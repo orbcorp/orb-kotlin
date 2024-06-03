@@ -1,0 +1,40 @@
+// File generated from our OpenAPI spec by Stainless.
+
+@file:Suppress("OVERLOADS_INTERFACE") // See https://youtrack.jetbrains.com/issue/KT-36102
+
+package com.withorb.api.services.async
+
+import com.withorb.api.core.RequestOptions
+import com.withorb.api.models.Item
+import com.withorb.api.models.ItemCreateParams
+import com.withorb.api.models.ItemFetchParams
+import com.withorb.api.models.ItemListPageAsync
+import com.withorb.api.models.ItemListParams
+import com.withorb.api.models.ItemUpdateParams
+
+interface ItemServiceAsync {
+
+    /** This endpoint is used to create an [Item](../guides/concepts#item). */
+    suspend fun create(
+        params: ItemCreateParams,
+        requestOptions: RequestOptions = RequestOptions.none()
+    ): Item
+
+    /** Update items */
+    suspend fun update(
+        params: ItemUpdateParams,
+        requestOptions: RequestOptions = RequestOptions.none()
+    ): Item
+
+    /** This endpoint returns a list of all Items, ordered in descending order by creation time. */
+    suspend fun list(
+        params: ItemListParams,
+        requestOptions: RequestOptions = RequestOptions.none()
+    ): ItemListPageAsync
+
+    /** This endpoint returns an item identified by its item_id. */
+    suspend fun fetch(
+        params: ItemFetchParams,
+        requestOptions: RequestOptions = RequestOptions.none()
+    ): Item
+}
