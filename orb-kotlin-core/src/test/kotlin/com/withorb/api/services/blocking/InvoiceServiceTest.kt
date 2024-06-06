@@ -46,6 +46,16 @@ class InvoiceServiceTest {
                     )
                     .netTerms(123L)
                     .customerId("4khy3nwzktxv7")
+                    .discount(
+                        Discount.ofPercentageDiscount(
+                            Discount.PercentageDiscount.builder()
+                                .appliesToPriceIds(listOf("string"))
+                                .discountType(Discount.PercentageDiscount.DiscountType.PERCENTAGE)
+                                .percentageDiscount(1.0)
+                                .reason("string")
+                                .build()
+                        )
+                    )
                     .externalCustomerId("external-customer-id")
                     .memo("An optional memo for my invoice.")
                     .metadata(InvoiceCreateParams.Metadata.builder().build())
