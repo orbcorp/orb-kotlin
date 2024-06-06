@@ -32,7 +32,9 @@ class SubscriptionPriceIntervalsParams
 constructor(
     private val subscriptionId: String,
     private val add: List<Add>?,
+    private val addAdjustments: List<AddAdjustment>?,
     private val edit: List<Edit>?,
+    private val editAdjustments: List<EditAdjustment>?,
     private val additionalQueryParams: Map<String, List<String>>,
     private val additionalHeaders: Map<String, List<String>>,
     private val additionalBodyProperties: Map<String, JsonValue>,
@@ -42,12 +44,18 @@ constructor(
 
     fun add(): List<Add>? = add
 
+    fun addAdjustments(): List<AddAdjustment>? = addAdjustments
+
     fun edit(): List<Edit>? = edit
+
+    fun editAdjustments(): List<EditAdjustment>? = editAdjustments
 
     internal fun getBody(): SubscriptionPriceIntervalsBody {
         return SubscriptionPriceIntervalsBody(
             add,
+            addAdjustments,
             edit,
+            editAdjustments,
             additionalBodyProperties,
         )
     }
@@ -68,7 +76,9 @@ constructor(
     class SubscriptionPriceIntervalsBody
     internal constructor(
         private val add: List<Add>?,
+        private val addAdjustments: List<AddAdjustment>?,
         private val edit: List<Edit>?,
+        private val editAdjustments: List<EditAdjustment>?,
         private val additionalProperties: Map<String, JsonValue>,
     ) {
 
@@ -77,8 +87,15 @@ constructor(
         /** A list of price intervals to add to the subscription. */
         @JsonProperty("add") fun add(): List<Add>? = add
 
+        /** A list of adjustments to add to the subscription. */
+        @JsonProperty("add_adjustments") fun addAdjustments(): List<AddAdjustment>? = addAdjustments
+
         /** A list of price intervals to edit on the subscription. */
         @JsonProperty("edit") fun edit(): List<Edit>? = edit
+
+        /** A list of adjustments to edit on the subscription. */
+        @JsonProperty("edit_adjustments")
+        fun editAdjustments(): List<EditAdjustment>? = editAdjustments
 
         @JsonAnyGetter
         @ExcludeMissing
@@ -93,7 +110,9 @@ constructor(
 
             return other is SubscriptionPriceIntervalsBody &&
                 this.add == other.add &&
+                this.addAdjustments == other.addAdjustments &&
                 this.edit == other.edit &&
+                this.editAdjustments == other.editAdjustments &&
                 this.additionalProperties == other.additionalProperties
         }
 
@@ -102,7 +121,9 @@ constructor(
                 hashCode =
                     Objects.hash(
                         add,
+                        addAdjustments,
                         edit,
+                        editAdjustments,
                         additionalProperties,
                     )
             }
@@ -110,7 +131,7 @@ constructor(
         }
 
         override fun toString() =
-            "SubscriptionPriceIntervalsBody{add=$add, edit=$edit, additionalProperties=$additionalProperties}"
+            "SubscriptionPriceIntervalsBody{add=$add, addAdjustments=$addAdjustments, edit=$edit, editAdjustments=$editAdjustments, additionalProperties=$additionalProperties}"
 
         companion object {
 
@@ -120,21 +141,37 @@ constructor(
         class Builder {
 
             private var add: List<Add>? = null
+            private var addAdjustments: List<AddAdjustment>? = null
             private var edit: List<Edit>? = null
+            private var editAdjustments: List<EditAdjustment>? = null
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             internal fun from(subscriptionPriceIntervalsBody: SubscriptionPriceIntervalsBody) =
                 apply {
                     this.add = subscriptionPriceIntervalsBody.add
+                    this.addAdjustments = subscriptionPriceIntervalsBody.addAdjustments
                     this.edit = subscriptionPriceIntervalsBody.edit
+                    this.editAdjustments = subscriptionPriceIntervalsBody.editAdjustments
                     additionalProperties(subscriptionPriceIntervalsBody.additionalProperties)
                 }
 
             /** A list of price intervals to add to the subscription. */
             @JsonProperty("add") fun add(add: List<Add>) = apply { this.add = add }
 
+            /** A list of adjustments to add to the subscription. */
+            @JsonProperty("add_adjustments")
+            fun addAdjustments(addAdjustments: List<AddAdjustment>) = apply {
+                this.addAdjustments = addAdjustments
+            }
+
             /** A list of price intervals to edit on the subscription. */
             @JsonProperty("edit") fun edit(edit: List<Edit>) = apply { this.edit = edit }
+
+            /** A list of adjustments to edit on the subscription. */
+            @JsonProperty("edit_adjustments")
+            fun editAdjustments(editAdjustments: List<EditAdjustment>) = apply {
+                this.editAdjustments = editAdjustments
+            }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
@@ -153,7 +190,9 @@ constructor(
             fun build(): SubscriptionPriceIntervalsBody =
                 SubscriptionPriceIntervalsBody(
                     add?.toUnmodifiable(),
+                    addAdjustments?.toUnmodifiable(),
                     edit?.toUnmodifiable(),
+                    editAdjustments?.toUnmodifiable(),
                     additionalProperties.toUnmodifiable(),
                 )
         }
@@ -173,7 +212,9 @@ constructor(
         return other is SubscriptionPriceIntervalsParams &&
             this.subscriptionId == other.subscriptionId &&
             this.add == other.add &&
+            this.addAdjustments == other.addAdjustments &&
             this.edit == other.edit &&
+            this.editAdjustments == other.editAdjustments &&
             this.additionalQueryParams == other.additionalQueryParams &&
             this.additionalHeaders == other.additionalHeaders &&
             this.additionalBodyProperties == other.additionalBodyProperties
@@ -183,7 +224,9 @@ constructor(
         return Objects.hash(
             subscriptionId,
             add,
+            addAdjustments,
             edit,
+            editAdjustments,
             additionalQueryParams,
             additionalHeaders,
             additionalBodyProperties,
@@ -191,7 +234,7 @@ constructor(
     }
 
     override fun toString() =
-        "SubscriptionPriceIntervalsParams{subscriptionId=$subscriptionId, add=$add, edit=$edit, additionalQueryParams=$additionalQueryParams, additionalHeaders=$additionalHeaders, additionalBodyProperties=$additionalBodyProperties}"
+        "SubscriptionPriceIntervalsParams{subscriptionId=$subscriptionId, add=$add, addAdjustments=$addAdjustments, edit=$edit, editAdjustments=$editAdjustments, additionalQueryParams=$additionalQueryParams, additionalHeaders=$additionalHeaders, additionalBodyProperties=$additionalBodyProperties}"
 
     fun toBuilder() = Builder().from(this)
 
@@ -205,7 +248,9 @@ constructor(
 
         private var subscriptionId: String? = null
         private var add: MutableList<Add> = mutableListOf()
+        private var addAdjustments: MutableList<AddAdjustment> = mutableListOf()
         private var edit: MutableList<Edit> = mutableListOf()
+        private var editAdjustments: MutableList<EditAdjustment> = mutableListOf()
         private var additionalQueryParams: MutableMap<String, MutableList<String>> = mutableMapOf()
         private var additionalHeaders: MutableMap<String, MutableList<String>> = mutableMapOf()
         private var additionalBodyProperties: MutableMap<String, JsonValue> = mutableMapOf()
@@ -214,7 +259,9 @@ constructor(
             apply {
                 this.subscriptionId = subscriptionPriceIntervalsParams.subscriptionId
                 this.add(subscriptionPriceIntervalsParams.add ?: listOf())
+                this.addAdjustments(subscriptionPriceIntervalsParams.addAdjustments ?: listOf())
                 this.edit(subscriptionPriceIntervalsParams.edit ?: listOf())
+                this.editAdjustments(subscriptionPriceIntervalsParams.editAdjustments ?: listOf())
                 additionalQueryParams(subscriptionPriceIntervalsParams.additionalQueryParams)
                 additionalHeaders(subscriptionPriceIntervalsParams.additionalHeaders)
                 additionalBodyProperties(subscriptionPriceIntervalsParams.additionalBodyProperties)
@@ -231,6 +278,17 @@ constructor(
         /** A list of price intervals to add to the subscription. */
         fun addAdd(add: Add) = apply { this.add.add(add) }
 
+        /** A list of adjustments to add to the subscription. */
+        fun addAdjustments(addAdjustments: List<AddAdjustment>) = apply {
+            this.addAdjustments.clear()
+            this.addAdjustments.addAll(addAdjustments)
+        }
+
+        /** A list of adjustments to add to the subscription. */
+        fun addAddAdjustment(addAdjustment: AddAdjustment) = apply {
+            this.addAdjustments.add(addAdjustment)
+        }
+
         /** A list of price intervals to edit on the subscription. */
         fun edit(edit: List<Edit>) = apply {
             this.edit.clear()
@@ -239,6 +297,17 @@ constructor(
 
         /** A list of price intervals to edit on the subscription. */
         fun addEdit(edit: Edit) = apply { this.edit.add(edit) }
+
+        /** A list of adjustments to edit on the subscription. */
+        fun editAdjustments(editAdjustments: List<EditAdjustment>) = apply {
+            this.editAdjustments.clear()
+            this.editAdjustments.addAll(editAdjustments)
+        }
+
+        /** A list of adjustments to edit on the subscription. */
+        fun addEditAdjustment(editAdjustment: EditAdjustment) = apply {
+            this.editAdjustments.add(editAdjustment)
+        }
 
         fun additionalQueryParams(additionalQueryParams: Map<String, List<String>>) = apply {
             this.additionalQueryParams.clear()
@@ -298,7 +367,9 @@ constructor(
             SubscriptionPriceIntervalsParams(
                 checkNotNull(subscriptionId) { "`subscriptionId` is required but was not set" },
                 if (add.size == 0) null else add.toUnmodifiable(),
+                if (addAdjustments.size == 0) null else addAdjustments.toUnmodifiable(),
                 if (edit.size == 0) null else edit.toUnmodifiable(),
+                if (editAdjustments.size == 0) null else editAdjustments.toUnmodifiable(),
                 additionalQueryParams.mapValues { it.value.toUnmodifiable() }.toUnmodifiable(),
                 additionalHeaders.mapValues { it.value.toUnmodifiable() }.toUnmodifiable(),
                 additionalBodyProperties.toUnmodifiable(),
@@ -2752,6 +2823,8 @@ constructor(
 
                         val ANNUAL = Cadence(JsonField.of("annual"))
 
+                        val SEMI_ANNUAL = Cadence(JsonField.of("semi_annual"))
+
                         val MONTHLY = Cadence(JsonField.of("monthly"))
 
                         val QUARTERLY = Cadence(JsonField.of("quarterly"))
@@ -2763,6 +2836,7 @@ constructor(
 
                     enum class Known {
                         ANNUAL,
+                        SEMI_ANNUAL,
                         MONTHLY,
                         QUARTERLY,
                         ONE_TIME,
@@ -2770,6 +2844,7 @@ constructor(
 
                     enum class Value {
                         ANNUAL,
+                        SEMI_ANNUAL,
                         MONTHLY,
                         QUARTERLY,
                         ONE_TIME,
@@ -2779,6 +2854,7 @@ constructor(
                     fun value(): Value =
                         when (this) {
                             ANNUAL -> Value.ANNUAL
+                            SEMI_ANNUAL -> Value.SEMI_ANNUAL
                             MONTHLY -> Value.MONTHLY
                             QUARTERLY -> Value.QUARTERLY
                             ONE_TIME -> Value.ONE_TIME
@@ -2788,6 +2864,7 @@ constructor(
                     fun known(): Known =
                         when (this) {
                             ANNUAL -> Known.ANNUAL
+                            SEMI_ANNUAL -> Known.SEMI_ANNUAL
                             MONTHLY -> Known.MONTHLY
                             QUARTERLY -> Known.QUARTERLY
                             ONE_TIME -> Known.ONE_TIME
@@ -3372,6 +3449,8 @@ constructor(
 
                         val ANNUAL = Cadence(JsonField.of("annual"))
 
+                        val SEMI_ANNUAL = Cadence(JsonField.of("semi_annual"))
+
                         val MONTHLY = Cadence(JsonField.of("monthly"))
 
                         val QUARTERLY = Cadence(JsonField.of("quarterly"))
@@ -3383,6 +3462,7 @@ constructor(
 
                     enum class Known {
                         ANNUAL,
+                        SEMI_ANNUAL,
                         MONTHLY,
                         QUARTERLY,
                         ONE_TIME,
@@ -3390,6 +3470,7 @@ constructor(
 
                     enum class Value {
                         ANNUAL,
+                        SEMI_ANNUAL,
                         MONTHLY,
                         QUARTERLY,
                         ONE_TIME,
@@ -3399,6 +3480,7 @@ constructor(
                     fun value(): Value =
                         when (this) {
                             ANNUAL -> Value.ANNUAL
+                            SEMI_ANNUAL -> Value.SEMI_ANNUAL
                             MONTHLY -> Value.MONTHLY
                             QUARTERLY -> Value.QUARTERLY
                             ONE_TIME -> Value.ONE_TIME
@@ -3408,6 +3490,7 @@ constructor(
                     fun known(): Known =
                         when (this) {
                             ANNUAL -> Known.ANNUAL
+                            SEMI_ANNUAL -> Known.SEMI_ANNUAL
                             MONTHLY -> Known.MONTHLY
                             QUARTERLY -> Known.QUARTERLY
                             ONE_TIME -> Known.ONE_TIME
@@ -4037,6 +4120,8 @@ constructor(
 
                         val ANNUAL = Cadence(JsonField.of("annual"))
 
+                        val SEMI_ANNUAL = Cadence(JsonField.of("semi_annual"))
+
                         val MONTHLY = Cadence(JsonField.of("monthly"))
 
                         val QUARTERLY = Cadence(JsonField.of("quarterly"))
@@ -4048,6 +4133,7 @@ constructor(
 
                     enum class Known {
                         ANNUAL,
+                        SEMI_ANNUAL,
                         MONTHLY,
                         QUARTERLY,
                         ONE_TIME,
@@ -4055,6 +4141,7 @@ constructor(
 
                     enum class Value {
                         ANNUAL,
+                        SEMI_ANNUAL,
                         MONTHLY,
                         QUARTERLY,
                         ONE_TIME,
@@ -4064,6 +4151,7 @@ constructor(
                     fun value(): Value =
                         when (this) {
                             ANNUAL -> Value.ANNUAL
+                            SEMI_ANNUAL -> Value.SEMI_ANNUAL
                             MONTHLY -> Value.MONTHLY
                             QUARTERLY -> Value.QUARTERLY
                             ONE_TIME -> Value.ONE_TIME
@@ -4073,6 +4161,7 @@ constructor(
                     fun known(): Known =
                         when (this) {
                             ANNUAL -> Known.ANNUAL
+                            SEMI_ANNUAL -> Known.SEMI_ANNUAL
                             MONTHLY -> Known.MONTHLY
                             QUARTERLY -> Known.QUARTERLY
                             ONE_TIME -> Known.ONE_TIME
@@ -4892,6 +4981,8 @@ constructor(
 
                         val ANNUAL = Cadence(JsonField.of("annual"))
 
+                        val SEMI_ANNUAL = Cadence(JsonField.of("semi_annual"))
+
                         val MONTHLY = Cadence(JsonField.of("monthly"))
 
                         val QUARTERLY = Cadence(JsonField.of("quarterly"))
@@ -4903,6 +4994,7 @@ constructor(
 
                     enum class Known {
                         ANNUAL,
+                        SEMI_ANNUAL,
                         MONTHLY,
                         QUARTERLY,
                         ONE_TIME,
@@ -4910,6 +5002,7 @@ constructor(
 
                     enum class Value {
                         ANNUAL,
+                        SEMI_ANNUAL,
                         MONTHLY,
                         QUARTERLY,
                         ONE_TIME,
@@ -4919,6 +5012,7 @@ constructor(
                     fun value(): Value =
                         when (this) {
                             ANNUAL -> Value.ANNUAL
+                            SEMI_ANNUAL -> Value.SEMI_ANNUAL
                             MONTHLY -> Value.MONTHLY
                             QUARTERLY -> Value.QUARTERLY
                             ONE_TIME -> Value.ONE_TIME
@@ -4928,6 +5022,7 @@ constructor(
                     fun known(): Known =
                         when (this) {
                             ANNUAL -> Known.ANNUAL
+                            SEMI_ANNUAL -> Known.SEMI_ANNUAL
                             MONTHLY -> Known.MONTHLY
                             QUARTERLY -> Known.QUARTERLY
                             ONE_TIME -> Known.ONE_TIME
@@ -5762,6 +5857,8 @@ constructor(
 
                         val ANNUAL = Cadence(JsonField.of("annual"))
 
+                        val SEMI_ANNUAL = Cadence(JsonField.of("semi_annual"))
+
                         val MONTHLY = Cadence(JsonField.of("monthly"))
 
                         val QUARTERLY = Cadence(JsonField.of("quarterly"))
@@ -5773,6 +5870,7 @@ constructor(
 
                     enum class Known {
                         ANNUAL,
+                        SEMI_ANNUAL,
                         MONTHLY,
                         QUARTERLY,
                         ONE_TIME,
@@ -5780,6 +5878,7 @@ constructor(
 
                     enum class Value {
                         ANNUAL,
+                        SEMI_ANNUAL,
                         MONTHLY,
                         QUARTERLY,
                         ONE_TIME,
@@ -5789,6 +5888,7 @@ constructor(
                     fun value(): Value =
                         when (this) {
                             ANNUAL -> Value.ANNUAL
+                            SEMI_ANNUAL -> Value.SEMI_ANNUAL
                             MONTHLY -> Value.MONTHLY
                             QUARTERLY -> Value.QUARTERLY
                             ONE_TIME -> Value.ONE_TIME
@@ -5798,6 +5898,7 @@ constructor(
                     fun known(): Known =
                         when (this) {
                             ANNUAL -> Known.ANNUAL
+                            SEMI_ANNUAL -> Known.SEMI_ANNUAL
                             MONTHLY -> Known.MONTHLY
                             QUARTERLY -> Known.QUARTERLY
                             ONE_TIME -> Known.ONE_TIME
@@ -6552,6 +6653,8 @@ constructor(
 
                         val ANNUAL = Cadence(JsonField.of("annual"))
 
+                        val SEMI_ANNUAL = Cadence(JsonField.of("semi_annual"))
+
                         val MONTHLY = Cadence(JsonField.of("monthly"))
 
                         val QUARTERLY = Cadence(JsonField.of("quarterly"))
@@ -6563,6 +6666,7 @@ constructor(
 
                     enum class Known {
                         ANNUAL,
+                        SEMI_ANNUAL,
                         MONTHLY,
                         QUARTERLY,
                         ONE_TIME,
@@ -6570,6 +6674,7 @@ constructor(
 
                     enum class Value {
                         ANNUAL,
+                        SEMI_ANNUAL,
                         MONTHLY,
                         QUARTERLY,
                         ONE_TIME,
@@ -6579,6 +6684,7 @@ constructor(
                     fun value(): Value =
                         when (this) {
                             ANNUAL -> Value.ANNUAL
+                            SEMI_ANNUAL -> Value.SEMI_ANNUAL
                             MONTHLY -> Value.MONTHLY
                             QUARTERLY -> Value.QUARTERLY
                             ONE_TIME -> Value.ONE_TIME
@@ -6588,6 +6694,7 @@ constructor(
                     fun known(): Known =
                         when (this) {
                             ANNUAL -> Known.ANNUAL
+                            SEMI_ANNUAL -> Known.SEMI_ANNUAL
                             MONTHLY -> Known.MONTHLY
                             QUARTERLY -> Known.QUARTERLY
                             ONE_TIME -> Known.ONE_TIME
@@ -7493,6 +7600,8 @@ constructor(
 
                         val ANNUAL = Cadence(JsonField.of("annual"))
 
+                        val SEMI_ANNUAL = Cadence(JsonField.of("semi_annual"))
+
                         val MONTHLY = Cadence(JsonField.of("monthly"))
 
                         val QUARTERLY = Cadence(JsonField.of("quarterly"))
@@ -7504,6 +7613,7 @@ constructor(
 
                     enum class Known {
                         ANNUAL,
+                        SEMI_ANNUAL,
                         MONTHLY,
                         QUARTERLY,
                         ONE_TIME,
@@ -7511,6 +7621,7 @@ constructor(
 
                     enum class Value {
                         ANNUAL,
+                        SEMI_ANNUAL,
                         MONTHLY,
                         QUARTERLY,
                         ONE_TIME,
@@ -7520,6 +7631,7 @@ constructor(
                     fun value(): Value =
                         when (this) {
                             ANNUAL -> Value.ANNUAL
+                            SEMI_ANNUAL -> Value.SEMI_ANNUAL
                             MONTHLY -> Value.MONTHLY
                             QUARTERLY -> Value.QUARTERLY
                             ONE_TIME -> Value.ONE_TIME
@@ -7529,6 +7641,7 @@ constructor(
                     fun known(): Known =
                         when (this) {
                             ANNUAL -> Known.ANNUAL
+                            SEMI_ANNUAL -> Known.SEMI_ANNUAL
                             MONTHLY -> Known.MONTHLY
                             QUARTERLY -> Known.QUARTERLY
                             ONE_TIME -> Known.ONE_TIME
@@ -8283,6 +8396,8 @@ constructor(
 
                         val ANNUAL = Cadence(JsonField.of("annual"))
 
+                        val SEMI_ANNUAL = Cadence(JsonField.of("semi_annual"))
+
                         val MONTHLY = Cadence(JsonField.of("monthly"))
 
                         val QUARTERLY = Cadence(JsonField.of("quarterly"))
@@ -8294,6 +8409,7 @@ constructor(
 
                     enum class Known {
                         ANNUAL,
+                        SEMI_ANNUAL,
                         MONTHLY,
                         QUARTERLY,
                         ONE_TIME,
@@ -8301,6 +8417,7 @@ constructor(
 
                     enum class Value {
                         ANNUAL,
+                        SEMI_ANNUAL,
                         MONTHLY,
                         QUARTERLY,
                         ONE_TIME,
@@ -8310,6 +8427,7 @@ constructor(
                     fun value(): Value =
                         when (this) {
                             ANNUAL -> Value.ANNUAL
+                            SEMI_ANNUAL -> Value.SEMI_ANNUAL
                             MONTHLY -> Value.MONTHLY
                             QUARTERLY -> Value.QUARTERLY
                             ONE_TIME -> Value.ONE_TIME
@@ -8319,6 +8437,7 @@ constructor(
                     fun known(): Known =
                         when (this) {
                             ANNUAL -> Known.ANNUAL
+                            SEMI_ANNUAL -> Known.SEMI_ANNUAL
                             MONTHLY -> Known.MONTHLY
                             QUARTERLY -> Known.QUARTERLY
                             ONE_TIME -> Known.ONE_TIME
@@ -9034,6 +9153,8 @@ constructor(
 
                         val ANNUAL = Cadence(JsonField.of("annual"))
 
+                        val SEMI_ANNUAL = Cadence(JsonField.of("semi_annual"))
+
                         val MONTHLY = Cadence(JsonField.of("monthly"))
 
                         val QUARTERLY = Cadence(JsonField.of("quarterly"))
@@ -9045,6 +9166,7 @@ constructor(
 
                     enum class Known {
                         ANNUAL,
+                        SEMI_ANNUAL,
                         MONTHLY,
                         QUARTERLY,
                         ONE_TIME,
@@ -9052,6 +9174,7 @@ constructor(
 
                     enum class Value {
                         ANNUAL,
+                        SEMI_ANNUAL,
                         MONTHLY,
                         QUARTERLY,
                         ONE_TIME,
@@ -9061,6 +9184,7 @@ constructor(
                     fun value(): Value =
                         when (this) {
                             ANNUAL -> Value.ANNUAL
+                            SEMI_ANNUAL -> Value.SEMI_ANNUAL
                             MONTHLY -> Value.MONTHLY
                             QUARTERLY -> Value.QUARTERLY
                             ONE_TIME -> Value.ONE_TIME
@@ -9070,6 +9194,7 @@ constructor(
                     fun known(): Known =
                         when (this) {
                             ANNUAL -> Known.ANNUAL
+                            SEMI_ANNUAL -> Known.SEMI_ANNUAL
                             MONTHLY -> Known.MONTHLY
                             QUARTERLY -> Known.QUARTERLY
                             ONE_TIME -> Known.ONE_TIME
@@ -9570,6 +9695,8 @@ constructor(
 
                         val ANNUAL = Cadence(JsonField.of("annual"))
 
+                        val SEMI_ANNUAL = Cadence(JsonField.of("semi_annual"))
+
                         val MONTHLY = Cadence(JsonField.of("monthly"))
 
                         val QUARTERLY = Cadence(JsonField.of("quarterly"))
@@ -9581,6 +9708,7 @@ constructor(
 
                     enum class Known {
                         ANNUAL,
+                        SEMI_ANNUAL,
                         MONTHLY,
                         QUARTERLY,
                         ONE_TIME,
@@ -9588,6 +9716,7 @@ constructor(
 
                     enum class Value {
                         ANNUAL,
+                        SEMI_ANNUAL,
                         MONTHLY,
                         QUARTERLY,
                         ONE_TIME,
@@ -9597,6 +9726,7 @@ constructor(
                     fun value(): Value =
                         when (this) {
                             ANNUAL -> Value.ANNUAL
+                            SEMI_ANNUAL -> Value.SEMI_ANNUAL
                             MONTHLY -> Value.MONTHLY
                             QUARTERLY -> Value.QUARTERLY
                             ONE_TIME -> Value.ONE_TIME
@@ -9606,6 +9736,7 @@ constructor(
                     fun known(): Known =
                         when (this) {
                             ANNUAL -> Known.ANNUAL
+                            SEMI_ANNUAL -> Known.SEMI_ANNUAL
                             MONTHLY -> Known.MONTHLY
                             QUARTERLY -> Known.QUARTERLY
                             ONE_TIME -> Known.ONE_TIME
@@ -10180,6 +10311,8 @@ constructor(
 
                         val ANNUAL = Cadence(JsonField.of("annual"))
 
+                        val SEMI_ANNUAL = Cadence(JsonField.of("semi_annual"))
+
                         val MONTHLY = Cadence(JsonField.of("monthly"))
 
                         val QUARTERLY = Cadence(JsonField.of("quarterly"))
@@ -10191,6 +10324,7 @@ constructor(
 
                     enum class Known {
                         ANNUAL,
+                        SEMI_ANNUAL,
                         MONTHLY,
                         QUARTERLY,
                         ONE_TIME,
@@ -10198,6 +10332,7 @@ constructor(
 
                     enum class Value {
                         ANNUAL,
+                        SEMI_ANNUAL,
                         MONTHLY,
                         QUARTERLY,
                         ONE_TIME,
@@ -10207,6 +10342,7 @@ constructor(
                     fun value(): Value =
                         when (this) {
                             ANNUAL -> Value.ANNUAL
+                            SEMI_ANNUAL -> Value.SEMI_ANNUAL
                             MONTHLY -> Value.MONTHLY
                             QUARTERLY -> Value.QUARTERLY
                             ONE_TIME -> Value.ONE_TIME
@@ -10216,6 +10352,7 @@ constructor(
                     fun known(): Known =
                         when (this) {
                             ANNUAL -> Known.ANNUAL
+                            SEMI_ANNUAL -> Known.SEMI_ANNUAL
                             MONTHLY -> Known.MONTHLY
                             QUARTERLY -> Known.QUARTERLY
                             ONE_TIME -> Known.ONE_TIME
@@ -10786,6 +10923,8 @@ constructor(
 
                         val ANNUAL = Cadence(JsonField.of("annual"))
 
+                        val SEMI_ANNUAL = Cadence(JsonField.of("semi_annual"))
+
                         val MONTHLY = Cadence(JsonField.of("monthly"))
 
                         val QUARTERLY = Cadence(JsonField.of("quarterly"))
@@ -10797,6 +10936,7 @@ constructor(
 
                     enum class Known {
                         ANNUAL,
+                        SEMI_ANNUAL,
                         MONTHLY,
                         QUARTERLY,
                         ONE_TIME,
@@ -10804,6 +10944,7 @@ constructor(
 
                     enum class Value {
                         ANNUAL,
+                        SEMI_ANNUAL,
                         MONTHLY,
                         QUARTERLY,
                         ONE_TIME,
@@ -10813,6 +10954,7 @@ constructor(
                     fun value(): Value =
                         when (this) {
                             ANNUAL -> Value.ANNUAL
+                            SEMI_ANNUAL -> Value.SEMI_ANNUAL
                             MONTHLY -> Value.MONTHLY
                             QUARTERLY -> Value.QUARTERLY
                             ONE_TIME -> Value.ONE_TIME
@@ -10822,6 +10964,7 @@ constructor(
                     fun known(): Known =
                         when (this) {
                             ANNUAL -> Known.ANNUAL
+                            SEMI_ANNUAL -> Known.SEMI_ANNUAL
                             MONTHLY -> Known.MONTHLY
                             QUARTERLY -> Known.QUARTERLY
                             ONE_TIME -> Known.ONE_TIME
@@ -11394,6 +11537,8 @@ constructor(
 
                         val ANNUAL = Cadence(JsonField.of("annual"))
 
+                        val SEMI_ANNUAL = Cadence(JsonField.of("semi_annual"))
+
                         val MONTHLY = Cadence(JsonField.of("monthly"))
 
                         val QUARTERLY = Cadence(JsonField.of("quarterly"))
@@ -11405,6 +11550,7 @@ constructor(
 
                     enum class Known {
                         ANNUAL,
+                        SEMI_ANNUAL,
                         MONTHLY,
                         QUARTERLY,
                         ONE_TIME,
@@ -11412,6 +11558,7 @@ constructor(
 
                     enum class Value {
                         ANNUAL,
+                        SEMI_ANNUAL,
                         MONTHLY,
                         QUARTERLY,
                         ONE_TIME,
@@ -11421,6 +11568,7 @@ constructor(
                     fun value(): Value =
                         when (this) {
                             ANNUAL -> Value.ANNUAL
+                            SEMI_ANNUAL -> Value.SEMI_ANNUAL
                             MONTHLY -> Value.MONTHLY
                             QUARTERLY -> Value.QUARTERLY
                             ONE_TIME -> Value.ONE_TIME
@@ -11430,6 +11578,7 @@ constructor(
                     fun known(): Known =
                         when (this) {
                             ANNUAL -> Known.ANNUAL
+                            SEMI_ANNUAL -> Known.SEMI_ANNUAL
                             MONTHLY -> Known.MONTHLY
                             QUARTERLY -> Known.QUARTERLY
                             ONE_TIME -> Known.ONE_TIME
@@ -12008,6 +12157,8 @@ constructor(
 
                         val ANNUAL = Cadence(JsonField.of("annual"))
 
+                        val SEMI_ANNUAL = Cadence(JsonField.of("semi_annual"))
+
                         val MONTHLY = Cadence(JsonField.of("monthly"))
 
                         val QUARTERLY = Cadence(JsonField.of("quarterly"))
@@ -12019,6 +12170,7 @@ constructor(
 
                     enum class Known {
                         ANNUAL,
+                        SEMI_ANNUAL,
                         MONTHLY,
                         QUARTERLY,
                         ONE_TIME,
@@ -12026,6 +12178,7 @@ constructor(
 
                     enum class Value {
                         ANNUAL,
+                        SEMI_ANNUAL,
                         MONTHLY,
                         QUARTERLY,
                         ONE_TIME,
@@ -12035,6 +12188,7 @@ constructor(
                     fun value(): Value =
                         when (this) {
                             ANNUAL -> Value.ANNUAL
+                            SEMI_ANNUAL -> Value.SEMI_ANNUAL
                             MONTHLY -> Value.MONTHLY
                             QUARTERLY -> Value.QUARTERLY
                             ONE_TIME -> Value.ONE_TIME
@@ -12044,6 +12198,7 @@ constructor(
                     fun known(): Known =
                         when (this) {
                             ANNUAL -> Known.ANNUAL
+                            SEMI_ANNUAL -> Known.SEMI_ANNUAL
                             MONTHLY -> Known.MONTHLY
                             QUARTERLY -> Known.QUARTERLY
                             ONE_TIME -> Known.ONE_TIME
@@ -12632,6 +12787,8 @@ constructor(
 
                         val ANNUAL = Cadence(JsonField.of("annual"))
 
+                        val SEMI_ANNUAL = Cadence(JsonField.of("semi_annual"))
+
                         val MONTHLY = Cadence(JsonField.of("monthly"))
 
                         val QUARTERLY = Cadence(JsonField.of("quarterly"))
@@ -12643,6 +12800,7 @@ constructor(
 
                     enum class Known {
                         ANNUAL,
+                        SEMI_ANNUAL,
                         MONTHLY,
                         QUARTERLY,
                         ONE_TIME,
@@ -12650,6 +12808,7 @@ constructor(
 
                     enum class Value {
                         ANNUAL,
+                        SEMI_ANNUAL,
                         MONTHLY,
                         QUARTERLY,
                         ONE_TIME,
@@ -12659,6 +12818,7 @@ constructor(
                     fun value(): Value =
                         when (this) {
                             ANNUAL -> Value.ANNUAL
+                            SEMI_ANNUAL -> Value.SEMI_ANNUAL
                             MONTHLY -> Value.MONTHLY
                             QUARTERLY -> Value.QUARTERLY
                             ONE_TIME -> Value.ONE_TIME
@@ -12668,6 +12828,7 @@ constructor(
                     fun known(): Known =
                         when (this) {
                             ANNUAL -> Known.ANNUAL
+                            SEMI_ANNUAL -> Known.SEMI_ANNUAL
                             MONTHLY -> Known.MONTHLY
                             QUARTERLY -> Known.QUARTERLY
                             ONE_TIME -> Known.ONE_TIME
@@ -13243,6 +13404,8 @@ constructor(
 
                         val ANNUAL = Cadence(JsonField.of("annual"))
 
+                        val SEMI_ANNUAL = Cadence(JsonField.of("semi_annual"))
+
                         val MONTHLY = Cadence(JsonField.of("monthly"))
 
                         val QUARTERLY = Cadence(JsonField.of("quarterly"))
@@ -13254,6 +13417,7 @@ constructor(
 
                     enum class Known {
                         ANNUAL,
+                        SEMI_ANNUAL,
                         MONTHLY,
                         QUARTERLY,
                         ONE_TIME,
@@ -13261,6 +13425,7 @@ constructor(
 
                     enum class Value {
                         ANNUAL,
+                        SEMI_ANNUAL,
                         MONTHLY,
                         QUARTERLY,
                         ONE_TIME,
@@ -13270,6 +13435,7 @@ constructor(
                     fun value(): Value =
                         when (this) {
                             ANNUAL -> Value.ANNUAL
+                            SEMI_ANNUAL -> Value.SEMI_ANNUAL
                             MONTHLY -> Value.MONTHLY
                             QUARTERLY -> Value.QUARTERLY
                             ONE_TIME -> Value.ONE_TIME
@@ -13279,6 +13445,7 @@ constructor(
                     fun known(): Known =
                         when (this) {
                             ANNUAL -> Known.ANNUAL
+                            SEMI_ANNUAL -> Known.SEMI_ANNUAL
                             MONTHLY -> Known.MONTHLY
                             QUARTERLY -> Known.QUARTERLY
                             ONE_TIME -> Known.ONE_TIME
@@ -13854,6 +14021,8 @@ constructor(
 
                         val ANNUAL = Cadence(JsonField.of("annual"))
 
+                        val SEMI_ANNUAL = Cadence(JsonField.of("semi_annual"))
+
                         val MONTHLY = Cadence(JsonField.of("monthly"))
 
                         val QUARTERLY = Cadence(JsonField.of("quarterly"))
@@ -13865,6 +14034,7 @@ constructor(
 
                     enum class Known {
                         ANNUAL,
+                        SEMI_ANNUAL,
                         MONTHLY,
                         QUARTERLY,
                         ONE_TIME,
@@ -13872,6 +14042,7 @@ constructor(
 
                     enum class Value {
                         ANNUAL,
+                        SEMI_ANNUAL,
                         MONTHLY,
                         QUARTERLY,
                         ONE_TIME,
@@ -13881,6 +14052,7 @@ constructor(
                     fun value(): Value =
                         when (this) {
                             ANNUAL -> Value.ANNUAL
+                            SEMI_ANNUAL -> Value.SEMI_ANNUAL
                             MONTHLY -> Value.MONTHLY
                             QUARTERLY -> Value.QUARTERLY
                             ONE_TIME -> Value.ONE_TIME
@@ -13890,6 +14062,7 @@ constructor(
                     fun known(): Known =
                         when (this) {
                             ANNUAL -> Known.ANNUAL
+                            SEMI_ANNUAL -> Known.SEMI_ANNUAL
                             MONTHLY -> Known.MONTHLY
                             QUARTERLY -> Known.QUARTERLY
                             ONE_TIME -> Known.ONE_TIME
@@ -14463,6 +14636,8 @@ constructor(
 
                         val ANNUAL = Cadence(JsonField.of("annual"))
 
+                        val SEMI_ANNUAL = Cadence(JsonField.of("semi_annual"))
+
                         val MONTHLY = Cadence(JsonField.of("monthly"))
 
                         val QUARTERLY = Cadence(JsonField.of("quarterly"))
@@ -14474,6 +14649,7 @@ constructor(
 
                     enum class Known {
                         ANNUAL,
+                        SEMI_ANNUAL,
                         MONTHLY,
                         QUARTERLY,
                         ONE_TIME,
@@ -14481,6 +14657,7 @@ constructor(
 
                     enum class Value {
                         ANNUAL,
+                        SEMI_ANNUAL,
                         MONTHLY,
                         QUARTERLY,
                         ONE_TIME,
@@ -14490,6 +14667,7 @@ constructor(
                     fun value(): Value =
                         when (this) {
                             ANNUAL -> Value.ANNUAL
+                            SEMI_ANNUAL -> Value.SEMI_ANNUAL
                             MONTHLY -> Value.MONTHLY
                             QUARTERLY -> Value.QUARTERLY
                             ONE_TIME -> Value.ONE_TIME
@@ -14499,6 +14677,7 @@ constructor(
                     fun known(): Known =
                         when (this) {
                             ANNUAL -> Known.ANNUAL
+                            SEMI_ANNUAL -> Known.SEMI_ANNUAL
                             MONTHLY -> Known.MONTHLY
                             QUARTERLY -> Known.QUARTERLY
                             ONE_TIME -> Known.ONE_TIME
@@ -14634,6 +14813,1382 @@ constructor(
 
                         fun build(): UnitWithProrationConfig =
                             UnitWithProrationConfig(additionalProperties.toUnmodifiable())
+                    }
+                }
+            }
+        }
+    }
+
+    @JsonDeserialize(builder = AddAdjustment.Builder::class)
+    @NoAutoDetect
+    class AddAdjustment
+    private constructor(
+        private val adjustment: Adjustment?,
+        private val startDate: StartDate?,
+        private val endDate: EndDate?,
+        private val additionalProperties: Map<String, JsonValue>,
+    ) {
+
+        private var hashCode: Int = 0
+
+        /** The definition of a new adjustment to create and add to the subscription. */
+        @JsonProperty("adjustment") fun adjustment(): Adjustment? = adjustment
+
+        /**
+         * The start date of the adjustment interval. This is the date that the adjustment will
+         * start affecting prices on the subscription.
+         */
+        @JsonProperty("start_date") fun startDate(): StartDate? = startDate
+
+        /**
+         * The end date of the adjustment interval. This is the date that the adjustment will stop
+         * affecting prices on the subscription.
+         */
+        @JsonProperty("end_date") fun endDate(): EndDate? = endDate
+
+        @JsonAnyGetter
+        @ExcludeMissing
+        fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
+
+        fun toBuilder() = Builder().from(this)
+
+        override fun equals(other: Any?): Boolean {
+            if (this === other) {
+                return true
+            }
+
+            return other is AddAdjustment &&
+                this.adjustment == other.adjustment &&
+                this.startDate == other.startDate &&
+                this.endDate == other.endDate &&
+                this.additionalProperties == other.additionalProperties
+        }
+
+        override fun hashCode(): Int {
+            if (hashCode == 0) {
+                hashCode =
+                    Objects.hash(
+                        adjustment,
+                        startDate,
+                        endDate,
+                        additionalProperties,
+                    )
+            }
+            return hashCode
+        }
+
+        override fun toString() =
+            "AddAdjustment{adjustment=$adjustment, startDate=$startDate, endDate=$endDate, additionalProperties=$additionalProperties}"
+
+        companion object {
+
+            fun builder() = Builder()
+        }
+
+        class Builder {
+
+            private var adjustment: Adjustment? = null
+            private var startDate: StartDate? = null
+            private var endDate: EndDate? = null
+            private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
+
+            internal fun from(addAdjustment: AddAdjustment) = apply {
+                this.adjustment = addAdjustment.adjustment
+                this.startDate = addAdjustment.startDate
+                this.endDate = addAdjustment.endDate
+                additionalProperties(addAdjustment.additionalProperties)
+            }
+
+            /** The definition of a new adjustment to create and add to the subscription. */
+            @JsonProperty("adjustment")
+            fun adjustment(adjustment: Adjustment) = apply { this.adjustment = adjustment }
+
+            /**
+             * The start date of the adjustment interval. This is the date that the adjustment will
+             * start affecting prices on the subscription.
+             */
+            @JsonProperty("start_date")
+            fun startDate(startDate: StartDate) = apply { this.startDate = startDate }
+
+            /**
+             * The end date of the adjustment interval. This is the date that the adjustment will
+             * stop affecting prices on the subscription.
+             */
+            @JsonProperty("end_date")
+            fun endDate(endDate: EndDate) = apply { this.endDate = endDate }
+
+            fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                this.additionalProperties.clear()
+                this.additionalProperties.putAll(additionalProperties)
+            }
+
+            @JsonAnySetter
+            fun putAdditionalProperty(key: String, value: JsonValue) = apply {
+                this.additionalProperties.put(key, value)
+            }
+
+            fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                this.additionalProperties.putAll(additionalProperties)
+            }
+
+            fun build(): AddAdjustment =
+                AddAdjustment(
+                    checkNotNull(adjustment) { "`adjustment` is required but was not set" },
+                    checkNotNull(startDate) { "`startDate` is required but was not set" },
+                    endDate,
+                    additionalProperties.toUnmodifiable(),
+                )
+        }
+
+        @JsonDeserialize(using = Adjustment.Deserializer::class)
+        @JsonSerialize(using = Adjustment.Serializer::class)
+        class Adjustment
+        private constructor(
+            private val newPercentageDiscount: NewPercentageDiscount? = null,
+            private val newAmountDiscount: NewAmountDiscount? = null,
+            private val newMinimum: NewMinimum? = null,
+            private val newMaximum: NewMaximum? = null,
+            private val _json: JsonValue? = null,
+        ) {
+
+            private var validated: Boolean = false
+
+            fun newPercentageDiscount(): NewPercentageDiscount? = newPercentageDiscount
+
+            fun newAmountDiscount(): NewAmountDiscount? = newAmountDiscount
+
+            fun newMinimum(): NewMinimum? = newMinimum
+
+            fun newMaximum(): NewMaximum? = newMaximum
+
+            fun isNewPercentageDiscount(): Boolean = newPercentageDiscount != null
+
+            fun isNewAmountDiscount(): Boolean = newAmountDiscount != null
+
+            fun isNewMinimum(): Boolean = newMinimum != null
+
+            fun isNewMaximum(): Boolean = newMaximum != null
+
+            fun asNewPercentageDiscount(): NewPercentageDiscount =
+                newPercentageDiscount.getOrThrow("newPercentageDiscount")
+
+            fun asNewAmountDiscount(): NewAmountDiscount =
+                newAmountDiscount.getOrThrow("newAmountDiscount")
+
+            fun asNewMinimum(): NewMinimum = newMinimum.getOrThrow("newMinimum")
+
+            fun asNewMaximum(): NewMaximum = newMaximum.getOrThrow("newMaximum")
+
+            fun _json(): JsonValue? = _json
+
+            fun <T> accept(visitor: Visitor<T>): T {
+                return when {
+                    newPercentageDiscount != null ->
+                        visitor.visitNewPercentageDiscount(newPercentageDiscount)
+                    newAmountDiscount != null -> visitor.visitNewAmountDiscount(newAmountDiscount)
+                    newMinimum != null -> visitor.visitNewMinimum(newMinimum)
+                    newMaximum != null -> visitor.visitNewMaximum(newMaximum)
+                    else -> visitor.unknown(_json)
+                }
+            }
+
+            fun validate(): Adjustment = apply {
+                if (!validated) {
+                    if (
+                        newPercentageDiscount == null &&
+                            newAmountDiscount == null &&
+                            newMinimum == null &&
+                            newMaximum == null
+                    ) {
+                        throw OrbInvalidDataException("Unknown Adjustment: $_json")
+                    }
+                    newPercentageDiscount?.validate()
+                    newAmountDiscount?.validate()
+                    newMinimum?.validate()
+                    newMaximum?.validate()
+                    validated = true
+                }
+            }
+
+            override fun equals(other: Any?): Boolean {
+                if (this === other) {
+                    return true
+                }
+
+                return other is Adjustment &&
+                    this.newPercentageDiscount == other.newPercentageDiscount &&
+                    this.newAmountDiscount == other.newAmountDiscount &&
+                    this.newMinimum == other.newMinimum &&
+                    this.newMaximum == other.newMaximum
+            }
+
+            override fun hashCode(): Int {
+                return Objects.hash(
+                    newPercentageDiscount,
+                    newAmountDiscount,
+                    newMinimum,
+                    newMaximum,
+                )
+            }
+
+            override fun toString(): String {
+                return when {
+                    newPercentageDiscount != null ->
+                        "Adjustment{newPercentageDiscount=$newPercentageDiscount}"
+                    newAmountDiscount != null -> "Adjustment{newAmountDiscount=$newAmountDiscount}"
+                    newMinimum != null -> "Adjustment{newMinimum=$newMinimum}"
+                    newMaximum != null -> "Adjustment{newMaximum=$newMaximum}"
+                    _json != null -> "Adjustment{_unknown=$_json}"
+                    else -> throw IllegalStateException("Invalid Adjustment")
+                }
+            }
+
+            companion object {
+
+                fun ofNewPercentageDiscount(newPercentageDiscount: NewPercentageDiscount) =
+                    Adjustment(newPercentageDiscount = newPercentageDiscount)
+
+                fun ofNewAmountDiscount(newAmountDiscount: NewAmountDiscount) =
+                    Adjustment(newAmountDiscount = newAmountDiscount)
+
+                fun ofNewMinimum(newMinimum: NewMinimum) = Adjustment(newMinimum = newMinimum)
+
+                fun ofNewMaximum(newMaximum: NewMaximum) = Adjustment(newMaximum = newMaximum)
+            }
+
+            interface Visitor<out T> {
+
+                fun visitNewPercentageDiscount(newPercentageDiscount: NewPercentageDiscount): T
+
+                fun visitNewAmountDiscount(newAmountDiscount: NewAmountDiscount): T
+
+                fun visitNewMinimum(newMinimum: NewMinimum): T
+
+                fun visitNewMaximum(newMaximum: NewMaximum): T
+
+                fun unknown(json: JsonValue?): T {
+                    throw OrbInvalidDataException("Unknown Adjustment: $json")
+                }
+            }
+
+            class Deserializer : BaseDeserializer<Adjustment>(Adjustment::class) {
+
+                override fun ObjectCodec.deserialize(node: JsonNode): Adjustment {
+                    val json = JsonValue.fromJsonNode(node)
+                    tryDeserialize(node, jacksonTypeRef<NewPercentageDiscount>()) { it.validate() }
+                        ?.let {
+                            return Adjustment(newPercentageDiscount = it, _json = json)
+                        }
+                    tryDeserialize(node, jacksonTypeRef<NewAmountDiscount>()) { it.validate() }
+                        ?.let {
+                            return Adjustment(newAmountDiscount = it, _json = json)
+                        }
+                    tryDeserialize(node, jacksonTypeRef<NewMinimum>()) { it.validate() }
+                        ?.let {
+                            return Adjustment(newMinimum = it, _json = json)
+                        }
+                    tryDeserialize(node, jacksonTypeRef<NewMaximum>()) { it.validate() }
+                        ?.let {
+                            return Adjustment(newMaximum = it, _json = json)
+                        }
+
+                    return Adjustment(_json = json)
+                }
+            }
+
+            class Serializer : BaseSerializer<Adjustment>(Adjustment::class) {
+
+                override fun serialize(
+                    value: Adjustment,
+                    generator: JsonGenerator,
+                    provider: SerializerProvider
+                ) {
+                    when {
+                        value.newPercentageDiscount != null ->
+                            generator.writeObject(value.newPercentageDiscount)
+                        value.newAmountDiscount != null ->
+                            generator.writeObject(value.newAmountDiscount)
+                        value.newMinimum != null -> generator.writeObject(value.newMinimum)
+                        value.newMaximum != null -> generator.writeObject(value.newMaximum)
+                        value._json != null -> generator.writeObject(value._json)
+                        else -> throw IllegalStateException("Invalid Adjustment")
+                    }
+                }
+            }
+
+            @JsonDeserialize(builder = NewPercentageDiscount.Builder::class)
+            @NoAutoDetect
+            class NewPercentageDiscount
+            private constructor(
+                private val appliesToPriceIds: JsonField<List<String>>,
+                private val adjustmentType: JsonField<AdjustmentType>,
+                private val percentageDiscount: JsonField<Double>,
+                private val additionalProperties: Map<String, JsonValue>,
+            ) {
+
+                private var validated: Boolean = false
+
+                private var hashCode: Int = 0
+
+                /** The set of price IDs to which this adjustment applies. */
+                fun appliesToPriceIds(): List<String> =
+                    appliesToPriceIds.getRequired("applies_to_price_ids")
+
+                fun adjustmentType(): AdjustmentType = adjustmentType.getRequired("adjustment_type")
+
+                fun percentageDiscount(): Double =
+                    percentageDiscount.getRequired("percentage_discount")
+
+                /** The set of price IDs to which this adjustment applies. */
+                @JsonProperty("applies_to_price_ids")
+                @ExcludeMissing
+                fun _appliesToPriceIds() = appliesToPriceIds
+
+                @JsonProperty("adjustment_type")
+                @ExcludeMissing
+                fun _adjustmentType() = adjustmentType
+
+                @JsonProperty("percentage_discount")
+                @ExcludeMissing
+                fun _percentageDiscount() = percentageDiscount
+
+                @JsonAnyGetter
+                @ExcludeMissing
+                fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
+
+                fun validate(): NewPercentageDiscount = apply {
+                    if (!validated) {
+                        appliesToPriceIds()
+                        adjustmentType()
+                        percentageDiscount()
+                        validated = true
+                    }
+                }
+
+                fun toBuilder() = Builder().from(this)
+
+                override fun equals(other: Any?): Boolean {
+                    if (this === other) {
+                        return true
+                    }
+
+                    return other is NewPercentageDiscount &&
+                        this.appliesToPriceIds == other.appliesToPriceIds &&
+                        this.adjustmentType == other.adjustmentType &&
+                        this.percentageDiscount == other.percentageDiscount &&
+                        this.additionalProperties == other.additionalProperties
+                }
+
+                override fun hashCode(): Int {
+                    if (hashCode == 0) {
+                        hashCode =
+                            Objects.hash(
+                                appliesToPriceIds,
+                                adjustmentType,
+                                percentageDiscount,
+                                additionalProperties,
+                            )
+                    }
+                    return hashCode
+                }
+
+                override fun toString() =
+                    "NewPercentageDiscount{appliesToPriceIds=$appliesToPriceIds, adjustmentType=$adjustmentType, percentageDiscount=$percentageDiscount, additionalProperties=$additionalProperties}"
+
+                companion object {
+
+                    fun builder() = Builder()
+                }
+
+                class Builder {
+
+                    private var appliesToPriceIds: JsonField<List<String>> = JsonMissing.of()
+                    private var adjustmentType: JsonField<AdjustmentType> = JsonMissing.of()
+                    private var percentageDiscount: JsonField<Double> = JsonMissing.of()
+                    private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
+
+                    internal fun from(newPercentageDiscount: NewPercentageDiscount) = apply {
+                        this.appliesToPriceIds = newPercentageDiscount.appliesToPriceIds
+                        this.adjustmentType = newPercentageDiscount.adjustmentType
+                        this.percentageDiscount = newPercentageDiscount.percentageDiscount
+                        additionalProperties(newPercentageDiscount.additionalProperties)
+                    }
+
+                    /** The set of price IDs to which this adjustment applies. */
+                    fun appliesToPriceIds(appliesToPriceIds: List<String>) =
+                        appliesToPriceIds(JsonField.of(appliesToPriceIds))
+
+                    /** The set of price IDs to which this adjustment applies. */
+                    @JsonProperty("applies_to_price_ids")
+                    @ExcludeMissing
+                    fun appliesToPriceIds(appliesToPriceIds: JsonField<List<String>>) = apply {
+                        this.appliesToPriceIds = appliesToPriceIds
+                    }
+
+                    fun adjustmentType(adjustmentType: AdjustmentType) =
+                        adjustmentType(JsonField.of(adjustmentType))
+
+                    @JsonProperty("adjustment_type")
+                    @ExcludeMissing
+                    fun adjustmentType(adjustmentType: JsonField<AdjustmentType>) = apply {
+                        this.adjustmentType = adjustmentType
+                    }
+
+                    fun percentageDiscount(percentageDiscount: Double) =
+                        percentageDiscount(JsonField.of(percentageDiscount))
+
+                    @JsonProperty("percentage_discount")
+                    @ExcludeMissing
+                    fun percentageDiscount(percentageDiscount: JsonField<Double>) = apply {
+                        this.percentageDiscount = percentageDiscount
+                    }
+
+                    fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                        this.additionalProperties.clear()
+                        this.additionalProperties.putAll(additionalProperties)
+                    }
+
+                    @JsonAnySetter
+                    fun putAdditionalProperty(key: String, value: JsonValue) = apply {
+                        this.additionalProperties.put(key, value)
+                    }
+
+                    fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) =
+                        apply {
+                            this.additionalProperties.putAll(additionalProperties)
+                        }
+
+                    fun build(): NewPercentageDiscount =
+                        NewPercentageDiscount(
+                            appliesToPriceIds.map { it.toUnmodifiable() },
+                            adjustmentType,
+                            percentageDiscount,
+                            additionalProperties.toUnmodifiable(),
+                        )
+                }
+
+                class AdjustmentType
+                @JsonCreator
+                private constructor(
+                    private val value: JsonField<String>,
+                ) : Enum {
+
+                    @com.fasterxml.jackson.annotation.JsonValue
+                    fun _value(): JsonField<String> = value
+
+                    override fun equals(other: Any?): Boolean {
+                        if (this === other) {
+                            return true
+                        }
+
+                        return other is AdjustmentType && this.value == other.value
+                    }
+
+                    override fun hashCode() = value.hashCode()
+
+                    override fun toString() = value.toString()
+
+                    companion object {
+
+                        val PERCENTAGE_DISCOUNT =
+                            AdjustmentType(JsonField.of("percentage_discount"))
+
+                        fun of(value: String) = AdjustmentType(JsonField.of(value))
+                    }
+
+                    enum class Known {
+                        PERCENTAGE_DISCOUNT,
+                    }
+
+                    enum class Value {
+                        PERCENTAGE_DISCOUNT,
+                        _UNKNOWN,
+                    }
+
+                    fun value(): Value =
+                        when (this) {
+                            PERCENTAGE_DISCOUNT -> Value.PERCENTAGE_DISCOUNT
+                            else -> Value._UNKNOWN
+                        }
+
+                    fun known(): Known =
+                        when (this) {
+                            PERCENTAGE_DISCOUNT -> Known.PERCENTAGE_DISCOUNT
+                            else -> throw OrbInvalidDataException("Unknown AdjustmentType: $value")
+                        }
+
+                    fun asString(): String = _value().asStringOrThrow()
+                }
+            }
+
+            @JsonDeserialize(builder = NewAmountDiscount.Builder::class)
+            @NoAutoDetect
+            class NewAmountDiscount
+            private constructor(
+                private val appliesToPriceIds: JsonField<List<String>>,
+                private val adjustmentType: JsonField<AdjustmentType>,
+                private val amountDiscount: JsonField<String>,
+                private val additionalProperties: Map<String, JsonValue>,
+            ) {
+
+                private var validated: Boolean = false
+
+                private var hashCode: Int = 0
+
+                /** The set of price IDs to which this adjustment applies. */
+                fun appliesToPriceIds(): List<String> =
+                    appliesToPriceIds.getRequired("applies_to_price_ids")
+
+                fun adjustmentType(): AdjustmentType = adjustmentType.getRequired("adjustment_type")
+
+                fun amountDiscount(): String = amountDiscount.getRequired("amount_discount")
+
+                /** The set of price IDs to which this adjustment applies. */
+                @JsonProperty("applies_to_price_ids")
+                @ExcludeMissing
+                fun _appliesToPriceIds() = appliesToPriceIds
+
+                @JsonProperty("adjustment_type")
+                @ExcludeMissing
+                fun _adjustmentType() = adjustmentType
+
+                @JsonProperty("amount_discount")
+                @ExcludeMissing
+                fun _amountDiscount() = amountDiscount
+
+                @JsonAnyGetter
+                @ExcludeMissing
+                fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
+
+                fun validate(): NewAmountDiscount = apply {
+                    if (!validated) {
+                        appliesToPriceIds()
+                        adjustmentType()
+                        amountDiscount()
+                        validated = true
+                    }
+                }
+
+                fun toBuilder() = Builder().from(this)
+
+                override fun equals(other: Any?): Boolean {
+                    if (this === other) {
+                        return true
+                    }
+
+                    return other is NewAmountDiscount &&
+                        this.appliesToPriceIds == other.appliesToPriceIds &&
+                        this.adjustmentType == other.adjustmentType &&
+                        this.amountDiscount == other.amountDiscount &&
+                        this.additionalProperties == other.additionalProperties
+                }
+
+                override fun hashCode(): Int {
+                    if (hashCode == 0) {
+                        hashCode =
+                            Objects.hash(
+                                appliesToPriceIds,
+                                adjustmentType,
+                                amountDiscount,
+                                additionalProperties,
+                            )
+                    }
+                    return hashCode
+                }
+
+                override fun toString() =
+                    "NewAmountDiscount{appliesToPriceIds=$appliesToPriceIds, adjustmentType=$adjustmentType, amountDiscount=$amountDiscount, additionalProperties=$additionalProperties}"
+
+                companion object {
+
+                    fun builder() = Builder()
+                }
+
+                class Builder {
+
+                    private var appliesToPriceIds: JsonField<List<String>> = JsonMissing.of()
+                    private var adjustmentType: JsonField<AdjustmentType> = JsonMissing.of()
+                    private var amountDiscount: JsonField<String> = JsonMissing.of()
+                    private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
+
+                    internal fun from(newAmountDiscount: NewAmountDiscount) = apply {
+                        this.appliesToPriceIds = newAmountDiscount.appliesToPriceIds
+                        this.adjustmentType = newAmountDiscount.adjustmentType
+                        this.amountDiscount = newAmountDiscount.amountDiscount
+                        additionalProperties(newAmountDiscount.additionalProperties)
+                    }
+
+                    /** The set of price IDs to which this adjustment applies. */
+                    fun appliesToPriceIds(appliesToPriceIds: List<String>) =
+                        appliesToPriceIds(JsonField.of(appliesToPriceIds))
+
+                    /** The set of price IDs to which this adjustment applies. */
+                    @JsonProperty("applies_to_price_ids")
+                    @ExcludeMissing
+                    fun appliesToPriceIds(appliesToPriceIds: JsonField<List<String>>) = apply {
+                        this.appliesToPriceIds = appliesToPriceIds
+                    }
+
+                    fun adjustmentType(adjustmentType: AdjustmentType) =
+                        adjustmentType(JsonField.of(adjustmentType))
+
+                    @JsonProperty("adjustment_type")
+                    @ExcludeMissing
+                    fun adjustmentType(adjustmentType: JsonField<AdjustmentType>) = apply {
+                        this.adjustmentType = adjustmentType
+                    }
+
+                    fun amountDiscount(amountDiscount: String) =
+                        amountDiscount(JsonField.of(amountDiscount))
+
+                    @JsonProperty("amount_discount")
+                    @ExcludeMissing
+                    fun amountDiscount(amountDiscount: JsonField<String>) = apply {
+                        this.amountDiscount = amountDiscount
+                    }
+
+                    fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                        this.additionalProperties.clear()
+                        this.additionalProperties.putAll(additionalProperties)
+                    }
+
+                    @JsonAnySetter
+                    fun putAdditionalProperty(key: String, value: JsonValue) = apply {
+                        this.additionalProperties.put(key, value)
+                    }
+
+                    fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) =
+                        apply {
+                            this.additionalProperties.putAll(additionalProperties)
+                        }
+
+                    fun build(): NewAmountDiscount =
+                        NewAmountDiscount(
+                            appliesToPriceIds.map { it.toUnmodifiable() },
+                            adjustmentType,
+                            amountDiscount,
+                            additionalProperties.toUnmodifiable(),
+                        )
+                }
+
+                class AdjustmentType
+                @JsonCreator
+                private constructor(
+                    private val value: JsonField<String>,
+                ) : Enum {
+
+                    @com.fasterxml.jackson.annotation.JsonValue
+                    fun _value(): JsonField<String> = value
+
+                    override fun equals(other: Any?): Boolean {
+                        if (this === other) {
+                            return true
+                        }
+
+                        return other is AdjustmentType && this.value == other.value
+                    }
+
+                    override fun hashCode() = value.hashCode()
+
+                    override fun toString() = value.toString()
+
+                    companion object {
+
+                        val AMOUNT_DISCOUNT = AdjustmentType(JsonField.of("amount_discount"))
+
+                        fun of(value: String) = AdjustmentType(JsonField.of(value))
+                    }
+
+                    enum class Known {
+                        AMOUNT_DISCOUNT,
+                    }
+
+                    enum class Value {
+                        AMOUNT_DISCOUNT,
+                        _UNKNOWN,
+                    }
+
+                    fun value(): Value =
+                        when (this) {
+                            AMOUNT_DISCOUNT -> Value.AMOUNT_DISCOUNT
+                            else -> Value._UNKNOWN
+                        }
+
+                    fun known(): Known =
+                        when (this) {
+                            AMOUNT_DISCOUNT -> Known.AMOUNT_DISCOUNT
+                            else -> throw OrbInvalidDataException("Unknown AdjustmentType: $value")
+                        }
+
+                    fun asString(): String = _value().asStringOrThrow()
+                }
+            }
+
+            @JsonDeserialize(builder = NewMinimum.Builder::class)
+            @NoAutoDetect
+            class NewMinimum
+            private constructor(
+                private val appliesToPriceIds: JsonField<List<String>>,
+                private val adjustmentType: JsonField<AdjustmentType>,
+                private val minimumAmount: JsonField<String>,
+                private val itemId: JsonField<String>,
+                private val additionalProperties: Map<String, JsonValue>,
+            ) {
+
+                private var validated: Boolean = false
+
+                private var hashCode: Int = 0
+
+                /** The set of price IDs to which this adjustment applies. */
+                fun appliesToPriceIds(): List<String> =
+                    appliesToPriceIds.getRequired("applies_to_price_ids")
+
+                fun adjustmentType(): AdjustmentType = adjustmentType.getRequired("adjustment_type")
+
+                fun minimumAmount(): String = minimumAmount.getRequired("minimum_amount")
+
+                /** The item ID that revenue from this minimum will be attributed to. */
+                fun itemId(): String = itemId.getRequired("item_id")
+
+                /** The set of price IDs to which this adjustment applies. */
+                @JsonProperty("applies_to_price_ids")
+                @ExcludeMissing
+                fun _appliesToPriceIds() = appliesToPriceIds
+
+                @JsonProperty("adjustment_type")
+                @ExcludeMissing
+                fun _adjustmentType() = adjustmentType
+
+                @JsonProperty("minimum_amount") @ExcludeMissing fun _minimumAmount() = minimumAmount
+
+                /** The item ID that revenue from this minimum will be attributed to. */
+                @JsonProperty("item_id") @ExcludeMissing fun _itemId() = itemId
+
+                @JsonAnyGetter
+                @ExcludeMissing
+                fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
+
+                fun validate(): NewMinimum = apply {
+                    if (!validated) {
+                        appliesToPriceIds()
+                        adjustmentType()
+                        minimumAmount()
+                        itemId()
+                        validated = true
+                    }
+                }
+
+                fun toBuilder() = Builder().from(this)
+
+                override fun equals(other: Any?): Boolean {
+                    if (this === other) {
+                        return true
+                    }
+
+                    return other is NewMinimum &&
+                        this.appliesToPriceIds == other.appliesToPriceIds &&
+                        this.adjustmentType == other.adjustmentType &&
+                        this.minimumAmount == other.minimumAmount &&
+                        this.itemId == other.itemId &&
+                        this.additionalProperties == other.additionalProperties
+                }
+
+                override fun hashCode(): Int {
+                    if (hashCode == 0) {
+                        hashCode =
+                            Objects.hash(
+                                appliesToPriceIds,
+                                adjustmentType,
+                                minimumAmount,
+                                itemId,
+                                additionalProperties,
+                            )
+                    }
+                    return hashCode
+                }
+
+                override fun toString() =
+                    "NewMinimum{appliesToPriceIds=$appliesToPriceIds, adjustmentType=$adjustmentType, minimumAmount=$minimumAmount, itemId=$itemId, additionalProperties=$additionalProperties}"
+
+                companion object {
+
+                    fun builder() = Builder()
+                }
+
+                class Builder {
+
+                    private var appliesToPriceIds: JsonField<List<String>> = JsonMissing.of()
+                    private var adjustmentType: JsonField<AdjustmentType> = JsonMissing.of()
+                    private var minimumAmount: JsonField<String> = JsonMissing.of()
+                    private var itemId: JsonField<String> = JsonMissing.of()
+                    private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
+
+                    internal fun from(newMinimum: NewMinimum) = apply {
+                        this.appliesToPriceIds = newMinimum.appliesToPriceIds
+                        this.adjustmentType = newMinimum.adjustmentType
+                        this.minimumAmount = newMinimum.minimumAmount
+                        this.itemId = newMinimum.itemId
+                        additionalProperties(newMinimum.additionalProperties)
+                    }
+
+                    /** The set of price IDs to which this adjustment applies. */
+                    fun appliesToPriceIds(appliesToPriceIds: List<String>) =
+                        appliesToPriceIds(JsonField.of(appliesToPriceIds))
+
+                    /** The set of price IDs to which this adjustment applies. */
+                    @JsonProperty("applies_to_price_ids")
+                    @ExcludeMissing
+                    fun appliesToPriceIds(appliesToPriceIds: JsonField<List<String>>) = apply {
+                        this.appliesToPriceIds = appliesToPriceIds
+                    }
+
+                    fun adjustmentType(adjustmentType: AdjustmentType) =
+                        adjustmentType(JsonField.of(adjustmentType))
+
+                    @JsonProperty("adjustment_type")
+                    @ExcludeMissing
+                    fun adjustmentType(adjustmentType: JsonField<AdjustmentType>) = apply {
+                        this.adjustmentType = adjustmentType
+                    }
+
+                    fun minimumAmount(minimumAmount: String) =
+                        minimumAmount(JsonField.of(minimumAmount))
+
+                    @JsonProperty("minimum_amount")
+                    @ExcludeMissing
+                    fun minimumAmount(minimumAmount: JsonField<String>) = apply {
+                        this.minimumAmount = minimumAmount
+                    }
+
+                    /** The item ID that revenue from this minimum will be attributed to. */
+                    fun itemId(itemId: String) = itemId(JsonField.of(itemId))
+
+                    /** The item ID that revenue from this minimum will be attributed to. */
+                    @JsonProperty("item_id")
+                    @ExcludeMissing
+                    fun itemId(itemId: JsonField<String>) = apply { this.itemId = itemId }
+
+                    fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                        this.additionalProperties.clear()
+                        this.additionalProperties.putAll(additionalProperties)
+                    }
+
+                    @JsonAnySetter
+                    fun putAdditionalProperty(key: String, value: JsonValue) = apply {
+                        this.additionalProperties.put(key, value)
+                    }
+
+                    fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) =
+                        apply {
+                            this.additionalProperties.putAll(additionalProperties)
+                        }
+
+                    fun build(): NewMinimum =
+                        NewMinimum(
+                            appliesToPriceIds.map { it.toUnmodifiable() },
+                            adjustmentType,
+                            minimumAmount,
+                            itemId,
+                            additionalProperties.toUnmodifiable(),
+                        )
+                }
+
+                class AdjustmentType
+                @JsonCreator
+                private constructor(
+                    private val value: JsonField<String>,
+                ) : Enum {
+
+                    @com.fasterxml.jackson.annotation.JsonValue
+                    fun _value(): JsonField<String> = value
+
+                    override fun equals(other: Any?): Boolean {
+                        if (this === other) {
+                            return true
+                        }
+
+                        return other is AdjustmentType && this.value == other.value
+                    }
+
+                    override fun hashCode() = value.hashCode()
+
+                    override fun toString() = value.toString()
+
+                    companion object {
+
+                        val MINIMUM = AdjustmentType(JsonField.of("minimum"))
+
+                        fun of(value: String) = AdjustmentType(JsonField.of(value))
+                    }
+
+                    enum class Known {
+                        MINIMUM,
+                    }
+
+                    enum class Value {
+                        MINIMUM,
+                        _UNKNOWN,
+                    }
+
+                    fun value(): Value =
+                        when (this) {
+                            MINIMUM -> Value.MINIMUM
+                            else -> Value._UNKNOWN
+                        }
+
+                    fun known(): Known =
+                        when (this) {
+                            MINIMUM -> Known.MINIMUM
+                            else -> throw OrbInvalidDataException("Unknown AdjustmentType: $value")
+                        }
+
+                    fun asString(): String = _value().asStringOrThrow()
+                }
+            }
+
+            @JsonDeserialize(builder = NewMaximum.Builder::class)
+            @NoAutoDetect
+            class NewMaximum
+            private constructor(
+                private val appliesToPriceIds: JsonField<List<String>>,
+                private val adjustmentType: JsonField<AdjustmentType>,
+                private val maximumAmount: JsonField<String>,
+                private val additionalProperties: Map<String, JsonValue>,
+            ) {
+
+                private var validated: Boolean = false
+
+                private var hashCode: Int = 0
+
+                /** The set of price IDs to which this adjustment applies. */
+                fun appliesToPriceIds(): List<String> =
+                    appliesToPriceIds.getRequired("applies_to_price_ids")
+
+                fun adjustmentType(): AdjustmentType = adjustmentType.getRequired("adjustment_type")
+
+                fun maximumAmount(): String = maximumAmount.getRequired("maximum_amount")
+
+                /** The set of price IDs to which this adjustment applies. */
+                @JsonProperty("applies_to_price_ids")
+                @ExcludeMissing
+                fun _appliesToPriceIds() = appliesToPriceIds
+
+                @JsonProperty("adjustment_type")
+                @ExcludeMissing
+                fun _adjustmentType() = adjustmentType
+
+                @JsonProperty("maximum_amount") @ExcludeMissing fun _maximumAmount() = maximumAmount
+
+                @JsonAnyGetter
+                @ExcludeMissing
+                fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
+
+                fun validate(): NewMaximum = apply {
+                    if (!validated) {
+                        appliesToPriceIds()
+                        adjustmentType()
+                        maximumAmount()
+                        validated = true
+                    }
+                }
+
+                fun toBuilder() = Builder().from(this)
+
+                override fun equals(other: Any?): Boolean {
+                    if (this === other) {
+                        return true
+                    }
+
+                    return other is NewMaximum &&
+                        this.appliesToPriceIds == other.appliesToPriceIds &&
+                        this.adjustmentType == other.adjustmentType &&
+                        this.maximumAmount == other.maximumAmount &&
+                        this.additionalProperties == other.additionalProperties
+                }
+
+                override fun hashCode(): Int {
+                    if (hashCode == 0) {
+                        hashCode =
+                            Objects.hash(
+                                appliesToPriceIds,
+                                adjustmentType,
+                                maximumAmount,
+                                additionalProperties,
+                            )
+                    }
+                    return hashCode
+                }
+
+                override fun toString() =
+                    "NewMaximum{appliesToPriceIds=$appliesToPriceIds, adjustmentType=$adjustmentType, maximumAmount=$maximumAmount, additionalProperties=$additionalProperties}"
+
+                companion object {
+
+                    fun builder() = Builder()
+                }
+
+                class Builder {
+
+                    private var appliesToPriceIds: JsonField<List<String>> = JsonMissing.of()
+                    private var adjustmentType: JsonField<AdjustmentType> = JsonMissing.of()
+                    private var maximumAmount: JsonField<String> = JsonMissing.of()
+                    private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
+
+                    internal fun from(newMaximum: NewMaximum) = apply {
+                        this.appliesToPriceIds = newMaximum.appliesToPriceIds
+                        this.adjustmentType = newMaximum.adjustmentType
+                        this.maximumAmount = newMaximum.maximumAmount
+                        additionalProperties(newMaximum.additionalProperties)
+                    }
+
+                    /** The set of price IDs to which this adjustment applies. */
+                    fun appliesToPriceIds(appliesToPriceIds: List<String>) =
+                        appliesToPriceIds(JsonField.of(appliesToPriceIds))
+
+                    /** The set of price IDs to which this adjustment applies. */
+                    @JsonProperty("applies_to_price_ids")
+                    @ExcludeMissing
+                    fun appliesToPriceIds(appliesToPriceIds: JsonField<List<String>>) = apply {
+                        this.appliesToPriceIds = appliesToPriceIds
+                    }
+
+                    fun adjustmentType(adjustmentType: AdjustmentType) =
+                        adjustmentType(JsonField.of(adjustmentType))
+
+                    @JsonProperty("adjustment_type")
+                    @ExcludeMissing
+                    fun adjustmentType(adjustmentType: JsonField<AdjustmentType>) = apply {
+                        this.adjustmentType = adjustmentType
+                    }
+
+                    fun maximumAmount(maximumAmount: String) =
+                        maximumAmount(JsonField.of(maximumAmount))
+
+                    @JsonProperty("maximum_amount")
+                    @ExcludeMissing
+                    fun maximumAmount(maximumAmount: JsonField<String>) = apply {
+                        this.maximumAmount = maximumAmount
+                    }
+
+                    fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                        this.additionalProperties.clear()
+                        this.additionalProperties.putAll(additionalProperties)
+                    }
+
+                    @JsonAnySetter
+                    fun putAdditionalProperty(key: String, value: JsonValue) = apply {
+                        this.additionalProperties.put(key, value)
+                    }
+
+                    fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) =
+                        apply {
+                            this.additionalProperties.putAll(additionalProperties)
+                        }
+
+                    fun build(): NewMaximum =
+                        NewMaximum(
+                            appliesToPriceIds.map { it.toUnmodifiable() },
+                            adjustmentType,
+                            maximumAmount,
+                            additionalProperties.toUnmodifiable(),
+                        )
+                }
+
+                class AdjustmentType
+                @JsonCreator
+                private constructor(
+                    private val value: JsonField<String>,
+                ) : Enum {
+
+                    @com.fasterxml.jackson.annotation.JsonValue
+                    fun _value(): JsonField<String> = value
+
+                    override fun equals(other: Any?): Boolean {
+                        if (this === other) {
+                            return true
+                        }
+
+                        return other is AdjustmentType && this.value == other.value
+                    }
+
+                    override fun hashCode() = value.hashCode()
+
+                    override fun toString() = value.toString()
+
+                    companion object {
+
+                        val MAXIMUM = AdjustmentType(JsonField.of("maximum"))
+
+                        fun of(value: String) = AdjustmentType(JsonField.of(value))
+                    }
+
+                    enum class Known {
+                        MAXIMUM,
+                    }
+
+                    enum class Value {
+                        MAXIMUM,
+                        _UNKNOWN,
+                    }
+
+                    fun value(): Value =
+                        when (this) {
+                            MAXIMUM -> Value.MAXIMUM
+                            else -> Value._UNKNOWN
+                        }
+
+                    fun known(): Known =
+                        when (this) {
+                            MAXIMUM -> Known.MAXIMUM
+                            else -> throw OrbInvalidDataException("Unknown AdjustmentType: $value")
+                        }
+
+                    fun asString(): String = _value().asStringOrThrow()
+                }
+            }
+        }
+
+        @JsonDeserialize(using = StartDate.Deserializer::class)
+        @JsonSerialize(using = StartDate.Serializer::class)
+        class StartDate
+        private constructor(
+            private val offsetDateTime: OffsetDateTime? = null,
+            private val billingCycleRelativeDate: BillingCycleRelativeDate? = null,
+            private val _json: JsonValue? = null,
+        ) {
+
+            private var validated: Boolean = false
+
+            fun offsetDateTime(): OffsetDateTime? = offsetDateTime
+
+            fun billingCycleRelativeDate(): BillingCycleRelativeDate? = billingCycleRelativeDate
+
+            fun isOffsetDateTime(): Boolean = offsetDateTime != null
+
+            fun isBillingCycleRelativeDate(): Boolean = billingCycleRelativeDate != null
+
+            fun asOffsetDateTime(): OffsetDateTime = offsetDateTime.getOrThrow("offsetDateTime")
+
+            fun asBillingCycleRelativeDate(): BillingCycleRelativeDate =
+                billingCycleRelativeDate.getOrThrow("billingCycleRelativeDate")
+
+            fun _json(): JsonValue? = _json
+
+            fun <T> accept(visitor: Visitor<T>): T {
+                return when {
+                    offsetDateTime != null -> visitor.visitOffsetDateTime(offsetDateTime)
+                    billingCycleRelativeDate != null ->
+                        visitor.visitBillingCycleRelativeDate(billingCycleRelativeDate)
+                    else -> visitor.unknown(_json)
+                }
+            }
+
+            fun validate(): StartDate = apply {
+                if (!validated) {
+                    if (offsetDateTime == null && billingCycleRelativeDate == null) {
+                        throw OrbInvalidDataException("Unknown StartDate: $_json")
+                    }
+                    validated = true
+                }
+            }
+
+            override fun equals(other: Any?): Boolean {
+                if (this === other) {
+                    return true
+                }
+
+                return other is StartDate &&
+                    this.offsetDateTime == other.offsetDateTime &&
+                    this.billingCycleRelativeDate == other.billingCycleRelativeDate
+            }
+
+            override fun hashCode(): Int {
+                return Objects.hash(offsetDateTime, billingCycleRelativeDate)
+            }
+
+            override fun toString(): String {
+                return when {
+                    offsetDateTime != null -> "StartDate{offsetDateTime=$offsetDateTime}"
+                    billingCycleRelativeDate != null ->
+                        "StartDate{billingCycleRelativeDate=$billingCycleRelativeDate}"
+                    _json != null -> "StartDate{_unknown=$_json}"
+                    else -> throw IllegalStateException("Invalid StartDate")
+                }
+            }
+
+            companion object {
+
+                fun ofOffsetDateTime(offsetDateTime: OffsetDateTime) =
+                    StartDate(offsetDateTime = offsetDateTime)
+
+                fun ofBillingCycleRelativeDate(billingCycleRelativeDate: BillingCycleRelativeDate) =
+                    StartDate(billingCycleRelativeDate = billingCycleRelativeDate)
+            }
+
+            interface Visitor<out T> {
+
+                fun visitOffsetDateTime(offsetDateTime: OffsetDateTime): T
+
+                fun visitBillingCycleRelativeDate(
+                    billingCycleRelativeDate: BillingCycleRelativeDate
+                ): T
+
+                fun unknown(json: JsonValue?): T {
+                    throw OrbInvalidDataException("Unknown StartDate: $json")
+                }
+            }
+
+            class Deserializer : BaseDeserializer<StartDate>(StartDate::class) {
+
+                override fun ObjectCodec.deserialize(node: JsonNode): StartDate {
+                    val json = JsonValue.fromJsonNode(node)
+                    tryDeserialize(node, jacksonTypeRef<OffsetDateTime>())?.let {
+                        return StartDate(offsetDateTime = it, _json = json)
+                    }
+                    tryDeserialize(node, jacksonTypeRef<BillingCycleRelativeDate>())?.let {
+                        return StartDate(billingCycleRelativeDate = it, _json = json)
+                    }
+
+                    return StartDate(_json = json)
+                }
+            }
+
+            class Serializer : BaseSerializer<StartDate>(StartDate::class) {
+
+                override fun serialize(
+                    value: StartDate,
+                    generator: JsonGenerator,
+                    provider: SerializerProvider
+                ) {
+                    when {
+                        value.offsetDateTime != null -> generator.writeObject(value.offsetDateTime)
+                        value.billingCycleRelativeDate != null ->
+                            generator.writeObject(value.billingCycleRelativeDate)
+                        value._json != null -> generator.writeObject(value._json)
+                        else -> throw IllegalStateException("Invalid StartDate")
+                    }
+                }
+            }
+        }
+
+        @JsonDeserialize(using = EndDate.Deserializer::class)
+        @JsonSerialize(using = EndDate.Serializer::class)
+        class EndDate
+        private constructor(
+            private val offsetDateTime: OffsetDateTime? = null,
+            private val billingCycleRelativeDate: BillingCycleRelativeDate? = null,
+            private val _json: JsonValue? = null,
+        ) {
+
+            private var validated: Boolean = false
+
+            fun offsetDateTime(): OffsetDateTime? = offsetDateTime
+
+            fun billingCycleRelativeDate(): BillingCycleRelativeDate? = billingCycleRelativeDate
+
+            fun isOffsetDateTime(): Boolean = offsetDateTime != null
+
+            fun isBillingCycleRelativeDate(): Boolean = billingCycleRelativeDate != null
+
+            fun asOffsetDateTime(): OffsetDateTime = offsetDateTime.getOrThrow("offsetDateTime")
+
+            fun asBillingCycleRelativeDate(): BillingCycleRelativeDate =
+                billingCycleRelativeDate.getOrThrow("billingCycleRelativeDate")
+
+            fun _json(): JsonValue? = _json
+
+            fun <T> accept(visitor: Visitor<T>): T {
+                return when {
+                    offsetDateTime != null -> visitor.visitOffsetDateTime(offsetDateTime)
+                    billingCycleRelativeDate != null ->
+                        visitor.visitBillingCycleRelativeDate(billingCycleRelativeDate)
+                    else -> visitor.unknown(_json)
+                }
+            }
+
+            fun validate(): EndDate = apply {
+                if (!validated) {
+                    if (offsetDateTime == null && billingCycleRelativeDate == null) {
+                        throw OrbInvalidDataException("Unknown EndDate: $_json")
+                    }
+                    validated = true
+                }
+            }
+
+            override fun equals(other: Any?): Boolean {
+                if (this === other) {
+                    return true
+                }
+
+                return other is EndDate &&
+                    this.offsetDateTime == other.offsetDateTime &&
+                    this.billingCycleRelativeDate == other.billingCycleRelativeDate
+            }
+
+            override fun hashCode(): Int {
+                return Objects.hash(offsetDateTime, billingCycleRelativeDate)
+            }
+
+            override fun toString(): String {
+                return when {
+                    offsetDateTime != null -> "EndDate{offsetDateTime=$offsetDateTime}"
+                    billingCycleRelativeDate != null ->
+                        "EndDate{billingCycleRelativeDate=$billingCycleRelativeDate}"
+                    _json != null -> "EndDate{_unknown=$_json}"
+                    else -> throw IllegalStateException("Invalid EndDate")
+                }
+            }
+
+            companion object {
+
+                fun ofOffsetDateTime(offsetDateTime: OffsetDateTime) =
+                    EndDate(offsetDateTime = offsetDateTime)
+
+                fun ofBillingCycleRelativeDate(billingCycleRelativeDate: BillingCycleRelativeDate) =
+                    EndDate(billingCycleRelativeDate = billingCycleRelativeDate)
+            }
+
+            interface Visitor<out T> {
+
+                fun visitOffsetDateTime(offsetDateTime: OffsetDateTime): T
+
+                fun visitBillingCycleRelativeDate(
+                    billingCycleRelativeDate: BillingCycleRelativeDate
+                ): T
+
+                fun unknown(json: JsonValue?): T {
+                    throw OrbInvalidDataException("Unknown EndDate: $json")
+                }
+            }
+
+            class Deserializer : BaseDeserializer<EndDate>(EndDate::class) {
+
+                override fun ObjectCodec.deserialize(node: JsonNode): EndDate {
+                    val json = JsonValue.fromJsonNode(node)
+                    tryDeserialize(node, jacksonTypeRef<OffsetDateTime>())?.let {
+                        return EndDate(offsetDateTime = it, _json = json)
+                    }
+                    tryDeserialize(node, jacksonTypeRef<BillingCycleRelativeDate>())?.let {
+                        return EndDate(billingCycleRelativeDate = it, _json = json)
+                    }
+
+                    return EndDate(_json = json)
+                }
+            }
+
+            class Serializer : BaseSerializer<EndDate>(EndDate::class) {
+
+                override fun serialize(
+                    value: EndDate,
+                    generator: JsonGenerator,
+                    provider: SerializerProvider
+                ) {
+                    when {
+                        value.offsetDateTime != null -> generator.writeObject(value.offsetDateTime)
+                        value.billingCycleRelativeDate != null ->
+                            generator.writeObject(value.billingCycleRelativeDate)
+                        value._json != null -> generator.writeObject(value._json)
+                        else -> throw IllegalStateException("Invalid EndDate")
                     }
                 }
             }
@@ -15034,6 +16589,379 @@ constructor(
                         },
                         additionalProperties.toUnmodifiable(),
                     )
+            }
+        }
+
+        @JsonDeserialize(using = StartDate.Deserializer::class)
+        @JsonSerialize(using = StartDate.Serializer::class)
+        class StartDate
+        private constructor(
+            private val offsetDateTime: OffsetDateTime? = null,
+            private val billingCycleRelativeDate: BillingCycleRelativeDate? = null,
+            private val _json: JsonValue? = null,
+        ) {
+
+            private var validated: Boolean = false
+
+            fun offsetDateTime(): OffsetDateTime? = offsetDateTime
+
+            fun billingCycleRelativeDate(): BillingCycleRelativeDate? = billingCycleRelativeDate
+
+            fun isOffsetDateTime(): Boolean = offsetDateTime != null
+
+            fun isBillingCycleRelativeDate(): Boolean = billingCycleRelativeDate != null
+
+            fun asOffsetDateTime(): OffsetDateTime = offsetDateTime.getOrThrow("offsetDateTime")
+
+            fun asBillingCycleRelativeDate(): BillingCycleRelativeDate =
+                billingCycleRelativeDate.getOrThrow("billingCycleRelativeDate")
+
+            fun _json(): JsonValue? = _json
+
+            fun <T> accept(visitor: Visitor<T>): T {
+                return when {
+                    offsetDateTime != null -> visitor.visitOffsetDateTime(offsetDateTime)
+                    billingCycleRelativeDate != null ->
+                        visitor.visitBillingCycleRelativeDate(billingCycleRelativeDate)
+                    else -> visitor.unknown(_json)
+                }
+            }
+
+            fun validate(): StartDate = apply {
+                if (!validated) {
+                    if (offsetDateTime == null && billingCycleRelativeDate == null) {
+                        throw OrbInvalidDataException("Unknown StartDate: $_json")
+                    }
+                    validated = true
+                }
+            }
+
+            override fun equals(other: Any?): Boolean {
+                if (this === other) {
+                    return true
+                }
+
+                return other is StartDate &&
+                    this.offsetDateTime == other.offsetDateTime &&
+                    this.billingCycleRelativeDate == other.billingCycleRelativeDate
+            }
+
+            override fun hashCode(): Int {
+                return Objects.hash(offsetDateTime, billingCycleRelativeDate)
+            }
+
+            override fun toString(): String {
+                return when {
+                    offsetDateTime != null -> "StartDate{offsetDateTime=$offsetDateTime}"
+                    billingCycleRelativeDate != null ->
+                        "StartDate{billingCycleRelativeDate=$billingCycleRelativeDate}"
+                    _json != null -> "StartDate{_unknown=$_json}"
+                    else -> throw IllegalStateException("Invalid StartDate")
+                }
+            }
+
+            companion object {
+
+                fun ofOffsetDateTime(offsetDateTime: OffsetDateTime) =
+                    StartDate(offsetDateTime = offsetDateTime)
+
+                fun ofBillingCycleRelativeDate(billingCycleRelativeDate: BillingCycleRelativeDate) =
+                    StartDate(billingCycleRelativeDate = billingCycleRelativeDate)
+            }
+
+            interface Visitor<out T> {
+
+                fun visitOffsetDateTime(offsetDateTime: OffsetDateTime): T
+
+                fun visitBillingCycleRelativeDate(
+                    billingCycleRelativeDate: BillingCycleRelativeDate
+                ): T
+
+                fun unknown(json: JsonValue?): T {
+                    throw OrbInvalidDataException("Unknown StartDate: $json")
+                }
+            }
+
+            class Deserializer : BaseDeserializer<StartDate>(StartDate::class) {
+
+                override fun ObjectCodec.deserialize(node: JsonNode): StartDate {
+                    val json = JsonValue.fromJsonNode(node)
+                    tryDeserialize(node, jacksonTypeRef<OffsetDateTime>())?.let {
+                        return StartDate(offsetDateTime = it, _json = json)
+                    }
+                    tryDeserialize(node, jacksonTypeRef<BillingCycleRelativeDate>())?.let {
+                        return StartDate(billingCycleRelativeDate = it, _json = json)
+                    }
+
+                    return StartDate(_json = json)
+                }
+            }
+
+            class Serializer : BaseSerializer<StartDate>(StartDate::class) {
+
+                override fun serialize(
+                    value: StartDate,
+                    generator: JsonGenerator,
+                    provider: SerializerProvider
+                ) {
+                    when {
+                        value.offsetDateTime != null -> generator.writeObject(value.offsetDateTime)
+                        value.billingCycleRelativeDate != null ->
+                            generator.writeObject(value.billingCycleRelativeDate)
+                        value._json != null -> generator.writeObject(value._json)
+                        else -> throw IllegalStateException("Invalid StartDate")
+                    }
+                }
+            }
+        }
+    }
+
+    @JsonDeserialize(builder = EditAdjustment.Builder::class)
+    @NoAutoDetect
+    class EditAdjustment
+    private constructor(
+        private val adjustmentIntervalId: String?,
+        private val startDate: StartDate?,
+        private val endDate: EndDate?,
+        private val additionalProperties: Map<String, JsonValue>,
+    ) {
+
+        private var hashCode: Int = 0
+
+        /** The id of the adjustment interval to edit. */
+        @JsonProperty("adjustment_interval_id")
+        fun adjustmentIntervalId(): String? = adjustmentIntervalId
+
+        /**
+         * The updated start date of this adjustment interval. If not specified, the start date will
+         * not be updated.
+         */
+        @JsonProperty("start_date") fun startDate(): StartDate? = startDate
+
+        /**
+         * The updated end date of this adjustment interval. If not specified, the start date will
+         * not be updated.
+         */
+        @JsonProperty("end_date") fun endDate(): EndDate? = endDate
+
+        @JsonAnyGetter
+        @ExcludeMissing
+        fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
+
+        fun toBuilder() = Builder().from(this)
+
+        override fun equals(other: Any?): Boolean {
+            if (this === other) {
+                return true
+            }
+
+            return other is EditAdjustment &&
+                this.adjustmentIntervalId == other.adjustmentIntervalId &&
+                this.startDate == other.startDate &&
+                this.endDate == other.endDate &&
+                this.additionalProperties == other.additionalProperties
+        }
+
+        override fun hashCode(): Int {
+            if (hashCode == 0) {
+                hashCode =
+                    Objects.hash(
+                        adjustmentIntervalId,
+                        startDate,
+                        endDate,
+                        additionalProperties,
+                    )
+            }
+            return hashCode
+        }
+
+        override fun toString() =
+            "EditAdjustment{adjustmentIntervalId=$adjustmentIntervalId, startDate=$startDate, endDate=$endDate, additionalProperties=$additionalProperties}"
+
+        companion object {
+
+            fun builder() = Builder()
+        }
+
+        class Builder {
+
+            private var adjustmentIntervalId: String? = null
+            private var startDate: StartDate? = null
+            private var endDate: EndDate? = null
+            private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
+
+            internal fun from(editAdjustment: EditAdjustment) = apply {
+                this.adjustmentIntervalId = editAdjustment.adjustmentIntervalId
+                this.startDate = editAdjustment.startDate
+                this.endDate = editAdjustment.endDate
+                additionalProperties(editAdjustment.additionalProperties)
+            }
+
+            /** The id of the adjustment interval to edit. */
+            @JsonProperty("adjustment_interval_id")
+            fun adjustmentIntervalId(adjustmentIntervalId: String) = apply {
+                this.adjustmentIntervalId = adjustmentIntervalId
+            }
+
+            /**
+             * The updated start date of this adjustment interval. If not specified, the start date
+             * will not be updated.
+             */
+            @JsonProperty("start_date")
+            fun startDate(startDate: StartDate) = apply { this.startDate = startDate }
+
+            /**
+             * The updated end date of this adjustment interval. If not specified, the start date
+             * will not be updated.
+             */
+            @JsonProperty("end_date")
+            fun endDate(endDate: EndDate) = apply { this.endDate = endDate }
+
+            fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                this.additionalProperties.clear()
+                this.additionalProperties.putAll(additionalProperties)
+            }
+
+            @JsonAnySetter
+            fun putAdditionalProperty(key: String, value: JsonValue) = apply {
+                this.additionalProperties.put(key, value)
+            }
+
+            fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                this.additionalProperties.putAll(additionalProperties)
+            }
+
+            fun build(): EditAdjustment =
+                EditAdjustment(
+                    checkNotNull(adjustmentIntervalId) {
+                        "`adjustmentIntervalId` is required but was not set"
+                    },
+                    startDate,
+                    endDate,
+                    additionalProperties.toUnmodifiable(),
+                )
+        }
+
+        @JsonDeserialize(using = EndDate.Deserializer::class)
+        @JsonSerialize(using = EndDate.Serializer::class)
+        class EndDate
+        private constructor(
+            private val offsetDateTime: OffsetDateTime? = null,
+            private val billingCycleRelativeDate: BillingCycleRelativeDate? = null,
+            private val _json: JsonValue? = null,
+        ) {
+
+            private var validated: Boolean = false
+
+            fun offsetDateTime(): OffsetDateTime? = offsetDateTime
+
+            fun billingCycleRelativeDate(): BillingCycleRelativeDate? = billingCycleRelativeDate
+
+            fun isOffsetDateTime(): Boolean = offsetDateTime != null
+
+            fun isBillingCycleRelativeDate(): Boolean = billingCycleRelativeDate != null
+
+            fun asOffsetDateTime(): OffsetDateTime = offsetDateTime.getOrThrow("offsetDateTime")
+
+            fun asBillingCycleRelativeDate(): BillingCycleRelativeDate =
+                billingCycleRelativeDate.getOrThrow("billingCycleRelativeDate")
+
+            fun _json(): JsonValue? = _json
+
+            fun <T> accept(visitor: Visitor<T>): T {
+                return when {
+                    offsetDateTime != null -> visitor.visitOffsetDateTime(offsetDateTime)
+                    billingCycleRelativeDate != null ->
+                        visitor.visitBillingCycleRelativeDate(billingCycleRelativeDate)
+                    else -> visitor.unknown(_json)
+                }
+            }
+
+            fun validate(): EndDate = apply {
+                if (!validated) {
+                    if (offsetDateTime == null && billingCycleRelativeDate == null) {
+                        throw OrbInvalidDataException("Unknown EndDate: $_json")
+                    }
+                    validated = true
+                }
+            }
+
+            override fun equals(other: Any?): Boolean {
+                if (this === other) {
+                    return true
+                }
+
+                return other is EndDate &&
+                    this.offsetDateTime == other.offsetDateTime &&
+                    this.billingCycleRelativeDate == other.billingCycleRelativeDate
+            }
+
+            override fun hashCode(): Int {
+                return Objects.hash(offsetDateTime, billingCycleRelativeDate)
+            }
+
+            override fun toString(): String {
+                return when {
+                    offsetDateTime != null -> "EndDate{offsetDateTime=$offsetDateTime}"
+                    billingCycleRelativeDate != null ->
+                        "EndDate{billingCycleRelativeDate=$billingCycleRelativeDate}"
+                    _json != null -> "EndDate{_unknown=$_json}"
+                    else -> throw IllegalStateException("Invalid EndDate")
+                }
+            }
+
+            companion object {
+
+                fun ofOffsetDateTime(offsetDateTime: OffsetDateTime) =
+                    EndDate(offsetDateTime = offsetDateTime)
+
+                fun ofBillingCycleRelativeDate(billingCycleRelativeDate: BillingCycleRelativeDate) =
+                    EndDate(billingCycleRelativeDate = billingCycleRelativeDate)
+            }
+
+            interface Visitor<out T> {
+
+                fun visitOffsetDateTime(offsetDateTime: OffsetDateTime): T
+
+                fun visitBillingCycleRelativeDate(
+                    billingCycleRelativeDate: BillingCycleRelativeDate
+                ): T
+
+                fun unknown(json: JsonValue?): T {
+                    throw OrbInvalidDataException("Unknown EndDate: $json")
+                }
+            }
+
+            class Deserializer : BaseDeserializer<EndDate>(EndDate::class) {
+
+                override fun ObjectCodec.deserialize(node: JsonNode): EndDate {
+                    val json = JsonValue.fromJsonNode(node)
+                    tryDeserialize(node, jacksonTypeRef<OffsetDateTime>())?.let {
+                        return EndDate(offsetDateTime = it, _json = json)
+                    }
+                    tryDeserialize(node, jacksonTypeRef<BillingCycleRelativeDate>())?.let {
+                        return EndDate(billingCycleRelativeDate = it, _json = json)
+                    }
+
+                    return EndDate(_json = json)
+                }
+            }
+
+            class Serializer : BaseSerializer<EndDate>(EndDate::class) {
+
+                override fun serialize(
+                    value: EndDate,
+                    generator: JsonGenerator,
+                    provider: SerializerProvider
+                ) {
+                    when {
+                        value.offsetDateTime != null -> generator.writeObject(value.offsetDateTime)
+                        value.billingCycleRelativeDate != null ->
+                            generator.writeObject(value.billingCycleRelativeDate)
+                        value._json != null -> generator.writeObject(value._json)
+                        else -> throw IllegalStateException("Invalid EndDate")
+                    }
+                }
             }
         }
 

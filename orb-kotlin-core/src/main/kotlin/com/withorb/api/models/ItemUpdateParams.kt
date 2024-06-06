@@ -21,7 +21,6 @@ class ItemUpdateParams
 constructor(
     private val itemId: String,
     private val externalConnections: List<ExternalConnection>?,
-    private val metadata: Metadata?,
     private val additionalQueryParams: Map<String, List<String>>,
     private val additionalHeaders: Map<String, List<String>>,
     private val additionalBodyProperties: Map<String, JsonValue>,
@@ -31,14 +30,8 @@ constructor(
 
     fun externalConnections(): List<ExternalConnection>? = externalConnections
 
-    fun metadata(): Metadata? = metadata
-
     internal fun getBody(): ItemUpdateBody {
-        return ItemUpdateBody(
-            externalConnections,
-            metadata,
-            additionalBodyProperties,
-        )
+        return ItemUpdateBody(externalConnections, additionalBodyProperties)
     }
 
     internal fun getQueryParams(): Map<String, List<String>> = additionalQueryParams
@@ -62,7 +55,6 @@ constructor(
     class ItemUpdateBody
     internal constructor(
         private val externalConnections: List<ExternalConnection>?,
-        private val metadata: Metadata?,
         private val additionalProperties: Map<String, JsonValue>,
     ) {
 
@@ -70,13 +62,6 @@ constructor(
 
         @JsonProperty("external_connections")
         fun externalConnections(): List<ExternalConnection>? = externalConnections
-
-        /**
-         * User-specified key/value pairs for the resource. Individual keys can be removed by
-         * setting the value to `null`, and the entire metadata mapping can be cleared by setting
-         * `metadata` to `null`.
-         */
-        @JsonProperty("metadata") fun metadata(): Metadata? = metadata
 
         @JsonAnyGetter
         @ExcludeMissing
@@ -91,24 +76,18 @@ constructor(
 
             return other is ItemUpdateBody &&
                 this.externalConnections == other.externalConnections &&
-                this.metadata == other.metadata &&
                 this.additionalProperties == other.additionalProperties
         }
 
         override fun hashCode(): Int {
             if (hashCode == 0) {
-                hashCode =
-                    Objects.hash(
-                        externalConnections,
-                        metadata,
-                        additionalProperties,
-                    )
+                hashCode = Objects.hash(externalConnections, additionalProperties)
             }
             return hashCode
         }
 
         override fun toString() =
-            "ItemUpdateBody{externalConnections=$externalConnections, metadata=$metadata, additionalProperties=$additionalProperties}"
+            "ItemUpdateBody{externalConnections=$externalConnections, additionalProperties=$additionalProperties}"
 
         companion object {
 
@@ -118,12 +97,10 @@ constructor(
         class Builder {
 
             private var externalConnections: List<ExternalConnection>? = null
-            private var metadata: Metadata? = null
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             internal fun from(itemUpdateBody: ItemUpdateBody) = apply {
                 this.externalConnections = itemUpdateBody.externalConnections
-                this.metadata = itemUpdateBody.metadata
                 additionalProperties(itemUpdateBody.additionalProperties)
             }
 
@@ -131,14 +108,6 @@ constructor(
             fun externalConnections(externalConnections: List<ExternalConnection>) = apply {
                 this.externalConnections = externalConnections
             }
-
-            /**
-             * User-specified key/value pairs for the resource. Individual keys can be removed by
-             * setting the value to `null`, and the entire metadata mapping can be cleared by
-             * setting `metadata` to `null`.
-             */
-            @JsonProperty("metadata")
-            fun metadata(metadata: Metadata) = apply { this.metadata = metadata }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
@@ -157,8 +126,7 @@ constructor(
             fun build(): ItemUpdateBody =
                 ItemUpdateBody(
                     externalConnections?.toUnmodifiable(),
-                    metadata,
-                    additionalProperties.toUnmodifiable(),
+                    additionalProperties.toUnmodifiable()
                 )
         }
     }
@@ -177,7 +145,6 @@ constructor(
         return other is ItemUpdateParams &&
             this.itemId == other.itemId &&
             this.externalConnections == other.externalConnections &&
-            this.metadata == other.metadata &&
             this.additionalQueryParams == other.additionalQueryParams &&
             this.additionalHeaders == other.additionalHeaders &&
             this.additionalBodyProperties == other.additionalBodyProperties
@@ -187,7 +154,6 @@ constructor(
         return Objects.hash(
             itemId,
             externalConnections,
-            metadata,
             additionalQueryParams,
             additionalHeaders,
             additionalBodyProperties,
@@ -195,7 +161,7 @@ constructor(
     }
 
     override fun toString() =
-        "ItemUpdateParams{itemId=$itemId, externalConnections=$externalConnections, metadata=$metadata, additionalQueryParams=$additionalQueryParams, additionalHeaders=$additionalHeaders, additionalBodyProperties=$additionalBodyProperties}"
+        "ItemUpdateParams{itemId=$itemId, externalConnections=$externalConnections, additionalQueryParams=$additionalQueryParams, additionalHeaders=$additionalHeaders, additionalBodyProperties=$additionalBodyProperties}"
 
     fun toBuilder() = Builder().from(this)
 
@@ -209,7 +175,6 @@ constructor(
 
         private var itemId: String? = null
         private var externalConnections: MutableList<ExternalConnection> = mutableListOf()
-        private var metadata: Metadata? = null
         private var additionalQueryParams: MutableMap<String, MutableList<String>> = mutableMapOf()
         private var additionalHeaders: MutableMap<String, MutableList<String>> = mutableMapOf()
         private var additionalBodyProperties: MutableMap<String, JsonValue> = mutableMapOf()
@@ -217,7 +182,6 @@ constructor(
         internal fun from(itemUpdateParams: ItemUpdateParams) = apply {
             this.itemId = itemUpdateParams.itemId
             this.externalConnections(itemUpdateParams.externalConnections ?: listOf())
-            this.metadata = itemUpdateParams.metadata
             additionalQueryParams(itemUpdateParams.additionalQueryParams)
             additionalHeaders(itemUpdateParams.additionalHeaders)
             additionalBodyProperties(itemUpdateParams.additionalBodyProperties)
@@ -233,13 +197,6 @@ constructor(
         fun addExternalConnection(externalConnection: ExternalConnection) = apply {
             this.externalConnections.add(externalConnection)
         }
-
-        /**
-         * User-specified key/value pairs for the resource. Individual keys can be removed by
-         * setting the value to `null`, and the entire metadata mapping can be cleared by setting
-         * `metadata` to `null`.
-         */
-        fun metadata(metadata: Metadata) = apply { this.metadata = metadata }
 
         fun additionalQueryParams(additionalQueryParams: Map<String, List<String>>) = apply {
             this.additionalQueryParams.clear()
@@ -299,7 +256,6 @@ constructor(
             ItemUpdateParams(
                 checkNotNull(itemId) { "`itemId` is required but was not set" },
                 if (externalConnections.size == 0) null else externalConnections.toUnmodifiable(),
-                metadata,
                 additionalQueryParams.mapValues { it.value.toUnmodifiable() }.toUnmodifiable(),
                 additionalHeaders.mapValues { it.value.toUnmodifiable() }.toUnmodifiable(),
                 additionalBodyProperties.toUnmodifiable(),
@@ -492,74 +448,6 @@ constructor(
                 }
 
             fun asString(): String = _value().asStringOrThrow()
-        }
-    }
-
-    /**
-     * User-specified key/value pairs for the resource. Individual keys can be removed by setting
-     * the value to `null`, and the entire metadata mapping can be cleared by setting `metadata` to
-     * `null`.
-     */
-    @JsonDeserialize(builder = Metadata.Builder::class)
-    @NoAutoDetect
-    class Metadata
-    private constructor(
-        private val additionalProperties: Map<String, JsonValue>,
-    ) {
-
-        private var hashCode: Int = 0
-
-        @JsonAnyGetter
-        @ExcludeMissing
-        fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
-
-        fun toBuilder() = Builder().from(this)
-
-        override fun equals(other: Any?): Boolean {
-            if (this === other) {
-                return true
-            }
-
-            return other is Metadata && this.additionalProperties == other.additionalProperties
-        }
-
-        override fun hashCode(): Int {
-            if (hashCode == 0) {
-                hashCode = Objects.hash(additionalProperties)
-            }
-            return hashCode
-        }
-
-        override fun toString() = "Metadata{additionalProperties=$additionalProperties}"
-
-        companion object {
-
-            fun builder() = Builder()
-        }
-
-        class Builder {
-
-            private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
-
-            internal fun from(metadata: Metadata) = apply {
-                additionalProperties(metadata.additionalProperties)
-            }
-
-            fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
-                this.additionalProperties.clear()
-                this.additionalProperties.putAll(additionalProperties)
-            }
-
-            @JsonAnySetter
-            fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-                this.additionalProperties.put(key, value)
-            }
-
-            fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
-                this.additionalProperties.putAll(additionalProperties)
-            }
-
-            fun build(): Metadata = Metadata(additionalProperties.toUnmodifiable())
         }
     }
 }

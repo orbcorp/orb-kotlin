@@ -22,7 +22,6 @@ class ItemUpdateParamsTest {
                         .build()
                 )
             )
-            .metadata(ItemUpdateParams.Metadata.builder().build())
             .build()
     }
 
@@ -41,7 +40,6 @@ class ItemUpdateParamsTest {
                             .build()
                     )
                 )
-                .metadata(ItemUpdateParams.Metadata.builder().build())
                 .build()
         val body = params.getBody()
         assertThat(body).isNotNull
@@ -56,7 +54,6 @@ class ItemUpdateParamsTest {
                         .build()
                 )
             )
-        assertThat(body.metadata()).isEqualTo(ItemUpdateParams.Metadata.builder().build())
     }
 
     @Test

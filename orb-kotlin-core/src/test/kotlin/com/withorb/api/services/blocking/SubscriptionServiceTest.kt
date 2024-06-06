@@ -337,6 +337,43 @@ class SubscriptionServiceTest {
                                 .build()
                         )
                     )
+                    .addAdjustments(
+                        listOf(
+                            SubscriptionPriceIntervalsParams.AddAdjustment.builder()
+                                .adjustment(
+                                    SubscriptionPriceIntervalsParams.AddAdjustment.Adjustment
+                                        .ofNewPercentageDiscount(
+                                            SubscriptionPriceIntervalsParams.AddAdjustment
+                                                .Adjustment
+                                                .NewPercentageDiscount
+                                                .builder()
+                                                .adjustmentType(
+                                                    SubscriptionPriceIntervalsParams.AddAdjustment
+                                                        .Adjustment
+                                                        .NewPercentageDiscount
+                                                        .AdjustmentType
+                                                        .PERCENTAGE_DISCOUNT
+                                                )
+                                                .appliesToPriceIds(listOf("string"))
+                                                .percentageDiscount(42.23)
+                                                .build()
+                                        )
+                                )
+                                .startDate(
+                                    SubscriptionPriceIntervalsParams.AddAdjustment.StartDate
+                                        .ofOffsetDateTime(
+                                            OffsetDateTime.parse("2019-12-27T18:11:19.117Z")
+                                        )
+                                )
+                                .endDate(
+                                    SubscriptionPriceIntervalsParams.AddAdjustment.EndDate
+                                        .ofOffsetDateTime(
+                                            OffsetDateTime.parse("2019-12-27T18:11:19.117Z")
+                                        )
+                                )
+                                .build()
+                        )
+                    )
                     .edit(
                         listOf(
                             SubscriptionPriceIntervalsParams.Edit.builder()
@@ -361,6 +398,25 @@ class SubscriptionServiceTest {
                                 )
                                 .startDate(
                                     SubscriptionPriceIntervalsParams.Edit.StartDate
+                                        .ofOffsetDateTime(
+                                            OffsetDateTime.parse("2019-12-27T18:11:19.117Z")
+                                        )
+                                )
+                                .build()
+                        )
+                    )
+                    .editAdjustments(
+                        listOf(
+                            SubscriptionPriceIntervalsParams.EditAdjustment.builder()
+                                .adjustmentIntervalId("sdfs6wdjvn7ujokd")
+                                .endDate(
+                                    SubscriptionPriceIntervalsParams.EditAdjustment.EndDate
+                                        .ofOffsetDateTime(
+                                            OffsetDateTime.parse("2019-12-27T18:11:19.117Z")
+                                        )
+                                )
+                                .startDate(
+                                    SubscriptionPriceIntervalsParams.EditAdjustment.StartDate
                                         .ofOffsetDateTime(
                                             OffsetDateTime.parse("2019-12-27T18:11:19.117Z")
                                         )

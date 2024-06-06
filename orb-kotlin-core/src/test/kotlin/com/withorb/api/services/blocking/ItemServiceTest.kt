@@ -48,7 +48,6 @@ class ItemServiceTest {
                                 .build()
                         )
                     )
-                    .metadata(ItemUpdateParams.Metadata.builder().build())
                     .build()
             )
         println(item)
