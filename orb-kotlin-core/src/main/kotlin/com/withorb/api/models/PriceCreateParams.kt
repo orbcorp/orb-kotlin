@@ -1587,6 +1587,8 @@ constructor(
 
                 val ANNUAL = Cadence(JsonField.of("annual"))
 
+                val SEMI_ANNUAL = Cadence(JsonField.of("semi_annual"))
+
                 val MONTHLY = Cadence(JsonField.of("monthly"))
 
                 val QUARTERLY = Cadence(JsonField.of("quarterly"))
@@ -1598,6 +1600,7 @@ constructor(
 
             enum class Known {
                 ANNUAL,
+                SEMI_ANNUAL,
                 MONTHLY,
                 QUARTERLY,
                 ONE_TIME,
@@ -1605,6 +1608,7 @@ constructor(
 
             enum class Value {
                 ANNUAL,
+                SEMI_ANNUAL,
                 MONTHLY,
                 QUARTERLY,
                 ONE_TIME,
@@ -1614,6 +1618,7 @@ constructor(
             fun value(): Value =
                 when (this) {
                     ANNUAL -> Value.ANNUAL
+                    SEMI_ANNUAL -> Value.SEMI_ANNUAL
                     MONTHLY -> Value.MONTHLY
                     QUARTERLY -> Value.QUARTERLY
                     ONE_TIME -> Value.ONE_TIME
@@ -1623,6 +1628,7 @@ constructor(
             fun known(): Known =
                 when (this) {
                     ANNUAL -> Known.ANNUAL
+                    SEMI_ANNUAL -> Known.SEMI_ANNUAL
                     MONTHLY -> Known.MONTHLY
                     QUARTERLY -> Known.QUARTERLY
                     ONE_TIME -> Known.ONE_TIME
@@ -2033,6 +2039,8 @@ constructor(
 
                 val ANNUAL = Cadence(JsonField.of("annual"))
 
+                val SEMI_ANNUAL = Cadence(JsonField.of("semi_annual"))
+
                 val MONTHLY = Cadence(JsonField.of("monthly"))
 
                 val QUARTERLY = Cadence(JsonField.of("quarterly"))
@@ -2044,6 +2052,7 @@ constructor(
 
             enum class Known {
                 ANNUAL,
+                SEMI_ANNUAL,
                 MONTHLY,
                 QUARTERLY,
                 ONE_TIME,
@@ -2051,6 +2060,7 @@ constructor(
 
             enum class Value {
                 ANNUAL,
+                SEMI_ANNUAL,
                 MONTHLY,
                 QUARTERLY,
                 ONE_TIME,
@@ -2060,6 +2070,7 @@ constructor(
             fun value(): Value =
                 when (this) {
                     ANNUAL -> Value.ANNUAL
+                    SEMI_ANNUAL -> Value.SEMI_ANNUAL
                     MONTHLY -> Value.MONTHLY
                     QUARTERLY -> Value.QUARTERLY
                     ONE_TIME -> Value.ONE_TIME
@@ -2069,6 +2080,7 @@ constructor(
             fun known(): Known =
                 when (this) {
                     ANNUAL -> Known.ANNUAL
+                    SEMI_ANNUAL -> Known.SEMI_ANNUAL
                     MONTHLY -> Known.MONTHLY
                     QUARTERLY -> Known.QUARTERLY
                     ONE_TIME -> Known.ONE_TIME
@@ -2506,6 +2518,8 @@ constructor(
 
                 val ANNUAL = Cadence(JsonField.of("annual"))
 
+                val SEMI_ANNUAL = Cadence(JsonField.of("semi_annual"))
+
                 val MONTHLY = Cadence(JsonField.of("monthly"))
 
                 val QUARTERLY = Cadence(JsonField.of("quarterly"))
@@ -2517,6 +2531,7 @@ constructor(
 
             enum class Known {
                 ANNUAL,
+                SEMI_ANNUAL,
                 MONTHLY,
                 QUARTERLY,
                 ONE_TIME,
@@ -2524,6 +2539,7 @@ constructor(
 
             enum class Value {
                 ANNUAL,
+                SEMI_ANNUAL,
                 MONTHLY,
                 QUARTERLY,
                 ONE_TIME,
@@ -2533,6 +2549,7 @@ constructor(
             fun value(): Value =
                 when (this) {
                     ANNUAL -> Value.ANNUAL
+                    SEMI_ANNUAL -> Value.SEMI_ANNUAL
                     MONTHLY -> Value.MONTHLY
                     QUARTERLY -> Value.QUARTERLY
                     ONE_TIME -> Value.ONE_TIME
@@ -2542,6 +2559,7 @@ constructor(
             fun known(): Known =
                 when (this) {
                     ANNUAL -> Known.ANNUAL
+                    SEMI_ANNUAL -> Known.SEMI_ANNUAL
                     MONTHLY -> Known.MONTHLY
                     QUARTERLY -> Known.QUARTERLY
                     ONE_TIME -> Known.ONE_TIME
@@ -3112,6 +3130,8 @@ constructor(
 
                 val ANNUAL = Cadence(JsonField.of("annual"))
 
+                val SEMI_ANNUAL = Cadence(JsonField.of("semi_annual"))
+
                 val MONTHLY = Cadence(JsonField.of("monthly"))
 
                 val QUARTERLY = Cadence(JsonField.of("quarterly"))
@@ -3123,6 +3143,7 @@ constructor(
 
             enum class Known {
                 ANNUAL,
+                SEMI_ANNUAL,
                 MONTHLY,
                 QUARTERLY,
                 ONE_TIME,
@@ -3130,6 +3151,7 @@ constructor(
 
             enum class Value {
                 ANNUAL,
+                SEMI_ANNUAL,
                 MONTHLY,
                 QUARTERLY,
                 ONE_TIME,
@@ -3139,6 +3161,7 @@ constructor(
             fun value(): Value =
                 when (this) {
                     ANNUAL -> Value.ANNUAL
+                    SEMI_ANNUAL -> Value.SEMI_ANNUAL
                     MONTHLY -> Value.MONTHLY
                     QUARTERLY -> Value.QUARTERLY
                     ONE_TIME -> Value.ONE_TIME
@@ -3148,6 +3171,7 @@ constructor(
             fun known(): Known =
                 when (this) {
                     ANNUAL -> Known.ANNUAL
+                    SEMI_ANNUAL -> Known.SEMI_ANNUAL
                     MONTHLY -> Known.MONTHLY
                     QUARTERLY -> Known.QUARTERLY
                     ONE_TIME -> Known.ONE_TIME
@@ -3724,6 +3748,8 @@ constructor(
 
                 val ANNUAL = Cadence(JsonField.of("annual"))
 
+                val SEMI_ANNUAL = Cadence(JsonField.of("semi_annual"))
+
                 val MONTHLY = Cadence(JsonField.of("monthly"))
 
                 val QUARTERLY = Cadence(JsonField.of("quarterly"))
@@ -3735,6 +3761,7 @@ constructor(
 
             enum class Known {
                 ANNUAL,
+                SEMI_ANNUAL,
                 MONTHLY,
                 QUARTERLY,
                 ONE_TIME,
@@ -3742,6 +3769,7 @@ constructor(
 
             enum class Value {
                 ANNUAL,
+                SEMI_ANNUAL,
                 MONTHLY,
                 QUARTERLY,
                 ONE_TIME,
@@ -3751,6 +3779,7 @@ constructor(
             fun value(): Value =
                 when (this) {
                     ANNUAL -> Value.ANNUAL
+                    SEMI_ANNUAL -> Value.SEMI_ANNUAL
                     MONTHLY -> Value.MONTHLY
                     QUARTERLY -> Value.QUARTERLY
                     ONE_TIME -> Value.ONE_TIME
@@ -3760,6 +3789,7 @@ constructor(
             fun known(): Known =
                 when (this) {
                     ANNUAL -> Known.ANNUAL
+                    SEMI_ANNUAL -> Known.SEMI_ANNUAL
                     MONTHLY -> Known.MONTHLY
                     QUARTERLY -> Known.QUARTERLY
                     ONE_TIME -> Known.ONE_TIME
@@ -4283,6 +4313,8 @@ constructor(
 
                 val ANNUAL = Cadence(JsonField.of("annual"))
 
+                val SEMI_ANNUAL = Cadence(JsonField.of("semi_annual"))
+
                 val MONTHLY = Cadence(JsonField.of("monthly"))
 
                 val QUARTERLY = Cadence(JsonField.of("quarterly"))
@@ -4294,6 +4326,7 @@ constructor(
 
             enum class Known {
                 ANNUAL,
+                SEMI_ANNUAL,
                 MONTHLY,
                 QUARTERLY,
                 ONE_TIME,
@@ -4301,6 +4334,7 @@ constructor(
 
             enum class Value {
                 ANNUAL,
+                SEMI_ANNUAL,
                 MONTHLY,
                 QUARTERLY,
                 ONE_TIME,
@@ -4310,6 +4344,7 @@ constructor(
             fun value(): Value =
                 when (this) {
                     ANNUAL -> Value.ANNUAL
+                    SEMI_ANNUAL -> Value.SEMI_ANNUAL
                     MONTHLY -> Value.MONTHLY
                     QUARTERLY -> Value.QUARTERLY
                     ONE_TIME -> Value.ONE_TIME
@@ -4319,6 +4354,7 @@ constructor(
             fun known(): Known =
                 when (this) {
                     ANNUAL -> Known.ANNUAL
+                    SEMI_ANNUAL -> Known.SEMI_ANNUAL
                     MONTHLY -> Known.MONTHLY
                     QUARTERLY -> Known.QUARTERLY
                     ONE_TIME -> Known.ONE_TIME
@@ -4962,6 +4998,8 @@ constructor(
 
                 val ANNUAL = Cadence(JsonField.of("annual"))
 
+                val SEMI_ANNUAL = Cadence(JsonField.of("semi_annual"))
+
                 val MONTHLY = Cadence(JsonField.of("monthly"))
 
                 val QUARTERLY = Cadence(JsonField.of("quarterly"))
@@ -4973,6 +5011,7 @@ constructor(
 
             enum class Known {
                 ANNUAL,
+                SEMI_ANNUAL,
                 MONTHLY,
                 QUARTERLY,
                 ONE_TIME,
@@ -4980,6 +5019,7 @@ constructor(
 
             enum class Value {
                 ANNUAL,
+                SEMI_ANNUAL,
                 MONTHLY,
                 QUARTERLY,
                 ONE_TIME,
@@ -4989,6 +5029,7 @@ constructor(
             fun value(): Value =
                 when (this) {
                     ANNUAL -> Value.ANNUAL
+                    SEMI_ANNUAL -> Value.SEMI_ANNUAL
                     MONTHLY -> Value.MONTHLY
                     QUARTERLY -> Value.QUARTERLY
                     ONE_TIME -> Value.ONE_TIME
@@ -4998,6 +5039,7 @@ constructor(
             fun known(): Known =
                 when (this) {
                     ANNUAL -> Known.ANNUAL
+                    SEMI_ANNUAL -> Known.SEMI_ANNUAL
                     MONTHLY -> Known.MONTHLY
                     QUARTERLY -> Known.QUARTERLY
                     ONE_TIME -> Known.ONE_TIME
@@ -5528,6 +5570,8 @@ constructor(
 
                 val ANNUAL = Cadence(JsonField.of("annual"))
 
+                val SEMI_ANNUAL = Cadence(JsonField.of("semi_annual"))
+
                 val MONTHLY = Cadence(JsonField.of("monthly"))
 
                 val QUARTERLY = Cadence(JsonField.of("quarterly"))
@@ -5539,6 +5583,7 @@ constructor(
 
             enum class Known {
                 ANNUAL,
+                SEMI_ANNUAL,
                 MONTHLY,
                 QUARTERLY,
                 ONE_TIME,
@@ -5546,6 +5591,7 @@ constructor(
 
             enum class Value {
                 ANNUAL,
+                SEMI_ANNUAL,
                 MONTHLY,
                 QUARTERLY,
                 ONE_TIME,
@@ -5555,6 +5601,7 @@ constructor(
             fun value(): Value =
                 when (this) {
                     ANNUAL -> Value.ANNUAL
+                    SEMI_ANNUAL -> Value.SEMI_ANNUAL
                     MONTHLY -> Value.MONTHLY
                     QUARTERLY -> Value.QUARTERLY
                     ONE_TIME -> Value.ONE_TIME
@@ -5564,6 +5611,7 @@ constructor(
             fun known(): Known =
                 when (this) {
                     ANNUAL -> Known.ANNUAL
+                    SEMI_ANNUAL -> Known.SEMI_ANNUAL
                     MONTHLY -> Known.MONTHLY
                     QUARTERLY -> Known.QUARTERLY
                     ONE_TIME -> Known.ONE_TIME
@@ -6072,6 +6120,8 @@ constructor(
 
                 val ANNUAL = Cadence(JsonField.of("annual"))
 
+                val SEMI_ANNUAL = Cadence(JsonField.of("semi_annual"))
+
                 val MONTHLY = Cadence(JsonField.of("monthly"))
 
                 val QUARTERLY = Cadence(JsonField.of("quarterly"))
@@ -6083,6 +6133,7 @@ constructor(
 
             enum class Known {
                 ANNUAL,
+                SEMI_ANNUAL,
                 MONTHLY,
                 QUARTERLY,
                 ONE_TIME,
@@ -6090,6 +6141,7 @@ constructor(
 
             enum class Value {
                 ANNUAL,
+                SEMI_ANNUAL,
                 MONTHLY,
                 QUARTERLY,
                 ONE_TIME,
@@ -6099,6 +6151,7 @@ constructor(
             fun value(): Value =
                 when (this) {
                     ANNUAL -> Value.ANNUAL
+                    SEMI_ANNUAL -> Value.SEMI_ANNUAL
                     MONTHLY -> Value.MONTHLY
                     QUARTERLY -> Value.QUARTERLY
                     ONE_TIME -> Value.ONE_TIME
@@ -6108,6 +6161,7 @@ constructor(
             fun known(): Known =
                 when (this) {
                     ANNUAL -> Known.ANNUAL
+                    SEMI_ANNUAL -> Known.SEMI_ANNUAL
                     MONTHLY -> Known.MONTHLY
                     QUARTERLY -> Known.QUARTERLY
                     ONE_TIME -> Known.ONE_TIME
@@ -6444,6 +6498,8 @@ constructor(
 
                 val ANNUAL = Cadence(JsonField.of("annual"))
 
+                val SEMI_ANNUAL = Cadence(JsonField.of("semi_annual"))
+
                 val MONTHLY = Cadence(JsonField.of("monthly"))
 
                 val QUARTERLY = Cadence(JsonField.of("quarterly"))
@@ -6455,6 +6511,7 @@ constructor(
 
             enum class Known {
                 ANNUAL,
+                SEMI_ANNUAL,
                 MONTHLY,
                 QUARTERLY,
                 ONE_TIME,
@@ -6462,6 +6519,7 @@ constructor(
 
             enum class Value {
                 ANNUAL,
+                SEMI_ANNUAL,
                 MONTHLY,
                 QUARTERLY,
                 ONE_TIME,
@@ -6471,6 +6529,7 @@ constructor(
             fun value(): Value =
                 when (this) {
                     ANNUAL -> Value.ANNUAL
+                    SEMI_ANNUAL -> Value.SEMI_ANNUAL
                     MONTHLY -> Value.MONTHLY
                     QUARTERLY -> Value.QUARTERLY
                     ONE_TIME -> Value.ONE_TIME
@@ -6480,6 +6539,7 @@ constructor(
             fun known(): Known =
                 when (this) {
                     ANNUAL -> Known.ANNUAL
+                    SEMI_ANNUAL -> Known.SEMI_ANNUAL
                     MONTHLY -> Known.MONTHLY
                     QUARTERLY -> Known.QUARTERLY
                     ONE_TIME -> Known.ONE_TIME
@@ -6880,6 +6940,8 @@ constructor(
 
                 val ANNUAL = Cadence(JsonField.of("annual"))
 
+                val SEMI_ANNUAL = Cadence(JsonField.of("semi_annual"))
+
                 val MONTHLY = Cadence(JsonField.of("monthly"))
 
                 val QUARTERLY = Cadence(JsonField.of("quarterly"))
@@ -6891,6 +6953,7 @@ constructor(
 
             enum class Known {
                 ANNUAL,
+                SEMI_ANNUAL,
                 MONTHLY,
                 QUARTERLY,
                 ONE_TIME,
@@ -6898,6 +6961,7 @@ constructor(
 
             enum class Value {
                 ANNUAL,
+                SEMI_ANNUAL,
                 MONTHLY,
                 QUARTERLY,
                 ONE_TIME,
@@ -6907,6 +6971,7 @@ constructor(
             fun value(): Value =
                 when (this) {
                     ANNUAL -> Value.ANNUAL
+                    SEMI_ANNUAL -> Value.SEMI_ANNUAL
                     MONTHLY -> Value.MONTHLY
                     QUARTERLY -> Value.QUARTERLY
                     ONE_TIME -> Value.ONE_TIME
@@ -6916,6 +6981,7 @@ constructor(
             fun known(): Known =
                 when (this) {
                     ANNUAL -> Known.ANNUAL
+                    SEMI_ANNUAL -> Known.SEMI_ANNUAL
                     MONTHLY -> Known.MONTHLY
                     QUARTERLY -> Known.QUARTERLY
                     ONE_TIME -> Known.ONE_TIME
@@ -7316,6 +7382,8 @@ constructor(
 
                 val ANNUAL = Cadence(JsonField.of("annual"))
 
+                val SEMI_ANNUAL = Cadence(JsonField.of("semi_annual"))
+
                 val MONTHLY = Cadence(JsonField.of("monthly"))
 
                 val QUARTERLY = Cadence(JsonField.of("quarterly"))
@@ -7327,6 +7395,7 @@ constructor(
 
             enum class Known {
                 ANNUAL,
+                SEMI_ANNUAL,
                 MONTHLY,
                 QUARTERLY,
                 ONE_TIME,
@@ -7334,6 +7403,7 @@ constructor(
 
             enum class Value {
                 ANNUAL,
+                SEMI_ANNUAL,
                 MONTHLY,
                 QUARTERLY,
                 ONE_TIME,
@@ -7343,6 +7413,7 @@ constructor(
             fun value(): Value =
                 when (this) {
                     ANNUAL -> Value.ANNUAL
+                    SEMI_ANNUAL -> Value.SEMI_ANNUAL
                     MONTHLY -> Value.MONTHLY
                     QUARTERLY -> Value.QUARTERLY
                     ONE_TIME -> Value.ONE_TIME
@@ -7352,6 +7423,7 @@ constructor(
             fun known(): Known =
                 when (this) {
                     ANNUAL -> Known.ANNUAL
+                    SEMI_ANNUAL -> Known.SEMI_ANNUAL
                     MONTHLY -> Known.MONTHLY
                     QUARTERLY -> Known.QUARTERLY
                     ONE_TIME -> Known.ONE_TIME
@@ -7754,6 +7826,8 @@ constructor(
 
                 val ANNUAL = Cadence(JsonField.of("annual"))
 
+                val SEMI_ANNUAL = Cadence(JsonField.of("semi_annual"))
+
                 val MONTHLY = Cadence(JsonField.of("monthly"))
 
                 val QUARTERLY = Cadence(JsonField.of("quarterly"))
@@ -7765,6 +7839,7 @@ constructor(
 
             enum class Known {
                 ANNUAL,
+                SEMI_ANNUAL,
                 MONTHLY,
                 QUARTERLY,
                 ONE_TIME,
@@ -7772,6 +7847,7 @@ constructor(
 
             enum class Value {
                 ANNUAL,
+                SEMI_ANNUAL,
                 MONTHLY,
                 QUARTERLY,
                 ONE_TIME,
@@ -7781,6 +7857,7 @@ constructor(
             fun value(): Value =
                 when (this) {
                     ANNUAL -> Value.ANNUAL
+                    SEMI_ANNUAL -> Value.SEMI_ANNUAL
                     MONTHLY -> Value.MONTHLY
                     QUARTERLY -> Value.QUARTERLY
                     ONE_TIME -> Value.ONE_TIME
@@ -7790,6 +7867,7 @@ constructor(
             fun known(): Known =
                 when (this) {
                     ANNUAL -> Known.ANNUAL
+                    SEMI_ANNUAL -> Known.SEMI_ANNUAL
                     MONTHLY -> Known.MONTHLY
                     QUARTERLY -> Known.QUARTERLY
                     ONE_TIME -> Known.ONE_TIME
@@ -8193,6 +8271,8 @@ constructor(
 
                 val ANNUAL = Cadence(JsonField.of("annual"))
 
+                val SEMI_ANNUAL = Cadence(JsonField.of("semi_annual"))
+
                 val MONTHLY = Cadence(JsonField.of("monthly"))
 
                 val QUARTERLY = Cadence(JsonField.of("quarterly"))
@@ -8204,6 +8284,7 @@ constructor(
 
             enum class Known {
                 ANNUAL,
+                SEMI_ANNUAL,
                 MONTHLY,
                 QUARTERLY,
                 ONE_TIME,
@@ -8211,6 +8292,7 @@ constructor(
 
             enum class Value {
                 ANNUAL,
+                SEMI_ANNUAL,
                 MONTHLY,
                 QUARTERLY,
                 ONE_TIME,
@@ -8220,6 +8302,7 @@ constructor(
             fun value(): Value =
                 when (this) {
                     ANNUAL -> Value.ANNUAL
+                    SEMI_ANNUAL -> Value.SEMI_ANNUAL
                     MONTHLY -> Value.MONTHLY
                     QUARTERLY -> Value.QUARTERLY
                     ONE_TIME -> Value.ONE_TIME
@@ -8229,6 +8312,7 @@ constructor(
             fun known(): Known =
                 when (this) {
                     ANNUAL -> Known.ANNUAL
+                    SEMI_ANNUAL -> Known.SEMI_ANNUAL
                     MONTHLY -> Known.MONTHLY
                     QUARTERLY -> Known.QUARTERLY
                     ONE_TIME -> Known.ONE_TIME
@@ -8635,6 +8719,8 @@ constructor(
 
                 val ANNUAL = Cadence(JsonField.of("annual"))
 
+                val SEMI_ANNUAL = Cadence(JsonField.of("semi_annual"))
+
                 val MONTHLY = Cadence(JsonField.of("monthly"))
 
                 val QUARTERLY = Cadence(JsonField.of("quarterly"))
@@ -8646,6 +8732,7 @@ constructor(
 
             enum class Known {
                 ANNUAL,
+                SEMI_ANNUAL,
                 MONTHLY,
                 QUARTERLY,
                 ONE_TIME,
@@ -8653,6 +8740,7 @@ constructor(
 
             enum class Value {
                 ANNUAL,
+                SEMI_ANNUAL,
                 MONTHLY,
                 QUARTERLY,
                 ONE_TIME,
@@ -8662,6 +8750,7 @@ constructor(
             fun value(): Value =
                 when (this) {
                     ANNUAL -> Value.ANNUAL
+                    SEMI_ANNUAL -> Value.SEMI_ANNUAL
                     MONTHLY -> Value.MONTHLY
                     QUARTERLY -> Value.QUARTERLY
                     ONE_TIME -> Value.ONE_TIME
@@ -8671,6 +8760,7 @@ constructor(
             fun known(): Known =
                 when (this) {
                     ANNUAL -> Known.ANNUAL
+                    SEMI_ANNUAL -> Known.SEMI_ANNUAL
                     MONTHLY -> Known.MONTHLY
                     QUARTERLY -> Known.QUARTERLY
                     ONE_TIME -> Known.ONE_TIME
@@ -9074,6 +9164,8 @@ constructor(
 
                 val ANNUAL = Cadence(JsonField.of("annual"))
 
+                val SEMI_ANNUAL = Cadence(JsonField.of("semi_annual"))
+
                 val MONTHLY = Cadence(JsonField.of("monthly"))
 
                 val QUARTERLY = Cadence(JsonField.of("quarterly"))
@@ -9085,6 +9177,7 @@ constructor(
 
             enum class Known {
                 ANNUAL,
+                SEMI_ANNUAL,
                 MONTHLY,
                 QUARTERLY,
                 ONE_TIME,
@@ -9092,6 +9185,7 @@ constructor(
 
             enum class Value {
                 ANNUAL,
+                SEMI_ANNUAL,
                 MONTHLY,
                 QUARTERLY,
                 ONE_TIME,
@@ -9101,6 +9195,7 @@ constructor(
             fun value(): Value =
                 when (this) {
                     ANNUAL -> Value.ANNUAL
+                    SEMI_ANNUAL -> Value.SEMI_ANNUAL
                     MONTHLY -> Value.MONTHLY
                     QUARTERLY -> Value.QUARTERLY
                     ONE_TIME -> Value.ONE_TIME
@@ -9110,6 +9205,7 @@ constructor(
             fun known(): Known =
                 when (this) {
                     ANNUAL -> Known.ANNUAL
+                    SEMI_ANNUAL -> Known.SEMI_ANNUAL
                     MONTHLY -> Known.MONTHLY
                     QUARTERLY -> Known.QUARTERLY
                     ONE_TIME -> Known.ONE_TIME
@@ -9513,6 +9609,8 @@ constructor(
 
                 val ANNUAL = Cadence(JsonField.of("annual"))
 
+                val SEMI_ANNUAL = Cadence(JsonField.of("semi_annual"))
+
                 val MONTHLY = Cadence(JsonField.of("monthly"))
 
                 val QUARTERLY = Cadence(JsonField.of("quarterly"))
@@ -9524,6 +9622,7 @@ constructor(
 
             enum class Known {
                 ANNUAL,
+                SEMI_ANNUAL,
                 MONTHLY,
                 QUARTERLY,
                 ONE_TIME,
@@ -9531,6 +9630,7 @@ constructor(
 
             enum class Value {
                 ANNUAL,
+                SEMI_ANNUAL,
                 MONTHLY,
                 QUARTERLY,
                 ONE_TIME,
@@ -9540,6 +9640,7 @@ constructor(
             fun value(): Value =
                 when (this) {
                     ANNUAL -> Value.ANNUAL
+                    SEMI_ANNUAL -> Value.SEMI_ANNUAL
                     MONTHLY -> Value.MONTHLY
                     QUARTERLY -> Value.QUARTERLY
                     ONE_TIME -> Value.ONE_TIME
@@ -9549,6 +9650,7 @@ constructor(
             fun known(): Known =
                 when (this) {
                     ANNUAL -> Known.ANNUAL
+                    SEMI_ANNUAL -> Known.SEMI_ANNUAL
                     MONTHLY -> Known.MONTHLY
                     QUARTERLY -> Known.QUARTERLY
                     ONE_TIME -> Known.ONE_TIME
@@ -9951,6 +10053,8 @@ constructor(
 
                 val ANNUAL = Cadence(JsonField.of("annual"))
 
+                val SEMI_ANNUAL = Cadence(JsonField.of("semi_annual"))
+
                 val MONTHLY = Cadence(JsonField.of("monthly"))
 
                 val QUARTERLY = Cadence(JsonField.of("quarterly"))
@@ -9962,6 +10066,7 @@ constructor(
 
             enum class Known {
                 ANNUAL,
+                SEMI_ANNUAL,
                 MONTHLY,
                 QUARTERLY,
                 ONE_TIME,
@@ -9969,6 +10074,7 @@ constructor(
 
             enum class Value {
                 ANNUAL,
+                SEMI_ANNUAL,
                 MONTHLY,
                 QUARTERLY,
                 ONE_TIME,
@@ -9978,6 +10084,7 @@ constructor(
             fun value(): Value =
                 when (this) {
                     ANNUAL -> Value.ANNUAL
+                    SEMI_ANNUAL -> Value.SEMI_ANNUAL
                     MONTHLY -> Value.MONTHLY
                     QUARTERLY -> Value.QUARTERLY
                     ONE_TIME -> Value.ONE_TIME
@@ -9987,6 +10094,7 @@ constructor(
             fun known(): Known =
                 when (this) {
                     ANNUAL -> Known.ANNUAL
+                    SEMI_ANNUAL -> Known.SEMI_ANNUAL
                     MONTHLY -> Known.MONTHLY
                     QUARTERLY -> Known.QUARTERLY
                     ONE_TIME -> Known.ONE_TIME
