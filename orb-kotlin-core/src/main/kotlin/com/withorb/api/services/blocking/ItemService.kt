@@ -20,7 +20,7 @@ interface ItemService {
         requestOptions: RequestOptions = RequestOptions.none()
     ): Item
 
-    /** Update items */
+    /** This endpoint can be used to update properties on the Item. */
     fun update(
         params: ItemUpdateParams,
         requestOptions: RequestOptions = RequestOptions.none()
