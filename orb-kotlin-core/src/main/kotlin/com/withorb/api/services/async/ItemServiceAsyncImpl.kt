@@ -54,7 +54,7 @@ constructor(
     private val updateHandler: Handler<Item> =
         jsonHandler<Item>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
 
-    /** Update items */
+    /** This endpoint can be used to update properties on the Item. */
     override suspend fun update(params: ItemUpdateParams, requestOptions: RequestOptions): Item {
         val request =
             HttpRequest.builder()
