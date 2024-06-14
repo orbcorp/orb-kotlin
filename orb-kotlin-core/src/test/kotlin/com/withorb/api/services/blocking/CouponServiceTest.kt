@@ -31,7 +31,7 @@ class CouponServiceTest {
                                         .DiscountType
                                         .PERCENTAGE
                                 )
-                                .percentageDiscount(1.0)
+                                .percentageDiscount(42.23)
                                 .build()
                         )
                     )
