@@ -18,7 +18,7 @@ class CouponCreateParamsTest {
                             CouponCreateParams.Discount.NewCouponPercentageDiscount.DiscountType
                                 .PERCENTAGE
                         )
-                        .percentageDiscount(1.0)
+                        .percentageDiscount(42.23)
                         .build()
                 )
             )
@@ -39,7 +39,7 @@ class CouponCreateParamsTest {
                                 CouponCreateParams.Discount.NewCouponPercentageDiscount.DiscountType
                                     .PERCENTAGE
                             )
-                            .percentageDiscount(1.0)
+                            .percentageDiscount(42.23)
                             .build()
                     )
                 )
@@ -57,7 +57,7 @@ class CouponCreateParamsTest {
                             CouponCreateParams.Discount.NewCouponPercentageDiscount.DiscountType
                                 .PERCENTAGE
                         )
-                        .percentageDiscount(1.0)
+                        .percentageDiscount(42.23)
                         .build()
                 )
             )
@@ -77,7 +77,7 @@ class CouponCreateParamsTest {
                                 CouponCreateParams.Discount.NewCouponPercentageDiscount.DiscountType
                                     .PERCENTAGE
                             )
-                            .percentageDiscount(1.0)
+                            .percentageDiscount(42.23)
                             .build()
                     )
                 )
@@ -93,7 +93,7 @@ class CouponCreateParamsTest {
                             CouponCreateParams.Discount.NewCouponPercentageDiscount.DiscountType
                                 .PERCENTAGE
                         )
-                        .percentageDiscount(1.0)
+                        .percentageDiscount(42.23)
                         .build()
                 )
             )
