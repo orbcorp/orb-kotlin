@@ -48,6 +48,7 @@ class ItemServiceTest {
                                 .build()
                         )
                     )
+                    .name("string")
                     .build()
             )
         println(item)
