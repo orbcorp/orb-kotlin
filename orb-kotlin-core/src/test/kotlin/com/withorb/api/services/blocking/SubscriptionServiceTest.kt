@@ -258,7 +258,7 @@ class SubscriptionServiceTest {
                                 )
                                 .allocationPrice(
                                     SubscriptionPriceIntervalsParams.Add.AllocationPrice.builder()
-                                        .amount(42.23)
+                                        .amount("10.00")
                                         .cadence(
                                             SubscriptionPriceIntervalsParams.Add.AllocationPrice
                                                 .Cadence
