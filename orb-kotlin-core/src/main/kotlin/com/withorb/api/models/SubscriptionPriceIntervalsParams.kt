@@ -736,7 +736,7 @@ constructor(
         class AllocationPrice
         private constructor(
             private val currency: String?,
-            private val amount: Double?,
+            private val amount: String?,
             private val cadence: Cadence?,
             private val expiresAtEndOfCadence: Boolean?,
             private val additionalProperties: Map<String, JsonValue>,
@@ -751,7 +751,7 @@ constructor(
             @JsonProperty("currency") fun currency(): String? = currency
 
             /** An amount of the currency to allocate to the customer at the specified cadence. */
-            @JsonProperty("amount") fun amount(): Double? = amount
+            @JsonProperty("amount") fun amount(): String? = amount
 
             /** The cadence at which to allocate the amount to the customer. */
             @JsonProperty("cadence") fun cadence(): Cadence? = cadence
@@ -807,7 +807,7 @@ constructor(
             class Builder {
 
                 private var currency: String? = null
-                private var amount: Double? = null
+                private var amount: String? = null
                 private var cadence: Cadence? = null
                 private var expiresAtEndOfCadence: Boolean? = null
                 private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
@@ -830,7 +830,7 @@ constructor(
                 /**
                  * An amount of the currency to allocate to the customer at the specified cadence.
                  */
-                @JsonProperty("amount") fun amount(amount: Double) = apply { this.amount = amount }
+                @JsonProperty("amount") fun amount(amount: String) = apply { this.amount = amount }
 
                 /** The cadence at which to allocate the amount to the customer. */
                 @JsonProperty("cadence")

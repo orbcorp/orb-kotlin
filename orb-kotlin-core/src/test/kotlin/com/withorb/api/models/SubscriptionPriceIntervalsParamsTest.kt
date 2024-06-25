@@ -23,7 +23,7 @@ class SubscriptionPriceIntervalsParamsTest {
                         )
                         .allocationPrice(
                             SubscriptionPriceIntervalsParams.Add.AllocationPrice.builder()
-                                .amount(42.23)
+                                .amount("10.00")
                                 .cadence(
                                     SubscriptionPriceIntervalsParams.Add.AllocationPrice.Cadence
                                         .ONE_TIME
@@ -200,7 +200,7 @@ class SubscriptionPriceIntervalsParamsTest {
                             )
                             .allocationPrice(
                                 SubscriptionPriceIntervalsParams.Add.AllocationPrice.builder()
-                                    .amount(42.23)
+                                    .amount("10.00")
                                     .cadence(
                                         SubscriptionPriceIntervalsParams.Add.AllocationPrice.Cadence
                                             .ONE_TIME
@@ -384,7 +384,7 @@ class SubscriptionPriceIntervalsParamsTest {
                         )
                         .allocationPrice(
                             SubscriptionPriceIntervalsParams.Add.AllocationPrice.builder()
-                                .amount(42.23)
+                                .amount("10.00")
                                 .cadence(
                                     SubscriptionPriceIntervalsParams.Add.AllocationPrice.Cadence
                                         .ONE_TIME
