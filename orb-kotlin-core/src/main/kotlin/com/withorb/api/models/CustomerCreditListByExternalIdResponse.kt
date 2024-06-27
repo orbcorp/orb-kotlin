@@ -28,6 +28,7 @@ private constructor(
     private val expiryDate: JsonField<OffsetDateTime>,
     private val perUnitCostBasis: JsonField<String>,
     private val status: JsonField<Status>,
+    private val maximumInitialBalance: JsonField<Double>,
     private val additionalProperties: Map<String, JsonValue>,
 ) {
 
@@ -47,6 +48,9 @@ private constructor(
 
     fun status(): Status = status.getRequired("status")
 
+    fun maximumInitialBalance(): Double? =
+        maximumInitialBalance.getNullable("maximum_initial_balance")
+
     @JsonProperty("id") @ExcludeMissing fun _id() = id
 
     @JsonProperty("balance") @ExcludeMissing fun _balance() = balance
@@ -58,6 +62,10 @@ private constructor(
     @JsonProperty("per_unit_cost_basis") @ExcludeMissing fun _perUnitCostBasis() = perUnitCostBasis
 
     @JsonProperty("status") @ExcludeMissing fun _status() = status
+
+    @JsonProperty("maximum_initial_balance")
+    @ExcludeMissing
+    fun _maximumInitialBalance() = maximumInitialBalance
 
     @JsonAnyGetter
     @ExcludeMissing
@@ -71,6 +79,7 @@ private constructor(
             expiryDate()
             perUnitCostBasis()
             status()
+            maximumInitialBalance()
             validated = true
         }
     }
@@ -89,6 +98,7 @@ private constructor(
             this.expiryDate == other.expiryDate &&
             this.perUnitCostBasis == other.perUnitCostBasis &&
             this.status == other.status &&
+            this.maximumInitialBalance == other.maximumInitialBalance &&
             this.additionalProperties == other.additionalProperties
     }
 
@@ -102,6 +112,7 @@ private constructor(
                     expiryDate,
                     perUnitCostBasis,
                     status,
+                    maximumInitialBalance,
                     additionalProperties,
                 )
         }
@@ -109,7 +120,7 @@ private constructor(
     }
 
     override fun toString() =
-        "CustomerCreditListByExternalIdResponse{id=$id, balance=$balance, effectiveDate=$effectiveDate, expiryDate=$expiryDate, perUnitCostBasis=$perUnitCostBasis, status=$status, additionalProperties=$additionalProperties}"
+        "CustomerCreditListByExternalIdResponse{id=$id, balance=$balance, effectiveDate=$effectiveDate, expiryDate=$expiryDate, perUnitCostBasis=$perUnitCostBasis, status=$status, maximumInitialBalance=$maximumInitialBalance, additionalProperties=$additionalProperties}"
 
     companion object {
 
@@ -124,6 +135,7 @@ private constructor(
         private var expiryDate: JsonField<OffsetDateTime> = JsonMissing.of()
         private var perUnitCostBasis: JsonField<String> = JsonMissing.of()
         private var status: JsonField<Status> = JsonMissing.of()
+        private var maximumInitialBalance: JsonField<Double> = JsonMissing.of()
         private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         internal fun from(
@@ -135,6 +147,8 @@ private constructor(
             this.expiryDate = customerCreditListByExternalIdResponse.expiryDate
             this.perUnitCostBasis = customerCreditListByExternalIdResponse.perUnitCostBasis
             this.status = customerCreditListByExternalIdResponse.status
+            this.maximumInitialBalance =
+                customerCreditListByExternalIdResponse.maximumInitialBalance
             additionalProperties(customerCreditListByExternalIdResponse.additionalProperties)
         }
 
@@ -180,6 +194,15 @@ private constructor(
         @ExcludeMissing
         fun status(status: JsonField<Status>) = apply { this.status = status }
 
+        fun maximumInitialBalance(maximumInitialBalance: Double) =
+            maximumInitialBalance(JsonField.of(maximumInitialBalance))
+
+        @JsonProperty("maximum_initial_balance")
+        @ExcludeMissing
+        fun maximumInitialBalance(maximumInitialBalance: JsonField<Double>) = apply {
+            this.maximumInitialBalance = maximumInitialBalance
+        }
+
         fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
             this.additionalProperties.clear()
             this.additionalProperties.putAll(additionalProperties)
@@ -202,6 +225,7 @@ private constructor(
                 expiryDate,
                 perUnitCostBasis,
                 status,
+                maximumInitialBalance,
                 additionalProperties.toUnmodifiable(),
             )
     }
