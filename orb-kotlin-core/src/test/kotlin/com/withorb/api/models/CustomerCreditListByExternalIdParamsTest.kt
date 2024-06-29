@@ -14,6 +14,7 @@ class CustomerCreditListByExternalIdParamsTest {
             .externalCustomerId("string")
             .currency("string")
             .cursor("string")
+            .includeAllBlocks(true)
             .limit(123L)
             .build()
     }
@@ -25,11 +26,13 @@ class CustomerCreditListByExternalIdParamsTest {
                 .externalCustomerId("string")
                 .currency("string")
                 .cursor("string")
+                .includeAllBlocks(true)
                 .limit(123L)
                 .build()
         val expected = mutableMapOf<String, List<String>>()
         expected.put("currency", listOf("string"))
         expected.put("cursor", listOf("string"))
+        expected.put("include_all_blocks", listOf("true"))
         expected.put("limit", listOf("123"))
         assertThat(params.getQueryParams()).isEqualTo(expected)
     }

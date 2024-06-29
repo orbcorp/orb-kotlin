@@ -1,5 +1,38 @@
 # Changelog
 
+## 0.1.0-alpha.2 (2024-06-28)
+
+Full Changelog: [v0.1.0-alpha.1...v0.1.0-alpha.2](https://github.com/orbcorp/orb-kotlin/compare/v0.1.0-alpha.1...v0.1.0-alpha.2)
+
+### ⚠ BREAKING CHANGES
+
+* **api:** endpoint expects amount of new allocation price to be a string, not a number ([#10](https://github.com/orbcorp/orb-kotlin/issues/10))
+
+### Features
+
+* **api:** add support for adding allocation price to subscription ([#8](https://github.com/orbcorp/orb-kotlin/issues/8)) ([94987f0](https://github.com/orbcorp/orb-kotlin/commit/94987f0818bd8d1bad183a3d5b9f9797332094d5))
+* **api:** add support for query param include_all_blocks ([#11](https://github.com/orbcorp/orb-kotlin/issues/11)) ([ce06e75](https://github.com/orbcorp/orb-kotlin/commit/ce06e75c9ef65f52c9aa9b8289248ee22cc61b38))
+* **api:** external connections made optional when updating items ([#9](https://github.com/orbcorp/orb-kotlin/issues/9)) ([f12c785](https://github.com/orbcorp/orb-kotlin/commit/f12c785d390719ae9505de0b802f1ae07a01c2be))
+* **api:** updates ([#5](https://github.com/orbcorp/orb-kotlin/issues/5)) ([2c0c8e8](https://github.com/orbcorp/orb-kotlin/commit/2c0c8e8af82300b3caa9f58fd2aa0ba0c60ca388))
+* **client:** add support for `putQueryParam` on `ClientOptions` ([#6](https://github.com/orbcorp/orb-kotlin/issues/6)) ([1d16514](https://github.com/orbcorp/orb-kotlin/commit/1d1651472cb9d475c99e70a95fc922e116139450))
+
+
+### Bug Fixes
+
+* **api:** endpoint expects amount of new allocation price to be a string, not a number ([#10](https://github.com/orbcorp/orb-kotlin/issues/10)) ([8cb42ee](https://github.com/orbcorp/orb-kotlin/commit/8cb42ee21425c2beb88bdaa5cc3094c081bf7f15))
+
+
+### Chores
+
+* **docs:** improve Coupon description ([#7](https://github.com/orbcorp/orb-kotlin/issues/7)) ([380b281](https://github.com/orbcorp/orb-kotlin/commit/380b28179cd585f1d114af3e1b53587f1815cd33))
+* **docs:** updates price intervals docs ([#12](https://github.com/orbcorp/orb-kotlin/issues/12)) ([1df4524](https://github.com/orbcorp/orb-kotlin/commit/1df45240a285e7a9f866749883aa263b16c65386))
+* gitignore test server logs ([#13](https://github.com/orbcorp/orb-kotlin/issues/13)) ([8870a5f](https://github.com/orbcorp/orb-kotlin/commit/8870a5fe483a79c450c73f6fb7d6ee3aa1c0c0bc))
+
+
+### Documentation
+
+* small updates ([#3](https://github.com/orbcorp/orb-kotlin/issues/3)) ([e2bf19e](https://github.com/orbcorp/orb-kotlin/commit/e2bf19e528a6708d95adc698f542987b157da258))
+
 ## 0.1.0-alpha.1 (2024-06-06)
 
 Full Changelog: [v0.0.1-alpha.0...v0.1.0-alpha.1](https://github.com/orbcorp/orb-kotlin/compare/v0.0.1-alpha.0...v0.1.0-alpha.1)

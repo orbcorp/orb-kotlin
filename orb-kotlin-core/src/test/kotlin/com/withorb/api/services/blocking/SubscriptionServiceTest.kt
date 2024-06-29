@@ -256,6 +256,18 @@ class SubscriptionServiceTest {
                                         OffsetDateTime.parse("2019-12-27T18:11:19.117Z")
                                     )
                                 )
+                                .allocationPrice(
+                                    SubscriptionPriceIntervalsParams.Add.AllocationPrice.builder()
+                                        .amount("10.00")
+                                        .cadence(
+                                            SubscriptionPriceIntervalsParams.Add.AllocationPrice
+                                                .Cadence
+                                                .ONE_TIME
+                                        )
+                                        .currency("USD")
+                                        .expiresAtEndOfCadence(true)
+                                        .build()
+                                )
                                 .discounts(
                                     listOf(
                                         SubscriptionPriceIntervalsParams.Add.Discount

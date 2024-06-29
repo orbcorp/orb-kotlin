@@ -383,6 +383,7 @@ constructor(
         private val priceId: String?,
         private val externalPriceId: String?,
         private val price: Price?,
+        private val allocationPrice: AllocationPrice?,
         private val startDate: StartDate?,
         private val endDate: EndDate?,
         private val fixedFeeQuantityTransitions: List<FixedFeeQuantityTransition>?,
@@ -402,6 +403,9 @@ constructor(
 
         /** The definition of a new price to create and add to the subscription. */
         @JsonProperty("price") fun price(): Price? = price
+
+        /** The definition of a new allocation price to create and add to the subscription. */
+        @JsonProperty("allocation_price") fun allocationPrice(): AllocationPrice? = allocationPrice
 
         /**
          * The start date of the price interval. This is the date that the price will start billing
@@ -450,6 +454,7 @@ constructor(
                 this.priceId == other.priceId &&
                 this.externalPriceId == other.externalPriceId &&
                 this.price == other.price &&
+                this.allocationPrice == other.allocationPrice &&
                 this.startDate == other.startDate &&
                 this.endDate == other.endDate &&
                 this.fixedFeeQuantityTransitions == other.fixedFeeQuantityTransitions &&
@@ -466,6 +471,7 @@ constructor(
                         priceId,
                         externalPriceId,
                         price,
+                        allocationPrice,
                         startDate,
                         endDate,
                         fixedFeeQuantityTransitions,
@@ -479,7 +485,7 @@ constructor(
         }
 
         override fun toString() =
-            "Add{priceId=$priceId, externalPriceId=$externalPriceId, price=$price, startDate=$startDate, endDate=$endDate, fixedFeeQuantityTransitions=$fixedFeeQuantityTransitions, discounts=$discounts, minimumAmount=$minimumAmount, maximumAmount=$maximumAmount, additionalProperties=$additionalProperties}"
+            "Add{priceId=$priceId, externalPriceId=$externalPriceId, price=$price, allocationPrice=$allocationPrice, startDate=$startDate, endDate=$endDate, fixedFeeQuantityTransitions=$fixedFeeQuantityTransitions, discounts=$discounts, minimumAmount=$minimumAmount, maximumAmount=$maximumAmount, additionalProperties=$additionalProperties}"
 
         companion object {
 
@@ -491,6 +497,7 @@ constructor(
             private var priceId: String? = null
             private var externalPriceId: String? = null
             private var price: Price? = null
+            private var allocationPrice: AllocationPrice? = null
             private var startDate: StartDate? = null
             private var endDate: EndDate? = null
             private var fixedFeeQuantityTransitions: List<FixedFeeQuantityTransition>? = null
@@ -503,6 +510,7 @@ constructor(
                 this.priceId = add.priceId
                 this.externalPriceId = add.externalPriceId
                 this.price = add.price
+                this.allocationPrice = add.allocationPrice
                 this.startDate = add.startDate
                 this.endDate = add.endDate
                 this.fixedFeeQuantityTransitions = add.fixedFeeQuantityTransitions
@@ -524,6 +532,12 @@ constructor(
 
             /** The definition of a new price to create and add to the subscription. */
             @JsonProperty("price") fun price(price: Price) = apply { this.price = price }
+
+            /** The definition of a new allocation price to create and add to the subscription. */
+            @JsonProperty("allocation_price")
+            fun allocationPrice(allocationPrice: AllocationPrice) = apply {
+                this.allocationPrice = allocationPrice
+            }
 
             /**
              * The start date of the price interval. This is the date that the price will start
@@ -582,6 +596,7 @@ constructor(
                     priceId,
                     externalPriceId,
                     price,
+                    allocationPrice,
                     checkNotNull(startDate) { "`startDate` is required but was not set" },
                     endDate,
                     fixedFeeQuantityTransitions?.toUnmodifiable(),
@@ -712,6 +727,224 @@ constructor(
                         else -> throw IllegalStateException("Invalid StartDate")
                     }
                 }
+            }
+        }
+
+        /** The definition of a new allocation price to create and add to the subscription. */
+        @JsonDeserialize(builder = AllocationPrice.Builder::class)
+        @NoAutoDetect
+        class AllocationPrice
+        private constructor(
+            private val currency: String?,
+            private val amount: String?,
+            private val cadence: Cadence?,
+            private val expiresAtEndOfCadence: Boolean?,
+            private val additionalProperties: Map<String, JsonValue>,
+        ) {
+
+            private var hashCode: Int = 0
+
+            /**
+             * An ISO 4217 currency string or a custom pricing unit identifier in which to bill this
+             * price.
+             */
+            @JsonProperty("currency") fun currency(): String? = currency
+
+            /** An amount of the currency to allocate to the customer at the specified cadence. */
+            @JsonProperty("amount") fun amount(): String? = amount
+
+            /** The cadence at which to allocate the amount to the customer. */
+            @JsonProperty("cadence") fun cadence(): Cadence? = cadence
+
+            /**
+             * Whether the allocated amount should expire at the end of the cadence or roll over to
+             * the next period.
+             */
+            @JsonProperty("expires_at_end_of_cadence")
+            fun expiresAtEndOfCadence(): Boolean? = expiresAtEndOfCadence
+
+            @JsonAnyGetter
+            @ExcludeMissing
+            fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
+
+            fun toBuilder() = Builder().from(this)
+
+            override fun equals(other: Any?): Boolean {
+                if (this === other) {
+                    return true
+                }
+
+                return other is AllocationPrice &&
+                    this.currency == other.currency &&
+                    this.amount == other.amount &&
+                    this.cadence == other.cadence &&
+                    this.expiresAtEndOfCadence == other.expiresAtEndOfCadence &&
+                    this.additionalProperties == other.additionalProperties
+            }
+
+            override fun hashCode(): Int {
+                if (hashCode == 0) {
+                    hashCode =
+                        Objects.hash(
+                            currency,
+                            amount,
+                            cadence,
+                            expiresAtEndOfCadence,
+                            additionalProperties,
+                        )
+                }
+                return hashCode
+            }
+
+            override fun toString() =
+                "AllocationPrice{currency=$currency, amount=$amount, cadence=$cadence, expiresAtEndOfCadence=$expiresAtEndOfCadence, additionalProperties=$additionalProperties}"
+
+            companion object {
+
+                fun builder() = Builder()
+            }
+
+            class Builder {
+
+                private var currency: String? = null
+                private var amount: String? = null
+                private var cadence: Cadence? = null
+                private var expiresAtEndOfCadence: Boolean? = null
+                private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
+
+                internal fun from(allocationPrice: AllocationPrice) = apply {
+                    this.currency = allocationPrice.currency
+                    this.amount = allocationPrice.amount
+                    this.cadence = allocationPrice.cadence
+                    this.expiresAtEndOfCadence = allocationPrice.expiresAtEndOfCadence
+                    additionalProperties(allocationPrice.additionalProperties)
+                }
+
+                /**
+                 * An ISO 4217 currency string or a custom pricing unit identifier in which to bill
+                 * this price.
+                 */
+                @JsonProperty("currency")
+                fun currency(currency: String) = apply { this.currency = currency }
+
+                /**
+                 * An amount of the currency to allocate to the customer at the specified cadence.
+                 */
+                @JsonProperty("amount") fun amount(amount: String) = apply { this.amount = amount }
+
+                /** The cadence at which to allocate the amount to the customer. */
+                @JsonProperty("cadence")
+                fun cadence(cadence: Cadence) = apply { this.cadence = cadence }
+
+                /**
+                 * Whether the allocated amount should expire at the end of the cadence or roll over
+                 * to the next period.
+                 */
+                @JsonProperty("expires_at_end_of_cadence")
+                fun expiresAtEndOfCadence(expiresAtEndOfCadence: Boolean) = apply {
+                    this.expiresAtEndOfCadence = expiresAtEndOfCadence
+                }
+
+                fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                    this.additionalProperties.clear()
+                    this.additionalProperties.putAll(additionalProperties)
+                }
+
+                @JsonAnySetter
+                fun putAdditionalProperty(key: String, value: JsonValue) = apply {
+                    this.additionalProperties.put(key, value)
+                }
+
+                fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) =
+                    apply {
+                        this.additionalProperties.putAll(additionalProperties)
+                    }
+
+                fun build(): AllocationPrice =
+                    AllocationPrice(
+                        checkNotNull(currency) { "`currency` is required but was not set" },
+                        checkNotNull(amount) { "`amount` is required but was not set" },
+                        checkNotNull(cadence) { "`cadence` is required but was not set" },
+                        checkNotNull(expiresAtEndOfCadence) {
+                            "`expiresAtEndOfCadence` is required but was not set"
+                        },
+                        additionalProperties.toUnmodifiable(),
+                    )
+            }
+
+            class Cadence
+            @JsonCreator
+            private constructor(
+                private val value: JsonField<String>,
+            ) : Enum {
+
+                @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
+
+                override fun equals(other: Any?): Boolean {
+                    if (this === other) {
+                        return true
+                    }
+
+                    return other is Cadence && this.value == other.value
+                }
+
+                override fun hashCode() = value.hashCode()
+
+                override fun toString() = value.toString()
+
+                companion object {
+
+                    val ONE_TIME = Cadence(JsonField.of("one_time"))
+
+                    val MONTHLY = Cadence(JsonField.of("monthly"))
+
+                    val QUARTERLY = Cadence(JsonField.of("quarterly"))
+
+                    val SEMI_ANNUAL = Cadence(JsonField.of("semi_annual"))
+
+                    val ANNUAL = Cadence(JsonField.of("annual"))
+
+                    fun of(value: String) = Cadence(JsonField.of(value))
+                }
+
+                enum class Known {
+                    ONE_TIME,
+                    MONTHLY,
+                    QUARTERLY,
+                    SEMI_ANNUAL,
+                    ANNUAL,
+                }
+
+                enum class Value {
+                    ONE_TIME,
+                    MONTHLY,
+                    QUARTERLY,
+                    SEMI_ANNUAL,
+                    ANNUAL,
+                    _UNKNOWN,
+                }
+
+                fun value(): Value =
+                    when (this) {
+                        ONE_TIME -> Value.ONE_TIME
+                        MONTHLY -> Value.MONTHLY
+                        QUARTERLY -> Value.QUARTERLY
+                        SEMI_ANNUAL -> Value.SEMI_ANNUAL
+                        ANNUAL -> Value.ANNUAL
+                        else -> Value._UNKNOWN
+                    }
+
+                fun known(): Known =
+                    when (this) {
+                        ONE_TIME -> Known.ONE_TIME
+                        MONTHLY -> Known.MONTHLY
+                        QUARTERLY -> Known.QUARTERLY
+                        SEMI_ANNUAL -> Known.SEMI_ANNUAL
+                        ANNUAL -> Known.ANNUAL
+                        else -> throw OrbInvalidDataException("Unknown Cadence: $value")
+                    }
+
+                fun asString(): String = _value().asStringOrThrow()
             }
         }
 

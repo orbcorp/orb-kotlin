@@ -430,6 +430,7 @@ constructor(
             HttpRequest.builder()
                 .method(HttpMethod.POST)
                 .addPathSegments("subscriptions")
+                .putAllQueryParams(clientOptions.queryParams)
                 .putAllQueryParams(params.getQueryParams())
                 .putAllHeaders(clientOptions.headers)
                 .putAllHeaders(params.getHeaders())
@@ -461,6 +462,7 @@ constructor(
             HttpRequest.builder()
                 .method(HttpMethod.PUT)
                 .addPathSegments("subscriptions", params.getPathParam(0))
+                .putAllQueryParams(clientOptions.queryParams)
                 .putAllQueryParams(params.getQueryParams())
                 .putAllHeaders(clientOptions.headers)
                 .putAllHeaders(params.getHeaders())
@@ -498,6 +500,7 @@ constructor(
             HttpRequest.builder()
                 .method(HttpMethod.GET)
                 .addPathSegments("subscriptions")
+                .putAllQueryParams(clientOptions.queryParams)
                 .putAllQueryParams(params.getQueryParams())
                 .putAllHeaders(clientOptions.headers)
                 .putAllHeaders(params.getHeaders())
@@ -579,6 +582,7 @@ constructor(
             HttpRequest.builder()
                 .method(HttpMethod.POST)
                 .addPathSegments("subscriptions", params.getPathParam(0), "cancel")
+                .putAllQueryParams(clientOptions.queryParams)
                 .putAllQueryParams(params.getQueryParams())
                 .putAllHeaders(clientOptions.headers)
                 .putAllHeaders(params.getHeaders())
@@ -610,6 +614,7 @@ constructor(
             HttpRequest.builder()
                 .method(HttpMethod.GET)
                 .addPathSegments("subscriptions", params.getPathParam(0))
+                .putAllQueryParams(clientOptions.queryParams)
                 .putAllQueryParams(params.getQueryParams())
                 .putAllHeaders(clientOptions.headers)
                 .putAllHeaders(params.getHeaders())
@@ -648,6 +653,7 @@ constructor(
             HttpRequest.builder()
                 .method(HttpMethod.GET)
                 .addPathSegments("subscriptions", params.getPathParam(0), "costs")
+                .putAllQueryParams(clientOptions.queryParams)
                 .putAllQueryParams(params.getQueryParams())
                 .putAllHeaders(clientOptions.headers)
                 .putAllHeaders(params.getHeaders())
@@ -680,6 +686,7 @@ constructor(
             HttpRequest.builder()
                 .method(HttpMethod.GET)
                 .addPathSegments("subscriptions", params.getPathParam(0), "schedule")
+                .putAllQueryParams(clientOptions.queryParams)
                 .putAllQueryParams(params.getQueryParams())
                 .putAllHeaders(clientOptions.headers)
                 .putAllHeaders(params.getHeaders())
@@ -884,6 +891,7 @@ constructor(
             HttpRequest.builder()
                 .method(HttpMethod.GET)
                 .addPathSegments("subscriptions", params.getPathParam(0), "usage")
+                .putAllQueryParams(clientOptions.queryParams)
                 .putAllQueryParams(params.getQueryParams())
                 .putAllHeaders(clientOptions.headers)
                 .putAllHeaders(params.getHeaders())
@@ -926,6 +934,19 @@ constructor(
      * Additionally, a discount, minimum, or maximum can be specified on the price interval. This
      * will only apply to this price interval, not any other price intervals on the subscription.
      *
+     * ## Adjustment intervals
+     *
+     * An adjustment interval represents the time period that a particular adjustment (a discount,
+     * minimum, or maximum) applies to the prices on a subscription. Adjustment intervals can be
+     * added to a subscription by specifying them in the `add_adjustments` array, or modified via
+     * the `edit_adjustments` array. When creating an adjustment interval, you'll need to provide
+     * the definition of the new adjustment (the type of adjustment, and which prices it applies
+     * to), as well as the start and end dates for the adjustment interval. The start and end dates
+     * of an existing adjustment interval can be edited via the `edit_adjustments` field (just like
+     * price intervals). (To "change" the amount of a discount, minimum, or maximum, then, you'll
+     * need to end the existing interval, and create a new adjustment interval with the new amount
+     * and a start date that matches the end date of the previous interval.)
+     *
      * ## Editing price intervals
      *
      * Price intervals can be adjusted by specifying edits to make in the `edit` array. A
@@ -964,6 +985,7 @@ constructor(
             HttpRequest.builder()
                 .method(HttpMethod.POST)
                 .addPathSegments("subscriptions", params.getPathParam(0), "price_intervals")
+                .putAllQueryParams(clientOptions.queryParams)
                 .putAllQueryParams(params.getQueryParams())
                 .putAllHeaders(clientOptions.headers)
                 .putAllHeaders(params.getHeaders())
@@ -1033,6 +1055,7 @@ constructor(
             HttpRequest.builder()
                 .method(HttpMethod.POST)
                 .addPathSegments("subscriptions", params.getPathParam(0), "schedule_plan_change")
+                .putAllQueryParams(clientOptions.queryParams)
                 .putAllQueryParams(params.getQueryParams())
                 .putAllHeaders(clientOptions.headers)
                 .putAllHeaders(params.getHeaders())
@@ -1063,6 +1086,7 @@ constructor(
             HttpRequest.builder()
                 .method(HttpMethod.POST)
                 .addPathSegments("subscriptions", params.getPathParam(0), "trigger_phase")
+                .putAllQueryParams(clientOptions.queryParams)
                 .putAllQueryParams(params.getQueryParams())
                 .putAllHeaders(clientOptions.headers)
                 .putAllHeaders(params.getHeaders())
@@ -1097,6 +1121,7 @@ constructor(
             HttpRequest.builder()
                 .method(HttpMethod.POST)
                 .addPathSegments("subscriptions", params.getPathParam(0), "unschedule_cancellation")
+                .putAllQueryParams(clientOptions.queryParams)
                 .putAllQueryParams(params.getQueryParams())
                 .putAllHeaders(clientOptions.headers)
                 .putAllHeaders(params.getHeaders())
@@ -1133,6 +1158,7 @@ constructor(
                     params.getPathParam(0),
                     "unschedule_fixed_fee_quantity_updates"
                 )
+                .putAllQueryParams(clientOptions.queryParams)
                 .putAllQueryParams(params.getQueryParams())
                 .putAllHeaders(clientOptions.headers)
                 .putAllHeaders(params.getHeaders())
@@ -1167,6 +1193,7 @@ constructor(
                     params.getPathParam(0),
                     "unschedule_pending_plan_changes"
                 )
+                .putAllQueryParams(clientOptions.queryParams)
                 .putAllQueryParams(params.getQueryParams())
                 .putAllHeaders(clientOptions.headers)
                 .putAllHeaders(params.getHeaders())
@@ -1212,6 +1239,7 @@ constructor(
                     params.getPathParam(0),
                     "update_fixed_fee_quantity"
                 )
+                .putAllQueryParams(clientOptions.queryParams)
                 .putAllQueryParams(params.getQueryParams())
                 .putAllHeaders(clientOptions.headers)
                 .putAllHeaders(params.getHeaders())
