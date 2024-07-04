@@ -41,6 +41,7 @@ class PlanCreateParamsTest {
             .externalPlanId("string")
             .metadata(PlanCreateParams.Metadata.builder().build())
             .netTerms(123L)
+            .status(PlanCreateParams.Status.ACTIVE)
             .build()
     }
 
@@ -78,6 +79,7 @@ class PlanCreateParamsTest {
                 .externalPlanId("string")
                 .metadata(PlanCreateParams.Metadata.builder().build())
                 .netTerms(123L)
+                .status(PlanCreateParams.Status.ACTIVE)
                 .build()
         val body = params.getBody()
         assertThat(body).isNotNull
@@ -112,6 +114,7 @@ class PlanCreateParamsTest {
         assertThat(body.externalPlanId()).isEqualTo("string")
         assertThat(body.metadata()).isEqualTo(PlanCreateParams.Metadata.builder().build())
         assertThat(body.netTerms()).isEqualTo(123L)
+        assertThat(body.status()).isEqualTo(PlanCreateParams.Status.ACTIVE)
     }
 
     @Test
