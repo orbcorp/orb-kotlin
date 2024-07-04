@@ -55,6 +55,7 @@ class PlanServiceTest {
                     .externalPlanId("string")
                     .metadata(PlanCreateParams.Metadata.builder().build())
                     .netTerms(123L)
+                    .status(PlanCreateParams.Status.ACTIVE)
                     .build()
             )
         println(plan)
