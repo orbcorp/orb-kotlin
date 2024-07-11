@@ -11,12 +11,12 @@ class AlertCreateForSubscriptionParamsTest {
     @Test
     fun createAlertCreateForSubscriptionParams() {
         AlertCreateForSubscriptionParams.builder()
-            .subscriptionId("string")
+            .subscriptionId("subscription_id")
             .thresholds(
                 listOf(AlertCreateForSubscriptionParams.Threshold.builder().value(42.23).build())
             )
-            .type("string")
-            .metricId("string")
+            .type("type")
+            .metricId("metric_id")
             .build()
     }
 
@@ -24,14 +24,14 @@ class AlertCreateForSubscriptionParamsTest {
     fun getBody() {
         val params =
             AlertCreateForSubscriptionParams.builder()
-                .subscriptionId("string")
+                .subscriptionId("subscription_id")
                 .thresholds(
                     listOf(
                         AlertCreateForSubscriptionParams.Threshold.builder().value(42.23).build()
                     )
                 )
-                .type("string")
-                .metricId("string")
+                .type("type")
+                .metricId("metric_id")
                 .build()
         val body = params.getBody()
         assertThat(body).isNotNull
@@ -39,21 +39,21 @@ class AlertCreateForSubscriptionParamsTest {
             .isEqualTo(
                 listOf(AlertCreateForSubscriptionParams.Threshold.builder().value(42.23).build())
             )
-        assertThat(body.type()).isEqualTo("string")
-        assertThat(body.metricId()).isEqualTo("string")
+        assertThat(body.type()).isEqualTo("type")
+        assertThat(body.metricId()).isEqualTo("metric_id")
     }
 
     @Test
     fun getBodyWithoutOptionalFields() {
         val params =
             AlertCreateForSubscriptionParams.builder()
-                .subscriptionId("string")
+                .subscriptionId("subscription_id")
                 .thresholds(
                     listOf(
                         AlertCreateForSubscriptionParams.Threshold.builder().value(42.23).build()
                     )
                 )
-                .type("string")
+                .type("type")
                 .build()
         val body = params.getBody()
         assertThat(body).isNotNull
@@ -61,24 +61,24 @@ class AlertCreateForSubscriptionParamsTest {
             .isEqualTo(
                 listOf(AlertCreateForSubscriptionParams.Threshold.builder().value(42.23).build())
             )
-        assertThat(body.type()).isEqualTo("string")
+        assertThat(body.type()).isEqualTo("type")
     }
 
     @Test
     fun getPathParam() {
         val params =
             AlertCreateForSubscriptionParams.builder()
-                .subscriptionId("string")
+                .subscriptionId("subscription_id")
                 .thresholds(
                     listOf(
                         AlertCreateForSubscriptionParams.Threshold.builder().value(42.23).build()
                     )
                 )
-                .type("string")
+                .type("type")
                 .build()
         assertThat(params).isNotNull
         // path param "subscriptionId"
-        assertThat(params.getPathParam(0)).isEqualTo("string")
+        assertThat(params.getPathParam(0)).isEqualTo("subscription_id")
         // out-of-bound path param
         assertThat(params.getPathParam(1)).isEqualTo("")
     }

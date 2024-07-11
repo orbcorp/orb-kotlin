@@ -23,10 +23,10 @@ class BalanceTransactionServiceTest {
         val customerBalanceTransactionCreateResponse =
             balanceTransactionService.create(
                 CustomerBalanceTransactionCreateParams.builder()
-                    .customerId("string")
-                    .amount("string")
+                    .customerId("customer_id")
+                    .amount("amount")
                     .type(CustomerBalanceTransactionCreateParams.Type.INCREMENT)
-                    .description("string")
+                    .description("description")
                     .build()
             )
         println(customerBalanceTransactionCreateResponse)
@@ -43,7 +43,7 @@ class BalanceTransactionServiceTest {
         val balanceTransactionService = client.customers().balanceTransactions()
         val customerBalanceTransactions =
             balanceTransactionService.list(
-                CustomerBalanceTransactionListParams.builder().customerId("string").build()
+                CustomerBalanceTransactionListParams.builder().customerId("customer_id").build()
             )
         println(customerBalanceTransactions)
         customerBalanceTransactions.data().forEach { it.validate() }

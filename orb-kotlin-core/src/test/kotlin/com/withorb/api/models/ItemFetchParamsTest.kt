@@ -10,15 +10,15 @@ class ItemFetchParamsTest {
 
     @Test
     fun createItemFetchParams() {
-        ItemFetchParams.builder().itemId("string").build()
+        ItemFetchParams.builder().itemId("item_id").build()
     }
 
     @Test
     fun getPathParam() {
-        val params = ItemFetchParams.builder().itemId("string").build()
+        val params = ItemFetchParams.builder().itemId("item_id").build()
         assertThat(params).isNotNull
         // path param "itemId"
-        assertThat(params.getPathParam(0)).isEqualTo("string")
+        assertThat(params.getPathParam(0)).isEqualTo("item_id")
         // out-of-bound path param
         assertThat(params.getPathParam(1)).isEqualTo("")
     }

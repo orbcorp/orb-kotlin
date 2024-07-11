@@ -22,7 +22,7 @@ class CreditServiceTest {
                 .build()
         val creditService = client.customers().credits()
         val customerCreditBalances =
-            creditService.list(CustomerCreditListParams.builder().customerId("string").build())
+            creditService.list(CustomerCreditListParams.builder().customerId("customer_id").build())
         println(customerCreditBalances)
         customerCreditBalances.data().forEach { it.validate() }
     }
@@ -37,7 +37,9 @@ class CreditServiceTest {
         val creditService = client.customers().credits()
         val customerCreditBalances =
             creditService.listByExternalId(
-                CustomerCreditListByExternalIdParams.builder().externalCustomerId("string").build()
+                CustomerCreditListByExternalIdParams.builder()
+                    .externalCustomerId("external_customer_id")
+                    .build()
             )
         println(customerCreditBalances)
         customerCreditBalances.data().forEach { it.validate() }

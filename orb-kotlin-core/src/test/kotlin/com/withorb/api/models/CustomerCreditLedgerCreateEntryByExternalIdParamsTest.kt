@@ -12,7 +12,7 @@ class CustomerCreditLedgerCreateEntryByExternalIdParamsTest {
     @Test
     fun createCustomerCreditLedgerCreateEntryByExternalIdParams() {
         CustomerCreditLedgerCreateEntryByExternalIdParams.builder()
-            .externalCustomerId("string")
+            .externalCustomerId("external_customer_id")
             .forAddIncrementCreditLedgerEntryRequestParams(
                 CustomerCreditLedgerCreateEntryByExternalIdParams
                     .AddIncrementCreditLedgerEntryRequestParams
@@ -24,8 +24,8 @@ class CustomerCreditLedgerCreateEntryByExternalIdParamsTest {
                             .EntryType
                             .INCREMENT
                     )
-                    .currency("string")
-                    .description("string")
+                    .currency("currency")
+                    .description("description")
                     .effectiveDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                     .expiryDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                     .invoiceSettings(
@@ -35,7 +35,7 @@ class CustomerCreditLedgerCreateEntryByExternalIdParamsTest {
                             .builder()
                             .autoCollection(true)
                             .netTerms(123L)
-                            .memo("string")
+                            .memo("memo")
                             .requireSuccessfulPayment(true)
                             .build()
                     )
@@ -46,7 +46,7 @@ class CustomerCreditLedgerCreateEntryByExternalIdParamsTest {
                             .builder()
                             .build()
                     )
-                    .perUnitCostBasis("string")
+                    .perUnitCostBasis("per_unit_cost_basis")
                     .build()
             )
             .build()
@@ -56,11 +56,11 @@ class CustomerCreditLedgerCreateEntryByExternalIdParamsTest {
     fun getPathParam() {
         val params =
             CustomerCreditLedgerCreateEntryByExternalIdParams.builder()
-                .externalCustomerId("string")
+                .externalCustomerId("external_customer_id")
                 .build()
         assertThat(params).isNotNull
         // path param "externalCustomerId"
-        assertThat(params.getPathParam(0)).isEqualTo("string")
+        assertThat(params.getPathParam(0)).isEqualTo("external_customer_id")
         // out-of-bound path param
         assertThat(params.getPathParam(1)).isEqualTo("")
     }

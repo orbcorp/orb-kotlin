@@ -11,9 +11,9 @@ class CouponListParamsTest {
     @Test
     fun createCouponListParams() {
         CouponListParams.builder()
-            .cursor("string")
+            .cursor("cursor")
             .limit(123L)
-            .redemptionCode("string")
+            .redemptionCode("redemption_code")
             .showArchived(true)
             .build()
     }
@@ -22,15 +22,15 @@ class CouponListParamsTest {
     fun getQueryParams() {
         val params =
             CouponListParams.builder()
-                .cursor("string")
+                .cursor("cursor")
                 .limit(123L)
-                .redemptionCode("string")
+                .redemptionCode("redemption_code")
                 .showArchived(true)
                 .build()
         val expected = mutableMapOf<String, List<String>>()
-        expected.put("cursor", listOf("string"))
+        expected.put("cursor", listOf("cursor"))
         expected.put("limit", listOf("123"))
-        expected.put("redemption_code", listOf("string"))
+        expected.put("redemption_code", listOf("redemption_code"))
         expected.put("show_archived", listOf("true"))
         assertThat(params.getQueryParams()).isEqualTo(expected)
     }

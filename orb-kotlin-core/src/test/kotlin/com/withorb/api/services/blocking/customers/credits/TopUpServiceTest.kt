@@ -24,19 +24,19 @@ class TopUpServiceTest {
         val customerCreditTopUpCreateResponse =
             topUpService.create(
                 CustomerCreditTopUpCreateParams.builder()
-                    .customerId("string")
-                    .amount("string")
-                    .currency("string")
+                    .customerId("customer_id")
+                    .amount("amount")
+                    .currency("currency")
                     .invoiceSettings(
                         CustomerCreditTopUpCreateParams.InvoiceSettings.builder()
                             .autoCollection(true)
                             .netTerms(123L)
-                            .memo("string")
+                            .memo("memo")
                             .requireSuccessfulPayment(true)
                             .build()
                     )
-                    .perUnitCostBasis("string")
-                    .threshold("string")
+                    .perUnitCostBasis("per_unit_cost_basis")
+                    .threshold("threshold")
                     .expiresAfter(123L)
                     .expiresAfterUnit(CustomerCreditTopUpCreateParams.ExpiresAfterUnit.DAY)
                     .build()
@@ -54,7 +54,9 @@ class TopUpServiceTest {
                 .build()
         val topUpService = client.customers().credits().topUps()
         val topUps =
-            topUpService.list(CustomerCreditTopUpListParams.builder().customerId("string").build())
+            topUpService.list(
+                CustomerCreditTopUpListParams.builder().customerId("customer_id").build()
+            )
         println(topUps)
         topUps.data().forEach { it.validate() }
     }
@@ -68,7 +70,10 @@ class TopUpServiceTest {
                 .build()
         val topUpService = client.customers().credits().topUps()
         topUpService.delete(
-            CustomerCreditTopUpDeleteParams.builder().customerId("string").topUpId("string").build()
+            CustomerCreditTopUpDeleteParams.builder()
+                .customerId("customer_id")
+                .topUpId("top_up_id")
+                .build()
         )
     }
 
@@ -83,19 +88,19 @@ class TopUpServiceTest {
         val customerCreditTopUpCreateByExternalIdResponse =
             topUpService.createByExternalId(
                 CustomerCreditTopUpCreateByExternalIdParams.builder()
-                    .externalCustomerId("string")
-                    .amount("string")
-                    .currency("string")
+                    .externalCustomerId("external_customer_id")
+                    .amount("amount")
+                    .currency("currency")
                     .invoiceSettings(
                         CustomerCreditTopUpCreateByExternalIdParams.InvoiceSettings.builder()
                             .autoCollection(true)
                             .netTerms(123L)
-                            .memo("string")
+                            .memo("memo")
                             .requireSuccessfulPayment(true)
                             .build()
                     )
-                    .perUnitCostBasis("string")
-                    .threshold("string")
+                    .perUnitCostBasis("per_unit_cost_basis")
+                    .threshold("threshold")
                     .expiresAfter(123L)
                     .expiresAfterUnit(
                         CustomerCreditTopUpCreateByExternalIdParams.ExpiresAfterUnit.DAY
@@ -116,8 +121,8 @@ class TopUpServiceTest {
         val topUpService = client.customers().credits().topUps()
         topUpService.deleteByExternalId(
             CustomerCreditTopUpDeleteByExternalIdParams.builder()
-                .externalCustomerId("string")
-                .topUpId("string")
+                .externalCustomerId("external_customer_id")
+                .topUpId("top_up_id")
                 .build()
         )
     }
@@ -133,7 +138,7 @@ class TopUpServiceTest {
         val topUps =
             topUpService.listByExternalId(
                 CustomerCreditTopUpListByExternalIdParams.builder()
-                    .externalCustomerId("string")
+                    .externalCustomerId("external_customer_id")
                     .build()
             )
         println(topUps)

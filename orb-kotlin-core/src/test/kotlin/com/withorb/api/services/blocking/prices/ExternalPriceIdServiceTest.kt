@@ -21,7 +21,9 @@ class ExternalPriceIdServiceTest {
         val externalPriceIdService = client.prices().externalPriceId()
         val price =
             externalPriceIdService.fetch(
-                PriceExternalPriceIdFetchParams.builder().externalPriceId("string").build()
+                PriceExternalPriceIdFetchParams.builder()
+                    .externalPriceId("external_price_id")
+                    .build()
             )
         println(price)
     }

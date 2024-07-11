@@ -11,18 +11,18 @@ class ItemUpdateParamsTest {
     @Test
     fun createItemUpdateParams() {
         ItemUpdateParams.builder()
-            .itemId("string")
+            .itemId("item_id")
             .externalConnections(
                 listOf(
                     ItemUpdateParams.ExternalConnection.builder()
                         .externalConnectionName(
                             ItemUpdateParams.ExternalConnection.ExternalConnectionName.STRIPE
                         )
-                        .externalEntityId("string")
+                        .externalEntityId("external_entity_id")
                         .build()
                 )
             )
-            .name("string")
+            .name("name")
             .build()
     }
 
@@ -30,18 +30,18 @@ class ItemUpdateParamsTest {
     fun getBody() {
         val params =
             ItemUpdateParams.builder()
-                .itemId("string")
+                .itemId("item_id")
                 .externalConnections(
                     listOf(
                         ItemUpdateParams.ExternalConnection.builder()
                             .externalConnectionName(
                                 ItemUpdateParams.ExternalConnection.ExternalConnectionName.STRIPE
                             )
-                            .externalEntityId("string")
+                            .externalEntityId("external_entity_id")
                             .build()
                     )
                 )
-                .name("string")
+                .name("name")
                 .build()
         val body = params.getBody()
         assertThat(body).isNotNull
@@ -52,26 +52,26 @@ class ItemUpdateParamsTest {
                         .externalConnectionName(
                             ItemUpdateParams.ExternalConnection.ExternalConnectionName.STRIPE
                         )
-                        .externalEntityId("string")
+                        .externalEntityId("external_entity_id")
                         .build()
                 )
             )
-        assertThat(body.name()).isEqualTo("string")
+        assertThat(body.name()).isEqualTo("name")
     }
 
     @Test
     fun getBodyWithoutOptionalFields() {
-        val params = ItemUpdateParams.builder().itemId("string").build()
+        val params = ItemUpdateParams.builder().itemId("item_id").build()
         val body = params.getBody()
         assertThat(body).isNotNull
     }
 
     @Test
     fun getPathParam() {
-        val params = ItemUpdateParams.builder().itemId("string").build()
+        val params = ItemUpdateParams.builder().itemId("item_id").build()
         assertThat(params).isNotNull
         // path param "itemId"
-        assertThat(params.getPathParam(0)).isEqualTo("string")
+        assertThat(params.getPathParam(0)).isEqualTo("item_id")
         // out-of-bound path param
         assertThat(params.getPathParam(1)).isEqualTo("")
     }

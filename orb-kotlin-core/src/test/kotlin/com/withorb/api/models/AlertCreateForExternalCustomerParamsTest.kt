@@ -11,9 +11,9 @@ class AlertCreateForExternalCustomerParamsTest {
     @Test
     fun createAlertCreateForExternalCustomerParams() {
         AlertCreateForExternalCustomerParams.builder()
-            .externalCustomerId("string")
-            .currency("string")
-            .type("string")
+            .externalCustomerId("external_customer_id")
+            .currency("currency")
+            .type("type")
             .thresholds(
                 listOf(
                     AlertCreateForExternalCustomerParams.Threshold.builder().value(42.23).build()
@@ -26,9 +26,9 @@ class AlertCreateForExternalCustomerParamsTest {
     fun getBody() {
         val params =
             AlertCreateForExternalCustomerParams.builder()
-                .externalCustomerId("string")
-                .currency("string")
-                .type("string")
+                .externalCustomerId("external_customer_id")
+                .currency("currency")
+                .type("type")
                 .thresholds(
                     listOf(
                         AlertCreateForExternalCustomerParams.Threshold.builder()
@@ -39,8 +39,8 @@ class AlertCreateForExternalCustomerParamsTest {
                 .build()
         val body = params.getBody()
         assertThat(body).isNotNull
-        assertThat(body.currency()).isEqualTo("string")
-        assertThat(body.type()).isEqualTo("string")
+        assertThat(body.currency()).isEqualTo("currency")
+        assertThat(body.type()).isEqualTo("type")
         assertThat(body.thresholds())
             .isEqualTo(
                 listOf(
@@ -53,27 +53,27 @@ class AlertCreateForExternalCustomerParamsTest {
     fun getBodyWithoutOptionalFields() {
         val params =
             AlertCreateForExternalCustomerParams.builder()
-                .externalCustomerId("string")
-                .currency("string")
-                .type("string")
+                .externalCustomerId("external_customer_id")
+                .currency("currency")
+                .type("type")
                 .build()
         val body = params.getBody()
         assertThat(body).isNotNull
-        assertThat(body.currency()).isEqualTo("string")
-        assertThat(body.type()).isEqualTo("string")
+        assertThat(body.currency()).isEqualTo("currency")
+        assertThat(body.type()).isEqualTo("type")
     }
 
     @Test
     fun getPathParam() {
         val params =
             AlertCreateForExternalCustomerParams.builder()
-                .externalCustomerId("string")
-                .currency("string")
-                .type("string")
+                .externalCustomerId("external_customer_id")
+                .currency("currency")
+                .type("type")
                 .build()
         assertThat(params).isNotNull
         // path param "externalCustomerId"
-        assertThat(params.getPathParam(0)).isEqualTo("string")
+        assertThat(params.getPathParam(0)).isEqualTo("external_customer_id")
         // out-of-bound path param
         assertThat(params.getPathParam(1)).isEqualTo("")
     }

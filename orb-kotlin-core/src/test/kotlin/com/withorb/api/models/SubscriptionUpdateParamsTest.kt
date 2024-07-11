@@ -11,9 +11,9 @@ class SubscriptionUpdateParamsTest {
     @Test
     fun createSubscriptionUpdateParams() {
         SubscriptionUpdateParams.builder()
-            .subscriptionId("string")
+            .subscriptionId("subscription_id")
             .autoCollection(true)
-            .defaultInvoiceMemo("string")
+            .defaultInvoiceMemo("default_invoice_memo")
             .invoicingThreshold("10.00")
             .metadata(SubscriptionUpdateParams.Metadata.builder().build())
             .netTerms(123L)
@@ -24,9 +24,9 @@ class SubscriptionUpdateParamsTest {
     fun getBody() {
         val params =
             SubscriptionUpdateParams.builder()
-                .subscriptionId("string")
+                .subscriptionId("subscription_id")
                 .autoCollection(true)
-                .defaultInvoiceMemo("string")
+                .defaultInvoiceMemo("default_invoice_memo")
                 .invoicingThreshold("10.00")
                 .metadata(SubscriptionUpdateParams.Metadata.builder().build())
                 .netTerms(123L)
@@ -34,7 +34,7 @@ class SubscriptionUpdateParamsTest {
         val body = params.getBody()
         assertThat(body).isNotNull
         assertThat(body.autoCollection()).isEqualTo(true)
-        assertThat(body.defaultInvoiceMemo()).isEqualTo("string")
+        assertThat(body.defaultInvoiceMemo()).isEqualTo("default_invoice_memo")
         assertThat(body.invoicingThreshold()).isEqualTo("10.00")
         assertThat(body.metadata()).isEqualTo(SubscriptionUpdateParams.Metadata.builder().build())
         assertThat(body.netTerms()).isEqualTo(123L)
@@ -42,17 +42,17 @@ class SubscriptionUpdateParamsTest {
 
     @Test
     fun getBodyWithoutOptionalFields() {
-        val params = SubscriptionUpdateParams.builder().subscriptionId("string").build()
+        val params = SubscriptionUpdateParams.builder().subscriptionId("subscription_id").build()
         val body = params.getBody()
         assertThat(body).isNotNull
     }
 
     @Test
     fun getPathParam() {
-        val params = SubscriptionUpdateParams.builder().subscriptionId("string").build()
+        val params = SubscriptionUpdateParams.builder().subscriptionId("subscription_id").build()
         assertThat(params).isNotNull
         // path param "subscriptionId"
-        assertThat(params.getPathParam(0)).isEqualTo("string")
+        assertThat(params.getPathParam(0)).isEqualTo("subscription_id")
         // out-of-bound path param
         assertThat(params.getPathParam(1)).isEqualTo("")
     }

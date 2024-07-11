@@ -10,15 +10,15 @@ class AlertRetrieveParamsTest {
 
     @Test
     fun createAlertRetrieveParams() {
-        AlertRetrieveParams.builder().alertId("string").build()
+        AlertRetrieveParams.builder().alertId("alert_id").build()
     }
 
     @Test
     fun getPathParam() {
-        val params = AlertRetrieveParams.builder().alertId("string").build()
+        val params = AlertRetrieveParams.builder().alertId("alert_id").build()
         assertThat(params).isNotNull
         // path param "alertId"
-        assertThat(params.getPathParam(0)).isEqualTo("string")
+        assertThat(params.getPathParam(0)).isEqualTo("alert_id")
         // out-of-bound path param
         assertThat(params.getPathParam(1)).isEqualTo("")
     }

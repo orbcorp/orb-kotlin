@@ -24,12 +24,12 @@ class EventServiceTest {
         val eventUpdateResponse =
             eventService.update(
                 EventUpdateParams.builder()
-                    .eventId("string")
-                    .eventName("string")
+                    .eventId("event_id")
+                    .eventName("event_name")
                     .properties(JsonValue.from(mapOf<String, Any>()))
                     .timestamp(OffsetDateTime.parse("2020-12-09T16:09:53Z"))
-                    .customerId("string")
-                    .externalCustomerId("string")
+                    .customerId("customer_id")
+                    .externalCustomerId("external_customer_id")
                     .build()
             )
         println(eventUpdateResponse)
@@ -45,7 +45,7 @@ class EventServiceTest {
                 .build()
         val eventService = client.events()
         val eventDeprecateResponse =
-            eventService.deprecate(EventDeprecateParams.builder().eventId("string").build())
+            eventService.deprecate(EventDeprecateParams.builder().eventId("event_id").build())
         println(eventDeprecateResponse)
         eventDeprecateResponse.validate()
     }
@@ -64,16 +64,16 @@ class EventServiceTest {
                     .events(
                         listOf(
                             EventIngestParams.Event.builder()
-                                .eventName("string")
-                                .idempotencyKey("string")
+                                .eventName("event_name")
+                                .idempotencyKey("idempotency_key")
                                 .properties(JsonValue.from(mapOf<String, Any>()))
                                 .timestamp(OffsetDateTime.parse("2020-12-09T16:09:53Z"))
-                                .customerId("string")
-                                .externalCustomerId("string")
+                                .customerId("customer_id")
+                                .externalCustomerId("external_customer_id")
                                 .build()
                         )
                     )
-                    .backfillId("string")
+                    .backfillId("backfill_id")
                     .debug(true)
                     .build()
             )

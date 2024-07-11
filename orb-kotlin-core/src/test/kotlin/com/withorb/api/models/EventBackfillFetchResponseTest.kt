@@ -12,10 +12,10 @@ class EventBackfillFetchResponseTest {
     fun createEventBackfillFetchResponse() {
         val eventBackfillFetchResponse =
             EventBackfillFetchResponse.builder()
-                .id("string")
+                .id("id")
                 .closeTime(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                 .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
-                .customerId("string")
+                .customerId("customer_id")
                 .eventsIngested(123L)
                 .revertedAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                 .status(EventBackfillFetchResponse.Status.PENDING)
@@ -23,12 +23,12 @@ class EventBackfillFetchResponseTest {
                 .timeframeStart(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                 .build()
         assertThat(eventBackfillFetchResponse).isNotNull
-        assertThat(eventBackfillFetchResponse.id()).isEqualTo("string")
+        assertThat(eventBackfillFetchResponse.id()).isEqualTo("id")
         assertThat(eventBackfillFetchResponse.closeTime())
             .isEqualTo(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
         assertThat(eventBackfillFetchResponse.createdAt())
             .isEqualTo(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
-        assertThat(eventBackfillFetchResponse.customerId()).isEqualTo("string")
+        assertThat(eventBackfillFetchResponse.customerId()).isEqualTo("customer_id")
         assertThat(eventBackfillFetchResponse.eventsIngested()).isEqualTo(123L)
         assertThat(eventBackfillFetchResponse.revertedAt())
             .isEqualTo(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))

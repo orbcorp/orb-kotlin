@@ -14,7 +14,7 @@ class EventIngestResponseTest {
                 .validationFailed(
                     listOf(
                         EventIngestResponse.ValidationFailed.builder()
-                            .idempotencyKey("string")
+                            .idempotencyKey("idempotency_key")
                             .validationErrors(listOf("string"))
                             .build()
                     )
@@ -30,7 +30,7 @@ class EventIngestResponseTest {
         assertThat(eventIngestResponse.validationFailed())
             .containsExactly(
                 EventIngestResponse.ValidationFailed.builder()
-                    .idempotencyKey("string")
+                    .idempotencyKey("idempotency_key")
                     .validationErrors(listOf("string"))
                     .build()
             )

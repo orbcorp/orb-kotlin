@@ -9,8 +9,8 @@ class TopLevelPingResponseTest {
 
     @Test
     fun createTopLevelPingResponse() {
-        val topLevelPingResponse = TopLevelPingResponse.builder().response("string").build()
+        val topLevelPingResponse = TopLevelPingResponse.builder().response("response").build()
         assertThat(topLevelPingResponse).isNotNull
-        assertThat(topLevelPingResponse.response()).isEqualTo("string")
+        assertThat(topLevelPingResponse.response()).isEqualTo("response")
     }
 }

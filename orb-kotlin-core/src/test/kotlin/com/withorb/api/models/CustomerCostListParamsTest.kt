@@ -12,7 +12,7 @@ class CustomerCostListParamsTest {
     @Test
     fun createCustomerCostListParams() {
         CustomerCostListParams.builder()
-            .customerId("string")
+            .customerId("customer_id")
             .timeframeEnd(OffsetDateTime.parse("2022-03-01T05:00:00Z"))
             .timeframeStart(OffsetDateTime.parse("2022-02-01T05:00:00Z"))
             .viewMode(CustomerCostListParams.ViewMode.PERIODIC)
@@ -23,7 +23,7 @@ class CustomerCostListParamsTest {
     fun getQueryParams() {
         val params =
             CustomerCostListParams.builder()
-                .customerId("string")
+                .customerId("customer_id")
                 .timeframeEnd(OffsetDateTime.parse("2022-03-01T05:00:00Z"))
                 .timeframeStart(OffsetDateTime.parse("2022-02-01T05:00:00Z"))
                 .viewMode(CustomerCostListParams.ViewMode.PERIODIC)
@@ -37,17 +37,17 @@ class CustomerCostListParamsTest {
 
     @Test
     fun getQueryParamsWithoutOptionalFields() {
-        val params = CustomerCostListParams.builder().customerId("string").build()
+        val params = CustomerCostListParams.builder().customerId("customer_id").build()
         val expected = mutableMapOf<String, List<String>>()
         assertThat(params.getQueryParams()).isEqualTo(expected)
     }
 
     @Test
     fun getPathParam() {
-        val params = CustomerCostListParams.builder().customerId("string").build()
+        val params = CustomerCostListParams.builder().customerId("customer_id").build()
         assertThat(params).isNotNull
         // path param "customerId"
-        assertThat(params.getPathParam(0)).isEqualTo("string")
+        assertThat(params.getPathParam(0)).isEqualTo("customer_id")
         // out-of-bound path param
         assertThat(params.getPathParam(1)).isEqualTo("")
     }

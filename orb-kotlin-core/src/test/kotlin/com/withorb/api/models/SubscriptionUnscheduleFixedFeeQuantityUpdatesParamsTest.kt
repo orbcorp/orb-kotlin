@@ -11,8 +11,8 @@ class SubscriptionUnscheduleFixedFeeQuantityUpdatesParamsTest {
     @Test
     fun createSubscriptionUnscheduleFixedFeeQuantityUpdatesParams() {
         SubscriptionUnscheduleFixedFeeQuantityUpdatesParams.builder()
-            .subscriptionId("string")
-            .priceId("string")
+            .subscriptionId("subscription_id")
+            .priceId("price_id")
             .build()
     }
 
@@ -20,36 +20,36 @@ class SubscriptionUnscheduleFixedFeeQuantityUpdatesParamsTest {
     fun getBody() {
         val params =
             SubscriptionUnscheduleFixedFeeQuantityUpdatesParams.builder()
-                .subscriptionId("string")
-                .priceId("string")
+                .subscriptionId("subscription_id")
+                .priceId("price_id")
                 .build()
         val body = params.getBody()
         assertThat(body).isNotNull
-        assertThat(body.priceId()).isEqualTo("string")
+        assertThat(body.priceId()).isEqualTo("price_id")
     }
 
     @Test
     fun getBodyWithoutOptionalFields() {
         val params =
             SubscriptionUnscheduleFixedFeeQuantityUpdatesParams.builder()
-                .subscriptionId("string")
-                .priceId("string")
+                .subscriptionId("subscription_id")
+                .priceId("price_id")
                 .build()
         val body = params.getBody()
         assertThat(body).isNotNull
-        assertThat(body.priceId()).isEqualTo("string")
+        assertThat(body.priceId()).isEqualTo("price_id")
     }
 
     @Test
     fun getPathParam() {
         val params =
             SubscriptionUnscheduleFixedFeeQuantityUpdatesParams.builder()
-                .subscriptionId("string")
-                .priceId("string")
+                .subscriptionId("subscription_id")
+                .priceId("price_id")
                 .build()
         assertThat(params).isNotNull
         // path param "subscriptionId"
-        assertThat(params.getPathParam(0)).isEqualTo("string")
+        assertThat(params.getPathParam(0)).isEqualTo("subscription_id")
         // out-of-bound path param
         assertThat(params.getPathParam(1)).isEqualTo("")
     }

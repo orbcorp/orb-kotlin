@@ -11,8 +11,8 @@ class CustomerCreditTopUpDeleteByExternalIdParamsTest {
     @Test
     fun createCustomerCreditTopUpDeleteByExternalIdParams() {
         CustomerCreditTopUpDeleteByExternalIdParams.builder()
-            .externalCustomerId("string")
-            .topUpId("string")
+            .externalCustomerId("external_customer_id")
+            .topUpId("top_up_id")
             .build()
     }
 
@@ -20,14 +20,14 @@ class CustomerCreditTopUpDeleteByExternalIdParamsTest {
     fun getPathParam() {
         val params =
             CustomerCreditTopUpDeleteByExternalIdParams.builder()
-                .externalCustomerId("string")
-                .topUpId("string")
+                .externalCustomerId("external_customer_id")
+                .topUpId("top_up_id")
                 .build()
         assertThat(params).isNotNull
         // path param "externalCustomerId"
-        assertThat(params.getPathParam(0)).isEqualTo("string")
+        assertThat(params.getPathParam(0)).isEqualTo("external_customer_id")
         // path param "topUpId"
-        assertThat(params.getPathParam(1)).isEqualTo("string")
+        assertThat(params.getPathParam(1)).isEqualTo("top_up_id")
         // out-of-bound path param
         assertThat(params.getPathParam(2)).isEqualTo("")
     }

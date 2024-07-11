@@ -10,15 +10,15 @@ class CreditNoteFetchParamsTest {
 
     @Test
     fun createCreditNoteFetchParams() {
-        CreditNoteFetchParams.builder().creditNoteId("string").build()
+        CreditNoteFetchParams.builder().creditNoteId("credit_note_id").build()
     }
 
     @Test
     fun getPathParam() {
-        val params = CreditNoteFetchParams.builder().creditNoteId("string").build()
+        val params = CreditNoteFetchParams.builder().creditNoteId("credit_note_id").build()
         assertThat(params).isNotNull
         // path param "creditNoteId"
-        assertThat(params.getPathParam(0)).isEqualTo("string")
+        assertThat(params.getPathParam(0)).isEqualTo("credit_note_id")
         // out-of-bound path param
         assertThat(params.getPathParam(1)).isEqualTo("")
     }

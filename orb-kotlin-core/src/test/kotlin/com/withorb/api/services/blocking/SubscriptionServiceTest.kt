@@ -29,18 +29,18 @@ class SubscriptionServiceTest {
                 SubscriptionCreateParams.builder()
                     .alignBillingWithSubscriptionStartDate(true)
                     .autoCollection(true)
-                    .awsRegion("string")
-                    .couponRedemptionCode("string")
+                    .awsRegion("aws_region")
+                    .couponRedemptionCode("coupon_redemption_code")
                     .creditsOverageRate(42.23)
-                    .customerId("string")
-                    .defaultInvoiceMemo("string")
+                    .customerId("customer_id")
+                    .defaultInvoiceMemo("default_invoice_memo")
                     .endDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
-                    .externalCustomerId("string")
+                    .externalCustomerId("external_customer_id")
                     .externalMarketplace(SubscriptionCreateParams.ExternalMarketplace.GOOGLE)
-                    .externalMarketplaceReportingId("string")
+                    .externalMarketplaceReportingId("external_marketplace_reporting_id")
                     .externalPlanId("ZMwNQefe7J3ecf7W")
                     .initialPhaseOrder(123L)
-                    .invoicingThreshold("string")
+                    .invoicingThreshold("invoicing_threshold")
                     .metadata(SubscriptionCreateParams.Metadata.builder().build())
                     .netTerms(123L)
                     .perCreditOverageAmount(42.23)
@@ -49,7 +49,7 @@ class SubscriptionServiceTest {
                         listOf(
                             SubscriptionCreateParams.PriceOverride.ofOverrideUnitPrice(
                                 SubscriptionCreateParams.PriceOverride.OverrideUnitPrice.builder()
-                                    .id("string")
+                                    .id("id")
                                     .modelType(
                                         SubscriptionCreateParams.PriceOverride.OverrideUnitPrice
                                             .ModelType
@@ -59,11 +59,11 @@ class SubscriptionServiceTest {
                                         SubscriptionCreateParams.PriceOverride.OverrideUnitPrice
                                             .UnitConfig
                                             .builder()
-                                            .unitAmount("string")
+                                            .unitAmount("unit_amount")
                                             .build()
                                     )
                                     .conversionRate(42.23)
-                                    .currency("string")
+                                    .currency("currency")
                                     .discount(
                                         SubscriptionCreateParams.PriceOverride.OverrideUnitPrice
                                             .Discount
@@ -75,10 +75,10 @@ class SubscriptionServiceTest {
                                                     .DiscountType
                                                     .PERCENTAGE
                                             )
-                                            .amountDiscount("string")
+                                            .amountDiscount("amount_discount")
                                             .appliesToPriceIds(listOf("string"))
                                             .percentageDiscount(42.23)
-                                            .trialAmountDiscount("string")
+                                            .trialAmountDiscount("trial_amount_discount")
                                             .usageDiscount(42.23)
                                             .build()
                                     )
@@ -107,9 +107,9 @@ class SubscriptionServiceTest {
         val subscription =
             subscriptionService.update(
                 SubscriptionUpdateParams.builder()
-                    .subscriptionId("string")
+                    .subscriptionId("subscription_id")
                     .autoCollection(true)
-                    .defaultInvoiceMemo("string")
+                    .defaultInvoiceMemo("default_invoice_memo")
                     .invoicingThreshold("10.00")
                     .metadata(SubscriptionUpdateParams.Metadata.builder().build())
                     .netTerms(123L)
@@ -143,7 +143,7 @@ class SubscriptionServiceTest {
         val subscription =
             subscriptionService.cancel(
                 SubscriptionCancelParams.builder()
-                    .subscriptionId("string")
+                    .subscriptionId("subscription_id")
                     .cancelOption(SubscriptionCancelParams.CancelOption.END_OF_SUBSCRIPTION_TERM)
                     .cancellationDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                     .build()
@@ -162,7 +162,7 @@ class SubscriptionServiceTest {
         val subscriptionService = client.subscriptions()
         val subscription =
             subscriptionService.fetch(
-                SubscriptionFetchParams.builder().subscriptionId("string").build()
+                SubscriptionFetchParams.builder().subscriptionId("subscription_id").build()
             )
         println(subscription)
         subscription.validate()
@@ -179,7 +179,7 @@ class SubscriptionServiceTest {
         val subscriptionFetchCostsResponse =
             subscriptionService.fetchCosts(
                 SubscriptionFetchCostsParams.builder()
-                    .subscriptionId("string")
+                    .subscriptionId("subscription_id")
                     .timeframeEnd(OffsetDateTime.parse("2022-03-01T05:00:00Z"))
                     .timeframeStart(OffsetDateTime.parse("2022-02-01T05:00:00Z"))
                     .viewMode(SubscriptionFetchCostsParams.ViewMode.PERIODIC)
@@ -199,7 +199,7 @@ class SubscriptionServiceTest {
         val subscriptionService = client.subscriptions()
         val subscriptionScheduleItems =
             subscriptionService.fetchSchedule(
-                SubscriptionFetchScheduleParams.builder().subscriptionId("string").build()
+                SubscriptionFetchScheduleParams.builder().subscriptionId("subscription_id").build()
             )
         println(subscriptionScheduleItems)
         subscriptionScheduleItems.data().forEach { it.validate() }
@@ -217,16 +217,16 @@ class SubscriptionServiceTest {
         val subscriptionUsage =
             subscriptionService.fetchUsage(
                 SubscriptionFetchUsageParams.builder()
-                    .subscriptionId("string")
-                    .billableMetricId("string")
-                    .cursor("string")
-                    .firstDimensionKey("string")
-                    .firstDimensionValue("string")
+                    .subscriptionId("subscription_id")
+                    .billableMetricId("billable_metric_id")
+                    .cursor("cursor")
+                    .firstDimensionKey("first_dimension_key")
+                    .firstDimensionValue("first_dimension_value")
                     .granularity(SubscriptionFetchUsageParams.Granularity.DAY)
-                    .groupBy("string")
+                    .groupBy("group_by")
                     .limit(123L)
-                    .secondDimensionKey("string")
-                    .secondDimensionValue("string")
+                    .secondDimensionKey("second_dimension_key")
+                    .secondDimensionValue("second_dimension_value")
                     .timeframeEnd(OffsetDateTime.parse("2022-03-01T05:00:00Z"))
                     .timeframeStart(OffsetDateTime.parse("2022-02-01T05:00:00Z"))
                     .viewMode(SubscriptionFetchUsageParams.ViewMode.PERIODIC)
@@ -247,7 +247,7 @@ class SubscriptionServiceTest {
         val subscription =
             subscriptionService.priceIntervals(
                 SubscriptionPriceIntervalsParams.builder()
-                    .subscriptionId("string")
+                    .subscriptionId("subscription_id")
                     .add(
                         listOf(
                             SubscriptionPriceIntervalsParams.Add.builder()
@@ -319,8 +319,8 @@ class SubscriptionServiceTest {
                                                         .Cadence
                                                         .ANNUAL
                                                 )
-                                                .currency("string")
-                                                .itemId("string")
+                                                .currency("currency")
+                                                .itemId("item_id")
                                                 .modelType(
                                                     SubscriptionPriceIntervalsParams.Add.Price
                                                         .NewFloatingUnitPrice
@@ -333,15 +333,15 @@ class SubscriptionServiceTest {
                                                         .NewFloatingUnitPrice
                                                         .UnitConfig
                                                         .builder()
-                                                        .unitAmount("string")
+                                                        .unitAmount("unit_amount")
                                                         .build()
                                                 )
-                                                .billableMetricId("string")
+                                                .billableMetricId("billable_metric_id")
                                                 .billedInAdvance(true)
                                                 .conversionRate(42.23)
-                                                .externalPriceId("string")
+                                                .externalPriceId("external_price_id")
                                                 .fixedPriceQuantity(42.23)
-                                                .invoiceGroupingKey("string")
+                                                .invoiceGroupingKey("invoice_grouping_key")
                                                 .build()
                                         )
                                 )
@@ -453,14 +453,14 @@ class SubscriptionServiceTest {
         val subscription =
             subscriptionService.schedulePlanChange(
                 SubscriptionSchedulePlanChangeParams.builder()
-                    .subscriptionId("string")
+                    .subscriptionId("subscription_id")
                     .changeOption(SubscriptionSchedulePlanChangeParams.ChangeOption.REQUESTED_DATE)
                     .alignBillingWithPlanChangeDate(true)
                     .billingCycleAlignment(
                         SubscriptionSchedulePlanChangeParams.BillingCycleAlignment.UNCHANGED
                     )
                     .changeDate("2017-07-21T17:32:28Z")
-                    .couponRedemptionCode("string")
+                    .couponRedemptionCode("coupon_redemption_code")
                     .creditsOverageRate(42.23)
                     .externalPlanId("ZMwNQefe7J3ecf7W")
                     .initialPhaseOrder(123L)
@@ -472,7 +472,7 @@ class SubscriptionServiceTest {
                             SubscriptionSchedulePlanChangeParams.PriceOverride.ofOverrideUnitPrice(
                                 SubscriptionSchedulePlanChangeParams.PriceOverride.OverrideUnitPrice
                                     .builder()
-                                    .id("string")
+                                    .id("id")
                                     .modelType(
                                         SubscriptionSchedulePlanChangeParams.PriceOverride
                                             .OverrideUnitPrice
@@ -484,11 +484,11 @@ class SubscriptionServiceTest {
                                             .OverrideUnitPrice
                                             .UnitConfig
                                             .builder()
-                                            .unitAmount("string")
+                                            .unitAmount("unit_amount")
                                             .build()
                                     )
                                     .conversionRate(42.23)
-                                    .currency("string")
+                                    .currency("currency")
                                     .discount(
                                         SubscriptionSchedulePlanChangeParams.PriceOverride
                                             .OverrideUnitPrice
@@ -501,10 +501,10 @@ class SubscriptionServiceTest {
                                                     .DiscountType
                                                     .PERCENTAGE
                                             )
-                                            .amountDiscount("string")
+                                            .amountDiscount("amount_discount")
                                             .appliesToPriceIds(listOf("string"))
                                             .percentageDiscount(42.23)
-                                            .trialAmountDiscount("string")
+                                            .trialAmountDiscount("trial_amount_discount")
                                             .usageDiscount(42.23)
                                             .build()
                                     )
@@ -532,7 +532,7 @@ class SubscriptionServiceTest {
         val subscription =
             subscriptionService.triggerPhase(
                 SubscriptionTriggerPhaseParams.builder()
-                    .subscriptionId("string")
+                    .subscriptionId("subscription_id")
                     .effectiveDate(LocalDate.parse("2019-12-27"))
                     .build()
             )
@@ -550,7 +550,9 @@ class SubscriptionServiceTest {
         val subscriptionService = client.subscriptions()
         val subscription =
             subscriptionService.unscheduleCancellation(
-                SubscriptionUnscheduleCancellationParams.builder().subscriptionId("string").build()
+                SubscriptionUnscheduleCancellationParams.builder()
+                    .subscriptionId("subscription_id")
+                    .build()
             )
         println(subscription)
         subscription.validate()
@@ -567,8 +569,8 @@ class SubscriptionServiceTest {
         val subscription =
             subscriptionService.unscheduleFixedFeeQuantityUpdates(
                 SubscriptionUnscheduleFixedFeeQuantityUpdatesParams.builder()
-                    .subscriptionId("string")
-                    .priceId("string")
+                    .subscriptionId("subscription_id")
+                    .priceId("price_id")
                     .build()
             )
         println(subscription)
@@ -586,7 +588,7 @@ class SubscriptionServiceTest {
         val subscription =
             subscriptionService.unschedulePendingPlanChanges(
                 SubscriptionUnschedulePendingPlanChangesParams.builder()
-                    .subscriptionId("string")
+                    .subscriptionId("subscription_id")
                     .build()
             )
         println(subscription)
@@ -604,8 +606,8 @@ class SubscriptionServiceTest {
         val subscription =
             subscriptionService.updateFixedFeeQuantity(
                 SubscriptionUpdateFixedFeeQuantityParams.builder()
-                    .subscriptionId("string")
-                    .priceId("string")
+                    .subscriptionId("subscription_id")
+                    .priceId("price_id")
                     .quantity(42.23)
                     .changeOption(SubscriptionUpdateFixedFeeQuantityParams.ChangeOption.IMMEDIATE)
                     .effectiveDate(LocalDate.parse("2022-12-21"))
