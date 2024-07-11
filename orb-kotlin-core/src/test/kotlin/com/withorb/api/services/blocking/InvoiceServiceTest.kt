@@ -38,7 +38,7 @@ class InvoiceServiceTest {
                                 .startDate(LocalDate.parse("2023-09-22"))
                                 .unitConfig(
                                     InvoiceCreateParams.LineItem.UnitConfig.builder()
-                                        .unitAmount("string")
+                                        .unitAmount("unit_amount")
                                         .build()
                                 )
                                 .build()
@@ -52,7 +52,7 @@ class InvoiceServiceTest {
                                 .appliesToPriceIds(listOf("string"))
                                 .discountType(Discount.PercentageDiscount.DiscountType.PERCENTAGE)
                                 .percentageDiscount(1.0)
-                                .reason("string")
+                                .reason("reason")
                                 .build()
                         )
                     )
@@ -87,7 +87,8 @@ class InvoiceServiceTest {
                 .apiKey("My API Key")
                 .build()
         val invoiceService = client.invoices()
-        val invoice = invoiceService.fetch(InvoiceFetchParams.builder().invoiceId("string").build())
+        val invoice =
+            invoiceService.fetch(InvoiceFetchParams.builder().invoiceId("invoice_id").build())
         println(invoice)
         invoice.validate()
     }
@@ -102,7 +103,7 @@ class InvoiceServiceTest {
         val invoiceService = client.invoices()
         val invoiceFetchUpcomingResponse =
             invoiceService.fetchUpcoming(
-                InvoiceFetchUpcomingParams.builder().subscriptionId("string").build()
+                InvoiceFetchUpcomingParams.builder().subscriptionId("subscription_id").build()
             )
         println(invoiceFetchUpcomingResponse)
         invoiceFetchUpcomingResponse.validate()
@@ -116,7 +117,8 @@ class InvoiceServiceTest {
                 .apiKey("My API Key")
                 .build()
         val invoiceService = client.invoices()
-        val invoice = invoiceService.issue(InvoiceIssueParams.builder().invoiceId("string").build())
+        val invoice =
+            invoiceService.issue(InvoiceIssueParams.builder().invoiceId("invoice_id").build())
         println(invoice)
         invoice.validate()
     }
@@ -132,10 +134,10 @@ class InvoiceServiceTest {
         val invoice =
             invoiceService.markPaid(
                 InvoiceMarkPaidParams.builder()
-                    .invoiceId("string")
+                    .invoiceId("invoice_id")
                     .paymentReceivedDate(LocalDate.parse("2023-09-22"))
                     .externalId("external_payment_id_123")
-                    .notes("string")
+                    .notes("notes")
                     .build()
             )
         println(invoice)
@@ -150,7 +152,8 @@ class InvoiceServiceTest {
                 .apiKey("My API Key")
                 .build()
         val invoiceService = client.invoices()
-        val invoice = invoiceService.void(InvoiceVoidParams.builder().invoiceId("string").build())
+        val invoice =
+            invoiceService.void(InvoiceVoidParams.builder().invoiceId("invoice_id").build())
         println(invoice)
         invoice.validate()
     }

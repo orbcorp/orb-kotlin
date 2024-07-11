@@ -12,10 +12,10 @@ class InvoiceMarkPaidParamsTest {
     @Test
     fun createInvoiceMarkPaidParams() {
         InvoiceMarkPaidParams.builder()
-            .invoiceId("string")
+            .invoiceId("invoice_id")
             .paymentReceivedDate(LocalDate.parse("2023-09-22"))
             .externalId("external_payment_id_123")
-            .notes("string")
+            .notes("notes")
             .build()
     }
 
@@ -23,23 +23,23 @@ class InvoiceMarkPaidParamsTest {
     fun getBody() {
         val params =
             InvoiceMarkPaidParams.builder()
-                .invoiceId("string")
+                .invoiceId("invoice_id")
                 .paymentReceivedDate(LocalDate.parse("2023-09-22"))
                 .externalId("external_payment_id_123")
-                .notes("string")
+                .notes("notes")
                 .build()
         val body = params.getBody()
         assertThat(body).isNotNull
         assertThat(body.paymentReceivedDate()).isEqualTo(LocalDate.parse("2023-09-22"))
         assertThat(body.externalId()).isEqualTo("external_payment_id_123")
-        assertThat(body.notes()).isEqualTo("string")
+        assertThat(body.notes()).isEqualTo("notes")
     }
 
     @Test
     fun getBodyWithoutOptionalFields() {
         val params =
             InvoiceMarkPaidParams.builder()
-                .invoiceId("string")
+                .invoiceId("invoice_id")
                 .paymentReceivedDate(LocalDate.parse("2023-09-22"))
                 .build()
         val body = params.getBody()
@@ -51,12 +51,12 @@ class InvoiceMarkPaidParamsTest {
     fun getPathParam() {
         val params =
             InvoiceMarkPaidParams.builder()
-                .invoiceId("string")
+                .invoiceId("invoice_id")
                 .paymentReceivedDate(LocalDate.parse("2023-09-22"))
                 .build()
         assertThat(params).isNotNull
         // path param "invoiceId"
-        assertThat(params.getPathParam(0)).isEqualTo("string")
+        assertThat(params.getPathParam(0)).isEqualTo("invoice_id")
         // out-of-bound path param
         assertThat(params.getPathParam(1)).isEqualTo("")
     }

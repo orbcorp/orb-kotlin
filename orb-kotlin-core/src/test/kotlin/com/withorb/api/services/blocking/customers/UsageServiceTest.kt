@@ -24,15 +24,15 @@ class UsageServiceTest {
         val customerUsageUpdateResponse =
             usageService.update(
                 CustomerUsageUpdateParams.builder()
-                    .id("string")
+                    .id("customer_id")
                     .events(
                         listOf(
                             CustomerUsageUpdateParams.Event.builder()
-                                .eventName("string")
+                                .eventName("event_name")
                                 .properties(JsonValue.from(mapOf<String, Any>()))
                                 .timestamp(OffsetDateTime.parse("2020-12-09T16:09:53Z"))
-                                .customerId("string")
-                                .externalCustomerId("string")
+                                .customerId("customer_id")
+                                .externalCustomerId("external_customer_id")
                                 .build()
                         )
                     )
@@ -55,15 +55,15 @@ class UsageServiceTest {
         val customerUsageUpdateByExternalIdResponse =
             usageService.updateByExternalId(
                 CustomerUsageUpdateByExternalIdParams.builder()
-                    .id("string")
+                    .id("external_customer_id")
                     .events(
                         listOf(
                             CustomerUsageUpdateByExternalIdParams.Event.builder()
-                                .eventName("string")
+                                .eventName("event_name")
                                 .properties(JsonValue.from(mapOf<String, Any>()))
                                 .timestamp(OffsetDateTime.parse("2020-12-09T16:09:53Z"))
-                                .customerId("string")
-                                .externalCustomerId("string")
+                                .customerId("customer_id")
+                                .externalCustomerId("external_customer_id")
                                 .build()
                         )
                     )

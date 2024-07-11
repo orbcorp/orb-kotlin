@@ -12,11 +12,11 @@ class PriceEvaluateParamsTest {
     @Test
     fun createPriceEvaluateParams() {
         PriceEvaluateParams.builder()
-            .priceId("string")
+            .priceId("price_id")
             .timeframeEnd(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
             .timeframeStart(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
-            .customerId("string")
-            .externalCustomerId("string")
+            .customerId("customer_id")
+            .externalCustomerId("external_customer_id")
             .filter("my_numeric_property > 100 AND my_other_property = \'bar\'")
             .groupingKeys(listOf("string"))
             .build()
@@ -26,11 +26,11 @@ class PriceEvaluateParamsTest {
     fun getBody() {
         val params =
             PriceEvaluateParams.builder()
-                .priceId("string")
+                .priceId("price_id")
                 .timeframeEnd(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                 .timeframeStart(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
-                .customerId("string")
-                .externalCustomerId("string")
+                .customerId("customer_id")
+                .externalCustomerId("external_customer_id")
                 .filter("my_numeric_property > 100 AND my_other_property = \'bar\'")
                 .groupingKeys(listOf("string"))
                 .build()
@@ -39,8 +39,8 @@ class PriceEvaluateParamsTest {
         assertThat(body.timeframeEnd()).isEqualTo(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
         assertThat(body.timeframeStart())
             .isEqualTo(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
-        assertThat(body.customerId()).isEqualTo("string")
-        assertThat(body.externalCustomerId()).isEqualTo("string")
+        assertThat(body.customerId()).isEqualTo("customer_id")
+        assertThat(body.externalCustomerId()).isEqualTo("external_customer_id")
         assertThat(body.filter())
             .isEqualTo("my_numeric_property > 100 AND my_other_property = \'bar\'")
         assertThat(body.groupingKeys()).isEqualTo(listOf("string"))
@@ -50,7 +50,7 @@ class PriceEvaluateParamsTest {
     fun getBodyWithoutOptionalFields() {
         val params =
             PriceEvaluateParams.builder()
-                .priceId("string")
+                .priceId("price_id")
                 .timeframeEnd(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                 .timeframeStart(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                 .build()
@@ -65,13 +65,13 @@ class PriceEvaluateParamsTest {
     fun getPathParam() {
         val params =
             PriceEvaluateParams.builder()
-                .priceId("string")
+                .priceId("price_id")
                 .timeframeEnd(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                 .timeframeStart(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                 .build()
         assertThat(params).isNotNull
         // path param "priceId"
-        assertThat(params.getPathParam(0)).isEqualTo("string")
+        assertThat(params.getPathParam(0)).isEqualTo("price_id")
         // out-of-bound path param
         assertThat(params.getPathParam(1)).isEqualTo("")
     }

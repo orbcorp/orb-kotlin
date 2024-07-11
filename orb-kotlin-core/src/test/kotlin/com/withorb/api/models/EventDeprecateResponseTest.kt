@@ -9,8 +9,9 @@ class EventDeprecateResponseTest {
 
     @Test
     fun createEventDeprecateResponse() {
-        val eventDeprecateResponse = EventDeprecateResponse.builder().deprecated("string").build()
+        val eventDeprecateResponse =
+            EventDeprecateResponse.builder().deprecated("deprecated").build()
         assertThat(eventDeprecateResponse).isNotNull
-        assertThat(eventDeprecateResponse.deprecated()).isEqualTo("string")
+        assertThat(eventDeprecateResponse.deprecated()).isEqualTo("deprecated")
     }
 }

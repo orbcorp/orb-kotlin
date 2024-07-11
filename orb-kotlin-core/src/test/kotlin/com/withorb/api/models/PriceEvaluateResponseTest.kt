@@ -14,7 +14,7 @@ class PriceEvaluateResponseTest {
                 .data(
                     listOf(
                         EvaluatePriceGroup.builder()
-                            .amount("string")
+                            .amount("amount")
                             .groupingValues(
                                 listOf(EvaluatePriceGroup.GroupingValue.ofString("string"))
                             )
@@ -27,7 +27,7 @@ class PriceEvaluateResponseTest {
         assertThat(priceEvaluateResponse.data())
             .containsExactly(
                 EvaluatePriceGroup.builder()
-                    .amount("string")
+                    .amount("amount")
                     .groupingValues(listOf(EvaluatePriceGroup.GroupingValue.ofString("string")))
                     .quantity(42.23)
                     .build()

@@ -10,16 +10,18 @@ class SubscriptionUnscheduleCancellationParamsTest {
 
     @Test
     fun createSubscriptionUnscheduleCancellationParams() {
-        SubscriptionUnscheduleCancellationParams.builder().subscriptionId("string").build()
+        SubscriptionUnscheduleCancellationParams.builder().subscriptionId("subscription_id").build()
     }
 
     @Test
     fun getPathParam() {
         val params =
-            SubscriptionUnscheduleCancellationParams.builder().subscriptionId("string").build()
+            SubscriptionUnscheduleCancellationParams.builder()
+                .subscriptionId("subscription_id")
+                .build()
         assertThat(params).isNotNull
         // path param "subscriptionId"
-        assertThat(params.getPathParam(0)).isEqualTo("string")
+        assertThat(params.getPathParam(0)).isEqualTo("subscription_id")
         // out-of-bound path param
         assertThat(params.getPathParam(1)).isEqualTo("")
     }

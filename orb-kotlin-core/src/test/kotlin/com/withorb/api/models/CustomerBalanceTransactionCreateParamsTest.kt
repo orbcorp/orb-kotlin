@@ -11,10 +11,10 @@ class CustomerBalanceTransactionCreateParamsTest {
     @Test
     fun createCustomerBalanceTransactionCreateParams() {
         CustomerBalanceTransactionCreateParams.builder()
-            .customerId("string")
-            .amount("string")
+            .customerId("customer_id")
+            .amount("amount")
             .type(CustomerBalanceTransactionCreateParams.Type.INCREMENT)
-            .description("string")
+            .description("description")
             .build()
     }
 
@@ -22,29 +22,29 @@ class CustomerBalanceTransactionCreateParamsTest {
     fun getBody() {
         val params =
             CustomerBalanceTransactionCreateParams.builder()
-                .customerId("string")
-                .amount("string")
+                .customerId("customer_id")
+                .amount("amount")
                 .type(CustomerBalanceTransactionCreateParams.Type.INCREMENT)
-                .description("string")
+                .description("description")
                 .build()
         val body = params.getBody()
         assertThat(body).isNotNull
-        assertThat(body.amount()).isEqualTo("string")
+        assertThat(body.amount()).isEqualTo("amount")
         assertThat(body.type()).isEqualTo(CustomerBalanceTransactionCreateParams.Type.INCREMENT)
-        assertThat(body.description()).isEqualTo("string")
+        assertThat(body.description()).isEqualTo("description")
     }
 
     @Test
     fun getBodyWithoutOptionalFields() {
         val params =
             CustomerBalanceTransactionCreateParams.builder()
-                .customerId("string")
-                .amount("string")
+                .customerId("customer_id")
+                .amount("amount")
                 .type(CustomerBalanceTransactionCreateParams.Type.INCREMENT)
                 .build()
         val body = params.getBody()
         assertThat(body).isNotNull
-        assertThat(body.amount()).isEqualTo("string")
+        assertThat(body.amount()).isEqualTo("amount")
         assertThat(body.type()).isEqualTo(CustomerBalanceTransactionCreateParams.Type.INCREMENT)
     }
 
@@ -52,13 +52,13 @@ class CustomerBalanceTransactionCreateParamsTest {
     fun getPathParam() {
         val params =
             CustomerBalanceTransactionCreateParams.builder()
-                .customerId("string")
-                .amount("string")
+                .customerId("customer_id")
+                .amount("amount")
                 .type(CustomerBalanceTransactionCreateParams.Type.INCREMENT)
                 .build()
         assertThat(params).isNotNull
         // path param "customerId"
-        assertThat(params.getPathParam(0)).isEqualTo("string")
+        assertThat(params.getPathParam(0)).isEqualTo("customer_id")
         // out-of-bound path param
         assertThat(params.getPathParam(1)).isEqualTo("")
     }

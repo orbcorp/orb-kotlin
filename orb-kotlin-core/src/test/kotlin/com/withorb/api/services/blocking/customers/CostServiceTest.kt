@@ -23,7 +23,7 @@ class CostServiceTest {
         val customerCostListResponse =
             costService.list(
                 CustomerCostListParams.builder()
-                    .customerId("string")
+                    .customerId("customer_id")
                     .timeframeEnd(OffsetDateTime.parse("2022-03-01T05:00:00Z"))
                     .timeframeStart(OffsetDateTime.parse("2022-02-01T05:00:00Z"))
                     .viewMode(CustomerCostListParams.ViewMode.PERIODIC)
@@ -44,7 +44,7 @@ class CostServiceTest {
         val customerCostListByExternalIdResponse =
             costService.listByExternalId(
                 CustomerCostListByExternalIdParams.builder()
-                    .externalCustomerId("string")
+                    .externalCustomerId("external_customer_id")
                     .timeframeEnd(OffsetDateTime.parse("2022-03-01T05:00:00Z"))
                     .timeframeStart(OffsetDateTime.parse("2022-02-01T05:00:00Z"))
                     .viewMode(CustomerCostListByExternalIdParams.ViewMode.PERIODIC)

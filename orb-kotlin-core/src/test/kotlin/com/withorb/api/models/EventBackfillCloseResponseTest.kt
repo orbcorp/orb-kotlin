@@ -12,10 +12,10 @@ class EventBackfillCloseResponseTest {
     fun createEventBackfillCloseResponse() {
         val eventBackfillCloseResponse =
             EventBackfillCloseResponse.builder()
-                .id("string")
+                .id("id")
                 .closeTime(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                 .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
-                .customerId("string")
+                .customerId("customer_id")
                 .eventsIngested(123L)
                 .revertedAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                 .status(EventBackfillCloseResponse.Status.PENDING)
@@ -23,12 +23,12 @@ class EventBackfillCloseResponseTest {
                 .timeframeStart(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                 .build()
         assertThat(eventBackfillCloseResponse).isNotNull
-        assertThat(eventBackfillCloseResponse.id()).isEqualTo("string")
+        assertThat(eventBackfillCloseResponse.id()).isEqualTo("id")
         assertThat(eventBackfillCloseResponse.closeTime())
             .isEqualTo(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
         assertThat(eventBackfillCloseResponse.createdAt())
             .isEqualTo(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
-        assertThat(eventBackfillCloseResponse.customerId()).isEqualTo("string")
+        assertThat(eventBackfillCloseResponse.customerId()).isEqualTo("customer_id")
         assertThat(eventBackfillCloseResponse.eventsIngested()).isEqualTo(123L)
         assertThat(eventBackfillCloseResponse.revertedAt())
             .isEqualTo(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))

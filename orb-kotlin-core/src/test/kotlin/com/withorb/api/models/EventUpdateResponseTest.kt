@@ -9,8 +9,8 @@ class EventUpdateResponseTest {
 
     @Test
     fun createEventUpdateResponse() {
-        val eventUpdateResponse = EventUpdateResponse.builder().amended("string").build()
+        val eventUpdateResponse = EventUpdateResponse.builder().amended("amended").build()
         assertThat(eventUpdateResponse).isNotNull
-        assertThat(eventUpdateResponse.amended()).isEqualTo("string")
+        assertThat(eventUpdateResponse.amended()).isEqualTo("amended")
     }
 }

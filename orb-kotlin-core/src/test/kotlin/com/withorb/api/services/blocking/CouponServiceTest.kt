@@ -65,7 +65,8 @@ class CouponServiceTest {
                 .apiKey("My API Key")
                 .build()
         val couponService = client.coupons()
-        val coupon = couponService.archive(CouponArchiveParams.builder().couponId("string").build())
+        val coupon =
+            couponService.archive(CouponArchiveParams.builder().couponId("coupon_id").build())
         println(coupon)
         coupon.validate()
     }
@@ -78,7 +79,7 @@ class CouponServiceTest {
                 .apiKey("My API Key")
                 .build()
         val couponService = client.coupons()
-        val coupon = couponService.fetch(CouponFetchParams.builder().couponId("string").build())
+        val coupon = couponService.fetch(CouponFetchParams.builder().couponId("coupon_id").build())
         println(coupon)
         coupon.validate()
     }

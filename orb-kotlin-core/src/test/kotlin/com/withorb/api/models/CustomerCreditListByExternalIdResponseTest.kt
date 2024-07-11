@@ -12,23 +12,24 @@ class CustomerCreditListByExternalIdResponseTest {
     fun createCustomerCreditListByExternalIdResponse() {
         val customerCreditListByExternalIdResponse =
             CustomerCreditListByExternalIdResponse.builder()
-                .id("string")
+                .id("id")
                 .balance(42.23)
                 .effectiveDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                 .expiryDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                 .maximumInitialBalance(42.23)
-                .perUnitCostBasis("string")
+                .perUnitCostBasis("per_unit_cost_basis")
                 .status(CustomerCreditListByExternalIdResponse.Status.ACTIVE)
                 .build()
         assertThat(customerCreditListByExternalIdResponse).isNotNull
-        assertThat(customerCreditListByExternalIdResponse.id()).isEqualTo("string")
+        assertThat(customerCreditListByExternalIdResponse.id()).isEqualTo("id")
         assertThat(customerCreditListByExternalIdResponse.balance()).isEqualTo(42.23)
         assertThat(customerCreditListByExternalIdResponse.effectiveDate())
             .isEqualTo(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
         assertThat(customerCreditListByExternalIdResponse.expiryDate())
             .isEqualTo(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
         assertThat(customerCreditListByExternalIdResponse.maximumInitialBalance()).isEqualTo(42.23)
-        assertThat(customerCreditListByExternalIdResponse.perUnitCostBasis()).isEqualTo("string")
+        assertThat(customerCreditListByExternalIdResponse.perUnitCostBasis())
+            .isEqualTo("per_unit_cost_basis")
         assertThat(customerCreditListByExternalIdResponse.status())
             .isEqualTo(CustomerCreditListByExternalIdResponse.Status.ACTIVE)
     }

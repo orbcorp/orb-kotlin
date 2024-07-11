@@ -34,7 +34,9 @@ class CreditNoteServiceTest {
                 .build()
         val creditNoteService = client.creditNotes()
         val creditNote =
-            creditNoteService.fetch(CreditNoteFetchParams.builder().creditNoteId("string").build())
+            creditNoteService.fetch(
+                CreditNoteFetchParams.builder().creditNoteId("credit_note_id").build()
+            )
         println(creditNote)
         creditNote.validate()
     }

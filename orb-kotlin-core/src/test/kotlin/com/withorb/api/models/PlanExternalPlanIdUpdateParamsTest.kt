@@ -11,8 +11,8 @@ class PlanExternalPlanIdUpdateParamsTest {
     @Test
     fun createPlanExternalPlanIdUpdateParams() {
         PlanExternalPlanIdUpdateParams.builder()
-            .otherExternalPlanId("string")
-            .externalPlanId("string")
+            .otherExternalPlanId("external_plan_id")
+            .externalPlanId("external_plan_id")
             .metadata(PlanExternalPlanIdUpdateParams.Metadata.builder().build())
             .build()
     }
@@ -21,30 +21,32 @@ class PlanExternalPlanIdUpdateParamsTest {
     fun getBody() {
         val params =
             PlanExternalPlanIdUpdateParams.builder()
-                .otherExternalPlanId("string")
-                .externalPlanId("string")
+                .otherExternalPlanId("external_plan_id")
+                .externalPlanId("external_plan_id")
                 .metadata(PlanExternalPlanIdUpdateParams.Metadata.builder().build())
                 .build()
         val body = params.getBody()
         assertThat(body).isNotNull
-        assertThat(body.externalPlanId()).isEqualTo("string")
+        assertThat(body.externalPlanId()).isEqualTo("external_plan_id")
         assertThat(body.metadata())
             .isEqualTo(PlanExternalPlanIdUpdateParams.Metadata.builder().build())
     }
 
     @Test
     fun getBodyWithoutOptionalFields() {
-        val params = PlanExternalPlanIdUpdateParams.builder().otherExternalPlanId("string").build()
+        val params =
+            PlanExternalPlanIdUpdateParams.builder().otherExternalPlanId("external_plan_id").build()
         val body = params.getBody()
         assertThat(body).isNotNull
     }
 
     @Test
     fun getPathParam() {
-        val params = PlanExternalPlanIdUpdateParams.builder().otherExternalPlanId("string").build()
+        val params =
+            PlanExternalPlanIdUpdateParams.builder().otherExternalPlanId("external_plan_id").build()
         assertThat(params).isNotNull
         // path param "otherExternalPlanId"
-        assertThat(params.getPathParam(0)).isEqualTo("string")
+        assertThat(params.getPathParam(0)).isEqualTo("external_plan_id")
         // out-of-bound path param
         assertThat(params.getPathParam(1)).isEqualTo("")
     }

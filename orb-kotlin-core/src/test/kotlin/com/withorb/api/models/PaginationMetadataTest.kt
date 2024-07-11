@@ -10,9 +10,9 @@ class PaginationMetadataTest {
     @Test
     fun createPaginationMetadata() {
         val paginationMetadata =
-            PaginationMetadata.builder().hasMore(true).nextCursor("string").build()
+            PaginationMetadata.builder().hasMore(true).nextCursor("next_cursor").build()
         assertThat(paginationMetadata).isNotNull
         assertThat(paginationMetadata.hasMore()).isEqualTo(true)
-        assertThat(paginationMetadata.nextCursor()).isEqualTo("string")
+        assertThat(paginationMetadata.nextCursor()).isEqualTo("next_cursor")
     }
 }

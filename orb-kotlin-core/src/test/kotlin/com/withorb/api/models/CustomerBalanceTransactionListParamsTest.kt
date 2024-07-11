@@ -12,8 +12,8 @@ class CustomerBalanceTransactionListParamsTest {
     @Test
     fun createCustomerBalanceTransactionListParams() {
         CustomerBalanceTransactionListParams.builder()
-            .customerId("string")
-            .cursor("string")
+            .customerId("customer_id")
+            .cursor("cursor")
             .limit(123L)
             .operationTimeGt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
             .operationTimeGte(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
@@ -26,8 +26,8 @@ class CustomerBalanceTransactionListParamsTest {
     fun getQueryParams() {
         val params =
             CustomerBalanceTransactionListParams.builder()
-                .customerId("string")
-                .cursor("string")
+                .customerId("customer_id")
+                .cursor("cursor")
                 .limit(123L)
                 .operationTimeGt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                 .operationTimeGte(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
@@ -35,7 +35,7 @@ class CustomerBalanceTransactionListParamsTest {
                 .operationTimeLte(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                 .build()
         val expected = mutableMapOf<String, List<String>>()
-        expected.put("cursor", listOf("string"))
+        expected.put("cursor", listOf("cursor"))
         expected.put("limit", listOf("123"))
         expected.put("operation_time[gt]", listOf("2019-12-27T18:11:19.117Z"))
         expected.put("operation_time[gte]", listOf("2019-12-27T18:11:19.117Z"))
@@ -46,17 +46,19 @@ class CustomerBalanceTransactionListParamsTest {
 
     @Test
     fun getQueryParamsWithoutOptionalFields() {
-        val params = CustomerBalanceTransactionListParams.builder().customerId("string").build()
+        val params =
+            CustomerBalanceTransactionListParams.builder().customerId("customer_id").build()
         val expected = mutableMapOf<String, List<String>>()
         assertThat(params.getQueryParams()).isEqualTo(expected)
     }
 
     @Test
     fun getPathParam() {
-        val params = CustomerBalanceTransactionListParams.builder().customerId("string").build()
+        val params =
+            CustomerBalanceTransactionListParams.builder().customerId("customer_id").build()
         assertThat(params).isNotNull
         // path param "customerId"
-        assertThat(params.getPathParam(0)).isEqualTo("string")
+        assertThat(params.getPathParam(0)).isEqualTo("customer_id")
         // out-of-bound path param
         assertThat(params.getPathParam(1)).isEqualTo("")
     }

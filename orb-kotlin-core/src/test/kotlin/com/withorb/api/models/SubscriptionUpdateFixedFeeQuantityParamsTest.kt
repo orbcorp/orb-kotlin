@@ -12,8 +12,8 @@ class SubscriptionUpdateFixedFeeQuantityParamsTest {
     @Test
     fun createSubscriptionUpdateFixedFeeQuantityParams() {
         SubscriptionUpdateFixedFeeQuantityParams.builder()
-            .subscriptionId("string")
-            .priceId("string")
+            .subscriptionId("subscription_id")
+            .priceId("price_id")
             .quantity(42.23)
             .changeOption(SubscriptionUpdateFixedFeeQuantityParams.ChangeOption.IMMEDIATE)
             .effectiveDate(LocalDate.parse("2022-12-21"))
@@ -24,15 +24,15 @@ class SubscriptionUpdateFixedFeeQuantityParamsTest {
     fun getBody() {
         val params =
             SubscriptionUpdateFixedFeeQuantityParams.builder()
-                .subscriptionId("string")
-                .priceId("string")
+                .subscriptionId("subscription_id")
+                .priceId("price_id")
                 .quantity(42.23)
                 .changeOption(SubscriptionUpdateFixedFeeQuantityParams.ChangeOption.IMMEDIATE)
                 .effectiveDate(LocalDate.parse("2022-12-21"))
                 .build()
         val body = params.getBody()
         assertThat(body).isNotNull
-        assertThat(body.priceId()).isEqualTo("string")
+        assertThat(body.priceId()).isEqualTo("price_id")
         assertThat(body.quantity()).isEqualTo(42.23)
         assertThat(body.changeOption())
             .isEqualTo(SubscriptionUpdateFixedFeeQuantityParams.ChangeOption.IMMEDIATE)
@@ -43,13 +43,13 @@ class SubscriptionUpdateFixedFeeQuantityParamsTest {
     fun getBodyWithoutOptionalFields() {
         val params =
             SubscriptionUpdateFixedFeeQuantityParams.builder()
-                .subscriptionId("string")
-                .priceId("string")
+                .subscriptionId("subscription_id")
+                .priceId("price_id")
                 .quantity(42.23)
                 .build()
         val body = params.getBody()
         assertThat(body).isNotNull
-        assertThat(body.priceId()).isEqualTo("string")
+        assertThat(body.priceId()).isEqualTo("price_id")
         assertThat(body.quantity()).isEqualTo(42.23)
     }
 
@@ -57,13 +57,13 @@ class SubscriptionUpdateFixedFeeQuantityParamsTest {
     fun getPathParam() {
         val params =
             SubscriptionUpdateFixedFeeQuantityParams.builder()
-                .subscriptionId("string")
-                .priceId("string")
+                .subscriptionId("subscription_id")
+                .priceId("price_id")
                 .quantity(42.23)
                 .build()
         assertThat(params).isNotNull
         // path param "subscriptionId"
-        assertThat(params.getPathParam(0)).isEqualTo("string")
+        assertThat(params.getPathParam(0)).isEqualTo("subscription_id")
         // out-of-bound path param
         assertThat(params.getPathParam(1)).isEqualTo("")
     }
