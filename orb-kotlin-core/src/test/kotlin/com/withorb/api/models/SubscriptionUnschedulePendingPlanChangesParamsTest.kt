@@ -10,18 +10,20 @@ class SubscriptionUnschedulePendingPlanChangesParamsTest {
 
     @Test
     fun createSubscriptionUnschedulePendingPlanChangesParams() {
-        SubscriptionUnschedulePendingPlanChangesParams.builder().subscriptionId("string").build()
+        SubscriptionUnschedulePendingPlanChangesParams.builder()
+            .subscriptionId("subscription_id")
+            .build()
     }
 
     @Test
     fun getPathParam() {
         val params =
             SubscriptionUnschedulePendingPlanChangesParams.builder()
-                .subscriptionId("string")
+                .subscriptionId("subscription_id")
                 .build()
         assertThat(params).isNotNull
         // path param "subscriptionId"
-        assertThat(params.getPathParam(0)).isEqualTo("string")
+        assertThat(params.getPathParam(0)).isEqualTo("subscription_id")
         // out-of-bound path param
         assertThat(params.getPathParam(1)).isEqualTo("")
     }

@@ -12,8 +12,8 @@ class SubscriptionFetchScheduleParamsTest {
     @Test
     fun createSubscriptionFetchScheduleParams() {
         SubscriptionFetchScheduleParams.builder()
-            .subscriptionId("string")
-            .cursor("string")
+            .subscriptionId("subscription_id")
+            .cursor("cursor")
             .limit(123L)
             .startDateGt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
             .startDateGte(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
@@ -26,8 +26,8 @@ class SubscriptionFetchScheduleParamsTest {
     fun getQueryParams() {
         val params =
             SubscriptionFetchScheduleParams.builder()
-                .subscriptionId("string")
-                .cursor("string")
+                .subscriptionId("subscription_id")
+                .cursor("cursor")
                 .limit(123L)
                 .startDateGt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                 .startDateGte(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
@@ -35,7 +35,7 @@ class SubscriptionFetchScheduleParamsTest {
                 .startDateLte(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                 .build()
         val expected = mutableMapOf<String, List<String>>()
-        expected.put("cursor", listOf("string"))
+        expected.put("cursor", listOf("cursor"))
         expected.put("limit", listOf("123"))
         expected.put("start_date[gt]", listOf("2019-12-27T18:11:19.117Z"))
         expected.put("start_date[gte]", listOf("2019-12-27T18:11:19.117Z"))
@@ -46,17 +46,19 @@ class SubscriptionFetchScheduleParamsTest {
 
     @Test
     fun getQueryParamsWithoutOptionalFields() {
-        val params = SubscriptionFetchScheduleParams.builder().subscriptionId("string").build()
+        val params =
+            SubscriptionFetchScheduleParams.builder().subscriptionId("subscription_id").build()
         val expected = mutableMapOf<String, List<String>>()
         assertThat(params.getQueryParams()).isEqualTo(expected)
     }
 
     @Test
     fun getPathParam() {
-        val params = SubscriptionFetchScheduleParams.builder().subscriptionId("string").build()
+        val params =
+            SubscriptionFetchScheduleParams.builder().subscriptionId("subscription_id").build()
         assertThat(params).isNotNull
         // path param "subscriptionId"
-        assertThat(params.getPathParam(0)).isEqualTo("string")
+        assertThat(params.getPathParam(0)).isEqualTo("subscription_id")
         // out-of-bound path param
         assertThat(params.getPathParam(1)).isEqualTo("")
     }

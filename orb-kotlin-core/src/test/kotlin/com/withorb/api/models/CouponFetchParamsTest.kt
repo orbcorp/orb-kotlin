@@ -10,15 +10,15 @@ class CouponFetchParamsTest {
 
     @Test
     fun createCouponFetchParams() {
-        CouponFetchParams.builder().couponId("string").build()
+        CouponFetchParams.builder().couponId("coupon_id").build()
     }
 
     @Test
     fun getPathParam() {
-        val params = CouponFetchParams.builder().couponId("string").build()
+        val params = CouponFetchParams.builder().couponId("coupon_id").build()
         assertThat(params).isNotNull
         // path param "couponId"
-        assertThat(params.getPathParam(0)).isEqualTo("string")
+        assertThat(params.getPathParam(0)).isEqualTo("coupon_id")
         // out-of-bound path param
         assertThat(params.getPathParam(1)).isEqualTo("")
     }

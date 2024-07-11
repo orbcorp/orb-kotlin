@@ -11,12 +11,12 @@ class EvaluatePriceGroupTest {
     fun createEvaluatePriceGroup() {
         val evaluatePriceGroup =
             EvaluatePriceGroup.builder()
-                .amount("string")
+                .amount("amount")
                 .groupingValues(listOf(EvaluatePriceGroup.GroupingValue.ofString("string")))
                 .quantity(42.23)
                 .build()
         assertThat(evaluatePriceGroup).isNotNull
-        assertThat(evaluatePriceGroup.amount()).isEqualTo("string")
+        assertThat(evaluatePriceGroup.amount()).isEqualTo("amount")
         assertThat(evaluatePriceGroup.groupingValues())
             .containsExactly(EvaluatePriceGroup.GroupingValue.ofString("string"))
         assertThat(evaluatePriceGroup.quantity()).isEqualTo(42.23)

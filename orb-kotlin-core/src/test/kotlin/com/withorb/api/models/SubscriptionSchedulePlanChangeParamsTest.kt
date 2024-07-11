@@ -11,14 +11,14 @@ class SubscriptionSchedulePlanChangeParamsTest {
     @Test
     fun createSubscriptionSchedulePlanChangeParams() {
         SubscriptionSchedulePlanChangeParams.builder()
-            .subscriptionId("string")
+            .subscriptionId("subscription_id")
             .changeOption(SubscriptionSchedulePlanChangeParams.ChangeOption.REQUESTED_DATE)
             .alignBillingWithPlanChangeDate(true)
             .billingCycleAlignment(
                 SubscriptionSchedulePlanChangeParams.BillingCycleAlignment.UNCHANGED
             )
             .changeDate("2017-07-21T17:32:28Z")
-            .couponRedemptionCode("string")
+            .couponRedemptionCode("coupon_redemption_code")
             .creditsOverageRate(42.23)
             .externalPlanId("ZMwNQefe7J3ecf7W")
             .initialPhaseOrder(123L)
@@ -30,7 +30,7 @@ class SubscriptionSchedulePlanChangeParamsTest {
                     SubscriptionSchedulePlanChangeParams.PriceOverride.ofOverrideUnitPrice(
                         SubscriptionSchedulePlanChangeParams.PriceOverride.OverrideUnitPrice
                             .builder()
-                            .id("string")
+                            .id("id")
                             .modelType(
                                 SubscriptionSchedulePlanChangeParams.PriceOverride.OverrideUnitPrice
                                     .ModelType
@@ -40,11 +40,11 @@ class SubscriptionSchedulePlanChangeParamsTest {
                                 SubscriptionSchedulePlanChangeParams.PriceOverride.OverrideUnitPrice
                                     .UnitConfig
                                     .builder()
-                                    .unitAmount("string")
+                                    .unitAmount("unit_amount")
                                     .build()
                             )
                             .conversionRate(42.23)
-                            .currency("string")
+                            .currency("currency")
                             .discount(
                                 SubscriptionSchedulePlanChangeParams.PriceOverride.OverrideUnitPrice
                                     .Discount
@@ -56,10 +56,10 @@ class SubscriptionSchedulePlanChangeParamsTest {
                                             .DiscountType
                                             .PERCENTAGE
                                     )
-                                    .amountDiscount("string")
+                                    .amountDiscount("amount_discount")
                                     .appliesToPriceIds(listOf("string"))
                                     .percentageDiscount(42.23)
-                                    .trialAmountDiscount("string")
+                                    .trialAmountDiscount("trial_amount_discount")
                                     .usageDiscount(42.23)
                                     .build()
                             )
@@ -77,14 +77,14 @@ class SubscriptionSchedulePlanChangeParamsTest {
     fun getBody() {
         val params =
             SubscriptionSchedulePlanChangeParams.builder()
-                .subscriptionId("string")
+                .subscriptionId("subscription_id")
                 .changeOption(SubscriptionSchedulePlanChangeParams.ChangeOption.REQUESTED_DATE)
                 .alignBillingWithPlanChangeDate(true)
                 .billingCycleAlignment(
                     SubscriptionSchedulePlanChangeParams.BillingCycleAlignment.UNCHANGED
                 )
                 .changeDate("2017-07-21T17:32:28Z")
-                .couponRedemptionCode("string")
+                .couponRedemptionCode("coupon_redemption_code")
                 .creditsOverageRate(42.23)
                 .externalPlanId("ZMwNQefe7J3ecf7W")
                 .initialPhaseOrder(123L)
@@ -96,7 +96,7 @@ class SubscriptionSchedulePlanChangeParamsTest {
                         SubscriptionSchedulePlanChangeParams.PriceOverride.ofOverrideUnitPrice(
                             SubscriptionSchedulePlanChangeParams.PriceOverride.OverrideUnitPrice
                                 .builder()
-                                .id("string")
+                                .id("id")
                                 .modelType(
                                     SubscriptionSchedulePlanChangeParams.PriceOverride
                                         .OverrideUnitPrice
@@ -108,11 +108,11 @@ class SubscriptionSchedulePlanChangeParamsTest {
                                         .OverrideUnitPrice
                                         .UnitConfig
                                         .builder()
-                                        .unitAmount("string")
+                                        .unitAmount("unit_amount")
                                         .build()
                                 )
                                 .conversionRate(42.23)
-                                .currency("string")
+                                .currency("currency")
                                 .discount(
                                     SubscriptionSchedulePlanChangeParams.PriceOverride
                                         .OverrideUnitPrice
@@ -125,10 +125,10 @@ class SubscriptionSchedulePlanChangeParamsTest {
                                                 .DiscountType
                                                 .PERCENTAGE
                                         )
-                                        .amountDiscount("string")
+                                        .amountDiscount("amount_discount")
                                         .appliesToPriceIds(listOf("string"))
                                         .percentageDiscount(42.23)
-                                        .trialAmountDiscount("string")
+                                        .trialAmountDiscount("trial_amount_discount")
                                         .usageDiscount(42.23)
                                         .build()
                                 )
@@ -148,7 +148,7 @@ class SubscriptionSchedulePlanChangeParamsTest {
         assertThat(body.billingCycleAlignment())
             .isEqualTo(SubscriptionSchedulePlanChangeParams.BillingCycleAlignment.UNCHANGED)
         assertThat(body.changeDate()).isEqualTo("2017-07-21T17:32:28Z")
-        assertThat(body.couponRedemptionCode()).isEqualTo("string")
+        assertThat(body.couponRedemptionCode()).isEqualTo("coupon_redemption_code")
         assertThat(body.creditsOverageRate()).isEqualTo(42.23)
         assertThat(body.externalPlanId()).isEqualTo("ZMwNQefe7J3ecf7W")
         assertThat(body.initialPhaseOrder()).isEqualTo(123L)
@@ -161,7 +161,7 @@ class SubscriptionSchedulePlanChangeParamsTest {
                     SubscriptionSchedulePlanChangeParams.PriceOverride.ofOverrideUnitPrice(
                         SubscriptionSchedulePlanChangeParams.PriceOverride.OverrideUnitPrice
                             .builder()
-                            .id("string")
+                            .id("id")
                             .modelType(
                                 SubscriptionSchedulePlanChangeParams.PriceOverride.OverrideUnitPrice
                                     .ModelType
@@ -171,11 +171,11 @@ class SubscriptionSchedulePlanChangeParamsTest {
                                 SubscriptionSchedulePlanChangeParams.PriceOverride.OverrideUnitPrice
                                     .UnitConfig
                                     .builder()
-                                    .unitAmount("string")
+                                    .unitAmount("unit_amount")
                                     .build()
                             )
                             .conversionRate(42.23)
-                            .currency("string")
+                            .currency("currency")
                             .discount(
                                 SubscriptionSchedulePlanChangeParams.PriceOverride.OverrideUnitPrice
                                     .Discount
@@ -187,10 +187,10 @@ class SubscriptionSchedulePlanChangeParamsTest {
                                             .DiscountType
                                             .PERCENTAGE
                                     )
-                                    .amountDiscount("string")
+                                    .amountDiscount("amount_discount")
                                     .appliesToPriceIds(listOf("string"))
                                     .percentageDiscount(42.23)
-                                    .trialAmountDiscount("string")
+                                    .trialAmountDiscount("trial_amount_discount")
                                     .usageDiscount(42.23)
                                     .build()
                             )
@@ -207,7 +207,7 @@ class SubscriptionSchedulePlanChangeParamsTest {
     fun getBodyWithoutOptionalFields() {
         val params =
             SubscriptionSchedulePlanChangeParams.builder()
-                .subscriptionId("string")
+                .subscriptionId("subscription_id")
                 .changeOption(SubscriptionSchedulePlanChangeParams.ChangeOption.REQUESTED_DATE)
                 .build()
         val body = params.getBody()
@@ -220,12 +220,12 @@ class SubscriptionSchedulePlanChangeParamsTest {
     fun getPathParam() {
         val params =
             SubscriptionSchedulePlanChangeParams.builder()
-                .subscriptionId("string")
+                .subscriptionId("subscription_id")
                 .changeOption(SubscriptionSchedulePlanChangeParams.ChangeOption.REQUESTED_DATE)
                 .build()
         assertThat(params).isNotNull
         // path param "subscriptionId"
-        assertThat(params.getPathParam(0)).isEqualTo("string")
+        assertThat(params.getPathParam(0)).isEqualTo("subscription_id")
         // out-of-bound path param
         assertThat(params.getPathParam(1)).isEqualTo("")
     }

@@ -11,9 +11,9 @@ class CustomerCreditListByExternalIdParamsTest {
     @Test
     fun createCustomerCreditListByExternalIdParams() {
         CustomerCreditListByExternalIdParams.builder()
-            .externalCustomerId("string")
-            .currency("string")
-            .cursor("string")
+            .externalCustomerId("external_customer_id")
+            .currency("currency")
+            .cursor("cursor")
             .includeAllBlocks(true)
             .limit(123L)
             .build()
@@ -23,15 +23,15 @@ class CustomerCreditListByExternalIdParamsTest {
     fun getQueryParams() {
         val params =
             CustomerCreditListByExternalIdParams.builder()
-                .externalCustomerId("string")
-                .currency("string")
-                .cursor("string")
+                .externalCustomerId("external_customer_id")
+                .currency("currency")
+                .cursor("cursor")
                 .includeAllBlocks(true)
                 .limit(123L)
                 .build()
         val expected = mutableMapOf<String, List<String>>()
-        expected.put("currency", listOf("string"))
-        expected.put("cursor", listOf("string"))
+        expected.put("currency", listOf("currency"))
+        expected.put("cursor", listOf("cursor"))
         expected.put("include_all_blocks", listOf("true"))
         expected.put("limit", listOf("123"))
         assertThat(params.getQueryParams()).isEqualTo(expected)
@@ -40,7 +40,9 @@ class CustomerCreditListByExternalIdParamsTest {
     @Test
     fun getQueryParamsWithoutOptionalFields() {
         val params =
-            CustomerCreditListByExternalIdParams.builder().externalCustomerId("string").build()
+            CustomerCreditListByExternalIdParams.builder()
+                .externalCustomerId("external_customer_id")
+                .build()
         val expected = mutableMapOf<String, List<String>>()
         assertThat(params.getQueryParams()).isEqualTo(expected)
     }
@@ -48,10 +50,12 @@ class CustomerCreditListByExternalIdParamsTest {
     @Test
     fun getPathParam() {
         val params =
-            CustomerCreditListByExternalIdParams.builder().externalCustomerId("string").build()
+            CustomerCreditListByExternalIdParams.builder()
+                .externalCustomerId("external_customer_id")
+                .build()
         assertThat(params).isNotNull
         // path param "externalCustomerId"
-        assertThat(params.getPathParam(0)).isEqualTo("string")
+        assertThat(params.getPathParam(0)).isEqualTo("external_customer_id")
         // out-of-bound path param
         assertThat(params.getPathParam(1)).isEqualTo("")
     }

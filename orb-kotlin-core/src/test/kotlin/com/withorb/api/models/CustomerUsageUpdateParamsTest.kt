@@ -13,15 +13,15 @@ class CustomerUsageUpdateParamsTest {
     @Test
     fun createCustomerUsageUpdateParams() {
         CustomerUsageUpdateParams.builder()
-            .id("string")
+            .id("customer_id")
             .events(
                 listOf(
                     CustomerUsageUpdateParams.Event.builder()
-                        .eventName("string")
+                        .eventName("event_name")
                         .properties(JsonValue.from(mapOf<String, Any>()))
                         .timestamp(OffsetDateTime.parse("2020-12-09T16:09:53Z"))
-                        .customerId("string")
-                        .externalCustomerId("string")
+                        .customerId("customer_id")
+                        .externalCustomerId("external_customer_id")
                         .build()
                 )
             )
@@ -34,15 +34,15 @@ class CustomerUsageUpdateParamsTest {
     fun getQueryParams() {
         val params =
             CustomerUsageUpdateParams.builder()
-                .id("string")
+                .id("customer_id")
                 .events(
                     listOf(
                         CustomerUsageUpdateParams.Event.builder()
-                            .eventName("string")
+                            .eventName("event_name")
                             .properties(JsonValue.from(mapOf<String, Any>()))
                             .timestamp(OffsetDateTime.parse("2020-12-09T16:09:53Z"))
-                            .customerId("string")
-                            .externalCustomerId("string")
+                            .customerId("customer_id")
+                            .externalCustomerId("external_customer_id")
                             .build()
                     )
                 )
@@ -59,11 +59,11 @@ class CustomerUsageUpdateParamsTest {
     fun getQueryParamsWithoutOptionalFields() {
         val params =
             CustomerUsageUpdateParams.builder()
-                .id("string")
+                .id("customer_id")
                 .events(
                     listOf(
                         CustomerUsageUpdateParams.Event.builder()
-                            .eventName("string")
+                            .eventName("event_name")
                             .properties(JsonValue.from(mapOf<String, Any>()))
                             .timestamp(OffsetDateTime.parse("2020-12-09T16:09:53Z"))
                             .build()
@@ -78,15 +78,15 @@ class CustomerUsageUpdateParamsTest {
     fun getBody() {
         val params =
             CustomerUsageUpdateParams.builder()
-                .id("string")
+                .id("customer_id")
                 .events(
                     listOf(
                         CustomerUsageUpdateParams.Event.builder()
-                            .eventName("string")
+                            .eventName("event_name")
                             .properties(JsonValue.from(mapOf<String, Any>()))
                             .timestamp(OffsetDateTime.parse("2020-12-09T16:09:53Z"))
-                            .customerId("string")
-                            .externalCustomerId("string")
+                            .customerId("customer_id")
+                            .externalCustomerId("external_customer_id")
                             .build()
                     )
                 )
@@ -99,11 +99,11 @@ class CustomerUsageUpdateParamsTest {
             .isEqualTo(
                 listOf(
                     CustomerUsageUpdateParams.Event.builder()
-                        .eventName("string")
+                        .eventName("event_name")
                         .properties(JsonValue.from(mapOf<String, Any>()))
                         .timestamp(OffsetDateTime.parse("2020-12-09T16:09:53Z"))
-                        .customerId("string")
-                        .externalCustomerId("string")
+                        .customerId("customer_id")
+                        .externalCustomerId("external_customer_id")
                         .build()
                 )
             )
@@ -113,11 +113,11 @@ class CustomerUsageUpdateParamsTest {
     fun getBodyWithoutOptionalFields() {
         val params =
             CustomerUsageUpdateParams.builder()
-                .id("string")
+                .id("customer_id")
                 .events(
                     listOf(
                         CustomerUsageUpdateParams.Event.builder()
-                            .eventName("string")
+                            .eventName("event_name")
                             .properties(JsonValue.from(mapOf<String, Any>()))
                             .timestamp(OffsetDateTime.parse("2020-12-09T16:09:53Z"))
                             .build()
@@ -130,7 +130,7 @@ class CustomerUsageUpdateParamsTest {
             .isEqualTo(
                 listOf(
                     CustomerUsageUpdateParams.Event.builder()
-                        .eventName("string")
+                        .eventName("event_name")
                         .properties(JsonValue.from(mapOf<String, Any>()))
                         .timestamp(OffsetDateTime.parse("2020-12-09T16:09:53Z"))
                         .build()
@@ -142,11 +142,11 @@ class CustomerUsageUpdateParamsTest {
     fun getPathParam() {
         val params =
             CustomerUsageUpdateParams.builder()
-                .id("string")
+                .id("customer_id")
                 .events(
                     listOf(
                         CustomerUsageUpdateParams.Event.builder()
-                            .eventName("string")
+                            .eventName("event_name")
                             .properties(JsonValue.from(mapOf<String, Any>()))
                             .timestamp(OffsetDateTime.parse("2020-12-09T16:09:53Z"))
                             .build()
@@ -155,7 +155,7 @@ class CustomerUsageUpdateParamsTest {
                 .build()
         assertThat(params).isNotNull
         // path param "id"
-        assertThat(params.getPathParam(0)).isEqualTo("string")
+        assertThat(params.getPathParam(0)).isEqualTo("customer_id")
         // out-of-bound path param
         assertThat(params.getPathParam(1)).isEqualTo("")
     }

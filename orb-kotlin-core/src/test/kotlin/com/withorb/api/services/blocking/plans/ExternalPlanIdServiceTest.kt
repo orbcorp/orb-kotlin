@@ -22,8 +22,8 @@ class ExternalPlanIdServiceTest {
         val plan =
             externalPlanIdService.update(
                 PlanExternalPlanIdUpdateParams.builder()
-                    .otherExternalPlanId("string")
-                    .externalPlanId("string")
+                    .otherExternalPlanId("external_plan_id")
+                    .externalPlanId("external_plan_id")
                     .metadata(PlanExternalPlanIdUpdateParams.Metadata.builder().build())
                     .build()
             )
@@ -41,7 +41,7 @@ class ExternalPlanIdServiceTest {
         val externalPlanIdService = client.plans().externalPlanId()
         val plan =
             externalPlanIdService.fetch(
-                PlanExternalPlanIdFetchParams.builder().externalPlanId("string").build()
+                PlanExternalPlanIdFetchParams.builder().externalPlanId("external_plan_id").build()
             )
         println(plan)
         plan.validate()

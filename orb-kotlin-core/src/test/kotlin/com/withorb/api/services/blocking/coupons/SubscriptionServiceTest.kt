@@ -22,7 +22,7 @@ class SubscriptionServiceTest {
         val subscriptionService = client.coupons().subscriptions()
         val subscriptions =
             subscriptionService.list(
-                CouponSubscriptionListParams.builder().couponId("string").build()
+                CouponSubscriptionListParams.builder().couponId("coupon_id").build()
             )
         println(subscriptions)
         subscriptions.data().forEach { it.validate() }

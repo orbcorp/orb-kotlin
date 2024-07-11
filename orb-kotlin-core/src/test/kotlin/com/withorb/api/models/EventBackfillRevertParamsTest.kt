@@ -10,15 +10,15 @@ class EventBackfillRevertParamsTest {
 
     @Test
     fun createEventBackfillRevertParams() {
-        EventBackfillRevertParams.builder().backfillId("string").build()
+        EventBackfillRevertParams.builder().backfillId("backfill_id").build()
     }
 
     @Test
     fun getPathParam() {
-        val params = EventBackfillRevertParams.builder().backfillId("string").build()
+        val params = EventBackfillRevertParams.builder().backfillId("backfill_id").build()
         assertThat(params).isNotNull
         // path param "backfillId"
-        assertThat(params.getPathParam(0)).isEqualTo("string")
+        assertThat(params.getPathParam(0)).isEqualTo("backfill_id")
         // out-of-bound path param
         assertThat(params.getPathParam(1)).isEqualTo("")
     }

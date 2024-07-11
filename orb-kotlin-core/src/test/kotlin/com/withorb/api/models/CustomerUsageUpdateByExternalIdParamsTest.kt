@@ -13,15 +13,15 @@ class CustomerUsageUpdateByExternalIdParamsTest {
     @Test
     fun createCustomerUsageUpdateByExternalIdParams() {
         CustomerUsageUpdateByExternalIdParams.builder()
-            .id("string")
+            .id("external_customer_id")
             .events(
                 listOf(
                     CustomerUsageUpdateByExternalIdParams.Event.builder()
-                        .eventName("string")
+                        .eventName("event_name")
                         .properties(JsonValue.from(mapOf<String, Any>()))
                         .timestamp(OffsetDateTime.parse("2020-12-09T16:09:53Z"))
-                        .customerId("string")
-                        .externalCustomerId("string")
+                        .customerId("customer_id")
+                        .externalCustomerId("external_customer_id")
                         .build()
                 )
             )
@@ -34,15 +34,15 @@ class CustomerUsageUpdateByExternalIdParamsTest {
     fun getQueryParams() {
         val params =
             CustomerUsageUpdateByExternalIdParams.builder()
-                .id("string")
+                .id("external_customer_id")
                 .events(
                     listOf(
                         CustomerUsageUpdateByExternalIdParams.Event.builder()
-                            .eventName("string")
+                            .eventName("event_name")
                             .properties(JsonValue.from(mapOf<String, Any>()))
                             .timestamp(OffsetDateTime.parse("2020-12-09T16:09:53Z"))
-                            .customerId("string")
-                            .externalCustomerId("string")
+                            .customerId("customer_id")
+                            .externalCustomerId("external_customer_id")
                             .build()
                     )
                 )
@@ -59,11 +59,11 @@ class CustomerUsageUpdateByExternalIdParamsTest {
     fun getQueryParamsWithoutOptionalFields() {
         val params =
             CustomerUsageUpdateByExternalIdParams.builder()
-                .id("string")
+                .id("external_customer_id")
                 .events(
                     listOf(
                         CustomerUsageUpdateByExternalIdParams.Event.builder()
-                            .eventName("string")
+                            .eventName("event_name")
                             .properties(JsonValue.from(mapOf<String, Any>()))
                             .timestamp(OffsetDateTime.parse("2020-12-09T16:09:53Z"))
                             .build()
@@ -78,15 +78,15 @@ class CustomerUsageUpdateByExternalIdParamsTest {
     fun getBody() {
         val params =
             CustomerUsageUpdateByExternalIdParams.builder()
-                .id("string")
+                .id("external_customer_id")
                 .events(
                     listOf(
                         CustomerUsageUpdateByExternalIdParams.Event.builder()
-                            .eventName("string")
+                            .eventName("event_name")
                             .properties(JsonValue.from(mapOf<String, Any>()))
                             .timestamp(OffsetDateTime.parse("2020-12-09T16:09:53Z"))
-                            .customerId("string")
-                            .externalCustomerId("string")
+                            .customerId("customer_id")
+                            .externalCustomerId("external_customer_id")
                             .build()
                     )
                 )
@@ -99,11 +99,11 @@ class CustomerUsageUpdateByExternalIdParamsTest {
             .isEqualTo(
                 listOf(
                     CustomerUsageUpdateByExternalIdParams.Event.builder()
-                        .eventName("string")
+                        .eventName("event_name")
                         .properties(JsonValue.from(mapOf<String, Any>()))
                         .timestamp(OffsetDateTime.parse("2020-12-09T16:09:53Z"))
-                        .customerId("string")
-                        .externalCustomerId("string")
+                        .customerId("customer_id")
+                        .externalCustomerId("external_customer_id")
                         .build()
                 )
             )
@@ -113,11 +113,11 @@ class CustomerUsageUpdateByExternalIdParamsTest {
     fun getBodyWithoutOptionalFields() {
         val params =
             CustomerUsageUpdateByExternalIdParams.builder()
-                .id("string")
+                .id("external_customer_id")
                 .events(
                     listOf(
                         CustomerUsageUpdateByExternalIdParams.Event.builder()
-                            .eventName("string")
+                            .eventName("event_name")
                             .properties(JsonValue.from(mapOf<String, Any>()))
                             .timestamp(OffsetDateTime.parse("2020-12-09T16:09:53Z"))
                             .build()
@@ -130,7 +130,7 @@ class CustomerUsageUpdateByExternalIdParamsTest {
             .isEqualTo(
                 listOf(
                     CustomerUsageUpdateByExternalIdParams.Event.builder()
-                        .eventName("string")
+                        .eventName("event_name")
                         .properties(JsonValue.from(mapOf<String, Any>()))
                         .timestamp(OffsetDateTime.parse("2020-12-09T16:09:53Z"))
                         .build()
@@ -142,11 +142,11 @@ class CustomerUsageUpdateByExternalIdParamsTest {
     fun getPathParam() {
         val params =
             CustomerUsageUpdateByExternalIdParams.builder()
-                .id("string")
+                .id("external_customer_id")
                 .events(
                     listOf(
                         CustomerUsageUpdateByExternalIdParams.Event.builder()
-                            .eventName("string")
+                            .eventName("event_name")
                             .properties(JsonValue.from(mapOf<String, Any>()))
                             .timestamp(OffsetDateTime.parse("2020-12-09T16:09:53Z"))
                             .build()
@@ -155,7 +155,7 @@ class CustomerUsageUpdateByExternalIdParamsTest {
                 .build()
         assertThat(params).isNotNull
         // path param "id"
-        assertThat(params.getPathParam(0)).isEqualTo("string")
+        assertThat(params.getPathParam(0)).isEqualTo("external_customer_id")
         // out-of-bound path param
         assertThat(params.getPathParam(1)).isEqualTo("")
     }

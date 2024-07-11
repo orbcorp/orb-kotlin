@@ -12,7 +12,7 @@ class CustomerCreditLedgerCreateEntryParamsTest {
     @Test
     fun createCustomerCreditLedgerCreateEntryParams() {
         CustomerCreditLedgerCreateEntryParams.builder()
-            .customerId("string")
+            .customerId("customer_id")
             .forAddIncrementCreditLedgerEntryRequestParams(
                 CustomerCreditLedgerCreateEntryParams.AddIncrementCreditLedgerEntryRequestParams
                     .builder()
@@ -23,8 +23,8 @@ class CustomerCreditLedgerCreateEntryParamsTest {
                             .EntryType
                             .INCREMENT
                     )
-                    .currency("string")
-                    .description("string")
+                    .currency("currency")
+                    .description("description")
                     .effectiveDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                     .expiryDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                     .invoiceSettings(
@@ -34,7 +34,7 @@ class CustomerCreditLedgerCreateEntryParamsTest {
                             .builder()
                             .autoCollection(true)
                             .netTerms(123L)
-                            .memo("string")
+                            .memo("memo")
                             .requireSuccessfulPayment(true)
                             .build()
                     )
@@ -45,7 +45,7 @@ class CustomerCreditLedgerCreateEntryParamsTest {
                             .builder()
                             .build()
                     )
-                    .perUnitCostBasis("string")
+                    .perUnitCostBasis("per_unit_cost_basis")
                     .build()
             )
             .build()
@@ -53,10 +53,11 @@ class CustomerCreditLedgerCreateEntryParamsTest {
 
     @Test
     fun getPathParam() {
-        val params = CustomerCreditLedgerCreateEntryParams.builder().customerId("string").build()
+        val params =
+            CustomerCreditLedgerCreateEntryParams.builder().customerId("customer_id").build()
         assertThat(params).isNotNull
         // path param "customerId"
-        assertThat(params.getPathParam(0)).isEqualTo("string")
+        assertThat(params.getPathParam(0)).isEqualTo("customer_id")
         // out-of-bound path param
         assertThat(params.getPathParam(1)).isEqualTo("")
     }
