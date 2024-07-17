@@ -70,6 +70,9 @@ class CustomerCostListResponseTest {
                                                             .build()
                                                     )
                                                     .maximumAmount("maximum_amount")
+                                                    .metadata(
+                                                        Price.UnitPrice.Metadata.builder().build()
+                                                    )
                                                     .minimum(
                                                         Price.UnitPrice.Minimum.builder()
                                                             .appliesToPriceIds(listOf("string"))
@@ -161,6 +164,7 @@ class CustomerCostListResponseTest {
                                                     .build()
                                             )
                                             .maximumAmount("maximum_amount")
+                                            .metadata(Price.UnitPrice.Metadata.builder().build())
                                             .minimum(
                                                 Price.UnitPrice.Minimum.builder()
                                                     .appliesToPriceIds(listOf("string"))
