@@ -78,7 +78,7 @@ class PriceServiceTest {
                     .timeframeStart(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                     .customerId("customer_id")
                     .externalCustomerId("external_customer_id")
-                    .filter("my_numeric_property > 100 AND my_other_property = \'bar\'")
+                    .filter("my_numeric_property > 100 AND my_other_property = 'bar'")
                     .groupingKeys(listOf("string"))
                     .build()
             )
