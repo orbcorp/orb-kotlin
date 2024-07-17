@@ -26,7 +26,7 @@ class MetricServiceTest {
                     .description("Sum of bytes downloaded in fast mode")
                     .itemId("item_id")
                     .name("Bytes downloaded")
-                    .sql("SELECT sum(bytes_downloaded) FROM events WHERE download_speed = \'fast\'")
+                    .sql("SELECT sum(bytes_downloaded) FROM events WHERE download_speed = 'fast'")
                     .metadata(MetricCreateParams.Metadata.builder().build())
                     .build()
             )

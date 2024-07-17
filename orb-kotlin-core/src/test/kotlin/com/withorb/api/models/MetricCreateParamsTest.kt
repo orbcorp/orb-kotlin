@@ -14,7 +14,7 @@ class MetricCreateParamsTest {
             .description("Sum of bytes downloaded in fast mode")
             .itemId("item_id")
             .name("Bytes downloaded")
-            .sql("SELECT sum(bytes_downloaded) FROM events WHERE download_speed = \'fast\'")
+            .sql("SELECT sum(bytes_downloaded) FROM events WHERE download_speed = 'fast'")
             .metadata(MetricCreateParams.Metadata.builder().build())
             .build()
     }
@@ -26,7 +26,7 @@ class MetricCreateParamsTest {
                 .description("Sum of bytes downloaded in fast mode")
                 .itemId("item_id")
                 .name("Bytes downloaded")
-                .sql("SELECT sum(bytes_downloaded) FROM events WHERE download_speed = \'fast\'")
+                .sql("SELECT sum(bytes_downloaded) FROM events WHERE download_speed = 'fast'")
                 .metadata(MetricCreateParams.Metadata.builder().build())
                 .build()
         val body = params.getBody()
@@ -35,7 +35,7 @@ class MetricCreateParamsTest {
         assertThat(body.itemId()).isEqualTo("item_id")
         assertThat(body.name()).isEqualTo("Bytes downloaded")
         assertThat(body.sql())
-            .isEqualTo("SELECT sum(bytes_downloaded) FROM events WHERE download_speed = \'fast\'")
+            .isEqualTo("SELECT sum(bytes_downloaded) FROM events WHERE download_speed = 'fast'")
         assertThat(body.metadata()).isEqualTo(MetricCreateParams.Metadata.builder().build())
     }
 
@@ -45,13 +45,13 @@ class MetricCreateParamsTest {
             MetricCreateParams.builder()
                 .itemId("item_id")
                 .name("Bytes downloaded")
-                .sql("SELECT sum(bytes_downloaded) FROM events WHERE download_speed = \'fast\'")
+                .sql("SELECT sum(bytes_downloaded) FROM events WHERE download_speed = 'fast'")
                 .build()
         val body = params.getBody()
         assertThat(body).isNotNull
         assertThat(body.itemId()).isEqualTo("item_id")
         assertThat(body.name()).isEqualTo("Bytes downloaded")
         assertThat(body.sql())
-            .isEqualTo("SELECT sum(bytes_downloaded) FROM events WHERE download_speed = \'fast\'")
+            .isEqualTo("SELECT sum(bytes_downloaded) FROM events WHERE download_speed = 'fast'")
     }
 }
