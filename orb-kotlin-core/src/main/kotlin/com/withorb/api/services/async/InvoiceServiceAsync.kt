@@ -14,6 +14,7 @@ import com.withorb.api.models.InvoiceIssueParams
 import com.withorb.api.models.InvoiceListPageAsync
 import com.withorb.api.models.InvoiceListParams
 import com.withorb.api.models.InvoiceMarkPaidParams
+import com.withorb.api.models.InvoiceUpdateParams
 import com.withorb.api.models.InvoiceVoidParams
 
 interface InvoiceServiceAsync {
@@ -21,6 +22,17 @@ interface InvoiceServiceAsync {
     /** This endpoint is used to create a one-off invoice for a customer. */
     suspend fun create(
         params: InvoiceCreateParams,
+        requestOptions: RequestOptions = RequestOptions.none()
+    ): Invoice
+
+    /**
+     * This endpoint allows you to update the `metadata` property on an invoice. If you pass null
+     * for the metadata value, it will clear any existing metadata for that invoice.
+     *
+     * `metadata` can be modified regardless of invoice state.
+     */
+    suspend fun update(
+        params: InvoiceUpdateParams,
         requestOptions: RequestOptions = RequestOptions.none()
     ): Invoice
 

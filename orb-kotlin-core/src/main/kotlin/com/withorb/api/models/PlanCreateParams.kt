@@ -981,6 +981,7 @@ constructor(
         @NoAutoDetect
         class NewPlanUnitPrice
         private constructor(
+            private val metadata: JsonField<Metadata>,
             private val externalPriceId: JsonField<String>,
             private val name: JsonField<String>,
             private val billableMetricId: JsonField<String>,
@@ -999,6 +1000,13 @@ constructor(
             private var validated: Boolean = false
 
             private var hashCode: Int = 0
+
+            /**
+             * User-specified key/value pairs for the resource. Individual keys can be removed by
+             * setting the value to `null`, and the entire metadata mapping can be cleared by
+             * setting `metadata` to `null`.
+             */
+            fun metadata(): Metadata? = metadata.getNullable("metadata")
 
             /** An alias for the price. */
             fun externalPriceId(): String? = externalPriceId.getNullable("external_price_id")
@@ -1045,6 +1053,13 @@ constructor(
              * is billed.
              */
             fun currency(): String? = currency.getNullable("currency")
+
+            /**
+             * User-specified key/value pairs for the resource. Individual keys can be removed by
+             * setting the value to `null`, and the entire metadata mapping can be cleared by
+             * setting `metadata` to `null`.
+             */
+            @JsonProperty("metadata") @ExcludeMissing fun _metadata() = metadata
 
             /** An alias for the price. */
             @JsonProperty("external_price_id")
@@ -1106,6 +1121,7 @@ constructor(
 
             fun validate(): NewPlanUnitPrice = apply {
                 if (!validated) {
+                    metadata()?.validate()
                     externalPriceId()
                     name()
                     billableMetricId()
@@ -1130,6 +1146,7 @@ constructor(
                 }
 
                 return other is NewPlanUnitPrice &&
+                    this.metadata == other.metadata &&
                     this.externalPriceId == other.externalPriceId &&
                     this.name == other.name &&
                     this.billableMetricId == other.billableMetricId &&
@@ -1149,6 +1166,7 @@ constructor(
                 if (hashCode == 0) {
                     hashCode =
                         Objects.hash(
+                            metadata,
                             externalPriceId,
                             name,
                             billableMetricId,
@@ -1168,7 +1186,7 @@ constructor(
             }
 
             override fun toString() =
-                "NewPlanUnitPrice{externalPriceId=$externalPriceId, name=$name, billableMetricId=$billableMetricId, itemId=$itemId, billedInAdvance=$billedInAdvance, fixedPriceQuantity=$fixedPriceQuantity, invoiceGroupingKey=$invoiceGroupingKey, cadence=$cadence, conversionRate=$conversionRate, modelType=$modelType, unitConfig=$unitConfig, currency=$currency, additionalProperties=$additionalProperties}"
+                "NewPlanUnitPrice{metadata=$metadata, externalPriceId=$externalPriceId, name=$name, billableMetricId=$billableMetricId, itemId=$itemId, billedInAdvance=$billedInAdvance, fixedPriceQuantity=$fixedPriceQuantity, invoiceGroupingKey=$invoiceGroupingKey, cadence=$cadence, conversionRate=$conversionRate, modelType=$modelType, unitConfig=$unitConfig, currency=$currency, additionalProperties=$additionalProperties}"
 
             companion object {
 
@@ -1177,6 +1195,7 @@ constructor(
 
             class Builder {
 
+                private var metadata: JsonField<Metadata> = JsonMissing.of()
                 private var externalPriceId: JsonField<String> = JsonMissing.of()
                 private var name: JsonField<String> = JsonMissing.of()
                 private var billableMetricId: JsonField<String> = JsonMissing.of()
@@ -1192,6 +1211,7 @@ constructor(
                 private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
                 internal fun from(newPlanUnitPrice: NewPlanUnitPrice) = apply {
+                    this.metadata = newPlanUnitPrice.metadata
                     this.externalPriceId = newPlanUnitPrice.externalPriceId
                     this.name = newPlanUnitPrice.name
                     this.billableMetricId = newPlanUnitPrice.billableMetricId
@@ -1206,6 +1226,22 @@ constructor(
                     this.currency = newPlanUnitPrice.currency
                     additionalProperties(newPlanUnitPrice.additionalProperties)
                 }
+
+                /**
+                 * User-specified key/value pairs for the resource. Individual keys can be removed
+                 * by setting the value to `null`, and the entire metadata mapping can be cleared by
+                 * setting `metadata` to `null`.
+                 */
+                fun metadata(metadata: Metadata) = metadata(JsonField.of(metadata))
+
+                /**
+                 * User-specified key/value pairs for the resource. Individual keys can be removed
+                 * by setting the value to `null`, and the entire metadata mapping can be cleared by
+                 * setting `metadata` to `null`.
+                 */
+                @JsonProperty("metadata")
+                @ExcludeMissing
+                fun metadata(metadata: JsonField<Metadata>) = apply { this.metadata = metadata }
 
                 /** An alias for the price. */
                 fun externalPriceId(externalPriceId: String) =
@@ -1362,6 +1398,7 @@ constructor(
 
                 fun build(): NewPlanUnitPrice =
                     NewPlanUnitPrice(
+                        metadata,
                         externalPriceId,
                         name,
                         billableMetricId,
@@ -1599,12 +1636,91 @@ constructor(
                         UnitConfig(unitAmount, additionalProperties.toUnmodifiable())
                 }
             }
+
+            /**
+             * User-specified key/value pairs for the resource. Individual keys can be removed by
+             * setting the value to `null`, and the entire metadata mapping can be cleared by
+             * setting `metadata` to `null`.
+             */
+            @JsonDeserialize(builder = Metadata.Builder::class)
+            @NoAutoDetect
+            class Metadata
+            private constructor(
+                private val additionalProperties: Map<String, JsonValue>,
+            ) {
+
+                private var validated: Boolean = false
+
+                private var hashCode: Int = 0
+
+                @JsonAnyGetter
+                @ExcludeMissing
+                fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
+
+                fun validate(): Metadata = apply {
+                    if (!validated) {
+                        validated = true
+                    }
+                }
+
+                fun toBuilder() = Builder().from(this)
+
+                override fun equals(other: Any?): Boolean {
+                    if (this === other) {
+                        return true
+                    }
+
+                    return other is Metadata &&
+                        this.additionalProperties == other.additionalProperties
+                }
+
+                override fun hashCode(): Int {
+                    if (hashCode == 0) {
+                        hashCode = Objects.hash(additionalProperties)
+                    }
+                    return hashCode
+                }
+
+                override fun toString() = "Metadata{additionalProperties=$additionalProperties}"
+
+                companion object {
+
+                    fun builder() = Builder()
+                }
+
+                class Builder {
+
+                    private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
+
+                    internal fun from(metadata: Metadata) = apply {
+                        additionalProperties(metadata.additionalProperties)
+                    }
+
+                    fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                        this.additionalProperties.clear()
+                        this.additionalProperties.putAll(additionalProperties)
+                    }
+
+                    @JsonAnySetter
+                    fun putAdditionalProperty(key: String, value: JsonValue) = apply {
+                        this.additionalProperties.put(key, value)
+                    }
+
+                    fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) =
+                        apply {
+                            this.additionalProperties.putAll(additionalProperties)
+                        }
+
+                    fun build(): Metadata = Metadata(additionalProperties.toUnmodifiable())
+                }
+            }
         }
 
         @JsonDeserialize(builder = NewPlanPackagePrice.Builder::class)
         @NoAutoDetect
         class NewPlanPackagePrice
         private constructor(
+            private val metadata: JsonField<Metadata>,
             private val externalPriceId: JsonField<String>,
             private val name: JsonField<String>,
             private val billableMetricId: JsonField<String>,
@@ -1623,6 +1739,13 @@ constructor(
             private var validated: Boolean = false
 
             private var hashCode: Int = 0
+
+            /**
+             * User-specified key/value pairs for the resource. Individual keys can be removed by
+             * setting the value to `null`, and the entire metadata mapping can be cleared by
+             * setting `metadata` to `null`.
+             */
+            fun metadata(): Metadata? = metadata.getNullable("metadata")
 
             /** An alias for the price. */
             fun externalPriceId(): String? = externalPriceId.getNullable("external_price_id")
@@ -1669,6 +1792,13 @@ constructor(
              * is billed.
              */
             fun currency(): String? = currency.getNullable("currency")
+
+            /**
+             * User-specified key/value pairs for the resource. Individual keys can be removed by
+             * setting the value to `null`, and the entire metadata mapping can be cleared by
+             * setting `metadata` to `null`.
+             */
+            @JsonProperty("metadata") @ExcludeMissing fun _metadata() = metadata
 
             /** An alias for the price. */
             @JsonProperty("external_price_id")
@@ -1730,6 +1860,7 @@ constructor(
 
             fun validate(): NewPlanPackagePrice = apply {
                 if (!validated) {
+                    metadata()?.validate()
                     externalPriceId()
                     name()
                     billableMetricId()
@@ -1754,6 +1885,7 @@ constructor(
                 }
 
                 return other is NewPlanPackagePrice &&
+                    this.metadata == other.metadata &&
                     this.externalPriceId == other.externalPriceId &&
                     this.name == other.name &&
                     this.billableMetricId == other.billableMetricId &&
@@ -1773,6 +1905,7 @@ constructor(
                 if (hashCode == 0) {
                     hashCode =
                         Objects.hash(
+                            metadata,
                             externalPriceId,
                             name,
                             billableMetricId,
@@ -1792,7 +1925,7 @@ constructor(
             }
 
             override fun toString() =
-                "NewPlanPackagePrice{externalPriceId=$externalPriceId, name=$name, billableMetricId=$billableMetricId, itemId=$itemId, billedInAdvance=$billedInAdvance, fixedPriceQuantity=$fixedPriceQuantity, invoiceGroupingKey=$invoiceGroupingKey, cadence=$cadence, conversionRate=$conversionRate, modelType=$modelType, packageConfig=$packageConfig, currency=$currency, additionalProperties=$additionalProperties}"
+                "NewPlanPackagePrice{metadata=$metadata, externalPriceId=$externalPriceId, name=$name, billableMetricId=$billableMetricId, itemId=$itemId, billedInAdvance=$billedInAdvance, fixedPriceQuantity=$fixedPriceQuantity, invoiceGroupingKey=$invoiceGroupingKey, cadence=$cadence, conversionRate=$conversionRate, modelType=$modelType, packageConfig=$packageConfig, currency=$currency, additionalProperties=$additionalProperties}"
 
             companion object {
 
@@ -1801,6 +1934,7 @@ constructor(
 
             class Builder {
 
+                private var metadata: JsonField<Metadata> = JsonMissing.of()
                 private var externalPriceId: JsonField<String> = JsonMissing.of()
                 private var name: JsonField<String> = JsonMissing.of()
                 private var billableMetricId: JsonField<String> = JsonMissing.of()
@@ -1816,6 +1950,7 @@ constructor(
                 private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
                 internal fun from(newPlanPackagePrice: NewPlanPackagePrice) = apply {
+                    this.metadata = newPlanPackagePrice.metadata
                     this.externalPriceId = newPlanPackagePrice.externalPriceId
                     this.name = newPlanPackagePrice.name
                     this.billableMetricId = newPlanPackagePrice.billableMetricId
@@ -1830,6 +1965,22 @@ constructor(
                     this.currency = newPlanPackagePrice.currency
                     additionalProperties(newPlanPackagePrice.additionalProperties)
                 }
+
+                /**
+                 * User-specified key/value pairs for the resource. Individual keys can be removed
+                 * by setting the value to `null`, and the entire metadata mapping can be cleared by
+                 * setting `metadata` to `null`.
+                 */
+                fun metadata(metadata: Metadata) = metadata(JsonField.of(metadata))
+
+                /**
+                 * User-specified key/value pairs for the resource. Individual keys can be removed
+                 * by setting the value to `null`, and the entire metadata mapping can be cleared by
+                 * setting `metadata` to `null`.
+                 */
+                @JsonProperty("metadata")
+                @ExcludeMissing
+                fun metadata(metadata: JsonField<Metadata>) = apply { this.metadata = metadata }
 
                 /** An alias for the price. */
                 fun externalPriceId(externalPriceId: String) =
@@ -1987,6 +2138,7 @@ constructor(
 
                 fun build(): NewPlanPackagePrice =
                     NewPlanPackagePrice(
+                        metadata,
                         externalPriceId,
                         name,
                         billableMetricId,
@@ -2267,12 +2419,91 @@ constructor(
                         )
                 }
             }
+
+            /**
+             * User-specified key/value pairs for the resource. Individual keys can be removed by
+             * setting the value to `null`, and the entire metadata mapping can be cleared by
+             * setting `metadata` to `null`.
+             */
+            @JsonDeserialize(builder = Metadata.Builder::class)
+            @NoAutoDetect
+            class Metadata
+            private constructor(
+                private val additionalProperties: Map<String, JsonValue>,
+            ) {
+
+                private var validated: Boolean = false
+
+                private var hashCode: Int = 0
+
+                @JsonAnyGetter
+                @ExcludeMissing
+                fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
+
+                fun validate(): Metadata = apply {
+                    if (!validated) {
+                        validated = true
+                    }
+                }
+
+                fun toBuilder() = Builder().from(this)
+
+                override fun equals(other: Any?): Boolean {
+                    if (this === other) {
+                        return true
+                    }
+
+                    return other is Metadata &&
+                        this.additionalProperties == other.additionalProperties
+                }
+
+                override fun hashCode(): Int {
+                    if (hashCode == 0) {
+                        hashCode = Objects.hash(additionalProperties)
+                    }
+                    return hashCode
+                }
+
+                override fun toString() = "Metadata{additionalProperties=$additionalProperties}"
+
+                companion object {
+
+                    fun builder() = Builder()
+                }
+
+                class Builder {
+
+                    private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
+
+                    internal fun from(metadata: Metadata) = apply {
+                        additionalProperties(metadata.additionalProperties)
+                    }
+
+                    fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                        this.additionalProperties.clear()
+                        this.additionalProperties.putAll(additionalProperties)
+                    }
+
+                    @JsonAnySetter
+                    fun putAdditionalProperty(key: String, value: JsonValue) = apply {
+                        this.additionalProperties.put(key, value)
+                    }
+
+                    fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) =
+                        apply {
+                            this.additionalProperties.putAll(additionalProperties)
+                        }
+
+                    fun build(): Metadata = Metadata(additionalProperties.toUnmodifiable())
+                }
+            }
         }
 
         @JsonDeserialize(builder = NewPlanMatrixPrice.Builder::class)
         @NoAutoDetect
         class NewPlanMatrixPrice
         private constructor(
+            private val metadata: JsonField<Metadata>,
             private val externalPriceId: JsonField<String>,
             private val name: JsonField<String>,
             private val billableMetricId: JsonField<String>,
@@ -2291,6 +2522,13 @@ constructor(
             private var validated: Boolean = false
 
             private var hashCode: Int = 0
+
+            /**
+             * User-specified key/value pairs for the resource. Individual keys can be removed by
+             * setting the value to `null`, and the entire metadata mapping can be cleared by
+             * setting `metadata` to `null`.
+             */
+            fun metadata(): Metadata? = metadata.getNullable("metadata")
 
             /** An alias for the price. */
             fun externalPriceId(): String? = externalPriceId.getNullable("external_price_id")
@@ -2337,6 +2575,13 @@ constructor(
              * is billed.
              */
             fun currency(): String? = currency.getNullable("currency")
+
+            /**
+             * User-specified key/value pairs for the resource. Individual keys can be removed by
+             * setting the value to `null`, and the entire metadata mapping can be cleared by
+             * setting `metadata` to `null`.
+             */
+            @JsonProperty("metadata") @ExcludeMissing fun _metadata() = metadata
 
             /** An alias for the price. */
             @JsonProperty("external_price_id")
@@ -2398,6 +2643,7 @@ constructor(
 
             fun validate(): NewPlanMatrixPrice = apply {
                 if (!validated) {
+                    metadata()?.validate()
                     externalPriceId()
                     name()
                     billableMetricId()
@@ -2422,6 +2668,7 @@ constructor(
                 }
 
                 return other is NewPlanMatrixPrice &&
+                    this.metadata == other.metadata &&
                     this.externalPriceId == other.externalPriceId &&
                     this.name == other.name &&
                     this.billableMetricId == other.billableMetricId &&
@@ -2441,6 +2688,7 @@ constructor(
                 if (hashCode == 0) {
                     hashCode =
                         Objects.hash(
+                            metadata,
                             externalPriceId,
                             name,
                             billableMetricId,
@@ -2460,7 +2708,7 @@ constructor(
             }
 
             override fun toString() =
-                "NewPlanMatrixPrice{externalPriceId=$externalPriceId, name=$name, billableMetricId=$billableMetricId, itemId=$itemId, billedInAdvance=$billedInAdvance, fixedPriceQuantity=$fixedPriceQuantity, invoiceGroupingKey=$invoiceGroupingKey, cadence=$cadence, conversionRate=$conversionRate, modelType=$modelType, matrixConfig=$matrixConfig, currency=$currency, additionalProperties=$additionalProperties}"
+                "NewPlanMatrixPrice{metadata=$metadata, externalPriceId=$externalPriceId, name=$name, billableMetricId=$billableMetricId, itemId=$itemId, billedInAdvance=$billedInAdvance, fixedPriceQuantity=$fixedPriceQuantity, invoiceGroupingKey=$invoiceGroupingKey, cadence=$cadence, conversionRate=$conversionRate, modelType=$modelType, matrixConfig=$matrixConfig, currency=$currency, additionalProperties=$additionalProperties}"
 
             companion object {
 
@@ -2469,6 +2717,7 @@ constructor(
 
             class Builder {
 
+                private var metadata: JsonField<Metadata> = JsonMissing.of()
                 private var externalPriceId: JsonField<String> = JsonMissing.of()
                 private var name: JsonField<String> = JsonMissing.of()
                 private var billableMetricId: JsonField<String> = JsonMissing.of()
@@ -2484,6 +2733,7 @@ constructor(
                 private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
                 internal fun from(newPlanMatrixPrice: NewPlanMatrixPrice) = apply {
+                    this.metadata = newPlanMatrixPrice.metadata
                     this.externalPriceId = newPlanMatrixPrice.externalPriceId
                     this.name = newPlanMatrixPrice.name
                     this.billableMetricId = newPlanMatrixPrice.billableMetricId
@@ -2498,6 +2748,22 @@ constructor(
                     this.currency = newPlanMatrixPrice.currency
                     additionalProperties(newPlanMatrixPrice.additionalProperties)
                 }
+
+                /**
+                 * User-specified key/value pairs for the resource. Individual keys can be removed
+                 * by setting the value to `null`, and the entire metadata mapping can be cleared by
+                 * setting `metadata` to `null`.
+                 */
+                fun metadata(metadata: Metadata) = metadata(JsonField.of(metadata))
+
+                /**
+                 * User-specified key/value pairs for the resource. Individual keys can be removed
+                 * by setting the value to `null`, and the entire metadata mapping can be cleared by
+                 * setting `metadata` to `null`.
+                 */
+                @JsonProperty("metadata")
+                @ExcludeMissing
+                fun metadata(metadata: JsonField<Metadata>) = apply { this.metadata = metadata }
 
                 /** An alias for the price. */
                 fun externalPriceId(externalPriceId: String) =
@@ -2655,6 +2921,7 @@ constructor(
 
                 fun build(): NewPlanMatrixPrice =
                     NewPlanMatrixPrice(
+                        metadata,
                         externalPriceId,
                         name,
                         billableMetricId,
@@ -3107,12 +3374,91 @@ constructor(
 
                 fun asString(): String = _value().asStringOrThrow()
             }
+
+            /**
+             * User-specified key/value pairs for the resource. Individual keys can be removed by
+             * setting the value to `null`, and the entire metadata mapping can be cleared by
+             * setting `metadata` to `null`.
+             */
+            @JsonDeserialize(builder = Metadata.Builder::class)
+            @NoAutoDetect
+            class Metadata
+            private constructor(
+                private val additionalProperties: Map<String, JsonValue>,
+            ) {
+
+                private var validated: Boolean = false
+
+                private var hashCode: Int = 0
+
+                @JsonAnyGetter
+                @ExcludeMissing
+                fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
+
+                fun validate(): Metadata = apply {
+                    if (!validated) {
+                        validated = true
+                    }
+                }
+
+                fun toBuilder() = Builder().from(this)
+
+                override fun equals(other: Any?): Boolean {
+                    if (this === other) {
+                        return true
+                    }
+
+                    return other is Metadata &&
+                        this.additionalProperties == other.additionalProperties
+                }
+
+                override fun hashCode(): Int {
+                    if (hashCode == 0) {
+                        hashCode = Objects.hash(additionalProperties)
+                    }
+                    return hashCode
+                }
+
+                override fun toString() = "Metadata{additionalProperties=$additionalProperties}"
+
+                companion object {
+
+                    fun builder() = Builder()
+                }
+
+                class Builder {
+
+                    private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
+
+                    internal fun from(metadata: Metadata) = apply {
+                        additionalProperties(metadata.additionalProperties)
+                    }
+
+                    fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                        this.additionalProperties.clear()
+                        this.additionalProperties.putAll(additionalProperties)
+                    }
+
+                    @JsonAnySetter
+                    fun putAdditionalProperty(key: String, value: JsonValue) = apply {
+                        this.additionalProperties.put(key, value)
+                    }
+
+                    fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) =
+                        apply {
+                            this.additionalProperties.putAll(additionalProperties)
+                        }
+
+                    fun build(): Metadata = Metadata(additionalProperties.toUnmodifiable())
+                }
+            }
         }
 
         @JsonDeserialize(builder = NewPlanTieredPrice.Builder::class)
         @NoAutoDetect
         class NewPlanTieredPrice
         private constructor(
+            private val metadata: JsonField<Metadata>,
             private val externalPriceId: JsonField<String>,
             private val name: JsonField<String>,
             private val billableMetricId: JsonField<String>,
@@ -3131,6 +3477,13 @@ constructor(
             private var validated: Boolean = false
 
             private var hashCode: Int = 0
+
+            /**
+             * User-specified key/value pairs for the resource. Individual keys can be removed by
+             * setting the value to `null`, and the entire metadata mapping can be cleared by
+             * setting `metadata` to `null`.
+             */
+            fun metadata(): Metadata? = metadata.getNullable("metadata")
 
             /** An alias for the price. */
             fun externalPriceId(): String? = externalPriceId.getNullable("external_price_id")
@@ -3177,6 +3530,13 @@ constructor(
              * is billed.
              */
             fun currency(): String? = currency.getNullable("currency")
+
+            /**
+             * User-specified key/value pairs for the resource. Individual keys can be removed by
+             * setting the value to `null`, and the entire metadata mapping can be cleared by
+             * setting `metadata` to `null`.
+             */
+            @JsonProperty("metadata") @ExcludeMissing fun _metadata() = metadata
 
             /** An alias for the price. */
             @JsonProperty("external_price_id")
@@ -3238,6 +3598,7 @@ constructor(
 
             fun validate(): NewPlanTieredPrice = apply {
                 if (!validated) {
+                    metadata()?.validate()
                     externalPriceId()
                     name()
                     billableMetricId()
@@ -3262,6 +3623,7 @@ constructor(
                 }
 
                 return other is NewPlanTieredPrice &&
+                    this.metadata == other.metadata &&
                     this.externalPriceId == other.externalPriceId &&
                     this.name == other.name &&
                     this.billableMetricId == other.billableMetricId &&
@@ -3281,6 +3643,7 @@ constructor(
                 if (hashCode == 0) {
                     hashCode =
                         Objects.hash(
+                            metadata,
                             externalPriceId,
                             name,
                             billableMetricId,
@@ -3300,7 +3663,7 @@ constructor(
             }
 
             override fun toString() =
-                "NewPlanTieredPrice{externalPriceId=$externalPriceId, name=$name, billableMetricId=$billableMetricId, itemId=$itemId, billedInAdvance=$billedInAdvance, fixedPriceQuantity=$fixedPriceQuantity, invoiceGroupingKey=$invoiceGroupingKey, cadence=$cadence, conversionRate=$conversionRate, modelType=$modelType, tieredConfig=$tieredConfig, currency=$currency, additionalProperties=$additionalProperties}"
+                "NewPlanTieredPrice{metadata=$metadata, externalPriceId=$externalPriceId, name=$name, billableMetricId=$billableMetricId, itemId=$itemId, billedInAdvance=$billedInAdvance, fixedPriceQuantity=$fixedPriceQuantity, invoiceGroupingKey=$invoiceGroupingKey, cadence=$cadence, conversionRate=$conversionRate, modelType=$modelType, tieredConfig=$tieredConfig, currency=$currency, additionalProperties=$additionalProperties}"
 
             companion object {
 
@@ -3309,6 +3672,7 @@ constructor(
 
             class Builder {
 
+                private var metadata: JsonField<Metadata> = JsonMissing.of()
                 private var externalPriceId: JsonField<String> = JsonMissing.of()
                 private var name: JsonField<String> = JsonMissing.of()
                 private var billableMetricId: JsonField<String> = JsonMissing.of()
@@ -3324,6 +3688,7 @@ constructor(
                 private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
                 internal fun from(newPlanTieredPrice: NewPlanTieredPrice) = apply {
+                    this.metadata = newPlanTieredPrice.metadata
                     this.externalPriceId = newPlanTieredPrice.externalPriceId
                     this.name = newPlanTieredPrice.name
                     this.billableMetricId = newPlanTieredPrice.billableMetricId
@@ -3338,6 +3703,22 @@ constructor(
                     this.currency = newPlanTieredPrice.currency
                     additionalProperties(newPlanTieredPrice.additionalProperties)
                 }
+
+                /**
+                 * User-specified key/value pairs for the resource. Individual keys can be removed
+                 * by setting the value to `null`, and the entire metadata mapping can be cleared by
+                 * setting `metadata` to `null`.
+                 */
+                fun metadata(metadata: Metadata) = metadata(JsonField.of(metadata))
+
+                /**
+                 * User-specified key/value pairs for the resource. Individual keys can be removed
+                 * by setting the value to `null`, and the entire metadata mapping can be cleared by
+                 * setting `metadata` to `null`.
+                 */
+                @JsonProperty("metadata")
+                @ExcludeMissing
+                fun metadata(metadata: JsonField<Metadata>) = apply { this.metadata = metadata }
 
                 /** An alias for the price. */
                 fun externalPriceId(externalPriceId: String) =
@@ -3495,6 +3876,7 @@ constructor(
 
                 fun build(): NewPlanTieredPrice =
                     NewPlanTieredPrice(
+                        metadata,
                         externalPriceId,
                         name,
                         billableMetricId,
@@ -3887,12 +4269,91 @@ constructor(
                     }
                 }
             }
+
+            /**
+             * User-specified key/value pairs for the resource. Individual keys can be removed by
+             * setting the value to `null`, and the entire metadata mapping can be cleared by
+             * setting `metadata` to `null`.
+             */
+            @JsonDeserialize(builder = Metadata.Builder::class)
+            @NoAutoDetect
+            class Metadata
+            private constructor(
+                private val additionalProperties: Map<String, JsonValue>,
+            ) {
+
+                private var validated: Boolean = false
+
+                private var hashCode: Int = 0
+
+                @JsonAnyGetter
+                @ExcludeMissing
+                fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
+
+                fun validate(): Metadata = apply {
+                    if (!validated) {
+                        validated = true
+                    }
+                }
+
+                fun toBuilder() = Builder().from(this)
+
+                override fun equals(other: Any?): Boolean {
+                    if (this === other) {
+                        return true
+                    }
+
+                    return other is Metadata &&
+                        this.additionalProperties == other.additionalProperties
+                }
+
+                override fun hashCode(): Int {
+                    if (hashCode == 0) {
+                        hashCode = Objects.hash(additionalProperties)
+                    }
+                    return hashCode
+                }
+
+                override fun toString() = "Metadata{additionalProperties=$additionalProperties}"
+
+                companion object {
+
+                    fun builder() = Builder()
+                }
+
+                class Builder {
+
+                    private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
+
+                    internal fun from(metadata: Metadata) = apply {
+                        additionalProperties(metadata.additionalProperties)
+                    }
+
+                    fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                        this.additionalProperties.clear()
+                        this.additionalProperties.putAll(additionalProperties)
+                    }
+
+                    @JsonAnySetter
+                    fun putAdditionalProperty(key: String, value: JsonValue) = apply {
+                        this.additionalProperties.put(key, value)
+                    }
+
+                    fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) =
+                        apply {
+                            this.additionalProperties.putAll(additionalProperties)
+                        }
+
+                    fun build(): Metadata = Metadata(additionalProperties.toUnmodifiable())
+                }
+            }
         }
 
         @JsonDeserialize(builder = NewPlanTieredBpsPrice.Builder::class)
         @NoAutoDetect
         class NewPlanTieredBpsPrice
         private constructor(
+            private val metadata: JsonField<Metadata>,
             private val externalPriceId: JsonField<String>,
             private val name: JsonField<String>,
             private val billableMetricId: JsonField<String>,
@@ -3911,6 +4372,13 @@ constructor(
             private var validated: Boolean = false
 
             private var hashCode: Int = 0
+
+            /**
+             * User-specified key/value pairs for the resource. Individual keys can be removed by
+             * setting the value to `null`, and the entire metadata mapping can be cleared by
+             * setting `metadata` to `null`.
+             */
+            fun metadata(): Metadata? = metadata.getNullable("metadata")
 
             /** An alias for the price. */
             fun externalPriceId(): String? = externalPriceId.getNullable("external_price_id")
@@ -3958,6 +4426,13 @@ constructor(
              * is billed.
              */
             fun currency(): String? = currency.getNullable("currency")
+
+            /**
+             * User-specified key/value pairs for the resource. Individual keys can be removed by
+             * setting the value to `null`, and the entire metadata mapping can be cleared by
+             * setting `metadata` to `null`.
+             */
+            @JsonProperty("metadata") @ExcludeMissing fun _metadata() = metadata
 
             /** An alias for the price. */
             @JsonProperty("external_price_id")
@@ -4021,6 +4496,7 @@ constructor(
 
             fun validate(): NewPlanTieredBpsPrice = apply {
                 if (!validated) {
+                    metadata()?.validate()
                     externalPriceId()
                     name()
                     billableMetricId()
@@ -4045,6 +4521,7 @@ constructor(
                 }
 
                 return other is NewPlanTieredBpsPrice &&
+                    this.metadata == other.metadata &&
                     this.externalPriceId == other.externalPriceId &&
                     this.name == other.name &&
                     this.billableMetricId == other.billableMetricId &&
@@ -4064,6 +4541,7 @@ constructor(
                 if (hashCode == 0) {
                     hashCode =
                         Objects.hash(
+                            metadata,
                             externalPriceId,
                             name,
                             billableMetricId,
@@ -4083,7 +4561,7 @@ constructor(
             }
 
             override fun toString() =
-                "NewPlanTieredBpsPrice{externalPriceId=$externalPriceId, name=$name, billableMetricId=$billableMetricId, itemId=$itemId, billedInAdvance=$billedInAdvance, fixedPriceQuantity=$fixedPriceQuantity, invoiceGroupingKey=$invoiceGroupingKey, cadence=$cadence, conversionRate=$conversionRate, modelType=$modelType, tieredBpsConfig=$tieredBpsConfig, currency=$currency, additionalProperties=$additionalProperties}"
+                "NewPlanTieredBpsPrice{metadata=$metadata, externalPriceId=$externalPriceId, name=$name, billableMetricId=$billableMetricId, itemId=$itemId, billedInAdvance=$billedInAdvance, fixedPriceQuantity=$fixedPriceQuantity, invoiceGroupingKey=$invoiceGroupingKey, cadence=$cadence, conversionRate=$conversionRate, modelType=$modelType, tieredBpsConfig=$tieredBpsConfig, currency=$currency, additionalProperties=$additionalProperties}"
 
             companion object {
 
@@ -4092,6 +4570,7 @@ constructor(
 
             class Builder {
 
+                private var metadata: JsonField<Metadata> = JsonMissing.of()
                 private var externalPriceId: JsonField<String> = JsonMissing.of()
                 private var name: JsonField<String> = JsonMissing.of()
                 private var billableMetricId: JsonField<String> = JsonMissing.of()
@@ -4107,6 +4586,7 @@ constructor(
                 private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
                 internal fun from(newPlanTieredBpsPrice: NewPlanTieredBpsPrice) = apply {
+                    this.metadata = newPlanTieredBpsPrice.metadata
                     this.externalPriceId = newPlanTieredBpsPrice.externalPriceId
                     this.name = newPlanTieredBpsPrice.name
                     this.billableMetricId = newPlanTieredBpsPrice.billableMetricId
@@ -4121,6 +4601,22 @@ constructor(
                     this.currency = newPlanTieredBpsPrice.currency
                     additionalProperties(newPlanTieredBpsPrice.additionalProperties)
                 }
+
+                /**
+                 * User-specified key/value pairs for the resource. Individual keys can be removed
+                 * by setting the value to `null`, and the entire metadata mapping can be cleared by
+                 * setting `metadata` to `null`.
+                 */
+                fun metadata(metadata: Metadata) = metadata(JsonField.of(metadata))
+
+                /**
+                 * User-specified key/value pairs for the resource. Individual keys can be removed
+                 * by setting the value to `null`, and the entire metadata mapping can be cleared by
+                 * setting `metadata` to `null`.
+                 */
+                @JsonProperty("metadata")
+                @ExcludeMissing
+                fun metadata(metadata: JsonField<Metadata>) = apply { this.metadata = metadata }
 
                 /** An alias for the price. */
                 fun externalPriceId(externalPriceId: String) =
@@ -4278,6 +4774,7 @@ constructor(
 
                 fun build(): NewPlanTieredBpsPrice =
                     NewPlanTieredBpsPrice(
+                        metadata,
                         externalPriceId,
                         name,
                         billableMetricId,
@@ -4708,12 +5205,91 @@ constructor(
                     }
                 }
             }
+
+            /**
+             * User-specified key/value pairs for the resource. Individual keys can be removed by
+             * setting the value to `null`, and the entire metadata mapping can be cleared by
+             * setting `metadata` to `null`.
+             */
+            @JsonDeserialize(builder = Metadata.Builder::class)
+            @NoAutoDetect
+            class Metadata
+            private constructor(
+                private val additionalProperties: Map<String, JsonValue>,
+            ) {
+
+                private var validated: Boolean = false
+
+                private var hashCode: Int = 0
+
+                @JsonAnyGetter
+                @ExcludeMissing
+                fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
+
+                fun validate(): Metadata = apply {
+                    if (!validated) {
+                        validated = true
+                    }
+                }
+
+                fun toBuilder() = Builder().from(this)
+
+                override fun equals(other: Any?): Boolean {
+                    if (this === other) {
+                        return true
+                    }
+
+                    return other is Metadata &&
+                        this.additionalProperties == other.additionalProperties
+                }
+
+                override fun hashCode(): Int {
+                    if (hashCode == 0) {
+                        hashCode = Objects.hash(additionalProperties)
+                    }
+                    return hashCode
+                }
+
+                override fun toString() = "Metadata{additionalProperties=$additionalProperties}"
+
+                companion object {
+
+                    fun builder() = Builder()
+                }
+
+                class Builder {
+
+                    private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
+
+                    internal fun from(metadata: Metadata) = apply {
+                        additionalProperties(metadata.additionalProperties)
+                    }
+
+                    fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                        this.additionalProperties.clear()
+                        this.additionalProperties.putAll(additionalProperties)
+                    }
+
+                    @JsonAnySetter
+                    fun putAdditionalProperty(key: String, value: JsonValue) = apply {
+                        this.additionalProperties.put(key, value)
+                    }
+
+                    fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) =
+                        apply {
+                            this.additionalProperties.putAll(additionalProperties)
+                        }
+
+                    fun build(): Metadata = Metadata(additionalProperties.toUnmodifiable())
+                }
+            }
         }
 
         @JsonDeserialize(builder = NewPlanBpsPrice.Builder::class)
         @NoAutoDetect
         class NewPlanBpsPrice
         private constructor(
+            private val metadata: JsonField<Metadata>,
             private val externalPriceId: JsonField<String>,
             private val name: JsonField<String>,
             private val billableMetricId: JsonField<String>,
@@ -4732,6 +5308,13 @@ constructor(
             private var validated: Boolean = false
 
             private var hashCode: Int = 0
+
+            /**
+             * User-specified key/value pairs for the resource. Individual keys can be removed by
+             * setting the value to `null`, and the entire metadata mapping can be cleared by
+             * setting `metadata` to `null`.
+             */
+            fun metadata(): Metadata? = metadata.getNullable("metadata")
 
             /** An alias for the price. */
             fun externalPriceId(): String? = externalPriceId.getNullable("external_price_id")
@@ -4778,6 +5361,13 @@ constructor(
              * is billed.
              */
             fun currency(): String? = currency.getNullable("currency")
+
+            /**
+             * User-specified key/value pairs for the resource. Individual keys can be removed by
+             * setting the value to `null`, and the entire metadata mapping can be cleared by
+             * setting `metadata` to `null`.
+             */
+            @JsonProperty("metadata") @ExcludeMissing fun _metadata() = metadata
 
             /** An alias for the price. */
             @JsonProperty("external_price_id")
@@ -4839,6 +5429,7 @@ constructor(
 
             fun validate(): NewPlanBpsPrice = apply {
                 if (!validated) {
+                    metadata()?.validate()
                     externalPriceId()
                     name()
                     billableMetricId()
@@ -4863,6 +5454,7 @@ constructor(
                 }
 
                 return other is NewPlanBpsPrice &&
+                    this.metadata == other.metadata &&
                     this.externalPriceId == other.externalPriceId &&
                     this.name == other.name &&
                     this.billableMetricId == other.billableMetricId &&
@@ -4882,6 +5474,7 @@ constructor(
                 if (hashCode == 0) {
                     hashCode =
                         Objects.hash(
+                            metadata,
                             externalPriceId,
                             name,
                             billableMetricId,
@@ -4901,7 +5494,7 @@ constructor(
             }
 
             override fun toString() =
-                "NewPlanBpsPrice{externalPriceId=$externalPriceId, name=$name, billableMetricId=$billableMetricId, itemId=$itemId, billedInAdvance=$billedInAdvance, fixedPriceQuantity=$fixedPriceQuantity, invoiceGroupingKey=$invoiceGroupingKey, cadence=$cadence, conversionRate=$conversionRate, modelType=$modelType, bpsConfig=$bpsConfig, currency=$currency, additionalProperties=$additionalProperties}"
+                "NewPlanBpsPrice{metadata=$metadata, externalPriceId=$externalPriceId, name=$name, billableMetricId=$billableMetricId, itemId=$itemId, billedInAdvance=$billedInAdvance, fixedPriceQuantity=$fixedPriceQuantity, invoiceGroupingKey=$invoiceGroupingKey, cadence=$cadence, conversionRate=$conversionRate, modelType=$modelType, bpsConfig=$bpsConfig, currency=$currency, additionalProperties=$additionalProperties}"
 
             companion object {
 
@@ -4910,6 +5503,7 @@ constructor(
 
             class Builder {
 
+                private var metadata: JsonField<Metadata> = JsonMissing.of()
                 private var externalPriceId: JsonField<String> = JsonMissing.of()
                 private var name: JsonField<String> = JsonMissing.of()
                 private var billableMetricId: JsonField<String> = JsonMissing.of()
@@ -4925,6 +5519,7 @@ constructor(
                 private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
                 internal fun from(newPlanBpsPrice: NewPlanBpsPrice) = apply {
+                    this.metadata = newPlanBpsPrice.metadata
                     this.externalPriceId = newPlanBpsPrice.externalPriceId
                     this.name = newPlanBpsPrice.name
                     this.billableMetricId = newPlanBpsPrice.billableMetricId
@@ -4939,6 +5534,22 @@ constructor(
                     this.currency = newPlanBpsPrice.currency
                     additionalProperties(newPlanBpsPrice.additionalProperties)
                 }
+
+                /**
+                 * User-specified key/value pairs for the resource. Individual keys can be removed
+                 * by setting the value to `null`, and the entire metadata mapping can be cleared by
+                 * setting `metadata` to `null`.
+                 */
+                fun metadata(metadata: Metadata) = metadata(JsonField.of(metadata))
+
+                /**
+                 * User-specified key/value pairs for the resource. Individual keys can be removed
+                 * by setting the value to `null`, and the entire metadata mapping can be cleared by
+                 * setting `metadata` to `null`.
+                 */
+                @JsonProperty("metadata")
+                @ExcludeMissing
+                fun metadata(metadata: JsonField<Metadata>) = apply { this.metadata = metadata }
 
                 /** An alias for the price. */
                 fun externalPriceId(externalPriceId: String) =
@@ -5095,6 +5706,7 @@ constructor(
 
                 fun build(): NewPlanBpsPrice =
                     NewPlanBpsPrice(
+                        metadata,
                         externalPriceId,
                         name,
                         billableMetricId,
@@ -5363,12 +5975,91 @@ constructor(
 
                 fun asString(): String = _value().asStringOrThrow()
             }
+
+            /**
+             * User-specified key/value pairs for the resource. Individual keys can be removed by
+             * setting the value to `null`, and the entire metadata mapping can be cleared by
+             * setting `metadata` to `null`.
+             */
+            @JsonDeserialize(builder = Metadata.Builder::class)
+            @NoAutoDetect
+            class Metadata
+            private constructor(
+                private val additionalProperties: Map<String, JsonValue>,
+            ) {
+
+                private var validated: Boolean = false
+
+                private var hashCode: Int = 0
+
+                @JsonAnyGetter
+                @ExcludeMissing
+                fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
+
+                fun validate(): Metadata = apply {
+                    if (!validated) {
+                        validated = true
+                    }
+                }
+
+                fun toBuilder() = Builder().from(this)
+
+                override fun equals(other: Any?): Boolean {
+                    if (this === other) {
+                        return true
+                    }
+
+                    return other is Metadata &&
+                        this.additionalProperties == other.additionalProperties
+                }
+
+                override fun hashCode(): Int {
+                    if (hashCode == 0) {
+                        hashCode = Objects.hash(additionalProperties)
+                    }
+                    return hashCode
+                }
+
+                override fun toString() = "Metadata{additionalProperties=$additionalProperties}"
+
+                companion object {
+
+                    fun builder() = Builder()
+                }
+
+                class Builder {
+
+                    private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
+
+                    internal fun from(metadata: Metadata) = apply {
+                        additionalProperties(metadata.additionalProperties)
+                    }
+
+                    fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                        this.additionalProperties.clear()
+                        this.additionalProperties.putAll(additionalProperties)
+                    }
+
+                    @JsonAnySetter
+                    fun putAdditionalProperty(key: String, value: JsonValue) = apply {
+                        this.additionalProperties.put(key, value)
+                    }
+
+                    fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) =
+                        apply {
+                            this.additionalProperties.putAll(additionalProperties)
+                        }
+
+                    fun build(): Metadata = Metadata(additionalProperties.toUnmodifiable())
+                }
+            }
         }
 
         @JsonDeserialize(builder = NewPlanBulkBpsPrice.Builder::class)
         @NoAutoDetect
         class NewPlanBulkBpsPrice
         private constructor(
+            private val metadata: JsonField<Metadata>,
             private val externalPriceId: JsonField<String>,
             private val name: JsonField<String>,
             private val billableMetricId: JsonField<String>,
@@ -5387,6 +6078,13 @@ constructor(
             private var validated: Boolean = false
 
             private var hashCode: Int = 0
+
+            /**
+             * User-specified key/value pairs for the resource. Individual keys can be removed by
+             * setting the value to `null`, and the entire metadata mapping can be cleared by
+             * setting `metadata` to `null`.
+             */
+            fun metadata(): Metadata? = metadata.getNullable("metadata")
 
             /** An alias for the price. */
             fun externalPriceId(): String? = externalPriceId.getNullable("external_price_id")
@@ -5433,6 +6131,13 @@ constructor(
              * is billed.
              */
             fun currency(): String? = currency.getNullable("currency")
+
+            /**
+             * User-specified key/value pairs for the resource. Individual keys can be removed by
+             * setting the value to `null`, and the entire metadata mapping can be cleared by
+             * setting `metadata` to `null`.
+             */
+            @JsonProperty("metadata") @ExcludeMissing fun _metadata() = metadata
 
             /** An alias for the price. */
             @JsonProperty("external_price_id")
@@ -5494,6 +6199,7 @@ constructor(
 
             fun validate(): NewPlanBulkBpsPrice = apply {
                 if (!validated) {
+                    metadata()?.validate()
                     externalPriceId()
                     name()
                     billableMetricId()
@@ -5518,6 +6224,7 @@ constructor(
                 }
 
                 return other is NewPlanBulkBpsPrice &&
+                    this.metadata == other.metadata &&
                     this.externalPriceId == other.externalPriceId &&
                     this.name == other.name &&
                     this.billableMetricId == other.billableMetricId &&
@@ -5537,6 +6244,7 @@ constructor(
                 if (hashCode == 0) {
                     hashCode =
                         Objects.hash(
+                            metadata,
                             externalPriceId,
                             name,
                             billableMetricId,
@@ -5556,7 +6264,7 @@ constructor(
             }
 
             override fun toString() =
-                "NewPlanBulkBpsPrice{externalPriceId=$externalPriceId, name=$name, billableMetricId=$billableMetricId, itemId=$itemId, billedInAdvance=$billedInAdvance, fixedPriceQuantity=$fixedPriceQuantity, invoiceGroupingKey=$invoiceGroupingKey, cadence=$cadence, conversionRate=$conversionRate, modelType=$modelType, bulkBpsConfig=$bulkBpsConfig, currency=$currency, additionalProperties=$additionalProperties}"
+                "NewPlanBulkBpsPrice{metadata=$metadata, externalPriceId=$externalPriceId, name=$name, billableMetricId=$billableMetricId, itemId=$itemId, billedInAdvance=$billedInAdvance, fixedPriceQuantity=$fixedPriceQuantity, invoiceGroupingKey=$invoiceGroupingKey, cadence=$cadence, conversionRate=$conversionRate, modelType=$modelType, bulkBpsConfig=$bulkBpsConfig, currency=$currency, additionalProperties=$additionalProperties}"
 
             companion object {
 
@@ -5565,6 +6273,7 @@ constructor(
 
             class Builder {
 
+                private var metadata: JsonField<Metadata> = JsonMissing.of()
                 private var externalPriceId: JsonField<String> = JsonMissing.of()
                 private var name: JsonField<String> = JsonMissing.of()
                 private var billableMetricId: JsonField<String> = JsonMissing.of()
@@ -5580,6 +6289,7 @@ constructor(
                 private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
                 internal fun from(newPlanBulkBpsPrice: NewPlanBulkBpsPrice) = apply {
+                    this.metadata = newPlanBulkBpsPrice.metadata
                     this.externalPriceId = newPlanBulkBpsPrice.externalPriceId
                     this.name = newPlanBulkBpsPrice.name
                     this.billableMetricId = newPlanBulkBpsPrice.billableMetricId
@@ -5594,6 +6304,22 @@ constructor(
                     this.currency = newPlanBulkBpsPrice.currency
                     additionalProperties(newPlanBulkBpsPrice.additionalProperties)
                 }
+
+                /**
+                 * User-specified key/value pairs for the resource. Individual keys can be removed
+                 * by setting the value to `null`, and the entire metadata mapping can be cleared by
+                 * setting `metadata` to `null`.
+                 */
+                fun metadata(metadata: Metadata) = metadata(JsonField.of(metadata))
+
+                /**
+                 * User-specified key/value pairs for the resource. Individual keys can be removed
+                 * by setting the value to `null`, and the entire metadata mapping can be cleared by
+                 * setting `metadata` to `null`.
+                 */
+                @JsonProperty("metadata")
+                @ExcludeMissing
+                fun metadata(metadata: JsonField<Metadata>) = apply { this.metadata = metadata }
 
                 /** An alias for the price. */
                 fun externalPriceId(externalPriceId: String) =
@@ -5751,6 +6477,7 @@ constructor(
 
                 fun build(): NewPlanBulkBpsPrice =
                     NewPlanBulkBpsPrice(
+                        metadata,
                         externalPriceId,
                         name,
                         billableMetricId,
@@ -6155,12 +6882,91 @@ constructor(
 
                 fun asString(): String = _value().asStringOrThrow()
             }
+
+            /**
+             * User-specified key/value pairs for the resource. Individual keys can be removed by
+             * setting the value to `null`, and the entire metadata mapping can be cleared by
+             * setting `metadata` to `null`.
+             */
+            @JsonDeserialize(builder = Metadata.Builder::class)
+            @NoAutoDetect
+            class Metadata
+            private constructor(
+                private val additionalProperties: Map<String, JsonValue>,
+            ) {
+
+                private var validated: Boolean = false
+
+                private var hashCode: Int = 0
+
+                @JsonAnyGetter
+                @ExcludeMissing
+                fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
+
+                fun validate(): Metadata = apply {
+                    if (!validated) {
+                        validated = true
+                    }
+                }
+
+                fun toBuilder() = Builder().from(this)
+
+                override fun equals(other: Any?): Boolean {
+                    if (this === other) {
+                        return true
+                    }
+
+                    return other is Metadata &&
+                        this.additionalProperties == other.additionalProperties
+                }
+
+                override fun hashCode(): Int {
+                    if (hashCode == 0) {
+                        hashCode = Objects.hash(additionalProperties)
+                    }
+                    return hashCode
+                }
+
+                override fun toString() = "Metadata{additionalProperties=$additionalProperties}"
+
+                companion object {
+
+                    fun builder() = Builder()
+                }
+
+                class Builder {
+
+                    private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
+
+                    internal fun from(metadata: Metadata) = apply {
+                        additionalProperties(metadata.additionalProperties)
+                    }
+
+                    fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                        this.additionalProperties.clear()
+                        this.additionalProperties.putAll(additionalProperties)
+                    }
+
+                    @JsonAnySetter
+                    fun putAdditionalProperty(key: String, value: JsonValue) = apply {
+                        this.additionalProperties.put(key, value)
+                    }
+
+                    fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) =
+                        apply {
+                            this.additionalProperties.putAll(additionalProperties)
+                        }
+
+                    fun build(): Metadata = Metadata(additionalProperties.toUnmodifiable())
+                }
+            }
         }
 
         @JsonDeserialize(builder = NewPlanBulkPrice.Builder::class)
         @NoAutoDetect
         class NewPlanBulkPrice
         private constructor(
+            private val metadata: JsonField<Metadata>,
             private val externalPriceId: JsonField<String>,
             private val name: JsonField<String>,
             private val billableMetricId: JsonField<String>,
@@ -6179,6 +6985,13 @@ constructor(
             private var validated: Boolean = false
 
             private var hashCode: Int = 0
+
+            /**
+             * User-specified key/value pairs for the resource. Individual keys can be removed by
+             * setting the value to `null`, and the entire metadata mapping can be cleared by
+             * setting `metadata` to `null`.
+             */
+            fun metadata(): Metadata? = metadata.getNullable("metadata")
 
             /** An alias for the price. */
             fun externalPriceId(): String? = externalPriceId.getNullable("external_price_id")
@@ -6225,6 +7038,13 @@ constructor(
              * is billed.
              */
             fun currency(): String? = currency.getNullable("currency")
+
+            /**
+             * User-specified key/value pairs for the resource. Individual keys can be removed by
+             * setting the value to `null`, and the entire metadata mapping can be cleared by
+             * setting `metadata` to `null`.
+             */
+            @JsonProperty("metadata") @ExcludeMissing fun _metadata() = metadata
 
             /** An alias for the price. */
             @JsonProperty("external_price_id")
@@ -6286,6 +7106,7 @@ constructor(
 
             fun validate(): NewPlanBulkPrice = apply {
                 if (!validated) {
+                    metadata()?.validate()
                     externalPriceId()
                     name()
                     billableMetricId()
@@ -6310,6 +7131,7 @@ constructor(
                 }
 
                 return other is NewPlanBulkPrice &&
+                    this.metadata == other.metadata &&
                     this.externalPriceId == other.externalPriceId &&
                     this.name == other.name &&
                     this.billableMetricId == other.billableMetricId &&
@@ -6329,6 +7151,7 @@ constructor(
                 if (hashCode == 0) {
                     hashCode =
                         Objects.hash(
+                            metadata,
                             externalPriceId,
                             name,
                             billableMetricId,
@@ -6348,7 +7171,7 @@ constructor(
             }
 
             override fun toString() =
-                "NewPlanBulkPrice{externalPriceId=$externalPriceId, name=$name, billableMetricId=$billableMetricId, itemId=$itemId, billedInAdvance=$billedInAdvance, fixedPriceQuantity=$fixedPriceQuantity, invoiceGroupingKey=$invoiceGroupingKey, cadence=$cadence, conversionRate=$conversionRate, modelType=$modelType, bulkConfig=$bulkConfig, currency=$currency, additionalProperties=$additionalProperties}"
+                "NewPlanBulkPrice{metadata=$metadata, externalPriceId=$externalPriceId, name=$name, billableMetricId=$billableMetricId, itemId=$itemId, billedInAdvance=$billedInAdvance, fixedPriceQuantity=$fixedPriceQuantity, invoiceGroupingKey=$invoiceGroupingKey, cadence=$cadence, conversionRate=$conversionRate, modelType=$modelType, bulkConfig=$bulkConfig, currency=$currency, additionalProperties=$additionalProperties}"
 
             companion object {
 
@@ -6357,6 +7180,7 @@ constructor(
 
             class Builder {
 
+                private var metadata: JsonField<Metadata> = JsonMissing.of()
                 private var externalPriceId: JsonField<String> = JsonMissing.of()
                 private var name: JsonField<String> = JsonMissing.of()
                 private var billableMetricId: JsonField<String> = JsonMissing.of()
@@ -6372,6 +7196,7 @@ constructor(
                 private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
                 internal fun from(newPlanBulkPrice: NewPlanBulkPrice) = apply {
+                    this.metadata = newPlanBulkPrice.metadata
                     this.externalPriceId = newPlanBulkPrice.externalPriceId
                     this.name = newPlanBulkPrice.name
                     this.billableMetricId = newPlanBulkPrice.billableMetricId
@@ -6386,6 +7211,22 @@ constructor(
                     this.currency = newPlanBulkPrice.currency
                     additionalProperties(newPlanBulkPrice.additionalProperties)
                 }
+
+                /**
+                 * User-specified key/value pairs for the resource. Individual keys can be removed
+                 * by setting the value to `null`, and the entire metadata mapping can be cleared by
+                 * setting `metadata` to `null`.
+                 */
+                fun metadata(metadata: Metadata) = metadata(JsonField.of(metadata))
+
+                /**
+                 * User-specified key/value pairs for the resource. Individual keys can be removed
+                 * by setting the value to `null`, and the entire metadata mapping can be cleared by
+                 * setting `metadata` to `null`.
+                 */
+                @JsonProperty("metadata")
+                @ExcludeMissing
+                fun metadata(metadata: JsonField<Metadata>) = apply { this.metadata = metadata }
 
                 /** An alias for the price. */
                 fun externalPriceId(externalPriceId: String) =
@@ -6542,6 +7383,7 @@ constructor(
 
                 fun build(): NewPlanBulkPrice =
                     NewPlanBulkPrice(
+                        metadata,
                         externalPriceId,
                         name,
                         billableMetricId,
@@ -6910,12 +7752,91 @@ constructor(
 
                 fun asString(): String = _value().asStringOrThrow()
             }
+
+            /**
+             * User-specified key/value pairs for the resource. Individual keys can be removed by
+             * setting the value to `null`, and the entire metadata mapping can be cleared by
+             * setting `metadata` to `null`.
+             */
+            @JsonDeserialize(builder = Metadata.Builder::class)
+            @NoAutoDetect
+            class Metadata
+            private constructor(
+                private val additionalProperties: Map<String, JsonValue>,
+            ) {
+
+                private var validated: Boolean = false
+
+                private var hashCode: Int = 0
+
+                @JsonAnyGetter
+                @ExcludeMissing
+                fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
+
+                fun validate(): Metadata = apply {
+                    if (!validated) {
+                        validated = true
+                    }
+                }
+
+                fun toBuilder() = Builder().from(this)
+
+                override fun equals(other: Any?): Boolean {
+                    if (this === other) {
+                        return true
+                    }
+
+                    return other is Metadata &&
+                        this.additionalProperties == other.additionalProperties
+                }
+
+                override fun hashCode(): Int {
+                    if (hashCode == 0) {
+                        hashCode = Objects.hash(additionalProperties)
+                    }
+                    return hashCode
+                }
+
+                override fun toString() = "Metadata{additionalProperties=$additionalProperties}"
+
+                companion object {
+
+                    fun builder() = Builder()
+                }
+
+                class Builder {
+
+                    private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
+
+                    internal fun from(metadata: Metadata) = apply {
+                        additionalProperties(metadata.additionalProperties)
+                    }
+
+                    fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                        this.additionalProperties.clear()
+                        this.additionalProperties.putAll(additionalProperties)
+                    }
+
+                    @JsonAnySetter
+                    fun putAdditionalProperty(key: String, value: JsonValue) = apply {
+                        this.additionalProperties.put(key, value)
+                    }
+
+                    fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) =
+                        apply {
+                            this.additionalProperties.putAll(additionalProperties)
+                        }
+
+                    fun build(): Metadata = Metadata(additionalProperties.toUnmodifiable())
+                }
+            }
         }
 
         @JsonDeserialize(builder = NewPlanThresholdTotalAmountPrice.Builder::class)
         @NoAutoDetect
         class NewPlanThresholdTotalAmountPrice
         private constructor(
+            private val metadata: JsonField<Metadata>,
             private val externalPriceId: JsonField<String>,
             private val name: JsonField<String>,
             private val billableMetricId: JsonField<String>,
@@ -6934,6 +7855,13 @@ constructor(
             private var validated: Boolean = false
 
             private var hashCode: Int = 0
+
+            /**
+             * User-specified key/value pairs for the resource. Individual keys can be removed by
+             * setting the value to `null`, and the entire metadata mapping can be cleared by
+             * setting `metadata` to `null`.
+             */
+            fun metadata(): Metadata? = metadata.getNullable("metadata")
 
             /** An alias for the price. */
             fun externalPriceId(): String? = externalPriceId.getNullable("external_price_id")
@@ -6981,6 +7909,13 @@ constructor(
              * is billed.
              */
             fun currency(): String? = currency.getNullable("currency")
+
+            /**
+             * User-specified key/value pairs for the resource. Individual keys can be removed by
+             * setting the value to `null`, and the entire metadata mapping can be cleared by
+             * setting `metadata` to `null`.
+             */
+            @JsonProperty("metadata") @ExcludeMissing fun _metadata() = metadata
 
             /** An alias for the price. */
             @JsonProperty("external_price_id")
@@ -7044,6 +7979,7 @@ constructor(
 
             fun validate(): NewPlanThresholdTotalAmountPrice = apply {
                 if (!validated) {
+                    metadata()?.validate()
                     externalPriceId()
                     name()
                     billableMetricId()
@@ -7068,6 +8004,7 @@ constructor(
                 }
 
                 return other is NewPlanThresholdTotalAmountPrice &&
+                    this.metadata == other.metadata &&
                     this.externalPriceId == other.externalPriceId &&
                     this.name == other.name &&
                     this.billableMetricId == other.billableMetricId &&
@@ -7087,6 +8024,7 @@ constructor(
                 if (hashCode == 0) {
                     hashCode =
                         Objects.hash(
+                            metadata,
                             externalPriceId,
                             name,
                             billableMetricId,
@@ -7106,7 +8044,7 @@ constructor(
             }
 
             override fun toString() =
-                "NewPlanThresholdTotalAmountPrice{externalPriceId=$externalPriceId, name=$name, billableMetricId=$billableMetricId, itemId=$itemId, billedInAdvance=$billedInAdvance, fixedPriceQuantity=$fixedPriceQuantity, invoiceGroupingKey=$invoiceGroupingKey, cadence=$cadence, conversionRate=$conversionRate, modelType=$modelType, thresholdTotalAmountConfig=$thresholdTotalAmountConfig, currency=$currency, additionalProperties=$additionalProperties}"
+                "NewPlanThresholdTotalAmountPrice{metadata=$metadata, externalPriceId=$externalPriceId, name=$name, billableMetricId=$billableMetricId, itemId=$itemId, billedInAdvance=$billedInAdvance, fixedPriceQuantity=$fixedPriceQuantity, invoiceGroupingKey=$invoiceGroupingKey, cadence=$cadence, conversionRate=$conversionRate, modelType=$modelType, thresholdTotalAmountConfig=$thresholdTotalAmountConfig, currency=$currency, additionalProperties=$additionalProperties}"
 
             companion object {
 
@@ -7115,6 +8053,7 @@ constructor(
 
             class Builder {
 
+                private var metadata: JsonField<Metadata> = JsonMissing.of()
                 private var externalPriceId: JsonField<String> = JsonMissing.of()
                 private var name: JsonField<String> = JsonMissing.of()
                 private var billableMetricId: JsonField<String> = JsonMissing.of()
@@ -7133,6 +8072,7 @@ constructor(
                 internal fun from(
                     newPlanThresholdTotalAmountPrice: NewPlanThresholdTotalAmountPrice
                 ) = apply {
+                    this.metadata = newPlanThresholdTotalAmountPrice.metadata
                     this.externalPriceId = newPlanThresholdTotalAmountPrice.externalPriceId
                     this.name = newPlanThresholdTotalAmountPrice.name
                     this.billableMetricId = newPlanThresholdTotalAmountPrice.billableMetricId
@@ -7148,6 +8088,22 @@ constructor(
                     this.currency = newPlanThresholdTotalAmountPrice.currency
                     additionalProperties(newPlanThresholdTotalAmountPrice.additionalProperties)
                 }
+
+                /**
+                 * User-specified key/value pairs for the resource. Individual keys can be removed
+                 * by setting the value to `null`, and the entire metadata mapping can be cleared by
+                 * setting `metadata` to `null`.
+                 */
+                fun metadata(metadata: Metadata) = metadata(JsonField.of(metadata))
+
+                /**
+                 * User-specified key/value pairs for the resource. Individual keys can be removed
+                 * by setting the value to `null`, and the entire metadata mapping can be cleared by
+                 * setting `metadata` to `null`.
+                 */
+                @JsonProperty("metadata")
+                @ExcludeMissing
+                fun metadata(metadata: JsonField<Metadata>) = apply { this.metadata = metadata }
 
                 /** An alias for the price. */
                 fun externalPriceId(externalPriceId: String) =
@@ -7306,6 +8262,7 @@ constructor(
 
                 fun build(): NewPlanThresholdTotalAmountPrice =
                     NewPlanThresholdTotalAmountPrice(
+                        metadata,
                         externalPriceId,
                         name,
                         billableMetricId,
@@ -7523,12 +8480,91 @@ constructor(
                         ThresholdTotalAmountConfig(additionalProperties.toUnmodifiable())
                 }
             }
+
+            /**
+             * User-specified key/value pairs for the resource. Individual keys can be removed by
+             * setting the value to `null`, and the entire metadata mapping can be cleared by
+             * setting `metadata` to `null`.
+             */
+            @JsonDeserialize(builder = Metadata.Builder::class)
+            @NoAutoDetect
+            class Metadata
+            private constructor(
+                private val additionalProperties: Map<String, JsonValue>,
+            ) {
+
+                private var validated: Boolean = false
+
+                private var hashCode: Int = 0
+
+                @JsonAnyGetter
+                @ExcludeMissing
+                fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
+
+                fun validate(): Metadata = apply {
+                    if (!validated) {
+                        validated = true
+                    }
+                }
+
+                fun toBuilder() = Builder().from(this)
+
+                override fun equals(other: Any?): Boolean {
+                    if (this === other) {
+                        return true
+                    }
+
+                    return other is Metadata &&
+                        this.additionalProperties == other.additionalProperties
+                }
+
+                override fun hashCode(): Int {
+                    if (hashCode == 0) {
+                        hashCode = Objects.hash(additionalProperties)
+                    }
+                    return hashCode
+                }
+
+                override fun toString() = "Metadata{additionalProperties=$additionalProperties}"
+
+                companion object {
+
+                    fun builder() = Builder()
+                }
+
+                class Builder {
+
+                    private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
+
+                    internal fun from(metadata: Metadata) = apply {
+                        additionalProperties(metadata.additionalProperties)
+                    }
+
+                    fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                        this.additionalProperties.clear()
+                        this.additionalProperties.putAll(additionalProperties)
+                    }
+
+                    @JsonAnySetter
+                    fun putAdditionalProperty(key: String, value: JsonValue) = apply {
+                        this.additionalProperties.put(key, value)
+                    }
+
+                    fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) =
+                        apply {
+                            this.additionalProperties.putAll(additionalProperties)
+                        }
+
+                    fun build(): Metadata = Metadata(additionalProperties.toUnmodifiable())
+                }
+            }
         }
 
         @JsonDeserialize(builder = NewPlanTieredPackagePrice.Builder::class)
         @NoAutoDetect
         class NewPlanTieredPackagePrice
         private constructor(
+            private val metadata: JsonField<Metadata>,
             private val externalPriceId: JsonField<String>,
             private val name: JsonField<String>,
             private val billableMetricId: JsonField<String>,
@@ -7547,6 +8583,13 @@ constructor(
             private var validated: Boolean = false
 
             private var hashCode: Int = 0
+
+            /**
+             * User-specified key/value pairs for the resource. Individual keys can be removed by
+             * setting the value to `null`, and the entire metadata mapping can be cleared by
+             * setting `metadata` to `null`.
+             */
+            fun metadata(): Metadata? = metadata.getNullable("metadata")
 
             /** An alias for the price. */
             fun externalPriceId(): String? = externalPriceId.getNullable("external_price_id")
@@ -7594,6 +8637,13 @@ constructor(
              * is billed.
              */
             fun currency(): String? = currency.getNullable("currency")
+
+            /**
+             * User-specified key/value pairs for the resource. Individual keys can be removed by
+             * setting the value to `null`, and the entire metadata mapping can be cleared by
+             * setting `metadata` to `null`.
+             */
+            @JsonProperty("metadata") @ExcludeMissing fun _metadata() = metadata
 
             /** An alias for the price. */
             @JsonProperty("external_price_id")
@@ -7657,6 +8707,7 @@ constructor(
 
             fun validate(): NewPlanTieredPackagePrice = apply {
                 if (!validated) {
+                    metadata()?.validate()
                     externalPriceId()
                     name()
                     billableMetricId()
@@ -7681,6 +8732,7 @@ constructor(
                 }
 
                 return other is NewPlanTieredPackagePrice &&
+                    this.metadata == other.metadata &&
                     this.externalPriceId == other.externalPriceId &&
                     this.name == other.name &&
                     this.billableMetricId == other.billableMetricId &&
@@ -7700,6 +8752,7 @@ constructor(
                 if (hashCode == 0) {
                     hashCode =
                         Objects.hash(
+                            metadata,
                             externalPriceId,
                             name,
                             billableMetricId,
@@ -7719,7 +8772,7 @@ constructor(
             }
 
             override fun toString() =
-                "NewPlanTieredPackagePrice{externalPriceId=$externalPriceId, name=$name, billableMetricId=$billableMetricId, itemId=$itemId, billedInAdvance=$billedInAdvance, fixedPriceQuantity=$fixedPriceQuantity, invoiceGroupingKey=$invoiceGroupingKey, cadence=$cadence, conversionRate=$conversionRate, modelType=$modelType, tieredPackageConfig=$tieredPackageConfig, currency=$currency, additionalProperties=$additionalProperties}"
+                "NewPlanTieredPackagePrice{metadata=$metadata, externalPriceId=$externalPriceId, name=$name, billableMetricId=$billableMetricId, itemId=$itemId, billedInAdvance=$billedInAdvance, fixedPriceQuantity=$fixedPriceQuantity, invoiceGroupingKey=$invoiceGroupingKey, cadence=$cadence, conversionRate=$conversionRate, modelType=$modelType, tieredPackageConfig=$tieredPackageConfig, currency=$currency, additionalProperties=$additionalProperties}"
 
             companion object {
 
@@ -7728,6 +8781,7 @@ constructor(
 
             class Builder {
 
+                private var metadata: JsonField<Metadata> = JsonMissing.of()
                 private var externalPriceId: JsonField<String> = JsonMissing.of()
                 private var name: JsonField<String> = JsonMissing.of()
                 private var billableMetricId: JsonField<String> = JsonMissing.of()
@@ -7743,6 +8797,7 @@ constructor(
                 private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
                 internal fun from(newPlanTieredPackagePrice: NewPlanTieredPackagePrice) = apply {
+                    this.metadata = newPlanTieredPackagePrice.metadata
                     this.externalPriceId = newPlanTieredPackagePrice.externalPriceId
                     this.name = newPlanTieredPackagePrice.name
                     this.billableMetricId = newPlanTieredPackagePrice.billableMetricId
@@ -7757,6 +8812,22 @@ constructor(
                     this.currency = newPlanTieredPackagePrice.currency
                     additionalProperties(newPlanTieredPackagePrice.additionalProperties)
                 }
+
+                /**
+                 * User-specified key/value pairs for the resource. Individual keys can be removed
+                 * by setting the value to `null`, and the entire metadata mapping can be cleared by
+                 * setting `metadata` to `null`.
+                 */
+                fun metadata(metadata: Metadata) = metadata(JsonField.of(metadata))
+
+                /**
+                 * User-specified key/value pairs for the resource. Individual keys can be removed
+                 * by setting the value to `null`, and the entire metadata mapping can be cleared by
+                 * setting `metadata` to `null`.
+                 */
+                @JsonProperty("metadata")
+                @ExcludeMissing
+                fun metadata(metadata: JsonField<Metadata>) = apply { this.metadata = metadata }
 
                 /** An alias for the price. */
                 fun externalPriceId(externalPriceId: String) =
@@ -7915,6 +8986,7 @@ constructor(
 
                 fun build(): NewPlanTieredPackagePrice =
                     NewPlanTieredPackagePrice(
+                        metadata,
                         externalPriceId,
                         name,
                         billableMetricId,
@@ -8131,12 +9203,91 @@ constructor(
                         TieredPackageConfig(additionalProperties.toUnmodifiable())
                 }
             }
+
+            /**
+             * User-specified key/value pairs for the resource. Individual keys can be removed by
+             * setting the value to `null`, and the entire metadata mapping can be cleared by
+             * setting `metadata` to `null`.
+             */
+            @JsonDeserialize(builder = Metadata.Builder::class)
+            @NoAutoDetect
+            class Metadata
+            private constructor(
+                private val additionalProperties: Map<String, JsonValue>,
+            ) {
+
+                private var validated: Boolean = false
+
+                private var hashCode: Int = 0
+
+                @JsonAnyGetter
+                @ExcludeMissing
+                fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
+
+                fun validate(): Metadata = apply {
+                    if (!validated) {
+                        validated = true
+                    }
+                }
+
+                fun toBuilder() = Builder().from(this)
+
+                override fun equals(other: Any?): Boolean {
+                    if (this === other) {
+                        return true
+                    }
+
+                    return other is Metadata &&
+                        this.additionalProperties == other.additionalProperties
+                }
+
+                override fun hashCode(): Int {
+                    if (hashCode == 0) {
+                        hashCode = Objects.hash(additionalProperties)
+                    }
+                    return hashCode
+                }
+
+                override fun toString() = "Metadata{additionalProperties=$additionalProperties}"
+
+                companion object {
+
+                    fun builder() = Builder()
+                }
+
+                class Builder {
+
+                    private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
+
+                    internal fun from(metadata: Metadata) = apply {
+                        additionalProperties(metadata.additionalProperties)
+                    }
+
+                    fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                        this.additionalProperties.clear()
+                        this.additionalProperties.putAll(additionalProperties)
+                    }
+
+                    @JsonAnySetter
+                    fun putAdditionalProperty(key: String, value: JsonValue) = apply {
+                        this.additionalProperties.put(key, value)
+                    }
+
+                    fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) =
+                        apply {
+                            this.additionalProperties.putAll(additionalProperties)
+                        }
+
+                    fun build(): Metadata = Metadata(additionalProperties.toUnmodifiable())
+                }
+            }
         }
 
         @JsonDeserialize(builder = NewPlanTieredWithMinimumPrice.Builder::class)
         @NoAutoDetect
         class NewPlanTieredWithMinimumPrice
         private constructor(
+            private val metadata: JsonField<Metadata>,
             private val externalPriceId: JsonField<String>,
             private val name: JsonField<String>,
             private val billableMetricId: JsonField<String>,
@@ -8155,6 +9306,13 @@ constructor(
             private var validated: Boolean = false
 
             private var hashCode: Int = 0
+
+            /**
+             * User-specified key/value pairs for the resource. Individual keys can be removed by
+             * setting the value to `null`, and the entire metadata mapping can be cleared by
+             * setting `metadata` to `null`.
+             */
+            fun metadata(): Metadata? = metadata.getNullable("metadata")
 
             /** An alias for the price. */
             fun externalPriceId(): String? = externalPriceId.getNullable("external_price_id")
@@ -8202,6 +9360,13 @@ constructor(
              * is billed.
              */
             fun currency(): String? = currency.getNullable("currency")
+
+            /**
+             * User-specified key/value pairs for the resource. Individual keys can be removed by
+             * setting the value to `null`, and the entire metadata mapping can be cleared by
+             * setting `metadata` to `null`.
+             */
+            @JsonProperty("metadata") @ExcludeMissing fun _metadata() = metadata
 
             /** An alias for the price. */
             @JsonProperty("external_price_id")
@@ -8265,6 +9430,7 @@ constructor(
 
             fun validate(): NewPlanTieredWithMinimumPrice = apply {
                 if (!validated) {
+                    metadata()?.validate()
                     externalPriceId()
                     name()
                     billableMetricId()
@@ -8289,6 +9455,7 @@ constructor(
                 }
 
                 return other is NewPlanTieredWithMinimumPrice &&
+                    this.metadata == other.metadata &&
                     this.externalPriceId == other.externalPriceId &&
                     this.name == other.name &&
                     this.billableMetricId == other.billableMetricId &&
@@ -8308,6 +9475,7 @@ constructor(
                 if (hashCode == 0) {
                     hashCode =
                         Objects.hash(
+                            metadata,
                             externalPriceId,
                             name,
                             billableMetricId,
@@ -8327,7 +9495,7 @@ constructor(
             }
 
             override fun toString() =
-                "NewPlanTieredWithMinimumPrice{externalPriceId=$externalPriceId, name=$name, billableMetricId=$billableMetricId, itemId=$itemId, billedInAdvance=$billedInAdvance, fixedPriceQuantity=$fixedPriceQuantity, invoiceGroupingKey=$invoiceGroupingKey, cadence=$cadence, conversionRate=$conversionRate, modelType=$modelType, tieredWithMinimumConfig=$tieredWithMinimumConfig, currency=$currency, additionalProperties=$additionalProperties}"
+                "NewPlanTieredWithMinimumPrice{metadata=$metadata, externalPriceId=$externalPriceId, name=$name, billableMetricId=$billableMetricId, itemId=$itemId, billedInAdvance=$billedInAdvance, fixedPriceQuantity=$fixedPriceQuantity, invoiceGroupingKey=$invoiceGroupingKey, cadence=$cadence, conversionRate=$conversionRate, modelType=$modelType, tieredWithMinimumConfig=$tieredWithMinimumConfig, currency=$currency, additionalProperties=$additionalProperties}"
 
             companion object {
 
@@ -8336,6 +9504,7 @@ constructor(
 
             class Builder {
 
+                private var metadata: JsonField<Metadata> = JsonMissing.of()
                 private var externalPriceId: JsonField<String> = JsonMissing.of()
                 private var name: JsonField<String> = JsonMissing.of()
                 private var billableMetricId: JsonField<String> = JsonMissing.of()
@@ -8353,6 +9522,7 @@ constructor(
 
                 internal fun from(newPlanTieredWithMinimumPrice: NewPlanTieredWithMinimumPrice) =
                     apply {
+                        this.metadata = newPlanTieredWithMinimumPrice.metadata
                         this.externalPriceId = newPlanTieredWithMinimumPrice.externalPriceId
                         this.name = newPlanTieredWithMinimumPrice.name
                         this.billableMetricId = newPlanTieredWithMinimumPrice.billableMetricId
@@ -8368,6 +9538,22 @@ constructor(
                         this.currency = newPlanTieredWithMinimumPrice.currency
                         additionalProperties(newPlanTieredWithMinimumPrice.additionalProperties)
                     }
+
+                /**
+                 * User-specified key/value pairs for the resource. Individual keys can be removed
+                 * by setting the value to `null`, and the entire metadata mapping can be cleared by
+                 * setting `metadata` to `null`.
+                 */
+                fun metadata(metadata: Metadata) = metadata(JsonField.of(metadata))
+
+                /**
+                 * User-specified key/value pairs for the resource. Individual keys can be removed
+                 * by setting the value to `null`, and the entire metadata mapping can be cleared by
+                 * setting `metadata` to `null`.
+                 */
+                @JsonProperty("metadata")
+                @ExcludeMissing
+                fun metadata(metadata: JsonField<Metadata>) = apply { this.metadata = metadata }
 
                 /** An alias for the price. */
                 fun externalPriceId(externalPriceId: String) =
@@ -8525,6 +9711,7 @@ constructor(
 
                 fun build(): NewPlanTieredWithMinimumPrice =
                     NewPlanTieredWithMinimumPrice(
+                        metadata,
                         externalPriceId,
                         name,
                         billableMetricId,
@@ -8741,12 +9928,91 @@ constructor(
                         TieredWithMinimumConfig(additionalProperties.toUnmodifiable())
                 }
             }
+
+            /**
+             * User-specified key/value pairs for the resource. Individual keys can be removed by
+             * setting the value to `null`, and the entire metadata mapping can be cleared by
+             * setting `metadata` to `null`.
+             */
+            @JsonDeserialize(builder = Metadata.Builder::class)
+            @NoAutoDetect
+            class Metadata
+            private constructor(
+                private val additionalProperties: Map<String, JsonValue>,
+            ) {
+
+                private var validated: Boolean = false
+
+                private var hashCode: Int = 0
+
+                @JsonAnyGetter
+                @ExcludeMissing
+                fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
+
+                fun validate(): Metadata = apply {
+                    if (!validated) {
+                        validated = true
+                    }
+                }
+
+                fun toBuilder() = Builder().from(this)
+
+                override fun equals(other: Any?): Boolean {
+                    if (this === other) {
+                        return true
+                    }
+
+                    return other is Metadata &&
+                        this.additionalProperties == other.additionalProperties
+                }
+
+                override fun hashCode(): Int {
+                    if (hashCode == 0) {
+                        hashCode = Objects.hash(additionalProperties)
+                    }
+                    return hashCode
+                }
+
+                override fun toString() = "Metadata{additionalProperties=$additionalProperties}"
+
+                companion object {
+
+                    fun builder() = Builder()
+                }
+
+                class Builder {
+
+                    private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
+
+                    internal fun from(metadata: Metadata) = apply {
+                        additionalProperties(metadata.additionalProperties)
+                    }
+
+                    fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                        this.additionalProperties.clear()
+                        this.additionalProperties.putAll(additionalProperties)
+                    }
+
+                    @JsonAnySetter
+                    fun putAdditionalProperty(key: String, value: JsonValue) = apply {
+                        this.additionalProperties.put(key, value)
+                    }
+
+                    fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) =
+                        apply {
+                            this.additionalProperties.putAll(additionalProperties)
+                        }
+
+                    fun build(): Metadata = Metadata(additionalProperties.toUnmodifiable())
+                }
+            }
         }
 
         @JsonDeserialize(builder = NewPlanUnitWithPercentPrice.Builder::class)
         @NoAutoDetect
         class NewPlanUnitWithPercentPrice
         private constructor(
+            private val metadata: JsonField<Metadata>,
             private val externalPriceId: JsonField<String>,
             private val name: JsonField<String>,
             private val billableMetricId: JsonField<String>,
@@ -8765,6 +10031,13 @@ constructor(
             private var validated: Boolean = false
 
             private var hashCode: Int = 0
+
+            /**
+             * User-specified key/value pairs for the resource. Individual keys can be removed by
+             * setting the value to `null`, and the entire metadata mapping can be cleared by
+             * setting `metadata` to `null`.
+             */
+            fun metadata(): Metadata? = metadata.getNullable("metadata")
 
             /** An alias for the price. */
             fun externalPriceId(): String? = externalPriceId.getNullable("external_price_id")
@@ -8812,6 +10085,13 @@ constructor(
              * is billed.
              */
             fun currency(): String? = currency.getNullable("currency")
+
+            /**
+             * User-specified key/value pairs for the resource. Individual keys can be removed by
+             * setting the value to `null`, and the entire metadata mapping can be cleared by
+             * setting `metadata` to `null`.
+             */
+            @JsonProperty("metadata") @ExcludeMissing fun _metadata() = metadata
 
             /** An alias for the price. */
             @JsonProperty("external_price_id")
@@ -8875,6 +10155,7 @@ constructor(
 
             fun validate(): NewPlanUnitWithPercentPrice = apply {
                 if (!validated) {
+                    metadata()?.validate()
                     externalPriceId()
                     name()
                     billableMetricId()
@@ -8899,6 +10180,7 @@ constructor(
                 }
 
                 return other is NewPlanUnitWithPercentPrice &&
+                    this.metadata == other.metadata &&
                     this.externalPriceId == other.externalPriceId &&
                     this.name == other.name &&
                     this.billableMetricId == other.billableMetricId &&
@@ -8918,6 +10200,7 @@ constructor(
                 if (hashCode == 0) {
                     hashCode =
                         Objects.hash(
+                            metadata,
                             externalPriceId,
                             name,
                             billableMetricId,
@@ -8937,7 +10220,7 @@ constructor(
             }
 
             override fun toString() =
-                "NewPlanUnitWithPercentPrice{externalPriceId=$externalPriceId, name=$name, billableMetricId=$billableMetricId, itemId=$itemId, billedInAdvance=$billedInAdvance, fixedPriceQuantity=$fixedPriceQuantity, invoiceGroupingKey=$invoiceGroupingKey, cadence=$cadence, conversionRate=$conversionRate, modelType=$modelType, unitWithPercentConfig=$unitWithPercentConfig, currency=$currency, additionalProperties=$additionalProperties}"
+                "NewPlanUnitWithPercentPrice{metadata=$metadata, externalPriceId=$externalPriceId, name=$name, billableMetricId=$billableMetricId, itemId=$itemId, billedInAdvance=$billedInAdvance, fixedPriceQuantity=$fixedPriceQuantity, invoiceGroupingKey=$invoiceGroupingKey, cadence=$cadence, conversionRate=$conversionRate, modelType=$modelType, unitWithPercentConfig=$unitWithPercentConfig, currency=$currency, additionalProperties=$additionalProperties}"
 
             companion object {
 
@@ -8946,6 +10229,7 @@ constructor(
 
             class Builder {
 
+                private var metadata: JsonField<Metadata> = JsonMissing.of()
                 private var externalPriceId: JsonField<String> = JsonMissing.of()
                 private var name: JsonField<String> = JsonMissing.of()
                 private var billableMetricId: JsonField<String> = JsonMissing.of()
@@ -8963,6 +10247,7 @@ constructor(
 
                 internal fun from(newPlanUnitWithPercentPrice: NewPlanUnitWithPercentPrice) =
                     apply {
+                        this.metadata = newPlanUnitWithPercentPrice.metadata
                         this.externalPriceId = newPlanUnitWithPercentPrice.externalPriceId
                         this.name = newPlanUnitWithPercentPrice.name
                         this.billableMetricId = newPlanUnitWithPercentPrice.billableMetricId
@@ -8978,6 +10263,22 @@ constructor(
                         this.currency = newPlanUnitWithPercentPrice.currency
                         additionalProperties(newPlanUnitWithPercentPrice.additionalProperties)
                     }
+
+                /**
+                 * User-specified key/value pairs for the resource. Individual keys can be removed
+                 * by setting the value to `null`, and the entire metadata mapping can be cleared by
+                 * setting `metadata` to `null`.
+                 */
+                fun metadata(metadata: Metadata) = metadata(JsonField.of(metadata))
+
+                /**
+                 * User-specified key/value pairs for the resource. Individual keys can be removed
+                 * by setting the value to `null`, and the entire metadata mapping can be cleared by
+                 * setting `metadata` to `null`.
+                 */
+                @JsonProperty("metadata")
+                @ExcludeMissing
+                fun metadata(metadata: JsonField<Metadata>) = apply { this.metadata = metadata }
 
                 /** An alias for the price. */
                 fun externalPriceId(externalPriceId: String) =
@@ -9136,6 +10437,7 @@ constructor(
 
                 fun build(): NewPlanUnitWithPercentPrice =
                     NewPlanUnitWithPercentPrice(
+                        metadata,
                         externalPriceId,
                         name,
                         billableMetricId,
@@ -9352,12 +10654,91 @@ constructor(
                         UnitWithPercentConfig(additionalProperties.toUnmodifiable())
                 }
             }
+
+            /**
+             * User-specified key/value pairs for the resource. Individual keys can be removed by
+             * setting the value to `null`, and the entire metadata mapping can be cleared by
+             * setting `metadata` to `null`.
+             */
+            @JsonDeserialize(builder = Metadata.Builder::class)
+            @NoAutoDetect
+            class Metadata
+            private constructor(
+                private val additionalProperties: Map<String, JsonValue>,
+            ) {
+
+                private var validated: Boolean = false
+
+                private var hashCode: Int = 0
+
+                @JsonAnyGetter
+                @ExcludeMissing
+                fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
+
+                fun validate(): Metadata = apply {
+                    if (!validated) {
+                        validated = true
+                    }
+                }
+
+                fun toBuilder() = Builder().from(this)
+
+                override fun equals(other: Any?): Boolean {
+                    if (this === other) {
+                        return true
+                    }
+
+                    return other is Metadata &&
+                        this.additionalProperties == other.additionalProperties
+                }
+
+                override fun hashCode(): Int {
+                    if (hashCode == 0) {
+                        hashCode = Objects.hash(additionalProperties)
+                    }
+                    return hashCode
+                }
+
+                override fun toString() = "Metadata{additionalProperties=$additionalProperties}"
+
+                companion object {
+
+                    fun builder() = Builder()
+                }
+
+                class Builder {
+
+                    private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
+
+                    internal fun from(metadata: Metadata) = apply {
+                        additionalProperties(metadata.additionalProperties)
+                    }
+
+                    fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                        this.additionalProperties.clear()
+                        this.additionalProperties.putAll(additionalProperties)
+                    }
+
+                    @JsonAnySetter
+                    fun putAdditionalProperty(key: String, value: JsonValue) = apply {
+                        this.additionalProperties.put(key, value)
+                    }
+
+                    fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) =
+                        apply {
+                            this.additionalProperties.putAll(additionalProperties)
+                        }
+
+                    fun build(): Metadata = Metadata(additionalProperties.toUnmodifiable())
+                }
+            }
         }
 
         @JsonDeserialize(builder = NewPlanPackageWithAllocationPrice.Builder::class)
         @NoAutoDetect
         class NewPlanPackageWithAllocationPrice
         private constructor(
+            private val metadata: JsonField<Metadata>,
             private val externalPriceId: JsonField<String>,
             private val name: JsonField<String>,
             private val billableMetricId: JsonField<String>,
@@ -9376,6 +10757,13 @@ constructor(
             private var validated: Boolean = false
 
             private var hashCode: Int = 0
+
+            /**
+             * User-specified key/value pairs for the resource. Individual keys can be removed by
+             * setting the value to `null`, and the entire metadata mapping can be cleared by
+             * setting `metadata` to `null`.
+             */
+            fun metadata(): Metadata? = metadata.getNullable("metadata")
 
             /** An alias for the price. */
             fun externalPriceId(): String? = externalPriceId.getNullable("external_price_id")
@@ -9423,6 +10811,13 @@ constructor(
              * is billed.
              */
             fun currency(): String? = currency.getNullable("currency")
+
+            /**
+             * User-specified key/value pairs for the resource. Individual keys can be removed by
+             * setting the value to `null`, and the entire metadata mapping can be cleared by
+             * setting `metadata` to `null`.
+             */
+            @JsonProperty("metadata") @ExcludeMissing fun _metadata() = metadata
 
             /** An alias for the price. */
             @JsonProperty("external_price_id")
@@ -9486,6 +10881,7 @@ constructor(
 
             fun validate(): NewPlanPackageWithAllocationPrice = apply {
                 if (!validated) {
+                    metadata()?.validate()
                     externalPriceId()
                     name()
                     billableMetricId()
@@ -9510,6 +10906,7 @@ constructor(
                 }
 
                 return other is NewPlanPackageWithAllocationPrice &&
+                    this.metadata == other.metadata &&
                     this.externalPriceId == other.externalPriceId &&
                     this.name == other.name &&
                     this.billableMetricId == other.billableMetricId &&
@@ -9529,6 +10926,7 @@ constructor(
                 if (hashCode == 0) {
                     hashCode =
                         Objects.hash(
+                            metadata,
                             externalPriceId,
                             name,
                             billableMetricId,
@@ -9548,7 +10946,7 @@ constructor(
             }
 
             override fun toString() =
-                "NewPlanPackageWithAllocationPrice{externalPriceId=$externalPriceId, name=$name, billableMetricId=$billableMetricId, itemId=$itemId, billedInAdvance=$billedInAdvance, fixedPriceQuantity=$fixedPriceQuantity, invoiceGroupingKey=$invoiceGroupingKey, cadence=$cadence, conversionRate=$conversionRate, modelType=$modelType, packageWithAllocationConfig=$packageWithAllocationConfig, currency=$currency, additionalProperties=$additionalProperties}"
+                "NewPlanPackageWithAllocationPrice{metadata=$metadata, externalPriceId=$externalPriceId, name=$name, billableMetricId=$billableMetricId, itemId=$itemId, billedInAdvance=$billedInAdvance, fixedPriceQuantity=$fixedPriceQuantity, invoiceGroupingKey=$invoiceGroupingKey, cadence=$cadence, conversionRate=$conversionRate, modelType=$modelType, packageWithAllocationConfig=$packageWithAllocationConfig, currency=$currency, additionalProperties=$additionalProperties}"
 
             companion object {
 
@@ -9557,6 +10955,7 @@ constructor(
 
             class Builder {
 
+                private var metadata: JsonField<Metadata> = JsonMissing.of()
                 private var externalPriceId: JsonField<String> = JsonMissing.of()
                 private var name: JsonField<String> = JsonMissing.of()
                 private var billableMetricId: JsonField<String> = JsonMissing.of()
@@ -9575,6 +10974,7 @@ constructor(
                 internal fun from(
                     newPlanPackageWithAllocationPrice: NewPlanPackageWithAllocationPrice
                 ) = apply {
+                    this.metadata = newPlanPackageWithAllocationPrice.metadata
                     this.externalPriceId = newPlanPackageWithAllocationPrice.externalPriceId
                     this.name = newPlanPackageWithAllocationPrice.name
                     this.billableMetricId = newPlanPackageWithAllocationPrice.billableMetricId
@@ -9590,6 +10990,22 @@ constructor(
                     this.currency = newPlanPackageWithAllocationPrice.currency
                     additionalProperties(newPlanPackageWithAllocationPrice.additionalProperties)
                 }
+
+                /**
+                 * User-specified key/value pairs for the resource. Individual keys can be removed
+                 * by setting the value to `null`, and the entire metadata mapping can be cleared by
+                 * setting `metadata` to `null`.
+                 */
+                fun metadata(metadata: Metadata) = metadata(JsonField.of(metadata))
+
+                /**
+                 * User-specified key/value pairs for the resource. Individual keys can be removed
+                 * by setting the value to `null`, and the entire metadata mapping can be cleared by
+                 * setting `metadata` to `null`.
+                 */
+                @JsonProperty("metadata")
+                @ExcludeMissing
+                fun metadata(metadata: JsonField<Metadata>) = apply { this.metadata = metadata }
 
                 /** An alias for the price. */
                 fun externalPriceId(externalPriceId: String) =
@@ -9748,6 +11164,7 @@ constructor(
 
                 fun build(): NewPlanPackageWithAllocationPrice =
                     NewPlanPackageWithAllocationPrice(
+                        metadata,
                         externalPriceId,
                         name,
                         billableMetricId,
@@ -9965,12 +11382,91 @@ constructor(
                         PackageWithAllocationConfig(additionalProperties.toUnmodifiable())
                 }
             }
+
+            /**
+             * User-specified key/value pairs for the resource. Individual keys can be removed by
+             * setting the value to `null`, and the entire metadata mapping can be cleared by
+             * setting `metadata` to `null`.
+             */
+            @JsonDeserialize(builder = Metadata.Builder::class)
+            @NoAutoDetect
+            class Metadata
+            private constructor(
+                private val additionalProperties: Map<String, JsonValue>,
+            ) {
+
+                private var validated: Boolean = false
+
+                private var hashCode: Int = 0
+
+                @JsonAnyGetter
+                @ExcludeMissing
+                fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
+
+                fun validate(): Metadata = apply {
+                    if (!validated) {
+                        validated = true
+                    }
+                }
+
+                fun toBuilder() = Builder().from(this)
+
+                override fun equals(other: Any?): Boolean {
+                    if (this === other) {
+                        return true
+                    }
+
+                    return other is Metadata &&
+                        this.additionalProperties == other.additionalProperties
+                }
+
+                override fun hashCode(): Int {
+                    if (hashCode == 0) {
+                        hashCode = Objects.hash(additionalProperties)
+                    }
+                    return hashCode
+                }
+
+                override fun toString() = "Metadata{additionalProperties=$additionalProperties}"
+
+                companion object {
+
+                    fun builder() = Builder()
+                }
+
+                class Builder {
+
+                    private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
+
+                    internal fun from(metadata: Metadata) = apply {
+                        additionalProperties(metadata.additionalProperties)
+                    }
+
+                    fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                        this.additionalProperties.clear()
+                        this.additionalProperties.putAll(additionalProperties)
+                    }
+
+                    @JsonAnySetter
+                    fun putAdditionalProperty(key: String, value: JsonValue) = apply {
+                        this.additionalProperties.put(key, value)
+                    }
+
+                    fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) =
+                        apply {
+                            this.additionalProperties.putAll(additionalProperties)
+                        }
+
+                    fun build(): Metadata = Metadata(additionalProperties.toUnmodifiable())
+                }
+            }
         }
 
         @JsonDeserialize(builder = NewPlanTierWithProrationPrice.Builder::class)
         @NoAutoDetect
         class NewPlanTierWithProrationPrice
         private constructor(
+            private val metadata: JsonField<Metadata>,
             private val externalPriceId: JsonField<String>,
             private val name: JsonField<String>,
             private val billableMetricId: JsonField<String>,
@@ -9989,6 +11485,13 @@ constructor(
             private var validated: Boolean = false
 
             private var hashCode: Int = 0
+
+            /**
+             * User-specified key/value pairs for the resource. Individual keys can be removed by
+             * setting the value to `null`, and the entire metadata mapping can be cleared by
+             * setting `metadata` to `null`.
+             */
+            fun metadata(): Metadata? = metadata.getNullable("metadata")
 
             /** An alias for the price. */
             fun externalPriceId(): String? = externalPriceId.getNullable("external_price_id")
@@ -10036,6 +11539,13 @@ constructor(
              * is billed.
              */
             fun currency(): String? = currency.getNullable("currency")
+
+            /**
+             * User-specified key/value pairs for the resource. Individual keys can be removed by
+             * setting the value to `null`, and the entire metadata mapping can be cleared by
+             * setting `metadata` to `null`.
+             */
+            @JsonProperty("metadata") @ExcludeMissing fun _metadata() = metadata
 
             /** An alias for the price. */
             @JsonProperty("external_price_id")
@@ -10099,6 +11609,7 @@ constructor(
 
             fun validate(): NewPlanTierWithProrationPrice = apply {
                 if (!validated) {
+                    metadata()?.validate()
                     externalPriceId()
                     name()
                     billableMetricId()
@@ -10123,6 +11634,7 @@ constructor(
                 }
 
                 return other is NewPlanTierWithProrationPrice &&
+                    this.metadata == other.metadata &&
                     this.externalPriceId == other.externalPriceId &&
                     this.name == other.name &&
                     this.billableMetricId == other.billableMetricId &&
@@ -10142,6 +11654,7 @@ constructor(
                 if (hashCode == 0) {
                     hashCode =
                         Objects.hash(
+                            metadata,
                             externalPriceId,
                             name,
                             billableMetricId,
@@ -10161,7 +11674,7 @@ constructor(
             }
 
             override fun toString() =
-                "NewPlanTierWithProrationPrice{externalPriceId=$externalPriceId, name=$name, billableMetricId=$billableMetricId, itemId=$itemId, billedInAdvance=$billedInAdvance, fixedPriceQuantity=$fixedPriceQuantity, invoiceGroupingKey=$invoiceGroupingKey, cadence=$cadence, conversionRate=$conversionRate, modelType=$modelType, tieredWithProrationConfig=$tieredWithProrationConfig, currency=$currency, additionalProperties=$additionalProperties}"
+                "NewPlanTierWithProrationPrice{metadata=$metadata, externalPriceId=$externalPriceId, name=$name, billableMetricId=$billableMetricId, itemId=$itemId, billedInAdvance=$billedInAdvance, fixedPriceQuantity=$fixedPriceQuantity, invoiceGroupingKey=$invoiceGroupingKey, cadence=$cadence, conversionRate=$conversionRate, modelType=$modelType, tieredWithProrationConfig=$tieredWithProrationConfig, currency=$currency, additionalProperties=$additionalProperties}"
 
             companion object {
 
@@ -10170,6 +11683,7 @@ constructor(
 
             class Builder {
 
+                private var metadata: JsonField<Metadata> = JsonMissing.of()
                 private var externalPriceId: JsonField<String> = JsonMissing.of()
                 private var name: JsonField<String> = JsonMissing.of()
                 private var billableMetricId: JsonField<String> = JsonMissing.of()
@@ -10187,6 +11701,7 @@ constructor(
 
                 internal fun from(newPlanTierWithProrationPrice: NewPlanTierWithProrationPrice) =
                     apply {
+                        this.metadata = newPlanTierWithProrationPrice.metadata
                         this.externalPriceId = newPlanTierWithProrationPrice.externalPriceId
                         this.name = newPlanTierWithProrationPrice.name
                         this.billableMetricId = newPlanTierWithProrationPrice.billableMetricId
@@ -10202,6 +11717,22 @@ constructor(
                         this.currency = newPlanTierWithProrationPrice.currency
                         additionalProperties(newPlanTierWithProrationPrice.additionalProperties)
                     }
+
+                /**
+                 * User-specified key/value pairs for the resource. Individual keys can be removed
+                 * by setting the value to `null`, and the entire metadata mapping can be cleared by
+                 * setting `metadata` to `null`.
+                 */
+                fun metadata(metadata: Metadata) = metadata(JsonField.of(metadata))
+
+                /**
+                 * User-specified key/value pairs for the resource. Individual keys can be removed
+                 * by setting the value to `null`, and the entire metadata mapping can be cleared by
+                 * setting `metadata` to `null`.
+                 */
+                @JsonProperty("metadata")
+                @ExcludeMissing
+                fun metadata(metadata: JsonField<Metadata>) = apply { this.metadata = metadata }
 
                 /** An alias for the price. */
                 fun externalPriceId(externalPriceId: String) =
@@ -10360,6 +11891,7 @@ constructor(
 
                 fun build(): NewPlanTierWithProrationPrice =
                     NewPlanTierWithProrationPrice(
+                        metadata,
                         externalPriceId,
                         name,
                         billableMetricId,
@@ -10577,12 +12109,91 @@ constructor(
                         TieredWithProrationConfig(additionalProperties.toUnmodifiable())
                 }
             }
+
+            /**
+             * User-specified key/value pairs for the resource. Individual keys can be removed by
+             * setting the value to `null`, and the entire metadata mapping can be cleared by
+             * setting `metadata` to `null`.
+             */
+            @JsonDeserialize(builder = Metadata.Builder::class)
+            @NoAutoDetect
+            class Metadata
+            private constructor(
+                private val additionalProperties: Map<String, JsonValue>,
+            ) {
+
+                private var validated: Boolean = false
+
+                private var hashCode: Int = 0
+
+                @JsonAnyGetter
+                @ExcludeMissing
+                fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
+
+                fun validate(): Metadata = apply {
+                    if (!validated) {
+                        validated = true
+                    }
+                }
+
+                fun toBuilder() = Builder().from(this)
+
+                override fun equals(other: Any?): Boolean {
+                    if (this === other) {
+                        return true
+                    }
+
+                    return other is Metadata &&
+                        this.additionalProperties == other.additionalProperties
+                }
+
+                override fun hashCode(): Int {
+                    if (hashCode == 0) {
+                        hashCode = Objects.hash(additionalProperties)
+                    }
+                    return hashCode
+                }
+
+                override fun toString() = "Metadata{additionalProperties=$additionalProperties}"
+
+                companion object {
+
+                    fun builder() = Builder()
+                }
+
+                class Builder {
+
+                    private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
+
+                    internal fun from(metadata: Metadata) = apply {
+                        additionalProperties(metadata.additionalProperties)
+                    }
+
+                    fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                        this.additionalProperties.clear()
+                        this.additionalProperties.putAll(additionalProperties)
+                    }
+
+                    @JsonAnySetter
+                    fun putAdditionalProperty(key: String, value: JsonValue) = apply {
+                        this.additionalProperties.put(key, value)
+                    }
+
+                    fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) =
+                        apply {
+                            this.additionalProperties.putAll(additionalProperties)
+                        }
+
+                    fun build(): Metadata = Metadata(additionalProperties.toUnmodifiable())
+                }
+            }
         }
 
         @JsonDeserialize(builder = NewPlanUnitWithProrationPrice.Builder::class)
         @NoAutoDetect
         class NewPlanUnitWithProrationPrice
         private constructor(
+            private val metadata: JsonField<Metadata>,
             private val externalPriceId: JsonField<String>,
             private val name: JsonField<String>,
             private val billableMetricId: JsonField<String>,
@@ -10601,6 +12212,13 @@ constructor(
             private var validated: Boolean = false
 
             private var hashCode: Int = 0
+
+            /**
+             * User-specified key/value pairs for the resource. Individual keys can be removed by
+             * setting the value to `null`, and the entire metadata mapping can be cleared by
+             * setting `metadata` to `null`.
+             */
+            fun metadata(): Metadata? = metadata.getNullable("metadata")
 
             /** An alias for the price. */
             fun externalPriceId(): String? = externalPriceId.getNullable("external_price_id")
@@ -10648,6 +12266,13 @@ constructor(
              * is billed.
              */
             fun currency(): String? = currency.getNullable("currency")
+
+            /**
+             * User-specified key/value pairs for the resource. Individual keys can be removed by
+             * setting the value to `null`, and the entire metadata mapping can be cleared by
+             * setting `metadata` to `null`.
+             */
+            @JsonProperty("metadata") @ExcludeMissing fun _metadata() = metadata
 
             /** An alias for the price. */
             @JsonProperty("external_price_id")
@@ -10711,6 +12336,7 @@ constructor(
 
             fun validate(): NewPlanUnitWithProrationPrice = apply {
                 if (!validated) {
+                    metadata()?.validate()
                     externalPriceId()
                     name()
                     billableMetricId()
@@ -10735,6 +12361,7 @@ constructor(
                 }
 
                 return other is NewPlanUnitWithProrationPrice &&
+                    this.metadata == other.metadata &&
                     this.externalPriceId == other.externalPriceId &&
                     this.name == other.name &&
                     this.billableMetricId == other.billableMetricId &&
@@ -10754,6 +12381,7 @@ constructor(
                 if (hashCode == 0) {
                     hashCode =
                         Objects.hash(
+                            metadata,
                             externalPriceId,
                             name,
                             billableMetricId,
@@ -10773,7 +12401,7 @@ constructor(
             }
 
             override fun toString() =
-                "NewPlanUnitWithProrationPrice{externalPriceId=$externalPriceId, name=$name, billableMetricId=$billableMetricId, itemId=$itemId, billedInAdvance=$billedInAdvance, fixedPriceQuantity=$fixedPriceQuantity, invoiceGroupingKey=$invoiceGroupingKey, cadence=$cadence, conversionRate=$conversionRate, modelType=$modelType, unitWithProrationConfig=$unitWithProrationConfig, currency=$currency, additionalProperties=$additionalProperties}"
+                "NewPlanUnitWithProrationPrice{metadata=$metadata, externalPriceId=$externalPriceId, name=$name, billableMetricId=$billableMetricId, itemId=$itemId, billedInAdvance=$billedInAdvance, fixedPriceQuantity=$fixedPriceQuantity, invoiceGroupingKey=$invoiceGroupingKey, cadence=$cadence, conversionRate=$conversionRate, modelType=$modelType, unitWithProrationConfig=$unitWithProrationConfig, currency=$currency, additionalProperties=$additionalProperties}"
 
             companion object {
 
@@ -10782,6 +12410,7 @@ constructor(
 
             class Builder {
 
+                private var metadata: JsonField<Metadata> = JsonMissing.of()
                 private var externalPriceId: JsonField<String> = JsonMissing.of()
                 private var name: JsonField<String> = JsonMissing.of()
                 private var billableMetricId: JsonField<String> = JsonMissing.of()
@@ -10799,6 +12428,7 @@ constructor(
 
                 internal fun from(newPlanUnitWithProrationPrice: NewPlanUnitWithProrationPrice) =
                     apply {
+                        this.metadata = newPlanUnitWithProrationPrice.metadata
                         this.externalPriceId = newPlanUnitWithProrationPrice.externalPriceId
                         this.name = newPlanUnitWithProrationPrice.name
                         this.billableMetricId = newPlanUnitWithProrationPrice.billableMetricId
@@ -10814,6 +12444,22 @@ constructor(
                         this.currency = newPlanUnitWithProrationPrice.currency
                         additionalProperties(newPlanUnitWithProrationPrice.additionalProperties)
                     }
+
+                /**
+                 * User-specified key/value pairs for the resource. Individual keys can be removed
+                 * by setting the value to `null`, and the entire metadata mapping can be cleared by
+                 * setting `metadata` to `null`.
+                 */
+                fun metadata(metadata: Metadata) = metadata(JsonField.of(metadata))
+
+                /**
+                 * User-specified key/value pairs for the resource. Individual keys can be removed
+                 * by setting the value to `null`, and the entire metadata mapping can be cleared by
+                 * setting `metadata` to `null`.
+                 */
+                @JsonProperty("metadata")
+                @ExcludeMissing
+                fun metadata(metadata: JsonField<Metadata>) = apply { this.metadata = metadata }
 
                 /** An alias for the price. */
                 fun externalPriceId(externalPriceId: String) =
@@ -10971,6 +12617,7 @@ constructor(
 
                 fun build(): NewPlanUnitWithProrationPrice =
                     NewPlanUnitWithProrationPrice(
+                        metadata,
                         externalPriceId,
                         name,
                         billableMetricId,
@@ -11185,6 +12832,84 @@ constructor(
 
                     fun build(): UnitWithProrationConfig =
                         UnitWithProrationConfig(additionalProperties.toUnmodifiable())
+                }
+            }
+
+            /**
+             * User-specified key/value pairs for the resource. Individual keys can be removed by
+             * setting the value to `null`, and the entire metadata mapping can be cleared by
+             * setting `metadata` to `null`.
+             */
+            @JsonDeserialize(builder = Metadata.Builder::class)
+            @NoAutoDetect
+            class Metadata
+            private constructor(
+                private val additionalProperties: Map<String, JsonValue>,
+            ) {
+
+                private var validated: Boolean = false
+
+                private var hashCode: Int = 0
+
+                @JsonAnyGetter
+                @ExcludeMissing
+                fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
+
+                fun validate(): Metadata = apply {
+                    if (!validated) {
+                        validated = true
+                    }
+                }
+
+                fun toBuilder() = Builder().from(this)
+
+                override fun equals(other: Any?): Boolean {
+                    if (this === other) {
+                        return true
+                    }
+
+                    return other is Metadata &&
+                        this.additionalProperties == other.additionalProperties
+                }
+
+                override fun hashCode(): Int {
+                    if (hashCode == 0) {
+                        hashCode = Objects.hash(additionalProperties)
+                    }
+                    return hashCode
+                }
+
+                override fun toString() = "Metadata{additionalProperties=$additionalProperties}"
+
+                companion object {
+
+                    fun builder() = Builder()
+                }
+
+                class Builder {
+
+                    private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
+
+                    internal fun from(metadata: Metadata) = apply {
+                        additionalProperties(metadata.additionalProperties)
+                    }
+
+                    fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                        this.additionalProperties.clear()
+                        this.additionalProperties.putAll(additionalProperties)
+                    }
+
+                    @JsonAnySetter
+                    fun putAdditionalProperty(key: String, value: JsonValue) = apply {
+                        this.additionalProperties.put(key, value)
+                    }
+
+                    fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) =
+                        apply {
+                            this.additionalProperties.putAll(additionalProperties)
+                        }
+
+                    fun build(): Metadata = Metadata(additionalProperties.toUnmodifiable())
                 }
             }
         }

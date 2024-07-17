@@ -28,6 +28,7 @@ class PriceCreateParamsTest {
                     .externalPriceId("external_price_id")
                     .fixedPriceQuantity(42.23)
                     .invoiceGroupingKey("invoice_grouping_key")
+                    .metadata(PriceCreateParams.NewFloatingUnitPrice.Metadata.builder().build())
                     .build()
             )
             .build()

@@ -17,6 +17,7 @@ import com.withorb.api.models.InvoiceIssueParams
 import com.withorb.api.models.InvoiceListPage
 import com.withorb.api.models.InvoiceListParams
 import com.withorb.api.models.InvoiceMarkPaidParams
+import com.withorb.api.models.InvoiceUpdateParams
 import com.withorb.api.models.InvoiceVoidParams
 import com.withorb.api.services.errorHandler
 import com.withorb.api.services.json
@@ -48,6 +49,37 @@ constructor(
         return clientOptions.httpClient.execute(request, requestOptions).let { response ->
             response
                 .use { createHandler.handle(it) }
+                .apply {
+                    if (requestOptions.responseValidation ?: clientOptions.responseValidation) {
+                        validate()
+                    }
+                }
+        }
+    }
+
+    private val updateHandler: Handler<Invoice> =
+        jsonHandler<Invoice>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+
+    /**
+     * This endpoint allows you to update the `metadata` property on an invoice. If you pass null
+     * for the metadata value, it will clear any existing metadata for that invoice.
+     *
+     * `metadata` can be modified regardless of invoice state.
+     */
+    override fun update(params: InvoiceUpdateParams, requestOptions: RequestOptions): Invoice {
+        val request =
+            HttpRequest.builder()
+                .method(HttpMethod.PUT)
+                .addPathSegments("invoices", params.getPathParam(0))
+                .putAllQueryParams(clientOptions.queryParams)
+                .putAllQueryParams(params.getQueryParams())
+                .putAllHeaders(clientOptions.headers)
+                .putAllHeaders(params.getHeaders())
+                .body(json(clientOptions.jsonMapper, params.getBody()))
+                .build()
+        return clientOptions.httpClient.execute(request, requestOptions).let { response ->
+            response
+                .use { updateHandler.handle(it) }
                 .apply {
                     if (requestOptions.responseValidation ?: clientOptions.responseValidation) {
                         validate()

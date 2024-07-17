@@ -33,6 +33,9 @@ class PlanCreateParamsTest {
                             .externalPriceId("external_price_id")
                             .fixedPriceQuantity(42.23)
                             .invoiceGroupingKey("invoice_grouping_key")
+                            .metadata(
+                                PlanCreateParams.Price.NewPlanUnitPrice.Metadata.builder().build()
+                            )
                             .build()
                     )
                 )
@@ -71,6 +74,10 @@ class PlanCreateParamsTest {
                                 .externalPriceId("external_price_id")
                                 .fixedPriceQuantity(42.23)
                                 .invoiceGroupingKey("invoice_grouping_key")
+                                .metadata(
+                                    PlanCreateParams.Price.NewPlanUnitPrice.Metadata.builder()
+                                        .build()
+                                )
                                 .build()
                         )
                     )
@@ -106,6 +113,9 @@ class PlanCreateParamsTest {
                             .externalPriceId("external_price_id")
                             .fixedPriceQuantity(42.23)
                             .invoiceGroupingKey("invoice_grouping_key")
+                            .metadata(
+                                PlanCreateParams.Price.NewPlanUnitPrice.Metadata.builder().build()
+                            )
                             .build()
                     )
                 )
