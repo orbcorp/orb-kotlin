@@ -42,8 +42,29 @@ class PriceServiceTest {
                             .externalPriceId("external_price_id")
                             .fixedPriceQuantity(42.23)
                             .invoiceGroupingKey("invoice_grouping_key")
+                            .metadata(
+                                PriceCreateParams.NewFloatingUnitPrice.Metadata.builder().build()
+                            )
                             .build()
                     )
+                    .build()
+            )
+        println(price)
+    }
+
+    @Test
+    fun callUpdate() {
+        val client =
+            OrbOkHttpClient.builder()
+                .baseUrl(TestServerExtension.BASE_URL)
+                .apiKey("My API Key")
+                .build()
+        val priceService = client.prices()
+        val price =
+            priceService.update(
+                PriceUpdateParams.builder()
+                    .priceId("price_id")
+                    .metadata(PriceUpdateParams.Metadata.builder().build())
                     .build()
             )
         println(price)

@@ -67,6 +67,25 @@ class InvoiceServiceTest {
     }
 
     @Test
+    fun callUpdate() {
+        val client =
+            OrbOkHttpClient.builder()
+                .baseUrl(TestServerExtension.BASE_URL)
+                .apiKey("My API Key")
+                .build()
+        val invoiceService = client.invoices()
+        val invoice =
+            invoiceService.update(
+                InvoiceUpdateParams.builder()
+                    .invoiceId("invoice_id")
+                    .metadata(InvoiceUpdateParams.Metadata.builder().build())
+                    .build()
+            )
+        println(invoice)
+        invoice.validate()
+    }
+
+    @Test
     fun callList() {
         val client =
             OrbOkHttpClient.builder()

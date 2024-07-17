@@ -12,6 +12,7 @@ import com.withorb.api.models.PriceEvaluateResponse
 import com.withorb.api.models.PriceFetchParams
 import com.withorb.api.models.PriceListPageAsync
 import com.withorb.api.models.PriceListParams
+import com.withorb.api.models.PriceUpdateParams
 import com.withorb.api.services.async.prices.ExternalPriceIdServiceAsync
 
 interface PriceServiceAsync {
@@ -31,6 +32,15 @@ interface PriceServiceAsync {
      */
     suspend fun create(
         params: PriceCreateParams,
+        requestOptions: RequestOptions = RequestOptions.none()
+    ): Price
+
+    /**
+     * This endpoint allows you to update the `metadata` property on a price. If you pass null for
+     * the metadata value, it will clear any existing metadata for that price.
+     */
+    suspend fun update(
+        params: PriceUpdateParams,
         requestOptions: RequestOptions = RequestOptions.none()
     ): Price
 
