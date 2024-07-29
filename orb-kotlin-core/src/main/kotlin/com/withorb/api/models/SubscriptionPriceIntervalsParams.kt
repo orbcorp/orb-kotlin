@@ -904,6 +904,8 @@ constructor(
 
                     val ANNUAL = Cadence(JsonField.of("annual"))
 
+                    val CUSTOM = Cadence(JsonField.of("custom"))
+
                     fun of(value: String) = Cadence(JsonField.of(value))
                 }
 
@@ -913,6 +915,7 @@ constructor(
                     QUARTERLY,
                     SEMI_ANNUAL,
                     ANNUAL,
+                    CUSTOM,
                 }
 
                 enum class Value {
@@ -921,6 +924,7 @@ constructor(
                     QUARTERLY,
                     SEMI_ANNUAL,
                     ANNUAL,
+                    CUSTOM,
                     _UNKNOWN,
                 }
 
@@ -931,6 +935,7 @@ constructor(
                         QUARTERLY -> Value.QUARTERLY
                         SEMI_ANNUAL -> Value.SEMI_ANNUAL
                         ANNUAL -> Value.ANNUAL
+                        CUSTOM -> Value.CUSTOM
                         else -> Value._UNKNOWN
                     }
 
@@ -941,6 +946,7 @@ constructor(
                         QUARTERLY -> Known.QUARTERLY
                         SEMI_ANNUAL -> Known.SEMI_ANNUAL
                         ANNUAL -> Known.ANNUAL
+                        CUSTOM -> Known.CUSTOM
                         else -> throw OrbInvalidDataException("Unknown Cadence: $value")
                     }
 
