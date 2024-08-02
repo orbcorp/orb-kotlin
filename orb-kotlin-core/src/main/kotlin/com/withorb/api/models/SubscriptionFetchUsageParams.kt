@@ -18,12 +18,10 @@ class SubscriptionFetchUsageParams
 constructor(
     private val subscriptionId: String,
     private val billableMetricId: String?,
-    private val cursor: String?,
     private val firstDimensionKey: String?,
     private val firstDimensionValue: String?,
     private val granularity: Granularity?,
     private val groupBy: String?,
-    private val limit: Long?,
     private val secondDimensionKey: String?,
     private val secondDimensionValue: String?,
     private val timeframeEnd: OffsetDateTime?,
@@ -38,8 +36,6 @@ constructor(
 
     fun billableMetricId(): String? = billableMetricId
 
-    fun cursor(): String? = cursor
-
     fun firstDimensionKey(): String? = firstDimensionKey
 
     fun firstDimensionValue(): String? = firstDimensionValue
@@ -47,8 +43,6 @@ constructor(
     fun granularity(): Granularity? = granularity
 
     fun groupBy(): String? = groupBy
-
-    fun limit(): Long? = limit
 
     fun secondDimensionKey(): String? = secondDimensionKey
 
@@ -63,12 +57,10 @@ constructor(
     internal fun getQueryParams(): Map<String, List<String>> {
         val params = mutableMapOf<String, List<String>>()
         this.billableMetricId?.let { params.put("billable_metric_id", listOf(it.toString())) }
-        this.cursor?.let { params.put("cursor", listOf(it.toString())) }
         this.firstDimensionKey?.let { params.put("first_dimension_key", listOf(it.toString())) }
         this.firstDimensionValue?.let { params.put("first_dimension_value", listOf(it.toString())) }
         this.granularity?.let { params.put("granularity", listOf(it.toString())) }
         this.groupBy?.let { params.put("group_by", listOf(it.toString())) }
-        this.limit?.let { params.put("limit", listOf(it.toString())) }
         this.secondDimensionKey?.let { params.put("second_dimension_key", listOf(it.toString())) }
         this.secondDimensionValue?.let {
             params.put("second_dimension_value", listOf(it.toString()))
@@ -107,12 +99,10 @@ constructor(
         return other is SubscriptionFetchUsageParams &&
             this.subscriptionId == other.subscriptionId &&
             this.billableMetricId == other.billableMetricId &&
-            this.cursor == other.cursor &&
             this.firstDimensionKey == other.firstDimensionKey &&
             this.firstDimensionValue == other.firstDimensionValue &&
             this.granularity == other.granularity &&
             this.groupBy == other.groupBy &&
-            this.limit == other.limit &&
             this.secondDimensionKey == other.secondDimensionKey &&
             this.secondDimensionValue == other.secondDimensionValue &&
             this.timeframeEnd == other.timeframeEnd &&
@@ -127,12 +117,10 @@ constructor(
         return Objects.hash(
             subscriptionId,
             billableMetricId,
-            cursor,
             firstDimensionKey,
             firstDimensionValue,
             granularity,
             groupBy,
-            limit,
             secondDimensionKey,
             secondDimensionValue,
             timeframeEnd,
@@ -145,7 +133,7 @@ constructor(
     }
 
     override fun toString() =
-        "SubscriptionFetchUsageParams{subscriptionId=$subscriptionId, billableMetricId=$billableMetricId, cursor=$cursor, firstDimensionKey=$firstDimensionKey, firstDimensionValue=$firstDimensionValue, granularity=$granularity, groupBy=$groupBy, limit=$limit, secondDimensionKey=$secondDimensionKey, secondDimensionValue=$secondDimensionValue, timeframeEnd=$timeframeEnd, timeframeStart=$timeframeStart, viewMode=$viewMode, additionalQueryParams=$additionalQueryParams, additionalHeaders=$additionalHeaders, additionalBodyProperties=$additionalBodyProperties}"
+        "SubscriptionFetchUsageParams{subscriptionId=$subscriptionId, billableMetricId=$billableMetricId, firstDimensionKey=$firstDimensionKey, firstDimensionValue=$firstDimensionValue, granularity=$granularity, groupBy=$groupBy, secondDimensionKey=$secondDimensionKey, secondDimensionValue=$secondDimensionValue, timeframeEnd=$timeframeEnd, timeframeStart=$timeframeStart, viewMode=$viewMode, additionalQueryParams=$additionalQueryParams, additionalHeaders=$additionalHeaders, additionalBodyProperties=$additionalBodyProperties}"
 
     fun toBuilder() = Builder().from(this)
 
@@ -159,12 +147,10 @@ constructor(
 
         private var subscriptionId: String? = null
         private var billableMetricId: String? = null
-        private var cursor: String? = null
         private var firstDimensionKey: String? = null
         private var firstDimensionValue: String? = null
         private var granularity: Granularity? = null
         private var groupBy: String? = null
-        private var limit: Long? = null
         private var secondDimensionKey: String? = null
         private var secondDimensionValue: String? = null
         private var timeframeEnd: OffsetDateTime? = null
@@ -177,12 +163,10 @@ constructor(
         internal fun from(subscriptionFetchUsageParams: SubscriptionFetchUsageParams) = apply {
             this.subscriptionId = subscriptionFetchUsageParams.subscriptionId
             this.billableMetricId = subscriptionFetchUsageParams.billableMetricId
-            this.cursor = subscriptionFetchUsageParams.cursor
             this.firstDimensionKey = subscriptionFetchUsageParams.firstDimensionKey
             this.firstDimensionValue = subscriptionFetchUsageParams.firstDimensionValue
             this.granularity = subscriptionFetchUsageParams.granularity
             this.groupBy = subscriptionFetchUsageParams.groupBy
-            this.limit = subscriptionFetchUsageParams.limit
             this.secondDimensionKey = subscriptionFetchUsageParams.secondDimensionKey
             this.secondDimensionValue = subscriptionFetchUsageParams.secondDimensionValue
             this.timeframeEnd = subscriptionFetchUsageParams.timeframeEnd
@@ -204,12 +188,6 @@ constructor(
             this.billableMetricId = billableMetricId
         }
 
-        /**
-         * Cursor for pagination. This can be populated by the `next_cursor` value returned from the
-         * initial request.
-         */
-        fun cursor(cursor: String) = apply { this.cursor = cursor }
-
         fun firstDimensionKey(firstDimensionKey: String) = apply {
             this.firstDimensionKey = firstDimensionKey
         }
@@ -223,9 +201,6 @@ constructor(
 
         /** Groups per-price usage by the key provided. */
         fun groupBy(groupBy: String) = apply { this.groupBy = groupBy }
-
-        /** If including a `group_by`, the number of groups to fetch data for. Defaults to 1000. */
-        fun limit(limit: Long) = apply { this.limit = limit }
 
         fun secondDimensionKey(secondDimensionKey: String) = apply {
             this.secondDimensionKey = secondDimensionKey
@@ -308,12 +283,10 @@ constructor(
             SubscriptionFetchUsageParams(
                 checkNotNull(subscriptionId) { "`subscriptionId` is required but was not set" },
                 billableMetricId,
-                cursor,
                 firstDimensionKey,
                 firstDimensionValue,
                 granularity,
                 groupBy,
-                limit,
                 secondDimensionKey,
                 secondDimensionValue,
                 timeframeEnd,

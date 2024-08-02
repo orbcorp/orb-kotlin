@@ -23,8 +23,6 @@ import com.withorb.api.services.blocking.customers.CostService
 import com.withorb.api.services.blocking.customers.CostServiceImpl
 import com.withorb.api.services.blocking.customers.CreditService
 import com.withorb.api.services.blocking.customers.CreditServiceImpl
-import com.withorb.api.services.blocking.customers.UsageService
-import com.withorb.api.services.blocking.customers.UsageServiceImpl
 import com.withorb.api.services.emptyHandler
 import com.withorb.api.services.errorHandler
 import com.withorb.api.services.json
@@ -40,8 +38,6 @@ constructor(
 
     private val costs: CostService by lazy { CostServiceImpl(clientOptions) }
 
-    private val usage: UsageService by lazy { UsageServiceImpl(clientOptions) }
-
     private val credits: CreditService by lazy { CreditServiceImpl(clientOptions) }
 
     private val balanceTransactions: BalanceTransactionService by lazy {
@@ -49,8 +45,6 @@ constructor(
     }
 
     override fun costs(): CostService = costs
-
-    override fun usage(): UsageService = usage
 
     override fun credits(): CreditService = credits
 
