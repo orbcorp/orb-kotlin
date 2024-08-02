@@ -1,5 +1,40 @@
 # Changelog
 
+## 0.1.0-alpha.3 (2024-08-02)
+
+Full Changelog: [v0.1.0-alpha.2...v0.1.0-alpha.3](https://github.com/orbcorp/orb-kotlin/compare/v0.1.0-alpha.2...v0.1.0-alpha.3)
+
+### ⚠ BREAKING CHANGES
+
+* **api:** remove methods 'customers.usage.create' and 'customers.usage.update_by_external_id' ([#30](https://github.com/orbcorp/orb-kotlin/issues/30))
+
+### Features
+
+* **api:** add 'status' to plan creation params ([#14](https://github.com/orbcorp/orb-kotlin/issues/14)) ([125924a](https://github.com/orbcorp/orb-kotlin/commit/125924ab4496c72408a55a199562984c4becc9c8))
+* **api:** add cadence enum value 'custom' ([#25](https://github.com/orbcorp/orb-kotlin/issues/25)) ([847e046](https://github.com/orbcorp/orb-kotlin/commit/847e0462d2585ac32a83e8ea48d0e0e1dfc89d61))
+* **api:** add methods to prices and invoices ([#21](https://github.com/orbcorp/orb-kotlin/issues/21)) ([e4169ae](https://github.com/orbcorp/orb-kotlin/commit/e4169aee3d2ca6e8773c55e2aa9b7beb9aa7baa9))
+* **api:** deprecate methods 'customers.usage.create' and 'customers.usage.update_by_external_id' ([#29](https://github.com/orbcorp/orb-kotlin/issues/29)) ([41ff2f7](https://github.com/orbcorp/orb-kotlin/commit/41ff2f76b8b125177ad906ec04b10081fdb12524))
+* **api:** remove methods 'customers.usage.create' and 'customers.usage.update_by_external_id' ([#30](https://github.com/orbcorp/orb-kotlin/issues/30)) ([9c9f653](https://github.com/orbcorp/orb-kotlin/commit/9c9f65361fe9d35df7d244f826446b466049f746))
+* **client:** improve binary return values ([#27](https://github.com/orbcorp/orb-kotlin/issues/27)) ([e6fc27a](https://github.com/orbcorp/orb-kotlin/commit/e6fc27a603cdf21e1226d5ab90983c70b8bda82f))
+
+
+### Chores
+
+* **ci:** also run workflows for PRs targeting `next` ([#17](https://github.com/orbcorp/orb-kotlin/issues/17)) ([446a7ab](https://github.com/orbcorp/orb-kotlin/commit/446a7ab4ad8c246225c717057b334e6b01cbcf11))
+* **ci:** limit release doctor target branches ([#22](https://github.com/orbcorp/orb-kotlin/issues/22)) ([25a2792](https://github.com/orbcorp/orb-kotlin/commit/25a2792c1dbcfe6ebf3ad2547f5fb111a1e99b9a))
+* **ci:** run tests in CI ([#28](https://github.com/orbcorp/orb-kotlin/issues/28)) ([83b1878](https://github.com/orbcorp/orb-kotlin/commit/83b187890337ea30cf114d849d954b32d84921d3))
+* **docs:** document minimum Java version (Java 8) in README ([#16](https://github.com/orbcorp/orb-kotlin/issues/16)) ([b4ac601](https://github.com/orbcorp/orb-kotlin/commit/b4ac601069f6856114810b2cada345830455a0f5))
+* **docs:** minor update to formatting of API link in README ([#19](https://github.com/orbcorp/orb-kotlin/issues/19)) ([8d9dbcd](https://github.com/orbcorp/orb-kotlin/commit/8d9dbcda98ee75b604dafc027c10b33443e1577c))
+* **internal:** refactor release doctor script ([#23](https://github.com/orbcorp/orb-kotlin/issues/23)) ([bc19329](https://github.com/orbcorp/orb-kotlin/commit/bc1932991380f98d1473f24d82323c2a594b7e07))
+* **internal:** remove unused test file ([#26](https://github.com/orbcorp/orb-kotlin/issues/26)) ([908c31a](https://github.com/orbcorp/orb-kotlin/commit/908c31a03f64fc5a466f9e00aab3c5099542140a))
+* minor updates ([#20](https://github.com/orbcorp/orb-kotlin/issues/20)) ([fe32256](https://github.com/orbcorp/orb-kotlin/commit/fe32256d5e3c345eb14d635e4e3a2f2bf0817aca))
+* **tests:** update prism version ([#24](https://github.com/orbcorp/orb-kotlin/issues/24)) ([8c504c5](https://github.com/orbcorp/orb-kotlin/commit/8c504c57ede34c81004ba1f120669b03d35805a7))
+
+
+### Documentation
+
+* **examples:** update example values ([#18](https://github.com/orbcorp/orb-kotlin/issues/18)) ([e203681](https://github.com/orbcorp/orb-kotlin/commit/e203681e57de68b99012ee0a7e391b5bd5d929e2))
+
 ## 0.1.0-alpha.2 (2024-06-28)
 
 Full Changelog: [v0.1.0-alpha.1...v0.1.0-alpha.2](https://github.com/orbcorp/orb-kotlin/compare/v0.1.0-alpha.1...v0.1.0-alpha.2)
