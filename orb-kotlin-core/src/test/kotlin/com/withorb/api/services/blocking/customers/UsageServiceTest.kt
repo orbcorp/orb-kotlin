@@ -21,6 +21,7 @@ class UsageServiceTest {
                 .apiKey("My API Key")
                 .build()
         val usageService = client.customers().usage()
+        @Suppress("DEPRECATION")
         val customerUsageUpdateResponse =
             usageService.update(
                 CustomerUsageUpdateParams.builder()
@@ -52,6 +53,7 @@ class UsageServiceTest {
                 .apiKey("My API Key")
                 .build()
         val usageService = client.customers().usage()
+        @Suppress("DEPRECATION")
         val customerUsageUpdateByExternalIdResponse =
             usageService.updateByExternalId(
                 CustomerUsageUpdateByExternalIdParams.builder()
