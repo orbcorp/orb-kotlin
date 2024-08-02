@@ -14,18 +14,18 @@ class SubscriptionCreateParamsTest {
         SubscriptionCreateParams.builder()
             .alignBillingWithSubscriptionStartDate(true)
             .autoCollection(true)
-            .awsRegion("string")
-            .couponRedemptionCode("string")
+            .awsRegion("aws_region")
+            .couponRedemptionCode("coupon_redemption_code")
             .creditsOverageRate(42.23)
-            .customerId("string")
-            .defaultInvoiceMemo("string")
+            .customerId("customer_id")
+            .defaultInvoiceMemo("default_invoice_memo")
             .endDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
-            .externalCustomerId("string")
+            .externalCustomerId("external_customer_id")
             .externalMarketplace(SubscriptionCreateParams.ExternalMarketplace.GOOGLE)
-            .externalMarketplaceReportingId("string")
+            .externalMarketplaceReportingId("external_marketplace_reporting_id")
             .externalPlanId("ZMwNQefe7J3ecf7W")
             .initialPhaseOrder(123L)
-            .invoicingThreshold("string")
+            .invoicingThreshold("invoicing_threshold")
             .metadata(SubscriptionCreateParams.Metadata.builder().build())
             .netTerms(123L)
             .perCreditOverageAmount(42.23)
@@ -34,7 +34,7 @@ class SubscriptionCreateParamsTest {
                 listOf(
                     SubscriptionCreateParams.PriceOverride.ofOverrideUnitPrice(
                         SubscriptionCreateParams.PriceOverride.OverrideUnitPrice.builder()
-                            .id("string")
+                            .id("id")
                             .modelType(
                                 SubscriptionCreateParams.PriceOverride.OverrideUnitPrice.ModelType
                                     .UNIT
@@ -42,11 +42,11 @@ class SubscriptionCreateParamsTest {
                             .unitConfig(
                                 SubscriptionCreateParams.PriceOverride.OverrideUnitPrice.UnitConfig
                                     .builder()
-                                    .unitAmount("string")
+                                    .unitAmount("unit_amount")
                                     .build()
                             )
                             .conversionRate(42.23)
-                            .currency("string")
+                            .currency("currency")
                             .discount(
                                 SubscriptionCreateParams.PriceOverride.OverrideUnitPrice.Discount
                                     .builder()
@@ -56,10 +56,10 @@ class SubscriptionCreateParamsTest {
                                             .DiscountType
                                             .PERCENTAGE
                                     )
-                                    .amountDiscount("string")
+                                    .amountDiscount("amount_discount")
                                     .appliesToPriceIds(listOf("string"))
                                     .percentageDiscount(42.23)
-                                    .trialAmountDiscount("string")
+                                    .trialAmountDiscount("trial_amount_discount")
                                     .usageDiscount(42.23)
                                     .build()
                             )
@@ -80,18 +80,18 @@ class SubscriptionCreateParamsTest {
             SubscriptionCreateParams.builder()
                 .alignBillingWithSubscriptionStartDate(true)
                 .autoCollection(true)
-                .awsRegion("string")
-                .couponRedemptionCode("string")
+                .awsRegion("aws_region")
+                .couponRedemptionCode("coupon_redemption_code")
                 .creditsOverageRate(42.23)
-                .customerId("string")
-                .defaultInvoiceMemo("string")
+                .customerId("customer_id")
+                .defaultInvoiceMemo("default_invoice_memo")
                 .endDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
-                .externalCustomerId("string")
+                .externalCustomerId("external_customer_id")
                 .externalMarketplace(SubscriptionCreateParams.ExternalMarketplace.GOOGLE)
-                .externalMarketplaceReportingId("string")
+                .externalMarketplaceReportingId("external_marketplace_reporting_id")
                 .externalPlanId("ZMwNQefe7J3ecf7W")
                 .initialPhaseOrder(123L)
-                .invoicingThreshold("string")
+                .invoicingThreshold("invoicing_threshold")
                 .metadata(SubscriptionCreateParams.Metadata.builder().build())
                 .netTerms(123L)
                 .perCreditOverageAmount(42.23)
@@ -100,7 +100,7 @@ class SubscriptionCreateParamsTest {
                     listOf(
                         SubscriptionCreateParams.PriceOverride.ofOverrideUnitPrice(
                             SubscriptionCreateParams.PriceOverride.OverrideUnitPrice.builder()
-                                .id("string")
+                                .id("id")
                                 .modelType(
                                     SubscriptionCreateParams.PriceOverride.OverrideUnitPrice
                                         .ModelType
@@ -110,11 +110,11 @@ class SubscriptionCreateParamsTest {
                                     SubscriptionCreateParams.PriceOverride.OverrideUnitPrice
                                         .UnitConfig
                                         .builder()
-                                        .unitAmount("string")
+                                        .unitAmount("unit_amount")
                                         .build()
                                 )
                                 .conversionRate(42.23)
-                                .currency("string")
+                                .currency("currency")
                                 .discount(
                                     SubscriptionCreateParams.PriceOverride.OverrideUnitPrice
                                         .Discount
@@ -125,10 +125,10 @@ class SubscriptionCreateParamsTest {
                                                 .DiscountType
                                                 .PERCENTAGE
                                         )
-                                        .amountDiscount("string")
+                                        .amountDiscount("amount_discount")
                                         .appliesToPriceIds(listOf("string"))
                                         .percentageDiscount(42.23)
-                                        .trialAmountDiscount("string")
+                                        .trialAmountDiscount("trial_amount_discount")
                                         .usageDiscount(42.23)
                                         .build()
                                 )
@@ -145,19 +145,20 @@ class SubscriptionCreateParamsTest {
         assertThat(body).isNotNull
         assertThat(body.alignBillingWithSubscriptionStartDate()).isEqualTo(true)
         assertThat(body.autoCollection()).isEqualTo(true)
-        assertThat(body.awsRegion()).isEqualTo("string")
-        assertThat(body.couponRedemptionCode()).isEqualTo("string")
+        assertThat(body.awsRegion()).isEqualTo("aws_region")
+        assertThat(body.couponRedemptionCode()).isEqualTo("coupon_redemption_code")
         assertThat(body.creditsOverageRate()).isEqualTo(42.23)
-        assertThat(body.customerId()).isEqualTo("string")
-        assertThat(body.defaultInvoiceMemo()).isEqualTo("string")
+        assertThat(body.customerId()).isEqualTo("customer_id")
+        assertThat(body.defaultInvoiceMemo()).isEqualTo("default_invoice_memo")
         assertThat(body.endDate()).isEqualTo(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
-        assertThat(body.externalCustomerId()).isEqualTo("string")
+        assertThat(body.externalCustomerId()).isEqualTo("external_customer_id")
         assertThat(body.externalMarketplace())
             .isEqualTo(SubscriptionCreateParams.ExternalMarketplace.GOOGLE)
-        assertThat(body.externalMarketplaceReportingId()).isEqualTo("string")
+        assertThat(body.externalMarketplaceReportingId())
+            .isEqualTo("external_marketplace_reporting_id")
         assertThat(body.externalPlanId()).isEqualTo("ZMwNQefe7J3ecf7W")
         assertThat(body.initialPhaseOrder()).isEqualTo(123L)
-        assertThat(body.invoicingThreshold()).isEqualTo("string")
+        assertThat(body.invoicingThreshold()).isEqualTo("invoicing_threshold")
         assertThat(body.metadata()).isEqualTo(SubscriptionCreateParams.Metadata.builder().build())
         assertThat(body.netTerms()).isEqualTo(123L)
         assertThat(body.perCreditOverageAmount()).isEqualTo(42.23)
@@ -167,7 +168,7 @@ class SubscriptionCreateParamsTest {
                 listOf(
                     SubscriptionCreateParams.PriceOverride.ofOverrideUnitPrice(
                         SubscriptionCreateParams.PriceOverride.OverrideUnitPrice.builder()
-                            .id("string")
+                            .id("id")
                             .modelType(
                                 SubscriptionCreateParams.PriceOverride.OverrideUnitPrice.ModelType
                                     .UNIT
@@ -175,11 +176,11 @@ class SubscriptionCreateParamsTest {
                             .unitConfig(
                                 SubscriptionCreateParams.PriceOverride.OverrideUnitPrice.UnitConfig
                                     .builder()
-                                    .unitAmount("string")
+                                    .unitAmount("unit_amount")
                                     .build()
                             )
                             .conversionRate(42.23)
-                            .currency("string")
+                            .currency("currency")
                             .discount(
                                 SubscriptionCreateParams.PriceOverride.OverrideUnitPrice.Discount
                                     .builder()
@@ -189,10 +190,10 @@ class SubscriptionCreateParamsTest {
                                             .DiscountType
                                             .PERCENTAGE
                                     )
-                                    .amountDiscount("string")
+                                    .amountDiscount("amount_discount")
                                     .appliesToPriceIds(listOf("string"))
                                     .percentageDiscount(42.23)
-                                    .trialAmountDiscount("string")
+                                    .trialAmountDiscount("trial_amount_discount")
                                     .usageDiscount(42.23)
                                     .build()
                             )

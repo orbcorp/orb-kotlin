@@ -17,7 +17,7 @@ class CustomerBalanceTransactionListResponseTest {
                 .amount("11.00")
                 .createdAt(OffsetDateTime.parse("2022-05-01T07:01:31+00:00"))
                 .creditNote(
-                    CustomerBalanceTransactionListResponse.CreditNote.builder().id("string").build()
+                    CustomerBalanceTransactionListResponse.CreditNote.builder().id("id").build()
                 )
                 .description("An optional description")
                 .endingBalance("22.00")
@@ -37,9 +37,7 @@ class CustomerBalanceTransactionListResponseTest {
         assertThat(customerBalanceTransactionListResponse.createdAt())
             .isEqualTo(OffsetDateTime.parse("2022-05-01T07:01:31+00:00"))
         assertThat(customerBalanceTransactionListResponse.creditNote())
-            .isEqualTo(
-                CustomerBalanceTransactionListResponse.CreditNote.builder().id("string").build()
-            )
+            .isEqualTo(CustomerBalanceTransactionListResponse.CreditNote.builder().id("id").build())
         assertThat(customerBalanceTransactionListResponse.description())
             .isEqualTo("An optional description")
         assertThat(customerBalanceTransactionListResponse.endingBalance()).isEqualTo("22.00")

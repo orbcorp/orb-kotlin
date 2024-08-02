@@ -12,12 +12,12 @@ class SubscriptionTest {
     fun createSubscription() {
         val subscription =
             Subscription.builder()
-                .id("string")
+                .id("id")
                 .activePlanPhaseOrder(123L)
                 .adjustmentIntervals(
                     listOf(
                         Subscription.AdjustmentInterval.builder()
-                            .id("string")
+                            .id("id")
                             .adjustment(
                                 Subscription.AdjustmentInterval.Adjustment
                                     .ofAmountDiscountAdjustment(
@@ -30,9 +30,9 @@ class SubscriptionTest {
                                                     .AdjustmentType
                                                     .AMOUNT_DISCOUNT
                                             )
-                                            .amountDiscount("string")
+                                            .amountDiscount("amount_discount")
                                             .appliesToPriceIds(listOf("string"))
-                                            .reason("string")
+                                            .reason("reason")
                                             .build()
                                     )
                             )
@@ -49,55 +49,55 @@ class SubscriptionTest {
                 .currentBillingPeriodStartDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                 .customer(
                     Customer.builder()
-                        .id("string")
+                        .id("id")
                         .additionalEmails(listOf("string"))
                         .autoCollection(true)
-                        .balance("string")
+                        .balance("balance")
                         .billingAddress(
                             Customer.BillingAddress.builder()
-                                .city("string")
-                                .country("string")
-                                .line1("string")
-                                .line2("string")
-                                .postalCode("string")
-                                .state("string")
+                                .city("city")
+                                .country("country")
+                                .line1("line1")
+                                .line2("line2")
+                                .postalCode("postal_code")
+                                .state("state")
                                 .build()
                         )
                         .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
-                        .currency("string")
-                        .email("string")
+                        .currency("currency")
+                        .email("email")
                         .emailDelivery(true)
-                        .externalCustomerId("string")
+                        .externalCustomerId("external_customer_id")
                         .metadata(Customer.Metadata.builder().build())
-                        .name("string")
+                        .name("name")
                         .paymentProvider(Customer.PaymentProvider.QUICKBOOKS)
-                        .paymentProviderId("string")
-                        .portalUrl("string")
+                        .paymentProviderId("payment_provider_id")
+                        .portalUrl("portal_url")
                         .shippingAddress(
                             Customer.ShippingAddress.builder()
-                                .city("string")
-                                .country("string")
-                                .line1("string")
-                                .line2("string")
-                                .postalCode("string")
-                                .state("string")
+                                .city("city")
+                                .country("country")
+                                .line1("line1")
+                                .line2("line2")
+                                .postalCode("postal_code")
+                                .state("state")
                                 .build()
                         )
                         .taxId(
                             Customer.TaxId.builder()
                                 .country(Customer.TaxId.Country.AD)
                                 .type(Customer.TaxId.Type.AD_NRT)
-                                .value("string")
+                                .value("value")
                                 .build()
                         )
-                        .timezone("string")
+                        .timezone("timezone")
                         .accountingSyncConfiguration(
                             Customer.AccountingSyncConfiguration.builder()
                                 .accountingProviders(
                                     listOf(
                                         Customer.AccountingSyncConfiguration.AccountingProvider
                                             .builder()
-                                            .externalProviderId("string")
+                                            .externalProviderId("external_provider_id")
                                             .providerType(
                                                 Customer.AccountingSyncConfiguration
                                                     .AccountingProvider
@@ -115,12 +115,12 @@ class SubscriptionTest {
                         )
                         .build()
                 )
-                .defaultInvoiceMemo("string")
+                .defaultInvoiceMemo("default_invoice_memo")
                 .discountIntervals(
                     listOf(
                         Subscription.DiscountInterval.ofAmountDiscountInterval(
                             Subscription.DiscountInterval.AmountDiscountInterval.builder()
-                                .amountDiscount("string")
+                                .amountDiscount("amount_discount")
                                 .appliesToPriceIds(listOf("string"))
                                 .appliesToPriceIntervalIds(listOf("string"))
                                 .discountType(
@@ -139,20 +139,20 @@ class SubscriptionTest {
                     listOf(
                         Subscription.FixedFeeQuantitySchedule.builder()
                             .endDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
-                            .priceId("string")
+                            .priceId("price_id")
                             .quantity(42.23)
                             .startDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                             .build()
                     )
                 )
-                .invoicingThreshold("string")
+                .invoicingThreshold("invoicing_threshold")
                 .maximumIntervals(
                     listOf(
                         Subscription.MaximumInterval.builder()
                             .appliesToPriceIds(listOf("string"))
                             .appliesToPriceIntervalIds(listOf("string"))
                             .endDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
-                            .maximumAmount("string")
+                            .maximumAmount("maximum_amount")
                             .startDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                             .build()
                     )
@@ -164,7 +164,7 @@ class SubscriptionTest {
                             .appliesToPriceIds(listOf("string"))
                             .appliesToPriceIntervalIds(listOf("string"))
                             .endDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
-                            .minimumAmount("string")
+                            .minimumAmount("minimum_amount")
                             .startDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                             .build()
                     )
@@ -172,7 +172,7 @@ class SubscriptionTest {
                 .netTerms(123L)
                 .plan(
                     Plan.builder()
-                        .id("string")
+                        .id("id")
                         .basePlan(
                             Plan.BasePlan.builder()
                                 .id("m2t5akQeh2obwxeU")
@@ -180,11 +180,11 @@ class SubscriptionTest {
                                 .name("Example plan")
                                 .build()
                         )
-                        .basePlanId("string")
+                        .basePlanId("base_plan_id")
                         .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
-                        .currency("string")
-                        .defaultInvoiceMemo("string")
-                        .description("string")
+                        .currency("currency")
+                        .defaultInvoiceMemo("default_invoice_memo")
+                        .description("description")
                         .discount(
                             Discount.ofPercentageDiscount(
                                 Discount.PercentageDiscount.builder()
@@ -193,34 +193,34 @@ class SubscriptionTest {
                                         Discount.PercentageDiscount.DiscountType.PERCENTAGE
                                     )
                                     .percentageDiscount(1.0)
-                                    .reason("string")
+                                    .reason("reason")
                                     .build()
                             )
                         )
-                        .externalPlanId("string")
-                        .invoicingCurrency("string")
+                        .externalPlanId("external_plan_id")
+                        .invoicingCurrency("invoicing_currency")
                         .maximum(
                             Plan.Maximum.builder()
                                 .appliesToPriceIds(listOf("string"))
-                                .maximumAmount("string")
+                                .maximumAmount("maximum_amount")
                                 .build()
                         )
-                        .maximumAmount("string")
+                        .maximumAmount("maximum_amount")
                         .metadata(Plan.Metadata.builder().build())
                         .minimum(
                             Plan.Minimum.builder()
                                 .appliesToPriceIds(listOf("string"))
-                                .minimumAmount("string")
+                                .minimumAmount("minimum_amount")
                                 .build()
                         )
-                        .minimumAmount("string")
-                        .name("string")
+                        .minimumAmount("minimum_amount")
+                        .name("name")
                         .netTerms(123L)
                         .planPhases(
                             listOf(
                                 Plan.PlanPhase.builder()
-                                    .id("string")
-                                    .description("string")
+                                    .id("id")
+                                    .description("description")
                                     .discount(
                                         Discount.ofPercentageDiscount(
                                             Discount.PercentageDiscount.builder()
@@ -230,7 +230,7 @@ class SubscriptionTest {
                                                         .PERCENTAGE
                                                 )
                                                 .percentageDiscount(1.0)
-                                                .reason("string")
+                                                .reason("reason")
                                                 .build()
                                         )
                                     )
@@ -239,18 +239,18 @@ class SubscriptionTest {
                                     .maximum(
                                         Plan.PlanPhase.Maximum.builder()
                                             .appliesToPriceIds(listOf("string"))
-                                            .maximumAmount("string")
+                                            .maximumAmount("maximum_amount")
                                             .build()
                                     )
-                                    .maximumAmount("string")
+                                    .maximumAmount("maximum_amount")
                                     .minimum(
                                         Plan.PlanPhase.Minimum.builder()
                                             .appliesToPriceIds(listOf("string"))
-                                            .minimumAmount("string")
+                                            .minimumAmount("minimum_amount")
                                             .build()
                                     )
-                                    .minimumAmount("string")
-                                    .name("string")
+                                    .minimumAmount("minimum_amount")
+                                    .name("name")
                                     .order(123L)
                                     .build()
                             )
@@ -259,10 +259,20 @@ class SubscriptionTest {
                             listOf(
                                 Price.ofUnitPrice(
                                     Price.UnitPrice.builder()
-                                        .id("string")
+                                        .id("id")
                                         .billableMetric(
                                             Price.UnitPrice.BillableMetric.builder()
-                                                .id("string")
+                                                .id("id")
+                                                .build()
+                                        )
+                                        .billingCycleConfiguration(
+                                            Price.UnitPrice.BillingCycleConfiguration.builder()
+                                                .duration(123L)
+                                                .durationUnit(
+                                                    Price.UnitPrice.BillingCycleConfiguration
+                                                        .DurationUnit
+                                                        .DAY
+                                                )
                                                 .build()
                                         )
                                         .cadence(Price.UnitPrice.Cadence.ONE_TIME)
@@ -271,10 +281,10 @@ class SubscriptionTest {
                                         .creditAllocation(
                                             Price.UnitPrice.CreditAllocation.builder()
                                                 .allowsRollover(true)
-                                                .currency("string")
+                                                .currency("currency")
                                                 .build()
                                         )
-                                        .currency("string")
+                                        .currency("currency")
                                         .discount(
                                             Discount.ofPercentageDiscount(
                                                 Discount.PercentageDiscount.builder()
@@ -284,39 +294,40 @@ class SubscriptionTest {
                                                             .PERCENTAGE
                                                     )
                                                     .percentageDiscount(1.0)
-                                                    .reason("string")
+                                                    .reason("reason")
                                                     .build()
                                             )
                                         )
-                                        .externalPriceId("string")
+                                        .externalPriceId("external_price_id")
                                         .fixedPriceQuantity(42.23)
                                         .item(
                                             Price.UnitPrice.Item.builder()
-                                                .id("string")
-                                                .name("string")
+                                                .id("id")
+                                                .name("name")
                                                 .build()
                                         )
                                         .maximum(
                                             Price.UnitPrice.Maximum.builder()
                                                 .appliesToPriceIds(listOf("string"))
-                                                .maximumAmount("string")
+                                                .maximumAmount("maximum_amount")
                                                 .build()
                                         )
-                                        .maximumAmount("string")
+                                        .maximumAmount("maximum_amount")
+                                        .metadata(Price.UnitPrice.Metadata.builder().build())
                                         .minimum(
                                             Price.UnitPrice.Minimum.builder()
                                                 .appliesToPriceIds(listOf("string"))
-                                                .minimumAmount("string")
+                                                .minimumAmount("minimum_amount")
                                                 .build()
                                         )
-                                        .minimumAmount("string")
+                                        .minimumAmount("minimum_amount")
                                         .modelType(Price.UnitPrice.ModelType.UNIT)
-                                        .name("string")
+                                        .name("name")
                                         .planPhaseOrder(123L)
                                         .priceType(Price.UnitPrice.PriceType.USAGE_PRICE)
                                         .unitConfig(
                                             Price.UnitPrice.UnitConfig.builder()
-                                                .unitAmount("string")
+                                                .unitAmount("unit_amount")
                                                 .build()
                                         )
                                         .build()
@@ -325,9 +336,9 @@ class SubscriptionTest {
                         )
                         .product(
                             Plan.Product.builder()
-                                .id("string")
+                                .id("id")
                                 .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
-                                .name("string")
+                                .name("name")
                                 .build()
                         )
                         .status(Plan.Status.ACTIVE)
@@ -343,7 +354,7 @@ class SubscriptionTest {
                 .priceIntervals(
                     listOf(
                         Subscription.PriceInterval.builder()
-                            .id("string")
+                            .id("id")
                             .billingCycleDay(123L)
                             .currentBillingPeriodEndDate(
                                 OffsetDateTime.parse("2019-12-27T18:11:19.117Z")
@@ -358,7 +369,7 @@ class SubscriptionTest {
                                         .effectiveDate(
                                             OffsetDateTime.parse("2019-12-27T18:11:19.117Z")
                                         )
-                                        .priceId("string")
+                                        .priceId("price_id")
                                         .quantity(123L)
                                         .build()
                                 )
@@ -366,10 +377,20 @@ class SubscriptionTest {
                             .price(
                                 Price.ofUnitPrice(
                                     Price.UnitPrice.builder()
-                                        .id("string")
+                                        .id("id")
                                         .billableMetric(
                                             Price.UnitPrice.BillableMetric.builder()
-                                                .id("string")
+                                                .id("id")
+                                                .build()
+                                        )
+                                        .billingCycleConfiguration(
+                                            Price.UnitPrice.BillingCycleConfiguration.builder()
+                                                .duration(123L)
+                                                .durationUnit(
+                                                    Price.UnitPrice.BillingCycleConfiguration
+                                                        .DurationUnit
+                                                        .DAY
+                                                )
                                                 .build()
                                         )
                                         .cadence(Price.UnitPrice.Cadence.ONE_TIME)
@@ -378,10 +399,10 @@ class SubscriptionTest {
                                         .creditAllocation(
                                             Price.UnitPrice.CreditAllocation.builder()
                                                 .allowsRollover(true)
-                                                .currency("string")
+                                                .currency("currency")
                                                 .build()
                                         )
-                                        .currency("string")
+                                        .currency("currency")
                                         .discount(
                                             Discount.ofPercentageDiscount(
                                                 Discount.PercentageDiscount.builder()
@@ -391,39 +412,40 @@ class SubscriptionTest {
                                                             .PERCENTAGE
                                                     )
                                                     .percentageDiscount(1.0)
-                                                    .reason("string")
+                                                    .reason("reason")
                                                     .build()
                                             )
                                         )
-                                        .externalPriceId("string")
+                                        .externalPriceId("external_price_id")
                                         .fixedPriceQuantity(42.23)
                                         .item(
                                             Price.UnitPrice.Item.builder()
-                                                .id("string")
-                                                .name("string")
+                                                .id("id")
+                                                .name("name")
                                                 .build()
                                         )
                                         .maximum(
                                             Price.UnitPrice.Maximum.builder()
                                                 .appliesToPriceIds(listOf("string"))
-                                                .maximumAmount("string")
+                                                .maximumAmount("maximum_amount")
                                                 .build()
                                         )
-                                        .maximumAmount("string")
+                                        .maximumAmount("maximum_amount")
+                                        .metadata(Price.UnitPrice.Metadata.builder().build())
                                         .minimum(
                                             Price.UnitPrice.Minimum.builder()
                                                 .appliesToPriceIds(listOf("string"))
-                                                .minimumAmount("string")
+                                                .minimumAmount("minimum_amount")
                                                 .build()
                                         )
-                                        .minimumAmount("string")
+                                        .minimumAmount("minimum_amount")
                                         .modelType(Price.UnitPrice.ModelType.UNIT)
-                                        .name("string")
+                                        .name("name")
                                         .planPhaseOrder(123L)
                                         .priceType(Price.UnitPrice.PriceType.USAGE_PRICE)
                                         .unitConfig(
                                             Price.UnitPrice.UnitConfig.builder()
-                                                .unitAmount("string")
+                                                .unitAmount("unit_amount")
                                                 .build()
                                         )
                                         .build()
@@ -435,7 +457,7 @@ class SubscriptionTest {
                 )
                 .redeemedCoupon(
                     Subscription.RedeemedCoupon.builder()
-                        .couponId("string")
+                        .couponId("coupon_id")
                         .endDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                         .startDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                         .build()
@@ -449,12 +471,12 @@ class SubscriptionTest {
                 )
                 .build()
         assertThat(subscription).isNotNull
-        assertThat(subscription.id()).isEqualTo("string")
+        assertThat(subscription.id()).isEqualTo("id")
         assertThat(subscription.activePlanPhaseOrder()).isEqualTo(123L)
         assertThat(subscription.adjustmentIntervals())
             .containsExactly(
                 Subscription.AdjustmentInterval.builder()
-                    .id("string")
+                    .id("id")
                     .adjustment(
                         Subscription.AdjustmentInterval.Adjustment.ofAmountDiscountAdjustment(
                             Subscription.AdjustmentInterval.Adjustment.AmountDiscountAdjustment
@@ -465,9 +487,9 @@ class SubscriptionTest {
                                         .AdjustmentType
                                         .AMOUNT_DISCOUNT
                                 )
-                                .amountDiscount("string")
+                                .amountDiscount("amount_discount")
                                 .appliesToPriceIds(listOf("string"))
-                                .reason("string")
+                                .reason("reason")
                                 .build()
                         )
                     )
@@ -487,55 +509,55 @@ class SubscriptionTest {
         assertThat(subscription.customer())
             .isEqualTo(
                 Customer.builder()
-                    .id("string")
+                    .id("id")
                     .additionalEmails(listOf("string"))
                     .autoCollection(true)
-                    .balance("string")
+                    .balance("balance")
                     .billingAddress(
                         Customer.BillingAddress.builder()
-                            .city("string")
-                            .country("string")
-                            .line1("string")
-                            .line2("string")
-                            .postalCode("string")
-                            .state("string")
+                            .city("city")
+                            .country("country")
+                            .line1("line1")
+                            .line2("line2")
+                            .postalCode("postal_code")
+                            .state("state")
                             .build()
                     )
                     .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
-                    .currency("string")
-                    .email("string")
+                    .currency("currency")
+                    .email("email")
                     .emailDelivery(true)
-                    .externalCustomerId("string")
+                    .externalCustomerId("external_customer_id")
                     .metadata(Customer.Metadata.builder().build())
-                    .name("string")
+                    .name("name")
                     .paymentProvider(Customer.PaymentProvider.QUICKBOOKS)
-                    .paymentProviderId("string")
-                    .portalUrl("string")
+                    .paymentProviderId("payment_provider_id")
+                    .portalUrl("portal_url")
                     .shippingAddress(
                         Customer.ShippingAddress.builder()
-                            .city("string")
-                            .country("string")
-                            .line1("string")
-                            .line2("string")
-                            .postalCode("string")
-                            .state("string")
+                            .city("city")
+                            .country("country")
+                            .line1("line1")
+                            .line2("line2")
+                            .postalCode("postal_code")
+                            .state("state")
                             .build()
                     )
                     .taxId(
                         Customer.TaxId.builder()
                             .country(Customer.TaxId.Country.AD)
                             .type(Customer.TaxId.Type.AD_NRT)
-                            .value("string")
+                            .value("value")
                             .build()
                     )
-                    .timezone("string")
+                    .timezone("timezone")
                     .accountingSyncConfiguration(
                         Customer.AccountingSyncConfiguration.builder()
                             .accountingProviders(
                                 listOf(
                                     Customer.AccountingSyncConfiguration.AccountingProvider
                                         .builder()
-                                        .externalProviderId("string")
+                                        .externalProviderId("external_provider_id")
                                         .providerType(
                                             Customer.AccountingSyncConfiguration.AccountingProvider
                                                 .ProviderType
@@ -552,12 +574,12 @@ class SubscriptionTest {
                     )
                     .build()
             )
-        assertThat(subscription.defaultInvoiceMemo()).isEqualTo("string")
+        assertThat(subscription.defaultInvoiceMemo()).isEqualTo("default_invoice_memo")
         assertThat(subscription.discountIntervals())
             .containsExactly(
                 Subscription.DiscountInterval.ofAmountDiscountInterval(
                     Subscription.DiscountInterval.AmountDiscountInterval.builder()
-                        .amountDiscount("string")
+                        .amountDiscount("amount_discount")
                         .appliesToPriceIds(listOf("string"))
                         .appliesToPriceIntervalIds(listOf("string"))
                         .discountType(
@@ -574,19 +596,19 @@ class SubscriptionTest {
             .containsExactly(
                 Subscription.FixedFeeQuantitySchedule.builder()
                     .endDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
-                    .priceId("string")
+                    .priceId("price_id")
                     .quantity(42.23)
                     .startDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                     .build()
             )
-        assertThat(subscription.invoicingThreshold()).isEqualTo("string")
+        assertThat(subscription.invoicingThreshold()).isEqualTo("invoicing_threshold")
         assertThat(subscription.maximumIntervals())
             .containsExactly(
                 Subscription.MaximumInterval.builder()
                     .appliesToPriceIds(listOf("string"))
                     .appliesToPriceIntervalIds(listOf("string"))
                     .endDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
-                    .maximumAmount("string")
+                    .maximumAmount("maximum_amount")
                     .startDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                     .build()
             )
@@ -597,7 +619,7 @@ class SubscriptionTest {
                     .appliesToPriceIds(listOf("string"))
                     .appliesToPriceIntervalIds(listOf("string"))
                     .endDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
-                    .minimumAmount("string")
+                    .minimumAmount("minimum_amount")
                     .startDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                     .build()
             )
@@ -605,7 +627,7 @@ class SubscriptionTest {
         assertThat(subscription.plan())
             .isEqualTo(
                 Plan.builder()
-                    .id("string")
+                    .id("id")
                     .basePlan(
                         Plan.BasePlan.builder()
                             .id("m2t5akQeh2obwxeU")
@@ -613,45 +635,45 @@ class SubscriptionTest {
                             .name("Example plan")
                             .build()
                     )
-                    .basePlanId("string")
+                    .basePlanId("base_plan_id")
                     .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
-                    .currency("string")
-                    .defaultInvoiceMemo("string")
-                    .description("string")
+                    .currency("currency")
+                    .defaultInvoiceMemo("default_invoice_memo")
+                    .description("description")
                     .discount(
                         Discount.ofPercentageDiscount(
                             Discount.PercentageDiscount.builder()
                                 .appliesToPriceIds(listOf("string"))
                                 .discountType(Discount.PercentageDiscount.DiscountType.PERCENTAGE)
                                 .percentageDiscount(1.0)
-                                .reason("string")
+                                .reason("reason")
                                 .build()
                         )
                     )
-                    .externalPlanId("string")
-                    .invoicingCurrency("string")
+                    .externalPlanId("external_plan_id")
+                    .invoicingCurrency("invoicing_currency")
                     .maximum(
                         Plan.Maximum.builder()
                             .appliesToPriceIds(listOf("string"))
-                            .maximumAmount("string")
+                            .maximumAmount("maximum_amount")
                             .build()
                     )
-                    .maximumAmount("string")
+                    .maximumAmount("maximum_amount")
                     .metadata(Plan.Metadata.builder().build())
                     .minimum(
                         Plan.Minimum.builder()
                             .appliesToPriceIds(listOf("string"))
-                            .minimumAmount("string")
+                            .minimumAmount("minimum_amount")
                             .build()
                     )
-                    .minimumAmount("string")
-                    .name("string")
+                    .minimumAmount("minimum_amount")
+                    .name("name")
                     .netTerms(123L)
                     .planPhases(
                         listOf(
                             Plan.PlanPhase.builder()
-                                .id("string")
-                                .description("string")
+                                .id("id")
+                                .description("description")
                                 .discount(
                                     Discount.ofPercentageDiscount(
                                         Discount.PercentageDiscount.builder()
@@ -660,7 +682,7 @@ class SubscriptionTest {
                                                 Discount.PercentageDiscount.DiscountType.PERCENTAGE
                                             )
                                             .percentageDiscount(1.0)
-                                            .reason("string")
+                                            .reason("reason")
                                             .build()
                                     )
                                 )
@@ -669,18 +691,18 @@ class SubscriptionTest {
                                 .maximum(
                                     Plan.PlanPhase.Maximum.builder()
                                         .appliesToPriceIds(listOf("string"))
-                                        .maximumAmount("string")
+                                        .maximumAmount("maximum_amount")
                                         .build()
                                 )
-                                .maximumAmount("string")
+                                .maximumAmount("maximum_amount")
                                 .minimum(
                                     Plan.PlanPhase.Minimum.builder()
                                         .appliesToPriceIds(listOf("string"))
-                                        .minimumAmount("string")
+                                        .minimumAmount("minimum_amount")
                                         .build()
                                 )
-                                .minimumAmount("string")
-                                .name("string")
+                                .minimumAmount("minimum_amount")
+                                .name("name")
                                 .order(123L)
                                 .build()
                         )
@@ -689,10 +711,18 @@ class SubscriptionTest {
                         listOf(
                             Price.ofUnitPrice(
                                 Price.UnitPrice.builder()
-                                    .id("string")
+                                    .id("id")
                                     .billableMetric(
-                                        Price.UnitPrice.BillableMetric.builder()
-                                            .id("string")
+                                        Price.UnitPrice.BillableMetric.builder().id("id").build()
+                                    )
+                                    .billingCycleConfiguration(
+                                        Price.UnitPrice.BillingCycleConfiguration.builder()
+                                            .duration(123L)
+                                            .durationUnit(
+                                                Price.UnitPrice.BillingCycleConfiguration
+                                                    .DurationUnit
+                                                    .DAY
+                                            )
                                             .build()
                                     )
                                     .cadence(Price.UnitPrice.Cadence.ONE_TIME)
@@ -701,10 +731,10 @@ class SubscriptionTest {
                                     .creditAllocation(
                                         Price.UnitPrice.CreditAllocation.builder()
                                             .allowsRollover(true)
-                                            .currency("string")
+                                            .currency("currency")
                                             .build()
                                     )
-                                    .currency("string")
+                                    .currency("currency")
                                     .discount(
                                         Discount.ofPercentageDiscount(
                                             Discount.PercentageDiscount.builder()
@@ -714,39 +744,37 @@ class SubscriptionTest {
                                                         .PERCENTAGE
                                                 )
                                                 .percentageDiscount(1.0)
-                                                .reason("string")
+                                                .reason("reason")
                                                 .build()
                                         )
                                     )
-                                    .externalPriceId("string")
+                                    .externalPriceId("external_price_id")
                                     .fixedPriceQuantity(42.23)
                                     .item(
-                                        Price.UnitPrice.Item.builder()
-                                            .id("string")
-                                            .name("string")
-                                            .build()
+                                        Price.UnitPrice.Item.builder().id("id").name("name").build()
                                     )
                                     .maximum(
                                         Price.UnitPrice.Maximum.builder()
                                             .appliesToPriceIds(listOf("string"))
-                                            .maximumAmount("string")
+                                            .maximumAmount("maximum_amount")
                                             .build()
                                     )
-                                    .maximumAmount("string")
+                                    .maximumAmount("maximum_amount")
+                                    .metadata(Price.UnitPrice.Metadata.builder().build())
                                     .minimum(
                                         Price.UnitPrice.Minimum.builder()
                                             .appliesToPriceIds(listOf("string"))
-                                            .minimumAmount("string")
+                                            .minimumAmount("minimum_amount")
                                             .build()
                                     )
-                                    .minimumAmount("string")
+                                    .minimumAmount("minimum_amount")
                                     .modelType(Price.UnitPrice.ModelType.UNIT)
-                                    .name("string")
+                                    .name("name")
                                     .planPhaseOrder(123L)
                                     .priceType(Price.UnitPrice.PriceType.USAGE_PRICE)
                                     .unitConfig(
                                         Price.UnitPrice.UnitConfig.builder()
-                                            .unitAmount("string")
+                                            .unitAmount("unit_amount")
                                             .build()
                                     )
                                     .build()
@@ -755,9 +783,9 @@ class SubscriptionTest {
                     )
                     .product(
                         Plan.Product.builder()
-                            .id("string")
+                            .id("id")
                             .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
-                            .name("string")
+                            .name("name")
                             .build()
                     )
                     .status(Plan.Status.ACTIVE)
@@ -773,7 +801,7 @@ class SubscriptionTest {
         assertThat(subscription.priceIntervals())
             .containsExactly(
                 Subscription.PriceInterval.builder()
-                    .id("string")
+                    .id("id")
                     .billingCycleDay(123L)
                     .currentBillingPeriodEndDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                     .currentBillingPeriodStartDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
@@ -782,7 +810,7 @@ class SubscriptionTest {
                         listOf(
                             Subscription.PriceInterval.FixedFeeQuantityTransition.builder()
                                 .effectiveDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
-                                .priceId("string")
+                                .priceId("price_id")
                                 .quantity(123L)
                                 .build()
                         )
@@ -790,9 +818,18 @@ class SubscriptionTest {
                     .price(
                         Price.ofUnitPrice(
                             Price.UnitPrice.builder()
-                                .id("string")
+                                .id("id")
                                 .billableMetric(
-                                    Price.UnitPrice.BillableMetric.builder().id("string").build()
+                                    Price.UnitPrice.BillableMetric.builder().id("id").build()
+                                )
+                                .billingCycleConfiguration(
+                                    Price.UnitPrice.BillingCycleConfiguration.builder()
+                                        .duration(123L)
+                                        .durationUnit(
+                                            Price.UnitPrice.BillingCycleConfiguration.DurationUnit
+                                                .DAY
+                                        )
+                                        .build()
                                 )
                                 .cadence(Price.UnitPrice.Cadence.ONE_TIME)
                                 .conversionRate(42.23)
@@ -800,10 +837,10 @@ class SubscriptionTest {
                                 .creditAllocation(
                                     Price.UnitPrice.CreditAllocation.builder()
                                         .allowsRollover(true)
-                                        .currency("string")
+                                        .currency("currency")
                                         .build()
                                 )
-                                .currency("string")
+                                .currency("currency")
                                 .discount(
                                     Discount.ofPercentageDiscount(
                                         Discount.PercentageDiscount.builder()
@@ -812,39 +849,35 @@ class SubscriptionTest {
                                                 Discount.PercentageDiscount.DiscountType.PERCENTAGE
                                             )
                                             .percentageDiscount(1.0)
-                                            .reason("string")
+                                            .reason("reason")
                                             .build()
                                     )
                                 )
-                                .externalPriceId("string")
+                                .externalPriceId("external_price_id")
                                 .fixedPriceQuantity(42.23)
-                                .item(
-                                    Price.UnitPrice.Item.builder()
-                                        .id("string")
-                                        .name("string")
-                                        .build()
-                                )
+                                .item(Price.UnitPrice.Item.builder().id("id").name("name").build())
                                 .maximum(
                                     Price.UnitPrice.Maximum.builder()
                                         .appliesToPriceIds(listOf("string"))
-                                        .maximumAmount("string")
+                                        .maximumAmount("maximum_amount")
                                         .build()
                                 )
-                                .maximumAmount("string")
+                                .maximumAmount("maximum_amount")
+                                .metadata(Price.UnitPrice.Metadata.builder().build())
                                 .minimum(
                                     Price.UnitPrice.Minimum.builder()
                                         .appliesToPriceIds(listOf("string"))
-                                        .minimumAmount("string")
+                                        .minimumAmount("minimum_amount")
                                         .build()
                                 )
-                                .minimumAmount("string")
+                                .minimumAmount("minimum_amount")
                                 .modelType(Price.UnitPrice.ModelType.UNIT)
-                                .name("string")
+                                .name("name")
                                 .planPhaseOrder(123L)
                                 .priceType(Price.UnitPrice.PriceType.USAGE_PRICE)
                                 .unitConfig(
                                     Price.UnitPrice.UnitConfig.builder()
-                                        .unitAmount("string")
+                                        .unitAmount("unit_amount")
                                         .build()
                                 )
                                 .build()
@@ -856,7 +889,7 @@ class SubscriptionTest {
         assertThat(subscription.redeemedCoupon())
             .isEqualTo(
                 Subscription.RedeemedCoupon.builder()
-                    .couponId("string")
+                    .couponId("coupon_id")
                     .endDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                     .startDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                     .build()

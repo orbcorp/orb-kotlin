@@ -12,11 +12,11 @@ class MetricFetchResponseTest {
     fun createMetricFetchResponse() {
         val metricFetchResponse =
             MetricFetchResponse.builder()
-                .id("string")
-                .description("string")
+                .id("id")
+                .description("description")
                 .item(
                     Item.builder()
-                        .id("string")
+                        .id("id")
                         .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                         .externalConnections(
                             listOf(
@@ -24,24 +24,24 @@ class MetricFetchResponseTest {
                                     .externalConnectionName(
                                         Item.ExternalConnection.ExternalConnectionName.STRIPE
                                     )
-                                    .externalEntityId("string")
+                                    .externalEntityId("external_entity_id")
                                     .build()
                             )
                         )
-                        .name("string")
+                        .name("name")
                         .build()
                 )
                 .metadata(MetricFetchResponse.Metadata.builder().build())
-                .name("string")
+                .name("name")
                 .status(MetricFetchResponse.Status.ACTIVE)
                 .build()
         assertThat(metricFetchResponse).isNotNull
-        assertThat(metricFetchResponse.id()).isEqualTo("string")
-        assertThat(metricFetchResponse.description()).isEqualTo("string")
+        assertThat(metricFetchResponse.id()).isEqualTo("id")
+        assertThat(metricFetchResponse.description()).isEqualTo("description")
         assertThat(metricFetchResponse.item())
             .isEqualTo(
                 Item.builder()
-                    .id("string")
+                    .id("id")
                     .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                     .externalConnections(
                         listOf(
@@ -49,16 +49,16 @@ class MetricFetchResponseTest {
                                 .externalConnectionName(
                                     Item.ExternalConnection.ExternalConnectionName.STRIPE
                                 )
-                                .externalEntityId("string")
+                                .externalEntityId("external_entity_id")
                                 .build()
                         )
                     )
-                    .name("string")
+                    .name("name")
                     .build()
             )
         assertThat(metricFetchResponse.metadata())
             .isEqualTo(MetricFetchResponse.Metadata.builder().build())
-        assertThat(metricFetchResponse.name()).isEqualTo("string")
+        assertThat(metricFetchResponse.name()).isEqualTo("name")
         assertThat(metricFetchResponse.status()).isEqualTo(MetricFetchResponse.Status.ACTIVE)
     }
 }

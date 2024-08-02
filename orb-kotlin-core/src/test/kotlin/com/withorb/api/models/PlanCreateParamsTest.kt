@@ -11,36 +11,40 @@ class PlanCreateParamsTest {
     @Test
     fun createPlanCreateParams() {
         PlanCreateParams.builder()
-            .currency("string")
-            .name("string")
+            .currency("currency")
+            .name("name")
             .prices(
                 listOf(
                     PlanCreateParams.Price.ofNewPlanUnitPrice(
                         PlanCreateParams.Price.NewPlanUnitPrice.builder()
                             .cadence(PlanCreateParams.Price.NewPlanUnitPrice.Cadence.ANNUAL)
-                            .itemId("string")
+                            .itemId("item_id")
                             .modelType(PlanCreateParams.Price.NewPlanUnitPrice.ModelType.UNIT)
                             .name("Annual fee")
                             .unitConfig(
                                 PlanCreateParams.Price.NewPlanUnitPrice.UnitConfig.builder()
-                                    .unitAmount("string")
+                                    .unitAmount("unit_amount")
                                     .build()
                             )
-                            .billableMetricId("string")
+                            .billableMetricId("billable_metric_id")
                             .billedInAdvance(true)
                             .conversionRate(42.23)
-                            .currency("string")
-                            .externalPriceId("string")
+                            .currency("currency")
+                            .externalPriceId("external_price_id")
                             .fixedPriceQuantity(42.23)
-                            .invoiceGroupingKey("string")
+                            .invoiceGroupingKey("invoice_grouping_key")
+                            .metadata(
+                                PlanCreateParams.Price.NewPlanUnitPrice.Metadata.builder().build()
+                            )
                             .build()
                     )
                 )
             )
-            .defaultInvoiceMemo("string")
-            .externalPlanId("string")
+            .defaultInvoiceMemo("default_invoice_memo")
+            .externalPlanId("external_plan_id")
             .metadata(PlanCreateParams.Metadata.builder().build())
             .netTerms(123L)
+            .status(PlanCreateParams.Status.ACTIVE)
             .build()
     }
 
@@ -48,89 +52,98 @@ class PlanCreateParamsTest {
     fun getBody() {
         val params =
             PlanCreateParams.builder()
-                .currency("string")
-                .name("string")
+                .currency("currency")
+                .name("name")
                 .prices(
                     listOf(
                         PlanCreateParams.Price.ofNewPlanUnitPrice(
                             PlanCreateParams.Price.NewPlanUnitPrice.builder()
                                 .cadence(PlanCreateParams.Price.NewPlanUnitPrice.Cadence.ANNUAL)
-                                .itemId("string")
+                                .itemId("item_id")
                                 .modelType(PlanCreateParams.Price.NewPlanUnitPrice.ModelType.UNIT)
                                 .name("Annual fee")
                                 .unitConfig(
                                     PlanCreateParams.Price.NewPlanUnitPrice.UnitConfig.builder()
-                                        .unitAmount("string")
+                                        .unitAmount("unit_amount")
                                         .build()
                                 )
-                                .billableMetricId("string")
+                                .billableMetricId("billable_metric_id")
                                 .billedInAdvance(true)
                                 .conversionRate(42.23)
-                                .currency("string")
-                                .externalPriceId("string")
+                                .currency("currency")
+                                .externalPriceId("external_price_id")
                                 .fixedPriceQuantity(42.23)
-                                .invoiceGroupingKey("string")
+                                .invoiceGroupingKey("invoice_grouping_key")
+                                .metadata(
+                                    PlanCreateParams.Price.NewPlanUnitPrice.Metadata.builder()
+                                        .build()
+                                )
                                 .build()
                         )
                     )
                 )
-                .defaultInvoiceMemo("string")
-                .externalPlanId("string")
+                .defaultInvoiceMemo("default_invoice_memo")
+                .externalPlanId("external_plan_id")
                 .metadata(PlanCreateParams.Metadata.builder().build())
                 .netTerms(123L)
+                .status(PlanCreateParams.Status.ACTIVE)
                 .build()
         val body = params.getBody()
         assertThat(body).isNotNull
-        assertThat(body.currency()).isEqualTo("string")
-        assertThat(body.name()).isEqualTo("string")
+        assertThat(body.currency()).isEqualTo("currency")
+        assertThat(body.name()).isEqualTo("name")
         assertThat(body.prices())
             .isEqualTo(
                 listOf(
                     PlanCreateParams.Price.ofNewPlanUnitPrice(
                         PlanCreateParams.Price.NewPlanUnitPrice.builder()
                             .cadence(PlanCreateParams.Price.NewPlanUnitPrice.Cadence.ANNUAL)
-                            .itemId("string")
+                            .itemId("item_id")
                             .modelType(PlanCreateParams.Price.NewPlanUnitPrice.ModelType.UNIT)
                             .name("Annual fee")
                             .unitConfig(
                                 PlanCreateParams.Price.NewPlanUnitPrice.UnitConfig.builder()
-                                    .unitAmount("string")
+                                    .unitAmount("unit_amount")
                                     .build()
                             )
-                            .billableMetricId("string")
+                            .billableMetricId("billable_metric_id")
                             .billedInAdvance(true)
                             .conversionRate(42.23)
-                            .currency("string")
-                            .externalPriceId("string")
+                            .currency("currency")
+                            .externalPriceId("external_price_id")
                             .fixedPriceQuantity(42.23)
-                            .invoiceGroupingKey("string")
+                            .invoiceGroupingKey("invoice_grouping_key")
+                            .metadata(
+                                PlanCreateParams.Price.NewPlanUnitPrice.Metadata.builder().build()
+                            )
                             .build()
                     )
                 )
             )
-        assertThat(body.defaultInvoiceMemo()).isEqualTo("string")
-        assertThat(body.externalPlanId()).isEqualTo("string")
+        assertThat(body.defaultInvoiceMemo()).isEqualTo("default_invoice_memo")
+        assertThat(body.externalPlanId()).isEqualTo("external_plan_id")
         assertThat(body.metadata()).isEqualTo(PlanCreateParams.Metadata.builder().build())
         assertThat(body.netTerms()).isEqualTo(123L)
+        assertThat(body.status()).isEqualTo(PlanCreateParams.Status.ACTIVE)
     }
 
     @Test
     fun getBodyWithoutOptionalFields() {
         val params =
             PlanCreateParams.builder()
-                .currency("string")
-                .name("string")
+                .currency("currency")
+                .name("name")
                 .prices(
                     listOf(
                         PlanCreateParams.Price.ofNewPlanUnitPrice(
                             PlanCreateParams.Price.NewPlanUnitPrice.builder()
                                 .cadence(PlanCreateParams.Price.NewPlanUnitPrice.Cadence.ANNUAL)
-                                .itemId("string")
+                                .itemId("item_id")
                                 .modelType(PlanCreateParams.Price.NewPlanUnitPrice.ModelType.UNIT)
                                 .name("Annual fee")
                                 .unitConfig(
                                     PlanCreateParams.Price.NewPlanUnitPrice.UnitConfig.builder()
-                                        .unitAmount("string")
+                                        .unitAmount("unit_amount")
                                         .build()
                                 )
                                 .build()
@@ -140,20 +153,20 @@ class PlanCreateParamsTest {
                 .build()
         val body = params.getBody()
         assertThat(body).isNotNull
-        assertThat(body.currency()).isEqualTo("string")
-        assertThat(body.name()).isEqualTo("string")
+        assertThat(body.currency()).isEqualTo("currency")
+        assertThat(body.name()).isEqualTo("name")
         assertThat(body.prices())
             .isEqualTo(
                 listOf(
                     PlanCreateParams.Price.ofNewPlanUnitPrice(
                         PlanCreateParams.Price.NewPlanUnitPrice.builder()
                             .cadence(PlanCreateParams.Price.NewPlanUnitPrice.Cadence.ANNUAL)
-                            .itemId("string")
+                            .itemId("item_id")
                             .modelType(PlanCreateParams.Price.NewPlanUnitPrice.ModelType.UNIT)
                             .name("Annual fee")
                             .unitConfig(
                                 PlanCreateParams.Price.NewPlanUnitPrice.UnitConfig.builder()
-                                    .unitAmount("string")
+                                    .unitAmount("unit_amount")
                                     .build()
                             )
                             .build()

@@ -3061,7 +3061,7 @@ private constructor(
 
                 companion object {
 
-                    val NULL = Type(JsonField.of("\'null\'"))
+                    val NULL = Type(JsonField.of("'null'"))
 
                     fun of(value: String) = Type(JsonField.of(value))
                 }

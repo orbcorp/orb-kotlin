@@ -24,9 +24,9 @@ class MetricServiceTest {
             metricService.create(
                 MetricCreateParams.builder()
                     .description("Sum of bytes downloaded in fast mode")
-                    .itemId("string")
+                    .itemId("item_id")
                     .name("Bytes downloaded")
-                    .sql("SELECT sum(bytes_downloaded) FROM events WHERE download_speed = \'fast\'")
+                    .sql("SELECT sum(bytes_downloaded) FROM events WHERE download_speed = 'fast'")
                     .metadata(MetricCreateParams.Metadata.builder().build())
                     .build()
             )
@@ -56,7 +56,7 @@ class MetricServiceTest {
                 .build()
         val metricService = client.metrics()
         val metricFetchResponse =
-            metricService.fetch(MetricFetchParams.builder().metricId("string").build())
+            metricService.fetch(MetricFetchParams.builder().metricId("metric_id").build())
         println(metricFetchResponse)
         metricFetchResponse.validate()
     }

@@ -21,10 +21,22 @@ class CustomerCostListResponseTest {
                                         .price(
                                             Price.ofUnitPrice(
                                                 Price.UnitPrice.builder()
-                                                    .id("string")
+                                                    .id("id")
                                                     .billableMetric(
                                                         Price.UnitPrice.BillableMetric.builder()
-                                                            .id("string")
+                                                            .id("id")
+                                                            .build()
+                                                    )
+                                                    .billingCycleConfiguration(
+                                                        Price.UnitPrice.BillingCycleConfiguration
+                                                            .builder()
+                                                            .duration(123L)
+                                                            .durationUnit(
+                                                                Price.UnitPrice
+                                                                    .BillingCycleConfiguration
+                                                                    .DurationUnit
+                                                                    .DAY
+                                                            )
                                                             .build()
                                                     )
                                                     .cadence(Price.UnitPrice.Cadence.ONE_TIME)
@@ -37,10 +49,10 @@ class CustomerCostListResponseTest {
                                                     .creditAllocation(
                                                         Price.UnitPrice.CreditAllocation.builder()
                                                             .allowsRollover(true)
-                                                            .currency("string")
+                                                            .currency("currency")
                                                             .build()
                                                     )
-                                                    .currency("string")
+                                                    .currency("currency")
                                                     .discount(
                                                         Discount.ofPercentageDiscount(
                                                             Discount.PercentageDiscount.builder()
@@ -51,56 +63,59 @@ class CustomerCostListResponseTest {
                                                                         .PERCENTAGE
                                                                 )
                                                                 .percentageDiscount(1.0)
-                                                                .reason("string")
+                                                                .reason("reason")
                                                                 .build()
                                                         )
                                                     )
-                                                    .externalPriceId("string")
+                                                    .externalPriceId("external_price_id")
                                                     .fixedPriceQuantity(42.23)
                                                     .item(
                                                         Price.UnitPrice.Item.builder()
-                                                            .id("string")
-                                                            .name("string")
+                                                            .id("id")
+                                                            .name("name")
                                                             .build()
                                                     )
                                                     .maximum(
                                                         Price.UnitPrice.Maximum.builder()
                                                             .appliesToPriceIds(listOf("string"))
-                                                            .maximumAmount("string")
+                                                            .maximumAmount("maximum_amount")
                                                             .build()
                                                     )
-                                                    .maximumAmount("string")
+                                                    .maximumAmount("maximum_amount")
+                                                    .metadata(
+                                                        Price.UnitPrice.Metadata.builder().build()
+                                                    )
                                                     .minimum(
                                                         Price.UnitPrice.Minimum.builder()
                                                             .appliesToPriceIds(listOf("string"))
-                                                            .minimumAmount("string")
+                                                            .minimumAmount("minimum_amount")
                                                             .build()
                                                     )
-                                                    .minimumAmount("string")
+                                                    .minimumAmount("minimum_amount")
                                                     .modelType(Price.UnitPrice.ModelType.UNIT)
-                                                    .name("string")
+                                                    .name("name")
                                                     .planPhaseOrder(123L)
                                                     .priceType(
                                                         Price.UnitPrice.PriceType.USAGE_PRICE
                                                     )
                                                     .unitConfig(
                                                         Price.UnitPrice.UnitConfig.builder()
-                                                            .unitAmount("string")
+                                                            .unitAmount("unit_amount")
                                                             .build()
                                                     )
                                                     .build()
                                             )
                                         )
-                                        .subtotal("string")
-                                        .total("string")
+                                        .subtotal("subtotal")
+                                        .total("total")
                                         .quantity(42.23)
                                         .build()
                                 )
                             )
-                            .subtotal("string")
+                            .subtotal("subtotal")
                             .timeframeEnd(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                             .timeframeStart(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
-                            .total("string")
+                            .total("total")
                             .build()
                     )
                 )
@@ -115,10 +130,20 @@ class CustomerCostListResponseTest {
                                 .price(
                                     Price.ofUnitPrice(
                                         Price.UnitPrice.builder()
-                                            .id("string")
+                                            .id("id")
                                             .billableMetric(
                                                 Price.UnitPrice.BillableMetric.builder()
-                                                    .id("string")
+                                                    .id("id")
+                                                    .build()
+                                            )
+                                            .billingCycleConfiguration(
+                                                Price.UnitPrice.BillingCycleConfiguration.builder()
+                                                    .duration(123L)
+                                                    .durationUnit(
+                                                        Price.UnitPrice.BillingCycleConfiguration
+                                                            .DurationUnit
+                                                            .DAY
+                                                    )
                                                     .build()
                                             )
                                             .cadence(Price.UnitPrice.Cadence.ONE_TIME)
@@ -129,10 +154,10 @@ class CustomerCostListResponseTest {
                                             .creditAllocation(
                                                 Price.UnitPrice.CreditAllocation.builder()
                                                     .allowsRollover(true)
-                                                    .currency("string")
+                                                    .currency("currency")
                                                     .build()
                                             )
-                                            .currency("string")
+                                            .currency("currency")
                                             .discount(
                                                 Discount.ofPercentageDiscount(
                                                     Discount.PercentageDiscount.builder()
@@ -142,54 +167,55 @@ class CustomerCostListResponseTest {
                                                                 .PERCENTAGE
                                                         )
                                                         .percentageDiscount(1.0)
-                                                        .reason("string")
+                                                        .reason("reason")
                                                         .build()
                                                 )
                                             )
-                                            .externalPriceId("string")
+                                            .externalPriceId("external_price_id")
                                             .fixedPriceQuantity(42.23)
                                             .item(
                                                 Price.UnitPrice.Item.builder()
-                                                    .id("string")
-                                                    .name("string")
+                                                    .id("id")
+                                                    .name("name")
                                                     .build()
                                             )
                                             .maximum(
                                                 Price.UnitPrice.Maximum.builder()
                                                     .appliesToPriceIds(listOf("string"))
-                                                    .maximumAmount("string")
+                                                    .maximumAmount("maximum_amount")
                                                     .build()
                                             )
-                                            .maximumAmount("string")
+                                            .maximumAmount("maximum_amount")
+                                            .metadata(Price.UnitPrice.Metadata.builder().build())
                                             .minimum(
                                                 Price.UnitPrice.Minimum.builder()
                                                     .appliesToPriceIds(listOf("string"))
-                                                    .minimumAmount("string")
+                                                    .minimumAmount("minimum_amount")
                                                     .build()
                                             )
-                                            .minimumAmount("string")
+                                            .minimumAmount("minimum_amount")
                                             .modelType(Price.UnitPrice.ModelType.UNIT)
-                                            .name("string")
+                                            .name("name")
                                             .planPhaseOrder(123L)
                                             .priceType(Price.UnitPrice.PriceType.USAGE_PRICE)
                                             .unitConfig(
                                                 Price.UnitPrice.UnitConfig.builder()
-                                                    .unitAmount("string")
+                                                    .unitAmount("unit_amount")
                                                     .build()
                                             )
                                             .build()
                                     )
                                 )
-                                .subtotal("string")
-                                .total("string")
+                                .subtotal("subtotal")
+                                .total("total")
                                 .quantity(42.23)
                                 .build()
                         )
                     )
-                    .subtotal("string")
+                    .subtotal("subtotal")
                     .timeframeEnd(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                     .timeframeStart(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
-                    .total("string")
+                    .total("total")
                     .build()
             )
     }

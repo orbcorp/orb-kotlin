@@ -23,38 +23,43 @@ class PlanServiceTest {
         val plan =
             planService.create(
                 PlanCreateParams.builder()
-                    .currency("string")
-                    .name("string")
+                    .currency("currency")
+                    .name("name")
                     .prices(
                         listOf(
                             PlanCreateParams.Price.ofNewPlanUnitPrice(
                                 PlanCreateParams.Price.NewPlanUnitPrice.builder()
                                     .cadence(PlanCreateParams.Price.NewPlanUnitPrice.Cadence.ANNUAL)
-                                    .itemId("string")
+                                    .itemId("item_id")
                                     .modelType(
                                         PlanCreateParams.Price.NewPlanUnitPrice.ModelType.UNIT
                                     )
                                     .name("Annual fee")
                                     .unitConfig(
                                         PlanCreateParams.Price.NewPlanUnitPrice.UnitConfig.builder()
-                                            .unitAmount("string")
+                                            .unitAmount("unit_amount")
                                             .build()
                                     )
-                                    .billableMetricId("string")
+                                    .billableMetricId("billable_metric_id")
                                     .billedInAdvance(true)
                                     .conversionRate(42.23)
-                                    .currency("string")
-                                    .externalPriceId("string")
+                                    .currency("currency")
+                                    .externalPriceId("external_price_id")
                                     .fixedPriceQuantity(42.23)
-                                    .invoiceGroupingKey("string")
+                                    .invoiceGroupingKey("invoice_grouping_key")
+                                    .metadata(
+                                        PlanCreateParams.Price.NewPlanUnitPrice.Metadata.builder()
+                                            .build()
+                                    )
                                     .build()
                             )
                         )
                     )
-                    .defaultInvoiceMemo("string")
-                    .externalPlanId("string")
+                    .defaultInvoiceMemo("default_invoice_memo")
+                    .externalPlanId("external_plan_id")
                     .metadata(PlanCreateParams.Metadata.builder().build())
                     .netTerms(123L)
+                    .status(PlanCreateParams.Status.ACTIVE)
                     .build()
             )
         println(plan)
@@ -72,8 +77,8 @@ class PlanServiceTest {
         val plan =
             planService.update(
                 PlanUpdateParams.builder()
-                    .planId("string")
-                    .externalPlanId("string")
+                    .planId("plan_id")
+                    .externalPlanId("external_plan_id")
                     .metadata(PlanUpdateParams.Metadata.builder().build())
                     .build()
             )
@@ -102,7 +107,7 @@ class PlanServiceTest {
                 .apiKey("My API Key")
                 .build()
         val planService = client.plans()
-        val plan = planService.fetch(PlanFetchParams.builder().planId("string").build())
+        val plan = planService.fetch(PlanFetchParams.builder().planId("plan_id").build())
         println(plan)
         plan.validate()
     }

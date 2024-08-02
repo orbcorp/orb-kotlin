@@ -12,6 +12,24 @@ import org.junit.jupiter.api.extension.ExtendWith
 class ExternalPriceIdServiceTest {
 
     @Test
+    fun callUpdate() {
+        val client =
+            OrbOkHttpClient.builder()
+                .baseUrl(TestServerExtension.BASE_URL)
+                .apiKey("My API Key")
+                .build()
+        val externalPriceIdService = client.prices().externalPriceId()
+        val price =
+            externalPriceIdService.update(
+                PriceExternalPriceIdUpdateParams.builder()
+                    .externalPriceId("external_price_id")
+                    .metadata(PriceExternalPriceIdUpdateParams.Metadata.builder().build())
+                    .build()
+            )
+        println(price)
+    }
+
+    @Test
     fun callFetch() {
         val client =
             OrbOkHttpClient.builder()
@@ -21,7 +39,9 @@ class ExternalPriceIdServiceTest {
         val externalPriceIdService = client.prices().externalPriceId()
         val price =
             externalPriceIdService.fetch(
-                PriceExternalPriceIdFetchParams.builder().externalPriceId("string").build()
+                PriceExternalPriceIdFetchParams.builder()
+                    .externalPriceId("external_price_id")
+                    .build()
             )
         println(price)
     }

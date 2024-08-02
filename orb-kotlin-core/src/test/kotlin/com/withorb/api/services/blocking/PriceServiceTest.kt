@@ -27,23 +27,44 @@ class PriceServiceTest {
                     .forNewFloatingUnitPrice(
                         PriceCreateParams.NewFloatingUnitPrice.builder()
                             .cadence(PriceCreateParams.NewFloatingUnitPrice.Cadence.ANNUAL)
-                            .currency("string")
-                            .itemId("string")
+                            .currency("currency")
+                            .itemId("item_id")
                             .modelType(PriceCreateParams.NewFloatingUnitPrice.ModelType.UNIT)
                             .name("Annual fee")
                             .unitConfig(
                                 PriceCreateParams.NewFloatingUnitPrice.UnitConfig.builder()
-                                    .unitAmount("string")
+                                    .unitAmount("unit_amount")
                                     .build()
                             )
-                            .billableMetricId("string")
+                            .billableMetricId("billable_metric_id")
                             .billedInAdvance(true)
                             .conversionRate(42.23)
-                            .externalPriceId("string")
+                            .externalPriceId("external_price_id")
                             .fixedPriceQuantity(42.23)
-                            .invoiceGroupingKey("string")
+                            .invoiceGroupingKey("invoice_grouping_key")
+                            .metadata(
+                                PriceCreateParams.NewFloatingUnitPrice.Metadata.builder().build()
+                            )
                             .build()
                     )
+                    .build()
+            )
+        println(price)
+    }
+
+    @Test
+    fun callUpdate() {
+        val client =
+            OrbOkHttpClient.builder()
+                .baseUrl(TestServerExtension.BASE_URL)
+                .apiKey("My API Key")
+                .build()
+        val priceService = client.prices()
+        val price =
+            priceService.update(
+                PriceUpdateParams.builder()
+                    .priceId("price_id")
+                    .metadata(PriceUpdateParams.Metadata.builder().build())
                     .build()
             )
         println(price)
@@ -73,12 +94,12 @@ class PriceServiceTest {
         val priceEvaluateResponse =
             priceService.evaluate(
                 PriceEvaluateParams.builder()
-                    .priceId("string")
+                    .priceId("price_id")
                     .timeframeEnd(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                     .timeframeStart(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
-                    .customerId("string")
-                    .externalCustomerId("string")
-                    .filter("my_numeric_property > 100 AND my_other_property = \'bar\'")
+                    .customerId("customer_id")
+                    .externalCustomerId("external_customer_id")
+                    .filter("my_numeric_property > 100 AND my_other_property = 'bar'")
                     .groupingKeys(listOf("string"))
                     .build()
             )
@@ -94,7 +115,7 @@ class PriceServiceTest {
                 .apiKey("My API Key")
                 .build()
         val priceService = client.prices()
-        val price = priceService.fetch(PriceFetchParams.builder().priceId("string").build())
+        val price = priceService.fetch(PriceFetchParams.builder().priceId("price_id").build())
         println(price)
     }
 }

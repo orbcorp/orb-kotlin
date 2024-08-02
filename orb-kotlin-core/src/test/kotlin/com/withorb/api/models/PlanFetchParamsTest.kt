@@ -10,15 +10,15 @@ class PlanFetchParamsTest {
 
     @Test
     fun createPlanFetchParams() {
-        PlanFetchParams.builder().planId("string").build()
+        PlanFetchParams.builder().planId("plan_id").build()
     }
 
     @Test
     fun getPathParam() {
-        val params = PlanFetchParams.builder().planId("string").build()
+        val params = PlanFetchParams.builder().planId("plan_id").build()
         assertThat(params).isNotNull
         // path param "planId"
-        assertThat(params.getPathParam(0)).isEqualTo("string")
+        assertThat(params.getPathParam(0)).isEqualTo("plan_id")
         // out-of-bound path param
         assertThat(params.getPathParam(1)).isEqualTo("")
     }

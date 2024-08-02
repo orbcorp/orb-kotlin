@@ -21,7 +21,7 @@ class AlertServiceTest {
                 .apiKey("My API Key")
                 .build()
         val alertService = client.alerts()
-        val alert = alertService.retrieve(AlertRetrieveParams.builder().alertId("string").build())
+        val alert = alertService.retrieve(AlertRetrieveParams.builder().alertId("alert_id").build())
         println(alert)
         alert.validate()
     }
@@ -51,9 +51,9 @@ class AlertServiceTest {
         val alert =
             alertService.createForCustomer(
                 AlertCreateForCustomerParams.builder()
-                    .customerId("string")
-                    .currency("string")
-                    .type("string")
+                    .customerId("customer_id")
+                    .currency("currency")
+                    .type("type")
                     .thresholds(
                         listOf(
                             AlertCreateForCustomerParams.Threshold.builder().value(42.23).build()
@@ -76,9 +76,9 @@ class AlertServiceTest {
         val alert =
             alertService.createForExternalCustomer(
                 AlertCreateForExternalCustomerParams.builder()
-                    .externalCustomerId("string")
-                    .currency("string")
-                    .type("string")
+                    .externalCustomerId("external_customer_id")
+                    .currency("currency")
+                    .type("type")
                     .thresholds(
                         listOf(
                             AlertCreateForExternalCustomerParams.Threshold.builder()
@@ -103,7 +103,7 @@ class AlertServiceTest {
         val alert =
             alertService.createForSubscription(
                 AlertCreateForSubscriptionParams.builder()
-                    .subscriptionId("string")
+                    .subscriptionId("subscription_id")
                     .thresholds(
                         listOf(
                             AlertCreateForSubscriptionParams.Threshold.builder()
@@ -111,8 +111,8 @@ class AlertServiceTest {
                                 .build()
                         )
                     )
-                    .type("string")
-                    .metricId("string")
+                    .type("type")
+                    .metricId("metric_id")
                     .build()
             )
         println(alert)
@@ -129,7 +129,7 @@ class AlertServiceTest {
         val alertService = client.alerts()
         val alert =
             alertService.disable(
-                AlertDisableParams.builder().alertConfigurationId("string").build()
+                AlertDisableParams.builder().alertConfigurationId("alert_configuration_id").build()
             )
         println(alert)
         alert.validate()
@@ -144,7 +144,9 @@ class AlertServiceTest {
                 .build()
         val alertService = client.alerts()
         val alert =
-            alertService.enable(AlertEnableParams.builder().alertConfigurationId("string").build())
+            alertService.enable(
+                AlertEnableParams.builder().alertConfigurationId("alert_configuration_id").build()
+            )
         println(alert)
         alert.validate()
     }

@@ -10,15 +10,15 @@ class InvoiceIssueParamsTest {
 
     @Test
     fun createInvoiceIssueParams() {
-        InvoiceIssueParams.builder().invoiceId("string").build()
+        InvoiceIssueParams.builder().invoiceId("invoice_id").build()
     }
 
     @Test
     fun getPathParam() {
-        val params = InvoiceIssueParams.builder().invoiceId("string").build()
+        val params = InvoiceIssueParams.builder().invoiceId("invoice_id").build()
         assertThat(params).isNotNull
         // path param "invoiceId"
-        assertThat(params.getPathParam(0)).isEqualTo("string")
+        assertThat(params.getPathParam(0)).isEqualTo("invoice_id")
         // out-of-bound path param
         assertThat(params.getPathParam(1)).isEqualTo("")
     }

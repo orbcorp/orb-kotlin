@@ -36,7 +36,7 @@ class ItemServiceTest {
         val item =
             itemService.update(
                 ItemUpdateParams.builder()
-                    .itemId("string")
+                    .itemId("item_id")
                     .externalConnections(
                         listOf(
                             ItemUpdateParams.ExternalConnection.builder()
@@ -44,11 +44,11 @@ class ItemServiceTest {
                                     ItemUpdateParams.ExternalConnection.ExternalConnectionName
                                         .STRIPE
                                 )
-                                .externalEntityId("string")
+                                .externalEntityId("external_entity_id")
                                 .build()
                         )
                     )
-                    .name("string")
+                    .name("name")
                     .build()
             )
         println(item)
@@ -76,7 +76,7 @@ class ItemServiceTest {
                 .apiKey("My API Key")
                 .build()
         val itemService = client.items()
-        val item = itemService.fetch(ItemFetchParams.builder().itemId("string").build())
+        val item = itemService.fetch(ItemFetchParams.builder().itemId("item_id").build())
         println(item)
         item.validate()
     }

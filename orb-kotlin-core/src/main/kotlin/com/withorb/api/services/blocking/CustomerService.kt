@@ -17,13 +17,10 @@ import com.withorb.api.models.CustomerUpdateParams
 import com.withorb.api.services.blocking.customers.BalanceTransactionService
 import com.withorb.api.services.blocking.customers.CostService
 import com.withorb.api.services.blocking.customers.CreditService
-import com.withorb.api.services.blocking.customers.UsageService
 
 interface CustomerService {
 
     fun costs(): CostService
-
-    fun usage(): UsageService
 
     fun credits(): CreditService
 

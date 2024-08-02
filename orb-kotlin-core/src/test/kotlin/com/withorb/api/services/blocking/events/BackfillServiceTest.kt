@@ -27,8 +27,8 @@ class BackfillServiceTest {
                     .timeframeEnd(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                     .timeframeStart(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                     .closeTime(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
-                    .customerId("string")
-                    .externalCustomerId("string")
+                    .customerId("customer_id")
+                    .externalCustomerId("external_customer_id")
                     .replaceExistingEvents(true)
                     .build()
             )
@@ -58,7 +58,9 @@ class BackfillServiceTest {
                 .build()
         val backfillService = client.events().backfills()
         val eventBackfillCloseResponse =
-            backfillService.close(EventBackfillCloseParams.builder().backfillId("string").build())
+            backfillService.close(
+                EventBackfillCloseParams.builder().backfillId("backfill_id").build()
+            )
         println(eventBackfillCloseResponse)
         eventBackfillCloseResponse.validate()
     }
@@ -72,7 +74,9 @@ class BackfillServiceTest {
                 .build()
         val backfillService = client.events().backfills()
         val eventBackfillFetchResponse =
-            backfillService.fetch(EventBackfillFetchParams.builder().backfillId("string").build())
+            backfillService.fetch(
+                EventBackfillFetchParams.builder().backfillId("backfill_id").build()
+            )
         println(eventBackfillFetchResponse)
         eventBackfillFetchResponse.validate()
     }
@@ -86,7 +90,9 @@ class BackfillServiceTest {
                 .build()
         val backfillService = client.events().backfills()
         val eventBackfillRevertResponse =
-            backfillService.revert(EventBackfillRevertParams.builder().backfillId("string").build())
+            backfillService.revert(
+                EventBackfillRevertParams.builder().backfillId("backfill_id").build()
+            )
         println(eventBackfillRevertResponse)
         eventBackfillRevertResponse.validate()
     }

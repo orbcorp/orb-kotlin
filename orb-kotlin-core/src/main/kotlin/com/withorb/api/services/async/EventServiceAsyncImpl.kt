@@ -45,9 +45,8 @@ constructor(
      * This endpoint will mark the existing event as ignored, and Orb will only use the new event
      * passed in the body of this request as the source of truth for that `event_id`. Note that a
      * single event can be amended any number of times, so the same event can be overwritten in
-     * subsequent calls to this endpoint, or overwritten using the
-     * [Amend customer usage](amend-usage) endpoint. Only a single event with a given `event_id`
-     * will be considered the source of truth at any given time.
+     * subsequent calls to this endpoint. Only a single event with a given `event_id` will be
+     * considered the source of truth at any given time.
      *
      * This is a powerful and audit-safe mechanism to retroactively update a single event in cases
      * where you need to:
@@ -75,6 +74,9 @@ constructor(
      * - The event's `timestamp` must fall within the customer's current subscription's billing
      *   period, or within the grace period of the customer's current subscription's previous
      *   billing period.
+     * - By default, no more than 100 events can be amended for a single customer in a 100 day
+     *   period. For higher volume updates, consider using the [event backfill](create-backfill)
+     *   endpoint.
      */
     override suspend fun update(
         params: EventUpdateParams,
@@ -136,6 +138,9 @@ constructor(
      *   must identify a Customer resource within Orb, even if this event was ingested during the
      *   initial integration period. We do not allow deprecating events for customers not in the Orb
      *   system.
+     * - By default, no more than 100 events can be deprecated for a single customer in a 100 day
+     *   period. For higher volume updates, consider using the [event backfill](create-backfill)
+     *   endpoint.
      */
     override suspend fun deprecate(
         params: EventDeprecateParams,

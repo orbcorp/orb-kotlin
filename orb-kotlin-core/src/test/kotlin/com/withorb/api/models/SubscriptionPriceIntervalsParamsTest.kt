@@ -12,7 +12,7 @@ class SubscriptionPriceIntervalsParamsTest {
     @Test
     fun createSubscriptionPriceIntervalsParams() {
         SubscriptionPriceIntervalsParams.builder()
-            .subscriptionId("string")
+            .subscriptionId("subscription_id")
             .add(
                 listOf(
                     SubscriptionPriceIntervalsParams.Add.builder()
@@ -77,8 +77,8 @@ class SubscriptionPriceIntervalsParamsTest {
                                             .Cadence
                                             .ANNUAL
                                     )
-                                    .currency("string")
-                                    .itemId("string")
+                                    .currency("currency")
+                                    .itemId("item_id")
                                     .modelType(
                                         SubscriptionPriceIntervalsParams.Add.Price
                                             .NewFloatingUnitPrice
@@ -91,15 +91,22 @@ class SubscriptionPriceIntervalsParamsTest {
                                             .NewFloatingUnitPrice
                                             .UnitConfig
                                             .builder()
-                                            .unitAmount("string")
+                                            .unitAmount("unit_amount")
                                             .build()
                                     )
-                                    .billableMetricId("string")
+                                    .billableMetricId("billable_metric_id")
                                     .billedInAdvance(true)
                                     .conversionRate(42.23)
-                                    .externalPriceId("string")
+                                    .externalPriceId("external_price_id")
                                     .fixedPriceQuantity(42.23)
-                                    .invoiceGroupingKey("string")
+                                    .invoiceGroupingKey("invoice_grouping_key")
+                                    .metadata(
+                                        SubscriptionPriceIntervalsParams.Add.Price
+                                            .NewFloatingUnitPrice
+                                            .Metadata
+                                            .builder()
+                                            .build()
+                                    )
                                     .build()
                             )
                         )
@@ -189,7 +196,7 @@ class SubscriptionPriceIntervalsParamsTest {
     fun getBody() {
         val params =
             SubscriptionPriceIntervalsParams.builder()
-                .subscriptionId("string")
+                .subscriptionId("subscription_id")
                 .add(
                     listOf(
                         SubscriptionPriceIntervalsParams.Add.builder()
@@ -256,8 +263,8 @@ class SubscriptionPriceIntervalsParamsTest {
                                                 .Cadence
                                                 .ANNUAL
                                         )
-                                        .currency("string")
-                                        .itemId("string")
+                                        .currency("currency")
+                                        .itemId("item_id")
                                         .modelType(
                                             SubscriptionPriceIntervalsParams.Add.Price
                                                 .NewFloatingUnitPrice
@@ -270,15 +277,22 @@ class SubscriptionPriceIntervalsParamsTest {
                                                 .NewFloatingUnitPrice
                                                 .UnitConfig
                                                 .builder()
-                                                .unitAmount("string")
+                                                .unitAmount("unit_amount")
                                                 .build()
                                         )
-                                        .billableMetricId("string")
+                                        .billableMetricId("billable_metric_id")
                                         .billedInAdvance(true)
                                         .conversionRate(42.23)
-                                        .externalPriceId("string")
+                                        .externalPriceId("external_price_id")
                                         .fixedPriceQuantity(42.23)
-                                        .invoiceGroupingKey("string")
+                                        .invoiceGroupingKey("invoice_grouping_key")
+                                        .metadata(
+                                            SubscriptionPriceIntervalsParams.Add.Price
+                                                .NewFloatingUnitPrice
+                                                .Metadata
+                                                .builder()
+                                                .build()
+                                        )
                                         .build()
                                 )
                             )
@@ -438,8 +452,8 @@ class SubscriptionPriceIntervalsParamsTest {
                                             .Cadence
                                             .ANNUAL
                                     )
-                                    .currency("string")
-                                    .itemId("string")
+                                    .currency("currency")
+                                    .itemId("item_id")
                                     .modelType(
                                         SubscriptionPriceIntervalsParams.Add.Price
                                             .NewFloatingUnitPrice
@@ -452,15 +466,22 @@ class SubscriptionPriceIntervalsParamsTest {
                                             .NewFloatingUnitPrice
                                             .UnitConfig
                                             .builder()
-                                            .unitAmount("string")
+                                            .unitAmount("unit_amount")
                                             .build()
                                     )
-                                    .billableMetricId("string")
+                                    .billableMetricId("billable_metric_id")
                                     .billedInAdvance(true)
                                     .conversionRate(42.23)
-                                    .externalPriceId("string")
+                                    .externalPriceId("external_price_id")
                                     .fixedPriceQuantity(42.23)
-                                    .invoiceGroupingKey("string")
+                                    .invoiceGroupingKey("invoice_grouping_key")
+                                    .metadata(
+                                        SubscriptionPriceIntervalsParams.Add.Price
+                                            .NewFloatingUnitPrice
+                                            .Metadata
+                                            .builder()
+                                            .build()
+                                    )
                                     .build()
                             )
                         )
@@ -550,17 +571,19 @@ class SubscriptionPriceIntervalsParamsTest {
 
     @Test
     fun getBodyWithoutOptionalFields() {
-        val params = SubscriptionPriceIntervalsParams.builder().subscriptionId("string").build()
+        val params =
+            SubscriptionPriceIntervalsParams.builder().subscriptionId("subscription_id").build()
         val body = params.getBody()
         assertThat(body).isNotNull
     }
 
     @Test
     fun getPathParam() {
-        val params = SubscriptionPriceIntervalsParams.builder().subscriptionId("string").build()
+        val params =
+            SubscriptionPriceIntervalsParams.builder().subscriptionId("subscription_id").build()
         assertThat(params).isNotNull
         // path param "subscriptionId"
-        assertThat(params.getPathParam(0)).isEqualTo("string")
+        assertThat(params.getPathParam(0)).isEqualTo("subscription_id")
         // out-of-bound path param
         assertThat(params.getPathParam(1)).isEqualTo("")
     }

@@ -10,15 +10,15 @@ class CustomerFetchParamsTest {
 
     @Test
     fun createCustomerFetchParams() {
-        CustomerFetchParams.builder().customerId("string").build()
+        CustomerFetchParams.builder().customerId("customer_id").build()
     }
 
     @Test
     fun getPathParam() {
-        val params = CustomerFetchParams.builder().customerId("string").build()
+        val params = CustomerFetchParams.builder().customerId("customer_id").build()
         assertThat(params).isNotNull
         // path param "customerId"
-        assertThat(params.getPathParam(0)).isEqualTo("string")
+        assertThat(params.getPathParam(0)).isEqualTo("customer_id")
         // out-of-bound path param
         assertThat(params.getPathParam(1)).isEqualTo("")
     }

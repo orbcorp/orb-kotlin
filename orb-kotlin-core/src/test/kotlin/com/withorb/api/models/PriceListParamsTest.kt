@@ -10,14 +10,14 @@ class PriceListParamsTest {
 
     @Test
     fun createPriceListParams() {
-        PriceListParams.builder().cursor("string").limit(123L).build()
+        PriceListParams.builder().cursor("cursor").limit(123L).build()
     }
 
     @Test
     fun getQueryParams() {
-        val params = PriceListParams.builder().cursor("string").limit(123L).build()
+        val params = PriceListParams.builder().cursor("cursor").limit(123L).build()
         val expected = mutableMapOf<String, List<String>>()
-        expected.put("cursor", listOf("string"))
+        expected.put("cursor", listOf("cursor"))
         expected.put("limit", listOf("123"))
         assertThat(params.getQueryParams()).isEqualTo(expected)
     }

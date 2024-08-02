@@ -10,15 +10,16 @@ class AlertEnableParamsTest {
 
     @Test
     fun createAlertEnableParams() {
-        AlertEnableParams.builder().alertConfigurationId("string").build()
+        AlertEnableParams.builder().alertConfigurationId("alert_configuration_id").build()
     }
 
     @Test
     fun getPathParam() {
-        val params = AlertEnableParams.builder().alertConfigurationId("string").build()
+        val params =
+            AlertEnableParams.builder().alertConfigurationId("alert_configuration_id").build()
         assertThat(params).isNotNull
         // path param "alertConfigurationId"
-        assertThat(params.getPathParam(0)).isEqualTo("string")
+        assertThat(params.getPathParam(0)).isEqualTo("alert_configuration_id")
         // out-of-bound path param
         assertThat(params.getPathParam(1)).isEqualTo("")
     }

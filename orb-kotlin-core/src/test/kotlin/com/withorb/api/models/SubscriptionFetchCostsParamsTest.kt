@@ -12,7 +12,7 @@ class SubscriptionFetchCostsParamsTest {
     @Test
     fun createSubscriptionFetchCostsParams() {
         SubscriptionFetchCostsParams.builder()
-            .subscriptionId("string")
+            .subscriptionId("subscription_id")
             .timeframeEnd(OffsetDateTime.parse("2022-03-01T05:00:00Z"))
             .timeframeStart(OffsetDateTime.parse("2022-02-01T05:00:00Z"))
             .viewMode(SubscriptionFetchCostsParams.ViewMode.PERIODIC)
@@ -23,7 +23,7 @@ class SubscriptionFetchCostsParamsTest {
     fun getQueryParams() {
         val params =
             SubscriptionFetchCostsParams.builder()
-                .subscriptionId("string")
+                .subscriptionId("subscription_id")
                 .timeframeEnd(OffsetDateTime.parse("2022-03-01T05:00:00Z"))
                 .timeframeStart(OffsetDateTime.parse("2022-02-01T05:00:00Z"))
                 .viewMode(SubscriptionFetchCostsParams.ViewMode.PERIODIC)
@@ -37,17 +37,19 @@ class SubscriptionFetchCostsParamsTest {
 
     @Test
     fun getQueryParamsWithoutOptionalFields() {
-        val params = SubscriptionFetchCostsParams.builder().subscriptionId("string").build()
+        val params =
+            SubscriptionFetchCostsParams.builder().subscriptionId("subscription_id").build()
         val expected = mutableMapOf<String, List<String>>()
         assertThat(params.getQueryParams()).isEqualTo(expected)
     }
 
     @Test
     fun getPathParam() {
-        val params = SubscriptionFetchCostsParams.builder().subscriptionId("string").build()
+        val params =
+            SubscriptionFetchCostsParams.builder().subscriptionId("subscription_id").build()
         assertThat(params).isNotNull
         // path param "subscriptionId"
-        assertThat(params.getPathParam(0)).isEqualTo("string")
+        assertThat(params.getPathParam(0)).isEqualTo("subscription_id")
         // out-of-bound path param
         assertThat(params.getPathParam(1)).isEqualTo("")
     }

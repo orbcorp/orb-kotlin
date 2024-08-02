@@ -12,7 +12,7 @@ class SubscriptionTriggerPhaseParamsTest {
     @Test
     fun createSubscriptionTriggerPhaseParams() {
         SubscriptionTriggerPhaseParams.builder()
-            .subscriptionId("string")
+            .subscriptionId("subscription_id")
             .effectiveDate(LocalDate.parse("2019-12-27"))
             .build()
     }
@@ -21,7 +21,7 @@ class SubscriptionTriggerPhaseParamsTest {
     fun getBody() {
         val params =
             SubscriptionTriggerPhaseParams.builder()
-                .subscriptionId("string")
+                .subscriptionId("subscription_id")
                 .effectiveDate(LocalDate.parse("2019-12-27"))
                 .build()
         val body = params.getBody()
@@ -31,17 +31,19 @@ class SubscriptionTriggerPhaseParamsTest {
 
     @Test
     fun getBodyWithoutOptionalFields() {
-        val params = SubscriptionTriggerPhaseParams.builder().subscriptionId("string").build()
+        val params =
+            SubscriptionTriggerPhaseParams.builder().subscriptionId("subscription_id").build()
         val body = params.getBody()
         assertThat(body).isNotNull
     }
 
     @Test
     fun getPathParam() {
-        val params = SubscriptionTriggerPhaseParams.builder().subscriptionId("string").build()
+        val params =
+            SubscriptionTriggerPhaseParams.builder().subscriptionId("subscription_id").build()
         assertThat(params).isNotNull
         // path param "subscriptionId"
-        assertThat(params.getPathParam(0)).isEqualTo("string")
+        assertThat(params.getPathParam(0)).isEqualTo("subscription_id")
         // out-of-bound path param
         assertThat(params.getPathParam(1)).isEqualTo("")
     }

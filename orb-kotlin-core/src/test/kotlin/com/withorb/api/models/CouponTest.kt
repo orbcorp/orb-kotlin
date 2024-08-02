@@ -22,7 +22,7 @@ class CouponTest {
                                 Coupon.Discount.PercentageDiscount.DiscountType.PERCENTAGE
                             )
                             .percentageDiscount(1.0)
-                            .reason("string")
+                            .reason("reason")
                             .build()
                     )
                 )
@@ -41,7 +41,7 @@ class CouponTest {
                         .appliesToPriceIds(listOf("string"))
                         .discountType(Coupon.Discount.PercentageDiscount.DiscountType.PERCENTAGE)
                         .percentageDiscount(1.0)
-                        .reason("string")
+                        .reason("reason")
                         .build()
                 )
             )
