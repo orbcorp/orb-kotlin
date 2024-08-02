@@ -219,12 +219,10 @@ class SubscriptionServiceTest {
                 SubscriptionFetchUsageParams.builder()
                     .subscriptionId("subscription_id")
                     .billableMetricId("billable_metric_id")
-                    .cursor("cursor")
                     .firstDimensionKey("first_dimension_key")
                     .firstDimensionValue("first_dimension_value")
                     .granularity(SubscriptionFetchUsageParams.Granularity.DAY)
                     .groupBy("group_by")
-                    .limit(123L)
                     .secondDimensionKey("second_dimension_key")
                     .secondDimensionValue("second_dimension_value")
                     .timeframeEnd(OffsetDateTime.parse("2022-03-01T05:00:00Z"))
@@ -466,7 +464,7 @@ class SubscriptionServiceTest {
                     .billingCycleAlignment(
                         SubscriptionSchedulePlanChangeParams.BillingCycleAlignment.UNCHANGED
                     )
-                    .changeDate("2017-07-21T17:32:28Z")
+                    .changeDate(OffsetDateTime.parse("2017-07-21T17:32:28Z"))
                     .couponRedemptionCode("coupon_redemption_code")
                     .creditsOverageRate(42.23)
                     .externalPlanId("ZMwNQefe7J3ecf7W")
