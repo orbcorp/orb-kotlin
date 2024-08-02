@@ -1447,6 +1447,8 @@ constructor(
 
                     val ONE_TIME = Cadence(JsonField.of("one_time"))
 
+                    val CUSTOM = Cadence(JsonField.of("custom"))
+
                     fun of(value: String) = Cadence(JsonField.of(value))
                 }
 
@@ -1456,6 +1458,7 @@ constructor(
                     MONTHLY,
                     QUARTERLY,
                     ONE_TIME,
+                    CUSTOM,
                 }
 
                 enum class Value {
@@ -1464,6 +1467,7 @@ constructor(
                     MONTHLY,
                     QUARTERLY,
                     ONE_TIME,
+                    CUSTOM,
                     _UNKNOWN,
                 }
 
@@ -1474,6 +1478,7 @@ constructor(
                         MONTHLY -> Value.MONTHLY
                         QUARTERLY -> Value.QUARTERLY
                         ONE_TIME -> Value.ONE_TIME
+                        CUSTOM -> Value.CUSTOM
                         else -> Value._UNKNOWN
                     }
 
@@ -1484,6 +1489,7 @@ constructor(
                         MONTHLY -> Known.MONTHLY
                         QUARTERLY -> Known.QUARTERLY
                         ONE_TIME -> Known.ONE_TIME
+                        CUSTOM -> Known.CUSTOM
                         else -> throw OrbInvalidDataException("Unknown Cadence: $value")
                     }
 
@@ -2187,6 +2193,8 @@ constructor(
 
                     val ONE_TIME = Cadence(JsonField.of("one_time"))
 
+                    val CUSTOM = Cadence(JsonField.of("custom"))
+
                     fun of(value: String) = Cadence(JsonField.of(value))
                 }
 
@@ -2196,6 +2204,7 @@ constructor(
                     MONTHLY,
                     QUARTERLY,
                     ONE_TIME,
+                    CUSTOM,
                 }
 
                 enum class Value {
@@ -2204,6 +2213,7 @@ constructor(
                     MONTHLY,
                     QUARTERLY,
                     ONE_TIME,
+                    CUSTOM,
                     _UNKNOWN,
                 }
 
@@ -2214,6 +2224,7 @@ constructor(
                         MONTHLY -> Value.MONTHLY
                         QUARTERLY -> Value.QUARTERLY
                         ONE_TIME -> Value.ONE_TIME
+                        CUSTOM -> Value.CUSTOM
                         else -> Value._UNKNOWN
                     }
 
@@ -2224,6 +2235,7 @@ constructor(
                         MONTHLY -> Known.MONTHLY
                         QUARTERLY -> Known.QUARTERLY
                         ONE_TIME -> Known.ONE_TIME
+                        CUSTOM -> Known.CUSTOM
                         else -> throw OrbInvalidDataException("Unknown Cadence: $value")
                     }
 
@@ -2970,6 +2982,8 @@ constructor(
 
                     val ONE_TIME = Cadence(JsonField.of("one_time"))
 
+                    val CUSTOM = Cadence(JsonField.of("custom"))
+
                     fun of(value: String) = Cadence(JsonField.of(value))
                 }
 
@@ -2979,6 +2993,7 @@ constructor(
                     MONTHLY,
                     QUARTERLY,
                     ONE_TIME,
+                    CUSTOM,
                 }
 
                 enum class Value {
@@ -2987,6 +3002,7 @@ constructor(
                     MONTHLY,
                     QUARTERLY,
                     ONE_TIME,
+                    CUSTOM,
                     _UNKNOWN,
                 }
 
@@ -2997,6 +3013,7 @@ constructor(
                         MONTHLY -> Value.MONTHLY
                         QUARTERLY -> Value.QUARTERLY
                         ONE_TIME -> Value.ONE_TIME
+                        CUSTOM -> Value.CUSTOM
                         else -> Value._UNKNOWN
                     }
 
@@ -3007,6 +3024,7 @@ constructor(
                         MONTHLY -> Known.MONTHLY
                         QUARTERLY -> Known.QUARTERLY
                         ONE_TIME -> Known.ONE_TIME
+                        CUSTOM -> Known.CUSTOM
                         else -> throw OrbInvalidDataException("Unknown Cadence: $value")
                     }
 
@@ -3925,6 +3943,8 @@ constructor(
 
                     val ONE_TIME = Cadence(JsonField.of("one_time"))
 
+                    val CUSTOM = Cadence(JsonField.of("custom"))
+
                     fun of(value: String) = Cadence(JsonField.of(value))
                 }
 
@@ -3934,6 +3954,7 @@ constructor(
                     MONTHLY,
                     QUARTERLY,
                     ONE_TIME,
+                    CUSTOM,
                 }
 
                 enum class Value {
@@ -3942,6 +3963,7 @@ constructor(
                     MONTHLY,
                     QUARTERLY,
                     ONE_TIME,
+                    CUSTOM,
                     _UNKNOWN,
                 }
 
@@ -3952,6 +3974,7 @@ constructor(
                         MONTHLY -> Value.MONTHLY
                         QUARTERLY -> Value.QUARTERLY
                         ONE_TIME -> Value.ONE_TIME
+                        CUSTOM -> Value.CUSTOM
                         else -> Value._UNKNOWN
                     }
 
@@ -3962,6 +3985,7 @@ constructor(
                         MONTHLY -> Known.MONTHLY
                         QUARTERLY -> Known.QUARTERLY
                         ONE_TIME -> Known.ONE_TIME
+                        CUSTOM -> Known.CUSTOM
                         else -> throw OrbInvalidDataException("Unknown Cadence: $value")
                     }
 
@@ -4823,6 +4847,8 @@ constructor(
 
                     val ONE_TIME = Cadence(JsonField.of("one_time"))
 
+                    val CUSTOM = Cadence(JsonField.of("custom"))
+
                     fun of(value: String) = Cadence(JsonField.of(value))
                 }
 
@@ -4832,6 +4858,7 @@ constructor(
                     MONTHLY,
                     QUARTERLY,
                     ONE_TIME,
+                    CUSTOM,
                 }
 
                 enum class Value {
@@ -4840,6 +4867,7 @@ constructor(
                     MONTHLY,
                     QUARTERLY,
                     ONE_TIME,
+                    CUSTOM,
                     _UNKNOWN,
                 }
 
@@ -4850,6 +4878,7 @@ constructor(
                         MONTHLY -> Value.MONTHLY
                         QUARTERLY -> Value.QUARTERLY
                         ONE_TIME -> Value.ONE_TIME
+                        CUSTOM -> Value.CUSTOM
                         else -> Value._UNKNOWN
                     }
 
@@ -4860,6 +4889,7 @@ constructor(
                         MONTHLY -> Known.MONTHLY
                         QUARTERLY -> Known.QUARTERLY
                         ONE_TIME -> Known.ONE_TIME
+                        CUSTOM -> Known.CUSTOM
                         else -> throw OrbInvalidDataException("Unknown Cadence: $value")
                     }
 
@@ -5882,6 +5912,8 @@ constructor(
 
                     val ONE_TIME = Cadence(JsonField.of("one_time"))
 
+                    val CUSTOM = Cadence(JsonField.of("custom"))
+
                     fun of(value: String) = Cadence(JsonField.of(value))
                 }
 
@@ -5891,6 +5923,7 @@ constructor(
                     MONTHLY,
                     QUARTERLY,
                     ONE_TIME,
+                    CUSTOM,
                 }
 
                 enum class Value {
@@ -5899,6 +5932,7 @@ constructor(
                     MONTHLY,
                     QUARTERLY,
                     ONE_TIME,
+                    CUSTOM,
                     _UNKNOWN,
                 }
 
@@ -5909,6 +5943,7 @@ constructor(
                         MONTHLY -> Value.MONTHLY
                         QUARTERLY -> Value.QUARTERLY
                         ONE_TIME -> Value.ONE_TIME
+                        CUSTOM -> Value.CUSTOM
                         else -> Value._UNKNOWN
                     }
 
@@ -5919,6 +5954,7 @@ constructor(
                         MONTHLY -> Known.MONTHLY
                         QUARTERLY -> Known.QUARTERLY
                         ONE_TIME -> Known.ONE_TIME
+                        CUSTOM -> Known.CUSTOM
                         else -> throw OrbInvalidDataException("Unknown Cadence: $value")
                     }
 
@@ -6789,6 +6825,8 @@ constructor(
 
                     val ONE_TIME = Cadence(JsonField.of("one_time"))
 
+                    val CUSTOM = Cadence(JsonField.of("custom"))
+
                     fun of(value: String) = Cadence(JsonField.of(value))
                 }
 
@@ -6798,6 +6836,7 @@ constructor(
                     MONTHLY,
                     QUARTERLY,
                     ONE_TIME,
+                    CUSTOM,
                 }
 
                 enum class Value {
@@ -6806,6 +6845,7 @@ constructor(
                     MONTHLY,
                     QUARTERLY,
                     ONE_TIME,
+                    CUSTOM,
                     _UNKNOWN,
                 }
 
@@ -6816,6 +6856,7 @@ constructor(
                         MONTHLY -> Value.MONTHLY
                         QUARTERLY -> Value.QUARTERLY
                         ONE_TIME -> Value.ONE_TIME
+                        CUSTOM -> Value.CUSTOM
                         else -> Value._UNKNOWN
                     }
 
@@ -6826,6 +6867,7 @@ constructor(
                         MONTHLY -> Known.MONTHLY
                         QUARTERLY -> Known.QUARTERLY
                         ONE_TIME -> Known.ONE_TIME
+                        CUSTOM -> Known.CUSTOM
                         else -> throw OrbInvalidDataException("Unknown Cadence: $value")
                     }
 
@@ -7659,6 +7701,8 @@ constructor(
 
                     val ONE_TIME = Cadence(JsonField.of("one_time"))
 
+                    val CUSTOM = Cadence(JsonField.of("custom"))
+
                     fun of(value: String) = Cadence(JsonField.of(value))
                 }
 
@@ -7668,6 +7712,7 @@ constructor(
                     MONTHLY,
                     QUARTERLY,
                     ONE_TIME,
+                    CUSTOM,
                 }
 
                 enum class Value {
@@ -7676,6 +7721,7 @@ constructor(
                     MONTHLY,
                     QUARTERLY,
                     ONE_TIME,
+                    CUSTOM,
                     _UNKNOWN,
                 }
 
@@ -7686,6 +7732,7 @@ constructor(
                         MONTHLY -> Value.MONTHLY
                         QUARTERLY -> Value.QUARTERLY
                         ONE_TIME -> Value.ONE_TIME
+                        CUSTOM -> Value.CUSTOM
                         else -> Value._UNKNOWN
                     }
 
@@ -7696,6 +7743,7 @@ constructor(
                         MONTHLY -> Known.MONTHLY
                         QUARTERLY -> Known.QUARTERLY
                         ONE_TIME -> Known.ONE_TIME
+                        CUSTOM -> Known.CUSTOM
                         else -> throw OrbInvalidDataException("Unknown Cadence: $value")
                     }
 
@@ -8311,6 +8359,8 @@ constructor(
 
                     val ONE_TIME = Cadence(JsonField.of("one_time"))
 
+                    val CUSTOM = Cadence(JsonField.of("custom"))
+
                     fun of(value: String) = Cadence(JsonField.of(value))
                 }
 
@@ -8320,6 +8370,7 @@ constructor(
                     MONTHLY,
                     QUARTERLY,
                     ONE_TIME,
+                    CUSTOM,
                 }
 
                 enum class Value {
@@ -8328,6 +8379,7 @@ constructor(
                     MONTHLY,
                     QUARTERLY,
                     ONE_TIME,
+                    CUSTOM,
                     _UNKNOWN,
                 }
 
@@ -8338,6 +8390,7 @@ constructor(
                         MONTHLY -> Value.MONTHLY
                         QUARTERLY -> Value.QUARTERLY
                         ONE_TIME -> Value.ONE_TIME
+                        CUSTOM -> Value.CUSTOM
                         else -> Value._UNKNOWN
                     }
 
@@ -8348,6 +8401,7 @@ constructor(
                         MONTHLY -> Known.MONTHLY
                         QUARTERLY -> Known.QUARTERLY
                         ONE_TIME -> Known.ONE_TIME
+                        CUSTOM -> Known.CUSTOM
                         else -> throw OrbInvalidDataException("Unknown Cadence: $value")
                     }
 
@@ -9035,6 +9089,8 @@ constructor(
 
                     val ONE_TIME = Cadence(JsonField.of("one_time"))
 
+                    val CUSTOM = Cadence(JsonField.of("custom"))
+
                     fun of(value: String) = Cadence(JsonField.of(value))
                 }
 
@@ -9044,6 +9100,7 @@ constructor(
                     MONTHLY,
                     QUARTERLY,
                     ONE_TIME,
+                    CUSTOM,
                 }
 
                 enum class Value {
@@ -9052,6 +9109,7 @@ constructor(
                     MONTHLY,
                     QUARTERLY,
                     ONE_TIME,
+                    CUSTOM,
                     _UNKNOWN,
                 }
 
@@ -9062,6 +9120,7 @@ constructor(
                         MONTHLY -> Value.MONTHLY
                         QUARTERLY -> Value.QUARTERLY
                         ONE_TIME -> Value.ONE_TIME
+                        CUSTOM -> Value.CUSTOM
                         else -> Value._UNKNOWN
                     }
 
@@ -9072,6 +9131,7 @@ constructor(
                         MONTHLY -> Known.MONTHLY
                         QUARTERLY -> Known.QUARTERLY
                         ONE_TIME -> Known.ONE_TIME
+                        CUSTOM -> Known.CUSTOM
                         else -> throw OrbInvalidDataException("Unknown Cadence: $value")
                     }
 
@@ -9760,6 +9820,8 @@ constructor(
 
                     val ONE_TIME = Cadence(JsonField.of("one_time"))
 
+                    val CUSTOM = Cadence(JsonField.of("custom"))
+
                     fun of(value: String) = Cadence(JsonField.of(value))
                 }
 
@@ -9769,6 +9831,7 @@ constructor(
                     MONTHLY,
                     QUARTERLY,
                     ONE_TIME,
+                    CUSTOM,
                 }
 
                 enum class Value {
@@ -9777,6 +9840,7 @@ constructor(
                     MONTHLY,
                     QUARTERLY,
                     ONE_TIME,
+                    CUSTOM,
                     _UNKNOWN,
                 }
 
@@ -9787,6 +9851,7 @@ constructor(
                         MONTHLY -> Value.MONTHLY
                         QUARTERLY -> Value.QUARTERLY
                         ONE_TIME -> Value.ONE_TIME
+                        CUSTOM -> Value.CUSTOM
                         else -> Value._UNKNOWN
                     }
 
@@ -9797,6 +9862,7 @@ constructor(
                         MONTHLY -> Known.MONTHLY
                         QUARTERLY -> Known.QUARTERLY
                         ONE_TIME -> Known.ONE_TIME
+                        CUSTOM -> Known.CUSTOM
                         else -> throw OrbInvalidDataException("Unknown Cadence: $value")
                     }
 
@@ -10486,6 +10552,8 @@ constructor(
 
                     val ONE_TIME = Cadence(JsonField.of("one_time"))
 
+                    val CUSTOM = Cadence(JsonField.of("custom"))
+
                     fun of(value: String) = Cadence(JsonField.of(value))
                 }
 
@@ -10495,6 +10563,7 @@ constructor(
                     MONTHLY,
                     QUARTERLY,
                     ONE_TIME,
+                    CUSTOM,
                 }
 
                 enum class Value {
@@ -10503,6 +10572,7 @@ constructor(
                     MONTHLY,
                     QUARTERLY,
                     ONE_TIME,
+                    CUSTOM,
                     _UNKNOWN,
                 }
 
@@ -10513,6 +10583,7 @@ constructor(
                         MONTHLY -> Value.MONTHLY
                         QUARTERLY -> Value.QUARTERLY
                         ONE_TIME -> Value.ONE_TIME
+                        CUSTOM -> Value.CUSTOM
                         else -> Value._UNKNOWN
                     }
 
@@ -10523,6 +10594,7 @@ constructor(
                         MONTHLY -> Known.MONTHLY
                         QUARTERLY -> Known.QUARTERLY
                         ONE_TIME -> Known.ONE_TIME
+                        CUSTOM -> Known.CUSTOM
                         else -> throw OrbInvalidDataException("Unknown Cadence: $value")
                     }
 
@@ -11213,6 +11285,8 @@ constructor(
 
                     val ONE_TIME = Cadence(JsonField.of("one_time"))
 
+                    val CUSTOM = Cadence(JsonField.of("custom"))
+
                     fun of(value: String) = Cadence(JsonField.of(value))
                 }
 
@@ -11222,6 +11296,7 @@ constructor(
                     MONTHLY,
                     QUARTERLY,
                     ONE_TIME,
+                    CUSTOM,
                 }
 
                 enum class Value {
@@ -11230,6 +11305,7 @@ constructor(
                     MONTHLY,
                     QUARTERLY,
                     ONE_TIME,
+                    CUSTOM,
                     _UNKNOWN,
                 }
 
@@ -11240,6 +11316,7 @@ constructor(
                         MONTHLY -> Value.MONTHLY
                         QUARTERLY -> Value.QUARTERLY
                         ONE_TIME -> Value.ONE_TIME
+                        CUSTOM -> Value.CUSTOM
                         else -> Value._UNKNOWN
                     }
 
@@ -11250,6 +11327,7 @@ constructor(
                         MONTHLY -> Known.MONTHLY
                         QUARTERLY -> Known.QUARTERLY
                         ONE_TIME -> Known.ONE_TIME
+                        CUSTOM -> Known.CUSTOM
                         else -> throw OrbInvalidDataException("Unknown Cadence: $value")
                     }
 
@@ -11940,6 +12018,8 @@ constructor(
 
                     val ONE_TIME = Cadence(JsonField.of("one_time"))
 
+                    val CUSTOM = Cadence(JsonField.of("custom"))
+
                     fun of(value: String) = Cadence(JsonField.of(value))
                 }
 
@@ -11949,6 +12029,7 @@ constructor(
                     MONTHLY,
                     QUARTERLY,
                     ONE_TIME,
+                    CUSTOM,
                 }
 
                 enum class Value {
@@ -11957,6 +12038,7 @@ constructor(
                     MONTHLY,
                     QUARTERLY,
                     ONE_TIME,
+                    CUSTOM,
                     _UNKNOWN,
                 }
 
@@ -11967,6 +12049,7 @@ constructor(
                         MONTHLY -> Value.MONTHLY
                         QUARTERLY -> Value.QUARTERLY
                         ONE_TIME -> Value.ONE_TIME
+                        CUSTOM -> Value.CUSTOM
                         else -> Value._UNKNOWN
                     }
 
@@ -11977,6 +12060,7 @@ constructor(
                         MONTHLY -> Known.MONTHLY
                         QUARTERLY -> Known.QUARTERLY
                         ONE_TIME -> Known.ONE_TIME
+                        CUSTOM -> Known.CUSTOM
                         else -> throw OrbInvalidDataException("Unknown Cadence: $value")
                     }
 
@@ -12666,6 +12750,8 @@ constructor(
 
                     val ONE_TIME = Cadence(JsonField.of("one_time"))
 
+                    val CUSTOM = Cadence(JsonField.of("custom"))
+
                     fun of(value: String) = Cadence(JsonField.of(value))
                 }
 
@@ -12675,6 +12761,7 @@ constructor(
                     MONTHLY,
                     QUARTERLY,
                     ONE_TIME,
+                    CUSTOM,
                 }
 
                 enum class Value {
@@ -12683,6 +12770,7 @@ constructor(
                     MONTHLY,
                     QUARTERLY,
                     ONE_TIME,
+                    CUSTOM,
                     _UNKNOWN,
                 }
 
@@ -12693,6 +12781,7 @@ constructor(
                         MONTHLY -> Value.MONTHLY
                         QUARTERLY -> Value.QUARTERLY
                         ONE_TIME -> Value.ONE_TIME
+                        CUSTOM -> Value.CUSTOM
                         else -> Value._UNKNOWN
                     }
 
@@ -12703,6 +12792,7 @@ constructor(
                         MONTHLY -> Known.MONTHLY
                         QUARTERLY -> Known.QUARTERLY
                         ONE_TIME -> Known.ONE_TIME
+                        CUSTOM -> Known.CUSTOM
                         else -> throw OrbInvalidDataException("Unknown Cadence: $value")
                     }
 

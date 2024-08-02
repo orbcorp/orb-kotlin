@@ -3,6 +3,7 @@
 package com.withorb.api.models
 
 import com.withorb.api.models.*
+import java.time.OffsetDateTime
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
@@ -17,7 +18,7 @@ class SubscriptionSchedulePlanChangeParamsTest {
             .billingCycleAlignment(
                 SubscriptionSchedulePlanChangeParams.BillingCycleAlignment.UNCHANGED
             )
-            .changeDate("2017-07-21T17:32:28Z")
+            .changeDate(OffsetDateTime.parse("2017-07-21T17:32:28Z"))
             .couponRedemptionCode("coupon_redemption_code")
             .creditsOverageRate(42.23)
             .externalPlanId("ZMwNQefe7J3ecf7W")
@@ -83,7 +84,7 @@ class SubscriptionSchedulePlanChangeParamsTest {
                 .billingCycleAlignment(
                     SubscriptionSchedulePlanChangeParams.BillingCycleAlignment.UNCHANGED
                 )
-                .changeDate("2017-07-21T17:32:28Z")
+                .changeDate(OffsetDateTime.parse("2017-07-21T17:32:28Z"))
                 .couponRedemptionCode("coupon_redemption_code")
                 .creditsOverageRate(42.23)
                 .externalPlanId("ZMwNQefe7J3ecf7W")
@@ -147,7 +148,7 @@ class SubscriptionSchedulePlanChangeParamsTest {
         assertThat(body.alignBillingWithPlanChangeDate()).isEqualTo(true)
         assertThat(body.billingCycleAlignment())
             .isEqualTo(SubscriptionSchedulePlanChangeParams.BillingCycleAlignment.UNCHANGED)
-        assertThat(body.changeDate()).isEqualTo("2017-07-21T17:32:28Z")
+        assertThat(body.changeDate()).isEqualTo(OffsetDateTime.parse("2017-07-21T17:32:28Z"))
         assertThat(body.couponRedemptionCode()).isEqualTo("coupon_redemption_code")
         assertThat(body.creditsOverageRate()).isEqualTo(42.23)
         assertThat(body.externalPlanId()).isEqualTo("ZMwNQefe7J3ecf7W")

@@ -25,6 +25,7 @@ import com.withorb.api.core.getOrThrow
 import com.withorb.api.core.toUnmodifiable
 import com.withorb.api.errors.OrbInvalidDataException
 import com.withorb.api.models.*
+import java.time.OffsetDateTime
 import java.util.Objects
 
 class SubscriptionSchedulePlanChangeParams
@@ -33,7 +34,7 @@ constructor(
     private val changeOption: ChangeOption,
     private val alignBillingWithPlanChangeDate: Boolean?,
     private val billingCycleAlignment: BillingCycleAlignment?,
-    private val changeDate: String?,
+    private val changeDate: OffsetDateTime?,
     private val couponRedemptionCode: String?,
     private val creditsOverageRate: Double?,
     private val externalPlanId: String?,
@@ -55,7 +56,7 @@ constructor(
 
     fun billingCycleAlignment(): BillingCycleAlignment? = billingCycleAlignment
 
-    fun changeDate(): String? = changeDate
+    fun changeDate(): OffsetDateTime? = changeDate
 
     fun couponRedemptionCode(): String? = couponRedemptionCode
 
@@ -109,7 +110,7 @@ constructor(
         private val changeOption: ChangeOption?,
         private val alignBillingWithPlanChangeDate: Boolean?,
         private val billingCycleAlignment: BillingCycleAlignment?,
-        private val changeDate: String?,
+        private val changeDate: OffsetDateTime?,
         private val couponRedemptionCode: String?,
         private val creditsOverageRate: Double?,
         private val externalPlanId: String?,
@@ -144,7 +145,7 @@ constructor(
          * The date that the plan change should take effect. This parameter can only be passed if
          * the `change_option` is `requested_date`.
          */
-        @JsonProperty("change_date") fun changeDate(): String? = changeDate
+        @JsonProperty("change_date") fun changeDate(): OffsetDateTime? = changeDate
 
         /**
          * Redemption code to be used for this subscription. If the coupon cannot be found by its
@@ -246,7 +247,7 @@ constructor(
             private var changeOption: ChangeOption? = null
             private var alignBillingWithPlanChangeDate: Boolean? = null
             private var billingCycleAlignment: BillingCycleAlignment? = null
-            private var changeDate: String? = null
+            private var changeDate: OffsetDateTime? = null
             private var couponRedemptionCode: String? = null
             private var creditsOverageRate: Double? = null
             private var externalPlanId: String? = null
@@ -307,7 +308,7 @@ constructor(
              * if the `change_option` is `requested_date`.
              */
             @JsonProperty("change_date")
-            fun changeDate(changeDate: String) = apply { this.changeDate = changeDate }
+            fun changeDate(changeDate: OffsetDateTime) = apply { this.changeDate = changeDate }
 
             /**
              * Redemption code to be used for this subscription. If the coupon cannot be found by
@@ -467,7 +468,7 @@ constructor(
         private var changeOption: ChangeOption? = null
         private var alignBillingWithPlanChangeDate: Boolean? = null
         private var billingCycleAlignment: BillingCycleAlignment? = null
-        private var changeDate: String? = null
+        private var changeDate: OffsetDateTime? = null
         private var couponRedemptionCode: String? = null
         private var creditsOverageRate: Double? = null
         private var externalPlanId: String? = null
@@ -528,7 +529,7 @@ constructor(
          * The date that the plan change should take effect. This parameter can only be passed if
          * the `change_option` is `requested_date`.
          */
-        fun changeDate(changeDate: String) = apply { this.changeDate = changeDate }
+        fun changeDate(changeDate: OffsetDateTime) = apply { this.changeDate = changeDate }
 
         /**
          * Redemption code to be used for this subscription. If the coupon cannot be found by its

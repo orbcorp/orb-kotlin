@@ -17,13 +17,10 @@ import com.withorb.api.models.CustomerUpdateParams
 import com.withorb.api.services.async.customers.BalanceTransactionServiceAsync
 import com.withorb.api.services.async.customers.CostServiceAsync
 import com.withorb.api.services.async.customers.CreditServiceAsync
-import com.withorb.api.services.async.customers.UsageServiceAsync
 
 interface CustomerServiceAsync {
 
     fun costs(): CostServiceAsync
-
-    fun usage(): UsageServiceAsync
 
     fun credits(): CreditServiceAsync
 

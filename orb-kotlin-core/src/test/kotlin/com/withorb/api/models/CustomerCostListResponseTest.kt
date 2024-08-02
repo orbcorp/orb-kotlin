@@ -27,6 +27,18 @@ class CustomerCostListResponseTest {
                                                             .id("id")
                                                             .build()
                                                     )
+                                                    .billingCycleConfiguration(
+                                                        Price.UnitPrice.BillingCycleConfiguration
+                                                            .builder()
+                                                            .duration(123L)
+                                                            .durationUnit(
+                                                                Price.UnitPrice
+                                                                    .BillingCycleConfiguration
+                                                                    .DurationUnit
+                                                                    .DAY
+                                                            )
+                                                            .build()
+                                                    )
                                                     .cadence(Price.UnitPrice.Cadence.ONE_TIME)
                                                     .conversionRate(42.23)
                                                     .createdAt(
@@ -122,6 +134,16 @@ class CustomerCostListResponseTest {
                                             .billableMetric(
                                                 Price.UnitPrice.BillableMetric.builder()
                                                     .id("id")
+                                                    .build()
+                                            )
+                                            .billingCycleConfiguration(
+                                                Price.UnitPrice.BillingCycleConfiguration.builder()
+                                                    .duration(123L)
+                                                    .durationUnit(
+                                                        Price.UnitPrice.BillingCycleConfiguration
+                                                            .DurationUnit
+                                                            .DAY
+                                                    )
                                                     .build()
                                             )
                                             .cadence(Price.UnitPrice.Cadence.ONE_TIME)

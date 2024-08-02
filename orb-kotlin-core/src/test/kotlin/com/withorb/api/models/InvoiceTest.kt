@@ -158,6 +158,16 @@ class InvoiceTest {
                                                 .id("id")
                                                 .build()
                                         )
+                                        .billingCycleConfiguration(
+                                            Price.UnitPrice.BillingCycleConfiguration.builder()
+                                                .duration(123L)
+                                                .durationUnit(
+                                                    Price.UnitPrice.BillingCycleConfiguration
+                                                        .DurationUnit
+                                                        .DAY
+                                                )
+                                                .build()
+                                        )
                                         .cadence(Price.UnitPrice.Cadence.ONE_TIME)
                                         .conversionRate(42.23)
                                         .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
@@ -445,6 +455,15 @@ class InvoiceTest {
                                 .id("id")
                                 .billableMetric(
                                     Price.UnitPrice.BillableMetric.builder().id("id").build()
+                                )
+                                .billingCycleConfiguration(
+                                    Price.UnitPrice.BillingCycleConfiguration.builder()
+                                        .duration(123L)
+                                        .durationUnit(
+                                            Price.UnitPrice.BillingCycleConfiguration.DurationUnit
+                                                .DAY
+                                        )
+                                        .build()
                                 )
                                 .cadence(Price.UnitPrice.Cadence.ONE_TIME)
                                 .conversionRate(42.23)
