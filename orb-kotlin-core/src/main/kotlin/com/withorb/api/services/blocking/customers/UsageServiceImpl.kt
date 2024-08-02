@@ -115,6 +115,9 @@ constructor(
      * In order to overwrite timeframes with a very large number of events, we suggest using
      * multiple calls with small adjacent (e.g. every hour) timeframes.
      */
+    @Deprecated(
+        "This method will be removed in a future release. Please use the 'events.backfills.create' instead."
+    )
     override fun update(
         params: CustomerUsageUpdateParams,
         requestOptions: RequestOptions
@@ -231,6 +234,9 @@ constructor(
      * In order to overwrite timeframes with a very large number of events, we suggest using
      * multiple calls with small adjacent (e.g. every hour) timeframes.
      */
+    @Deprecated(
+        "This method will be removed in a future release. Please use the 'events.backfills.create' instead."
+    )
     override fun updateByExternalId(
         params: CustomerUsageUpdateByExternalIdParams,
         requestOptions: RequestOptions
