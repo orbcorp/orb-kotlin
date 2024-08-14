@@ -53,7 +53,7 @@ class AlertServiceTest {
                 AlertCreateForCustomerParams.builder()
                     .customerId("customer_id")
                     .currency("currency")
-                    .type("type")
+                    .type(AlertCreateForCustomerParams.Type.USAGE_EXCEEDED)
                     .thresholds(
                         listOf(
                             AlertCreateForCustomerParams.Threshold.builder().value(42.23).build()
@@ -78,7 +78,7 @@ class AlertServiceTest {
                 AlertCreateForExternalCustomerParams.builder()
                     .externalCustomerId("external_customer_id")
                     .currency("currency")
-                    .type("type")
+                    .type(AlertCreateForExternalCustomerParams.Type.USAGE_EXCEEDED)
                     .thresholds(
                         listOf(
                             AlertCreateForExternalCustomerParams.Threshold.builder()
@@ -111,7 +111,7 @@ class AlertServiceTest {
                                 .build()
                         )
                     )
-                    .type("type")
+                    .type(AlertCreateForSubscriptionParams.Type.USAGE_EXCEEDED)
                     .metricId("metric_id")
                     .build()
             )
