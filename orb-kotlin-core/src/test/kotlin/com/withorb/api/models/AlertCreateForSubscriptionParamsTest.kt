@@ -15,7 +15,7 @@ class AlertCreateForSubscriptionParamsTest {
             .thresholds(
                 listOf(AlertCreateForSubscriptionParams.Threshold.builder().value(42.23).build())
             )
-            .type("type")
+            .type(AlertCreateForSubscriptionParams.Type.USAGE_EXCEEDED)
             .metricId("metric_id")
             .build()
     }
@@ -30,7 +30,7 @@ class AlertCreateForSubscriptionParamsTest {
                         AlertCreateForSubscriptionParams.Threshold.builder().value(42.23).build()
                     )
                 )
-                .type("type")
+                .type(AlertCreateForSubscriptionParams.Type.USAGE_EXCEEDED)
                 .metricId("metric_id")
                 .build()
         val body = params.getBody()
@@ -39,7 +39,7 @@ class AlertCreateForSubscriptionParamsTest {
             .isEqualTo(
                 listOf(AlertCreateForSubscriptionParams.Threshold.builder().value(42.23).build())
             )
-        assertThat(body.type()).isEqualTo("type")
+        assertThat(body.type()).isEqualTo(AlertCreateForSubscriptionParams.Type.USAGE_EXCEEDED)
         assertThat(body.metricId()).isEqualTo("metric_id")
     }
 
@@ -53,7 +53,7 @@ class AlertCreateForSubscriptionParamsTest {
                         AlertCreateForSubscriptionParams.Threshold.builder().value(42.23).build()
                     )
                 )
-                .type("type")
+                .type(AlertCreateForSubscriptionParams.Type.USAGE_EXCEEDED)
                 .build()
         val body = params.getBody()
         assertThat(body).isNotNull
@@ -61,7 +61,7 @@ class AlertCreateForSubscriptionParamsTest {
             .isEqualTo(
                 listOf(AlertCreateForSubscriptionParams.Threshold.builder().value(42.23).build())
             )
-        assertThat(body.type()).isEqualTo("type")
+        assertThat(body.type()).isEqualTo(AlertCreateForSubscriptionParams.Type.USAGE_EXCEEDED)
     }
 
     @Test
@@ -74,7 +74,7 @@ class AlertCreateForSubscriptionParamsTest {
                         AlertCreateForSubscriptionParams.Threshold.builder().value(42.23).build()
                     )
                 )
-                .type("type")
+                .type(AlertCreateForSubscriptionParams.Type.USAGE_EXCEEDED)
                 .build()
         assertThat(params).isNotNull
         // path param "subscriptionId"
