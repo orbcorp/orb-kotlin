@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.1.0-alpha.4 (2024-08-14)
+
+Full Changelog: [v0.1.0-alpha.3...v0.1.0-alpha.4](https://github.com/orbcorp/orb-kotlin/compare/v0.1.0-alpha.3...v0.1.0-alpha.4)
+
+### Features
+
+* **api:** OpenAPI spec update via Stainless API ([#31](https://github.com/orbcorp/orb-kotlin/issues/31)) ([3a0a24f](https://github.com/orbcorp/orb-kotlin/commit/3a0a24fbaab281d10e61c0ddefa4d3c4af1c7ed3))
+
 ## 0.1.0-alpha.3 (2024-08-02)
 
 Full Changelog: [v0.1.0-alpha.2...v0.1.0-alpha.3](https://github.com/orbcorp/orb-kotlin/compare/v0.1.0-alpha.2...v0.1.0-alpha.3)
