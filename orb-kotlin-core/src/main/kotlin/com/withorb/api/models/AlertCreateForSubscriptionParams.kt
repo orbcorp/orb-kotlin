@@ -4,12 +4,16 @@ package com.withorb.api.models
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter
 import com.fasterxml.jackson.annotation.JsonAnySetter
+import com.fasterxml.jackson.annotation.JsonCreator
 import com.fasterxml.jackson.annotation.JsonProperty
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize
+import com.withorb.api.core.Enum
 import com.withorb.api.core.ExcludeMissing
+import com.withorb.api.core.JsonField
 import com.withorb.api.core.JsonValue
 import com.withorb.api.core.NoAutoDetect
 import com.withorb.api.core.toUnmodifiable
+import com.withorb.api.errors.OrbInvalidDataException
 import com.withorb.api.models.*
 import java.util.Objects
 
@@ -17,7 +21,7 @@ class AlertCreateForSubscriptionParams
 constructor(
     private val subscriptionId: String,
     private val thresholds: List<Threshold>,
-    private val type: String,
+    private val type: Type,
     private val metricId: String?,
     private val additionalQueryParams: Map<String, List<String>>,
     private val additionalHeaders: Map<String, List<String>>,
@@ -28,7 +32,7 @@ constructor(
 
     fun thresholds(): List<Threshold> = thresholds
 
-    fun type(): String = type
+    fun type(): Type = type
 
     fun metricId(): String? = metricId
 
@@ -57,18 +61,18 @@ constructor(
     class AlertCreateForSubscriptionBody
     internal constructor(
         private val thresholds: List<Threshold>?,
-        private val type: String?,
+        private val type: Type?,
         private val metricId: String?,
         private val additionalProperties: Map<String, JsonValue>,
     ) {
 
         private var hashCode: Int = 0
 
-        /** The thresholds for the alert. */
+        /** The thresholds that define the values at which the alert will be triggered. */
         @JsonProperty("thresholds") fun thresholds(): List<Threshold>? = thresholds
 
-        /** The thresholds that define the values at which the alert will be triggered. */
-        @JsonProperty("type") fun type(): String? = type
+        /** The type of alert to create. This must be a valid alert type. */
+        @JsonProperty("type") fun type(): Type? = type
 
         /** The metric to track usage for. */
         @JsonProperty("metric_id") fun metricId(): String? = metricId
@@ -115,7 +119,7 @@ constructor(
         class Builder {
 
             private var thresholds: List<Threshold>? = null
-            private var type: String? = null
+            private var type: Type? = null
             private var metricId: String? = null
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
@@ -127,12 +131,12 @@ constructor(
                     additionalProperties(alertCreateForSubscriptionBody.additionalProperties)
                 }
 
-            /** The thresholds for the alert. */
+            /** The thresholds that define the values at which the alert will be triggered. */
             @JsonProperty("thresholds")
             fun thresholds(thresholds: List<Threshold>) = apply { this.thresholds = thresholds }
 
-            /** The thresholds that define the values at which the alert will be triggered. */
-            @JsonProperty("type") fun type(type: String) = apply { this.type = type }
+            /** The type of alert to create. This must be a valid alert type. */
+            @JsonProperty("type") fun type(type: Type) = apply { this.type = type }
 
             /** The metric to track usage for. */
             @JsonProperty("metric_id")
@@ -211,7 +215,7 @@ constructor(
 
         private var subscriptionId: String? = null
         private var thresholds: MutableList<Threshold> = mutableListOf()
-        private var type: String? = null
+        private var type: Type? = null
         private var metricId: String? = null
         private var additionalQueryParams: MutableMap<String, MutableList<String>> = mutableMapOf()
         private var additionalHeaders: MutableMap<String, MutableList<String>> = mutableMapOf()
@@ -230,17 +234,17 @@ constructor(
 
         fun subscriptionId(subscriptionId: String) = apply { this.subscriptionId = subscriptionId }
 
-        /** The thresholds for the alert. */
+        /** The thresholds that define the values at which the alert will be triggered. */
         fun thresholds(thresholds: List<Threshold>) = apply {
             this.thresholds.clear()
             this.thresholds.addAll(thresholds)
         }
 
-        /** The thresholds for the alert. */
+        /** The thresholds that define the values at which the alert will be triggered. */
         fun addThreshold(threshold: Threshold) = apply { this.thresholds.add(threshold) }
 
-        /** The thresholds that define the values at which the alert will be triggered. */
-        fun type(type: String) = apply { this.type = type }
+        /** The type of alert to create. This must be a valid alert type. */
+        fun type(type: Type) = apply { this.type = type }
 
         /** The metric to track usage for. */
         fun metricId(metricId: String) = apply { this.metricId = metricId }
@@ -398,5 +402,80 @@ constructor(
                     additionalProperties.toUnmodifiable()
                 )
         }
+    }
+
+    class Type
+    @JsonCreator
+    private constructor(
+        private val value: JsonField<String>,
+    ) : Enum {
+
+        @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
+
+        override fun equals(other: Any?): Boolean {
+            if (this === other) {
+                return true
+            }
+
+            return other is Type && this.value == other.value
+        }
+
+        override fun hashCode() = value.hashCode()
+
+        override fun toString() = value.toString()
+
+        companion object {
+
+            val USAGE_EXCEEDED = Type(JsonField.of("usage_exceeded"))
+
+            val COST_EXCEEDED = Type(JsonField.of("cost_exceeded"))
+
+            val CREDIT_BALANCE_DEPLETED = Type(JsonField.of("credit_balance_depleted"))
+
+            val CREDIT_BALANCE_DROPPED = Type(JsonField.of("credit_balance_dropped"))
+
+            val CREDIT_BALANCE_RECOVERED = Type(JsonField.of("credit_balance_recovered"))
+
+            fun of(value: String) = Type(JsonField.of(value))
+        }
+
+        enum class Known {
+            USAGE_EXCEEDED,
+            COST_EXCEEDED,
+            CREDIT_BALANCE_DEPLETED,
+            CREDIT_BALANCE_DROPPED,
+            CREDIT_BALANCE_RECOVERED,
+        }
+
+        enum class Value {
+            USAGE_EXCEEDED,
+            COST_EXCEEDED,
+            CREDIT_BALANCE_DEPLETED,
+            CREDIT_BALANCE_DROPPED,
+            CREDIT_BALANCE_RECOVERED,
+            _UNKNOWN,
+        }
+
+        fun value(): Value =
+            when (this) {
+                USAGE_EXCEEDED -> Value.USAGE_EXCEEDED
+                COST_EXCEEDED -> Value.COST_EXCEEDED
+                CREDIT_BALANCE_DEPLETED -> Value.CREDIT_BALANCE_DEPLETED
+                CREDIT_BALANCE_DROPPED -> Value.CREDIT_BALANCE_DROPPED
+                CREDIT_BALANCE_RECOVERED -> Value.CREDIT_BALANCE_RECOVERED
+                else -> Value._UNKNOWN
+            }
+
+        fun known(): Known =
+            when (this) {
+                USAGE_EXCEEDED -> Known.USAGE_EXCEEDED
+                COST_EXCEEDED -> Known.COST_EXCEEDED
+                CREDIT_BALANCE_DEPLETED -> Known.CREDIT_BALANCE_DEPLETED
+                CREDIT_BALANCE_DROPPED -> Known.CREDIT_BALANCE_DROPPED
+                CREDIT_BALANCE_RECOVERED -> Known.CREDIT_BALANCE_RECOVERED
+                else -> throw OrbInvalidDataException("Unknown Type: $value")
+            }
+
+        fun asString(): String = _value().asStringOrThrow()
     }
 }

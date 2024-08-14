@@ -13,7 +13,7 @@ class AlertCreateForCustomerParamsTest {
         AlertCreateForCustomerParams.builder()
             .customerId("customer_id")
             .currency("currency")
-            .type("type")
+            .type(AlertCreateForCustomerParams.Type.USAGE_EXCEEDED)
             .thresholds(
                 listOf(AlertCreateForCustomerParams.Threshold.builder().value(42.23).build())
             )
@@ -26,7 +26,7 @@ class AlertCreateForCustomerParamsTest {
             AlertCreateForCustomerParams.builder()
                 .customerId("customer_id")
                 .currency("currency")
-                .type("type")
+                .type(AlertCreateForCustomerParams.Type.USAGE_EXCEEDED)
                 .thresholds(
                     listOf(AlertCreateForCustomerParams.Threshold.builder().value(42.23).build())
                 )
@@ -34,7 +34,7 @@ class AlertCreateForCustomerParamsTest {
         val body = params.getBody()
         assertThat(body).isNotNull
         assertThat(body.currency()).isEqualTo("currency")
-        assertThat(body.type()).isEqualTo("type")
+        assertThat(body.type()).isEqualTo(AlertCreateForCustomerParams.Type.USAGE_EXCEEDED)
         assertThat(body.thresholds())
             .isEqualTo(
                 listOf(AlertCreateForCustomerParams.Threshold.builder().value(42.23).build())
@@ -47,12 +47,12 @@ class AlertCreateForCustomerParamsTest {
             AlertCreateForCustomerParams.builder()
                 .customerId("customer_id")
                 .currency("currency")
-                .type("type")
+                .type(AlertCreateForCustomerParams.Type.USAGE_EXCEEDED)
                 .build()
         val body = params.getBody()
         assertThat(body).isNotNull
         assertThat(body.currency()).isEqualTo("currency")
-        assertThat(body.type()).isEqualTo("type")
+        assertThat(body.type()).isEqualTo(AlertCreateForCustomerParams.Type.USAGE_EXCEEDED)
     }
 
     @Test
@@ -61,7 +61,7 @@ class AlertCreateForCustomerParamsTest {
             AlertCreateForCustomerParams.builder()
                 .customerId("customer_id")
                 .currency("currency")
-                .type("type")
+                .type(AlertCreateForCustomerParams.Type.USAGE_EXCEEDED)
                 .build()
         assertThat(params).isNotNull
         // path param "customerId"
