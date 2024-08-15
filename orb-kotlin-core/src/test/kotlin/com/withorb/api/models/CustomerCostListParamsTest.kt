@@ -13,6 +13,7 @@ class CustomerCostListParamsTest {
     fun createCustomerCostListParams() {
         CustomerCostListParams.builder()
             .customerId("customer_id")
+            .currency("currency")
             .timeframeEnd(OffsetDateTime.parse("2022-03-01T05:00:00Z"))
             .timeframeStart(OffsetDateTime.parse("2022-02-01T05:00:00Z"))
             .viewMode(CustomerCostListParams.ViewMode.PERIODIC)
@@ -24,11 +25,13 @@ class CustomerCostListParamsTest {
         val params =
             CustomerCostListParams.builder()
                 .customerId("customer_id")
+                .currency("currency")
                 .timeframeEnd(OffsetDateTime.parse("2022-03-01T05:00:00Z"))
                 .timeframeStart(OffsetDateTime.parse("2022-02-01T05:00:00Z"))
                 .viewMode(CustomerCostListParams.ViewMode.PERIODIC)
                 .build()
         val expected = mutableMapOf<String, List<String>>()
+        expected.put("currency", listOf("currency"))
         expected.put("timeframe_end", listOf("2022-03-01T05:00:00Z"))
         expected.put("timeframe_start", listOf("2022-02-01T05:00:00Z"))
         expected.put("view_mode", listOf(CustomerCostListParams.ViewMode.PERIODIC.toString()))

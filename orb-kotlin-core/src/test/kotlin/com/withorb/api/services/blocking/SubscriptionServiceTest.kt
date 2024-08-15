@@ -180,6 +180,7 @@ class SubscriptionServiceTest {
             subscriptionService.fetchCosts(
                 SubscriptionFetchCostsParams.builder()
                     .subscriptionId("subscription_id")
+                    .currency("currency")
                     .timeframeEnd(OffsetDateTime.parse("2022-03-01T05:00:00Z"))
                     .timeframeStart(OffsetDateTime.parse("2022-02-01T05:00:00Z"))
                     .viewMode(SubscriptionFetchCostsParams.ViewMode.PERIODIC)
