@@ -21,6 +21,7 @@ class EventBackfillCloseResponseTest {
                 .status(EventBackfillCloseResponse.Status.PENDING)
                 .timeframeEnd(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                 .timeframeStart(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                .deprecationFilter("my_numeric_property > 100 AND my_other_property = 'bar'")
                 .build()
         assertThat(eventBackfillCloseResponse).isNotNull
         assertThat(eventBackfillCloseResponse.id()).isEqualTo("id")
@@ -38,5 +39,7 @@ class EventBackfillCloseResponseTest {
             .isEqualTo(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
         assertThat(eventBackfillCloseResponse.timeframeStart())
             .isEqualTo(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+        assertThat(eventBackfillCloseResponse.deprecationFilter())
+            .isEqualTo("my_numeric_property > 100 AND my_other_property = 'bar'")
     }
 }

@@ -35,6 +35,7 @@ private constructor(
     private val closeTime: JsonField<OffsetDateTime>,
     private val revertedAt: JsonField<OffsetDateTime>,
     private val customerId: JsonField<String>,
+    private val deprecationFilter: JsonField<String>,
     private val additionalProperties: Map<String, JsonValue>,
 ) {
 
@@ -71,6 +72,12 @@ private constructor(
      */
     fun customerId(): String? = customerId.getNullable("customer_id")
 
+    /**
+     * A boolean [computed property](../guides/extensibility/advanced-metrics#computed-properties)
+     * used to filter the set of events to deprecate
+     */
+    fun deprecationFilter(): String? = deprecationFilter.getNullable("deprecation_filter")
+
     @JsonProperty("id") @ExcludeMissing fun _id() = id
 
     /** The status of the backfill. */
@@ -100,6 +107,12 @@ private constructor(
      */
     @JsonProperty("customer_id") @ExcludeMissing fun _customerId() = customerId
 
+    /**
+     * A boolean [computed property](../guides/extensibility/advanced-metrics#computed-properties)
+     * used to filter the set of events to deprecate
+     */
+    @JsonProperty("deprecation_filter") @ExcludeMissing fun _deprecationFilter() = deprecationFilter
+
     @JsonAnyGetter
     @ExcludeMissing
     fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
@@ -115,6 +128,7 @@ private constructor(
             closeTime()
             revertedAt()
             customerId()
+            deprecationFilter()
             validated = true
         }
     }
@@ -136,6 +150,7 @@ private constructor(
             this.closeTime == other.closeTime &&
             this.revertedAt == other.revertedAt &&
             this.customerId == other.customerId &&
+            this.deprecationFilter == other.deprecationFilter &&
             this.additionalProperties == other.additionalProperties
     }
 
@@ -152,6 +167,7 @@ private constructor(
                     closeTime,
                     revertedAt,
                     customerId,
+                    deprecationFilter,
                     additionalProperties,
                 )
         }
@@ -159,7 +175,7 @@ private constructor(
     }
 
     override fun toString() =
-        "EventBackfillCloseResponse{id=$id, status=$status, createdAt=$createdAt, timeframeStart=$timeframeStart, timeframeEnd=$timeframeEnd, eventsIngested=$eventsIngested, closeTime=$closeTime, revertedAt=$revertedAt, customerId=$customerId, additionalProperties=$additionalProperties}"
+        "EventBackfillCloseResponse{id=$id, status=$status, createdAt=$createdAt, timeframeStart=$timeframeStart, timeframeEnd=$timeframeEnd, eventsIngested=$eventsIngested, closeTime=$closeTime, revertedAt=$revertedAt, customerId=$customerId, deprecationFilter=$deprecationFilter, additionalProperties=$additionalProperties}"
 
     companion object {
 
@@ -177,6 +193,7 @@ private constructor(
         private var closeTime: JsonField<OffsetDateTime> = JsonMissing.of()
         private var revertedAt: JsonField<OffsetDateTime> = JsonMissing.of()
         private var customerId: JsonField<String> = JsonMissing.of()
+        private var deprecationFilter: JsonField<String> = JsonMissing.of()
         private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         internal fun from(eventBackfillCloseResponse: EventBackfillCloseResponse) = apply {
@@ -189,6 +206,7 @@ private constructor(
             this.closeTime = eventBackfillCloseResponse.closeTime
             this.revertedAt = eventBackfillCloseResponse.revertedAt
             this.customerId = eventBackfillCloseResponse.customerId
+            this.deprecationFilter = eventBackfillCloseResponse.deprecationFilter
             additionalProperties(eventBackfillCloseResponse.additionalProperties)
         }
 
@@ -275,6 +293,25 @@ private constructor(
         @ExcludeMissing
         fun customerId(customerId: JsonField<String>) = apply { this.customerId = customerId }
 
+        /**
+         * A boolean
+         * [computed property](../guides/extensibility/advanced-metrics#computed-properties) used to
+         * filter the set of events to deprecate
+         */
+        fun deprecationFilter(deprecationFilter: String) =
+            deprecationFilter(JsonField.of(deprecationFilter))
+
+        /**
+         * A boolean
+         * [computed property](../guides/extensibility/advanced-metrics#computed-properties) used to
+         * filter the set of events to deprecate
+         */
+        @JsonProperty("deprecation_filter")
+        @ExcludeMissing
+        fun deprecationFilter(deprecationFilter: JsonField<String>) = apply {
+            this.deprecationFilter = deprecationFilter
+        }
+
         fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
             this.additionalProperties.clear()
             this.additionalProperties.putAll(additionalProperties)
@@ -300,6 +337,7 @@ private constructor(
                 closeTime,
                 revertedAt,
                 customerId,
+                deprecationFilter,
                 additionalProperties.toUnmodifiable(),
             )
     }
