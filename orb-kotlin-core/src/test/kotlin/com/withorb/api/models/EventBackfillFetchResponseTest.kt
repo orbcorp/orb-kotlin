@@ -21,6 +21,7 @@ class EventBackfillFetchResponseTest {
                 .status(EventBackfillFetchResponse.Status.PENDING)
                 .timeframeEnd(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                 .timeframeStart(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                .deprecationFilter("my_numeric_property > 100 AND my_other_property = 'bar'")
                 .build()
         assertThat(eventBackfillFetchResponse).isNotNull
         assertThat(eventBackfillFetchResponse.id()).isEqualTo("id")
@@ -38,5 +39,7 @@ class EventBackfillFetchResponseTest {
             .isEqualTo(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
         assertThat(eventBackfillFetchResponse.timeframeStart())
             .isEqualTo(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+        assertThat(eventBackfillFetchResponse.deprecationFilter())
+            .isEqualTo("my_numeric_property > 100 AND my_other_property = 'bar'")
     }
 }

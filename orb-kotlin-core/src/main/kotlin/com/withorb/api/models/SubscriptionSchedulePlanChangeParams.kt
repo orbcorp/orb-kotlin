@@ -128,13 +128,13 @@ constructor(
 
         /**
          * [DEPRECATED] Use billing_cycle_alignment instead. Reset billing periods to be aligned
-         * with the plan change’s effective date.
+         * with the plan change's effective date.
          */
         @JsonProperty("align_billing_with_plan_change_date")
         fun alignBillingWithPlanChangeDate(): Boolean? = alignBillingWithPlanChangeDate
 
         /**
-         * Reset billing periods to be aligned with the plan change’s effective date or start of the
+         * Reset billing periods to be aligned with the plan change's effective date or start of the
          * month. Defaults to `unchanged` which keeps subscription's existing billing cycle
          * alignment.
          */
@@ -286,7 +286,7 @@ constructor(
 
             /**
              * [DEPRECATED] Use billing_cycle_alignment instead. Reset billing periods to be aligned
-             * with the plan change’s effective date.
+             * with the plan change's effective date.
              */
             @JsonProperty("align_billing_with_plan_change_date")
             fun alignBillingWithPlanChangeDate(alignBillingWithPlanChangeDate: Boolean) = apply {
@@ -294,7 +294,7 @@ constructor(
             }
 
             /**
-             * Reset billing periods to be aligned with the plan change’s effective date or start of
+             * Reset billing periods to be aligned with the plan change's effective date or start of
              * the month. Defaults to `unchanged` which keeps subscription's existing billing cycle
              * alignment.
              */
@@ -510,14 +510,14 @@ constructor(
 
         /**
          * [DEPRECATED] Use billing_cycle_alignment instead. Reset billing periods to be aligned
-         * with the plan change’s effective date.
+         * with the plan change's effective date.
          */
         fun alignBillingWithPlanChangeDate(alignBillingWithPlanChangeDate: Boolean) = apply {
             this.alignBillingWithPlanChangeDate = alignBillingWithPlanChangeDate
         }
 
         /**
-         * Reset billing periods to be aligned with the plan change’s effective date or start of the
+         * Reset billing periods to be aligned with the plan change's effective date or start of the
          * month. Defaults to `unchanged` which keeps subscription's existing billing cycle
          * alignment.
          */
