@@ -28,6 +28,7 @@ class BackfillServiceTest {
                     .timeframeStart(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                     .closeTime(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                     .customerId("customer_id")
+                    .deprecationFilter("my_numeric_property > 100 AND my_other_property = 'bar'")
                     .externalCustomerId("external_customer_id")
                     .replaceExistingEvents(true)
                     .build()
