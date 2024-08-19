@@ -14,12 +14,19 @@ import com.withorb.api.models.AlertEnableParams
 import com.withorb.api.models.AlertListPage
 import com.withorb.api.models.AlertListParams
 import com.withorb.api.models.AlertRetrieveParams
+import com.withorb.api.models.AlertUpdateParams
 
 interface AlertService {
 
     /** This endpoint retrieves an alert by its ID. */
     fun retrieve(
         params: AlertRetrieveParams,
+        requestOptions: RequestOptions = RequestOptions.none()
+    ): Alert
+
+    /** This endpoint updates the thresholds of an alert. */
+    fun update(
+        params: AlertUpdateParams,
         requestOptions: RequestOptions = RequestOptions.none()
     ): Alert
 

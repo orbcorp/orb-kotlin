@@ -6,12 +6,12 @@ import java.time.OffsetDateTime
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
-class MetricFetchResponseTest {
+class BillableMetricTest {
 
     @Test
-    fun createMetricFetchResponse() {
-        val metricFetchResponse =
-            MetricFetchResponse.builder()
+    fun createBillableMetric() {
+        val billableMetric =
+            BillableMetric.builder()
                 .id("id")
                 .description("description")
                 .item(
@@ -31,14 +31,14 @@ class MetricFetchResponseTest {
                         .name("name")
                         .build()
                 )
-                .metadata(MetricFetchResponse.Metadata.builder().build())
+                .metadata(BillableMetric.Metadata.builder().build())
                 .name("name")
-                .status(MetricFetchResponse.Status.ACTIVE)
+                .status(BillableMetric.Status.ACTIVE)
                 .build()
-        assertThat(metricFetchResponse).isNotNull
-        assertThat(metricFetchResponse.id()).isEqualTo("id")
-        assertThat(metricFetchResponse.description()).isEqualTo("description")
-        assertThat(metricFetchResponse.item())
+        assertThat(billableMetric).isNotNull
+        assertThat(billableMetric.id()).isEqualTo("id")
+        assertThat(billableMetric.description()).isEqualTo("description")
+        assertThat(billableMetric.item())
             .isEqualTo(
                 Item.builder()
                     .id("id")
@@ -56,9 +56,8 @@ class MetricFetchResponseTest {
                     .name("name")
                     .build()
             )
-        assertThat(metricFetchResponse.metadata())
-            .isEqualTo(MetricFetchResponse.Metadata.builder().build())
-        assertThat(metricFetchResponse.name()).isEqualTo("name")
-        assertThat(metricFetchResponse.status()).isEqualTo(MetricFetchResponse.Status.ACTIVE)
+        assertThat(billableMetric.metadata()).isEqualTo(BillableMetric.Metadata.builder().build())
+        assertThat(billableMetric.name()).isEqualTo("name")
+        assertThat(billableMetric.status()).isEqualTo(BillableMetric.Status.ACTIVE)
     }
 }

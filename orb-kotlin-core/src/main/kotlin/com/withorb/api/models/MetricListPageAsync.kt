@@ -26,7 +26,7 @@ private constructor(
 
     fun response(): Response = response
 
-    fun data(): List<MetricListResponse> = response().data()
+    fun data(): List<BillableMetric> = response().data()
 
     fun paginationMetadata(): PaginationMetadata = response().paginationMetadata()
 
@@ -91,19 +91,19 @@ private constructor(
     @NoAutoDetect
     class Response
     constructor(
-        private val data: JsonField<List<MetricListResponse>>,
+        private val data: JsonField<List<BillableMetric>>,
         private val paginationMetadata: JsonField<PaginationMetadata>,
         private val additionalProperties: Map<String, JsonValue>,
     ) {
 
         private var validated: Boolean = false
 
-        fun data(): List<MetricListResponse> = data.getNullable("data") ?: listOf()
+        fun data(): List<BillableMetric> = data.getNullable("data") ?: listOf()
 
         fun paginationMetadata(): PaginationMetadata =
             paginationMetadata.getRequired("pagination_metadata")
 
-        @JsonProperty("data") fun _data(): JsonField<List<MetricListResponse>>? = data
+        @JsonProperty("data") fun _data(): JsonField<List<BillableMetric>>? = data
 
         @JsonProperty("pagination_metadata")
         fun _paginationMetadata(): JsonField<PaginationMetadata>? = paginationMetadata
@@ -151,7 +151,7 @@ private constructor(
 
         class Builder {
 
-            private var data: JsonField<List<MetricListResponse>> = JsonMissing.of()
+            private var data: JsonField<List<BillableMetric>> = JsonMissing.of()
             private var paginationMetadata: JsonField<PaginationMetadata> = JsonMissing.of()
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
@@ -161,10 +161,10 @@ private constructor(
                 this.additionalProperties.putAll(page.additionalProperties)
             }
 
-            fun data(data: List<MetricListResponse>) = data(JsonField.of(data))
+            fun data(data: List<BillableMetric>) = data(JsonField.of(data))
 
             @JsonProperty("data")
-            fun data(data: JsonField<List<MetricListResponse>>) = apply { this.data = data }
+            fun data(data: JsonField<List<BillableMetric>>) = apply { this.data = data }
 
             fun paginationMetadata(paginationMetadata: PaginationMetadata) =
                 paginationMetadata(JsonField.of(paginationMetadata))
@@ -191,9 +191,9 @@ private constructor(
     class AutoPager
     constructor(
         private val firstPage: MetricListPageAsync,
-    ) : Flow<MetricListResponse> {
+    ) : Flow<BillableMetric> {
 
-        override suspend fun collect(collector: FlowCollector<MetricListResponse>) {
+        override suspend fun collect(collector: FlowCollector<BillableMetric>) {
             var page = firstPage
             var index = 0
             while (true) {

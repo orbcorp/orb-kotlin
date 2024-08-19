@@ -17,6 +17,7 @@ import com.withorb.api.models.AlertEnableParams
 import com.withorb.api.models.AlertListPage
 import com.withorb.api.models.AlertListParams
 import com.withorb.api.models.AlertRetrieveParams
+import com.withorb.api.models.AlertUpdateParams
 import com.withorb.api.services.errorHandler
 import com.withorb.api.services.json
 import com.withorb.api.services.jsonHandler
@@ -46,6 +47,32 @@ constructor(
         return clientOptions.httpClient.execute(request, requestOptions).let { response ->
             response
                 .use { retrieveHandler.handle(it) }
+                .apply {
+                    if (requestOptions.responseValidation ?: clientOptions.responseValidation) {
+                        validate()
+                    }
+                }
+        }
+    }
+
+    private val updateHandler: Handler<Alert> =
+        jsonHandler<Alert>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+
+    /** This endpoint updates the thresholds of an alert. */
+    override fun update(params: AlertUpdateParams, requestOptions: RequestOptions): Alert {
+        val request =
+            HttpRequest.builder()
+                .method(HttpMethod.PUT)
+                .addPathSegments("alerts", params.getPathParam(0))
+                .putAllQueryParams(clientOptions.queryParams)
+                .putAllQueryParams(params.getQueryParams())
+                .putAllHeaders(clientOptions.headers)
+                .putAllHeaders(params.getHeaders())
+                .body(json(clientOptions.jsonMapper, params.getBody()))
+                .build()
+        return clientOptions.httpClient.execute(request, requestOptions).let { response ->
+            response
+                .use { updateHandler.handle(it) }
                 .apply {
                     if (requestOptions.responseValidation ?: clientOptions.responseValidation) {
                         validate()
