@@ -20,7 +20,7 @@ class MetricServiceTest {
                 .apiKey("My API Key")
                 .build()
         val metricService = client.metrics()
-        val metricCreateResponse =
+        val billableMetric =
             metricService.create(
                 MetricCreateParams.builder()
                     .description("Sum of bytes downloaded in fast mode")
@@ -30,8 +30,27 @@ class MetricServiceTest {
                     .metadata(MetricCreateParams.Metadata.builder().build())
                     .build()
             )
-        println(metricCreateResponse)
-        metricCreateResponse.validate()
+        println(billableMetric)
+        billableMetric.validate()
+    }
+
+    @Test
+    fun callUpdate() {
+        val client =
+            OrbOkHttpClient.builder()
+                .baseUrl(TestServerExtension.BASE_URL)
+                .apiKey("My API Key")
+                .build()
+        val metricService = client.metrics()
+        val billableMetric =
+            metricService.update(
+                MetricUpdateParams.builder()
+                    .metricId("metric_id")
+                    .metadata(MetricUpdateParams.Metadata.builder().build())
+                    .build()
+            )
+        println(billableMetric)
+        billableMetric.validate()
     }
 
     @Test
@@ -55,9 +74,9 @@ class MetricServiceTest {
                 .apiKey("My API Key")
                 .build()
         val metricService = client.metrics()
-        val metricFetchResponse =
+        val billableMetric =
             metricService.fetch(MetricFetchParams.builder().metricId("metric_id").build())
-        println(metricFetchResponse)
-        metricFetchResponse.validate()
+        println(billableMetric)
+        billableMetric.validate()
     }
 }
