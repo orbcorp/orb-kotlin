@@ -21,9 +21,9 @@ import java.util.Objects
  * The Metric resource represents a calculation of a quantity based on events. Metrics are defined
  * by the query that transforms raw usage events into meaningful values for your customers.
  */
-@JsonDeserialize(builder = MetricFetchResponse.Builder::class)
+@JsonDeserialize(builder = BillableMetric.Builder::class)
 @NoAutoDetect
-class MetricFetchResponse
+class BillableMetric
 private constructor(
     private val metadata: JsonField<Metadata>,
     private val id: JsonField<String>,
@@ -86,7 +86,7 @@ private constructor(
     @ExcludeMissing
     fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
 
-    fun validate(): MetricFetchResponse = apply {
+    fun validate(): BillableMetric = apply {
         if (!validated) {
             metadata().validate()
             id()
@@ -105,7 +105,7 @@ private constructor(
             return true
         }
 
-        return other is MetricFetchResponse &&
+        return other is BillableMetric &&
             this.metadata == other.metadata &&
             this.id == other.id &&
             this.name == other.name &&
@@ -132,7 +132,7 @@ private constructor(
     }
 
     override fun toString() =
-        "MetricFetchResponse{metadata=$metadata, id=$id, name=$name, description=$description, status=$status, item=$item, additionalProperties=$additionalProperties}"
+        "BillableMetric{metadata=$metadata, id=$id, name=$name, description=$description, status=$status, item=$item, additionalProperties=$additionalProperties}"
 
     companion object {
 
@@ -149,14 +149,14 @@ private constructor(
         private var item: JsonField<Item> = JsonMissing.of()
         private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
-        internal fun from(metricFetchResponse: MetricFetchResponse) = apply {
-            this.metadata = metricFetchResponse.metadata
-            this.id = metricFetchResponse.id
-            this.name = metricFetchResponse.name
-            this.description = metricFetchResponse.description
-            this.status = metricFetchResponse.status
-            this.item = metricFetchResponse.item
-            additionalProperties(metricFetchResponse.additionalProperties)
+        internal fun from(billableMetric: BillableMetric) = apply {
+            this.metadata = billableMetric.metadata
+            this.id = billableMetric.id
+            this.name = billableMetric.name
+            this.description = billableMetric.description
+            this.status = billableMetric.status
+            this.item = billableMetric.item
+            additionalProperties(billableMetric.additionalProperties)
         }
 
         /**
@@ -227,8 +227,8 @@ private constructor(
             this.additionalProperties.putAll(additionalProperties)
         }
 
-        fun build(): MetricFetchResponse =
-            MetricFetchResponse(
+        fun build(): BillableMetric =
+            BillableMetric(
                 metadata,
                 id,
                 name,
