@@ -4,22 +4,45 @@ package com.withorb.api.models
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter
 import com.fasterxml.jackson.annotation.JsonAnySetter
+import com.fasterxml.jackson.annotation.JsonCreator
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonProperty
+import com.fasterxml.jackson.core.JsonGenerator
+import com.fasterxml.jackson.core.ObjectCodec
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize
-import com.withorb.api.core.ExcludeMissing
-import com.withorb.api.core.JsonValue
-import com.withorb.api.core.NoAutoDetect
-import com.withorb.api.core.toUnmodifiable
-import com.withorb.api.models.*
+import com.fasterxml.jackson.databind.annotation.JsonSerialize
+import com.fasterxml.jackson.databind.JsonNode
+import com.fasterxml.jackson.databind.SerializerProvider
+import com.fasterxml.jackson.module.kotlin.jacksonTypeRef
+import org.apache.hc.core5.http.ContentType
+import java.time.LocalDate
+import java.time.OffsetDateTime
+import java.time.format.DateTimeFormatter
 import java.util.Objects
+import java.util.Optional
+import java.util.UUID
+import com.withorb.api.core.BaseDeserializer
+import com.withorb.api.core.BaseSerializer
+import com.withorb.api.core.getOrThrow
+import com.withorb.api.core.ExcludeMissing
+import com.withorb.api.core.JsonField
+import com.withorb.api.core.JsonMissing
+import com.withorb.api.core.JsonValue
+import com.withorb.api.core.MultipartFormValue
+import com.withorb.api.core.toUnmodifiable
+import com.withorb.api.core.NoAutoDetect
+import com.withorb.api.core.Enum
+import com.withorb.api.core.ContentTypes
+import com.withorb.api.errors.OrbInvalidDataException
+import com.withorb.api.models.*
 
-class SubscriptionUnscheduleFixedFeeQuantityUpdatesParams
-constructor(
-    private val subscriptionId: String,
-    private val priceId: String,
-    private val additionalQueryParams: Map<String, List<String>>,
-    private val additionalHeaders: Map<String, List<String>>,
-    private val additionalBodyProperties: Map<String, JsonValue>,
+class SubscriptionUnscheduleFixedFeeQuantityUpdatesParams constructor(
+  private val subscriptionId: String,
+  private val priceId: String,
+  private val additionalQueryParams: Map<String, List<String>>,
+  private val additionalHeaders: Map<String, List<String>>,
+  private val additionalBodyProperties: Map<String, JsonValue>,
+
 ) {
 
     fun subscriptionId(): String = subscriptionId
@@ -27,7 +50,7 @@ constructor(
     fun priceId(): String = priceId
 
     internal fun getBody(): SubscriptionUnscheduleFixedFeeQuantityUpdatesBody {
-        return SubscriptionUnscheduleFixedFeeQuantityUpdatesBody(priceId, additionalBodyProperties)
+      return SubscriptionUnscheduleFixedFeeQuantityUpdatesBody(priceId, additionalBodyProperties)
     }
 
     internal fun getQueryParams(): Map<String, List<String>> = additionalQueryParams
@@ -35,24 +58,21 @@ constructor(
     internal fun getHeaders(): Map<String, List<String>> = additionalHeaders
 
     fun getPathParam(index: Int): String {
-        return when (index) {
-            0 -> subscriptionId
-            else -> ""
-        }
+      return when (index) {
+          0 -> subscriptionId
+          else -> ""
+      }
     }
 
     @JsonDeserialize(builder = SubscriptionUnscheduleFixedFeeQuantityUpdatesBody.Builder::class)
     @NoAutoDetect
-    class SubscriptionUnscheduleFixedFeeQuantityUpdatesBody
-    internal constructor(
-        private val priceId: String?,
-        private val additionalProperties: Map<String, JsonValue>,
-    ) {
+    class SubscriptionUnscheduleFixedFeeQuantityUpdatesBody internal constructor(private val priceId: String?, private val additionalProperties: Map<String, JsonValue>, ) {
 
         private var hashCode: Int = 0
 
         /** Price for which the updates should be cleared. Must be a fixed fee. */
-        @JsonProperty("price_id") fun priceId(): String? = priceId
+        @JsonProperty("price_id")
+        fun priceId(): String? = priceId
 
         @JsonAnyGetter
         @ExcludeMissing
@@ -61,24 +81,23 @@ constructor(
         fun toBuilder() = Builder().from(this)
 
         override fun equals(other: Any?): Boolean {
-            if (this === other) {
-                return true
-            }
+          if (this === other) {
+              return true
+          }
 
-            return other is SubscriptionUnscheduleFixedFeeQuantityUpdatesBody &&
-                this.priceId == other.priceId &&
-                this.additionalProperties == other.additionalProperties
+          return other is SubscriptionUnscheduleFixedFeeQuantityUpdatesBody &&
+              this.priceId == other.priceId &&
+              this.additionalProperties == other.additionalProperties
         }
 
         override fun hashCode(): Int {
-            if (hashCode == 0) {
-                hashCode = Objects.hash(priceId, additionalProperties)
-            }
-            return hashCode
+          if (hashCode == 0) {
+            hashCode = Objects.hash(priceId, additionalProperties)
+          }
+          return hashCode
         }
 
-        override fun toString() =
-            "SubscriptionUnscheduleFixedFeeQuantityUpdatesBody{priceId=$priceId, additionalProperties=$additionalProperties}"
+        override fun toString() = "SubscriptionUnscheduleFixedFeeQuantityUpdatesBody{priceId=$priceId, additionalProperties=$additionalProperties}"
 
         companion object {
 
@@ -90,19 +109,16 @@ constructor(
             private var priceId: String? = null
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
-            internal fun from(
-                subscriptionUnscheduleFixedFeeQuantityUpdatesBody:
-                    SubscriptionUnscheduleFixedFeeQuantityUpdatesBody
-            ) = apply {
+            internal fun from(subscriptionUnscheduleFixedFeeQuantityUpdatesBody: SubscriptionUnscheduleFixedFeeQuantityUpdatesBody) = apply {
                 this.priceId = subscriptionUnscheduleFixedFeeQuantityUpdatesBody.priceId
-                additionalProperties(
-                    subscriptionUnscheduleFixedFeeQuantityUpdatesBody.additionalProperties
-                )
+                additionalProperties(subscriptionUnscheduleFixedFeeQuantityUpdatesBody.additionalProperties)
             }
 
             /** Price for which the updates should be cleared. Must be a fixed fee. */
             @JsonProperty("price_id")
-            fun priceId(priceId: String) = apply { this.priceId = priceId }
+            fun priceId(priceId: String) = apply {
+                this.priceId = priceId
+            }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
@@ -118,11 +134,9 @@ constructor(
                 this.additionalProperties.putAll(additionalProperties)
             }
 
-            fun build(): SubscriptionUnscheduleFixedFeeQuantityUpdatesBody =
-                SubscriptionUnscheduleFixedFeeQuantityUpdatesBody(
-                    checkNotNull(priceId) { "`priceId` is required but was not set" },
-                    additionalProperties.toUnmodifiable()
-                )
+            fun build(): SubscriptionUnscheduleFixedFeeQuantityUpdatesBody = SubscriptionUnscheduleFixedFeeQuantityUpdatesBody(checkNotNull(priceId) {
+                "`priceId` is required but was not set"
+            }, additionalProperties.toUnmodifiable())
         }
     }
 
@@ -133,30 +147,29 @@ constructor(
     fun _additionalBodyProperties(): Map<String, JsonValue> = additionalBodyProperties
 
     override fun equals(other: Any?): Boolean {
-        if (this === other) {
-            return true
-        }
+      if (this === other) {
+          return true
+      }
 
-        return other is SubscriptionUnscheduleFixedFeeQuantityUpdatesParams &&
-            this.subscriptionId == other.subscriptionId &&
-            this.priceId == other.priceId &&
-            this.additionalQueryParams == other.additionalQueryParams &&
-            this.additionalHeaders == other.additionalHeaders &&
-            this.additionalBodyProperties == other.additionalBodyProperties
+      return other is SubscriptionUnscheduleFixedFeeQuantityUpdatesParams &&
+          this.subscriptionId == other.subscriptionId &&
+          this.priceId == other.priceId &&
+          this.additionalQueryParams == other.additionalQueryParams &&
+          this.additionalHeaders == other.additionalHeaders &&
+          this.additionalBodyProperties == other.additionalBodyProperties
     }
 
     override fun hashCode(): Int {
-        return Objects.hash(
-            subscriptionId,
-            priceId,
-            additionalQueryParams,
-            additionalHeaders,
-            additionalBodyProperties,
-        )
+      return Objects.hash(
+          subscriptionId,
+          priceId,
+          additionalQueryParams,
+          additionalHeaders,
+          additionalBodyProperties,
+      )
     }
 
-    override fun toString() =
-        "SubscriptionUnscheduleFixedFeeQuantityUpdatesParams{subscriptionId=$subscriptionId, priceId=$priceId, additionalQueryParams=$additionalQueryParams, additionalHeaders=$additionalHeaders, additionalBodyProperties=$additionalBodyProperties}"
+    override fun toString() = "SubscriptionUnscheduleFixedFeeQuantityUpdatesParams{subscriptionId=$subscriptionId, priceId=$priceId, additionalQueryParams=$additionalQueryParams, additionalHeaders=$additionalHeaders, additionalBodyProperties=$additionalBodyProperties}"
 
     fun toBuilder() = Builder().from(this)
 
@@ -174,25 +187,22 @@ constructor(
         private var additionalHeaders: MutableMap<String, MutableList<String>> = mutableMapOf()
         private var additionalBodyProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
-        internal fun from(
-            subscriptionUnscheduleFixedFeeQuantityUpdatesParams:
-                SubscriptionUnscheduleFixedFeeQuantityUpdatesParams
-        ) = apply {
+        internal fun from(subscriptionUnscheduleFixedFeeQuantityUpdatesParams: SubscriptionUnscheduleFixedFeeQuantityUpdatesParams) = apply {
             this.subscriptionId = subscriptionUnscheduleFixedFeeQuantityUpdatesParams.subscriptionId
             this.priceId = subscriptionUnscheduleFixedFeeQuantityUpdatesParams.priceId
-            additionalQueryParams(
-                subscriptionUnscheduleFixedFeeQuantityUpdatesParams.additionalQueryParams
-            )
+            additionalQueryParams(subscriptionUnscheduleFixedFeeQuantityUpdatesParams.additionalQueryParams)
             additionalHeaders(subscriptionUnscheduleFixedFeeQuantityUpdatesParams.additionalHeaders)
-            additionalBodyProperties(
-                subscriptionUnscheduleFixedFeeQuantityUpdatesParams.additionalBodyProperties
-            )
+            additionalBodyProperties(subscriptionUnscheduleFixedFeeQuantityUpdatesParams.additionalBodyProperties)
         }
 
-        fun subscriptionId(subscriptionId: String) = apply { this.subscriptionId = subscriptionId }
+        fun subscriptionId(subscriptionId: String) = apply {
+            this.subscriptionId = subscriptionId
+        }
 
         /** Price for which the updates should be cleared. Must be a fixed fee. */
-        fun priceId(priceId: String) = apply { this.priceId = priceId }
+        fun priceId(priceId: String) = apply {
+            this.priceId = priceId
+        }
 
         fun additionalQueryParams(additionalQueryParams: Map<String, List<String>>) = apply {
             this.additionalQueryParams.clear()
@@ -232,7 +242,9 @@ constructor(
             additionalHeaders.forEach(this::putHeaders)
         }
 
-        fun removeHeader(name: String) = apply { this.additionalHeaders.put(name, mutableListOf()) }
+        fun removeHeader(name: String) = apply {
+            this.additionalHeaders.put(name, mutableListOf())
+        }
 
         fun additionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) = apply {
             this.additionalBodyProperties.clear()
@@ -243,18 +255,20 @@ constructor(
             this.additionalBodyProperties.put(key, value)
         }
 
-        fun putAllAdditionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) =
-            apply {
-                this.additionalBodyProperties.putAll(additionalBodyProperties)
-            }
+        fun putAllAdditionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) = apply {
+            this.additionalBodyProperties.putAll(additionalBodyProperties)
+        }
 
-        fun build(): SubscriptionUnscheduleFixedFeeQuantityUpdatesParams =
-            SubscriptionUnscheduleFixedFeeQuantityUpdatesParams(
-                checkNotNull(subscriptionId) { "`subscriptionId` is required but was not set" },
-                checkNotNull(priceId) { "`priceId` is required but was not set" },
-                additionalQueryParams.mapValues { it.value.toUnmodifiable() }.toUnmodifiable(),
-                additionalHeaders.mapValues { it.value.toUnmodifiable() }.toUnmodifiable(),
-                additionalBodyProperties.toUnmodifiable(),
-            )
+        fun build(): SubscriptionUnscheduleFixedFeeQuantityUpdatesParams = SubscriptionUnscheduleFixedFeeQuantityUpdatesParams(
+            checkNotNull(subscriptionId) {
+                "`subscriptionId` is required but was not set"
+            },
+            checkNotNull(priceId) {
+                "`priceId` is required but was not set"
+            },
+            additionalQueryParams.mapValues { it.value.toUnmodifiable() }.toUnmodifiable(),
+            additionalHeaders.mapValues { it.value.toUnmodifiable() }.toUnmodifiable(),
+            additionalBodyProperties.toUnmodifiable(),
+        )
     }
 }

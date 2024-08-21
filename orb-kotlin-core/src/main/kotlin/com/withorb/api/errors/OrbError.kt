@@ -5,46 +5,51 @@ package com.withorb.api.errors
 import com.fasterxml.jackson.annotation.JsonAnyGetter
 import com.fasterxml.jackson.annotation.JsonAnySetter
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize
+import java.time.LocalDate
+import java.time.OffsetDateTime
+import java.util.Objects
+import java.util.UUID
+import com.withorb.api.core.toUnmodifiable
 import com.withorb.api.core.JsonValue
 import com.withorb.api.core.NoAutoDetect
-import com.withorb.api.core.toUnmodifiable
-import java.util.Objects
 
 @JsonDeserialize(builder = OrbError.Builder::class)
 @NoAutoDetect
-class OrbError
-constructor(
-    private val additionalProperties: Map<String, JsonValue>,
-) {
+class OrbError constructor(private val additionalProperties: Map<String, JsonValue>, ) {
 
-    @JsonAnyGetter fun additionalProperties(): Map<String, JsonValue> = additionalProperties
+    @JsonAnyGetter
+    fun additionalProperties(): Map<String, JsonValue> = additionalProperties
 
     fun toBuilder() = Builder()
 
     override fun equals(other: Any?): Boolean {
-        if (this === other) {
-            return true
-        }
+      if (this === other) {
+          return true
+      }
 
-        return other is OrbError && this.additionalProperties == other.additionalProperties
+      return other is OrbError &&
+          this.additionalProperties == other.additionalProperties
     }
 
     override fun hashCode(): Int {
-        return Objects.hash(additionalProperties)
+      return Objects.hash(additionalProperties)
     }
 
     override fun toString() = "OrbError{additionalProperties=$additionalProperties}"
 
     companion object {
 
-        @JvmStatic fun builder() = Builder()
+        @JvmStatic
+        fun builder() = Builder()
     }
 
     class Builder {
 
         private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
-        fun from(error: OrbError) = apply { additionalProperties(error.additionalProperties) }
+        fun from(error: OrbError) = apply {
+            additionalProperties(error.additionalProperties)
+        }
 
         fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
             this.additionalProperties.clear()
