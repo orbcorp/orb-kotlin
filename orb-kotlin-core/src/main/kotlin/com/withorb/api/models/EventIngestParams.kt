@@ -4,24 +4,46 @@ package com.withorb.api.models
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter
 import com.fasterxml.jackson.annotation.JsonAnySetter
+import com.fasterxml.jackson.annotation.JsonCreator
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonProperty
+import com.fasterxml.jackson.core.JsonGenerator
+import com.fasterxml.jackson.core.ObjectCodec
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize
-import com.withorb.api.core.ExcludeMissing
-import com.withorb.api.core.JsonValue
-import com.withorb.api.core.NoAutoDetect
-import com.withorb.api.core.toUnmodifiable
-import com.withorb.api.models.*
+import com.fasterxml.jackson.databind.annotation.JsonSerialize
+import com.fasterxml.jackson.databind.JsonNode
+import com.fasterxml.jackson.databind.SerializerProvider
+import com.fasterxml.jackson.module.kotlin.jacksonTypeRef
+import org.apache.hc.core5.http.ContentType
+import java.time.LocalDate
 import java.time.OffsetDateTime
+import java.time.format.DateTimeFormatter
 import java.util.Objects
+import java.util.Optional
+import java.util.UUID
+import com.withorb.api.core.BaseDeserializer
+import com.withorb.api.core.BaseSerializer
+import com.withorb.api.core.getOrThrow
+import com.withorb.api.core.ExcludeMissing
+import com.withorb.api.core.JsonField
+import com.withorb.api.core.JsonMissing
+import com.withorb.api.core.JsonValue
+import com.withorb.api.core.MultipartFormValue
+import com.withorb.api.core.toUnmodifiable
+import com.withorb.api.core.NoAutoDetect
+import com.withorb.api.core.Enum
+import com.withorb.api.core.ContentTypes
+import com.withorb.api.errors.OrbInvalidDataException
+import com.withorb.api.models.*
 
-class EventIngestParams
-constructor(
-    private val events: List<Event>,
-    private val backfillId: String?,
-    private val debug: Boolean?,
-    private val additionalQueryParams: Map<String, List<String>>,
-    private val additionalHeaders: Map<String, List<String>>,
-    private val additionalBodyProperties: Map<String, JsonValue>,
+class EventIngestParams constructor(
+  private val events: List<Event>,
+  private val backfillId: String?,
+  private val debug: Boolean?,
+  private val additionalQueryParams: Map<String, List<String>>,
+  private val additionalHeaders: Map<String, List<String>>,
+  private val additionalBodyProperties: Map<String, JsonValue>,
+
 ) {
 
     fun events(): List<Event> = events
@@ -31,30 +53,31 @@ constructor(
     fun debug(): Boolean? = debug
 
     internal fun getBody(): EventIngestBody {
-        return EventIngestBody(events, additionalBodyProperties)
+      return EventIngestBody(events, additionalBodyProperties)
     }
 
     internal fun getQueryParams(): Map<String, List<String>> {
-        val params = mutableMapOf<String, List<String>>()
-        this.backfillId?.let { params.put("backfill_id", listOf(it.toString())) }
-        this.debug?.let { params.put("debug", listOf(it.toString())) }
-        params.putAll(additionalQueryParams)
-        return params.toUnmodifiable()
+      val params = mutableMapOf<String, List<String>>()
+      this.backfillId?.let {
+          params.put("backfill_id", listOf(it.toString()))
+      }
+      this.debug?.let {
+          params.put("debug", listOf(it.toString()))
+      }
+      params.putAll(additionalQueryParams)
+      return params.toUnmodifiable()
     }
 
     internal fun getHeaders(): Map<String, List<String>> = additionalHeaders
 
     @JsonDeserialize(builder = EventIngestBody.Builder::class)
     @NoAutoDetect
-    class EventIngestBody
-    internal constructor(
-        private val events: List<Event>?,
-        private val additionalProperties: Map<String, JsonValue>,
-    ) {
+    class EventIngestBody internal constructor(private val events: List<Event>?, private val additionalProperties: Map<String, JsonValue>, ) {
 
         private var hashCode: Int = 0
 
-        @JsonProperty("events") fun events(): List<Event>? = events
+        @JsonProperty("events")
+        fun events(): List<Event>? = events
 
         @JsonAnyGetter
         @ExcludeMissing
@@ -63,24 +86,23 @@ constructor(
         fun toBuilder() = Builder().from(this)
 
         override fun equals(other: Any?): Boolean {
-            if (this === other) {
-                return true
-            }
+          if (this === other) {
+              return true
+          }
 
-            return other is EventIngestBody &&
-                this.events == other.events &&
-                this.additionalProperties == other.additionalProperties
+          return other is EventIngestBody &&
+              this.events == other.events &&
+              this.additionalProperties == other.additionalProperties
         }
 
         override fun hashCode(): Int {
-            if (hashCode == 0) {
-                hashCode = Objects.hash(events, additionalProperties)
-            }
-            return hashCode
+          if (hashCode == 0) {
+            hashCode = Objects.hash(events, additionalProperties)
+          }
+          return hashCode
         }
 
-        override fun toString() =
-            "EventIngestBody{events=$events, additionalProperties=$additionalProperties}"
+        override fun toString() = "EventIngestBody{events=$events, additionalProperties=$additionalProperties}"
 
         companion object {
 
@@ -97,7 +119,10 @@ constructor(
                 additionalProperties(eventIngestBody.additionalProperties)
             }
 
-            @JsonProperty("events") fun events(events: List<Event>) = apply { this.events = events }
+            @JsonProperty("events")
+            fun events(events: List<Event>) = apply {
+                this.events = events
+            }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
@@ -113,12 +138,9 @@ constructor(
                 this.additionalProperties.putAll(additionalProperties)
             }
 
-            fun build(): EventIngestBody =
-                EventIngestBody(
-                    checkNotNull(events) { "`events` is required but was not set" }
-                        .toUnmodifiable(),
-                    additionalProperties.toUnmodifiable()
-                )
+            fun build(): EventIngestBody = EventIngestBody(checkNotNull(events) {
+                "`events` is required but was not set"
+            }.toUnmodifiable(), additionalProperties.toUnmodifiable())
         }
     }
 
@@ -129,32 +151,31 @@ constructor(
     fun _additionalBodyProperties(): Map<String, JsonValue> = additionalBodyProperties
 
     override fun equals(other: Any?): Boolean {
-        if (this === other) {
-            return true
-        }
+      if (this === other) {
+          return true
+      }
 
-        return other is EventIngestParams &&
-            this.events == other.events &&
-            this.backfillId == other.backfillId &&
-            this.debug == other.debug &&
-            this.additionalQueryParams == other.additionalQueryParams &&
-            this.additionalHeaders == other.additionalHeaders &&
-            this.additionalBodyProperties == other.additionalBodyProperties
+      return other is EventIngestParams &&
+          this.events == other.events &&
+          this.backfillId == other.backfillId &&
+          this.debug == other.debug &&
+          this.additionalQueryParams == other.additionalQueryParams &&
+          this.additionalHeaders == other.additionalHeaders &&
+          this.additionalBodyProperties == other.additionalBodyProperties
     }
 
     override fun hashCode(): Int {
-        return Objects.hash(
-            events,
-            backfillId,
-            debug,
-            additionalQueryParams,
-            additionalHeaders,
-            additionalBodyProperties,
-        )
+      return Objects.hash(
+          events,
+          backfillId,
+          debug,
+          additionalQueryParams,
+          additionalHeaders,
+          additionalBodyProperties,
+      )
     }
 
-    override fun toString() =
-        "EventIngestParams{events=$events, backfillId=$backfillId, debug=$debug, additionalQueryParams=$additionalQueryParams, additionalHeaders=$additionalHeaders, additionalBodyProperties=$additionalBodyProperties}"
+    override fun toString() = "EventIngestParams{events=$events, backfillId=$backfillId, debug=$debug, additionalQueryParams=$additionalQueryParams, additionalHeaders=$additionalHeaders, additionalBodyProperties=$additionalBodyProperties}"
 
     fun toBuilder() = Builder().from(this)
 
@@ -187,16 +208,22 @@ constructor(
             this.events.addAll(events)
         }
 
-        fun addEvent(event: Event) = apply { this.events.add(event) }
+        fun addEvent(event: Event) = apply {
+            this.events.add(event)
+        }
 
         /**
-         * If this ingestion request is part of a backfill, this parameter ties the ingested events
-         * to the backfill
+         * If this ingestion request is part of a backfill, this parameter ties the
+         * ingested events to the backfill
          */
-        fun backfillId(backfillId: String) = apply { this.backfillId = backfillId }
+        fun backfillId(backfillId: String) = apply {
+            this.backfillId = backfillId
+        }
 
         /** Flag to enable additional debug information in the endpoint response */
-        fun debug(debug: Boolean) = apply { this.debug = debug }
+        fun debug(debug: Boolean) = apply {
+            this.debug = debug
+        }
 
         fun additionalQueryParams(additionalQueryParams: Map<String, List<String>>) = apply {
             this.additionalQueryParams.clear()
@@ -236,7 +263,9 @@ constructor(
             additionalHeaders.forEach(this::putHeaders)
         }
 
-        fun removeHeader(name: String) = apply { this.additionalHeaders.put(name, mutableListOf()) }
+        fun removeHeader(name: String) = apply {
+            this.additionalHeaders.put(name, mutableListOf())
+        }
 
         fun additionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) = apply {
             this.additionalBodyProperties.clear()
@@ -247,65 +276,74 @@ constructor(
             this.additionalBodyProperties.put(key, value)
         }
 
-        fun putAllAdditionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) =
-            apply {
-                this.additionalBodyProperties.putAll(additionalBodyProperties)
-            }
+        fun putAllAdditionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) = apply {
+            this.additionalBodyProperties.putAll(additionalBodyProperties)
+        }
 
-        fun build(): EventIngestParams =
-            EventIngestParams(
-                checkNotNull(events) { "`events` is required but was not set" }.toUnmodifiable(),
-                backfillId,
-                debug,
-                additionalQueryParams.mapValues { it.value.toUnmodifiable() }.toUnmodifiable(),
-                additionalHeaders.mapValues { it.value.toUnmodifiable() }.toUnmodifiable(),
-                additionalBodyProperties.toUnmodifiable(),
-            )
+        fun build(): EventIngestParams = EventIngestParams(
+            checkNotNull(events) {
+                "`events` is required but was not set"
+            }.toUnmodifiable(),
+            backfillId,
+            debug,
+            additionalQueryParams.mapValues { it.value.toUnmodifiable() }.toUnmodifiable(),
+            additionalHeaders.mapValues { it.value.toUnmodifiable() }.toUnmodifiable(),
+            additionalBodyProperties.toUnmodifiable(),
+        )
     }
 
     @JsonDeserialize(builder = Event.Builder::class)
     @NoAutoDetect
-    class Event
-    private constructor(
-        private val customerId: String?,
-        private val externalCustomerId: String?,
-        private val eventName: String?,
-        private val timestamp: OffsetDateTime?,
-        private val properties: JsonValue?,
-        private val idempotencyKey: String?,
-        private val additionalProperties: Map<String, JsonValue>,
+    class Event private constructor(
+      private val customerId: String?,
+      private val externalCustomerId: String?,
+      private val eventName: String?,
+      private val timestamp: OffsetDateTime?,
+      private val properties: JsonValue?,
+      private val idempotencyKey: String?,
+      private val additionalProperties: Map<String, JsonValue>,
+
     ) {
 
         private var hashCode: Int = 0
 
         /** The Orb Customer identifier */
-        @JsonProperty("customer_id") fun customerId(): String? = customerId
+        @JsonProperty("customer_id")
+        fun customerId(): String? = customerId
 
-        /** An alias for the Orb customer, whose mapping is specified when creating the customer */
-        @JsonProperty("external_customer_id") fun externalCustomerId(): String? = externalCustomerId
+        /**
+         * An alias for the Orb customer, whose mapping is specified when creating the
+         * customer
+         */
+        @JsonProperty("external_customer_id")
+        fun externalCustomerId(): String? = externalCustomerId
 
         /** A name to meaningfully identify the action or event type. */
-        @JsonProperty("event_name") fun eventName(): String? = eventName
+        @JsonProperty("event_name")
+        fun eventName(): String? = eventName
 
         /**
-         * An ISO 8601 format date with no timezone offset (i.e. UTC). This should represent the
-         * time that usage was recorded, and is particularly important to attribute usage to a given
-         * billing period.
+         * An ISO 8601 format date with no timezone offset (i.e. UTC). This should
+         * represent the time that usage was recorded, and is particularly important to
+         * attribute usage to a given billing period.
          */
-        @JsonProperty("timestamp") fun timestamp(): OffsetDateTime? = timestamp
+        @JsonProperty("timestamp")
+        fun timestamp(): OffsetDateTime? = timestamp
 
         /**
-         * A dictionary of custom properties. Values in this dictionary must be numeric, boolean, or
-         * strings. Nested dictionaries are disallowed.
+         * A dictionary of custom properties. Values in this dictionary must be numeric,
+         * boolean, or strings. Nested dictionaries are disallowed.
          */
-        @JsonProperty("properties") fun properties(): JsonValue? = properties
+        @JsonProperty("properties")
+        fun properties(): JsonValue? = properties
 
         /**
-         * A unique value, generated by the client, that is used to de-duplicate events. Exactly one
-         * event with a given idempotency key will be ingested, which allows for safe request
-         * retries.
+         * A unique value, generated by the client, that is used to de-duplicate events.
+         * Exactly one event with a given idempotency key will be ingested, which allows
+         * for safe request retries.
          */
-        @JsonProperty("idempotency_key") fun idempotencyKey(): String? = idempotencyKey
+        @JsonProperty("idempotency_key")
+        fun idempotencyKey(): String? = idempotencyKey
 
         @JsonAnyGetter
         @ExcludeMissing
@@ -314,38 +352,36 @@ constructor(
         fun toBuilder() = Builder().from(this)
 
         override fun equals(other: Any?): Boolean {
-            if (this === other) {
-                return true
-            }
+          if (this === other) {
+              return true
+          }
 
-            return other is Event &&
-                this.customerId == other.customerId &&
-                this.externalCustomerId == other.externalCustomerId &&
-                this.eventName == other.eventName &&
-                this.timestamp == other.timestamp &&
-                this.properties == other.properties &&
-                this.idempotencyKey == other.idempotencyKey &&
-                this.additionalProperties == other.additionalProperties
+          return other is Event &&
+              this.customerId == other.customerId &&
+              this.externalCustomerId == other.externalCustomerId &&
+              this.eventName == other.eventName &&
+              this.timestamp == other.timestamp &&
+              this.properties == other.properties &&
+              this.idempotencyKey == other.idempotencyKey &&
+              this.additionalProperties == other.additionalProperties
         }
 
         override fun hashCode(): Int {
-            if (hashCode == 0) {
-                hashCode =
-                    Objects.hash(
-                        customerId,
-                        externalCustomerId,
-                        eventName,
-                        timestamp,
-                        properties,
-                        idempotencyKey,
-                        additionalProperties,
-                    )
-            }
-            return hashCode
+          if (hashCode == 0) {
+            hashCode = Objects.hash(
+                customerId,
+                externalCustomerId,
+                eventName,
+                timestamp,
+                properties,
+                idempotencyKey,
+                additionalProperties,
+            )
+          }
+          return hashCode
         }
 
-        override fun toString() =
-            "Event{customerId=$customerId, externalCustomerId=$externalCustomerId, eventName=$eventName, timestamp=$timestamp, properties=$properties, idempotencyKey=$idempotencyKey, additionalProperties=$additionalProperties}"
+        override fun toString() = "Event{customerId=$customerId, externalCustomerId=$externalCustomerId, eventName=$eventName, timestamp=$timestamp, properties=$properties, idempotencyKey=$idempotencyKey, additionalProperties=$additionalProperties}"
 
         companion object {
 
@@ -374,10 +410,13 @@ constructor(
 
             /** The Orb Customer identifier */
             @JsonProperty("customer_id")
-            fun customerId(customerId: String) = apply { this.customerId = customerId }
+            fun customerId(customerId: String) = apply {
+                this.customerId = customerId
+            }
 
             /**
-             * An alias for the Orb customer, whose mapping is specified when creating the customer
+             * An alias for the Orb customer, whose mapping is specified when creating the
+             * customer
              */
             @JsonProperty("external_customer_id")
             fun externalCustomerId(externalCustomerId: String) = apply {
@@ -386,27 +425,33 @@ constructor(
 
             /** A name to meaningfully identify the action or event type. */
             @JsonProperty("event_name")
-            fun eventName(eventName: String) = apply { this.eventName = eventName }
+            fun eventName(eventName: String) = apply {
+                this.eventName = eventName
+            }
 
             /**
-             * An ISO 8601 format date with no timezone offset (i.e. UTC). This should represent the
-             * time that usage was recorded, and is particularly important to attribute usage to a
-             * given billing period.
+             * An ISO 8601 format date with no timezone offset (i.e. UTC). This should
+             * represent the time that usage was recorded, and is particularly important to
+             * attribute usage to a given billing period.
              */
             @JsonProperty("timestamp")
-            fun timestamp(timestamp: OffsetDateTime) = apply { this.timestamp = timestamp }
+            fun timestamp(timestamp: OffsetDateTime) = apply {
+                this.timestamp = timestamp
+            }
 
             /**
              * A dictionary of custom properties. Values in this dictionary must be numeric,
              * boolean, or strings. Nested dictionaries are disallowed.
              */
             @JsonProperty("properties")
-            fun properties(properties: JsonValue) = apply { this.properties = properties }
+            fun properties(properties: JsonValue) = apply {
+                this.properties = properties
+            }
 
             /**
-             * A unique value, generated by the client, that is used to de-duplicate events. Exactly
-             * one event with a given idempotency key will be ingested, which allows for safe
-             * request retries.
+             * A unique value, generated by the client, that is used to de-duplicate events.
+             * Exactly one event with a given idempotency key will be ingested, which allows
+             * for safe request retries.
              */
             @JsonProperty("idempotency_key")
             fun idempotencyKey(idempotencyKey: String) = apply {
@@ -427,16 +472,23 @@ constructor(
                 this.additionalProperties.putAll(additionalProperties)
             }
 
-            fun build(): Event =
-                Event(
-                    customerId,
-                    externalCustomerId,
-                    checkNotNull(eventName) { "`eventName` is required but was not set" },
-                    checkNotNull(timestamp) { "`timestamp` is required but was not set" },
-                    checkNotNull(properties) { "`properties` is required but was not set" },
-                    checkNotNull(idempotencyKey) { "`idempotencyKey` is required but was not set" },
-                    additionalProperties.toUnmodifiable(),
-                )
+            fun build(): Event = Event(
+                customerId,
+                externalCustomerId,
+                checkNotNull(eventName) {
+                    "`eventName` is required but was not set"
+                },
+                checkNotNull(timestamp) {
+                    "`timestamp` is required but was not set"
+                },
+                checkNotNull(properties) {
+                    "`properties` is required but was not set"
+                },
+                checkNotNull(idempotencyKey) {
+                    "`idempotencyKey` is required but was not set"
+                },
+                additionalProperties.toUnmodifiable(),
+            )
         }
     }
 }

@@ -4,53 +4,70 @@ package com.withorb.api.models
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter
 import com.fasterxml.jackson.annotation.JsonAnySetter
+import com.fasterxml.jackson.annotation.JsonCreator
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonProperty
+import com.fasterxml.jackson.core.JsonGenerator
+import com.fasterxml.jackson.core.ObjectCodec
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize
+import com.fasterxml.jackson.databind.annotation.JsonSerialize
+import com.fasterxml.jackson.databind.JsonNode
+import com.fasterxml.jackson.databind.SerializerProvider
+import com.fasterxml.jackson.module.kotlin.jacksonTypeRef
+import java.time.LocalDate
+import java.time.OffsetDateTime
+import java.time.format.DateTimeFormatter
+import java.util.Objects
+import java.util.Optional
+import java.util.UUID
+import com.withorb.api.core.BaseDeserializer
+import com.withorb.api.core.BaseSerializer
+import com.withorb.api.core.getOrThrow
 import com.withorb.api.core.ExcludeMissing
-import com.withorb.api.core.JsonField
 import com.withorb.api.core.JsonMissing
 import com.withorb.api.core.JsonValue
-import com.withorb.api.core.NoAutoDetect
+import com.withorb.api.core.JsonNull
+import com.withorb.api.core.JsonField
+import com.withorb.api.core.Enum
 import com.withorb.api.core.toUnmodifiable
-import java.util.Objects
+import com.withorb.api.core.NoAutoDetect
+import com.withorb.api.errors.OrbInvalidDataException
 
 @JsonDeserialize(builder = EventIngestResponse.Builder::class)
 @NoAutoDetect
-class EventIngestResponse
-private constructor(
-    private val debug: JsonField<Debug>,
-    private val validationFailed: JsonField<List<ValidationFailed>>,
-    private val additionalProperties: Map<String, JsonValue>,
-) {
+class EventIngestResponse private constructor(private val debug: JsonField<Debug>, private val validationFailed: JsonField<List<ValidationFailed>>, private val additionalProperties: Map<String, JsonValue>, ) {
 
     private var validated: Boolean = false
 
     private var hashCode: Int = 0
 
     /**
-     * Optional debug information (only present when debug=true is passed to the endpoint). Contains
-     * ingested and duplicate event idempotency keys.
+     * Optional debug information (only present when debug=true is passed to the
+     * endpoint). Contains ingested and duplicate event idempotency keys.
      */
     fun debug(): Debug? = debug.getNullable("debug")
 
     /**
-     * Contains all failing validation events. In the case of a 200, this array will always be
-     * empty. This field will always be present.
+     * Contains all failing validation events. In the case of a 200, this array will
+     * always be empty. This field will always be present.
      */
-    fun validationFailed(): List<ValidationFailed> =
-        validationFailed.getRequired("validation_failed")
+    fun validationFailed(): List<ValidationFailed> = validationFailed.getRequired("validation_failed")
 
     /**
-     * Optional debug information (only present when debug=true is passed to the endpoint). Contains
-     * ingested and duplicate event idempotency keys.
+     * Optional debug information (only present when debug=true is passed to the
+     * endpoint). Contains ingested and duplicate event idempotency keys.
      */
-    @JsonProperty("debug") @ExcludeMissing fun _debug() = debug
+    @JsonProperty("debug")
+    @ExcludeMissing
+    fun _debug() = debug
 
     /**
-     * Contains all failing validation events. In the case of a 200, this array will always be
-     * empty. This field will always be present.
+     * Contains all failing validation events. In the case of a 200, this array will
+     * always be empty. This field will always be present.
      */
-    @JsonProperty("validation_failed") @ExcludeMissing fun _validationFailed() = validationFailed
+    @JsonProperty("validation_failed")
+    @ExcludeMissing
+    fun _validationFailed() = validationFailed
 
     @JsonAnyGetter
     @ExcludeMissing
@@ -58,39 +75,37 @@ private constructor(
 
     fun validate(): EventIngestResponse = apply {
         if (!validated) {
-            debug()?.validate()
-            validationFailed().forEach { it.validate() }
-            validated = true
+          debug()?.validate()
+          validationFailed().forEach { it.validate() }
+          validated = true
         }
     }
 
     fun toBuilder() = Builder().from(this)
 
     override fun equals(other: Any?): Boolean {
-        if (this === other) {
-            return true
-        }
+      if (this === other) {
+          return true
+      }
 
-        return other is EventIngestResponse &&
-            this.debug == other.debug &&
-            this.validationFailed == other.validationFailed &&
-            this.additionalProperties == other.additionalProperties
+      return other is EventIngestResponse &&
+          this.debug == other.debug &&
+          this.validationFailed == other.validationFailed &&
+          this.additionalProperties == other.additionalProperties
     }
 
     override fun hashCode(): Int {
-        if (hashCode == 0) {
-            hashCode =
-                Objects.hash(
-                    debug,
-                    validationFailed,
-                    additionalProperties,
-                )
-        }
-        return hashCode
+      if (hashCode == 0) {
+        hashCode = Objects.hash(
+            debug,
+            validationFailed,
+            additionalProperties,
+        )
+      }
+      return hashCode
     }
 
-    override fun toString() =
-        "EventIngestResponse{debug=$debug, validationFailed=$validationFailed, additionalProperties=$additionalProperties}"
+    override fun toString() = "EventIngestResponse{debug=$debug, validationFailed=$validationFailed, additionalProperties=$additionalProperties}"
 
     companion object {
 
@@ -110,29 +125,30 @@ private constructor(
         }
 
         /**
-         * Optional debug information (only present when debug=true is passed to the endpoint).
-         * Contains ingested and duplicate event idempotency keys.
+         * Optional debug information (only present when debug=true is passed to the
+         * endpoint). Contains ingested and duplicate event idempotency keys.
          */
         fun debug(debug: Debug) = debug(JsonField.of(debug))
 
         /**
-         * Optional debug information (only present when debug=true is passed to the endpoint).
-         * Contains ingested and duplicate event idempotency keys.
+         * Optional debug information (only present when debug=true is passed to the
+         * endpoint). Contains ingested and duplicate event idempotency keys.
          */
         @JsonProperty("debug")
         @ExcludeMissing
-        fun debug(debug: JsonField<Debug>) = apply { this.debug = debug }
+        fun debug(debug: JsonField<Debug>) = apply {
+            this.debug = debug
+        }
 
         /**
-         * Contains all failing validation events. In the case of a 200, this array will always be
-         * empty. This field will always be present.
+         * Contains all failing validation events. In the case of a 200, this array will
+         * always be empty. This field will always be present.
          */
-        fun validationFailed(validationFailed: List<ValidationFailed>) =
-            validationFailed(JsonField.of(validationFailed))
+        fun validationFailed(validationFailed: List<ValidationFailed>) = validationFailed(JsonField.of(validationFailed))
 
         /**
-         * Contains all failing validation events. In the case of a 200, this array will always be
-         * empty. This field will always be present.
+         * Contains all failing validation events. In the case of a 200, this array will
+         * always be empty. This field will always be present.
          */
         @JsonProperty("validation_failed")
         @ExcludeMissing
@@ -154,22 +170,16 @@ private constructor(
             this.additionalProperties.putAll(additionalProperties)
         }
 
-        fun build(): EventIngestResponse =
-            EventIngestResponse(
-                debug,
-                validationFailed.map { it.toUnmodifiable() },
-                additionalProperties.toUnmodifiable(),
-            )
+        fun build(): EventIngestResponse = EventIngestResponse(
+            debug,
+            validationFailed.map { it.toUnmodifiable() },
+            additionalProperties.toUnmodifiable(),
+        )
     }
 
     @JsonDeserialize(builder = ValidationFailed.Builder::class)
     @NoAutoDetect
-    class ValidationFailed
-    private constructor(
-        private val idempotencyKey: JsonField<String>,
-        private val validationErrors: JsonField<List<String>>,
-        private val additionalProperties: Map<String, JsonValue>,
-    ) {
+    class ValidationFailed private constructor(private val idempotencyKey: JsonField<String>, private val validationErrors: JsonField<List<String>>, private val additionalProperties: Map<String, JsonValue>, ) {
 
         private var validated: Boolean = false
 
@@ -178,13 +188,21 @@ private constructor(
         /** The passed idempotency_key corresponding to the validation_errors */
         fun idempotencyKey(): String = idempotencyKey.getRequired("idempotency_key")
 
-        /** An array of strings corresponding to validation failures for this idempotency_key. */
+        /**
+         * An array of strings corresponding to validation failures for this
+         * idempotency_key.
+         */
         fun validationErrors(): List<String> = validationErrors.getRequired("validation_errors")
 
         /** The passed idempotency_key corresponding to the validation_errors */
-        @JsonProperty("idempotency_key") @ExcludeMissing fun _idempotencyKey() = idempotencyKey
+        @JsonProperty("idempotency_key")
+        @ExcludeMissing
+        fun _idempotencyKey() = idempotencyKey
 
-        /** An array of strings corresponding to validation failures for this idempotency_key. */
+        /**
+         * An array of strings corresponding to validation failures for this
+         * idempotency_key.
+         */
         @JsonProperty("validation_errors")
         @ExcludeMissing
         fun _validationErrors() = validationErrors
@@ -195,39 +213,37 @@ private constructor(
 
         fun validate(): ValidationFailed = apply {
             if (!validated) {
-                idempotencyKey()
-                validationErrors()
-                validated = true
+              idempotencyKey()
+              validationErrors()
+              validated = true
             }
         }
 
         fun toBuilder() = Builder().from(this)
 
         override fun equals(other: Any?): Boolean {
-            if (this === other) {
-                return true
-            }
+          if (this === other) {
+              return true
+          }
 
-            return other is ValidationFailed &&
-                this.idempotencyKey == other.idempotencyKey &&
-                this.validationErrors == other.validationErrors &&
-                this.additionalProperties == other.additionalProperties
+          return other is ValidationFailed &&
+              this.idempotencyKey == other.idempotencyKey &&
+              this.validationErrors == other.validationErrors &&
+              this.additionalProperties == other.additionalProperties
         }
 
         override fun hashCode(): Int {
-            if (hashCode == 0) {
-                hashCode =
-                    Objects.hash(
-                        idempotencyKey,
-                        validationErrors,
-                        additionalProperties,
-                    )
-            }
-            return hashCode
+          if (hashCode == 0) {
+            hashCode = Objects.hash(
+                idempotencyKey,
+                validationErrors,
+                additionalProperties,
+            )
+          }
+          return hashCode
         }
 
-        override fun toString() =
-            "ValidationFailed{idempotencyKey=$idempotencyKey, validationErrors=$validationErrors, additionalProperties=$additionalProperties}"
+        override fun toString() = "ValidationFailed{idempotencyKey=$idempotencyKey, validationErrors=$validationErrors, additionalProperties=$additionalProperties}"
 
         companion object {
 
@@ -247,8 +263,7 @@ private constructor(
             }
 
             /** The passed idempotency_key corresponding to the validation_errors */
-            fun idempotencyKey(idempotencyKey: String) =
-                idempotencyKey(JsonField.of(idempotencyKey))
+            fun idempotencyKey(idempotencyKey: String) = idempotencyKey(JsonField.of(idempotencyKey))
 
             /** The passed idempotency_key corresponding to the validation_errors */
             @JsonProperty("idempotency_key")
@@ -258,13 +273,14 @@ private constructor(
             }
 
             /**
-             * An array of strings corresponding to validation failures for this idempotency_key.
+             * An array of strings corresponding to validation failures for this
+             * idempotency_key.
              */
-            fun validationErrors(validationErrors: List<String>) =
-                validationErrors(JsonField.of(validationErrors))
+            fun validationErrors(validationErrors: List<String>) = validationErrors(JsonField.of(validationErrors))
 
             /**
-             * An array of strings corresponding to validation failures for this idempotency_key.
+             * An array of strings corresponding to validation failures for this
+             * idempotency_key.
              */
             @JsonProperty("validation_errors")
             @ExcludeMissing
@@ -286,27 +302,21 @@ private constructor(
                 this.additionalProperties.putAll(additionalProperties)
             }
 
-            fun build(): ValidationFailed =
-                ValidationFailed(
-                    idempotencyKey,
-                    validationErrors.map { it.toUnmodifiable() },
-                    additionalProperties.toUnmodifiable(),
-                )
+            fun build(): ValidationFailed = ValidationFailed(
+                idempotencyKey,
+                validationErrors.map { it.toUnmodifiable() },
+                additionalProperties.toUnmodifiable(),
+            )
         }
     }
 
     /**
-     * Optional debug information (only present when debug=true is passed to the endpoint). Contains
-     * ingested and duplicate event idempotency keys.
+     * Optional debug information (only present when debug=true is passed to the
+     * endpoint). Contains ingested and duplicate event idempotency keys.
      */
     @JsonDeserialize(builder = Debug.Builder::class)
     @NoAutoDetect
-    class Debug
-    private constructor(
-        private val duplicate: JsonField<List<String>>,
-        private val ingested: JsonField<List<String>>,
-        private val additionalProperties: Map<String, JsonValue>,
-    ) {
+    class Debug private constructor(private val duplicate: JsonField<List<String>>, private val ingested: JsonField<List<String>>, private val additionalProperties: Map<String, JsonValue>, ) {
 
         private var validated: Boolean = false
 
@@ -316,9 +326,13 @@ private constructor(
 
         fun ingested(): List<String> = ingested.getRequired("ingested")
 
-        @JsonProperty("duplicate") @ExcludeMissing fun _duplicate() = duplicate
+        @JsonProperty("duplicate")
+        @ExcludeMissing
+        fun _duplicate() = duplicate
 
-        @JsonProperty("ingested") @ExcludeMissing fun _ingested() = ingested
+        @JsonProperty("ingested")
+        @ExcludeMissing
+        fun _ingested() = ingested
 
         @JsonAnyGetter
         @ExcludeMissing
@@ -326,39 +340,37 @@ private constructor(
 
         fun validate(): Debug = apply {
             if (!validated) {
-                duplicate()
-                ingested()
-                validated = true
+              duplicate()
+              ingested()
+              validated = true
             }
         }
 
         fun toBuilder() = Builder().from(this)
 
         override fun equals(other: Any?): Boolean {
-            if (this === other) {
-                return true
-            }
+          if (this === other) {
+              return true
+          }
 
-            return other is Debug &&
-                this.duplicate == other.duplicate &&
-                this.ingested == other.ingested &&
-                this.additionalProperties == other.additionalProperties
+          return other is Debug &&
+              this.duplicate == other.duplicate &&
+              this.ingested == other.ingested &&
+              this.additionalProperties == other.additionalProperties
         }
 
         override fun hashCode(): Int {
-            if (hashCode == 0) {
-                hashCode =
-                    Objects.hash(
-                        duplicate,
-                        ingested,
-                        additionalProperties,
-                    )
-            }
-            return hashCode
+          if (hashCode == 0) {
+            hashCode = Objects.hash(
+                duplicate,
+                ingested,
+                additionalProperties,
+            )
+          }
+          return hashCode
         }
 
-        override fun toString() =
-            "Debug{duplicate=$duplicate, ingested=$ingested, additionalProperties=$additionalProperties}"
+        override fun toString() = "Debug{duplicate=$duplicate, ingested=$ingested, additionalProperties=$additionalProperties}"
 
         companion object {
 
@@ -381,13 +393,17 @@ private constructor(
 
             @JsonProperty("duplicate")
             @ExcludeMissing
-            fun duplicate(duplicate: JsonField<List<String>>) = apply { this.duplicate = duplicate }
+            fun duplicate(duplicate: JsonField<List<String>>) = apply {
+                this.duplicate = duplicate
+            }
 
             fun ingested(ingested: List<String>) = ingested(JsonField.of(ingested))
 
             @JsonProperty("ingested")
             @ExcludeMissing
-            fun ingested(ingested: JsonField<List<String>>) = apply { this.ingested = ingested }
+            fun ingested(ingested: JsonField<List<String>>) = apply {
+                this.ingested = ingested
+            }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
@@ -403,12 +419,11 @@ private constructor(
                 this.additionalProperties.putAll(additionalProperties)
             }
 
-            fun build(): Debug =
-                Debug(
-                    duplicate.map { it.toUnmodifiable() },
-                    ingested.map { it.toUnmodifiable() },
-                    additionalProperties.toUnmodifiable(),
-                )
+            fun build(): Debug = Debug(
+                duplicate.map { it.toUnmodifiable() },
+                ingested.map { it.toUnmodifiable() },
+                additionalProperties.toUnmodifiable(),
+            )
         }
     }
 }
