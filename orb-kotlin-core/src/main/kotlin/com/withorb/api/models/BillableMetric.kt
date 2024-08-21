@@ -5,50 +5,33 @@ package com.withorb.api.models
 import com.fasterxml.jackson.annotation.JsonAnyGetter
 import com.fasterxml.jackson.annotation.JsonAnySetter
 import com.fasterxml.jackson.annotation.JsonCreator
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonProperty
-import com.fasterxml.jackson.core.JsonGenerator
-import com.fasterxml.jackson.core.ObjectCodec
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize
-import com.fasterxml.jackson.databind.annotation.JsonSerialize
-import com.fasterxml.jackson.databind.JsonNode
-import com.fasterxml.jackson.databind.SerializerProvider
-import com.fasterxml.jackson.module.kotlin.jacksonTypeRef
-import java.time.LocalDate
-import java.time.OffsetDateTime
-import java.time.format.DateTimeFormatter
-import java.util.Objects
-import java.util.Optional
-import java.util.UUID
-import com.withorb.api.core.BaseDeserializer
-import com.withorb.api.core.BaseSerializer
-import com.withorb.api.core.getOrThrow
+import com.withorb.api.core.Enum
 import com.withorb.api.core.ExcludeMissing
+import com.withorb.api.core.JsonField
 import com.withorb.api.core.JsonMissing
 import com.withorb.api.core.JsonValue
-import com.withorb.api.core.JsonNull
-import com.withorb.api.core.JsonField
-import com.withorb.api.core.Enum
-import com.withorb.api.core.toUnmodifiable
 import com.withorb.api.core.NoAutoDetect
+import com.withorb.api.core.toUnmodifiable
 import com.withorb.api.errors.OrbInvalidDataException
+import java.util.Objects
 
 /**
- * The Metric resource represents a calculation of a quantity based on events.
- * Metrics are defined by the query that transforms raw usage events into
- * meaningful values for your customers.
+ * The Metric resource represents a calculation of a quantity based on events. Metrics are defined
+ * by the query that transforms raw usage events into meaningful values for your customers.
  */
 @JsonDeserialize(builder = BillableMetric.Builder::class)
 @NoAutoDetect
-class BillableMetric private constructor(
-  private val metadata: JsonField<Metadata>,
-  private val id: JsonField<String>,
-  private val name: JsonField<String>,
-  private val description: JsonField<String>,
-  private val status: JsonField<Status>,
-  private val item: JsonField<Item>,
-  private val additionalProperties: Map<String, JsonValue>,
-
+class BillableMetric
+private constructor(
+    private val metadata: JsonField<Metadata>,
+    private val id: JsonField<String>,
+    private val name: JsonField<String>,
+    private val description: JsonField<String>,
+    private val status: JsonField<Status>,
+    private val item: JsonField<Item>,
+    private val additionalProperties: Map<String, JsonValue>,
 ) {
 
     private var validated: Boolean = false
@@ -56,10 +39,9 @@ class BillableMetric private constructor(
     private var hashCode: Int = 0
 
     /**
-     * User specified key-value pairs for the resource. If not present, this defaults
-     * to an empty dictionary. Individual keys can be removed by setting the value to
-     * `null`, and the entire metadata mapping can be cleared by setting `metadata` to
-     * `null`.
+     * User specified key-value pairs for the resource. If not present, this defaults to an empty
+     * dictionary. Individual keys can be removed by setting the value to `null`, and the entire
+     * metadata mapping can be cleared by setting `metadata` to `null`.
      */
     fun metadata(): Metadata = metadata.getRequired("metadata")
 
@@ -72,46 +54,33 @@ class BillableMetric private constructor(
     fun status(): Status = status.getRequired("status")
 
     /**
-     * The Item resource represents a sellable product or good. Items are associated
-     * with all line items, billable metrics, and prices and are used for defining
-     * external sync behavior for invoices and tax calculation purposes.
+     * The Item resource represents a sellable product or good. Items are associated with all line
+     * items, billable metrics, and prices and are used for defining external sync behavior for
+     * invoices and tax calculation purposes.
      */
     fun item(): Item = item.getRequired("item")
 
     /**
-     * User specified key-value pairs for the resource. If not present, this defaults
-     * to an empty dictionary. Individual keys can be removed by setting the value to
-     * `null`, and the entire metadata mapping can be cleared by setting `metadata` to
-     * `null`.
+     * User specified key-value pairs for the resource. If not present, this defaults to an empty
+     * dictionary. Individual keys can be removed by setting the value to `null`, and the entire
+     * metadata mapping can be cleared by setting `metadata` to `null`.
      */
-    @JsonProperty("metadata")
-    @ExcludeMissing
-    fun _metadata() = metadata
+    @JsonProperty("metadata") @ExcludeMissing fun _metadata() = metadata
 
-    @JsonProperty("id")
-    @ExcludeMissing
-    fun _id() = id
+    @JsonProperty("id") @ExcludeMissing fun _id() = id
 
-    @JsonProperty("name")
-    @ExcludeMissing
-    fun _name() = name
+    @JsonProperty("name") @ExcludeMissing fun _name() = name
 
-    @JsonProperty("description")
-    @ExcludeMissing
-    fun _description() = description
+    @JsonProperty("description") @ExcludeMissing fun _description() = description
 
-    @JsonProperty("status")
-    @ExcludeMissing
-    fun _status() = status
+    @JsonProperty("status") @ExcludeMissing fun _status() = status
 
     /**
-     * The Item resource represents a sellable product or good. Items are associated
-     * with all line items, billable metrics, and prices and are used for defining
-     * external sync behavior for invoices and tax calculation purposes.
+     * The Item resource represents a sellable product or good. Items are associated with all line
+     * items, billable metrics, and prices and are used for defining external sync behavior for
+     * invoices and tax calculation purposes.
      */
-    @JsonProperty("item")
-    @ExcludeMissing
-    fun _item() = item
+    @JsonProperty("item") @ExcludeMissing fun _item() = item
 
     @JsonAnyGetter
     @ExcludeMissing
@@ -119,49 +88,51 @@ class BillableMetric private constructor(
 
     fun validate(): BillableMetric = apply {
         if (!validated) {
-          metadata().validate()
-          id()
-          name()
-          description()
-          status()
-          item().validate()
-          validated = true
+            metadata().validate()
+            id()
+            name()
+            description()
+            status()
+            item().validate()
+            validated = true
         }
     }
 
     fun toBuilder() = Builder().from(this)
 
     override fun equals(other: Any?): Boolean {
-      if (this === other) {
-          return true
-      }
+        if (this === other) {
+            return true
+        }
 
-      return other is BillableMetric &&
-          this.metadata == other.metadata &&
-          this.id == other.id &&
-          this.name == other.name &&
-          this.description == other.description &&
-          this.status == other.status &&
-          this.item == other.item &&
-          this.additionalProperties == other.additionalProperties
+        return other is BillableMetric &&
+            this.metadata == other.metadata &&
+            this.id == other.id &&
+            this.name == other.name &&
+            this.description == other.description &&
+            this.status == other.status &&
+            this.item == other.item &&
+            this.additionalProperties == other.additionalProperties
     }
 
     override fun hashCode(): Int {
-      if (hashCode == 0) {
-        hashCode = Objects.hash(
-            metadata,
-            id,
-            name,
-            description,
-            status,
-            item,
-            additionalProperties,
-        )
-      }
-      return hashCode
+        if (hashCode == 0) {
+            hashCode =
+                Objects.hash(
+                    metadata,
+                    id,
+                    name,
+                    description,
+                    status,
+                    item,
+                    additionalProperties,
+                )
+        }
+        return hashCode
     }
 
-    override fun toString() = "BillableMetric{metadata=$metadata, id=$id, name=$name, description=$description, status=$status, item=$item, additionalProperties=$additionalProperties}"
+    override fun toString() =
+        "BillableMetric{metadata=$metadata, id=$id, name=$name, description=$description, status=$status, item=$item, additionalProperties=$additionalProperties}"
 
     companion object {
 
@@ -189,74 +160,58 @@ class BillableMetric private constructor(
         }
 
         /**
-         * User specified key-value pairs for the resource. If not present, this defaults
-         * to an empty dictionary. Individual keys can be removed by setting the value to
-         * `null`, and the entire metadata mapping can be cleared by setting `metadata` to
-         * `null`.
+         * User specified key-value pairs for the resource. If not present, this defaults to an
+         * empty dictionary. Individual keys can be removed by setting the value to `null`, and the
+         * entire metadata mapping can be cleared by setting `metadata` to `null`.
          */
         fun metadata(metadata: Metadata) = metadata(JsonField.of(metadata))
 
         /**
-         * User specified key-value pairs for the resource. If not present, this defaults
-         * to an empty dictionary. Individual keys can be removed by setting the value to
-         * `null`, and the entire metadata mapping can be cleared by setting `metadata` to
-         * `null`.
+         * User specified key-value pairs for the resource. If not present, this defaults to an
+         * empty dictionary. Individual keys can be removed by setting the value to `null`, and the
+         * entire metadata mapping can be cleared by setting `metadata` to `null`.
          */
         @JsonProperty("metadata")
         @ExcludeMissing
-        fun metadata(metadata: JsonField<Metadata>) = apply {
-            this.metadata = metadata
-        }
+        fun metadata(metadata: JsonField<Metadata>) = apply { this.metadata = metadata }
 
         fun id(id: String) = id(JsonField.of(id))
 
-        @JsonProperty("id")
-        @ExcludeMissing
-        fun id(id: JsonField<String>) = apply {
-            this.id = id
-        }
+        @JsonProperty("id") @ExcludeMissing fun id(id: JsonField<String>) = apply { this.id = id }
 
         fun name(name: String) = name(JsonField.of(name))
 
         @JsonProperty("name")
         @ExcludeMissing
-        fun name(name: JsonField<String>) = apply {
-            this.name = name
-        }
+        fun name(name: JsonField<String>) = apply { this.name = name }
 
         fun description(description: String) = description(JsonField.of(description))
 
         @JsonProperty("description")
         @ExcludeMissing
-        fun description(description: JsonField<String>) = apply {
-            this.description = description
-        }
+        fun description(description: JsonField<String>) = apply { this.description = description }
 
         fun status(status: Status) = status(JsonField.of(status))
 
         @JsonProperty("status")
         @ExcludeMissing
-        fun status(status: JsonField<Status>) = apply {
-            this.status = status
-        }
+        fun status(status: JsonField<Status>) = apply { this.status = status }
 
         /**
-         * The Item resource represents a sellable product or good. Items are associated
-         * with all line items, billable metrics, and prices and are used for defining
-         * external sync behavior for invoices and tax calculation purposes.
+         * The Item resource represents a sellable product or good. Items are associated with all
+         * line items, billable metrics, and prices and are used for defining external sync behavior
+         * for invoices and tax calculation purposes.
          */
         fun item(item: Item) = item(JsonField.of(item))
 
         /**
-         * The Item resource represents a sellable product or good. Items are associated
-         * with all line items, billable metrics, and prices and are used for defining
-         * external sync behavior for invoices and tax calculation purposes.
+         * The Item resource represents a sellable product or good. Items are associated with all
+         * line items, billable metrics, and prices and are used for defining external sync behavior
+         * for invoices and tax calculation purposes.
          */
         @JsonProperty("item")
         @ExcludeMissing
-        fun item(item: JsonField<Item>) = apply {
-            this.item = item
-        }
+        fun item(item: JsonField<Item>) = apply { this.item = item }
 
         fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
             this.additionalProperties.clear()
@@ -272,26 +227,29 @@ class BillableMetric private constructor(
             this.additionalProperties.putAll(additionalProperties)
         }
 
-        fun build(): BillableMetric = BillableMetric(
-            metadata,
-            id,
-            name,
-            description,
-            status,
-            item,
-            additionalProperties.toUnmodifiable(),
-        )
+        fun build(): BillableMetric =
+            BillableMetric(
+                metadata,
+                id,
+                name,
+                description,
+                status,
+                item,
+                additionalProperties.toUnmodifiable(),
+            )
     }
 
     /**
-     * User specified key-value pairs for the resource. If not present, this defaults
-     * to an empty dictionary. Individual keys can be removed by setting the value to
-     * `null`, and the entire metadata mapping can be cleared by setting `metadata` to
-     * `null`.
+     * User specified key-value pairs for the resource. If not present, this defaults to an empty
+     * dictionary. Individual keys can be removed by setting the value to `null`, and the entire
+     * metadata mapping can be cleared by setting `metadata` to `null`.
      */
     @JsonDeserialize(builder = Metadata.Builder::class)
     @NoAutoDetect
-    class Metadata private constructor(private val additionalProperties: Map<String, JsonValue>, ) {
+    class Metadata
+    private constructor(
+        private val additionalProperties: Map<String, JsonValue>,
+    ) {
 
         private var validated: Boolean = false
 
@@ -303,26 +261,25 @@ class BillableMetric private constructor(
 
         fun validate(): Metadata = apply {
             if (!validated) {
-              validated = true
+                validated = true
             }
         }
 
         fun toBuilder() = Builder().from(this)
 
         override fun equals(other: Any?): Boolean {
-          if (this === other) {
-              return true
-          }
+            if (this === other) {
+                return true
+            }
 
-          return other is Metadata &&
-              this.additionalProperties == other.additionalProperties
+            return other is Metadata && this.additionalProperties == other.additionalProperties
         }
 
         override fun hashCode(): Int {
-          if (hashCode == 0) {
-            hashCode = Objects.hash(additionalProperties)
-          }
-          return hashCode
+            if (hashCode == 0) {
+                hashCode = Objects.hash(additionalProperties)
+            }
+            return hashCode
         }
 
         override fun toString() = "Metadata{additionalProperties=$additionalProperties}"
@@ -358,18 +315,20 @@ class BillableMetric private constructor(
         }
     }
 
-    class Status @JsonCreator private constructor(private val value: JsonField<String>, ) : Enum {
+    class Status
+    @JsonCreator
+    private constructor(
+        private val value: JsonField<String>,
+    ) : Enum {
 
-        @com.fasterxml.jackson.annotation.JsonValue
-        fun _value(): JsonField<String> = value
+        @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
 
         override fun equals(other: Any?): Boolean {
-          if (this === other) {
-              return true
-          }
+            if (this === other) {
+                return true
+            }
 
-          return other is Status &&
-              this.value == other.value
+            return other is Status && this.value == other.value
         }
 
         override fun hashCode() = value.hashCode()
@@ -400,19 +359,21 @@ class BillableMetric private constructor(
             _UNKNOWN,
         }
 
-        fun value(): Value = when (this) {
-            ACTIVE -> Value.ACTIVE
-            DRAFT -> Value.DRAFT
-            ARCHIVED -> Value.ARCHIVED
-            else -> Value._UNKNOWN
-        }
+        fun value(): Value =
+            when (this) {
+                ACTIVE -> Value.ACTIVE
+                DRAFT -> Value.DRAFT
+                ARCHIVED -> Value.ARCHIVED
+                else -> Value._UNKNOWN
+            }
 
-        fun known(): Known = when (this) {
-            ACTIVE -> Known.ACTIVE
-            DRAFT -> Known.DRAFT
-            ARCHIVED -> Known.ARCHIVED
-            else -> throw OrbInvalidDataException("Unknown Status: $value")
-        }
+        fun known(): Known =
+            when (this) {
+                ACTIVE -> Known.ACTIVE
+                DRAFT -> Known.DRAFT
+                ARCHIVED -> Known.ARCHIVED
+                else -> throw OrbInvalidDataException("Unknown Status: $value")
+            }
 
         fun asString(): String = _value().asStringOrThrow()
     }

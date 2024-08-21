@@ -2,50 +2,28 @@
 
 package com.withorb.api.models
 
-import com.fasterxml.jackson.annotation.JsonAnyGetter
-import com.fasterxml.jackson.annotation.JsonAnySetter
 import com.fasterxml.jackson.annotation.JsonCreator
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties
-import com.fasterxml.jackson.annotation.JsonProperty
-import com.fasterxml.jackson.core.JsonGenerator
-import com.fasterxml.jackson.core.ObjectCodec
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize
-import com.fasterxml.jackson.databind.annotation.JsonSerialize
-import com.fasterxml.jackson.databind.JsonNode
-import com.fasterxml.jackson.databind.SerializerProvider
-import com.fasterxml.jackson.module.kotlin.jacksonTypeRef
-import org.apache.hc.core5.http.ContentType
-import java.time.LocalDate
+import com.withorb.api.core.Enum
+import com.withorb.api.core.JsonField
+import com.withorb.api.core.JsonValue
+import com.withorb.api.core.NoAutoDetect
+import com.withorb.api.core.toUnmodifiable
+import com.withorb.api.errors.OrbInvalidDataException
+import com.withorb.api.models.*
 import java.time.OffsetDateTime
 import java.time.format.DateTimeFormatter
 import java.util.Objects
-import java.util.Optional
-import java.util.UUID
-import com.withorb.api.core.BaseDeserializer
-import com.withorb.api.core.BaseSerializer
-import com.withorb.api.core.getOrThrow
-import com.withorb.api.core.ExcludeMissing
-import com.withorb.api.core.JsonField
-import com.withorb.api.core.JsonMissing
-import com.withorb.api.core.JsonValue
-import com.withorb.api.core.MultipartFormValue
-import com.withorb.api.core.toUnmodifiable
-import com.withorb.api.core.NoAutoDetect
-import com.withorb.api.core.Enum
-import com.withorb.api.core.ContentTypes
-import com.withorb.api.errors.OrbInvalidDataException
-import com.withorb.api.models.*
 
-class CustomerCostListByExternalIdParams constructor(
-  private val externalCustomerId: String,
-  private val currency: String?,
-  private val timeframeEnd: OffsetDateTime?,
-  private val timeframeStart: OffsetDateTime?,
-  private val viewMode: ViewMode?,
-  private val additionalQueryParams: Map<String, List<String>>,
-  private val additionalHeaders: Map<String, List<String>>,
-  private val additionalBodyProperties: Map<String, JsonValue>,
-
+class CustomerCostListByExternalIdParams
+constructor(
+    private val externalCustomerId: String,
+    private val currency: String?,
+    private val timeframeEnd: OffsetDateTime?,
+    private val timeframeStart: OffsetDateTime?,
+    private val viewMode: ViewMode?,
+    private val additionalQueryParams: Map<String, List<String>>,
+    private val additionalHeaders: Map<String, List<String>>,
+    private val additionalBodyProperties: Map<String, JsonValue>,
 ) {
 
     fun externalCustomerId(): String = externalCustomerId
@@ -59,30 +37,26 @@ class CustomerCostListByExternalIdParams constructor(
     fun viewMode(): ViewMode? = viewMode
 
     internal fun getQueryParams(): Map<String, List<String>> {
-      val params = mutableMapOf<String, List<String>>()
-      this.currency?.let {
-          params.put("currency", listOf(it.toString()))
-      }
-      this.timeframeEnd?.let {
-          params.put("timeframe_end", listOf(DateTimeFormatter.ISO_OFFSET_DATE_TIME.format(it)))
-      }
-      this.timeframeStart?.let {
-          params.put("timeframe_start", listOf(DateTimeFormatter.ISO_OFFSET_DATE_TIME.format(it)))
-      }
-      this.viewMode?.let {
-          params.put("view_mode", listOf(it.toString()))
-      }
-      params.putAll(additionalQueryParams)
-      return params.toUnmodifiable()
+        val params = mutableMapOf<String, List<String>>()
+        this.currency?.let { params.put("currency", listOf(it.toString())) }
+        this.timeframeEnd?.let {
+            params.put("timeframe_end", listOf(DateTimeFormatter.ISO_OFFSET_DATE_TIME.format(it)))
+        }
+        this.timeframeStart?.let {
+            params.put("timeframe_start", listOf(DateTimeFormatter.ISO_OFFSET_DATE_TIME.format(it)))
+        }
+        this.viewMode?.let { params.put("view_mode", listOf(it.toString())) }
+        params.putAll(additionalQueryParams)
+        return params.toUnmodifiable()
     }
 
     internal fun getHeaders(): Map<String, List<String>> = additionalHeaders
 
     fun getPathParam(index: Int): String {
-      return when (index) {
-          0 -> externalCustomerId
-          else -> ""
-      }
+        return when (index) {
+            0 -> externalCustomerId
+            else -> ""
+        }
     }
 
     fun _additionalQueryParams(): Map<String, List<String>> = additionalQueryParams
@@ -92,35 +66,36 @@ class CustomerCostListByExternalIdParams constructor(
     fun _additionalBodyProperties(): Map<String, JsonValue> = additionalBodyProperties
 
     override fun equals(other: Any?): Boolean {
-      if (this === other) {
-          return true
-      }
+        if (this === other) {
+            return true
+        }
 
-      return other is CustomerCostListByExternalIdParams &&
-          this.externalCustomerId == other.externalCustomerId &&
-          this.currency == other.currency &&
-          this.timeframeEnd == other.timeframeEnd &&
-          this.timeframeStart == other.timeframeStart &&
-          this.viewMode == other.viewMode &&
-          this.additionalQueryParams == other.additionalQueryParams &&
-          this.additionalHeaders == other.additionalHeaders &&
-          this.additionalBodyProperties == other.additionalBodyProperties
+        return other is CustomerCostListByExternalIdParams &&
+            this.externalCustomerId == other.externalCustomerId &&
+            this.currency == other.currency &&
+            this.timeframeEnd == other.timeframeEnd &&
+            this.timeframeStart == other.timeframeStart &&
+            this.viewMode == other.viewMode &&
+            this.additionalQueryParams == other.additionalQueryParams &&
+            this.additionalHeaders == other.additionalHeaders &&
+            this.additionalBodyProperties == other.additionalBodyProperties
     }
 
     override fun hashCode(): Int {
-      return Objects.hash(
-          externalCustomerId,
-          currency,
-          timeframeEnd,
-          timeframeStart,
-          viewMode,
-          additionalQueryParams,
-          additionalHeaders,
-          additionalBodyProperties,
-      )
+        return Objects.hash(
+            externalCustomerId,
+            currency,
+            timeframeEnd,
+            timeframeStart,
+            viewMode,
+            additionalQueryParams,
+            additionalHeaders,
+            additionalBodyProperties,
+        )
     }
 
-    override fun toString() = "CustomerCostListByExternalIdParams{externalCustomerId=$externalCustomerId, currency=$currency, timeframeEnd=$timeframeEnd, timeframeStart=$timeframeStart, viewMode=$viewMode, additionalQueryParams=$additionalQueryParams, additionalHeaders=$additionalHeaders, additionalBodyProperties=$additionalBodyProperties}"
+    override fun toString() =
+        "CustomerCostListByExternalIdParams{externalCustomerId=$externalCustomerId, currency=$currency, timeframeEnd=$timeframeEnd, timeframeStart=$timeframeStart, viewMode=$viewMode, additionalQueryParams=$additionalQueryParams, additionalHeaders=$additionalHeaders, additionalBodyProperties=$additionalBodyProperties}"
 
     fun toBuilder() = Builder().from(this)
 
@@ -141,30 +116,29 @@ class CustomerCostListByExternalIdParams constructor(
         private var additionalHeaders: MutableMap<String, MutableList<String>> = mutableMapOf()
         private var additionalBodyProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
-        internal fun from(customerCostListByExternalIdParams: CustomerCostListByExternalIdParams) = apply {
-            this.externalCustomerId = customerCostListByExternalIdParams.externalCustomerId
-            this.currency = customerCostListByExternalIdParams.currency
-            this.timeframeEnd = customerCostListByExternalIdParams.timeframeEnd
-            this.timeframeStart = customerCostListByExternalIdParams.timeframeStart
-            this.viewMode = customerCostListByExternalIdParams.viewMode
-            additionalQueryParams(customerCostListByExternalIdParams.additionalQueryParams)
-            additionalHeaders(customerCostListByExternalIdParams.additionalHeaders)
-            additionalBodyProperties(customerCostListByExternalIdParams.additionalBodyProperties)
-        }
+        internal fun from(customerCostListByExternalIdParams: CustomerCostListByExternalIdParams) =
+            apply {
+                this.externalCustomerId = customerCostListByExternalIdParams.externalCustomerId
+                this.currency = customerCostListByExternalIdParams.currency
+                this.timeframeEnd = customerCostListByExternalIdParams.timeframeEnd
+                this.timeframeStart = customerCostListByExternalIdParams.timeframeStart
+                this.viewMode = customerCostListByExternalIdParams.viewMode
+                additionalQueryParams(customerCostListByExternalIdParams.additionalQueryParams)
+                additionalHeaders(customerCostListByExternalIdParams.additionalHeaders)
+                additionalBodyProperties(
+                    customerCostListByExternalIdParams.additionalBodyProperties
+                )
+            }
 
         fun externalCustomerId(externalCustomerId: String) = apply {
             this.externalCustomerId = externalCustomerId
         }
 
         /** The currency or custom pricing unit to use. */
-        fun currency(currency: String) = apply {
-            this.currency = currency
-        }
+        fun currency(currency: String) = apply { this.currency = currency }
 
         /** Costs returned are exclusive of `timeframe_end`. */
-        fun timeframeEnd(timeframeEnd: OffsetDateTime) = apply {
-            this.timeframeEnd = timeframeEnd
-        }
+        fun timeframeEnd(timeframeEnd: OffsetDateTime) = apply { this.timeframeEnd = timeframeEnd }
 
         /** Costs returned are inclusive of `timeframe_start`. */
         fun timeframeStart(timeframeStart: OffsetDateTime) = apply {
@@ -172,14 +146,11 @@ class CustomerCostListByExternalIdParams constructor(
         }
 
         /**
-         * Controls whether Orb returns cumulative costs since the start of the billing
-         * period, or incremental day-by-day costs. If your customer has minimums or
-         * discounts, it's strongly recommended that you use the default cumulative
-         * behavior.
+         * Controls whether Orb returns cumulative costs since the start of the billing period, or
+         * incremental day-by-day costs. If your customer has minimums or discounts, it's strongly
+         * recommended that you use the default cumulative behavior.
          */
-        fun viewMode(viewMode: ViewMode) = apply {
-            this.viewMode = viewMode
-        }
+        fun viewMode(viewMode: ViewMode) = apply { this.viewMode = viewMode }
 
         fun additionalQueryParams(additionalQueryParams: Map<String, List<String>>) = apply {
             this.additionalQueryParams.clear()
@@ -219,9 +190,7 @@ class CustomerCostListByExternalIdParams constructor(
             additionalHeaders.forEach(this::putHeaders)
         }
 
-        fun removeHeader(name: String) = apply {
-            this.additionalHeaders.put(name, mutableListOf())
-        }
+        fun removeHeader(name: String) = apply { this.additionalHeaders.put(name, mutableListOf()) }
 
         fun additionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) = apply {
             this.additionalBodyProperties.clear()
@@ -232,36 +201,40 @@ class CustomerCostListByExternalIdParams constructor(
             this.additionalBodyProperties.put(key, value)
         }
 
-        fun putAllAdditionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) = apply {
-            this.additionalBodyProperties.putAll(additionalBodyProperties)
-        }
+        fun putAllAdditionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) =
+            apply {
+                this.additionalBodyProperties.putAll(additionalBodyProperties)
+            }
 
-        fun build(): CustomerCostListByExternalIdParams = CustomerCostListByExternalIdParams(
-            checkNotNull(externalCustomerId) {
-                "`externalCustomerId` is required but was not set"
-            },
-            currency,
-            timeframeEnd,
-            timeframeStart,
-            viewMode,
-            additionalQueryParams.mapValues { it.value.toUnmodifiable() }.toUnmodifiable(),
-            additionalHeaders.mapValues { it.value.toUnmodifiable() }.toUnmodifiable(),
-            additionalBodyProperties.toUnmodifiable(),
-        )
+        fun build(): CustomerCostListByExternalIdParams =
+            CustomerCostListByExternalIdParams(
+                checkNotNull(externalCustomerId) {
+                    "`externalCustomerId` is required but was not set"
+                },
+                currency,
+                timeframeEnd,
+                timeframeStart,
+                viewMode,
+                additionalQueryParams.mapValues { it.value.toUnmodifiable() }.toUnmodifiable(),
+                additionalHeaders.mapValues { it.value.toUnmodifiable() }.toUnmodifiable(),
+                additionalBodyProperties.toUnmodifiable(),
+            )
     }
 
-    class ViewMode @JsonCreator private constructor(private val value: JsonField<String>, ) : Enum {
+    class ViewMode
+    @JsonCreator
+    private constructor(
+        private val value: JsonField<String>,
+    ) : Enum {
 
-        @com.fasterxml.jackson.annotation.JsonValue
-        fun _value(): JsonField<String> = value
+        @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
 
         override fun equals(other: Any?): Boolean {
-          if (this === other) {
-              return true
-          }
+            if (this === other) {
+                return true
+            }
 
-          return other is ViewMode &&
-              this.value == other.value
+            return other is ViewMode && this.value == other.value
         }
 
         override fun hashCode() = value.hashCode()
@@ -288,17 +261,19 @@ class CustomerCostListByExternalIdParams constructor(
             _UNKNOWN,
         }
 
-        fun value(): Value = when (this) {
-            PERIODIC -> Value.PERIODIC
-            CUMULATIVE -> Value.CUMULATIVE
-            else -> Value._UNKNOWN
-        }
+        fun value(): Value =
+            when (this) {
+                PERIODIC -> Value.PERIODIC
+                CUMULATIVE -> Value.CUMULATIVE
+                else -> Value._UNKNOWN
+            }
 
-        fun known(): Known = when (this) {
-            PERIODIC -> Known.PERIODIC
-            CUMULATIVE -> Known.CUMULATIVE
-            else -> throw OrbInvalidDataException("Unknown ViewMode: $value")
-        }
+        fun known(): Known =
+            when (this) {
+                PERIODIC -> Known.PERIODIC
+                CUMULATIVE -> Known.CUMULATIVE
+                else -> throw OrbInvalidDataException("Unknown ViewMode: $value")
+            }
 
         fun asString(): String = _value().asStringOrThrow()
     }

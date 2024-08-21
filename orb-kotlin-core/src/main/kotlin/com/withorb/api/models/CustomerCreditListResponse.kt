@@ -5,46 +5,31 @@ package com.withorb.api.models
 import com.fasterxml.jackson.annotation.JsonAnyGetter
 import com.fasterxml.jackson.annotation.JsonAnySetter
 import com.fasterxml.jackson.annotation.JsonCreator
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonProperty
-import com.fasterxml.jackson.core.JsonGenerator
-import com.fasterxml.jackson.core.ObjectCodec
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize
-import com.fasterxml.jackson.databind.annotation.JsonSerialize
-import com.fasterxml.jackson.databind.JsonNode
-import com.fasterxml.jackson.databind.SerializerProvider
-import com.fasterxml.jackson.module.kotlin.jacksonTypeRef
-import java.time.LocalDate
-import java.time.OffsetDateTime
-import java.time.format.DateTimeFormatter
-import java.util.Objects
-import java.util.Optional
-import java.util.UUID
-import com.withorb.api.core.BaseDeserializer
-import com.withorb.api.core.BaseSerializer
-import com.withorb.api.core.getOrThrow
+import com.withorb.api.core.Enum
 import com.withorb.api.core.ExcludeMissing
+import com.withorb.api.core.JsonField
 import com.withorb.api.core.JsonMissing
 import com.withorb.api.core.JsonValue
-import com.withorb.api.core.JsonNull
-import com.withorb.api.core.JsonField
-import com.withorb.api.core.Enum
-import com.withorb.api.core.toUnmodifiable
 import com.withorb.api.core.NoAutoDetect
+import com.withorb.api.core.toUnmodifiable
 import com.withorb.api.errors.OrbInvalidDataException
+import java.time.OffsetDateTime
+import java.util.Objects
 
 @JsonDeserialize(builder = CustomerCreditListResponse.Builder::class)
 @NoAutoDetect
-class CustomerCreditListResponse private constructor(
-  private val id: JsonField<String>,
-  private val balance: JsonField<Double>,
-  private val effectiveDate: JsonField<OffsetDateTime>,
-  private val expiryDate: JsonField<OffsetDateTime>,
-  private val perUnitCostBasis: JsonField<String>,
-  private val status: JsonField<Status>,
-  private val maximumInitialBalance: JsonField<Double>,
-  private val additionalProperties: Map<String, JsonValue>,
-
+class CustomerCreditListResponse
+private constructor(
+    private val id: JsonField<String>,
+    private val balance: JsonField<Double>,
+    private val effectiveDate: JsonField<OffsetDateTime>,
+    private val expiryDate: JsonField<OffsetDateTime>,
+    private val perUnitCostBasis: JsonField<String>,
+    private val status: JsonField<Status>,
+    private val maximumInitialBalance: JsonField<Double>,
+    private val additionalProperties: Map<String, JsonValue>,
 ) {
 
     private var validated: Boolean = false
@@ -63,31 +48,20 @@ class CustomerCreditListResponse private constructor(
 
     fun status(): Status = status.getRequired("status")
 
-    fun maximumInitialBalance(): Double? = maximumInitialBalance.getNullable("maximum_initial_balance")
+    fun maximumInitialBalance(): Double? =
+        maximumInitialBalance.getNullable("maximum_initial_balance")
 
-    @JsonProperty("id")
-    @ExcludeMissing
-    fun _id() = id
+    @JsonProperty("id") @ExcludeMissing fun _id() = id
 
-    @JsonProperty("balance")
-    @ExcludeMissing
-    fun _balance() = balance
+    @JsonProperty("balance") @ExcludeMissing fun _balance() = balance
 
-    @JsonProperty("effective_date")
-    @ExcludeMissing
-    fun _effectiveDate() = effectiveDate
+    @JsonProperty("effective_date") @ExcludeMissing fun _effectiveDate() = effectiveDate
 
-    @JsonProperty("expiry_date")
-    @ExcludeMissing
-    fun _expiryDate() = expiryDate
+    @JsonProperty("expiry_date") @ExcludeMissing fun _expiryDate() = expiryDate
 
-    @JsonProperty("per_unit_cost_basis")
-    @ExcludeMissing
-    fun _perUnitCostBasis() = perUnitCostBasis
+    @JsonProperty("per_unit_cost_basis") @ExcludeMissing fun _perUnitCostBasis() = perUnitCostBasis
 
-    @JsonProperty("status")
-    @ExcludeMissing
-    fun _status() = status
+    @JsonProperty("status") @ExcludeMissing fun _status() = status
 
     @JsonProperty("maximum_initial_balance")
     @ExcludeMissing
@@ -99,52 +73,54 @@ class CustomerCreditListResponse private constructor(
 
     fun validate(): CustomerCreditListResponse = apply {
         if (!validated) {
-          id()
-          balance()
-          effectiveDate()
-          expiryDate()
-          perUnitCostBasis()
-          status()
-          maximumInitialBalance()
-          validated = true
+            id()
+            balance()
+            effectiveDate()
+            expiryDate()
+            perUnitCostBasis()
+            status()
+            maximumInitialBalance()
+            validated = true
         }
     }
 
     fun toBuilder() = Builder().from(this)
 
     override fun equals(other: Any?): Boolean {
-      if (this === other) {
-          return true
-      }
+        if (this === other) {
+            return true
+        }
 
-      return other is CustomerCreditListResponse &&
-          this.id == other.id &&
-          this.balance == other.balance &&
-          this.effectiveDate == other.effectiveDate &&
-          this.expiryDate == other.expiryDate &&
-          this.perUnitCostBasis == other.perUnitCostBasis &&
-          this.status == other.status &&
-          this.maximumInitialBalance == other.maximumInitialBalance &&
-          this.additionalProperties == other.additionalProperties
+        return other is CustomerCreditListResponse &&
+            this.id == other.id &&
+            this.balance == other.balance &&
+            this.effectiveDate == other.effectiveDate &&
+            this.expiryDate == other.expiryDate &&
+            this.perUnitCostBasis == other.perUnitCostBasis &&
+            this.status == other.status &&
+            this.maximumInitialBalance == other.maximumInitialBalance &&
+            this.additionalProperties == other.additionalProperties
     }
 
     override fun hashCode(): Int {
-      if (hashCode == 0) {
-        hashCode = Objects.hash(
-            id,
-            balance,
-            effectiveDate,
-            expiryDate,
-            perUnitCostBasis,
-            status,
-            maximumInitialBalance,
-            additionalProperties,
-        )
-      }
-      return hashCode
+        if (hashCode == 0) {
+            hashCode =
+                Objects.hash(
+                    id,
+                    balance,
+                    effectiveDate,
+                    expiryDate,
+                    perUnitCostBasis,
+                    status,
+                    maximumInitialBalance,
+                    additionalProperties,
+                )
+        }
+        return hashCode
     }
 
-    override fun toString() = "CustomerCreditListResponse{id=$id, balance=$balance, effectiveDate=$effectiveDate, expiryDate=$expiryDate, perUnitCostBasis=$perUnitCostBasis, status=$status, maximumInitialBalance=$maximumInitialBalance, additionalProperties=$additionalProperties}"
+    override fun toString() =
+        "CustomerCreditListResponse{id=$id, balance=$balance, effectiveDate=$effectiveDate, expiryDate=$expiryDate, perUnitCostBasis=$perUnitCostBasis, status=$status, maximumInitialBalance=$maximumInitialBalance, additionalProperties=$additionalProperties}"
 
     companion object {
 
@@ -175,21 +151,16 @@ class CustomerCreditListResponse private constructor(
 
         fun id(id: String) = id(JsonField.of(id))
 
-        @JsonProperty("id")
-        @ExcludeMissing
-        fun id(id: JsonField<String>) = apply {
-            this.id = id
-        }
+        @JsonProperty("id") @ExcludeMissing fun id(id: JsonField<String>) = apply { this.id = id }
 
         fun balance(balance: Double) = balance(JsonField.of(balance))
 
         @JsonProperty("balance")
         @ExcludeMissing
-        fun balance(balance: JsonField<Double>) = apply {
-            this.balance = balance
-        }
+        fun balance(balance: JsonField<Double>) = apply { this.balance = balance }
 
-        fun effectiveDate(effectiveDate: OffsetDateTime) = effectiveDate(JsonField.of(effectiveDate))
+        fun effectiveDate(effectiveDate: OffsetDateTime) =
+            effectiveDate(JsonField.of(effectiveDate))
 
         @JsonProperty("effective_date")
         @ExcludeMissing
@@ -205,7 +176,8 @@ class CustomerCreditListResponse private constructor(
             this.expiryDate = expiryDate
         }
 
-        fun perUnitCostBasis(perUnitCostBasis: String) = perUnitCostBasis(JsonField.of(perUnitCostBasis))
+        fun perUnitCostBasis(perUnitCostBasis: String) =
+            perUnitCostBasis(JsonField.of(perUnitCostBasis))
 
         @JsonProperty("per_unit_cost_basis")
         @ExcludeMissing
@@ -217,11 +189,10 @@ class CustomerCreditListResponse private constructor(
 
         @JsonProperty("status")
         @ExcludeMissing
-        fun status(status: JsonField<Status>) = apply {
-            this.status = status
-        }
+        fun status(status: JsonField<Status>) = apply { this.status = status }
 
-        fun maximumInitialBalance(maximumInitialBalance: Double) = maximumInitialBalance(JsonField.of(maximumInitialBalance))
+        fun maximumInitialBalance(maximumInitialBalance: Double) =
+            maximumInitialBalance(JsonField.of(maximumInitialBalance))
 
         @JsonProperty("maximum_initial_balance")
         @ExcludeMissing
@@ -243,30 +214,33 @@ class CustomerCreditListResponse private constructor(
             this.additionalProperties.putAll(additionalProperties)
         }
 
-        fun build(): CustomerCreditListResponse = CustomerCreditListResponse(
-            id,
-            balance,
-            effectiveDate,
-            expiryDate,
-            perUnitCostBasis,
-            status,
-            maximumInitialBalance,
-            additionalProperties.toUnmodifiable(),
-        )
+        fun build(): CustomerCreditListResponse =
+            CustomerCreditListResponse(
+                id,
+                balance,
+                effectiveDate,
+                expiryDate,
+                perUnitCostBasis,
+                status,
+                maximumInitialBalance,
+                additionalProperties.toUnmodifiable(),
+            )
     }
 
-    class Status @JsonCreator private constructor(private val value: JsonField<String>, ) : Enum {
+    class Status
+    @JsonCreator
+    private constructor(
+        private val value: JsonField<String>,
+    ) : Enum {
 
-        @com.fasterxml.jackson.annotation.JsonValue
-        fun _value(): JsonField<String> = value
+        @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
 
         override fun equals(other: Any?): Boolean {
-          if (this === other) {
-              return true
-          }
+            if (this === other) {
+                return true
+            }
 
-          return other is Status &&
-              this.value == other.value
+            return other is Status && this.value == other.value
         }
 
         override fun hashCode() = value.hashCode()
@@ -293,17 +267,19 @@ class CustomerCreditListResponse private constructor(
             _UNKNOWN,
         }
 
-        fun value(): Value = when (this) {
-            ACTIVE -> Value.ACTIVE
-            PENDING_PAYMENT -> Value.PENDING_PAYMENT
-            else -> Value._UNKNOWN
-        }
+        fun value(): Value =
+            when (this) {
+                ACTIVE -> Value.ACTIVE
+                PENDING_PAYMENT -> Value.PENDING_PAYMENT
+                else -> Value._UNKNOWN
+            }
 
-        fun known(): Known = when (this) {
-            ACTIVE -> Known.ACTIVE
-            PENDING_PAYMENT -> Known.PENDING_PAYMENT
-            else -> throw OrbInvalidDataException("Unknown Status: $value")
-        }
+        fun known(): Known =
+            when (this) {
+                ACTIVE -> Known.ACTIVE
+                PENDING_PAYMENT -> Known.PENDING_PAYMENT
+                else -> throw OrbInvalidDataException("Unknown Status: $value")
+            }
 
         fun asString(): String = _value().asStringOrThrow()
     }
