@@ -5,46 +5,27 @@ package com.withorb.api.models
 import com.fasterxml.jackson.annotation.JsonAnyGetter
 import com.fasterxml.jackson.annotation.JsonAnySetter
 import com.fasterxml.jackson.annotation.JsonCreator
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonProperty
-import com.fasterxml.jackson.core.JsonGenerator
-import com.fasterxml.jackson.core.ObjectCodec
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize
-import com.fasterxml.jackson.databind.annotation.JsonSerialize
-import com.fasterxml.jackson.databind.JsonNode
-import com.fasterxml.jackson.databind.SerializerProvider
-import com.fasterxml.jackson.module.kotlin.jacksonTypeRef
-import org.apache.hc.core5.http.ContentType
-import java.time.LocalDate
-import java.time.OffsetDateTime
-import java.time.format.DateTimeFormatter
-import java.util.Objects
-import java.util.Optional
-import java.util.UUID
-import com.withorb.api.core.BaseDeserializer
-import com.withorb.api.core.BaseSerializer
-import com.withorb.api.core.getOrThrow
+import com.withorb.api.core.Enum
 import com.withorb.api.core.ExcludeMissing
 import com.withorb.api.core.JsonField
-import com.withorb.api.core.JsonMissing
 import com.withorb.api.core.JsonValue
-import com.withorb.api.core.MultipartFormValue
-import com.withorb.api.core.toUnmodifiable
 import com.withorb.api.core.NoAutoDetect
-import com.withorb.api.core.Enum
-import com.withorb.api.core.ContentTypes
+import com.withorb.api.core.toUnmodifiable
 import com.withorb.api.errors.OrbInvalidDataException
 import com.withorb.api.models.*
+import java.util.Objects
 
-class CustomerBalanceTransactionCreateParams constructor(
-  private val customerId: String,
-  private val amount: String,
-  private val type: Type,
-  private val description: String?,
-  private val additionalQueryParams: Map<String, List<String>>,
-  private val additionalHeaders: Map<String, List<String>>,
-  private val additionalBodyProperties: Map<String, JsonValue>,
-
+class CustomerBalanceTransactionCreateParams
+constructor(
+    private val customerId: String,
+    private val amount: String,
+    private val type: Type,
+    private val description: String?,
+    private val additionalQueryParams: Map<String, List<String>>,
+    private val additionalHeaders: Map<String, List<String>>,
+    private val additionalBodyProperties: Map<String, JsonValue>,
 ) {
 
     fun customerId(): String = customerId
@@ -56,12 +37,12 @@ class CustomerBalanceTransactionCreateParams constructor(
     fun description(): String? = description
 
     internal fun getBody(): CustomerBalanceTransactionCreateBody {
-      return CustomerBalanceTransactionCreateBody(
-          amount,
-          type,
-          description,
-          additionalBodyProperties,
-      )
+        return CustomerBalanceTransactionCreateBody(
+            amount,
+            type,
+            description,
+            additionalBodyProperties,
+        )
     }
 
     internal fun getQueryParams(): Map<String, List<String>> = additionalQueryParams
@@ -69,33 +50,30 @@ class CustomerBalanceTransactionCreateParams constructor(
     internal fun getHeaders(): Map<String, List<String>> = additionalHeaders
 
     fun getPathParam(index: Int): String {
-      return when (index) {
-          0 -> customerId
-          else -> ""
-      }
+        return when (index) {
+            0 -> customerId
+            else -> ""
+        }
     }
 
     @JsonDeserialize(builder = CustomerBalanceTransactionCreateBody.Builder::class)
     @NoAutoDetect
-    class CustomerBalanceTransactionCreateBody internal constructor(
-      private val amount: String?,
-      private val type: Type?,
-      private val description: String?,
-      private val additionalProperties: Map<String, JsonValue>,
-
+    class CustomerBalanceTransactionCreateBody
+    internal constructor(
+        private val amount: String?,
+        private val type: Type?,
+        private val description: String?,
+        private val additionalProperties: Map<String, JsonValue>,
     ) {
 
         private var hashCode: Int = 0
 
-        @JsonProperty("amount")
-        fun amount(): String? = amount
+        @JsonProperty("amount") fun amount(): String? = amount
 
-        @JsonProperty("type")
-        fun type(): Type? = type
+        @JsonProperty("type") fun type(): Type? = type
 
         /** An optional description that can be specified around this entry. */
-        @JsonProperty("description")
-        fun description(): String? = description
+        @JsonProperty("description") fun description(): String? = description
 
         @JsonAnyGetter
         @ExcludeMissing
@@ -104,30 +82,32 @@ class CustomerBalanceTransactionCreateParams constructor(
         fun toBuilder() = Builder().from(this)
 
         override fun equals(other: Any?): Boolean {
-          if (this === other) {
-              return true
-          }
+            if (this === other) {
+                return true
+            }
 
-          return other is CustomerBalanceTransactionCreateBody &&
-              this.amount == other.amount &&
-              this.type == other.type &&
-              this.description == other.description &&
-              this.additionalProperties == other.additionalProperties
+            return other is CustomerBalanceTransactionCreateBody &&
+                this.amount == other.amount &&
+                this.type == other.type &&
+                this.description == other.description &&
+                this.additionalProperties == other.additionalProperties
         }
 
         override fun hashCode(): Int {
-          if (hashCode == 0) {
-            hashCode = Objects.hash(
-                amount,
-                type,
-                description,
-                additionalProperties,
-            )
-          }
-          return hashCode
+            if (hashCode == 0) {
+                hashCode =
+                    Objects.hash(
+                        amount,
+                        type,
+                        description,
+                        additionalProperties,
+                    )
+            }
+            return hashCode
         }
 
-        override fun toString() = "CustomerBalanceTransactionCreateBody{amount=$amount, type=$type, description=$description, additionalProperties=$additionalProperties}"
+        override fun toString() =
+            "CustomerBalanceTransactionCreateBody{amount=$amount, type=$type, description=$description, additionalProperties=$additionalProperties}"
 
         companion object {
 
@@ -141,28 +121,22 @@ class CustomerBalanceTransactionCreateParams constructor(
             private var description: String? = null
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
-            internal fun from(customerBalanceTransactionCreateBody: CustomerBalanceTransactionCreateBody) = apply {
+            internal fun from(
+                customerBalanceTransactionCreateBody: CustomerBalanceTransactionCreateBody
+            ) = apply {
                 this.amount = customerBalanceTransactionCreateBody.amount
                 this.type = customerBalanceTransactionCreateBody.type
                 this.description = customerBalanceTransactionCreateBody.description
                 additionalProperties(customerBalanceTransactionCreateBody.additionalProperties)
             }
 
-            @JsonProperty("amount")
-            fun amount(amount: String) = apply {
-                this.amount = amount
-            }
+            @JsonProperty("amount") fun amount(amount: String) = apply { this.amount = amount }
 
-            @JsonProperty("type")
-            fun type(type: Type) = apply {
-                this.type = type
-            }
+            @JsonProperty("type") fun type(type: Type) = apply { this.type = type }
 
             /** An optional description that can be specified around this entry. */
             @JsonProperty("description")
-            fun description(description: String) = apply {
-                this.description = description
-            }
+            fun description(description: String) = apply { this.description = description }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
@@ -178,16 +152,13 @@ class CustomerBalanceTransactionCreateParams constructor(
                 this.additionalProperties.putAll(additionalProperties)
             }
 
-            fun build(): CustomerBalanceTransactionCreateBody = CustomerBalanceTransactionCreateBody(
-                checkNotNull(amount) {
-                    "`amount` is required but was not set"
-                },
-                checkNotNull(type) {
-                    "`type` is required but was not set"
-                },
-                description,
-                additionalProperties.toUnmodifiable(),
-            )
+            fun build(): CustomerBalanceTransactionCreateBody =
+                CustomerBalanceTransactionCreateBody(
+                    checkNotNull(amount) { "`amount` is required but was not set" },
+                    checkNotNull(type) { "`type` is required but was not set" },
+                    description,
+                    additionalProperties.toUnmodifiable(),
+                )
         }
     }
 
@@ -198,33 +169,34 @@ class CustomerBalanceTransactionCreateParams constructor(
     fun _additionalBodyProperties(): Map<String, JsonValue> = additionalBodyProperties
 
     override fun equals(other: Any?): Boolean {
-      if (this === other) {
-          return true
-      }
+        if (this === other) {
+            return true
+        }
 
-      return other is CustomerBalanceTransactionCreateParams &&
-          this.customerId == other.customerId &&
-          this.amount == other.amount &&
-          this.type == other.type &&
-          this.description == other.description &&
-          this.additionalQueryParams == other.additionalQueryParams &&
-          this.additionalHeaders == other.additionalHeaders &&
-          this.additionalBodyProperties == other.additionalBodyProperties
+        return other is CustomerBalanceTransactionCreateParams &&
+            this.customerId == other.customerId &&
+            this.amount == other.amount &&
+            this.type == other.type &&
+            this.description == other.description &&
+            this.additionalQueryParams == other.additionalQueryParams &&
+            this.additionalHeaders == other.additionalHeaders &&
+            this.additionalBodyProperties == other.additionalBodyProperties
     }
 
     override fun hashCode(): Int {
-      return Objects.hash(
-          customerId,
-          amount,
-          type,
-          description,
-          additionalQueryParams,
-          additionalHeaders,
-          additionalBodyProperties,
-      )
+        return Objects.hash(
+            customerId,
+            amount,
+            type,
+            description,
+            additionalQueryParams,
+            additionalHeaders,
+            additionalBodyProperties,
+        )
     }
 
-    override fun toString() = "CustomerBalanceTransactionCreateParams{customerId=$customerId, amount=$amount, type=$type, description=$description, additionalQueryParams=$additionalQueryParams, additionalHeaders=$additionalHeaders, additionalBodyProperties=$additionalBodyProperties}"
+    override fun toString() =
+        "CustomerBalanceTransactionCreateParams{customerId=$customerId, amount=$amount, type=$type, description=$description, additionalQueryParams=$additionalQueryParams, additionalHeaders=$additionalHeaders, additionalBodyProperties=$additionalBodyProperties}"
 
     fun toBuilder() = Builder().from(this)
 
@@ -244,32 +216,28 @@ class CustomerBalanceTransactionCreateParams constructor(
         private var additionalHeaders: MutableMap<String, MutableList<String>> = mutableMapOf()
         private var additionalBodyProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
-        internal fun from(customerBalanceTransactionCreateParams: CustomerBalanceTransactionCreateParams) = apply {
+        internal fun from(
+            customerBalanceTransactionCreateParams: CustomerBalanceTransactionCreateParams
+        ) = apply {
             this.customerId = customerBalanceTransactionCreateParams.customerId
             this.amount = customerBalanceTransactionCreateParams.amount
             this.type = customerBalanceTransactionCreateParams.type
             this.description = customerBalanceTransactionCreateParams.description
             additionalQueryParams(customerBalanceTransactionCreateParams.additionalQueryParams)
             additionalHeaders(customerBalanceTransactionCreateParams.additionalHeaders)
-            additionalBodyProperties(customerBalanceTransactionCreateParams.additionalBodyProperties)
+            additionalBodyProperties(
+                customerBalanceTransactionCreateParams.additionalBodyProperties
+            )
         }
 
-        fun customerId(customerId: String) = apply {
-            this.customerId = customerId
-        }
+        fun customerId(customerId: String) = apply { this.customerId = customerId }
 
-        fun amount(amount: String) = apply {
-            this.amount = amount
-        }
+        fun amount(amount: String) = apply { this.amount = amount }
 
-        fun type(type: Type) = apply {
-            this.type = type
-        }
+        fun type(type: Type) = apply { this.type = type }
 
         /** An optional description that can be specified around this entry. */
-        fun description(description: String) = apply {
-            this.description = description
-        }
+        fun description(description: String) = apply { this.description = description }
 
         fun additionalQueryParams(additionalQueryParams: Map<String, List<String>>) = apply {
             this.additionalQueryParams.clear()
@@ -309,9 +277,7 @@ class CustomerBalanceTransactionCreateParams constructor(
             additionalHeaders.forEach(this::putHeaders)
         }
 
-        fun removeHeader(name: String) = apply {
-            this.additionalHeaders.put(name, mutableListOf())
-        }
+        fun removeHeader(name: String) = apply { this.additionalHeaders.put(name, mutableListOf()) }
 
         fun additionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) = apply {
             this.additionalBodyProperties.clear()
@@ -322,39 +288,37 @@ class CustomerBalanceTransactionCreateParams constructor(
             this.additionalBodyProperties.put(key, value)
         }
 
-        fun putAllAdditionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) = apply {
-            this.additionalBodyProperties.putAll(additionalBodyProperties)
-        }
+        fun putAllAdditionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) =
+            apply {
+                this.additionalBodyProperties.putAll(additionalBodyProperties)
+            }
 
-        fun build(): CustomerBalanceTransactionCreateParams = CustomerBalanceTransactionCreateParams(
-            checkNotNull(customerId) {
-                "`customerId` is required but was not set"
-            },
-            checkNotNull(amount) {
-                "`amount` is required but was not set"
-            },
-            checkNotNull(type) {
-                "`type` is required but was not set"
-            },
-            description,
-            additionalQueryParams.mapValues { it.value.toUnmodifiable() }.toUnmodifiable(),
-            additionalHeaders.mapValues { it.value.toUnmodifiable() }.toUnmodifiable(),
-            additionalBodyProperties.toUnmodifiable(),
-        )
+        fun build(): CustomerBalanceTransactionCreateParams =
+            CustomerBalanceTransactionCreateParams(
+                checkNotNull(customerId) { "`customerId` is required but was not set" },
+                checkNotNull(amount) { "`amount` is required but was not set" },
+                checkNotNull(type) { "`type` is required but was not set" },
+                description,
+                additionalQueryParams.mapValues { it.value.toUnmodifiable() }.toUnmodifiable(),
+                additionalHeaders.mapValues { it.value.toUnmodifiable() }.toUnmodifiable(),
+                additionalBodyProperties.toUnmodifiable(),
+            )
     }
 
-    class Type @JsonCreator private constructor(private val value: JsonField<String>, ) : Enum {
+    class Type
+    @JsonCreator
+    private constructor(
+        private val value: JsonField<String>,
+    ) : Enum {
 
-        @com.fasterxml.jackson.annotation.JsonValue
-        fun _value(): JsonField<String> = value
+        @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
 
         override fun equals(other: Any?): Boolean {
-          if (this === other) {
-              return true
-          }
+            if (this === other) {
+                return true
+            }
 
-          return other is Type &&
-              this.value == other.value
+            return other is Type && this.value == other.value
         }
 
         override fun hashCode() = value.hashCode()
@@ -381,17 +345,19 @@ class CustomerBalanceTransactionCreateParams constructor(
             _UNKNOWN,
         }
 
-        fun value(): Value = when (this) {
-            INCREMENT -> Value.INCREMENT
-            DECREMENT -> Value.DECREMENT
-            else -> Value._UNKNOWN
-        }
+        fun value(): Value =
+            when (this) {
+                INCREMENT -> Value.INCREMENT
+                DECREMENT -> Value.DECREMENT
+                else -> Value._UNKNOWN
+            }
 
-        fun known(): Known = when (this) {
-            INCREMENT -> Known.INCREMENT
-            DECREMENT -> Known.DECREMENT
-            else -> throw OrbInvalidDataException("Unknown Type: $value")
-        }
+        fun known(): Known =
+            when (this) {
+                INCREMENT -> Known.INCREMENT
+                DECREMENT -> Known.DECREMENT
+                else -> throw OrbInvalidDataException("Unknown Type: $value")
+            }
 
         fun asString(): String = _value().asStringOrThrow()
     }

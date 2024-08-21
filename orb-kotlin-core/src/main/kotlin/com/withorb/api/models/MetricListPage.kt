@@ -6,31 +6,21 @@ import com.fasterxml.jackson.annotation.JsonAnyGetter
 import com.fasterxml.jackson.annotation.JsonAnySetter
 import com.fasterxml.jackson.annotation.JsonProperty
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize
-import java.time.LocalDate
-import java.time.OffsetDateTime
-import java.time.format.DateTimeFormatter
-import java.util.Objects
-import java.util.Optional
-import java.util.Spliterator
-import java.util.Spliterators
-import java.util.UUID
-import java.util.concurrent.CompletableFuture
-import java.util.concurrent.Executor
-import java.util.function.Predicate
-import java.util.stream.Stream
-import java.util.stream.StreamSupport
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.FlowCollector
 import com.withorb.api.core.ExcludeMissing
+import com.withorb.api.core.JsonField
 import com.withorb.api.core.JsonMissing
 import com.withorb.api.core.JsonValue
-import com.withorb.api.core.JsonField
 import com.withorb.api.core.NoAutoDetect
 import com.withorb.api.core.toUnmodifiable
-import com.withorb.api.models.BillableMetric
 import com.withorb.api.services.blocking.MetricService
+import java.util.Objects
 
-class MetricListPage private constructor(private val metricsService: MetricService, private val params: MetricListParams, private val response: Response, ) {
+class MetricListPage
+private constructor(
+    private val metricsService: MetricService,
+    private val params: MetricListParams,
+    private val response: Response,
+) {
 
     fun response(): Response = response
 
@@ -39,71 +29,79 @@ class MetricListPage private constructor(private val metricsService: MetricServi
     fun paginationMetadata(): PaginationMetadata = response().paginationMetadata()
 
     override fun equals(other: Any?): Boolean {
-      if (this === other) {
-          return true
-      }
+        if (this === other) {
+            return true
+        }
 
-      return other is MetricListPage &&
-          this.metricsService == other.metricsService &&
-          this.params == other.params &&
-          this.response == other.response
+        return other is MetricListPage &&
+            this.metricsService == other.metricsService &&
+            this.params == other.params &&
+            this.response == other.response
     }
 
     override fun hashCode(): Int {
-      return Objects.hash(
-          metricsService,
-          params,
-          response,
-      )
-    }
-
-    override fun toString() = "MetricListPage{metricsService=$metricsService, params=$params, response=$response}"
-
-    fun hasNextPage(): Boolean {
-      if (data().isEmpty()) {
-        return false;
-      }
-
-      return paginationMetadata().nextCursor() != null
-    }
-
-    fun getNextPageParams(): MetricListParams? {
-      if (!hasNextPage()) {
-        return null
-      }
-
-      return MetricListParams.builder().from(params).apply {paginationMetadata().nextCursor()?.let{ this.cursor(it) } }.build()
-    }
-
-    fun getNextPage(): MetricListPage? {
-      return getNextPageParams()?.let {
-          metricsService.list(it)
-      }
-    }
-
-    fun autoPager(): AutoPager = AutoPager(this)
-
-    companion object {
-
-        fun of(metricsService: MetricService, params: MetricListParams, response: Response) = MetricListPage(
+        return Objects.hash(
             metricsService,
             params,
             response,
         )
     }
 
+    override fun toString() =
+        "MetricListPage{metricsService=$metricsService, params=$params, response=$response}"
+
+    fun hasNextPage(): Boolean {
+        if (data().isEmpty()) {
+            return false
+        }
+
+        return paginationMetadata().nextCursor() != null
+    }
+
+    fun getNextPageParams(): MetricListParams? {
+        if (!hasNextPage()) {
+            return null
+        }
+
+        return MetricListParams.builder()
+            .from(params)
+            .apply { paginationMetadata().nextCursor()?.let { this.cursor(it) } }
+            .build()
+    }
+
+    fun getNextPage(): MetricListPage? {
+        return getNextPageParams()?.let { metricsService.list(it) }
+    }
+
+    fun autoPager(): AutoPager = AutoPager(this)
+
+    companion object {
+
+        fun of(metricsService: MetricService, params: MetricListParams, response: Response) =
+            MetricListPage(
+                metricsService,
+                params,
+                response,
+            )
+    }
+
     @JsonDeserialize(builder = Response.Builder::class)
     @NoAutoDetect
-    class Response constructor(private val data: JsonField<List<BillableMetric>>, private val paginationMetadata: JsonField<PaginationMetadata>, private val additionalProperties: Map<String, JsonValue>, ) {
+    class Response
+    constructor(
+        private val data: JsonField<List<BillableMetric>>,
+        private val paginationMetadata: JsonField<PaginationMetadata>,
+        private val additionalProperties: Map<String, JsonValue>,
+    ) {
 
         private var validated: Boolean = false
 
         fun data(): List<BillableMetric> = data.getNullable("data") ?: listOf()
 
-        fun paginationMetadata(): PaginationMetadata = paginationMetadata.getRequired("pagination_metadata")
+        fun paginationMetadata(): PaginationMetadata =
+            paginationMetadata.getRequired("pagination_metadata")
 
-        @JsonProperty("data")
-        fun _data(): JsonField<List<BillableMetric>>? = data
+        @JsonProperty("data") fun _data(): JsonField<List<BillableMetric>>? = data
 
         @JsonProperty("pagination_metadata")
         fun _paginationMetadata(): JsonField<PaginationMetadata>? = paginationMetadata
@@ -114,34 +112,35 @@ class MetricListPage private constructor(private val metricsService: MetricServi
 
         fun validate(): Response = apply {
             if (!validated) {
-              data().map { it.validate() }
-              paginationMetadata().validate()
-              validated = true
+                data().map { it.validate() }
+                paginationMetadata().validate()
+                validated = true
             }
         }
 
         fun toBuilder() = Builder().from(this)
 
         override fun equals(other: Any?): Boolean {
-          if (this === other) {
-              return true
-          }
+            if (this === other) {
+                return true
+            }
 
-          return other is Response &&
-              this.data == other.data &&
-              this.paginationMetadata == other.paginationMetadata &&
-              this.additionalProperties == other.additionalProperties
+            return other is Response &&
+                this.data == other.data &&
+                this.paginationMetadata == other.paginationMetadata &&
+                this.additionalProperties == other.additionalProperties
         }
 
         override fun hashCode(): Int {
-          return Objects.hash(
-              data,
-              paginationMetadata,
-              additionalProperties,
-          )
+            return Objects.hash(
+                data,
+                paginationMetadata,
+                additionalProperties,
+            )
         }
 
-        override fun toString() = "MetricListPage.Response{data=$data, paginationMetadata=$paginationMetadata, additionalProperties=$additionalProperties}"
+        override fun toString() =
+            "MetricListPage.Response{data=$data, paginationMetadata=$paginationMetadata, additionalProperties=$additionalProperties}"
 
         companion object {
 
@@ -165,35 +164,42 @@ class MetricListPage private constructor(private val metricsService: MetricServi
             @JsonProperty("data")
             fun data(data: JsonField<List<BillableMetric>>) = apply { this.data = data }
 
-            fun paginationMetadata(paginationMetadata: PaginationMetadata) = paginationMetadata(JsonField.of(paginationMetadata))
+            fun paginationMetadata(paginationMetadata: PaginationMetadata) =
+                paginationMetadata(JsonField.of(paginationMetadata))
 
             @JsonProperty("pagination_metadata")
-            fun paginationMetadata(paginationMetadata: JsonField<PaginationMetadata>) = apply { this.paginationMetadata = paginationMetadata }
+            fun paginationMetadata(paginationMetadata: JsonField<PaginationMetadata>) = apply {
+                this.paginationMetadata = paginationMetadata
+            }
 
             @JsonAnySetter
             fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                 this.additionalProperties.put(key, value)
             }
 
-            fun build() = Response(
-                data,
-                paginationMetadata,
-                additionalProperties.toUnmodifiable(),
-            )
+            fun build() =
+                Response(
+                    data,
+                    paginationMetadata,
+                    additionalProperties.toUnmodifiable(),
+                )
         }
     }
 
-    class AutoPager constructor(private val firstPage: MetricListPage, ) : Sequence<BillableMetric> {
+    class AutoPager
+    constructor(
+        private val firstPage: MetricListPage,
+    ) : Sequence<BillableMetric> {
 
         override fun iterator(): Iterator<BillableMetric> = iterator {
             var page = firstPage
             var index = 0
             while (true) {
-              while (index < page.data().size) {
-                yield(page.data()[index++])
-              }
-              page = page.getNextPage() ?: break
-              index = 0
+                while (index < page.data().size) {
+                    yield(page.data()[index++])
+                }
+                page = page.getNextPage() ?: break
+                index = 0
             }
         }
     }

@@ -4,38 +4,24 @@ package com.withorb.api.models
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter
 import com.fasterxml.jackson.annotation.JsonAnySetter
-import com.fasterxml.jackson.annotation.JsonCreator
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonProperty
-import com.fasterxml.jackson.core.JsonGenerator
-import com.fasterxml.jackson.core.ObjectCodec
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize
-import com.fasterxml.jackson.databind.annotation.JsonSerialize
-import com.fasterxml.jackson.databind.JsonNode
-import com.fasterxml.jackson.databind.SerializerProvider
-import com.fasterxml.jackson.module.kotlin.jacksonTypeRef
-import java.time.LocalDate
-import java.time.OffsetDateTime
-import java.time.format.DateTimeFormatter
-import java.util.Objects
-import java.util.Optional
-import java.util.UUID
-import com.withorb.api.core.BaseDeserializer
-import com.withorb.api.core.BaseSerializer
-import com.withorb.api.core.getOrThrow
 import com.withorb.api.core.ExcludeMissing
+import com.withorb.api.core.JsonField
 import com.withorb.api.core.JsonMissing
 import com.withorb.api.core.JsonValue
-import com.withorb.api.core.JsonNull
-import com.withorb.api.core.JsonField
-import com.withorb.api.core.Enum
-import com.withorb.api.core.toUnmodifiable
 import com.withorb.api.core.NoAutoDetect
-import com.withorb.api.errors.OrbInvalidDataException
+import com.withorb.api.core.toUnmodifiable
+import java.util.Objects
 
 @JsonDeserialize(builder = PaginationMetadata.Builder::class)
 @NoAutoDetect
-class PaginationMetadata private constructor(private val hasMore: JsonField<Boolean>, private val nextCursor: JsonField<String>, private val additionalProperties: Map<String, JsonValue>, ) {
+class PaginationMetadata
+private constructor(
+    private val hasMore: JsonField<Boolean>,
+    private val nextCursor: JsonField<String>,
+    private val additionalProperties: Map<String, JsonValue>,
+) {
 
     private var validated: Boolean = false
 
@@ -45,13 +31,9 @@ class PaginationMetadata private constructor(private val hasMore: JsonField<Bool
 
     fun nextCursor(): String? = nextCursor.getNullable("next_cursor")
 
-    @JsonProperty("has_more")
-    @ExcludeMissing
-    fun _hasMore() = hasMore
+    @JsonProperty("has_more") @ExcludeMissing fun _hasMore() = hasMore
 
-    @JsonProperty("next_cursor")
-    @ExcludeMissing
-    fun _nextCursor() = nextCursor
+    @JsonProperty("next_cursor") @ExcludeMissing fun _nextCursor() = nextCursor
 
     @JsonAnyGetter
     @ExcludeMissing
@@ -59,37 +41,39 @@ class PaginationMetadata private constructor(private val hasMore: JsonField<Bool
 
     fun validate(): PaginationMetadata = apply {
         if (!validated) {
-          hasMore()
-          nextCursor()
-          validated = true
+            hasMore()
+            nextCursor()
+            validated = true
         }
     }
 
     fun toBuilder() = Builder().from(this)
 
     override fun equals(other: Any?): Boolean {
-      if (this === other) {
-          return true
-      }
+        if (this === other) {
+            return true
+        }
 
-      return other is PaginationMetadata &&
-          this.hasMore == other.hasMore &&
-          this.nextCursor == other.nextCursor &&
-          this.additionalProperties == other.additionalProperties
+        return other is PaginationMetadata &&
+            this.hasMore == other.hasMore &&
+            this.nextCursor == other.nextCursor &&
+            this.additionalProperties == other.additionalProperties
     }
 
     override fun hashCode(): Int {
-      if (hashCode == 0) {
-        hashCode = Objects.hash(
-            hasMore,
-            nextCursor,
-            additionalProperties,
-        )
-      }
-      return hashCode
+        if (hashCode == 0) {
+            hashCode =
+                Objects.hash(
+                    hasMore,
+                    nextCursor,
+                    additionalProperties,
+                )
+        }
+        return hashCode
     }
 
-    override fun toString() = "PaginationMetadata{hasMore=$hasMore, nextCursor=$nextCursor, additionalProperties=$additionalProperties}"
+    override fun toString() =
+        "PaginationMetadata{hasMore=$hasMore, nextCursor=$nextCursor, additionalProperties=$additionalProperties}"
 
     companion object {
 
@@ -112,17 +96,13 @@ class PaginationMetadata private constructor(private val hasMore: JsonField<Bool
 
         @JsonProperty("has_more")
         @ExcludeMissing
-        fun hasMore(hasMore: JsonField<Boolean>) = apply {
-            this.hasMore = hasMore
-        }
+        fun hasMore(hasMore: JsonField<Boolean>) = apply { this.hasMore = hasMore }
 
         fun nextCursor(nextCursor: String) = nextCursor(JsonField.of(nextCursor))
 
         @JsonProperty("next_cursor")
         @ExcludeMissing
-        fun nextCursor(nextCursor: JsonField<String>) = apply {
-            this.nextCursor = nextCursor
-        }
+        fun nextCursor(nextCursor: JsonField<String>) = apply { this.nextCursor = nextCursor }
 
         fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
             this.additionalProperties.clear()
@@ -138,10 +118,11 @@ class PaginationMetadata private constructor(private val hasMore: JsonField<Bool
             this.additionalProperties.putAll(additionalProperties)
         }
 
-        fun build(): PaginationMetadata = PaginationMetadata(
-            hasMore,
-            nextCursor,
-            additionalProperties.toUnmodifiable(),
-        )
+        fun build(): PaginationMetadata =
+            PaginationMetadata(
+                hasMore,
+                nextCursor,
+                additionalProperties.toUnmodifiable(),
+            )
     }
 }

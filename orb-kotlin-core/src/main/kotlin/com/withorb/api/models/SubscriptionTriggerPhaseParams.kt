@@ -4,45 +4,23 @@ package com.withorb.api.models
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter
 import com.fasterxml.jackson.annotation.JsonAnySetter
-import com.fasterxml.jackson.annotation.JsonCreator
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonProperty
-import com.fasterxml.jackson.core.JsonGenerator
-import com.fasterxml.jackson.core.ObjectCodec
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize
-import com.fasterxml.jackson.databind.annotation.JsonSerialize
-import com.fasterxml.jackson.databind.JsonNode
-import com.fasterxml.jackson.databind.SerializerProvider
-import com.fasterxml.jackson.module.kotlin.jacksonTypeRef
-import org.apache.hc.core5.http.ContentType
-import java.time.LocalDate
-import java.time.OffsetDateTime
-import java.time.format.DateTimeFormatter
-import java.util.Objects
-import java.util.Optional
-import java.util.UUID
-import com.withorb.api.core.BaseDeserializer
-import com.withorb.api.core.BaseSerializer
-import com.withorb.api.core.getOrThrow
 import com.withorb.api.core.ExcludeMissing
-import com.withorb.api.core.JsonField
-import com.withorb.api.core.JsonMissing
 import com.withorb.api.core.JsonValue
-import com.withorb.api.core.MultipartFormValue
-import com.withorb.api.core.toUnmodifiable
 import com.withorb.api.core.NoAutoDetect
-import com.withorb.api.core.Enum
-import com.withorb.api.core.ContentTypes
-import com.withorb.api.errors.OrbInvalidDataException
+import com.withorb.api.core.toUnmodifiable
 import com.withorb.api.models.*
+import java.time.LocalDate
+import java.util.Objects
 
-class SubscriptionTriggerPhaseParams constructor(
-  private val subscriptionId: String,
-  private val effectiveDate: LocalDate?,
-  private val additionalQueryParams: Map<String, List<String>>,
-  private val additionalHeaders: Map<String, List<String>>,
-  private val additionalBodyProperties: Map<String, JsonValue>,
-
+class SubscriptionTriggerPhaseParams
+constructor(
+    private val subscriptionId: String,
+    private val effectiveDate: LocalDate?,
+    private val additionalQueryParams: Map<String, List<String>>,
+    private val additionalHeaders: Map<String, List<String>>,
+    private val additionalBodyProperties: Map<String, JsonValue>,
 ) {
 
     fun subscriptionId(): String = subscriptionId
@@ -50,7 +28,7 @@ class SubscriptionTriggerPhaseParams constructor(
     fun effectiveDate(): LocalDate? = effectiveDate
 
     internal fun getBody(): SubscriptionTriggerPhaseBody {
-      return SubscriptionTriggerPhaseBody(effectiveDate, additionalBodyProperties)
+        return SubscriptionTriggerPhaseBody(effectiveDate, additionalBodyProperties)
     }
 
     internal fun getQueryParams(): Map<String, List<String>> = additionalQueryParams
@@ -58,24 +36,27 @@ class SubscriptionTriggerPhaseParams constructor(
     internal fun getHeaders(): Map<String, List<String>> = additionalHeaders
 
     fun getPathParam(index: Int): String {
-      return when (index) {
-          0 -> subscriptionId
-          else -> ""
-      }
+        return when (index) {
+            0 -> subscriptionId
+            else -> ""
+        }
     }
 
     @JsonDeserialize(builder = SubscriptionTriggerPhaseBody.Builder::class)
     @NoAutoDetect
-    class SubscriptionTriggerPhaseBody internal constructor(private val effectiveDate: LocalDate?, private val additionalProperties: Map<String, JsonValue>, ) {
+    class SubscriptionTriggerPhaseBody
+    internal constructor(
+        private val effectiveDate: LocalDate?,
+        private val additionalProperties: Map<String, JsonValue>,
+    ) {
 
         private var hashCode: Int = 0
 
         /**
-         * The date on which the phase change should take effect. If not provided, defaults
-         * to today in the customer's timezone.
+         * The date on which the phase change should take effect. If not provided, defaults to today
+         * in the customer's timezone.
          */
-        @JsonProperty("effective_date")
-        fun effectiveDate(): LocalDate? = effectiveDate
+        @JsonProperty("effective_date") fun effectiveDate(): LocalDate? = effectiveDate
 
         @JsonAnyGetter
         @ExcludeMissing
@@ -84,23 +65,24 @@ class SubscriptionTriggerPhaseParams constructor(
         fun toBuilder() = Builder().from(this)
 
         override fun equals(other: Any?): Boolean {
-          if (this === other) {
-              return true
-          }
+            if (this === other) {
+                return true
+            }
 
-          return other is SubscriptionTriggerPhaseBody &&
-              this.effectiveDate == other.effectiveDate &&
-              this.additionalProperties == other.additionalProperties
+            return other is SubscriptionTriggerPhaseBody &&
+                this.effectiveDate == other.effectiveDate &&
+                this.additionalProperties == other.additionalProperties
         }
 
         override fun hashCode(): Int {
-          if (hashCode == 0) {
-            hashCode = Objects.hash(effectiveDate, additionalProperties)
-          }
-          return hashCode
+            if (hashCode == 0) {
+                hashCode = Objects.hash(effectiveDate, additionalProperties)
+            }
+            return hashCode
         }
 
-        override fun toString() = "SubscriptionTriggerPhaseBody{effectiveDate=$effectiveDate, additionalProperties=$additionalProperties}"
+        override fun toString() =
+            "SubscriptionTriggerPhaseBody{effectiveDate=$effectiveDate, additionalProperties=$additionalProperties}"
 
         companion object {
 
@@ -118,8 +100,8 @@ class SubscriptionTriggerPhaseParams constructor(
             }
 
             /**
-             * The date on which the phase change should take effect. If not provided, defaults
-             * to today in the customer's timezone.
+             * The date on which the phase change should take effect. If not provided, defaults to
+             * today in the customer's timezone.
              */
             @JsonProperty("effective_date")
             fun effectiveDate(effectiveDate: LocalDate) = apply {
@@ -140,7 +122,8 @@ class SubscriptionTriggerPhaseParams constructor(
                 this.additionalProperties.putAll(additionalProperties)
             }
 
-            fun build(): SubscriptionTriggerPhaseBody = SubscriptionTriggerPhaseBody(effectiveDate, additionalProperties.toUnmodifiable())
+            fun build(): SubscriptionTriggerPhaseBody =
+                SubscriptionTriggerPhaseBody(effectiveDate, additionalProperties.toUnmodifiable())
         }
     }
 
@@ -151,29 +134,30 @@ class SubscriptionTriggerPhaseParams constructor(
     fun _additionalBodyProperties(): Map<String, JsonValue> = additionalBodyProperties
 
     override fun equals(other: Any?): Boolean {
-      if (this === other) {
-          return true
-      }
+        if (this === other) {
+            return true
+        }
 
-      return other is SubscriptionTriggerPhaseParams &&
-          this.subscriptionId == other.subscriptionId &&
-          this.effectiveDate == other.effectiveDate &&
-          this.additionalQueryParams == other.additionalQueryParams &&
-          this.additionalHeaders == other.additionalHeaders &&
-          this.additionalBodyProperties == other.additionalBodyProperties
+        return other is SubscriptionTriggerPhaseParams &&
+            this.subscriptionId == other.subscriptionId &&
+            this.effectiveDate == other.effectiveDate &&
+            this.additionalQueryParams == other.additionalQueryParams &&
+            this.additionalHeaders == other.additionalHeaders &&
+            this.additionalBodyProperties == other.additionalBodyProperties
     }
 
     override fun hashCode(): Int {
-      return Objects.hash(
-          subscriptionId,
-          effectiveDate,
-          additionalQueryParams,
-          additionalHeaders,
-          additionalBodyProperties,
-      )
+        return Objects.hash(
+            subscriptionId,
+            effectiveDate,
+            additionalQueryParams,
+            additionalHeaders,
+            additionalBodyProperties,
+        )
     }
 
-    override fun toString() = "SubscriptionTriggerPhaseParams{subscriptionId=$subscriptionId, effectiveDate=$effectiveDate, additionalQueryParams=$additionalQueryParams, additionalHeaders=$additionalHeaders, additionalBodyProperties=$additionalBodyProperties}"
+    override fun toString() =
+        "SubscriptionTriggerPhaseParams{subscriptionId=$subscriptionId, effectiveDate=$effectiveDate, additionalQueryParams=$additionalQueryParams, additionalHeaders=$additionalHeaders, additionalBodyProperties=$additionalBodyProperties}"
 
     fun toBuilder() = Builder().from(this)
 
@@ -199,17 +183,13 @@ class SubscriptionTriggerPhaseParams constructor(
             additionalBodyProperties(subscriptionTriggerPhaseParams.additionalBodyProperties)
         }
 
-        fun subscriptionId(subscriptionId: String) = apply {
-            this.subscriptionId = subscriptionId
-        }
+        fun subscriptionId(subscriptionId: String) = apply { this.subscriptionId = subscriptionId }
 
         /**
-         * The date on which the phase change should take effect. If not provided, defaults
-         * to today in the customer's timezone.
+         * The date on which the phase change should take effect. If not provided, defaults to today
+         * in the customer's timezone.
          */
-        fun effectiveDate(effectiveDate: LocalDate) = apply {
-            this.effectiveDate = effectiveDate
-        }
+        fun effectiveDate(effectiveDate: LocalDate) = apply { this.effectiveDate = effectiveDate }
 
         fun additionalQueryParams(additionalQueryParams: Map<String, List<String>>) = apply {
             this.additionalQueryParams.clear()
@@ -249,9 +229,7 @@ class SubscriptionTriggerPhaseParams constructor(
             additionalHeaders.forEach(this::putHeaders)
         }
 
-        fun removeHeader(name: String) = apply {
-            this.additionalHeaders.put(name, mutableListOf())
-        }
+        fun removeHeader(name: String) = apply { this.additionalHeaders.put(name, mutableListOf()) }
 
         fun additionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) = apply {
             this.additionalBodyProperties.clear()
@@ -262,18 +240,18 @@ class SubscriptionTriggerPhaseParams constructor(
             this.additionalBodyProperties.put(key, value)
         }
 
-        fun putAllAdditionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) = apply {
-            this.additionalBodyProperties.putAll(additionalBodyProperties)
-        }
+        fun putAllAdditionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) =
+            apply {
+                this.additionalBodyProperties.putAll(additionalBodyProperties)
+            }
 
-        fun build(): SubscriptionTriggerPhaseParams = SubscriptionTriggerPhaseParams(
-            checkNotNull(subscriptionId) {
-                "`subscriptionId` is required but was not set"
-            },
-            effectiveDate,
-            additionalQueryParams.mapValues { it.value.toUnmodifiable() }.toUnmodifiable(),
-            additionalHeaders.mapValues { it.value.toUnmodifiable() }.toUnmodifiable(),
-            additionalBodyProperties.toUnmodifiable(),
-        )
+        fun build(): SubscriptionTriggerPhaseParams =
+            SubscriptionTriggerPhaseParams(
+                checkNotNull(subscriptionId) { "`subscriptionId` is required but was not set" },
+                effectiveDate,
+                additionalQueryParams.mapValues { it.value.toUnmodifiable() }.toUnmodifiable(),
+                additionalHeaders.mapValues { it.value.toUnmodifiable() }.toUnmodifiable(),
+                additionalBodyProperties.toUnmodifiable(),
+            )
     }
 }

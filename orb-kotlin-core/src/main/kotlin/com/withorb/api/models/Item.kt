@@ -5,48 +5,33 @@ package com.withorb.api.models
 import com.fasterxml.jackson.annotation.JsonAnyGetter
 import com.fasterxml.jackson.annotation.JsonAnySetter
 import com.fasterxml.jackson.annotation.JsonCreator
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonProperty
-import com.fasterxml.jackson.core.JsonGenerator
-import com.fasterxml.jackson.core.ObjectCodec
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize
-import com.fasterxml.jackson.databind.annotation.JsonSerialize
-import com.fasterxml.jackson.databind.JsonNode
-import com.fasterxml.jackson.databind.SerializerProvider
-import com.fasterxml.jackson.module.kotlin.jacksonTypeRef
-import java.time.LocalDate
-import java.time.OffsetDateTime
-import java.time.format.DateTimeFormatter
-import java.util.Objects
-import java.util.Optional
-import java.util.UUID
-import com.withorb.api.core.BaseDeserializer
-import com.withorb.api.core.BaseSerializer
-import com.withorb.api.core.getOrThrow
+import com.withorb.api.core.Enum
 import com.withorb.api.core.ExcludeMissing
+import com.withorb.api.core.JsonField
 import com.withorb.api.core.JsonMissing
 import com.withorb.api.core.JsonValue
-import com.withorb.api.core.JsonNull
-import com.withorb.api.core.JsonField
-import com.withorb.api.core.Enum
-import com.withorb.api.core.toUnmodifiable
 import com.withorb.api.core.NoAutoDetect
+import com.withorb.api.core.toUnmodifiable
 import com.withorb.api.errors.OrbInvalidDataException
+import java.time.OffsetDateTime
+import java.util.Objects
 
 /**
- * The Item resource represents a sellable product or good. Items are associated
- * with all line items, billable metrics, and prices and are used for defining
- * external sync behavior for invoices and tax calculation purposes.
+ * The Item resource represents a sellable product or good. Items are associated with all line
+ * items, billable metrics, and prices and are used for defining external sync behavior for invoices
+ * and tax calculation purposes.
  */
 @JsonDeserialize(builder = Item.Builder::class)
 @NoAutoDetect
-class Item private constructor(
-  private val id: JsonField<String>,
-  private val name: JsonField<String>,
-  private val createdAt: JsonField<OffsetDateTime>,
-  private val externalConnections: JsonField<List<ExternalConnection>>,
-  private val additionalProperties: Map<String, JsonValue>,
-
+class Item
+private constructor(
+    private val id: JsonField<String>,
+    private val name: JsonField<String>,
+    private val createdAt: JsonField<OffsetDateTime>,
+    private val externalConnections: JsonField<List<ExternalConnection>>,
+    private val additionalProperties: Map<String, JsonValue>,
 ) {
 
     private var validated: Boolean = false
@@ -59,19 +44,14 @@ class Item private constructor(
 
     fun createdAt(): OffsetDateTime = createdAt.getRequired("created_at")
 
-    fun externalConnections(): List<ExternalConnection> = externalConnections.getRequired("external_connections")
+    fun externalConnections(): List<ExternalConnection> =
+        externalConnections.getRequired("external_connections")
 
-    @JsonProperty("id")
-    @ExcludeMissing
-    fun _id() = id
+    @JsonProperty("id") @ExcludeMissing fun _id() = id
 
-    @JsonProperty("name")
-    @ExcludeMissing
-    fun _name() = name
+    @JsonProperty("name") @ExcludeMissing fun _name() = name
 
-    @JsonProperty("created_at")
-    @ExcludeMissing
-    fun _createdAt() = createdAt
+    @JsonProperty("created_at") @ExcludeMissing fun _createdAt() = createdAt
 
     @JsonProperty("external_connections")
     @ExcludeMissing
@@ -83,43 +63,45 @@ class Item private constructor(
 
     fun validate(): Item = apply {
         if (!validated) {
-          id()
-          name()
-          createdAt()
-          externalConnections().forEach { it.validate() }
-          validated = true
+            id()
+            name()
+            createdAt()
+            externalConnections().forEach { it.validate() }
+            validated = true
         }
     }
 
     fun toBuilder() = Builder().from(this)
 
     override fun equals(other: Any?): Boolean {
-      if (this === other) {
-          return true
-      }
+        if (this === other) {
+            return true
+        }
 
-      return other is Item &&
-          this.id == other.id &&
-          this.name == other.name &&
-          this.createdAt == other.createdAt &&
-          this.externalConnections == other.externalConnections &&
-          this.additionalProperties == other.additionalProperties
+        return other is Item &&
+            this.id == other.id &&
+            this.name == other.name &&
+            this.createdAt == other.createdAt &&
+            this.externalConnections == other.externalConnections &&
+            this.additionalProperties == other.additionalProperties
     }
 
     override fun hashCode(): Int {
-      if (hashCode == 0) {
-        hashCode = Objects.hash(
-            id,
-            name,
-            createdAt,
-            externalConnections,
-            additionalProperties,
-        )
-      }
-      return hashCode
+        if (hashCode == 0) {
+            hashCode =
+                Objects.hash(
+                    id,
+                    name,
+                    createdAt,
+                    externalConnections,
+                    additionalProperties,
+                )
+        }
+        return hashCode
     }
 
-    override fun toString() = "Item{id=$id, name=$name, createdAt=$createdAt, externalConnections=$externalConnections, additionalProperties=$additionalProperties}"
+    override fun toString() =
+        "Item{id=$id, name=$name, createdAt=$createdAt, externalConnections=$externalConnections, additionalProperties=$additionalProperties}"
 
     companion object {
 
@@ -144,29 +126,22 @@ class Item private constructor(
 
         fun id(id: String) = id(JsonField.of(id))
 
-        @JsonProperty("id")
-        @ExcludeMissing
-        fun id(id: JsonField<String>) = apply {
-            this.id = id
-        }
+        @JsonProperty("id") @ExcludeMissing fun id(id: JsonField<String>) = apply { this.id = id }
 
         fun name(name: String) = name(JsonField.of(name))
 
         @JsonProperty("name")
         @ExcludeMissing
-        fun name(name: JsonField<String>) = apply {
-            this.name = name
-        }
+        fun name(name: JsonField<String>) = apply { this.name = name }
 
         fun createdAt(createdAt: OffsetDateTime) = createdAt(JsonField.of(createdAt))
 
         @JsonProperty("created_at")
         @ExcludeMissing
-        fun createdAt(createdAt: JsonField<OffsetDateTime>) = apply {
-            this.createdAt = createdAt
-        }
+        fun createdAt(createdAt: JsonField<OffsetDateTime>) = apply { this.createdAt = createdAt }
 
-        fun externalConnections(externalConnections: List<ExternalConnection>) = externalConnections(JsonField.of(externalConnections))
+        fun externalConnections(externalConnections: List<ExternalConnection>) =
+            externalConnections(JsonField.of(externalConnections))
 
         @JsonProperty("external_connections")
         @ExcludeMissing
@@ -188,24 +163,31 @@ class Item private constructor(
             this.additionalProperties.putAll(additionalProperties)
         }
 
-        fun build(): Item = Item(
-            id,
-            name,
-            createdAt,
-            externalConnections.map { it.toUnmodifiable() },
-            additionalProperties.toUnmodifiable(),
-        )
+        fun build(): Item =
+            Item(
+                id,
+                name,
+                createdAt,
+                externalConnections.map { it.toUnmodifiable() },
+                additionalProperties.toUnmodifiable(),
+            )
     }
 
     @JsonDeserialize(builder = ExternalConnection.Builder::class)
     @NoAutoDetect
-    class ExternalConnection private constructor(private val externalConnectionName: JsonField<ExternalConnectionName>, private val externalEntityId: JsonField<String>, private val additionalProperties: Map<String, JsonValue>, ) {
+    class ExternalConnection
+    private constructor(
+        private val externalConnectionName: JsonField<ExternalConnectionName>,
+        private val externalEntityId: JsonField<String>,
+        private val additionalProperties: Map<String, JsonValue>,
+    ) {
 
         private var validated: Boolean = false
 
         private var hashCode: Int = 0
 
-        fun externalConnectionName(): ExternalConnectionName = externalConnectionName.getRequired("external_connection_name")
+        fun externalConnectionName(): ExternalConnectionName =
+            externalConnectionName.getRequired("external_connection_name")
 
         fun externalEntityId(): String = externalEntityId.getRequired("external_entity_id")
 
@@ -223,37 +205,39 @@ class Item private constructor(
 
         fun validate(): ExternalConnection = apply {
             if (!validated) {
-              externalConnectionName()
-              externalEntityId()
-              validated = true
+                externalConnectionName()
+                externalEntityId()
+                validated = true
             }
         }
 
         fun toBuilder() = Builder().from(this)
 
         override fun equals(other: Any?): Boolean {
-          if (this === other) {
-              return true
-          }
+            if (this === other) {
+                return true
+            }
 
-          return other is ExternalConnection &&
-              this.externalConnectionName == other.externalConnectionName &&
-              this.externalEntityId == other.externalEntityId &&
-              this.additionalProperties == other.additionalProperties
+            return other is ExternalConnection &&
+                this.externalConnectionName == other.externalConnectionName &&
+                this.externalEntityId == other.externalEntityId &&
+                this.additionalProperties == other.additionalProperties
         }
 
         override fun hashCode(): Int {
-          if (hashCode == 0) {
-            hashCode = Objects.hash(
-                externalConnectionName,
-                externalEntityId,
-                additionalProperties,
-            )
-          }
-          return hashCode
+            if (hashCode == 0) {
+                hashCode =
+                    Objects.hash(
+                        externalConnectionName,
+                        externalEntityId,
+                        additionalProperties,
+                    )
+            }
+            return hashCode
         }
 
-        override fun toString() = "ExternalConnection{externalConnectionName=$externalConnectionName, externalEntityId=$externalEntityId, additionalProperties=$additionalProperties}"
+        override fun toString() =
+            "ExternalConnection{externalConnectionName=$externalConnectionName, externalEntityId=$externalEntityId, additionalProperties=$additionalProperties}"
 
         companion object {
 
@@ -272,15 +256,18 @@ class Item private constructor(
                 additionalProperties(externalConnection.additionalProperties)
             }
 
-            fun externalConnectionName(externalConnectionName: ExternalConnectionName) = externalConnectionName(JsonField.of(externalConnectionName))
+            fun externalConnectionName(externalConnectionName: ExternalConnectionName) =
+                externalConnectionName(JsonField.of(externalConnectionName))
 
             @JsonProperty("external_connection_name")
             @ExcludeMissing
-            fun externalConnectionName(externalConnectionName: JsonField<ExternalConnectionName>) = apply {
-                this.externalConnectionName = externalConnectionName
-            }
+            fun externalConnectionName(externalConnectionName: JsonField<ExternalConnectionName>) =
+                apply {
+                    this.externalConnectionName = externalConnectionName
+                }
 
-            fun externalEntityId(externalEntityId: String) = externalEntityId(JsonField.of(externalEntityId))
+            fun externalEntityId(externalEntityId: String) =
+                externalEntityId(JsonField.of(externalEntityId))
 
             @JsonProperty("external_entity_id")
             @ExcludeMissing
@@ -302,25 +289,28 @@ class Item private constructor(
                 this.additionalProperties.putAll(additionalProperties)
             }
 
-            fun build(): ExternalConnection = ExternalConnection(
-                externalConnectionName,
-                externalEntityId,
-                additionalProperties.toUnmodifiable(),
-            )
+            fun build(): ExternalConnection =
+                ExternalConnection(
+                    externalConnectionName,
+                    externalEntityId,
+                    additionalProperties.toUnmodifiable(),
+                )
         }
 
-        class ExternalConnectionName @JsonCreator private constructor(private val value: JsonField<String>, ) : Enum {
+        class ExternalConnectionName
+        @JsonCreator
+        private constructor(
+            private val value: JsonField<String>,
+        ) : Enum {
 
-            @com.fasterxml.jackson.annotation.JsonValue
-            fun _value(): JsonField<String> = value
+            @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
 
             override fun equals(other: Any?): Boolean {
-              if (this === other) {
-                  return true
-              }
+                if (this === other) {
+                    return true
+                }
 
-              return other is ExternalConnectionName &&
-                  this.value == other.value
+                return other is ExternalConnectionName && this.value == other.value
             }
 
             override fun hashCode() = value.hashCode()
@@ -367,27 +357,29 @@ class Item private constructor(
                 _UNKNOWN,
             }
 
-            fun value(): Value = when (this) {
-                STRIPE -> Value.STRIPE
-                QUICKBOOKS -> Value.QUICKBOOKS
-                BILL_COM -> Value.BILL_COM
-                NETSUITE -> Value.NETSUITE
-                TAXJAR -> Value.TAXJAR
-                AVALARA -> Value.AVALARA
-                ANROK -> Value.ANROK
-                else -> Value._UNKNOWN
-            }
+            fun value(): Value =
+                when (this) {
+                    STRIPE -> Value.STRIPE
+                    QUICKBOOKS -> Value.QUICKBOOKS
+                    BILL_COM -> Value.BILL_COM
+                    NETSUITE -> Value.NETSUITE
+                    TAXJAR -> Value.TAXJAR
+                    AVALARA -> Value.AVALARA
+                    ANROK -> Value.ANROK
+                    else -> Value._UNKNOWN
+                }
 
-            fun known(): Known = when (this) {
-                STRIPE -> Known.STRIPE
-                QUICKBOOKS -> Known.QUICKBOOKS
-                BILL_COM -> Known.BILL_COM
-                NETSUITE -> Known.NETSUITE
-                TAXJAR -> Known.TAXJAR
-                AVALARA -> Known.AVALARA
-                ANROK -> Known.ANROK
-                else -> throw OrbInvalidDataException("Unknown ExternalConnectionName: $value")
-            }
+            fun known(): Known =
+                when (this) {
+                    STRIPE -> Known.STRIPE
+                    QUICKBOOKS -> Known.QUICKBOOKS
+                    BILL_COM -> Known.BILL_COM
+                    NETSUITE -> Known.NETSUITE
+                    TAXJAR -> Known.TAXJAR
+                    AVALARA -> Known.AVALARA
+                    ANROK -> Known.ANROK
+                    else -> throw OrbInvalidDataException("Unknown ExternalConnectionName: $value")
+                }
 
             fun asString(): String = _value().asStringOrThrow()
         }

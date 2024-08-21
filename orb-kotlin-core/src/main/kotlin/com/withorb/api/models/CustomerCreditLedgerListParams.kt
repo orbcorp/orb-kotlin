@@ -2,56 +2,34 @@
 
 package com.withorb.api.models
 
-import com.fasterxml.jackson.annotation.JsonAnyGetter
-import com.fasterxml.jackson.annotation.JsonAnySetter
 import com.fasterxml.jackson.annotation.JsonCreator
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties
-import com.fasterxml.jackson.annotation.JsonProperty
-import com.fasterxml.jackson.core.JsonGenerator
-import com.fasterxml.jackson.core.ObjectCodec
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize
-import com.fasterxml.jackson.databind.annotation.JsonSerialize
-import com.fasterxml.jackson.databind.JsonNode
-import com.fasterxml.jackson.databind.SerializerProvider
-import com.fasterxml.jackson.module.kotlin.jacksonTypeRef
-import org.apache.hc.core5.http.ContentType
-import java.time.LocalDate
+import com.withorb.api.core.Enum
+import com.withorb.api.core.JsonField
+import com.withorb.api.core.JsonValue
+import com.withorb.api.core.NoAutoDetect
+import com.withorb.api.core.toUnmodifiable
+import com.withorb.api.errors.OrbInvalidDataException
+import com.withorb.api.models.*
 import java.time.OffsetDateTime
 import java.time.format.DateTimeFormatter
 import java.util.Objects
-import java.util.Optional
-import java.util.UUID
-import com.withorb.api.core.BaseDeserializer
-import com.withorb.api.core.BaseSerializer
-import com.withorb.api.core.getOrThrow
-import com.withorb.api.core.ExcludeMissing
-import com.withorb.api.core.JsonField
-import com.withorb.api.core.JsonMissing
-import com.withorb.api.core.JsonValue
-import com.withorb.api.core.MultipartFormValue
-import com.withorb.api.core.toUnmodifiable
-import com.withorb.api.core.NoAutoDetect
-import com.withorb.api.core.Enum
-import com.withorb.api.core.ContentTypes
-import com.withorb.api.errors.OrbInvalidDataException
-import com.withorb.api.models.*
 
-class CustomerCreditLedgerListParams constructor(
-  private val customerId: String,
-  private val createdAtGt: OffsetDateTime?,
-  private val createdAtGte: OffsetDateTime?,
-  private val createdAtLt: OffsetDateTime?,
-  private val createdAtLte: OffsetDateTime?,
-  private val currency: String?,
-  private val cursor: String?,
-  private val entryStatus: EntryStatus?,
-  private val entryType: EntryType?,
-  private val limit: Long?,
-  private val minimumAmount: String?,
-  private val additionalQueryParams: Map<String, List<String>>,
-  private val additionalHeaders: Map<String, List<String>>,
-  private val additionalBodyProperties: Map<String, JsonValue>,
-
+class CustomerCreditLedgerListParams
+constructor(
+    private val customerId: String,
+    private val createdAtGt: OffsetDateTime?,
+    private val createdAtGte: OffsetDateTime?,
+    private val createdAtLt: OffsetDateTime?,
+    private val createdAtLte: OffsetDateTime?,
+    private val currency: String?,
+    private val cursor: String?,
+    private val entryStatus: EntryStatus?,
+    private val entryType: EntryType?,
+    private val limit: Long?,
+    private val minimumAmount: String?,
+    private val additionalQueryParams: Map<String, List<String>>,
+    private val additionalHeaders: Map<String, List<String>>,
+    private val additionalBodyProperties: Map<String, JsonValue>,
 ) {
 
     fun customerId(): String = customerId
@@ -77,48 +55,36 @@ class CustomerCreditLedgerListParams constructor(
     fun minimumAmount(): String? = minimumAmount
 
     internal fun getQueryParams(): Map<String, List<String>> {
-      val params = mutableMapOf<String, List<String>>()
-      this.createdAtGt?.let {
-          params.put("created_at[gt]", listOf(DateTimeFormatter.ISO_OFFSET_DATE_TIME.format(it)))
-      }
-      this.createdAtGte?.let {
-          params.put("created_at[gte]", listOf(DateTimeFormatter.ISO_OFFSET_DATE_TIME.format(it)))
-      }
-      this.createdAtLt?.let {
-          params.put("created_at[lt]", listOf(DateTimeFormatter.ISO_OFFSET_DATE_TIME.format(it)))
-      }
-      this.createdAtLte?.let {
-          params.put("created_at[lte]", listOf(DateTimeFormatter.ISO_OFFSET_DATE_TIME.format(it)))
-      }
-      this.currency?.let {
-          params.put("currency", listOf(it.toString()))
-      }
-      this.cursor?.let {
-          params.put("cursor", listOf(it.toString()))
-      }
-      this.entryStatus?.let {
-          params.put("entry_status", listOf(it.toString()))
-      }
-      this.entryType?.let {
-          params.put("entry_type", listOf(it.toString()))
-      }
-      this.limit?.let {
-          params.put("limit", listOf(it.toString()))
-      }
-      this.minimumAmount?.let {
-          params.put("minimum_amount", listOf(it.toString()))
-      }
-      params.putAll(additionalQueryParams)
-      return params.toUnmodifiable()
+        val params = mutableMapOf<String, List<String>>()
+        this.createdAtGt?.let {
+            params.put("created_at[gt]", listOf(DateTimeFormatter.ISO_OFFSET_DATE_TIME.format(it)))
+        }
+        this.createdAtGte?.let {
+            params.put("created_at[gte]", listOf(DateTimeFormatter.ISO_OFFSET_DATE_TIME.format(it)))
+        }
+        this.createdAtLt?.let {
+            params.put("created_at[lt]", listOf(DateTimeFormatter.ISO_OFFSET_DATE_TIME.format(it)))
+        }
+        this.createdAtLte?.let {
+            params.put("created_at[lte]", listOf(DateTimeFormatter.ISO_OFFSET_DATE_TIME.format(it)))
+        }
+        this.currency?.let { params.put("currency", listOf(it.toString())) }
+        this.cursor?.let { params.put("cursor", listOf(it.toString())) }
+        this.entryStatus?.let { params.put("entry_status", listOf(it.toString())) }
+        this.entryType?.let { params.put("entry_type", listOf(it.toString())) }
+        this.limit?.let { params.put("limit", listOf(it.toString())) }
+        this.minimumAmount?.let { params.put("minimum_amount", listOf(it.toString())) }
+        params.putAll(additionalQueryParams)
+        return params.toUnmodifiable()
     }
 
     internal fun getHeaders(): Map<String, List<String>> = additionalHeaders
 
     fun getPathParam(index: Int): String {
-      return when (index) {
-          0 -> customerId
-          else -> ""
-      }
+        return when (index) {
+            0 -> customerId
+            else -> ""
+        }
     }
 
     fun _additionalQueryParams(): Map<String, List<String>> = additionalQueryParams
@@ -128,47 +94,48 @@ class CustomerCreditLedgerListParams constructor(
     fun _additionalBodyProperties(): Map<String, JsonValue> = additionalBodyProperties
 
     override fun equals(other: Any?): Boolean {
-      if (this === other) {
-          return true
-      }
+        if (this === other) {
+            return true
+        }
 
-      return other is CustomerCreditLedgerListParams &&
-          this.customerId == other.customerId &&
-          this.createdAtGt == other.createdAtGt &&
-          this.createdAtGte == other.createdAtGte &&
-          this.createdAtLt == other.createdAtLt &&
-          this.createdAtLte == other.createdAtLte &&
-          this.currency == other.currency &&
-          this.cursor == other.cursor &&
-          this.entryStatus == other.entryStatus &&
-          this.entryType == other.entryType &&
-          this.limit == other.limit &&
-          this.minimumAmount == other.minimumAmount &&
-          this.additionalQueryParams == other.additionalQueryParams &&
-          this.additionalHeaders == other.additionalHeaders &&
-          this.additionalBodyProperties == other.additionalBodyProperties
+        return other is CustomerCreditLedgerListParams &&
+            this.customerId == other.customerId &&
+            this.createdAtGt == other.createdAtGt &&
+            this.createdAtGte == other.createdAtGte &&
+            this.createdAtLt == other.createdAtLt &&
+            this.createdAtLte == other.createdAtLte &&
+            this.currency == other.currency &&
+            this.cursor == other.cursor &&
+            this.entryStatus == other.entryStatus &&
+            this.entryType == other.entryType &&
+            this.limit == other.limit &&
+            this.minimumAmount == other.minimumAmount &&
+            this.additionalQueryParams == other.additionalQueryParams &&
+            this.additionalHeaders == other.additionalHeaders &&
+            this.additionalBodyProperties == other.additionalBodyProperties
     }
 
     override fun hashCode(): Int {
-      return Objects.hash(
-          customerId,
-          createdAtGt,
-          createdAtGte,
-          createdAtLt,
-          createdAtLte,
-          currency,
-          cursor,
-          entryStatus,
-          entryType,
-          limit,
-          minimumAmount,
-          additionalQueryParams,
-          additionalHeaders,
-          additionalBodyProperties,
-      )
+        return Objects.hash(
+            customerId,
+            createdAtGt,
+            createdAtGte,
+            createdAtLt,
+            createdAtLte,
+            currency,
+            cursor,
+            entryStatus,
+            entryType,
+            limit,
+            minimumAmount,
+            additionalQueryParams,
+            additionalHeaders,
+            additionalBodyProperties,
+        )
     }
 
-    override fun toString() = "CustomerCreditLedgerListParams{customerId=$customerId, createdAtGt=$createdAtGt, createdAtGte=$createdAtGte, createdAtLt=$createdAtLt, createdAtLte=$createdAtLte, currency=$currency, cursor=$cursor, entryStatus=$entryStatus, entryType=$entryType, limit=$limit, minimumAmount=$minimumAmount, additionalQueryParams=$additionalQueryParams, additionalHeaders=$additionalHeaders, additionalBodyProperties=$additionalBodyProperties}"
+    override fun toString() =
+        "CustomerCreditLedgerListParams{customerId=$customerId, createdAtGt=$createdAtGt, createdAtGte=$createdAtGte, createdAtLt=$createdAtLt, createdAtLte=$createdAtLte, currency=$currency, cursor=$cursor, entryStatus=$entryStatus, entryType=$entryType, limit=$limit, minimumAmount=$minimumAmount, additionalQueryParams=$additionalQueryParams, additionalHeaders=$additionalHeaders, additionalBodyProperties=$additionalBodyProperties}"
 
     fun toBuilder() = Builder().from(this)
 
@@ -212,55 +179,33 @@ class CustomerCreditLedgerListParams constructor(
             additionalBodyProperties(customerCreditLedgerListParams.additionalBodyProperties)
         }
 
-        fun customerId(customerId: String) = apply {
-            this.customerId = customerId
-        }
+        fun customerId(customerId: String) = apply { this.customerId = customerId }
 
-        fun createdAtGt(createdAtGt: OffsetDateTime) = apply {
-            this.createdAtGt = createdAtGt
-        }
+        fun createdAtGt(createdAtGt: OffsetDateTime) = apply { this.createdAtGt = createdAtGt }
 
-        fun createdAtGte(createdAtGte: OffsetDateTime) = apply {
-            this.createdAtGte = createdAtGte
-        }
+        fun createdAtGte(createdAtGte: OffsetDateTime) = apply { this.createdAtGte = createdAtGte }
 
-        fun createdAtLt(createdAtLt: OffsetDateTime) = apply {
-            this.createdAtLt = createdAtLt
-        }
+        fun createdAtLt(createdAtLt: OffsetDateTime) = apply { this.createdAtLt = createdAtLt }
 
-        fun createdAtLte(createdAtLte: OffsetDateTime) = apply {
-            this.createdAtLte = createdAtLte
-        }
+        fun createdAtLte(createdAtLte: OffsetDateTime) = apply { this.createdAtLte = createdAtLte }
 
         /** The ledger currency or custom pricing unit to use. */
-        fun currency(currency: String) = apply {
-            this.currency = currency
-        }
+        fun currency(currency: String) = apply { this.currency = currency }
 
         /**
-         * Cursor for pagination. This can be populated by the `next_cursor` value returned
-         * from the initial request.
+         * Cursor for pagination. This can be populated by the `next_cursor` value returned from the
+         * initial request.
          */
-        fun cursor(cursor: String) = apply {
-            this.cursor = cursor
-        }
+        fun cursor(cursor: String) = apply { this.cursor = cursor }
 
-        fun entryStatus(entryStatus: EntryStatus) = apply {
-            this.entryStatus = entryStatus
-        }
+        fun entryStatus(entryStatus: EntryStatus) = apply { this.entryStatus = entryStatus }
 
-        fun entryType(entryType: EntryType) = apply {
-            this.entryType = entryType
-        }
+        fun entryType(entryType: EntryType) = apply { this.entryType = entryType }
 
         /** The number of items to fetch. Defaults to 20. */
-        fun limit(limit: Long) = apply {
-            this.limit = limit
-        }
+        fun limit(limit: Long) = apply { this.limit = limit }
 
-        fun minimumAmount(minimumAmount: String) = apply {
-            this.minimumAmount = minimumAmount
-        }
+        fun minimumAmount(minimumAmount: String) = apply { this.minimumAmount = minimumAmount }
 
         fun additionalQueryParams(additionalQueryParams: Map<String, List<String>>) = apply {
             this.additionalQueryParams.clear()
@@ -300,9 +245,7 @@ class CustomerCreditLedgerListParams constructor(
             additionalHeaders.forEach(this::putHeaders)
         }
 
-        fun removeHeader(name: String) = apply {
-            this.additionalHeaders.put(name, mutableListOf())
-        }
+        fun removeHeader(name: String) = apply { this.additionalHeaders.put(name, mutableListOf()) }
 
         fun additionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) = apply {
             this.additionalBodyProperties.clear()
@@ -313,42 +256,44 @@ class CustomerCreditLedgerListParams constructor(
             this.additionalBodyProperties.put(key, value)
         }
 
-        fun putAllAdditionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) = apply {
-            this.additionalBodyProperties.putAll(additionalBodyProperties)
-        }
+        fun putAllAdditionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) =
+            apply {
+                this.additionalBodyProperties.putAll(additionalBodyProperties)
+            }
 
-        fun build(): CustomerCreditLedgerListParams = CustomerCreditLedgerListParams(
-            checkNotNull(customerId) {
-                "`customerId` is required but was not set"
-            },
-            createdAtGt,
-            createdAtGte,
-            createdAtLt,
-            createdAtLte,
-            currency,
-            cursor,
-            entryStatus,
-            entryType,
-            limit,
-            minimumAmount,
-            additionalQueryParams.mapValues { it.value.toUnmodifiable() }.toUnmodifiable(),
-            additionalHeaders.mapValues { it.value.toUnmodifiable() }.toUnmodifiable(),
-            additionalBodyProperties.toUnmodifiable(),
-        )
+        fun build(): CustomerCreditLedgerListParams =
+            CustomerCreditLedgerListParams(
+                checkNotNull(customerId) { "`customerId` is required but was not set" },
+                createdAtGt,
+                createdAtGte,
+                createdAtLt,
+                createdAtLte,
+                currency,
+                cursor,
+                entryStatus,
+                entryType,
+                limit,
+                minimumAmount,
+                additionalQueryParams.mapValues { it.value.toUnmodifiable() }.toUnmodifiable(),
+                additionalHeaders.mapValues { it.value.toUnmodifiable() }.toUnmodifiable(),
+                additionalBodyProperties.toUnmodifiable(),
+            )
     }
 
-    class EntryStatus @JsonCreator private constructor(private val value: JsonField<String>, ) : Enum {
+    class EntryStatus
+    @JsonCreator
+    private constructor(
+        private val value: JsonField<String>,
+    ) : Enum {
 
-        @com.fasterxml.jackson.annotation.JsonValue
-        fun _value(): JsonField<String> = value
+        @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
 
         override fun equals(other: Any?): Boolean {
-          if (this === other) {
-              return true
-          }
+            if (this === other) {
+                return true
+            }
 
-          return other is EntryStatus &&
-              this.value == other.value
+            return other is EntryStatus && this.value == other.value
         }
 
         override fun hashCode() = value.hashCode()
@@ -375,33 +320,37 @@ class CustomerCreditLedgerListParams constructor(
             _UNKNOWN,
         }
 
-        fun value(): Value = when (this) {
-            COMMITTED -> Value.COMMITTED
-            PENDING -> Value.PENDING
-            else -> Value._UNKNOWN
-        }
+        fun value(): Value =
+            when (this) {
+                COMMITTED -> Value.COMMITTED
+                PENDING -> Value.PENDING
+                else -> Value._UNKNOWN
+            }
 
-        fun known(): Known = when (this) {
-            COMMITTED -> Known.COMMITTED
-            PENDING -> Known.PENDING
-            else -> throw OrbInvalidDataException("Unknown EntryStatus: $value")
-        }
+        fun known(): Known =
+            when (this) {
+                COMMITTED -> Known.COMMITTED
+                PENDING -> Known.PENDING
+                else -> throw OrbInvalidDataException("Unknown EntryStatus: $value")
+            }
 
         fun asString(): String = _value().asStringOrThrow()
     }
 
-    class EntryType @JsonCreator private constructor(private val value: JsonField<String>, ) : Enum {
+    class EntryType
+    @JsonCreator
+    private constructor(
+        private val value: JsonField<String>,
+    ) : Enum {
 
-        @com.fasterxml.jackson.annotation.JsonValue
-        fun _value(): JsonField<String> = value
+        @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
 
         override fun equals(other: Any?): Boolean {
-          if (this === other) {
-              return true
-          }
+            if (this === other) {
+                return true
+            }
 
-          return other is EntryType &&
-              this.value == other.value
+            return other is EntryType && this.value == other.value
         }
 
         override fun hashCode() = value.hashCode()
@@ -448,27 +397,29 @@ class CustomerCreditLedgerListParams constructor(
             _UNKNOWN,
         }
 
-        fun value(): Value = when (this) {
-            INCREMENT -> Value.INCREMENT
-            DECREMENT -> Value.DECREMENT
-            EXPIRATION_CHANGE -> Value.EXPIRATION_CHANGE
-            CREDIT_BLOCK_EXPIRY -> Value.CREDIT_BLOCK_EXPIRY
-            VOID -> Value.VOID
-            VOID_INITIATED -> Value.VOID_INITIATED
-            AMENDMENT -> Value.AMENDMENT
-            else -> Value._UNKNOWN
-        }
+        fun value(): Value =
+            when (this) {
+                INCREMENT -> Value.INCREMENT
+                DECREMENT -> Value.DECREMENT
+                EXPIRATION_CHANGE -> Value.EXPIRATION_CHANGE
+                CREDIT_BLOCK_EXPIRY -> Value.CREDIT_BLOCK_EXPIRY
+                VOID -> Value.VOID
+                VOID_INITIATED -> Value.VOID_INITIATED
+                AMENDMENT -> Value.AMENDMENT
+                else -> Value._UNKNOWN
+            }
 
-        fun known(): Known = when (this) {
-            INCREMENT -> Known.INCREMENT
-            DECREMENT -> Known.DECREMENT
-            EXPIRATION_CHANGE -> Known.EXPIRATION_CHANGE
-            CREDIT_BLOCK_EXPIRY -> Known.CREDIT_BLOCK_EXPIRY
-            VOID -> Known.VOID
-            VOID_INITIATED -> Known.VOID_INITIATED
-            AMENDMENT -> Known.AMENDMENT
-            else -> throw OrbInvalidDataException("Unknown EntryType: $value")
-        }
+        fun known(): Known =
+            when (this) {
+                INCREMENT -> Known.INCREMENT
+                DECREMENT -> Known.DECREMENT
+                EXPIRATION_CHANGE -> Known.EXPIRATION_CHANGE
+                CREDIT_BLOCK_EXPIRY -> Known.CREDIT_BLOCK_EXPIRY
+                VOID -> Known.VOID
+                VOID_INITIATED -> Known.VOID_INITIATED
+                AMENDMENT -> Known.AMENDMENT
+                else -> throw OrbInvalidDataException("Unknown EntryType: $value")
+            }
 
         fun asString(): String = _value().asStringOrThrow()
     }
