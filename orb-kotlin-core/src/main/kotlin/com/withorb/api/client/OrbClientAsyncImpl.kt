@@ -2,29 +2,17 @@
 
 package com.withorb.api.client
 
-import java.time.Duration
-import java.util.Base64
-import java.util.Optional
-import java.util.concurrent.CompletableFuture
 import com.withorb.api.core.ClientOptions
-import com.withorb.api.core.http.HttpMethod
-import com.withorb.api.core.http.HttpRequest
 import com.withorb.api.core.http.HttpResponse.Handler
-import com.withorb.api.core.JsonField
-import com.withorb.api.core.RequestOptions
 import com.withorb.api.errors.OrbError
-import com.withorb.api.errors.OrbInvalidDataException
 import com.withorb.api.models.*
 import com.withorb.api.services.async.*
-import com.withorb.api.services.emptyHandler
 import com.withorb.api.services.errorHandler
-import com.withorb.api.services.json
-import com.withorb.api.services.jsonHandler
-import com.withorb.api.services.stringHandler
-import com.withorb.api.services.binaryHandler
-import com.withorb.api.services.withErrorHandler
 
-class OrbClientAsyncImpl constructor(private val clientOptions: ClientOptions, ) : OrbClientAsync {
+class OrbClientAsyncImpl
+constructor(
+    private val clientOptions: ClientOptions,
+) : OrbClientAsync {
 
     private val errorHandler: Handler<OrbError> = errorHandler(clientOptions.jsonMapper)
 
@@ -34,13 +22,17 @@ class OrbClientAsyncImpl constructor(private val clientOptions: ClientOptions, )
 
     private val coupons: CouponServiceAsync by lazy { CouponServiceAsyncImpl(clientOptions) }
 
-    private val creditNotes: CreditNoteServiceAsync by lazy { CreditNoteServiceAsyncImpl(clientOptions) }
+    private val creditNotes: CreditNoteServiceAsync by lazy {
+        CreditNoteServiceAsyncImpl(clientOptions)
+    }
 
     private val customers: CustomerServiceAsync by lazy { CustomerServiceAsyncImpl(clientOptions) }
 
     private val events: EventServiceAsync by lazy { EventServiceAsyncImpl(clientOptions) }
 
-    private val invoiceLineItems: InvoiceLineItemServiceAsync by lazy { InvoiceLineItemServiceAsyncImpl(clientOptions) }
+    private val invoiceLineItems: InvoiceLineItemServiceAsync by lazy {
+        InvoiceLineItemServiceAsyncImpl(clientOptions)
+    }
 
     private val invoices: InvoiceServiceAsync by lazy { InvoiceServiceAsyncImpl(clientOptions) }
 
@@ -52,7 +44,9 @@ class OrbClientAsyncImpl constructor(private val clientOptions: ClientOptions, )
 
     private val prices: PriceServiceAsync by lazy { PriceServiceAsyncImpl(clientOptions) }
 
-    private val subscriptions: SubscriptionServiceAsync by lazy { SubscriptionServiceAsyncImpl(clientOptions) }
+    private val subscriptions: SubscriptionServiceAsync by lazy {
+        SubscriptionServiceAsyncImpl(clientOptions)
+    }
 
     private val alerts: AlertServiceAsync by lazy { AlertServiceAsyncImpl(clientOptions) }
 

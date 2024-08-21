@@ -4,38 +4,24 @@ package com.withorb.api.models
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter
 import com.fasterxml.jackson.annotation.JsonAnySetter
-import com.fasterxml.jackson.annotation.JsonCreator
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonProperty
-import com.fasterxml.jackson.core.JsonGenerator
-import com.fasterxml.jackson.core.ObjectCodec
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize
-import com.fasterxml.jackson.databind.annotation.JsonSerialize
-import com.fasterxml.jackson.databind.JsonNode
-import com.fasterxml.jackson.databind.SerializerProvider
-import com.fasterxml.jackson.module.kotlin.jacksonTypeRef
-import java.time.LocalDate
-import java.time.OffsetDateTime
-import java.time.format.DateTimeFormatter
-import java.util.Objects
-import java.util.Optional
-import java.util.UUID
-import com.withorb.api.core.BaseDeserializer
-import com.withorb.api.core.BaseSerializer
-import com.withorb.api.core.getOrThrow
 import com.withorb.api.core.ExcludeMissing
+import com.withorb.api.core.JsonField
 import com.withorb.api.core.JsonMissing
 import com.withorb.api.core.JsonValue
-import com.withorb.api.core.JsonNull
-import com.withorb.api.core.JsonField
-import com.withorb.api.core.Enum
-import com.withorb.api.core.toUnmodifiable
 import com.withorb.api.core.NoAutoDetect
-import com.withorb.api.errors.OrbInvalidDataException
+import com.withorb.api.core.toUnmodifiable
+import java.util.Objects
 
 @JsonDeserialize(builder = Subscriptions.Builder::class)
 @NoAutoDetect
-class Subscriptions private constructor(private val data: JsonField<List<Subscription>>, private val paginationMetadata: JsonField<PaginationMetadata>, private val additionalProperties: Map<String, JsonValue>, ) {
+class Subscriptions
+private constructor(
+    private val data: JsonField<List<Subscription>>,
+    private val paginationMetadata: JsonField<PaginationMetadata>,
+    private val additionalProperties: Map<String, JsonValue>,
+) {
 
     private var validated: Boolean = false
 
@@ -43,11 +29,10 @@ class Subscriptions private constructor(private val data: JsonField<List<Subscri
 
     fun data(): List<Subscription> = data.getRequired("data")
 
-    fun paginationMetadata(): PaginationMetadata = paginationMetadata.getRequired("pagination_metadata")
+    fun paginationMetadata(): PaginationMetadata =
+        paginationMetadata.getRequired("pagination_metadata")
 
-    @JsonProperty("data")
-    @ExcludeMissing
-    fun _data() = data
+    @JsonProperty("data") @ExcludeMissing fun _data() = data
 
     @JsonProperty("pagination_metadata")
     @ExcludeMissing
@@ -59,37 +44,39 @@ class Subscriptions private constructor(private val data: JsonField<List<Subscri
 
     fun validate(): Subscriptions = apply {
         if (!validated) {
-          data().forEach { it.validate() }
-          paginationMetadata().validate()
-          validated = true
+            data().forEach { it.validate() }
+            paginationMetadata().validate()
+            validated = true
         }
     }
 
     fun toBuilder() = Builder().from(this)
 
     override fun equals(other: Any?): Boolean {
-      if (this === other) {
-          return true
-      }
+        if (this === other) {
+            return true
+        }
 
-      return other is Subscriptions &&
-          this.data == other.data &&
-          this.paginationMetadata == other.paginationMetadata &&
-          this.additionalProperties == other.additionalProperties
+        return other is Subscriptions &&
+            this.data == other.data &&
+            this.paginationMetadata == other.paginationMetadata &&
+            this.additionalProperties == other.additionalProperties
     }
 
     override fun hashCode(): Int {
-      if (hashCode == 0) {
-        hashCode = Objects.hash(
-            data,
-            paginationMetadata,
-            additionalProperties,
-        )
-      }
-      return hashCode
+        if (hashCode == 0) {
+            hashCode =
+                Objects.hash(
+                    data,
+                    paginationMetadata,
+                    additionalProperties,
+                )
+        }
+        return hashCode
     }
 
-    override fun toString() = "Subscriptions{data=$data, paginationMetadata=$paginationMetadata, additionalProperties=$additionalProperties}"
+    override fun toString() =
+        "Subscriptions{data=$data, paginationMetadata=$paginationMetadata, additionalProperties=$additionalProperties}"
 
     companion object {
 
@@ -112,11 +99,10 @@ class Subscriptions private constructor(private val data: JsonField<List<Subscri
 
         @JsonProperty("data")
         @ExcludeMissing
-        fun data(data: JsonField<List<Subscription>>) = apply {
-            this.data = data
-        }
+        fun data(data: JsonField<List<Subscription>>) = apply { this.data = data }
 
-        fun paginationMetadata(paginationMetadata: PaginationMetadata) = paginationMetadata(JsonField.of(paginationMetadata))
+        fun paginationMetadata(paginationMetadata: PaginationMetadata) =
+            paginationMetadata(JsonField.of(paginationMetadata))
 
         @JsonProperty("pagination_metadata")
         @ExcludeMissing
@@ -138,10 +124,11 @@ class Subscriptions private constructor(private val data: JsonField<List<Subscri
             this.additionalProperties.putAll(additionalProperties)
         }
 
-        fun build(): Subscriptions = Subscriptions(
-            data.map { it.toUnmodifiable() },
-            paginationMetadata,
-            additionalProperties.toUnmodifiable(),
-        )
+        fun build(): Subscriptions =
+            Subscriptions(
+                data.map { it.toUnmodifiable() },
+                paginationMetadata,
+                additionalProperties.toUnmodifiable(),
+            )
     }
 }
