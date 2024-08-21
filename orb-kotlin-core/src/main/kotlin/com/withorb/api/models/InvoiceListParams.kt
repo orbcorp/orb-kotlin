@@ -2,43 +2,64 @@
 
 package com.withorb.api.models
 
+import com.fasterxml.jackson.annotation.JsonAnyGetter
+import com.fasterxml.jackson.annotation.JsonAnySetter
 import com.fasterxml.jackson.annotation.JsonCreator
-import com.withorb.api.core.Enum
-import com.withorb.api.core.JsonField
-import com.withorb.api.core.JsonValue
-import com.withorb.api.core.NoAutoDetect
-import com.withorb.api.core.toUnmodifiable
-import com.withorb.api.errors.OrbInvalidDataException
-import com.withorb.api.models.*
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties
+import com.fasterxml.jackson.annotation.JsonProperty
+import com.fasterxml.jackson.core.JsonGenerator
+import com.fasterxml.jackson.core.ObjectCodec
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize
+import com.fasterxml.jackson.databind.annotation.JsonSerialize
+import com.fasterxml.jackson.databind.JsonNode
+import com.fasterxml.jackson.databind.SerializerProvider
+import com.fasterxml.jackson.module.kotlin.jacksonTypeRef
+import org.apache.hc.core5.http.ContentType
 import java.time.LocalDate
 import java.time.OffsetDateTime
 import java.time.format.DateTimeFormatter
 import java.util.Objects
+import java.util.Optional
+import java.util.UUID
+import com.withorb.api.core.BaseDeserializer
+import com.withorb.api.core.BaseSerializer
+import com.withorb.api.core.getOrThrow
+import com.withorb.api.core.ExcludeMissing
+import com.withorb.api.core.JsonField
+import com.withorb.api.core.JsonMissing
+import com.withorb.api.core.JsonValue
+import com.withorb.api.core.MultipartFormValue
+import com.withorb.api.core.toUnmodifiable
+import com.withorb.api.core.NoAutoDetect
+import com.withorb.api.core.Enum
+import com.withorb.api.core.ContentTypes
+import com.withorb.api.errors.OrbInvalidDataException
+import com.withorb.api.models.*
 
-class InvoiceListParams
-constructor(
-    private val amount: String?,
-    private val amountGt: String?,
-    private val amountLt: String?,
-    private val cursor: String?,
-    private val customerId: String?,
-    private val dateType: DateType?,
-    private val dueDate: LocalDate?,
-    private val dueDateWindow: String?,
-    private val dueDateGt: LocalDate?,
-    private val dueDateLt: LocalDate?,
-    private val externalCustomerId: String?,
-    private val invoiceDateGt: OffsetDateTime?,
-    private val invoiceDateGte: OffsetDateTime?,
-    private val invoiceDateLt: OffsetDateTime?,
-    private val invoiceDateLte: OffsetDateTime?,
-    private val isRecurring: Boolean?,
-    private val limit: Long?,
-    private val status: List<Status>?,
-    private val subscriptionId: String?,
-    private val additionalQueryParams: Map<String, List<String>>,
-    private val additionalHeaders: Map<String, List<String>>,
-    private val additionalBodyProperties: Map<String, JsonValue>,
+class InvoiceListParams constructor(
+  private val amount: String?,
+  private val amountGt: String?,
+  private val amountLt: String?,
+  private val cursor: String?,
+  private val customerId: String?,
+  private val dateType: DateType?,
+  private val dueDate: LocalDate?,
+  private val dueDateWindow: String?,
+  private val dueDateGt: LocalDate?,
+  private val dueDateLt: LocalDate?,
+  private val externalCustomerId: String?,
+  private val invoiceDateGt: OffsetDateTime?,
+  private val invoiceDateGte: OffsetDateTime?,
+  private val invoiceDateLt: OffsetDateTime?,
+  private val invoiceDateLte: OffsetDateTime?,
+  private val isRecurring: Boolean?,
+  private val limit: Long?,
+  private val status: List<Status>?,
+  private val subscriptionId: String?,
+  private val additionalQueryParams: Map<String, List<String>>,
+  private val additionalHeaders: Map<String, List<String>>,
+  private val additionalBodyProperties: Map<String, JsonValue>,
+
 ) {
 
     fun amount(): String? = amount
@@ -80,48 +101,66 @@ constructor(
     fun subscriptionId(): String? = subscriptionId
 
     internal fun getQueryParams(): Map<String, List<String>> {
-        val params = mutableMapOf<String, List<String>>()
-        this.amount?.let { params.put("amount", listOf(it.toString())) }
-        this.amountGt?.let { params.put("amount[gt]", listOf(it.toString())) }
-        this.amountLt?.let { params.put("amount[lt]", listOf(it.toString())) }
-        this.cursor?.let { params.put("cursor", listOf(it.toString())) }
-        this.customerId?.let { params.put("customer_id", listOf(it.toString())) }
-        this.dateType?.let { params.put("date_type", listOf(it.toString())) }
-        this.dueDate?.let { params.put("due_date", listOf(it.toString())) }
-        this.dueDateWindow?.let { params.put("due_date_window", listOf(it.toString())) }
-        this.dueDateGt?.let { params.put("due_date[gt]", listOf(it.toString())) }
-        this.dueDateLt?.let { params.put("due_date[lt]", listOf(it.toString())) }
-        this.externalCustomerId?.let { params.put("external_customer_id", listOf(it.toString())) }
-        this.invoiceDateGt?.let {
-            params.put(
-                "invoice_date[gt]",
-                listOf(DateTimeFormatter.ISO_OFFSET_DATE_TIME.format(it))
-            )
-        }
-        this.invoiceDateGte?.let {
-            params.put(
-                "invoice_date[gte]",
-                listOf(DateTimeFormatter.ISO_OFFSET_DATE_TIME.format(it))
-            )
-        }
-        this.invoiceDateLt?.let {
-            params.put(
-                "invoice_date[lt]",
-                listOf(DateTimeFormatter.ISO_OFFSET_DATE_TIME.format(it))
-            )
-        }
-        this.invoiceDateLte?.let {
-            params.put(
-                "invoice_date[lte]",
-                listOf(DateTimeFormatter.ISO_OFFSET_DATE_TIME.format(it))
-            )
-        }
-        this.isRecurring?.let { params.put("is_recurring", listOf(it.toString())) }
-        this.limit?.let { params.put("limit", listOf(it.toString())) }
-        this.status?.let { params.put("status[]", it.map(Any::toString)) }
-        this.subscriptionId?.let { params.put("subscription_id", listOf(it.toString())) }
-        params.putAll(additionalQueryParams)
-        return params.toUnmodifiable()
+      val params = mutableMapOf<String, List<String>>()
+      this.amount?.let {
+          params.put("amount", listOf(it.toString()))
+      }
+      this.amountGt?.let {
+          params.put("amount[gt]", listOf(it.toString()))
+      }
+      this.amountLt?.let {
+          params.put("amount[lt]", listOf(it.toString()))
+      }
+      this.cursor?.let {
+          params.put("cursor", listOf(it.toString()))
+      }
+      this.customerId?.let {
+          params.put("customer_id", listOf(it.toString()))
+      }
+      this.dateType?.let {
+          params.put("date_type", listOf(it.toString()))
+      }
+      this.dueDate?.let {
+          params.put("due_date", listOf(it.toString()))
+      }
+      this.dueDateWindow?.let {
+          params.put("due_date_window", listOf(it.toString()))
+      }
+      this.dueDateGt?.let {
+          params.put("due_date[gt]", listOf(it.toString()))
+      }
+      this.dueDateLt?.let {
+          params.put("due_date[lt]", listOf(it.toString()))
+      }
+      this.externalCustomerId?.let {
+          params.put("external_customer_id", listOf(it.toString()))
+      }
+      this.invoiceDateGt?.let {
+          params.put("invoice_date[gt]", listOf(DateTimeFormatter.ISO_OFFSET_DATE_TIME.format(it)))
+      }
+      this.invoiceDateGte?.let {
+          params.put("invoice_date[gte]", listOf(DateTimeFormatter.ISO_OFFSET_DATE_TIME.format(it)))
+      }
+      this.invoiceDateLt?.let {
+          params.put("invoice_date[lt]", listOf(DateTimeFormatter.ISO_OFFSET_DATE_TIME.format(it)))
+      }
+      this.invoiceDateLte?.let {
+          params.put("invoice_date[lte]", listOf(DateTimeFormatter.ISO_OFFSET_DATE_TIME.format(it)))
+      }
+      this.isRecurring?.let {
+          params.put("is_recurring", listOf(it.toString()))
+      }
+      this.limit?.let {
+          params.put("limit", listOf(it.toString()))
+      }
+      this.status?.let {
+          params.put("status[]", it.map(Any::toString))
+      }
+      this.subscriptionId?.let {
+          params.put("subscription_id", listOf(it.toString()))
+      }
+      params.putAll(additionalQueryParams)
+      return params.toUnmodifiable()
     }
 
     internal fun getHeaders(): Map<String, List<String>> = additionalHeaders
@@ -133,64 +172,63 @@ constructor(
     fun _additionalBodyProperties(): Map<String, JsonValue> = additionalBodyProperties
 
     override fun equals(other: Any?): Boolean {
-        if (this === other) {
-            return true
-        }
+      if (this === other) {
+          return true
+      }
 
-        return other is InvoiceListParams &&
-            this.amount == other.amount &&
-            this.amountGt == other.amountGt &&
-            this.amountLt == other.amountLt &&
-            this.cursor == other.cursor &&
-            this.customerId == other.customerId &&
-            this.dateType == other.dateType &&
-            this.dueDate == other.dueDate &&
-            this.dueDateWindow == other.dueDateWindow &&
-            this.dueDateGt == other.dueDateGt &&
-            this.dueDateLt == other.dueDateLt &&
-            this.externalCustomerId == other.externalCustomerId &&
-            this.invoiceDateGt == other.invoiceDateGt &&
-            this.invoiceDateGte == other.invoiceDateGte &&
-            this.invoiceDateLt == other.invoiceDateLt &&
-            this.invoiceDateLte == other.invoiceDateLte &&
-            this.isRecurring == other.isRecurring &&
-            this.limit == other.limit &&
-            this.status == other.status &&
-            this.subscriptionId == other.subscriptionId &&
-            this.additionalQueryParams == other.additionalQueryParams &&
-            this.additionalHeaders == other.additionalHeaders &&
-            this.additionalBodyProperties == other.additionalBodyProperties
+      return other is InvoiceListParams &&
+          this.amount == other.amount &&
+          this.amountGt == other.amountGt &&
+          this.amountLt == other.amountLt &&
+          this.cursor == other.cursor &&
+          this.customerId == other.customerId &&
+          this.dateType == other.dateType &&
+          this.dueDate == other.dueDate &&
+          this.dueDateWindow == other.dueDateWindow &&
+          this.dueDateGt == other.dueDateGt &&
+          this.dueDateLt == other.dueDateLt &&
+          this.externalCustomerId == other.externalCustomerId &&
+          this.invoiceDateGt == other.invoiceDateGt &&
+          this.invoiceDateGte == other.invoiceDateGte &&
+          this.invoiceDateLt == other.invoiceDateLt &&
+          this.invoiceDateLte == other.invoiceDateLte &&
+          this.isRecurring == other.isRecurring &&
+          this.limit == other.limit &&
+          this.status == other.status &&
+          this.subscriptionId == other.subscriptionId &&
+          this.additionalQueryParams == other.additionalQueryParams &&
+          this.additionalHeaders == other.additionalHeaders &&
+          this.additionalBodyProperties == other.additionalBodyProperties
     }
 
     override fun hashCode(): Int {
-        return Objects.hash(
-            amount,
-            amountGt,
-            amountLt,
-            cursor,
-            customerId,
-            dateType,
-            dueDate,
-            dueDateWindow,
-            dueDateGt,
-            dueDateLt,
-            externalCustomerId,
-            invoiceDateGt,
-            invoiceDateGte,
-            invoiceDateLt,
-            invoiceDateLte,
-            isRecurring,
-            limit,
-            status,
-            subscriptionId,
-            additionalQueryParams,
-            additionalHeaders,
-            additionalBodyProperties,
-        )
+      return Objects.hash(
+          amount,
+          amountGt,
+          amountLt,
+          cursor,
+          customerId,
+          dateType,
+          dueDate,
+          dueDateWindow,
+          dueDateGt,
+          dueDateLt,
+          externalCustomerId,
+          invoiceDateGt,
+          invoiceDateGte,
+          invoiceDateLt,
+          invoiceDateLte,
+          isRecurring,
+          limit,
+          status,
+          subscriptionId,
+          additionalQueryParams,
+          additionalHeaders,
+          additionalBodyProperties,
+      )
     }
 
-    override fun toString() =
-        "InvoiceListParams{amount=$amount, amountGt=$amountGt, amountLt=$amountLt, cursor=$cursor, customerId=$customerId, dateType=$dateType, dueDate=$dueDate, dueDateWindow=$dueDateWindow, dueDateGt=$dueDateGt, dueDateLt=$dueDateLt, externalCustomerId=$externalCustomerId, invoiceDateGt=$invoiceDateGt, invoiceDateGte=$invoiceDateGte, invoiceDateLt=$invoiceDateLt, invoiceDateLte=$invoiceDateLte, isRecurring=$isRecurring, limit=$limit, status=$status, subscriptionId=$subscriptionId, additionalQueryParams=$additionalQueryParams, additionalHeaders=$additionalHeaders, additionalBodyProperties=$additionalBodyProperties}"
+    override fun toString() = "InvoiceListParams{amount=$amount, amountGt=$amountGt, amountLt=$amountLt, cursor=$cursor, customerId=$customerId, dateType=$dateType, dueDate=$dueDate, dueDateWindow=$dueDateWindow, dueDateGt=$dueDateGt, dueDateLt=$dueDateLt, externalCustomerId=$externalCustomerId, invoiceDateGt=$invoiceDateGt, invoiceDateGte=$invoiceDateGte, invoiceDateLt=$invoiceDateLt, invoiceDateLte=$invoiceDateLte, isRecurring=$isRecurring, limit=$limit, status=$status, subscriptionId=$subscriptionId, additionalQueryParams=$additionalQueryParams, additionalHeaders=$additionalHeaders, additionalBodyProperties=$additionalBodyProperties}"
 
     fun toBuilder() = Builder().from(this)
 
@@ -250,29 +288,49 @@ constructor(
             additionalBodyProperties(invoiceListParams.additionalBodyProperties)
         }
 
-        fun amount(amount: String) = apply { this.amount = amount }
+        fun amount(amount: String) = apply {
+            this.amount = amount
+        }
 
-        fun amountGt(amountGt: String) = apply { this.amountGt = amountGt }
+        fun amountGt(amountGt: String) = apply {
+            this.amountGt = amountGt
+        }
 
-        fun amountLt(amountLt: String) = apply { this.amountLt = amountLt }
+        fun amountLt(amountLt: String) = apply {
+            this.amountLt = amountLt
+        }
 
         /**
-         * Cursor for pagination. This can be populated by the `next_cursor` value returned from the
-         * initial request.
+         * Cursor for pagination. This can be populated by the `next_cursor` value returned
+         * from the initial request.
          */
-        fun cursor(cursor: String) = apply { this.cursor = cursor }
+        fun cursor(cursor: String) = apply {
+            this.cursor = cursor
+        }
 
-        fun customerId(customerId: String) = apply { this.customerId = customerId }
+        fun customerId(customerId: String) = apply {
+            this.customerId = customerId
+        }
 
-        fun dateType(dateType: DateType) = apply { this.dateType = dateType }
+        fun dateType(dateType: DateType) = apply {
+            this.dateType = dateType
+        }
 
-        fun dueDate(dueDate: LocalDate) = apply { this.dueDate = dueDate }
+        fun dueDate(dueDate: LocalDate) = apply {
+            this.dueDate = dueDate
+        }
 
-        fun dueDateWindow(dueDateWindow: String) = apply { this.dueDateWindow = dueDateWindow }
+        fun dueDateWindow(dueDateWindow: String) = apply {
+            this.dueDateWindow = dueDateWindow
+        }
 
-        fun dueDateGt(dueDateGt: LocalDate) = apply { this.dueDateGt = dueDateGt }
+        fun dueDateGt(dueDateGt: LocalDate) = apply {
+            this.dueDateGt = dueDateGt
+        }
 
-        fun dueDateLt(dueDateLt: LocalDate) = apply { this.dueDateLt = dueDateLt }
+        fun dueDateLt(dueDateLt: LocalDate) = apply {
+            this.dueDateLt = dueDateLt
+        }
 
         fun externalCustomerId(externalCustomerId: String) = apply {
             this.externalCustomerId = externalCustomerId
@@ -294,19 +352,27 @@ constructor(
             this.invoiceDateLte = invoiceDateLte
         }
 
-        fun isRecurring(isRecurring: Boolean) = apply { this.isRecurring = isRecurring }
+        fun isRecurring(isRecurring: Boolean) = apply {
+            this.isRecurring = isRecurring
+        }
 
         /** The number of items to fetch. Defaults to 20. */
-        fun limit(limit: Long) = apply { this.limit = limit }
+        fun limit(limit: Long) = apply {
+            this.limit = limit
+        }
 
         fun status(status: List<Status>) = apply {
             this.status.clear()
             this.status.addAll(status)
         }
 
-        fun addStatus(status: Status) = apply { this.status.add(status) }
+        fun addStatus(status: Status) = apply {
+            this.status.add(status)
+        }
 
-        fun subscriptionId(subscriptionId: String) = apply { this.subscriptionId = subscriptionId }
+        fun subscriptionId(subscriptionId: String) = apply {
+            this.subscriptionId = subscriptionId
+        }
 
         fun additionalQueryParams(additionalQueryParams: Map<String, List<String>>) = apply {
             this.additionalQueryParams.clear()
@@ -346,7 +412,9 @@ constructor(
             additionalHeaders.forEach(this::putHeaders)
         }
 
-        fun removeHeader(name: String) = apply { this.additionalHeaders.put(name, mutableListOf()) }
+        fun removeHeader(name: String) = apply {
+            this.additionalHeaders.put(name, mutableListOf())
+        }
 
         fun additionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) = apply {
             this.additionalBodyProperties.clear()
@@ -357,52 +425,48 @@ constructor(
             this.additionalBodyProperties.put(key, value)
         }
 
-        fun putAllAdditionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) =
-            apply {
-                this.additionalBodyProperties.putAll(additionalBodyProperties)
-            }
+        fun putAllAdditionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) = apply {
+            this.additionalBodyProperties.putAll(additionalBodyProperties)
+        }
 
-        fun build(): InvoiceListParams =
-            InvoiceListParams(
-                amount,
-                amountGt,
-                amountLt,
-                cursor,
-                customerId,
-                dateType,
-                dueDate,
-                dueDateWindow,
-                dueDateGt,
-                dueDateLt,
-                externalCustomerId,
-                invoiceDateGt,
-                invoiceDateGte,
-                invoiceDateLt,
-                invoiceDateLte,
-                isRecurring,
-                limit,
-                if (status.size == 0) null else status.toUnmodifiable(),
-                subscriptionId,
-                additionalQueryParams.mapValues { it.value.toUnmodifiable() }.toUnmodifiable(),
-                additionalHeaders.mapValues { it.value.toUnmodifiable() }.toUnmodifiable(),
-                additionalBodyProperties.toUnmodifiable(),
-            )
+        fun build(): InvoiceListParams = InvoiceListParams(
+            amount,
+            amountGt,
+            amountLt,
+            cursor,
+            customerId,
+            dateType,
+            dueDate,
+            dueDateWindow,
+            dueDateGt,
+            dueDateLt,
+            externalCustomerId,
+            invoiceDateGt,
+            invoiceDateGte,
+            invoiceDateLt,
+            invoiceDateLte,
+            isRecurring,
+            limit,
+            if(status.size == 0) null else status.toUnmodifiable(),
+            subscriptionId,
+            additionalQueryParams.mapValues { it.value.toUnmodifiable() }.toUnmodifiable(),
+            additionalHeaders.mapValues { it.value.toUnmodifiable() }.toUnmodifiable(),
+            additionalBodyProperties.toUnmodifiable(),
+        )
     }
 
-    class DateType
-    @JsonCreator
-    private constructor(
-        private val value: JsonField<String>,
-    ) : Enum {
+    class DateType @JsonCreator private constructor(private val value: JsonField<String>, ) : Enum {
 
-        @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
+        @com.fasterxml.jackson.annotation.JsonValue
+        fun _value(): JsonField<String> = value
 
         override fun equals(other: Any?): Boolean {
-            if (this === other) {
-                return true
-            }
+          if (this === other) {
+              return true
+          }
 
-            return other is DateType && this.value == other.value
+          return other is DateType &&
+              this.value == other.value
         }
 
         override fun hashCode() = value.hashCode()
@@ -429,37 +493,33 @@ constructor(
             _UNKNOWN,
         }
 
-        fun value(): Value =
-            when (this) {
-                DUE_DATE -> Value.DUE_DATE
-                INVOICE_DATE -> Value.INVOICE_DATE
-                else -> Value._UNKNOWN
-            }
+        fun value(): Value = when (this) {
+            DUE_DATE -> Value.DUE_DATE
+            INVOICE_DATE -> Value.INVOICE_DATE
+            else -> Value._UNKNOWN
+        }
 
-        fun known(): Known =
-            when (this) {
-                DUE_DATE -> Known.DUE_DATE
-                INVOICE_DATE -> Known.INVOICE_DATE
-                else -> throw OrbInvalidDataException("Unknown DateType: $value")
-            }
+        fun known(): Known = when (this) {
+            DUE_DATE -> Known.DUE_DATE
+            INVOICE_DATE -> Known.INVOICE_DATE
+            else -> throw OrbInvalidDataException("Unknown DateType: $value")
+        }
 
         fun asString(): String = _value().asStringOrThrow()
     }
 
-    class Status
-    @JsonCreator
-    private constructor(
-        private val value: JsonField<String>,
-    ) : Enum {
+    class Status @JsonCreator private constructor(private val value: JsonField<String>, ) : Enum {
 
-        @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
+        @com.fasterxml.jackson.annotation.JsonValue
+        fun _value(): JsonField<String> = value
 
         override fun equals(other: Any?): Boolean {
-            if (this === other) {
-                return true
-            }
+          if (this === other) {
+              return true
+          }
 
-            return other is Status && this.value == other.value
+          return other is Status &&
+              this.value == other.value
         }
 
         override fun hashCode() = value.hashCode()
@@ -498,25 +558,23 @@ constructor(
             _UNKNOWN,
         }
 
-        fun value(): Value =
-            when (this) {
-                DRAFT -> Value.DRAFT
-                ISSUED -> Value.ISSUED
-                PAID -> Value.PAID
-                SYNCED -> Value.SYNCED
-                VOID -> Value.VOID
-                else -> Value._UNKNOWN
-            }
+        fun value(): Value = when (this) {
+            DRAFT -> Value.DRAFT
+            ISSUED -> Value.ISSUED
+            PAID -> Value.PAID
+            SYNCED -> Value.SYNCED
+            VOID -> Value.VOID
+            else -> Value._UNKNOWN
+        }
 
-        fun known(): Known =
-            when (this) {
-                DRAFT -> Known.DRAFT
-                ISSUED -> Known.ISSUED
-                PAID -> Known.PAID
-                SYNCED -> Known.SYNCED
-                VOID -> Known.VOID
-                else -> throw OrbInvalidDataException("Unknown Status: $value")
-            }
+        fun known(): Known = when (this) {
+            DRAFT -> Known.DRAFT
+            ISSUED -> Known.ISSUED
+            PAID -> Known.PAID
+            SYNCED -> Known.SYNCED
+            VOID -> Known.VOID
+            else -> throw OrbInvalidDataException("Unknown Status: $value")
+        }
 
         fun asString(): String = _value().asStringOrThrow()
     }

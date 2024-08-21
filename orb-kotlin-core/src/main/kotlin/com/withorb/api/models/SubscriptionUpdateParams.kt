@@ -4,26 +4,49 @@ package com.withorb.api.models
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter
 import com.fasterxml.jackson.annotation.JsonAnySetter
+import com.fasterxml.jackson.annotation.JsonCreator
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonProperty
+import com.fasterxml.jackson.core.JsonGenerator
+import com.fasterxml.jackson.core.ObjectCodec
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize
-import com.withorb.api.core.ExcludeMissing
-import com.withorb.api.core.JsonValue
-import com.withorb.api.core.NoAutoDetect
-import com.withorb.api.core.toUnmodifiable
-import com.withorb.api.models.*
+import com.fasterxml.jackson.databind.annotation.JsonSerialize
+import com.fasterxml.jackson.databind.JsonNode
+import com.fasterxml.jackson.databind.SerializerProvider
+import com.fasterxml.jackson.module.kotlin.jacksonTypeRef
+import org.apache.hc.core5.http.ContentType
+import java.time.LocalDate
+import java.time.OffsetDateTime
+import java.time.format.DateTimeFormatter
 import java.util.Objects
+import java.util.Optional
+import java.util.UUID
+import com.withorb.api.core.BaseDeserializer
+import com.withorb.api.core.BaseSerializer
+import com.withorb.api.core.getOrThrow
+import com.withorb.api.core.ExcludeMissing
+import com.withorb.api.core.JsonField
+import com.withorb.api.core.JsonMissing
+import com.withorb.api.core.JsonValue
+import com.withorb.api.core.MultipartFormValue
+import com.withorb.api.core.toUnmodifiable
+import com.withorb.api.core.NoAutoDetect
+import com.withorb.api.core.Enum
+import com.withorb.api.core.ContentTypes
+import com.withorb.api.errors.OrbInvalidDataException
+import com.withorb.api.models.*
 
-class SubscriptionUpdateParams
-constructor(
-    private val subscriptionId: String,
-    private val autoCollection: Boolean?,
-    private val defaultInvoiceMemo: String?,
-    private val invoicingThreshold: String?,
-    private val metadata: Metadata?,
-    private val netTerms: Long?,
-    private val additionalQueryParams: Map<String, List<String>>,
-    private val additionalHeaders: Map<String, List<String>>,
-    private val additionalBodyProperties: Map<String, JsonValue>,
+class SubscriptionUpdateParams constructor(
+  private val subscriptionId: String,
+  private val autoCollection: Boolean?,
+  private val defaultInvoiceMemo: String?,
+  private val invoicingThreshold: String?,
+  private val metadata: Metadata?,
+  private val netTerms: Long?,
+  private val additionalQueryParams: Map<String, List<String>>,
+  private val additionalHeaders: Map<String, List<String>>,
+  private val additionalBodyProperties: Map<String, JsonValue>,
+
 ) {
 
     fun subscriptionId(): String = subscriptionId
@@ -39,14 +62,14 @@ constructor(
     fun netTerms(): Long? = netTerms
 
     internal fun getBody(): SubscriptionUpdateBody {
-        return SubscriptionUpdateBody(
-            autoCollection,
-            defaultInvoiceMemo,
-            invoicingThreshold,
-            metadata,
-            netTerms,
-            additionalBodyProperties,
-        )
+      return SubscriptionUpdateBody(
+          autoCollection,
+          defaultInvoiceMemo,
+          invoicingThreshold,
+          metadata,
+          netTerms,
+          additionalBodyProperties,
+      )
     }
 
     internal fun getQueryParams(): Map<String, List<String>> = additionalQueryParams
@@ -54,59 +77,65 @@ constructor(
     internal fun getHeaders(): Map<String, List<String>> = additionalHeaders
 
     fun getPathParam(index: Int): String {
-        return when (index) {
-            0 -> subscriptionId
-            else -> ""
-        }
+      return when (index) {
+          0 -> subscriptionId
+          else -> ""
+      }
     }
 
     @JsonDeserialize(builder = SubscriptionUpdateBody.Builder::class)
     @NoAutoDetect
-    class SubscriptionUpdateBody
-    internal constructor(
-        private val autoCollection: Boolean?,
-        private val defaultInvoiceMemo: String?,
-        private val invoicingThreshold: String?,
-        private val metadata: Metadata?,
-        private val netTerms: Long?,
-        private val additionalProperties: Map<String, JsonValue>,
+    class SubscriptionUpdateBody internal constructor(
+      private val autoCollection: Boolean?,
+      private val defaultInvoiceMemo: String?,
+      private val invoicingThreshold: String?,
+      private val metadata: Metadata?,
+      private val netTerms: Long?,
+      private val additionalProperties: Map<String, JsonValue>,
+
     ) {
 
         private var hashCode: Int = 0
 
         /**
-         * Determines whether issued invoices for this subscription will automatically be charged
-         * with the saved payment method on the due date. This property defaults to the plan's
-         * behavior.
+         * Determines whether issued invoices for this subscription will automatically be
+         * charged with the saved payment method on the due date. This property defaults to
+         * the plan's behavior.
          */
-        @JsonProperty("auto_collection") fun autoCollection(): Boolean? = autoCollection
+        @JsonProperty("auto_collection")
+        fun autoCollection(): Boolean? = autoCollection
 
         /**
-         * Determines the default memo on this subscription's invoices. Note that if this is not
-         * provided, it is determined by the plan configuration.
+         * Determines the default memo on this subscription's invoices. Note that if this
+         * is not provided, it is determined by the plan configuration.
          */
-        @JsonProperty("default_invoice_memo") fun defaultInvoiceMemo(): String? = defaultInvoiceMemo
+        @JsonProperty("default_invoice_memo")
+        fun defaultInvoiceMemo(): String? = defaultInvoiceMemo
 
         /**
-         * When this subscription's accrued usage reaches this threshold, an invoice will be issued
-         * for the subscription. If not specified, invoices will only be issued at the end of the
-         * billing period.
+         * When this subscription's accrued usage reaches this threshold, an invoice will
+         * be issued for the subscription. If not specified, invoices will only be issued
+         * at the end of the billing period.
          */
-        @JsonProperty("invoicing_threshold") fun invoicingThreshold(): String? = invoicingThreshold
+        @JsonProperty("invoicing_threshold")
+        fun invoicingThreshold(): String? = invoicingThreshold
 
         /**
-         * User-specified key/value pairs for the resource. Individual keys can be removed by
-         * setting the value to `null`, and the entire metadata mapping can be cleared by setting
-         * `metadata` to `null`.
+         * User-specified key/value pairs for the resource. Individual keys can be removed
+         * by setting the value to `null`, and the entire metadata mapping can be cleared
+         * by setting `metadata` to `null`.
          */
-        @JsonProperty("metadata") fun metadata(): Metadata? = metadata
+        @JsonProperty("metadata")
+        fun metadata(): Metadata? = metadata
 
         /**
-         * Determines the difference between the invoice issue date for subscription invoices as the
-         * date that they are due. A value of `0` here represents that the invoice is due on issue,
-         * whereas a value of `30` represents that the customer has a month to pay the invoice.
+         * Determines the difference between the invoice issue date for subscription
+         * invoices as the date that they are due. A value of `0` here represents that the
+         * invoice is due on issue, whereas a value of `30` represents that the customer
+         * has a month to pay the invoice.
          */
-        @JsonProperty("net_terms") fun netTerms(): Long? = netTerms
+        @JsonProperty("net_terms")
+        fun netTerms(): Long? = netTerms
 
         @JsonAnyGetter
         @ExcludeMissing
@@ -115,36 +144,34 @@ constructor(
         fun toBuilder() = Builder().from(this)
 
         override fun equals(other: Any?): Boolean {
-            if (this === other) {
-                return true
-            }
+          if (this === other) {
+              return true
+          }
 
-            return other is SubscriptionUpdateBody &&
-                this.autoCollection == other.autoCollection &&
-                this.defaultInvoiceMemo == other.defaultInvoiceMemo &&
-                this.invoicingThreshold == other.invoicingThreshold &&
-                this.metadata == other.metadata &&
-                this.netTerms == other.netTerms &&
-                this.additionalProperties == other.additionalProperties
+          return other is SubscriptionUpdateBody &&
+              this.autoCollection == other.autoCollection &&
+              this.defaultInvoiceMemo == other.defaultInvoiceMemo &&
+              this.invoicingThreshold == other.invoicingThreshold &&
+              this.metadata == other.metadata &&
+              this.netTerms == other.netTerms &&
+              this.additionalProperties == other.additionalProperties
         }
 
         override fun hashCode(): Int {
-            if (hashCode == 0) {
-                hashCode =
-                    Objects.hash(
-                        autoCollection,
-                        defaultInvoiceMemo,
-                        invoicingThreshold,
-                        metadata,
-                        netTerms,
-                        additionalProperties,
-                    )
-            }
-            return hashCode
+          if (hashCode == 0) {
+            hashCode = Objects.hash(
+                autoCollection,
+                defaultInvoiceMemo,
+                invoicingThreshold,
+                metadata,
+                netTerms,
+                additionalProperties,
+            )
+          }
+          return hashCode
         }
 
-        override fun toString() =
-            "SubscriptionUpdateBody{autoCollection=$autoCollection, defaultInvoiceMemo=$defaultInvoiceMemo, invoicingThreshold=$invoicingThreshold, metadata=$metadata, netTerms=$netTerms, additionalProperties=$additionalProperties}"
+        override fun toString() = "SubscriptionUpdateBody{autoCollection=$autoCollection, defaultInvoiceMemo=$defaultInvoiceMemo, invoicingThreshold=$invoicingThreshold, metadata=$metadata, netTerms=$netTerms, additionalProperties=$additionalProperties}"
 
         companion object {
 
@@ -171,8 +198,8 @@ constructor(
 
             /**
              * Determines whether issued invoices for this subscription will automatically be
-             * charged with the saved payment method on the due date. This property defaults to the
-             * plan's behavior.
+             * charged with the saved payment method on the due date. This property defaults to
+             * the plan's behavior.
              */
             @JsonProperty("auto_collection")
             fun autoCollection(autoCollection: Boolean) = apply {
@@ -180,8 +207,8 @@ constructor(
             }
 
             /**
-             * Determines the default memo on this subscription's invoices. Note that if this is not
-             * provided, it is determined by the plan configuration.
+             * Determines the default memo on this subscription's invoices. Note that if this
+             * is not provided, it is determined by the plan configuration.
              */
             @JsonProperty("default_invoice_memo")
             fun defaultInvoiceMemo(defaultInvoiceMemo: String) = apply {
@@ -189,9 +216,9 @@ constructor(
             }
 
             /**
-             * When this subscription's accrued usage reaches this threshold, an invoice will be
-             * issued for the subscription. If not specified, invoices will only be issued at the
-             * end of the billing period.
+             * When this subscription's accrued usage reaches this threshold, an invoice will
+             * be issued for the subscription. If not specified, invoices will only be issued
+             * at the end of the billing period.
              */
             @JsonProperty("invoicing_threshold")
             fun invoicingThreshold(invoicingThreshold: String) = apply {
@@ -199,21 +226,25 @@ constructor(
             }
 
             /**
-             * User-specified key/value pairs for the resource. Individual keys can be removed by
-             * setting the value to `null`, and the entire metadata mapping can be cleared by
-             * setting `metadata` to `null`.
+             * User-specified key/value pairs for the resource. Individual keys can be removed
+             * by setting the value to `null`, and the entire metadata mapping can be cleared
+             * by setting `metadata` to `null`.
              */
             @JsonProperty("metadata")
-            fun metadata(metadata: Metadata) = apply { this.metadata = metadata }
+            fun metadata(metadata: Metadata) = apply {
+                this.metadata = metadata
+            }
 
             /**
-             * Determines the difference between the invoice issue date for subscription invoices as
-             * the date that they are due. A value of `0` here represents that the invoice is due on
-             * issue, whereas a value of `30` represents that the customer has a month to pay the
-             * invoice.
+             * Determines the difference between the invoice issue date for subscription
+             * invoices as the date that they are due. A value of `0` here represents that the
+             * invoice is due on issue, whereas a value of `30` represents that the customer
+             * has a month to pay the invoice.
              */
             @JsonProperty("net_terms")
-            fun netTerms(netTerms: Long) = apply { this.netTerms = netTerms }
+            fun netTerms(netTerms: Long) = apply {
+                this.netTerms = netTerms
+            }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
@@ -229,15 +260,14 @@ constructor(
                 this.additionalProperties.putAll(additionalProperties)
             }
 
-            fun build(): SubscriptionUpdateBody =
-                SubscriptionUpdateBody(
-                    autoCollection,
-                    defaultInvoiceMemo,
-                    invoicingThreshold,
-                    metadata,
-                    netTerms,
-                    additionalProperties.toUnmodifiable(),
-                )
+            fun build(): SubscriptionUpdateBody = SubscriptionUpdateBody(
+                autoCollection,
+                defaultInvoiceMemo,
+                invoicingThreshold,
+                metadata,
+                netTerms,
+                additionalProperties.toUnmodifiable(),
+            )
         }
     }
 
@@ -248,38 +278,37 @@ constructor(
     fun _additionalBodyProperties(): Map<String, JsonValue> = additionalBodyProperties
 
     override fun equals(other: Any?): Boolean {
-        if (this === other) {
-            return true
-        }
+      if (this === other) {
+          return true
+      }
 
-        return other is SubscriptionUpdateParams &&
-            this.subscriptionId == other.subscriptionId &&
-            this.autoCollection == other.autoCollection &&
-            this.defaultInvoiceMemo == other.defaultInvoiceMemo &&
-            this.invoicingThreshold == other.invoicingThreshold &&
-            this.metadata == other.metadata &&
-            this.netTerms == other.netTerms &&
-            this.additionalQueryParams == other.additionalQueryParams &&
-            this.additionalHeaders == other.additionalHeaders &&
-            this.additionalBodyProperties == other.additionalBodyProperties
+      return other is SubscriptionUpdateParams &&
+          this.subscriptionId == other.subscriptionId &&
+          this.autoCollection == other.autoCollection &&
+          this.defaultInvoiceMemo == other.defaultInvoiceMemo &&
+          this.invoicingThreshold == other.invoicingThreshold &&
+          this.metadata == other.metadata &&
+          this.netTerms == other.netTerms &&
+          this.additionalQueryParams == other.additionalQueryParams &&
+          this.additionalHeaders == other.additionalHeaders &&
+          this.additionalBodyProperties == other.additionalBodyProperties
     }
 
     override fun hashCode(): Int {
-        return Objects.hash(
-            subscriptionId,
-            autoCollection,
-            defaultInvoiceMemo,
-            invoicingThreshold,
-            metadata,
-            netTerms,
-            additionalQueryParams,
-            additionalHeaders,
-            additionalBodyProperties,
-        )
+      return Objects.hash(
+          subscriptionId,
+          autoCollection,
+          defaultInvoiceMemo,
+          invoicingThreshold,
+          metadata,
+          netTerms,
+          additionalQueryParams,
+          additionalHeaders,
+          additionalBodyProperties,
+      )
     }
 
-    override fun toString() =
-        "SubscriptionUpdateParams{subscriptionId=$subscriptionId, autoCollection=$autoCollection, defaultInvoiceMemo=$defaultInvoiceMemo, invoicingThreshold=$invoicingThreshold, metadata=$metadata, netTerms=$netTerms, additionalQueryParams=$additionalQueryParams, additionalHeaders=$additionalHeaders, additionalBodyProperties=$additionalBodyProperties}"
+    override fun toString() = "SubscriptionUpdateParams{subscriptionId=$subscriptionId, autoCollection=$autoCollection, defaultInvoiceMemo=$defaultInvoiceMemo, invoicingThreshold=$invoicingThreshold, metadata=$metadata, netTerms=$netTerms, additionalQueryParams=$additionalQueryParams, additionalHeaders=$additionalHeaders, additionalBodyProperties=$additionalBodyProperties}"
 
     fun toBuilder() = Builder().from(this)
 
@@ -313,45 +342,54 @@ constructor(
             additionalBodyProperties(subscriptionUpdateParams.additionalBodyProperties)
         }
 
-        fun subscriptionId(subscriptionId: String) = apply { this.subscriptionId = subscriptionId }
+        fun subscriptionId(subscriptionId: String) = apply {
+            this.subscriptionId = subscriptionId
+        }
 
         /**
-         * Determines whether issued invoices for this subscription will automatically be charged
-         * with the saved payment method on the due date. This property defaults to the plan's
-         * behavior.
+         * Determines whether issued invoices for this subscription will automatically be
+         * charged with the saved payment method on the due date. This property defaults to
+         * the plan's behavior.
          */
-        fun autoCollection(autoCollection: Boolean) = apply { this.autoCollection = autoCollection }
+        fun autoCollection(autoCollection: Boolean) = apply {
+            this.autoCollection = autoCollection
+        }
 
         /**
-         * Determines the default memo on this subscription's invoices. Note that if this is not
-         * provided, it is determined by the plan configuration.
+         * Determines the default memo on this subscription's invoices. Note that if this
+         * is not provided, it is determined by the plan configuration.
          */
         fun defaultInvoiceMemo(defaultInvoiceMemo: String) = apply {
             this.defaultInvoiceMemo = defaultInvoiceMemo
         }
 
         /**
-         * When this subscription's accrued usage reaches this threshold, an invoice will be issued
-         * for the subscription. If not specified, invoices will only be issued at the end of the
-         * billing period.
+         * When this subscription's accrued usage reaches this threshold, an invoice will
+         * be issued for the subscription. If not specified, invoices will only be issued
+         * at the end of the billing period.
          */
         fun invoicingThreshold(invoicingThreshold: String) = apply {
             this.invoicingThreshold = invoicingThreshold
         }
 
         /**
-         * User-specified key/value pairs for the resource. Individual keys can be removed by
-         * setting the value to `null`, and the entire metadata mapping can be cleared by setting
-         * `metadata` to `null`.
+         * User-specified key/value pairs for the resource. Individual keys can be removed
+         * by setting the value to `null`, and the entire metadata mapping can be cleared
+         * by setting `metadata` to `null`.
          */
-        fun metadata(metadata: Metadata) = apply { this.metadata = metadata }
+        fun metadata(metadata: Metadata) = apply {
+            this.metadata = metadata
+        }
 
         /**
-         * Determines the difference between the invoice issue date for subscription invoices as the
-         * date that they are due. A value of `0` here represents that the invoice is due on issue,
-         * whereas a value of `30` represents that the customer has a month to pay the invoice.
+         * Determines the difference between the invoice issue date for subscription
+         * invoices as the date that they are due. A value of `0` here represents that the
+         * invoice is due on issue, whereas a value of `30` represents that the customer
+         * has a month to pay the invoice.
          */
-        fun netTerms(netTerms: Long) = apply { this.netTerms = netTerms }
+        fun netTerms(netTerms: Long) = apply {
+            this.netTerms = netTerms
+        }
 
         fun additionalQueryParams(additionalQueryParams: Map<String, List<String>>) = apply {
             this.additionalQueryParams.clear()
@@ -391,7 +429,9 @@ constructor(
             additionalHeaders.forEach(this::putHeaders)
         }
 
-        fun removeHeader(name: String) = apply { this.additionalHeaders.put(name, mutableListOf()) }
+        fun removeHeader(name: String) = apply {
+            this.additionalHeaders.put(name, mutableListOf())
+        }
 
         fun additionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) = apply {
             this.additionalBodyProperties.clear()
@@ -402,36 +442,33 @@ constructor(
             this.additionalBodyProperties.put(key, value)
         }
 
-        fun putAllAdditionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) =
-            apply {
-                this.additionalBodyProperties.putAll(additionalBodyProperties)
-            }
+        fun putAllAdditionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) = apply {
+            this.additionalBodyProperties.putAll(additionalBodyProperties)
+        }
 
-        fun build(): SubscriptionUpdateParams =
-            SubscriptionUpdateParams(
-                checkNotNull(subscriptionId) { "`subscriptionId` is required but was not set" },
-                autoCollection,
-                defaultInvoiceMemo,
-                invoicingThreshold,
-                metadata,
-                netTerms,
-                additionalQueryParams.mapValues { it.value.toUnmodifiable() }.toUnmodifiable(),
-                additionalHeaders.mapValues { it.value.toUnmodifiable() }.toUnmodifiable(),
-                additionalBodyProperties.toUnmodifiable(),
-            )
+        fun build(): SubscriptionUpdateParams = SubscriptionUpdateParams(
+            checkNotNull(subscriptionId) {
+                "`subscriptionId` is required but was not set"
+            },
+            autoCollection,
+            defaultInvoiceMemo,
+            invoicingThreshold,
+            metadata,
+            netTerms,
+            additionalQueryParams.mapValues { it.value.toUnmodifiable() }.toUnmodifiable(),
+            additionalHeaders.mapValues { it.value.toUnmodifiable() }.toUnmodifiable(),
+            additionalBodyProperties.toUnmodifiable(),
+        )
     }
 
     /**
-     * User-specified key/value pairs for the resource. Individual keys can be removed by setting
-     * the value to `null`, and the entire metadata mapping can be cleared by setting `metadata` to
-     * `null`.
+     * User-specified key/value pairs for the resource. Individual keys can be removed
+     * by setting the value to `null`, and the entire metadata mapping can be cleared
+     * by setting `metadata` to `null`.
      */
     @JsonDeserialize(builder = Metadata.Builder::class)
     @NoAutoDetect
-    class Metadata
-    private constructor(
-        private val additionalProperties: Map<String, JsonValue>,
-    ) {
+    class Metadata private constructor(private val additionalProperties: Map<String, JsonValue>, ) {
 
         private var hashCode: Int = 0
 
@@ -442,18 +479,19 @@ constructor(
         fun toBuilder() = Builder().from(this)
 
         override fun equals(other: Any?): Boolean {
-            if (this === other) {
-                return true
-            }
+          if (this === other) {
+              return true
+          }
 
-            return other is Metadata && this.additionalProperties == other.additionalProperties
+          return other is Metadata &&
+              this.additionalProperties == other.additionalProperties
         }
 
         override fun hashCode(): Int {
-            if (hashCode == 0) {
-                hashCode = Objects.hash(additionalProperties)
-            }
-            return hashCode
+          if (hashCode == 0) {
+            hashCode = Objects.hash(additionalProperties)
+          }
+          return hashCode
         }
 
         override fun toString() = "Metadata{additionalProperties=$additionalProperties}"

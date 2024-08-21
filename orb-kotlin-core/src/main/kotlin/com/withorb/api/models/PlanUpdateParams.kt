@@ -4,23 +4,46 @@ package com.withorb.api.models
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter
 import com.fasterxml.jackson.annotation.JsonAnySetter
+import com.fasterxml.jackson.annotation.JsonCreator
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonProperty
+import com.fasterxml.jackson.core.JsonGenerator
+import com.fasterxml.jackson.core.ObjectCodec
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize
-import com.withorb.api.core.ExcludeMissing
-import com.withorb.api.core.JsonValue
-import com.withorb.api.core.NoAutoDetect
-import com.withorb.api.core.toUnmodifiable
-import com.withorb.api.models.*
+import com.fasterxml.jackson.databind.annotation.JsonSerialize
+import com.fasterxml.jackson.databind.JsonNode
+import com.fasterxml.jackson.databind.SerializerProvider
+import com.fasterxml.jackson.module.kotlin.jacksonTypeRef
+import org.apache.hc.core5.http.ContentType
+import java.time.LocalDate
+import java.time.OffsetDateTime
+import java.time.format.DateTimeFormatter
 import java.util.Objects
+import java.util.Optional
+import java.util.UUID
+import com.withorb.api.core.BaseDeserializer
+import com.withorb.api.core.BaseSerializer
+import com.withorb.api.core.getOrThrow
+import com.withorb.api.core.ExcludeMissing
+import com.withorb.api.core.JsonField
+import com.withorb.api.core.JsonMissing
+import com.withorb.api.core.JsonValue
+import com.withorb.api.core.MultipartFormValue
+import com.withorb.api.core.toUnmodifiable
+import com.withorb.api.core.NoAutoDetect
+import com.withorb.api.core.Enum
+import com.withorb.api.core.ContentTypes
+import com.withorb.api.errors.OrbInvalidDataException
+import com.withorb.api.models.*
 
-class PlanUpdateParams
-constructor(
-    private val planId: String,
-    private val externalPlanId: String?,
-    private val metadata: Metadata?,
-    private val additionalQueryParams: Map<String, List<String>>,
-    private val additionalHeaders: Map<String, List<String>>,
-    private val additionalBodyProperties: Map<String, JsonValue>,
+class PlanUpdateParams constructor(
+  private val planId: String,
+  private val externalPlanId: String?,
+  private val metadata: Metadata?,
+  private val additionalQueryParams: Map<String, List<String>>,
+  private val additionalHeaders: Map<String, List<String>>,
+  private val additionalBodyProperties: Map<String, JsonValue>,
+
 ) {
 
     fun planId(): String = planId
@@ -30,11 +53,11 @@ constructor(
     fun metadata(): Metadata? = metadata
 
     internal fun getBody(): PlanUpdateBody {
-        return PlanUpdateBody(
-            externalPlanId,
-            metadata,
-            additionalBodyProperties,
-        )
+      return PlanUpdateBody(
+          externalPlanId,
+          metadata,
+          additionalBodyProperties,
+      )
     }
 
     internal fun getQueryParams(): Map<String, List<String>> = additionalQueryParams
@@ -42,36 +65,33 @@ constructor(
     internal fun getHeaders(): Map<String, List<String>> = additionalHeaders
 
     fun getPathParam(index: Int): String {
-        return when (index) {
-            0 -> planId
-            else -> ""
-        }
+      return when (index) {
+          0 -> planId
+          else -> ""
+      }
     }
 
     @JsonDeserialize(builder = PlanUpdateBody.Builder::class)
     @NoAutoDetect
-    class PlanUpdateBody
-    internal constructor(
-        private val externalPlanId: String?,
-        private val metadata: Metadata?,
-        private val additionalProperties: Map<String, JsonValue>,
-    ) {
+    class PlanUpdateBody internal constructor(private val externalPlanId: String?, private val metadata: Metadata?, private val additionalProperties: Map<String, JsonValue>, ) {
 
         private var hashCode: Int = 0
 
         /**
-         * An optional user-defined ID for this plan resource, used throughout the system as an
-         * alias for this Plan. Use this field to identify a plan by an existing identifier in your
-         * system.
+         * An optional user-defined ID for this plan resource, used throughout the system
+         * as an alias for this Plan. Use this field to identify a plan by an existing
+         * identifier in your system.
          */
-        @JsonProperty("external_plan_id") fun externalPlanId(): String? = externalPlanId
+        @JsonProperty("external_plan_id")
+        fun externalPlanId(): String? = externalPlanId
 
         /**
-         * User-specified key/value pairs for the resource. Individual keys can be removed by
-         * setting the value to `null`, and the entire metadata mapping can be cleared by setting
-         * `metadata` to `null`.
+         * User-specified key/value pairs for the resource. Individual keys can be removed
+         * by setting the value to `null`, and the entire metadata mapping can be cleared
+         * by setting `metadata` to `null`.
          */
-        @JsonProperty("metadata") fun metadata(): Metadata? = metadata
+        @JsonProperty("metadata")
+        fun metadata(): Metadata? = metadata
 
         @JsonAnyGetter
         @ExcludeMissing
@@ -80,30 +100,28 @@ constructor(
         fun toBuilder() = Builder().from(this)
 
         override fun equals(other: Any?): Boolean {
-            if (this === other) {
-                return true
-            }
+          if (this === other) {
+              return true
+          }
 
-            return other is PlanUpdateBody &&
-                this.externalPlanId == other.externalPlanId &&
-                this.metadata == other.metadata &&
-                this.additionalProperties == other.additionalProperties
+          return other is PlanUpdateBody &&
+              this.externalPlanId == other.externalPlanId &&
+              this.metadata == other.metadata &&
+              this.additionalProperties == other.additionalProperties
         }
 
         override fun hashCode(): Int {
-            if (hashCode == 0) {
-                hashCode =
-                    Objects.hash(
-                        externalPlanId,
-                        metadata,
-                        additionalProperties,
-                    )
-            }
-            return hashCode
+          if (hashCode == 0) {
+            hashCode = Objects.hash(
+                externalPlanId,
+                metadata,
+                additionalProperties,
+            )
+          }
+          return hashCode
         }
 
-        override fun toString() =
-            "PlanUpdateBody{externalPlanId=$externalPlanId, metadata=$metadata, additionalProperties=$additionalProperties}"
+        override fun toString() = "PlanUpdateBody{externalPlanId=$externalPlanId, metadata=$metadata, additionalProperties=$additionalProperties}"
 
         companion object {
 
@@ -123,9 +141,9 @@ constructor(
             }
 
             /**
-             * An optional user-defined ID for this plan resource, used throughout the system as an
-             * alias for this Plan. Use this field to identify a plan by an existing identifier in
-             * your system.
+             * An optional user-defined ID for this plan resource, used throughout the system
+             * as an alias for this Plan. Use this field to identify a plan by an existing
+             * identifier in your system.
              */
             @JsonProperty("external_plan_id")
             fun externalPlanId(externalPlanId: String) = apply {
@@ -133,12 +151,14 @@ constructor(
             }
 
             /**
-             * User-specified key/value pairs for the resource. Individual keys can be removed by
-             * setting the value to `null`, and the entire metadata mapping can be cleared by
-             * setting `metadata` to `null`.
+             * User-specified key/value pairs for the resource. Individual keys can be removed
+             * by setting the value to `null`, and the entire metadata mapping can be cleared
+             * by setting `metadata` to `null`.
              */
             @JsonProperty("metadata")
-            fun metadata(metadata: Metadata) = apply { this.metadata = metadata }
+            fun metadata(metadata: Metadata) = apply {
+                this.metadata = metadata
+            }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
@@ -154,12 +174,11 @@ constructor(
                 this.additionalProperties.putAll(additionalProperties)
             }
 
-            fun build(): PlanUpdateBody =
-                PlanUpdateBody(
-                    externalPlanId,
-                    metadata,
-                    additionalProperties.toUnmodifiable(),
-                )
+            fun build(): PlanUpdateBody = PlanUpdateBody(
+                externalPlanId,
+                metadata,
+                additionalProperties.toUnmodifiable(),
+            )
         }
     }
 
@@ -170,32 +189,31 @@ constructor(
     fun _additionalBodyProperties(): Map<String, JsonValue> = additionalBodyProperties
 
     override fun equals(other: Any?): Boolean {
-        if (this === other) {
-            return true
-        }
+      if (this === other) {
+          return true
+      }
 
-        return other is PlanUpdateParams &&
-            this.planId == other.planId &&
-            this.externalPlanId == other.externalPlanId &&
-            this.metadata == other.metadata &&
-            this.additionalQueryParams == other.additionalQueryParams &&
-            this.additionalHeaders == other.additionalHeaders &&
-            this.additionalBodyProperties == other.additionalBodyProperties
+      return other is PlanUpdateParams &&
+          this.planId == other.planId &&
+          this.externalPlanId == other.externalPlanId &&
+          this.metadata == other.metadata &&
+          this.additionalQueryParams == other.additionalQueryParams &&
+          this.additionalHeaders == other.additionalHeaders &&
+          this.additionalBodyProperties == other.additionalBodyProperties
     }
 
     override fun hashCode(): Int {
-        return Objects.hash(
-            planId,
-            externalPlanId,
-            metadata,
-            additionalQueryParams,
-            additionalHeaders,
-            additionalBodyProperties,
-        )
+      return Objects.hash(
+          planId,
+          externalPlanId,
+          metadata,
+          additionalQueryParams,
+          additionalHeaders,
+          additionalBodyProperties,
+      )
     }
 
-    override fun toString() =
-        "PlanUpdateParams{planId=$planId, externalPlanId=$externalPlanId, metadata=$metadata, additionalQueryParams=$additionalQueryParams, additionalHeaders=$additionalHeaders, additionalBodyProperties=$additionalBodyProperties}"
+    override fun toString() = "PlanUpdateParams{planId=$planId, externalPlanId=$externalPlanId, metadata=$metadata, additionalQueryParams=$additionalQueryParams, additionalHeaders=$additionalHeaders, additionalBodyProperties=$additionalBodyProperties}"
 
     fun toBuilder() = Builder().from(this)
 
@@ -223,21 +241,27 @@ constructor(
             additionalBodyProperties(planUpdateParams.additionalBodyProperties)
         }
 
-        fun planId(planId: String) = apply { this.planId = planId }
+        fun planId(planId: String) = apply {
+            this.planId = planId
+        }
 
         /**
-         * An optional user-defined ID for this plan resource, used throughout the system as an
-         * alias for this Plan. Use this field to identify a plan by an existing identifier in your
-         * system.
+         * An optional user-defined ID for this plan resource, used throughout the system
+         * as an alias for this Plan. Use this field to identify a plan by an existing
+         * identifier in your system.
          */
-        fun externalPlanId(externalPlanId: String) = apply { this.externalPlanId = externalPlanId }
+        fun externalPlanId(externalPlanId: String) = apply {
+            this.externalPlanId = externalPlanId
+        }
 
         /**
-         * User-specified key/value pairs for the resource. Individual keys can be removed by
-         * setting the value to `null`, and the entire metadata mapping can be cleared by setting
-         * `metadata` to `null`.
+         * User-specified key/value pairs for the resource. Individual keys can be removed
+         * by setting the value to `null`, and the entire metadata mapping can be cleared
+         * by setting `metadata` to `null`.
          */
-        fun metadata(metadata: Metadata) = apply { this.metadata = metadata }
+        fun metadata(metadata: Metadata) = apply {
+            this.metadata = metadata
+        }
 
         fun additionalQueryParams(additionalQueryParams: Map<String, List<String>>) = apply {
             this.additionalQueryParams.clear()
@@ -277,7 +301,9 @@ constructor(
             additionalHeaders.forEach(this::putHeaders)
         }
 
-        fun removeHeader(name: String) = apply { this.additionalHeaders.put(name, mutableListOf()) }
+        fun removeHeader(name: String) = apply {
+            this.additionalHeaders.put(name, mutableListOf())
+        }
 
         fun additionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) = apply {
             this.additionalBodyProperties.clear()
@@ -288,33 +314,30 @@ constructor(
             this.additionalBodyProperties.put(key, value)
         }
 
-        fun putAllAdditionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) =
-            apply {
-                this.additionalBodyProperties.putAll(additionalBodyProperties)
-            }
+        fun putAllAdditionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) = apply {
+            this.additionalBodyProperties.putAll(additionalBodyProperties)
+        }
 
-        fun build(): PlanUpdateParams =
-            PlanUpdateParams(
-                checkNotNull(planId) { "`planId` is required but was not set" },
-                externalPlanId,
-                metadata,
-                additionalQueryParams.mapValues { it.value.toUnmodifiable() }.toUnmodifiable(),
-                additionalHeaders.mapValues { it.value.toUnmodifiable() }.toUnmodifiable(),
-                additionalBodyProperties.toUnmodifiable(),
-            )
+        fun build(): PlanUpdateParams = PlanUpdateParams(
+            checkNotNull(planId) {
+                "`planId` is required but was not set"
+            },
+            externalPlanId,
+            metadata,
+            additionalQueryParams.mapValues { it.value.toUnmodifiable() }.toUnmodifiable(),
+            additionalHeaders.mapValues { it.value.toUnmodifiable() }.toUnmodifiable(),
+            additionalBodyProperties.toUnmodifiable(),
+        )
     }
 
     /**
-     * User-specified key/value pairs for the resource. Individual keys can be removed by setting
-     * the value to `null`, and the entire metadata mapping can be cleared by setting `metadata` to
-     * `null`.
+     * User-specified key/value pairs for the resource. Individual keys can be removed
+     * by setting the value to `null`, and the entire metadata mapping can be cleared
+     * by setting `metadata` to `null`.
      */
     @JsonDeserialize(builder = Metadata.Builder::class)
     @NoAutoDetect
-    class Metadata
-    private constructor(
-        private val additionalProperties: Map<String, JsonValue>,
-    ) {
+    class Metadata private constructor(private val additionalProperties: Map<String, JsonValue>, ) {
 
         private var hashCode: Int = 0
 
@@ -325,18 +348,19 @@ constructor(
         fun toBuilder() = Builder().from(this)
 
         override fun equals(other: Any?): Boolean {
-            if (this === other) {
-                return true
-            }
+          if (this === other) {
+              return true
+          }
 
-            return other is Metadata && this.additionalProperties == other.additionalProperties
+          return other is Metadata &&
+              this.additionalProperties == other.additionalProperties
         }
 
         override fun hashCode(): Int {
-            if (hashCode == 0) {
-                hashCode = Objects.hash(additionalProperties)
-            }
-            return hashCode
+          if (hashCode == 0) {
+            hashCode = Objects.hash(additionalProperties)
+          }
+          return hashCode
         }
 
         override fun toString() = "Metadata{additionalProperties=$additionalProperties}"

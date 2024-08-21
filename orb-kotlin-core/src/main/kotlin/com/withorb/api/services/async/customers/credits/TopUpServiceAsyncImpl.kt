@@ -2,12 +2,22 @@
 
 package com.withorb.api.services.async.customers.credits
 
-import com.withorb.api.core.ClientOptions
-import com.withorb.api.core.RequestOptions
-import com.withorb.api.core.http.HttpMethod
-import com.withorb.api.core.http.HttpRequest
-import com.withorb.api.core.http.HttpResponse.Handler
-import com.withorb.api.errors.OrbError
+import com.fasterxml.jackson.databind.json.JsonMapper
+import com.fasterxml.jackson.annotation.JsonCreator
+import com.fasterxml.jackson.annotation.JsonProperty
+import kotlin.LazyThreadSafetyMode.PUBLICATION
+import java.time.LocalDate
+import java.time.Duration
+import java.time.OffsetDateTime
+import java.time.format.DateTimeFormatter
+import java.util.Base64
+import java.util.Optional
+import java.util.UUID
+import java.util.concurrent.CompletableFuture
+import java.util.stream.Stream
+import com.withorb.api.core.Enum
+import com.withorb.api.core.NoAutoDetect
+import com.withorb.api.errors.OrbInvalidDataException
 import com.withorb.api.models.CustomerCreditTopUpCreateByExternalIdParams
 import com.withorb.api.models.CustomerCreditTopUpCreateByExternalIdResponse
 import com.withorb.api.models.CustomerCreditTopUpCreateParams
@@ -16,223 +26,215 @@ import com.withorb.api.models.CustomerCreditTopUpDeleteByExternalIdParams
 import com.withorb.api.models.CustomerCreditTopUpDeleteParams
 import com.withorb.api.models.CustomerCreditTopUpListByExternalIdPageAsync
 import com.withorb.api.models.CustomerCreditTopUpListByExternalIdParams
+import com.withorb.api.models.CustomerCreditTopUpListByExternalIdResponse
 import com.withorb.api.models.CustomerCreditTopUpListPageAsync
 import com.withorb.api.models.CustomerCreditTopUpListParams
+import com.withorb.api.models.CustomerCreditTopUpListResponse
+import com.withorb.api.core.ClientOptions
+import com.withorb.api.core.http.HttpMethod
+import com.withorb.api.core.http.HttpRequest
+import com.withorb.api.core.http.HttpResponse.Handler
+import com.withorb.api.core.http.BinaryResponseContent
+import com.withorb.api.core.JsonField
+import com.withorb.api.core.JsonValue
+import com.withorb.api.core.RequestOptions
+import com.withorb.api.errors.OrbError
 import com.withorb.api.services.emptyHandler
 import com.withorb.api.services.errorHandler
 import com.withorb.api.services.json
 import com.withorb.api.services.jsonHandler
+import com.withorb.api.services.multipartFormData
+import com.withorb.api.services.stringHandler
+import com.withorb.api.services.binaryHandler
 import com.withorb.api.services.withErrorHandler
 
-class TopUpServiceAsyncImpl
-constructor(
-    private val clientOptions: ClientOptions,
-) : TopUpServiceAsync {
+class TopUpServiceAsyncImpl constructor(private val clientOptions: ClientOptions, ) : TopUpServiceAsync {
 
     private val errorHandler: Handler<OrbError> = errorHandler(clientOptions.jsonMapper)
 
     private val createHandler: Handler<CustomerCreditTopUpCreateResponse> =
-        jsonHandler<CustomerCreditTopUpCreateResponse>(clientOptions.jsonMapper)
-            .withErrorHandler(errorHandler)
+    jsonHandler<CustomerCreditTopUpCreateResponse>(clientOptions.jsonMapper)
+    .withErrorHandler(errorHandler)
 
     /**
-     * This endpoint allows you to create a new top-up for a specified customer's balance. While
-     * this top-up is active, the customer's balance will added in increments of the specified
-     * amount whenever the balance reaches the specified threshold.
+     * This endpoint allows you to create a new top-up for a specified customer's
+     * balance. While this top-up is active, the customer's balance will added in
+     * increments of the specified amount whenever the balance reaches the specified
+     * threshold.
      *
-     * If a top-up already exists for this customer in the same currency, the existing top-up will
-     * be replaced.
+     * If a top-up already exists for this customer in the same currency, the existing
+     * top-up will be replaced.
      */
-    override suspend fun create(
-        params: CustomerCreditTopUpCreateParams,
-        requestOptions: RequestOptions
-    ): CustomerCreditTopUpCreateResponse {
-        val request =
-            HttpRequest.builder()
-                .method(HttpMethod.POST)
-                .addPathSegments("customers", params.getPathParam(0), "credits", "top_ups")
-                .putAllQueryParams(clientOptions.queryParams)
-                .putAllQueryParams(params.getQueryParams())
-                .putAllHeaders(clientOptions.headers)
-                .putAllHeaders(params.getHeaders())
-                .body(json(clientOptions.jsonMapper, params.getBody()))
-                .build()
-        return clientOptions.httpClient.executeAsync(request, requestOptions).let { response ->
-            response
-                .use { createHandler.handle(it) }
-                .apply {
-                    if (requestOptions.responseValidation ?: clientOptions.responseValidation) {
-                        validate()
-                    }
-                }
-        }
+    override suspend fun create(params: CustomerCreditTopUpCreateParams, requestOptions: RequestOptions): CustomerCreditTopUpCreateResponse {
+      val request = HttpRequest.builder()
+        .method(HttpMethod.POST)
+        .addPathSegments("customers", params.getPathParam(0), "credits", "top_ups")
+        .putAllQueryParams(clientOptions.queryParams)
+        .putAllQueryParams(params.getQueryParams())
+        .putAllHeaders(clientOptions.headers)
+        .putAllHeaders(params.getHeaders())
+        .body(json(clientOptions.jsonMapper, params.getBody()))
+        .build()
+      return clientOptions.httpClient.executeAsync(request, requestOptions)
+      .let { response -> 
+          response.use {
+              createHandler.handle(it)
+          }
+          .apply  {
+              if (requestOptions.responseValidation ?: clientOptions.responseValidation) {
+                validate()
+              }
+          }
+      }
     }
 
     private val listHandler: Handler<CustomerCreditTopUpListPageAsync.Response> =
-        jsonHandler<CustomerCreditTopUpListPageAsync.Response>(clientOptions.jsonMapper)
-            .withErrorHandler(errorHandler)
+    jsonHandler<CustomerCreditTopUpListPageAsync.Response>(clientOptions.jsonMapper)
+    .withErrorHandler(errorHandler)
 
     /** List top-ups */
-    override suspend fun list(
-        params: CustomerCreditTopUpListParams,
-        requestOptions: RequestOptions
-    ): CustomerCreditTopUpListPageAsync {
-        val request =
-            HttpRequest.builder()
-                .method(HttpMethod.GET)
-                .addPathSegments("customers", params.getPathParam(0), "credits", "top_ups")
-                .putAllQueryParams(clientOptions.queryParams)
-                .putAllQueryParams(params.getQueryParams())
-                .putAllHeaders(clientOptions.headers)
-                .putAllHeaders(params.getHeaders())
-                .build()
-        return clientOptions.httpClient.executeAsync(request, requestOptions).let { response ->
-            response
-                .use { listHandler.handle(it) }
-                .apply {
-                    if (requestOptions.responseValidation ?: clientOptions.responseValidation) {
-                        validate()
-                    }
-                }
-                .let { CustomerCreditTopUpListPageAsync.of(this, params, it) }
-        }
+    override suspend fun list(params: CustomerCreditTopUpListParams, requestOptions: RequestOptions): CustomerCreditTopUpListPageAsync {
+      val request = HttpRequest.builder()
+        .method(HttpMethod.GET)
+        .addPathSegments("customers", params.getPathParam(0), "credits", "top_ups")
+        .putAllQueryParams(clientOptions.queryParams)
+        .putAllQueryParams(params.getQueryParams())
+        .putAllHeaders(clientOptions.headers)
+        .putAllHeaders(params.getHeaders())
+        .build()
+      return clientOptions.httpClient.executeAsync(request, requestOptions)
+      .let { response -> 
+          response.use {
+              listHandler.handle(it)
+          }
+          .apply  {
+              if (requestOptions.responseValidation ?: clientOptions.responseValidation) {
+                validate()
+              }
+          }
+          .let {
+              CustomerCreditTopUpListPageAsync.of(this, params, it)
+          }
+      }
     }
 
-    private val deleteHandler: Handler<Void?> = emptyHandler().withErrorHandler(errorHandler)
+    private val deleteHandler: Handler<Void?> =
+    emptyHandler()
+    .withErrorHandler(errorHandler)
 
     /** Delete top-up */
-    override suspend fun delete(
-        params: CustomerCreditTopUpDeleteParams,
-        requestOptions: RequestOptions
-    ) {
-        val request =
-            HttpRequest.builder()
-                .method(HttpMethod.DELETE)
-                .addPathSegments(
-                    "customers",
-                    params.getPathParam(0),
-                    "credits",
-                    "top_ups",
-                    params.getPathParam(1)
-                )
-                .putAllQueryParams(clientOptions.queryParams)
-                .putAllQueryParams(params.getQueryParams())
-                .putAllHeaders(clientOptions.headers)
-                .putAllHeaders(params.getHeaders())
-                .apply { params.getBody()?.also { body(json(clientOptions.jsonMapper, it)) } }
-                .build()
-        return clientOptions.httpClient.executeAsync(request, requestOptions).let { response ->
-            response.use { deleteHandler.handle(it) }
+    override suspend fun delete(params: CustomerCreditTopUpDeleteParams, requestOptions: RequestOptions) {
+      val request = HttpRequest.builder()
+        .method(HttpMethod.DELETE)
+        .addPathSegments("customers", params.getPathParam(0), "credits", "top_ups", params.getPathParam(1))
+        .putAllQueryParams(clientOptions.queryParams)
+        .putAllQueryParams(params.getQueryParams())
+        .putAllHeaders(clientOptions.headers)
+        .putAllHeaders(params.getHeaders())
+        .apply {
+            params.getBody()?.also {
+                body(json(clientOptions.jsonMapper, it))
+            }
         }
+        .build()
+      return clientOptions.httpClient.executeAsync(request, requestOptions)
+      .let { response -> 
+          response.use {
+              deleteHandler.handle(it)
+          }
+      }
     }
 
     private val createByExternalIdHandler: Handler<CustomerCreditTopUpCreateByExternalIdResponse> =
-        jsonHandler<CustomerCreditTopUpCreateByExternalIdResponse>(clientOptions.jsonMapper)
-            .withErrorHandler(errorHandler)
+    jsonHandler<CustomerCreditTopUpCreateByExternalIdResponse>(clientOptions.jsonMapper)
+    .withErrorHandler(errorHandler)
 
     /**
-     * This endpoint allows you to create a new top-up for a specified customer's balance. While
-     * this top-up is active, the customer's balance will added in increments of the specified
-     * amount whenever the balance reaches the specified threshold.
+     * This endpoint allows you to create a new top-up for a specified customer's
+     * balance. While this top-up is active, the customer's balance will added in
+     * increments of the specified amount whenever the balance reaches the specified
+     * threshold.
      *
-     * If a top-up already exists for this customer in the same currency, the existing top-up will
-     * be replaced.
+     * If a top-up already exists for this customer in the same currency, the existing
+     * top-up will be replaced.
      */
-    override suspend fun createByExternalId(
-        params: CustomerCreditTopUpCreateByExternalIdParams,
-        requestOptions: RequestOptions
-    ): CustomerCreditTopUpCreateByExternalIdResponse {
-        val request =
-            HttpRequest.builder()
-                .method(HttpMethod.POST)
-                .addPathSegments(
-                    "customers",
-                    "external_customer_id",
-                    params.getPathParam(0),
-                    "credits",
-                    "top_ups"
-                )
-                .putAllQueryParams(clientOptions.queryParams)
-                .putAllQueryParams(params.getQueryParams())
-                .putAllHeaders(clientOptions.headers)
-                .putAllHeaders(params.getHeaders())
-                .body(json(clientOptions.jsonMapper, params.getBody()))
-                .build()
-        return clientOptions.httpClient.executeAsync(request, requestOptions).let { response ->
-            response
-                .use { createByExternalIdHandler.handle(it) }
-                .apply {
-                    if (requestOptions.responseValidation ?: clientOptions.responseValidation) {
-                        validate()
-                    }
-                }
-        }
+    override suspend fun createByExternalId(params: CustomerCreditTopUpCreateByExternalIdParams, requestOptions: RequestOptions): CustomerCreditTopUpCreateByExternalIdResponse {
+      val request = HttpRequest.builder()
+        .method(HttpMethod.POST)
+        .addPathSegments("customers", "external_customer_id", params.getPathParam(0), "credits", "top_ups")
+        .putAllQueryParams(clientOptions.queryParams)
+        .putAllQueryParams(params.getQueryParams())
+        .putAllHeaders(clientOptions.headers)
+        .putAllHeaders(params.getHeaders())
+        .body(json(clientOptions.jsonMapper, params.getBody()))
+        .build()
+      return clientOptions.httpClient.executeAsync(request, requestOptions)
+      .let { response -> 
+          response.use {
+              createByExternalIdHandler.handle(it)
+          }
+          .apply  {
+              if (requestOptions.responseValidation ?: clientOptions.responseValidation) {
+                validate()
+              }
+          }
+      }
     }
 
     private val deleteByExternalIdHandler: Handler<Void?> =
-        emptyHandler().withErrorHandler(errorHandler)
+    emptyHandler()
+    .withErrorHandler(errorHandler)
 
     /** Delete top-up by external ID */
-    override suspend fun deleteByExternalId(
-        params: CustomerCreditTopUpDeleteByExternalIdParams,
-        requestOptions: RequestOptions
-    ) {
-        val request =
-            HttpRequest.builder()
-                .method(HttpMethod.DELETE)
-                .addPathSegments(
-                    "customers",
-                    "external_customer_id",
-                    params.getPathParam(0),
-                    "credits",
-                    "top_ups",
-                    params.getPathParam(1)
-                )
-                .putAllQueryParams(clientOptions.queryParams)
-                .putAllQueryParams(params.getQueryParams())
-                .putAllHeaders(clientOptions.headers)
-                .putAllHeaders(params.getHeaders())
-                .apply { params.getBody()?.also { body(json(clientOptions.jsonMapper, it)) } }
-                .build()
-        return clientOptions.httpClient.executeAsync(request, requestOptions).let { response ->
-            response.use { deleteByExternalIdHandler.handle(it) }
+    override suspend fun deleteByExternalId(params: CustomerCreditTopUpDeleteByExternalIdParams, requestOptions: RequestOptions) {
+      val request = HttpRequest.builder()
+        .method(HttpMethod.DELETE)
+        .addPathSegments("customers", "external_customer_id", params.getPathParam(0), "credits", "top_ups", params.getPathParam(1))
+        .putAllQueryParams(clientOptions.queryParams)
+        .putAllQueryParams(params.getQueryParams())
+        .putAllHeaders(clientOptions.headers)
+        .putAllHeaders(params.getHeaders())
+        .apply {
+            params.getBody()?.also {
+                body(json(clientOptions.jsonMapper, it))
+            }
         }
+        .build()
+      return clientOptions.httpClient.executeAsync(request, requestOptions)
+      .let { response -> 
+          response.use {
+              deleteByExternalIdHandler.handle(it)
+          }
+      }
     }
 
-    private val listByExternalIdHandler:
-        Handler<CustomerCreditTopUpListByExternalIdPageAsync.Response> =
-        jsonHandler<CustomerCreditTopUpListByExternalIdPageAsync.Response>(clientOptions.jsonMapper)
-            .withErrorHandler(errorHandler)
+    private val listByExternalIdHandler: Handler<CustomerCreditTopUpListByExternalIdPageAsync.Response> =
+    jsonHandler<CustomerCreditTopUpListByExternalIdPageAsync.Response>(clientOptions.jsonMapper)
+    .withErrorHandler(errorHandler)
 
     /** List top-ups by external ID */
-    override suspend fun listByExternalId(
-        params: CustomerCreditTopUpListByExternalIdParams,
-        requestOptions: RequestOptions
-    ): CustomerCreditTopUpListByExternalIdPageAsync {
-        val request =
-            HttpRequest.builder()
-                .method(HttpMethod.GET)
-                .addPathSegments(
-                    "customers",
-                    "external_customer_id",
-                    params.getPathParam(0),
-                    "credits",
-                    "top_ups"
-                )
-                .putAllQueryParams(clientOptions.queryParams)
-                .putAllQueryParams(params.getQueryParams())
-                .putAllHeaders(clientOptions.headers)
-                .putAllHeaders(params.getHeaders())
-                .build()
-        return clientOptions.httpClient.executeAsync(request, requestOptions).let { response ->
-            response
-                .use { listByExternalIdHandler.handle(it) }
-                .apply {
-                    if (requestOptions.responseValidation ?: clientOptions.responseValidation) {
-                        validate()
-                    }
-                }
-                .let { CustomerCreditTopUpListByExternalIdPageAsync.of(this, params, it) }
-        }
+    override suspend fun listByExternalId(params: CustomerCreditTopUpListByExternalIdParams, requestOptions: RequestOptions): CustomerCreditTopUpListByExternalIdPageAsync {
+      val request = HttpRequest.builder()
+        .method(HttpMethod.GET)
+        .addPathSegments("customers", "external_customer_id", params.getPathParam(0), "credits", "top_ups")
+        .putAllQueryParams(clientOptions.queryParams)
+        .putAllQueryParams(params.getQueryParams())
+        .putAllHeaders(clientOptions.headers)
+        .putAllHeaders(params.getHeaders())
+        .build()
+      return clientOptions.httpClient.executeAsync(request, requestOptions)
+      .let { response -> 
+          response.use {
+              listByExternalIdHandler.handle(it)
+          }
+          .apply  {
+              if (requestOptions.responseValidation ?: clientOptions.responseValidation) {
+                validate()
+              }
+          }
+          .let {
+              CustomerCreditTopUpListByExternalIdPageAsync.of(this, params, it)
+          }
+      }
     }
 }

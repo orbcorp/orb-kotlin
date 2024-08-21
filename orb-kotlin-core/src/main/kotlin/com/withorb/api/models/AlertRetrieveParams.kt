@@ -2,18 +2,46 @@
 
 package com.withorb.api.models
 
-import com.withorb.api.core.JsonValue
-import com.withorb.api.core.NoAutoDetect
-import com.withorb.api.core.toUnmodifiable
-import com.withorb.api.models.*
+import com.fasterxml.jackson.annotation.JsonAnyGetter
+import com.fasterxml.jackson.annotation.JsonAnySetter
+import com.fasterxml.jackson.annotation.JsonCreator
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties
+import com.fasterxml.jackson.annotation.JsonProperty
+import com.fasterxml.jackson.core.JsonGenerator
+import com.fasterxml.jackson.core.ObjectCodec
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize
+import com.fasterxml.jackson.databind.annotation.JsonSerialize
+import com.fasterxml.jackson.databind.JsonNode
+import com.fasterxml.jackson.databind.SerializerProvider
+import com.fasterxml.jackson.module.kotlin.jacksonTypeRef
+import org.apache.hc.core5.http.ContentType
+import java.time.LocalDate
+import java.time.OffsetDateTime
+import java.time.format.DateTimeFormatter
 import java.util.Objects
+import java.util.Optional
+import java.util.UUID
+import com.withorb.api.core.BaseDeserializer
+import com.withorb.api.core.BaseSerializer
+import com.withorb.api.core.getOrThrow
+import com.withorb.api.core.ExcludeMissing
+import com.withorb.api.core.JsonField
+import com.withorb.api.core.JsonMissing
+import com.withorb.api.core.JsonValue
+import com.withorb.api.core.MultipartFormValue
+import com.withorb.api.core.toUnmodifiable
+import com.withorb.api.core.NoAutoDetect
+import com.withorb.api.core.Enum
+import com.withorb.api.core.ContentTypes
+import com.withorb.api.errors.OrbInvalidDataException
+import com.withorb.api.models.*
 
-class AlertRetrieveParams
-constructor(
-    private val alertId: String,
-    private val additionalQueryParams: Map<String, List<String>>,
-    private val additionalHeaders: Map<String, List<String>>,
-    private val additionalBodyProperties: Map<String, JsonValue>,
+class AlertRetrieveParams constructor(
+  private val alertId: String,
+  private val additionalQueryParams: Map<String, List<String>>,
+  private val additionalHeaders: Map<String, List<String>>,
+  private val additionalBodyProperties: Map<String, JsonValue>,
+
 ) {
 
     fun alertId(): String = alertId
@@ -23,10 +51,10 @@ constructor(
     internal fun getHeaders(): Map<String, List<String>> = additionalHeaders
 
     fun getPathParam(index: Int): String {
-        return when (index) {
-            0 -> alertId
-            else -> ""
-        }
+      return when (index) {
+          0 -> alertId
+          else -> ""
+      }
     }
 
     fun _additionalQueryParams(): Map<String, List<String>> = additionalQueryParams
@@ -36,28 +64,27 @@ constructor(
     fun _additionalBodyProperties(): Map<String, JsonValue> = additionalBodyProperties
 
     override fun equals(other: Any?): Boolean {
-        if (this === other) {
-            return true
-        }
+      if (this === other) {
+          return true
+      }
 
-        return other is AlertRetrieveParams &&
-            this.alertId == other.alertId &&
-            this.additionalQueryParams == other.additionalQueryParams &&
-            this.additionalHeaders == other.additionalHeaders &&
-            this.additionalBodyProperties == other.additionalBodyProperties
+      return other is AlertRetrieveParams &&
+          this.alertId == other.alertId &&
+          this.additionalQueryParams == other.additionalQueryParams &&
+          this.additionalHeaders == other.additionalHeaders &&
+          this.additionalBodyProperties == other.additionalBodyProperties
     }
 
     override fun hashCode(): Int {
-        return Objects.hash(
-            alertId,
-            additionalQueryParams,
-            additionalHeaders,
-            additionalBodyProperties,
-        )
+      return Objects.hash(
+          alertId,
+          additionalQueryParams,
+          additionalHeaders,
+          additionalBodyProperties,
+      )
     }
 
-    override fun toString() =
-        "AlertRetrieveParams{alertId=$alertId, additionalQueryParams=$additionalQueryParams, additionalHeaders=$additionalHeaders, additionalBodyProperties=$additionalBodyProperties}"
+    override fun toString() = "AlertRetrieveParams{alertId=$alertId, additionalQueryParams=$additionalQueryParams, additionalHeaders=$additionalHeaders, additionalBodyProperties=$additionalBodyProperties}"
 
     fun toBuilder() = Builder().from(this)
 
@@ -81,7 +108,9 @@ constructor(
             additionalBodyProperties(alertRetrieveParams.additionalBodyProperties)
         }
 
-        fun alertId(alertId: String) = apply { this.alertId = alertId }
+        fun alertId(alertId: String) = apply {
+            this.alertId = alertId
+        }
 
         fun additionalQueryParams(additionalQueryParams: Map<String, List<String>>) = apply {
             this.additionalQueryParams.clear()
@@ -121,7 +150,9 @@ constructor(
             additionalHeaders.forEach(this::putHeaders)
         }
 
-        fun removeHeader(name: String) = apply { this.additionalHeaders.put(name, mutableListOf()) }
+        fun removeHeader(name: String) = apply {
+            this.additionalHeaders.put(name, mutableListOf())
+        }
 
         fun additionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) = apply {
             this.additionalBodyProperties.clear()
@@ -132,17 +163,17 @@ constructor(
             this.additionalBodyProperties.put(key, value)
         }
 
-        fun putAllAdditionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) =
-            apply {
-                this.additionalBodyProperties.putAll(additionalBodyProperties)
-            }
+        fun putAllAdditionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) = apply {
+            this.additionalBodyProperties.putAll(additionalBodyProperties)
+        }
 
-        fun build(): AlertRetrieveParams =
-            AlertRetrieveParams(
-                checkNotNull(alertId) { "`alertId` is required but was not set" },
-                additionalQueryParams.mapValues { it.value.toUnmodifiable() }.toUnmodifiable(),
-                additionalHeaders.mapValues { it.value.toUnmodifiable() }.toUnmodifiable(),
-                additionalBodyProperties.toUnmodifiable(),
-            )
+        fun build(): AlertRetrieveParams = AlertRetrieveParams(
+            checkNotNull(alertId) {
+                "`alertId` is required but was not set"
+            },
+            additionalQueryParams.mapValues { it.value.toUnmodifiable() }.toUnmodifiable(),
+            additionalHeaders.mapValues { it.value.toUnmodifiable() }.toUnmodifiable(),
+            additionalBodyProperties.toUnmodifiable(),
+        )
     }
 }
