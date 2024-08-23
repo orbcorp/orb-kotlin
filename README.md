@@ -19,7 +19,7 @@ The REST API documentation can be found on [docs.withorb.com](https://docs.with
 <!-- x-release-please-start-version -->
 
 ```kotlin
-implementation("com.withorb.api:orb-kotlin:0.1.0-alpha.4")
+implementation("com.withorb.api:orb-kotlin:0.1.0-alpha.5")
 ```
 
 #### Maven
@@ -28,7 +28,7 @@ implementation("com.withorb.api:orb-kotlin:0.1.0-alpha.4")
 <dependency>
     <groupId>com.withorb.api</groupId>
     <artifactId>orb-kotlin</artifactId>
-    <version>0.1.0-alpha.4</version>
+    <version>0.1.0-alpha.5</version>
 </dependency>
 ```
 
@@ -116,9 +116,10 @@ Sometimes, the API may support other properties that are not yet supported in th
 you can attach them using the `putAdditionalProperty` method.
 
 ```kotlin
+import com.withorb.api.models.core.JsonValue
 val params = CustomerCreateParams.builder()
     // ... normal properties
-    .putAdditionalProperty("secret_param", "4242")
+    .putAdditionalProperty("secret_param", JsonValue.from("4242"))
     .build()
 ```
 

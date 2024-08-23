@@ -56,6 +56,12 @@ constructor(
      *
      * If a `customer_id` or `external_customer_id` is specified, the backfill will only affect
      * events for that customer. If neither is specified, the backfill will affect all customers.
+     *
+     * When `replace_existing_events` is `true`, the field `filter` can be optionally added which
+     * enables filtering using
+     * [computed properties](../guides/extensibility/advanced-metrics#computed-properties). The
+     * expressiveness of computed properties allows you to deprecate existing events based on both a
+     * period of time and specific property values.
      */
     override fun create(
         params: EventBackfillCreateParams,

@@ -17,6 +17,7 @@ import java.util.Objects
 class CustomerCostListByExternalIdParams
 constructor(
     private val externalCustomerId: String,
+    private val currency: String?,
     private val timeframeEnd: OffsetDateTime?,
     private val timeframeStart: OffsetDateTime?,
     private val viewMode: ViewMode?,
@@ -27,6 +28,8 @@ constructor(
 
     fun externalCustomerId(): String = externalCustomerId
 
+    fun currency(): String? = currency
+
     fun timeframeEnd(): OffsetDateTime? = timeframeEnd
 
     fun timeframeStart(): OffsetDateTime? = timeframeStart
@@ -35,6 +38,7 @@ constructor(
 
     internal fun getQueryParams(): Map<String, List<String>> {
         val params = mutableMapOf<String, List<String>>()
+        this.currency?.let { params.put("currency", listOf(it.toString())) }
         this.timeframeEnd?.let {
             params.put("timeframe_end", listOf(DateTimeFormatter.ISO_OFFSET_DATE_TIME.format(it)))
         }
@@ -68,6 +72,7 @@ constructor(
 
         return other is CustomerCostListByExternalIdParams &&
             this.externalCustomerId == other.externalCustomerId &&
+            this.currency == other.currency &&
             this.timeframeEnd == other.timeframeEnd &&
             this.timeframeStart == other.timeframeStart &&
             this.viewMode == other.viewMode &&
@@ -79,6 +84,7 @@ constructor(
     override fun hashCode(): Int {
         return Objects.hash(
             externalCustomerId,
+            currency,
             timeframeEnd,
             timeframeStart,
             viewMode,
@@ -89,7 +95,7 @@ constructor(
     }
 
     override fun toString() =
-        "CustomerCostListByExternalIdParams{externalCustomerId=$externalCustomerId, timeframeEnd=$timeframeEnd, timeframeStart=$timeframeStart, viewMode=$viewMode, additionalQueryParams=$additionalQueryParams, additionalHeaders=$additionalHeaders, additionalBodyProperties=$additionalBodyProperties}"
+        "CustomerCostListByExternalIdParams{externalCustomerId=$externalCustomerId, currency=$currency, timeframeEnd=$timeframeEnd, timeframeStart=$timeframeStart, viewMode=$viewMode, additionalQueryParams=$additionalQueryParams, additionalHeaders=$additionalHeaders, additionalBodyProperties=$additionalBodyProperties}"
 
     fun toBuilder() = Builder().from(this)
 
@@ -102,6 +108,7 @@ constructor(
     class Builder {
 
         private var externalCustomerId: String? = null
+        private var currency: String? = null
         private var timeframeEnd: OffsetDateTime? = null
         private var timeframeStart: OffsetDateTime? = null
         private var viewMode: ViewMode? = null
@@ -112,6 +119,7 @@ constructor(
         internal fun from(customerCostListByExternalIdParams: CustomerCostListByExternalIdParams) =
             apply {
                 this.externalCustomerId = customerCostListByExternalIdParams.externalCustomerId
+                this.currency = customerCostListByExternalIdParams.currency
                 this.timeframeEnd = customerCostListByExternalIdParams.timeframeEnd
                 this.timeframeStart = customerCostListByExternalIdParams.timeframeStart
                 this.viewMode = customerCostListByExternalIdParams.viewMode
@@ -125,6 +133,9 @@ constructor(
         fun externalCustomerId(externalCustomerId: String) = apply {
             this.externalCustomerId = externalCustomerId
         }
+
+        /** The currency or custom pricing unit to use. */
+        fun currency(currency: String) = apply { this.currency = currency }
 
         /** Costs returned are exclusive of `timeframe_end`. */
         fun timeframeEnd(timeframeEnd: OffsetDateTime) = apply { this.timeframeEnd = timeframeEnd }
@@ -200,6 +211,7 @@ constructor(
                 checkNotNull(externalCustomerId) {
                     "`externalCustomerId` is required but was not set"
                 },
+                currency,
                 timeframeEnd,
                 timeframeStart,
                 viewMode,

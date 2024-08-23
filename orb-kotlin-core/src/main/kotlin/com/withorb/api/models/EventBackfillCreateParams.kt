@@ -20,6 +20,7 @@ constructor(
     private val timeframeStart: OffsetDateTime,
     private val closeTime: OffsetDateTime?,
     private val customerId: String?,
+    private val deprecationFilter: String?,
     private val externalCustomerId: String?,
     private val replaceExistingEvents: Boolean?,
     private val additionalQueryParams: Map<String, List<String>>,
@@ -35,6 +36,8 @@ constructor(
 
     fun customerId(): String? = customerId
 
+    fun deprecationFilter(): String? = deprecationFilter
+
     fun externalCustomerId(): String? = externalCustomerId
 
     fun replaceExistingEvents(): Boolean? = replaceExistingEvents
@@ -45,6 +48,7 @@ constructor(
             timeframeStart,
             closeTime,
             customerId,
+            deprecationFilter,
             externalCustomerId,
             replaceExistingEvents,
             additionalBodyProperties,
@@ -63,6 +67,7 @@ constructor(
         private val timeframeStart: OffsetDateTime?,
         private val closeTime: OffsetDateTime?,
         private val customerId: String?,
+        private val deprecationFilter: String?,
         private val externalCustomerId: String?,
         private val replaceExistingEvents: Boolean?,
         private val additionalProperties: Map<String, JsonValue>,
@@ -85,6 +90,13 @@ constructor(
 
         /** The ID of the customer to which this backfill is scoped. */
         @JsonProperty("customer_id") fun customerId(): String? = customerId
+
+        /**
+         * A boolean
+         * [computed property](../guides/extensibility/advanced-metrics#computed-properties) used to
+         * filter the set of events to deprecate
+         */
+        @JsonProperty("deprecation_filter") fun deprecationFilter(): String? = deprecationFilter
 
         /** The external customer ID of the customer to which this backfill is scoped. */
         @JsonProperty("external_customer_id") fun externalCustomerId(): String? = externalCustomerId
@@ -112,6 +124,7 @@ constructor(
                 this.timeframeStart == other.timeframeStart &&
                 this.closeTime == other.closeTime &&
                 this.customerId == other.customerId &&
+                this.deprecationFilter == other.deprecationFilter &&
                 this.externalCustomerId == other.externalCustomerId &&
                 this.replaceExistingEvents == other.replaceExistingEvents &&
                 this.additionalProperties == other.additionalProperties
@@ -125,6 +138,7 @@ constructor(
                         timeframeStart,
                         closeTime,
                         customerId,
+                        deprecationFilter,
                         externalCustomerId,
                         replaceExistingEvents,
                         additionalProperties,
@@ -134,7 +148,7 @@ constructor(
         }
 
         override fun toString() =
-            "EventBackfillCreateBody{timeframeEnd=$timeframeEnd, timeframeStart=$timeframeStart, closeTime=$closeTime, customerId=$customerId, externalCustomerId=$externalCustomerId, replaceExistingEvents=$replaceExistingEvents, additionalProperties=$additionalProperties}"
+            "EventBackfillCreateBody{timeframeEnd=$timeframeEnd, timeframeStart=$timeframeStart, closeTime=$closeTime, customerId=$customerId, deprecationFilter=$deprecationFilter, externalCustomerId=$externalCustomerId, replaceExistingEvents=$replaceExistingEvents, additionalProperties=$additionalProperties}"
 
         companion object {
 
@@ -147,6 +161,7 @@ constructor(
             private var timeframeStart: OffsetDateTime? = null
             private var closeTime: OffsetDateTime? = null
             private var customerId: String? = null
+            private var deprecationFilter: String? = null
             private var externalCustomerId: String? = null
             private var replaceExistingEvents: Boolean? = null
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
@@ -156,6 +171,7 @@ constructor(
                 this.timeframeStart = eventBackfillCreateBody.timeframeStart
                 this.closeTime = eventBackfillCreateBody.closeTime
                 this.customerId = eventBackfillCreateBody.customerId
+                this.deprecationFilter = eventBackfillCreateBody.deprecationFilter
                 this.externalCustomerId = eventBackfillCreateBody.externalCustomerId
                 this.replaceExistingEvents = eventBackfillCreateBody.replaceExistingEvents
                 additionalProperties(eventBackfillCreateBody.additionalProperties)
@@ -184,6 +200,16 @@ constructor(
             /** The ID of the customer to which this backfill is scoped. */
             @JsonProperty("customer_id")
             fun customerId(customerId: String) = apply { this.customerId = customerId }
+
+            /**
+             * A boolean
+             * [computed property](../guides/extensibility/advanced-metrics#computed-properties)
+             * used to filter the set of events to deprecate
+             */
+            @JsonProperty("deprecation_filter")
+            fun deprecationFilter(deprecationFilter: String) = apply {
+                this.deprecationFilter = deprecationFilter
+            }
 
             /** The external customer ID of the customer to which this backfill is scoped. */
             @JsonProperty("external_customer_id")
@@ -220,6 +246,7 @@ constructor(
                     checkNotNull(timeframeStart) { "`timeframeStart` is required but was not set" },
                     closeTime,
                     customerId,
+                    deprecationFilter,
                     externalCustomerId,
                     replaceExistingEvents,
                     additionalProperties.toUnmodifiable(),
@@ -243,6 +270,7 @@ constructor(
             this.timeframeStart == other.timeframeStart &&
             this.closeTime == other.closeTime &&
             this.customerId == other.customerId &&
+            this.deprecationFilter == other.deprecationFilter &&
             this.externalCustomerId == other.externalCustomerId &&
             this.replaceExistingEvents == other.replaceExistingEvents &&
             this.additionalQueryParams == other.additionalQueryParams &&
@@ -256,6 +284,7 @@ constructor(
             timeframeStart,
             closeTime,
             customerId,
+            deprecationFilter,
             externalCustomerId,
             replaceExistingEvents,
             additionalQueryParams,
@@ -265,7 +294,7 @@ constructor(
     }
 
     override fun toString() =
-        "EventBackfillCreateParams{timeframeEnd=$timeframeEnd, timeframeStart=$timeframeStart, closeTime=$closeTime, customerId=$customerId, externalCustomerId=$externalCustomerId, replaceExistingEvents=$replaceExistingEvents, additionalQueryParams=$additionalQueryParams, additionalHeaders=$additionalHeaders, additionalBodyProperties=$additionalBodyProperties}"
+        "EventBackfillCreateParams{timeframeEnd=$timeframeEnd, timeframeStart=$timeframeStart, closeTime=$closeTime, customerId=$customerId, deprecationFilter=$deprecationFilter, externalCustomerId=$externalCustomerId, replaceExistingEvents=$replaceExistingEvents, additionalQueryParams=$additionalQueryParams, additionalHeaders=$additionalHeaders, additionalBodyProperties=$additionalBodyProperties}"
 
     fun toBuilder() = Builder().from(this)
 
@@ -281,6 +310,7 @@ constructor(
         private var timeframeStart: OffsetDateTime? = null
         private var closeTime: OffsetDateTime? = null
         private var customerId: String? = null
+        private var deprecationFilter: String? = null
         private var externalCustomerId: String? = null
         private var replaceExistingEvents: Boolean? = null
         private var additionalQueryParams: MutableMap<String, MutableList<String>> = mutableMapOf()
@@ -292,6 +322,7 @@ constructor(
             this.timeframeStart = eventBackfillCreateParams.timeframeStart
             this.closeTime = eventBackfillCreateParams.closeTime
             this.customerId = eventBackfillCreateParams.customerId
+            this.deprecationFilter = eventBackfillCreateParams.deprecationFilter
             this.externalCustomerId = eventBackfillCreateParams.externalCustomerId
             this.replaceExistingEvents = eventBackfillCreateParams.replaceExistingEvents
             additionalQueryParams(eventBackfillCreateParams.additionalQueryParams)
@@ -316,6 +347,15 @@ constructor(
 
         /** The ID of the customer to which this backfill is scoped. */
         fun customerId(customerId: String) = apply { this.customerId = customerId }
+
+        /**
+         * A boolean
+         * [computed property](../guides/extensibility/advanced-metrics#computed-properties) used to
+         * filter the set of events to deprecate
+         */
+        fun deprecationFilter(deprecationFilter: String) = apply {
+            this.deprecationFilter = deprecationFilter
+        }
 
         /** The external customer ID of the customer to which this backfill is scoped. */
         fun externalCustomerId(externalCustomerId: String) = apply {
@@ -390,6 +430,7 @@ constructor(
                 checkNotNull(timeframeStart) { "`timeframeStart` is required but was not set" },
                 closeTime,
                 customerId,
+                deprecationFilter,
                 externalCustomerId,
                 replaceExistingEvents,
                 additionalQueryParams.mapValues { it.value.toUnmodifiable() }.toUnmodifiable(),

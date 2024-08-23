@@ -17,6 +17,7 @@ import java.util.Objects
 class SubscriptionFetchCostsParams
 constructor(
     private val subscriptionId: String,
+    private val currency: String?,
     private val timeframeEnd: OffsetDateTime?,
     private val timeframeStart: OffsetDateTime?,
     private val viewMode: ViewMode?,
@@ -27,6 +28,8 @@ constructor(
 
     fun subscriptionId(): String = subscriptionId
 
+    fun currency(): String? = currency
+
     fun timeframeEnd(): OffsetDateTime? = timeframeEnd
 
     fun timeframeStart(): OffsetDateTime? = timeframeStart
@@ -35,6 +38,7 @@ constructor(
 
     internal fun getQueryParams(): Map<String, List<String>> {
         val params = mutableMapOf<String, List<String>>()
+        this.currency?.let { params.put("currency", listOf(it.toString())) }
         this.timeframeEnd?.let {
             params.put("timeframe_end", listOf(DateTimeFormatter.ISO_OFFSET_DATE_TIME.format(it)))
         }
@@ -68,6 +72,7 @@ constructor(
 
         return other is SubscriptionFetchCostsParams &&
             this.subscriptionId == other.subscriptionId &&
+            this.currency == other.currency &&
             this.timeframeEnd == other.timeframeEnd &&
             this.timeframeStart == other.timeframeStart &&
             this.viewMode == other.viewMode &&
@@ -79,6 +84,7 @@ constructor(
     override fun hashCode(): Int {
         return Objects.hash(
             subscriptionId,
+            currency,
             timeframeEnd,
             timeframeStart,
             viewMode,
@@ -89,7 +95,7 @@ constructor(
     }
 
     override fun toString() =
-        "SubscriptionFetchCostsParams{subscriptionId=$subscriptionId, timeframeEnd=$timeframeEnd, timeframeStart=$timeframeStart, viewMode=$viewMode, additionalQueryParams=$additionalQueryParams, additionalHeaders=$additionalHeaders, additionalBodyProperties=$additionalBodyProperties}"
+        "SubscriptionFetchCostsParams{subscriptionId=$subscriptionId, currency=$currency, timeframeEnd=$timeframeEnd, timeframeStart=$timeframeStart, viewMode=$viewMode, additionalQueryParams=$additionalQueryParams, additionalHeaders=$additionalHeaders, additionalBodyProperties=$additionalBodyProperties}"
 
     fun toBuilder() = Builder().from(this)
 
@@ -102,6 +108,7 @@ constructor(
     class Builder {
 
         private var subscriptionId: String? = null
+        private var currency: String? = null
         private var timeframeEnd: OffsetDateTime? = null
         private var timeframeStart: OffsetDateTime? = null
         private var viewMode: ViewMode? = null
@@ -111,6 +118,7 @@ constructor(
 
         internal fun from(subscriptionFetchCostsParams: SubscriptionFetchCostsParams) = apply {
             this.subscriptionId = subscriptionFetchCostsParams.subscriptionId
+            this.currency = subscriptionFetchCostsParams.currency
             this.timeframeEnd = subscriptionFetchCostsParams.timeframeEnd
             this.timeframeStart = subscriptionFetchCostsParams.timeframeStart
             this.viewMode = subscriptionFetchCostsParams.viewMode
@@ -120,6 +128,9 @@ constructor(
         }
 
         fun subscriptionId(subscriptionId: String) = apply { this.subscriptionId = subscriptionId }
+
+        /** The currency or custom pricing unit to use. */
+        fun currency(currency: String) = apply { this.currency = currency }
 
         /** Costs returned are exclusive of `timeframe_end`. */
         fun timeframeEnd(timeframeEnd: OffsetDateTime) = apply { this.timeframeEnd = timeframeEnd }
@@ -193,6 +204,7 @@ constructor(
         fun build(): SubscriptionFetchCostsParams =
             SubscriptionFetchCostsParams(
                 checkNotNull(subscriptionId) { "`subscriptionId` is required but was not set" },
+                currency,
                 timeframeEnd,
                 timeframeStart,
                 viewMode,

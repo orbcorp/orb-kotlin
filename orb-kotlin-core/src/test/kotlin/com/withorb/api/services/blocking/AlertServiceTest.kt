@@ -26,6 +26,25 @@ class AlertServiceTest {
         alert.validate()
     }
 
+    @Test
+    fun callUpdate() {
+        val client =
+            OrbOkHttpClient.builder()
+                .baseUrl(TestServerExtension.BASE_URL)
+                .apiKey("My API Key")
+                .build()
+        val alertService = client.alerts()
+        val alert =
+            alertService.update(
+                AlertUpdateParams.builder()
+                    .alertConfigurationId("alert_configuration_id")
+                    .thresholds(listOf(AlertUpdateParams.Threshold.builder().value(42.23).build()))
+                    .build()
+            )
+        println(alert)
+        alert.validate()
+    }
+
     @Disabled("plan_version=0 breaks Prism")
     @Test
     fun callList() {

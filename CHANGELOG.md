@@ -1,5 +1,30 @@
 # Changelog
 
+## 0.1.0-alpha.5 (2024-08-22)
+
+Full Changelog: [v0.1.0-alpha.4...v0.1.0-alpha.5](https://github.com/orbcorp/orb-kotlin/compare/v0.1.0-alpha.4...v0.1.0-alpha.5)
+
+### Features
+
+* **api:** codegen changes ([#39](https://github.com/orbcorp/orb-kotlin/issues/39)) ([fe78ca9](https://github.com/orbcorp/orb-kotlin/commit/fe78ca9c7802faff94bf9c2852146da8df95604e))
+* **api:** manual updates ([#40](https://github.com/orbcorp/orb-kotlin/issues/40)) ([f48f51d](https://github.com/orbcorp/orb-kotlin/commit/f48f51d447ff991702967ec74856014e86dddead))
+* **api:** OpenAPI spec update via Stainless API ([#34](https://github.com/orbcorp/orb-kotlin/issues/34)) ([08810c4](https://github.com/orbcorp/orb-kotlin/commit/08810c4a992b2fc97124ffe48b0c63587e11151a))
+* **api:** OpenAPI spec update via Stainless API ([#36](https://github.com/orbcorp/orb-kotlin/issues/36)) ([c8f652a](https://github.com/orbcorp/orb-kotlin/commit/c8f652a950a6a891cec8fbab0037003a72bf7c38))
+* **api:** OpenAPI spec update via Stainless API ([#37](https://github.com/orbcorp/orb-kotlin/issues/37)) ([4eb6fd3](https://github.com/orbcorp/orb-kotlin/commit/4eb6fd330e75800fbbd0a2de90b566916cec9ee3))
+* **api:** OpenAPI spec update via Stainless API ([#38](https://github.com/orbcorp/orb-kotlin/issues/38)) ([757858a](https://github.com/orbcorp/orb-kotlin/commit/757858aab6322b97d8032c50fa9563270a976dce))
+* **api:** OpenAPI spec update via Stainless API ([#43](https://github.com/orbcorp/orb-kotlin/issues/43)) ([9dbc27f](https://github.com/orbcorp/orb-kotlin/commit/9dbc27f38ae14c89a924ed5f6b9d770ca7bd857a))
+
+
+### Bug Fixes
+
+* **docs:** use correct putAdditionalProperty value ([#44](https://github.com/orbcorp/orb-kotlin/issues/44)) ([47731b7](https://github.com/orbcorp/orb-kotlin/commit/47731b7233a36214a42745d4d4a3b0324027b050))
+
+
+### Chores
+
+* **internal:** codegen related update ([#41](https://github.com/orbcorp/orb-kotlin/issues/41)) ([a235c7e](https://github.com/orbcorp/orb-kotlin/commit/a235c7e01e85de5860fc03a4627b437ebc9f7d01))
+* **internal:** codegen related update ([#42](https://github.com/orbcorp/orb-kotlin/issues/42)) ([1c5b7f0](https://github.com/orbcorp/orb-kotlin/commit/1c5b7f0f1ea9d34350ce845c5d0c7147b609b640))
+
 ## 0.1.0-alpha.4 (2024-08-14)
 
 Full Changelog: [v0.1.0-alpha.3...v0.1.0-alpha.4](https://github.com/orbcorp/orb-kotlin/compare/v0.1.0-alpha.3...v0.1.0-alpha.4)
