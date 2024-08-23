@@ -61,7 +61,7 @@ class ErrorHandlingTest {
         val params =
             CustomerCreateParams.builder()
                 .email("email")
-                .name("name")
+                .name("x")
                 .accountingSyncConfiguration(
                     CustomerCreateParams.AccountingSyncConfiguration.builder()
                         .accountingProviders(
@@ -193,7 +193,7 @@ class ErrorHandlingTest {
         val params =
             CustomerCreateParams.builder()
                 .email("email")
-                .name("name")
+                .name("x")
                 .accountingSyncConfiguration(
                     CustomerCreateParams.AccountingSyncConfiguration.builder()
                         .accountingProviders(
@@ -265,7 +265,7 @@ class ErrorHandlingTest {
         val params =
             CustomerCreateParams.builder()
                 .email("email")
-                .name("name")
+                .name("x")
                 .accountingSyncConfiguration(
                     CustomerCreateParams.AccountingSyncConfiguration.builder()
                         .accountingProviders(
@@ -337,7 +337,7 @@ class ErrorHandlingTest {
         val params =
             CustomerCreateParams.builder()
                 .email("email")
-                .name("name")
+                .name("x")
                 .accountingSyncConfiguration(
                     CustomerCreateParams.AccountingSyncConfiguration.builder()
                         .accountingProviders(
@@ -409,7 +409,7 @@ class ErrorHandlingTest {
         val params =
             CustomerCreateParams.builder()
                 .email("email")
-                .name("name")
+                .name("x")
                 .accountingSyncConfiguration(
                     CustomerCreateParams.AccountingSyncConfiguration.builder()
                         .accountingProviders(
@@ -481,7 +481,7 @@ class ErrorHandlingTest {
         val params =
             CustomerCreateParams.builder()
                 .email("email")
-                .name("name")
+                .name("x")
                 .accountingSyncConfiguration(
                     CustomerCreateParams.AccountingSyncConfiguration.builder()
                         .accountingProviders(
@@ -553,7 +553,7 @@ class ErrorHandlingTest {
         val params =
             CustomerCreateParams.builder()
                 .email("email")
-                .name("name")
+                .name("x")
                 .accountingSyncConfiguration(
                     CustomerCreateParams.AccountingSyncConfiguration.builder()
                         .accountingProviders(
@@ -625,7 +625,7 @@ class ErrorHandlingTest {
         val params =
             CustomerCreateParams.builder()
                 .email("email")
-                .name("name")
+                .name("x")
                 .accountingSyncConfiguration(
                     CustomerCreateParams.AccountingSyncConfiguration.builder()
                         .accountingProviders(
@@ -697,7 +697,7 @@ class ErrorHandlingTest {
         val params =
             CustomerCreateParams.builder()
                 .email("email")
-                .name("name")
+                .name("x")
                 .accountingSyncConfiguration(
                     CustomerCreateParams.AccountingSyncConfiguration.builder()
                         .accountingProviders(
@@ -774,7 +774,7 @@ class ErrorHandlingTest {
         val params =
             CustomerCreateParams.builder()
                 .email("email")
-                .name("name")
+                .name("x")
                 .accountingSyncConfiguration(
                     CustomerCreateParams.AccountingSyncConfiguration.builder()
                         .accountingProviders(
@@ -845,7 +845,7 @@ class ErrorHandlingTest {
         val params =
             CustomerCreateParams.builder()
                 .email("email")
-                .name("name")
+                .name("x")
                 .accountingSyncConfiguration(
                     CustomerCreateParams.AccountingSyncConfiguration.builder()
                         .accountingProviders(
