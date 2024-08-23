@@ -27,7 +27,6 @@ constructor(
     private val status: Status?,
     private val additionalQueryParams: Map<String, List<String>>,
     private val additionalHeaders: Map<String, List<String>>,
-    private val additionalBodyProperties: Map<String, JsonValue>,
 ) {
 
     fun createdAtGt(): OffsetDateTime? = createdAtGt
@@ -77,8 +76,6 @@ constructor(
 
     fun _additionalHeaders(): Map<String, List<String>> = additionalHeaders
 
-    fun _additionalBodyProperties(): Map<String, JsonValue> = additionalBodyProperties
-
     override fun equals(other: Any?): Boolean {
         if (this === other) {
             return true
@@ -95,8 +92,7 @@ constructor(
             this.limit == other.limit &&
             this.status == other.status &&
             this.additionalQueryParams == other.additionalQueryParams &&
-            this.additionalHeaders == other.additionalHeaders &&
-            this.additionalBodyProperties == other.additionalBodyProperties
+            this.additionalHeaders == other.additionalHeaders
     }
 
     override fun hashCode(): Int {
@@ -112,12 +108,11 @@ constructor(
             status,
             additionalQueryParams,
             additionalHeaders,
-            additionalBodyProperties,
         )
     }
 
     override fun toString() =
-        "SubscriptionListParams{createdAtGt=$createdAtGt, createdAtGte=$createdAtGte, createdAtLt=$createdAtLt, createdAtLte=$createdAtLte, cursor=$cursor, customerId=$customerId, externalCustomerId=$externalCustomerId, limit=$limit, status=$status, additionalQueryParams=$additionalQueryParams, additionalHeaders=$additionalHeaders, additionalBodyProperties=$additionalBodyProperties}"
+        "SubscriptionListParams{createdAtGt=$createdAtGt, createdAtGte=$createdAtGte, createdAtLt=$createdAtLt, createdAtLte=$createdAtLte, cursor=$cursor, customerId=$customerId, externalCustomerId=$externalCustomerId, limit=$limit, status=$status, additionalQueryParams=$additionalQueryParams, additionalHeaders=$additionalHeaders}"
 
     fun toBuilder() = Builder().from(this)
 
@@ -140,7 +135,6 @@ constructor(
         private var status: Status? = null
         private var additionalQueryParams: MutableMap<String, MutableList<String>> = mutableMapOf()
         private var additionalHeaders: MutableMap<String, MutableList<String>> = mutableMapOf()
-        private var additionalBodyProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         internal fun from(subscriptionListParams: SubscriptionListParams) = apply {
             this.createdAtGt = subscriptionListParams.createdAtGt
@@ -154,7 +148,6 @@ constructor(
             this.status = subscriptionListParams.status
             additionalQueryParams(subscriptionListParams.additionalQueryParams)
             additionalHeaders(subscriptionListParams.additionalHeaders)
-            additionalBodyProperties(subscriptionListParams.additionalBodyProperties)
         }
 
         fun createdAtGt(createdAtGt: OffsetDateTime) = apply { this.createdAtGt = createdAtGt }
@@ -222,20 +215,6 @@ constructor(
 
         fun removeHeader(name: String) = apply { this.additionalHeaders.put(name, mutableListOf()) }
 
-        fun additionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) = apply {
-            this.additionalBodyProperties.clear()
-            this.additionalBodyProperties.putAll(additionalBodyProperties)
-        }
-
-        fun putAdditionalBodyProperty(key: String, value: JsonValue) = apply {
-            this.additionalBodyProperties.put(key, value)
-        }
-
-        fun putAllAdditionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) =
-            apply {
-                this.additionalBodyProperties.putAll(additionalBodyProperties)
-            }
-
         fun build(): SubscriptionListParams =
             SubscriptionListParams(
                 createdAtGt,
@@ -249,7 +228,6 @@ constructor(
                 status,
                 additionalQueryParams.mapValues { it.value.toUnmodifiable() }.toUnmodifiable(),
                 additionalHeaders.mapValues { it.value.toUnmodifiable() }.toUnmodifiable(),
-                additionalBodyProperties.toUnmodifiable(),
             )
     }
 

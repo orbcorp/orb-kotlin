@@ -24,7 +24,7 @@ class CustomerServiceTest {
             customerService.create(
                 CustomerCreateParams.builder()
                     .email("email")
-                    .name("name")
+                    .name("x")
                     .accountingSyncConfiguration(
                         CustomerCreateParams.AccountingSyncConfiguration.builder()
                             .accountingProviders(

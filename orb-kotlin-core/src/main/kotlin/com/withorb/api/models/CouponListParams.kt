@@ -2,7 +2,6 @@
 
 package com.withorb.api.models
 
-import com.withorb.api.core.JsonValue
 import com.withorb.api.core.NoAutoDetect
 import com.withorb.api.core.toUnmodifiable
 import com.withorb.api.models.*
@@ -16,7 +15,6 @@ constructor(
     private val showArchived: Boolean?,
     private val additionalQueryParams: Map<String, List<String>>,
     private val additionalHeaders: Map<String, List<String>>,
-    private val additionalBodyProperties: Map<String, JsonValue>,
 ) {
 
     fun cursor(): String? = cursor
@@ -43,8 +41,6 @@ constructor(
 
     fun _additionalHeaders(): Map<String, List<String>> = additionalHeaders
 
-    fun _additionalBodyProperties(): Map<String, JsonValue> = additionalBodyProperties
-
     override fun equals(other: Any?): Boolean {
         if (this === other) {
             return true
@@ -56,8 +52,7 @@ constructor(
             this.redemptionCode == other.redemptionCode &&
             this.showArchived == other.showArchived &&
             this.additionalQueryParams == other.additionalQueryParams &&
-            this.additionalHeaders == other.additionalHeaders &&
-            this.additionalBodyProperties == other.additionalBodyProperties
+            this.additionalHeaders == other.additionalHeaders
     }
 
     override fun hashCode(): Int {
@@ -68,12 +63,11 @@ constructor(
             showArchived,
             additionalQueryParams,
             additionalHeaders,
-            additionalBodyProperties,
         )
     }
 
     override fun toString() =
-        "CouponListParams{cursor=$cursor, limit=$limit, redemptionCode=$redemptionCode, showArchived=$showArchived, additionalQueryParams=$additionalQueryParams, additionalHeaders=$additionalHeaders, additionalBodyProperties=$additionalBodyProperties}"
+        "CouponListParams{cursor=$cursor, limit=$limit, redemptionCode=$redemptionCode, showArchived=$showArchived, additionalQueryParams=$additionalQueryParams, additionalHeaders=$additionalHeaders}"
 
     fun toBuilder() = Builder().from(this)
 
@@ -91,7 +85,6 @@ constructor(
         private var showArchived: Boolean? = null
         private var additionalQueryParams: MutableMap<String, MutableList<String>> = mutableMapOf()
         private var additionalHeaders: MutableMap<String, MutableList<String>> = mutableMapOf()
-        private var additionalBodyProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         internal fun from(couponListParams: CouponListParams) = apply {
             this.cursor = couponListParams.cursor
@@ -100,7 +93,6 @@ constructor(
             this.showArchived = couponListParams.showArchived
             additionalQueryParams(couponListParams.additionalQueryParams)
             additionalHeaders(couponListParams.additionalHeaders)
-            additionalBodyProperties(couponListParams.additionalBodyProperties)
         }
 
         /**
@@ -160,20 +152,6 @@ constructor(
 
         fun removeHeader(name: String) = apply { this.additionalHeaders.put(name, mutableListOf()) }
 
-        fun additionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) = apply {
-            this.additionalBodyProperties.clear()
-            this.additionalBodyProperties.putAll(additionalBodyProperties)
-        }
-
-        fun putAdditionalBodyProperty(key: String, value: JsonValue) = apply {
-            this.additionalBodyProperties.put(key, value)
-        }
-
-        fun putAllAdditionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) =
-            apply {
-                this.additionalBodyProperties.putAll(additionalBodyProperties)
-            }
-
         fun build(): CouponListParams =
             CouponListParams(
                 cursor,
@@ -182,7 +160,6 @@ constructor(
                 showArchived,
                 additionalQueryParams.mapValues { it.value.toUnmodifiable() }.toUnmodifiable(),
                 additionalHeaders.mapValues { it.value.toUnmodifiable() }.toUnmodifiable(),
-                additionalBodyProperties.toUnmodifiable(),
             )
     }
 }
