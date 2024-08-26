@@ -427,8 +427,9 @@ interface SubscriptionService {
      * subscription. For a full discussion of the subscription resource, see
      * [Subscription](../guides/concepts#subscription).
      *
-     * Subscriptions can be filtered to a single customer by passing in the `customer_id` query
-     * parameter or the `external_customer_id` query parameter.
+     * Subscriptions can be filtered for a specific customer by using either the customer_id or
+     * external_customer_id query parameters. To filter subscriptions for multiple customers, use
+     * the customer_id[] or external_customer_id[] query parameters.
      */
     fun list(
         params: SubscriptionListParams,
