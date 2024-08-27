@@ -21,8 +21,8 @@ constructor(
     private val createdAtLt: OffsetDateTime?,
     private val createdAtLte: OffsetDateTime?,
     private val cursor: String?,
-    private val queryCustomerId: String?,
-    private val queryExternalCustomerId: String?,
+    private val customerId: List<String>?,
+    private val externalCustomerId: String?,
     private val limit: Long?,
     private val status: Status?,
     private val additionalQueryParams: Map<String, List<String>>,
@@ -39,9 +39,9 @@ constructor(
 
     fun cursor(): String? = cursor
 
-    fun queryCustomerId(): String? = queryCustomerId
+    fun customerId(): List<String>? = customerId
 
-    fun queryExternalCustomerId(): String? = queryExternalCustomerId
+    fun externalCustomerId(): String? = externalCustomerId
 
     fun limit(): Long? = limit
 
@@ -62,14 +62,8 @@ constructor(
             params.put("created_at[lte]", listOf(DateTimeFormatter.ISO_OFFSET_DATE_TIME.format(it)))
         }
         this.cursor?.let { params.put("cursor", listOf(it.toString())) }
-        this.queryCustomerId?.let { params.put("customer_id", listOf(it.toString())) }
-        this.queryCustomerId?.let { params.put("customer_id[]", it.map(Any::toString)) }
-        this.queryExternalCustomerId?.let {
-            params.put("external_customer_id", listOf(it.toString()))
-        }
-        this.queryExternalCustomerId?.let {
-            params.put("external_customer_id[]", it.map(Any::toString))
-        }
+        this.customerId?.let { params.put("customer_id[]", it.map(Any::toString)) }
+        this.externalCustomerId?.let { params.put("external_customer_id", listOf(it.toString())) }
         this.limit?.let { params.put("limit", listOf(it.toString())) }
         this.status?.let { params.put("status", listOf(it.toString())) }
         params.putAll(additionalQueryParams)
@@ -93,8 +87,8 @@ constructor(
             this.createdAtLt == other.createdAtLt &&
             this.createdAtLte == other.createdAtLte &&
             this.cursor == other.cursor &&
-            this.queryCustomerId == other.queryCustomerId &&
-            this.queryExternalCustomerId == other.queryExternalCustomerId &&
+            this.customerId == other.customerId &&
+            this.externalCustomerId == other.externalCustomerId &&
             this.limit == other.limit &&
             this.status == other.status &&
             this.additionalQueryParams == other.additionalQueryParams &&
@@ -108,8 +102,8 @@ constructor(
             createdAtLt,
             createdAtLte,
             cursor,
-            queryCustomerId,
-            queryExternalCustomerId,
+            customerId,
+            externalCustomerId,
             limit,
             status,
             additionalQueryParams,
@@ -118,7 +112,7 @@ constructor(
     }
 
     override fun toString() =
-        "SubscriptionListParams{createdAtGt=$createdAtGt, createdAtGte=$createdAtGte, createdAtLt=$createdAtLt, createdAtLte=$createdAtLte, cursor=$cursor, queryCustomerId=$queryCustomerId, queryExternalCustomerId=$queryExternalCustomerId, limit=$limit, status=$status, additionalQueryParams=$additionalQueryParams, additionalHeaders=$additionalHeaders}"
+        "SubscriptionListParams{createdAtGt=$createdAtGt, createdAtGte=$createdAtGte, createdAtLt=$createdAtLt, createdAtLte=$createdAtLte, cursor=$cursor, customerId=$customerId, externalCustomerId=$externalCustomerId, limit=$limit, status=$status, additionalQueryParams=$additionalQueryParams, additionalHeaders=$additionalHeaders}"
 
     fun toBuilder() = Builder().from(this)
 
@@ -135,8 +129,8 @@ constructor(
         private var createdAtLt: OffsetDateTime? = null
         private var createdAtLte: OffsetDateTime? = null
         private var cursor: String? = null
-        private var queryCustomerId: String? = null
-        private var queryExternalCustomerId: String? = null
+        private var customerId: MutableList<String> = mutableListOf()
+        private var externalCustomerId: String? = null
         private var limit: Long? = null
         private var status: Status? = null
         private var additionalQueryParams: MutableMap<String, MutableList<String>> = mutableMapOf()
@@ -148,8 +142,8 @@ constructor(
             this.createdAtLt = subscriptionListParams.createdAtLt
             this.createdAtLte = subscriptionListParams.createdAtLte
             this.cursor = subscriptionListParams.cursor
-            this.queryCustomerId = subscriptionListParams.queryCustomerId
-            this.queryExternalCustomerId = subscriptionListParams.queryExternalCustomerId
+            this.customerId(subscriptionListParams.customerId ?: listOf())
+            this.externalCustomerId = subscriptionListParams.externalCustomerId
             this.limit = subscriptionListParams.limit
             this.status = subscriptionListParams.status
             additionalQueryParams(subscriptionListParams.additionalQueryParams)
@@ -170,12 +164,15 @@ constructor(
          */
         fun cursor(cursor: String) = apply { this.cursor = cursor }
 
-        fun queryCustomerId(queryCustomerId: String) = apply {
-            this.queryCustomerId = queryCustomerId
+        fun customerId(customerId: List<String>) = apply {
+            this.customerId.clear()
+            this.customerId.addAll(customerId)
         }
 
-        fun queryExternalCustomerId(queryExternalCustomerId: String) = apply {
-            this.queryExternalCustomerId = queryExternalCustomerId
+        fun addCustomerId(customerId: String) = apply { this.customerId.add(customerId) }
+
+        fun externalCustomerId(externalCustomerId: String) = apply {
+            this.externalCustomerId = externalCustomerId
         }
 
         /** The number of items to fetch. Defaults to 20. */
@@ -230,8 +227,8 @@ constructor(
                 createdAtLt,
                 createdAtLte,
                 cursor,
-                queryCustomerId,
-                queryExternalCustomerId,
+                if (customerId.size == 0) null else customerId.toUnmodifiable(),
+                externalCustomerId,
                 limit,
                 status,
                 additionalQueryParams.mapValues { it.value.toUnmodifiable() }.toUnmodifiable(),
