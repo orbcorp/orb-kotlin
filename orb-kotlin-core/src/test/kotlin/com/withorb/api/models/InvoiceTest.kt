@@ -193,6 +193,16 @@ class InvoiceTest {
                                         )
                                         .externalPriceId("external_price_id")
                                         .fixedPriceQuantity(42.23)
+                                        .invoicingCycleConfiguration(
+                                            Price.UnitPrice.InvoicingCycleConfiguration.builder()
+                                                .duration(123L)
+                                                .durationUnit(
+                                                    Price.UnitPrice.InvoicingCycleConfiguration
+                                                        .DurationUnit
+                                                        .DAY
+                                                )
+                                                .build()
+                                        )
                                         .item(
                                             Price.UnitPrice.Item.builder()
                                                 .id("id")
@@ -489,6 +499,15 @@ class InvoiceTest {
                                 )
                                 .externalPriceId("external_price_id")
                                 .fixedPriceQuantity(42.23)
+                                .invoicingCycleConfiguration(
+                                    Price.UnitPrice.InvoicingCycleConfiguration.builder()
+                                        .duration(123L)
+                                        .durationUnit(
+                                            Price.UnitPrice.InvoicingCycleConfiguration.DurationUnit
+                                                .DAY
+                                        )
+                                        .build()
+                                )
                                 .item(Price.UnitPrice.Item.builder().id("id").name("name").build())
                                 .maximum(
                                     Price.UnitPrice.Maximum.builder()

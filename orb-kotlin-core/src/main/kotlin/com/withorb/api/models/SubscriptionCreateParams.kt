@@ -33,6 +33,7 @@ constructor(
     private val alignBillingWithSubscriptionStartDate: Boolean?,
     private val autoCollection: Boolean?,
     private val awsRegion: String?,
+    private val billingCycleAnchorConfiguration: BillingCycleAnchorConfiguration?,
     private val couponRedemptionCode: String?,
     private val creditsOverageRate: Double?,
     private val customerId: String?,
@@ -60,6 +61,9 @@ constructor(
     fun autoCollection(): Boolean? = autoCollection
 
     fun awsRegion(): String? = awsRegion
+
+    fun billingCycleAnchorConfiguration(): BillingCycleAnchorConfiguration? =
+        billingCycleAnchorConfiguration
 
     fun couponRedemptionCode(): String? = couponRedemptionCode
 
@@ -100,6 +104,7 @@ constructor(
             alignBillingWithSubscriptionStartDate,
             autoCollection,
             awsRegion,
+            billingCycleAnchorConfiguration,
             couponRedemptionCode,
             creditsOverageRate,
             customerId,
@@ -132,6 +137,7 @@ constructor(
         private val alignBillingWithSubscriptionStartDate: Boolean?,
         private val autoCollection: Boolean?,
         private val awsRegion: String?,
+        private val billingCycleAnchorConfiguration: BillingCycleAnchorConfiguration?,
         private val couponRedemptionCode: String?,
         private val creditsOverageRate: Double?,
         private val customerId: String?,
@@ -161,6 +167,10 @@ constructor(
         @JsonProperty("auto_collection") fun autoCollection(): Boolean? = autoCollection
 
         @JsonProperty("aws_region") fun awsRegion(): String? = awsRegion
+
+        @JsonProperty("billing_cycle_anchor_configuration")
+        fun billingCycleAnchorConfiguration(): BillingCycleAnchorConfiguration? =
+            billingCycleAnchorConfiguration
 
         @JsonProperty("coupon_redemption_code")
         fun couponRedemptionCode(): String? = couponRedemptionCode
@@ -230,6 +240,7 @@ constructor(
                     other.alignBillingWithSubscriptionStartDate &&
                 this.autoCollection == other.autoCollection &&
                 this.awsRegion == other.awsRegion &&
+                this.billingCycleAnchorConfiguration == other.billingCycleAnchorConfiguration &&
                 this.couponRedemptionCode == other.couponRedemptionCode &&
                 this.creditsOverageRate == other.creditsOverageRate &&
                 this.customerId == other.customerId &&
@@ -257,6 +268,7 @@ constructor(
                         alignBillingWithSubscriptionStartDate,
                         autoCollection,
                         awsRegion,
+                        billingCycleAnchorConfiguration,
                         couponRedemptionCode,
                         creditsOverageRate,
                         customerId,
@@ -281,7 +293,7 @@ constructor(
         }
 
         override fun toString() =
-            "SubscriptionCreateBody{alignBillingWithSubscriptionStartDate=$alignBillingWithSubscriptionStartDate, autoCollection=$autoCollection, awsRegion=$awsRegion, couponRedemptionCode=$couponRedemptionCode, creditsOverageRate=$creditsOverageRate, customerId=$customerId, defaultInvoiceMemo=$defaultInvoiceMemo, endDate=$endDate, externalCustomerId=$externalCustomerId, externalMarketplace=$externalMarketplace, externalMarketplaceReportingId=$externalMarketplaceReportingId, externalPlanId=$externalPlanId, initialPhaseOrder=$initialPhaseOrder, invoicingThreshold=$invoicingThreshold, metadata=$metadata, netTerms=$netTerms, perCreditOverageAmount=$perCreditOverageAmount, planId=$planId, priceOverrides=$priceOverrides, startDate=$startDate, additionalProperties=$additionalProperties}"
+            "SubscriptionCreateBody{alignBillingWithSubscriptionStartDate=$alignBillingWithSubscriptionStartDate, autoCollection=$autoCollection, awsRegion=$awsRegion, billingCycleAnchorConfiguration=$billingCycleAnchorConfiguration, couponRedemptionCode=$couponRedemptionCode, creditsOverageRate=$creditsOverageRate, customerId=$customerId, defaultInvoiceMemo=$defaultInvoiceMemo, endDate=$endDate, externalCustomerId=$externalCustomerId, externalMarketplace=$externalMarketplace, externalMarketplaceReportingId=$externalMarketplaceReportingId, externalPlanId=$externalPlanId, initialPhaseOrder=$initialPhaseOrder, invoicingThreshold=$invoicingThreshold, metadata=$metadata, netTerms=$netTerms, perCreditOverageAmount=$perCreditOverageAmount, planId=$planId, priceOverrides=$priceOverrides, startDate=$startDate, additionalProperties=$additionalProperties}"
 
         companion object {
 
@@ -293,6 +305,7 @@ constructor(
             private var alignBillingWithSubscriptionStartDate: Boolean? = null
             private var autoCollection: Boolean? = null
             private var awsRegion: String? = null
+            private var billingCycleAnchorConfiguration: BillingCycleAnchorConfiguration? = null
             private var couponRedemptionCode: String? = null
             private var creditsOverageRate: Double? = null
             private var customerId: String? = null
@@ -317,6 +330,8 @@ constructor(
                     subscriptionCreateBody.alignBillingWithSubscriptionStartDate
                 this.autoCollection = subscriptionCreateBody.autoCollection
                 this.awsRegion = subscriptionCreateBody.awsRegion
+                this.billingCycleAnchorConfiguration =
+                    subscriptionCreateBody.billingCycleAnchorConfiguration
                 this.couponRedemptionCode = subscriptionCreateBody.couponRedemptionCode
                 this.creditsOverageRate = subscriptionCreateBody.creditsOverageRate
                 this.customerId = subscriptionCreateBody.customerId
@@ -352,6 +367,11 @@ constructor(
 
             @JsonProperty("aws_region")
             fun awsRegion(awsRegion: String) = apply { this.awsRegion = awsRegion }
+
+            @JsonProperty("billing_cycle_anchor_configuration")
+            fun billingCycleAnchorConfiguration(
+                billingCycleAnchorConfiguration: BillingCycleAnchorConfiguration
+            ) = apply { this.billingCycleAnchorConfiguration = billingCycleAnchorConfiguration }
 
             @JsonProperty("coupon_redemption_code")
             fun couponRedemptionCode(couponRedemptionCode: String) = apply {
@@ -458,6 +478,7 @@ constructor(
                     alignBillingWithSubscriptionStartDate,
                     autoCollection,
                     awsRegion,
+                    billingCycleAnchorConfiguration,
                     couponRedemptionCode,
                     creditsOverageRate,
                     customerId,
@@ -496,6 +517,7 @@ constructor(
                 other.alignBillingWithSubscriptionStartDate &&
             this.autoCollection == other.autoCollection &&
             this.awsRegion == other.awsRegion &&
+            this.billingCycleAnchorConfiguration == other.billingCycleAnchorConfiguration &&
             this.couponRedemptionCode == other.couponRedemptionCode &&
             this.creditsOverageRate == other.creditsOverageRate &&
             this.customerId == other.customerId &&
@@ -523,6 +545,7 @@ constructor(
             alignBillingWithSubscriptionStartDate,
             autoCollection,
             awsRegion,
+            billingCycleAnchorConfiguration,
             couponRedemptionCode,
             creditsOverageRate,
             customerId,
@@ -547,7 +570,7 @@ constructor(
     }
 
     override fun toString() =
-        "SubscriptionCreateParams{alignBillingWithSubscriptionStartDate=$alignBillingWithSubscriptionStartDate, autoCollection=$autoCollection, awsRegion=$awsRegion, couponRedemptionCode=$couponRedemptionCode, creditsOverageRate=$creditsOverageRate, customerId=$customerId, defaultInvoiceMemo=$defaultInvoiceMemo, endDate=$endDate, externalCustomerId=$externalCustomerId, externalMarketplace=$externalMarketplace, externalMarketplaceReportingId=$externalMarketplaceReportingId, externalPlanId=$externalPlanId, initialPhaseOrder=$initialPhaseOrder, invoicingThreshold=$invoicingThreshold, metadata=$metadata, netTerms=$netTerms, perCreditOverageAmount=$perCreditOverageAmount, planId=$planId, priceOverrides=$priceOverrides, startDate=$startDate, additionalQueryParams=$additionalQueryParams, additionalHeaders=$additionalHeaders, additionalBodyProperties=$additionalBodyProperties}"
+        "SubscriptionCreateParams{alignBillingWithSubscriptionStartDate=$alignBillingWithSubscriptionStartDate, autoCollection=$autoCollection, awsRegion=$awsRegion, billingCycleAnchorConfiguration=$billingCycleAnchorConfiguration, couponRedemptionCode=$couponRedemptionCode, creditsOverageRate=$creditsOverageRate, customerId=$customerId, defaultInvoiceMemo=$defaultInvoiceMemo, endDate=$endDate, externalCustomerId=$externalCustomerId, externalMarketplace=$externalMarketplace, externalMarketplaceReportingId=$externalMarketplaceReportingId, externalPlanId=$externalPlanId, initialPhaseOrder=$initialPhaseOrder, invoicingThreshold=$invoicingThreshold, metadata=$metadata, netTerms=$netTerms, perCreditOverageAmount=$perCreditOverageAmount, planId=$planId, priceOverrides=$priceOverrides, startDate=$startDate, additionalQueryParams=$additionalQueryParams, additionalHeaders=$additionalHeaders, additionalBodyProperties=$additionalBodyProperties}"
 
     fun toBuilder() = Builder().from(this)
 
@@ -562,6 +585,7 @@ constructor(
         private var alignBillingWithSubscriptionStartDate: Boolean? = null
         private var autoCollection: Boolean? = null
         private var awsRegion: String? = null
+        private var billingCycleAnchorConfiguration: BillingCycleAnchorConfiguration? = null
         private var couponRedemptionCode: String? = null
         private var creditsOverageRate: Double? = null
         private var customerId: String? = null
@@ -588,6 +612,8 @@ constructor(
                 subscriptionCreateParams.alignBillingWithSubscriptionStartDate
             this.autoCollection = subscriptionCreateParams.autoCollection
             this.awsRegion = subscriptionCreateParams.awsRegion
+            this.billingCycleAnchorConfiguration =
+                subscriptionCreateParams.billingCycleAnchorConfiguration
             this.couponRedemptionCode = subscriptionCreateParams.couponRedemptionCode
             this.creditsOverageRate = subscriptionCreateParams.creditsOverageRate
             this.customerId = subscriptionCreateParams.customerId
@@ -619,6 +645,10 @@ constructor(
         fun autoCollection(autoCollection: Boolean) = apply { this.autoCollection = autoCollection }
 
         fun awsRegion(awsRegion: String) = apply { this.awsRegion = awsRegion }
+
+        fun billingCycleAnchorConfiguration(
+            billingCycleAnchorConfiguration: BillingCycleAnchorConfiguration
+        ) = apply { this.billingCycleAnchorConfiguration = billingCycleAnchorConfiguration }
 
         fun couponRedemptionCode(couponRedemptionCode: String) = apply {
             this.couponRedemptionCode = couponRedemptionCode
@@ -753,6 +783,7 @@ constructor(
                 alignBillingWithSubscriptionStartDate,
                 autoCollection,
                 awsRegion,
+                billingCycleAnchorConfiguration,
                 couponRedemptionCode,
                 creditsOverageRate,
                 customerId,
@@ -774,6 +805,136 @@ constructor(
                 additionalHeaders.mapValues { it.value.toUnmodifiable() }.toUnmodifiable(),
                 additionalBodyProperties.toUnmodifiable(),
             )
+    }
+
+    @JsonDeserialize(builder = BillingCycleAnchorConfiguration.Builder::class)
+    @NoAutoDetect
+    class BillingCycleAnchorConfiguration
+    private constructor(
+        private val day: Long?,
+        private val month: Long?,
+        private val year: Long?,
+        private val additionalProperties: Map<String, JsonValue>,
+    ) {
+
+        private var hashCode: Int = 0
+
+        /**
+         * The day of the month on which the billing cycle is anchored. If the maximum number of
+         * days in a month is greater than this value, the last day of the month is the billing
+         * cycle day (e.g. billing_cycle_day=31 for April means the billing period begins on the
+         * 30th.
+         */
+        @JsonProperty("day") fun day(): Long? = day
+
+        /**
+         * The month on which the billing cycle is anchored (e.g. a quarterly price anchored in
+         * February would have cycles starting February, May, August, and November).
+         */
+        @JsonProperty("month") fun month(): Long? = month
+
+        /**
+         * The year on which the billing cycle is anchored (e.g. a 2 year billing cycle anchored on
+         * 2021 would have cycles starting on 2021, 2023, 2025, etc.).
+         */
+        @JsonProperty("year") fun year(): Long? = year
+
+        @JsonAnyGetter
+        @ExcludeMissing
+        fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
+
+        fun toBuilder() = Builder().from(this)
+
+        override fun equals(other: Any?): Boolean {
+            if (this === other) {
+                return true
+            }
+
+            return other is BillingCycleAnchorConfiguration &&
+                this.day == other.day &&
+                this.month == other.month &&
+                this.year == other.year &&
+                this.additionalProperties == other.additionalProperties
+        }
+
+        override fun hashCode(): Int {
+            if (hashCode == 0) {
+                hashCode =
+                    Objects.hash(
+                        day,
+                        month,
+                        year,
+                        additionalProperties,
+                    )
+            }
+            return hashCode
+        }
+
+        override fun toString() =
+            "BillingCycleAnchorConfiguration{day=$day, month=$month, year=$year, additionalProperties=$additionalProperties}"
+
+        companion object {
+
+            fun builder() = Builder()
+        }
+
+        class Builder {
+
+            private var day: Long? = null
+            private var month: Long? = null
+            private var year: Long? = null
+            private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
+
+            internal fun from(billingCycleAnchorConfiguration: BillingCycleAnchorConfiguration) =
+                apply {
+                    this.day = billingCycleAnchorConfiguration.day
+                    this.month = billingCycleAnchorConfiguration.month
+                    this.year = billingCycleAnchorConfiguration.year
+                    additionalProperties(billingCycleAnchorConfiguration.additionalProperties)
+                }
+
+            /**
+             * The day of the month on which the billing cycle is anchored. If the maximum number of
+             * days in a month is greater than this value, the last day of the month is the billing
+             * cycle day (e.g. billing_cycle_day=31 for April means the billing period begins on the
+             * 30th.
+             */
+            @JsonProperty("day") fun day(day: Long) = apply { this.day = day }
+
+            /**
+             * The month on which the billing cycle is anchored (e.g. a quarterly price anchored in
+             * February would have cycles starting February, May, August, and November).
+             */
+            @JsonProperty("month") fun month(month: Long) = apply { this.month = month }
+
+            /**
+             * The year on which the billing cycle is anchored (e.g. a 2 year billing cycle anchored
+             * on 2021 would have cycles starting on 2021, 2023, 2025, etc.).
+             */
+            @JsonProperty("year") fun year(year: Long) = apply { this.year = year }
+
+            fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                this.additionalProperties.clear()
+                this.additionalProperties.putAll(additionalProperties)
+            }
+
+            @JsonAnySetter
+            fun putAdditionalProperty(key: String, value: JsonValue) = apply {
+                this.additionalProperties.put(key, value)
+            }
+
+            fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                this.additionalProperties.putAll(additionalProperties)
+            }
+
+            fun build(): BillingCycleAnchorConfiguration =
+                BillingCycleAnchorConfiguration(
+                    checkNotNull(day) { "`day` is required but was not set" },
+                    month,
+                    year,
+                    additionalProperties.toUnmodifiable(),
+                )
+        }
     }
 
     class ExternalMarketplace

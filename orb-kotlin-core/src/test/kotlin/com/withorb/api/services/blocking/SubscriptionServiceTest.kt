@@ -30,6 +30,13 @@ class SubscriptionServiceTest {
                     .alignBillingWithSubscriptionStartDate(true)
                     .autoCollection(true)
                     .awsRegion("aws_region")
+                    .billingCycleAnchorConfiguration(
+                        SubscriptionCreateParams.BillingCycleAnchorConfiguration.builder()
+                            .day(31L)
+                            .month(12L)
+                            .year(123L)
+                            .build()
+                    )
                     .couponRedemptionCode("coupon_redemption_code")
                     .creditsOverageRate(42.23)
                     .customerId("customer_id")
@@ -337,10 +344,42 @@ class SubscriptionServiceTest {
                                                 )
                                                 .billableMetricId("billable_metric_id")
                                                 .billedInAdvance(true)
+                                                .billingCycleConfiguration(
+                                                    SubscriptionPriceIntervalsParams.Add.Price
+                                                        .NewFloatingUnitPrice
+                                                        .BillingCycleConfiguration
+                                                        .builder()
+                                                        .duration(123L)
+                                                        .durationUnit(
+                                                            SubscriptionPriceIntervalsParams.Add
+                                                                .Price
+                                                                .NewFloatingUnitPrice
+                                                                .BillingCycleConfiguration
+                                                                .DurationUnit
+                                                                .DAY
+                                                        )
+                                                        .build()
+                                                )
                                                 .conversionRate(42.23)
                                                 .externalPriceId("external_price_id")
                                                 .fixedPriceQuantity(42.23)
                                                 .invoiceGroupingKey("invoice_grouping_key")
+                                                .invoicingCycleConfiguration(
+                                                    SubscriptionPriceIntervalsParams.Add.Price
+                                                        .NewFloatingUnitPrice
+                                                        .InvoicingCycleConfiguration
+                                                        .builder()
+                                                        .duration(123L)
+                                                        .durationUnit(
+                                                            SubscriptionPriceIntervalsParams.Add
+                                                                .Price
+                                                                .NewFloatingUnitPrice
+                                                                .InvoicingCycleConfiguration
+                                                                .DurationUnit
+                                                                .DAY
+                                                        )
+                                                        .build()
+                                                )
                                                 .metadata(
                                                     SubscriptionPriceIntervalsParams.Add.Price
                                                         .NewFloatingUnitPrice

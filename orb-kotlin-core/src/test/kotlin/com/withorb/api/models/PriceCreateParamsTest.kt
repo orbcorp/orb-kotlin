@@ -24,10 +24,30 @@ class PriceCreateParamsTest {
                     )
                     .billableMetricId("billable_metric_id")
                     .billedInAdvance(true)
+                    .billingCycleConfiguration(
+                        PriceCreateParams.NewFloatingUnitPrice.BillingCycleConfiguration.builder()
+                            .duration(123L)
+                            .durationUnit(
+                                PriceCreateParams.NewFloatingUnitPrice.BillingCycleConfiguration
+                                    .DurationUnit
+                                    .DAY
+                            )
+                            .build()
+                    )
                     .conversionRate(42.23)
                     .externalPriceId("external_price_id")
                     .fixedPriceQuantity(42.23)
                     .invoiceGroupingKey("invoice_grouping_key")
+                    .invoicingCycleConfiguration(
+                        PriceCreateParams.NewFloatingUnitPrice.InvoicingCycleConfiguration.builder()
+                            .duration(123L)
+                            .durationUnit(
+                                PriceCreateParams.NewFloatingUnitPrice.InvoicingCycleConfiguration
+                                    .DurationUnit
+                                    .DAY
+                            )
+                            .build()
+                    )
                     .metadata(PriceCreateParams.NewFloatingUnitPrice.Metadata.builder().build())
                     .build()
             )
