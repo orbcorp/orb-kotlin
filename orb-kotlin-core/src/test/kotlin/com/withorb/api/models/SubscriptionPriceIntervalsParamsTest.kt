@@ -96,10 +96,40 @@ class SubscriptionPriceIntervalsParamsTest {
                                     )
                                     .billableMetricId("billable_metric_id")
                                     .billedInAdvance(true)
+                                    .billingCycleConfiguration(
+                                        SubscriptionPriceIntervalsParams.Add.Price
+                                            .NewFloatingUnitPrice
+                                            .BillingCycleConfiguration
+                                            .builder()
+                                            .duration(123L)
+                                            .durationUnit(
+                                                SubscriptionPriceIntervalsParams.Add.Price
+                                                    .NewFloatingUnitPrice
+                                                    .BillingCycleConfiguration
+                                                    .DurationUnit
+                                                    .DAY
+                                            )
+                                            .build()
+                                    )
                                     .conversionRate(42.23)
                                     .externalPriceId("external_price_id")
                                     .fixedPriceQuantity(42.23)
                                     .invoiceGroupingKey("invoice_grouping_key")
+                                    .invoicingCycleConfiguration(
+                                        SubscriptionPriceIntervalsParams.Add.Price
+                                            .NewFloatingUnitPrice
+                                            .InvoicingCycleConfiguration
+                                            .builder()
+                                            .duration(123L)
+                                            .durationUnit(
+                                                SubscriptionPriceIntervalsParams.Add.Price
+                                                    .NewFloatingUnitPrice
+                                                    .InvoicingCycleConfiguration
+                                                    .DurationUnit
+                                                    .DAY
+                                            )
+                                            .build()
+                                    )
                                     .metadata(
                                         SubscriptionPriceIntervalsParams.Add.Price
                                             .NewFloatingUnitPrice
@@ -282,10 +312,40 @@ class SubscriptionPriceIntervalsParamsTest {
                                         )
                                         .billableMetricId("billable_metric_id")
                                         .billedInAdvance(true)
+                                        .billingCycleConfiguration(
+                                            SubscriptionPriceIntervalsParams.Add.Price
+                                                .NewFloatingUnitPrice
+                                                .BillingCycleConfiguration
+                                                .builder()
+                                                .duration(123L)
+                                                .durationUnit(
+                                                    SubscriptionPriceIntervalsParams.Add.Price
+                                                        .NewFloatingUnitPrice
+                                                        .BillingCycleConfiguration
+                                                        .DurationUnit
+                                                        .DAY
+                                                )
+                                                .build()
+                                        )
                                         .conversionRate(42.23)
                                         .externalPriceId("external_price_id")
                                         .fixedPriceQuantity(42.23)
                                         .invoiceGroupingKey("invoice_grouping_key")
+                                        .invoicingCycleConfiguration(
+                                            SubscriptionPriceIntervalsParams.Add.Price
+                                                .NewFloatingUnitPrice
+                                                .InvoicingCycleConfiguration
+                                                .builder()
+                                                .duration(123L)
+                                                .durationUnit(
+                                                    SubscriptionPriceIntervalsParams.Add.Price
+                                                        .NewFloatingUnitPrice
+                                                        .InvoicingCycleConfiguration
+                                                        .DurationUnit
+                                                        .DAY
+                                                )
+                                                .build()
+                                        )
                                         .metadata(
                                             SubscriptionPriceIntervalsParams.Add.Price
                                                 .NewFloatingUnitPrice
@@ -471,10 +531,40 @@ class SubscriptionPriceIntervalsParamsTest {
                                     )
                                     .billableMetricId("billable_metric_id")
                                     .billedInAdvance(true)
+                                    .billingCycleConfiguration(
+                                        SubscriptionPriceIntervalsParams.Add.Price
+                                            .NewFloatingUnitPrice
+                                            .BillingCycleConfiguration
+                                            .builder()
+                                            .duration(123L)
+                                            .durationUnit(
+                                                SubscriptionPriceIntervalsParams.Add.Price
+                                                    .NewFloatingUnitPrice
+                                                    .BillingCycleConfiguration
+                                                    .DurationUnit
+                                                    .DAY
+                                            )
+                                            .build()
+                                    )
                                     .conversionRate(42.23)
                                     .externalPriceId("external_price_id")
                                     .fixedPriceQuantity(42.23)
                                     .invoiceGroupingKey("invoice_grouping_key")
+                                    .invoicingCycleConfiguration(
+                                        SubscriptionPriceIntervalsParams.Add.Price
+                                            .NewFloatingUnitPrice
+                                            .InvoicingCycleConfiguration
+                                            .builder()
+                                            .duration(123L)
+                                            .durationUnit(
+                                                SubscriptionPriceIntervalsParams.Add.Price
+                                                    .NewFloatingUnitPrice
+                                                    .InvoicingCycleConfiguration
+                                                    .DurationUnit
+                                                    .DAY
+                                            )
+                                            .build()
+                                    )
                                     .metadata(
                                         SubscriptionPriceIntervalsParams.Add.Price
                                             .NewFloatingUnitPrice

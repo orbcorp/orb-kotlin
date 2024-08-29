@@ -43,6 +43,13 @@ class SubscriptionTest {
                     )
                 )
                 .autoCollection(true)
+                .billingCycleAnchorConfiguration(
+                    Subscription.BillingCycleAnchorConfiguration.builder()
+                        .day(31L)
+                        .month(12L)
+                        .year(123L)
+                        .build()
+                )
                 .billingCycleDay(31L)
                 .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                 .currentBillingPeriodEndDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
@@ -300,6 +307,16 @@ class SubscriptionTest {
                                         )
                                         .externalPriceId("external_price_id")
                                         .fixedPriceQuantity(42.23)
+                                        .invoicingCycleConfiguration(
+                                            Price.UnitPrice.InvoicingCycleConfiguration.builder()
+                                                .duration(123L)
+                                                .durationUnit(
+                                                    Price.UnitPrice.InvoicingCycleConfiguration
+                                                        .DurationUnit
+                                                        .DAY
+                                                )
+                                                .build()
+                                        )
                                         .item(
                                             Price.UnitPrice.Item.builder()
                                                 .id("id")
@@ -418,6 +435,16 @@ class SubscriptionTest {
                                         )
                                         .externalPriceId("external_price_id")
                                         .fixedPriceQuantity(42.23)
+                                        .invoicingCycleConfiguration(
+                                            Price.UnitPrice.InvoicingCycleConfiguration.builder()
+                                                .duration(123L)
+                                                .durationUnit(
+                                                    Price.UnitPrice.InvoicingCycleConfiguration
+                                                        .DurationUnit
+                                                        .DAY
+                                                )
+                                                .build()
+                                        )
                                         .item(
                                             Price.UnitPrice.Item.builder()
                                                 .id("id")
@@ -499,6 +526,14 @@ class SubscriptionTest {
                     .build()
             )
         assertThat(subscription.autoCollection()).isEqualTo(true)
+        assertThat(subscription.billingCycleAnchorConfiguration())
+            .isEqualTo(
+                Subscription.BillingCycleAnchorConfiguration.builder()
+                    .day(31L)
+                    .month(12L)
+                    .year(123L)
+                    .build()
+            )
         assertThat(subscription.billingCycleDay()).isEqualTo(31L)
         assertThat(subscription.createdAt())
             .isEqualTo(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
@@ -750,6 +785,16 @@ class SubscriptionTest {
                                     )
                                     .externalPriceId("external_price_id")
                                     .fixedPriceQuantity(42.23)
+                                    .invoicingCycleConfiguration(
+                                        Price.UnitPrice.InvoicingCycleConfiguration.builder()
+                                            .duration(123L)
+                                            .durationUnit(
+                                                Price.UnitPrice.InvoicingCycleConfiguration
+                                                    .DurationUnit
+                                                    .DAY
+                                            )
+                                            .build()
+                                    )
                                     .item(
                                         Price.UnitPrice.Item.builder().id("id").name("name").build()
                                     )
@@ -855,6 +900,15 @@ class SubscriptionTest {
                                 )
                                 .externalPriceId("external_price_id")
                                 .fixedPriceQuantity(42.23)
+                                .invoicingCycleConfiguration(
+                                    Price.UnitPrice.InvoicingCycleConfiguration.builder()
+                                        .duration(123L)
+                                        .durationUnit(
+                                            Price.UnitPrice.InvoicingCycleConfiguration.DurationUnit
+                                                .DAY
+                                        )
+                                        .build()
+                                )
                                 .item(Price.UnitPrice.Item.builder().id("id").name("name").build())
                                 .maximum(
                                     Price.UnitPrice.Maximum.builder()
