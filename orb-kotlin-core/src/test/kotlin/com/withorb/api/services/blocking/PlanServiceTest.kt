@@ -42,11 +42,37 @@ class PlanServiceTest {
                                     )
                                     .billableMetricId("billable_metric_id")
                                     .billedInAdvance(true)
+                                    .billingCycleConfiguration(
+                                        PlanCreateParams.Price.NewPlanUnitPrice
+                                            .BillingCycleConfiguration
+                                            .builder()
+                                            .duration(123L)
+                                            .durationUnit(
+                                                PlanCreateParams.Price.NewPlanUnitPrice
+                                                    .BillingCycleConfiguration
+                                                    .DurationUnit
+                                                    .DAY
+                                            )
+                                            .build()
+                                    )
                                     .conversionRate(42.23)
                                     .currency("currency")
                                     .externalPriceId("external_price_id")
                                     .fixedPriceQuantity(42.23)
                                     .invoiceGroupingKey("invoice_grouping_key")
+                                    .invoicingCycleConfiguration(
+                                        PlanCreateParams.Price.NewPlanUnitPrice
+                                            .InvoicingCycleConfiguration
+                                            .builder()
+                                            .duration(123L)
+                                            .durationUnit(
+                                                PlanCreateParams.Price.NewPlanUnitPrice
+                                                    .InvoicingCycleConfiguration
+                                                    .DurationUnit
+                                                    .DAY
+                                            )
+                                            .build()
+                                    )
                                     .metadata(
                                         PlanCreateParams.Price.NewPlanUnitPrice.Metadata.builder()
                                             .build()
