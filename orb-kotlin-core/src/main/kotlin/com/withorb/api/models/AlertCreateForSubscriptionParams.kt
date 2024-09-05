@@ -5,46 +5,27 @@ package com.withorb.api.models
 import com.fasterxml.jackson.annotation.JsonAnyGetter
 import com.fasterxml.jackson.annotation.JsonAnySetter
 import com.fasterxml.jackson.annotation.JsonCreator
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonProperty
-import com.fasterxml.jackson.core.JsonGenerator
-import com.fasterxml.jackson.core.ObjectCodec
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize
-import com.fasterxml.jackson.databind.annotation.JsonSerialize
-import com.fasterxml.jackson.databind.JsonNode
-import com.fasterxml.jackson.databind.SerializerProvider
-import com.fasterxml.jackson.module.kotlin.jacksonTypeRef
-import org.apache.hc.core5.http.ContentType
-import java.time.LocalDate
-import java.time.OffsetDateTime
-import java.time.format.DateTimeFormatter
-import java.util.Objects
-import java.util.Optional
-import java.util.UUID
-import com.withorb.api.core.BaseDeserializer
-import com.withorb.api.core.BaseSerializer
-import com.withorb.api.core.getOrThrow
+import com.withorb.api.core.Enum
 import com.withorb.api.core.ExcludeMissing
 import com.withorb.api.core.JsonField
-import com.withorb.api.core.JsonMissing
 import com.withorb.api.core.JsonValue
-import com.withorb.api.core.MultipartFormValue
-import com.withorb.api.core.toUnmodifiable
 import com.withorb.api.core.NoAutoDetect
-import com.withorb.api.core.Enum
-import com.withorb.api.core.ContentTypes
+import com.withorb.api.core.toUnmodifiable
 import com.withorb.api.errors.OrbInvalidDataException
 import com.withorb.api.models.*
+import java.util.Objects
 
-class AlertCreateForSubscriptionParams constructor(
-  private val subscriptionId: String,
-  private val thresholds: List<Threshold>,
-  private val type: Type,
-  private val metricId: String?,
-  private val additionalQueryParams: Map<String, List<String>>,
-  private val additionalHeaders: Map<String, List<String>>,
-  private val additionalBodyProperties: Map<String, JsonValue>,
-
+class AlertCreateForSubscriptionParams
+constructor(
+    private val subscriptionId: String,
+    private val thresholds: List<Threshold>,
+    private val type: Type,
+    private val metricId: String?,
+    private val additionalQueryParams: Map<String, List<String>>,
+    private val additionalHeaders: Map<String, List<String>>,
+    private val additionalBodyProperties: Map<String, JsonValue>,
 ) {
 
     fun subscriptionId(): String = subscriptionId
@@ -56,12 +37,12 @@ class AlertCreateForSubscriptionParams constructor(
     fun metricId(): String? = metricId
 
     internal fun getBody(): AlertCreateForSubscriptionBody {
-      return AlertCreateForSubscriptionBody(
-          thresholds,
-          type,
-          metricId,
-          additionalBodyProperties,
-      )
+        return AlertCreateForSubscriptionBody(
+            thresholds,
+            type,
+            metricId,
+            additionalBodyProperties,
+        )
     }
 
     internal fun getQueryParams(): Map<String, List<String>> = additionalQueryParams
@@ -69,35 +50,32 @@ class AlertCreateForSubscriptionParams constructor(
     internal fun getHeaders(): Map<String, List<String>> = additionalHeaders
 
     fun getPathParam(index: Int): String {
-      return when (index) {
-          0 -> subscriptionId
-          else -> ""
-      }
+        return when (index) {
+            0 -> subscriptionId
+            else -> ""
+        }
     }
 
     @JsonDeserialize(builder = AlertCreateForSubscriptionBody.Builder::class)
     @NoAutoDetect
-    class AlertCreateForSubscriptionBody internal constructor(
-      private val thresholds: List<Threshold>?,
-      private val type: Type?,
-      private val metricId: String?,
-      private val additionalProperties: Map<String, JsonValue>,
-
+    class AlertCreateForSubscriptionBody
+    internal constructor(
+        private val thresholds: List<Threshold>?,
+        private val type: Type?,
+        private val metricId: String?,
+        private val additionalProperties: Map<String, JsonValue>,
     ) {
 
         private var hashCode: Int = 0
 
         /** The thresholds that define the values at which the alert will be triggered. */
-        @JsonProperty("thresholds")
-        fun thresholds(): List<Threshold>? = thresholds
+        @JsonProperty("thresholds") fun thresholds(): List<Threshold>? = thresholds
 
         /** The type of alert to create. This must be a valid alert type. */
-        @JsonProperty("type")
-        fun type(): Type? = type
+        @JsonProperty("type") fun type(): Type? = type
 
         /** The metric to track usage for. */
-        @JsonProperty("metric_id")
-        fun metricId(): String? = metricId
+        @JsonProperty("metric_id") fun metricId(): String? = metricId
 
         @JsonAnyGetter
         @ExcludeMissing
@@ -106,30 +84,32 @@ class AlertCreateForSubscriptionParams constructor(
         fun toBuilder() = Builder().from(this)
 
         override fun equals(other: Any?): Boolean {
-          if (this === other) {
-              return true
-          }
+            if (this === other) {
+                return true
+            }
 
-          return other is AlertCreateForSubscriptionBody &&
-              this.thresholds == other.thresholds &&
-              this.type == other.type &&
-              this.metricId == other.metricId &&
-              this.additionalProperties == other.additionalProperties
+            return other is AlertCreateForSubscriptionBody &&
+                this.thresholds == other.thresholds &&
+                this.type == other.type &&
+                this.metricId == other.metricId &&
+                this.additionalProperties == other.additionalProperties
         }
 
         override fun hashCode(): Int {
-          if (hashCode == 0) {
-            hashCode = Objects.hash(
-                thresholds,
-                type,
-                metricId,
-                additionalProperties,
-            )
-          }
-          return hashCode
+            if (hashCode == 0) {
+                hashCode =
+                    Objects.hash(
+                        thresholds,
+                        type,
+                        metricId,
+                        additionalProperties,
+                    )
+            }
+            return hashCode
         }
 
-        override fun toString() = "AlertCreateForSubscriptionBody{thresholds=$thresholds, type=$type, metricId=$metricId, additionalProperties=$additionalProperties}"
+        override fun toString() =
+            "AlertCreateForSubscriptionBody{thresholds=$thresholds, type=$type, metricId=$metricId, additionalProperties=$additionalProperties}"
 
         companion object {
 
@@ -143,30 +123,24 @@ class AlertCreateForSubscriptionParams constructor(
             private var metricId: String? = null
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
-            internal fun from(alertCreateForSubscriptionBody: AlertCreateForSubscriptionBody) = apply {
-                this.thresholds = alertCreateForSubscriptionBody.thresholds
-                this.type = alertCreateForSubscriptionBody.type
-                this.metricId = alertCreateForSubscriptionBody.metricId
-                additionalProperties(alertCreateForSubscriptionBody.additionalProperties)
-            }
+            internal fun from(alertCreateForSubscriptionBody: AlertCreateForSubscriptionBody) =
+                apply {
+                    this.thresholds = alertCreateForSubscriptionBody.thresholds
+                    this.type = alertCreateForSubscriptionBody.type
+                    this.metricId = alertCreateForSubscriptionBody.metricId
+                    additionalProperties(alertCreateForSubscriptionBody.additionalProperties)
+                }
 
             /** The thresholds that define the values at which the alert will be triggered. */
             @JsonProperty("thresholds")
-            fun thresholds(thresholds: List<Threshold>) = apply {
-                this.thresholds = thresholds
-            }
+            fun thresholds(thresholds: List<Threshold>) = apply { this.thresholds = thresholds }
 
             /** The type of alert to create. This must be a valid alert type. */
-            @JsonProperty("type")
-            fun type(type: Type) = apply {
-                this.type = type
-            }
+            @JsonProperty("type") fun type(type: Type) = apply { this.type = type }
 
             /** The metric to track usage for. */
             @JsonProperty("metric_id")
-            fun metricId(metricId: String) = apply {
-                this.metricId = metricId
-            }
+            fun metricId(metricId: String) = apply { this.metricId = metricId }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
@@ -182,16 +156,14 @@ class AlertCreateForSubscriptionParams constructor(
                 this.additionalProperties.putAll(additionalProperties)
             }
 
-            fun build(): AlertCreateForSubscriptionBody = AlertCreateForSubscriptionBody(
-                checkNotNull(thresholds) {
-                    "`thresholds` is required but was not set"
-                }.toUnmodifiable(),
-                checkNotNull(type) {
-                    "`type` is required but was not set"
-                },
-                metricId,
-                additionalProperties.toUnmodifiable(),
-            )
+            fun build(): AlertCreateForSubscriptionBody =
+                AlertCreateForSubscriptionBody(
+                    checkNotNull(thresholds) { "`thresholds` is required but was not set" }
+                        .toUnmodifiable(),
+                    checkNotNull(type) { "`type` is required but was not set" },
+                    metricId,
+                    additionalProperties.toUnmodifiable(),
+                )
         }
     }
 
@@ -202,33 +174,34 @@ class AlertCreateForSubscriptionParams constructor(
     fun _additionalBodyProperties(): Map<String, JsonValue> = additionalBodyProperties
 
     override fun equals(other: Any?): Boolean {
-      if (this === other) {
-          return true
-      }
+        if (this === other) {
+            return true
+        }
 
-      return other is AlertCreateForSubscriptionParams &&
-          this.subscriptionId == other.subscriptionId &&
-          this.thresholds == other.thresholds &&
-          this.type == other.type &&
-          this.metricId == other.metricId &&
-          this.additionalQueryParams == other.additionalQueryParams &&
-          this.additionalHeaders == other.additionalHeaders &&
-          this.additionalBodyProperties == other.additionalBodyProperties
+        return other is AlertCreateForSubscriptionParams &&
+            this.subscriptionId == other.subscriptionId &&
+            this.thresholds == other.thresholds &&
+            this.type == other.type &&
+            this.metricId == other.metricId &&
+            this.additionalQueryParams == other.additionalQueryParams &&
+            this.additionalHeaders == other.additionalHeaders &&
+            this.additionalBodyProperties == other.additionalBodyProperties
     }
 
     override fun hashCode(): Int {
-      return Objects.hash(
-          subscriptionId,
-          thresholds,
-          type,
-          metricId,
-          additionalQueryParams,
-          additionalHeaders,
-          additionalBodyProperties,
-      )
+        return Objects.hash(
+            subscriptionId,
+            thresholds,
+            type,
+            metricId,
+            additionalQueryParams,
+            additionalHeaders,
+            additionalBodyProperties,
+        )
     }
 
-    override fun toString() = "AlertCreateForSubscriptionParams{subscriptionId=$subscriptionId, thresholds=$thresholds, type=$type, metricId=$metricId, additionalQueryParams=$additionalQueryParams, additionalHeaders=$additionalHeaders, additionalBodyProperties=$additionalBodyProperties}"
+    override fun toString() =
+        "AlertCreateForSubscriptionParams{subscriptionId=$subscriptionId, thresholds=$thresholds, type=$type, metricId=$metricId, additionalQueryParams=$additionalQueryParams, additionalHeaders=$additionalHeaders, additionalBodyProperties=$additionalBodyProperties}"
 
     fun toBuilder() = Builder().from(this)
 
@@ -248,19 +221,18 @@ class AlertCreateForSubscriptionParams constructor(
         private var additionalHeaders: MutableMap<String, MutableList<String>> = mutableMapOf()
         private var additionalBodyProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
-        internal fun from(alertCreateForSubscriptionParams: AlertCreateForSubscriptionParams) = apply {
-            this.subscriptionId = alertCreateForSubscriptionParams.subscriptionId
-            this.thresholds(alertCreateForSubscriptionParams.thresholds)
-            this.type = alertCreateForSubscriptionParams.type
-            this.metricId = alertCreateForSubscriptionParams.metricId
-            additionalQueryParams(alertCreateForSubscriptionParams.additionalQueryParams)
-            additionalHeaders(alertCreateForSubscriptionParams.additionalHeaders)
-            additionalBodyProperties(alertCreateForSubscriptionParams.additionalBodyProperties)
-        }
+        internal fun from(alertCreateForSubscriptionParams: AlertCreateForSubscriptionParams) =
+            apply {
+                this.subscriptionId = alertCreateForSubscriptionParams.subscriptionId
+                this.thresholds(alertCreateForSubscriptionParams.thresholds)
+                this.type = alertCreateForSubscriptionParams.type
+                this.metricId = alertCreateForSubscriptionParams.metricId
+                additionalQueryParams(alertCreateForSubscriptionParams.additionalQueryParams)
+                additionalHeaders(alertCreateForSubscriptionParams.additionalHeaders)
+                additionalBodyProperties(alertCreateForSubscriptionParams.additionalBodyProperties)
+            }
 
-        fun subscriptionId(subscriptionId: String) = apply {
-            this.subscriptionId = subscriptionId
-        }
+        fun subscriptionId(subscriptionId: String) = apply { this.subscriptionId = subscriptionId }
 
         /** The thresholds that define the values at which the alert will be triggered. */
         fun thresholds(thresholds: List<Threshold>) = apply {
@@ -269,19 +241,13 @@ class AlertCreateForSubscriptionParams constructor(
         }
 
         /** The thresholds that define the values at which the alert will be triggered. */
-        fun addThreshold(threshold: Threshold) = apply {
-            this.thresholds.add(threshold)
-        }
+        fun addThreshold(threshold: Threshold) = apply { this.thresholds.add(threshold) }
 
         /** The type of alert to create. This must be a valid alert type. */
-        fun type(type: Type) = apply {
-            this.type = type
-        }
+        fun type(type: Type) = apply { this.type = type }
 
         /** The metric to track usage for. */
-        fun metricId(metricId: String) = apply {
-            this.metricId = metricId
-        }
+        fun metricId(metricId: String) = apply { this.metricId = metricId }
 
         fun additionalQueryParams(additionalQueryParams: Map<String, List<String>>) = apply {
             this.additionalQueryParams.clear()
@@ -321,9 +287,7 @@ class AlertCreateForSubscriptionParams constructor(
             additionalHeaders.forEach(this::putHeaders)
         }
 
-        fun removeHeader(name: String) = apply {
-            this.additionalHeaders.put(name, mutableListOf())
-        }
+        fun removeHeader(name: String) = apply { this.additionalHeaders.put(name, mutableListOf()) }
 
         fun additionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) = apply {
             this.additionalBodyProperties.clear()
@@ -334,44 +298,41 @@ class AlertCreateForSubscriptionParams constructor(
             this.additionalBodyProperties.put(key, value)
         }
 
-        fun putAllAdditionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) = apply {
-            this.additionalBodyProperties.putAll(additionalBodyProperties)
-        }
+        fun putAllAdditionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) =
+            apply {
+                this.additionalBodyProperties.putAll(additionalBodyProperties)
+            }
 
-        fun build(): AlertCreateForSubscriptionParams = AlertCreateForSubscriptionParams(
-            checkNotNull(subscriptionId) {
-                "`subscriptionId` is required but was not set"
-            },
-            checkNotNull(thresholds) {
-                "`thresholds` is required but was not set"
-            }.toUnmodifiable(),
-            checkNotNull(type) {
-                "`type` is required but was not set"
-            },
-            metricId,
-            additionalQueryParams.mapValues { it.value.toUnmodifiable() }.toUnmodifiable(),
-            additionalHeaders.mapValues { it.value.toUnmodifiable() }.toUnmodifiable(),
-            additionalBodyProperties.toUnmodifiable(),
-        )
+        fun build(): AlertCreateForSubscriptionParams =
+            AlertCreateForSubscriptionParams(
+                checkNotNull(subscriptionId) { "`subscriptionId` is required but was not set" },
+                checkNotNull(thresholds) { "`thresholds` is required but was not set" }
+                    .toUnmodifiable(),
+                checkNotNull(type) { "`type` is required but was not set" },
+                metricId,
+                additionalQueryParams.mapValues { it.value.toUnmodifiable() }.toUnmodifiable(),
+                additionalHeaders.mapValues { it.value.toUnmodifiable() }.toUnmodifiable(),
+                additionalBodyProperties.toUnmodifiable(),
+            )
     }
 
-    /**
-     * Thresholds are used to define the conditions under which an alert will be
-     * triggered.
-     */
+    /** Thresholds are used to define the conditions under which an alert will be triggered. */
     @JsonDeserialize(builder = Threshold.Builder::class)
     @NoAutoDetect
-    class Threshold private constructor(private val value: Double?, private val additionalProperties: Map<String, JsonValue>, ) {
+    class Threshold
+    private constructor(
+        private val value: Double?,
+        private val additionalProperties: Map<String, JsonValue>,
+    ) {
 
         private var hashCode: Int = 0
 
         /**
-         * The value at which an alert will fire. For credit balance alerts, the alert will
-         * fire at or below this value. For usage and cost alerts, the alert will fire at
-         * or above this value.
+         * The value at which an alert will fire. For credit balance alerts, the alert will fire at
+         * or below this value. For usage and cost alerts, the alert will fire at or above this
+         * value.
          */
-        @JsonProperty("value")
-        fun value(): Double? = value
+        @JsonProperty("value") fun value(): Double? = value
 
         @JsonAnyGetter
         @ExcludeMissing
@@ -380,23 +341,24 @@ class AlertCreateForSubscriptionParams constructor(
         fun toBuilder() = Builder().from(this)
 
         override fun equals(other: Any?): Boolean {
-          if (this === other) {
-              return true
-          }
+            if (this === other) {
+                return true
+            }
 
-          return other is Threshold &&
-              this.value == other.value &&
-              this.additionalProperties == other.additionalProperties
+            return other is Threshold &&
+                this.value == other.value &&
+                this.additionalProperties == other.additionalProperties
         }
 
         override fun hashCode(): Int {
-          if (hashCode == 0) {
-            hashCode = Objects.hash(value, additionalProperties)
-          }
-          return hashCode
+            if (hashCode == 0) {
+                hashCode = Objects.hash(value, additionalProperties)
+            }
+            return hashCode
         }
 
-        override fun toString() = "Threshold{value=$value, additionalProperties=$additionalProperties}"
+        override fun toString() =
+            "Threshold{value=$value, additionalProperties=$additionalProperties}"
 
         companion object {
 
@@ -414,14 +376,11 @@ class AlertCreateForSubscriptionParams constructor(
             }
 
             /**
-             * The value at which an alert will fire. For credit balance alerts, the alert will
-             * fire at or below this value. For usage and cost alerts, the alert will fire at
-             * or above this value.
+             * The value at which an alert will fire. For credit balance alerts, the alert will fire
+             * at or below this value. For usage and cost alerts, the alert will fire at or above
+             * this value.
              */
-            @JsonProperty("value")
-            fun value(value: Double) = apply {
-                this.value = value
-            }
+            @JsonProperty("value") fun value(value: Double) = apply { this.value = value }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
@@ -437,24 +396,28 @@ class AlertCreateForSubscriptionParams constructor(
                 this.additionalProperties.putAll(additionalProperties)
             }
 
-            fun build(): Threshold = Threshold(checkNotNull(value) {
-                "`value` is required but was not set"
-            }, additionalProperties.toUnmodifiable())
+            fun build(): Threshold =
+                Threshold(
+                    checkNotNull(value) { "`value` is required but was not set" },
+                    additionalProperties.toUnmodifiable()
+                )
         }
     }
 
-    class Type @JsonCreator private constructor(private val value: JsonField<String>, ) : Enum {
+    class Type
+    @JsonCreator
+    private constructor(
+        private val value: JsonField<String>,
+    ) : Enum {
 
-        @com.fasterxml.jackson.annotation.JsonValue
-        fun _value(): JsonField<String> = value
+        @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
 
         override fun equals(other: Any?): Boolean {
-          if (this === other) {
-              return true
-          }
+            if (this === other) {
+                return true
+            }
 
-          return other is Type &&
-              this.value == other.value
+            return other is Type && this.value == other.value
         }
 
         override fun hashCode() = value.hashCode()
@@ -493,23 +456,25 @@ class AlertCreateForSubscriptionParams constructor(
             _UNKNOWN,
         }
 
-        fun value(): Value = when (this) {
-            USAGE_EXCEEDED -> Value.USAGE_EXCEEDED
-            COST_EXCEEDED -> Value.COST_EXCEEDED
-            CREDIT_BALANCE_DEPLETED -> Value.CREDIT_BALANCE_DEPLETED
-            CREDIT_BALANCE_DROPPED -> Value.CREDIT_BALANCE_DROPPED
-            CREDIT_BALANCE_RECOVERED -> Value.CREDIT_BALANCE_RECOVERED
-            else -> Value._UNKNOWN
-        }
+        fun value(): Value =
+            when (this) {
+                USAGE_EXCEEDED -> Value.USAGE_EXCEEDED
+                COST_EXCEEDED -> Value.COST_EXCEEDED
+                CREDIT_BALANCE_DEPLETED -> Value.CREDIT_BALANCE_DEPLETED
+                CREDIT_BALANCE_DROPPED -> Value.CREDIT_BALANCE_DROPPED
+                CREDIT_BALANCE_RECOVERED -> Value.CREDIT_BALANCE_RECOVERED
+                else -> Value._UNKNOWN
+            }
 
-        fun known(): Known = when (this) {
-            USAGE_EXCEEDED -> Known.USAGE_EXCEEDED
-            COST_EXCEEDED -> Known.COST_EXCEEDED
-            CREDIT_BALANCE_DEPLETED -> Known.CREDIT_BALANCE_DEPLETED
-            CREDIT_BALANCE_DROPPED -> Known.CREDIT_BALANCE_DROPPED
-            CREDIT_BALANCE_RECOVERED -> Known.CREDIT_BALANCE_RECOVERED
-            else -> throw OrbInvalidDataException("Unknown Type: $value")
-        }
+        fun known(): Known =
+            when (this) {
+                USAGE_EXCEEDED -> Known.USAGE_EXCEEDED
+                COST_EXCEEDED -> Known.COST_EXCEEDED
+                CREDIT_BALANCE_DEPLETED -> Known.CREDIT_BALANCE_DEPLETED
+                CREDIT_BALANCE_DROPPED -> Known.CREDIT_BALANCE_DROPPED
+                CREDIT_BALANCE_RECOVERED -> Known.CREDIT_BALANCE_RECOVERED
+                else -> throw OrbInvalidDataException("Unknown Type: $value")
+            }
 
         fun asString(): String = _value().asStringOrThrow()
     }

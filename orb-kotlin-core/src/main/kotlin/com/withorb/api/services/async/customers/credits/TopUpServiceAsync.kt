@@ -4,22 +4,7 @@
 
 package com.withorb.api.services.async.customers.credits
 
-import com.fasterxml.jackson.databind.json.JsonMapper
-import com.fasterxml.jackson.annotation.JsonCreator
-import com.fasterxml.jackson.annotation.JsonProperty
-import kotlin.LazyThreadSafetyMode.PUBLICATION
-import java.time.LocalDate
-import java.time.Duration
-import java.time.OffsetDateTime
-import java.time.format.DateTimeFormatter
-import java.util.Base64
-import java.util.Optional
-import java.util.UUID
-import java.util.concurrent.CompletableFuture
-import java.util.stream.Stream
-import com.withorb.api.core.Enum
-import com.withorb.api.core.NoAutoDetect
-import com.withorb.api.errors.OrbInvalidDataException
+import com.withorb.api.core.RequestOptions
 import com.withorb.api.models.CustomerCreditTopUpCreateByExternalIdParams
 import com.withorb.api.models.CustomerCreditTopUpCreateByExternalIdResponse
 import com.withorb.api.models.CustomerCreditTopUpCreateParams
@@ -28,61 +13,58 @@ import com.withorb.api.models.CustomerCreditTopUpDeleteByExternalIdParams
 import com.withorb.api.models.CustomerCreditTopUpDeleteParams
 import com.withorb.api.models.CustomerCreditTopUpListByExternalIdPageAsync
 import com.withorb.api.models.CustomerCreditTopUpListByExternalIdParams
-import com.withorb.api.models.CustomerCreditTopUpListByExternalIdResponse
 import com.withorb.api.models.CustomerCreditTopUpListPageAsync
 import com.withorb.api.models.CustomerCreditTopUpListParams
-import com.withorb.api.models.CustomerCreditTopUpListResponse
-import com.withorb.api.core.ClientOptions
-import com.withorb.api.core.http.HttpMethod
-import com.withorb.api.core.http.HttpRequest
-import com.withorb.api.core.http.HttpResponse.Handler
-import com.withorb.api.core.http.BinaryResponseContent
-import com.withorb.api.core.JsonField
-import com.withorb.api.core.JsonValue
-import com.withorb.api.core.RequestOptions
-import com.withorb.api.errors.OrbError
-import com.withorb.api.services.emptyHandler
-import com.withorb.api.services.errorHandler
-import com.withorb.api.services.json
-import com.withorb.api.services.jsonHandler
-import com.withorb.api.services.multipartFormData
-import com.withorb.api.services.stringHandler
-import com.withorb.api.services.binaryHandler
-import com.withorb.api.services.withErrorHandler
 
 interface TopUpServiceAsync {
 
     /**
-     * This endpoint allows you to create a new top-up for a specified customer's
-     * balance. While this top-up is active, the customer's balance will added in
-     * increments of the specified amount whenever the balance reaches the specified
-     * threshold.
+     * This endpoint allows you to create a new top-up for a specified customer's balance. While
+     * this top-up is active, the customer's balance will added in increments of the specified
+     * amount whenever the balance reaches the specified threshold.
      *
-     * If a top-up already exists for this customer in the same currency, the existing
-     * top-up will be replaced.
+     * If a top-up already exists for this customer in the same currency, the existing top-up will
+     * be replaced.
      */
-    suspend fun create(params: CustomerCreditTopUpCreateParams, requestOptions: RequestOptions = RequestOptions.none()): CustomerCreditTopUpCreateResponse
+    suspend fun create(
+        params: CustomerCreditTopUpCreateParams,
+        requestOptions: RequestOptions = RequestOptions.none()
+    ): CustomerCreditTopUpCreateResponse
 
     /** List top-ups */
-    suspend fun list(params: CustomerCreditTopUpListParams, requestOptions: RequestOptions = RequestOptions.none()): CustomerCreditTopUpListPageAsync
+    suspend fun list(
+        params: CustomerCreditTopUpListParams,
+        requestOptions: RequestOptions = RequestOptions.none()
+    ): CustomerCreditTopUpListPageAsync
 
     /** Delete top-up */
-    suspend fun delete(params: CustomerCreditTopUpDeleteParams, requestOptions: RequestOptions = RequestOptions.none())
+    suspend fun delete(
+        params: CustomerCreditTopUpDeleteParams,
+        requestOptions: RequestOptions = RequestOptions.none()
+    )
 
     /**
-     * This endpoint allows you to create a new top-up for a specified customer's
-     * balance. While this top-up is active, the customer's balance will added in
-     * increments of the specified amount whenever the balance reaches the specified
-     * threshold.
+     * This endpoint allows you to create a new top-up for a specified customer's balance. While
+     * this top-up is active, the customer's balance will added in increments of the specified
+     * amount whenever the balance reaches the specified threshold.
      *
-     * If a top-up already exists for this customer in the same currency, the existing
-     * top-up will be replaced.
+     * If a top-up already exists for this customer in the same currency, the existing top-up will
+     * be replaced.
      */
-    suspend fun createByExternalId(params: CustomerCreditTopUpCreateByExternalIdParams, requestOptions: RequestOptions = RequestOptions.none()): CustomerCreditTopUpCreateByExternalIdResponse
+    suspend fun createByExternalId(
+        params: CustomerCreditTopUpCreateByExternalIdParams,
+        requestOptions: RequestOptions = RequestOptions.none()
+    ): CustomerCreditTopUpCreateByExternalIdResponse
 
     /** Delete top-up by external ID */
-    suspend fun deleteByExternalId(params: CustomerCreditTopUpDeleteByExternalIdParams, requestOptions: RequestOptions = RequestOptions.none())
+    suspend fun deleteByExternalId(
+        params: CustomerCreditTopUpDeleteByExternalIdParams,
+        requestOptions: RequestOptions = RequestOptions.none()
+    )
 
     /** List top-ups by external ID */
-    suspend fun listByExternalId(params: CustomerCreditTopUpListByExternalIdParams, requestOptions: RequestOptions = RequestOptions.none()): CustomerCreditTopUpListByExternalIdPageAsync
+    suspend fun listByExternalId(
+        params: CustomerCreditTopUpListByExternalIdParams,
+        requestOptions: RequestOptions = RequestOptions.none()
+    ): CustomerCreditTopUpListByExternalIdPageAsync
 }

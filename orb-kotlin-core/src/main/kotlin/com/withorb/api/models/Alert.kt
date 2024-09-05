@@ -5,62 +5,45 @@ package com.withorb.api.models
 import com.fasterxml.jackson.annotation.JsonAnyGetter
 import com.fasterxml.jackson.annotation.JsonAnySetter
 import com.fasterxml.jackson.annotation.JsonCreator
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonProperty
-import com.fasterxml.jackson.core.JsonGenerator
-import com.fasterxml.jackson.core.ObjectCodec
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize
-import com.fasterxml.jackson.databind.annotation.JsonSerialize
-import com.fasterxml.jackson.databind.JsonNode
-import com.fasterxml.jackson.databind.SerializerProvider
-import com.fasterxml.jackson.module.kotlin.jacksonTypeRef
-import java.time.LocalDate
-import java.time.OffsetDateTime
-import java.time.format.DateTimeFormatter
-import java.util.Objects
-import java.util.Optional
-import java.util.UUID
-import com.withorb.api.core.BaseDeserializer
-import com.withorb.api.core.BaseSerializer
-import com.withorb.api.core.getOrThrow
+import com.withorb.api.core.Enum
 import com.withorb.api.core.ExcludeMissing
+import com.withorb.api.core.JsonField
 import com.withorb.api.core.JsonMissing
 import com.withorb.api.core.JsonValue
-import com.withorb.api.core.JsonNull
-import com.withorb.api.core.JsonField
-import com.withorb.api.core.Enum
-import com.withorb.api.core.toUnmodifiable
 import com.withorb.api.core.NoAutoDetect
+import com.withorb.api.core.toUnmodifiable
 import com.withorb.api.errors.OrbInvalidDataException
+import java.time.OffsetDateTime
+import java.util.Objects
 
 /**
- * [Alerts within Orb](https://docs.withorb.com/guides/product-catalog/configuring-alerts)
- * monitor spending, usage, or credit balance and trigger webhooks when a threshold
- * is exceeded.
+ * [Alerts within Orb](https://docs.withorb.com/guides/product-catalog/configuring-alerts) monitor
+ * spending, usage, or credit balance and trigger webhooks when a threshold is exceeded.
  *
- * Alerts created through the API can be scoped to either customers or
- * subscriptions.
+ * Alerts created through the API can be scoped to either customers or subscriptions.
  *
- * | Scope        | Monitors                       | Vaild Alert Types                                                                   |
- * | ------------ | ------------------------------ | ----------------------------------------------------------------------------------- |
- * | Customer     | A customer's credit balance    | `credit_balance_depleted`, `credit_balance_recovered`, and `credit_balance_dropped` |
- * | Subscription | A subscription's usage or cost | `usage_exceeded` and `cost_exceeded`                                                |
+ * |Scope       |Monitors                      |Vaild Alert Types                                                                  |
+ * |------------|------------------------------|-----------------------------------------------------------------------------------|
+ * |Customer    |A customer's credit balance   |`credit_balance_depleted`, `credit_balance_recovered`, and `credit_balance_dropped`|
+ * |Subscription|A subscription's usage or cost|`usage_exceeded` and `cost_exceeded`                                               |
  */
 @JsonDeserialize(builder = Alert.Builder::class)
 @NoAutoDetect
-class Alert private constructor(
-  private val id: JsonField<String>,
-  private val type: JsonField<Type>,
-  private val createdAt: JsonField<OffsetDateTime>,
-  private val enabled: JsonField<Boolean>,
-  private val thresholds: JsonField<List<Threshold>>,
-  private val customer: JsonField<Customer>,
-  private val plan: JsonField<Plan>,
-  private val subscription: JsonField<Subscription>,
-  private val metric: JsonField<Metric>,
-  private val currency: JsonField<String>,
-  private val additionalProperties: Map<String, JsonValue>,
-
+class Alert
+private constructor(
+    private val id: JsonField<String>,
+    private val type: JsonField<Type>,
+    private val createdAt: JsonField<OffsetDateTime>,
+    private val enabled: JsonField<Boolean>,
+    private val thresholds: JsonField<List<Threshold>>,
+    private val customer: JsonField<Customer>,
+    private val plan: JsonField<Plan>,
+    private val subscription: JsonField<Subscription>,
+    private val metric: JsonField<Metric>,
+    private val currency: JsonField<String>,
+    private val additionalProperties: Map<String, JsonValue>,
 ) {
 
     private var validated: Boolean = false
@@ -79,10 +62,7 @@ class Alert private constructor(
     /** Whether the alert is enabled or disabled. */
     fun enabled(): Boolean = enabled.getRequired("enabled")
 
-    /**
-     * The thresholds that define the conditions under which the alert will be
-     * triggered.
-     */
+    /** The thresholds that define the conditions under which the alert will be triggered. */
     fun thresholds(): List<Threshold>? = thresholds.getNullable("thresholds")
 
     /** The customer the alert applies to. */
@@ -101,57 +81,34 @@ class Alert private constructor(
     fun currency(): String? = currency.getNullable("currency")
 
     /** Also referred to as alert_id in this documentation. */
-    @JsonProperty("id")
-    @ExcludeMissing
-    fun _id() = id
+    @JsonProperty("id") @ExcludeMissing fun _id() = id
 
     /** The type of alert. This must be a valid alert type. */
-    @JsonProperty("type")
-    @ExcludeMissing
-    fun _type() = type
+    @JsonProperty("type") @ExcludeMissing fun _type() = type
 
     /** The creation time of the resource in Orb. */
-    @JsonProperty("created_at")
-    @ExcludeMissing
-    fun _createdAt() = createdAt
+    @JsonProperty("created_at") @ExcludeMissing fun _createdAt() = createdAt
 
     /** Whether the alert is enabled or disabled. */
-    @JsonProperty("enabled")
-    @ExcludeMissing
-    fun _enabled() = enabled
+    @JsonProperty("enabled") @ExcludeMissing fun _enabled() = enabled
 
-    /**
-     * The thresholds that define the conditions under which the alert will be
-     * triggered.
-     */
-    @JsonProperty("thresholds")
-    @ExcludeMissing
-    fun _thresholds() = thresholds
+    /** The thresholds that define the conditions under which the alert will be triggered. */
+    @JsonProperty("thresholds") @ExcludeMissing fun _thresholds() = thresholds
 
     /** The customer the alert applies to. */
-    @JsonProperty("customer")
-    @ExcludeMissing
-    fun _customer() = customer
+    @JsonProperty("customer") @ExcludeMissing fun _customer() = customer
 
     /** The plan the alert applies to. */
-    @JsonProperty("plan")
-    @ExcludeMissing
-    fun _plan() = plan
+    @JsonProperty("plan") @ExcludeMissing fun _plan() = plan
 
     /** The subscription the alert applies to. */
-    @JsonProperty("subscription")
-    @ExcludeMissing
-    fun _subscription() = subscription
+    @JsonProperty("subscription") @ExcludeMissing fun _subscription() = subscription
 
     /** The metric the alert applies to. */
-    @JsonProperty("metric")
-    @ExcludeMissing
-    fun _metric() = metric
+    @JsonProperty("metric") @ExcludeMissing fun _metric() = metric
 
     /** The name of the currency the credit balance or invoice cost is denominated in. */
-    @JsonProperty("currency")
-    @ExcludeMissing
-    fun _currency() = currency
+    @JsonProperty("currency") @ExcludeMissing fun _currency() = currency
 
     @JsonAnyGetter
     @ExcludeMissing
@@ -159,61 +116,63 @@ class Alert private constructor(
 
     fun validate(): Alert = apply {
         if (!validated) {
-          id()
-          type()
-          createdAt()
-          enabled()
-          thresholds()?.forEach { it.validate() }
-          customer()?.validate()
-          plan()?.validate()
-          subscription()?.validate()
-          metric()?.validate()
-          currency()
-          validated = true
+            id()
+            type()
+            createdAt()
+            enabled()
+            thresholds()?.forEach { it.validate() }
+            customer()?.validate()
+            plan()?.validate()
+            subscription()?.validate()
+            metric()?.validate()
+            currency()
+            validated = true
         }
     }
 
     fun toBuilder() = Builder().from(this)
 
     override fun equals(other: Any?): Boolean {
-      if (this === other) {
-          return true
-      }
+        if (this === other) {
+            return true
+        }
 
-      return other is Alert &&
-          this.id == other.id &&
-          this.type == other.type &&
-          this.createdAt == other.createdAt &&
-          this.enabled == other.enabled &&
-          this.thresholds == other.thresholds &&
-          this.customer == other.customer &&
-          this.plan == other.plan &&
-          this.subscription == other.subscription &&
-          this.metric == other.metric &&
-          this.currency == other.currency &&
-          this.additionalProperties == other.additionalProperties
+        return other is Alert &&
+            this.id == other.id &&
+            this.type == other.type &&
+            this.createdAt == other.createdAt &&
+            this.enabled == other.enabled &&
+            this.thresholds == other.thresholds &&
+            this.customer == other.customer &&
+            this.plan == other.plan &&
+            this.subscription == other.subscription &&
+            this.metric == other.metric &&
+            this.currency == other.currency &&
+            this.additionalProperties == other.additionalProperties
     }
 
     override fun hashCode(): Int {
-      if (hashCode == 0) {
-        hashCode = Objects.hash(
-            id,
-            type,
-            createdAt,
-            enabled,
-            thresholds,
-            customer,
-            plan,
-            subscription,
-            metric,
-            currency,
-            additionalProperties,
-        )
-      }
-      return hashCode
+        if (hashCode == 0) {
+            hashCode =
+                Objects.hash(
+                    id,
+                    type,
+                    createdAt,
+                    enabled,
+                    thresholds,
+                    customer,
+                    plan,
+                    subscription,
+                    metric,
+                    currency,
+                    additionalProperties,
+                )
+        }
+        return hashCode
     }
 
-    override fun toString() = "Alert{id=$id, type=$type, createdAt=$createdAt, enabled=$enabled, thresholds=$thresholds, customer=$customer, plan=$plan, subscription=$subscription, metric=$metric, currency=$currency, additionalProperties=$additionalProperties}"
+    override fun toString() =
+        "Alert{id=$id, type=$type, createdAt=$createdAt, enabled=$enabled, thresholds=$thresholds, customer=$customer, plan=$plan, subscription=$subscription, metric=$metric, currency=$currency, additionalProperties=$additionalProperties}"
 
     companion object {
 
@@ -252,11 +211,7 @@ class Alert private constructor(
         fun id(id: String) = id(JsonField.of(id))
 
         /** Also referred to as alert_id in this documentation. */
-        @JsonProperty("id")
-        @ExcludeMissing
-        fun id(id: JsonField<String>) = apply {
-            this.id = id
-        }
+        @JsonProperty("id") @ExcludeMissing fun id(id: JsonField<String>) = apply { this.id = id }
 
         /** The type of alert. This must be a valid alert type. */
         fun type(type: Type) = type(JsonField.of(type))
@@ -264,9 +219,7 @@ class Alert private constructor(
         /** The type of alert. This must be a valid alert type. */
         @JsonProperty("type")
         @ExcludeMissing
-        fun type(type: JsonField<Type>) = apply {
-            this.type = type
-        }
+        fun type(type: JsonField<Type>) = apply { this.type = type }
 
         /** The creation time of the resource in Orb. */
         fun createdAt(createdAt: OffsetDateTime) = createdAt(JsonField.of(createdAt))
@@ -274,9 +227,7 @@ class Alert private constructor(
         /** The creation time of the resource in Orb. */
         @JsonProperty("created_at")
         @ExcludeMissing
-        fun createdAt(createdAt: JsonField<OffsetDateTime>) = apply {
-            this.createdAt = createdAt
-        }
+        fun createdAt(createdAt: JsonField<OffsetDateTime>) = apply { this.createdAt = createdAt }
 
         /** Whether the alert is enabled or disabled. */
         fun enabled(enabled: Boolean) = enabled(JsonField.of(enabled))
@@ -284,20 +235,12 @@ class Alert private constructor(
         /** Whether the alert is enabled or disabled. */
         @JsonProperty("enabled")
         @ExcludeMissing
-        fun enabled(enabled: JsonField<Boolean>) = apply {
-            this.enabled = enabled
-        }
+        fun enabled(enabled: JsonField<Boolean>) = apply { this.enabled = enabled }
 
-        /**
-         * The thresholds that define the conditions under which the alert will be
-         * triggered.
-         */
+        /** The thresholds that define the conditions under which the alert will be triggered. */
         fun thresholds(thresholds: List<Threshold>) = thresholds(JsonField.of(thresholds))
 
-        /**
-         * The thresholds that define the conditions under which the alert will be
-         * triggered.
-         */
+        /** The thresholds that define the conditions under which the alert will be triggered. */
         @JsonProperty("thresholds")
         @ExcludeMissing
         fun thresholds(thresholds: JsonField<List<Threshold>>) = apply {
@@ -310,9 +253,7 @@ class Alert private constructor(
         /** The customer the alert applies to. */
         @JsonProperty("customer")
         @ExcludeMissing
-        fun customer(customer: JsonField<Customer>) = apply {
-            this.customer = customer
-        }
+        fun customer(customer: JsonField<Customer>) = apply { this.customer = customer }
 
         /** The plan the alert applies to. */
         fun plan(plan: Plan) = plan(JsonField.of(plan))
@@ -320,9 +261,7 @@ class Alert private constructor(
         /** The plan the alert applies to. */
         @JsonProperty("plan")
         @ExcludeMissing
-        fun plan(plan: JsonField<Plan>) = apply {
-            this.plan = plan
-        }
+        fun plan(plan: JsonField<Plan>) = apply { this.plan = plan }
 
         /** The subscription the alert applies to. */
         fun subscription(subscription: Subscription) = subscription(JsonField.of(subscription))
@@ -340,9 +279,7 @@ class Alert private constructor(
         /** The metric the alert applies to. */
         @JsonProperty("metric")
         @ExcludeMissing
-        fun metric(metric: JsonField<Metric>) = apply {
-            this.metric = metric
-        }
+        fun metric(metric: JsonField<Metric>) = apply { this.metric = metric }
 
         /** The name of the currency the credit balance or invoice cost is denominated in. */
         fun currency(currency: String) = currency(JsonField.of(currency))
@@ -350,9 +287,7 @@ class Alert private constructor(
         /** The name of the currency the credit balance or invoice cost is denominated in. */
         @JsonProperty("currency")
         @ExcludeMissing
-        fun currency(currency: JsonField<String>) = apply {
-            this.currency = currency
-        }
+        fun currency(currency: JsonField<String>) = apply { this.currency = currency }
 
         fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
             this.additionalProperties.clear()
@@ -368,25 +303,29 @@ class Alert private constructor(
             this.additionalProperties.putAll(additionalProperties)
         }
 
-        fun build(): Alert = Alert(
-            id,
-            type,
-            createdAt,
-            enabled,
-            thresholds.map { it.toUnmodifiable() },
-            customer,
-            plan,
-            subscription,
-            metric,
-            currency,
-            additionalProperties.toUnmodifiable(),
-        )
+        fun build(): Alert =
+            Alert(
+                id,
+                type,
+                createdAt,
+                enabled,
+                thresholds.map { it.toUnmodifiable() },
+                customer,
+                plan,
+                subscription,
+                metric,
+                currency,
+                additionalProperties.toUnmodifiable(),
+            )
     }
 
     /** The customer the alert applies to. */
     @JsonDeserialize(builder = Customer.Builder::class)
     @NoAutoDetect
-    class Customer private constructor(private val additionalProperties: Map<String, JsonValue>, ) {
+    class Customer
+    private constructor(
+        private val additionalProperties: Map<String, JsonValue>,
+    ) {
 
         private var validated: Boolean = false
 
@@ -398,26 +337,25 @@ class Alert private constructor(
 
         fun validate(): Customer = apply {
             if (!validated) {
-              validated = true
+                validated = true
             }
         }
 
         fun toBuilder() = Builder().from(this)
 
         override fun equals(other: Any?): Boolean {
-          if (this === other) {
-              return true
-          }
+            if (this === other) {
+                return true
+            }
 
-          return other is Customer &&
-              this.additionalProperties == other.additionalProperties
+            return other is Customer && this.additionalProperties == other.additionalProperties
         }
 
         override fun hashCode(): Int {
-          if (hashCode == 0) {
-            hashCode = Objects.hash(additionalProperties)
-          }
-          return hashCode
+            if (hashCode == 0) {
+                hashCode = Objects.hash(additionalProperties)
+            }
+            return hashCode
         }
 
         override fun toString() = "Customer{additionalProperties=$additionalProperties}"
@@ -456,7 +394,10 @@ class Alert private constructor(
     /** The metric the alert applies to. */
     @JsonDeserialize(builder = Metric.Builder::class)
     @NoAutoDetect
-    class Metric private constructor(private val additionalProperties: Map<String, JsonValue>, ) {
+    class Metric
+    private constructor(
+        private val additionalProperties: Map<String, JsonValue>,
+    ) {
 
         private var validated: Boolean = false
 
@@ -468,26 +409,25 @@ class Alert private constructor(
 
         fun validate(): Metric = apply {
             if (!validated) {
-              validated = true
+                validated = true
             }
         }
 
         fun toBuilder() = Builder().from(this)
 
         override fun equals(other: Any?): Boolean {
-          if (this === other) {
-              return true
-          }
+            if (this === other) {
+                return true
+            }
 
-          return other is Metric &&
-              this.additionalProperties == other.additionalProperties
+            return other is Metric && this.additionalProperties == other.additionalProperties
         }
 
         override fun hashCode(): Int {
-          if (hashCode == 0) {
-            hashCode = Objects.hash(additionalProperties)
-          }
-          return hashCode
+            if (hashCode == 0) {
+                hashCode = Objects.hash(additionalProperties)
+            }
+            return hashCode
         }
 
         override fun toString() = "Metric{additionalProperties=$additionalProperties}"
@@ -526,7 +466,10 @@ class Alert private constructor(
     /** The plan the alert applies to. */
     @JsonDeserialize(builder = Plan.Builder::class)
     @NoAutoDetect
-    class Plan private constructor(private val additionalProperties: Map<String, JsonValue>, ) {
+    class Plan
+    private constructor(
+        private val additionalProperties: Map<String, JsonValue>,
+    ) {
 
         private var validated: Boolean = false
 
@@ -538,26 +481,25 @@ class Alert private constructor(
 
         fun validate(): Plan = apply {
             if (!validated) {
-              validated = true
+                validated = true
             }
         }
 
         fun toBuilder() = Builder().from(this)
 
         override fun equals(other: Any?): Boolean {
-          if (this === other) {
-              return true
-          }
+            if (this === other) {
+                return true
+            }
 
-          return other is Plan &&
-              this.additionalProperties == other.additionalProperties
+            return other is Plan && this.additionalProperties == other.additionalProperties
         }
 
         override fun hashCode(): Int {
-          if (hashCode == 0) {
-            hashCode = Objects.hash(additionalProperties)
-          }
-          return hashCode
+            if (hashCode == 0) {
+                hashCode = Objects.hash(additionalProperties)
+            }
+            return hashCode
         }
 
         override fun toString() = "Plan{additionalProperties=$additionalProperties}"
@@ -596,7 +538,10 @@ class Alert private constructor(
     /** The subscription the alert applies to. */
     @JsonDeserialize(builder = Subscription.Builder::class)
     @NoAutoDetect
-    class Subscription private constructor(private val additionalProperties: Map<String, JsonValue>, ) {
+    class Subscription
+    private constructor(
+        private val additionalProperties: Map<String, JsonValue>,
+    ) {
 
         private var validated: Boolean = false
 
@@ -608,26 +553,25 @@ class Alert private constructor(
 
         fun validate(): Subscription = apply {
             if (!validated) {
-              validated = true
+                validated = true
             }
         }
 
         fun toBuilder() = Builder().from(this)
 
         override fun equals(other: Any?): Boolean {
-          if (this === other) {
-              return true
-          }
+            if (this === other) {
+                return true
+            }
 
-          return other is Subscription &&
-              this.additionalProperties == other.additionalProperties
+            return other is Subscription && this.additionalProperties == other.additionalProperties
         }
 
         override fun hashCode(): Int {
-          if (hashCode == 0) {
-            hashCode = Objects.hash(additionalProperties)
-          }
-          return hashCode
+            if (hashCode == 0) {
+                hashCode = Objects.hash(additionalProperties)
+            }
+            return hashCode
         }
 
         override fun toString() = "Subscription{additionalProperties=$additionalProperties}"
@@ -663,33 +607,32 @@ class Alert private constructor(
         }
     }
 
-    /**
-     * Thresholds are used to define the conditions under which an alert will be
-     * triggered.
-     */
+    /** Thresholds are used to define the conditions under which an alert will be triggered. */
     @JsonDeserialize(builder = Threshold.Builder::class)
     @NoAutoDetect
-    class Threshold private constructor(private val value: JsonField<Double>, private val additionalProperties: Map<String, JsonValue>, ) {
+    class Threshold
+    private constructor(
+        private val value: JsonField<Double>,
+        private val additionalProperties: Map<String, JsonValue>,
+    ) {
 
         private var validated: Boolean = false
 
         private var hashCode: Int = 0
 
         /**
-         * The value at which an alert will fire. For credit balance alerts, the alert will
-         * fire at or below this value. For usage and cost alerts, the alert will fire at
-         * or above this value.
+         * The value at which an alert will fire. For credit balance alerts, the alert will fire at
+         * or below this value. For usage and cost alerts, the alert will fire at or above this
+         * value.
          */
         fun value(): Double = value.getRequired("value")
 
         /**
-         * The value at which an alert will fire. For credit balance alerts, the alert will
-         * fire at or below this value. For usage and cost alerts, the alert will fire at
-         * or above this value.
+         * The value at which an alert will fire. For credit balance alerts, the alert will fire at
+         * or below this value. For usage and cost alerts, the alert will fire at or above this
+         * value.
          */
-        @JsonProperty("value")
-        @ExcludeMissing
-        fun _value() = value
+        @JsonProperty("value") @ExcludeMissing fun _value() = value
 
         @JsonAnyGetter
         @ExcludeMissing
@@ -697,31 +640,32 @@ class Alert private constructor(
 
         fun validate(): Threshold = apply {
             if (!validated) {
-              value()
-              validated = true
+                value()
+                validated = true
             }
         }
 
         fun toBuilder() = Builder().from(this)
 
         override fun equals(other: Any?): Boolean {
-          if (this === other) {
-              return true
-          }
+            if (this === other) {
+                return true
+            }
 
-          return other is Threshold &&
-              this.value == other.value &&
-              this.additionalProperties == other.additionalProperties
+            return other is Threshold &&
+                this.value == other.value &&
+                this.additionalProperties == other.additionalProperties
         }
 
         override fun hashCode(): Int {
-          if (hashCode == 0) {
-            hashCode = Objects.hash(value, additionalProperties)
-          }
-          return hashCode
+            if (hashCode == 0) {
+                hashCode = Objects.hash(value, additionalProperties)
+            }
+            return hashCode
         }
 
-        override fun toString() = "Threshold{value=$value, additionalProperties=$additionalProperties}"
+        override fun toString() =
+            "Threshold{value=$value, additionalProperties=$additionalProperties}"
 
         companion object {
 
@@ -739,22 +683,20 @@ class Alert private constructor(
             }
 
             /**
-             * The value at which an alert will fire. For credit balance alerts, the alert will
-             * fire at or below this value. For usage and cost alerts, the alert will fire at
-             * or above this value.
+             * The value at which an alert will fire. For credit balance alerts, the alert will fire
+             * at or below this value. For usage and cost alerts, the alert will fire at or above
+             * this value.
              */
             fun value(value: Double) = value(JsonField.of(value))
 
             /**
-             * The value at which an alert will fire. For credit balance alerts, the alert will
-             * fire at or below this value. For usage and cost alerts, the alert will fire at
-             * or above this value.
+             * The value at which an alert will fire. For credit balance alerts, the alert will fire
+             * at or below this value. For usage and cost alerts, the alert will fire at or above
+             * this value.
              */
             @JsonProperty("value")
             @ExcludeMissing
-            fun value(value: JsonField<Double>) = apply {
-                this.value = value
-            }
+            fun value(value: JsonField<Double>) = apply { this.value = value }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
@@ -774,18 +716,20 @@ class Alert private constructor(
         }
     }
 
-    class Type @JsonCreator private constructor(private val value: JsonField<String>, ) : Enum {
+    class Type
+    @JsonCreator
+    private constructor(
+        private val value: JsonField<String>,
+    ) : Enum {
 
-        @com.fasterxml.jackson.annotation.JsonValue
-        fun _value(): JsonField<String> = value
+        @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
 
         override fun equals(other: Any?): Boolean {
-          if (this === other) {
-              return true
-          }
+            if (this === other) {
+                return true
+            }
 
-          return other is Type &&
-              this.value == other.value
+            return other is Type && this.value == other.value
         }
 
         override fun hashCode() = value.hashCode()
@@ -824,23 +768,25 @@ class Alert private constructor(
             _UNKNOWN,
         }
 
-        fun value(): Value = when (this) {
-            USAGE_EXCEEDED -> Value.USAGE_EXCEEDED
-            COST_EXCEEDED -> Value.COST_EXCEEDED
-            CREDIT_BALANCE_DEPLETED -> Value.CREDIT_BALANCE_DEPLETED
-            CREDIT_BALANCE_DROPPED -> Value.CREDIT_BALANCE_DROPPED
-            CREDIT_BALANCE_RECOVERED -> Value.CREDIT_BALANCE_RECOVERED
-            else -> Value._UNKNOWN
-        }
+        fun value(): Value =
+            when (this) {
+                USAGE_EXCEEDED -> Value.USAGE_EXCEEDED
+                COST_EXCEEDED -> Value.COST_EXCEEDED
+                CREDIT_BALANCE_DEPLETED -> Value.CREDIT_BALANCE_DEPLETED
+                CREDIT_BALANCE_DROPPED -> Value.CREDIT_BALANCE_DROPPED
+                CREDIT_BALANCE_RECOVERED -> Value.CREDIT_BALANCE_RECOVERED
+                else -> Value._UNKNOWN
+            }
 
-        fun known(): Known = when (this) {
-            USAGE_EXCEEDED -> Known.USAGE_EXCEEDED
-            COST_EXCEEDED -> Known.COST_EXCEEDED
-            CREDIT_BALANCE_DEPLETED -> Known.CREDIT_BALANCE_DEPLETED
-            CREDIT_BALANCE_DROPPED -> Known.CREDIT_BALANCE_DROPPED
-            CREDIT_BALANCE_RECOVERED -> Known.CREDIT_BALANCE_RECOVERED
-            else -> throw OrbInvalidDataException("Unknown Type: $value")
-        }
+        fun known(): Known =
+            when (this) {
+                USAGE_EXCEEDED -> Known.USAGE_EXCEEDED
+                COST_EXCEEDED -> Known.COST_EXCEEDED
+                CREDIT_BALANCE_DEPLETED -> Known.CREDIT_BALANCE_DEPLETED
+                CREDIT_BALANCE_DROPPED -> Known.CREDIT_BALANCE_DROPPED
+                CREDIT_BALANCE_RECOVERED -> Known.CREDIT_BALANCE_RECOVERED
+                else -> throw OrbInvalidDataException("Unknown Type: $value")
+            }
 
         fun asString(): String = _value().asStringOrThrow()
     }

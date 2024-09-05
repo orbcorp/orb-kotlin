@@ -2,52 +2,24 @@
 
 package com.withorb.api.models
 
-import com.fasterxml.jackson.annotation.JsonAnyGetter
-import com.fasterxml.jackson.annotation.JsonAnySetter
-import com.fasterxml.jackson.annotation.JsonCreator
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties
-import com.fasterxml.jackson.annotation.JsonProperty
-import com.fasterxml.jackson.core.JsonGenerator
-import com.fasterxml.jackson.core.ObjectCodec
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize
-import com.fasterxml.jackson.databind.annotation.JsonSerialize
-import com.fasterxml.jackson.databind.JsonNode
-import com.fasterxml.jackson.databind.SerializerProvider
-import com.fasterxml.jackson.module.kotlin.jacksonTypeRef
-import org.apache.hc.core5.http.ContentType
-import java.time.LocalDate
-import java.time.OffsetDateTime
-import java.time.format.DateTimeFormatter
-import java.util.Objects
-import java.util.Optional
-import java.util.UUID
-import com.withorb.api.core.BaseDeserializer
-import com.withorb.api.core.BaseSerializer
-import com.withorb.api.core.getOrThrow
-import com.withorb.api.core.ExcludeMissing
-import com.withorb.api.core.JsonField
-import com.withorb.api.core.JsonMissing
 import com.withorb.api.core.JsonValue
-import com.withorb.api.core.MultipartFormValue
-import com.withorb.api.core.toUnmodifiable
 import com.withorb.api.core.NoAutoDetect
-import com.withorb.api.core.Enum
-import com.withorb.api.core.ContentTypes
-import com.withorb.api.errors.OrbInvalidDataException
+import com.withorb.api.core.toUnmodifiable
 import com.withorb.api.models.*
+import java.util.Objects
 
-class InvoiceIssueParams constructor(
-  private val invoiceId: String,
-  private val additionalQueryParams: Map<String, List<String>>,
-  private val additionalHeaders: Map<String, List<String>>,
-  private val additionalBodyProperties: Map<String, JsonValue>,
-
+class InvoiceIssueParams
+constructor(
+    private val invoiceId: String,
+    private val additionalQueryParams: Map<String, List<String>>,
+    private val additionalHeaders: Map<String, List<String>>,
+    private val additionalBodyProperties: Map<String, JsonValue>,
 ) {
 
     fun invoiceId(): String = invoiceId
 
     internal fun getBody(): Map<String, JsonValue>? {
-      return additionalBodyProperties.ifEmpty { null }
+        return additionalBodyProperties.ifEmpty { null }
     }
 
     internal fun getQueryParams(): Map<String, List<String>> = additionalQueryParams
@@ -55,10 +27,10 @@ class InvoiceIssueParams constructor(
     internal fun getHeaders(): Map<String, List<String>> = additionalHeaders
 
     fun getPathParam(index: Int): String {
-      return when (index) {
-          0 -> invoiceId
-          else -> ""
-      }
+        return when (index) {
+            0 -> invoiceId
+            else -> ""
+        }
     }
 
     fun _additionalQueryParams(): Map<String, List<String>> = additionalQueryParams
@@ -68,27 +40,28 @@ class InvoiceIssueParams constructor(
     fun _additionalBodyProperties(): Map<String, JsonValue> = additionalBodyProperties
 
     override fun equals(other: Any?): Boolean {
-      if (this === other) {
-          return true
-      }
+        if (this === other) {
+            return true
+        }
 
-      return other is InvoiceIssueParams &&
-          this.invoiceId == other.invoiceId &&
-          this.additionalQueryParams == other.additionalQueryParams &&
-          this.additionalHeaders == other.additionalHeaders &&
-          this.additionalBodyProperties == other.additionalBodyProperties
+        return other is InvoiceIssueParams &&
+            this.invoiceId == other.invoiceId &&
+            this.additionalQueryParams == other.additionalQueryParams &&
+            this.additionalHeaders == other.additionalHeaders &&
+            this.additionalBodyProperties == other.additionalBodyProperties
     }
 
     override fun hashCode(): Int {
-      return Objects.hash(
-          invoiceId,
-          additionalQueryParams,
-          additionalHeaders,
-          additionalBodyProperties,
-      )
+        return Objects.hash(
+            invoiceId,
+            additionalQueryParams,
+            additionalHeaders,
+            additionalBodyProperties,
+        )
     }
 
-    override fun toString() = "InvoiceIssueParams{invoiceId=$invoiceId, additionalQueryParams=$additionalQueryParams, additionalHeaders=$additionalHeaders, additionalBodyProperties=$additionalBodyProperties}"
+    override fun toString() =
+        "InvoiceIssueParams{invoiceId=$invoiceId, additionalQueryParams=$additionalQueryParams, additionalHeaders=$additionalHeaders, additionalBodyProperties=$additionalBodyProperties}"
 
     fun toBuilder() = Builder().from(this)
 
@@ -112,9 +85,7 @@ class InvoiceIssueParams constructor(
             additionalBodyProperties(invoiceIssueParams.additionalBodyProperties)
         }
 
-        fun invoiceId(invoiceId: String) = apply {
-            this.invoiceId = invoiceId
-        }
+        fun invoiceId(invoiceId: String) = apply { this.invoiceId = invoiceId }
 
         fun additionalQueryParams(additionalQueryParams: Map<String, List<String>>) = apply {
             this.additionalQueryParams.clear()
@@ -154,9 +125,7 @@ class InvoiceIssueParams constructor(
             additionalHeaders.forEach(this::putHeaders)
         }
 
-        fun removeHeader(name: String) = apply {
-            this.additionalHeaders.put(name, mutableListOf())
-        }
+        fun removeHeader(name: String) = apply { this.additionalHeaders.put(name, mutableListOf()) }
 
         fun additionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) = apply {
             this.additionalBodyProperties.clear()
@@ -167,17 +136,17 @@ class InvoiceIssueParams constructor(
             this.additionalBodyProperties.put(key, value)
         }
 
-        fun putAllAdditionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) = apply {
-            this.additionalBodyProperties.putAll(additionalBodyProperties)
-        }
+        fun putAllAdditionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) =
+            apply {
+                this.additionalBodyProperties.putAll(additionalBodyProperties)
+            }
 
-        fun build(): InvoiceIssueParams = InvoiceIssueParams(
-            checkNotNull(invoiceId) {
-                "`invoiceId` is required but was not set"
-            },
-            additionalQueryParams.mapValues { it.value.toUnmodifiable() }.toUnmodifiable(),
-            additionalHeaders.mapValues { it.value.toUnmodifiable() }.toUnmodifiable(),
-            additionalBodyProperties.toUnmodifiable(),
-        )
+        fun build(): InvoiceIssueParams =
+            InvoiceIssueParams(
+                checkNotNull(invoiceId) { "`invoiceId` is required but was not set" },
+                additionalQueryParams.mapValues { it.value.toUnmodifiable() }.toUnmodifiable(),
+                additionalHeaders.mapValues { it.value.toUnmodifiable() }.toUnmodifiable(),
+                additionalBodyProperties.toUnmodifiable(),
+            )
     }
 }

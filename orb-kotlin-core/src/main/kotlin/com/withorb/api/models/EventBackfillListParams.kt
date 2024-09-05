@@ -2,46 +2,17 @@
 
 package com.withorb.api.models
 
-import com.fasterxml.jackson.annotation.JsonAnyGetter
-import com.fasterxml.jackson.annotation.JsonAnySetter
-import com.fasterxml.jackson.annotation.JsonCreator
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties
-import com.fasterxml.jackson.annotation.JsonProperty
-import com.fasterxml.jackson.core.JsonGenerator
-import com.fasterxml.jackson.core.ObjectCodec
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize
-import com.fasterxml.jackson.databind.annotation.JsonSerialize
-import com.fasterxml.jackson.databind.JsonNode
-import com.fasterxml.jackson.databind.SerializerProvider
-import com.fasterxml.jackson.module.kotlin.jacksonTypeRef
-import org.apache.hc.core5.http.ContentType
-import java.time.LocalDate
-import java.time.OffsetDateTime
-import java.time.format.DateTimeFormatter
-import java.util.Objects
-import java.util.Optional
-import java.util.UUID
-import com.withorb.api.core.BaseDeserializer
-import com.withorb.api.core.BaseSerializer
-import com.withorb.api.core.getOrThrow
-import com.withorb.api.core.ExcludeMissing
-import com.withorb.api.core.JsonField
-import com.withorb.api.core.JsonMissing
-import com.withorb.api.core.JsonValue
-import com.withorb.api.core.MultipartFormValue
-import com.withorb.api.core.toUnmodifiable
 import com.withorb.api.core.NoAutoDetect
-import com.withorb.api.core.Enum
-import com.withorb.api.core.ContentTypes
-import com.withorb.api.errors.OrbInvalidDataException
+import com.withorb.api.core.toUnmodifiable
 import com.withorb.api.models.*
+import java.util.Objects
 
-class EventBackfillListParams constructor(
-  private val cursor: String?,
-  private val limit: Long?,
-  private val additionalQueryParams: Map<String, List<String>>,
-  private val additionalHeaders: Map<String, List<String>>,
-
+class EventBackfillListParams
+constructor(
+    private val cursor: String?,
+    private val limit: Long?,
+    private val additionalQueryParams: Map<String, List<String>>,
+    private val additionalHeaders: Map<String, List<String>>,
 ) {
 
     fun cursor(): String? = cursor
@@ -49,15 +20,11 @@ class EventBackfillListParams constructor(
     fun limit(): Long? = limit
 
     internal fun getQueryParams(): Map<String, List<String>> {
-      val params = mutableMapOf<String, List<String>>()
-      this.cursor?.let {
-          params.put("cursor", listOf(it.toString()))
-      }
-      this.limit?.let {
-          params.put("limit", listOf(it.toString()))
-      }
-      params.putAll(additionalQueryParams)
-      return params.toUnmodifiable()
+        val params = mutableMapOf<String, List<String>>()
+        this.cursor?.let { params.put("cursor", listOf(it.toString())) }
+        this.limit?.let { params.put("limit", listOf(it.toString())) }
+        params.putAll(additionalQueryParams)
+        return params.toUnmodifiable()
     }
 
     internal fun getHeaders(): Map<String, List<String>> = additionalHeaders
@@ -67,27 +34,28 @@ class EventBackfillListParams constructor(
     fun _additionalHeaders(): Map<String, List<String>> = additionalHeaders
 
     override fun equals(other: Any?): Boolean {
-      if (this === other) {
-          return true
-      }
+        if (this === other) {
+            return true
+        }
 
-      return other is EventBackfillListParams &&
-          this.cursor == other.cursor &&
-          this.limit == other.limit &&
-          this.additionalQueryParams == other.additionalQueryParams &&
-          this.additionalHeaders == other.additionalHeaders
+        return other is EventBackfillListParams &&
+            this.cursor == other.cursor &&
+            this.limit == other.limit &&
+            this.additionalQueryParams == other.additionalQueryParams &&
+            this.additionalHeaders == other.additionalHeaders
     }
 
     override fun hashCode(): Int {
-      return Objects.hash(
-          cursor,
-          limit,
-          additionalQueryParams,
-          additionalHeaders,
-      )
+        return Objects.hash(
+            cursor,
+            limit,
+            additionalQueryParams,
+            additionalHeaders,
+        )
     }
 
-    override fun toString() = "EventBackfillListParams{cursor=$cursor, limit=$limit, additionalQueryParams=$additionalQueryParams, additionalHeaders=$additionalHeaders}"
+    override fun toString() =
+        "EventBackfillListParams{cursor=$cursor, limit=$limit, additionalQueryParams=$additionalQueryParams, additionalHeaders=$additionalHeaders}"
 
     fun toBuilder() = Builder().from(this)
 
@@ -112,17 +80,13 @@ class EventBackfillListParams constructor(
         }
 
         /**
-         * Cursor for pagination. This can be populated by the `next_cursor` value returned
-         * from the initial request.
+         * Cursor for pagination. This can be populated by the `next_cursor` value returned from the
+         * initial request.
          */
-        fun cursor(cursor: String) = apply {
-            this.cursor = cursor
-        }
+        fun cursor(cursor: String) = apply { this.cursor = cursor }
 
         /** The number of items to fetch. Defaults to 20. */
-        fun limit(limit: Long) = apply {
-            this.limit = limit
-        }
+        fun limit(limit: Long) = apply { this.limit = limit }
 
         fun additionalQueryParams(additionalQueryParams: Map<String, List<String>>) = apply {
             this.additionalQueryParams.clear()
@@ -162,15 +126,14 @@ class EventBackfillListParams constructor(
             additionalHeaders.forEach(this::putHeaders)
         }
 
-        fun removeHeader(name: String) = apply {
-            this.additionalHeaders.put(name, mutableListOf())
-        }
+        fun removeHeader(name: String) = apply { this.additionalHeaders.put(name, mutableListOf()) }
 
-        fun build(): EventBackfillListParams = EventBackfillListParams(
-            cursor,
-            limit,
-            additionalQueryParams.mapValues { it.value.toUnmodifiable() }.toUnmodifiable(),
-            additionalHeaders.mapValues { it.value.toUnmodifiable() }.toUnmodifiable(),
-        )
+        fun build(): EventBackfillListParams =
+            EventBackfillListParams(
+                cursor,
+                limit,
+                additionalQueryParams.mapValues { it.value.toUnmodifiable() }.toUnmodifiable(),
+                additionalHeaders.mapValues { it.value.toUnmodifiable() }.toUnmodifiable(),
+            )
     }
 }
