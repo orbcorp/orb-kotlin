@@ -2,33 +2,55 @@
 
 package com.withorb.api.models
 
+import com.fasterxml.jackson.annotation.JsonAnyGetter
+import com.fasterxml.jackson.annotation.JsonAnySetter
 import com.fasterxml.jackson.annotation.JsonCreator
-import com.withorb.api.core.Enum
-import com.withorb.api.core.JsonField
-import com.withorb.api.core.JsonValue
-import com.withorb.api.core.NoAutoDetect
-import com.withorb.api.core.toUnmodifiable
-import com.withorb.api.errors.OrbInvalidDataException
-import com.withorb.api.models.*
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties
+import com.fasterxml.jackson.annotation.JsonProperty
+import com.fasterxml.jackson.core.JsonGenerator
+import com.fasterxml.jackson.core.ObjectCodec
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize
+import com.fasterxml.jackson.databind.annotation.JsonSerialize
+import com.fasterxml.jackson.databind.JsonNode
+import com.fasterxml.jackson.databind.SerializerProvider
+import com.fasterxml.jackson.module.kotlin.jacksonTypeRef
+import org.apache.hc.core5.http.ContentType
+import java.time.LocalDate
 import java.time.OffsetDateTime
 import java.time.format.DateTimeFormatter
 import java.util.Objects
+import java.util.Optional
+import java.util.UUID
+import com.withorb.api.core.BaseDeserializer
+import com.withorb.api.core.BaseSerializer
+import com.withorb.api.core.getOrThrow
+import com.withorb.api.core.ExcludeMissing
+import com.withorb.api.core.JsonField
+import com.withorb.api.core.JsonMissing
+import com.withorb.api.core.JsonValue
+import com.withorb.api.core.MultipartFormValue
+import com.withorb.api.core.toUnmodifiable
+import com.withorb.api.core.NoAutoDetect
+import com.withorb.api.core.Enum
+import com.withorb.api.core.ContentTypes
+import com.withorb.api.errors.OrbInvalidDataException
+import com.withorb.api.models.*
 
-class SubscriptionFetchUsageParams
-constructor(
-    private val subscriptionId: String,
-    private val billableMetricId: String?,
-    private val firstDimensionKey: String?,
-    private val firstDimensionValue: String?,
-    private val granularity: Granularity?,
-    private val groupBy: String?,
-    private val secondDimensionKey: String?,
-    private val secondDimensionValue: String?,
-    private val timeframeEnd: OffsetDateTime?,
-    private val timeframeStart: OffsetDateTime?,
-    private val viewMode: ViewMode?,
-    private val additionalQueryParams: Map<String, List<String>>,
-    private val additionalHeaders: Map<String, List<String>>,
+class SubscriptionFetchUsageParams constructor(
+  private val subscriptionId: String,
+  private val billableMetricId: String?,
+  private val firstDimensionKey: String?,
+  private val firstDimensionValue: String?,
+  private val granularity: Granularity?,
+  private val groupBy: String?,
+  private val secondDimensionKey: String?,
+  private val secondDimensionValue: String?,
+  private val timeframeEnd: OffsetDateTime?,
+  private val timeframeStart: OffsetDateTime?,
+  private val viewMode: ViewMode?,
+  private val additionalQueryParams: Map<String, List<String>>,
+  private val additionalHeaders: Map<String, List<String>>,
+
 ) {
 
     fun subscriptionId(): String = subscriptionId
@@ -54,34 +76,48 @@ constructor(
     fun viewMode(): ViewMode? = viewMode
 
     internal fun getQueryParams(): Map<String, List<String>> {
-        val params = mutableMapOf<String, List<String>>()
-        this.billableMetricId?.let { params.put("billable_metric_id", listOf(it.toString())) }
-        this.firstDimensionKey?.let { params.put("first_dimension_key", listOf(it.toString())) }
-        this.firstDimensionValue?.let { params.put("first_dimension_value", listOf(it.toString())) }
-        this.granularity?.let { params.put("granularity", listOf(it.toString())) }
-        this.groupBy?.let { params.put("group_by", listOf(it.toString())) }
-        this.secondDimensionKey?.let { params.put("second_dimension_key", listOf(it.toString())) }
-        this.secondDimensionValue?.let {
-            params.put("second_dimension_value", listOf(it.toString()))
-        }
-        this.timeframeEnd?.let {
-            params.put("timeframe_end", listOf(DateTimeFormatter.ISO_OFFSET_DATE_TIME.format(it)))
-        }
-        this.timeframeStart?.let {
-            params.put("timeframe_start", listOf(DateTimeFormatter.ISO_OFFSET_DATE_TIME.format(it)))
-        }
-        this.viewMode?.let { params.put("view_mode", listOf(it.toString())) }
-        params.putAll(additionalQueryParams)
-        return params.toUnmodifiable()
+      val params = mutableMapOf<String, List<String>>()
+      this.billableMetricId?.let {
+          params.put("billable_metric_id", listOf(it.toString()))
+      }
+      this.firstDimensionKey?.let {
+          params.put("first_dimension_key", listOf(it.toString()))
+      }
+      this.firstDimensionValue?.let {
+          params.put("first_dimension_value", listOf(it.toString()))
+      }
+      this.granularity?.let {
+          params.put("granularity", listOf(it.toString()))
+      }
+      this.groupBy?.let {
+          params.put("group_by", listOf(it.toString()))
+      }
+      this.secondDimensionKey?.let {
+          params.put("second_dimension_key", listOf(it.toString()))
+      }
+      this.secondDimensionValue?.let {
+          params.put("second_dimension_value", listOf(it.toString()))
+      }
+      this.timeframeEnd?.let {
+          params.put("timeframe_end", listOf(DateTimeFormatter.ISO_OFFSET_DATE_TIME.format(it)))
+      }
+      this.timeframeStart?.let {
+          params.put("timeframe_start", listOf(DateTimeFormatter.ISO_OFFSET_DATE_TIME.format(it)))
+      }
+      this.viewMode?.let {
+          params.put("view_mode", listOf(it.toString()))
+      }
+      params.putAll(additionalQueryParams)
+      return params.toUnmodifiable()
     }
 
     internal fun getHeaders(): Map<String, List<String>> = additionalHeaders
 
     fun getPathParam(index: Int): String {
-        return when (index) {
-            0 -> subscriptionId
-            else -> ""
-        }
+      return when (index) {
+          0 -> subscriptionId
+          else -> ""
+      }
     }
 
     fun _additionalQueryParams(): Map<String, List<String>> = additionalQueryParams
@@ -89,46 +125,45 @@ constructor(
     fun _additionalHeaders(): Map<String, List<String>> = additionalHeaders
 
     override fun equals(other: Any?): Boolean {
-        if (this === other) {
-            return true
-        }
+      if (this === other) {
+          return true
+      }
 
-        return other is SubscriptionFetchUsageParams &&
-            this.subscriptionId == other.subscriptionId &&
-            this.billableMetricId == other.billableMetricId &&
-            this.firstDimensionKey == other.firstDimensionKey &&
-            this.firstDimensionValue == other.firstDimensionValue &&
-            this.granularity == other.granularity &&
-            this.groupBy == other.groupBy &&
-            this.secondDimensionKey == other.secondDimensionKey &&
-            this.secondDimensionValue == other.secondDimensionValue &&
-            this.timeframeEnd == other.timeframeEnd &&
-            this.timeframeStart == other.timeframeStart &&
-            this.viewMode == other.viewMode &&
-            this.additionalQueryParams == other.additionalQueryParams &&
-            this.additionalHeaders == other.additionalHeaders
+      return other is SubscriptionFetchUsageParams &&
+          this.subscriptionId == other.subscriptionId &&
+          this.billableMetricId == other.billableMetricId &&
+          this.firstDimensionKey == other.firstDimensionKey &&
+          this.firstDimensionValue == other.firstDimensionValue &&
+          this.granularity == other.granularity &&
+          this.groupBy == other.groupBy &&
+          this.secondDimensionKey == other.secondDimensionKey &&
+          this.secondDimensionValue == other.secondDimensionValue &&
+          this.timeframeEnd == other.timeframeEnd &&
+          this.timeframeStart == other.timeframeStart &&
+          this.viewMode == other.viewMode &&
+          this.additionalQueryParams == other.additionalQueryParams &&
+          this.additionalHeaders == other.additionalHeaders
     }
 
     override fun hashCode(): Int {
-        return Objects.hash(
-            subscriptionId,
-            billableMetricId,
-            firstDimensionKey,
-            firstDimensionValue,
-            granularity,
-            groupBy,
-            secondDimensionKey,
-            secondDimensionValue,
-            timeframeEnd,
-            timeframeStart,
-            viewMode,
-            additionalQueryParams,
-            additionalHeaders,
-        )
+      return Objects.hash(
+          subscriptionId,
+          billableMetricId,
+          firstDimensionKey,
+          firstDimensionValue,
+          granularity,
+          groupBy,
+          secondDimensionKey,
+          secondDimensionValue,
+          timeframeEnd,
+          timeframeStart,
+          viewMode,
+          additionalQueryParams,
+          additionalHeaders,
+      )
     }
 
-    override fun toString() =
-        "SubscriptionFetchUsageParams{subscriptionId=$subscriptionId, billableMetricId=$billableMetricId, firstDimensionKey=$firstDimensionKey, firstDimensionValue=$firstDimensionValue, granularity=$granularity, groupBy=$groupBy, secondDimensionKey=$secondDimensionKey, secondDimensionValue=$secondDimensionValue, timeframeEnd=$timeframeEnd, timeframeStart=$timeframeStart, viewMode=$viewMode, additionalQueryParams=$additionalQueryParams, additionalHeaders=$additionalHeaders}"
+    override fun toString() = "SubscriptionFetchUsageParams{subscriptionId=$subscriptionId, billableMetricId=$billableMetricId, firstDimensionKey=$firstDimensionKey, firstDimensionValue=$firstDimensionValue, granularity=$granularity, groupBy=$groupBy, secondDimensionKey=$secondDimensionKey, secondDimensionValue=$secondDimensionValue, timeframeEnd=$timeframeEnd, timeframeStart=$timeframeStart, viewMode=$viewMode, additionalQueryParams=$additionalQueryParams, additionalHeaders=$additionalHeaders}"
 
     fun toBuilder() = Builder().from(this)
 
@@ -170,12 +205,14 @@ constructor(
             additionalHeaders(subscriptionFetchUsageParams.additionalHeaders)
         }
 
-        fun subscriptionId(subscriptionId: String) = apply { this.subscriptionId = subscriptionId }
+        fun subscriptionId(subscriptionId: String) = apply {
+            this.subscriptionId = subscriptionId
+        }
 
         /**
-         * When specified in conjunction with `group_by`, this parameter filters usage to a single
-         * billable metric. Note that both `group_by` and `billable_metric_id` must be specified
-         * together.
+         * When specified in conjunction with `group_by`, this parameter filters usage to a
+         * single billable metric. Note that both `group_by` and `billable_metric_id` must
+         * be specified together.
          */
         fun billableMetricId(billableMetricId: String) = apply {
             this.billableMetricId = billableMetricId
@@ -190,10 +227,14 @@ constructor(
         }
 
         /** This determines the windowing of usage reporting. */
-        fun granularity(granularity: Granularity) = apply { this.granularity = granularity }
+        fun granularity(granularity: Granularity) = apply {
+            this.granularity = granularity
+        }
 
         /** Groups per-price usage by the key provided. */
-        fun groupBy(groupBy: String) = apply { this.groupBy = groupBy }
+        fun groupBy(groupBy: String) = apply {
+            this.groupBy = groupBy
+        }
 
         fun secondDimensionKey(secondDimensionKey: String) = apply {
             this.secondDimensionKey = secondDimensionKey
@@ -204,7 +245,9 @@ constructor(
         }
 
         /** Usage returned is exclusive of `timeframe_end`. */
-        fun timeframeEnd(timeframeEnd: OffsetDateTime) = apply { this.timeframeEnd = timeframeEnd }
+        fun timeframeEnd(timeframeEnd: OffsetDateTime) = apply {
+            this.timeframeEnd = timeframeEnd
+        }
 
         /** Usage returned is inclusive of `timeframe_start`. */
         fun timeframeStart(timeframeStart: OffsetDateTime) = apply {
@@ -212,11 +255,14 @@ constructor(
         }
 
         /**
-         * Controls whether Orb returns cumulative usage since the start of the billing period, or
-         * incremental day-by-day usage. If your customer has minimums or discounts, it's strongly
-         * recommended that you use the default cumulative behavior.
+         * Controls whether Orb returns cumulative usage since the start of the billing
+         * period, or incremental day-by-day usage. If your customer has minimums or
+         * discounts, it's strongly recommended that you use the default cumulative
+         * behavior.
          */
-        fun viewMode(viewMode: ViewMode) = apply { this.viewMode = viewMode }
+        fun viewMode(viewMode: ViewMode) = apply {
+            this.viewMode = viewMode
+        }
 
         fun additionalQueryParams(additionalQueryParams: Map<String, List<String>>) = apply {
             this.additionalQueryParams.clear()
@@ -256,40 +302,41 @@ constructor(
             additionalHeaders.forEach(this::putHeaders)
         }
 
-        fun removeHeader(name: String) = apply { this.additionalHeaders.put(name, mutableListOf()) }
+        fun removeHeader(name: String) = apply {
+            this.additionalHeaders.put(name, mutableListOf())
+        }
 
-        fun build(): SubscriptionFetchUsageParams =
-            SubscriptionFetchUsageParams(
-                checkNotNull(subscriptionId) { "`subscriptionId` is required but was not set" },
-                billableMetricId,
-                firstDimensionKey,
-                firstDimensionValue,
-                granularity,
-                groupBy,
-                secondDimensionKey,
-                secondDimensionValue,
-                timeframeEnd,
-                timeframeStart,
-                viewMode,
-                additionalQueryParams.mapValues { it.value.toUnmodifiable() }.toUnmodifiable(),
-                additionalHeaders.mapValues { it.value.toUnmodifiable() }.toUnmodifiable(),
-            )
+        fun build(): SubscriptionFetchUsageParams = SubscriptionFetchUsageParams(
+            checkNotNull(subscriptionId) {
+                "`subscriptionId` is required but was not set"
+            },
+            billableMetricId,
+            firstDimensionKey,
+            firstDimensionValue,
+            granularity,
+            groupBy,
+            secondDimensionKey,
+            secondDimensionValue,
+            timeframeEnd,
+            timeframeStart,
+            viewMode,
+            additionalQueryParams.mapValues { it.value.toUnmodifiable() }.toUnmodifiable(),
+            additionalHeaders.mapValues { it.value.toUnmodifiable() }.toUnmodifiable(),
+        )
     }
 
-    class Granularity
-    @JsonCreator
-    private constructor(
-        private val value: JsonField<String>,
-    ) : Enum {
+    class Granularity @JsonCreator private constructor(private val value: JsonField<String>, ) : Enum {
 
-        @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
+        @com.fasterxml.jackson.annotation.JsonValue
+        fun _value(): JsonField<String> = value
 
         override fun equals(other: Any?): Boolean {
-            if (this === other) {
-                return true
-            }
+          if (this === other) {
+              return true
+          }
 
-            return other is Granularity && this.value == other.value
+          return other is Granularity &&
+              this.value == other.value
         }
 
         override fun hashCode() = value.hashCode()
@@ -312,35 +359,31 @@ constructor(
             _UNKNOWN,
         }
 
-        fun value(): Value =
-            when (this) {
-                DAY -> Value.DAY
-                else -> Value._UNKNOWN
-            }
+        fun value(): Value = when (this) {
+            DAY -> Value.DAY
+            else -> Value._UNKNOWN
+        }
 
-        fun known(): Known =
-            when (this) {
-                DAY -> Known.DAY
-                else -> throw OrbInvalidDataException("Unknown Granularity: $value")
-            }
+        fun known(): Known = when (this) {
+            DAY -> Known.DAY
+            else -> throw OrbInvalidDataException("Unknown Granularity: $value")
+        }
 
         fun asString(): String = _value().asStringOrThrow()
     }
 
-    class ViewMode
-    @JsonCreator
-    private constructor(
-        private val value: JsonField<String>,
-    ) : Enum {
+    class ViewMode @JsonCreator private constructor(private val value: JsonField<String>, ) : Enum {
 
-        @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
+        @com.fasterxml.jackson.annotation.JsonValue
+        fun _value(): JsonField<String> = value
 
         override fun equals(other: Any?): Boolean {
-            if (this === other) {
-                return true
-            }
+          if (this === other) {
+              return true
+          }
 
-            return other is ViewMode && this.value == other.value
+          return other is ViewMode &&
+              this.value == other.value
         }
 
         override fun hashCode() = value.hashCode()
@@ -367,19 +410,17 @@ constructor(
             _UNKNOWN,
         }
 
-        fun value(): Value =
-            when (this) {
-                PERIODIC -> Value.PERIODIC
-                CUMULATIVE -> Value.CUMULATIVE
-                else -> Value._UNKNOWN
-            }
+        fun value(): Value = when (this) {
+            PERIODIC -> Value.PERIODIC
+            CUMULATIVE -> Value.CUMULATIVE
+            else -> Value._UNKNOWN
+        }
 
-        fun known(): Known =
-            when (this) {
-                PERIODIC -> Known.PERIODIC
-                CUMULATIVE -> Known.CUMULATIVE
-                else -> throw OrbInvalidDataException("Unknown ViewMode: $value")
-            }
+        fun known(): Known = when (this) {
+            PERIODIC -> Known.PERIODIC
+            CUMULATIVE -> Known.CUMULATIVE
+            else -> throw OrbInvalidDataException("Unknown ViewMode: $value")
+        }
 
         fun asString(): String = _value().asStringOrThrow()
     }

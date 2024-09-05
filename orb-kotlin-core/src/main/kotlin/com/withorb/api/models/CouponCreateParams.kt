@@ -5,37 +5,46 @@ package com.withorb.api.models
 import com.fasterxml.jackson.annotation.JsonAnyGetter
 import com.fasterxml.jackson.annotation.JsonAnySetter
 import com.fasterxml.jackson.annotation.JsonCreator
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonProperty
 import com.fasterxml.jackson.core.JsonGenerator
 import com.fasterxml.jackson.core.ObjectCodec
-import com.fasterxml.jackson.databind.JsonNode
-import com.fasterxml.jackson.databind.SerializerProvider
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize
 import com.fasterxml.jackson.databind.annotation.JsonSerialize
+import com.fasterxml.jackson.databind.JsonNode
+import com.fasterxml.jackson.databind.SerializerProvider
 import com.fasterxml.jackson.module.kotlin.jacksonTypeRef
+import org.apache.hc.core5.http.ContentType
+import java.time.LocalDate
+import java.time.OffsetDateTime
+import java.time.format.DateTimeFormatter
+import java.util.Objects
+import java.util.Optional
+import java.util.UUID
 import com.withorb.api.core.BaseDeserializer
 import com.withorb.api.core.BaseSerializer
-import com.withorb.api.core.Enum
+import com.withorb.api.core.getOrThrow
 import com.withorb.api.core.ExcludeMissing
 import com.withorb.api.core.JsonField
 import com.withorb.api.core.JsonMissing
 import com.withorb.api.core.JsonValue
-import com.withorb.api.core.NoAutoDetect
-import com.withorb.api.core.getOrThrow
+import com.withorb.api.core.MultipartFormValue
 import com.withorb.api.core.toUnmodifiable
+import com.withorb.api.core.NoAutoDetect
+import com.withorb.api.core.Enum
+import com.withorb.api.core.ContentTypes
 import com.withorb.api.errors.OrbInvalidDataException
 import com.withorb.api.models.*
-import java.util.Objects
 
-class CouponCreateParams
-constructor(
-    private val discount: Discount,
-    private val redemptionCode: String,
-    private val durationInMonths: Long?,
-    private val maxRedemptions: Long?,
-    private val additionalQueryParams: Map<String, List<String>>,
-    private val additionalHeaders: Map<String, List<String>>,
-    private val additionalBodyProperties: Map<String, JsonValue>,
+class CouponCreateParams constructor(
+  private val discount: Discount,
+  private val redemptionCode: String,
+  private val durationInMonths: Long?,
+  private val maxRedemptions: Long?,
+  private val additionalQueryParams: Map<String, List<String>>,
+  private val additionalHeaders: Map<String, List<String>>,
+  private val additionalBodyProperties: Map<String, JsonValue>,
+
 ) {
 
     fun discount(): Discount = discount
@@ -47,13 +56,13 @@ constructor(
     fun maxRedemptions(): Long? = maxRedemptions
 
     internal fun getBody(): CouponCreateBody {
-        return CouponCreateBody(
-            discount,
-            redemptionCode,
-            durationInMonths,
-            maxRedemptions,
-            additionalBodyProperties,
-        )
+      return CouponCreateBody(
+          discount,
+          redemptionCode,
+          durationInMonths,
+          maxRedemptions,
+          additionalBodyProperties,
+      )
     }
 
     internal fun getQueryParams(): Map<String, List<String>> = additionalQueryParams
@@ -62,33 +71,37 @@ constructor(
 
     @JsonDeserialize(builder = CouponCreateBody.Builder::class)
     @NoAutoDetect
-    class CouponCreateBody
-    internal constructor(
-        private val discount: Discount?,
-        private val redemptionCode: String?,
-        private val durationInMonths: Long?,
-        private val maxRedemptions: Long?,
-        private val additionalProperties: Map<String, JsonValue>,
+    class CouponCreateBody internal constructor(
+      private val discount: Discount?,
+      private val redemptionCode: String?,
+      private val durationInMonths: Long?,
+      private val maxRedemptions: Long?,
+      private val additionalProperties: Map<String, JsonValue>,
+
     ) {
 
         private var hashCode: Int = 0
 
-        @JsonProperty("discount") fun discount(): Discount? = discount
+        @JsonProperty("discount")
+        fun discount(): Discount? = discount
 
         /** This string can be used to redeem this coupon for a given subscription. */
-        @JsonProperty("redemption_code") fun redemptionCode(): String? = redemptionCode
+        @JsonProperty("redemption_code")
+        fun redemptionCode(): String? = redemptionCode
 
         /**
-         * This allows for a coupon's discount to apply for a limited time (determined in months); a
-         * `null` value here means "unlimited time".
+         * This allows for a coupon's discount to apply for a limited time (determined in
+         * months); a `null` value here means "unlimited time".
          */
-        @JsonProperty("duration_in_months") fun durationInMonths(): Long? = durationInMonths
+        @JsonProperty("duration_in_months")
+        fun durationInMonths(): Long? = durationInMonths
 
         /**
-         * The maximum number of redemptions allowed for this coupon before it is exhausted;`null`
-         * here means "unlimited".
+         * The maximum number of redemptions allowed for this coupon before it is
+         * exhausted;`null` here means "unlimited".
          */
-        @JsonProperty("max_redemptions") fun maxRedemptions(): Long? = maxRedemptions
+        @JsonProperty("max_redemptions")
+        fun maxRedemptions(): Long? = maxRedemptions
 
         @JsonAnyGetter
         @ExcludeMissing
@@ -97,34 +110,32 @@ constructor(
         fun toBuilder() = Builder().from(this)
 
         override fun equals(other: Any?): Boolean {
-            if (this === other) {
-                return true
-            }
+          if (this === other) {
+              return true
+          }
 
-            return other is CouponCreateBody &&
-                this.discount == other.discount &&
-                this.redemptionCode == other.redemptionCode &&
-                this.durationInMonths == other.durationInMonths &&
-                this.maxRedemptions == other.maxRedemptions &&
-                this.additionalProperties == other.additionalProperties
+          return other is CouponCreateBody &&
+              this.discount == other.discount &&
+              this.redemptionCode == other.redemptionCode &&
+              this.durationInMonths == other.durationInMonths &&
+              this.maxRedemptions == other.maxRedemptions &&
+              this.additionalProperties == other.additionalProperties
         }
 
         override fun hashCode(): Int {
-            if (hashCode == 0) {
-                hashCode =
-                    Objects.hash(
-                        discount,
-                        redemptionCode,
-                        durationInMonths,
-                        maxRedemptions,
-                        additionalProperties,
-                    )
-            }
-            return hashCode
+          if (hashCode == 0) {
+            hashCode = Objects.hash(
+                discount,
+                redemptionCode,
+                durationInMonths,
+                maxRedemptions,
+                additionalProperties,
+            )
+          }
+          return hashCode
         }
 
-        override fun toString() =
-            "CouponCreateBody{discount=$discount, redemptionCode=$redemptionCode, durationInMonths=$durationInMonths, maxRedemptions=$maxRedemptions, additionalProperties=$additionalProperties}"
+        override fun toString() = "CouponCreateBody{discount=$discount, redemptionCode=$redemptionCode, durationInMonths=$durationInMonths, maxRedemptions=$maxRedemptions, additionalProperties=$additionalProperties}"
 
         companion object {
 
@@ -148,7 +159,9 @@ constructor(
             }
 
             @JsonProperty("discount")
-            fun discount(discount: Discount) = apply { this.discount = discount }
+            fun discount(discount: Discount) = apply {
+                this.discount = discount
+            }
 
             /** This string can be used to redeem this coupon for a given subscription. */
             @JsonProperty("redemption_code")
@@ -188,14 +201,17 @@ constructor(
                 this.additionalProperties.putAll(additionalProperties)
             }
 
-            fun build(): CouponCreateBody =
-                CouponCreateBody(
-                    checkNotNull(discount) { "`discount` is required but was not set" },
-                    checkNotNull(redemptionCode) { "`redemptionCode` is required but was not set" },
-                    durationInMonths,
-                    maxRedemptions,
-                    additionalProperties.toUnmodifiable(),
-                )
+            fun build(): CouponCreateBody = CouponCreateBody(
+                checkNotNull(discount) {
+                    "`discount` is required but was not set"
+                },
+                checkNotNull(redemptionCode) {
+                    "`redemptionCode` is required but was not set"
+                },
+                durationInMonths,
+                maxRedemptions,
+                additionalProperties.toUnmodifiable(),
+            )
         }
     }
 
@@ -206,34 +222,33 @@ constructor(
     fun _additionalBodyProperties(): Map<String, JsonValue> = additionalBodyProperties
 
     override fun equals(other: Any?): Boolean {
-        if (this === other) {
-            return true
-        }
+      if (this === other) {
+          return true
+      }
 
-        return other is CouponCreateParams &&
-            this.discount == other.discount &&
-            this.redemptionCode == other.redemptionCode &&
-            this.durationInMonths == other.durationInMonths &&
-            this.maxRedemptions == other.maxRedemptions &&
-            this.additionalQueryParams == other.additionalQueryParams &&
-            this.additionalHeaders == other.additionalHeaders &&
-            this.additionalBodyProperties == other.additionalBodyProperties
+      return other is CouponCreateParams &&
+          this.discount == other.discount &&
+          this.redemptionCode == other.redemptionCode &&
+          this.durationInMonths == other.durationInMonths &&
+          this.maxRedemptions == other.maxRedemptions &&
+          this.additionalQueryParams == other.additionalQueryParams &&
+          this.additionalHeaders == other.additionalHeaders &&
+          this.additionalBodyProperties == other.additionalBodyProperties
     }
 
     override fun hashCode(): Int {
-        return Objects.hash(
-            discount,
-            redemptionCode,
-            durationInMonths,
-            maxRedemptions,
-            additionalQueryParams,
-            additionalHeaders,
-            additionalBodyProperties,
-        )
+      return Objects.hash(
+          discount,
+          redemptionCode,
+          durationInMonths,
+          maxRedemptions,
+          additionalQueryParams,
+          additionalHeaders,
+          additionalBodyProperties,
+      )
     }
 
-    override fun toString() =
-        "CouponCreateParams{discount=$discount, redemptionCode=$redemptionCode, durationInMonths=$durationInMonths, maxRedemptions=$maxRedemptions, additionalQueryParams=$additionalQueryParams, additionalHeaders=$additionalHeaders, additionalBodyProperties=$additionalBodyProperties}"
+    override fun toString() = "CouponCreateParams{discount=$discount, redemptionCode=$redemptionCode, durationInMonths=$durationInMonths, maxRedemptions=$maxRedemptions, additionalQueryParams=$additionalQueryParams, additionalHeaders=$additionalHeaders, additionalBodyProperties=$additionalBodyProperties}"
 
     fun toBuilder() = Builder().from(this)
 
@@ -263,7 +278,9 @@ constructor(
             additionalBodyProperties(couponCreateParams.additionalBodyProperties)
         }
 
-        fun discount(discount: Discount) = apply { this.discount = discount }
+        fun discount(discount: Discount) = apply {
+            this.discount = discount
+        }
 
         fun discount(newCouponPercentageDiscount: Discount.NewCouponPercentageDiscount) = apply {
             this.discount = Discount.ofNewCouponPercentageDiscount(newCouponPercentageDiscount)
@@ -274,21 +291,25 @@ constructor(
         }
 
         /** This string can be used to redeem this coupon for a given subscription. */
-        fun redemptionCode(redemptionCode: String) = apply { this.redemptionCode = redemptionCode }
+        fun redemptionCode(redemptionCode: String) = apply {
+            this.redemptionCode = redemptionCode
+        }
 
         /**
-         * This allows for a coupon's discount to apply for a limited time (determined in months); a
-         * `null` value here means "unlimited time".
+         * This allows for a coupon's discount to apply for a limited time (determined in
+         * months); a `null` value here means "unlimited time".
          */
         fun durationInMonths(durationInMonths: Long) = apply {
             this.durationInMonths = durationInMonths
         }
 
         /**
-         * The maximum number of redemptions allowed for this coupon before it is exhausted;`null`
-         * here means "unlimited".
+         * The maximum number of redemptions allowed for this coupon before it is
+         * exhausted;`null` here means "unlimited".
          */
-        fun maxRedemptions(maxRedemptions: Long) = apply { this.maxRedemptions = maxRedemptions }
+        fun maxRedemptions(maxRedemptions: Long) = apply {
+            this.maxRedemptions = maxRedemptions
+        }
 
         fun additionalQueryParams(additionalQueryParams: Map<String, List<String>>) = apply {
             this.additionalQueryParams.clear()
@@ -328,7 +349,9 @@ constructor(
             additionalHeaders.forEach(this::putHeaders)
         }
 
-        fun removeHeader(name: String) = apply { this.additionalHeaders.put(name, mutableListOf()) }
+        fun removeHeader(name: String) = apply {
+            this.additionalHeaders.put(name, mutableListOf())
+        }
 
         fun additionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) = apply {
             this.additionalBodyProperties.clear()
@@ -339,165 +362,132 @@ constructor(
             this.additionalBodyProperties.put(key, value)
         }
 
-        fun putAllAdditionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) =
-            apply {
-                this.additionalBodyProperties.putAll(additionalBodyProperties)
-            }
+        fun putAllAdditionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) = apply {
+            this.additionalBodyProperties.putAll(additionalBodyProperties)
+        }
 
-        fun build(): CouponCreateParams =
-            CouponCreateParams(
-                checkNotNull(discount) { "`discount` is required but was not set" },
-                checkNotNull(redemptionCode) { "`redemptionCode` is required but was not set" },
-                durationInMonths,
-                maxRedemptions,
-                additionalQueryParams.mapValues { it.value.toUnmodifiable() }.toUnmodifiable(),
-                additionalHeaders.mapValues { it.value.toUnmodifiable() }.toUnmodifiable(),
-                additionalBodyProperties.toUnmodifiable(),
-            )
+        fun build(): CouponCreateParams = CouponCreateParams(
+            checkNotNull(discount) {
+                "`discount` is required but was not set"
+            },
+            checkNotNull(redemptionCode) {
+                "`redemptionCode` is required but was not set"
+            },
+            durationInMonths,
+            maxRedemptions,
+            additionalQueryParams.mapValues { it.value.toUnmodifiable() }.toUnmodifiable(),
+            additionalHeaders.mapValues { it.value.toUnmodifiable() }.toUnmodifiable(),
+            additionalBodyProperties.toUnmodifiable(),
+        )
     }
 
     @JsonDeserialize(using = Discount.Deserializer::class)
     @JsonSerialize(using = Discount.Serializer::class)
-    class Discount
-    private constructor(
-        private val newCouponPercentageDiscount: NewCouponPercentageDiscount? = null,
-        private val newCouponAmountDiscount: NewCouponAmountDiscount? = null,
-        private val _json: JsonValue? = null,
-    ) {
+    class Discount private constructor(private val newCouponPercentageDiscount: NewCouponPercentageDiscount? = null, private val newCouponAmountDiscount: NewCouponAmountDiscount? = null, private val _json: JsonValue? = null, ) {
 
         private var validated: Boolean = false
 
-        fun newCouponPercentageDiscount(): NewCouponPercentageDiscount? =
-            newCouponPercentageDiscount
-
+        fun newCouponPercentageDiscount(): NewCouponPercentageDiscount? = newCouponPercentageDiscount
         fun newCouponAmountDiscount(): NewCouponAmountDiscount? = newCouponAmountDiscount
 
         fun isNewCouponPercentageDiscount(): Boolean = newCouponPercentageDiscount != null
-
         fun isNewCouponAmountDiscount(): Boolean = newCouponAmountDiscount != null
 
-        fun asNewCouponPercentageDiscount(): NewCouponPercentageDiscount =
-            newCouponPercentageDiscount.getOrThrow("newCouponPercentageDiscount")
-
-        fun asNewCouponAmountDiscount(): NewCouponAmountDiscount =
-            newCouponAmountDiscount.getOrThrow("newCouponAmountDiscount")
+        fun asNewCouponPercentageDiscount(): NewCouponPercentageDiscount = newCouponPercentageDiscount.getOrThrow("newCouponPercentageDiscount")
+        fun asNewCouponAmountDiscount(): NewCouponAmountDiscount = newCouponAmountDiscount.getOrThrow("newCouponAmountDiscount")
 
         fun _json(): JsonValue? = _json
 
         fun <T> accept(visitor: Visitor<T>): T {
-            return when {
-                newCouponPercentageDiscount != null ->
-                    visitor.visitNewCouponPercentageDiscount(newCouponPercentageDiscount)
-                newCouponAmountDiscount != null ->
-                    visitor.visitNewCouponAmountDiscount(newCouponAmountDiscount)
-                else -> visitor.unknown(_json)
-            }
+          return when {
+              newCouponPercentageDiscount != null -> visitor.visitNewCouponPercentageDiscount(newCouponPercentageDiscount)
+              newCouponAmountDiscount != null -> visitor.visitNewCouponAmountDiscount(newCouponAmountDiscount)
+              else -> visitor.unknown(_json)
+          }
         }
 
         fun validate(): Discount = apply {
             if (!validated) {
-                if (newCouponPercentageDiscount == null && newCouponAmountDiscount == null) {
-                    throw OrbInvalidDataException("Unknown Discount: $_json")
-                }
-                newCouponPercentageDiscount?.validate()
-                newCouponAmountDiscount?.validate()
-                validated = true
+              if (newCouponPercentageDiscount == null && newCouponAmountDiscount == null) {
+                throw OrbInvalidDataException("Unknown Discount: $_json")
+              }
+              newCouponPercentageDiscount?.validate()
+              newCouponAmountDiscount?.validate()
+              validated = true
             }
         }
 
         override fun equals(other: Any?): Boolean {
-            if (this === other) {
-                return true
-            }
+          if (this === other) {
+              return true
+          }
 
-            return other is Discount &&
-                this.newCouponPercentageDiscount == other.newCouponPercentageDiscount &&
-                this.newCouponAmountDiscount == other.newCouponAmountDiscount
+          return other is Discount &&
+              this.newCouponPercentageDiscount == other.newCouponPercentageDiscount &&
+              this.newCouponAmountDiscount == other.newCouponAmountDiscount
         }
 
         override fun hashCode(): Int {
-            return Objects.hash(newCouponPercentageDiscount, newCouponAmountDiscount)
+          return Objects.hash(newCouponPercentageDiscount, newCouponAmountDiscount)
         }
 
         override fun toString(): String {
-            return when {
-                newCouponPercentageDiscount != null ->
-                    "Discount{newCouponPercentageDiscount=$newCouponPercentageDiscount}"
-                newCouponAmountDiscount != null ->
-                    "Discount{newCouponAmountDiscount=$newCouponAmountDiscount}"
-                _json != null -> "Discount{_unknown=$_json}"
-                else -> throw IllegalStateException("Invalid Discount")
-            }
+          return when {
+              newCouponPercentageDiscount != null -> "Discount{newCouponPercentageDiscount=$newCouponPercentageDiscount}"
+              newCouponAmountDiscount != null -> "Discount{newCouponAmountDiscount=$newCouponAmountDiscount}"
+              _json != null -> "Discount{_unknown=$_json}"
+              else -> throw IllegalStateException("Invalid Discount")
+          }
         }
 
         companion object {
 
-            fun ofNewCouponPercentageDiscount(
-                newCouponPercentageDiscount: NewCouponPercentageDiscount
-            ) = Discount(newCouponPercentageDiscount = newCouponPercentageDiscount)
+            fun ofNewCouponPercentageDiscount(newCouponPercentageDiscount: NewCouponPercentageDiscount) = Discount(newCouponPercentageDiscount = newCouponPercentageDiscount)
 
-            fun ofNewCouponAmountDiscount(newCouponAmountDiscount: NewCouponAmountDiscount) =
-                Discount(newCouponAmountDiscount = newCouponAmountDiscount)
+            fun ofNewCouponAmountDiscount(newCouponAmountDiscount: NewCouponAmountDiscount) = Discount(newCouponAmountDiscount = newCouponAmountDiscount)
         }
 
         interface Visitor<out T> {
 
-            fun visitNewCouponPercentageDiscount(
-                newCouponPercentageDiscount: NewCouponPercentageDiscount
-            ): T
+            fun visitNewCouponPercentageDiscount(newCouponPercentageDiscount: NewCouponPercentageDiscount): T
 
             fun visitNewCouponAmountDiscount(newCouponAmountDiscount: NewCouponAmountDiscount): T
 
             fun unknown(json: JsonValue?): T {
-                throw OrbInvalidDataException("Unknown Discount: $json")
+              throw OrbInvalidDataException("Unknown Discount: $json")
             }
         }
 
         class Deserializer : BaseDeserializer<Discount>(Discount::class) {
 
             override fun ObjectCodec.deserialize(node: JsonNode): Discount {
-                val json = JsonValue.fromJsonNode(node)
-                tryDeserialize(node, jacksonTypeRef<NewCouponPercentageDiscount>()) {
-                        it.validate()
-                    }
-                    ?.let {
-                        return Discount(newCouponPercentageDiscount = it, _json = json)
-                    }
-                tryDeserialize(node, jacksonTypeRef<NewCouponAmountDiscount>()) { it.validate() }
-                    ?.let {
-                        return Discount(newCouponAmountDiscount = it, _json = json)
-                    }
+              val json = JsonValue.fromJsonNode(node)
+              tryDeserialize(node, jacksonTypeRef<NewCouponPercentageDiscount>()){ it.validate() }?.let {
+                  return Discount(newCouponPercentageDiscount = it, _json = json)
+              }
+              tryDeserialize(node, jacksonTypeRef<NewCouponAmountDiscount>()){ it.validate() }?.let {
+                  return Discount(newCouponAmountDiscount = it, _json = json)
+              }
 
-                return Discount(_json = json)
+              return Discount(_json = json)
             }
         }
 
         class Serializer : BaseSerializer<Discount>(Discount::class) {
 
-            override fun serialize(
-                value: Discount,
-                generator: JsonGenerator,
-                provider: SerializerProvider
-            ) {
-                when {
-                    value.newCouponPercentageDiscount != null ->
-                        generator.writeObject(value.newCouponPercentageDiscount)
-                    value.newCouponAmountDiscount != null ->
-                        generator.writeObject(value.newCouponAmountDiscount)
-                    value._json != null -> generator.writeObject(value._json)
-                    else -> throw IllegalStateException("Invalid Discount")
-                }
+            override fun serialize(value: Discount, generator: JsonGenerator, provider: SerializerProvider) {
+              when {
+                  value.newCouponPercentageDiscount != null -> generator.writeObject(value.newCouponPercentageDiscount)
+                  value.newCouponAmountDiscount != null -> generator.writeObject(value.newCouponAmountDiscount)
+                  value._json != null -> generator.writeObject(value._json)
+                  else -> throw IllegalStateException("Invalid Discount")
+              }
             }
         }
 
         @JsonDeserialize(builder = NewCouponPercentageDiscount.Builder::class)
         @NoAutoDetect
-        class NewCouponPercentageDiscount
-        private constructor(
-            private val discountType: JsonField<DiscountType>,
-            private val percentageDiscount: JsonField<Double>,
-            private val additionalProperties: Map<String, JsonValue>,
-        ) {
+        class NewCouponPercentageDiscount private constructor(private val discountType: JsonField<DiscountType>, private val percentageDiscount: JsonField<Double>, private val additionalProperties: Map<String, JsonValue>, ) {
 
             private var validated: Boolean = false
 
@@ -507,7 +497,9 @@ constructor(
 
             fun percentageDiscount(): Double = percentageDiscount.getRequired("percentage_discount")
 
-            @JsonProperty("discount_type") @ExcludeMissing fun _discountType() = discountType
+            @JsonProperty("discount_type")
+            @ExcludeMissing
+            fun _discountType() = discountType
 
             @JsonProperty("percentage_discount")
             @ExcludeMissing
@@ -519,39 +511,37 @@ constructor(
 
             fun validate(): NewCouponPercentageDiscount = apply {
                 if (!validated) {
-                    discountType()
-                    percentageDiscount()
-                    validated = true
+                  discountType()
+                  percentageDiscount()
+                  validated = true
                 }
             }
 
             fun toBuilder() = Builder().from(this)
 
             override fun equals(other: Any?): Boolean {
-                if (this === other) {
-                    return true
-                }
+              if (this === other) {
+                  return true
+              }
 
-                return other is NewCouponPercentageDiscount &&
-                    this.discountType == other.discountType &&
-                    this.percentageDiscount == other.percentageDiscount &&
-                    this.additionalProperties == other.additionalProperties
+              return other is NewCouponPercentageDiscount &&
+                  this.discountType == other.discountType &&
+                  this.percentageDiscount == other.percentageDiscount &&
+                  this.additionalProperties == other.additionalProperties
             }
 
             override fun hashCode(): Int {
-                if (hashCode == 0) {
-                    hashCode =
-                        Objects.hash(
-                            discountType,
-                            percentageDiscount,
-                            additionalProperties,
-                        )
-                }
-                return hashCode
+              if (hashCode == 0) {
+                hashCode = Objects.hash(
+                    discountType,
+                    percentageDiscount,
+                    additionalProperties,
+                )
+              }
+              return hashCode
             }
 
-            override fun toString() =
-                "NewCouponPercentageDiscount{discountType=$discountType, percentageDiscount=$percentageDiscount, additionalProperties=$additionalProperties}"
+            override fun toString() = "NewCouponPercentageDiscount{discountType=$discountType, percentageDiscount=$percentageDiscount, additionalProperties=$additionalProperties}"
 
             companion object {
 
@@ -564,15 +554,13 @@ constructor(
                 private var percentageDiscount: JsonField<Double> = JsonMissing.of()
                 private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
-                internal fun from(newCouponPercentageDiscount: NewCouponPercentageDiscount) =
-                    apply {
-                        this.discountType = newCouponPercentageDiscount.discountType
-                        this.percentageDiscount = newCouponPercentageDiscount.percentageDiscount
-                        additionalProperties(newCouponPercentageDiscount.additionalProperties)
-                    }
+                internal fun from(newCouponPercentageDiscount: NewCouponPercentageDiscount) = apply {
+                    this.discountType = newCouponPercentageDiscount.discountType
+                    this.percentageDiscount = newCouponPercentageDiscount.percentageDiscount
+                    additionalProperties(newCouponPercentageDiscount.additionalProperties)
+                }
 
-                fun discountType(discountType: DiscountType) =
-                    discountType(JsonField.of(discountType))
+                fun discountType(discountType: DiscountType) = discountType(JsonField.of(discountType))
 
                 @JsonProperty("discount_type")
                 @ExcludeMissing
@@ -580,8 +568,7 @@ constructor(
                     this.discountType = discountType
                 }
 
-                fun percentageDiscount(percentageDiscount: Double) =
-                    percentageDiscount(JsonField.of(percentageDiscount))
+                fun percentageDiscount(percentageDiscount: Double) = percentageDiscount(JsonField.of(percentageDiscount))
 
                 @JsonProperty("percentage_discount")
                 @ExcludeMissing
@@ -599,33 +586,29 @@ constructor(
                     this.additionalProperties.put(key, value)
                 }
 
-                fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) =
-                    apply {
-                        this.additionalProperties.putAll(additionalProperties)
-                    }
+                fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                    this.additionalProperties.putAll(additionalProperties)
+                }
 
-                fun build(): NewCouponPercentageDiscount =
-                    NewCouponPercentageDiscount(
-                        discountType,
-                        percentageDiscount,
-                        additionalProperties.toUnmodifiable(),
-                    )
+                fun build(): NewCouponPercentageDiscount = NewCouponPercentageDiscount(
+                    discountType,
+                    percentageDiscount,
+                    additionalProperties.toUnmodifiable(),
+                )
             }
 
-            class DiscountType
-            @JsonCreator
-            private constructor(
-                private val value: JsonField<String>,
-            ) : Enum {
+            class DiscountType @JsonCreator private constructor(private val value: JsonField<String>, ) : Enum {
 
-                @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
+                @com.fasterxml.jackson.annotation.JsonValue
+                fun _value(): JsonField<String> = value
 
                 override fun equals(other: Any?): Boolean {
-                    if (this === other) {
-                        return true
-                    }
+                  if (this === other) {
+                      return true
+                  }
 
-                    return other is DiscountType && this.value == other.value
+                  return other is DiscountType &&
+                      this.value == other.value
                 }
 
                 override fun hashCode() = value.hashCode()
@@ -648,17 +631,15 @@ constructor(
                     _UNKNOWN,
                 }
 
-                fun value(): Value =
-                    when (this) {
-                        PERCENTAGE -> Value.PERCENTAGE
-                        else -> Value._UNKNOWN
-                    }
+                fun value(): Value = when (this) {
+                    PERCENTAGE -> Value.PERCENTAGE
+                    else -> Value._UNKNOWN
+                }
 
-                fun known(): Known =
-                    when (this) {
-                        PERCENTAGE -> Known.PERCENTAGE
-                        else -> throw OrbInvalidDataException("Unknown DiscountType: $value")
-                    }
+                fun known(): Known = when (this) {
+                    PERCENTAGE -> Known.PERCENTAGE
+                    else -> throw OrbInvalidDataException("Unknown DiscountType: $value")
+                }
 
                 fun asString(): String = _value().asStringOrThrow()
             }
@@ -666,12 +647,7 @@ constructor(
 
         @JsonDeserialize(builder = NewCouponAmountDiscount.Builder::class)
         @NoAutoDetect
-        class NewCouponAmountDiscount
-        private constructor(
-            private val discountType: JsonField<DiscountType>,
-            private val amountDiscount: JsonField<String>,
-            private val additionalProperties: Map<String, JsonValue>,
-        ) {
+        class NewCouponAmountDiscount private constructor(private val discountType: JsonField<DiscountType>, private val amountDiscount: JsonField<String>, private val additionalProperties: Map<String, JsonValue>, ) {
 
             private var validated: Boolean = false
 
@@ -681,9 +657,13 @@ constructor(
 
             fun amountDiscount(): String = amountDiscount.getRequired("amount_discount")
 
-            @JsonProperty("discount_type") @ExcludeMissing fun _discountType() = discountType
+            @JsonProperty("discount_type")
+            @ExcludeMissing
+            fun _discountType() = discountType
 
-            @JsonProperty("amount_discount") @ExcludeMissing fun _amountDiscount() = amountDiscount
+            @JsonProperty("amount_discount")
+            @ExcludeMissing
+            fun _amountDiscount() = amountDiscount
 
             @JsonAnyGetter
             @ExcludeMissing
@@ -691,39 +671,37 @@ constructor(
 
             fun validate(): NewCouponAmountDiscount = apply {
                 if (!validated) {
-                    discountType()
-                    amountDiscount()
-                    validated = true
+                  discountType()
+                  amountDiscount()
+                  validated = true
                 }
             }
 
             fun toBuilder() = Builder().from(this)
 
             override fun equals(other: Any?): Boolean {
-                if (this === other) {
-                    return true
-                }
+              if (this === other) {
+                  return true
+              }
 
-                return other is NewCouponAmountDiscount &&
-                    this.discountType == other.discountType &&
-                    this.amountDiscount == other.amountDiscount &&
-                    this.additionalProperties == other.additionalProperties
+              return other is NewCouponAmountDiscount &&
+                  this.discountType == other.discountType &&
+                  this.amountDiscount == other.amountDiscount &&
+                  this.additionalProperties == other.additionalProperties
             }
 
             override fun hashCode(): Int {
-                if (hashCode == 0) {
-                    hashCode =
-                        Objects.hash(
-                            discountType,
-                            amountDiscount,
-                            additionalProperties,
-                        )
-                }
-                return hashCode
+              if (hashCode == 0) {
+                hashCode = Objects.hash(
+                    discountType,
+                    amountDiscount,
+                    additionalProperties,
+                )
+              }
+              return hashCode
             }
 
-            override fun toString() =
-                "NewCouponAmountDiscount{discountType=$discountType, amountDiscount=$amountDiscount, additionalProperties=$additionalProperties}"
+            override fun toString() = "NewCouponAmountDiscount{discountType=$discountType, amountDiscount=$amountDiscount, additionalProperties=$additionalProperties}"
 
             companion object {
 
@@ -742,8 +720,7 @@ constructor(
                     additionalProperties(newCouponAmountDiscount.additionalProperties)
                 }
 
-                fun discountType(discountType: DiscountType) =
-                    discountType(JsonField.of(discountType))
+                fun discountType(discountType: DiscountType) = discountType(JsonField.of(discountType))
 
                 @JsonProperty("discount_type")
                 @ExcludeMissing
@@ -751,8 +728,7 @@ constructor(
                     this.discountType = discountType
                 }
 
-                fun amountDiscount(amountDiscount: String) =
-                    amountDiscount(JsonField.of(amountDiscount))
+                fun amountDiscount(amountDiscount: String) = amountDiscount(JsonField.of(amountDiscount))
 
                 @JsonProperty("amount_discount")
                 @ExcludeMissing
@@ -770,33 +746,29 @@ constructor(
                     this.additionalProperties.put(key, value)
                 }
 
-                fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) =
-                    apply {
-                        this.additionalProperties.putAll(additionalProperties)
-                    }
+                fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                    this.additionalProperties.putAll(additionalProperties)
+                }
 
-                fun build(): NewCouponAmountDiscount =
-                    NewCouponAmountDiscount(
-                        discountType,
-                        amountDiscount,
-                        additionalProperties.toUnmodifiable(),
-                    )
+                fun build(): NewCouponAmountDiscount = NewCouponAmountDiscount(
+                    discountType,
+                    amountDiscount,
+                    additionalProperties.toUnmodifiable(),
+                )
             }
 
-            class DiscountType
-            @JsonCreator
-            private constructor(
-                private val value: JsonField<String>,
-            ) : Enum {
+            class DiscountType @JsonCreator private constructor(private val value: JsonField<String>, ) : Enum {
 
-                @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
+                @com.fasterxml.jackson.annotation.JsonValue
+                fun _value(): JsonField<String> = value
 
                 override fun equals(other: Any?): Boolean {
-                    if (this === other) {
-                        return true
-                    }
+                  if (this === other) {
+                      return true
+                  }
 
-                    return other is DiscountType && this.value == other.value
+                  return other is DiscountType &&
+                      this.value == other.value
                 }
 
                 override fun hashCode() = value.hashCode()
@@ -819,17 +791,15 @@ constructor(
                     _UNKNOWN,
                 }
 
-                fun value(): Value =
-                    when (this) {
-                        AMOUNT -> Value.AMOUNT
-                        else -> Value._UNKNOWN
-                    }
+                fun value(): Value = when (this) {
+                    AMOUNT -> Value.AMOUNT
+                    else -> Value._UNKNOWN
+                }
 
-                fun known(): Known =
-                    when (this) {
-                        AMOUNT -> Known.AMOUNT
-                        else -> throw OrbInvalidDataException("Unknown DiscountType: $value")
-                    }
+                fun known(): Known = when (this) {
+                    AMOUNT -> Known.AMOUNT
+                    else -> throw OrbInvalidDataException("Unknown DiscountType: $value")
+                }
 
                 fun asString(): String = _value().asStringOrThrow()
             }
