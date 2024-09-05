@@ -4,49 +4,27 @@ package com.withorb.api.models
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter
 import com.fasterxml.jackson.annotation.JsonAnySetter
-import com.fasterxml.jackson.annotation.JsonCreator
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonProperty
-import com.fasterxml.jackson.core.JsonGenerator
-import com.fasterxml.jackson.core.ObjectCodec
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize
-import com.fasterxml.jackson.databind.annotation.JsonSerialize
-import com.fasterxml.jackson.databind.JsonNode
-import com.fasterxml.jackson.databind.SerializerProvider
-import com.fasterxml.jackson.module.kotlin.jacksonTypeRef
-import org.apache.hc.core5.http.ContentType
-import java.time.LocalDate
-import java.time.OffsetDateTime
-import java.time.format.DateTimeFormatter
-import java.util.Objects
-import java.util.Optional
-import java.util.UUID
-import com.withorb.api.core.BaseDeserializer
-import com.withorb.api.core.BaseSerializer
-import com.withorb.api.core.getOrThrow
 import com.withorb.api.core.ExcludeMissing
-import com.withorb.api.core.JsonField
-import com.withorb.api.core.JsonMissing
 import com.withorb.api.core.JsonValue
-import com.withorb.api.core.MultipartFormValue
-import com.withorb.api.core.toUnmodifiable
 import com.withorb.api.core.NoAutoDetect
-import com.withorb.api.core.Enum
-import com.withorb.api.core.ContentTypes
-import com.withorb.api.errors.OrbInvalidDataException
+import com.withorb.api.core.toUnmodifiable
 import com.withorb.api.models.*
+import java.time.LocalDate
+import java.util.Objects
 
-class InvoiceLineItemCreateParams constructor(
-  private val amount: String,
-  private val endDate: LocalDate,
-  private val invoiceId: String,
-  private val name: String,
-  private val quantity: Double,
-  private val startDate: LocalDate,
-  private val additionalQueryParams: Map<String, List<String>>,
-  private val additionalHeaders: Map<String, List<String>>,
-  private val additionalBodyProperties: Map<String, JsonValue>,
-
+class InvoiceLineItemCreateParams
+constructor(
+    private val amount: String,
+    private val endDate: LocalDate,
+    private val invoiceId: String,
+    private val name: String,
+    private val quantity: Double,
+    private val startDate: LocalDate,
+    private val additionalQueryParams: Map<String, List<String>>,
+    private val additionalHeaders: Map<String, List<String>>,
+    private val additionalBodyProperties: Map<String, JsonValue>,
 ) {
 
     fun amount(): String = amount
@@ -62,15 +40,15 @@ class InvoiceLineItemCreateParams constructor(
     fun startDate(): LocalDate = startDate
 
     internal fun getBody(): InvoiceLineItemCreateBody {
-      return InvoiceLineItemCreateBody(
-          amount,
-          endDate,
-          invoiceId,
-          name,
-          quantity,
-          startDate,
-          additionalBodyProperties,
-      )
+        return InvoiceLineItemCreateBody(
+            amount,
+            endDate,
+            invoiceId,
+            name,
+            quantity,
+            startDate,
+            additionalBodyProperties,
+        )
     }
 
     internal fun getQueryParams(): Map<String, List<String>> = additionalQueryParams
@@ -79,45 +57,39 @@ class InvoiceLineItemCreateParams constructor(
 
     @JsonDeserialize(builder = InvoiceLineItemCreateBody.Builder::class)
     @NoAutoDetect
-    class InvoiceLineItemCreateBody internal constructor(
-      private val amount: String?,
-      private val endDate: LocalDate?,
-      private val invoiceId: String?,
-      private val name: String?,
-      private val quantity: Double?,
-      private val startDate: LocalDate?,
-      private val additionalProperties: Map<String, JsonValue>,
-
+    class InvoiceLineItemCreateBody
+    internal constructor(
+        private val amount: String?,
+        private val endDate: LocalDate?,
+        private val invoiceId: String?,
+        private val name: String?,
+        private val quantity: Double?,
+        private val startDate: LocalDate?,
+        private val additionalProperties: Map<String, JsonValue>,
     ) {
 
         private var hashCode: Int = 0
 
         /** The total amount in the invoice's currency to add to the line item. */
-        @JsonProperty("amount")
-        fun amount(): String? = amount
+        @JsonProperty("amount") fun amount(): String? = amount
 
         /** A date string to specify the line item's end date in the customer's timezone. */
-        @JsonProperty("end_date")
-        fun endDate(): LocalDate? = endDate
+        @JsonProperty("end_date") fun endDate(): LocalDate? = endDate
 
         /** The id of the Invoice to add this line item. */
-        @JsonProperty("invoice_id")
-        fun invoiceId(): String? = invoiceId
+        @JsonProperty("invoice_id") fun invoiceId(): String? = invoiceId
 
         /**
-         * The item name associated with this line item. If an item with the same name
-         * exists in Orb, that item will be associated with the line item.
+         * The item name associated with this line item. If an item with the same name exists in
+         * Orb, that item will be associated with the line item.
          */
-        @JsonProperty("name")
-        fun name(): String? = name
+        @JsonProperty("name") fun name(): String? = name
 
         /** The number of units on the line item */
-        @JsonProperty("quantity")
-        fun quantity(): Double? = quantity
+        @JsonProperty("quantity") fun quantity(): Double? = quantity
 
         /** A date string to specify the line item's start date in the customer's timezone. */
-        @JsonProperty("start_date")
-        fun startDate(): LocalDate? = startDate
+        @JsonProperty("start_date") fun startDate(): LocalDate? = startDate
 
         @JsonAnyGetter
         @ExcludeMissing
@@ -126,36 +98,38 @@ class InvoiceLineItemCreateParams constructor(
         fun toBuilder() = Builder().from(this)
 
         override fun equals(other: Any?): Boolean {
-          if (this === other) {
-              return true
-          }
+            if (this === other) {
+                return true
+            }
 
-          return other is InvoiceLineItemCreateBody &&
-              this.amount == other.amount &&
-              this.endDate == other.endDate &&
-              this.invoiceId == other.invoiceId &&
-              this.name == other.name &&
-              this.quantity == other.quantity &&
-              this.startDate == other.startDate &&
-              this.additionalProperties == other.additionalProperties
+            return other is InvoiceLineItemCreateBody &&
+                this.amount == other.amount &&
+                this.endDate == other.endDate &&
+                this.invoiceId == other.invoiceId &&
+                this.name == other.name &&
+                this.quantity == other.quantity &&
+                this.startDate == other.startDate &&
+                this.additionalProperties == other.additionalProperties
         }
 
         override fun hashCode(): Int {
-          if (hashCode == 0) {
-            hashCode = Objects.hash(
-                amount,
-                endDate,
-                invoiceId,
-                name,
-                quantity,
-                startDate,
-                additionalProperties,
-            )
-          }
-          return hashCode
+            if (hashCode == 0) {
+                hashCode =
+                    Objects.hash(
+                        amount,
+                        endDate,
+                        invoiceId,
+                        name,
+                        quantity,
+                        startDate,
+                        additionalProperties,
+                    )
+            }
+            return hashCode
         }
 
-        override fun toString() = "InvoiceLineItemCreateBody{amount=$amount, endDate=$endDate, invoiceId=$invoiceId, name=$name, quantity=$quantity, startDate=$startDate, additionalProperties=$additionalProperties}"
+        override fun toString() =
+            "InvoiceLineItemCreateBody{amount=$amount, endDate=$endDate, invoiceId=$invoiceId, name=$name, quantity=$quantity, startDate=$startDate, additionalProperties=$additionalProperties}"
 
         companion object {
 
@@ -183,43 +157,29 @@ class InvoiceLineItemCreateParams constructor(
             }
 
             /** The total amount in the invoice's currency to add to the line item. */
-            @JsonProperty("amount")
-            fun amount(amount: String) = apply {
-                this.amount = amount
-            }
+            @JsonProperty("amount") fun amount(amount: String) = apply { this.amount = amount }
 
             /** A date string to specify the line item's end date in the customer's timezone. */
             @JsonProperty("end_date")
-            fun endDate(endDate: LocalDate) = apply {
-                this.endDate = endDate
-            }
+            fun endDate(endDate: LocalDate) = apply { this.endDate = endDate }
 
             /** The id of the Invoice to add this line item. */
             @JsonProperty("invoice_id")
-            fun invoiceId(invoiceId: String) = apply {
-                this.invoiceId = invoiceId
-            }
+            fun invoiceId(invoiceId: String) = apply { this.invoiceId = invoiceId }
 
             /**
-             * The item name associated with this line item. If an item with the same name
-             * exists in Orb, that item will be associated with the line item.
+             * The item name associated with this line item. If an item with the same name exists in
+             * Orb, that item will be associated with the line item.
              */
-            @JsonProperty("name")
-            fun name(name: String) = apply {
-                this.name = name
-            }
+            @JsonProperty("name") fun name(name: String) = apply { this.name = name }
 
             /** The number of units on the line item */
             @JsonProperty("quantity")
-            fun quantity(quantity: Double) = apply {
-                this.quantity = quantity
-            }
+            fun quantity(quantity: Double) = apply { this.quantity = quantity }
 
             /** A date string to specify the line item's start date in the customer's timezone. */
             @JsonProperty("start_date")
-            fun startDate(startDate: LocalDate) = apply {
-                this.startDate = startDate
-            }
+            fun startDate(startDate: LocalDate) = apply { this.startDate = startDate }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
@@ -235,27 +195,16 @@ class InvoiceLineItemCreateParams constructor(
                 this.additionalProperties.putAll(additionalProperties)
             }
 
-            fun build(): InvoiceLineItemCreateBody = InvoiceLineItemCreateBody(
-                checkNotNull(amount) {
-                    "`amount` is required but was not set"
-                },
-                checkNotNull(endDate) {
-                    "`endDate` is required but was not set"
-                },
-                checkNotNull(invoiceId) {
-                    "`invoiceId` is required but was not set"
-                },
-                checkNotNull(name) {
-                    "`name` is required but was not set"
-                },
-                checkNotNull(quantity) {
-                    "`quantity` is required but was not set"
-                },
-                checkNotNull(startDate) {
-                    "`startDate` is required but was not set"
-                },
-                additionalProperties.toUnmodifiable(),
-            )
+            fun build(): InvoiceLineItemCreateBody =
+                InvoiceLineItemCreateBody(
+                    checkNotNull(amount) { "`amount` is required but was not set" },
+                    checkNotNull(endDate) { "`endDate` is required but was not set" },
+                    checkNotNull(invoiceId) { "`invoiceId` is required but was not set" },
+                    checkNotNull(name) { "`name` is required but was not set" },
+                    checkNotNull(quantity) { "`quantity` is required but was not set" },
+                    checkNotNull(startDate) { "`startDate` is required but was not set" },
+                    additionalProperties.toUnmodifiable(),
+                )
         }
     }
 
@@ -266,37 +215,38 @@ class InvoiceLineItemCreateParams constructor(
     fun _additionalBodyProperties(): Map<String, JsonValue> = additionalBodyProperties
 
     override fun equals(other: Any?): Boolean {
-      if (this === other) {
-          return true
-      }
+        if (this === other) {
+            return true
+        }
 
-      return other is InvoiceLineItemCreateParams &&
-          this.amount == other.amount &&
-          this.endDate == other.endDate &&
-          this.invoiceId == other.invoiceId &&
-          this.name == other.name &&
-          this.quantity == other.quantity &&
-          this.startDate == other.startDate &&
-          this.additionalQueryParams == other.additionalQueryParams &&
-          this.additionalHeaders == other.additionalHeaders &&
-          this.additionalBodyProperties == other.additionalBodyProperties
+        return other is InvoiceLineItemCreateParams &&
+            this.amount == other.amount &&
+            this.endDate == other.endDate &&
+            this.invoiceId == other.invoiceId &&
+            this.name == other.name &&
+            this.quantity == other.quantity &&
+            this.startDate == other.startDate &&
+            this.additionalQueryParams == other.additionalQueryParams &&
+            this.additionalHeaders == other.additionalHeaders &&
+            this.additionalBodyProperties == other.additionalBodyProperties
     }
 
     override fun hashCode(): Int {
-      return Objects.hash(
-          amount,
-          endDate,
-          invoiceId,
-          name,
-          quantity,
-          startDate,
-          additionalQueryParams,
-          additionalHeaders,
-          additionalBodyProperties,
-      )
+        return Objects.hash(
+            amount,
+            endDate,
+            invoiceId,
+            name,
+            quantity,
+            startDate,
+            additionalQueryParams,
+            additionalHeaders,
+            additionalBodyProperties,
+        )
     }
 
-    override fun toString() = "InvoiceLineItemCreateParams{amount=$amount, endDate=$endDate, invoiceId=$invoiceId, name=$name, quantity=$quantity, startDate=$startDate, additionalQueryParams=$additionalQueryParams, additionalHeaders=$additionalHeaders, additionalBodyProperties=$additionalBodyProperties}"
+    override fun toString() =
+        "InvoiceLineItemCreateParams{amount=$amount, endDate=$endDate, invoiceId=$invoiceId, name=$name, quantity=$quantity, startDate=$startDate, additionalQueryParams=$additionalQueryParams, additionalHeaders=$additionalHeaders, additionalBodyProperties=$additionalBodyProperties}"
 
     fun toBuilder() = Builder().from(this)
 
@@ -331,37 +281,25 @@ class InvoiceLineItemCreateParams constructor(
         }
 
         /** The total amount in the invoice's currency to add to the line item. */
-        fun amount(amount: String) = apply {
-            this.amount = amount
-        }
+        fun amount(amount: String) = apply { this.amount = amount }
 
         /** A date string to specify the line item's end date in the customer's timezone. */
-        fun endDate(endDate: LocalDate) = apply {
-            this.endDate = endDate
-        }
+        fun endDate(endDate: LocalDate) = apply { this.endDate = endDate }
 
         /** The id of the Invoice to add this line item. */
-        fun invoiceId(invoiceId: String) = apply {
-            this.invoiceId = invoiceId
-        }
+        fun invoiceId(invoiceId: String) = apply { this.invoiceId = invoiceId }
 
         /**
-         * The item name associated with this line item. If an item with the same name
-         * exists in Orb, that item will be associated with the line item.
+         * The item name associated with this line item. If an item with the same name exists in
+         * Orb, that item will be associated with the line item.
          */
-        fun name(name: String) = apply {
-            this.name = name
-        }
+        fun name(name: String) = apply { this.name = name }
 
         /** The number of units on the line item */
-        fun quantity(quantity: Double) = apply {
-            this.quantity = quantity
-        }
+        fun quantity(quantity: Double) = apply { this.quantity = quantity }
 
         /** A date string to specify the line item's start date in the customer's timezone. */
-        fun startDate(startDate: LocalDate) = apply {
-            this.startDate = startDate
-        }
+        fun startDate(startDate: LocalDate) = apply { this.startDate = startDate }
 
         fun additionalQueryParams(additionalQueryParams: Map<String, List<String>>) = apply {
             this.additionalQueryParams.clear()
@@ -401,9 +339,7 @@ class InvoiceLineItemCreateParams constructor(
             additionalHeaders.forEach(this::putHeaders)
         }
 
-        fun removeHeader(name: String) = apply {
-            this.additionalHeaders.put(name, mutableListOf())
-        }
+        fun removeHeader(name: String) = apply { this.additionalHeaders.put(name, mutableListOf()) }
 
         fun additionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) = apply {
             this.additionalBodyProperties.clear()
@@ -414,32 +350,22 @@ class InvoiceLineItemCreateParams constructor(
             this.additionalBodyProperties.put(key, value)
         }
 
-        fun putAllAdditionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) = apply {
-            this.additionalBodyProperties.putAll(additionalBodyProperties)
-        }
+        fun putAllAdditionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) =
+            apply {
+                this.additionalBodyProperties.putAll(additionalBodyProperties)
+            }
 
-        fun build(): InvoiceLineItemCreateParams = InvoiceLineItemCreateParams(
-            checkNotNull(amount) {
-                "`amount` is required but was not set"
-            },
-            checkNotNull(endDate) {
-                "`endDate` is required but was not set"
-            },
-            checkNotNull(invoiceId) {
-                "`invoiceId` is required but was not set"
-            },
-            checkNotNull(name) {
-                "`name` is required but was not set"
-            },
-            checkNotNull(quantity) {
-                "`quantity` is required but was not set"
-            },
-            checkNotNull(startDate) {
-                "`startDate` is required but was not set"
-            },
-            additionalQueryParams.mapValues { it.value.toUnmodifiable() }.toUnmodifiable(),
-            additionalHeaders.mapValues { it.value.toUnmodifiable() }.toUnmodifiable(),
-            additionalBodyProperties.toUnmodifiable(),
-        )
+        fun build(): InvoiceLineItemCreateParams =
+            InvoiceLineItemCreateParams(
+                checkNotNull(amount) { "`amount` is required but was not set" },
+                checkNotNull(endDate) { "`endDate` is required but was not set" },
+                checkNotNull(invoiceId) { "`invoiceId` is required but was not set" },
+                checkNotNull(name) { "`name` is required but was not set" },
+                checkNotNull(quantity) { "`quantity` is required but was not set" },
+                checkNotNull(startDate) { "`startDate` is required but was not set" },
+                additionalQueryParams.mapValues { it.value.toUnmodifiable() }.toUnmodifiable(),
+                additionalHeaders.mapValues { it.value.toUnmodifiable() }.toUnmodifiable(),
+                additionalBodyProperties.toUnmodifiable(),
+            )
     }
 }

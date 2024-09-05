@@ -2,48 +2,30 @@
 
 package com.withorb.api.models
 
-import java.time.LocalDate
-import java.time.OffsetDateTime
-import java.time.format.DateTimeFormatter
-import java.util.UUID
-import org.junit.jupiter.api.Test
-import org.assertj.core.api.Assertions.assertThat
-import org.apache.hc.core5.http.ContentType
-import com.withorb.api.core.ContentTypes
-import com.withorb.api.core.JsonNull
-import com.withorb.api.core.JsonString
-import com.withorb.api.core.JsonValue
-import com.withorb.api.core.MultipartFormValue
 import com.withorb.api.models.*
-import com.withorb.api.models.ItemCreateParams
-import com.withorb.api.models.ItemCreateParams.ItemCreateBody
+import org.assertj.core.api.Assertions.assertThat
+import org.junit.jupiter.api.Test
 
 class ItemCreateParamsTest {
 
     @Test
     fun createItemCreateParams() {
-      ItemCreateParams.builder()
-          .name("API requests")
-          .build()
+        ItemCreateParams.builder().name("API requests").build()
     }
 
     @Test
     fun getBody() {
-      val params = ItemCreateParams.builder()
-          .name("API requests")
-          .build()
-      val body = params.getBody()
-      assertThat(body).isNotNull
-      assertThat(body.name()).isEqualTo("API requests")
+        val params = ItemCreateParams.builder().name("API requests").build()
+        val body = params.getBody()
+        assertThat(body).isNotNull
+        assertThat(body.name()).isEqualTo("API requests")
     }
 
     @Test
     fun getBodyWithoutOptionalFields() {
-      val params = ItemCreateParams.builder()
-          .name("API requests")
-          .build()
-      val body = params.getBody()
-      assertThat(body).isNotNull
-      assertThat(body.name()).isEqualTo("API requests")
+        val params = ItemCreateParams.builder().name("API requests").build()
+        val body = params.getBody()
+        assertThat(body).isNotNull
+        assertThat(body.name()).isEqualTo("API requests")
     }
 }
