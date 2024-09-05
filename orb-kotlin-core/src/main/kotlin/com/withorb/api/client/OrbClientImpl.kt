@@ -2,29 +2,17 @@
 
 package com.withorb.api.client
 
-import java.time.Duration
-import java.util.Base64
-import java.util.Optional
-import java.util.concurrent.CompletableFuture
 import com.withorb.api.core.ClientOptions
-import com.withorb.api.core.http.HttpMethod
-import com.withorb.api.core.http.HttpRequest
 import com.withorb.api.core.http.HttpResponse.Handler
-import com.withorb.api.core.JsonField
-import com.withorb.api.core.RequestOptions
 import com.withorb.api.errors.OrbError
-import com.withorb.api.errors.OrbInvalidDataException
 import com.withorb.api.models.*
 import com.withorb.api.services.blocking.*
-import com.withorb.api.services.emptyHandler
 import com.withorb.api.services.errorHandler
-import com.withorb.api.services.json
-import com.withorb.api.services.jsonHandler
-import com.withorb.api.services.stringHandler
-import com.withorb.api.services.binaryHandler
-import com.withorb.api.services.withErrorHandler
 
-class OrbClientImpl constructor(private val clientOptions: ClientOptions, ) : OrbClient {
+class OrbClientImpl
+constructor(
+    private val clientOptions: ClientOptions,
+) : OrbClient {
 
     private val errorHandler: Handler<OrbError> = errorHandler(clientOptions.jsonMapper)
 
@@ -40,7 +28,9 @@ class OrbClientImpl constructor(private val clientOptions: ClientOptions, ) : Or
 
     private val events: EventService by lazy { EventServiceImpl(clientOptions) }
 
-    private val invoiceLineItems: InvoiceLineItemService by lazy { InvoiceLineItemServiceImpl(clientOptions) }
+    private val invoiceLineItems: InvoiceLineItemService by lazy {
+        InvoiceLineItemServiceImpl(clientOptions)
+    }
 
     private val invoices: InvoiceService by lazy { InvoiceServiceImpl(clientOptions) }
 
@@ -52,7 +42,9 @@ class OrbClientImpl constructor(private val clientOptions: ClientOptions, ) : Or
 
     private val prices: PriceService by lazy { PriceServiceImpl(clientOptions) }
 
-    private val subscriptions: SubscriptionService by lazy { SubscriptionServiceImpl(clientOptions) }
+    private val subscriptions: SubscriptionService by lazy {
+        SubscriptionServiceImpl(clientOptions)
+    }
 
     private val alerts: AlertService by lazy { AlertServiceImpl(clientOptions) }
 
