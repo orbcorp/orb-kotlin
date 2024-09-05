@@ -4,23 +4,38 @@ package com.withorb.api.models
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter
 import com.fasterxml.jackson.annotation.JsonAnySetter
+import com.fasterxml.jackson.annotation.JsonCreator
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonProperty
+import com.fasterxml.jackson.core.JsonGenerator
+import com.fasterxml.jackson.core.ObjectCodec
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize
+import com.fasterxml.jackson.databind.annotation.JsonSerialize
+import com.fasterxml.jackson.databind.JsonNode
+import com.fasterxml.jackson.databind.SerializerProvider
+import com.fasterxml.jackson.module.kotlin.jacksonTypeRef
+import java.time.LocalDate
+import java.time.OffsetDateTime
+import java.time.format.DateTimeFormatter
+import java.util.Objects
+import java.util.Optional
+import java.util.UUID
+import com.withorb.api.core.BaseDeserializer
+import com.withorb.api.core.BaseSerializer
+import com.withorb.api.core.getOrThrow
 import com.withorb.api.core.ExcludeMissing
-import com.withorb.api.core.JsonField
 import com.withorb.api.core.JsonMissing
 import com.withorb.api.core.JsonValue
-import com.withorb.api.core.NoAutoDetect
+import com.withorb.api.core.JsonNull
+import com.withorb.api.core.JsonField
+import com.withorb.api.core.Enum
 import com.withorb.api.core.toUnmodifiable
-import java.util.Objects
+import com.withorb.api.core.NoAutoDetect
+import com.withorb.api.errors.OrbInvalidDataException
 
 @JsonDeserialize(builder = TopLevelPingResponse.Builder::class)
 @NoAutoDetect
-class TopLevelPingResponse
-private constructor(
-    private val response: JsonField<String>,
-    private val additionalProperties: Map<String, JsonValue>,
-) {
+class TopLevelPingResponse private constructor(private val response: JsonField<String>, private val additionalProperties: Map<String, JsonValue>, ) {
 
     private var validated: Boolean = false
 
@@ -28,7 +43,9 @@ private constructor(
 
     fun response(): String = response.getRequired("response")
 
-    @JsonProperty("response") @ExcludeMissing fun _response() = response
+    @JsonProperty("response")
+    @ExcludeMissing
+    fun _response() = response
 
     @JsonAnyGetter
     @ExcludeMissing
@@ -36,32 +53,31 @@ private constructor(
 
     fun validate(): TopLevelPingResponse = apply {
         if (!validated) {
-            response()
-            validated = true
+          response()
+          validated = true
         }
     }
 
     fun toBuilder() = Builder().from(this)
 
     override fun equals(other: Any?): Boolean {
-        if (this === other) {
-            return true
-        }
+      if (this === other) {
+          return true
+      }
 
-        return other is TopLevelPingResponse &&
-            this.response == other.response &&
-            this.additionalProperties == other.additionalProperties
+      return other is TopLevelPingResponse &&
+          this.response == other.response &&
+          this.additionalProperties == other.additionalProperties
     }
 
     override fun hashCode(): Int {
-        if (hashCode == 0) {
-            hashCode = Objects.hash(response, additionalProperties)
-        }
-        return hashCode
+      if (hashCode == 0) {
+        hashCode = Objects.hash(response, additionalProperties)
+      }
+      return hashCode
     }
 
-    override fun toString() =
-        "TopLevelPingResponse{response=$response, additionalProperties=$additionalProperties}"
+    override fun toString() = "TopLevelPingResponse{response=$response, additionalProperties=$additionalProperties}"
 
     companion object {
 
@@ -82,7 +98,9 @@ private constructor(
 
         @JsonProperty("response")
         @ExcludeMissing
-        fun response(response: JsonField<String>) = apply { this.response = response }
+        fun response(response: JsonField<String>) = apply {
+            this.response = response
+        }
 
         fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
             this.additionalProperties.clear()
@@ -98,7 +116,6 @@ private constructor(
             this.additionalProperties.putAll(additionalProperties)
         }
 
-        fun build(): TopLevelPingResponse =
-            TopLevelPingResponse(response, additionalProperties.toUnmodifiable())
+        fun build(): TopLevelPingResponse = TopLevelPingResponse(response, additionalProperties.toUnmodifiable())
     }
 }

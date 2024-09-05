@@ -4,24 +4,46 @@ package com.withorb.api.models
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter
 import com.fasterxml.jackson.annotation.JsonAnySetter
+import com.fasterxml.jackson.annotation.JsonCreator
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonProperty
+import com.fasterxml.jackson.core.JsonGenerator
+import com.fasterxml.jackson.core.ObjectCodec
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize
-import com.withorb.api.core.ExcludeMissing
-import com.withorb.api.core.JsonValue
-import com.withorb.api.core.NoAutoDetect
-import com.withorb.api.core.toUnmodifiable
-import com.withorb.api.models.*
+import com.fasterxml.jackson.databind.annotation.JsonSerialize
+import com.fasterxml.jackson.databind.JsonNode
+import com.fasterxml.jackson.databind.SerializerProvider
+import com.fasterxml.jackson.module.kotlin.jacksonTypeRef
+import org.apache.hc.core5.http.ContentType
+import java.time.LocalDate
 import java.time.OffsetDateTime
+import java.time.format.DateTimeFormatter
 import java.util.Objects
+import java.util.Optional
+import java.util.UUID
+import com.withorb.api.core.BaseDeserializer
+import com.withorb.api.core.BaseSerializer
+import com.withorb.api.core.getOrThrow
+import com.withorb.api.core.ExcludeMissing
+import com.withorb.api.core.JsonField
+import com.withorb.api.core.JsonMissing
+import com.withorb.api.core.JsonValue
+import com.withorb.api.core.MultipartFormValue
+import com.withorb.api.core.toUnmodifiable
+import com.withorb.api.core.NoAutoDetect
+import com.withorb.api.core.Enum
+import com.withorb.api.core.ContentTypes
+import com.withorb.api.errors.OrbInvalidDataException
+import com.withorb.api.models.*
 
-class EventSearchParams
-constructor(
-    private val eventIds: List<String>,
-    private val timeframeEnd: OffsetDateTime?,
-    private val timeframeStart: OffsetDateTime?,
-    private val additionalQueryParams: Map<String, List<String>>,
-    private val additionalHeaders: Map<String, List<String>>,
-    private val additionalBodyProperties: Map<String, JsonValue>,
+class EventSearchParams constructor(
+  private val eventIds: List<String>,
+  private val timeframeEnd: OffsetDateTime?,
+  private val timeframeStart: OffsetDateTime?,
+  private val additionalQueryParams: Map<String, List<String>>,
+  private val additionalHeaders: Map<String, List<String>>,
+  private val additionalBodyProperties: Map<String, JsonValue>,
+
 ) {
 
     fun eventIds(): List<String> = eventIds
@@ -31,12 +53,12 @@ constructor(
     fun timeframeStart(): OffsetDateTime? = timeframeStart
 
     internal fun getBody(): EventSearchBody {
-        return EventSearchBody(
-            eventIds,
-            timeframeEnd,
-            timeframeStart,
-            additionalBodyProperties,
-        )
+      return EventSearchBody(
+          eventIds,
+          timeframeEnd,
+          timeframeStart,
+          additionalBodyProperties,
+      )
     }
 
     internal fun getQueryParams(): Map<String, List<String>> = additionalQueryParams
@@ -45,34 +67,38 @@ constructor(
 
     @JsonDeserialize(builder = EventSearchBody.Builder::class)
     @NoAutoDetect
-    class EventSearchBody
-    internal constructor(
-        private val eventIds: List<String>?,
-        private val timeframeEnd: OffsetDateTime?,
-        private val timeframeStart: OffsetDateTime?,
-        private val additionalProperties: Map<String, JsonValue>,
+    class EventSearchBody internal constructor(
+      private val eventIds: List<String>?,
+      private val timeframeEnd: OffsetDateTime?,
+      private val timeframeStart: OffsetDateTime?,
+      private val additionalProperties: Map<String, JsonValue>,
+
     ) {
 
         private var hashCode: Int = 0
 
         /**
          * This is an explicit array of IDs to filter by. Note that an event's ID is the
-         * idempotency_key that was originally used for ingestion, and this only supports events
-         * that have not been amended. Values in this array will be treated case sensitively.
+         * idempotency_key that was originally used for ingestion, and this only supports
+         * events that have not been amended. Values in this array will be treated case
+         * sensitively.
          */
-        @JsonProperty("event_ids") fun eventIds(): List<String>? = eventIds
+        @JsonProperty("event_ids")
+        fun eventIds(): List<String>? = eventIds
 
         /**
-         * The end of the timeframe, exclusive, in which to search events. If not specified, the
-         * current time is used.
+         * The end of the timeframe, exclusive, in which to search events. If not
+         * specified, the current time is used.
          */
-        @JsonProperty("timeframe_end") fun timeframeEnd(): OffsetDateTime? = timeframeEnd
+        @JsonProperty("timeframe_end")
+        fun timeframeEnd(): OffsetDateTime? = timeframeEnd
 
         /**
-         * The start of the timeframe, inclusive, in which to search events. If not specified, the
-         * one week ago is used.
+         * The start of the timeframe, inclusive, in which to search events. If not
+         * specified, the one week ago is used.
          */
-        @JsonProperty("timeframe_start") fun timeframeStart(): OffsetDateTime? = timeframeStart
+        @JsonProperty("timeframe_start")
+        fun timeframeStart(): OffsetDateTime? = timeframeStart
 
         @JsonAnyGetter
         @ExcludeMissing
@@ -81,32 +107,30 @@ constructor(
         fun toBuilder() = Builder().from(this)
 
         override fun equals(other: Any?): Boolean {
-            if (this === other) {
-                return true
-            }
+          if (this === other) {
+              return true
+          }
 
-            return other is EventSearchBody &&
-                this.eventIds == other.eventIds &&
-                this.timeframeEnd == other.timeframeEnd &&
-                this.timeframeStart == other.timeframeStart &&
-                this.additionalProperties == other.additionalProperties
+          return other is EventSearchBody &&
+              this.eventIds == other.eventIds &&
+              this.timeframeEnd == other.timeframeEnd &&
+              this.timeframeStart == other.timeframeStart &&
+              this.additionalProperties == other.additionalProperties
         }
 
         override fun hashCode(): Int {
-            if (hashCode == 0) {
-                hashCode =
-                    Objects.hash(
-                        eventIds,
-                        timeframeEnd,
-                        timeframeStart,
-                        additionalProperties,
-                    )
-            }
-            return hashCode
+          if (hashCode == 0) {
+            hashCode = Objects.hash(
+                eventIds,
+                timeframeEnd,
+                timeframeStart,
+                additionalProperties,
+            )
+          }
+          return hashCode
         }
 
-        override fun toString() =
-            "EventSearchBody{eventIds=$eventIds, timeframeEnd=$timeframeEnd, timeframeStart=$timeframeStart, additionalProperties=$additionalProperties}"
+        override fun toString() = "EventSearchBody{eventIds=$eventIds, timeframeEnd=$timeframeEnd, timeframeStart=$timeframeStart, additionalProperties=$additionalProperties}"
 
         companion object {
 
@@ -129,15 +153,18 @@ constructor(
 
             /**
              * This is an explicit array of IDs to filter by. Note that an event's ID is the
-             * idempotency_key that was originally used for ingestion, and this only supports events
-             * that have not been amended. Values in this array will be treated case sensitively.
+             * idempotency_key that was originally used for ingestion, and this only supports
+             * events that have not been amended. Values in this array will be treated case
+             * sensitively.
              */
             @JsonProperty("event_ids")
-            fun eventIds(eventIds: List<String>) = apply { this.eventIds = eventIds }
+            fun eventIds(eventIds: List<String>) = apply {
+                this.eventIds = eventIds
+            }
 
             /**
-             * The end of the timeframe, exclusive, in which to search events. If not specified, the
-             * current time is used.
+             * The end of the timeframe, exclusive, in which to search events. If not
+             * specified, the current time is used.
              */
             @JsonProperty("timeframe_end")
             fun timeframeEnd(timeframeEnd: OffsetDateTime) = apply {
@@ -145,8 +172,8 @@ constructor(
             }
 
             /**
-             * The start of the timeframe, inclusive, in which to search events. If not specified,
-             * the one week ago is used.
+             * The start of the timeframe, inclusive, in which to search events. If not
+             * specified, the one week ago is used.
              */
             @JsonProperty("timeframe_start")
             fun timeframeStart(timeframeStart: OffsetDateTime) = apply {
@@ -167,14 +194,14 @@ constructor(
                 this.additionalProperties.putAll(additionalProperties)
             }
 
-            fun build(): EventSearchBody =
-                EventSearchBody(
-                    checkNotNull(eventIds) { "`eventIds` is required but was not set" }
-                        .toUnmodifiable(),
-                    timeframeEnd,
-                    timeframeStart,
-                    additionalProperties.toUnmodifiable(),
-                )
+            fun build(): EventSearchBody = EventSearchBody(
+                checkNotNull(eventIds) {
+                    "`eventIds` is required but was not set"
+                }.toUnmodifiable(),
+                timeframeEnd,
+                timeframeStart,
+                additionalProperties.toUnmodifiable(),
+            )
         }
     }
 
@@ -185,32 +212,31 @@ constructor(
     fun _additionalBodyProperties(): Map<String, JsonValue> = additionalBodyProperties
 
     override fun equals(other: Any?): Boolean {
-        if (this === other) {
-            return true
-        }
+      if (this === other) {
+          return true
+      }
 
-        return other is EventSearchParams &&
-            this.eventIds == other.eventIds &&
-            this.timeframeEnd == other.timeframeEnd &&
-            this.timeframeStart == other.timeframeStart &&
-            this.additionalQueryParams == other.additionalQueryParams &&
-            this.additionalHeaders == other.additionalHeaders &&
-            this.additionalBodyProperties == other.additionalBodyProperties
+      return other is EventSearchParams &&
+          this.eventIds == other.eventIds &&
+          this.timeframeEnd == other.timeframeEnd &&
+          this.timeframeStart == other.timeframeStart &&
+          this.additionalQueryParams == other.additionalQueryParams &&
+          this.additionalHeaders == other.additionalHeaders &&
+          this.additionalBodyProperties == other.additionalBodyProperties
     }
 
     override fun hashCode(): Int {
-        return Objects.hash(
-            eventIds,
-            timeframeEnd,
-            timeframeStart,
-            additionalQueryParams,
-            additionalHeaders,
-            additionalBodyProperties,
-        )
+      return Objects.hash(
+          eventIds,
+          timeframeEnd,
+          timeframeStart,
+          additionalQueryParams,
+          additionalHeaders,
+          additionalBodyProperties,
+      )
     }
 
-    override fun toString() =
-        "EventSearchParams{eventIds=$eventIds, timeframeEnd=$timeframeEnd, timeframeStart=$timeframeStart, additionalQueryParams=$additionalQueryParams, additionalHeaders=$additionalHeaders, additionalBodyProperties=$additionalBodyProperties}"
+    override fun toString() = "EventSearchParams{eventIds=$eventIds, timeframeEnd=$timeframeEnd, timeframeStart=$timeframeStart, additionalQueryParams=$additionalQueryParams, additionalHeaders=$additionalHeaders, additionalBodyProperties=$additionalBodyProperties}"
 
     fun toBuilder() = Builder().from(this)
 
@@ -240,8 +266,9 @@ constructor(
 
         /**
          * This is an explicit array of IDs to filter by. Note that an event's ID is the
-         * idempotency_key that was originally used for ingestion, and this only supports events
-         * that have not been amended. Values in this array will be treated case sensitively.
+         * idempotency_key that was originally used for ingestion, and this only supports
+         * events that have not been amended. Values in this array will be treated case
+         * sensitively.
          */
         fun eventIds(eventIds: List<String>) = apply {
             this.eventIds.clear()
@@ -250,20 +277,25 @@ constructor(
 
         /**
          * This is an explicit array of IDs to filter by. Note that an event's ID is the
-         * idempotency_key that was originally used for ingestion, and this only supports events
-         * that have not been amended. Values in this array will be treated case sensitively.
+         * idempotency_key that was originally used for ingestion, and this only supports
+         * events that have not been amended. Values in this array will be treated case
+         * sensitively.
          */
-        fun addEventId(eventId: String) = apply { this.eventIds.add(eventId) }
+        fun addEventId(eventId: String) = apply {
+            this.eventIds.add(eventId)
+        }
 
         /**
-         * The end of the timeframe, exclusive, in which to search events. If not specified, the
-         * current time is used.
+         * The end of the timeframe, exclusive, in which to search events. If not
+         * specified, the current time is used.
          */
-        fun timeframeEnd(timeframeEnd: OffsetDateTime) = apply { this.timeframeEnd = timeframeEnd }
+        fun timeframeEnd(timeframeEnd: OffsetDateTime) = apply {
+            this.timeframeEnd = timeframeEnd
+        }
 
         /**
-         * The start of the timeframe, inclusive, in which to search events. If not specified, the
-         * one week ago is used.
+         * The start of the timeframe, inclusive, in which to search events. If not
+         * specified, the one week ago is used.
          */
         fun timeframeStart(timeframeStart: OffsetDateTime) = apply {
             this.timeframeStart = timeframeStart
@@ -307,7 +339,9 @@ constructor(
             additionalHeaders.forEach(this::putHeaders)
         }
 
-        fun removeHeader(name: String) = apply { this.additionalHeaders.put(name, mutableListOf()) }
+        fun removeHeader(name: String) = apply {
+            this.additionalHeaders.put(name, mutableListOf())
+        }
 
         fun additionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) = apply {
             this.additionalBodyProperties.clear()
@@ -318,20 +352,19 @@ constructor(
             this.additionalBodyProperties.put(key, value)
         }
 
-        fun putAllAdditionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) =
-            apply {
-                this.additionalBodyProperties.putAll(additionalBodyProperties)
-            }
+        fun putAllAdditionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) = apply {
+            this.additionalBodyProperties.putAll(additionalBodyProperties)
+        }
 
-        fun build(): EventSearchParams =
-            EventSearchParams(
-                checkNotNull(eventIds) { "`eventIds` is required but was not set" }
-                    .toUnmodifiable(),
-                timeframeEnd,
-                timeframeStart,
-                additionalQueryParams.mapValues { it.value.toUnmodifiable() }.toUnmodifiable(),
-                additionalHeaders.mapValues { it.value.toUnmodifiable() }.toUnmodifiable(),
-                additionalBodyProperties.toUnmodifiable(),
-            )
+        fun build(): EventSearchParams = EventSearchParams(
+            checkNotNull(eventIds) {
+                "`eventIds` is required but was not set"
+            }.toUnmodifiable(),
+            timeframeEnd,
+            timeframeStart,
+            additionalQueryParams.mapValues { it.value.toUnmodifiable() }.toUnmodifiable(),
+            additionalHeaders.mapValues { it.value.toUnmodifiable() }.toUnmodifiable(),
+            additionalBodyProperties.toUnmodifiable(),
+        )
     }
 }

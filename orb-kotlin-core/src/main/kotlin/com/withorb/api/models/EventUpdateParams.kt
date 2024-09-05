@@ -4,27 +4,49 @@ package com.withorb.api.models
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter
 import com.fasterxml.jackson.annotation.JsonAnySetter
+import com.fasterxml.jackson.annotation.JsonCreator
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonProperty
+import com.fasterxml.jackson.core.JsonGenerator
+import com.fasterxml.jackson.core.ObjectCodec
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize
-import com.withorb.api.core.ExcludeMissing
-import com.withorb.api.core.JsonValue
-import com.withorb.api.core.NoAutoDetect
-import com.withorb.api.core.toUnmodifiable
-import com.withorb.api.models.*
+import com.fasterxml.jackson.databind.annotation.JsonSerialize
+import com.fasterxml.jackson.databind.JsonNode
+import com.fasterxml.jackson.databind.SerializerProvider
+import com.fasterxml.jackson.module.kotlin.jacksonTypeRef
+import org.apache.hc.core5.http.ContentType
+import java.time.LocalDate
 import java.time.OffsetDateTime
+import java.time.format.DateTimeFormatter
 import java.util.Objects
+import java.util.Optional
+import java.util.UUID
+import com.withorb.api.core.BaseDeserializer
+import com.withorb.api.core.BaseSerializer
+import com.withorb.api.core.getOrThrow
+import com.withorb.api.core.ExcludeMissing
+import com.withorb.api.core.JsonField
+import com.withorb.api.core.JsonMissing
+import com.withorb.api.core.JsonValue
+import com.withorb.api.core.MultipartFormValue
+import com.withorb.api.core.toUnmodifiable
+import com.withorb.api.core.NoAutoDetect
+import com.withorb.api.core.Enum
+import com.withorb.api.core.ContentTypes
+import com.withorb.api.errors.OrbInvalidDataException
+import com.withorb.api.models.*
 
-class EventUpdateParams
-constructor(
-    private val eventId: String,
-    private val eventName: String,
-    private val properties: JsonValue,
-    private val timestamp: OffsetDateTime,
-    private val customerId: String?,
-    private val externalCustomerId: String?,
-    private val additionalQueryParams: Map<String, List<String>>,
-    private val additionalHeaders: Map<String, List<String>>,
-    private val additionalBodyProperties: Map<String, JsonValue>,
+class EventUpdateParams constructor(
+  private val eventId: String,
+  private val eventName: String,
+  private val properties: JsonValue,
+  private val timestamp: OffsetDateTime,
+  private val customerId: String?,
+  private val externalCustomerId: String?,
+  private val additionalQueryParams: Map<String, List<String>>,
+  private val additionalHeaders: Map<String, List<String>>,
+  private val additionalBodyProperties: Map<String, JsonValue>,
+
 ) {
 
     fun eventId(): String = eventId
@@ -40,14 +62,14 @@ constructor(
     fun externalCustomerId(): String? = externalCustomerId
 
     internal fun getBody(): EventUpdateBody {
-        return EventUpdateBody(
-            eventName,
-            properties,
-            timestamp,
-            customerId,
-            externalCustomerId,
-            additionalBodyProperties,
-        )
+      return EventUpdateBody(
+          eventName,
+          properties,
+          timestamp,
+          customerId,
+          externalCustomerId,
+          additionalBodyProperties,
+      )
     }
 
     internal fun getQueryParams(): Map<String, List<String>> = additionalQueryParams
@@ -55,47 +77,55 @@ constructor(
     internal fun getHeaders(): Map<String, List<String>> = additionalHeaders
 
     fun getPathParam(index: Int): String {
-        return when (index) {
-            0 -> eventId
-            else -> ""
-        }
+      return when (index) {
+          0 -> eventId
+          else -> ""
+      }
     }
 
     @JsonDeserialize(builder = EventUpdateBody.Builder::class)
     @NoAutoDetect
-    class EventUpdateBody
-    internal constructor(
-        private val eventName: String?,
-        private val properties: JsonValue?,
-        private val timestamp: OffsetDateTime?,
-        private val customerId: String?,
-        private val externalCustomerId: String?,
-        private val additionalProperties: Map<String, JsonValue>,
+    class EventUpdateBody internal constructor(
+      private val eventName: String?,
+      private val properties: JsonValue?,
+      private val timestamp: OffsetDateTime?,
+      private val customerId: String?,
+      private val externalCustomerId: String?,
+      private val additionalProperties: Map<String, JsonValue>,
+
     ) {
 
         private var hashCode: Int = 0
 
         /** A name to meaningfully identify the action or event type. */
-        @JsonProperty("event_name") fun eventName(): String? = eventName
+        @JsonProperty("event_name")
+        fun eventName(): String? = eventName
 
         /**
-         * A dictionary of custom properties. Values in this dictionary must be numeric, boolean, or
-         * strings. Nested dictionaries are disallowed.
+         * A dictionary of custom properties. Values in this dictionary must be numeric,
+         * boolean, or strings. Nested dictionaries are disallowed.
          */
-        @JsonProperty("properties") fun properties(): JsonValue? = properties
+        @JsonProperty("properties")
+        fun properties(): JsonValue? = properties
 
         /**
-         * An ISO 8601 format date with no timezone offset (i.e. UTC). This should represent the
-         * time that usage was recorded, and is particularly important to attribute usage to a given
-         * billing period.
+         * An ISO 8601 format date with no timezone offset (i.e. UTC). This should
+         * represent the time that usage was recorded, and is particularly important to
+         * attribute usage to a given billing period.
          */
-        @JsonProperty("timestamp") fun timestamp(): OffsetDateTime? = timestamp
+        @JsonProperty("timestamp")
+        fun timestamp(): OffsetDateTime? = timestamp
 
         /** The Orb Customer identifier */
-        @JsonProperty("customer_id") fun customerId(): String? = customerId
+        @JsonProperty("customer_id")
+        fun customerId(): String? = customerId
 
-        /** An alias for the Orb customer, whose mapping is specified when creating the customer */
-        @JsonProperty("external_customer_id") fun externalCustomerId(): String? = externalCustomerId
+        /**
+         * An alias for the Orb customer, whose mapping is specified when creating the
+         * customer
+         */
+        @JsonProperty("external_customer_id")
+        fun externalCustomerId(): String? = externalCustomerId
 
         @JsonAnyGetter
         @ExcludeMissing
@@ -104,36 +134,34 @@ constructor(
         fun toBuilder() = Builder().from(this)
 
         override fun equals(other: Any?): Boolean {
-            if (this === other) {
-                return true
-            }
+          if (this === other) {
+              return true
+          }
 
-            return other is EventUpdateBody &&
-                this.eventName == other.eventName &&
-                this.properties == other.properties &&
-                this.timestamp == other.timestamp &&
-                this.customerId == other.customerId &&
-                this.externalCustomerId == other.externalCustomerId &&
-                this.additionalProperties == other.additionalProperties
+          return other is EventUpdateBody &&
+              this.eventName == other.eventName &&
+              this.properties == other.properties &&
+              this.timestamp == other.timestamp &&
+              this.customerId == other.customerId &&
+              this.externalCustomerId == other.externalCustomerId &&
+              this.additionalProperties == other.additionalProperties
         }
 
         override fun hashCode(): Int {
-            if (hashCode == 0) {
-                hashCode =
-                    Objects.hash(
-                        eventName,
-                        properties,
-                        timestamp,
-                        customerId,
-                        externalCustomerId,
-                        additionalProperties,
-                    )
-            }
-            return hashCode
+          if (hashCode == 0) {
+            hashCode = Objects.hash(
+                eventName,
+                properties,
+                timestamp,
+                customerId,
+                externalCustomerId,
+                additionalProperties,
+            )
+          }
+          return hashCode
         }
 
-        override fun toString() =
-            "EventUpdateBody{eventName=$eventName, properties=$properties, timestamp=$timestamp, customerId=$customerId, externalCustomerId=$externalCustomerId, additionalProperties=$additionalProperties}"
+        override fun toString() = "EventUpdateBody{eventName=$eventName, properties=$properties, timestamp=$timestamp, customerId=$customerId, externalCustomerId=$externalCustomerId, additionalProperties=$additionalProperties}"
 
         companion object {
 
@@ -160,29 +188,38 @@ constructor(
 
             /** A name to meaningfully identify the action or event type. */
             @JsonProperty("event_name")
-            fun eventName(eventName: String) = apply { this.eventName = eventName }
+            fun eventName(eventName: String) = apply {
+                this.eventName = eventName
+            }
 
             /**
              * A dictionary of custom properties. Values in this dictionary must be numeric,
              * boolean, or strings. Nested dictionaries are disallowed.
              */
             @JsonProperty("properties")
-            fun properties(properties: JsonValue) = apply { this.properties = properties }
+            fun properties(properties: JsonValue) = apply {
+                this.properties = properties
+            }
 
             /**
-             * An ISO 8601 format date with no timezone offset (i.e. UTC). This should represent the
-             * time that usage was recorded, and is particularly important to attribute usage to a
-             * given billing period.
+             * An ISO 8601 format date with no timezone offset (i.e. UTC). This should
+             * represent the time that usage was recorded, and is particularly important to
+             * attribute usage to a given billing period.
              */
             @JsonProperty("timestamp")
-            fun timestamp(timestamp: OffsetDateTime) = apply { this.timestamp = timestamp }
+            fun timestamp(timestamp: OffsetDateTime) = apply {
+                this.timestamp = timestamp
+            }
 
             /** The Orb Customer identifier */
             @JsonProperty("customer_id")
-            fun customerId(customerId: String) = apply { this.customerId = customerId }
+            fun customerId(customerId: String) = apply {
+                this.customerId = customerId
+            }
 
             /**
-             * An alias for the Orb customer, whose mapping is specified when creating the customer
+             * An alias for the Orb customer, whose mapping is specified when creating the
+             * customer
              */
             @JsonProperty("external_customer_id")
             fun externalCustomerId(externalCustomerId: String) = apply {
@@ -203,15 +240,20 @@ constructor(
                 this.additionalProperties.putAll(additionalProperties)
             }
 
-            fun build(): EventUpdateBody =
-                EventUpdateBody(
-                    checkNotNull(eventName) { "`eventName` is required but was not set" },
-                    checkNotNull(properties) { "`properties` is required but was not set" },
-                    checkNotNull(timestamp) { "`timestamp` is required but was not set" },
-                    customerId,
-                    externalCustomerId,
-                    additionalProperties.toUnmodifiable(),
-                )
+            fun build(): EventUpdateBody = EventUpdateBody(
+                checkNotNull(eventName) {
+                    "`eventName` is required but was not set"
+                },
+                checkNotNull(properties) {
+                    "`properties` is required but was not set"
+                },
+                checkNotNull(timestamp) {
+                    "`timestamp` is required but was not set"
+                },
+                customerId,
+                externalCustomerId,
+                additionalProperties.toUnmodifiable(),
+            )
         }
     }
 
@@ -222,38 +264,37 @@ constructor(
     fun _additionalBodyProperties(): Map<String, JsonValue> = additionalBodyProperties
 
     override fun equals(other: Any?): Boolean {
-        if (this === other) {
-            return true
-        }
+      if (this === other) {
+          return true
+      }
 
-        return other is EventUpdateParams &&
-            this.eventId == other.eventId &&
-            this.eventName == other.eventName &&
-            this.properties == other.properties &&
-            this.timestamp == other.timestamp &&
-            this.customerId == other.customerId &&
-            this.externalCustomerId == other.externalCustomerId &&
-            this.additionalQueryParams == other.additionalQueryParams &&
-            this.additionalHeaders == other.additionalHeaders &&
-            this.additionalBodyProperties == other.additionalBodyProperties
+      return other is EventUpdateParams &&
+          this.eventId == other.eventId &&
+          this.eventName == other.eventName &&
+          this.properties == other.properties &&
+          this.timestamp == other.timestamp &&
+          this.customerId == other.customerId &&
+          this.externalCustomerId == other.externalCustomerId &&
+          this.additionalQueryParams == other.additionalQueryParams &&
+          this.additionalHeaders == other.additionalHeaders &&
+          this.additionalBodyProperties == other.additionalBodyProperties
     }
 
     override fun hashCode(): Int {
-        return Objects.hash(
-            eventId,
-            eventName,
-            properties,
-            timestamp,
-            customerId,
-            externalCustomerId,
-            additionalQueryParams,
-            additionalHeaders,
-            additionalBodyProperties,
-        )
+      return Objects.hash(
+          eventId,
+          eventName,
+          properties,
+          timestamp,
+          customerId,
+          externalCustomerId,
+          additionalQueryParams,
+          additionalHeaders,
+          additionalBodyProperties,
+      )
     }
 
-    override fun toString() =
-        "EventUpdateParams{eventId=$eventId, eventName=$eventName, properties=$properties, timestamp=$timestamp, customerId=$customerId, externalCustomerId=$externalCustomerId, additionalQueryParams=$additionalQueryParams, additionalHeaders=$additionalHeaders, additionalBodyProperties=$additionalBodyProperties}"
+    override fun toString() = "EventUpdateParams{eventId=$eventId, eventName=$eventName, properties=$properties, timestamp=$timestamp, customerId=$customerId, externalCustomerId=$externalCustomerId, additionalQueryParams=$additionalQueryParams, additionalHeaders=$additionalHeaders, additionalBodyProperties=$additionalBodyProperties}"
 
     fun toBuilder() = Builder().from(this)
 
@@ -287,28 +328,41 @@ constructor(
             additionalBodyProperties(eventUpdateParams.additionalBodyProperties)
         }
 
-        fun eventId(eventId: String) = apply { this.eventId = eventId }
+        fun eventId(eventId: String) = apply {
+            this.eventId = eventId
+        }
 
         /** A name to meaningfully identify the action or event type. */
-        fun eventName(eventName: String) = apply { this.eventName = eventName }
+        fun eventName(eventName: String) = apply {
+            this.eventName = eventName
+        }
 
         /**
-         * A dictionary of custom properties. Values in this dictionary must be numeric, boolean, or
-         * strings. Nested dictionaries are disallowed.
+         * A dictionary of custom properties. Values in this dictionary must be numeric,
+         * boolean, or strings. Nested dictionaries are disallowed.
          */
-        fun properties(properties: JsonValue) = apply { this.properties = properties }
+        fun properties(properties: JsonValue) = apply {
+            this.properties = properties
+        }
 
         /**
-         * An ISO 8601 format date with no timezone offset (i.e. UTC). This should represent the
-         * time that usage was recorded, and is particularly important to attribute usage to a given
-         * billing period.
+         * An ISO 8601 format date with no timezone offset (i.e. UTC). This should
+         * represent the time that usage was recorded, and is particularly important to
+         * attribute usage to a given billing period.
          */
-        fun timestamp(timestamp: OffsetDateTime) = apply { this.timestamp = timestamp }
+        fun timestamp(timestamp: OffsetDateTime) = apply {
+            this.timestamp = timestamp
+        }
 
         /** The Orb Customer identifier */
-        fun customerId(customerId: String) = apply { this.customerId = customerId }
+        fun customerId(customerId: String) = apply {
+            this.customerId = customerId
+        }
 
-        /** An alias for the Orb customer, whose mapping is specified when creating the customer */
+        /**
+         * An alias for the Orb customer, whose mapping is specified when creating the
+         * customer
+         */
         fun externalCustomerId(externalCustomerId: String) = apply {
             this.externalCustomerId = externalCustomerId
         }
@@ -351,7 +405,9 @@ constructor(
             additionalHeaders.forEach(this::putHeaders)
         }
 
-        fun removeHeader(name: String) = apply { this.additionalHeaders.put(name, mutableListOf()) }
+        fun removeHeader(name: String) = apply {
+            this.additionalHeaders.put(name, mutableListOf())
+        }
 
         fun additionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) = apply {
             this.additionalBodyProperties.clear()
@@ -362,22 +418,28 @@ constructor(
             this.additionalBodyProperties.put(key, value)
         }
 
-        fun putAllAdditionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) =
-            apply {
-                this.additionalBodyProperties.putAll(additionalBodyProperties)
-            }
+        fun putAllAdditionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) = apply {
+            this.additionalBodyProperties.putAll(additionalBodyProperties)
+        }
 
-        fun build(): EventUpdateParams =
-            EventUpdateParams(
-                checkNotNull(eventId) { "`eventId` is required but was not set" },
-                checkNotNull(eventName) { "`eventName` is required but was not set" },
-                checkNotNull(properties) { "`properties` is required but was not set" },
-                checkNotNull(timestamp) { "`timestamp` is required but was not set" },
-                customerId,
-                externalCustomerId,
-                additionalQueryParams.mapValues { it.value.toUnmodifiable() }.toUnmodifiable(),
-                additionalHeaders.mapValues { it.value.toUnmodifiable() }.toUnmodifiable(),
-                additionalBodyProperties.toUnmodifiable(),
-            )
+        fun build(): EventUpdateParams = EventUpdateParams(
+            checkNotNull(eventId) {
+                "`eventId` is required but was not set"
+            },
+            checkNotNull(eventName) {
+                "`eventName` is required but was not set"
+            },
+            checkNotNull(properties) {
+                "`properties` is required but was not set"
+            },
+            checkNotNull(timestamp) {
+                "`timestamp` is required but was not set"
+            },
+            customerId,
+            externalCustomerId,
+            additionalQueryParams.mapValues { it.value.toUnmodifiable() }.toUnmodifiable(),
+            additionalHeaders.mapValues { it.value.toUnmodifiable() }.toUnmodifiable(),
+            additionalBodyProperties.toUnmodifiable(),
+        )
     }
 }

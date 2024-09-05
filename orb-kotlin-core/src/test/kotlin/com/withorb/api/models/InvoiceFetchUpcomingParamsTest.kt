@@ -2,29 +2,44 @@
 
 package com.withorb.api.models
 
-import com.withorb.api.models.*
-import org.assertj.core.api.Assertions.assertThat
+import java.time.LocalDate
+import java.time.OffsetDateTime
+import java.time.format.DateTimeFormatter
+import java.util.UUID
 import org.junit.jupiter.api.Test
+import org.assertj.core.api.Assertions.assertThat
+import org.apache.hc.core5.http.ContentType
+import com.withorb.api.core.ContentTypes
+import com.withorb.api.core.JsonNull
+import com.withorb.api.core.JsonString
+import com.withorb.api.core.JsonValue
+import com.withorb.api.core.MultipartFormValue
+import com.withorb.api.models.*
+import com.withorb.api.models.InvoiceFetchUpcomingParams
 
 class InvoiceFetchUpcomingParamsTest {
 
     @Test
     fun createInvoiceFetchUpcomingParams() {
-        InvoiceFetchUpcomingParams.builder().subscriptionId("subscription_id").build()
+      InvoiceFetchUpcomingParams.builder()
+          .subscriptionId("subscription_id")
+          .build()
     }
 
     @Test
     fun getQueryParams() {
-        val params = InvoiceFetchUpcomingParams.builder().subscriptionId("subscription_id").build()
-        val expected = mutableMapOf<String, List<String>>()
-        expected.put("subscription_id", listOf("subscription_id"))
-        assertThat(params.getQueryParams()).isEqualTo(expected)
+      val params = InvoiceFetchUpcomingParams.builder()
+          .subscriptionId("subscription_id")
+          .build()
+      val expected = mutableMapOf<String, List<String>>()
+      expected.put("subscription_id", listOf("subscription_id"))
+      assertThat(params.getQueryParams()).isEqualTo(expected)
     }
 
     @Test
     fun getQueryParamsWithoutOptionalFields() {
-        val params = InvoiceFetchUpcomingParams.builder().build()
-        val expected = mutableMapOf<String, List<String>>()
-        assertThat(params.getQueryParams()).isEqualTo(expected)
+      val params = InvoiceFetchUpcomingParams.builder().build()
+      val expected = mutableMapOf<String, List<String>>()
+      assertThat(params.getQueryParams()).isEqualTo(expected)
     }
 }
