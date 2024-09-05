@@ -5,27 +5,45 @@ package com.withorb.api.models
 import com.fasterxml.jackson.annotation.JsonAnyGetter
 import com.fasterxml.jackson.annotation.JsonAnySetter
 import com.fasterxml.jackson.annotation.JsonCreator
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonProperty
+import com.fasterxml.jackson.core.JsonGenerator
+import com.fasterxml.jackson.core.ObjectCodec
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize
-import com.withorb.api.core.Enum
+import com.fasterxml.jackson.databind.annotation.JsonSerialize
+import com.fasterxml.jackson.databind.JsonNode
+import com.fasterxml.jackson.databind.SerializerProvider
+import com.fasterxml.jackson.module.kotlin.jacksonTypeRef
+import org.apache.hc.core5.http.ContentType
+import java.time.LocalDate
+import java.time.OffsetDateTime
+import java.time.format.DateTimeFormatter
+import java.util.Objects
+import java.util.Optional
+import java.util.UUID
+import com.withorb.api.core.BaseDeserializer
+import com.withorb.api.core.BaseSerializer
+import com.withorb.api.core.getOrThrow
 import com.withorb.api.core.ExcludeMissing
 import com.withorb.api.core.JsonField
+import com.withorb.api.core.JsonMissing
 import com.withorb.api.core.JsonValue
-import com.withorb.api.core.NoAutoDetect
+import com.withorb.api.core.MultipartFormValue
 import com.withorb.api.core.toUnmodifiable
+import com.withorb.api.core.NoAutoDetect
+import com.withorb.api.core.Enum
+import com.withorb.api.core.ContentTypes
 import com.withorb.api.errors.OrbInvalidDataException
 import com.withorb.api.models.*
-import java.time.OffsetDateTime
-import java.util.Objects
 
-class SubscriptionCancelParams
-constructor(
-    private val subscriptionId: String,
-    private val cancelOption: CancelOption,
-    private val cancellationDate: OffsetDateTime?,
-    private val additionalQueryParams: Map<String, List<String>>,
-    private val additionalHeaders: Map<String, List<String>>,
-    private val additionalBodyProperties: Map<String, JsonValue>,
+class SubscriptionCancelParams constructor(
+  private val subscriptionId: String,
+  private val cancelOption: CancelOption,
+  private val cancellationDate: OffsetDateTime?,
+  private val additionalQueryParams: Map<String, List<String>>,
+  private val additionalHeaders: Map<String, List<String>>,
+  private val additionalBodyProperties: Map<String, JsonValue>,
+
 ) {
 
     fun subscriptionId(): String = subscriptionId
@@ -35,11 +53,11 @@ constructor(
     fun cancellationDate(): OffsetDateTime? = cancellationDate
 
     internal fun getBody(): SubscriptionCancelBody {
-        return SubscriptionCancelBody(
-            cancelOption,
-            cancellationDate,
-            additionalBodyProperties,
-        )
+      return SubscriptionCancelBody(
+          cancelOption,
+          cancellationDate,
+          additionalBodyProperties,
+      )
     }
 
     internal fun getQueryParams(): Map<String, List<String>> = additionalQueryParams
@@ -47,29 +65,25 @@ constructor(
     internal fun getHeaders(): Map<String, List<String>> = additionalHeaders
 
     fun getPathParam(index: Int): String {
-        return when (index) {
-            0 -> subscriptionId
-            else -> ""
-        }
+      return when (index) {
+          0 -> subscriptionId
+          else -> ""
+      }
     }
 
     @JsonDeserialize(builder = SubscriptionCancelBody.Builder::class)
     @NoAutoDetect
-    class SubscriptionCancelBody
-    internal constructor(
-        private val cancelOption: CancelOption?,
-        private val cancellationDate: OffsetDateTime?,
-        private val additionalProperties: Map<String, JsonValue>,
-    ) {
+    class SubscriptionCancelBody internal constructor(private val cancelOption: CancelOption?, private val cancellationDate: OffsetDateTime?, private val additionalProperties: Map<String, JsonValue>, ) {
 
         private var hashCode: Int = 0
 
         /** Determines the timing of subscription cancellation */
-        @JsonProperty("cancel_option") fun cancelOption(): CancelOption? = cancelOption
+        @JsonProperty("cancel_option")
+        fun cancelOption(): CancelOption? = cancelOption
 
         /**
-         * The date that the cancellation should take effect. This parameter can only be passed if
-         * the `cancel_option` is `requested_date`.
+         * The date that the cancellation should take effect. This parameter can only be
+         * passed if the `cancel_option` is `requested_date`.
          */
         @JsonProperty("cancellation_date")
         fun cancellationDate(): OffsetDateTime? = cancellationDate
@@ -81,30 +95,28 @@ constructor(
         fun toBuilder() = Builder().from(this)
 
         override fun equals(other: Any?): Boolean {
-            if (this === other) {
-                return true
-            }
+          if (this === other) {
+              return true
+          }
 
-            return other is SubscriptionCancelBody &&
-                this.cancelOption == other.cancelOption &&
-                this.cancellationDate == other.cancellationDate &&
-                this.additionalProperties == other.additionalProperties
+          return other is SubscriptionCancelBody &&
+              this.cancelOption == other.cancelOption &&
+              this.cancellationDate == other.cancellationDate &&
+              this.additionalProperties == other.additionalProperties
         }
 
         override fun hashCode(): Int {
-            if (hashCode == 0) {
-                hashCode =
-                    Objects.hash(
-                        cancelOption,
-                        cancellationDate,
-                        additionalProperties,
-                    )
-            }
-            return hashCode
+          if (hashCode == 0) {
+            hashCode = Objects.hash(
+                cancelOption,
+                cancellationDate,
+                additionalProperties,
+            )
+          }
+          return hashCode
         }
 
-        override fun toString() =
-            "SubscriptionCancelBody{cancelOption=$cancelOption, cancellationDate=$cancellationDate, additionalProperties=$additionalProperties}"
+        override fun toString() = "SubscriptionCancelBody{cancelOption=$cancelOption, cancellationDate=$cancellationDate, additionalProperties=$additionalProperties}"
 
         companion object {
 
@@ -130,8 +142,8 @@ constructor(
             }
 
             /**
-             * The date that the cancellation should take effect. This parameter can only be passed
-             * if the `cancel_option` is `requested_date`.
+             * The date that the cancellation should take effect. This parameter can only be
+             * passed if the `cancel_option` is `requested_date`.
              */
             @JsonProperty("cancellation_date")
             fun cancellationDate(cancellationDate: OffsetDateTime) = apply {
@@ -152,12 +164,13 @@ constructor(
                 this.additionalProperties.putAll(additionalProperties)
             }
 
-            fun build(): SubscriptionCancelBody =
-                SubscriptionCancelBody(
-                    checkNotNull(cancelOption) { "`cancelOption` is required but was not set" },
-                    cancellationDate,
-                    additionalProperties.toUnmodifiable(),
-                )
+            fun build(): SubscriptionCancelBody = SubscriptionCancelBody(
+                checkNotNull(cancelOption) {
+                    "`cancelOption` is required but was not set"
+                },
+                cancellationDate,
+                additionalProperties.toUnmodifiable(),
+            )
         }
     }
 
@@ -168,32 +181,31 @@ constructor(
     fun _additionalBodyProperties(): Map<String, JsonValue> = additionalBodyProperties
 
     override fun equals(other: Any?): Boolean {
-        if (this === other) {
-            return true
-        }
+      if (this === other) {
+          return true
+      }
 
-        return other is SubscriptionCancelParams &&
-            this.subscriptionId == other.subscriptionId &&
-            this.cancelOption == other.cancelOption &&
-            this.cancellationDate == other.cancellationDate &&
-            this.additionalQueryParams == other.additionalQueryParams &&
-            this.additionalHeaders == other.additionalHeaders &&
-            this.additionalBodyProperties == other.additionalBodyProperties
+      return other is SubscriptionCancelParams &&
+          this.subscriptionId == other.subscriptionId &&
+          this.cancelOption == other.cancelOption &&
+          this.cancellationDate == other.cancellationDate &&
+          this.additionalQueryParams == other.additionalQueryParams &&
+          this.additionalHeaders == other.additionalHeaders &&
+          this.additionalBodyProperties == other.additionalBodyProperties
     }
 
     override fun hashCode(): Int {
-        return Objects.hash(
-            subscriptionId,
-            cancelOption,
-            cancellationDate,
-            additionalQueryParams,
-            additionalHeaders,
-            additionalBodyProperties,
-        )
+      return Objects.hash(
+          subscriptionId,
+          cancelOption,
+          cancellationDate,
+          additionalQueryParams,
+          additionalHeaders,
+          additionalBodyProperties,
+      )
     }
 
-    override fun toString() =
-        "SubscriptionCancelParams{subscriptionId=$subscriptionId, cancelOption=$cancelOption, cancellationDate=$cancellationDate, additionalQueryParams=$additionalQueryParams, additionalHeaders=$additionalHeaders, additionalBodyProperties=$additionalBodyProperties}"
+    override fun toString() = "SubscriptionCancelParams{subscriptionId=$subscriptionId, cancelOption=$cancelOption, cancellationDate=$cancellationDate, additionalQueryParams=$additionalQueryParams, additionalHeaders=$additionalHeaders, additionalBodyProperties=$additionalBodyProperties}"
 
     fun toBuilder() = Builder().from(this)
 
@@ -221,14 +233,18 @@ constructor(
             additionalBodyProperties(subscriptionCancelParams.additionalBodyProperties)
         }
 
-        fun subscriptionId(subscriptionId: String) = apply { this.subscriptionId = subscriptionId }
+        fun subscriptionId(subscriptionId: String) = apply {
+            this.subscriptionId = subscriptionId
+        }
 
         /** Determines the timing of subscription cancellation */
-        fun cancelOption(cancelOption: CancelOption) = apply { this.cancelOption = cancelOption }
+        fun cancelOption(cancelOption: CancelOption) = apply {
+            this.cancelOption = cancelOption
+        }
 
         /**
-         * The date that the cancellation should take effect. This parameter can only be passed if
-         * the `cancel_option` is `requested_date`.
+         * The date that the cancellation should take effect. This parameter can only be
+         * passed if the `cancel_option` is `requested_date`.
          */
         fun cancellationDate(cancellationDate: OffsetDateTime) = apply {
             this.cancellationDate = cancellationDate
@@ -272,7 +288,9 @@ constructor(
             additionalHeaders.forEach(this::putHeaders)
         }
 
-        fun removeHeader(name: String) = apply { this.additionalHeaders.put(name, mutableListOf()) }
+        fun removeHeader(name: String) = apply {
+            this.additionalHeaders.put(name, mutableListOf())
+        }
 
         fun additionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) = apply {
             this.additionalBodyProperties.clear()
@@ -283,36 +301,36 @@ constructor(
             this.additionalBodyProperties.put(key, value)
         }
 
-        fun putAllAdditionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) =
-            apply {
-                this.additionalBodyProperties.putAll(additionalBodyProperties)
-            }
+        fun putAllAdditionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) = apply {
+            this.additionalBodyProperties.putAll(additionalBodyProperties)
+        }
 
-        fun build(): SubscriptionCancelParams =
-            SubscriptionCancelParams(
-                checkNotNull(subscriptionId) { "`subscriptionId` is required but was not set" },
-                checkNotNull(cancelOption) { "`cancelOption` is required but was not set" },
-                cancellationDate,
-                additionalQueryParams.mapValues { it.value.toUnmodifiable() }.toUnmodifiable(),
-                additionalHeaders.mapValues { it.value.toUnmodifiable() }.toUnmodifiable(),
-                additionalBodyProperties.toUnmodifiable(),
-            )
+        fun build(): SubscriptionCancelParams = SubscriptionCancelParams(
+            checkNotNull(subscriptionId) {
+                "`subscriptionId` is required but was not set"
+            },
+            checkNotNull(cancelOption) {
+                "`cancelOption` is required but was not set"
+            },
+            cancellationDate,
+            additionalQueryParams.mapValues { it.value.toUnmodifiable() }.toUnmodifiable(),
+            additionalHeaders.mapValues { it.value.toUnmodifiable() }.toUnmodifiable(),
+            additionalBodyProperties.toUnmodifiable(),
+        )
     }
 
-    class CancelOption
-    @JsonCreator
-    private constructor(
-        private val value: JsonField<String>,
-    ) : Enum {
+    class CancelOption @JsonCreator private constructor(private val value: JsonField<String>, ) : Enum {
 
-        @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
+        @com.fasterxml.jackson.annotation.JsonValue
+        fun _value(): JsonField<String> = value
 
         override fun equals(other: Any?): Boolean {
-            if (this === other) {
-                return true
-            }
+          if (this === other) {
+              return true
+          }
 
-            return other is CancelOption && this.value == other.value
+          return other is CancelOption &&
+              this.value == other.value
         }
 
         override fun hashCode() = value.hashCode()
@@ -343,21 +361,19 @@ constructor(
             _UNKNOWN,
         }
 
-        fun value(): Value =
-            when (this) {
-                END_OF_SUBSCRIPTION_TERM -> Value.END_OF_SUBSCRIPTION_TERM
-                IMMEDIATE -> Value.IMMEDIATE
-                REQUESTED_DATE -> Value.REQUESTED_DATE
-                else -> Value._UNKNOWN
-            }
+        fun value(): Value = when (this) {
+            END_OF_SUBSCRIPTION_TERM -> Value.END_OF_SUBSCRIPTION_TERM
+            IMMEDIATE -> Value.IMMEDIATE
+            REQUESTED_DATE -> Value.REQUESTED_DATE
+            else -> Value._UNKNOWN
+        }
 
-        fun known(): Known =
-            when (this) {
-                END_OF_SUBSCRIPTION_TERM -> Known.END_OF_SUBSCRIPTION_TERM
-                IMMEDIATE -> Known.IMMEDIATE
-                REQUESTED_DATE -> Known.REQUESTED_DATE
-                else -> throw OrbInvalidDataException("Unknown CancelOption: $value")
-            }
+        fun known(): Known = when (this) {
+            END_OF_SUBSCRIPTION_TERM -> Known.END_OF_SUBSCRIPTION_TERM
+            IMMEDIATE -> Known.IMMEDIATE
+            REQUESTED_DATE -> Known.REQUESTED_DATE
+            else -> throw OrbInvalidDataException("Unknown CancelOption: $value")
+        }
 
         fun asString(): String = _value().asStringOrThrow()
     }

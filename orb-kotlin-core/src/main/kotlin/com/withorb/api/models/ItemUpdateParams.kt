@@ -5,26 +5,45 @@ package com.withorb.api.models
 import com.fasterxml.jackson.annotation.JsonAnyGetter
 import com.fasterxml.jackson.annotation.JsonAnySetter
 import com.fasterxml.jackson.annotation.JsonCreator
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonProperty
+import com.fasterxml.jackson.core.JsonGenerator
+import com.fasterxml.jackson.core.ObjectCodec
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize
-import com.withorb.api.core.Enum
+import com.fasterxml.jackson.databind.annotation.JsonSerialize
+import com.fasterxml.jackson.databind.JsonNode
+import com.fasterxml.jackson.databind.SerializerProvider
+import com.fasterxml.jackson.module.kotlin.jacksonTypeRef
+import org.apache.hc.core5.http.ContentType
+import java.time.LocalDate
+import java.time.OffsetDateTime
+import java.time.format.DateTimeFormatter
+import java.util.Objects
+import java.util.Optional
+import java.util.UUID
+import com.withorb.api.core.BaseDeserializer
+import com.withorb.api.core.BaseSerializer
+import com.withorb.api.core.getOrThrow
 import com.withorb.api.core.ExcludeMissing
 import com.withorb.api.core.JsonField
+import com.withorb.api.core.JsonMissing
 import com.withorb.api.core.JsonValue
-import com.withorb.api.core.NoAutoDetect
+import com.withorb.api.core.MultipartFormValue
 import com.withorb.api.core.toUnmodifiable
+import com.withorb.api.core.NoAutoDetect
+import com.withorb.api.core.Enum
+import com.withorb.api.core.ContentTypes
 import com.withorb.api.errors.OrbInvalidDataException
 import com.withorb.api.models.*
-import java.util.Objects
 
-class ItemUpdateParams
-constructor(
-    private val itemId: String,
-    private val externalConnections: List<ExternalConnection>?,
-    private val name: String?,
-    private val additionalQueryParams: Map<String, List<String>>,
-    private val additionalHeaders: Map<String, List<String>>,
-    private val additionalBodyProperties: Map<String, JsonValue>,
+class ItemUpdateParams constructor(
+  private val itemId: String,
+  private val externalConnections: List<ExternalConnection>?,
+  private val name: String?,
+  private val additionalQueryParams: Map<String, List<String>>,
+  private val additionalHeaders: Map<String, List<String>>,
+  private val additionalBodyProperties: Map<String, JsonValue>,
+
 ) {
 
     fun itemId(): String = itemId
@@ -34,11 +53,11 @@ constructor(
     fun name(): String? = name
 
     internal fun getBody(): ItemUpdateBody {
-        return ItemUpdateBody(
-            externalConnections,
-            name,
-            additionalBodyProperties,
-        )
+      return ItemUpdateBody(
+          externalConnections,
+          name,
+          additionalBodyProperties,
+      )
     }
 
     internal fun getQueryParams(): Map<String, List<String>> = additionalQueryParams
@@ -46,32 +65,28 @@ constructor(
     internal fun getHeaders(): Map<String, List<String>> = additionalHeaders
 
     fun getPathParam(index: Int): String {
-        return when (index) {
-            0 -> itemId
-            else -> ""
-        }
+      return when (index) {
+          0 -> itemId
+          else -> ""
+      }
     }
 
     /**
-     * A list of external connections to map an item to. Note that passing `null` will clear
-     * existing mappings. Orb requires that you pass the full list of mappings; this list will
-     * replace the existing item mappings.
+     * A list of external connections to map an item to. Note that passing `null` will
+     * clear existing mappings. Orb requires that you pass the full list of mappings;
+     * this list will replace the existing item mappings.
      */
     @JsonDeserialize(builder = ItemUpdateBody.Builder::class)
     @NoAutoDetect
-    class ItemUpdateBody
-    internal constructor(
-        private val externalConnections: List<ExternalConnection>?,
-        private val name: String?,
-        private val additionalProperties: Map<String, JsonValue>,
-    ) {
+    class ItemUpdateBody internal constructor(private val externalConnections: List<ExternalConnection>?, private val name: String?, private val additionalProperties: Map<String, JsonValue>, ) {
 
         private var hashCode: Int = 0
 
         @JsonProperty("external_connections")
         fun externalConnections(): List<ExternalConnection>? = externalConnections
 
-        @JsonProperty("name") fun name(): String? = name
+        @JsonProperty("name")
+        fun name(): String? = name
 
         @JsonAnyGetter
         @ExcludeMissing
@@ -80,30 +95,28 @@ constructor(
         fun toBuilder() = Builder().from(this)
 
         override fun equals(other: Any?): Boolean {
-            if (this === other) {
-                return true
-            }
+          if (this === other) {
+              return true
+          }
 
-            return other is ItemUpdateBody &&
-                this.externalConnections == other.externalConnections &&
-                this.name == other.name &&
-                this.additionalProperties == other.additionalProperties
+          return other is ItemUpdateBody &&
+              this.externalConnections == other.externalConnections &&
+              this.name == other.name &&
+              this.additionalProperties == other.additionalProperties
         }
 
         override fun hashCode(): Int {
-            if (hashCode == 0) {
-                hashCode =
-                    Objects.hash(
-                        externalConnections,
-                        name,
-                        additionalProperties,
-                    )
-            }
-            return hashCode
+          if (hashCode == 0) {
+            hashCode = Objects.hash(
+                externalConnections,
+                name,
+                additionalProperties,
+            )
+          }
+          return hashCode
         }
 
-        override fun toString() =
-            "ItemUpdateBody{externalConnections=$externalConnections, name=$name, additionalProperties=$additionalProperties}"
+        override fun toString() = "ItemUpdateBody{externalConnections=$externalConnections, name=$name, additionalProperties=$additionalProperties}"
 
         companion object {
 
@@ -127,7 +140,10 @@ constructor(
                 this.externalConnections = externalConnections
             }
 
-            @JsonProperty("name") fun name(name: String) = apply { this.name = name }
+            @JsonProperty("name")
+            fun name(name: String) = apply {
+                this.name = name
+            }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
@@ -143,12 +159,11 @@ constructor(
                 this.additionalProperties.putAll(additionalProperties)
             }
 
-            fun build(): ItemUpdateBody =
-                ItemUpdateBody(
-                    externalConnections?.toUnmodifiable(),
-                    name,
-                    additionalProperties.toUnmodifiable(),
-                )
+            fun build(): ItemUpdateBody = ItemUpdateBody(
+                externalConnections?.toUnmodifiable(),
+                name,
+                additionalProperties.toUnmodifiable(),
+            )
         }
     }
 
@@ -159,32 +174,31 @@ constructor(
     fun _additionalBodyProperties(): Map<String, JsonValue> = additionalBodyProperties
 
     override fun equals(other: Any?): Boolean {
-        if (this === other) {
-            return true
-        }
+      if (this === other) {
+          return true
+      }
 
-        return other is ItemUpdateParams &&
-            this.itemId == other.itemId &&
-            this.externalConnections == other.externalConnections &&
-            this.name == other.name &&
-            this.additionalQueryParams == other.additionalQueryParams &&
-            this.additionalHeaders == other.additionalHeaders &&
-            this.additionalBodyProperties == other.additionalBodyProperties
+      return other is ItemUpdateParams &&
+          this.itemId == other.itemId &&
+          this.externalConnections == other.externalConnections &&
+          this.name == other.name &&
+          this.additionalQueryParams == other.additionalQueryParams &&
+          this.additionalHeaders == other.additionalHeaders &&
+          this.additionalBodyProperties == other.additionalBodyProperties
     }
 
     override fun hashCode(): Int {
-        return Objects.hash(
-            itemId,
-            externalConnections,
-            name,
-            additionalQueryParams,
-            additionalHeaders,
-            additionalBodyProperties,
-        )
+      return Objects.hash(
+          itemId,
+          externalConnections,
+          name,
+          additionalQueryParams,
+          additionalHeaders,
+          additionalBodyProperties,
+      )
     }
 
-    override fun toString() =
-        "ItemUpdateParams{itemId=$itemId, externalConnections=$externalConnections, name=$name, additionalQueryParams=$additionalQueryParams, additionalHeaders=$additionalHeaders, additionalBodyProperties=$additionalBodyProperties}"
+    override fun toString() = "ItemUpdateParams{itemId=$itemId, externalConnections=$externalConnections, name=$name, additionalQueryParams=$additionalQueryParams, additionalHeaders=$additionalHeaders, additionalBodyProperties=$additionalBodyProperties}"
 
     fun toBuilder() = Builder().from(this)
 
@@ -212,7 +226,9 @@ constructor(
             additionalBodyProperties(itemUpdateParams.additionalBodyProperties)
         }
 
-        fun itemId(itemId: String) = apply { this.itemId = itemId }
+        fun itemId(itemId: String) = apply {
+            this.itemId = itemId
+        }
 
         fun externalConnections(externalConnections: List<ExternalConnection>) = apply {
             this.externalConnections.clear()
@@ -223,7 +239,9 @@ constructor(
             this.externalConnections.add(externalConnection)
         }
 
-        fun name(name: String) = apply { this.name = name }
+        fun name(name: String) = apply {
+            this.name = name
+        }
 
         fun additionalQueryParams(additionalQueryParams: Map<String, List<String>>) = apply {
             this.additionalQueryParams.clear()
@@ -263,7 +281,9 @@ constructor(
             additionalHeaders.forEach(this::putHeaders)
         }
 
-        fun removeHeader(name: String) = apply { this.additionalHeaders.put(name, mutableListOf()) }
+        fun removeHeader(name: String) = apply {
+            this.additionalHeaders.put(name, mutableListOf())
+        }
 
         fun additionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) = apply {
             this.additionalBodyProperties.clear()
@@ -274,37 +294,33 @@ constructor(
             this.additionalBodyProperties.put(key, value)
         }
 
-        fun putAllAdditionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) =
-            apply {
-                this.additionalBodyProperties.putAll(additionalBodyProperties)
-            }
+        fun putAllAdditionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) = apply {
+            this.additionalBodyProperties.putAll(additionalBodyProperties)
+        }
 
-        fun build(): ItemUpdateParams =
-            ItemUpdateParams(
-                checkNotNull(itemId) { "`itemId` is required but was not set" },
-                if (externalConnections.size == 0) null else externalConnections.toUnmodifiable(),
-                name,
-                additionalQueryParams.mapValues { it.value.toUnmodifiable() }.toUnmodifiable(),
-                additionalHeaders.mapValues { it.value.toUnmodifiable() }.toUnmodifiable(),
-                additionalBodyProperties.toUnmodifiable(),
-            )
+        fun build(): ItemUpdateParams = ItemUpdateParams(
+            checkNotNull(itemId) {
+                "`itemId` is required but was not set"
+            },
+            if(externalConnections.size == 0) null else externalConnections.toUnmodifiable(),
+            name,
+            additionalQueryParams.mapValues { it.value.toUnmodifiable() }.toUnmodifiable(),
+            additionalHeaders.mapValues { it.value.toUnmodifiable() }.toUnmodifiable(),
+            additionalBodyProperties.toUnmodifiable(),
+        )
     }
 
     @JsonDeserialize(builder = ExternalConnection.Builder::class)
     @NoAutoDetect
-    class ExternalConnection
-    private constructor(
-        private val externalConnectionName: ExternalConnectionName?,
-        private val externalEntityId: String?,
-        private val additionalProperties: Map<String, JsonValue>,
-    ) {
+    class ExternalConnection private constructor(private val externalConnectionName: ExternalConnectionName?, private val externalEntityId: String?, private val additionalProperties: Map<String, JsonValue>, ) {
 
         private var hashCode: Int = 0
 
         @JsonProperty("external_connection_name")
         fun externalConnectionName(): ExternalConnectionName? = externalConnectionName
 
-        @JsonProperty("external_entity_id") fun externalEntityId(): String? = externalEntityId
+        @JsonProperty("external_entity_id")
+        fun externalEntityId(): String? = externalEntityId
 
         @JsonAnyGetter
         @ExcludeMissing
@@ -313,30 +329,28 @@ constructor(
         fun toBuilder() = Builder().from(this)
 
         override fun equals(other: Any?): Boolean {
-            if (this === other) {
-                return true
-            }
+          if (this === other) {
+              return true
+          }
 
-            return other is ExternalConnection &&
-                this.externalConnectionName == other.externalConnectionName &&
-                this.externalEntityId == other.externalEntityId &&
-                this.additionalProperties == other.additionalProperties
+          return other is ExternalConnection &&
+              this.externalConnectionName == other.externalConnectionName &&
+              this.externalEntityId == other.externalEntityId &&
+              this.additionalProperties == other.additionalProperties
         }
 
         override fun hashCode(): Int {
-            if (hashCode == 0) {
-                hashCode =
-                    Objects.hash(
-                        externalConnectionName,
-                        externalEntityId,
-                        additionalProperties,
-                    )
-            }
-            return hashCode
+          if (hashCode == 0) {
+            hashCode = Objects.hash(
+                externalConnectionName,
+                externalEntityId,
+                additionalProperties,
+            )
+          }
+          return hashCode
         }
 
-        override fun toString() =
-            "ExternalConnection{externalConnectionName=$externalConnectionName, externalEntityId=$externalEntityId, additionalProperties=$additionalProperties}"
+        override fun toString() = "ExternalConnection{externalConnectionName=$externalConnectionName, externalEntityId=$externalEntityId, additionalProperties=$additionalProperties}"
 
         companion object {
 
@@ -379,32 +393,29 @@ constructor(
                 this.additionalProperties.putAll(additionalProperties)
             }
 
-            fun build(): ExternalConnection =
-                ExternalConnection(
-                    checkNotNull(externalConnectionName) {
-                        "`externalConnectionName` is required but was not set"
-                    },
-                    checkNotNull(externalEntityId) {
-                        "`externalEntityId` is required but was not set"
-                    },
-                    additionalProperties.toUnmodifiable(),
-                )
+            fun build(): ExternalConnection = ExternalConnection(
+                checkNotNull(externalConnectionName) {
+                    "`externalConnectionName` is required but was not set"
+                },
+                checkNotNull(externalEntityId) {
+                    "`externalEntityId` is required but was not set"
+                },
+                additionalProperties.toUnmodifiable(),
+            )
         }
 
-        class ExternalConnectionName
-        @JsonCreator
-        private constructor(
-            private val value: JsonField<String>,
-        ) : Enum {
+        class ExternalConnectionName @JsonCreator private constructor(private val value: JsonField<String>, ) : Enum {
 
-            @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
+            @com.fasterxml.jackson.annotation.JsonValue
+            fun _value(): JsonField<String> = value
 
             override fun equals(other: Any?): Boolean {
-                if (this === other) {
-                    return true
-                }
+              if (this === other) {
+                  return true
+              }
 
-                return other is ExternalConnectionName && this.value == other.value
+              return other is ExternalConnectionName &&
+                  this.value == other.value
             }
 
             override fun hashCode() = value.hashCode()
@@ -451,29 +462,27 @@ constructor(
                 _UNKNOWN,
             }
 
-            fun value(): Value =
-                when (this) {
-                    STRIPE -> Value.STRIPE
-                    QUICKBOOKS -> Value.QUICKBOOKS
-                    BILL_COM -> Value.BILL_COM
-                    NETSUITE -> Value.NETSUITE
-                    TAXJAR -> Value.TAXJAR
-                    AVALARA -> Value.AVALARA
-                    ANROK -> Value.ANROK
-                    else -> Value._UNKNOWN
-                }
+            fun value(): Value = when (this) {
+                STRIPE -> Value.STRIPE
+                QUICKBOOKS -> Value.QUICKBOOKS
+                BILL_COM -> Value.BILL_COM
+                NETSUITE -> Value.NETSUITE
+                TAXJAR -> Value.TAXJAR
+                AVALARA -> Value.AVALARA
+                ANROK -> Value.ANROK
+                else -> Value._UNKNOWN
+            }
 
-            fun known(): Known =
-                when (this) {
-                    STRIPE -> Known.STRIPE
-                    QUICKBOOKS -> Known.QUICKBOOKS
-                    BILL_COM -> Known.BILL_COM
-                    NETSUITE -> Known.NETSUITE
-                    TAXJAR -> Known.TAXJAR
-                    AVALARA -> Known.AVALARA
-                    ANROK -> Known.ANROK
-                    else -> throw OrbInvalidDataException("Unknown ExternalConnectionName: $value")
-                }
+            fun known(): Known = when (this) {
+                STRIPE -> Known.STRIPE
+                QUICKBOOKS -> Known.QUICKBOOKS
+                BILL_COM -> Known.BILL_COM
+                NETSUITE -> Known.NETSUITE
+                TAXJAR -> Known.TAXJAR
+                AVALARA -> Known.AVALARA
+                ANROK -> Known.ANROK
+                else -> throw OrbInvalidDataException("Unknown ExternalConnectionName: $value")
+            }
 
             fun asString(): String = _value().asStringOrThrow()
         }
