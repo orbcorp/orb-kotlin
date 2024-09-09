@@ -30,6 +30,13 @@ class SubscriptionServiceTest {
                     .alignBillingWithSubscriptionStartDate(true)
                     .autoCollection(true)
                     .awsRegion("aws_region")
+                    .billingCycleAnchorConfiguration(
+                        SubscriptionCreateParams.BillingCycleAnchorConfiguration.builder()
+                            .day(31L)
+                            .month(12L)
+                            .year(123L)
+                            .build()
+                    )
                     .couponRedemptionCode("coupon_redemption_code")
                     .creditsOverageRate(42.23)
                     .customerId("customer_id")
@@ -40,7 +47,7 @@ class SubscriptionServiceTest {
                     .externalMarketplaceReportingId("external_marketplace_reporting_id")
                     .externalPlanId("ZMwNQefe7J3ecf7W")
                     .initialPhaseOrder(123L)
-                    .invoicingThreshold("invoicing_threshold")
+                    .invoicingThreshold("10.00")
                     .metadata(SubscriptionCreateParams.Metadata.builder().build())
                     .netTerms(123L)
                     .perCreditOverageAmount(42.23)
@@ -337,10 +344,42 @@ class SubscriptionServiceTest {
                                                 )
                                                 .billableMetricId("billable_metric_id")
                                                 .billedInAdvance(true)
+                                                .billingCycleConfiguration(
+                                                    SubscriptionPriceIntervalsParams.Add.Price
+                                                        .NewFloatingUnitPrice
+                                                        .BillingCycleConfiguration
+                                                        .builder()
+                                                        .duration(123L)
+                                                        .durationUnit(
+                                                            SubscriptionPriceIntervalsParams.Add
+                                                                .Price
+                                                                .NewFloatingUnitPrice
+                                                                .BillingCycleConfiguration
+                                                                .DurationUnit
+                                                                .DAY
+                                                        )
+                                                        .build()
+                                                )
                                                 .conversionRate(42.23)
                                                 .externalPriceId("external_price_id")
                                                 .fixedPriceQuantity(42.23)
                                                 .invoiceGroupingKey("invoice_grouping_key")
+                                                .invoicingCycleConfiguration(
+                                                    SubscriptionPriceIntervalsParams.Add.Price
+                                                        .NewFloatingUnitPrice
+                                                        .InvoicingCycleConfiguration
+                                                        .builder()
+                                                        .duration(123L)
+                                                        .durationUnit(
+                                                            SubscriptionPriceIntervalsParams.Add
+                                                                .Price
+                                                                .NewFloatingUnitPrice
+                                                                .InvoicingCycleConfiguration
+                                                                .DurationUnit
+                                                                .DAY
+                                                        )
+                                                        .build()
+                                                )
                                                 .metadata(
                                                     SubscriptionPriceIntervalsParams.Add.Price
                                                         .NewFloatingUnitPrice
@@ -462,15 +501,18 @@ class SubscriptionServiceTest {
                     .subscriptionId("subscription_id")
                     .changeOption(SubscriptionSchedulePlanChangeParams.ChangeOption.REQUESTED_DATE)
                     .alignBillingWithPlanChangeDate(true)
+                    .autoCollection(true)
                     .billingCycleAlignment(
                         SubscriptionSchedulePlanChangeParams.BillingCycleAlignment.UNCHANGED
                     )
                     .changeDate(OffsetDateTime.parse("2017-07-21T17:32:28Z"))
                     .couponRedemptionCode("coupon_redemption_code")
                     .creditsOverageRate(42.23)
+                    .defaultInvoiceMemo("default_invoice_memo")
                     .externalPlanId("ZMwNQefe7J3ecf7W")
                     .initialPhaseOrder(123L)
                     .invoicingThreshold("10.00")
+                    .netTerms(123L)
                     .perCreditOverageAmount(42.23)
                     .planId("ZMwNQefe7J3ecf7W")
                     .priceOverrides(

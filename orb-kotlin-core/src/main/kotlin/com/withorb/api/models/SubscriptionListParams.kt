@@ -21,13 +21,12 @@ constructor(
     private val createdAtLt: OffsetDateTime?,
     private val createdAtLte: OffsetDateTime?,
     private val cursor: String?,
-    private val customerId: String?,
+    private val customerId: List<String>?,
     private val externalCustomerId: String?,
     private val limit: Long?,
     private val status: Status?,
     private val additionalQueryParams: Map<String, List<String>>,
     private val additionalHeaders: Map<String, List<String>>,
-    private val additionalBodyProperties: Map<String, JsonValue>,
 ) {
 
     fun createdAtGt(): OffsetDateTime? = createdAtGt
@@ -40,7 +39,7 @@ constructor(
 
     fun cursor(): String? = cursor
 
-    fun customerId(): String? = customerId
+    fun customerId(): List<String>? = customerId
 
     fun externalCustomerId(): String? = externalCustomerId
 
@@ -63,7 +62,7 @@ constructor(
             params.put("created_at[lte]", listOf(DateTimeFormatter.ISO_OFFSET_DATE_TIME.format(it)))
         }
         this.cursor?.let { params.put("cursor", listOf(it.toString())) }
-        this.customerId?.let { params.put("customer_id", listOf(it.toString())) }
+        this.customerId?.let { params.put("customer_id[]", it.map(Any::toString)) }
         this.externalCustomerId?.let { params.put("external_customer_id", listOf(it.toString())) }
         this.limit?.let { params.put("limit", listOf(it.toString())) }
         this.status?.let { params.put("status", listOf(it.toString())) }
@@ -76,8 +75,6 @@ constructor(
     fun _additionalQueryParams(): Map<String, List<String>> = additionalQueryParams
 
     fun _additionalHeaders(): Map<String, List<String>> = additionalHeaders
-
-    fun _additionalBodyProperties(): Map<String, JsonValue> = additionalBodyProperties
 
     override fun equals(other: Any?): Boolean {
         if (this === other) {
@@ -95,8 +92,7 @@ constructor(
             this.limit == other.limit &&
             this.status == other.status &&
             this.additionalQueryParams == other.additionalQueryParams &&
-            this.additionalHeaders == other.additionalHeaders &&
-            this.additionalBodyProperties == other.additionalBodyProperties
+            this.additionalHeaders == other.additionalHeaders
     }
 
     override fun hashCode(): Int {
@@ -112,12 +108,11 @@ constructor(
             status,
             additionalQueryParams,
             additionalHeaders,
-            additionalBodyProperties,
         )
     }
 
     override fun toString() =
-        "SubscriptionListParams{createdAtGt=$createdAtGt, createdAtGte=$createdAtGte, createdAtLt=$createdAtLt, createdAtLte=$createdAtLte, cursor=$cursor, customerId=$customerId, externalCustomerId=$externalCustomerId, limit=$limit, status=$status, additionalQueryParams=$additionalQueryParams, additionalHeaders=$additionalHeaders, additionalBodyProperties=$additionalBodyProperties}"
+        "SubscriptionListParams{createdAtGt=$createdAtGt, createdAtGte=$createdAtGte, createdAtLt=$createdAtLt, createdAtLte=$createdAtLte, cursor=$cursor, customerId=$customerId, externalCustomerId=$externalCustomerId, limit=$limit, status=$status, additionalQueryParams=$additionalQueryParams, additionalHeaders=$additionalHeaders}"
 
     fun toBuilder() = Builder().from(this)
 
@@ -134,13 +129,12 @@ constructor(
         private var createdAtLt: OffsetDateTime? = null
         private var createdAtLte: OffsetDateTime? = null
         private var cursor: String? = null
-        private var customerId: String? = null
+        private var customerId: MutableList<String> = mutableListOf()
         private var externalCustomerId: String? = null
         private var limit: Long? = null
         private var status: Status? = null
         private var additionalQueryParams: MutableMap<String, MutableList<String>> = mutableMapOf()
         private var additionalHeaders: MutableMap<String, MutableList<String>> = mutableMapOf()
-        private var additionalBodyProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         internal fun from(subscriptionListParams: SubscriptionListParams) = apply {
             this.createdAtGt = subscriptionListParams.createdAtGt
@@ -148,13 +142,12 @@ constructor(
             this.createdAtLt = subscriptionListParams.createdAtLt
             this.createdAtLte = subscriptionListParams.createdAtLte
             this.cursor = subscriptionListParams.cursor
-            this.customerId = subscriptionListParams.customerId
+            this.customerId(subscriptionListParams.customerId ?: listOf())
             this.externalCustomerId = subscriptionListParams.externalCustomerId
             this.limit = subscriptionListParams.limit
             this.status = subscriptionListParams.status
             additionalQueryParams(subscriptionListParams.additionalQueryParams)
             additionalHeaders(subscriptionListParams.additionalHeaders)
-            additionalBodyProperties(subscriptionListParams.additionalBodyProperties)
         }
 
         fun createdAtGt(createdAtGt: OffsetDateTime) = apply { this.createdAtGt = createdAtGt }
@@ -171,7 +164,12 @@ constructor(
          */
         fun cursor(cursor: String) = apply { this.cursor = cursor }
 
-        fun customerId(customerId: String) = apply { this.customerId = customerId }
+        fun customerId(customerId: List<String>) = apply {
+            this.customerId.clear()
+            this.customerId.addAll(customerId)
+        }
+
+        fun addCustomerId(customerId: String) = apply { this.customerId.add(customerId) }
 
         fun externalCustomerId(externalCustomerId: String) = apply {
             this.externalCustomerId = externalCustomerId
@@ -222,20 +220,6 @@ constructor(
 
         fun removeHeader(name: String) = apply { this.additionalHeaders.put(name, mutableListOf()) }
 
-        fun additionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) = apply {
-            this.additionalBodyProperties.clear()
-            this.additionalBodyProperties.putAll(additionalBodyProperties)
-        }
-
-        fun putAdditionalBodyProperty(key: String, value: JsonValue) = apply {
-            this.additionalBodyProperties.put(key, value)
-        }
-
-        fun putAllAdditionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) =
-            apply {
-                this.additionalBodyProperties.putAll(additionalBodyProperties)
-            }
-
         fun build(): SubscriptionListParams =
             SubscriptionListParams(
                 createdAtGt,
@@ -243,13 +227,12 @@ constructor(
                 createdAtLt,
                 createdAtLte,
                 cursor,
-                customerId,
+                if (customerId.size == 0) null else customerId.toUnmodifiable(),
                 externalCustomerId,
                 limit,
                 status,
                 additionalQueryParams.mapValues { it.value.toUnmodifiable() }.toUnmodifiable(),
                 additionalHeaders.mapValues { it.value.toUnmodifiable() }.toUnmodifiable(),
-                additionalBodyProperties.toUnmodifiable(),
             )
     }
 

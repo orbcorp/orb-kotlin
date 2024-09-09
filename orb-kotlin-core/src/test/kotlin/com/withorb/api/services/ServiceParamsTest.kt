@@ -59,7 +59,7 @@ class ServiceParamsTest {
         val params =
             CustomerCreateParams.builder()
                 .email("email")
-                .name("name")
+                .name("x")
                 .accountingSyncConfiguration(
                     CustomerCreateParams.AccountingSyncConfiguration.builder()
                         .accountingProviders(

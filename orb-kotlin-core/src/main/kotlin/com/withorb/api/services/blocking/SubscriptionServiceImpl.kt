@@ -489,8 +489,9 @@ constructor(
      * subscription. For a full discussion of the subscription resource, see
      * [Subscription](../guides/concepts#subscription).
      *
-     * Subscriptions can be filtered to a single customer by passing in the `customer_id` query
-     * parameter or the `external_customer_id` query parameter.
+     * Subscriptions can be filtered for a specific customer by using either the customer_id or
+     * external_customer_id query parameters. To filter subscriptions for multiple customers, use
+     * the customer_id[] or external_customer_id[] query parameters.
      */
     override fun list(
         params: SubscriptionListParams,
@@ -1144,7 +1145,8 @@ constructor(
     /**
      * This endpoint can be used to clear scheduled updates to the quantity for a fixed fee.
      *
-     * If there are no updates scheduled, this endpoint is a no-op.
+     * If there are no updates scheduled, a request validation error will be returned with a 400
+     * status code.
      */
     override fun unscheduleFixedFeeQuantityUpdates(
         params: SubscriptionUnscheduleFixedFeeQuantityUpdatesParams,

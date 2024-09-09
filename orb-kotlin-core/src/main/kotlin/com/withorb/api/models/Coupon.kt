@@ -28,10 +28,10 @@ import java.time.OffsetDateTime
 import java.util.Objects
 
 /**
- * A coupon represents a reusable discount configuration that can be applied either as a fixed
- * currency amount or as a percentage of the usage cost. Coupons are activated using a redemption
- * code, which applies the discount to a subscription or invoice. The duration of a coupon
- * determines how long it remains available for use by end users.
+ * A coupon represents a reusable discount configuration that can be applied either as a fixed or
+ * percentage amount to an invoice or subscription. Coupons are activated using a redemption code,
+ * which applies the discount to a subscription or invoice. The duration of a coupon determines how
+ * long it remains available for use by end users.
  *
  * ## How to use coupons
  *
