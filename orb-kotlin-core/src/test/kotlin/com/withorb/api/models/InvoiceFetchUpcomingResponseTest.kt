@@ -93,10 +93,14 @@ class InvoiceFetchUpcomingResponseTest {
                         .build()
                 )
                 .discount(
-                    Discount.ofPercentageDiscount(
-                        Discount.PercentageDiscount.builder()
+                    InvoiceFetchUpcomingResponse.Discount.ofPercentageDiscount(
+                        InvoiceFetchUpcomingResponse.Discount.PercentageDiscount.builder()
                             .appliesToPriceIds(listOf("string"))
-                            .discountType(Discount.PercentageDiscount.DiscountType.PERCENTAGE)
+                            .discountType(
+                                InvoiceFetchUpcomingResponse.Discount.PercentageDiscount
+                                    .DiscountType
+                                    .PERCENTAGE
+                            )
                             .percentageDiscount(1.0)
                             .reason("reason")
                             .build()
@@ -104,10 +108,14 @@ class InvoiceFetchUpcomingResponseTest {
                 )
                 .discounts(
                     listOf(
-                        Discount.ofPercentageDiscount(
-                            Discount.PercentageDiscount.builder()
+                        InvoiceFetchUpcomingResponse.Discount.ofPercentageDiscount(
+                            InvoiceFetchUpcomingResponse.Discount.PercentageDiscount.builder()
                                 .appliesToPriceIds(listOf("string"))
-                                .discountType(Discount.PercentageDiscount.DiscountType.PERCENTAGE)
+                                .discountType(
+                                    InvoiceFetchUpcomingResponse.Discount.PercentageDiscount
+                                        .DiscountType
+                                        .PERCENTAGE
+                                )
                                 .percentageDiscount(1.0)
                                 .reason("reason")
                                 .build()
@@ -422,10 +430,13 @@ class InvoiceFetchUpcomingResponseTest {
             )
         assertThat(invoiceFetchUpcomingResponse.discount())
             .isEqualTo(
-                Discount.ofPercentageDiscount(
-                    Discount.PercentageDiscount.builder()
+                InvoiceFetchUpcomingResponse.Discount.ofPercentageDiscount(
+                    InvoiceFetchUpcomingResponse.Discount.PercentageDiscount.builder()
                         .appliesToPriceIds(listOf("string"))
-                        .discountType(Discount.PercentageDiscount.DiscountType.PERCENTAGE)
+                        .discountType(
+                            InvoiceFetchUpcomingResponse.Discount.PercentageDiscount.DiscountType
+                                .PERCENTAGE
+                        )
                         .percentageDiscount(1.0)
                         .reason("reason")
                         .build()
@@ -433,10 +444,13 @@ class InvoiceFetchUpcomingResponseTest {
             )
         assertThat(invoiceFetchUpcomingResponse.discounts())
             .containsExactly(
-                Discount.ofPercentageDiscount(
-                    Discount.PercentageDiscount.builder()
+                InvoiceFetchUpcomingResponse.Discount.ofPercentageDiscount(
+                    InvoiceFetchUpcomingResponse.Discount.PercentageDiscount.builder()
                         .appliesToPriceIds(listOf("string"))
-                        .discountType(Discount.PercentageDiscount.DiscountType.PERCENTAGE)
+                        .discountType(
+                            InvoiceFetchUpcomingResponse.Discount.PercentageDiscount.DiscountType
+                                .PERCENTAGE
+                        )
                         .percentageDiscount(1.0)
                         .reason("reason")
                         .build()
