@@ -67,8 +67,8 @@ private constructor(
     fun revertedAt(): OffsetDateTime? = revertedAt.getNullable("reverted_at")
 
     /**
-     * The customer ID this backfill is scoped to. If null, this backfill is not scoped to a single
-     * customer.
+     * The Orb-generated ID of the customer to which this backfill is scoped. If `null`, this
+     * backfill is scoped to all customers.
      */
     fun customerId(): String? = customerId.getNullable("customer_id")
 
@@ -102,8 +102,8 @@ private constructor(
     @JsonProperty("reverted_at") @ExcludeMissing fun _revertedAt() = revertedAt
 
     /**
-     * The customer ID this backfill is scoped to. If null, this backfill is not scoped to a single
-     * customer.
+     * The Orb-generated ID of the customer to which this backfill is scoped. If `null`, this
+     * backfill is scoped to all customers.
      */
     @JsonProperty("customer_id") @ExcludeMissing fun _customerId() = customerId
 
@@ -280,14 +280,14 @@ private constructor(
         }
 
         /**
-         * The customer ID this backfill is scoped to. If null, this backfill is not scoped to a
-         * single customer.
+         * The Orb-generated ID of the customer to which this backfill is scoped. If `null`, this
+         * backfill is scoped to all customers.
          */
         fun customerId(customerId: String) = customerId(JsonField.of(customerId))
 
         /**
-         * The customer ID this backfill is scoped to. If null, this backfill is not scoped to a
-         * single customer.
+         * The Orb-generated ID of the customer to which this backfill is scoped. If `null`, this
+         * backfill is scoped to all customers.
          */
         @JsonProperty("customer_id")
         @ExcludeMissing
