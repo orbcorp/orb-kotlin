@@ -6,22 +6,12 @@ import com.fasterxml.jackson.annotation.JsonAnyGetter
 import com.fasterxml.jackson.annotation.JsonAnySetter
 import com.fasterxml.jackson.annotation.JsonCreator
 import com.fasterxml.jackson.annotation.JsonProperty
-import com.fasterxml.jackson.core.JsonGenerator
-import com.fasterxml.jackson.core.ObjectCodec
-import com.fasterxml.jackson.databind.JsonNode
-import com.fasterxml.jackson.databind.SerializerProvider
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize
-import com.fasterxml.jackson.databind.annotation.JsonSerialize
-import com.fasterxml.jackson.module.kotlin.jacksonTypeRef
-import com.withorb.api.core.BaseDeserializer
-import com.withorb.api.core.BaseSerializer
 import com.withorb.api.core.Enum
 import com.withorb.api.core.ExcludeMissing
 import com.withorb.api.core.JsonField
-import com.withorb.api.core.JsonMissing
 import com.withorb.api.core.JsonValue
 import com.withorb.api.core.NoAutoDetect
-import com.withorb.api.core.getOrThrow
 import com.withorb.api.core.toUnmodifiable
 import com.withorb.api.errors.OrbInvalidDataException
 import com.withorb.api.models.*
@@ -44,7 +34,6 @@ constructor(
     private val paymentProviderId: String?,
     private val reportingConfiguration: ReportingConfiguration?,
     private val shippingAddress: ShippingAddress?,
-    private val taxConfiguration: TaxConfiguration?,
     private val taxId: TaxId?,
     private val additionalQueryParams: Map<String, List<String>>,
     private val additionalHeaders: Map<String, List<String>>,
@@ -81,8 +70,6 @@ constructor(
 
     fun shippingAddress(): ShippingAddress? = shippingAddress
 
-    fun taxConfiguration(): TaxConfiguration? = taxConfiguration
-
     fun taxId(): TaxId? = taxId
 
     internal fun getBody(): CustomerUpdateBody {
@@ -101,7 +88,6 @@ constructor(
             paymentProviderId,
             reportingConfiguration,
             shippingAddress,
-            taxConfiguration,
             taxId,
             additionalBodyProperties,
         )
@@ -136,7 +122,6 @@ constructor(
         private val paymentProviderId: String?,
         private val reportingConfiguration: ReportingConfiguration?,
         private val shippingAddress: ShippingAddress?,
-        private val taxConfiguration: TaxConfiguration?,
         private val taxId: TaxId?,
         private val additionalProperties: Map<String, JsonValue>,
     ) {
@@ -208,9 +193,6 @@ constructor(
         fun reportingConfiguration(): ReportingConfiguration? = reportingConfiguration
 
         @JsonProperty("shipping_address") fun shippingAddress(): ShippingAddress? = shippingAddress
-
-        @JsonProperty("tax_configuration")
-        fun taxConfiguration(): TaxConfiguration? = taxConfiguration
 
         /**
          * Tax IDs are commonly required to be displayed on customer invoices, which are added to
@@ -346,7 +328,6 @@ constructor(
                 this.paymentProviderId == other.paymentProviderId &&
                 this.reportingConfiguration == other.reportingConfiguration &&
                 this.shippingAddress == other.shippingAddress &&
-                this.taxConfiguration == other.taxConfiguration &&
                 this.taxId == other.taxId &&
                 this.additionalProperties == other.additionalProperties
         }
@@ -369,7 +350,6 @@ constructor(
                         paymentProviderId,
                         reportingConfiguration,
                         shippingAddress,
-                        taxConfiguration,
                         taxId,
                         additionalProperties,
                     )
@@ -378,7 +358,7 @@ constructor(
         }
 
         override fun toString() =
-            "CustomerUpdateBody{accountingSyncConfiguration=$accountingSyncConfiguration, additionalEmails=$additionalEmails, autoCollection=$autoCollection, billingAddress=$billingAddress, currency=$currency, email=$email, emailDelivery=$emailDelivery, externalCustomerId=$externalCustomerId, metadata=$metadata, name=$name, paymentProvider=$paymentProvider, paymentProviderId=$paymentProviderId, reportingConfiguration=$reportingConfiguration, shippingAddress=$shippingAddress, taxConfiguration=$taxConfiguration, taxId=$taxId, additionalProperties=$additionalProperties}"
+            "CustomerUpdateBody{accountingSyncConfiguration=$accountingSyncConfiguration, additionalEmails=$additionalEmails, autoCollection=$autoCollection, billingAddress=$billingAddress, currency=$currency, email=$email, emailDelivery=$emailDelivery, externalCustomerId=$externalCustomerId, metadata=$metadata, name=$name, paymentProvider=$paymentProvider, paymentProviderId=$paymentProviderId, reportingConfiguration=$reportingConfiguration, shippingAddress=$shippingAddress, taxId=$taxId, additionalProperties=$additionalProperties}"
 
         companion object {
 
@@ -401,7 +381,6 @@ constructor(
             private var paymentProviderId: String? = null
             private var reportingConfiguration: ReportingConfiguration? = null
             private var shippingAddress: ShippingAddress? = null
-            private var taxConfiguration: TaxConfiguration? = null
             private var taxId: TaxId? = null
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
@@ -420,7 +399,6 @@ constructor(
                 this.paymentProviderId = customerUpdateBody.paymentProviderId
                 this.reportingConfiguration = customerUpdateBody.reportingConfiguration
                 this.shippingAddress = customerUpdateBody.shippingAddress
-                this.taxConfiguration = customerUpdateBody.taxConfiguration
                 this.taxId = customerUpdateBody.taxId
                 additionalProperties(customerUpdateBody.additionalProperties)
             }
@@ -517,11 +495,6 @@ constructor(
             @JsonProperty("shipping_address")
             fun shippingAddress(shippingAddress: ShippingAddress) = apply {
                 this.shippingAddress = shippingAddress
-            }
-
-            @JsonProperty("tax_configuration")
-            fun taxConfiguration(taxConfiguration: TaxConfiguration) = apply {
-                this.taxConfiguration = taxConfiguration
             }
 
             /**
@@ -662,7 +635,6 @@ constructor(
                     paymentProviderId,
                     reportingConfiguration,
                     shippingAddress,
-                    taxConfiguration,
                     taxId,
                     additionalProperties.toUnmodifiable(),
                 )
@@ -696,7 +668,6 @@ constructor(
             this.paymentProviderId == other.paymentProviderId &&
             this.reportingConfiguration == other.reportingConfiguration &&
             this.shippingAddress == other.shippingAddress &&
-            this.taxConfiguration == other.taxConfiguration &&
             this.taxId == other.taxId &&
             this.additionalQueryParams == other.additionalQueryParams &&
             this.additionalHeaders == other.additionalHeaders &&
@@ -720,7 +691,6 @@ constructor(
             paymentProviderId,
             reportingConfiguration,
             shippingAddress,
-            taxConfiguration,
             taxId,
             additionalQueryParams,
             additionalHeaders,
@@ -729,7 +699,7 @@ constructor(
     }
 
     override fun toString() =
-        "CustomerUpdateParams{customerId=$customerId, accountingSyncConfiguration=$accountingSyncConfiguration, additionalEmails=$additionalEmails, autoCollection=$autoCollection, billingAddress=$billingAddress, currency=$currency, email=$email, emailDelivery=$emailDelivery, externalCustomerId=$externalCustomerId, metadata=$metadata, name=$name, paymentProvider=$paymentProvider, paymentProviderId=$paymentProviderId, reportingConfiguration=$reportingConfiguration, shippingAddress=$shippingAddress, taxConfiguration=$taxConfiguration, taxId=$taxId, additionalQueryParams=$additionalQueryParams, additionalHeaders=$additionalHeaders, additionalBodyProperties=$additionalBodyProperties}"
+        "CustomerUpdateParams{customerId=$customerId, accountingSyncConfiguration=$accountingSyncConfiguration, additionalEmails=$additionalEmails, autoCollection=$autoCollection, billingAddress=$billingAddress, currency=$currency, email=$email, emailDelivery=$emailDelivery, externalCustomerId=$externalCustomerId, metadata=$metadata, name=$name, paymentProvider=$paymentProvider, paymentProviderId=$paymentProviderId, reportingConfiguration=$reportingConfiguration, shippingAddress=$shippingAddress, taxId=$taxId, additionalQueryParams=$additionalQueryParams, additionalHeaders=$additionalHeaders, additionalBodyProperties=$additionalBodyProperties}"
 
     fun toBuilder() = Builder().from(this)
 
@@ -756,7 +726,6 @@ constructor(
         private var paymentProviderId: String? = null
         private var reportingConfiguration: ReportingConfiguration? = null
         private var shippingAddress: ShippingAddress? = null
-        private var taxConfiguration: TaxConfiguration? = null
         private var taxId: TaxId? = null
         private var additionalQueryParams: MutableMap<String, MutableList<String>> = mutableMapOf()
         private var additionalHeaders: MutableMap<String, MutableList<String>> = mutableMapOf()
@@ -778,7 +747,6 @@ constructor(
             this.paymentProviderId = customerUpdateParams.paymentProviderId
             this.reportingConfiguration = customerUpdateParams.reportingConfiguration
             this.shippingAddress = customerUpdateParams.shippingAddress
-            this.taxConfiguration = customerUpdateParams.taxConfiguration
             this.taxId = customerUpdateParams.taxId
             additionalQueryParams(customerUpdateParams.additionalQueryParams)
             additionalHeaders(customerUpdateParams.additionalHeaders)
@@ -875,23 +843,6 @@ constructor(
         fun shippingAddress(shippingAddress: ShippingAddress) = apply {
             this.shippingAddress = shippingAddress
         }
-
-        fun taxConfiguration(taxConfiguration: TaxConfiguration) = apply {
-            this.taxConfiguration = taxConfiguration
-        }
-
-        fun taxConfiguration(
-            newAvalaraTaxConfiguration: TaxConfiguration.NewAvalaraTaxConfiguration
-        ) = apply {
-            this.taxConfiguration =
-                TaxConfiguration.ofNewAvalaraTaxConfiguration(newAvalaraTaxConfiguration)
-        }
-
-        fun taxConfiguration(newTaxJarConfiguration: TaxConfiguration.NewTaxJarConfiguration) =
-            apply {
-                this.taxConfiguration =
-                    TaxConfiguration.ofNewTaxJarConfiguration(newTaxJarConfiguration)
-            }
 
         /**
          * Tax IDs are commonly required to be displayed on customer invoices, which are added to
@@ -1072,7 +1023,6 @@ constructor(
                 paymentProviderId,
                 reportingConfiguration,
                 shippingAddress,
-                taxConfiguration,
                 taxId,
                 additionalQueryParams.mapValues { it.value.toUnmodifiable() }.toUnmodifiable(),
                 additionalHeaders.mapValues { it.value.toUnmodifiable() }.toUnmodifiable(),
@@ -1756,516 +1706,6 @@ constructor(
                     country,
                     additionalProperties.toUnmodifiable(),
                 )
-        }
-    }
-
-    @JsonDeserialize(using = TaxConfiguration.Deserializer::class)
-    @JsonSerialize(using = TaxConfiguration.Serializer::class)
-    class TaxConfiguration
-    private constructor(
-        private val newAvalaraTaxConfiguration: NewAvalaraTaxConfiguration? = null,
-        private val newTaxJarConfiguration: NewTaxJarConfiguration? = null,
-        private val _json: JsonValue? = null,
-    ) {
-
-        private var validated: Boolean = false
-
-        fun newAvalaraTaxConfiguration(): NewAvalaraTaxConfiguration? = newAvalaraTaxConfiguration
-
-        fun newTaxJarConfiguration(): NewTaxJarConfiguration? = newTaxJarConfiguration
-
-        fun isNewAvalaraTaxConfiguration(): Boolean = newAvalaraTaxConfiguration != null
-
-        fun isNewTaxJarConfiguration(): Boolean = newTaxJarConfiguration != null
-
-        fun asNewAvalaraTaxConfiguration(): NewAvalaraTaxConfiguration =
-            newAvalaraTaxConfiguration.getOrThrow("newAvalaraTaxConfiguration")
-
-        fun asNewTaxJarConfiguration(): NewTaxJarConfiguration =
-            newTaxJarConfiguration.getOrThrow("newTaxJarConfiguration")
-
-        fun _json(): JsonValue? = _json
-
-        fun <T> accept(visitor: Visitor<T>): T {
-            return when {
-                newAvalaraTaxConfiguration != null ->
-                    visitor.visitNewAvalaraTaxConfiguration(newAvalaraTaxConfiguration)
-                newTaxJarConfiguration != null ->
-                    visitor.visitNewTaxJarConfiguration(newTaxJarConfiguration)
-                else -> visitor.unknown(_json)
-            }
-        }
-
-        fun validate(): TaxConfiguration = apply {
-            if (!validated) {
-                if (newAvalaraTaxConfiguration == null && newTaxJarConfiguration == null) {
-                    throw OrbInvalidDataException("Unknown TaxConfiguration: $_json")
-                }
-                newAvalaraTaxConfiguration?.validate()
-                newTaxJarConfiguration?.validate()
-                validated = true
-            }
-        }
-
-        override fun equals(other: Any?): Boolean {
-            if (this === other) {
-                return true
-            }
-
-            return other is TaxConfiguration &&
-                this.newAvalaraTaxConfiguration == other.newAvalaraTaxConfiguration &&
-                this.newTaxJarConfiguration == other.newTaxJarConfiguration
-        }
-
-        override fun hashCode(): Int {
-            return Objects.hash(newAvalaraTaxConfiguration, newTaxJarConfiguration)
-        }
-
-        override fun toString(): String {
-            return when {
-                newAvalaraTaxConfiguration != null ->
-                    "TaxConfiguration{newAvalaraTaxConfiguration=$newAvalaraTaxConfiguration}"
-                newTaxJarConfiguration != null ->
-                    "TaxConfiguration{newTaxJarConfiguration=$newTaxJarConfiguration}"
-                _json != null -> "TaxConfiguration{_unknown=$_json}"
-                else -> throw IllegalStateException("Invalid TaxConfiguration")
-            }
-        }
-
-        companion object {
-
-            fun ofNewAvalaraTaxConfiguration(
-                newAvalaraTaxConfiguration: NewAvalaraTaxConfiguration
-            ) = TaxConfiguration(newAvalaraTaxConfiguration = newAvalaraTaxConfiguration)
-
-            fun ofNewTaxJarConfiguration(newTaxJarConfiguration: NewTaxJarConfiguration) =
-                TaxConfiguration(newTaxJarConfiguration = newTaxJarConfiguration)
-        }
-
-        interface Visitor<out T> {
-
-            fun visitNewAvalaraTaxConfiguration(
-                newAvalaraTaxConfiguration: NewAvalaraTaxConfiguration
-            ): T
-
-            fun visitNewTaxJarConfiguration(newTaxJarConfiguration: NewTaxJarConfiguration): T
-
-            fun unknown(json: JsonValue?): T {
-                throw OrbInvalidDataException("Unknown TaxConfiguration: $json")
-            }
-        }
-
-        class Deserializer : BaseDeserializer<TaxConfiguration>(TaxConfiguration::class) {
-
-            override fun ObjectCodec.deserialize(node: JsonNode): TaxConfiguration {
-                val json = JsonValue.fromJsonNode(node)
-                tryDeserialize(node, jacksonTypeRef<NewAvalaraTaxConfiguration>()) { it.validate() }
-                    ?.let {
-                        return TaxConfiguration(newAvalaraTaxConfiguration = it, _json = json)
-                    }
-                tryDeserialize(node, jacksonTypeRef<NewTaxJarConfiguration>()) { it.validate() }
-                    ?.let {
-                        return TaxConfiguration(newTaxJarConfiguration = it, _json = json)
-                    }
-
-                return TaxConfiguration(_json = json)
-            }
-        }
-
-        class Serializer : BaseSerializer<TaxConfiguration>(TaxConfiguration::class) {
-
-            override fun serialize(
-                value: TaxConfiguration,
-                generator: JsonGenerator,
-                provider: SerializerProvider
-            ) {
-                when {
-                    value.newAvalaraTaxConfiguration != null ->
-                        generator.writeObject(value.newAvalaraTaxConfiguration)
-                    value.newTaxJarConfiguration != null ->
-                        generator.writeObject(value.newTaxJarConfiguration)
-                    value._json != null -> generator.writeObject(value._json)
-                    else -> throw IllegalStateException("Invalid TaxConfiguration")
-                }
-            }
-        }
-
-        @JsonDeserialize(builder = NewAvalaraTaxConfiguration.Builder::class)
-        @NoAutoDetect
-        class NewAvalaraTaxConfiguration
-        private constructor(
-            private val taxProvider: JsonField<TaxProvider>,
-            private val taxExempt: JsonField<Boolean>,
-            private val taxExemptionCode: JsonField<String>,
-            private val taxExemptionName: JsonField<String>,
-            private val additionalProperties: Map<String, JsonValue>,
-        ) {
-
-            private var validated: Boolean = false
-
-            private var hashCode: Int = 0
-
-            fun taxProvider(): TaxProvider = taxProvider.getRequired("tax_provider")
-
-            fun taxExempt(): Boolean = taxExempt.getRequired("tax_exempt")
-
-            fun taxExemptionCode(): String? = taxExemptionCode.getNullable("tax_exemption_code")
-
-            fun taxExemptionName(): String? = taxExemptionName.getNullable("tax_exemption_name")
-
-            @JsonProperty("tax_provider") @ExcludeMissing fun _taxProvider() = taxProvider
-
-            @JsonProperty("tax_exempt") @ExcludeMissing fun _taxExempt() = taxExempt
-
-            @JsonProperty("tax_exemption_code")
-            @ExcludeMissing
-            fun _taxExemptionCode() = taxExemptionCode
-
-            @JsonProperty("tax_exemption_name")
-            @ExcludeMissing
-            fun _taxExemptionName() = taxExemptionName
-
-            @JsonAnyGetter
-            @ExcludeMissing
-            fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
-
-            fun validate(): NewAvalaraTaxConfiguration = apply {
-                if (!validated) {
-                    taxProvider()
-                    taxExempt()
-                    taxExemptionCode()
-                    taxExemptionName()
-                    validated = true
-                }
-            }
-
-            fun toBuilder() = Builder().from(this)
-
-            override fun equals(other: Any?): Boolean {
-                if (this === other) {
-                    return true
-                }
-
-                return other is NewAvalaraTaxConfiguration &&
-                    this.taxProvider == other.taxProvider &&
-                    this.taxExempt == other.taxExempt &&
-                    this.taxExemptionCode == other.taxExemptionCode &&
-                    this.taxExemptionName == other.taxExemptionName &&
-                    this.additionalProperties == other.additionalProperties
-            }
-
-            override fun hashCode(): Int {
-                if (hashCode == 0) {
-                    hashCode =
-                        Objects.hash(
-                            taxProvider,
-                            taxExempt,
-                            taxExemptionCode,
-                            taxExemptionName,
-                            additionalProperties,
-                        )
-                }
-                return hashCode
-            }
-
-            override fun toString() =
-                "NewAvalaraTaxConfiguration{taxProvider=$taxProvider, taxExempt=$taxExempt, taxExemptionCode=$taxExemptionCode, taxExemptionName=$taxExemptionName, additionalProperties=$additionalProperties}"
-
-            companion object {
-
-                fun builder() = Builder()
-            }
-
-            class Builder {
-
-                private var taxProvider: JsonField<TaxProvider> = JsonMissing.of()
-                private var taxExempt: JsonField<Boolean> = JsonMissing.of()
-                private var taxExemptionCode: JsonField<String> = JsonMissing.of()
-                private var taxExemptionName: JsonField<String> = JsonMissing.of()
-                private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
-
-                internal fun from(newAvalaraTaxConfiguration: NewAvalaraTaxConfiguration) = apply {
-                    this.taxProvider = newAvalaraTaxConfiguration.taxProvider
-                    this.taxExempt = newAvalaraTaxConfiguration.taxExempt
-                    this.taxExemptionCode = newAvalaraTaxConfiguration.taxExemptionCode
-                    this.taxExemptionName = newAvalaraTaxConfiguration.taxExemptionName
-                    additionalProperties(newAvalaraTaxConfiguration.additionalProperties)
-                }
-
-                fun taxProvider(taxProvider: TaxProvider) = taxProvider(JsonField.of(taxProvider))
-
-                @JsonProperty("tax_provider")
-                @ExcludeMissing
-                fun taxProvider(taxProvider: JsonField<TaxProvider>) = apply {
-                    this.taxProvider = taxProvider
-                }
-
-                fun taxExempt(taxExempt: Boolean) = taxExempt(JsonField.of(taxExempt))
-
-                @JsonProperty("tax_exempt")
-                @ExcludeMissing
-                fun taxExempt(taxExempt: JsonField<Boolean>) = apply { this.taxExempt = taxExempt }
-
-                fun taxExemptionCode(taxExemptionCode: String) =
-                    taxExemptionCode(JsonField.of(taxExemptionCode))
-
-                @JsonProperty("tax_exemption_code")
-                @ExcludeMissing
-                fun taxExemptionCode(taxExemptionCode: JsonField<String>) = apply {
-                    this.taxExemptionCode = taxExemptionCode
-                }
-
-                fun taxExemptionName(taxExemptionName: String) =
-                    taxExemptionName(JsonField.of(taxExemptionName))
-
-                @JsonProperty("tax_exemption_name")
-                @ExcludeMissing
-                fun taxExemptionName(taxExemptionName: JsonField<String>) = apply {
-                    this.taxExemptionName = taxExemptionName
-                }
-
-                fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
-                    this.additionalProperties.clear()
-                    this.additionalProperties.putAll(additionalProperties)
-                }
-
-                @JsonAnySetter
-                fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-                    this.additionalProperties.put(key, value)
-                }
-
-                fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) =
-                    apply {
-                        this.additionalProperties.putAll(additionalProperties)
-                    }
-
-                fun build(): NewAvalaraTaxConfiguration =
-                    NewAvalaraTaxConfiguration(
-                        taxProvider,
-                        taxExempt,
-                        taxExemptionCode,
-                        taxExemptionName,
-                        additionalProperties.toUnmodifiable(),
-                    )
-            }
-
-            class TaxProvider
-            @JsonCreator
-            private constructor(
-                private val value: JsonField<String>,
-            ) : Enum {
-
-                @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
-
-                override fun equals(other: Any?): Boolean {
-                    if (this === other) {
-                        return true
-                    }
-
-                    return other is TaxProvider && this.value == other.value
-                }
-
-                override fun hashCode() = value.hashCode()
-
-                override fun toString() = value.toString()
-
-                companion object {
-
-                    val AVALARA = TaxProvider(JsonField.of("avalara"))
-
-                    fun of(value: String) = TaxProvider(JsonField.of(value))
-                }
-
-                enum class Known {
-                    AVALARA,
-                }
-
-                enum class Value {
-                    AVALARA,
-                    _UNKNOWN,
-                }
-
-                fun value(): Value =
-                    when (this) {
-                        AVALARA -> Value.AVALARA
-                        else -> Value._UNKNOWN
-                    }
-
-                fun known(): Known =
-                    when (this) {
-                        AVALARA -> Known.AVALARA
-                        else -> throw OrbInvalidDataException("Unknown TaxProvider: $value")
-                    }
-
-                fun asString(): String = _value().asStringOrThrow()
-            }
-        }
-
-        @JsonDeserialize(builder = NewTaxJarConfiguration.Builder::class)
-        @NoAutoDetect
-        class NewTaxJarConfiguration
-        private constructor(
-            private val taxProvider: JsonField<TaxProvider>,
-            private val taxExempt: JsonField<Boolean>,
-            private val additionalProperties: Map<String, JsonValue>,
-        ) {
-
-            private var validated: Boolean = false
-
-            private var hashCode: Int = 0
-
-            fun taxProvider(): TaxProvider = taxProvider.getRequired("tax_provider")
-
-            fun taxExempt(): Boolean = taxExempt.getRequired("tax_exempt")
-
-            @JsonProperty("tax_provider") @ExcludeMissing fun _taxProvider() = taxProvider
-
-            @JsonProperty("tax_exempt") @ExcludeMissing fun _taxExempt() = taxExempt
-
-            @JsonAnyGetter
-            @ExcludeMissing
-            fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
-
-            fun validate(): NewTaxJarConfiguration = apply {
-                if (!validated) {
-                    taxProvider()
-                    taxExempt()
-                    validated = true
-                }
-            }
-
-            fun toBuilder() = Builder().from(this)
-
-            override fun equals(other: Any?): Boolean {
-                if (this === other) {
-                    return true
-                }
-
-                return other is NewTaxJarConfiguration &&
-                    this.taxProvider == other.taxProvider &&
-                    this.taxExempt == other.taxExempt &&
-                    this.additionalProperties == other.additionalProperties
-            }
-
-            override fun hashCode(): Int {
-                if (hashCode == 0) {
-                    hashCode =
-                        Objects.hash(
-                            taxProvider,
-                            taxExempt,
-                            additionalProperties,
-                        )
-                }
-                return hashCode
-            }
-
-            override fun toString() =
-                "NewTaxJarConfiguration{taxProvider=$taxProvider, taxExempt=$taxExempt, additionalProperties=$additionalProperties}"
-
-            companion object {
-
-                fun builder() = Builder()
-            }
-
-            class Builder {
-
-                private var taxProvider: JsonField<TaxProvider> = JsonMissing.of()
-                private var taxExempt: JsonField<Boolean> = JsonMissing.of()
-                private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
-
-                internal fun from(newTaxJarConfiguration: NewTaxJarConfiguration) = apply {
-                    this.taxProvider = newTaxJarConfiguration.taxProvider
-                    this.taxExempt = newTaxJarConfiguration.taxExempt
-                    additionalProperties(newTaxJarConfiguration.additionalProperties)
-                }
-
-                fun taxProvider(taxProvider: TaxProvider) = taxProvider(JsonField.of(taxProvider))
-
-                @JsonProperty("tax_provider")
-                @ExcludeMissing
-                fun taxProvider(taxProvider: JsonField<TaxProvider>) = apply {
-                    this.taxProvider = taxProvider
-                }
-
-                fun taxExempt(taxExempt: Boolean) = taxExempt(JsonField.of(taxExempt))
-
-                @JsonProperty("tax_exempt")
-                @ExcludeMissing
-                fun taxExempt(taxExempt: JsonField<Boolean>) = apply { this.taxExempt = taxExempt }
-
-                fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
-                    this.additionalProperties.clear()
-                    this.additionalProperties.putAll(additionalProperties)
-                }
-
-                @JsonAnySetter
-                fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-                    this.additionalProperties.put(key, value)
-                }
-
-                fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) =
-                    apply {
-                        this.additionalProperties.putAll(additionalProperties)
-                    }
-
-                fun build(): NewTaxJarConfiguration =
-                    NewTaxJarConfiguration(
-                        taxProvider,
-                        taxExempt,
-                        additionalProperties.toUnmodifiable(),
-                    )
-            }
-
-            class TaxProvider
-            @JsonCreator
-            private constructor(
-                private val value: JsonField<String>,
-            ) : Enum {
-
-                @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
-
-                override fun equals(other: Any?): Boolean {
-                    if (this === other) {
-                        return true
-                    }
-
-                    return other is TaxProvider && this.value == other.value
-                }
-
-                override fun hashCode() = value.hashCode()
-
-                override fun toString() = value.toString()
-
-                companion object {
-
-                    val TAXJAR = TaxProvider(JsonField.of("taxjar"))
-
-                    fun of(value: String) = TaxProvider(JsonField.of(value))
-                }
-
-                enum class Known {
-                    TAXJAR,
-                }
-
-                enum class Value {
-                    TAXJAR,
-                    _UNKNOWN,
-                }
-
-                fun value(): Value =
-                    when (this) {
-                        TAXJAR -> Value.TAXJAR
-                        else -> Value._UNKNOWN
-                    }
-
-                fun known(): Known =
-                    when (this) {
-                        TAXJAR -> Known.TAXJAR
-                        else -> throw OrbInvalidDataException("Unknown TaxProvider: $value")
-                    }
-
-                fun asString(): String = _value().asStringOrThrow()
-            }
         }
     }
 

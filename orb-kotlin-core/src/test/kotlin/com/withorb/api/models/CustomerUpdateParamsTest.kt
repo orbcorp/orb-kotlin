@@ -59,20 +59,6 @@ class CustomerUpdateParamsTest {
                     .state("state")
                     .build()
             )
-            .taxConfiguration(
-                CustomerUpdateParams.TaxConfiguration.ofNewAvalaraTaxConfiguration(
-                    CustomerUpdateParams.TaxConfiguration.NewAvalaraTaxConfiguration.builder()
-                        .taxExempt(true)
-                        .taxProvider(
-                            CustomerUpdateParams.TaxConfiguration.NewAvalaraTaxConfiguration
-                                .TaxProvider
-                                .AVALARA
-                        )
-                        .taxExemptionCode("tax_exemption_code")
-                        .taxExemptionName("tax_exemption_name")
-                        .build()
-                )
-            )
             .taxId(
                 CustomerUpdateParams.TaxId.builder()
                     .country(CustomerUpdateParams.TaxId.Country.AD)
@@ -135,20 +121,6 @@ class CustomerUpdateParamsTest {
                         .state("state")
                         .build()
                 )
-                .taxConfiguration(
-                    CustomerUpdateParams.TaxConfiguration.ofNewAvalaraTaxConfiguration(
-                        CustomerUpdateParams.TaxConfiguration.NewAvalaraTaxConfiguration.builder()
-                            .taxExempt(true)
-                            .taxProvider(
-                                CustomerUpdateParams.TaxConfiguration.NewAvalaraTaxConfiguration
-                                    .TaxProvider
-                                    .AVALARA
-                            )
-                            .taxExemptionCode("tax_exemption_code")
-                            .taxExemptionName("tax_exemption_name")
-                            .build()
-                    )
-                )
                 .taxId(
                     CustomerUpdateParams.TaxId.builder()
                         .country(CustomerUpdateParams.TaxId.Country.AD)
@@ -208,21 +180,6 @@ class CustomerUpdateParamsTest {
                     .postalCode("postal_code")
                     .state("state")
                     .build()
-            )
-        assertThat(body.taxConfiguration())
-            .isEqualTo(
-                CustomerUpdateParams.TaxConfiguration.ofNewAvalaraTaxConfiguration(
-                    CustomerUpdateParams.TaxConfiguration.NewAvalaraTaxConfiguration.builder()
-                        .taxExempt(true)
-                        .taxProvider(
-                            CustomerUpdateParams.TaxConfiguration.NewAvalaraTaxConfiguration
-                                .TaxProvider
-                                .AVALARA
-                        )
-                        .taxExemptionCode("tax_exemption_code")
-                        .taxExemptionName("tax_exemption_name")
-                        .build()
-                )
             )
         assertThat(body.taxId())
             .isEqualTo(

@@ -62,22 +62,6 @@ class CustomerUpdateByExternalIdParamsTest {
                     .state("state")
                     .build()
             )
-            .taxConfiguration(
-                CustomerUpdateByExternalIdParams.TaxConfiguration.ofNewAvalaraTaxConfiguration(
-                    CustomerUpdateByExternalIdParams.TaxConfiguration.NewAvalaraTaxConfiguration
-                        .builder()
-                        .taxExempt(true)
-                        .taxProvider(
-                            CustomerUpdateByExternalIdParams.TaxConfiguration
-                                .NewAvalaraTaxConfiguration
-                                .TaxProvider
-                                .AVALARA
-                        )
-                        .taxExemptionCode("tax_exemption_code")
-                        .taxExemptionName("tax_exemption_name")
-                        .build()
-                )
-            )
             .taxId(
                 CustomerUpdateByExternalIdParams.TaxId.builder()
                     .country(CustomerUpdateByExternalIdParams.TaxId.Country.AD)
@@ -142,22 +126,6 @@ class CustomerUpdateByExternalIdParamsTest {
                         .postalCode("postal_code")
                         .state("state")
                         .build()
-                )
-                .taxConfiguration(
-                    CustomerUpdateByExternalIdParams.TaxConfiguration.ofNewAvalaraTaxConfiguration(
-                        CustomerUpdateByExternalIdParams.TaxConfiguration.NewAvalaraTaxConfiguration
-                            .builder()
-                            .taxExempt(true)
-                            .taxProvider(
-                                CustomerUpdateByExternalIdParams.TaxConfiguration
-                                    .NewAvalaraTaxConfiguration
-                                    .TaxProvider
-                                    .AVALARA
-                            )
-                            .taxExemptionCode("tax_exemption_code")
-                            .taxExemptionName("tax_exemption_name")
-                            .build()
-                    )
                 )
                 .taxId(
                     CustomerUpdateByExternalIdParams.TaxId.builder()
@@ -224,23 +192,6 @@ class CustomerUpdateByExternalIdParamsTest {
                     .postalCode("postal_code")
                     .state("state")
                     .build()
-            )
-        assertThat(body.taxConfiguration())
-            .isEqualTo(
-                CustomerUpdateByExternalIdParams.TaxConfiguration.ofNewAvalaraTaxConfiguration(
-                    CustomerUpdateByExternalIdParams.TaxConfiguration.NewAvalaraTaxConfiguration
-                        .builder()
-                        .taxExempt(true)
-                        .taxProvider(
-                            CustomerUpdateByExternalIdParams.TaxConfiguration
-                                .NewAvalaraTaxConfiguration
-                                .TaxProvider
-                                .AVALARA
-                        )
-                        .taxExemptionCode("tax_exemption_code")
-                        .taxExemptionName("tax_exemption_name")
-                        .build()
-                )
             )
         assertThat(body.taxId())
             .isEqualTo(
