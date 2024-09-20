@@ -138,7 +138,6 @@ class ServiceParamsTest {
                 .currency("currency")
                 .email("email")
                 .emailDelivery(true)
-                .exemptFromAutomatedTax(true)
                 .externalCustomerId("external_customer_id")
                 .metadata(Customer.Metadata.builder().build())
                 .name("name")
