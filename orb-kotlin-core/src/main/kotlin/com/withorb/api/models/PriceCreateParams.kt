@@ -49,6 +49,8 @@ constructor(
     private val newFloatingGroupedAllocationPrice: NewFloatingGroupedAllocationPrice?,
     private val newFloatingGroupedWithProratedMinimumPrice:
         NewFloatingGroupedWithProratedMinimumPrice?,
+    private val newFloatingGroupedWithMeteredMinimumPrice:
+        NewFloatingGroupedWithMeteredMinimumPrice?,
     private val newFloatingBulkWithProrationPrice: NewFloatingBulkWithProrationPrice?,
     private val additionalQueryParams: Map<String, List<String>>,
     private val additionalHeaders: Map<String, List<String>>,
@@ -106,6 +108,9 @@ constructor(
     fun newFloatingGroupedWithProratedMinimumPrice(): NewFloatingGroupedWithProratedMinimumPrice? =
         newFloatingGroupedWithProratedMinimumPrice
 
+    fun newFloatingGroupedWithMeteredMinimumPrice(): NewFloatingGroupedWithMeteredMinimumPrice? =
+        newFloatingGroupedWithMeteredMinimumPrice
+
     fun newFloatingBulkWithProrationPrice(): NewFloatingBulkWithProrationPrice? =
         newFloatingBulkWithProrationPrice
 
@@ -131,6 +136,7 @@ constructor(
             newFloatingUnitWithProrationPrice,
             newFloatingGroupedAllocationPrice,
             newFloatingGroupedWithProratedMinimumPrice,
+            newFloatingGroupedWithMeteredMinimumPrice,
             newFloatingBulkWithProrationPrice,
         )
     }
@@ -170,6 +176,9 @@ constructor(
         private val newFloatingGroupedAllocationPrice: NewFloatingGroupedAllocationPrice? = null,
         private val newFloatingGroupedWithProratedMinimumPrice:
             NewFloatingGroupedWithProratedMinimumPrice? =
+            null,
+        private val newFloatingGroupedWithMeteredMinimumPrice:
+            NewFloatingGroupedWithMeteredMinimumPrice? =
             null,
         private val newFloatingBulkWithProrationPrice: NewFloatingBulkWithProrationPrice? = null,
         private val _json: JsonValue? = null,
@@ -227,6 +236,9 @@ constructor(
         fun newFloatingGroupedWithProratedMinimumPrice():
             NewFloatingGroupedWithProratedMinimumPrice? = newFloatingGroupedWithProratedMinimumPrice
 
+        fun newFloatingGroupedWithMeteredMinimumPrice():
+            NewFloatingGroupedWithMeteredMinimumPrice? = newFloatingGroupedWithMeteredMinimumPrice
+
         fun newFloatingBulkWithProrationPrice(): NewFloatingBulkWithProrationPrice? =
             newFloatingBulkWithProrationPrice
 
@@ -278,6 +290,9 @@ constructor(
 
         fun isNewFloatingGroupedWithProratedMinimumPrice(): Boolean =
             newFloatingGroupedWithProratedMinimumPrice != null
+
+        fun isNewFloatingGroupedWithMeteredMinimumPrice(): Boolean =
+            newFloatingGroupedWithMeteredMinimumPrice != null
 
         fun isNewFloatingBulkWithProrationPrice(): Boolean =
             newFloatingBulkWithProrationPrice != null
@@ -349,6 +364,12 @@ constructor(
                 "newFloatingGroupedWithProratedMinimumPrice"
             )
 
+        fun asNewFloatingGroupedWithMeteredMinimumPrice():
+            NewFloatingGroupedWithMeteredMinimumPrice =
+            newFloatingGroupedWithMeteredMinimumPrice.getOrThrow(
+                "newFloatingGroupedWithMeteredMinimumPrice"
+            )
+
         fun asNewFloatingBulkWithProrationPrice(): NewFloatingBulkWithProrationPrice =
             newFloatingBulkWithProrationPrice.getOrThrow("newFloatingBulkWithProrationPrice")
 
@@ -413,6 +434,10 @@ constructor(
                     visitor.visitNewFloatingGroupedWithProratedMinimumPrice(
                         newFloatingGroupedWithProratedMinimumPrice
                     )
+                newFloatingGroupedWithMeteredMinimumPrice != null ->
+                    visitor.visitNewFloatingGroupedWithMeteredMinimumPrice(
+                        newFloatingGroupedWithMeteredMinimumPrice
+                    )
                 newFloatingBulkWithProrationPrice != null ->
                     visitor.visitNewFloatingBulkWithProrationPrice(
                         newFloatingBulkWithProrationPrice
@@ -453,6 +478,8 @@ constructor(
                 this.newFloatingGroupedAllocationPrice == other.newFloatingGroupedAllocationPrice &&
                 this.newFloatingGroupedWithProratedMinimumPrice ==
                     other.newFloatingGroupedWithProratedMinimumPrice &&
+                this.newFloatingGroupedWithMeteredMinimumPrice ==
+                    other.newFloatingGroupedWithMeteredMinimumPrice &&
                 this.newFloatingBulkWithProrationPrice == other.newFloatingBulkWithProrationPrice
         }
 
@@ -478,6 +505,7 @@ constructor(
                 newFloatingUnitWithProrationPrice,
                 newFloatingGroupedAllocationPrice,
                 newFloatingGroupedWithProratedMinimumPrice,
+                newFloatingGroupedWithMeteredMinimumPrice,
                 newFloatingBulkWithProrationPrice,
             )
         }
@@ -524,6 +552,8 @@ constructor(
                     "PriceCreateBody{newFloatingGroupedAllocationPrice=$newFloatingGroupedAllocationPrice}"
                 newFloatingGroupedWithProratedMinimumPrice != null ->
                     "PriceCreateBody{newFloatingGroupedWithProratedMinimumPrice=$newFloatingGroupedWithProratedMinimumPrice}"
+                newFloatingGroupedWithMeteredMinimumPrice != null ->
+                    "PriceCreateBody{newFloatingGroupedWithMeteredMinimumPrice=$newFloatingGroupedWithMeteredMinimumPrice}"
                 newFloatingBulkWithProrationPrice != null ->
                     "PriceCreateBody{newFloatingBulkWithProrationPrice=$newFloatingBulkWithProrationPrice}"
                 _json != null -> "PriceCreateBody{_unknown=$_json}"
@@ -635,6 +665,14 @@ constructor(
                         newFloatingGroupedWithProratedMinimumPrice
                 )
 
+            fun ofNewFloatingGroupedWithMeteredMinimumPrice(
+                newFloatingGroupedWithMeteredMinimumPrice: NewFloatingGroupedWithMeteredMinimumPrice
+            ) =
+                PriceCreateBody(
+                    newFloatingGroupedWithMeteredMinimumPrice =
+                        newFloatingGroupedWithMeteredMinimumPrice
+                )
+
             fun ofNewFloatingBulkWithProrationPrice(
                 newFloatingBulkWithProrationPrice: NewFloatingBulkWithProrationPrice
             ) =
@@ -710,6 +748,10 @@ constructor(
             fun visitNewFloatingGroupedWithProratedMinimumPrice(
                 newFloatingGroupedWithProratedMinimumPrice:
                     NewFloatingGroupedWithProratedMinimumPrice
+            ): T
+
+            fun visitNewFloatingGroupedWithMeteredMinimumPrice(
+                newFloatingGroupedWithMeteredMinimumPrice: NewFloatingGroupedWithMeteredMinimumPrice
             ): T
 
             fun visitNewFloatingBulkWithProrationPrice(
@@ -793,6 +835,13 @@ constructor(
                             _json = json
                         )
                     }
+                tryDeserialize(node, jacksonTypeRef<NewFloatingGroupedWithMeteredMinimumPrice>())
+                    ?.let {
+                        return PriceCreateBody(
+                            newFloatingGroupedWithMeteredMinimumPrice = it,
+                            _json = json
+                        )
+                    }
                 tryDeserialize(node, jacksonTypeRef<NewFloatingBulkWithProrationPrice>())?.let {
                     return PriceCreateBody(newFloatingBulkWithProrationPrice = it, _json = json)
                 }
@@ -849,6 +898,8 @@ constructor(
                         generator.writeObject(value.newFloatingGroupedAllocationPrice)
                     value.newFloatingGroupedWithProratedMinimumPrice != null ->
                         generator.writeObject(value.newFloatingGroupedWithProratedMinimumPrice)
+                    value.newFloatingGroupedWithMeteredMinimumPrice != null ->
+                        generator.writeObject(value.newFloatingGroupedWithMeteredMinimumPrice)
                     value.newFloatingBulkWithProrationPrice != null ->
                         generator.writeObject(value.newFloatingBulkWithProrationPrice)
                     value._json != null -> generator.writeObject(value._json)
@@ -893,6 +944,8 @@ constructor(
             this.newFloatingGroupedAllocationPrice == other.newFloatingGroupedAllocationPrice &&
             this.newFloatingGroupedWithProratedMinimumPrice ==
                 other.newFloatingGroupedWithProratedMinimumPrice &&
+            this.newFloatingGroupedWithMeteredMinimumPrice ==
+                other.newFloatingGroupedWithMeteredMinimumPrice &&
             this.newFloatingBulkWithProrationPrice == other.newFloatingBulkWithProrationPrice &&
             this.additionalQueryParams == other.additionalQueryParams &&
             this.additionalHeaders == other.additionalHeaders
@@ -920,6 +973,7 @@ constructor(
             newFloatingUnitWithProrationPrice,
             newFloatingGroupedAllocationPrice,
             newFloatingGroupedWithProratedMinimumPrice,
+            newFloatingGroupedWithMeteredMinimumPrice,
             newFloatingBulkWithProrationPrice,
             additionalQueryParams,
             additionalHeaders,
@@ -927,7 +981,7 @@ constructor(
     }
 
     override fun toString() =
-        "PriceCreateParams{newFloatingUnitPrice=$newFloatingUnitPrice, newFloatingPackagePrice=$newFloatingPackagePrice, newFloatingMatrixPrice=$newFloatingMatrixPrice, newFloatingMatrixWithAllocationPrice=$newFloatingMatrixWithAllocationPrice, newFloatingTieredPrice=$newFloatingTieredPrice, newFloatingTieredBpsPrice=$newFloatingTieredBpsPrice, newFloatingBpsPrice=$newFloatingBpsPrice, newFloatingBulkBpsPrice=$newFloatingBulkBpsPrice, newFloatingBulkPrice=$newFloatingBulkPrice, newFloatingThresholdTotalAmountPrice=$newFloatingThresholdTotalAmountPrice, newFloatingTieredPackagePrice=$newFloatingTieredPackagePrice, newFloatingGroupedTieredPrice=$newFloatingGroupedTieredPrice, newFloatingTieredWithMinimumPrice=$newFloatingTieredWithMinimumPrice, newFloatingPackageWithAllocationPrice=$newFloatingPackageWithAllocationPrice, newFloatingTieredPackageWithMinimumPrice=$newFloatingTieredPackageWithMinimumPrice, newFloatingUnitWithPercentPrice=$newFloatingUnitWithPercentPrice, newFloatingTieredWithProrationPrice=$newFloatingTieredWithProrationPrice, newFloatingUnitWithProrationPrice=$newFloatingUnitWithProrationPrice, newFloatingGroupedAllocationPrice=$newFloatingGroupedAllocationPrice, newFloatingGroupedWithProratedMinimumPrice=$newFloatingGroupedWithProratedMinimumPrice, newFloatingBulkWithProrationPrice=$newFloatingBulkWithProrationPrice, additionalQueryParams=$additionalQueryParams, additionalHeaders=$additionalHeaders}"
+        "PriceCreateParams{newFloatingUnitPrice=$newFloatingUnitPrice, newFloatingPackagePrice=$newFloatingPackagePrice, newFloatingMatrixPrice=$newFloatingMatrixPrice, newFloatingMatrixWithAllocationPrice=$newFloatingMatrixWithAllocationPrice, newFloatingTieredPrice=$newFloatingTieredPrice, newFloatingTieredBpsPrice=$newFloatingTieredBpsPrice, newFloatingBpsPrice=$newFloatingBpsPrice, newFloatingBulkBpsPrice=$newFloatingBulkBpsPrice, newFloatingBulkPrice=$newFloatingBulkPrice, newFloatingThresholdTotalAmountPrice=$newFloatingThresholdTotalAmountPrice, newFloatingTieredPackagePrice=$newFloatingTieredPackagePrice, newFloatingGroupedTieredPrice=$newFloatingGroupedTieredPrice, newFloatingTieredWithMinimumPrice=$newFloatingTieredWithMinimumPrice, newFloatingPackageWithAllocationPrice=$newFloatingPackageWithAllocationPrice, newFloatingTieredPackageWithMinimumPrice=$newFloatingTieredPackageWithMinimumPrice, newFloatingUnitWithPercentPrice=$newFloatingUnitWithPercentPrice, newFloatingTieredWithProrationPrice=$newFloatingTieredWithProrationPrice, newFloatingUnitWithProrationPrice=$newFloatingUnitWithProrationPrice, newFloatingGroupedAllocationPrice=$newFloatingGroupedAllocationPrice, newFloatingGroupedWithProratedMinimumPrice=$newFloatingGroupedWithProratedMinimumPrice, newFloatingGroupedWithMeteredMinimumPrice=$newFloatingGroupedWithMeteredMinimumPrice, newFloatingBulkWithProrationPrice=$newFloatingBulkWithProrationPrice, additionalQueryParams=$additionalQueryParams, additionalHeaders=$additionalHeaders}"
 
     fun toBuilder() = Builder().from(this)
 
@@ -966,6 +1020,9 @@ constructor(
         private var newFloatingGroupedWithProratedMinimumPrice:
             NewFloatingGroupedWithProratedMinimumPrice? =
             null
+        private var newFloatingGroupedWithMeteredMinimumPrice:
+            NewFloatingGroupedWithMeteredMinimumPrice? =
+            null
         private var newFloatingBulkWithProrationPrice: NewFloatingBulkWithProrationPrice? = null
         private var additionalQueryParams: MutableMap<String, MutableList<String>> = mutableMapOf()
         private var additionalHeaders: MutableMap<String, MutableList<String>> = mutableMapOf()
@@ -1000,6 +1057,8 @@ constructor(
                 priceCreateParams.newFloatingGroupedAllocationPrice
             this.newFloatingGroupedWithProratedMinimumPrice =
                 priceCreateParams.newFloatingGroupedWithProratedMinimumPrice
+            this.newFloatingGroupedWithMeteredMinimumPrice =
+                priceCreateParams.newFloatingGroupedWithMeteredMinimumPrice
             this.newFloatingBulkWithProrationPrice =
                 priceCreateParams.newFloatingBulkWithProrationPrice
             additionalQueryParams(priceCreateParams.additionalQueryParams)
@@ -1027,6 +1086,7 @@ constructor(
             this.newFloatingUnitWithProrationPrice = null
             this.newFloatingGroupedAllocationPrice = null
             this.newFloatingGroupedWithProratedMinimumPrice = null
+            this.newFloatingGroupedWithMeteredMinimumPrice = null
             this.newFloatingBulkWithProrationPrice = null
         }
 
@@ -1051,6 +1111,7 @@ constructor(
             this.newFloatingUnitWithProrationPrice = null
             this.newFloatingGroupedAllocationPrice = null
             this.newFloatingGroupedWithProratedMinimumPrice = null
+            this.newFloatingGroupedWithMeteredMinimumPrice = null
             this.newFloatingBulkWithProrationPrice = null
         }
 
@@ -1075,6 +1136,7 @@ constructor(
             this.newFloatingUnitWithProrationPrice = null
             this.newFloatingGroupedAllocationPrice = null
             this.newFloatingGroupedWithProratedMinimumPrice = null
+            this.newFloatingGroupedWithMeteredMinimumPrice = null
             this.newFloatingBulkWithProrationPrice = null
         }
 
@@ -1101,6 +1163,7 @@ constructor(
             this.newFloatingUnitWithProrationPrice = null
             this.newFloatingGroupedAllocationPrice = null
             this.newFloatingGroupedWithProratedMinimumPrice = null
+            this.newFloatingGroupedWithMeteredMinimumPrice = null
             this.newFloatingBulkWithProrationPrice = null
         }
 
@@ -1125,6 +1188,7 @@ constructor(
             this.newFloatingUnitWithProrationPrice = null
             this.newFloatingGroupedAllocationPrice = null
             this.newFloatingGroupedWithProratedMinimumPrice = null
+            this.newFloatingGroupedWithMeteredMinimumPrice = null
             this.newFloatingBulkWithProrationPrice = null
         }
 
@@ -1150,6 +1214,7 @@ constructor(
                 this.newFloatingUnitWithProrationPrice = null
                 this.newFloatingGroupedAllocationPrice = null
                 this.newFloatingGroupedWithProratedMinimumPrice = null
+                this.newFloatingGroupedWithMeteredMinimumPrice = null
                 this.newFloatingBulkWithProrationPrice = null
             }
 
@@ -1174,6 +1239,7 @@ constructor(
             this.newFloatingUnitWithProrationPrice = null
             this.newFloatingGroupedAllocationPrice = null
             this.newFloatingGroupedWithProratedMinimumPrice = null
+            this.newFloatingGroupedWithMeteredMinimumPrice = null
             this.newFloatingBulkWithProrationPrice = null
         }
 
@@ -1198,6 +1264,7 @@ constructor(
             this.newFloatingUnitWithProrationPrice = null
             this.newFloatingGroupedAllocationPrice = null
             this.newFloatingGroupedWithProratedMinimumPrice = null
+            this.newFloatingGroupedWithMeteredMinimumPrice = null
             this.newFloatingBulkWithProrationPrice = null
         }
 
@@ -1222,6 +1289,7 @@ constructor(
             this.newFloatingUnitWithProrationPrice = null
             this.newFloatingGroupedAllocationPrice = null
             this.newFloatingGroupedWithProratedMinimumPrice = null
+            this.newFloatingGroupedWithMeteredMinimumPrice = null
             this.newFloatingBulkWithProrationPrice = null
         }
 
@@ -1248,6 +1316,7 @@ constructor(
             this.newFloatingUnitWithProrationPrice = null
             this.newFloatingGroupedAllocationPrice = null
             this.newFloatingGroupedWithProratedMinimumPrice = null
+            this.newFloatingGroupedWithMeteredMinimumPrice = null
             this.newFloatingBulkWithProrationPrice = null
         }
 
@@ -1274,6 +1343,7 @@ constructor(
             this.newFloatingUnitWithProrationPrice = null
             this.newFloatingGroupedAllocationPrice = null
             this.newFloatingGroupedWithProratedMinimumPrice = null
+            this.newFloatingGroupedWithMeteredMinimumPrice = null
             this.newFloatingBulkWithProrationPrice = null
         }
 
@@ -1300,6 +1370,7 @@ constructor(
             this.newFloatingUnitWithProrationPrice = null
             this.newFloatingGroupedAllocationPrice = null
             this.newFloatingGroupedWithProratedMinimumPrice = null
+            this.newFloatingGroupedWithMeteredMinimumPrice = null
             this.newFloatingBulkWithProrationPrice = null
         }
 
@@ -1326,6 +1397,7 @@ constructor(
             this.newFloatingUnitWithProrationPrice = null
             this.newFloatingGroupedAllocationPrice = null
             this.newFloatingGroupedWithProratedMinimumPrice = null
+            this.newFloatingGroupedWithMeteredMinimumPrice = null
             this.newFloatingBulkWithProrationPrice = null
         }
 
@@ -1352,6 +1424,7 @@ constructor(
             this.newFloatingUnitWithProrationPrice = null
             this.newFloatingGroupedAllocationPrice = null
             this.newFloatingGroupedWithProratedMinimumPrice = null
+            this.newFloatingGroupedWithMeteredMinimumPrice = null
             this.newFloatingBulkWithProrationPrice = null
         }
 
@@ -1378,6 +1451,7 @@ constructor(
             this.newFloatingUnitWithProrationPrice = null
             this.newFloatingGroupedAllocationPrice = null
             this.newFloatingGroupedWithProratedMinimumPrice = null
+            this.newFloatingGroupedWithMeteredMinimumPrice = null
             this.newFloatingBulkWithProrationPrice = null
         }
 
@@ -1404,6 +1478,7 @@ constructor(
             this.newFloatingUnitWithProrationPrice = null
             this.newFloatingGroupedAllocationPrice = null
             this.newFloatingGroupedWithProratedMinimumPrice = null
+            this.newFloatingGroupedWithMeteredMinimumPrice = null
             this.newFloatingBulkWithProrationPrice = null
         }
 
@@ -1430,6 +1505,7 @@ constructor(
             this.newFloatingUnitWithProrationPrice = null
             this.newFloatingGroupedAllocationPrice = null
             this.newFloatingGroupedWithProratedMinimumPrice = null
+            this.newFloatingGroupedWithMeteredMinimumPrice = null
             this.newFloatingBulkWithProrationPrice = null
         }
 
@@ -1456,6 +1532,7 @@ constructor(
             this.newFloatingUnitWithProrationPrice = newFloatingUnitWithProrationPrice
             this.newFloatingGroupedAllocationPrice = null
             this.newFloatingGroupedWithProratedMinimumPrice = null
+            this.newFloatingGroupedWithMeteredMinimumPrice = null
             this.newFloatingBulkWithProrationPrice = null
         }
 
@@ -1482,6 +1559,7 @@ constructor(
             this.newFloatingUnitWithProrationPrice = null
             this.newFloatingGroupedAllocationPrice = newFloatingGroupedAllocationPrice
             this.newFloatingGroupedWithProratedMinimumPrice = null
+            this.newFloatingGroupedWithMeteredMinimumPrice = null
             this.newFloatingBulkWithProrationPrice = null
         }
 
@@ -1509,6 +1587,35 @@ constructor(
             this.newFloatingGroupedAllocationPrice = null
             this.newFloatingGroupedWithProratedMinimumPrice =
                 newFloatingGroupedWithProratedMinimumPrice
+            this.newFloatingGroupedWithMeteredMinimumPrice = null
+            this.newFloatingBulkWithProrationPrice = null
+        }
+
+        fun forNewFloatingGroupedWithMeteredMinimumPrice(
+            newFloatingGroupedWithMeteredMinimumPrice: NewFloatingGroupedWithMeteredMinimumPrice
+        ) = apply {
+            this.newFloatingUnitPrice = null
+            this.newFloatingPackagePrice = null
+            this.newFloatingMatrixPrice = null
+            this.newFloatingMatrixWithAllocationPrice = null
+            this.newFloatingTieredPrice = null
+            this.newFloatingTieredBpsPrice = null
+            this.newFloatingBpsPrice = null
+            this.newFloatingBulkBpsPrice = null
+            this.newFloatingBulkPrice = null
+            this.newFloatingThresholdTotalAmountPrice = null
+            this.newFloatingTieredPackagePrice = null
+            this.newFloatingGroupedTieredPrice = null
+            this.newFloatingTieredWithMinimumPrice = null
+            this.newFloatingPackageWithAllocationPrice = null
+            this.newFloatingTieredPackageWithMinimumPrice = null
+            this.newFloatingUnitWithPercentPrice = null
+            this.newFloatingTieredWithProrationPrice = null
+            this.newFloatingUnitWithProrationPrice = null
+            this.newFloatingGroupedAllocationPrice = null
+            this.newFloatingGroupedWithProratedMinimumPrice = null
+            this.newFloatingGroupedWithMeteredMinimumPrice =
+                newFloatingGroupedWithMeteredMinimumPrice
             this.newFloatingBulkWithProrationPrice = null
         }
 
@@ -1535,6 +1642,7 @@ constructor(
             this.newFloatingUnitWithProrationPrice = null
             this.newFloatingGroupedAllocationPrice = null
             this.newFloatingGroupedWithProratedMinimumPrice = null
+            this.newFloatingGroupedWithMeteredMinimumPrice = null
             this.newFloatingBulkWithProrationPrice = newFloatingBulkWithProrationPrice
         }
 
@@ -1600,6 +1708,7 @@ constructor(
                 newFloatingUnitWithProrationPrice,
                 newFloatingGroupedAllocationPrice,
                 newFloatingGroupedWithProratedMinimumPrice,
+                newFloatingGroupedWithMeteredMinimumPrice,
                 newFloatingBulkWithProrationPrice,
                 additionalQueryParams.mapValues { it.value.toUnmodifiable() }.toUnmodifiable(),
                 additionalHeaders.mapValues { it.value.toUnmodifiable() }.toUnmodifiable(),
@@ -20198,6 +20307,916 @@ constructor(
             fun known(): Known =
                 when (this) {
                     GROUPED_WITH_PRORATED_MINIMUM -> Known.GROUPED_WITH_PRORATED_MINIMUM
+                    else -> throw OrbInvalidDataException("Unknown ModelType: $value")
+                }
+
+            fun asString(): String = _value().asStringOrThrow()
+        }
+
+        /** For custom cadence: specifies the duration of the billing period in days or months. */
+        @JsonDeserialize(builder = BillingCycleConfiguration.Builder::class)
+        @NoAutoDetect
+        class BillingCycleConfiguration
+        private constructor(
+            private val duration: Long?,
+            private val durationUnit: DurationUnit?,
+            private val additionalProperties: Map<String, JsonValue>,
+        ) {
+
+            private var hashCode: Int = 0
+
+            /** The duration of the billing period. */
+            @JsonProperty("duration") fun duration(): Long? = duration
+
+            /** The unit of billing period duration. */
+            @JsonProperty("duration_unit") fun durationUnit(): DurationUnit? = durationUnit
+
+            @JsonAnyGetter
+            @ExcludeMissing
+            fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
+
+            fun toBuilder() = Builder().from(this)
+
+            override fun equals(other: Any?): Boolean {
+                if (this === other) {
+                    return true
+                }
+
+                return other is BillingCycleConfiguration &&
+                    this.duration == other.duration &&
+                    this.durationUnit == other.durationUnit &&
+                    this.additionalProperties == other.additionalProperties
+            }
+
+            override fun hashCode(): Int {
+                if (hashCode == 0) {
+                    hashCode =
+                        Objects.hash(
+                            duration,
+                            durationUnit,
+                            additionalProperties,
+                        )
+                }
+                return hashCode
+            }
+
+            override fun toString() =
+                "BillingCycleConfiguration{duration=$duration, durationUnit=$durationUnit, additionalProperties=$additionalProperties}"
+
+            companion object {
+
+                fun builder() = Builder()
+            }
+
+            class Builder {
+
+                private var duration: Long? = null
+                private var durationUnit: DurationUnit? = null
+                private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
+
+                internal fun from(billingCycleConfiguration: BillingCycleConfiguration) = apply {
+                    this.duration = billingCycleConfiguration.duration
+                    this.durationUnit = billingCycleConfiguration.durationUnit
+                    additionalProperties(billingCycleConfiguration.additionalProperties)
+                }
+
+                /** The duration of the billing period. */
+                @JsonProperty("duration")
+                fun duration(duration: Long) = apply { this.duration = duration }
+
+                /** The unit of billing period duration. */
+                @JsonProperty("duration_unit")
+                fun durationUnit(durationUnit: DurationUnit) = apply {
+                    this.durationUnit = durationUnit
+                }
+
+                fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                    this.additionalProperties.clear()
+                    this.additionalProperties.putAll(additionalProperties)
+                }
+
+                @JsonAnySetter
+                fun putAdditionalProperty(key: String, value: JsonValue) = apply {
+                    this.additionalProperties.put(key, value)
+                }
+
+                fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) =
+                    apply {
+                        this.additionalProperties.putAll(additionalProperties)
+                    }
+
+                fun build(): BillingCycleConfiguration =
+                    BillingCycleConfiguration(
+                        checkNotNull(duration) { "`duration` is required but was not set" },
+                        checkNotNull(durationUnit) { "`durationUnit` is required but was not set" },
+                        additionalProperties.toUnmodifiable(),
+                    )
+            }
+
+            class DurationUnit
+            @JsonCreator
+            private constructor(
+                private val value: JsonField<String>,
+            ) : Enum {
+
+                @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
+
+                override fun equals(other: Any?): Boolean {
+                    if (this === other) {
+                        return true
+                    }
+
+                    return other is DurationUnit && this.value == other.value
+                }
+
+                override fun hashCode() = value.hashCode()
+
+                override fun toString() = value.toString()
+
+                companion object {
+
+                    val DAY = DurationUnit(JsonField.of("day"))
+
+                    val MONTH = DurationUnit(JsonField.of("month"))
+
+                    fun of(value: String) = DurationUnit(JsonField.of(value))
+                }
+
+                enum class Known {
+                    DAY,
+                    MONTH,
+                }
+
+                enum class Value {
+                    DAY,
+                    MONTH,
+                    _UNKNOWN,
+                }
+
+                fun value(): Value =
+                    when (this) {
+                        DAY -> Value.DAY
+                        MONTH -> Value.MONTH
+                        else -> Value._UNKNOWN
+                    }
+
+                fun known(): Known =
+                    when (this) {
+                        DAY -> Known.DAY
+                        MONTH -> Known.MONTH
+                        else -> throw OrbInvalidDataException("Unknown DurationUnit: $value")
+                    }
+
+                fun asString(): String = _value().asStringOrThrow()
+            }
+        }
+
+        /**
+         * Within each billing cycle, specifies the cadence at which invoices are produced. If
+         * unspecified, a single invoice is produced per billing cycle.
+         */
+        @JsonDeserialize(builder = InvoicingCycleConfiguration.Builder::class)
+        @NoAutoDetect
+        class InvoicingCycleConfiguration
+        private constructor(
+            private val duration: Long?,
+            private val durationUnit: DurationUnit?,
+            private val additionalProperties: Map<String, JsonValue>,
+        ) {
+
+            private var hashCode: Int = 0
+
+            /** The duration of the billing period. */
+            @JsonProperty("duration") fun duration(): Long? = duration
+
+            /** The unit of billing period duration. */
+            @JsonProperty("duration_unit") fun durationUnit(): DurationUnit? = durationUnit
+
+            @JsonAnyGetter
+            @ExcludeMissing
+            fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
+
+            fun toBuilder() = Builder().from(this)
+
+            override fun equals(other: Any?): Boolean {
+                if (this === other) {
+                    return true
+                }
+
+                return other is InvoicingCycleConfiguration &&
+                    this.duration == other.duration &&
+                    this.durationUnit == other.durationUnit &&
+                    this.additionalProperties == other.additionalProperties
+            }
+
+            override fun hashCode(): Int {
+                if (hashCode == 0) {
+                    hashCode =
+                        Objects.hash(
+                            duration,
+                            durationUnit,
+                            additionalProperties,
+                        )
+                }
+                return hashCode
+            }
+
+            override fun toString() =
+                "InvoicingCycleConfiguration{duration=$duration, durationUnit=$durationUnit, additionalProperties=$additionalProperties}"
+
+            companion object {
+
+                fun builder() = Builder()
+            }
+
+            class Builder {
+
+                private var duration: Long? = null
+                private var durationUnit: DurationUnit? = null
+                private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
+
+                internal fun from(invoicingCycleConfiguration: InvoicingCycleConfiguration) =
+                    apply {
+                        this.duration = invoicingCycleConfiguration.duration
+                        this.durationUnit = invoicingCycleConfiguration.durationUnit
+                        additionalProperties(invoicingCycleConfiguration.additionalProperties)
+                    }
+
+                /** The duration of the billing period. */
+                @JsonProperty("duration")
+                fun duration(duration: Long) = apply { this.duration = duration }
+
+                /** The unit of billing period duration. */
+                @JsonProperty("duration_unit")
+                fun durationUnit(durationUnit: DurationUnit) = apply {
+                    this.durationUnit = durationUnit
+                }
+
+                fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                    this.additionalProperties.clear()
+                    this.additionalProperties.putAll(additionalProperties)
+                }
+
+                @JsonAnySetter
+                fun putAdditionalProperty(key: String, value: JsonValue) = apply {
+                    this.additionalProperties.put(key, value)
+                }
+
+                fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) =
+                    apply {
+                        this.additionalProperties.putAll(additionalProperties)
+                    }
+
+                fun build(): InvoicingCycleConfiguration =
+                    InvoicingCycleConfiguration(
+                        checkNotNull(duration) { "`duration` is required but was not set" },
+                        checkNotNull(durationUnit) { "`durationUnit` is required but was not set" },
+                        additionalProperties.toUnmodifiable(),
+                    )
+            }
+
+            class DurationUnit
+            @JsonCreator
+            private constructor(
+                private val value: JsonField<String>,
+            ) : Enum {
+
+                @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
+
+                override fun equals(other: Any?): Boolean {
+                    if (this === other) {
+                        return true
+                    }
+
+                    return other is DurationUnit && this.value == other.value
+                }
+
+                override fun hashCode() = value.hashCode()
+
+                override fun toString() = value.toString()
+
+                companion object {
+
+                    val DAY = DurationUnit(JsonField.of("day"))
+
+                    val MONTH = DurationUnit(JsonField.of("month"))
+
+                    fun of(value: String) = DurationUnit(JsonField.of(value))
+                }
+
+                enum class Known {
+                    DAY,
+                    MONTH,
+                }
+
+                enum class Value {
+                    DAY,
+                    MONTH,
+                    _UNKNOWN,
+                }
+
+                fun value(): Value =
+                    when (this) {
+                        DAY -> Value.DAY
+                        MONTH -> Value.MONTH
+                        else -> Value._UNKNOWN
+                    }
+
+                fun known(): Known =
+                    when (this) {
+                        DAY -> Known.DAY
+                        MONTH -> Known.MONTH
+                        else -> throw OrbInvalidDataException("Unknown DurationUnit: $value")
+                    }
+
+                fun asString(): String = _value().asStringOrThrow()
+            }
+        }
+
+        /**
+         * User-specified key/value pairs for the resource. Individual keys can be removed by
+         * setting the value to `null`, and the entire metadata mapping can be cleared by setting
+         * `metadata` to `null`.
+         */
+        @JsonDeserialize(builder = Metadata.Builder::class)
+        @NoAutoDetect
+        class Metadata
+        private constructor(
+            private val additionalProperties: Map<String, JsonValue>,
+        ) {
+
+            private var hashCode: Int = 0
+
+            @JsonAnyGetter
+            @ExcludeMissing
+            fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
+
+            fun toBuilder() = Builder().from(this)
+
+            override fun equals(other: Any?): Boolean {
+                if (this === other) {
+                    return true
+                }
+
+                return other is Metadata && this.additionalProperties == other.additionalProperties
+            }
+
+            override fun hashCode(): Int {
+                if (hashCode == 0) {
+                    hashCode = Objects.hash(additionalProperties)
+                }
+                return hashCode
+            }
+
+            override fun toString() = "Metadata{additionalProperties=$additionalProperties}"
+
+            companion object {
+
+                fun builder() = Builder()
+            }
+
+            class Builder {
+
+                private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
+
+                internal fun from(metadata: Metadata) = apply {
+                    additionalProperties(metadata.additionalProperties)
+                }
+
+                fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                    this.additionalProperties.clear()
+                    this.additionalProperties.putAll(additionalProperties)
+                }
+
+                @JsonAnySetter
+                fun putAdditionalProperty(key: String, value: JsonValue) = apply {
+                    this.additionalProperties.put(key, value)
+                }
+
+                fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) =
+                    apply {
+                        this.additionalProperties.putAll(additionalProperties)
+                    }
+
+                fun build(): Metadata = Metadata(additionalProperties.toUnmodifiable())
+            }
+        }
+    }
+
+    @JsonDeserialize(builder = NewFloatingGroupedWithMeteredMinimumPrice.Builder::class)
+    @NoAutoDetect
+    class NewFloatingGroupedWithMeteredMinimumPrice
+    private constructor(
+        private val metadata: Metadata?,
+        private val externalPriceId: String?,
+        private val name: String?,
+        private val billableMetricId: String?,
+        private val itemId: String?,
+        private val billedInAdvance: Boolean?,
+        private val fixedPriceQuantity: Double?,
+        private val invoiceGroupingKey: String?,
+        private val cadence: Cadence?,
+        private val billingCycleConfiguration: BillingCycleConfiguration?,
+        private val invoicingCycleConfiguration: InvoicingCycleConfiguration?,
+        private val conversionRate: Double?,
+        private val modelType: ModelType?,
+        private val groupedWithMeteredMinimumConfig: GroupedWithMeteredMinimumConfig?,
+        private val currency: String?,
+        private val additionalProperties: Map<String, JsonValue>,
+    ) {
+
+        private var hashCode: Int = 0
+
+        /**
+         * User-specified key/value pairs for the resource. Individual keys can be removed by
+         * setting the value to `null`, and the entire metadata mapping can be cleared by setting
+         * `metadata` to `null`.
+         */
+        @JsonProperty("metadata") fun metadata(): Metadata? = metadata
+
+        /** An alias for the price. */
+        @JsonProperty("external_price_id") fun externalPriceId(): String? = externalPriceId
+
+        /** The name of the price. */
+        @JsonProperty("name") fun name(): String? = name
+
+        /** The id of the billable metric for the price. Only needed if the price is usage-based. */
+        @JsonProperty("billable_metric_id") fun billableMetricId(): String? = billableMetricId
+
+        /** The id of the item the plan will be associated with. */
+        @JsonProperty("item_id") fun itemId(): String? = itemId
+
+        /**
+         * If the Price represents a fixed cost, the price will be billed in-advance if this is
+         * true, and in-arrears if this is false.
+         */
+        @JsonProperty("billed_in_advance") fun billedInAdvance(): Boolean? = billedInAdvance
+
+        /** If the Price represents a fixed cost, this represents the quantity of units applied. */
+        @JsonProperty("fixed_price_quantity") fun fixedPriceQuantity(): Double? = fixedPriceQuantity
+
+        /** The property used to group this price on an invoice */
+        @JsonProperty("invoice_grouping_key") fun invoiceGroupingKey(): String? = invoiceGroupingKey
+
+        /** The cadence to bill for this price on. */
+        @JsonProperty("cadence") fun cadence(): Cadence? = cadence
+
+        /** For custom cadence: specifies the duration of the billing period in days or months. */
+        @JsonProperty("billing_cycle_configuration")
+        fun billingCycleConfiguration(): BillingCycleConfiguration? = billingCycleConfiguration
+
+        /**
+         * Within each billing cycle, specifies the cadence at which invoices are produced. If
+         * unspecified, a single invoice is produced per billing cycle.
+         */
+        @JsonProperty("invoicing_cycle_configuration")
+        fun invoicingCycleConfiguration(): InvoicingCycleConfiguration? =
+            invoicingCycleConfiguration
+
+        /** The per unit conversion rate of the price currency to the invoicing currency. */
+        @JsonProperty("conversion_rate") fun conversionRate(): Double? = conversionRate
+
+        @JsonProperty("model_type") fun modelType(): ModelType? = modelType
+
+        @JsonProperty("grouped_with_metered_minimum_config")
+        fun groupedWithMeteredMinimumConfig(): GroupedWithMeteredMinimumConfig? =
+            groupedWithMeteredMinimumConfig
+
+        /** An ISO 4217 currency string for which this price is billed in. */
+        @JsonProperty("currency") fun currency(): String? = currency
+
+        @JsonAnyGetter
+        @ExcludeMissing
+        fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
+
+        fun toBuilder() = Builder().from(this)
+
+        override fun equals(other: Any?): Boolean {
+            if (this === other) {
+                return true
+            }
+
+            return other is NewFloatingGroupedWithMeteredMinimumPrice &&
+                this.metadata == other.metadata &&
+                this.externalPriceId == other.externalPriceId &&
+                this.name == other.name &&
+                this.billableMetricId == other.billableMetricId &&
+                this.itemId == other.itemId &&
+                this.billedInAdvance == other.billedInAdvance &&
+                this.fixedPriceQuantity == other.fixedPriceQuantity &&
+                this.invoiceGroupingKey == other.invoiceGroupingKey &&
+                this.cadence == other.cadence &&
+                this.billingCycleConfiguration == other.billingCycleConfiguration &&
+                this.invoicingCycleConfiguration == other.invoicingCycleConfiguration &&
+                this.conversionRate == other.conversionRate &&
+                this.modelType == other.modelType &&
+                this.groupedWithMeteredMinimumConfig == other.groupedWithMeteredMinimumConfig &&
+                this.currency == other.currency &&
+                this.additionalProperties == other.additionalProperties
+        }
+
+        override fun hashCode(): Int {
+            if (hashCode == 0) {
+                hashCode =
+                    Objects.hash(
+                        metadata,
+                        externalPriceId,
+                        name,
+                        billableMetricId,
+                        itemId,
+                        billedInAdvance,
+                        fixedPriceQuantity,
+                        invoiceGroupingKey,
+                        cadence,
+                        billingCycleConfiguration,
+                        invoicingCycleConfiguration,
+                        conversionRate,
+                        modelType,
+                        groupedWithMeteredMinimumConfig,
+                        currency,
+                        additionalProperties,
+                    )
+            }
+            return hashCode
+        }
+
+        override fun toString() =
+            "NewFloatingGroupedWithMeteredMinimumPrice{metadata=$metadata, externalPriceId=$externalPriceId, name=$name, billableMetricId=$billableMetricId, itemId=$itemId, billedInAdvance=$billedInAdvance, fixedPriceQuantity=$fixedPriceQuantity, invoiceGroupingKey=$invoiceGroupingKey, cadence=$cadence, billingCycleConfiguration=$billingCycleConfiguration, invoicingCycleConfiguration=$invoicingCycleConfiguration, conversionRate=$conversionRate, modelType=$modelType, groupedWithMeteredMinimumConfig=$groupedWithMeteredMinimumConfig, currency=$currency, additionalProperties=$additionalProperties}"
+
+        companion object {
+
+            fun builder() = Builder()
+        }
+
+        class Builder {
+
+            private var metadata: Metadata? = null
+            private var externalPriceId: String? = null
+            private var name: String? = null
+            private var billableMetricId: String? = null
+            private var itemId: String? = null
+            private var billedInAdvance: Boolean? = null
+            private var fixedPriceQuantity: Double? = null
+            private var invoiceGroupingKey: String? = null
+            private var cadence: Cadence? = null
+            private var billingCycleConfiguration: BillingCycleConfiguration? = null
+            private var invoicingCycleConfiguration: InvoicingCycleConfiguration? = null
+            private var conversionRate: Double? = null
+            private var modelType: ModelType? = null
+            private var groupedWithMeteredMinimumConfig: GroupedWithMeteredMinimumConfig? = null
+            private var currency: String? = null
+            private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
+
+            internal fun from(
+                newFloatingGroupedWithMeteredMinimumPrice: NewFloatingGroupedWithMeteredMinimumPrice
+            ) = apply {
+                this.metadata = newFloatingGroupedWithMeteredMinimumPrice.metadata
+                this.externalPriceId = newFloatingGroupedWithMeteredMinimumPrice.externalPriceId
+                this.name = newFloatingGroupedWithMeteredMinimumPrice.name
+                this.billableMetricId = newFloatingGroupedWithMeteredMinimumPrice.billableMetricId
+                this.itemId = newFloatingGroupedWithMeteredMinimumPrice.itemId
+                this.billedInAdvance = newFloatingGroupedWithMeteredMinimumPrice.billedInAdvance
+                this.fixedPriceQuantity =
+                    newFloatingGroupedWithMeteredMinimumPrice.fixedPriceQuantity
+                this.invoiceGroupingKey =
+                    newFloatingGroupedWithMeteredMinimumPrice.invoiceGroupingKey
+                this.cadence = newFloatingGroupedWithMeteredMinimumPrice.cadence
+                this.billingCycleConfiguration =
+                    newFloatingGroupedWithMeteredMinimumPrice.billingCycleConfiguration
+                this.invoicingCycleConfiguration =
+                    newFloatingGroupedWithMeteredMinimumPrice.invoicingCycleConfiguration
+                this.conversionRate = newFloatingGroupedWithMeteredMinimumPrice.conversionRate
+                this.modelType = newFloatingGroupedWithMeteredMinimumPrice.modelType
+                this.groupedWithMeteredMinimumConfig =
+                    newFloatingGroupedWithMeteredMinimumPrice.groupedWithMeteredMinimumConfig
+                this.currency = newFloatingGroupedWithMeteredMinimumPrice.currency
+                additionalProperties(newFloatingGroupedWithMeteredMinimumPrice.additionalProperties)
+            }
+
+            /**
+             * User-specified key/value pairs for the resource. Individual keys can be removed by
+             * setting the value to `null`, and the entire metadata mapping can be cleared by
+             * setting `metadata` to `null`.
+             */
+            @JsonProperty("metadata")
+            fun metadata(metadata: Metadata) = apply { this.metadata = metadata }
+
+            /** An alias for the price. */
+            @JsonProperty("external_price_id")
+            fun externalPriceId(externalPriceId: String) = apply {
+                this.externalPriceId = externalPriceId
+            }
+
+            /** The name of the price. */
+            @JsonProperty("name") fun name(name: String) = apply { this.name = name }
+
+            /**
+             * The id of the billable metric for the price. Only needed if the price is usage-based.
+             */
+            @JsonProperty("billable_metric_id")
+            fun billableMetricId(billableMetricId: String) = apply {
+                this.billableMetricId = billableMetricId
+            }
+
+            /** The id of the item the plan will be associated with. */
+            @JsonProperty("item_id") fun itemId(itemId: String) = apply { this.itemId = itemId }
+
+            /**
+             * If the Price represents a fixed cost, the price will be billed in-advance if this is
+             * true, and in-arrears if this is false.
+             */
+            @JsonProperty("billed_in_advance")
+            fun billedInAdvance(billedInAdvance: Boolean) = apply {
+                this.billedInAdvance = billedInAdvance
+            }
+
+            /**
+             * If the Price represents a fixed cost, this represents the quantity of units applied.
+             */
+            @JsonProperty("fixed_price_quantity")
+            fun fixedPriceQuantity(fixedPriceQuantity: Double) = apply {
+                this.fixedPriceQuantity = fixedPriceQuantity
+            }
+
+            /** The property used to group this price on an invoice */
+            @JsonProperty("invoice_grouping_key")
+            fun invoiceGroupingKey(invoiceGroupingKey: String) = apply {
+                this.invoiceGroupingKey = invoiceGroupingKey
+            }
+
+            /** The cadence to bill for this price on. */
+            @JsonProperty("cadence")
+            fun cadence(cadence: Cadence) = apply { this.cadence = cadence }
+
+            /**
+             * For custom cadence: specifies the duration of the billing period in days or months.
+             */
+            @JsonProperty("billing_cycle_configuration")
+            fun billingCycleConfiguration(billingCycleConfiguration: BillingCycleConfiguration) =
+                apply {
+                    this.billingCycleConfiguration = billingCycleConfiguration
+                }
+
+            /**
+             * Within each billing cycle, specifies the cadence at which invoices are produced. If
+             * unspecified, a single invoice is produced per billing cycle.
+             */
+            @JsonProperty("invoicing_cycle_configuration")
+            fun invoicingCycleConfiguration(
+                invoicingCycleConfiguration: InvoicingCycleConfiguration
+            ) = apply { this.invoicingCycleConfiguration = invoicingCycleConfiguration }
+
+            /** The per unit conversion rate of the price currency to the invoicing currency. */
+            @JsonProperty("conversion_rate")
+            fun conversionRate(conversionRate: Double) = apply {
+                this.conversionRate = conversionRate
+            }
+
+            @JsonProperty("model_type")
+            fun modelType(modelType: ModelType) = apply { this.modelType = modelType }
+
+            @JsonProperty("grouped_with_metered_minimum_config")
+            fun groupedWithMeteredMinimumConfig(
+                groupedWithMeteredMinimumConfig: GroupedWithMeteredMinimumConfig
+            ) = apply { this.groupedWithMeteredMinimumConfig = groupedWithMeteredMinimumConfig }
+
+            /** An ISO 4217 currency string for which this price is billed in. */
+            @JsonProperty("currency")
+            fun currency(currency: String) = apply { this.currency = currency }
+
+            fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                this.additionalProperties.clear()
+                this.additionalProperties.putAll(additionalProperties)
+            }
+
+            @JsonAnySetter
+            fun putAdditionalProperty(key: String, value: JsonValue) = apply {
+                this.additionalProperties.put(key, value)
+            }
+
+            fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                this.additionalProperties.putAll(additionalProperties)
+            }
+
+            fun build(): NewFloatingGroupedWithMeteredMinimumPrice =
+                NewFloatingGroupedWithMeteredMinimumPrice(
+                    metadata,
+                    externalPriceId,
+                    checkNotNull(name) { "`name` is required but was not set" },
+                    billableMetricId,
+                    checkNotNull(itemId) { "`itemId` is required but was not set" },
+                    billedInAdvance,
+                    fixedPriceQuantity,
+                    invoiceGroupingKey,
+                    checkNotNull(cadence) { "`cadence` is required but was not set" },
+                    billingCycleConfiguration,
+                    invoicingCycleConfiguration,
+                    conversionRate,
+                    checkNotNull(modelType) { "`modelType` is required but was not set" },
+                    checkNotNull(groupedWithMeteredMinimumConfig) {
+                        "`groupedWithMeteredMinimumConfig` is required but was not set"
+                    },
+                    checkNotNull(currency) { "`currency` is required but was not set" },
+                    additionalProperties.toUnmodifiable(),
+                )
+        }
+
+        class Cadence
+        @JsonCreator
+        private constructor(
+            private val value: JsonField<String>,
+        ) : Enum {
+
+            @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
+
+            override fun equals(other: Any?): Boolean {
+                if (this === other) {
+                    return true
+                }
+
+                return other is Cadence && this.value == other.value
+            }
+
+            override fun hashCode() = value.hashCode()
+
+            override fun toString() = value.toString()
+
+            companion object {
+
+                val ANNUAL = Cadence(JsonField.of("annual"))
+
+                val SEMI_ANNUAL = Cadence(JsonField.of("semi_annual"))
+
+                val MONTHLY = Cadence(JsonField.of("monthly"))
+
+                val QUARTERLY = Cadence(JsonField.of("quarterly"))
+
+                val ONE_TIME = Cadence(JsonField.of("one_time"))
+
+                val CUSTOM = Cadence(JsonField.of("custom"))
+
+                fun of(value: String) = Cadence(JsonField.of(value))
+            }
+
+            enum class Known {
+                ANNUAL,
+                SEMI_ANNUAL,
+                MONTHLY,
+                QUARTERLY,
+                ONE_TIME,
+                CUSTOM,
+            }
+
+            enum class Value {
+                ANNUAL,
+                SEMI_ANNUAL,
+                MONTHLY,
+                QUARTERLY,
+                ONE_TIME,
+                CUSTOM,
+                _UNKNOWN,
+            }
+
+            fun value(): Value =
+                when (this) {
+                    ANNUAL -> Value.ANNUAL
+                    SEMI_ANNUAL -> Value.SEMI_ANNUAL
+                    MONTHLY -> Value.MONTHLY
+                    QUARTERLY -> Value.QUARTERLY
+                    ONE_TIME -> Value.ONE_TIME
+                    CUSTOM -> Value.CUSTOM
+                    else -> Value._UNKNOWN
+                }
+
+            fun known(): Known =
+                when (this) {
+                    ANNUAL -> Known.ANNUAL
+                    SEMI_ANNUAL -> Known.SEMI_ANNUAL
+                    MONTHLY -> Known.MONTHLY
+                    QUARTERLY -> Known.QUARTERLY
+                    ONE_TIME -> Known.ONE_TIME
+                    CUSTOM -> Known.CUSTOM
+                    else -> throw OrbInvalidDataException("Unknown Cadence: $value")
+                }
+
+            fun asString(): String = _value().asStringOrThrow()
+        }
+
+        @JsonDeserialize(builder = GroupedWithMeteredMinimumConfig.Builder::class)
+        @NoAutoDetect
+        class GroupedWithMeteredMinimumConfig
+        private constructor(
+            private val additionalProperties: Map<String, JsonValue>,
+        ) {
+
+            private var hashCode: Int = 0
+
+            @JsonAnyGetter
+            @ExcludeMissing
+            fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
+
+            fun toBuilder() = Builder().from(this)
+
+            override fun equals(other: Any?): Boolean {
+                if (this === other) {
+                    return true
+                }
+
+                return other is GroupedWithMeteredMinimumConfig &&
+                    this.additionalProperties == other.additionalProperties
+            }
+
+            override fun hashCode(): Int {
+                if (hashCode == 0) {
+                    hashCode = Objects.hash(additionalProperties)
+                }
+                return hashCode
+            }
+
+            override fun toString() =
+                "GroupedWithMeteredMinimumConfig{additionalProperties=$additionalProperties}"
+
+            companion object {
+
+                fun builder() = Builder()
+            }
+
+            class Builder {
+
+                private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
+
+                internal fun from(
+                    groupedWithMeteredMinimumConfig: GroupedWithMeteredMinimumConfig
+                ) = apply {
+                    additionalProperties(groupedWithMeteredMinimumConfig.additionalProperties)
+                }
+
+                fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                    this.additionalProperties.clear()
+                    this.additionalProperties.putAll(additionalProperties)
+                }
+
+                @JsonAnySetter
+                fun putAdditionalProperty(key: String, value: JsonValue) = apply {
+                    this.additionalProperties.put(key, value)
+                }
+
+                fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) =
+                    apply {
+                        this.additionalProperties.putAll(additionalProperties)
+                    }
+
+                fun build(): GroupedWithMeteredMinimumConfig =
+                    GroupedWithMeteredMinimumConfig(additionalProperties.toUnmodifiable())
+            }
+        }
+
+        class ModelType
+        @JsonCreator
+        private constructor(
+            private val value: JsonField<String>,
+        ) : Enum {
+
+            @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
+
+            override fun equals(other: Any?): Boolean {
+                if (this === other) {
+                    return true
+                }
+
+                return other is ModelType && this.value == other.value
+            }
+
+            override fun hashCode() = value.hashCode()
+
+            override fun toString() = value.toString()
+
+            companion object {
+
+                val GROUPED_WITH_METERED_MINIMUM =
+                    ModelType(JsonField.of("grouped_with_metered_minimum"))
+
+                fun of(value: String) = ModelType(JsonField.of(value))
+            }
+
+            enum class Known {
+                GROUPED_WITH_METERED_MINIMUM,
+            }
+
+            enum class Value {
+                GROUPED_WITH_METERED_MINIMUM,
+                _UNKNOWN,
+            }
+
+            fun value(): Value =
+                when (this) {
+                    GROUPED_WITH_METERED_MINIMUM -> Value.GROUPED_WITH_METERED_MINIMUM
+                    else -> Value._UNKNOWN
+                }
+
+            fun known(): Known =
+                when (this) {
+                    GROUPED_WITH_METERED_MINIMUM -> Known.GROUPED_WITH_METERED_MINIMUM
                     else -> throw OrbInvalidDataException("Unknown ModelType: $value")
                 }
 
