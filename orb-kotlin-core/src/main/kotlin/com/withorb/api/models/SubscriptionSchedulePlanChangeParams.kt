@@ -921,6 +921,9 @@ constructor(
         private val overrideGroupedWithProratedMinimumPrice:
             OverrideGroupedWithProratedMinimumPrice? =
             null,
+        private val overrideGroupedWithMeteredMinimumPrice:
+            OverrideGroupedWithMeteredMinimumPrice? =
+            null,
         private val overrideBulkWithProrationPrice: OverrideBulkWithProrationPrice? = null,
         private val overrideUnitWithProrationPrice: OverrideUnitWithProrationPrice? = null,
         private val overrideTieredWithProrationPrice: OverrideTieredWithProrationPrice? = null,
@@ -965,6 +968,9 @@ constructor(
         fun overrideGroupedWithProratedMinimumPrice(): OverrideGroupedWithProratedMinimumPrice? =
             overrideGroupedWithProratedMinimumPrice
 
+        fun overrideGroupedWithMeteredMinimumPrice(): OverrideGroupedWithMeteredMinimumPrice? =
+            overrideGroupedWithMeteredMinimumPrice
+
         fun overrideBulkWithProrationPrice(): OverrideBulkWithProrationPrice? =
             overrideBulkWithProrationPrice
 
@@ -1006,6 +1012,9 @@ constructor(
 
         fun isOverrideGroupedWithProratedMinimumPrice(): Boolean =
             overrideGroupedWithProratedMinimumPrice != null
+
+        fun isOverrideGroupedWithMeteredMinimumPrice(): Boolean =
+            overrideGroupedWithMeteredMinimumPrice != null
 
         fun isOverrideBulkWithProrationPrice(): Boolean = overrideBulkWithProrationPrice != null
 
@@ -1059,6 +1068,11 @@ constructor(
                 "overrideGroupedWithProratedMinimumPrice"
             )
 
+        fun asOverrideGroupedWithMeteredMinimumPrice(): OverrideGroupedWithMeteredMinimumPrice =
+            overrideGroupedWithMeteredMinimumPrice.getOrThrow(
+                "overrideGroupedWithMeteredMinimumPrice"
+            )
+
         fun asOverrideBulkWithProrationPrice(): OverrideBulkWithProrationPrice =
             overrideBulkWithProrationPrice.getOrThrow("overrideBulkWithProrationPrice")
 
@@ -1103,6 +1117,10 @@ constructor(
                     visitor.visitOverrideGroupedWithProratedMinimumPrice(
                         overrideGroupedWithProratedMinimumPrice
                     )
+                overrideGroupedWithMeteredMinimumPrice != null ->
+                    visitor.visitOverrideGroupedWithMeteredMinimumPrice(
+                        overrideGroupedWithMeteredMinimumPrice
+                    )
                 overrideBulkWithProrationPrice != null ->
                     visitor.visitOverrideBulkWithProrationPrice(overrideBulkWithProrationPrice)
                 overrideUnitWithProrationPrice != null ->
@@ -1131,6 +1149,7 @@ constructor(
                         overrideUnitWithPercentPrice == null &&
                         overrideGroupedAllocationPrice == null &&
                         overrideGroupedWithProratedMinimumPrice == null &&
+                        overrideGroupedWithMeteredMinimumPrice == null &&
                         overrideBulkWithProrationPrice == null &&
                         overrideUnitWithProrationPrice == null &&
                         overrideTieredWithProrationPrice == null
@@ -1152,6 +1171,7 @@ constructor(
                 overrideUnitWithPercentPrice?.validate()
                 overrideGroupedAllocationPrice?.validate()
                 overrideGroupedWithProratedMinimumPrice?.validate()
+                overrideGroupedWithMeteredMinimumPrice?.validate()
                 overrideBulkWithProrationPrice?.validate()
                 overrideUnitWithProrationPrice?.validate()
                 overrideTieredWithProrationPrice?.validate()
@@ -1182,6 +1202,8 @@ constructor(
                 this.overrideGroupedAllocationPrice == other.overrideGroupedAllocationPrice &&
                 this.overrideGroupedWithProratedMinimumPrice ==
                     other.overrideGroupedWithProratedMinimumPrice &&
+                this.overrideGroupedWithMeteredMinimumPrice ==
+                    other.overrideGroupedWithMeteredMinimumPrice &&
                 this.overrideBulkWithProrationPrice == other.overrideBulkWithProrationPrice &&
                 this.overrideUnitWithProrationPrice == other.overrideUnitWithProrationPrice &&
                 this.overrideTieredWithProrationPrice == other.overrideTieredWithProrationPrice
@@ -1204,6 +1226,7 @@ constructor(
                 overrideUnitWithPercentPrice,
                 overrideGroupedAllocationPrice,
                 overrideGroupedWithProratedMinimumPrice,
+                overrideGroupedWithMeteredMinimumPrice,
                 overrideBulkWithProrationPrice,
                 overrideUnitWithProrationPrice,
                 overrideTieredWithProrationPrice,
@@ -1239,6 +1262,8 @@ constructor(
                     "PriceOverride{overrideGroupedAllocationPrice=$overrideGroupedAllocationPrice}"
                 overrideGroupedWithProratedMinimumPrice != null ->
                     "PriceOverride{overrideGroupedWithProratedMinimumPrice=$overrideGroupedWithProratedMinimumPrice}"
+                overrideGroupedWithMeteredMinimumPrice != null ->
+                    "PriceOverride{overrideGroupedWithMeteredMinimumPrice=$overrideGroupedWithMeteredMinimumPrice}"
                 overrideBulkWithProrationPrice != null ->
                     "PriceOverride{overrideBulkWithProrationPrice=$overrideBulkWithProrationPrice}"
                 overrideUnitWithProrationPrice != null ->
@@ -1311,6 +1336,13 @@ constructor(
                         overrideGroupedWithProratedMinimumPrice
                 )
 
+            fun ofOverrideGroupedWithMeteredMinimumPrice(
+                overrideGroupedWithMeteredMinimumPrice: OverrideGroupedWithMeteredMinimumPrice
+            ) =
+                PriceOverride(
+                    overrideGroupedWithMeteredMinimumPrice = overrideGroupedWithMeteredMinimumPrice
+                )
+
             fun ofOverrideBulkWithProrationPrice(
                 overrideBulkWithProrationPrice: OverrideBulkWithProrationPrice
             ) = PriceOverride(overrideBulkWithProrationPrice = overrideBulkWithProrationPrice)
@@ -1368,6 +1400,10 @@ constructor(
 
             fun visitOverrideGroupedWithProratedMinimumPrice(
                 overrideGroupedWithProratedMinimumPrice: OverrideGroupedWithProratedMinimumPrice
+            ): T
+
+            fun visitOverrideGroupedWithMeteredMinimumPrice(
+                overrideGroupedWithMeteredMinimumPrice: OverrideGroupedWithMeteredMinimumPrice
             ): T
 
             fun visitOverrideBulkWithProrationPrice(
@@ -1466,6 +1502,15 @@ constructor(
                             _json = json
                         )
                     }
+                tryDeserialize(node, jacksonTypeRef<OverrideGroupedWithMeteredMinimumPrice>()) {
+                        it.validate()
+                    }
+                    ?.let {
+                        return PriceOverride(
+                            overrideGroupedWithMeteredMinimumPrice = it,
+                            _json = json
+                        )
+                    }
                 tryDeserialize(node, jacksonTypeRef<OverrideBulkWithProrationPrice>()) {
                         it.validate()
                     }
@@ -1526,6 +1571,8 @@ constructor(
                         generator.writeObject(value.overrideGroupedAllocationPrice)
                     value.overrideGroupedWithProratedMinimumPrice != null ->
                         generator.writeObject(value.overrideGroupedWithProratedMinimumPrice)
+                    value.overrideGroupedWithMeteredMinimumPrice != null ->
+                        generator.writeObject(value.overrideGroupedWithMeteredMinimumPrice)
                     value.overrideBulkWithProrationPrice != null ->
                         generator.writeObject(value.overrideBulkWithProrationPrice)
                     value.overrideUnitWithProrationPrice != null ->
@@ -13621,6 +13668,772 @@ constructor(
                 fun known(): Known =
                     when (this) {
                         GROUPED_WITH_PRORATED_MINIMUM -> Known.GROUPED_WITH_PRORATED_MINIMUM
+                        else -> throw OrbInvalidDataException("Unknown ModelType: $value")
+                    }
+
+                fun asString(): String = _value().asStringOrThrow()
+            }
+
+            /** The subscription's override discount for the plan. */
+            @JsonDeserialize(builder = Discount.Builder::class)
+            @NoAutoDetect
+            class Discount
+            private constructor(
+                private val discountType: JsonField<DiscountType>,
+                private val percentageDiscount: JsonField<Double>,
+                private val trialAmountDiscount: JsonField<String>,
+                private val usageDiscount: JsonField<Double>,
+                private val amountDiscount: JsonField<String>,
+                private val appliesToPriceIds: JsonField<List<String>>,
+                private val additionalProperties: Map<String, JsonValue>,
+            ) {
+
+                private var validated: Boolean = false
+
+                private var hashCode: Int = 0
+
+                fun discountType(): DiscountType = discountType.getRequired("discount_type")
+
+                /**
+                 * Only available if discount_type is `percentage`. This is a number between 0
+                 * and 1.
+                 */
+                fun percentageDiscount(): Double? =
+                    percentageDiscount.getNullable("percentage_discount")
+
+                /** Only available if discount_type is `trial` */
+                fun trialAmountDiscount(): String? =
+                    trialAmountDiscount.getNullable("trial_amount_discount")
+
+                /**
+                 * Only available if discount_type is `usage`. Number of usage units that this
+                 * discount is for
+                 */
+                fun usageDiscount(): Double? = usageDiscount.getNullable("usage_discount")
+
+                /** Only available if discount_type is `amount`. */
+                fun amountDiscount(): String? = amountDiscount.getNullable("amount_discount")
+
+                /**
+                 * List of price_ids that this discount applies to. For plan/plan phase discounts,
+                 * this can be a subset of prices.
+                 */
+                fun appliesToPriceIds(): List<String>? =
+                    appliesToPriceIds.getNullable("applies_to_price_ids")
+
+                @JsonProperty("discount_type") @ExcludeMissing fun _discountType() = discountType
+
+                /**
+                 * Only available if discount_type is `percentage`. This is a number between 0
+                 * and 1.
+                 */
+                @JsonProperty("percentage_discount")
+                @ExcludeMissing
+                fun _percentageDiscount() = percentageDiscount
+
+                /** Only available if discount_type is `trial` */
+                @JsonProperty("trial_amount_discount")
+                @ExcludeMissing
+                fun _trialAmountDiscount() = trialAmountDiscount
+
+                /**
+                 * Only available if discount_type is `usage`. Number of usage units that this
+                 * discount is for
+                 */
+                @JsonProperty("usage_discount") @ExcludeMissing fun _usageDiscount() = usageDiscount
+
+                /** Only available if discount_type is `amount`. */
+                @JsonProperty("amount_discount")
+                @ExcludeMissing
+                fun _amountDiscount() = amountDiscount
+
+                /**
+                 * List of price_ids that this discount applies to. For plan/plan phase discounts,
+                 * this can be a subset of prices.
+                 */
+                @JsonProperty("applies_to_price_ids")
+                @ExcludeMissing
+                fun _appliesToPriceIds() = appliesToPriceIds
+
+                @JsonAnyGetter
+                @ExcludeMissing
+                fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
+
+                fun validate(): Discount = apply {
+                    if (!validated) {
+                        discountType()
+                        percentageDiscount()
+                        trialAmountDiscount()
+                        usageDiscount()
+                        amountDiscount()
+                        appliesToPriceIds()
+                        validated = true
+                    }
+                }
+
+                fun toBuilder() = Builder().from(this)
+
+                override fun equals(other: Any?): Boolean {
+                    if (this === other) {
+                        return true
+                    }
+
+                    return other is Discount &&
+                        this.discountType == other.discountType &&
+                        this.percentageDiscount == other.percentageDiscount &&
+                        this.trialAmountDiscount == other.trialAmountDiscount &&
+                        this.usageDiscount == other.usageDiscount &&
+                        this.amountDiscount == other.amountDiscount &&
+                        this.appliesToPriceIds == other.appliesToPriceIds &&
+                        this.additionalProperties == other.additionalProperties
+                }
+
+                override fun hashCode(): Int {
+                    if (hashCode == 0) {
+                        hashCode =
+                            Objects.hash(
+                                discountType,
+                                percentageDiscount,
+                                trialAmountDiscount,
+                                usageDiscount,
+                                amountDiscount,
+                                appliesToPriceIds,
+                                additionalProperties,
+                            )
+                    }
+                    return hashCode
+                }
+
+                override fun toString() =
+                    "Discount{discountType=$discountType, percentageDiscount=$percentageDiscount, trialAmountDiscount=$trialAmountDiscount, usageDiscount=$usageDiscount, amountDiscount=$amountDiscount, appliesToPriceIds=$appliesToPriceIds, additionalProperties=$additionalProperties}"
+
+                companion object {
+
+                    fun builder() = Builder()
+                }
+
+                class Builder {
+
+                    private var discountType: JsonField<DiscountType> = JsonMissing.of()
+                    private var percentageDiscount: JsonField<Double> = JsonMissing.of()
+                    private var trialAmountDiscount: JsonField<String> = JsonMissing.of()
+                    private var usageDiscount: JsonField<Double> = JsonMissing.of()
+                    private var amountDiscount: JsonField<String> = JsonMissing.of()
+                    private var appliesToPriceIds: JsonField<List<String>> = JsonMissing.of()
+                    private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
+
+                    internal fun from(discount: Discount) = apply {
+                        this.discountType = discount.discountType
+                        this.percentageDiscount = discount.percentageDiscount
+                        this.trialAmountDiscount = discount.trialAmountDiscount
+                        this.usageDiscount = discount.usageDiscount
+                        this.amountDiscount = discount.amountDiscount
+                        this.appliesToPriceIds = discount.appliesToPriceIds
+                        additionalProperties(discount.additionalProperties)
+                    }
+
+                    fun discountType(discountType: DiscountType) =
+                        discountType(JsonField.of(discountType))
+
+                    @JsonProperty("discount_type")
+                    @ExcludeMissing
+                    fun discountType(discountType: JsonField<DiscountType>) = apply {
+                        this.discountType = discountType
+                    }
+
+                    /**
+                     * Only available if discount_type is `percentage`. This is a number between 0
+                     * and 1.
+                     */
+                    fun percentageDiscount(percentageDiscount: Double) =
+                        percentageDiscount(JsonField.of(percentageDiscount))
+
+                    /**
+                     * Only available if discount_type is `percentage`. This is a number between 0
+                     * and 1.
+                     */
+                    @JsonProperty("percentage_discount")
+                    @ExcludeMissing
+                    fun percentageDiscount(percentageDiscount: JsonField<Double>) = apply {
+                        this.percentageDiscount = percentageDiscount
+                    }
+
+                    /** Only available if discount_type is `trial` */
+                    fun trialAmountDiscount(trialAmountDiscount: String) =
+                        trialAmountDiscount(JsonField.of(trialAmountDiscount))
+
+                    /** Only available if discount_type is `trial` */
+                    @JsonProperty("trial_amount_discount")
+                    @ExcludeMissing
+                    fun trialAmountDiscount(trialAmountDiscount: JsonField<String>) = apply {
+                        this.trialAmountDiscount = trialAmountDiscount
+                    }
+
+                    /**
+                     * Only available if discount_type is `usage`. Number of usage units that this
+                     * discount is for
+                     */
+                    fun usageDiscount(usageDiscount: Double) =
+                        usageDiscount(JsonField.of(usageDiscount))
+
+                    /**
+                     * Only available if discount_type is `usage`. Number of usage units that this
+                     * discount is for
+                     */
+                    @JsonProperty("usage_discount")
+                    @ExcludeMissing
+                    fun usageDiscount(usageDiscount: JsonField<Double>) = apply {
+                        this.usageDiscount = usageDiscount
+                    }
+
+                    /** Only available if discount_type is `amount`. */
+                    fun amountDiscount(amountDiscount: String) =
+                        amountDiscount(JsonField.of(amountDiscount))
+
+                    /** Only available if discount_type is `amount`. */
+                    @JsonProperty("amount_discount")
+                    @ExcludeMissing
+                    fun amountDiscount(amountDiscount: JsonField<String>) = apply {
+                        this.amountDiscount = amountDiscount
+                    }
+
+                    /**
+                     * List of price_ids that this discount applies to. For plan/plan phase
+                     * discounts, this can be a subset of prices.
+                     */
+                    fun appliesToPriceIds(appliesToPriceIds: List<String>) =
+                        appliesToPriceIds(JsonField.of(appliesToPriceIds))
+
+                    /**
+                     * List of price_ids that this discount applies to. For plan/plan phase
+                     * discounts, this can be a subset of prices.
+                     */
+                    @JsonProperty("applies_to_price_ids")
+                    @ExcludeMissing
+                    fun appliesToPriceIds(appliesToPriceIds: JsonField<List<String>>) = apply {
+                        this.appliesToPriceIds = appliesToPriceIds
+                    }
+
+                    fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                        this.additionalProperties.clear()
+                        this.additionalProperties.putAll(additionalProperties)
+                    }
+
+                    @JsonAnySetter
+                    fun putAdditionalProperty(key: String, value: JsonValue) = apply {
+                        this.additionalProperties.put(key, value)
+                    }
+
+                    fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) =
+                        apply {
+                            this.additionalProperties.putAll(additionalProperties)
+                        }
+
+                    fun build(): Discount =
+                        Discount(
+                            discountType,
+                            percentageDiscount,
+                            trialAmountDiscount,
+                            usageDiscount,
+                            amountDiscount,
+                            appliesToPriceIds.map { it.toUnmodifiable() },
+                            additionalProperties.toUnmodifiable(),
+                        )
+                }
+
+                class DiscountType
+                @JsonCreator
+                private constructor(
+                    private val value: JsonField<String>,
+                ) : Enum {
+
+                    @com.fasterxml.jackson.annotation.JsonValue
+                    fun _value(): JsonField<String> = value
+
+                    override fun equals(other: Any?): Boolean {
+                        if (this === other) {
+                            return true
+                        }
+
+                        return other is DiscountType && this.value == other.value
+                    }
+
+                    override fun hashCode() = value.hashCode()
+
+                    override fun toString() = value.toString()
+
+                    companion object {
+
+                        val PERCENTAGE = DiscountType(JsonField.of("percentage"))
+
+                        val TRIAL = DiscountType(JsonField.of("trial"))
+
+                        val USAGE = DiscountType(JsonField.of("usage"))
+
+                        val AMOUNT = DiscountType(JsonField.of("amount"))
+
+                        fun of(value: String) = DiscountType(JsonField.of(value))
+                    }
+
+                    enum class Known {
+                        PERCENTAGE,
+                        TRIAL,
+                        USAGE,
+                        AMOUNT,
+                    }
+
+                    enum class Value {
+                        PERCENTAGE,
+                        TRIAL,
+                        USAGE,
+                        AMOUNT,
+                        _UNKNOWN,
+                    }
+
+                    fun value(): Value =
+                        when (this) {
+                            PERCENTAGE -> Value.PERCENTAGE
+                            TRIAL -> Value.TRIAL
+                            USAGE -> Value.USAGE
+                            AMOUNT -> Value.AMOUNT
+                            else -> Value._UNKNOWN
+                        }
+
+                    fun known(): Known =
+                        when (this) {
+                            PERCENTAGE -> Known.PERCENTAGE
+                            TRIAL -> Known.TRIAL
+                            USAGE -> Known.USAGE
+                            AMOUNT -> Known.AMOUNT
+                            else -> throw OrbInvalidDataException("Unknown DiscountType: $value")
+                        }
+
+                    fun asString(): String = _value().asStringOrThrow()
+                }
+            }
+        }
+
+        @JsonDeserialize(builder = OverrideGroupedWithMeteredMinimumPrice.Builder::class)
+        @NoAutoDetect
+        class OverrideGroupedWithMeteredMinimumPrice
+        private constructor(
+            private val id: JsonField<String>,
+            private val modelType: JsonField<ModelType>,
+            private val minimumAmount: JsonField<String>,
+            private val maximumAmount: JsonField<String>,
+            private val currency: JsonField<String>,
+            private val conversionRate: JsonField<Double>,
+            private val discount: JsonField<Discount>,
+            private val fixedPriceQuantity: JsonField<Double>,
+            private val groupedWithMeteredMinimumConfig: JsonField<GroupedWithMeteredMinimumConfig>,
+            private val additionalProperties: Map<String, JsonValue>,
+        ) {
+
+            private var validated: Boolean = false
+
+            private var hashCode: Int = 0
+
+            fun id(): String = id.getRequired("id")
+
+            fun modelType(): ModelType = modelType.getRequired("model_type")
+
+            /** The subscription's override minimum amount for the plan. */
+            fun minimumAmount(): String? = minimumAmount.getNullable("minimum_amount")
+
+            /** The subscription's override maximum amount for the plan. */
+            fun maximumAmount(): String? = maximumAmount.getNullable("maximum_amount")
+
+            /**
+             * The currency of the price. If not provided, the currency of the plan will be used.
+             */
+            fun currency(): String? = currency.getNullable("currency")
+
+            /** The per unit conversion rate of the price currency to the invoicing currency. */
+            fun conversionRate(): Double? = conversionRate.getNullable("conversion_rate")
+
+            /** The subscription's override discount for the plan. */
+            fun discount(): Discount? = discount.getNullable("discount")
+
+            /** The starting quantity of the price, if the price is a fixed price. */
+            fun fixedPriceQuantity(): Double? =
+                fixedPriceQuantity.getNullable("fixed_price_quantity")
+
+            fun groupedWithMeteredMinimumConfig(): GroupedWithMeteredMinimumConfig =
+                groupedWithMeteredMinimumConfig.getRequired("grouped_with_metered_minimum_config")
+
+            @JsonProperty("id") @ExcludeMissing fun _id() = id
+
+            @JsonProperty("model_type") @ExcludeMissing fun _modelType() = modelType
+
+            /** The subscription's override minimum amount for the plan. */
+            @JsonProperty("minimum_amount") @ExcludeMissing fun _minimumAmount() = minimumAmount
+
+            /** The subscription's override maximum amount for the plan. */
+            @JsonProperty("maximum_amount") @ExcludeMissing fun _maximumAmount() = maximumAmount
+
+            /**
+             * The currency of the price. If not provided, the currency of the plan will be used.
+             */
+            @JsonProperty("currency") @ExcludeMissing fun _currency() = currency
+
+            /** The per unit conversion rate of the price currency to the invoicing currency. */
+            @JsonProperty("conversion_rate") @ExcludeMissing fun _conversionRate() = conversionRate
+
+            /** The subscription's override discount for the plan. */
+            @JsonProperty("discount") @ExcludeMissing fun _discount() = discount
+
+            /** The starting quantity of the price, if the price is a fixed price. */
+            @JsonProperty("fixed_price_quantity")
+            @ExcludeMissing
+            fun _fixedPriceQuantity() = fixedPriceQuantity
+
+            @JsonProperty("grouped_with_metered_minimum_config")
+            @ExcludeMissing
+            fun _groupedWithMeteredMinimumConfig() = groupedWithMeteredMinimumConfig
+
+            @JsonAnyGetter
+            @ExcludeMissing
+            fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
+
+            fun validate(): OverrideGroupedWithMeteredMinimumPrice = apply {
+                if (!validated) {
+                    id()
+                    modelType()
+                    minimumAmount()
+                    maximumAmount()
+                    currency()
+                    conversionRate()
+                    discount()?.validate()
+                    fixedPriceQuantity()
+                    groupedWithMeteredMinimumConfig().validate()
+                    validated = true
+                }
+            }
+
+            fun toBuilder() = Builder().from(this)
+
+            override fun equals(other: Any?): Boolean {
+                if (this === other) {
+                    return true
+                }
+
+                return other is OverrideGroupedWithMeteredMinimumPrice &&
+                    this.id == other.id &&
+                    this.modelType == other.modelType &&
+                    this.minimumAmount == other.minimumAmount &&
+                    this.maximumAmount == other.maximumAmount &&
+                    this.currency == other.currency &&
+                    this.conversionRate == other.conversionRate &&
+                    this.discount == other.discount &&
+                    this.fixedPriceQuantity == other.fixedPriceQuantity &&
+                    this.groupedWithMeteredMinimumConfig == other.groupedWithMeteredMinimumConfig &&
+                    this.additionalProperties == other.additionalProperties
+            }
+
+            override fun hashCode(): Int {
+                if (hashCode == 0) {
+                    hashCode =
+                        Objects.hash(
+                            id,
+                            modelType,
+                            minimumAmount,
+                            maximumAmount,
+                            currency,
+                            conversionRate,
+                            discount,
+                            fixedPriceQuantity,
+                            groupedWithMeteredMinimumConfig,
+                            additionalProperties,
+                        )
+                }
+                return hashCode
+            }
+
+            override fun toString() =
+                "OverrideGroupedWithMeteredMinimumPrice{id=$id, modelType=$modelType, minimumAmount=$minimumAmount, maximumAmount=$maximumAmount, currency=$currency, conversionRate=$conversionRate, discount=$discount, fixedPriceQuantity=$fixedPriceQuantity, groupedWithMeteredMinimumConfig=$groupedWithMeteredMinimumConfig, additionalProperties=$additionalProperties}"
+
+            companion object {
+
+                fun builder() = Builder()
+            }
+
+            class Builder {
+
+                private var id: JsonField<String> = JsonMissing.of()
+                private var modelType: JsonField<ModelType> = JsonMissing.of()
+                private var minimumAmount: JsonField<String> = JsonMissing.of()
+                private var maximumAmount: JsonField<String> = JsonMissing.of()
+                private var currency: JsonField<String> = JsonMissing.of()
+                private var conversionRate: JsonField<Double> = JsonMissing.of()
+                private var discount: JsonField<Discount> = JsonMissing.of()
+                private var fixedPriceQuantity: JsonField<Double> = JsonMissing.of()
+                private var groupedWithMeteredMinimumConfig:
+                    JsonField<GroupedWithMeteredMinimumConfig> =
+                    JsonMissing.of()
+                private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
+
+                internal fun from(
+                    overrideGroupedWithMeteredMinimumPrice: OverrideGroupedWithMeteredMinimumPrice
+                ) = apply {
+                    this.id = overrideGroupedWithMeteredMinimumPrice.id
+                    this.modelType = overrideGroupedWithMeteredMinimumPrice.modelType
+                    this.minimumAmount = overrideGroupedWithMeteredMinimumPrice.minimumAmount
+                    this.maximumAmount = overrideGroupedWithMeteredMinimumPrice.maximumAmount
+                    this.currency = overrideGroupedWithMeteredMinimumPrice.currency
+                    this.conversionRate = overrideGroupedWithMeteredMinimumPrice.conversionRate
+                    this.discount = overrideGroupedWithMeteredMinimumPrice.discount
+                    this.fixedPriceQuantity =
+                        overrideGroupedWithMeteredMinimumPrice.fixedPriceQuantity
+                    this.groupedWithMeteredMinimumConfig =
+                        overrideGroupedWithMeteredMinimumPrice.groupedWithMeteredMinimumConfig
+                    additionalProperties(
+                        overrideGroupedWithMeteredMinimumPrice.additionalProperties
+                    )
+                }
+
+                fun id(id: String) = id(JsonField.of(id))
+
+                @JsonProperty("id")
+                @ExcludeMissing
+                fun id(id: JsonField<String>) = apply { this.id = id }
+
+                fun modelType(modelType: ModelType) = modelType(JsonField.of(modelType))
+
+                @JsonProperty("model_type")
+                @ExcludeMissing
+                fun modelType(modelType: JsonField<ModelType>) = apply {
+                    this.modelType = modelType
+                }
+
+                /** The subscription's override minimum amount for the plan. */
+                fun minimumAmount(minimumAmount: String) =
+                    minimumAmount(JsonField.of(minimumAmount))
+
+                /** The subscription's override minimum amount for the plan. */
+                @JsonProperty("minimum_amount")
+                @ExcludeMissing
+                fun minimumAmount(minimumAmount: JsonField<String>) = apply {
+                    this.minimumAmount = minimumAmount
+                }
+
+                /** The subscription's override maximum amount for the plan. */
+                fun maximumAmount(maximumAmount: String) =
+                    maximumAmount(JsonField.of(maximumAmount))
+
+                /** The subscription's override maximum amount for the plan. */
+                @JsonProperty("maximum_amount")
+                @ExcludeMissing
+                fun maximumAmount(maximumAmount: JsonField<String>) = apply {
+                    this.maximumAmount = maximumAmount
+                }
+
+                /**
+                 * The currency of the price. If not provided, the currency of the plan will be
+                 * used.
+                 */
+                fun currency(currency: String) = currency(JsonField.of(currency))
+
+                /**
+                 * The currency of the price. If not provided, the currency of the plan will be
+                 * used.
+                 */
+                @JsonProperty("currency")
+                @ExcludeMissing
+                fun currency(currency: JsonField<String>) = apply { this.currency = currency }
+
+                /** The per unit conversion rate of the price currency to the invoicing currency. */
+                fun conversionRate(conversionRate: Double) =
+                    conversionRate(JsonField.of(conversionRate))
+
+                /** The per unit conversion rate of the price currency to the invoicing currency. */
+                @JsonProperty("conversion_rate")
+                @ExcludeMissing
+                fun conversionRate(conversionRate: JsonField<Double>) = apply {
+                    this.conversionRate = conversionRate
+                }
+
+                /** The subscription's override discount for the plan. */
+                fun discount(discount: Discount) = discount(JsonField.of(discount))
+
+                /** The subscription's override discount for the plan. */
+                @JsonProperty("discount")
+                @ExcludeMissing
+                fun discount(discount: JsonField<Discount>) = apply { this.discount = discount }
+
+                /** The starting quantity of the price, if the price is a fixed price. */
+                fun fixedPriceQuantity(fixedPriceQuantity: Double) =
+                    fixedPriceQuantity(JsonField.of(fixedPriceQuantity))
+
+                /** The starting quantity of the price, if the price is a fixed price. */
+                @JsonProperty("fixed_price_quantity")
+                @ExcludeMissing
+                fun fixedPriceQuantity(fixedPriceQuantity: JsonField<Double>) = apply {
+                    this.fixedPriceQuantity = fixedPriceQuantity
+                }
+
+                fun groupedWithMeteredMinimumConfig(
+                    groupedWithMeteredMinimumConfig: GroupedWithMeteredMinimumConfig
+                ) = groupedWithMeteredMinimumConfig(JsonField.of(groupedWithMeteredMinimumConfig))
+
+                @JsonProperty("grouped_with_metered_minimum_config")
+                @ExcludeMissing
+                fun groupedWithMeteredMinimumConfig(
+                    groupedWithMeteredMinimumConfig: JsonField<GroupedWithMeteredMinimumConfig>
+                ) = apply { this.groupedWithMeteredMinimumConfig = groupedWithMeteredMinimumConfig }
+
+                fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                    this.additionalProperties.clear()
+                    this.additionalProperties.putAll(additionalProperties)
+                }
+
+                @JsonAnySetter
+                fun putAdditionalProperty(key: String, value: JsonValue) = apply {
+                    this.additionalProperties.put(key, value)
+                }
+
+                fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) =
+                    apply {
+                        this.additionalProperties.putAll(additionalProperties)
+                    }
+
+                fun build(): OverrideGroupedWithMeteredMinimumPrice =
+                    OverrideGroupedWithMeteredMinimumPrice(
+                        id,
+                        modelType,
+                        minimumAmount,
+                        maximumAmount,
+                        currency,
+                        conversionRate,
+                        discount,
+                        fixedPriceQuantity,
+                        groupedWithMeteredMinimumConfig,
+                        additionalProperties.toUnmodifiable(),
+                    )
+            }
+
+            @JsonDeserialize(builder = GroupedWithMeteredMinimumConfig.Builder::class)
+            @NoAutoDetect
+            class GroupedWithMeteredMinimumConfig
+            private constructor(
+                private val additionalProperties: Map<String, JsonValue>,
+            ) {
+
+                private var validated: Boolean = false
+
+                private var hashCode: Int = 0
+
+                @JsonAnyGetter
+                @ExcludeMissing
+                fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
+
+                fun validate(): GroupedWithMeteredMinimumConfig = apply {
+                    if (!validated) {
+                        validated = true
+                    }
+                }
+
+                fun toBuilder() = Builder().from(this)
+
+                override fun equals(other: Any?): Boolean {
+                    if (this === other) {
+                        return true
+                    }
+
+                    return other is GroupedWithMeteredMinimumConfig &&
+                        this.additionalProperties == other.additionalProperties
+                }
+
+                override fun hashCode(): Int {
+                    if (hashCode == 0) {
+                        hashCode = Objects.hash(additionalProperties)
+                    }
+                    return hashCode
+                }
+
+                override fun toString() =
+                    "GroupedWithMeteredMinimumConfig{additionalProperties=$additionalProperties}"
+
+                companion object {
+
+                    fun builder() = Builder()
+                }
+
+                class Builder {
+
+                    private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
+
+                    internal fun from(
+                        groupedWithMeteredMinimumConfig: GroupedWithMeteredMinimumConfig
+                    ) = apply {
+                        additionalProperties(groupedWithMeteredMinimumConfig.additionalProperties)
+                    }
+
+                    fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                        this.additionalProperties.clear()
+                        this.additionalProperties.putAll(additionalProperties)
+                    }
+
+                    @JsonAnySetter
+                    fun putAdditionalProperty(key: String, value: JsonValue) = apply {
+                        this.additionalProperties.put(key, value)
+                    }
+
+                    fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) =
+                        apply {
+                            this.additionalProperties.putAll(additionalProperties)
+                        }
+
+                    fun build(): GroupedWithMeteredMinimumConfig =
+                        GroupedWithMeteredMinimumConfig(additionalProperties.toUnmodifiable())
+                }
+            }
+
+            class ModelType
+            @JsonCreator
+            private constructor(
+                private val value: JsonField<String>,
+            ) : Enum {
+
+                @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
+
+                override fun equals(other: Any?): Boolean {
+                    if (this === other) {
+                        return true
+                    }
+
+                    return other is ModelType && this.value == other.value
+                }
+
+                override fun hashCode() = value.hashCode()
+
+                override fun toString() = value.toString()
+
+                companion object {
+
+                    val GROUPED_WITH_METERED_MINIMUM =
+                        ModelType(JsonField.of("grouped_with_metered_minimum"))
+
+                    fun of(value: String) = ModelType(JsonField.of(value))
+                }
+
+                enum class Known {
+                    GROUPED_WITH_METERED_MINIMUM,
+                }
+
+                enum class Value {
+                    GROUPED_WITH_METERED_MINIMUM,
+                    _UNKNOWN,
+                }
+
+                fun value(): Value =
+                    when (this) {
+                        GROUPED_WITH_METERED_MINIMUM -> Value.GROUPED_WITH_METERED_MINIMUM
+                        else -> Value._UNKNOWN
+                    }
+
+                fun known(): Known =
+                    when (this) {
+                        GROUPED_WITH_METERED_MINIMUM -> Known.GROUPED_WITH_METERED_MINIMUM
                         else -> throw OrbInvalidDataException("Unknown ModelType: $value")
                     }
 

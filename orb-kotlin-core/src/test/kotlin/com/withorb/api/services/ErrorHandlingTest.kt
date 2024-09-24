@@ -107,6 +107,19 @@ class ErrorHandlingTest {
                         .state("state")
                         .build()
                 )
+                .taxConfiguration(
+                    CustomerCreateParams.TaxConfiguration.ofNewAvalaraTaxConfiguration(
+                        CustomerCreateParams.TaxConfiguration.NewAvalaraTaxConfiguration.builder()
+                            .taxExempt(true)
+                            .taxProvider(
+                                CustomerCreateParams.TaxConfiguration.NewAvalaraTaxConfiguration
+                                    .TaxProvider
+                                    .AVALARA
+                            )
+                            .taxExemptionCode("tax_exemption_code")
+                            .build()
+                    )
+                )
                 .taxId(
                     CustomerCreateParams.TaxId.builder()
                         .country(CustomerCreateParams.TaxId.Country.AD)
@@ -137,6 +150,7 @@ class ErrorHandlingTest {
                 .currency("currency")
                 .email("email")
                 .emailDelivery(true)
+                .exemptFromAutomatedTax(true)
                 .externalCustomerId("external_customer_id")
                 .metadata(Customer.Metadata.builder().build())
                 .name("name")
@@ -239,6 +253,19 @@ class ErrorHandlingTest {
                         .state("state")
                         .build()
                 )
+                .taxConfiguration(
+                    CustomerCreateParams.TaxConfiguration.ofNewAvalaraTaxConfiguration(
+                        CustomerCreateParams.TaxConfiguration.NewAvalaraTaxConfiguration.builder()
+                            .taxExempt(true)
+                            .taxProvider(
+                                CustomerCreateParams.TaxConfiguration.NewAvalaraTaxConfiguration
+                                    .TaxProvider
+                                    .AVALARA
+                            )
+                            .taxExemptionCode("tax_exemption_code")
+                            .build()
+                    )
+                )
                 .taxId(
                     CustomerCreateParams.TaxId.builder()
                         .country(CustomerCreateParams.TaxId.Country.AD)
@@ -310,6 +337,19 @@ class ErrorHandlingTest {
                         .postalCode("postal_code")
                         .state("state")
                         .build()
+                )
+                .taxConfiguration(
+                    CustomerCreateParams.TaxConfiguration.ofNewAvalaraTaxConfiguration(
+                        CustomerCreateParams.TaxConfiguration.NewAvalaraTaxConfiguration.builder()
+                            .taxExempt(true)
+                            .taxProvider(
+                                CustomerCreateParams.TaxConfiguration.NewAvalaraTaxConfiguration
+                                    .TaxProvider
+                                    .AVALARA
+                            )
+                            .taxExemptionCode("tax_exemption_code")
+                            .build()
+                    )
                 )
                 .taxId(
                     CustomerCreateParams.TaxId.builder()
@@ -383,6 +423,19 @@ class ErrorHandlingTest {
                         .state("state")
                         .build()
                 )
+                .taxConfiguration(
+                    CustomerCreateParams.TaxConfiguration.ofNewAvalaraTaxConfiguration(
+                        CustomerCreateParams.TaxConfiguration.NewAvalaraTaxConfiguration.builder()
+                            .taxExempt(true)
+                            .taxProvider(
+                                CustomerCreateParams.TaxConfiguration.NewAvalaraTaxConfiguration
+                                    .TaxProvider
+                                    .AVALARA
+                            )
+                            .taxExemptionCode("tax_exemption_code")
+                            .build()
+                    )
+                )
                 .taxId(
                     CustomerCreateParams.TaxId.builder()
                         .country(CustomerCreateParams.TaxId.Country.AD)
@@ -454,6 +507,19 @@ class ErrorHandlingTest {
                         .postalCode("postal_code")
                         .state("state")
                         .build()
+                )
+                .taxConfiguration(
+                    CustomerCreateParams.TaxConfiguration.ofNewAvalaraTaxConfiguration(
+                        CustomerCreateParams.TaxConfiguration.NewAvalaraTaxConfiguration.builder()
+                            .taxExempt(true)
+                            .taxProvider(
+                                CustomerCreateParams.TaxConfiguration.NewAvalaraTaxConfiguration
+                                    .TaxProvider
+                                    .AVALARA
+                            )
+                            .taxExemptionCode("tax_exemption_code")
+                            .build()
+                    )
                 )
                 .taxId(
                     CustomerCreateParams.TaxId.builder()
@@ -527,6 +593,19 @@ class ErrorHandlingTest {
                         .state("state")
                         .build()
                 )
+                .taxConfiguration(
+                    CustomerCreateParams.TaxConfiguration.ofNewAvalaraTaxConfiguration(
+                        CustomerCreateParams.TaxConfiguration.NewAvalaraTaxConfiguration.builder()
+                            .taxExempt(true)
+                            .taxProvider(
+                                CustomerCreateParams.TaxConfiguration.NewAvalaraTaxConfiguration
+                                    .TaxProvider
+                                    .AVALARA
+                            )
+                            .taxExemptionCode("tax_exemption_code")
+                            .build()
+                    )
+                )
                 .taxId(
                     CustomerCreateParams.TaxId.builder()
                         .country(CustomerCreateParams.TaxId.Country.AD)
@@ -598,6 +677,19 @@ class ErrorHandlingTest {
                         .postalCode("postal_code")
                         .state("state")
                         .build()
+                )
+                .taxConfiguration(
+                    CustomerCreateParams.TaxConfiguration.ofNewAvalaraTaxConfiguration(
+                        CustomerCreateParams.TaxConfiguration.NewAvalaraTaxConfiguration.builder()
+                            .taxExempt(true)
+                            .taxProvider(
+                                CustomerCreateParams.TaxConfiguration.NewAvalaraTaxConfiguration
+                                    .TaxProvider
+                                    .AVALARA
+                            )
+                            .taxExemptionCode("tax_exemption_code")
+                            .build()
+                    )
                 )
                 .taxId(
                     CustomerCreateParams.TaxId.builder()
@@ -671,6 +763,19 @@ class ErrorHandlingTest {
                         .state("state")
                         .build()
                 )
+                .taxConfiguration(
+                    CustomerCreateParams.TaxConfiguration.ofNewAvalaraTaxConfiguration(
+                        CustomerCreateParams.TaxConfiguration.NewAvalaraTaxConfiguration.builder()
+                            .taxExempt(true)
+                            .taxProvider(
+                                CustomerCreateParams.TaxConfiguration.NewAvalaraTaxConfiguration
+                                    .TaxProvider
+                                    .AVALARA
+                            )
+                            .taxExemptionCode("tax_exemption_code")
+                            .build()
+                    )
+                )
                 .taxId(
                     CustomerCreateParams.TaxId.builder()
                         .country(CustomerCreateParams.TaxId.Country.AD)
@@ -742,6 +847,19 @@ class ErrorHandlingTest {
                         .postalCode("postal_code")
                         .state("state")
                         .build()
+                )
+                .taxConfiguration(
+                    CustomerCreateParams.TaxConfiguration.ofNewAvalaraTaxConfiguration(
+                        CustomerCreateParams.TaxConfiguration.NewAvalaraTaxConfiguration.builder()
+                            .taxExempt(true)
+                            .taxProvider(
+                                CustomerCreateParams.TaxConfiguration.NewAvalaraTaxConfiguration
+                                    .TaxProvider
+                                    .AVALARA
+                            )
+                            .taxExemptionCode("tax_exemption_code")
+                            .build()
+                    )
                 )
                 .taxId(
                     CustomerCreateParams.TaxId.builder()
@@ -820,6 +938,19 @@ class ErrorHandlingTest {
                         .state("state")
                         .build()
                 )
+                .taxConfiguration(
+                    CustomerCreateParams.TaxConfiguration.ofNewAvalaraTaxConfiguration(
+                        CustomerCreateParams.TaxConfiguration.NewAvalaraTaxConfiguration.builder()
+                            .taxExempt(true)
+                            .taxProvider(
+                                CustomerCreateParams.TaxConfiguration.NewAvalaraTaxConfiguration
+                                    .TaxProvider
+                                    .AVALARA
+                            )
+                            .taxExemptionCode("tax_exemption_code")
+                            .build()
+                    )
+                )
                 .taxId(
                     CustomerCreateParams.TaxId.builder()
                         .country(CustomerCreateParams.TaxId.Country.AD)
@@ -890,6 +1021,19 @@ class ErrorHandlingTest {
                         .postalCode("postal_code")
                         .state("state")
                         .build()
+                )
+                .taxConfiguration(
+                    CustomerCreateParams.TaxConfiguration.ofNewAvalaraTaxConfiguration(
+                        CustomerCreateParams.TaxConfiguration.NewAvalaraTaxConfiguration.builder()
+                            .taxExempt(true)
+                            .taxProvider(
+                                CustomerCreateParams.TaxConfiguration.NewAvalaraTaxConfiguration
+                                    .TaxProvider
+                                    .AVALARA
+                            )
+                            .taxExemptionCode("tax_exemption_code")
+                            .build()
+                    )
                 )
                 .taxId(
                     CustomerCreateParams.TaxId.builder()
