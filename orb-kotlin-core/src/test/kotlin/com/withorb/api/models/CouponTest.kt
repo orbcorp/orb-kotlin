@@ -16,11 +16,9 @@ class CouponTest {
                 .archivedAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                 .discount(
                     Coupon.Discount.ofPercentageDiscount(
-                        Coupon.Discount.PercentageDiscount.builder()
+                        PercentageDiscount.builder()
                             .appliesToPriceIds(listOf("string"))
-                            .discountType(
-                                Coupon.Discount.PercentageDiscount.DiscountType.PERCENTAGE
-                            )
+                            .discountType(PercentageDiscount.DiscountType.PERCENTAGE)
                             .percentageDiscount(1.0)
                             .reason("reason")
                             .build()
@@ -37,9 +35,9 @@ class CouponTest {
         assertThat(coupon.discount())
             .isEqualTo(
                 Coupon.Discount.ofPercentageDiscount(
-                    Coupon.Discount.PercentageDiscount.builder()
+                    PercentageDiscount.builder()
                         .appliesToPriceIds(listOf("string"))
-                        .discountType(Coupon.Discount.PercentageDiscount.DiscountType.PERCENTAGE)
+                        .discountType(PercentageDiscount.DiscountType.PERCENTAGE)
                         .percentageDiscount(1.0)
                         .reason("reason")
                         .build()
