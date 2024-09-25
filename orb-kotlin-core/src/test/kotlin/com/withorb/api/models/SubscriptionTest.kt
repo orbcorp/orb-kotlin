@@ -195,11 +195,9 @@ class SubscriptionTest {
                         .description("description")
                         .discount(
                             Discount.ofPercentageDiscount(
-                                Discount.PercentageDiscount.builder()
+                                PercentageDiscount.builder()
                                     .appliesToPriceIds(listOf("string"))
-                                    .discountType(
-                                        Discount.PercentageDiscount.DiscountType.PERCENTAGE
-                                    )
+                                    .discountType(PercentageDiscount.DiscountType.PERCENTAGE)
                                     .percentageDiscount(1.0)
                                     .reason("reason")
                                     .build()
@@ -231,11 +229,10 @@ class SubscriptionTest {
                                     .description("description")
                                     .discount(
                                         Discount.ofPercentageDiscount(
-                                            Discount.PercentageDiscount.builder()
+                                            PercentageDiscount.builder()
                                                 .appliesToPriceIds(listOf("string"))
                                                 .discountType(
-                                                    Discount.PercentageDiscount.DiscountType
-                                                        .PERCENTAGE
+                                                    PercentageDiscount.DiscountType.PERCENTAGE
                                                 )
                                                 .percentageDiscount(1.0)
                                                 .reason("reason")
@@ -295,11 +292,10 @@ class SubscriptionTest {
                                         .currency("currency")
                                         .discount(
                                             Discount.ofPercentageDiscount(
-                                                Discount.PercentageDiscount.builder()
+                                                PercentageDiscount.builder()
                                                     .appliesToPriceIds(listOf("string"))
                                                     .discountType(
-                                                        Discount.PercentageDiscount.DiscountType
-                                                            .PERCENTAGE
+                                                        PercentageDiscount.DiscountType.PERCENTAGE
                                                     )
                                                     .percentageDiscount(1.0)
                                                     .reason("reason")
@@ -423,11 +419,10 @@ class SubscriptionTest {
                                         .currency("currency")
                                         .discount(
                                             Discount.ofPercentageDiscount(
-                                                Discount.PercentageDiscount.builder()
+                                                PercentageDiscount.builder()
                                                     .appliesToPriceIds(listOf("string"))
                                                     .discountType(
-                                                        Discount.PercentageDiscount.DiscountType
-                                                            .PERCENTAGE
+                                                        PercentageDiscount.DiscountType.PERCENTAGE
                                                     )
                                                     .percentageDiscount(1.0)
                                                     .reason("reason")
@@ -679,9 +674,9 @@ class SubscriptionTest {
                     .description("description")
                     .discount(
                         Discount.ofPercentageDiscount(
-                            Discount.PercentageDiscount.builder()
+                            PercentageDiscount.builder()
                                 .appliesToPriceIds(listOf("string"))
-                                .discountType(Discount.PercentageDiscount.DiscountType.PERCENTAGE)
+                                .discountType(PercentageDiscount.DiscountType.PERCENTAGE)
                                 .percentageDiscount(1.0)
                                 .reason("reason")
                                 .build()
@@ -713,10 +708,10 @@ class SubscriptionTest {
                                 .description("description")
                                 .discount(
                                     Discount.ofPercentageDiscount(
-                                        Discount.PercentageDiscount.builder()
+                                        PercentageDiscount.builder()
                                             .appliesToPriceIds(listOf("string"))
                                             .discountType(
-                                                Discount.PercentageDiscount.DiscountType.PERCENTAGE
+                                                PercentageDiscount.DiscountType.PERCENTAGE
                                             )
                                             .percentageDiscount(1.0)
                                             .reason("reason")
@@ -774,11 +769,10 @@ class SubscriptionTest {
                                     .currency("currency")
                                     .discount(
                                         Discount.ofPercentageDiscount(
-                                            Discount.PercentageDiscount.builder()
+                                            PercentageDiscount.builder()
                                                 .appliesToPriceIds(listOf("string"))
                                                 .discountType(
-                                                    Discount.PercentageDiscount.DiscountType
-                                                        .PERCENTAGE
+                                                    PercentageDiscount.DiscountType.PERCENTAGE
                                                 )
                                                 .percentageDiscount(1.0)
                                                 .reason("reason")
@@ -890,10 +884,10 @@ class SubscriptionTest {
                                 .currency("currency")
                                 .discount(
                                     Discount.ofPercentageDiscount(
-                                        Discount.PercentageDiscount.builder()
+                                        PercentageDiscount.builder()
                                             .appliesToPriceIds(listOf("string"))
                                             .discountType(
-                                                Discount.PercentageDiscount.DiscountType.PERCENTAGE
+                                                PercentageDiscount.DiscountType.PERCENTAGE
                                             )
                                             .percentageDiscount(1.0)
                                             .reason("reason")

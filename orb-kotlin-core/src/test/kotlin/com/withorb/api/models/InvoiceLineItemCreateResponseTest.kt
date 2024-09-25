@@ -16,9 +16,9 @@ class InvoiceLineItemCreateResponseTest {
                 .amount("7.00")
                 .discount(
                     Discount.ofPercentageDiscount(
-                        Discount.PercentageDiscount.builder()
+                        PercentageDiscount.builder()
                             .appliesToPriceIds(listOf("string"))
-                            .discountType(Discount.PercentageDiscount.DiscountType.PERCENTAGE)
+                            .discountType(PercentageDiscount.DiscountType.PERCENTAGE)
                             .percentageDiscount(1.0)
                             .reason("reason")
                             .build()
@@ -68,11 +68,9 @@ class InvoiceLineItemCreateResponseTest {
                             .currency("currency")
                             .discount(
                                 Discount.ofPercentageDiscount(
-                                    Discount.PercentageDiscount.builder()
+                                    PercentageDiscount.builder()
                                         .appliesToPriceIds(listOf("string"))
-                                        .discountType(
-                                            Discount.PercentageDiscount.DiscountType.PERCENTAGE
-                                        )
+                                        .discountType(PercentageDiscount.DiscountType.PERCENTAGE)
                                         .percentageDiscount(1.0)
                                         .reason("reason")
                                         .build()
@@ -165,9 +163,9 @@ class InvoiceLineItemCreateResponseTest {
         assertThat(invoiceLineItemCreateResponse.discount())
             .isEqualTo(
                 Discount.ofPercentageDiscount(
-                    Discount.PercentageDiscount.builder()
+                    PercentageDiscount.builder()
                         .appliesToPriceIds(listOf("string"))
-                        .discountType(Discount.PercentageDiscount.DiscountType.PERCENTAGE)
+                        .discountType(PercentageDiscount.DiscountType.PERCENTAGE)
                         .percentageDiscount(1.0)
                         .reason("reason")
                         .build()
@@ -219,11 +217,9 @@ class InvoiceLineItemCreateResponseTest {
                         .currency("currency")
                         .discount(
                             Discount.ofPercentageDiscount(
-                                Discount.PercentageDiscount.builder()
+                                PercentageDiscount.builder()
                                     .appliesToPriceIds(listOf("string"))
-                                    .discountType(
-                                        Discount.PercentageDiscount.DiscountType.PERCENTAGE
-                                    )
+                                    .discountType(PercentageDiscount.DiscountType.PERCENTAGE)
                                     .percentageDiscount(1.0)
                                     .reason("reason")
                                     .build()
