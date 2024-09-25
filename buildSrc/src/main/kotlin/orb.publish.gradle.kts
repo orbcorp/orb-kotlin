@@ -41,7 +41,7 @@ configure<MavenPublishBaseExtension> {
         developers {
             developer {
                 name.set("Orb")
-                email.set("team-test@withorb.com")
+                email.set("team@withorb.com")
             }
         }
 
