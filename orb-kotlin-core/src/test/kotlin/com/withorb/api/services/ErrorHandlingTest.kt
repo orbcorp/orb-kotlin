@@ -60,7 +60,7 @@ class ErrorHandlingTest {
     fun customersCreate200() {
         val params =
             CustomerCreateParams.builder()
-                .email("email")
+                .email("dev@stainlessapi.com")
                 .name("x")
                 .accountingSyncConfiguration(
                     CustomerCreateParams.AccountingSyncConfiguration.builder()
@@ -206,7 +206,7 @@ class ErrorHandlingTest {
     fun customersCreate400() {
         val params =
             CustomerCreateParams.builder()
-                .email("email")
+                .email("dev@stainlessapi.com")
                 .name("x")
                 .accountingSyncConfiguration(
                     CustomerCreateParams.AccountingSyncConfiguration.builder()
@@ -291,7 +291,7 @@ class ErrorHandlingTest {
     fun customersCreate401() {
         val params =
             CustomerCreateParams.builder()
-                .email("email")
+                .email("dev@stainlessapi.com")
                 .name("x")
                 .accountingSyncConfiguration(
                     CustomerCreateParams.AccountingSyncConfiguration.builder()
@@ -376,7 +376,7 @@ class ErrorHandlingTest {
     fun customersCreate403() {
         val params =
             CustomerCreateParams.builder()
-                .email("email")
+                .email("dev@stainlessapi.com")
                 .name("x")
                 .accountingSyncConfiguration(
                     CustomerCreateParams.AccountingSyncConfiguration.builder()
@@ -461,7 +461,7 @@ class ErrorHandlingTest {
     fun customersCreate404() {
         val params =
             CustomerCreateParams.builder()
-                .email("email")
+                .email("dev@stainlessapi.com")
                 .name("x")
                 .accountingSyncConfiguration(
                     CustomerCreateParams.AccountingSyncConfiguration.builder()
@@ -546,7 +546,7 @@ class ErrorHandlingTest {
     fun customersCreate422() {
         val params =
             CustomerCreateParams.builder()
-                .email("email")
+                .email("dev@stainlessapi.com")
                 .name("x")
                 .accountingSyncConfiguration(
                     CustomerCreateParams.AccountingSyncConfiguration.builder()
@@ -631,7 +631,7 @@ class ErrorHandlingTest {
     fun customersCreate429() {
         val params =
             CustomerCreateParams.builder()
-                .email("email")
+                .email("dev@stainlessapi.com")
                 .name("x")
                 .accountingSyncConfiguration(
                     CustomerCreateParams.AccountingSyncConfiguration.builder()
@@ -716,7 +716,7 @@ class ErrorHandlingTest {
     fun customersCreate500() {
         val params =
             CustomerCreateParams.builder()
-                .email("email")
+                .email("dev@stainlessapi.com")
                 .name("x")
                 .accountingSyncConfiguration(
                     CustomerCreateParams.AccountingSyncConfiguration.builder()
@@ -801,7 +801,7 @@ class ErrorHandlingTest {
     fun unexpectedStatusCode() {
         val params =
             CustomerCreateParams.builder()
-                .email("email")
+                .email("dev@stainlessapi.com")
                 .name("x")
                 .accountingSyncConfiguration(
                     CustomerCreateParams.AccountingSyncConfiguration.builder()
@@ -891,7 +891,7 @@ class ErrorHandlingTest {
     fun invalidBody() {
         val params =
             CustomerCreateParams.builder()
-                .email("email")
+                .email("dev@stainlessapi.com")
                 .name("x")
                 .accountingSyncConfiguration(
                     CustomerCreateParams.AccountingSyncConfiguration.builder()
@@ -975,7 +975,7 @@ class ErrorHandlingTest {
     fun invalidErrorBody() {
         val params =
             CustomerCreateParams.builder()
-                .email("email")
+                .email("dev@stainlessapi.com")
                 .name("x")
                 .accountingSyncConfiguration(
                     CustomerCreateParams.AccountingSyncConfiguration.builder()
