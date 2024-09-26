@@ -58,7 +58,7 @@ class ServiceParamsTest {
 
         val params =
             CustomerCreateParams.builder()
-                .email("email")
+                .email("dev@stainlessapi.com")
                 .name("x")
                 .accountingSyncConfiguration(
                     CustomerCreateParams.AccountingSyncConfiguration.builder()
