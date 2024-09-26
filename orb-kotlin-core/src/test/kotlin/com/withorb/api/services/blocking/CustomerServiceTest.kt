@@ -23,7 +23,7 @@ class CustomerServiceTest {
         val customer =
             customerService.create(
                 CustomerCreateParams.builder()
-                    .email("email")
+                    .email("dev@stainlessapi.com")
                     .name("x")
                     .accountingSyncConfiguration(
                         CustomerCreateParams.AccountingSyncConfiguration.builder()
@@ -139,7 +139,7 @@ class CustomerServiceTest {
                             .build()
                     )
                     .currency("currency")
-                    .email("email")
+                    .email("dev@stainlessapi.com")
                     .emailDelivery(true)
                     .externalCustomerId("external_customer_id")
                     .metadata(CustomerUpdateParams.Metadata.builder().build())
@@ -282,7 +282,7 @@ class CustomerServiceTest {
                             .build()
                     )
                     .currency("currency")
-                    .email("email")
+                    .email("dev@stainlessapi.com")
                     .emailDelivery(true)
                     .externalCustomerId("external_customer_id")
                     .metadata(CustomerUpdateByExternalIdParams.Metadata.builder().build())
