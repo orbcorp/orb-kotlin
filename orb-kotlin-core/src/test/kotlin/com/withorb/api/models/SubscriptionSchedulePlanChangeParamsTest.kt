@@ -121,6 +121,7 @@ class SubscriptionSchedulePlanChangeParamsTest {
                                                 .builder()
                                                 .build()
                                         )
+                                        .referenceId("reference_id")
                                         .build()
                                 )
                         )
@@ -233,6 +234,9 @@ class SubscriptionSchedulePlanChangeParamsTest {
             .replacePrices(
                 listOf(
                     SubscriptionSchedulePlanChangeParams.ReplacePrice.builder()
+                        .replacesPriceId("replaces_price_id")
+                        .externalPriceId("external_price_id")
+                        .fixedPriceQuantity(42.23)
                         .price(
                             SubscriptionSchedulePlanChangeParams.ReplacePrice.Price
                                 .ofNewSubscriptionUnitPrice(
@@ -309,10 +313,11 @@ class SubscriptionSchedulePlanChangeParamsTest {
                                                 .builder()
                                                 .build()
                                         )
+                                        .referenceId("reference_id")
                                         .build()
                                 )
                         )
-                        .replacesPriceId("replaces_price_id")
+                        .priceId("h74gfhdjvn7ujokd")
                         .build()
                 )
             )
@@ -435,6 +440,7 @@ class SubscriptionSchedulePlanChangeParamsTest {
                                                     .builder()
                                                     .build()
                                             )
+                                            .referenceId("reference_id")
                                             .build()
                                     )
                             )
@@ -551,6 +557,9 @@ class SubscriptionSchedulePlanChangeParamsTest {
                 .replacePrices(
                     listOf(
                         SubscriptionSchedulePlanChangeParams.ReplacePrice.builder()
+                            .replacesPriceId("replaces_price_id")
+                            .externalPriceId("external_price_id")
+                            .fixedPriceQuantity(42.23)
                             .price(
                                 SubscriptionSchedulePlanChangeParams.ReplacePrice.Price
                                     .ofNewSubscriptionUnitPrice(
@@ -633,10 +642,11 @@ class SubscriptionSchedulePlanChangeParamsTest {
                                                     .builder()
                                                     .build()
                                             )
+                                            .referenceId("reference_id")
                                             .build()
                                     )
                             )
-                            .replacesPriceId("replaces_price_id")
+                            .priceId("h74gfhdjvn7ujokd")
                             .build()
                     )
                 )
@@ -754,6 +764,7 @@ class SubscriptionSchedulePlanChangeParamsTest {
                                                 .builder()
                                                 .build()
                                         )
+                                        .referenceId("reference_id")
                                         .build()
                                 )
                         )
@@ -870,6 +881,9 @@ class SubscriptionSchedulePlanChangeParamsTest {
             .isEqualTo(
                 listOf(
                     SubscriptionSchedulePlanChangeParams.ReplacePrice.builder()
+                        .replacesPriceId("replaces_price_id")
+                        .externalPriceId("external_price_id")
+                        .fixedPriceQuantity(42.23)
                         .price(
                             SubscriptionSchedulePlanChangeParams.ReplacePrice.Price
                                 .ofNewSubscriptionUnitPrice(
@@ -946,10 +960,11 @@ class SubscriptionSchedulePlanChangeParamsTest {
                                                 .builder()
                                                 .build()
                                         )
+                                        .referenceId("reference_id")
                                         .build()
                                 )
                         )
-                        .replacesPriceId("replaces_price_id")
+                        .priceId("h74gfhdjvn7ujokd")
                         .build()
                 )
             )
