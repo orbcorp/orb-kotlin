@@ -114,6 +114,7 @@ class SubscriptionCreateParamsTest {
                                             .builder()
                                             .build()
                                     )
+                                    .referenceId("reference_id")
                                     .build()
                             )
                         )
@@ -229,6 +230,9 @@ class SubscriptionCreateParamsTest {
             .replacePrices(
                 listOf(
                     SubscriptionCreateParams.ReplacePrice.builder()
+                        .replacesPriceId("replaces_price_id")
+                        .externalPriceId("external_price_id")
+                        .fixedPriceQuantity(42.23)
                         .price(
                             SubscriptionCreateParams.ReplacePrice.Price.ofNewSubscriptionUnitPrice(
                                 SubscriptionCreateParams.ReplacePrice.Price.NewSubscriptionUnitPrice
@@ -299,10 +303,11 @@ class SubscriptionCreateParamsTest {
                                             .builder()
                                             .build()
                                     )
+                                    .referenceId("reference_id")
                                     .build()
                             )
                         )
-                        .replacesPriceId("replaces_price_id")
+                        .priceId("h74gfhdjvn7ujokd")
                         .build()
                 )
             )
@@ -416,6 +421,7 @@ class SubscriptionCreateParamsTest {
                                                 .builder()
                                                 .build()
                                         )
+                                        .referenceId("reference_id")
                                         .build()
                                 )
                             )
@@ -535,6 +541,9 @@ class SubscriptionCreateParamsTest {
                 .replacePrices(
                     listOf(
                         SubscriptionCreateParams.ReplacePrice.builder()
+                            .replacesPriceId("replaces_price_id")
+                            .externalPriceId("external_price_id")
+                            .fixedPriceQuantity(42.23)
                             .price(
                                 SubscriptionCreateParams.ReplacePrice.Price
                                     .ofNewSubscriptionUnitPrice(
@@ -607,10 +616,11 @@ class SubscriptionCreateParamsTest {
                                                     .builder()
                                                     .build()
                                             )
+                                            .referenceId("reference_id")
                                             .build()
                                     )
                             )
-                            .replacesPriceId("replaces_price_id")
+                            .priceId("h74gfhdjvn7ujokd")
                             .build()
                     )
                 )
@@ -722,6 +732,7 @@ class SubscriptionCreateParamsTest {
                                             .builder()
                                             .build()
                                     )
+                                    .referenceId("reference_id")
                                     .build()
                             )
                         )
@@ -845,6 +856,9 @@ class SubscriptionCreateParamsTest {
             .isEqualTo(
                 listOf(
                     SubscriptionCreateParams.ReplacePrice.builder()
+                        .replacesPriceId("replaces_price_id")
+                        .externalPriceId("external_price_id")
+                        .fixedPriceQuantity(42.23)
                         .price(
                             SubscriptionCreateParams.ReplacePrice.Price.ofNewSubscriptionUnitPrice(
                                 SubscriptionCreateParams.ReplacePrice.Price.NewSubscriptionUnitPrice
@@ -915,10 +929,11 @@ class SubscriptionCreateParamsTest {
                                             .builder()
                                             .build()
                                     )
+                                    .referenceId("reference_id")
                                     .build()
                             )
                         )
-                        .replacesPriceId("replaces_price_id")
+                        .priceId("h74gfhdjvn7ujokd")
                         .build()
                 )
             )

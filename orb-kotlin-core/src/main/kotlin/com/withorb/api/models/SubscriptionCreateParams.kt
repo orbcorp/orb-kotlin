@@ -3227,6 +3227,7 @@ constructor(
                 private val modelType: JsonField<ModelType>,
                 private val unitConfig: JsonField<UnitConfig>,
                 private val currency: JsonField<String>,
+                private val referenceId: JsonField<String>,
                 private val additionalProperties: Map<String, JsonValue>,
             ) {
 
@@ -3302,6 +3303,12 @@ constructor(
                  * price is billed.
                  */
                 fun currency(): String? = currency.getNullable("currency")
+
+                /**
+                 * A transient ID that can be used to reference this price when adding adjustments
+                 * in the same API call.
+                 */
+                fun referenceId(): String? = referenceId.getNullable("reference_id")
 
                 /**
                  * User-specified key/value pairs for the resource. Individual keys can be removed
@@ -3384,6 +3391,12 @@ constructor(
                  */
                 @JsonProperty("currency") @ExcludeMissing fun _currency() = currency
 
+                /**
+                 * A transient ID that can be used to reference this price when adding adjustments
+                 * in the same API call.
+                 */
+                @JsonProperty("reference_id") @ExcludeMissing fun _referenceId() = referenceId
+
                 @JsonAnyGetter
                 @ExcludeMissing
                 fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
@@ -3405,6 +3418,7 @@ constructor(
                         modelType()
                         unitConfig().validate()
                         currency()
+                        referenceId()
                         validated = true
                     }
                 }
@@ -3432,6 +3446,7 @@ constructor(
                         this.modelType == other.modelType &&
                         this.unitConfig == other.unitConfig &&
                         this.currency == other.currency &&
+                        this.referenceId == other.referenceId &&
                         this.additionalProperties == other.additionalProperties
                 }
 
@@ -3454,6 +3469,7 @@ constructor(
                                 modelType,
                                 unitConfig,
                                 currency,
+                                referenceId,
                                 additionalProperties,
                             )
                     }
@@ -3461,7 +3477,7 @@ constructor(
                 }
 
                 override fun toString() =
-                    "NewSubscriptionUnitPrice{metadata=$metadata, externalPriceId=$externalPriceId, name=$name, billableMetricId=$billableMetricId, itemId=$itemId, billedInAdvance=$billedInAdvance, fixedPriceQuantity=$fixedPriceQuantity, invoiceGroupingKey=$invoiceGroupingKey, cadence=$cadence, billingCycleConfiguration=$billingCycleConfiguration, invoicingCycleConfiguration=$invoicingCycleConfiguration, conversionRate=$conversionRate, modelType=$modelType, unitConfig=$unitConfig, currency=$currency, additionalProperties=$additionalProperties}"
+                    "NewSubscriptionUnitPrice{metadata=$metadata, externalPriceId=$externalPriceId, name=$name, billableMetricId=$billableMetricId, itemId=$itemId, billedInAdvance=$billedInAdvance, fixedPriceQuantity=$fixedPriceQuantity, invoiceGroupingKey=$invoiceGroupingKey, cadence=$cadence, billingCycleConfiguration=$billingCycleConfiguration, invoicingCycleConfiguration=$invoicingCycleConfiguration, conversionRate=$conversionRate, modelType=$modelType, unitConfig=$unitConfig, currency=$currency, referenceId=$referenceId, additionalProperties=$additionalProperties}"
 
                 companion object {
 
@@ -3488,6 +3504,7 @@ constructor(
                     private var modelType: JsonField<ModelType> = JsonMissing.of()
                     private var unitConfig: JsonField<UnitConfig> = JsonMissing.of()
                     private var currency: JsonField<String> = JsonMissing.of()
+                    private var referenceId: JsonField<String> = JsonMissing.of()
                     private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
                     internal fun from(newSubscriptionUnitPrice: NewSubscriptionUnitPrice) = apply {
@@ -3508,6 +3525,7 @@ constructor(
                         this.modelType = newSubscriptionUnitPrice.modelType
                         this.unitConfig = newSubscriptionUnitPrice.unitConfig
                         this.currency = newSubscriptionUnitPrice.currency
+                        this.referenceId = newSubscriptionUnitPrice.referenceId
                         additionalProperties(newSubscriptionUnitPrice.additionalProperties)
                     }
 
@@ -3705,6 +3723,22 @@ constructor(
                     @ExcludeMissing
                     fun currency(currency: JsonField<String>) = apply { this.currency = currency }
 
+                    /**
+                     * A transient ID that can be used to reference this price when adding
+                     * adjustments in the same API call.
+                     */
+                    fun referenceId(referenceId: String) = referenceId(JsonField.of(referenceId))
+
+                    /**
+                     * A transient ID that can be used to reference this price when adding
+                     * adjustments in the same API call.
+                     */
+                    @JsonProperty("reference_id")
+                    @ExcludeMissing
+                    fun referenceId(referenceId: JsonField<String>) = apply {
+                        this.referenceId = referenceId
+                    }
+
                     fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                         this.additionalProperties.clear()
                         this.additionalProperties.putAll(additionalProperties)
@@ -3737,6 +3771,7 @@ constructor(
                             modelType,
                             unitConfig,
                             currency,
+                            referenceId,
                             additionalProperties.toUnmodifiable(),
                         )
                 }
@@ -4456,6 +4491,7 @@ constructor(
                 private val modelType: JsonField<ModelType>,
                 private val packageConfig: JsonField<PackageConfig>,
                 private val currency: JsonField<String>,
+                private val referenceId: JsonField<String>,
                 private val additionalProperties: Map<String, JsonValue>,
             ) {
 
@@ -4531,6 +4567,12 @@ constructor(
                  * price is billed.
                  */
                 fun currency(): String? = currency.getNullable("currency")
+
+                /**
+                 * A transient ID that can be used to reference this price when adding adjustments
+                 * in the same API call.
+                 */
+                fun referenceId(): String? = referenceId.getNullable("reference_id")
 
                 /**
                  * User-specified key/value pairs for the resource. Individual keys can be removed
@@ -4613,6 +4655,12 @@ constructor(
                  */
                 @JsonProperty("currency") @ExcludeMissing fun _currency() = currency
 
+                /**
+                 * A transient ID that can be used to reference this price when adding adjustments
+                 * in the same API call.
+                 */
+                @JsonProperty("reference_id") @ExcludeMissing fun _referenceId() = referenceId
+
                 @JsonAnyGetter
                 @ExcludeMissing
                 fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
@@ -4634,6 +4682,7 @@ constructor(
                         modelType()
                         packageConfig().validate()
                         currency()
+                        referenceId()
                         validated = true
                     }
                 }
@@ -4661,6 +4710,7 @@ constructor(
                         this.modelType == other.modelType &&
                         this.packageConfig == other.packageConfig &&
                         this.currency == other.currency &&
+                        this.referenceId == other.referenceId &&
                         this.additionalProperties == other.additionalProperties
                 }
 
@@ -4683,6 +4733,7 @@ constructor(
                                 modelType,
                                 packageConfig,
                                 currency,
+                                referenceId,
                                 additionalProperties,
                             )
                     }
@@ -4690,7 +4741,7 @@ constructor(
                 }
 
                 override fun toString() =
-                    "NewSubscriptionPackagePrice{metadata=$metadata, externalPriceId=$externalPriceId, name=$name, billableMetricId=$billableMetricId, itemId=$itemId, billedInAdvance=$billedInAdvance, fixedPriceQuantity=$fixedPriceQuantity, invoiceGroupingKey=$invoiceGroupingKey, cadence=$cadence, billingCycleConfiguration=$billingCycleConfiguration, invoicingCycleConfiguration=$invoicingCycleConfiguration, conversionRate=$conversionRate, modelType=$modelType, packageConfig=$packageConfig, currency=$currency, additionalProperties=$additionalProperties}"
+                    "NewSubscriptionPackagePrice{metadata=$metadata, externalPriceId=$externalPriceId, name=$name, billableMetricId=$billableMetricId, itemId=$itemId, billedInAdvance=$billedInAdvance, fixedPriceQuantity=$fixedPriceQuantity, invoiceGroupingKey=$invoiceGroupingKey, cadence=$cadence, billingCycleConfiguration=$billingCycleConfiguration, invoicingCycleConfiguration=$invoicingCycleConfiguration, conversionRate=$conversionRate, modelType=$modelType, packageConfig=$packageConfig, currency=$currency, referenceId=$referenceId, additionalProperties=$additionalProperties}"
 
                 companion object {
 
@@ -4717,6 +4768,7 @@ constructor(
                     private var modelType: JsonField<ModelType> = JsonMissing.of()
                     private var packageConfig: JsonField<PackageConfig> = JsonMissing.of()
                     private var currency: JsonField<String> = JsonMissing.of()
+                    private var referenceId: JsonField<String> = JsonMissing.of()
                     private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
                     internal fun from(newSubscriptionPackagePrice: NewSubscriptionPackagePrice) =
@@ -4738,6 +4790,7 @@ constructor(
                             this.modelType = newSubscriptionPackagePrice.modelType
                             this.packageConfig = newSubscriptionPackagePrice.packageConfig
                             this.currency = newSubscriptionPackagePrice.currency
+                            this.referenceId = newSubscriptionPackagePrice.referenceId
                             additionalProperties(newSubscriptionPackagePrice.additionalProperties)
                         }
 
@@ -4936,6 +4989,22 @@ constructor(
                     @ExcludeMissing
                     fun currency(currency: JsonField<String>) = apply { this.currency = currency }
 
+                    /**
+                     * A transient ID that can be used to reference this price when adding
+                     * adjustments in the same API call.
+                     */
+                    fun referenceId(referenceId: String) = referenceId(JsonField.of(referenceId))
+
+                    /**
+                     * A transient ID that can be used to reference this price when adding
+                     * adjustments in the same API call.
+                     */
+                    @JsonProperty("reference_id")
+                    @ExcludeMissing
+                    fun referenceId(referenceId: JsonField<String>) = apply {
+                        this.referenceId = referenceId
+                    }
+
                     fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                         this.additionalProperties.clear()
                         this.additionalProperties.putAll(additionalProperties)
@@ -4968,6 +5037,7 @@ constructor(
                             modelType,
                             packageConfig,
                             currency,
+                            referenceId,
                             additionalProperties.toUnmodifiable(),
                         )
                 }
@@ -5732,6 +5802,7 @@ constructor(
                 private val modelType: JsonField<ModelType>,
                 private val matrixConfig: JsonField<MatrixConfig>,
                 private val currency: JsonField<String>,
+                private val referenceId: JsonField<String>,
                 private val additionalProperties: Map<String, JsonValue>,
             ) {
 
@@ -5807,6 +5878,12 @@ constructor(
                  * price is billed.
                  */
                 fun currency(): String? = currency.getNullable("currency")
+
+                /**
+                 * A transient ID that can be used to reference this price when adding adjustments
+                 * in the same API call.
+                 */
+                fun referenceId(): String? = referenceId.getNullable("reference_id")
 
                 /**
                  * User-specified key/value pairs for the resource. Individual keys can be removed
@@ -5889,6 +5966,12 @@ constructor(
                  */
                 @JsonProperty("currency") @ExcludeMissing fun _currency() = currency
 
+                /**
+                 * A transient ID that can be used to reference this price when adding adjustments
+                 * in the same API call.
+                 */
+                @JsonProperty("reference_id") @ExcludeMissing fun _referenceId() = referenceId
+
                 @JsonAnyGetter
                 @ExcludeMissing
                 fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
@@ -5910,6 +5993,7 @@ constructor(
                         modelType()
                         matrixConfig().validate()
                         currency()
+                        referenceId()
                         validated = true
                     }
                 }
@@ -5937,6 +6021,7 @@ constructor(
                         this.modelType == other.modelType &&
                         this.matrixConfig == other.matrixConfig &&
                         this.currency == other.currency &&
+                        this.referenceId == other.referenceId &&
                         this.additionalProperties == other.additionalProperties
                 }
 
@@ -5959,6 +6044,7 @@ constructor(
                                 modelType,
                                 matrixConfig,
                                 currency,
+                                referenceId,
                                 additionalProperties,
                             )
                     }
@@ -5966,7 +6052,7 @@ constructor(
                 }
 
                 override fun toString() =
-                    "NewSubscriptionMatrixPrice{metadata=$metadata, externalPriceId=$externalPriceId, name=$name, billableMetricId=$billableMetricId, itemId=$itemId, billedInAdvance=$billedInAdvance, fixedPriceQuantity=$fixedPriceQuantity, invoiceGroupingKey=$invoiceGroupingKey, cadence=$cadence, billingCycleConfiguration=$billingCycleConfiguration, invoicingCycleConfiguration=$invoicingCycleConfiguration, conversionRate=$conversionRate, modelType=$modelType, matrixConfig=$matrixConfig, currency=$currency, additionalProperties=$additionalProperties}"
+                    "NewSubscriptionMatrixPrice{metadata=$metadata, externalPriceId=$externalPriceId, name=$name, billableMetricId=$billableMetricId, itemId=$itemId, billedInAdvance=$billedInAdvance, fixedPriceQuantity=$fixedPriceQuantity, invoiceGroupingKey=$invoiceGroupingKey, cadence=$cadence, billingCycleConfiguration=$billingCycleConfiguration, invoicingCycleConfiguration=$invoicingCycleConfiguration, conversionRate=$conversionRate, modelType=$modelType, matrixConfig=$matrixConfig, currency=$currency, referenceId=$referenceId, additionalProperties=$additionalProperties}"
 
                 companion object {
 
@@ -5993,6 +6079,7 @@ constructor(
                     private var modelType: JsonField<ModelType> = JsonMissing.of()
                     private var matrixConfig: JsonField<MatrixConfig> = JsonMissing.of()
                     private var currency: JsonField<String> = JsonMissing.of()
+                    private var referenceId: JsonField<String> = JsonMissing.of()
                     private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
                     internal fun from(newSubscriptionMatrixPrice: NewSubscriptionMatrixPrice) =
@@ -6014,6 +6101,7 @@ constructor(
                             this.modelType = newSubscriptionMatrixPrice.modelType
                             this.matrixConfig = newSubscriptionMatrixPrice.matrixConfig
                             this.currency = newSubscriptionMatrixPrice.currency
+                            this.referenceId = newSubscriptionMatrixPrice.referenceId
                             additionalProperties(newSubscriptionMatrixPrice.additionalProperties)
                         }
 
@@ -6212,6 +6300,22 @@ constructor(
                     @ExcludeMissing
                     fun currency(currency: JsonField<String>) = apply { this.currency = currency }
 
+                    /**
+                     * A transient ID that can be used to reference this price when adding
+                     * adjustments in the same API call.
+                     */
+                    fun referenceId(referenceId: String) = referenceId(JsonField.of(referenceId))
+
+                    /**
+                     * A transient ID that can be used to reference this price when adding
+                     * adjustments in the same API call.
+                     */
+                    @JsonProperty("reference_id")
+                    @ExcludeMissing
+                    fun referenceId(referenceId: JsonField<String>) = apply {
+                        this.referenceId = referenceId
+                    }
+
                     fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                         this.additionalProperties.clear()
                         this.additionalProperties.putAll(additionalProperties)
@@ -6244,6 +6348,7 @@ constructor(
                             modelType,
                             matrixConfig,
                             currency,
+                            referenceId,
                             additionalProperties.toUnmodifiable(),
                         )
                 }
@@ -7185,6 +7290,7 @@ constructor(
                 private val modelType: JsonField<ModelType>,
                 private val tieredConfig: JsonField<TieredConfig>,
                 private val currency: JsonField<String>,
+                private val referenceId: JsonField<String>,
                 private val additionalProperties: Map<String, JsonValue>,
             ) {
 
@@ -7260,6 +7366,12 @@ constructor(
                  * price is billed.
                  */
                 fun currency(): String? = currency.getNullable("currency")
+
+                /**
+                 * A transient ID that can be used to reference this price when adding adjustments
+                 * in the same API call.
+                 */
+                fun referenceId(): String? = referenceId.getNullable("reference_id")
 
                 /**
                  * User-specified key/value pairs for the resource. Individual keys can be removed
@@ -7342,6 +7454,12 @@ constructor(
                  */
                 @JsonProperty("currency") @ExcludeMissing fun _currency() = currency
 
+                /**
+                 * A transient ID that can be used to reference this price when adding adjustments
+                 * in the same API call.
+                 */
+                @JsonProperty("reference_id") @ExcludeMissing fun _referenceId() = referenceId
+
                 @JsonAnyGetter
                 @ExcludeMissing
                 fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
@@ -7363,6 +7481,7 @@ constructor(
                         modelType()
                         tieredConfig().validate()
                         currency()
+                        referenceId()
                         validated = true
                     }
                 }
@@ -7390,6 +7509,7 @@ constructor(
                         this.modelType == other.modelType &&
                         this.tieredConfig == other.tieredConfig &&
                         this.currency == other.currency &&
+                        this.referenceId == other.referenceId &&
                         this.additionalProperties == other.additionalProperties
                 }
 
@@ -7412,6 +7532,7 @@ constructor(
                                 modelType,
                                 tieredConfig,
                                 currency,
+                                referenceId,
                                 additionalProperties,
                             )
                     }
@@ -7419,7 +7540,7 @@ constructor(
                 }
 
                 override fun toString() =
-                    "NewSubscriptionTieredPrice{metadata=$metadata, externalPriceId=$externalPriceId, name=$name, billableMetricId=$billableMetricId, itemId=$itemId, billedInAdvance=$billedInAdvance, fixedPriceQuantity=$fixedPriceQuantity, invoiceGroupingKey=$invoiceGroupingKey, cadence=$cadence, billingCycleConfiguration=$billingCycleConfiguration, invoicingCycleConfiguration=$invoicingCycleConfiguration, conversionRate=$conversionRate, modelType=$modelType, tieredConfig=$tieredConfig, currency=$currency, additionalProperties=$additionalProperties}"
+                    "NewSubscriptionTieredPrice{metadata=$metadata, externalPriceId=$externalPriceId, name=$name, billableMetricId=$billableMetricId, itemId=$itemId, billedInAdvance=$billedInAdvance, fixedPriceQuantity=$fixedPriceQuantity, invoiceGroupingKey=$invoiceGroupingKey, cadence=$cadence, billingCycleConfiguration=$billingCycleConfiguration, invoicingCycleConfiguration=$invoicingCycleConfiguration, conversionRate=$conversionRate, modelType=$modelType, tieredConfig=$tieredConfig, currency=$currency, referenceId=$referenceId, additionalProperties=$additionalProperties}"
 
                 companion object {
 
@@ -7446,6 +7567,7 @@ constructor(
                     private var modelType: JsonField<ModelType> = JsonMissing.of()
                     private var tieredConfig: JsonField<TieredConfig> = JsonMissing.of()
                     private var currency: JsonField<String> = JsonMissing.of()
+                    private var referenceId: JsonField<String> = JsonMissing.of()
                     private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
                     internal fun from(newSubscriptionTieredPrice: NewSubscriptionTieredPrice) =
@@ -7467,6 +7589,7 @@ constructor(
                             this.modelType = newSubscriptionTieredPrice.modelType
                             this.tieredConfig = newSubscriptionTieredPrice.tieredConfig
                             this.currency = newSubscriptionTieredPrice.currency
+                            this.referenceId = newSubscriptionTieredPrice.referenceId
                             additionalProperties(newSubscriptionTieredPrice.additionalProperties)
                         }
 
@@ -7665,6 +7788,22 @@ constructor(
                     @ExcludeMissing
                     fun currency(currency: JsonField<String>) = apply { this.currency = currency }
 
+                    /**
+                     * A transient ID that can be used to reference this price when adding
+                     * adjustments in the same API call.
+                     */
+                    fun referenceId(referenceId: String) = referenceId(JsonField.of(referenceId))
+
+                    /**
+                     * A transient ID that can be used to reference this price when adding
+                     * adjustments in the same API call.
+                     */
+                    @JsonProperty("reference_id")
+                    @ExcludeMissing
+                    fun referenceId(referenceId: JsonField<String>) = apply {
+                        this.referenceId = referenceId
+                    }
+
                     fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                         this.additionalProperties.clear()
                         this.additionalProperties.putAll(additionalProperties)
@@ -7697,6 +7836,7 @@ constructor(
                             modelType,
                             tieredConfig,
                             currency,
+                            referenceId,
                             additionalProperties.toUnmodifiable(),
                         )
                 }
@@ -8582,6 +8722,7 @@ constructor(
                 private val modelType: JsonField<ModelType>,
                 private val tieredBpsConfig: JsonField<TieredBpsConfig>,
                 private val currency: JsonField<String>,
+                private val referenceId: JsonField<String>,
                 private val additionalProperties: Map<String, JsonValue>,
             ) {
 
@@ -8658,6 +8799,12 @@ constructor(
                  * price is billed.
                  */
                 fun currency(): String? = currency.getNullable("currency")
+
+                /**
+                 * A transient ID that can be used to reference this price when adding adjustments
+                 * in the same API call.
+                 */
+                fun referenceId(): String? = referenceId.getNullable("reference_id")
 
                 /**
                  * User-specified key/value pairs for the resource. Individual keys can be removed
@@ -8742,6 +8889,12 @@ constructor(
                  */
                 @JsonProperty("currency") @ExcludeMissing fun _currency() = currency
 
+                /**
+                 * A transient ID that can be used to reference this price when adding adjustments
+                 * in the same API call.
+                 */
+                @JsonProperty("reference_id") @ExcludeMissing fun _referenceId() = referenceId
+
                 @JsonAnyGetter
                 @ExcludeMissing
                 fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
@@ -8763,6 +8916,7 @@ constructor(
                         modelType()
                         tieredBpsConfig().validate()
                         currency()
+                        referenceId()
                         validated = true
                     }
                 }
@@ -8790,6 +8944,7 @@ constructor(
                         this.modelType == other.modelType &&
                         this.tieredBpsConfig == other.tieredBpsConfig &&
                         this.currency == other.currency &&
+                        this.referenceId == other.referenceId &&
                         this.additionalProperties == other.additionalProperties
                 }
 
@@ -8812,6 +8967,7 @@ constructor(
                                 modelType,
                                 tieredBpsConfig,
                                 currency,
+                                referenceId,
                                 additionalProperties,
                             )
                     }
@@ -8819,7 +8975,7 @@ constructor(
                 }
 
                 override fun toString() =
-                    "NewSubscriptionTieredBpsPrice{metadata=$metadata, externalPriceId=$externalPriceId, name=$name, billableMetricId=$billableMetricId, itemId=$itemId, billedInAdvance=$billedInAdvance, fixedPriceQuantity=$fixedPriceQuantity, invoiceGroupingKey=$invoiceGroupingKey, cadence=$cadence, billingCycleConfiguration=$billingCycleConfiguration, invoicingCycleConfiguration=$invoicingCycleConfiguration, conversionRate=$conversionRate, modelType=$modelType, tieredBpsConfig=$tieredBpsConfig, currency=$currency, additionalProperties=$additionalProperties}"
+                    "NewSubscriptionTieredBpsPrice{metadata=$metadata, externalPriceId=$externalPriceId, name=$name, billableMetricId=$billableMetricId, itemId=$itemId, billedInAdvance=$billedInAdvance, fixedPriceQuantity=$fixedPriceQuantity, invoiceGroupingKey=$invoiceGroupingKey, cadence=$cadence, billingCycleConfiguration=$billingCycleConfiguration, invoicingCycleConfiguration=$invoicingCycleConfiguration, conversionRate=$conversionRate, modelType=$modelType, tieredBpsConfig=$tieredBpsConfig, currency=$currency, referenceId=$referenceId, additionalProperties=$additionalProperties}"
 
                 companion object {
 
@@ -8846,6 +9002,7 @@ constructor(
                     private var modelType: JsonField<ModelType> = JsonMissing.of()
                     private var tieredBpsConfig: JsonField<TieredBpsConfig> = JsonMissing.of()
                     private var currency: JsonField<String> = JsonMissing.of()
+                    private var referenceId: JsonField<String> = JsonMissing.of()
                     private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
                     internal fun from(
@@ -8868,6 +9025,7 @@ constructor(
                         this.modelType = newSubscriptionTieredBpsPrice.modelType
                         this.tieredBpsConfig = newSubscriptionTieredBpsPrice.tieredBpsConfig
                         this.currency = newSubscriptionTieredBpsPrice.currency
+                        this.referenceId = newSubscriptionTieredBpsPrice.referenceId
                         additionalProperties(newSubscriptionTieredBpsPrice.additionalProperties)
                     }
 
@@ -9066,6 +9224,22 @@ constructor(
                     @ExcludeMissing
                     fun currency(currency: JsonField<String>) = apply { this.currency = currency }
 
+                    /**
+                     * A transient ID that can be used to reference this price when adding
+                     * adjustments in the same API call.
+                     */
+                    fun referenceId(referenceId: String) = referenceId(JsonField.of(referenceId))
+
+                    /**
+                     * A transient ID that can be used to reference this price when adding
+                     * adjustments in the same API call.
+                     */
+                    @JsonProperty("reference_id")
+                    @ExcludeMissing
+                    fun referenceId(referenceId: JsonField<String>) = apply {
+                        this.referenceId = referenceId
+                    }
+
                     fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                         this.additionalProperties.clear()
                         this.additionalProperties.putAll(additionalProperties)
@@ -9098,6 +9272,7 @@ constructor(
                             modelType,
                             tieredBpsConfig,
                             currency,
+                            referenceId,
                             additionalProperties.toUnmodifiable(),
                         )
                 }
@@ -10011,6 +10186,7 @@ constructor(
                 private val modelType: JsonField<ModelType>,
                 private val bpsConfig: JsonField<BpsConfig>,
                 private val currency: JsonField<String>,
+                private val referenceId: JsonField<String>,
                 private val additionalProperties: Map<String, JsonValue>,
             ) {
 
@@ -10086,6 +10262,12 @@ constructor(
                  * price is billed.
                  */
                 fun currency(): String? = currency.getNullable("currency")
+
+                /**
+                 * A transient ID that can be used to reference this price when adding adjustments
+                 * in the same API call.
+                 */
+                fun referenceId(): String? = referenceId.getNullable("reference_id")
 
                 /**
                  * User-specified key/value pairs for the resource. Individual keys can be removed
@@ -10168,6 +10350,12 @@ constructor(
                  */
                 @JsonProperty("currency") @ExcludeMissing fun _currency() = currency
 
+                /**
+                 * A transient ID that can be used to reference this price when adding adjustments
+                 * in the same API call.
+                 */
+                @JsonProperty("reference_id") @ExcludeMissing fun _referenceId() = referenceId
+
                 @JsonAnyGetter
                 @ExcludeMissing
                 fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
@@ -10189,6 +10377,7 @@ constructor(
                         modelType()
                         bpsConfig().validate()
                         currency()
+                        referenceId()
                         validated = true
                     }
                 }
@@ -10216,6 +10405,7 @@ constructor(
                         this.modelType == other.modelType &&
                         this.bpsConfig == other.bpsConfig &&
                         this.currency == other.currency &&
+                        this.referenceId == other.referenceId &&
                         this.additionalProperties == other.additionalProperties
                 }
 
@@ -10238,6 +10428,7 @@ constructor(
                                 modelType,
                                 bpsConfig,
                                 currency,
+                                referenceId,
                                 additionalProperties,
                             )
                     }
@@ -10245,7 +10436,7 @@ constructor(
                 }
 
                 override fun toString() =
-                    "NewSubscriptionBpsPrice{metadata=$metadata, externalPriceId=$externalPriceId, name=$name, billableMetricId=$billableMetricId, itemId=$itemId, billedInAdvance=$billedInAdvance, fixedPriceQuantity=$fixedPriceQuantity, invoiceGroupingKey=$invoiceGroupingKey, cadence=$cadence, billingCycleConfiguration=$billingCycleConfiguration, invoicingCycleConfiguration=$invoicingCycleConfiguration, conversionRate=$conversionRate, modelType=$modelType, bpsConfig=$bpsConfig, currency=$currency, additionalProperties=$additionalProperties}"
+                    "NewSubscriptionBpsPrice{metadata=$metadata, externalPriceId=$externalPriceId, name=$name, billableMetricId=$billableMetricId, itemId=$itemId, billedInAdvance=$billedInAdvance, fixedPriceQuantity=$fixedPriceQuantity, invoiceGroupingKey=$invoiceGroupingKey, cadence=$cadence, billingCycleConfiguration=$billingCycleConfiguration, invoicingCycleConfiguration=$invoicingCycleConfiguration, conversionRate=$conversionRate, modelType=$modelType, bpsConfig=$bpsConfig, currency=$currency, referenceId=$referenceId, additionalProperties=$additionalProperties}"
 
                 companion object {
 
@@ -10272,6 +10463,7 @@ constructor(
                     private var modelType: JsonField<ModelType> = JsonMissing.of()
                     private var bpsConfig: JsonField<BpsConfig> = JsonMissing.of()
                     private var currency: JsonField<String> = JsonMissing.of()
+                    private var referenceId: JsonField<String> = JsonMissing.of()
                     private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
                     internal fun from(newSubscriptionBpsPrice: NewSubscriptionBpsPrice) = apply {
@@ -10292,6 +10484,7 @@ constructor(
                         this.modelType = newSubscriptionBpsPrice.modelType
                         this.bpsConfig = newSubscriptionBpsPrice.bpsConfig
                         this.currency = newSubscriptionBpsPrice.currency
+                        this.referenceId = newSubscriptionBpsPrice.referenceId
                         additionalProperties(newSubscriptionBpsPrice.additionalProperties)
                     }
 
@@ -10489,6 +10682,22 @@ constructor(
                     @ExcludeMissing
                     fun currency(currency: JsonField<String>) = apply { this.currency = currency }
 
+                    /**
+                     * A transient ID that can be used to reference this price when adding
+                     * adjustments in the same API call.
+                     */
+                    fun referenceId(referenceId: String) = referenceId(JsonField.of(referenceId))
+
+                    /**
+                     * A transient ID that can be used to reference this price when adding
+                     * adjustments in the same API call.
+                     */
+                    @JsonProperty("reference_id")
+                    @ExcludeMissing
+                    fun referenceId(referenceId: JsonField<String>) = apply {
+                        this.referenceId = referenceId
+                    }
+
                     fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                         this.additionalProperties.clear()
                         this.additionalProperties.putAll(additionalProperties)
@@ -10521,6 +10730,7 @@ constructor(
                             modelType,
                             bpsConfig,
                             currency,
+                            referenceId,
                             additionalProperties.toUnmodifiable(),
                         )
                 }
@@ -11271,6 +11481,7 @@ constructor(
                 private val modelType: JsonField<ModelType>,
                 private val bulkBpsConfig: JsonField<BulkBpsConfig>,
                 private val currency: JsonField<String>,
+                private val referenceId: JsonField<String>,
                 private val additionalProperties: Map<String, JsonValue>,
             ) {
 
@@ -11346,6 +11557,12 @@ constructor(
                  * price is billed.
                  */
                 fun currency(): String? = currency.getNullable("currency")
+
+                /**
+                 * A transient ID that can be used to reference this price when adding adjustments
+                 * in the same API call.
+                 */
+                fun referenceId(): String? = referenceId.getNullable("reference_id")
 
                 /**
                  * User-specified key/value pairs for the resource. Individual keys can be removed
@@ -11430,6 +11647,12 @@ constructor(
                  */
                 @JsonProperty("currency") @ExcludeMissing fun _currency() = currency
 
+                /**
+                 * A transient ID that can be used to reference this price when adding adjustments
+                 * in the same API call.
+                 */
+                @JsonProperty("reference_id") @ExcludeMissing fun _referenceId() = referenceId
+
                 @JsonAnyGetter
                 @ExcludeMissing
                 fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
@@ -11451,6 +11674,7 @@ constructor(
                         modelType()
                         bulkBpsConfig().validate()
                         currency()
+                        referenceId()
                         validated = true
                     }
                 }
@@ -11478,6 +11702,7 @@ constructor(
                         this.modelType == other.modelType &&
                         this.bulkBpsConfig == other.bulkBpsConfig &&
                         this.currency == other.currency &&
+                        this.referenceId == other.referenceId &&
                         this.additionalProperties == other.additionalProperties
                 }
 
@@ -11500,6 +11725,7 @@ constructor(
                                 modelType,
                                 bulkBpsConfig,
                                 currency,
+                                referenceId,
                                 additionalProperties,
                             )
                     }
@@ -11507,7 +11733,7 @@ constructor(
                 }
 
                 override fun toString() =
-                    "NewSubscriptionBulkBpsPrice{metadata=$metadata, externalPriceId=$externalPriceId, name=$name, billableMetricId=$billableMetricId, itemId=$itemId, billedInAdvance=$billedInAdvance, fixedPriceQuantity=$fixedPriceQuantity, invoiceGroupingKey=$invoiceGroupingKey, cadence=$cadence, billingCycleConfiguration=$billingCycleConfiguration, invoicingCycleConfiguration=$invoicingCycleConfiguration, conversionRate=$conversionRate, modelType=$modelType, bulkBpsConfig=$bulkBpsConfig, currency=$currency, additionalProperties=$additionalProperties}"
+                    "NewSubscriptionBulkBpsPrice{metadata=$metadata, externalPriceId=$externalPriceId, name=$name, billableMetricId=$billableMetricId, itemId=$itemId, billedInAdvance=$billedInAdvance, fixedPriceQuantity=$fixedPriceQuantity, invoiceGroupingKey=$invoiceGroupingKey, cadence=$cadence, billingCycleConfiguration=$billingCycleConfiguration, invoicingCycleConfiguration=$invoicingCycleConfiguration, conversionRate=$conversionRate, modelType=$modelType, bulkBpsConfig=$bulkBpsConfig, currency=$currency, referenceId=$referenceId, additionalProperties=$additionalProperties}"
 
                 companion object {
 
@@ -11534,6 +11760,7 @@ constructor(
                     private var modelType: JsonField<ModelType> = JsonMissing.of()
                     private var bulkBpsConfig: JsonField<BulkBpsConfig> = JsonMissing.of()
                     private var currency: JsonField<String> = JsonMissing.of()
+                    private var referenceId: JsonField<String> = JsonMissing.of()
                     private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
                     internal fun from(newSubscriptionBulkBpsPrice: NewSubscriptionBulkBpsPrice) =
@@ -11555,6 +11782,7 @@ constructor(
                             this.modelType = newSubscriptionBulkBpsPrice.modelType
                             this.bulkBpsConfig = newSubscriptionBulkBpsPrice.bulkBpsConfig
                             this.currency = newSubscriptionBulkBpsPrice.currency
+                            this.referenceId = newSubscriptionBulkBpsPrice.referenceId
                             additionalProperties(newSubscriptionBulkBpsPrice.additionalProperties)
                         }
 
@@ -11753,6 +11981,22 @@ constructor(
                     @ExcludeMissing
                     fun currency(currency: JsonField<String>) = apply { this.currency = currency }
 
+                    /**
+                     * A transient ID that can be used to reference this price when adding
+                     * adjustments in the same API call.
+                     */
+                    fun referenceId(referenceId: String) = referenceId(JsonField.of(referenceId))
+
+                    /**
+                     * A transient ID that can be used to reference this price when adding
+                     * adjustments in the same API call.
+                     */
+                    @JsonProperty("reference_id")
+                    @ExcludeMissing
+                    fun referenceId(referenceId: JsonField<String>) = apply {
+                        this.referenceId = referenceId
+                    }
+
                     fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                         this.additionalProperties.clear()
                         this.additionalProperties.putAll(additionalProperties)
@@ -11785,6 +12029,7 @@ constructor(
                             modelType,
                             bulkBpsConfig,
                             currency,
+                            referenceId,
                             additionalProperties.toUnmodifiable(),
                         )
                 }
@@ -12672,6 +12917,7 @@ constructor(
                 private val modelType: JsonField<ModelType>,
                 private val bulkConfig: JsonField<BulkConfig>,
                 private val currency: JsonField<String>,
+                private val referenceId: JsonField<String>,
                 private val additionalProperties: Map<String, JsonValue>,
             ) {
 
@@ -12747,6 +12993,12 @@ constructor(
                  * price is billed.
                  */
                 fun currency(): String? = currency.getNullable("currency")
+
+                /**
+                 * A transient ID that can be used to reference this price when adding adjustments
+                 * in the same API call.
+                 */
+                fun referenceId(): String? = referenceId.getNullable("reference_id")
 
                 /**
                  * User-specified key/value pairs for the resource. Individual keys can be removed
@@ -12829,6 +13081,12 @@ constructor(
                  */
                 @JsonProperty("currency") @ExcludeMissing fun _currency() = currency
 
+                /**
+                 * A transient ID that can be used to reference this price when adding adjustments
+                 * in the same API call.
+                 */
+                @JsonProperty("reference_id") @ExcludeMissing fun _referenceId() = referenceId
+
                 @JsonAnyGetter
                 @ExcludeMissing
                 fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
@@ -12850,6 +13108,7 @@ constructor(
                         modelType()
                         bulkConfig().validate()
                         currency()
+                        referenceId()
                         validated = true
                     }
                 }
@@ -12877,6 +13136,7 @@ constructor(
                         this.modelType == other.modelType &&
                         this.bulkConfig == other.bulkConfig &&
                         this.currency == other.currency &&
+                        this.referenceId == other.referenceId &&
                         this.additionalProperties == other.additionalProperties
                 }
 
@@ -12899,6 +13159,7 @@ constructor(
                                 modelType,
                                 bulkConfig,
                                 currency,
+                                referenceId,
                                 additionalProperties,
                             )
                     }
@@ -12906,7 +13167,7 @@ constructor(
                 }
 
                 override fun toString() =
-                    "NewSubscriptionBulkPrice{metadata=$metadata, externalPriceId=$externalPriceId, name=$name, billableMetricId=$billableMetricId, itemId=$itemId, billedInAdvance=$billedInAdvance, fixedPriceQuantity=$fixedPriceQuantity, invoiceGroupingKey=$invoiceGroupingKey, cadence=$cadence, billingCycleConfiguration=$billingCycleConfiguration, invoicingCycleConfiguration=$invoicingCycleConfiguration, conversionRate=$conversionRate, modelType=$modelType, bulkConfig=$bulkConfig, currency=$currency, additionalProperties=$additionalProperties}"
+                    "NewSubscriptionBulkPrice{metadata=$metadata, externalPriceId=$externalPriceId, name=$name, billableMetricId=$billableMetricId, itemId=$itemId, billedInAdvance=$billedInAdvance, fixedPriceQuantity=$fixedPriceQuantity, invoiceGroupingKey=$invoiceGroupingKey, cadence=$cadence, billingCycleConfiguration=$billingCycleConfiguration, invoicingCycleConfiguration=$invoicingCycleConfiguration, conversionRate=$conversionRate, modelType=$modelType, bulkConfig=$bulkConfig, currency=$currency, referenceId=$referenceId, additionalProperties=$additionalProperties}"
 
                 companion object {
 
@@ -12933,6 +13194,7 @@ constructor(
                     private var modelType: JsonField<ModelType> = JsonMissing.of()
                     private var bulkConfig: JsonField<BulkConfig> = JsonMissing.of()
                     private var currency: JsonField<String> = JsonMissing.of()
+                    private var referenceId: JsonField<String> = JsonMissing.of()
                     private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
                     internal fun from(newSubscriptionBulkPrice: NewSubscriptionBulkPrice) = apply {
@@ -12953,6 +13215,7 @@ constructor(
                         this.modelType = newSubscriptionBulkPrice.modelType
                         this.bulkConfig = newSubscriptionBulkPrice.bulkConfig
                         this.currency = newSubscriptionBulkPrice.currency
+                        this.referenceId = newSubscriptionBulkPrice.referenceId
                         additionalProperties(newSubscriptionBulkPrice.additionalProperties)
                     }
 
@@ -13150,6 +13413,22 @@ constructor(
                     @ExcludeMissing
                     fun currency(currency: JsonField<String>) = apply { this.currency = currency }
 
+                    /**
+                     * A transient ID that can be used to reference this price when adding
+                     * adjustments in the same API call.
+                     */
+                    fun referenceId(referenceId: String) = referenceId(JsonField.of(referenceId))
+
+                    /**
+                     * A transient ID that can be used to reference this price when adding
+                     * adjustments in the same API call.
+                     */
+                    @JsonProperty("reference_id")
+                    @ExcludeMissing
+                    fun referenceId(referenceId: JsonField<String>) = apply {
+                        this.referenceId = referenceId
+                    }
+
                     fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                         this.additionalProperties.clear()
                         this.additionalProperties.putAll(additionalProperties)
@@ -13182,6 +13461,7 @@ constructor(
                             modelType,
                             bulkConfig,
                             currency,
+                            referenceId,
                             additionalProperties.toUnmodifiable(),
                         )
                 }
@@ -14033,6 +14313,7 @@ constructor(
                 private val modelType: JsonField<ModelType>,
                 private val thresholdTotalAmountConfig: JsonField<ThresholdTotalAmountConfig>,
                 private val currency: JsonField<String>,
+                private val referenceId: JsonField<String>,
                 private val additionalProperties: Map<String, JsonValue>,
             ) {
 
@@ -14109,6 +14390,12 @@ constructor(
                  * price is billed.
                  */
                 fun currency(): String? = currency.getNullable("currency")
+
+                /**
+                 * A transient ID that can be used to reference this price when adding adjustments
+                 * in the same API call.
+                 */
+                fun referenceId(): String? = referenceId.getNullable("reference_id")
 
                 /**
                  * User-specified key/value pairs for the resource. Individual keys can be removed
@@ -14193,6 +14480,12 @@ constructor(
                  */
                 @JsonProperty("currency") @ExcludeMissing fun _currency() = currency
 
+                /**
+                 * A transient ID that can be used to reference this price when adding adjustments
+                 * in the same API call.
+                 */
+                @JsonProperty("reference_id") @ExcludeMissing fun _referenceId() = referenceId
+
                 @JsonAnyGetter
                 @ExcludeMissing
                 fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
@@ -14214,6 +14507,7 @@ constructor(
                         modelType()
                         thresholdTotalAmountConfig().validate()
                         currency()
+                        referenceId()
                         validated = true
                     }
                 }
@@ -14241,6 +14535,7 @@ constructor(
                         this.modelType == other.modelType &&
                         this.thresholdTotalAmountConfig == other.thresholdTotalAmountConfig &&
                         this.currency == other.currency &&
+                        this.referenceId == other.referenceId &&
                         this.additionalProperties == other.additionalProperties
                 }
 
@@ -14263,6 +14558,7 @@ constructor(
                                 modelType,
                                 thresholdTotalAmountConfig,
                                 currency,
+                                referenceId,
                                 additionalProperties,
                             )
                     }
@@ -14270,7 +14566,7 @@ constructor(
                 }
 
                 override fun toString() =
-                    "NewSubscriptionThresholdTotalAmountPrice{metadata=$metadata, externalPriceId=$externalPriceId, name=$name, billableMetricId=$billableMetricId, itemId=$itemId, billedInAdvance=$billedInAdvance, fixedPriceQuantity=$fixedPriceQuantity, invoiceGroupingKey=$invoiceGroupingKey, cadence=$cadence, billingCycleConfiguration=$billingCycleConfiguration, invoicingCycleConfiguration=$invoicingCycleConfiguration, conversionRate=$conversionRate, modelType=$modelType, thresholdTotalAmountConfig=$thresholdTotalAmountConfig, currency=$currency, additionalProperties=$additionalProperties}"
+                    "NewSubscriptionThresholdTotalAmountPrice{metadata=$metadata, externalPriceId=$externalPriceId, name=$name, billableMetricId=$billableMetricId, itemId=$itemId, billedInAdvance=$billedInAdvance, fixedPriceQuantity=$fixedPriceQuantity, invoiceGroupingKey=$invoiceGroupingKey, cadence=$cadence, billingCycleConfiguration=$billingCycleConfiguration, invoicingCycleConfiguration=$invoicingCycleConfiguration, conversionRate=$conversionRate, modelType=$modelType, thresholdTotalAmountConfig=$thresholdTotalAmountConfig, currency=$currency, referenceId=$referenceId, additionalProperties=$additionalProperties}"
 
                 companion object {
 
@@ -14298,6 +14594,7 @@ constructor(
                     private var thresholdTotalAmountConfig: JsonField<ThresholdTotalAmountConfig> =
                         JsonMissing.of()
                     private var currency: JsonField<String> = JsonMissing.of()
+                    private var referenceId: JsonField<String> = JsonMissing.of()
                     private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
                     internal fun from(
@@ -14328,6 +14625,7 @@ constructor(
                         this.thresholdTotalAmountConfig =
                             newSubscriptionThresholdTotalAmountPrice.thresholdTotalAmountConfig
                         this.currency = newSubscriptionThresholdTotalAmountPrice.currency
+                        this.referenceId = newSubscriptionThresholdTotalAmountPrice.referenceId
                         additionalProperties(
                             newSubscriptionThresholdTotalAmountPrice.additionalProperties
                         )
@@ -14529,6 +14827,22 @@ constructor(
                     @ExcludeMissing
                     fun currency(currency: JsonField<String>) = apply { this.currency = currency }
 
+                    /**
+                     * A transient ID that can be used to reference this price when adding
+                     * adjustments in the same API call.
+                     */
+                    fun referenceId(referenceId: String) = referenceId(JsonField.of(referenceId))
+
+                    /**
+                     * A transient ID that can be used to reference this price when adding
+                     * adjustments in the same API call.
+                     */
+                    @JsonProperty("reference_id")
+                    @ExcludeMissing
+                    fun referenceId(referenceId: JsonField<String>) = apply {
+                        this.referenceId = referenceId
+                    }
+
                     fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                         this.additionalProperties.clear()
                         this.additionalProperties.putAll(additionalProperties)
@@ -14561,6 +14875,7 @@ constructor(
                             modelType,
                             thresholdTotalAmountConfig,
                             currency,
+                            referenceId,
                             additionalProperties.toUnmodifiable(),
                         )
                 }
@@ -15263,6 +15578,7 @@ constructor(
                 private val modelType: JsonField<ModelType>,
                 private val tieredPackageConfig: JsonField<TieredPackageConfig>,
                 private val currency: JsonField<String>,
+                private val referenceId: JsonField<String>,
                 private val additionalProperties: Map<String, JsonValue>,
             ) {
 
@@ -15339,6 +15655,12 @@ constructor(
                  * price is billed.
                  */
                 fun currency(): String? = currency.getNullable("currency")
+
+                /**
+                 * A transient ID that can be used to reference this price when adding adjustments
+                 * in the same API call.
+                 */
+                fun referenceId(): String? = referenceId.getNullable("reference_id")
 
                 /**
                  * User-specified key/value pairs for the resource. Individual keys can be removed
@@ -15423,6 +15745,12 @@ constructor(
                  */
                 @JsonProperty("currency") @ExcludeMissing fun _currency() = currency
 
+                /**
+                 * A transient ID that can be used to reference this price when adding adjustments
+                 * in the same API call.
+                 */
+                @JsonProperty("reference_id") @ExcludeMissing fun _referenceId() = referenceId
+
                 @JsonAnyGetter
                 @ExcludeMissing
                 fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
@@ -15444,6 +15772,7 @@ constructor(
                         modelType()
                         tieredPackageConfig().validate()
                         currency()
+                        referenceId()
                         validated = true
                     }
                 }
@@ -15471,6 +15800,7 @@ constructor(
                         this.modelType == other.modelType &&
                         this.tieredPackageConfig == other.tieredPackageConfig &&
                         this.currency == other.currency &&
+                        this.referenceId == other.referenceId &&
                         this.additionalProperties == other.additionalProperties
                 }
 
@@ -15493,6 +15823,7 @@ constructor(
                                 modelType,
                                 tieredPackageConfig,
                                 currency,
+                                referenceId,
                                 additionalProperties,
                             )
                     }
@@ -15500,7 +15831,7 @@ constructor(
                 }
 
                 override fun toString() =
-                    "NewSubscriptionTieredPackagePrice{metadata=$metadata, externalPriceId=$externalPriceId, name=$name, billableMetricId=$billableMetricId, itemId=$itemId, billedInAdvance=$billedInAdvance, fixedPriceQuantity=$fixedPriceQuantity, invoiceGroupingKey=$invoiceGroupingKey, cadence=$cadence, billingCycleConfiguration=$billingCycleConfiguration, invoicingCycleConfiguration=$invoicingCycleConfiguration, conversionRate=$conversionRate, modelType=$modelType, tieredPackageConfig=$tieredPackageConfig, currency=$currency, additionalProperties=$additionalProperties}"
+                    "NewSubscriptionTieredPackagePrice{metadata=$metadata, externalPriceId=$externalPriceId, name=$name, billableMetricId=$billableMetricId, itemId=$itemId, billedInAdvance=$billedInAdvance, fixedPriceQuantity=$fixedPriceQuantity, invoiceGroupingKey=$invoiceGroupingKey, cadence=$cadence, billingCycleConfiguration=$billingCycleConfiguration, invoicingCycleConfiguration=$invoicingCycleConfiguration, conversionRate=$conversionRate, modelType=$modelType, tieredPackageConfig=$tieredPackageConfig, currency=$currency, referenceId=$referenceId, additionalProperties=$additionalProperties}"
 
                 companion object {
 
@@ -15528,6 +15859,7 @@ constructor(
                     private var tieredPackageConfig: JsonField<TieredPackageConfig> =
                         JsonMissing.of()
                     private var currency: JsonField<String> = JsonMissing.of()
+                    private var referenceId: JsonField<String> = JsonMissing.of()
                     private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
                     internal fun from(
@@ -15553,6 +15885,7 @@ constructor(
                         this.tieredPackageConfig =
                             newSubscriptionTieredPackagePrice.tieredPackageConfig
                         this.currency = newSubscriptionTieredPackagePrice.currency
+                        this.referenceId = newSubscriptionTieredPackagePrice.referenceId
                         additionalProperties(newSubscriptionTieredPackagePrice.additionalProperties)
                     }
 
@@ -15752,6 +16085,22 @@ constructor(
                     @ExcludeMissing
                     fun currency(currency: JsonField<String>) = apply { this.currency = currency }
 
+                    /**
+                     * A transient ID that can be used to reference this price when adding
+                     * adjustments in the same API call.
+                     */
+                    fun referenceId(referenceId: String) = referenceId(JsonField.of(referenceId))
+
+                    /**
+                     * A transient ID that can be used to reference this price when adding
+                     * adjustments in the same API call.
+                     */
+                    @JsonProperty("reference_id")
+                    @ExcludeMissing
+                    fun referenceId(referenceId: JsonField<String>) = apply {
+                        this.referenceId = referenceId
+                    }
+
                     fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                         this.additionalProperties.clear()
                         this.additionalProperties.putAll(additionalProperties)
@@ -15784,6 +16133,7 @@ constructor(
                             modelType,
                             tieredPackageConfig,
                             currency,
+                            referenceId,
                             additionalProperties.toUnmodifiable(),
                         )
                 }
@@ -16482,6 +16832,7 @@ constructor(
                 private val modelType: JsonField<ModelType>,
                 private val tieredWithMinimumConfig: JsonField<TieredWithMinimumConfig>,
                 private val currency: JsonField<String>,
+                private val referenceId: JsonField<String>,
                 private val additionalProperties: Map<String, JsonValue>,
             ) {
 
@@ -16558,6 +16909,12 @@ constructor(
                  * price is billed.
                  */
                 fun currency(): String? = currency.getNullable("currency")
+
+                /**
+                 * A transient ID that can be used to reference this price when adding adjustments
+                 * in the same API call.
+                 */
+                fun referenceId(): String? = referenceId.getNullable("reference_id")
 
                 /**
                  * User-specified key/value pairs for the resource. Individual keys can be removed
@@ -16642,6 +16999,12 @@ constructor(
                  */
                 @JsonProperty("currency") @ExcludeMissing fun _currency() = currency
 
+                /**
+                 * A transient ID that can be used to reference this price when adding adjustments
+                 * in the same API call.
+                 */
+                @JsonProperty("reference_id") @ExcludeMissing fun _referenceId() = referenceId
+
                 @JsonAnyGetter
                 @ExcludeMissing
                 fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
@@ -16663,6 +17026,7 @@ constructor(
                         modelType()
                         tieredWithMinimumConfig().validate()
                         currency()
+                        referenceId()
                         validated = true
                     }
                 }
@@ -16690,6 +17054,7 @@ constructor(
                         this.modelType == other.modelType &&
                         this.tieredWithMinimumConfig == other.tieredWithMinimumConfig &&
                         this.currency == other.currency &&
+                        this.referenceId == other.referenceId &&
                         this.additionalProperties == other.additionalProperties
                 }
 
@@ -16712,6 +17077,7 @@ constructor(
                                 modelType,
                                 tieredWithMinimumConfig,
                                 currency,
+                                referenceId,
                                 additionalProperties,
                             )
                     }
@@ -16719,7 +17085,7 @@ constructor(
                 }
 
                 override fun toString() =
-                    "NewSubscriptionTieredWithMinimumPrice{metadata=$metadata, externalPriceId=$externalPriceId, name=$name, billableMetricId=$billableMetricId, itemId=$itemId, billedInAdvance=$billedInAdvance, fixedPriceQuantity=$fixedPriceQuantity, invoiceGroupingKey=$invoiceGroupingKey, cadence=$cadence, billingCycleConfiguration=$billingCycleConfiguration, invoicingCycleConfiguration=$invoicingCycleConfiguration, conversionRate=$conversionRate, modelType=$modelType, tieredWithMinimumConfig=$tieredWithMinimumConfig, currency=$currency, additionalProperties=$additionalProperties}"
+                    "NewSubscriptionTieredWithMinimumPrice{metadata=$metadata, externalPriceId=$externalPriceId, name=$name, billableMetricId=$billableMetricId, itemId=$itemId, billedInAdvance=$billedInAdvance, fixedPriceQuantity=$fixedPriceQuantity, invoiceGroupingKey=$invoiceGroupingKey, cadence=$cadence, billingCycleConfiguration=$billingCycleConfiguration, invoicingCycleConfiguration=$invoicingCycleConfiguration, conversionRate=$conversionRate, modelType=$modelType, tieredWithMinimumConfig=$tieredWithMinimumConfig, currency=$currency, referenceId=$referenceId, additionalProperties=$additionalProperties}"
 
                 companion object {
 
@@ -16747,6 +17113,7 @@ constructor(
                     private var tieredWithMinimumConfig: JsonField<TieredWithMinimumConfig> =
                         JsonMissing.of()
                     private var currency: JsonField<String> = JsonMissing.of()
+                    private var referenceId: JsonField<String> = JsonMissing.of()
                     private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
                     internal fun from(
@@ -16773,6 +17140,7 @@ constructor(
                         this.tieredWithMinimumConfig =
                             newSubscriptionTieredWithMinimumPrice.tieredWithMinimumConfig
                         this.currency = newSubscriptionTieredWithMinimumPrice.currency
+                        this.referenceId = newSubscriptionTieredWithMinimumPrice.referenceId
                         additionalProperties(
                             newSubscriptionTieredWithMinimumPrice.additionalProperties
                         )
@@ -16973,6 +17341,22 @@ constructor(
                     @ExcludeMissing
                     fun currency(currency: JsonField<String>) = apply { this.currency = currency }
 
+                    /**
+                     * A transient ID that can be used to reference this price when adding
+                     * adjustments in the same API call.
+                     */
+                    fun referenceId(referenceId: String) = referenceId(JsonField.of(referenceId))
+
+                    /**
+                     * A transient ID that can be used to reference this price when adding
+                     * adjustments in the same API call.
+                     */
+                    @JsonProperty("reference_id")
+                    @ExcludeMissing
+                    fun referenceId(referenceId: JsonField<String>) = apply {
+                        this.referenceId = referenceId
+                    }
+
                     fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                         this.additionalProperties.clear()
                         this.additionalProperties.putAll(additionalProperties)
@@ -17005,6 +17389,7 @@ constructor(
                             modelType,
                             tieredWithMinimumConfig,
                             currency,
+                            referenceId,
                             additionalProperties.toUnmodifiable(),
                         )
                 }
@@ -17704,6 +18089,7 @@ constructor(
                 private val modelType: JsonField<ModelType>,
                 private val unitWithPercentConfig: JsonField<UnitWithPercentConfig>,
                 private val currency: JsonField<String>,
+                private val referenceId: JsonField<String>,
                 private val additionalProperties: Map<String, JsonValue>,
             ) {
 
@@ -17780,6 +18166,12 @@ constructor(
                  * price is billed.
                  */
                 fun currency(): String? = currency.getNullable("currency")
+
+                /**
+                 * A transient ID that can be used to reference this price when adding adjustments
+                 * in the same API call.
+                 */
+                fun referenceId(): String? = referenceId.getNullable("reference_id")
 
                 /**
                  * User-specified key/value pairs for the resource. Individual keys can be removed
@@ -17864,6 +18256,12 @@ constructor(
                  */
                 @JsonProperty("currency") @ExcludeMissing fun _currency() = currency
 
+                /**
+                 * A transient ID that can be used to reference this price when adding adjustments
+                 * in the same API call.
+                 */
+                @JsonProperty("reference_id") @ExcludeMissing fun _referenceId() = referenceId
+
                 @JsonAnyGetter
                 @ExcludeMissing
                 fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
@@ -17885,6 +18283,7 @@ constructor(
                         modelType()
                         unitWithPercentConfig().validate()
                         currency()
+                        referenceId()
                         validated = true
                     }
                 }
@@ -17912,6 +18311,7 @@ constructor(
                         this.modelType == other.modelType &&
                         this.unitWithPercentConfig == other.unitWithPercentConfig &&
                         this.currency == other.currency &&
+                        this.referenceId == other.referenceId &&
                         this.additionalProperties == other.additionalProperties
                 }
 
@@ -17934,6 +18334,7 @@ constructor(
                                 modelType,
                                 unitWithPercentConfig,
                                 currency,
+                                referenceId,
                                 additionalProperties,
                             )
                     }
@@ -17941,7 +18342,7 @@ constructor(
                 }
 
                 override fun toString() =
-                    "NewSubscriptionUnitWithPercentPrice{metadata=$metadata, externalPriceId=$externalPriceId, name=$name, billableMetricId=$billableMetricId, itemId=$itemId, billedInAdvance=$billedInAdvance, fixedPriceQuantity=$fixedPriceQuantity, invoiceGroupingKey=$invoiceGroupingKey, cadence=$cadence, billingCycleConfiguration=$billingCycleConfiguration, invoicingCycleConfiguration=$invoicingCycleConfiguration, conversionRate=$conversionRate, modelType=$modelType, unitWithPercentConfig=$unitWithPercentConfig, currency=$currency, additionalProperties=$additionalProperties}"
+                    "NewSubscriptionUnitWithPercentPrice{metadata=$metadata, externalPriceId=$externalPriceId, name=$name, billableMetricId=$billableMetricId, itemId=$itemId, billedInAdvance=$billedInAdvance, fixedPriceQuantity=$fixedPriceQuantity, invoiceGroupingKey=$invoiceGroupingKey, cadence=$cadence, billingCycleConfiguration=$billingCycleConfiguration, invoicingCycleConfiguration=$invoicingCycleConfiguration, conversionRate=$conversionRate, modelType=$modelType, unitWithPercentConfig=$unitWithPercentConfig, currency=$currency, referenceId=$referenceId, additionalProperties=$additionalProperties}"
 
                 companion object {
 
@@ -17969,6 +18370,7 @@ constructor(
                     private var unitWithPercentConfig: JsonField<UnitWithPercentConfig> =
                         JsonMissing.of()
                     private var currency: JsonField<String> = JsonMissing.of()
+                    private var referenceId: JsonField<String> = JsonMissing.of()
                     private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
                     internal fun from(
@@ -17994,6 +18396,7 @@ constructor(
                         this.unitWithPercentConfig =
                             newSubscriptionUnitWithPercentPrice.unitWithPercentConfig
                         this.currency = newSubscriptionUnitWithPercentPrice.currency
+                        this.referenceId = newSubscriptionUnitWithPercentPrice.referenceId
                         additionalProperties(
                             newSubscriptionUnitWithPercentPrice.additionalProperties
                         )
@@ -18194,6 +18597,22 @@ constructor(
                     @ExcludeMissing
                     fun currency(currency: JsonField<String>) = apply { this.currency = currency }
 
+                    /**
+                     * A transient ID that can be used to reference this price when adding
+                     * adjustments in the same API call.
+                     */
+                    fun referenceId(referenceId: String) = referenceId(JsonField.of(referenceId))
+
+                    /**
+                     * A transient ID that can be used to reference this price when adding
+                     * adjustments in the same API call.
+                     */
+                    @JsonProperty("reference_id")
+                    @ExcludeMissing
+                    fun referenceId(referenceId: JsonField<String>) = apply {
+                        this.referenceId = referenceId
+                    }
+
                     fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                         this.additionalProperties.clear()
                         this.additionalProperties.putAll(additionalProperties)
@@ -18226,6 +18645,7 @@ constructor(
                             modelType,
                             unitWithPercentConfig,
                             currency,
+                            referenceId,
                             additionalProperties.toUnmodifiable(),
                         )
                 }
@@ -18924,6 +19344,7 @@ constructor(
                 private val modelType: JsonField<ModelType>,
                 private val packageWithAllocationConfig: JsonField<PackageWithAllocationConfig>,
                 private val currency: JsonField<String>,
+                private val referenceId: JsonField<String>,
                 private val additionalProperties: Map<String, JsonValue>,
             ) {
 
@@ -19000,6 +19421,12 @@ constructor(
                  * price is billed.
                  */
                 fun currency(): String? = currency.getNullable("currency")
+
+                /**
+                 * A transient ID that can be used to reference this price when adding adjustments
+                 * in the same API call.
+                 */
+                fun referenceId(): String? = referenceId.getNullable("reference_id")
 
                 /**
                  * User-specified key/value pairs for the resource. Individual keys can be removed
@@ -19084,6 +19511,12 @@ constructor(
                  */
                 @JsonProperty("currency") @ExcludeMissing fun _currency() = currency
 
+                /**
+                 * A transient ID that can be used to reference this price when adding adjustments
+                 * in the same API call.
+                 */
+                @JsonProperty("reference_id") @ExcludeMissing fun _referenceId() = referenceId
+
                 @JsonAnyGetter
                 @ExcludeMissing
                 fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
@@ -19105,6 +19538,7 @@ constructor(
                         modelType()
                         packageWithAllocationConfig().validate()
                         currency()
+                        referenceId()
                         validated = true
                     }
                 }
@@ -19132,6 +19566,7 @@ constructor(
                         this.modelType == other.modelType &&
                         this.packageWithAllocationConfig == other.packageWithAllocationConfig &&
                         this.currency == other.currency &&
+                        this.referenceId == other.referenceId &&
                         this.additionalProperties == other.additionalProperties
                 }
 
@@ -19154,6 +19589,7 @@ constructor(
                                 modelType,
                                 packageWithAllocationConfig,
                                 currency,
+                                referenceId,
                                 additionalProperties,
                             )
                     }
@@ -19161,7 +19597,7 @@ constructor(
                 }
 
                 override fun toString() =
-                    "NewSubscriptionPackageWithAllocationPrice{metadata=$metadata, externalPriceId=$externalPriceId, name=$name, billableMetricId=$billableMetricId, itemId=$itemId, billedInAdvance=$billedInAdvance, fixedPriceQuantity=$fixedPriceQuantity, invoiceGroupingKey=$invoiceGroupingKey, cadence=$cadence, billingCycleConfiguration=$billingCycleConfiguration, invoicingCycleConfiguration=$invoicingCycleConfiguration, conversionRate=$conversionRate, modelType=$modelType, packageWithAllocationConfig=$packageWithAllocationConfig, currency=$currency, additionalProperties=$additionalProperties}"
+                    "NewSubscriptionPackageWithAllocationPrice{metadata=$metadata, externalPriceId=$externalPriceId, name=$name, billableMetricId=$billableMetricId, itemId=$itemId, billedInAdvance=$billedInAdvance, fixedPriceQuantity=$fixedPriceQuantity, invoiceGroupingKey=$invoiceGroupingKey, cadence=$cadence, billingCycleConfiguration=$billingCycleConfiguration, invoicingCycleConfiguration=$invoicingCycleConfiguration, conversionRate=$conversionRate, modelType=$modelType, packageWithAllocationConfig=$packageWithAllocationConfig, currency=$currency, referenceId=$referenceId, additionalProperties=$additionalProperties}"
 
                 companion object {
 
@@ -19190,6 +19626,7 @@ constructor(
                         JsonField<PackageWithAllocationConfig> =
                         JsonMissing.of()
                     private var currency: JsonField<String> = JsonMissing.of()
+                    private var referenceId: JsonField<String> = JsonMissing.of()
                     private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
                     internal fun from(
@@ -19220,6 +19657,7 @@ constructor(
                         this.packageWithAllocationConfig =
                             newSubscriptionPackageWithAllocationPrice.packageWithAllocationConfig
                         this.currency = newSubscriptionPackageWithAllocationPrice.currency
+                        this.referenceId = newSubscriptionPackageWithAllocationPrice.referenceId
                         additionalProperties(
                             newSubscriptionPackageWithAllocationPrice.additionalProperties
                         )
@@ -19421,6 +19859,22 @@ constructor(
                     @ExcludeMissing
                     fun currency(currency: JsonField<String>) = apply { this.currency = currency }
 
+                    /**
+                     * A transient ID that can be used to reference this price when adding
+                     * adjustments in the same API call.
+                     */
+                    fun referenceId(referenceId: String) = referenceId(JsonField.of(referenceId))
+
+                    /**
+                     * A transient ID that can be used to reference this price when adding
+                     * adjustments in the same API call.
+                     */
+                    @JsonProperty("reference_id")
+                    @ExcludeMissing
+                    fun referenceId(referenceId: JsonField<String>) = apply {
+                        this.referenceId = referenceId
+                    }
+
                     fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                         this.additionalProperties.clear()
                         this.additionalProperties.putAll(additionalProperties)
@@ -19453,6 +19907,7 @@ constructor(
                             modelType,
                             packageWithAllocationConfig,
                             currency,
+                            referenceId,
                             additionalProperties.toUnmodifiable(),
                         )
                 }
@@ -20154,6 +20609,7 @@ constructor(
                 private val modelType: JsonField<ModelType>,
                 private val tieredWithProrationConfig: JsonField<TieredWithProrationConfig>,
                 private val currency: JsonField<String>,
+                private val referenceId: JsonField<String>,
                 private val additionalProperties: Map<String, JsonValue>,
             ) {
 
@@ -20230,6 +20686,12 @@ constructor(
                  * price is billed.
                  */
                 fun currency(): String? = currency.getNullable("currency")
+
+                /**
+                 * A transient ID that can be used to reference this price when adding adjustments
+                 * in the same API call.
+                 */
+                fun referenceId(): String? = referenceId.getNullable("reference_id")
 
                 /**
                  * User-specified key/value pairs for the resource. Individual keys can be removed
@@ -20314,6 +20776,12 @@ constructor(
                  */
                 @JsonProperty("currency") @ExcludeMissing fun _currency() = currency
 
+                /**
+                 * A transient ID that can be used to reference this price when adding adjustments
+                 * in the same API call.
+                 */
+                @JsonProperty("reference_id") @ExcludeMissing fun _referenceId() = referenceId
+
                 @JsonAnyGetter
                 @ExcludeMissing
                 fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
@@ -20335,6 +20803,7 @@ constructor(
                         modelType()
                         tieredWithProrationConfig().validate()
                         currency()
+                        referenceId()
                         validated = true
                     }
                 }
@@ -20362,6 +20831,7 @@ constructor(
                         this.modelType == other.modelType &&
                         this.tieredWithProrationConfig == other.tieredWithProrationConfig &&
                         this.currency == other.currency &&
+                        this.referenceId == other.referenceId &&
                         this.additionalProperties == other.additionalProperties
                 }
 
@@ -20384,6 +20854,7 @@ constructor(
                                 modelType,
                                 tieredWithProrationConfig,
                                 currency,
+                                referenceId,
                                 additionalProperties,
                             )
                     }
@@ -20391,7 +20862,7 @@ constructor(
                 }
 
                 override fun toString() =
-                    "NewSubscriptionTierWithProrationPrice{metadata=$metadata, externalPriceId=$externalPriceId, name=$name, billableMetricId=$billableMetricId, itemId=$itemId, billedInAdvance=$billedInAdvance, fixedPriceQuantity=$fixedPriceQuantity, invoiceGroupingKey=$invoiceGroupingKey, cadence=$cadence, billingCycleConfiguration=$billingCycleConfiguration, invoicingCycleConfiguration=$invoicingCycleConfiguration, conversionRate=$conversionRate, modelType=$modelType, tieredWithProrationConfig=$tieredWithProrationConfig, currency=$currency, additionalProperties=$additionalProperties}"
+                    "NewSubscriptionTierWithProrationPrice{metadata=$metadata, externalPriceId=$externalPriceId, name=$name, billableMetricId=$billableMetricId, itemId=$itemId, billedInAdvance=$billedInAdvance, fixedPriceQuantity=$fixedPriceQuantity, invoiceGroupingKey=$invoiceGroupingKey, cadence=$cadence, billingCycleConfiguration=$billingCycleConfiguration, invoicingCycleConfiguration=$invoicingCycleConfiguration, conversionRate=$conversionRate, modelType=$modelType, tieredWithProrationConfig=$tieredWithProrationConfig, currency=$currency, referenceId=$referenceId, additionalProperties=$additionalProperties}"
 
                 companion object {
 
@@ -20419,6 +20890,7 @@ constructor(
                     private var tieredWithProrationConfig: JsonField<TieredWithProrationConfig> =
                         JsonMissing.of()
                     private var currency: JsonField<String> = JsonMissing.of()
+                    private var referenceId: JsonField<String> = JsonMissing.of()
                     private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
                     internal fun from(
@@ -20445,6 +20917,7 @@ constructor(
                         this.tieredWithProrationConfig =
                             newSubscriptionTierWithProrationPrice.tieredWithProrationConfig
                         this.currency = newSubscriptionTierWithProrationPrice.currency
+                        this.referenceId = newSubscriptionTierWithProrationPrice.referenceId
                         additionalProperties(
                             newSubscriptionTierWithProrationPrice.additionalProperties
                         )
@@ -20646,6 +21119,22 @@ constructor(
                     @ExcludeMissing
                     fun currency(currency: JsonField<String>) = apply { this.currency = currency }
 
+                    /**
+                     * A transient ID that can be used to reference this price when adding
+                     * adjustments in the same API call.
+                     */
+                    fun referenceId(referenceId: String) = referenceId(JsonField.of(referenceId))
+
+                    /**
+                     * A transient ID that can be used to reference this price when adding
+                     * adjustments in the same API call.
+                     */
+                    @JsonProperty("reference_id")
+                    @ExcludeMissing
+                    fun referenceId(referenceId: JsonField<String>) = apply {
+                        this.referenceId = referenceId
+                    }
+
                     fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                         this.additionalProperties.clear()
                         this.additionalProperties.putAll(additionalProperties)
@@ -20678,6 +21167,7 @@ constructor(
                             modelType,
                             tieredWithProrationConfig,
                             currency,
+                            referenceId,
                             additionalProperties.toUnmodifiable(),
                         )
                 }
@@ -21377,6 +21867,7 @@ constructor(
                 private val modelType: JsonField<ModelType>,
                 private val unitWithProrationConfig: JsonField<UnitWithProrationConfig>,
                 private val currency: JsonField<String>,
+                private val referenceId: JsonField<String>,
                 private val additionalProperties: Map<String, JsonValue>,
             ) {
 
@@ -21453,6 +21944,12 @@ constructor(
                  * price is billed.
                  */
                 fun currency(): String? = currency.getNullable("currency")
+
+                /**
+                 * A transient ID that can be used to reference this price when adding adjustments
+                 * in the same API call.
+                 */
+                fun referenceId(): String? = referenceId.getNullable("reference_id")
 
                 /**
                  * User-specified key/value pairs for the resource. Individual keys can be removed
@@ -21537,6 +22034,12 @@ constructor(
                  */
                 @JsonProperty("currency") @ExcludeMissing fun _currency() = currency
 
+                /**
+                 * A transient ID that can be used to reference this price when adding adjustments
+                 * in the same API call.
+                 */
+                @JsonProperty("reference_id") @ExcludeMissing fun _referenceId() = referenceId
+
                 @JsonAnyGetter
                 @ExcludeMissing
                 fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
@@ -21558,6 +22061,7 @@ constructor(
                         modelType()
                         unitWithProrationConfig().validate()
                         currency()
+                        referenceId()
                         validated = true
                     }
                 }
@@ -21585,6 +22089,7 @@ constructor(
                         this.modelType == other.modelType &&
                         this.unitWithProrationConfig == other.unitWithProrationConfig &&
                         this.currency == other.currency &&
+                        this.referenceId == other.referenceId &&
                         this.additionalProperties == other.additionalProperties
                 }
 
@@ -21607,6 +22112,7 @@ constructor(
                                 modelType,
                                 unitWithProrationConfig,
                                 currency,
+                                referenceId,
                                 additionalProperties,
                             )
                     }
@@ -21614,7 +22120,7 @@ constructor(
                 }
 
                 override fun toString() =
-                    "NewSubscriptionUnitWithProrationPrice{metadata=$metadata, externalPriceId=$externalPriceId, name=$name, billableMetricId=$billableMetricId, itemId=$itemId, billedInAdvance=$billedInAdvance, fixedPriceQuantity=$fixedPriceQuantity, invoiceGroupingKey=$invoiceGroupingKey, cadence=$cadence, billingCycleConfiguration=$billingCycleConfiguration, invoicingCycleConfiguration=$invoicingCycleConfiguration, conversionRate=$conversionRate, modelType=$modelType, unitWithProrationConfig=$unitWithProrationConfig, currency=$currency, additionalProperties=$additionalProperties}"
+                    "NewSubscriptionUnitWithProrationPrice{metadata=$metadata, externalPriceId=$externalPriceId, name=$name, billableMetricId=$billableMetricId, itemId=$itemId, billedInAdvance=$billedInAdvance, fixedPriceQuantity=$fixedPriceQuantity, invoiceGroupingKey=$invoiceGroupingKey, cadence=$cadence, billingCycleConfiguration=$billingCycleConfiguration, invoicingCycleConfiguration=$invoicingCycleConfiguration, conversionRate=$conversionRate, modelType=$modelType, unitWithProrationConfig=$unitWithProrationConfig, currency=$currency, referenceId=$referenceId, additionalProperties=$additionalProperties}"
 
                 companion object {
 
@@ -21642,6 +22148,7 @@ constructor(
                     private var unitWithProrationConfig: JsonField<UnitWithProrationConfig> =
                         JsonMissing.of()
                     private var currency: JsonField<String> = JsonMissing.of()
+                    private var referenceId: JsonField<String> = JsonMissing.of()
                     private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
                     internal fun from(
@@ -21668,6 +22175,7 @@ constructor(
                         this.unitWithProrationConfig =
                             newSubscriptionUnitWithProrationPrice.unitWithProrationConfig
                         this.currency = newSubscriptionUnitWithProrationPrice.currency
+                        this.referenceId = newSubscriptionUnitWithProrationPrice.referenceId
                         additionalProperties(
                             newSubscriptionUnitWithProrationPrice.additionalProperties
                         )
@@ -21868,6 +22376,22 @@ constructor(
                     @ExcludeMissing
                     fun currency(currency: JsonField<String>) = apply { this.currency = currency }
 
+                    /**
+                     * A transient ID that can be used to reference this price when adding
+                     * adjustments in the same API call.
+                     */
+                    fun referenceId(referenceId: String) = referenceId(JsonField.of(referenceId))
+
+                    /**
+                     * A transient ID that can be used to reference this price when adding
+                     * adjustments in the same API call.
+                     */
+                    @JsonProperty("reference_id")
+                    @ExcludeMissing
+                    fun referenceId(referenceId: JsonField<String>) = apply {
+                        this.referenceId = referenceId
+                    }
+
                     fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                         this.additionalProperties.clear()
                         this.additionalProperties.putAll(additionalProperties)
@@ -21900,6 +22424,7 @@ constructor(
                             modelType,
                             unitWithProrationConfig,
                             currency,
+                            referenceId,
                             additionalProperties.toUnmodifiable(),
                         )
                 }
@@ -22599,6 +23124,7 @@ constructor(
                 private val modelType: JsonField<ModelType>,
                 private val groupedAllocationConfig: JsonField<GroupedAllocationConfig>,
                 private val currency: JsonField<String>,
+                private val referenceId: JsonField<String>,
                 private val additionalProperties: Map<String, JsonValue>,
             ) {
 
@@ -22675,6 +23201,12 @@ constructor(
                  * price is billed.
                  */
                 fun currency(): String? = currency.getNullable("currency")
+
+                /**
+                 * A transient ID that can be used to reference this price when adding adjustments
+                 * in the same API call.
+                 */
+                fun referenceId(): String? = referenceId.getNullable("reference_id")
 
                 /**
                  * User-specified key/value pairs for the resource. Individual keys can be removed
@@ -22759,6 +23291,12 @@ constructor(
                  */
                 @JsonProperty("currency") @ExcludeMissing fun _currency() = currency
 
+                /**
+                 * A transient ID that can be used to reference this price when adding adjustments
+                 * in the same API call.
+                 */
+                @JsonProperty("reference_id") @ExcludeMissing fun _referenceId() = referenceId
+
                 @JsonAnyGetter
                 @ExcludeMissing
                 fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
@@ -22780,6 +23318,7 @@ constructor(
                         modelType()
                         groupedAllocationConfig().validate()
                         currency()
+                        referenceId()
                         validated = true
                     }
                 }
@@ -22807,6 +23346,7 @@ constructor(
                         this.modelType == other.modelType &&
                         this.groupedAllocationConfig == other.groupedAllocationConfig &&
                         this.currency == other.currency &&
+                        this.referenceId == other.referenceId &&
                         this.additionalProperties == other.additionalProperties
                 }
 
@@ -22829,6 +23369,7 @@ constructor(
                                 modelType,
                                 groupedAllocationConfig,
                                 currency,
+                                referenceId,
                                 additionalProperties,
                             )
                     }
@@ -22836,7 +23377,7 @@ constructor(
                 }
 
                 override fun toString() =
-                    "NewSubscriptionGroupedAllocationPrice{metadata=$metadata, externalPriceId=$externalPriceId, name=$name, billableMetricId=$billableMetricId, itemId=$itemId, billedInAdvance=$billedInAdvance, fixedPriceQuantity=$fixedPriceQuantity, invoiceGroupingKey=$invoiceGroupingKey, cadence=$cadence, billingCycleConfiguration=$billingCycleConfiguration, invoicingCycleConfiguration=$invoicingCycleConfiguration, conversionRate=$conversionRate, modelType=$modelType, groupedAllocationConfig=$groupedAllocationConfig, currency=$currency, additionalProperties=$additionalProperties}"
+                    "NewSubscriptionGroupedAllocationPrice{metadata=$metadata, externalPriceId=$externalPriceId, name=$name, billableMetricId=$billableMetricId, itemId=$itemId, billedInAdvance=$billedInAdvance, fixedPriceQuantity=$fixedPriceQuantity, invoiceGroupingKey=$invoiceGroupingKey, cadence=$cadence, billingCycleConfiguration=$billingCycleConfiguration, invoicingCycleConfiguration=$invoicingCycleConfiguration, conversionRate=$conversionRate, modelType=$modelType, groupedAllocationConfig=$groupedAllocationConfig, currency=$currency, referenceId=$referenceId, additionalProperties=$additionalProperties}"
 
                 companion object {
 
@@ -22864,6 +23405,7 @@ constructor(
                     private var groupedAllocationConfig: JsonField<GroupedAllocationConfig> =
                         JsonMissing.of()
                     private var currency: JsonField<String> = JsonMissing.of()
+                    private var referenceId: JsonField<String> = JsonMissing.of()
                     private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
                     internal fun from(
@@ -22890,6 +23432,7 @@ constructor(
                         this.groupedAllocationConfig =
                             newSubscriptionGroupedAllocationPrice.groupedAllocationConfig
                         this.currency = newSubscriptionGroupedAllocationPrice.currency
+                        this.referenceId = newSubscriptionGroupedAllocationPrice.referenceId
                         additionalProperties(
                             newSubscriptionGroupedAllocationPrice.additionalProperties
                         )
@@ -23090,6 +23633,22 @@ constructor(
                     @ExcludeMissing
                     fun currency(currency: JsonField<String>) = apply { this.currency = currency }
 
+                    /**
+                     * A transient ID that can be used to reference this price when adding
+                     * adjustments in the same API call.
+                     */
+                    fun referenceId(referenceId: String) = referenceId(JsonField.of(referenceId))
+
+                    /**
+                     * A transient ID that can be used to reference this price when adding
+                     * adjustments in the same API call.
+                     */
+                    @JsonProperty("reference_id")
+                    @ExcludeMissing
+                    fun referenceId(referenceId: JsonField<String>) = apply {
+                        this.referenceId = referenceId
+                    }
+
                     fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                         this.additionalProperties.clear()
                         this.additionalProperties.putAll(additionalProperties)
@@ -23122,6 +23681,7 @@ constructor(
                             modelType,
                             groupedAllocationConfig,
                             currency,
+                            referenceId,
                             additionalProperties.toUnmodifiable(),
                         )
                 }
@@ -23824,6 +24384,7 @@ constructor(
                 private val groupedWithProratedMinimumConfig:
                     JsonField<GroupedWithProratedMinimumConfig>,
                 private val currency: JsonField<String>,
+                private val referenceId: JsonField<String>,
                 private val additionalProperties: Map<String, JsonValue>,
             ) {
 
@@ -23902,6 +24463,12 @@ constructor(
                  * price is billed.
                  */
                 fun currency(): String? = currency.getNullable("currency")
+
+                /**
+                 * A transient ID that can be used to reference this price when adding adjustments
+                 * in the same API call.
+                 */
+                fun referenceId(): String? = referenceId.getNullable("reference_id")
 
                 /**
                  * User-specified key/value pairs for the resource. Individual keys can be removed
@@ -23986,6 +24553,12 @@ constructor(
                  */
                 @JsonProperty("currency") @ExcludeMissing fun _currency() = currency
 
+                /**
+                 * A transient ID that can be used to reference this price when adding adjustments
+                 * in the same API call.
+                 */
+                @JsonProperty("reference_id") @ExcludeMissing fun _referenceId() = referenceId
+
                 @JsonAnyGetter
                 @ExcludeMissing
                 fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
@@ -24007,6 +24580,7 @@ constructor(
                         modelType()
                         groupedWithProratedMinimumConfig().validate()
                         currency()
+                        referenceId()
                         validated = true
                     }
                 }
@@ -24035,6 +24609,7 @@ constructor(
                         this.groupedWithProratedMinimumConfig ==
                             other.groupedWithProratedMinimumConfig &&
                         this.currency == other.currency &&
+                        this.referenceId == other.referenceId &&
                         this.additionalProperties == other.additionalProperties
                 }
 
@@ -24057,6 +24632,7 @@ constructor(
                                 modelType,
                                 groupedWithProratedMinimumConfig,
                                 currency,
+                                referenceId,
                                 additionalProperties,
                             )
                     }
@@ -24064,7 +24640,7 @@ constructor(
                 }
 
                 override fun toString() =
-                    "NewSubscriptionGroupedWithProratedMinimumPrice{metadata=$metadata, externalPriceId=$externalPriceId, name=$name, billableMetricId=$billableMetricId, itemId=$itemId, billedInAdvance=$billedInAdvance, fixedPriceQuantity=$fixedPriceQuantity, invoiceGroupingKey=$invoiceGroupingKey, cadence=$cadence, billingCycleConfiguration=$billingCycleConfiguration, invoicingCycleConfiguration=$invoicingCycleConfiguration, conversionRate=$conversionRate, modelType=$modelType, groupedWithProratedMinimumConfig=$groupedWithProratedMinimumConfig, currency=$currency, additionalProperties=$additionalProperties}"
+                    "NewSubscriptionGroupedWithProratedMinimumPrice{metadata=$metadata, externalPriceId=$externalPriceId, name=$name, billableMetricId=$billableMetricId, itemId=$itemId, billedInAdvance=$billedInAdvance, fixedPriceQuantity=$fixedPriceQuantity, invoiceGroupingKey=$invoiceGroupingKey, cadence=$cadence, billingCycleConfiguration=$billingCycleConfiguration, invoicingCycleConfiguration=$invoicingCycleConfiguration, conversionRate=$conversionRate, modelType=$modelType, groupedWithProratedMinimumConfig=$groupedWithProratedMinimumConfig, currency=$currency, referenceId=$referenceId, additionalProperties=$additionalProperties}"
 
                 companion object {
 
@@ -24093,6 +24669,7 @@ constructor(
                         JsonField<GroupedWithProratedMinimumConfig> =
                         JsonMissing.of()
                     private var currency: JsonField<String> = JsonMissing.of()
+                    private var referenceId: JsonField<String> = JsonMissing.of()
                     private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
                     internal fun from(
@@ -24125,6 +24702,8 @@ constructor(
                             newSubscriptionGroupedWithProratedMinimumPrice
                                 .groupedWithProratedMinimumConfig
                         this.currency = newSubscriptionGroupedWithProratedMinimumPrice.currency
+                        this.referenceId =
+                            newSubscriptionGroupedWithProratedMinimumPrice.referenceId
                         additionalProperties(
                             newSubscriptionGroupedWithProratedMinimumPrice.additionalProperties
                         )
@@ -24332,6 +24911,22 @@ constructor(
                     @ExcludeMissing
                     fun currency(currency: JsonField<String>) = apply { this.currency = currency }
 
+                    /**
+                     * A transient ID that can be used to reference this price when adding
+                     * adjustments in the same API call.
+                     */
+                    fun referenceId(referenceId: String) = referenceId(JsonField.of(referenceId))
+
+                    /**
+                     * A transient ID that can be used to reference this price when adding
+                     * adjustments in the same API call.
+                     */
+                    @JsonProperty("reference_id")
+                    @ExcludeMissing
+                    fun referenceId(referenceId: JsonField<String>) = apply {
+                        this.referenceId = referenceId
+                    }
+
                     fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                         this.additionalProperties.clear()
                         this.additionalProperties.putAll(additionalProperties)
@@ -24364,6 +24959,7 @@ constructor(
                             modelType,
                             groupedWithProratedMinimumConfig,
                             currency,
+                            referenceId,
                             additionalProperties.toUnmodifiable(),
                         )
                 }
@@ -25067,6 +25663,7 @@ constructor(
                 private val modelType: JsonField<ModelType>,
                 private val bulkWithProrationConfig: JsonField<BulkWithProrationConfig>,
                 private val currency: JsonField<String>,
+                private val referenceId: JsonField<String>,
                 private val additionalProperties: Map<String, JsonValue>,
             ) {
 
@@ -25143,6 +25740,12 @@ constructor(
                  * price is billed.
                  */
                 fun currency(): String? = currency.getNullable("currency")
+
+                /**
+                 * A transient ID that can be used to reference this price when adding adjustments
+                 * in the same API call.
+                 */
+                fun referenceId(): String? = referenceId.getNullable("reference_id")
 
                 /**
                  * User-specified key/value pairs for the resource. Individual keys can be removed
@@ -25227,6 +25830,12 @@ constructor(
                  */
                 @JsonProperty("currency") @ExcludeMissing fun _currency() = currency
 
+                /**
+                 * A transient ID that can be used to reference this price when adding adjustments
+                 * in the same API call.
+                 */
+                @JsonProperty("reference_id") @ExcludeMissing fun _referenceId() = referenceId
+
                 @JsonAnyGetter
                 @ExcludeMissing
                 fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
@@ -25248,6 +25857,7 @@ constructor(
                         modelType()
                         bulkWithProrationConfig().validate()
                         currency()
+                        referenceId()
                         validated = true
                     }
                 }
@@ -25275,6 +25885,7 @@ constructor(
                         this.modelType == other.modelType &&
                         this.bulkWithProrationConfig == other.bulkWithProrationConfig &&
                         this.currency == other.currency &&
+                        this.referenceId == other.referenceId &&
                         this.additionalProperties == other.additionalProperties
                 }
 
@@ -25297,6 +25908,7 @@ constructor(
                                 modelType,
                                 bulkWithProrationConfig,
                                 currency,
+                                referenceId,
                                 additionalProperties,
                             )
                     }
@@ -25304,7 +25916,7 @@ constructor(
                 }
 
                 override fun toString() =
-                    "NewSubscriptionBulkWithProrationPrice{metadata=$metadata, externalPriceId=$externalPriceId, name=$name, billableMetricId=$billableMetricId, itemId=$itemId, billedInAdvance=$billedInAdvance, fixedPriceQuantity=$fixedPriceQuantity, invoiceGroupingKey=$invoiceGroupingKey, cadence=$cadence, billingCycleConfiguration=$billingCycleConfiguration, invoicingCycleConfiguration=$invoicingCycleConfiguration, conversionRate=$conversionRate, modelType=$modelType, bulkWithProrationConfig=$bulkWithProrationConfig, currency=$currency, additionalProperties=$additionalProperties}"
+                    "NewSubscriptionBulkWithProrationPrice{metadata=$metadata, externalPriceId=$externalPriceId, name=$name, billableMetricId=$billableMetricId, itemId=$itemId, billedInAdvance=$billedInAdvance, fixedPriceQuantity=$fixedPriceQuantity, invoiceGroupingKey=$invoiceGroupingKey, cadence=$cadence, billingCycleConfiguration=$billingCycleConfiguration, invoicingCycleConfiguration=$invoicingCycleConfiguration, conversionRate=$conversionRate, modelType=$modelType, bulkWithProrationConfig=$bulkWithProrationConfig, currency=$currency, referenceId=$referenceId, additionalProperties=$additionalProperties}"
 
                 companion object {
 
@@ -25332,6 +25944,7 @@ constructor(
                     private var bulkWithProrationConfig: JsonField<BulkWithProrationConfig> =
                         JsonMissing.of()
                     private var currency: JsonField<String> = JsonMissing.of()
+                    private var referenceId: JsonField<String> = JsonMissing.of()
                     private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
                     internal fun from(
@@ -25358,6 +25971,7 @@ constructor(
                         this.bulkWithProrationConfig =
                             newSubscriptionBulkWithProrationPrice.bulkWithProrationConfig
                         this.currency = newSubscriptionBulkWithProrationPrice.currency
+                        this.referenceId = newSubscriptionBulkWithProrationPrice.referenceId
                         additionalProperties(
                             newSubscriptionBulkWithProrationPrice.additionalProperties
                         )
@@ -25558,6 +26172,22 @@ constructor(
                     @ExcludeMissing
                     fun currency(currency: JsonField<String>) = apply { this.currency = currency }
 
+                    /**
+                     * A transient ID that can be used to reference this price when adding
+                     * adjustments in the same API call.
+                     */
+                    fun referenceId(referenceId: String) = referenceId(JsonField.of(referenceId))
+
+                    /**
+                     * A transient ID that can be used to reference this price when adding
+                     * adjustments in the same API call.
+                     */
+                    @JsonProperty("reference_id")
+                    @ExcludeMissing
+                    fun referenceId(referenceId: JsonField<String>) = apply {
+                        this.referenceId = referenceId
+                    }
+
                     fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                         this.additionalProperties.clear()
                         this.additionalProperties.putAll(additionalProperties)
@@ -25590,6 +26220,7 @@ constructor(
                             modelType,
                             bulkWithProrationConfig,
                             currency,
+                            referenceId,
                             additionalProperties.toUnmodifiable(),
                         )
                 }
@@ -43980,15 +44611,27 @@ constructor(
     @NoAutoDetect
     class ReplacePrice
     private constructor(
+        private val priceId: String?,
+        private val externalPriceId: String?,
         private val price: Price?,
+        private val fixedPriceQuantity: Double?,
         private val replacesPriceId: String?,
         private val additionalProperties: Map<String, JsonValue>,
     ) {
 
         private var hashCode: Int = 0
 
+        /** The id of the price to add to the subscription. */
+        @JsonProperty("price_id") fun priceId(): String? = priceId
+
+        /** The external price id of the price to add to the subscription. */
+        @JsonProperty("external_price_id") fun externalPriceId(): String? = externalPriceId
+
         /** The definition of a new price to create and add to the subscription. */
         @JsonProperty("price") fun price(): Price? = price
+
+        /** The new quantity of the price, if the price is a fixed price. */
+        @JsonProperty("fixed_price_quantity") fun fixedPriceQuantity(): Double? = fixedPriceQuantity
 
         /** The id of the price on the plan to replace in the subscription. */
         @JsonProperty("replaces_price_id") fun replacesPriceId(): String? = replacesPriceId
@@ -44005,7 +44648,10 @@ constructor(
             }
 
             return other is ReplacePrice &&
+                this.priceId == other.priceId &&
+                this.externalPriceId == other.externalPriceId &&
                 this.price == other.price &&
+                this.fixedPriceQuantity == other.fixedPriceQuantity &&
                 this.replacesPriceId == other.replacesPriceId &&
                 this.additionalProperties == other.additionalProperties
         }
@@ -44014,7 +44660,10 @@ constructor(
             if (hashCode == 0) {
                 hashCode =
                     Objects.hash(
+                        priceId,
+                        externalPriceId,
                         price,
+                        fixedPriceQuantity,
                         replacesPriceId,
                         additionalProperties,
                     )
@@ -44023,7 +44672,7 @@ constructor(
         }
 
         override fun toString() =
-            "ReplacePrice{price=$price, replacesPriceId=$replacesPriceId, additionalProperties=$additionalProperties}"
+            "ReplacePrice{priceId=$priceId, externalPriceId=$externalPriceId, price=$price, fixedPriceQuantity=$fixedPriceQuantity, replacesPriceId=$replacesPriceId, additionalProperties=$additionalProperties}"
 
         companion object {
 
@@ -44032,18 +44681,40 @@ constructor(
 
         class Builder {
 
+            private var priceId: String? = null
+            private var externalPriceId: String? = null
             private var price: Price? = null
+            private var fixedPriceQuantity: Double? = null
             private var replacesPriceId: String? = null
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             internal fun from(replacePrice: ReplacePrice) = apply {
+                this.priceId = replacePrice.priceId
+                this.externalPriceId = replacePrice.externalPriceId
                 this.price = replacePrice.price
+                this.fixedPriceQuantity = replacePrice.fixedPriceQuantity
                 this.replacesPriceId = replacePrice.replacesPriceId
                 additionalProperties(replacePrice.additionalProperties)
             }
 
+            /** The id of the price to add to the subscription. */
+            @JsonProperty("price_id")
+            fun priceId(priceId: String) = apply { this.priceId = priceId }
+
+            /** The external price id of the price to add to the subscription. */
+            @JsonProperty("external_price_id")
+            fun externalPriceId(externalPriceId: String) = apply {
+                this.externalPriceId = externalPriceId
+            }
+
             /** The definition of a new price to create and add to the subscription. */
             @JsonProperty("price") fun price(price: Price) = apply { this.price = price }
+
+            /** The new quantity of the price, if the price is a fixed price. */
+            @JsonProperty("fixed_price_quantity")
+            fun fixedPriceQuantity(fixedPriceQuantity: Double) = apply {
+                this.fixedPriceQuantity = fixedPriceQuantity
+            }
 
             /** The id of the price on the plan to replace in the subscription. */
             @JsonProperty("replaces_price_id")
@@ -44067,7 +44738,10 @@ constructor(
 
             fun build(): ReplacePrice =
                 ReplacePrice(
-                    checkNotNull(price) { "`price` is required but was not set" },
+                    priceId,
+                    externalPriceId,
+                    price,
+                    fixedPriceQuantity,
                     checkNotNull(replacesPriceId) {
                         "`replacesPriceId` is required but was not set"
                     },
@@ -44901,6 +45575,7 @@ constructor(
                 private val modelType: JsonField<ModelType>,
                 private val unitConfig: JsonField<UnitConfig>,
                 private val currency: JsonField<String>,
+                private val referenceId: JsonField<String>,
                 private val additionalProperties: Map<String, JsonValue>,
             ) {
 
@@ -44976,6 +45651,12 @@ constructor(
                  * price is billed.
                  */
                 fun currency(): String? = currency.getNullable("currency")
+
+                /**
+                 * A transient ID that can be used to reference this price when adding adjustments
+                 * in the same API call.
+                 */
+                fun referenceId(): String? = referenceId.getNullable("reference_id")
 
                 /**
                  * User-specified key/value pairs for the resource. Individual keys can be removed
@@ -45058,6 +45739,12 @@ constructor(
                  */
                 @JsonProperty("currency") @ExcludeMissing fun _currency() = currency
 
+                /**
+                 * A transient ID that can be used to reference this price when adding adjustments
+                 * in the same API call.
+                 */
+                @JsonProperty("reference_id") @ExcludeMissing fun _referenceId() = referenceId
+
                 @JsonAnyGetter
                 @ExcludeMissing
                 fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
@@ -45079,6 +45766,7 @@ constructor(
                         modelType()
                         unitConfig().validate()
                         currency()
+                        referenceId()
                         validated = true
                     }
                 }
@@ -45106,6 +45794,7 @@ constructor(
                         this.modelType == other.modelType &&
                         this.unitConfig == other.unitConfig &&
                         this.currency == other.currency &&
+                        this.referenceId == other.referenceId &&
                         this.additionalProperties == other.additionalProperties
                 }
 
@@ -45128,6 +45817,7 @@ constructor(
                                 modelType,
                                 unitConfig,
                                 currency,
+                                referenceId,
                                 additionalProperties,
                             )
                     }
@@ -45135,7 +45825,7 @@ constructor(
                 }
 
                 override fun toString() =
-                    "NewSubscriptionUnitPrice{metadata=$metadata, externalPriceId=$externalPriceId, name=$name, billableMetricId=$billableMetricId, itemId=$itemId, billedInAdvance=$billedInAdvance, fixedPriceQuantity=$fixedPriceQuantity, invoiceGroupingKey=$invoiceGroupingKey, cadence=$cadence, billingCycleConfiguration=$billingCycleConfiguration, invoicingCycleConfiguration=$invoicingCycleConfiguration, conversionRate=$conversionRate, modelType=$modelType, unitConfig=$unitConfig, currency=$currency, additionalProperties=$additionalProperties}"
+                    "NewSubscriptionUnitPrice{metadata=$metadata, externalPriceId=$externalPriceId, name=$name, billableMetricId=$billableMetricId, itemId=$itemId, billedInAdvance=$billedInAdvance, fixedPriceQuantity=$fixedPriceQuantity, invoiceGroupingKey=$invoiceGroupingKey, cadence=$cadence, billingCycleConfiguration=$billingCycleConfiguration, invoicingCycleConfiguration=$invoicingCycleConfiguration, conversionRate=$conversionRate, modelType=$modelType, unitConfig=$unitConfig, currency=$currency, referenceId=$referenceId, additionalProperties=$additionalProperties}"
 
                 companion object {
 
@@ -45162,6 +45852,7 @@ constructor(
                     private var modelType: JsonField<ModelType> = JsonMissing.of()
                     private var unitConfig: JsonField<UnitConfig> = JsonMissing.of()
                     private var currency: JsonField<String> = JsonMissing.of()
+                    private var referenceId: JsonField<String> = JsonMissing.of()
                     private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
                     internal fun from(newSubscriptionUnitPrice: NewSubscriptionUnitPrice) = apply {
@@ -45182,6 +45873,7 @@ constructor(
                         this.modelType = newSubscriptionUnitPrice.modelType
                         this.unitConfig = newSubscriptionUnitPrice.unitConfig
                         this.currency = newSubscriptionUnitPrice.currency
+                        this.referenceId = newSubscriptionUnitPrice.referenceId
                         additionalProperties(newSubscriptionUnitPrice.additionalProperties)
                     }
 
@@ -45379,6 +46071,22 @@ constructor(
                     @ExcludeMissing
                     fun currency(currency: JsonField<String>) = apply { this.currency = currency }
 
+                    /**
+                     * A transient ID that can be used to reference this price when adding
+                     * adjustments in the same API call.
+                     */
+                    fun referenceId(referenceId: String) = referenceId(JsonField.of(referenceId))
+
+                    /**
+                     * A transient ID that can be used to reference this price when adding
+                     * adjustments in the same API call.
+                     */
+                    @JsonProperty("reference_id")
+                    @ExcludeMissing
+                    fun referenceId(referenceId: JsonField<String>) = apply {
+                        this.referenceId = referenceId
+                    }
+
                     fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                         this.additionalProperties.clear()
                         this.additionalProperties.putAll(additionalProperties)
@@ -45411,6 +46119,7 @@ constructor(
                             modelType,
                             unitConfig,
                             currency,
+                            referenceId,
                             additionalProperties.toUnmodifiable(),
                         )
                 }
@@ -46130,6 +46839,7 @@ constructor(
                 private val modelType: JsonField<ModelType>,
                 private val packageConfig: JsonField<PackageConfig>,
                 private val currency: JsonField<String>,
+                private val referenceId: JsonField<String>,
                 private val additionalProperties: Map<String, JsonValue>,
             ) {
 
@@ -46205,6 +46915,12 @@ constructor(
                  * price is billed.
                  */
                 fun currency(): String? = currency.getNullable("currency")
+
+                /**
+                 * A transient ID that can be used to reference this price when adding adjustments
+                 * in the same API call.
+                 */
+                fun referenceId(): String? = referenceId.getNullable("reference_id")
 
                 /**
                  * User-specified key/value pairs for the resource. Individual keys can be removed
@@ -46287,6 +47003,12 @@ constructor(
                  */
                 @JsonProperty("currency") @ExcludeMissing fun _currency() = currency
 
+                /**
+                 * A transient ID that can be used to reference this price when adding adjustments
+                 * in the same API call.
+                 */
+                @JsonProperty("reference_id") @ExcludeMissing fun _referenceId() = referenceId
+
                 @JsonAnyGetter
                 @ExcludeMissing
                 fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
@@ -46308,6 +47030,7 @@ constructor(
                         modelType()
                         packageConfig().validate()
                         currency()
+                        referenceId()
                         validated = true
                     }
                 }
@@ -46335,6 +47058,7 @@ constructor(
                         this.modelType == other.modelType &&
                         this.packageConfig == other.packageConfig &&
                         this.currency == other.currency &&
+                        this.referenceId == other.referenceId &&
                         this.additionalProperties == other.additionalProperties
                 }
 
@@ -46357,6 +47081,7 @@ constructor(
                                 modelType,
                                 packageConfig,
                                 currency,
+                                referenceId,
                                 additionalProperties,
                             )
                     }
@@ -46364,7 +47089,7 @@ constructor(
                 }
 
                 override fun toString() =
-                    "NewSubscriptionPackagePrice{metadata=$metadata, externalPriceId=$externalPriceId, name=$name, billableMetricId=$billableMetricId, itemId=$itemId, billedInAdvance=$billedInAdvance, fixedPriceQuantity=$fixedPriceQuantity, invoiceGroupingKey=$invoiceGroupingKey, cadence=$cadence, billingCycleConfiguration=$billingCycleConfiguration, invoicingCycleConfiguration=$invoicingCycleConfiguration, conversionRate=$conversionRate, modelType=$modelType, packageConfig=$packageConfig, currency=$currency, additionalProperties=$additionalProperties}"
+                    "NewSubscriptionPackagePrice{metadata=$metadata, externalPriceId=$externalPriceId, name=$name, billableMetricId=$billableMetricId, itemId=$itemId, billedInAdvance=$billedInAdvance, fixedPriceQuantity=$fixedPriceQuantity, invoiceGroupingKey=$invoiceGroupingKey, cadence=$cadence, billingCycleConfiguration=$billingCycleConfiguration, invoicingCycleConfiguration=$invoicingCycleConfiguration, conversionRate=$conversionRate, modelType=$modelType, packageConfig=$packageConfig, currency=$currency, referenceId=$referenceId, additionalProperties=$additionalProperties}"
 
                 companion object {
 
@@ -46391,6 +47116,7 @@ constructor(
                     private var modelType: JsonField<ModelType> = JsonMissing.of()
                     private var packageConfig: JsonField<PackageConfig> = JsonMissing.of()
                     private var currency: JsonField<String> = JsonMissing.of()
+                    private var referenceId: JsonField<String> = JsonMissing.of()
                     private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
                     internal fun from(newSubscriptionPackagePrice: NewSubscriptionPackagePrice) =
@@ -46412,6 +47138,7 @@ constructor(
                             this.modelType = newSubscriptionPackagePrice.modelType
                             this.packageConfig = newSubscriptionPackagePrice.packageConfig
                             this.currency = newSubscriptionPackagePrice.currency
+                            this.referenceId = newSubscriptionPackagePrice.referenceId
                             additionalProperties(newSubscriptionPackagePrice.additionalProperties)
                         }
 
@@ -46610,6 +47337,22 @@ constructor(
                     @ExcludeMissing
                     fun currency(currency: JsonField<String>) = apply { this.currency = currency }
 
+                    /**
+                     * A transient ID that can be used to reference this price when adding
+                     * adjustments in the same API call.
+                     */
+                    fun referenceId(referenceId: String) = referenceId(JsonField.of(referenceId))
+
+                    /**
+                     * A transient ID that can be used to reference this price when adding
+                     * adjustments in the same API call.
+                     */
+                    @JsonProperty("reference_id")
+                    @ExcludeMissing
+                    fun referenceId(referenceId: JsonField<String>) = apply {
+                        this.referenceId = referenceId
+                    }
+
                     fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                         this.additionalProperties.clear()
                         this.additionalProperties.putAll(additionalProperties)
@@ -46642,6 +47385,7 @@ constructor(
                             modelType,
                             packageConfig,
                             currency,
+                            referenceId,
                             additionalProperties.toUnmodifiable(),
                         )
                 }
@@ -47406,6 +48150,7 @@ constructor(
                 private val modelType: JsonField<ModelType>,
                 private val matrixConfig: JsonField<MatrixConfig>,
                 private val currency: JsonField<String>,
+                private val referenceId: JsonField<String>,
                 private val additionalProperties: Map<String, JsonValue>,
             ) {
 
@@ -47481,6 +48226,12 @@ constructor(
                  * price is billed.
                  */
                 fun currency(): String? = currency.getNullable("currency")
+
+                /**
+                 * A transient ID that can be used to reference this price when adding adjustments
+                 * in the same API call.
+                 */
+                fun referenceId(): String? = referenceId.getNullable("reference_id")
 
                 /**
                  * User-specified key/value pairs for the resource. Individual keys can be removed
@@ -47563,6 +48314,12 @@ constructor(
                  */
                 @JsonProperty("currency") @ExcludeMissing fun _currency() = currency
 
+                /**
+                 * A transient ID that can be used to reference this price when adding adjustments
+                 * in the same API call.
+                 */
+                @JsonProperty("reference_id") @ExcludeMissing fun _referenceId() = referenceId
+
                 @JsonAnyGetter
                 @ExcludeMissing
                 fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
@@ -47584,6 +48341,7 @@ constructor(
                         modelType()
                         matrixConfig().validate()
                         currency()
+                        referenceId()
                         validated = true
                     }
                 }
@@ -47611,6 +48369,7 @@ constructor(
                         this.modelType == other.modelType &&
                         this.matrixConfig == other.matrixConfig &&
                         this.currency == other.currency &&
+                        this.referenceId == other.referenceId &&
                         this.additionalProperties == other.additionalProperties
                 }
 
@@ -47633,6 +48392,7 @@ constructor(
                                 modelType,
                                 matrixConfig,
                                 currency,
+                                referenceId,
                                 additionalProperties,
                             )
                     }
@@ -47640,7 +48400,7 @@ constructor(
                 }
 
                 override fun toString() =
-                    "NewSubscriptionMatrixPrice{metadata=$metadata, externalPriceId=$externalPriceId, name=$name, billableMetricId=$billableMetricId, itemId=$itemId, billedInAdvance=$billedInAdvance, fixedPriceQuantity=$fixedPriceQuantity, invoiceGroupingKey=$invoiceGroupingKey, cadence=$cadence, billingCycleConfiguration=$billingCycleConfiguration, invoicingCycleConfiguration=$invoicingCycleConfiguration, conversionRate=$conversionRate, modelType=$modelType, matrixConfig=$matrixConfig, currency=$currency, additionalProperties=$additionalProperties}"
+                    "NewSubscriptionMatrixPrice{metadata=$metadata, externalPriceId=$externalPriceId, name=$name, billableMetricId=$billableMetricId, itemId=$itemId, billedInAdvance=$billedInAdvance, fixedPriceQuantity=$fixedPriceQuantity, invoiceGroupingKey=$invoiceGroupingKey, cadence=$cadence, billingCycleConfiguration=$billingCycleConfiguration, invoicingCycleConfiguration=$invoicingCycleConfiguration, conversionRate=$conversionRate, modelType=$modelType, matrixConfig=$matrixConfig, currency=$currency, referenceId=$referenceId, additionalProperties=$additionalProperties}"
 
                 companion object {
 
@@ -47667,6 +48427,7 @@ constructor(
                     private var modelType: JsonField<ModelType> = JsonMissing.of()
                     private var matrixConfig: JsonField<MatrixConfig> = JsonMissing.of()
                     private var currency: JsonField<String> = JsonMissing.of()
+                    private var referenceId: JsonField<String> = JsonMissing.of()
                     private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
                     internal fun from(newSubscriptionMatrixPrice: NewSubscriptionMatrixPrice) =
@@ -47688,6 +48449,7 @@ constructor(
                             this.modelType = newSubscriptionMatrixPrice.modelType
                             this.matrixConfig = newSubscriptionMatrixPrice.matrixConfig
                             this.currency = newSubscriptionMatrixPrice.currency
+                            this.referenceId = newSubscriptionMatrixPrice.referenceId
                             additionalProperties(newSubscriptionMatrixPrice.additionalProperties)
                         }
 
@@ -47886,6 +48648,22 @@ constructor(
                     @ExcludeMissing
                     fun currency(currency: JsonField<String>) = apply { this.currency = currency }
 
+                    /**
+                     * A transient ID that can be used to reference this price when adding
+                     * adjustments in the same API call.
+                     */
+                    fun referenceId(referenceId: String) = referenceId(JsonField.of(referenceId))
+
+                    /**
+                     * A transient ID that can be used to reference this price when adding
+                     * adjustments in the same API call.
+                     */
+                    @JsonProperty("reference_id")
+                    @ExcludeMissing
+                    fun referenceId(referenceId: JsonField<String>) = apply {
+                        this.referenceId = referenceId
+                    }
+
                     fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                         this.additionalProperties.clear()
                         this.additionalProperties.putAll(additionalProperties)
@@ -47918,6 +48696,7 @@ constructor(
                             modelType,
                             matrixConfig,
                             currency,
+                            referenceId,
                             additionalProperties.toUnmodifiable(),
                         )
                 }
@@ -48859,6 +49638,7 @@ constructor(
                 private val modelType: JsonField<ModelType>,
                 private val tieredConfig: JsonField<TieredConfig>,
                 private val currency: JsonField<String>,
+                private val referenceId: JsonField<String>,
                 private val additionalProperties: Map<String, JsonValue>,
             ) {
 
@@ -48934,6 +49714,12 @@ constructor(
                  * price is billed.
                  */
                 fun currency(): String? = currency.getNullable("currency")
+
+                /**
+                 * A transient ID that can be used to reference this price when adding adjustments
+                 * in the same API call.
+                 */
+                fun referenceId(): String? = referenceId.getNullable("reference_id")
 
                 /**
                  * User-specified key/value pairs for the resource. Individual keys can be removed
@@ -49016,6 +49802,12 @@ constructor(
                  */
                 @JsonProperty("currency") @ExcludeMissing fun _currency() = currency
 
+                /**
+                 * A transient ID that can be used to reference this price when adding adjustments
+                 * in the same API call.
+                 */
+                @JsonProperty("reference_id") @ExcludeMissing fun _referenceId() = referenceId
+
                 @JsonAnyGetter
                 @ExcludeMissing
                 fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
@@ -49037,6 +49829,7 @@ constructor(
                         modelType()
                         tieredConfig().validate()
                         currency()
+                        referenceId()
                         validated = true
                     }
                 }
@@ -49064,6 +49857,7 @@ constructor(
                         this.modelType == other.modelType &&
                         this.tieredConfig == other.tieredConfig &&
                         this.currency == other.currency &&
+                        this.referenceId == other.referenceId &&
                         this.additionalProperties == other.additionalProperties
                 }
 
@@ -49086,6 +49880,7 @@ constructor(
                                 modelType,
                                 tieredConfig,
                                 currency,
+                                referenceId,
                                 additionalProperties,
                             )
                     }
@@ -49093,7 +49888,7 @@ constructor(
                 }
 
                 override fun toString() =
-                    "NewSubscriptionTieredPrice{metadata=$metadata, externalPriceId=$externalPriceId, name=$name, billableMetricId=$billableMetricId, itemId=$itemId, billedInAdvance=$billedInAdvance, fixedPriceQuantity=$fixedPriceQuantity, invoiceGroupingKey=$invoiceGroupingKey, cadence=$cadence, billingCycleConfiguration=$billingCycleConfiguration, invoicingCycleConfiguration=$invoicingCycleConfiguration, conversionRate=$conversionRate, modelType=$modelType, tieredConfig=$tieredConfig, currency=$currency, additionalProperties=$additionalProperties}"
+                    "NewSubscriptionTieredPrice{metadata=$metadata, externalPriceId=$externalPriceId, name=$name, billableMetricId=$billableMetricId, itemId=$itemId, billedInAdvance=$billedInAdvance, fixedPriceQuantity=$fixedPriceQuantity, invoiceGroupingKey=$invoiceGroupingKey, cadence=$cadence, billingCycleConfiguration=$billingCycleConfiguration, invoicingCycleConfiguration=$invoicingCycleConfiguration, conversionRate=$conversionRate, modelType=$modelType, tieredConfig=$tieredConfig, currency=$currency, referenceId=$referenceId, additionalProperties=$additionalProperties}"
 
                 companion object {
 
@@ -49120,6 +49915,7 @@ constructor(
                     private var modelType: JsonField<ModelType> = JsonMissing.of()
                     private var tieredConfig: JsonField<TieredConfig> = JsonMissing.of()
                     private var currency: JsonField<String> = JsonMissing.of()
+                    private var referenceId: JsonField<String> = JsonMissing.of()
                     private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
                     internal fun from(newSubscriptionTieredPrice: NewSubscriptionTieredPrice) =
@@ -49141,6 +49937,7 @@ constructor(
                             this.modelType = newSubscriptionTieredPrice.modelType
                             this.tieredConfig = newSubscriptionTieredPrice.tieredConfig
                             this.currency = newSubscriptionTieredPrice.currency
+                            this.referenceId = newSubscriptionTieredPrice.referenceId
                             additionalProperties(newSubscriptionTieredPrice.additionalProperties)
                         }
 
@@ -49339,6 +50136,22 @@ constructor(
                     @ExcludeMissing
                     fun currency(currency: JsonField<String>) = apply { this.currency = currency }
 
+                    /**
+                     * A transient ID that can be used to reference this price when adding
+                     * adjustments in the same API call.
+                     */
+                    fun referenceId(referenceId: String) = referenceId(JsonField.of(referenceId))
+
+                    /**
+                     * A transient ID that can be used to reference this price when adding
+                     * adjustments in the same API call.
+                     */
+                    @JsonProperty("reference_id")
+                    @ExcludeMissing
+                    fun referenceId(referenceId: JsonField<String>) = apply {
+                        this.referenceId = referenceId
+                    }
+
                     fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                         this.additionalProperties.clear()
                         this.additionalProperties.putAll(additionalProperties)
@@ -49371,6 +50184,7 @@ constructor(
                             modelType,
                             tieredConfig,
                             currency,
+                            referenceId,
                             additionalProperties.toUnmodifiable(),
                         )
                 }
@@ -50256,6 +51070,7 @@ constructor(
                 private val modelType: JsonField<ModelType>,
                 private val tieredBpsConfig: JsonField<TieredBpsConfig>,
                 private val currency: JsonField<String>,
+                private val referenceId: JsonField<String>,
                 private val additionalProperties: Map<String, JsonValue>,
             ) {
 
@@ -50332,6 +51147,12 @@ constructor(
                  * price is billed.
                  */
                 fun currency(): String? = currency.getNullable("currency")
+
+                /**
+                 * A transient ID that can be used to reference this price when adding adjustments
+                 * in the same API call.
+                 */
+                fun referenceId(): String? = referenceId.getNullable("reference_id")
 
                 /**
                  * User-specified key/value pairs for the resource. Individual keys can be removed
@@ -50416,6 +51237,12 @@ constructor(
                  */
                 @JsonProperty("currency") @ExcludeMissing fun _currency() = currency
 
+                /**
+                 * A transient ID that can be used to reference this price when adding adjustments
+                 * in the same API call.
+                 */
+                @JsonProperty("reference_id") @ExcludeMissing fun _referenceId() = referenceId
+
                 @JsonAnyGetter
                 @ExcludeMissing
                 fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
@@ -50437,6 +51264,7 @@ constructor(
                         modelType()
                         tieredBpsConfig().validate()
                         currency()
+                        referenceId()
                         validated = true
                     }
                 }
@@ -50464,6 +51292,7 @@ constructor(
                         this.modelType == other.modelType &&
                         this.tieredBpsConfig == other.tieredBpsConfig &&
                         this.currency == other.currency &&
+                        this.referenceId == other.referenceId &&
                         this.additionalProperties == other.additionalProperties
                 }
 
@@ -50486,6 +51315,7 @@ constructor(
                                 modelType,
                                 tieredBpsConfig,
                                 currency,
+                                referenceId,
                                 additionalProperties,
                             )
                     }
@@ -50493,7 +51323,7 @@ constructor(
                 }
 
                 override fun toString() =
-                    "NewSubscriptionTieredBpsPrice{metadata=$metadata, externalPriceId=$externalPriceId, name=$name, billableMetricId=$billableMetricId, itemId=$itemId, billedInAdvance=$billedInAdvance, fixedPriceQuantity=$fixedPriceQuantity, invoiceGroupingKey=$invoiceGroupingKey, cadence=$cadence, billingCycleConfiguration=$billingCycleConfiguration, invoicingCycleConfiguration=$invoicingCycleConfiguration, conversionRate=$conversionRate, modelType=$modelType, tieredBpsConfig=$tieredBpsConfig, currency=$currency, additionalProperties=$additionalProperties}"
+                    "NewSubscriptionTieredBpsPrice{metadata=$metadata, externalPriceId=$externalPriceId, name=$name, billableMetricId=$billableMetricId, itemId=$itemId, billedInAdvance=$billedInAdvance, fixedPriceQuantity=$fixedPriceQuantity, invoiceGroupingKey=$invoiceGroupingKey, cadence=$cadence, billingCycleConfiguration=$billingCycleConfiguration, invoicingCycleConfiguration=$invoicingCycleConfiguration, conversionRate=$conversionRate, modelType=$modelType, tieredBpsConfig=$tieredBpsConfig, currency=$currency, referenceId=$referenceId, additionalProperties=$additionalProperties}"
 
                 companion object {
 
@@ -50520,6 +51350,7 @@ constructor(
                     private var modelType: JsonField<ModelType> = JsonMissing.of()
                     private var tieredBpsConfig: JsonField<TieredBpsConfig> = JsonMissing.of()
                     private var currency: JsonField<String> = JsonMissing.of()
+                    private var referenceId: JsonField<String> = JsonMissing.of()
                     private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
                     internal fun from(
@@ -50542,6 +51373,7 @@ constructor(
                         this.modelType = newSubscriptionTieredBpsPrice.modelType
                         this.tieredBpsConfig = newSubscriptionTieredBpsPrice.tieredBpsConfig
                         this.currency = newSubscriptionTieredBpsPrice.currency
+                        this.referenceId = newSubscriptionTieredBpsPrice.referenceId
                         additionalProperties(newSubscriptionTieredBpsPrice.additionalProperties)
                     }
 
@@ -50740,6 +51572,22 @@ constructor(
                     @ExcludeMissing
                     fun currency(currency: JsonField<String>) = apply { this.currency = currency }
 
+                    /**
+                     * A transient ID that can be used to reference this price when adding
+                     * adjustments in the same API call.
+                     */
+                    fun referenceId(referenceId: String) = referenceId(JsonField.of(referenceId))
+
+                    /**
+                     * A transient ID that can be used to reference this price when adding
+                     * adjustments in the same API call.
+                     */
+                    @JsonProperty("reference_id")
+                    @ExcludeMissing
+                    fun referenceId(referenceId: JsonField<String>) = apply {
+                        this.referenceId = referenceId
+                    }
+
                     fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                         this.additionalProperties.clear()
                         this.additionalProperties.putAll(additionalProperties)
@@ -50772,6 +51620,7 @@ constructor(
                             modelType,
                             tieredBpsConfig,
                             currency,
+                            referenceId,
                             additionalProperties.toUnmodifiable(),
                         )
                 }
@@ -51685,6 +52534,7 @@ constructor(
                 private val modelType: JsonField<ModelType>,
                 private val bpsConfig: JsonField<BpsConfig>,
                 private val currency: JsonField<String>,
+                private val referenceId: JsonField<String>,
                 private val additionalProperties: Map<String, JsonValue>,
             ) {
 
@@ -51760,6 +52610,12 @@ constructor(
                  * price is billed.
                  */
                 fun currency(): String? = currency.getNullable("currency")
+
+                /**
+                 * A transient ID that can be used to reference this price when adding adjustments
+                 * in the same API call.
+                 */
+                fun referenceId(): String? = referenceId.getNullable("reference_id")
 
                 /**
                  * User-specified key/value pairs for the resource. Individual keys can be removed
@@ -51842,6 +52698,12 @@ constructor(
                  */
                 @JsonProperty("currency") @ExcludeMissing fun _currency() = currency
 
+                /**
+                 * A transient ID that can be used to reference this price when adding adjustments
+                 * in the same API call.
+                 */
+                @JsonProperty("reference_id") @ExcludeMissing fun _referenceId() = referenceId
+
                 @JsonAnyGetter
                 @ExcludeMissing
                 fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
@@ -51863,6 +52725,7 @@ constructor(
                         modelType()
                         bpsConfig().validate()
                         currency()
+                        referenceId()
                         validated = true
                     }
                 }
@@ -51890,6 +52753,7 @@ constructor(
                         this.modelType == other.modelType &&
                         this.bpsConfig == other.bpsConfig &&
                         this.currency == other.currency &&
+                        this.referenceId == other.referenceId &&
                         this.additionalProperties == other.additionalProperties
                 }
 
@@ -51912,6 +52776,7 @@ constructor(
                                 modelType,
                                 bpsConfig,
                                 currency,
+                                referenceId,
                                 additionalProperties,
                             )
                     }
@@ -51919,7 +52784,7 @@ constructor(
                 }
 
                 override fun toString() =
-                    "NewSubscriptionBpsPrice{metadata=$metadata, externalPriceId=$externalPriceId, name=$name, billableMetricId=$billableMetricId, itemId=$itemId, billedInAdvance=$billedInAdvance, fixedPriceQuantity=$fixedPriceQuantity, invoiceGroupingKey=$invoiceGroupingKey, cadence=$cadence, billingCycleConfiguration=$billingCycleConfiguration, invoicingCycleConfiguration=$invoicingCycleConfiguration, conversionRate=$conversionRate, modelType=$modelType, bpsConfig=$bpsConfig, currency=$currency, additionalProperties=$additionalProperties}"
+                    "NewSubscriptionBpsPrice{metadata=$metadata, externalPriceId=$externalPriceId, name=$name, billableMetricId=$billableMetricId, itemId=$itemId, billedInAdvance=$billedInAdvance, fixedPriceQuantity=$fixedPriceQuantity, invoiceGroupingKey=$invoiceGroupingKey, cadence=$cadence, billingCycleConfiguration=$billingCycleConfiguration, invoicingCycleConfiguration=$invoicingCycleConfiguration, conversionRate=$conversionRate, modelType=$modelType, bpsConfig=$bpsConfig, currency=$currency, referenceId=$referenceId, additionalProperties=$additionalProperties}"
 
                 companion object {
 
@@ -51946,6 +52811,7 @@ constructor(
                     private var modelType: JsonField<ModelType> = JsonMissing.of()
                     private var bpsConfig: JsonField<BpsConfig> = JsonMissing.of()
                     private var currency: JsonField<String> = JsonMissing.of()
+                    private var referenceId: JsonField<String> = JsonMissing.of()
                     private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
                     internal fun from(newSubscriptionBpsPrice: NewSubscriptionBpsPrice) = apply {
@@ -51966,6 +52832,7 @@ constructor(
                         this.modelType = newSubscriptionBpsPrice.modelType
                         this.bpsConfig = newSubscriptionBpsPrice.bpsConfig
                         this.currency = newSubscriptionBpsPrice.currency
+                        this.referenceId = newSubscriptionBpsPrice.referenceId
                         additionalProperties(newSubscriptionBpsPrice.additionalProperties)
                     }
 
@@ -52163,6 +53030,22 @@ constructor(
                     @ExcludeMissing
                     fun currency(currency: JsonField<String>) = apply { this.currency = currency }
 
+                    /**
+                     * A transient ID that can be used to reference this price when adding
+                     * adjustments in the same API call.
+                     */
+                    fun referenceId(referenceId: String) = referenceId(JsonField.of(referenceId))
+
+                    /**
+                     * A transient ID that can be used to reference this price when adding
+                     * adjustments in the same API call.
+                     */
+                    @JsonProperty("reference_id")
+                    @ExcludeMissing
+                    fun referenceId(referenceId: JsonField<String>) = apply {
+                        this.referenceId = referenceId
+                    }
+
                     fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                         this.additionalProperties.clear()
                         this.additionalProperties.putAll(additionalProperties)
@@ -52195,6 +53078,7 @@ constructor(
                             modelType,
                             bpsConfig,
                             currency,
+                            referenceId,
                             additionalProperties.toUnmodifiable(),
                         )
                 }
@@ -52945,6 +53829,7 @@ constructor(
                 private val modelType: JsonField<ModelType>,
                 private val bulkBpsConfig: JsonField<BulkBpsConfig>,
                 private val currency: JsonField<String>,
+                private val referenceId: JsonField<String>,
                 private val additionalProperties: Map<String, JsonValue>,
             ) {
 
@@ -53020,6 +53905,12 @@ constructor(
                  * price is billed.
                  */
                 fun currency(): String? = currency.getNullable("currency")
+
+                /**
+                 * A transient ID that can be used to reference this price when adding adjustments
+                 * in the same API call.
+                 */
+                fun referenceId(): String? = referenceId.getNullable("reference_id")
 
                 /**
                  * User-specified key/value pairs for the resource. Individual keys can be removed
@@ -53104,6 +53995,12 @@ constructor(
                  */
                 @JsonProperty("currency") @ExcludeMissing fun _currency() = currency
 
+                /**
+                 * A transient ID that can be used to reference this price when adding adjustments
+                 * in the same API call.
+                 */
+                @JsonProperty("reference_id") @ExcludeMissing fun _referenceId() = referenceId
+
                 @JsonAnyGetter
                 @ExcludeMissing
                 fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
@@ -53125,6 +54022,7 @@ constructor(
                         modelType()
                         bulkBpsConfig().validate()
                         currency()
+                        referenceId()
                         validated = true
                     }
                 }
@@ -53152,6 +54050,7 @@ constructor(
                         this.modelType == other.modelType &&
                         this.bulkBpsConfig == other.bulkBpsConfig &&
                         this.currency == other.currency &&
+                        this.referenceId == other.referenceId &&
                         this.additionalProperties == other.additionalProperties
                 }
 
@@ -53174,6 +54073,7 @@ constructor(
                                 modelType,
                                 bulkBpsConfig,
                                 currency,
+                                referenceId,
                                 additionalProperties,
                             )
                     }
@@ -53181,7 +54081,7 @@ constructor(
                 }
 
                 override fun toString() =
-                    "NewSubscriptionBulkBpsPrice{metadata=$metadata, externalPriceId=$externalPriceId, name=$name, billableMetricId=$billableMetricId, itemId=$itemId, billedInAdvance=$billedInAdvance, fixedPriceQuantity=$fixedPriceQuantity, invoiceGroupingKey=$invoiceGroupingKey, cadence=$cadence, billingCycleConfiguration=$billingCycleConfiguration, invoicingCycleConfiguration=$invoicingCycleConfiguration, conversionRate=$conversionRate, modelType=$modelType, bulkBpsConfig=$bulkBpsConfig, currency=$currency, additionalProperties=$additionalProperties}"
+                    "NewSubscriptionBulkBpsPrice{metadata=$metadata, externalPriceId=$externalPriceId, name=$name, billableMetricId=$billableMetricId, itemId=$itemId, billedInAdvance=$billedInAdvance, fixedPriceQuantity=$fixedPriceQuantity, invoiceGroupingKey=$invoiceGroupingKey, cadence=$cadence, billingCycleConfiguration=$billingCycleConfiguration, invoicingCycleConfiguration=$invoicingCycleConfiguration, conversionRate=$conversionRate, modelType=$modelType, bulkBpsConfig=$bulkBpsConfig, currency=$currency, referenceId=$referenceId, additionalProperties=$additionalProperties}"
 
                 companion object {
 
@@ -53208,6 +54108,7 @@ constructor(
                     private var modelType: JsonField<ModelType> = JsonMissing.of()
                     private var bulkBpsConfig: JsonField<BulkBpsConfig> = JsonMissing.of()
                     private var currency: JsonField<String> = JsonMissing.of()
+                    private var referenceId: JsonField<String> = JsonMissing.of()
                     private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
                     internal fun from(newSubscriptionBulkBpsPrice: NewSubscriptionBulkBpsPrice) =
@@ -53229,6 +54130,7 @@ constructor(
                             this.modelType = newSubscriptionBulkBpsPrice.modelType
                             this.bulkBpsConfig = newSubscriptionBulkBpsPrice.bulkBpsConfig
                             this.currency = newSubscriptionBulkBpsPrice.currency
+                            this.referenceId = newSubscriptionBulkBpsPrice.referenceId
                             additionalProperties(newSubscriptionBulkBpsPrice.additionalProperties)
                         }
 
@@ -53427,6 +54329,22 @@ constructor(
                     @ExcludeMissing
                     fun currency(currency: JsonField<String>) = apply { this.currency = currency }
 
+                    /**
+                     * A transient ID that can be used to reference this price when adding
+                     * adjustments in the same API call.
+                     */
+                    fun referenceId(referenceId: String) = referenceId(JsonField.of(referenceId))
+
+                    /**
+                     * A transient ID that can be used to reference this price when adding
+                     * adjustments in the same API call.
+                     */
+                    @JsonProperty("reference_id")
+                    @ExcludeMissing
+                    fun referenceId(referenceId: JsonField<String>) = apply {
+                        this.referenceId = referenceId
+                    }
+
                     fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                         this.additionalProperties.clear()
                         this.additionalProperties.putAll(additionalProperties)
@@ -53459,6 +54377,7 @@ constructor(
                             modelType,
                             bulkBpsConfig,
                             currency,
+                            referenceId,
                             additionalProperties.toUnmodifiable(),
                         )
                 }
@@ -54346,6 +55265,7 @@ constructor(
                 private val modelType: JsonField<ModelType>,
                 private val bulkConfig: JsonField<BulkConfig>,
                 private val currency: JsonField<String>,
+                private val referenceId: JsonField<String>,
                 private val additionalProperties: Map<String, JsonValue>,
             ) {
 
@@ -54421,6 +55341,12 @@ constructor(
                  * price is billed.
                  */
                 fun currency(): String? = currency.getNullable("currency")
+
+                /**
+                 * A transient ID that can be used to reference this price when adding adjustments
+                 * in the same API call.
+                 */
+                fun referenceId(): String? = referenceId.getNullable("reference_id")
 
                 /**
                  * User-specified key/value pairs for the resource. Individual keys can be removed
@@ -54503,6 +55429,12 @@ constructor(
                  */
                 @JsonProperty("currency") @ExcludeMissing fun _currency() = currency
 
+                /**
+                 * A transient ID that can be used to reference this price when adding adjustments
+                 * in the same API call.
+                 */
+                @JsonProperty("reference_id") @ExcludeMissing fun _referenceId() = referenceId
+
                 @JsonAnyGetter
                 @ExcludeMissing
                 fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
@@ -54524,6 +55456,7 @@ constructor(
                         modelType()
                         bulkConfig().validate()
                         currency()
+                        referenceId()
                         validated = true
                     }
                 }
@@ -54551,6 +55484,7 @@ constructor(
                         this.modelType == other.modelType &&
                         this.bulkConfig == other.bulkConfig &&
                         this.currency == other.currency &&
+                        this.referenceId == other.referenceId &&
                         this.additionalProperties == other.additionalProperties
                 }
 
@@ -54573,6 +55507,7 @@ constructor(
                                 modelType,
                                 bulkConfig,
                                 currency,
+                                referenceId,
                                 additionalProperties,
                             )
                     }
@@ -54580,7 +55515,7 @@ constructor(
                 }
 
                 override fun toString() =
-                    "NewSubscriptionBulkPrice{metadata=$metadata, externalPriceId=$externalPriceId, name=$name, billableMetricId=$billableMetricId, itemId=$itemId, billedInAdvance=$billedInAdvance, fixedPriceQuantity=$fixedPriceQuantity, invoiceGroupingKey=$invoiceGroupingKey, cadence=$cadence, billingCycleConfiguration=$billingCycleConfiguration, invoicingCycleConfiguration=$invoicingCycleConfiguration, conversionRate=$conversionRate, modelType=$modelType, bulkConfig=$bulkConfig, currency=$currency, additionalProperties=$additionalProperties}"
+                    "NewSubscriptionBulkPrice{metadata=$metadata, externalPriceId=$externalPriceId, name=$name, billableMetricId=$billableMetricId, itemId=$itemId, billedInAdvance=$billedInAdvance, fixedPriceQuantity=$fixedPriceQuantity, invoiceGroupingKey=$invoiceGroupingKey, cadence=$cadence, billingCycleConfiguration=$billingCycleConfiguration, invoicingCycleConfiguration=$invoicingCycleConfiguration, conversionRate=$conversionRate, modelType=$modelType, bulkConfig=$bulkConfig, currency=$currency, referenceId=$referenceId, additionalProperties=$additionalProperties}"
 
                 companion object {
 
@@ -54607,6 +55542,7 @@ constructor(
                     private var modelType: JsonField<ModelType> = JsonMissing.of()
                     private var bulkConfig: JsonField<BulkConfig> = JsonMissing.of()
                     private var currency: JsonField<String> = JsonMissing.of()
+                    private var referenceId: JsonField<String> = JsonMissing.of()
                     private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
                     internal fun from(newSubscriptionBulkPrice: NewSubscriptionBulkPrice) = apply {
@@ -54627,6 +55563,7 @@ constructor(
                         this.modelType = newSubscriptionBulkPrice.modelType
                         this.bulkConfig = newSubscriptionBulkPrice.bulkConfig
                         this.currency = newSubscriptionBulkPrice.currency
+                        this.referenceId = newSubscriptionBulkPrice.referenceId
                         additionalProperties(newSubscriptionBulkPrice.additionalProperties)
                     }
 
@@ -54824,6 +55761,22 @@ constructor(
                     @ExcludeMissing
                     fun currency(currency: JsonField<String>) = apply { this.currency = currency }
 
+                    /**
+                     * A transient ID that can be used to reference this price when adding
+                     * adjustments in the same API call.
+                     */
+                    fun referenceId(referenceId: String) = referenceId(JsonField.of(referenceId))
+
+                    /**
+                     * A transient ID that can be used to reference this price when adding
+                     * adjustments in the same API call.
+                     */
+                    @JsonProperty("reference_id")
+                    @ExcludeMissing
+                    fun referenceId(referenceId: JsonField<String>) = apply {
+                        this.referenceId = referenceId
+                    }
+
                     fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                         this.additionalProperties.clear()
                         this.additionalProperties.putAll(additionalProperties)
@@ -54856,6 +55809,7 @@ constructor(
                             modelType,
                             bulkConfig,
                             currency,
+                            referenceId,
                             additionalProperties.toUnmodifiable(),
                         )
                 }
@@ -55707,6 +56661,7 @@ constructor(
                 private val modelType: JsonField<ModelType>,
                 private val thresholdTotalAmountConfig: JsonField<ThresholdTotalAmountConfig>,
                 private val currency: JsonField<String>,
+                private val referenceId: JsonField<String>,
                 private val additionalProperties: Map<String, JsonValue>,
             ) {
 
@@ -55783,6 +56738,12 @@ constructor(
                  * price is billed.
                  */
                 fun currency(): String? = currency.getNullable("currency")
+
+                /**
+                 * A transient ID that can be used to reference this price when adding adjustments
+                 * in the same API call.
+                 */
+                fun referenceId(): String? = referenceId.getNullable("reference_id")
 
                 /**
                  * User-specified key/value pairs for the resource. Individual keys can be removed
@@ -55867,6 +56828,12 @@ constructor(
                  */
                 @JsonProperty("currency") @ExcludeMissing fun _currency() = currency
 
+                /**
+                 * A transient ID that can be used to reference this price when adding adjustments
+                 * in the same API call.
+                 */
+                @JsonProperty("reference_id") @ExcludeMissing fun _referenceId() = referenceId
+
                 @JsonAnyGetter
                 @ExcludeMissing
                 fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
@@ -55888,6 +56855,7 @@ constructor(
                         modelType()
                         thresholdTotalAmountConfig().validate()
                         currency()
+                        referenceId()
                         validated = true
                     }
                 }
@@ -55915,6 +56883,7 @@ constructor(
                         this.modelType == other.modelType &&
                         this.thresholdTotalAmountConfig == other.thresholdTotalAmountConfig &&
                         this.currency == other.currency &&
+                        this.referenceId == other.referenceId &&
                         this.additionalProperties == other.additionalProperties
                 }
 
@@ -55937,6 +56906,7 @@ constructor(
                                 modelType,
                                 thresholdTotalAmountConfig,
                                 currency,
+                                referenceId,
                                 additionalProperties,
                             )
                     }
@@ -55944,7 +56914,7 @@ constructor(
                 }
 
                 override fun toString() =
-                    "NewSubscriptionThresholdTotalAmountPrice{metadata=$metadata, externalPriceId=$externalPriceId, name=$name, billableMetricId=$billableMetricId, itemId=$itemId, billedInAdvance=$billedInAdvance, fixedPriceQuantity=$fixedPriceQuantity, invoiceGroupingKey=$invoiceGroupingKey, cadence=$cadence, billingCycleConfiguration=$billingCycleConfiguration, invoicingCycleConfiguration=$invoicingCycleConfiguration, conversionRate=$conversionRate, modelType=$modelType, thresholdTotalAmountConfig=$thresholdTotalAmountConfig, currency=$currency, additionalProperties=$additionalProperties}"
+                    "NewSubscriptionThresholdTotalAmountPrice{metadata=$metadata, externalPriceId=$externalPriceId, name=$name, billableMetricId=$billableMetricId, itemId=$itemId, billedInAdvance=$billedInAdvance, fixedPriceQuantity=$fixedPriceQuantity, invoiceGroupingKey=$invoiceGroupingKey, cadence=$cadence, billingCycleConfiguration=$billingCycleConfiguration, invoicingCycleConfiguration=$invoicingCycleConfiguration, conversionRate=$conversionRate, modelType=$modelType, thresholdTotalAmountConfig=$thresholdTotalAmountConfig, currency=$currency, referenceId=$referenceId, additionalProperties=$additionalProperties}"
 
                 companion object {
 
@@ -55972,6 +56942,7 @@ constructor(
                     private var thresholdTotalAmountConfig: JsonField<ThresholdTotalAmountConfig> =
                         JsonMissing.of()
                     private var currency: JsonField<String> = JsonMissing.of()
+                    private var referenceId: JsonField<String> = JsonMissing.of()
                     private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
                     internal fun from(
@@ -56002,6 +56973,7 @@ constructor(
                         this.thresholdTotalAmountConfig =
                             newSubscriptionThresholdTotalAmountPrice.thresholdTotalAmountConfig
                         this.currency = newSubscriptionThresholdTotalAmountPrice.currency
+                        this.referenceId = newSubscriptionThresholdTotalAmountPrice.referenceId
                         additionalProperties(
                             newSubscriptionThresholdTotalAmountPrice.additionalProperties
                         )
@@ -56203,6 +57175,22 @@ constructor(
                     @ExcludeMissing
                     fun currency(currency: JsonField<String>) = apply { this.currency = currency }
 
+                    /**
+                     * A transient ID that can be used to reference this price when adding
+                     * adjustments in the same API call.
+                     */
+                    fun referenceId(referenceId: String) = referenceId(JsonField.of(referenceId))
+
+                    /**
+                     * A transient ID that can be used to reference this price when adding
+                     * adjustments in the same API call.
+                     */
+                    @JsonProperty("reference_id")
+                    @ExcludeMissing
+                    fun referenceId(referenceId: JsonField<String>) = apply {
+                        this.referenceId = referenceId
+                    }
+
                     fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                         this.additionalProperties.clear()
                         this.additionalProperties.putAll(additionalProperties)
@@ -56235,6 +57223,7 @@ constructor(
                             modelType,
                             thresholdTotalAmountConfig,
                             currency,
+                            referenceId,
                             additionalProperties.toUnmodifiable(),
                         )
                 }
@@ -56937,6 +57926,7 @@ constructor(
                 private val modelType: JsonField<ModelType>,
                 private val tieredPackageConfig: JsonField<TieredPackageConfig>,
                 private val currency: JsonField<String>,
+                private val referenceId: JsonField<String>,
                 private val additionalProperties: Map<String, JsonValue>,
             ) {
 
@@ -57013,6 +58003,12 @@ constructor(
                  * price is billed.
                  */
                 fun currency(): String? = currency.getNullable("currency")
+
+                /**
+                 * A transient ID that can be used to reference this price when adding adjustments
+                 * in the same API call.
+                 */
+                fun referenceId(): String? = referenceId.getNullable("reference_id")
 
                 /**
                  * User-specified key/value pairs for the resource. Individual keys can be removed
@@ -57097,6 +58093,12 @@ constructor(
                  */
                 @JsonProperty("currency") @ExcludeMissing fun _currency() = currency
 
+                /**
+                 * A transient ID that can be used to reference this price when adding adjustments
+                 * in the same API call.
+                 */
+                @JsonProperty("reference_id") @ExcludeMissing fun _referenceId() = referenceId
+
                 @JsonAnyGetter
                 @ExcludeMissing
                 fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
@@ -57118,6 +58120,7 @@ constructor(
                         modelType()
                         tieredPackageConfig().validate()
                         currency()
+                        referenceId()
                         validated = true
                     }
                 }
@@ -57145,6 +58148,7 @@ constructor(
                         this.modelType == other.modelType &&
                         this.tieredPackageConfig == other.tieredPackageConfig &&
                         this.currency == other.currency &&
+                        this.referenceId == other.referenceId &&
                         this.additionalProperties == other.additionalProperties
                 }
 
@@ -57167,6 +58171,7 @@ constructor(
                                 modelType,
                                 tieredPackageConfig,
                                 currency,
+                                referenceId,
                                 additionalProperties,
                             )
                     }
@@ -57174,7 +58179,7 @@ constructor(
                 }
 
                 override fun toString() =
-                    "NewSubscriptionTieredPackagePrice{metadata=$metadata, externalPriceId=$externalPriceId, name=$name, billableMetricId=$billableMetricId, itemId=$itemId, billedInAdvance=$billedInAdvance, fixedPriceQuantity=$fixedPriceQuantity, invoiceGroupingKey=$invoiceGroupingKey, cadence=$cadence, billingCycleConfiguration=$billingCycleConfiguration, invoicingCycleConfiguration=$invoicingCycleConfiguration, conversionRate=$conversionRate, modelType=$modelType, tieredPackageConfig=$tieredPackageConfig, currency=$currency, additionalProperties=$additionalProperties}"
+                    "NewSubscriptionTieredPackagePrice{metadata=$metadata, externalPriceId=$externalPriceId, name=$name, billableMetricId=$billableMetricId, itemId=$itemId, billedInAdvance=$billedInAdvance, fixedPriceQuantity=$fixedPriceQuantity, invoiceGroupingKey=$invoiceGroupingKey, cadence=$cadence, billingCycleConfiguration=$billingCycleConfiguration, invoicingCycleConfiguration=$invoicingCycleConfiguration, conversionRate=$conversionRate, modelType=$modelType, tieredPackageConfig=$tieredPackageConfig, currency=$currency, referenceId=$referenceId, additionalProperties=$additionalProperties}"
 
                 companion object {
 
@@ -57202,6 +58207,7 @@ constructor(
                     private var tieredPackageConfig: JsonField<TieredPackageConfig> =
                         JsonMissing.of()
                     private var currency: JsonField<String> = JsonMissing.of()
+                    private var referenceId: JsonField<String> = JsonMissing.of()
                     private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
                     internal fun from(
@@ -57227,6 +58233,7 @@ constructor(
                         this.tieredPackageConfig =
                             newSubscriptionTieredPackagePrice.tieredPackageConfig
                         this.currency = newSubscriptionTieredPackagePrice.currency
+                        this.referenceId = newSubscriptionTieredPackagePrice.referenceId
                         additionalProperties(newSubscriptionTieredPackagePrice.additionalProperties)
                     }
 
@@ -57426,6 +58433,22 @@ constructor(
                     @ExcludeMissing
                     fun currency(currency: JsonField<String>) = apply { this.currency = currency }
 
+                    /**
+                     * A transient ID that can be used to reference this price when adding
+                     * adjustments in the same API call.
+                     */
+                    fun referenceId(referenceId: String) = referenceId(JsonField.of(referenceId))
+
+                    /**
+                     * A transient ID that can be used to reference this price when adding
+                     * adjustments in the same API call.
+                     */
+                    @JsonProperty("reference_id")
+                    @ExcludeMissing
+                    fun referenceId(referenceId: JsonField<String>) = apply {
+                        this.referenceId = referenceId
+                    }
+
                     fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                         this.additionalProperties.clear()
                         this.additionalProperties.putAll(additionalProperties)
@@ -57458,6 +58481,7 @@ constructor(
                             modelType,
                             tieredPackageConfig,
                             currency,
+                            referenceId,
                             additionalProperties.toUnmodifiable(),
                         )
                 }
@@ -58156,6 +59180,7 @@ constructor(
                 private val modelType: JsonField<ModelType>,
                 private val tieredWithMinimumConfig: JsonField<TieredWithMinimumConfig>,
                 private val currency: JsonField<String>,
+                private val referenceId: JsonField<String>,
                 private val additionalProperties: Map<String, JsonValue>,
             ) {
 
@@ -58232,6 +59257,12 @@ constructor(
                  * price is billed.
                  */
                 fun currency(): String? = currency.getNullable("currency")
+
+                /**
+                 * A transient ID that can be used to reference this price when adding adjustments
+                 * in the same API call.
+                 */
+                fun referenceId(): String? = referenceId.getNullable("reference_id")
 
                 /**
                  * User-specified key/value pairs for the resource. Individual keys can be removed
@@ -58316,6 +59347,12 @@ constructor(
                  */
                 @JsonProperty("currency") @ExcludeMissing fun _currency() = currency
 
+                /**
+                 * A transient ID that can be used to reference this price when adding adjustments
+                 * in the same API call.
+                 */
+                @JsonProperty("reference_id") @ExcludeMissing fun _referenceId() = referenceId
+
                 @JsonAnyGetter
                 @ExcludeMissing
                 fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
@@ -58337,6 +59374,7 @@ constructor(
                         modelType()
                         tieredWithMinimumConfig().validate()
                         currency()
+                        referenceId()
                         validated = true
                     }
                 }
@@ -58364,6 +59402,7 @@ constructor(
                         this.modelType == other.modelType &&
                         this.tieredWithMinimumConfig == other.tieredWithMinimumConfig &&
                         this.currency == other.currency &&
+                        this.referenceId == other.referenceId &&
                         this.additionalProperties == other.additionalProperties
                 }
 
@@ -58386,6 +59425,7 @@ constructor(
                                 modelType,
                                 tieredWithMinimumConfig,
                                 currency,
+                                referenceId,
                                 additionalProperties,
                             )
                     }
@@ -58393,7 +59433,7 @@ constructor(
                 }
 
                 override fun toString() =
-                    "NewSubscriptionTieredWithMinimumPrice{metadata=$metadata, externalPriceId=$externalPriceId, name=$name, billableMetricId=$billableMetricId, itemId=$itemId, billedInAdvance=$billedInAdvance, fixedPriceQuantity=$fixedPriceQuantity, invoiceGroupingKey=$invoiceGroupingKey, cadence=$cadence, billingCycleConfiguration=$billingCycleConfiguration, invoicingCycleConfiguration=$invoicingCycleConfiguration, conversionRate=$conversionRate, modelType=$modelType, tieredWithMinimumConfig=$tieredWithMinimumConfig, currency=$currency, additionalProperties=$additionalProperties}"
+                    "NewSubscriptionTieredWithMinimumPrice{metadata=$metadata, externalPriceId=$externalPriceId, name=$name, billableMetricId=$billableMetricId, itemId=$itemId, billedInAdvance=$billedInAdvance, fixedPriceQuantity=$fixedPriceQuantity, invoiceGroupingKey=$invoiceGroupingKey, cadence=$cadence, billingCycleConfiguration=$billingCycleConfiguration, invoicingCycleConfiguration=$invoicingCycleConfiguration, conversionRate=$conversionRate, modelType=$modelType, tieredWithMinimumConfig=$tieredWithMinimumConfig, currency=$currency, referenceId=$referenceId, additionalProperties=$additionalProperties}"
 
                 companion object {
 
@@ -58421,6 +59461,7 @@ constructor(
                     private var tieredWithMinimumConfig: JsonField<TieredWithMinimumConfig> =
                         JsonMissing.of()
                     private var currency: JsonField<String> = JsonMissing.of()
+                    private var referenceId: JsonField<String> = JsonMissing.of()
                     private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
                     internal fun from(
@@ -58447,6 +59488,7 @@ constructor(
                         this.tieredWithMinimumConfig =
                             newSubscriptionTieredWithMinimumPrice.tieredWithMinimumConfig
                         this.currency = newSubscriptionTieredWithMinimumPrice.currency
+                        this.referenceId = newSubscriptionTieredWithMinimumPrice.referenceId
                         additionalProperties(
                             newSubscriptionTieredWithMinimumPrice.additionalProperties
                         )
@@ -58647,6 +59689,22 @@ constructor(
                     @ExcludeMissing
                     fun currency(currency: JsonField<String>) = apply { this.currency = currency }
 
+                    /**
+                     * A transient ID that can be used to reference this price when adding
+                     * adjustments in the same API call.
+                     */
+                    fun referenceId(referenceId: String) = referenceId(JsonField.of(referenceId))
+
+                    /**
+                     * A transient ID that can be used to reference this price when adding
+                     * adjustments in the same API call.
+                     */
+                    @JsonProperty("reference_id")
+                    @ExcludeMissing
+                    fun referenceId(referenceId: JsonField<String>) = apply {
+                        this.referenceId = referenceId
+                    }
+
                     fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                         this.additionalProperties.clear()
                         this.additionalProperties.putAll(additionalProperties)
@@ -58679,6 +59737,7 @@ constructor(
                             modelType,
                             tieredWithMinimumConfig,
                             currency,
+                            referenceId,
                             additionalProperties.toUnmodifiable(),
                         )
                 }
@@ -59378,6 +60437,7 @@ constructor(
                 private val modelType: JsonField<ModelType>,
                 private val unitWithPercentConfig: JsonField<UnitWithPercentConfig>,
                 private val currency: JsonField<String>,
+                private val referenceId: JsonField<String>,
                 private val additionalProperties: Map<String, JsonValue>,
             ) {
 
@@ -59454,6 +60514,12 @@ constructor(
                  * price is billed.
                  */
                 fun currency(): String? = currency.getNullable("currency")
+
+                /**
+                 * A transient ID that can be used to reference this price when adding adjustments
+                 * in the same API call.
+                 */
+                fun referenceId(): String? = referenceId.getNullable("reference_id")
 
                 /**
                  * User-specified key/value pairs for the resource. Individual keys can be removed
@@ -59538,6 +60604,12 @@ constructor(
                  */
                 @JsonProperty("currency") @ExcludeMissing fun _currency() = currency
 
+                /**
+                 * A transient ID that can be used to reference this price when adding adjustments
+                 * in the same API call.
+                 */
+                @JsonProperty("reference_id") @ExcludeMissing fun _referenceId() = referenceId
+
                 @JsonAnyGetter
                 @ExcludeMissing
                 fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
@@ -59559,6 +60631,7 @@ constructor(
                         modelType()
                         unitWithPercentConfig().validate()
                         currency()
+                        referenceId()
                         validated = true
                     }
                 }
@@ -59586,6 +60659,7 @@ constructor(
                         this.modelType == other.modelType &&
                         this.unitWithPercentConfig == other.unitWithPercentConfig &&
                         this.currency == other.currency &&
+                        this.referenceId == other.referenceId &&
                         this.additionalProperties == other.additionalProperties
                 }
 
@@ -59608,6 +60682,7 @@ constructor(
                                 modelType,
                                 unitWithPercentConfig,
                                 currency,
+                                referenceId,
                                 additionalProperties,
                             )
                     }
@@ -59615,7 +60690,7 @@ constructor(
                 }
 
                 override fun toString() =
-                    "NewSubscriptionUnitWithPercentPrice{metadata=$metadata, externalPriceId=$externalPriceId, name=$name, billableMetricId=$billableMetricId, itemId=$itemId, billedInAdvance=$billedInAdvance, fixedPriceQuantity=$fixedPriceQuantity, invoiceGroupingKey=$invoiceGroupingKey, cadence=$cadence, billingCycleConfiguration=$billingCycleConfiguration, invoicingCycleConfiguration=$invoicingCycleConfiguration, conversionRate=$conversionRate, modelType=$modelType, unitWithPercentConfig=$unitWithPercentConfig, currency=$currency, additionalProperties=$additionalProperties}"
+                    "NewSubscriptionUnitWithPercentPrice{metadata=$metadata, externalPriceId=$externalPriceId, name=$name, billableMetricId=$billableMetricId, itemId=$itemId, billedInAdvance=$billedInAdvance, fixedPriceQuantity=$fixedPriceQuantity, invoiceGroupingKey=$invoiceGroupingKey, cadence=$cadence, billingCycleConfiguration=$billingCycleConfiguration, invoicingCycleConfiguration=$invoicingCycleConfiguration, conversionRate=$conversionRate, modelType=$modelType, unitWithPercentConfig=$unitWithPercentConfig, currency=$currency, referenceId=$referenceId, additionalProperties=$additionalProperties}"
 
                 companion object {
 
@@ -59643,6 +60718,7 @@ constructor(
                     private var unitWithPercentConfig: JsonField<UnitWithPercentConfig> =
                         JsonMissing.of()
                     private var currency: JsonField<String> = JsonMissing.of()
+                    private var referenceId: JsonField<String> = JsonMissing.of()
                     private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
                     internal fun from(
@@ -59668,6 +60744,7 @@ constructor(
                         this.unitWithPercentConfig =
                             newSubscriptionUnitWithPercentPrice.unitWithPercentConfig
                         this.currency = newSubscriptionUnitWithPercentPrice.currency
+                        this.referenceId = newSubscriptionUnitWithPercentPrice.referenceId
                         additionalProperties(
                             newSubscriptionUnitWithPercentPrice.additionalProperties
                         )
@@ -59868,6 +60945,22 @@ constructor(
                     @ExcludeMissing
                     fun currency(currency: JsonField<String>) = apply { this.currency = currency }
 
+                    /**
+                     * A transient ID that can be used to reference this price when adding
+                     * adjustments in the same API call.
+                     */
+                    fun referenceId(referenceId: String) = referenceId(JsonField.of(referenceId))
+
+                    /**
+                     * A transient ID that can be used to reference this price when adding
+                     * adjustments in the same API call.
+                     */
+                    @JsonProperty("reference_id")
+                    @ExcludeMissing
+                    fun referenceId(referenceId: JsonField<String>) = apply {
+                        this.referenceId = referenceId
+                    }
+
                     fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                         this.additionalProperties.clear()
                         this.additionalProperties.putAll(additionalProperties)
@@ -59900,6 +60993,7 @@ constructor(
                             modelType,
                             unitWithPercentConfig,
                             currency,
+                            referenceId,
                             additionalProperties.toUnmodifiable(),
                         )
                 }
@@ -60598,6 +61692,7 @@ constructor(
                 private val modelType: JsonField<ModelType>,
                 private val packageWithAllocationConfig: JsonField<PackageWithAllocationConfig>,
                 private val currency: JsonField<String>,
+                private val referenceId: JsonField<String>,
                 private val additionalProperties: Map<String, JsonValue>,
             ) {
 
@@ -60674,6 +61769,12 @@ constructor(
                  * price is billed.
                  */
                 fun currency(): String? = currency.getNullable("currency")
+
+                /**
+                 * A transient ID that can be used to reference this price when adding adjustments
+                 * in the same API call.
+                 */
+                fun referenceId(): String? = referenceId.getNullable("reference_id")
 
                 /**
                  * User-specified key/value pairs for the resource. Individual keys can be removed
@@ -60758,6 +61859,12 @@ constructor(
                  */
                 @JsonProperty("currency") @ExcludeMissing fun _currency() = currency
 
+                /**
+                 * A transient ID that can be used to reference this price when adding adjustments
+                 * in the same API call.
+                 */
+                @JsonProperty("reference_id") @ExcludeMissing fun _referenceId() = referenceId
+
                 @JsonAnyGetter
                 @ExcludeMissing
                 fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
@@ -60779,6 +61886,7 @@ constructor(
                         modelType()
                         packageWithAllocationConfig().validate()
                         currency()
+                        referenceId()
                         validated = true
                     }
                 }
@@ -60806,6 +61914,7 @@ constructor(
                         this.modelType == other.modelType &&
                         this.packageWithAllocationConfig == other.packageWithAllocationConfig &&
                         this.currency == other.currency &&
+                        this.referenceId == other.referenceId &&
                         this.additionalProperties == other.additionalProperties
                 }
 
@@ -60828,6 +61937,7 @@ constructor(
                                 modelType,
                                 packageWithAllocationConfig,
                                 currency,
+                                referenceId,
                                 additionalProperties,
                             )
                     }
@@ -60835,7 +61945,7 @@ constructor(
                 }
 
                 override fun toString() =
-                    "NewSubscriptionPackageWithAllocationPrice{metadata=$metadata, externalPriceId=$externalPriceId, name=$name, billableMetricId=$billableMetricId, itemId=$itemId, billedInAdvance=$billedInAdvance, fixedPriceQuantity=$fixedPriceQuantity, invoiceGroupingKey=$invoiceGroupingKey, cadence=$cadence, billingCycleConfiguration=$billingCycleConfiguration, invoicingCycleConfiguration=$invoicingCycleConfiguration, conversionRate=$conversionRate, modelType=$modelType, packageWithAllocationConfig=$packageWithAllocationConfig, currency=$currency, additionalProperties=$additionalProperties}"
+                    "NewSubscriptionPackageWithAllocationPrice{metadata=$metadata, externalPriceId=$externalPriceId, name=$name, billableMetricId=$billableMetricId, itemId=$itemId, billedInAdvance=$billedInAdvance, fixedPriceQuantity=$fixedPriceQuantity, invoiceGroupingKey=$invoiceGroupingKey, cadence=$cadence, billingCycleConfiguration=$billingCycleConfiguration, invoicingCycleConfiguration=$invoicingCycleConfiguration, conversionRate=$conversionRate, modelType=$modelType, packageWithAllocationConfig=$packageWithAllocationConfig, currency=$currency, referenceId=$referenceId, additionalProperties=$additionalProperties}"
 
                 companion object {
 
@@ -60864,6 +61974,7 @@ constructor(
                         JsonField<PackageWithAllocationConfig> =
                         JsonMissing.of()
                     private var currency: JsonField<String> = JsonMissing.of()
+                    private var referenceId: JsonField<String> = JsonMissing.of()
                     private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
                     internal fun from(
@@ -60894,6 +62005,7 @@ constructor(
                         this.packageWithAllocationConfig =
                             newSubscriptionPackageWithAllocationPrice.packageWithAllocationConfig
                         this.currency = newSubscriptionPackageWithAllocationPrice.currency
+                        this.referenceId = newSubscriptionPackageWithAllocationPrice.referenceId
                         additionalProperties(
                             newSubscriptionPackageWithAllocationPrice.additionalProperties
                         )
@@ -61095,6 +62207,22 @@ constructor(
                     @ExcludeMissing
                     fun currency(currency: JsonField<String>) = apply { this.currency = currency }
 
+                    /**
+                     * A transient ID that can be used to reference this price when adding
+                     * adjustments in the same API call.
+                     */
+                    fun referenceId(referenceId: String) = referenceId(JsonField.of(referenceId))
+
+                    /**
+                     * A transient ID that can be used to reference this price when adding
+                     * adjustments in the same API call.
+                     */
+                    @JsonProperty("reference_id")
+                    @ExcludeMissing
+                    fun referenceId(referenceId: JsonField<String>) = apply {
+                        this.referenceId = referenceId
+                    }
+
                     fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                         this.additionalProperties.clear()
                         this.additionalProperties.putAll(additionalProperties)
@@ -61127,6 +62255,7 @@ constructor(
                             modelType,
                             packageWithAllocationConfig,
                             currency,
+                            referenceId,
                             additionalProperties.toUnmodifiable(),
                         )
                 }
@@ -61828,6 +62957,7 @@ constructor(
                 private val modelType: JsonField<ModelType>,
                 private val tieredWithProrationConfig: JsonField<TieredWithProrationConfig>,
                 private val currency: JsonField<String>,
+                private val referenceId: JsonField<String>,
                 private val additionalProperties: Map<String, JsonValue>,
             ) {
 
@@ -61904,6 +63034,12 @@ constructor(
                  * price is billed.
                  */
                 fun currency(): String? = currency.getNullable("currency")
+
+                /**
+                 * A transient ID that can be used to reference this price when adding adjustments
+                 * in the same API call.
+                 */
+                fun referenceId(): String? = referenceId.getNullable("reference_id")
 
                 /**
                  * User-specified key/value pairs for the resource. Individual keys can be removed
@@ -61988,6 +63124,12 @@ constructor(
                  */
                 @JsonProperty("currency") @ExcludeMissing fun _currency() = currency
 
+                /**
+                 * A transient ID that can be used to reference this price when adding adjustments
+                 * in the same API call.
+                 */
+                @JsonProperty("reference_id") @ExcludeMissing fun _referenceId() = referenceId
+
                 @JsonAnyGetter
                 @ExcludeMissing
                 fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
@@ -62009,6 +63151,7 @@ constructor(
                         modelType()
                         tieredWithProrationConfig().validate()
                         currency()
+                        referenceId()
                         validated = true
                     }
                 }
@@ -62036,6 +63179,7 @@ constructor(
                         this.modelType == other.modelType &&
                         this.tieredWithProrationConfig == other.tieredWithProrationConfig &&
                         this.currency == other.currency &&
+                        this.referenceId == other.referenceId &&
                         this.additionalProperties == other.additionalProperties
                 }
 
@@ -62058,6 +63202,7 @@ constructor(
                                 modelType,
                                 tieredWithProrationConfig,
                                 currency,
+                                referenceId,
                                 additionalProperties,
                             )
                     }
@@ -62065,7 +63210,7 @@ constructor(
                 }
 
                 override fun toString() =
-                    "NewSubscriptionTierWithProrationPrice{metadata=$metadata, externalPriceId=$externalPriceId, name=$name, billableMetricId=$billableMetricId, itemId=$itemId, billedInAdvance=$billedInAdvance, fixedPriceQuantity=$fixedPriceQuantity, invoiceGroupingKey=$invoiceGroupingKey, cadence=$cadence, billingCycleConfiguration=$billingCycleConfiguration, invoicingCycleConfiguration=$invoicingCycleConfiguration, conversionRate=$conversionRate, modelType=$modelType, tieredWithProrationConfig=$tieredWithProrationConfig, currency=$currency, additionalProperties=$additionalProperties}"
+                    "NewSubscriptionTierWithProrationPrice{metadata=$metadata, externalPriceId=$externalPriceId, name=$name, billableMetricId=$billableMetricId, itemId=$itemId, billedInAdvance=$billedInAdvance, fixedPriceQuantity=$fixedPriceQuantity, invoiceGroupingKey=$invoiceGroupingKey, cadence=$cadence, billingCycleConfiguration=$billingCycleConfiguration, invoicingCycleConfiguration=$invoicingCycleConfiguration, conversionRate=$conversionRate, modelType=$modelType, tieredWithProrationConfig=$tieredWithProrationConfig, currency=$currency, referenceId=$referenceId, additionalProperties=$additionalProperties}"
 
                 companion object {
 
@@ -62093,6 +63238,7 @@ constructor(
                     private var tieredWithProrationConfig: JsonField<TieredWithProrationConfig> =
                         JsonMissing.of()
                     private var currency: JsonField<String> = JsonMissing.of()
+                    private var referenceId: JsonField<String> = JsonMissing.of()
                     private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
                     internal fun from(
@@ -62119,6 +63265,7 @@ constructor(
                         this.tieredWithProrationConfig =
                             newSubscriptionTierWithProrationPrice.tieredWithProrationConfig
                         this.currency = newSubscriptionTierWithProrationPrice.currency
+                        this.referenceId = newSubscriptionTierWithProrationPrice.referenceId
                         additionalProperties(
                             newSubscriptionTierWithProrationPrice.additionalProperties
                         )
@@ -62320,6 +63467,22 @@ constructor(
                     @ExcludeMissing
                     fun currency(currency: JsonField<String>) = apply { this.currency = currency }
 
+                    /**
+                     * A transient ID that can be used to reference this price when adding
+                     * adjustments in the same API call.
+                     */
+                    fun referenceId(referenceId: String) = referenceId(JsonField.of(referenceId))
+
+                    /**
+                     * A transient ID that can be used to reference this price when adding
+                     * adjustments in the same API call.
+                     */
+                    @JsonProperty("reference_id")
+                    @ExcludeMissing
+                    fun referenceId(referenceId: JsonField<String>) = apply {
+                        this.referenceId = referenceId
+                    }
+
                     fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                         this.additionalProperties.clear()
                         this.additionalProperties.putAll(additionalProperties)
@@ -62352,6 +63515,7 @@ constructor(
                             modelType,
                             tieredWithProrationConfig,
                             currency,
+                            referenceId,
                             additionalProperties.toUnmodifiable(),
                         )
                 }
@@ -63051,6 +64215,7 @@ constructor(
                 private val modelType: JsonField<ModelType>,
                 private val unitWithProrationConfig: JsonField<UnitWithProrationConfig>,
                 private val currency: JsonField<String>,
+                private val referenceId: JsonField<String>,
                 private val additionalProperties: Map<String, JsonValue>,
             ) {
 
@@ -63127,6 +64292,12 @@ constructor(
                  * price is billed.
                  */
                 fun currency(): String? = currency.getNullable("currency")
+
+                /**
+                 * A transient ID that can be used to reference this price when adding adjustments
+                 * in the same API call.
+                 */
+                fun referenceId(): String? = referenceId.getNullable("reference_id")
 
                 /**
                  * User-specified key/value pairs for the resource. Individual keys can be removed
@@ -63211,6 +64382,12 @@ constructor(
                  */
                 @JsonProperty("currency") @ExcludeMissing fun _currency() = currency
 
+                /**
+                 * A transient ID that can be used to reference this price when adding adjustments
+                 * in the same API call.
+                 */
+                @JsonProperty("reference_id") @ExcludeMissing fun _referenceId() = referenceId
+
                 @JsonAnyGetter
                 @ExcludeMissing
                 fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
@@ -63232,6 +64409,7 @@ constructor(
                         modelType()
                         unitWithProrationConfig().validate()
                         currency()
+                        referenceId()
                         validated = true
                     }
                 }
@@ -63259,6 +64437,7 @@ constructor(
                         this.modelType == other.modelType &&
                         this.unitWithProrationConfig == other.unitWithProrationConfig &&
                         this.currency == other.currency &&
+                        this.referenceId == other.referenceId &&
                         this.additionalProperties == other.additionalProperties
                 }
 
@@ -63281,6 +64460,7 @@ constructor(
                                 modelType,
                                 unitWithProrationConfig,
                                 currency,
+                                referenceId,
                                 additionalProperties,
                             )
                     }
@@ -63288,7 +64468,7 @@ constructor(
                 }
 
                 override fun toString() =
-                    "NewSubscriptionUnitWithProrationPrice{metadata=$metadata, externalPriceId=$externalPriceId, name=$name, billableMetricId=$billableMetricId, itemId=$itemId, billedInAdvance=$billedInAdvance, fixedPriceQuantity=$fixedPriceQuantity, invoiceGroupingKey=$invoiceGroupingKey, cadence=$cadence, billingCycleConfiguration=$billingCycleConfiguration, invoicingCycleConfiguration=$invoicingCycleConfiguration, conversionRate=$conversionRate, modelType=$modelType, unitWithProrationConfig=$unitWithProrationConfig, currency=$currency, additionalProperties=$additionalProperties}"
+                    "NewSubscriptionUnitWithProrationPrice{metadata=$metadata, externalPriceId=$externalPriceId, name=$name, billableMetricId=$billableMetricId, itemId=$itemId, billedInAdvance=$billedInAdvance, fixedPriceQuantity=$fixedPriceQuantity, invoiceGroupingKey=$invoiceGroupingKey, cadence=$cadence, billingCycleConfiguration=$billingCycleConfiguration, invoicingCycleConfiguration=$invoicingCycleConfiguration, conversionRate=$conversionRate, modelType=$modelType, unitWithProrationConfig=$unitWithProrationConfig, currency=$currency, referenceId=$referenceId, additionalProperties=$additionalProperties}"
 
                 companion object {
 
@@ -63316,6 +64496,7 @@ constructor(
                     private var unitWithProrationConfig: JsonField<UnitWithProrationConfig> =
                         JsonMissing.of()
                     private var currency: JsonField<String> = JsonMissing.of()
+                    private var referenceId: JsonField<String> = JsonMissing.of()
                     private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
                     internal fun from(
@@ -63342,6 +64523,7 @@ constructor(
                         this.unitWithProrationConfig =
                             newSubscriptionUnitWithProrationPrice.unitWithProrationConfig
                         this.currency = newSubscriptionUnitWithProrationPrice.currency
+                        this.referenceId = newSubscriptionUnitWithProrationPrice.referenceId
                         additionalProperties(
                             newSubscriptionUnitWithProrationPrice.additionalProperties
                         )
@@ -63542,6 +64724,22 @@ constructor(
                     @ExcludeMissing
                     fun currency(currency: JsonField<String>) = apply { this.currency = currency }
 
+                    /**
+                     * A transient ID that can be used to reference this price when adding
+                     * adjustments in the same API call.
+                     */
+                    fun referenceId(referenceId: String) = referenceId(JsonField.of(referenceId))
+
+                    /**
+                     * A transient ID that can be used to reference this price when adding
+                     * adjustments in the same API call.
+                     */
+                    @JsonProperty("reference_id")
+                    @ExcludeMissing
+                    fun referenceId(referenceId: JsonField<String>) = apply {
+                        this.referenceId = referenceId
+                    }
+
                     fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                         this.additionalProperties.clear()
                         this.additionalProperties.putAll(additionalProperties)
@@ -63574,6 +64772,7 @@ constructor(
                             modelType,
                             unitWithProrationConfig,
                             currency,
+                            referenceId,
                             additionalProperties.toUnmodifiable(),
                         )
                 }
@@ -64273,6 +65472,7 @@ constructor(
                 private val modelType: JsonField<ModelType>,
                 private val groupedAllocationConfig: JsonField<GroupedAllocationConfig>,
                 private val currency: JsonField<String>,
+                private val referenceId: JsonField<String>,
                 private val additionalProperties: Map<String, JsonValue>,
             ) {
 
@@ -64349,6 +65549,12 @@ constructor(
                  * price is billed.
                  */
                 fun currency(): String? = currency.getNullable("currency")
+
+                /**
+                 * A transient ID that can be used to reference this price when adding adjustments
+                 * in the same API call.
+                 */
+                fun referenceId(): String? = referenceId.getNullable("reference_id")
 
                 /**
                  * User-specified key/value pairs for the resource. Individual keys can be removed
@@ -64433,6 +65639,12 @@ constructor(
                  */
                 @JsonProperty("currency") @ExcludeMissing fun _currency() = currency
 
+                /**
+                 * A transient ID that can be used to reference this price when adding adjustments
+                 * in the same API call.
+                 */
+                @JsonProperty("reference_id") @ExcludeMissing fun _referenceId() = referenceId
+
                 @JsonAnyGetter
                 @ExcludeMissing
                 fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
@@ -64454,6 +65666,7 @@ constructor(
                         modelType()
                         groupedAllocationConfig().validate()
                         currency()
+                        referenceId()
                         validated = true
                     }
                 }
@@ -64481,6 +65694,7 @@ constructor(
                         this.modelType == other.modelType &&
                         this.groupedAllocationConfig == other.groupedAllocationConfig &&
                         this.currency == other.currency &&
+                        this.referenceId == other.referenceId &&
                         this.additionalProperties == other.additionalProperties
                 }
 
@@ -64503,6 +65717,7 @@ constructor(
                                 modelType,
                                 groupedAllocationConfig,
                                 currency,
+                                referenceId,
                                 additionalProperties,
                             )
                     }
@@ -64510,7 +65725,7 @@ constructor(
                 }
 
                 override fun toString() =
-                    "NewSubscriptionGroupedAllocationPrice{metadata=$metadata, externalPriceId=$externalPriceId, name=$name, billableMetricId=$billableMetricId, itemId=$itemId, billedInAdvance=$billedInAdvance, fixedPriceQuantity=$fixedPriceQuantity, invoiceGroupingKey=$invoiceGroupingKey, cadence=$cadence, billingCycleConfiguration=$billingCycleConfiguration, invoicingCycleConfiguration=$invoicingCycleConfiguration, conversionRate=$conversionRate, modelType=$modelType, groupedAllocationConfig=$groupedAllocationConfig, currency=$currency, additionalProperties=$additionalProperties}"
+                    "NewSubscriptionGroupedAllocationPrice{metadata=$metadata, externalPriceId=$externalPriceId, name=$name, billableMetricId=$billableMetricId, itemId=$itemId, billedInAdvance=$billedInAdvance, fixedPriceQuantity=$fixedPriceQuantity, invoiceGroupingKey=$invoiceGroupingKey, cadence=$cadence, billingCycleConfiguration=$billingCycleConfiguration, invoicingCycleConfiguration=$invoicingCycleConfiguration, conversionRate=$conversionRate, modelType=$modelType, groupedAllocationConfig=$groupedAllocationConfig, currency=$currency, referenceId=$referenceId, additionalProperties=$additionalProperties}"
 
                 companion object {
 
@@ -64538,6 +65753,7 @@ constructor(
                     private var groupedAllocationConfig: JsonField<GroupedAllocationConfig> =
                         JsonMissing.of()
                     private var currency: JsonField<String> = JsonMissing.of()
+                    private var referenceId: JsonField<String> = JsonMissing.of()
                     private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
                     internal fun from(
@@ -64564,6 +65780,7 @@ constructor(
                         this.groupedAllocationConfig =
                             newSubscriptionGroupedAllocationPrice.groupedAllocationConfig
                         this.currency = newSubscriptionGroupedAllocationPrice.currency
+                        this.referenceId = newSubscriptionGroupedAllocationPrice.referenceId
                         additionalProperties(
                             newSubscriptionGroupedAllocationPrice.additionalProperties
                         )
@@ -64764,6 +65981,22 @@ constructor(
                     @ExcludeMissing
                     fun currency(currency: JsonField<String>) = apply { this.currency = currency }
 
+                    /**
+                     * A transient ID that can be used to reference this price when adding
+                     * adjustments in the same API call.
+                     */
+                    fun referenceId(referenceId: String) = referenceId(JsonField.of(referenceId))
+
+                    /**
+                     * A transient ID that can be used to reference this price when adding
+                     * adjustments in the same API call.
+                     */
+                    @JsonProperty("reference_id")
+                    @ExcludeMissing
+                    fun referenceId(referenceId: JsonField<String>) = apply {
+                        this.referenceId = referenceId
+                    }
+
                     fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                         this.additionalProperties.clear()
                         this.additionalProperties.putAll(additionalProperties)
@@ -64796,6 +66029,7 @@ constructor(
                             modelType,
                             groupedAllocationConfig,
                             currency,
+                            referenceId,
                             additionalProperties.toUnmodifiable(),
                         )
                 }
@@ -65498,6 +66732,7 @@ constructor(
                 private val groupedWithProratedMinimumConfig:
                     JsonField<GroupedWithProratedMinimumConfig>,
                 private val currency: JsonField<String>,
+                private val referenceId: JsonField<String>,
                 private val additionalProperties: Map<String, JsonValue>,
             ) {
 
@@ -65576,6 +66811,12 @@ constructor(
                  * price is billed.
                  */
                 fun currency(): String? = currency.getNullable("currency")
+
+                /**
+                 * A transient ID that can be used to reference this price when adding adjustments
+                 * in the same API call.
+                 */
+                fun referenceId(): String? = referenceId.getNullable("reference_id")
 
                 /**
                  * User-specified key/value pairs for the resource. Individual keys can be removed
@@ -65660,6 +66901,12 @@ constructor(
                  */
                 @JsonProperty("currency") @ExcludeMissing fun _currency() = currency
 
+                /**
+                 * A transient ID that can be used to reference this price when adding adjustments
+                 * in the same API call.
+                 */
+                @JsonProperty("reference_id") @ExcludeMissing fun _referenceId() = referenceId
+
                 @JsonAnyGetter
                 @ExcludeMissing
                 fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
@@ -65681,6 +66928,7 @@ constructor(
                         modelType()
                         groupedWithProratedMinimumConfig().validate()
                         currency()
+                        referenceId()
                         validated = true
                     }
                 }
@@ -65709,6 +66957,7 @@ constructor(
                         this.groupedWithProratedMinimumConfig ==
                             other.groupedWithProratedMinimumConfig &&
                         this.currency == other.currency &&
+                        this.referenceId == other.referenceId &&
                         this.additionalProperties == other.additionalProperties
                 }
 
@@ -65731,6 +66980,7 @@ constructor(
                                 modelType,
                                 groupedWithProratedMinimumConfig,
                                 currency,
+                                referenceId,
                                 additionalProperties,
                             )
                     }
@@ -65738,7 +66988,7 @@ constructor(
                 }
 
                 override fun toString() =
-                    "NewSubscriptionGroupedWithProratedMinimumPrice{metadata=$metadata, externalPriceId=$externalPriceId, name=$name, billableMetricId=$billableMetricId, itemId=$itemId, billedInAdvance=$billedInAdvance, fixedPriceQuantity=$fixedPriceQuantity, invoiceGroupingKey=$invoiceGroupingKey, cadence=$cadence, billingCycleConfiguration=$billingCycleConfiguration, invoicingCycleConfiguration=$invoicingCycleConfiguration, conversionRate=$conversionRate, modelType=$modelType, groupedWithProratedMinimumConfig=$groupedWithProratedMinimumConfig, currency=$currency, additionalProperties=$additionalProperties}"
+                    "NewSubscriptionGroupedWithProratedMinimumPrice{metadata=$metadata, externalPriceId=$externalPriceId, name=$name, billableMetricId=$billableMetricId, itemId=$itemId, billedInAdvance=$billedInAdvance, fixedPriceQuantity=$fixedPriceQuantity, invoiceGroupingKey=$invoiceGroupingKey, cadence=$cadence, billingCycleConfiguration=$billingCycleConfiguration, invoicingCycleConfiguration=$invoicingCycleConfiguration, conversionRate=$conversionRate, modelType=$modelType, groupedWithProratedMinimumConfig=$groupedWithProratedMinimumConfig, currency=$currency, referenceId=$referenceId, additionalProperties=$additionalProperties}"
 
                 companion object {
 
@@ -65767,6 +67017,7 @@ constructor(
                         JsonField<GroupedWithProratedMinimumConfig> =
                         JsonMissing.of()
                     private var currency: JsonField<String> = JsonMissing.of()
+                    private var referenceId: JsonField<String> = JsonMissing.of()
                     private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
                     internal fun from(
@@ -65799,6 +67050,8 @@ constructor(
                             newSubscriptionGroupedWithProratedMinimumPrice
                                 .groupedWithProratedMinimumConfig
                         this.currency = newSubscriptionGroupedWithProratedMinimumPrice.currency
+                        this.referenceId =
+                            newSubscriptionGroupedWithProratedMinimumPrice.referenceId
                         additionalProperties(
                             newSubscriptionGroupedWithProratedMinimumPrice.additionalProperties
                         )
@@ -66006,6 +67259,22 @@ constructor(
                     @ExcludeMissing
                     fun currency(currency: JsonField<String>) = apply { this.currency = currency }
 
+                    /**
+                     * A transient ID that can be used to reference this price when adding
+                     * adjustments in the same API call.
+                     */
+                    fun referenceId(referenceId: String) = referenceId(JsonField.of(referenceId))
+
+                    /**
+                     * A transient ID that can be used to reference this price when adding
+                     * adjustments in the same API call.
+                     */
+                    @JsonProperty("reference_id")
+                    @ExcludeMissing
+                    fun referenceId(referenceId: JsonField<String>) = apply {
+                        this.referenceId = referenceId
+                    }
+
                     fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                         this.additionalProperties.clear()
                         this.additionalProperties.putAll(additionalProperties)
@@ -66038,6 +67307,7 @@ constructor(
                             modelType,
                             groupedWithProratedMinimumConfig,
                             currency,
+                            referenceId,
                             additionalProperties.toUnmodifiable(),
                         )
                 }
@@ -66741,6 +68011,7 @@ constructor(
                 private val modelType: JsonField<ModelType>,
                 private val bulkWithProrationConfig: JsonField<BulkWithProrationConfig>,
                 private val currency: JsonField<String>,
+                private val referenceId: JsonField<String>,
                 private val additionalProperties: Map<String, JsonValue>,
             ) {
 
@@ -66817,6 +68088,12 @@ constructor(
                  * price is billed.
                  */
                 fun currency(): String? = currency.getNullable("currency")
+
+                /**
+                 * A transient ID that can be used to reference this price when adding adjustments
+                 * in the same API call.
+                 */
+                fun referenceId(): String? = referenceId.getNullable("reference_id")
 
                 /**
                  * User-specified key/value pairs for the resource. Individual keys can be removed
@@ -66901,6 +68178,12 @@ constructor(
                  */
                 @JsonProperty("currency") @ExcludeMissing fun _currency() = currency
 
+                /**
+                 * A transient ID that can be used to reference this price when adding adjustments
+                 * in the same API call.
+                 */
+                @JsonProperty("reference_id") @ExcludeMissing fun _referenceId() = referenceId
+
                 @JsonAnyGetter
                 @ExcludeMissing
                 fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
@@ -66922,6 +68205,7 @@ constructor(
                         modelType()
                         bulkWithProrationConfig().validate()
                         currency()
+                        referenceId()
                         validated = true
                     }
                 }
@@ -66949,6 +68233,7 @@ constructor(
                         this.modelType == other.modelType &&
                         this.bulkWithProrationConfig == other.bulkWithProrationConfig &&
                         this.currency == other.currency &&
+                        this.referenceId == other.referenceId &&
                         this.additionalProperties == other.additionalProperties
                 }
 
@@ -66971,6 +68256,7 @@ constructor(
                                 modelType,
                                 bulkWithProrationConfig,
                                 currency,
+                                referenceId,
                                 additionalProperties,
                             )
                     }
@@ -66978,7 +68264,7 @@ constructor(
                 }
 
                 override fun toString() =
-                    "NewSubscriptionBulkWithProrationPrice{metadata=$metadata, externalPriceId=$externalPriceId, name=$name, billableMetricId=$billableMetricId, itemId=$itemId, billedInAdvance=$billedInAdvance, fixedPriceQuantity=$fixedPriceQuantity, invoiceGroupingKey=$invoiceGroupingKey, cadence=$cadence, billingCycleConfiguration=$billingCycleConfiguration, invoicingCycleConfiguration=$invoicingCycleConfiguration, conversionRate=$conversionRate, modelType=$modelType, bulkWithProrationConfig=$bulkWithProrationConfig, currency=$currency, additionalProperties=$additionalProperties}"
+                    "NewSubscriptionBulkWithProrationPrice{metadata=$metadata, externalPriceId=$externalPriceId, name=$name, billableMetricId=$billableMetricId, itemId=$itemId, billedInAdvance=$billedInAdvance, fixedPriceQuantity=$fixedPriceQuantity, invoiceGroupingKey=$invoiceGroupingKey, cadence=$cadence, billingCycleConfiguration=$billingCycleConfiguration, invoicingCycleConfiguration=$invoicingCycleConfiguration, conversionRate=$conversionRate, modelType=$modelType, bulkWithProrationConfig=$bulkWithProrationConfig, currency=$currency, referenceId=$referenceId, additionalProperties=$additionalProperties}"
 
                 companion object {
 
@@ -67006,6 +68292,7 @@ constructor(
                     private var bulkWithProrationConfig: JsonField<BulkWithProrationConfig> =
                         JsonMissing.of()
                     private var currency: JsonField<String> = JsonMissing.of()
+                    private var referenceId: JsonField<String> = JsonMissing.of()
                     private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
                     internal fun from(
@@ -67032,6 +68319,7 @@ constructor(
                         this.bulkWithProrationConfig =
                             newSubscriptionBulkWithProrationPrice.bulkWithProrationConfig
                         this.currency = newSubscriptionBulkWithProrationPrice.currency
+                        this.referenceId = newSubscriptionBulkWithProrationPrice.referenceId
                         additionalProperties(
                             newSubscriptionBulkWithProrationPrice.additionalProperties
                         )
@@ -67232,6 +68520,22 @@ constructor(
                     @ExcludeMissing
                     fun currency(currency: JsonField<String>) = apply { this.currency = currency }
 
+                    /**
+                     * A transient ID that can be used to reference this price when adding
+                     * adjustments in the same API call.
+                     */
+                    fun referenceId(referenceId: String) = referenceId(JsonField.of(referenceId))
+
+                    /**
+                     * A transient ID that can be used to reference this price when adding
+                     * adjustments in the same API call.
+                     */
+                    @JsonProperty("reference_id")
+                    @ExcludeMissing
+                    fun referenceId(referenceId: JsonField<String>) = apply {
+                        this.referenceId = referenceId
+                    }
+
                     fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                         this.additionalProperties.clear()
                         this.additionalProperties.putAll(additionalProperties)
@@ -67264,6 +68568,7 @@ constructor(
                             modelType,
                             bulkWithProrationConfig,
                             currency,
+                            referenceId,
                             additionalProperties.toUnmodifiable(),
                         )
                 }
