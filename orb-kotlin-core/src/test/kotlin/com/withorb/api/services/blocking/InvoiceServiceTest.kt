@@ -137,7 +137,9 @@ class InvoiceServiceTest {
                 .build()
         val invoiceService = client.invoices()
         val invoice =
-            invoiceService.issue(InvoiceIssueParams.builder().invoiceId("invoice_id").build())
+            invoiceService.issue(
+                InvoiceIssueParams.builder().invoiceId("invoice_id").synchronous(true).build()
+            )
         println(invoice)
         invoice.validate()
     }
