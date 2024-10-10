@@ -107,6 +107,10 @@ constructor(
      * caller retrieve the next page of results if they exist.
      *
      * By default, this only returns invoices that are `issued`, `paid`, or `synced`.
+     *
+     * When fetching any `draft` invoices, this returns the last-computed invoice values for each
+     * draft invoice, which may not always be up-to-date since Orb regularly refreshes invoices
+     * asynchronously.
      */
     override suspend fun list(
         params: InvoiceListParams,
@@ -218,7 +222,7 @@ constructor(
                 .putAllQueryParams(params.getQueryParams())
                 .putAllHeaders(clientOptions.headers)
                 .putAllHeaders(params.getHeaders())
-                .apply { params.getBody()?.also { body(json(clientOptions.jsonMapper, it)) } }
+                .body(json(clientOptions.jsonMapper, params.getBody()))
                 .build()
         return clientOptions.httpClient.executeAsync(request, requestOptions).let { response ->
             response

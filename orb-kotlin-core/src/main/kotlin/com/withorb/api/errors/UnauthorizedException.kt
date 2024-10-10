@@ -2,12 +2,8 @@ package com.withorb.api.errors
 
 import com.google.common.collect.ListMultimap
 
-class UnauthorizedException
-constructor(
+class UnauthorizedException(
     headers: ListMultimap<String, String>,
-    private val error: OrbError,
-) : OrbServiceException(headers, "${error}") {
-    override fun statusCode(): Int = 401
-
-    fun error(): OrbError = error
-}
+    body: String,
+    error: OrbError,
+) : OrbServiceException(401, headers, body, error)

@@ -446,12 +446,12 @@ constructor(
         fun discount(discount: Discount) = apply { this.discount = discount }
 
         /** An optional discount to attach to the invoice. */
-        fun discount(percentageDiscount: Discount.PercentageDiscount) = apply {
+        fun discount(percentageDiscount: PercentageDiscount) = apply {
             this.discount = Discount.ofPercentageDiscount(percentageDiscount)
         }
 
         /** An optional discount to attach to the invoice. */
-        fun discount(trialDiscount: Discount.TrialDiscount) = apply {
+        fun discount(trialDiscount: TrialDiscount) = apply {
             this.discount = Discount.ofTrialDiscount(trialDiscount)
         }
 
@@ -461,7 +461,7 @@ constructor(
         }
 
         /** An optional discount to attach to the invoice. */
-        fun discount(amountDiscount: Discount.AmountDiscount) = apply {
+        fun discount(amountDiscount: AmountDiscount) = apply {
             this.discount = Discount.ofAmountDiscount(amountDiscount)
         }
 

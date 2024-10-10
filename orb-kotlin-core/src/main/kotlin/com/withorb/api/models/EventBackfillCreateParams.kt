@@ -88,7 +88,10 @@ constructor(
          */
         @JsonProperty("close_time") fun closeTime(): OffsetDateTime? = closeTime
 
-        /** The ID of the customer to which this backfill is scoped. */
+        /**
+         * The Orb-generated ID of the customer to which this backfill is scoped. Omitting this
+         * field will scope the backfill to all customers.
+         */
         @JsonProperty("customer_id") fun customerId(): String? = customerId
 
         /**
@@ -98,7 +101,10 @@ constructor(
          */
         @JsonProperty("deprecation_filter") fun deprecationFilter(): String? = deprecationFilter
 
-        /** The external customer ID of the customer to which this backfill is scoped. */
+        /**
+         * The external customer ID of the customer to which this backfill is scoped. Omitting this
+         * field will scope the backfill to all customers.
+         */
         @JsonProperty("external_customer_id") fun externalCustomerId(): String? = externalCustomerId
 
         /**
@@ -197,7 +203,10 @@ constructor(
             @JsonProperty("close_time")
             fun closeTime(closeTime: OffsetDateTime) = apply { this.closeTime = closeTime }
 
-            /** The ID of the customer to which this backfill is scoped. */
+            /**
+             * The Orb-generated ID of the customer to which this backfill is scoped. Omitting this
+             * field will scope the backfill to all customers.
+             */
             @JsonProperty("customer_id")
             fun customerId(customerId: String) = apply { this.customerId = customerId }
 
@@ -211,7 +220,10 @@ constructor(
                 this.deprecationFilter = deprecationFilter
             }
 
-            /** The external customer ID of the customer to which this backfill is scoped. */
+            /**
+             * The external customer ID of the customer to which this backfill is scoped. Omitting
+             * this field will scope the backfill to all customers.
+             */
             @JsonProperty("external_customer_id")
             fun externalCustomerId(externalCustomerId: String) = apply {
                 this.externalCustomerId = externalCustomerId
@@ -345,7 +357,10 @@ constructor(
          */
         fun closeTime(closeTime: OffsetDateTime) = apply { this.closeTime = closeTime }
 
-        /** The ID of the customer to which this backfill is scoped. */
+        /**
+         * The Orb-generated ID of the customer to which this backfill is scoped. Omitting this
+         * field will scope the backfill to all customers.
+         */
         fun customerId(customerId: String) = apply { this.customerId = customerId }
 
         /**
@@ -357,7 +372,10 @@ constructor(
             this.deprecationFilter = deprecationFilter
         }
 
-        /** The external customer ID of the customer to which this backfill is scoped. */
+        /**
+         * The external customer ID of the customer to which this backfill is scoped. Omitting this
+         * field will scope the backfill to all customers.
+         */
         fun externalCustomerId(externalCustomerId: String) = apply {
             this.externalCustomerId = externalCustomerId
         }

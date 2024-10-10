@@ -45,8 +45,8 @@ private constructor(
     private val createdAt: JsonField<OffsetDateTime>,
     private val currency: JsonField<String>,
     private val customer: JsonField<Customer>,
-    private val discount: JsonField<Discount>,
-    private val discounts: JsonField<List<Discount>>,
+    private val discount: JsonField<InvoiceLevelDiscount>,
+    private val discounts: JsonField<List<InvoiceLevelDiscount>>,
     private val dueDate: JsonField<OffsetDateTime>,
     private val id: JsonField<String>,
     private val invoicePdf: JsonField<String>,
@@ -146,9 +146,13 @@ private constructor(
 
     fun customer(): Customer = customer.getRequired("customer")
 
-    fun discount(): Discount? = discount.getNullable("discount")
+    /**
+     * This field is deprecated in favor of `discounts`. If a `discounts` list is provided, the
+     * first discount in the list will be returned. If the list is empty, `None` will be returned.
+     */
+    fun discount(): InvoiceLevelDiscount? = discount.getNullable("discount")
 
-    fun discounts(): List<Discount> = discounts.getRequired("discounts")
+    fun discounts(): List<InvoiceLevelDiscount> = discounts.getRequired("discounts")
 
     /** When the invoice payment is due. */
     fun dueDate(): OffsetDateTime = dueDate.getRequired("due_date")
@@ -194,7 +198,10 @@ private constructor(
 
     fun billingAddress(): BillingAddress? = billingAddress.getNullable("billing_address")
 
-    /** A URL for the invoice portal. */
+    /**
+     * A URL for the customer-facing invoice portal. This URL expires 30 days after the invoice's
+     * due date, or 60 days after being re-generated through the UI.
+     */
     fun hostedInvoiceUrl(): String? = hostedInvoiceUrl.getNullable("hosted_invoice_url")
 
     /**
@@ -394,6 +401,10 @@ private constructor(
 
     @JsonProperty("customer") @ExcludeMissing fun _customer() = customer
 
+    /**
+     * This field is deprecated in favor of `discounts`. If a `discounts` list is provided, the
+     * first discount in the list will be returned. If the list is empty, `None` will be returned.
+     */
     @JsonProperty("discount") @ExcludeMissing fun _discount() = discount
 
     @JsonProperty("discounts") @ExcludeMissing fun _discounts() = discounts
@@ -443,7 +454,10 @@ private constructor(
 
     @JsonProperty("billing_address") @ExcludeMissing fun _billingAddress() = billingAddress
 
-    /** A URL for the invoice portal. */
+    /**
+     * A URL for the customer-facing invoice portal. This URL expires 30 days after the invoice's
+     * due date, or 60 days after being re-generated through the UI.
+     */
     @JsonProperty("hosted_invoice_url") @ExcludeMissing fun _hostedInvoiceUrl() = hostedInvoiceUrl
 
     /**
@@ -752,8 +766,8 @@ private constructor(
         private var createdAt: JsonField<OffsetDateTime> = JsonMissing.of()
         private var currency: JsonField<String> = JsonMissing.of()
         private var customer: JsonField<Customer> = JsonMissing.of()
-        private var discount: JsonField<Discount> = JsonMissing.of()
-        private var discounts: JsonField<List<Discount>> = JsonMissing.of()
+        private var discount: JsonField<InvoiceLevelDiscount> = JsonMissing.of()
+        private var discounts: JsonField<List<InvoiceLevelDiscount>> = JsonMissing.of()
         private var dueDate: JsonField<OffsetDateTime> = JsonMissing.of()
         private var id: JsonField<String> = JsonMissing.of()
         private var invoicePdf: JsonField<String> = JsonMissing.of()
@@ -1013,17 +1027,29 @@ private constructor(
         @ExcludeMissing
         fun customer(customer: JsonField<Customer>) = apply { this.customer = customer }
 
-        fun discount(discount: Discount) = discount(JsonField.of(discount))
+        /**
+         * This field is deprecated in favor of `discounts`. If a `discounts` list is provided, the
+         * first discount in the list will be returned. If the list is empty, `None` will be
+         * returned.
+         */
+        fun discount(discount: InvoiceLevelDiscount) = discount(JsonField.of(discount))
 
+        /**
+         * This field is deprecated in favor of `discounts`. If a `discounts` list is provided, the
+         * first discount in the list will be returned. If the list is empty, `None` will be
+         * returned.
+         */
         @JsonProperty("discount")
         @ExcludeMissing
-        fun discount(discount: JsonField<Discount>) = apply { this.discount = discount }
+        fun discount(discount: JsonField<InvoiceLevelDiscount>) = apply { this.discount = discount }
 
-        fun discounts(discounts: List<Discount>) = discounts(JsonField.of(discounts))
+        fun discounts(discounts: List<InvoiceLevelDiscount>) = discounts(JsonField.of(discounts))
 
         @JsonProperty("discounts")
         @ExcludeMissing
-        fun discounts(discounts: JsonField<List<Discount>>) = apply { this.discounts = discounts }
+        fun discounts(discounts: JsonField<List<InvoiceLevelDiscount>>) = apply {
+            this.discounts = discounts
+        }
 
         /** When the invoice payment is due. */
         fun dueDate(dueDate: OffsetDateTime) = dueDate(JsonField.of(dueDate))
@@ -1163,11 +1189,17 @@ private constructor(
             this.billingAddress = billingAddress
         }
 
-        /** A URL for the invoice portal. */
+        /**
+         * A URL for the customer-facing invoice portal. This URL expires 30 days after the
+         * invoice's due date, or 60 days after being re-generated through the UI.
+         */
         fun hostedInvoiceUrl(hostedInvoiceUrl: String) =
             hostedInvoiceUrl(JsonField.of(hostedInvoiceUrl))
 
-        /** A URL for the invoice portal. */
+        /**
+         * A URL for the customer-facing invoice portal. This URL expires 30 days after the
+         * invoice's due date, or 60 days after being re-generated through the UI.
+         */
         @JsonProperty("hosted_invoice_url")
         @ExcludeMissing
         fun hostedInvoiceUrl(hostedInvoiceUrl: JsonField<String>) = apply {
