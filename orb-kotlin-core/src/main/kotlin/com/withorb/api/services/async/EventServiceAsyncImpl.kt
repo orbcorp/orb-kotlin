@@ -18,6 +18,8 @@ import com.withorb.api.models.EventUpdateParams
 import com.withorb.api.models.EventUpdateResponse
 import com.withorb.api.services.async.events.BackfillServiceAsync
 import com.withorb.api.services.async.events.BackfillServiceAsyncImpl
+import com.withorb.api.services.async.events.VolumeServiceAsync
+import com.withorb.api.services.async.events.VolumeServiceAsyncImpl
 import com.withorb.api.services.errorHandler
 import com.withorb.api.services.json
 import com.withorb.api.services.jsonHandler
@@ -32,7 +34,11 @@ constructor(
 
     private val backfills: BackfillServiceAsync by lazy { BackfillServiceAsyncImpl(clientOptions) }
 
+    private val volume: VolumeServiceAsync by lazy { VolumeServiceAsyncImpl(clientOptions) }
+
     override fun backfills(): BackfillServiceAsync = backfills
+
+    override fun volume(): VolumeServiceAsync = volume
 
     private val updateHandler: Handler<EventUpdateResponse> =
         jsonHandler<EventUpdateResponse>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
