@@ -14,10 +14,13 @@ import com.withorb.api.models.EventSearchResponse
 import com.withorb.api.models.EventUpdateParams
 import com.withorb.api.models.EventUpdateResponse
 import com.withorb.api.services.blocking.events.BackfillService
+import com.withorb.api.services.blocking.events.VolumeService
 
 interface EventService {
 
     fun backfills(): BackfillService
+
+    fun volume(): VolumeService
 
     /**
      * This endpoint is used to amend a single usage event with a given `event_id`. `event_id`
