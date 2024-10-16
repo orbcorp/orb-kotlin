@@ -63,8 +63,6 @@ constructor(
         private val additionalProperties: Map<String, JsonValue>,
     ) {
 
-        private var hashCode: Int = 0
-
         /** A date string to specify the date of the payment. */
         @JsonProperty("payment_received_date")
         fun paymentReceivedDate(): LocalDate? = paymentReceivedDate
@@ -80,34 +78,6 @@ constructor(
         fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
 
         fun toBuilder() = Builder().from(this)
-
-        override fun equals(other: Any?): Boolean {
-            if (this === other) {
-                return true
-            }
-
-            return other is InvoiceMarkPaidBody &&
-                this.paymentReceivedDate == other.paymentReceivedDate &&
-                this.externalId == other.externalId &&
-                this.notes == other.notes &&
-                this.additionalProperties == other.additionalProperties
-        }
-
-        override fun hashCode(): Int {
-            if (hashCode == 0) {
-                hashCode =
-                    Objects.hash(
-                        paymentReceivedDate,
-                        externalId,
-                        notes,
-                        additionalProperties,
-                    )
-            }
-            return hashCode
-        }
-
-        override fun toString() =
-            "InvoiceMarkPaidBody{paymentReceivedDate=$paymentReceivedDate, externalId=$externalId, notes=$notes, additionalProperties=$additionalProperties}"
 
         companion object {
 
@@ -165,6 +135,26 @@ constructor(
                     additionalProperties.toUnmodifiable(),
                 )
         }
+
+        override fun equals(other: Any?): Boolean {
+            if (this === other) {
+                return true
+            }
+
+            return /* spotless:off */ other is InvoiceMarkPaidBody && this.paymentReceivedDate == other.paymentReceivedDate && this.externalId == other.externalId && this.notes == other.notes && this.additionalProperties == other.additionalProperties /* spotless:on */
+        }
+
+        private var hashCode: Int = 0
+
+        override fun hashCode(): Int {
+            if (hashCode == 0) {
+                hashCode = /* spotless:off */ Objects.hash(paymentReceivedDate, externalId, notes, additionalProperties) /* spotless:on */
+            }
+            return hashCode
+        }
+
+        override fun toString() =
+            "InvoiceMarkPaidBody{paymentReceivedDate=$paymentReceivedDate, externalId=$externalId, notes=$notes, additionalProperties=$additionalProperties}"
     }
 
     fun _additionalQueryParams(): Map<String, List<String>> = additionalQueryParams
@@ -178,26 +168,11 @@ constructor(
             return true
         }
 
-        return other is InvoiceMarkPaidParams &&
-            this.invoiceId == other.invoiceId &&
-            this.paymentReceivedDate == other.paymentReceivedDate &&
-            this.externalId == other.externalId &&
-            this.notes == other.notes &&
-            this.additionalQueryParams == other.additionalQueryParams &&
-            this.additionalHeaders == other.additionalHeaders &&
-            this.additionalBodyProperties == other.additionalBodyProperties
+        return /* spotless:off */ other is InvoiceMarkPaidParams && this.invoiceId == other.invoiceId && this.paymentReceivedDate == other.paymentReceivedDate && this.externalId == other.externalId && this.notes == other.notes && this.additionalQueryParams == other.additionalQueryParams && this.additionalHeaders == other.additionalHeaders && this.additionalBodyProperties == other.additionalBodyProperties /* spotless:on */
     }
 
     override fun hashCode(): Int {
-        return Objects.hash(
-            invoiceId,
-            paymentReceivedDate,
-            externalId,
-            notes,
-            additionalQueryParams,
-            additionalHeaders,
-            additionalBodyProperties,
-        )
+        return /* spotless:off */ Objects.hash(invoiceId, paymentReceivedDate, externalId, notes, additionalQueryParams, additionalHeaders, additionalBodyProperties) /* spotless:on */
     }
 
     override fun toString() =

@@ -34,8 +34,6 @@ private constructor(
 
     private var validated: Boolean = false
 
-    private var hashCode: Int = 0
-
     fun id(): String = id.getRequired("id")
 
     fun balance(): Double = balance.getRequired("balance")
@@ -85,42 +83,6 @@ private constructor(
     }
 
     fun toBuilder() = Builder().from(this)
-
-    override fun equals(other: Any?): Boolean {
-        if (this === other) {
-            return true
-        }
-
-        return other is CustomerCreditListResponse &&
-            this.id == other.id &&
-            this.balance == other.balance &&
-            this.effectiveDate == other.effectiveDate &&
-            this.expiryDate == other.expiryDate &&
-            this.perUnitCostBasis == other.perUnitCostBasis &&
-            this.status == other.status &&
-            this.maximumInitialBalance == other.maximumInitialBalance &&
-            this.additionalProperties == other.additionalProperties
-    }
-
-    override fun hashCode(): Int {
-        if (hashCode == 0) {
-            hashCode =
-                Objects.hash(
-                    id,
-                    balance,
-                    effectiveDate,
-                    expiryDate,
-                    perUnitCostBasis,
-                    status,
-                    maximumInitialBalance,
-                    additionalProperties,
-                )
-        }
-        return hashCode
-    }
-
-    override fun toString() =
-        "CustomerCreditListResponse{id=$id, balance=$balance, effectiveDate=$effectiveDate, expiryDate=$expiryDate, perUnitCostBasis=$perUnitCostBasis, status=$status, maximumInitialBalance=$maximumInitialBalance, additionalProperties=$additionalProperties}"
 
     companion object {
 
@@ -240,7 +202,7 @@ private constructor(
                 return true
             }
 
-            return other is Status && this.value == other.value
+            return /* spotless:off */ other is Status && this.value == other.value /* spotless:on */
         }
 
         override fun hashCode() = value.hashCode()
@@ -283,4 +245,24 @@ private constructor(
 
         fun asString(): String = _value().asStringOrThrow()
     }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) {
+            return true
+        }
+
+        return /* spotless:off */ other is CustomerCreditListResponse && this.id == other.id && this.balance == other.balance && this.effectiveDate == other.effectiveDate && this.expiryDate == other.expiryDate && this.perUnitCostBasis == other.perUnitCostBasis && this.status == other.status && this.maximumInitialBalance == other.maximumInitialBalance && this.additionalProperties == other.additionalProperties /* spotless:on */
+    }
+
+    private var hashCode: Int = 0
+
+    override fun hashCode(): Int {
+        if (hashCode == 0) {
+            hashCode = /* spotless:off */ Objects.hash(id, balance, effectiveDate, expiryDate, perUnitCostBasis, status, maximumInitialBalance, additionalProperties) /* spotless:on */
+        }
+        return hashCode
+    }
+
+    override fun toString() =
+        "CustomerCreditListResponse{id=$id, balance=$balance, effectiveDate=$effectiveDate, expiryDate=$expiryDate, perUnitCostBasis=$perUnitCostBasis, status=$status, maximumInitialBalance=$maximumInitialBalance, additionalProperties=$additionalProperties}"
 }

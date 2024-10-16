@@ -36,9 +36,9 @@ class InvoiceCreateParamsTest {
             .customerId("4khy3nwzktxv7")
             .discount(
                 Discount.ofPercentageDiscount(
-                    Discount.PercentageDiscount.builder()
+                    PercentageDiscount.builder()
                         .appliesToPriceIds(listOf("string"))
-                        .discountType(Discount.PercentageDiscount.DiscountType.PERCENTAGE)
+                        .discountType(PercentageDiscount.DiscountType.PERCENTAGE)
                         .percentageDiscount(1.0)
                         .reason("reason")
                         .build()
@@ -78,9 +78,9 @@ class InvoiceCreateParamsTest {
                 .customerId("4khy3nwzktxv7")
                 .discount(
                     Discount.ofPercentageDiscount(
-                        Discount.PercentageDiscount.builder()
+                        PercentageDiscount.builder()
                             .appliesToPriceIds(listOf("string"))
-                            .discountType(Discount.PercentageDiscount.DiscountType.PERCENTAGE)
+                            .discountType(PercentageDiscount.DiscountType.PERCENTAGE)
                             .percentageDiscount(1.0)
                             .reason("reason")
                             .build()
@@ -118,9 +118,9 @@ class InvoiceCreateParamsTest {
         assertThat(body.discount())
             .isEqualTo(
                 Discount.ofPercentageDiscount(
-                    Discount.PercentageDiscount.builder()
+                    PercentageDiscount.builder()
                         .appliesToPriceIds(listOf("string"))
-                        .discountType(Discount.PercentageDiscount.DiscountType.PERCENTAGE)
+                        .discountType(PercentageDiscount.DiscountType.PERCENTAGE)
                         .percentageDiscount(1.0)
                         .reason("reason")
                         .build()

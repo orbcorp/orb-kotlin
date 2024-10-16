@@ -78,8 +78,6 @@ constructor(
         private val additionalProperties: Map<String, JsonValue>,
     ) {
 
-        private var hashCode: Int = 0
-
         /** The exclusive upper bound for event timestamps */
         @JsonProperty("timeframe_end") fun timeframeEnd(): OffsetDateTime? = timeframeEnd
 
@@ -111,40 +109,6 @@ constructor(
         fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
 
         fun toBuilder() = Builder().from(this)
-
-        override fun equals(other: Any?): Boolean {
-            if (this === other) {
-                return true
-            }
-
-            return other is PriceEvaluateBody &&
-                this.timeframeEnd == other.timeframeEnd &&
-                this.timeframeStart == other.timeframeStart &&
-                this.customerId == other.customerId &&
-                this.externalCustomerId == other.externalCustomerId &&
-                this.filter == other.filter &&
-                this.groupingKeys == other.groupingKeys &&
-                this.additionalProperties == other.additionalProperties
-        }
-
-        override fun hashCode(): Int {
-            if (hashCode == 0) {
-                hashCode =
-                    Objects.hash(
-                        timeframeEnd,
-                        timeframeStart,
-                        customerId,
-                        externalCustomerId,
-                        filter,
-                        groupingKeys,
-                        additionalProperties,
-                    )
-            }
-            return hashCode
-        }
-
-        override fun toString() =
-            "PriceEvaluateBody{timeframeEnd=$timeframeEnd, timeframeStart=$timeframeStart, customerId=$customerId, externalCustomerId=$externalCustomerId, filter=$filter, groupingKeys=$groupingKeys, additionalProperties=$additionalProperties}"
 
         companion object {
 
@@ -235,6 +199,26 @@ constructor(
                     additionalProperties.toUnmodifiable(),
                 )
         }
+
+        override fun equals(other: Any?): Boolean {
+            if (this === other) {
+                return true
+            }
+
+            return /* spotless:off */ other is PriceEvaluateBody && this.timeframeEnd == other.timeframeEnd && this.timeframeStart == other.timeframeStart && this.customerId == other.customerId && this.externalCustomerId == other.externalCustomerId && this.filter == other.filter && this.groupingKeys == other.groupingKeys && this.additionalProperties == other.additionalProperties /* spotless:on */
+        }
+
+        private var hashCode: Int = 0
+
+        override fun hashCode(): Int {
+            if (hashCode == 0) {
+                hashCode = /* spotless:off */ Objects.hash(timeframeEnd, timeframeStart, customerId, externalCustomerId, filter, groupingKeys, additionalProperties) /* spotless:on */
+            }
+            return hashCode
+        }
+
+        override fun toString() =
+            "PriceEvaluateBody{timeframeEnd=$timeframeEnd, timeframeStart=$timeframeStart, customerId=$customerId, externalCustomerId=$externalCustomerId, filter=$filter, groupingKeys=$groupingKeys, additionalProperties=$additionalProperties}"
     }
 
     fun _additionalQueryParams(): Map<String, List<String>> = additionalQueryParams
@@ -248,32 +232,11 @@ constructor(
             return true
         }
 
-        return other is PriceEvaluateParams &&
-            this.priceId == other.priceId &&
-            this.timeframeEnd == other.timeframeEnd &&
-            this.timeframeStart == other.timeframeStart &&
-            this.customerId == other.customerId &&
-            this.externalCustomerId == other.externalCustomerId &&
-            this.filter == other.filter &&
-            this.groupingKeys == other.groupingKeys &&
-            this.additionalQueryParams == other.additionalQueryParams &&
-            this.additionalHeaders == other.additionalHeaders &&
-            this.additionalBodyProperties == other.additionalBodyProperties
+        return /* spotless:off */ other is PriceEvaluateParams && this.priceId == other.priceId && this.timeframeEnd == other.timeframeEnd && this.timeframeStart == other.timeframeStart && this.customerId == other.customerId && this.externalCustomerId == other.externalCustomerId && this.filter == other.filter && this.groupingKeys == other.groupingKeys && this.additionalQueryParams == other.additionalQueryParams && this.additionalHeaders == other.additionalHeaders && this.additionalBodyProperties == other.additionalBodyProperties /* spotless:on */
     }
 
     override fun hashCode(): Int {
-        return Objects.hash(
-            priceId,
-            timeframeEnd,
-            timeframeStart,
-            customerId,
-            externalCustomerId,
-            filter,
-            groupingKeys,
-            additionalQueryParams,
-            additionalHeaders,
-            additionalBodyProperties,
-        )
+        return /* spotless:off */ Objects.hash(priceId, timeframeEnd, timeframeStart, customerId, externalCustomerId, filter, groupingKeys, additionalQueryParams, additionalHeaders, additionalBodyProperties) /* spotless:on */
     }
 
     override fun toString() =

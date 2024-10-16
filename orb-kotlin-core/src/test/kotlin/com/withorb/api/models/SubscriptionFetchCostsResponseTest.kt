@@ -55,11 +55,10 @@ class SubscriptionFetchCostsResponseTest {
                                                     .currency("currency")
                                                     .discount(
                                                         Discount.ofPercentageDiscount(
-                                                            Discount.PercentageDiscount.builder()
+                                                            PercentageDiscount.builder()
                                                                 .appliesToPriceIds(listOf("string"))
                                                                 .discountType(
-                                                                    Discount.PercentageDiscount
-                                                                        .DiscountType
+                                                                    PercentageDiscount.DiscountType
                                                                         .PERCENTAGE
                                                                 )
                                                                 .percentageDiscount(1.0)
@@ -172,10 +171,10 @@ class SubscriptionFetchCostsResponseTest {
                                             .currency("currency")
                                             .discount(
                                                 Discount.ofPercentageDiscount(
-                                                    Discount.PercentageDiscount.builder()
+                                                    PercentageDiscount.builder()
                                                         .appliesToPriceIds(listOf("string"))
                                                         .discountType(
-                                                            Discount.PercentageDiscount.DiscountType
+                                                            PercentageDiscount.DiscountType
                                                                 .PERCENTAGE
                                                         )
                                                         .percentageDiscount(1.0)

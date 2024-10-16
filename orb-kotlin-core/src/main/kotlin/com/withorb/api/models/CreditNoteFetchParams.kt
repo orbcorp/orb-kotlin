@@ -36,18 +36,11 @@ constructor(
             return true
         }
 
-        return other is CreditNoteFetchParams &&
-            this.creditNoteId == other.creditNoteId &&
-            this.additionalQueryParams == other.additionalQueryParams &&
-            this.additionalHeaders == other.additionalHeaders
+        return /* spotless:off */ other is CreditNoteFetchParams && this.creditNoteId == other.creditNoteId && this.additionalQueryParams == other.additionalQueryParams && this.additionalHeaders == other.additionalHeaders /* spotless:on */
     }
 
     override fun hashCode(): Int {
-        return Objects.hash(
-            creditNoteId,
-            additionalQueryParams,
-            additionalHeaders,
-        )
+        return /* spotless:off */ Objects.hash(creditNoteId, additionalQueryParams, additionalHeaders) /* spotless:on */
     }
 
     override fun toString() =

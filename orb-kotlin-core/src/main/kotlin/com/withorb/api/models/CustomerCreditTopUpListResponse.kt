@@ -34,8 +34,6 @@ private constructor(
 
     private var validated: Boolean = false
 
-    private var hashCode: Int = 0
-
     fun id(): String = id.getRequired("id")
 
     /**
@@ -119,44 +117,6 @@ private constructor(
     }
 
     fun toBuilder() = Builder().from(this)
-
-    override fun equals(other: Any?): Boolean {
-        if (this === other) {
-            return true
-        }
-
-        return other is CustomerCreditTopUpListResponse &&
-            this.id == other.id &&
-            this.currency == other.currency &&
-            this.threshold == other.threshold &&
-            this.amount == other.amount &&
-            this.perUnitCostBasis == other.perUnitCostBasis &&
-            this.invoiceSettings == other.invoiceSettings &&
-            this.expiresAfter == other.expiresAfter &&
-            this.expiresAfterUnit == other.expiresAfterUnit &&
-            this.additionalProperties == other.additionalProperties
-    }
-
-    override fun hashCode(): Int {
-        if (hashCode == 0) {
-            hashCode =
-                Objects.hash(
-                    id,
-                    currency,
-                    threshold,
-                    amount,
-                    perUnitCostBasis,
-                    invoiceSettings,
-                    expiresAfter,
-                    expiresAfterUnit,
-                    additionalProperties,
-                )
-        }
-        return hashCode
-    }
-
-    override fun toString() =
-        "CustomerCreditTopUpListResponse{id=$id, currency=$currency, threshold=$threshold, amount=$amount, perUnitCostBasis=$perUnitCostBasis, invoiceSettings=$invoiceSettings, expiresAfter=$expiresAfter, expiresAfterUnit=$expiresAfterUnit, additionalProperties=$additionalProperties}"
 
     companion object {
 
@@ -317,8 +277,6 @@ private constructor(
 
         private var validated: Boolean = false
 
-        private var hashCode: Int = 0
-
         /**
          * Whether the credits purchase invoice should auto collect with the customer's saved
          * payment method.
@@ -379,36 +337,6 @@ private constructor(
         }
 
         fun toBuilder() = Builder().from(this)
-
-        override fun equals(other: Any?): Boolean {
-            if (this === other) {
-                return true
-            }
-
-            return other is InvoiceSettings &&
-                this.autoCollection == other.autoCollection &&
-                this.netTerms == other.netTerms &&
-                this.memo == other.memo &&
-                this.requireSuccessfulPayment == other.requireSuccessfulPayment &&
-                this.additionalProperties == other.additionalProperties
-        }
-
-        override fun hashCode(): Int {
-            if (hashCode == 0) {
-                hashCode =
-                    Objects.hash(
-                        autoCollection,
-                        netTerms,
-                        memo,
-                        requireSuccessfulPayment,
-                        additionalProperties,
-                    )
-            }
-            return hashCode
-        }
-
-        override fun toString() =
-            "InvoiceSettings{autoCollection=$autoCollection, netTerms=$netTerms, memo=$memo, requireSuccessfulPayment=$requireSuccessfulPayment, additionalProperties=$additionalProperties}"
 
         companion object {
 
@@ -510,6 +438,26 @@ private constructor(
                     additionalProperties.toUnmodifiable(),
                 )
         }
+
+        override fun equals(other: Any?): Boolean {
+            if (this === other) {
+                return true
+            }
+
+            return /* spotless:off */ other is InvoiceSettings && this.autoCollection == other.autoCollection && this.netTerms == other.netTerms && this.memo == other.memo && this.requireSuccessfulPayment == other.requireSuccessfulPayment && this.additionalProperties == other.additionalProperties /* spotless:on */
+        }
+
+        private var hashCode: Int = 0
+
+        override fun hashCode(): Int {
+            if (hashCode == 0) {
+                hashCode = /* spotless:off */ Objects.hash(autoCollection, netTerms, memo, requireSuccessfulPayment, additionalProperties) /* spotless:on */
+            }
+            return hashCode
+        }
+
+        override fun toString() =
+            "InvoiceSettings{autoCollection=$autoCollection, netTerms=$netTerms, memo=$memo, requireSuccessfulPayment=$requireSuccessfulPayment, additionalProperties=$additionalProperties}"
     }
 
     class ExpiresAfterUnit
@@ -525,7 +473,7 @@ private constructor(
                 return true
             }
 
-            return other is ExpiresAfterUnit && this.value == other.value
+            return /* spotless:off */ other is ExpiresAfterUnit && this.value == other.value /* spotless:on */
         }
 
         override fun hashCode() = value.hashCode()
@@ -568,4 +516,24 @@ private constructor(
 
         fun asString(): String = _value().asStringOrThrow()
     }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) {
+            return true
+        }
+
+        return /* spotless:off */ other is CustomerCreditTopUpListResponse && this.id == other.id && this.currency == other.currency && this.threshold == other.threshold && this.amount == other.amount && this.perUnitCostBasis == other.perUnitCostBasis && this.invoiceSettings == other.invoiceSettings && this.expiresAfter == other.expiresAfter && this.expiresAfterUnit == other.expiresAfterUnit && this.additionalProperties == other.additionalProperties /* spotless:on */
+    }
+
+    private var hashCode: Int = 0
+
+    override fun hashCode(): Int {
+        if (hashCode == 0) {
+            hashCode = /* spotless:off */ Objects.hash(id, currency, threshold, amount, perUnitCostBasis, invoiceSettings, expiresAfter, expiresAfterUnit, additionalProperties) /* spotless:on */
+        }
+        return hashCode
+    }
+
+    override fun toString() =
+        "CustomerCreditTopUpListResponse{id=$id, currency=$currency, threshold=$threshold, amount=$amount, perUnitCostBasis=$perUnitCostBasis, invoiceSettings=$invoiceSettings, expiresAfter=$expiresAfter, expiresAfterUnit=$expiresAfterUnit, additionalProperties=$additionalProperties}"
 }
