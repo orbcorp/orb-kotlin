@@ -64,9 +64,7 @@ class SubscriptionCreateParamsTest {
                                             .PERCENTAGE
                                     )
                                     .amountDiscount("amount_discount")
-                                    .appliesToPriceIds(listOf("string"))
                                     .percentageDiscount(42.23)
-                                    .trialAmountDiscount("trial_amount_discount")
                                     .usageDiscount(42.23)
                                     .build()
                             )
@@ -140,9 +138,7 @@ class SubscriptionCreateParamsTest {
                                                 .PERCENTAGE
                                         )
                                         .amountDiscount("amount_discount")
-                                        .appliesToPriceIds(listOf("string"))
                                         .percentageDiscount(42.23)
-                                        .trialAmountDiscount("trial_amount_discount")
                                         .usageDiscount(42.23)
                                         .build()
                                 )
@@ -213,9 +209,7 @@ class SubscriptionCreateParamsTest {
                                             .PERCENTAGE
                                     )
                                     .amountDiscount("amount_discount")
-                                    .appliesToPriceIds(listOf("string"))
                                     .percentageDiscount(42.23)
-                                    .trialAmountDiscount("trial_amount_discount")
                                     .usageDiscount(42.23)
                                     .build()
                             )

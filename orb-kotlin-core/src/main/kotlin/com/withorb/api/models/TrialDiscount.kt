@@ -31,8 +31,6 @@ private constructor(
 
     private var validated: Boolean = false
 
-    private var hashCode: Int = 0
-
     fun discountType(): DiscountType = discountType.getRequired("discount_type")
 
     /**
@@ -88,38 +86,6 @@ private constructor(
     }
 
     fun toBuilder() = Builder().from(this)
-
-    override fun equals(other: Any?): Boolean {
-        if (this === other) {
-            return true
-        }
-
-        return other is TrialDiscount &&
-            this.discountType == other.discountType &&
-            this.appliesToPriceIds == other.appliesToPriceIds &&
-            this.reason == other.reason &&
-            this.trialAmountDiscount == other.trialAmountDiscount &&
-            this.trialPercentageDiscount == other.trialPercentageDiscount &&
-            this.additionalProperties == other.additionalProperties
-    }
-
-    override fun hashCode(): Int {
-        if (hashCode == 0) {
-            hashCode =
-                Objects.hash(
-                    discountType,
-                    appliesToPriceIds,
-                    reason,
-                    trialAmountDiscount,
-                    trialPercentageDiscount,
-                    additionalProperties,
-                )
-        }
-        return hashCode
-    }
-
-    override fun toString() =
-        "TrialDiscount{discountType=$discountType, appliesToPriceIds=$appliesToPriceIds, reason=$reason, trialAmountDiscount=$trialAmountDiscount, trialPercentageDiscount=$trialPercentageDiscount, additionalProperties=$additionalProperties}"
 
     companion object {
 
@@ -235,7 +201,7 @@ private constructor(
                 return true
             }
 
-            return other is DiscountType && this.value == other.value
+            return /* spotless:off */ other is DiscountType && this.value == other.value /* spotless:on */
         }
 
         override fun hashCode() = value.hashCode()
@@ -272,4 +238,24 @@ private constructor(
 
         fun asString(): String = _value().asStringOrThrow()
     }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) {
+            return true
+        }
+
+        return /* spotless:off */ other is TrialDiscount && this.discountType == other.discountType && this.appliesToPriceIds == other.appliesToPriceIds && this.reason == other.reason && this.trialAmountDiscount == other.trialAmountDiscount && this.trialPercentageDiscount == other.trialPercentageDiscount && this.additionalProperties == other.additionalProperties /* spotless:on */
+    }
+
+    private var hashCode: Int = 0
+
+    override fun hashCode(): Int {
+        if (hashCode == 0) {
+            hashCode = /* spotless:off */ Objects.hash(discountType, appliesToPriceIds, reason, trialAmountDiscount, trialPercentageDiscount, additionalProperties) /* spotless:on */
+        }
+        return hashCode
+    }
+
+    override fun toString() =
+        "TrialDiscount{discountType=$discountType, appliesToPriceIds=$appliesToPriceIds, reason=$reason, trialAmountDiscount=$trialAmountDiscount, trialPercentageDiscount=$trialPercentageDiscount, additionalProperties=$additionalProperties}"
 }

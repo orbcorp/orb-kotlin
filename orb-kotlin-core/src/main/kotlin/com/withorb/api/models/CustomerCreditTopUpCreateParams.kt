@@ -86,8 +86,6 @@ constructor(
         private val additionalProperties: Map<String, JsonValue>,
     ) {
 
-        private var hashCode: Int = 0
-
         /** The amount to increment when the threshold is reached. */
         @JsonProperty("amount") fun amount(): String? = amount
 
@@ -124,42 +122,6 @@ constructor(
         fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
 
         fun toBuilder() = Builder().from(this)
-
-        override fun equals(other: Any?): Boolean {
-            if (this === other) {
-                return true
-            }
-
-            return other is CustomerCreditTopUpCreateBody &&
-                this.amount == other.amount &&
-                this.currency == other.currency &&
-                this.invoiceSettings == other.invoiceSettings &&
-                this.perUnitCostBasis == other.perUnitCostBasis &&
-                this.threshold == other.threshold &&
-                this.expiresAfter == other.expiresAfter &&
-                this.expiresAfterUnit == other.expiresAfterUnit &&
-                this.additionalProperties == other.additionalProperties
-        }
-
-        override fun hashCode(): Int {
-            if (hashCode == 0) {
-                hashCode =
-                    Objects.hash(
-                        amount,
-                        currency,
-                        invoiceSettings,
-                        perUnitCostBasis,
-                        threshold,
-                        expiresAfter,
-                        expiresAfterUnit,
-                        additionalProperties,
-                    )
-            }
-            return hashCode
-        }
-
-        override fun toString() =
-            "CustomerCreditTopUpCreateBody{amount=$amount, currency=$currency, invoiceSettings=$invoiceSettings, perUnitCostBasis=$perUnitCostBasis, threshold=$threshold, expiresAfter=$expiresAfter, expiresAfterUnit=$expiresAfterUnit, additionalProperties=$additionalProperties}"
 
         companion object {
 
@@ -261,6 +223,26 @@ constructor(
                     additionalProperties.toUnmodifiable(),
                 )
         }
+
+        override fun equals(other: Any?): Boolean {
+            if (this === other) {
+                return true
+            }
+
+            return /* spotless:off */ other is CustomerCreditTopUpCreateBody && this.amount == other.amount && this.currency == other.currency && this.invoiceSettings == other.invoiceSettings && this.perUnitCostBasis == other.perUnitCostBasis && this.threshold == other.threshold && this.expiresAfter == other.expiresAfter && this.expiresAfterUnit == other.expiresAfterUnit && this.additionalProperties == other.additionalProperties /* spotless:on */
+        }
+
+        private var hashCode: Int = 0
+
+        override fun hashCode(): Int {
+            if (hashCode == 0) {
+                hashCode = /* spotless:off */ Objects.hash(amount, currency, invoiceSettings, perUnitCostBasis, threshold, expiresAfter, expiresAfterUnit, additionalProperties) /* spotless:on */
+            }
+            return hashCode
+        }
+
+        override fun toString() =
+            "CustomerCreditTopUpCreateBody{amount=$amount, currency=$currency, invoiceSettings=$invoiceSettings, perUnitCostBasis=$perUnitCostBasis, threshold=$threshold, expiresAfter=$expiresAfter, expiresAfterUnit=$expiresAfterUnit, additionalProperties=$additionalProperties}"
     }
 
     fun _additionalQueryParams(): Map<String, List<String>> = additionalQueryParams
@@ -274,34 +256,11 @@ constructor(
             return true
         }
 
-        return other is CustomerCreditTopUpCreateParams &&
-            this.customerId == other.customerId &&
-            this.amount == other.amount &&
-            this.currency == other.currency &&
-            this.invoiceSettings == other.invoiceSettings &&
-            this.perUnitCostBasis == other.perUnitCostBasis &&
-            this.threshold == other.threshold &&
-            this.expiresAfter == other.expiresAfter &&
-            this.expiresAfterUnit == other.expiresAfterUnit &&
-            this.additionalQueryParams == other.additionalQueryParams &&
-            this.additionalHeaders == other.additionalHeaders &&
-            this.additionalBodyProperties == other.additionalBodyProperties
+        return /* spotless:off */ other is CustomerCreditTopUpCreateParams && this.customerId == other.customerId && this.amount == other.amount && this.currency == other.currency && this.invoiceSettings == other.invoiceSettings && this.perUnitCostBasis == other.perUnitCostBasis && this.threshold == other.threshold && this.expiresAfter == other.expiresAfter && this.expiresAfterUnit == other.expiresAfterUnit && this.additionalQueryParams == other.additionalQueryParams && this.additionalHeaders == other.additionalHeaders && this.additionalBodyProperties == other.additionalBodyProperties /* spotless:on */
     }
 
     override fun hashCode(): Int {
-        return Objects.hash(
-            customerId,
-            amount,
-            currency,
-            invoiceSettings,
-            perUnitCostBasis,
-            threshold,
-            expiresAfter,
-            expiresAfterUnit,
-            additionalQueryParams,
-            additionalHeaders,
-            additionalBodyProperties,
-        )
+        return /* spotless:off */ Objects.hash(customerId, amount, currency, invoiceSettings, perUnitCostBasis, threshold, expiresAfter, expiresAfterUnit, additionalQueryParams, additionalHeaders, additionalBodyProperties) /* spotless:on */
     }
 
     override fun toString() =
@@ -464,8 +423,6 @@ constructor(
         private val additionalProperties: Map<String, JsonValue>,
     ) {
 
-        private var hashCode: Int = 0
-
         /**
          * Whether the credits purchase invoice should auto collect with the customer's saved
          * payment method.
@@ -493,36 +450,6 @@ constructor(
         fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
 
         fun toBuilder() = Builder().from(this)
-
-        override fun equals(other: Any?): Boolean {
-            if (this === other) {
-                return true
-            }
-
-            return other is InvoiceSettings &&
-                this.autoCollection == other.autoCollection &&
-                this.netTerms == other.netTerms &&
-                this.memo == other.memo &&
-                this.requireSuccessfulPayment == other.requireSuccessfulPayment &&
-                this.additionalProperties == other.additionalProperties
-        }
-
-        override fun hashCode(): Int {
-            if (hashCode == 0) {
-                hashCode =
-                    Objects.hash(
-                        autoCollection,
-                        netTerms,
-                        memo,
-                        requireSuccessfulPayment,
-                        additionalProperties,
-                    )
-            }
-            return hashCode
-        }
-
-        override fun toString() =
-            "InvoiceSettings{autoCollection=$autoCollection, netTerms=$netTerms, memo=$memo, requireSuccessfulPayment=$requireSuccessfulPayment, additionalProperties=$additionalProperties}"
 
         companion object {
 
@@ -596,6 +523,26 @@ constructor(
                     additionalProperties.toUnmodifiable(),
                 )
         }
+
+        override fun equals(other: Any?): Boolean {
+            if (this === other) {
+                return true
+            }
+
+            return /* spotless:off */ other is InvoiceSettings && this.autoCollection == other.autoCollection && this.netTerms == other.netTerms && this.memo == other.memo && this.requireSuccessfulPayment == other.requireSuccessfulPayment && this.additionalProperties == other.additionalProperties /* spotless:on */
+        }
+
+        private var hashCode: Int = 0
+
+        override fun hashCode(): Int {
+            if (hashCode == 0) {
+                hashCode = /* spotless:off */ Objects.hash(autoCollection, netTerms, memo, requireSuccessfulPayment, additionalProperties) /* spotless:on */
+            }
+            return hashCode
+        }
+
+        override fun toString() =
+            "InvoiceSettings{autoCollection=$autoCollection, netTerms=$netTerms, memo=$memo, requireSuccessfulPayment=$requireSuccessfulPayment, additionalProperties=$additionalProperties}"
     }
 
     class ExpiresAfterUnit
@@ -611,7 +558,7 @@ constructor(
                 return true
             }
 
-            return other is ExpiresAfterUnit && this.value == other.value
+            return /* spotless:off */ other is ExpiresAfterUnit && this.value == other.value /* spotless:on */
         }
 
         override fun hashCode() = value.hashCode()

@@ -3,18 +3,13 @@
 package com.withorb.api.client
 
 import com.withorb.api.core.ClientOptions
-import com.withorb.api.core.http.HttpResponse.Handler
-import com.withorb.api.errors.OrbError
 import com.withorb.api.models.*
 import com.withorb.api.services.async.*
-import com.withorb.api.services.errorHandler
 
 class OrbClientAsyncImpl
 constructor(
     private val clientOptions: ClientOptions,
 ) : OrbClientAsync {
-
-    private val errorHandler: Handler<OrbError> = errorHandler(clientOptions.jsonMapper)
 
     private val sync: OrbClient by lazy { OrbClientImpl(clientOptions) }
 

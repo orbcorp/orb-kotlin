@@ -67,26 +67,11 @@ constructor(
             return true
         }
 
-        return other is CustomerCostListParams &&
-            this.customerId == other.customerId &&
-            this.currency == other.currency &&
-            this.timeframeEnd == other.timeframeEnd &&
-            this.timeframeStart == other.timeframeStart &&
-            this.viewMode == other.viewMode &&
-            this.additionalQueryParams == other.additionalQueryParams &&
-            this.additionalHeaders == other.additionalHeaders
+        return /* spotless:off */ other is CustomerCostListParams && this.customerId == other.customerId && this.currency == other.currency && this.timeframeEnd == other.timeframeEnd && this.timeframeStart == other.timeframeStart && this.viewMode == other.viewMode && this.additionalQueryParams == other.additionalQueryParams && this.additionalHeaders == other.additionalHeaders /* spotless:on */
     }
 
     override fun hashCode(): Int {
-        return Objects.hash(
-            customerId,
-            currency,
-            timeframeEnd,
-            timeframeStart,
-            viewMode,
-            additionalQueryParams,
-            additionalHeaders,
-        )
+        return /* spotless:off */ Objects.hash(customerId, currency, timeframeEnd, timeframeStart, viewMode, additionalQueryParams, additionalHeaders) /* spotless:on */
     }
 
     override fun toString() =
@@ -205,7 +190,7 @@ constructor(
                 return true
             }
 
-            return other is ViewMode && this.value == other.value
+            return /* spotless:off */ other is ViewMode && this.value == other.value /* spotless:on */
         }
 
         override fun hashCode() = value.hashCode()

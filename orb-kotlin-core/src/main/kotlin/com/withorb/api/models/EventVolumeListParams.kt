@@ -52,24 +52,11 @@ constructor(
             return true
         }
 
-        return other is EventVolumeListParams &&
-            this.cursor == other.cursor &&
-            this.limit == other.limit &&
-            this.timeframeEnd == other.timeframeEnd &&
-            this.timeframeStart == other.timeframeStart &&
-            this.additionalQueryParams == other.additionalQueryParams &&
-            this.additionalHeaders == other.additionalHeaders
+        return /* spotless:off */ other is EventVolumeListParams && this.cursor == other.cursor && this.limit == other.limit && this.timeframeEnd == other.timeframeEnd && this.timeframeStart == other.timeframeStart && this.additionalQueryParams == other.additionalQueryParams && this.additionalHeaders == other.additionalHeaders /* spotless:on */
     }
 
     override fun hashCode(): Int {
-        return Objects.hash(
-            cursor,
-            limit,
-            timeframeEnd,
-            timeframeStart,
-            additionalQueryParams,
-            additionalHeaders,
-        )
+        return /* spotless:off */ Objects.hash(cursor, limit, timeframeEnd, timeframeStart, additionalQueryParams, additionalHeaders) /* spotless:on */
     }
 
     override fun toString() =

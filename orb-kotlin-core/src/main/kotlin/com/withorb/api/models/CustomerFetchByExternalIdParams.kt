@@ -36,18 +36,11 @@ constructor(
             return true
         }
 
-        return other is CustomerFetchByExternalIdParams &&
-            this.externalCustomerId == other.externalCustomerId &&
-            this.additionalQueryParams == other.additionalQueryParams &&
-            this.additionalHeaders == other.additionalHeaders
+        return /* spotless:off */ other is CustomerFetchByExternalIdParams && this.externalCustomerId == other.externalCustomerId && this.additionalQueryParams == other.additionalQueryParams && this.additionalHeaders == other.additionalHeaders /* spotless:on */
     }
 
     override fun hashCode(): Int {
-        return Objects.hash(
-            externalCustomerId,
-            additionalQueryParams,
-            additionalHeaders,
-        )
+        return /* spotless:off */ Objects.hash(externalCustomerId, additionalQueryParams, additionalHeaders) /* spotless:on */
     }
 
     override fun toString() =
