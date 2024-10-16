@@ -75,18 +75,11 @@ private constructor(
             return true
         }
 
-        return other is InvoiceLevelDiscount &&
-            this.percentageDiscount == other.percentageDiscount &&
-            this.amountDiscount == other.amountDiscount &&
-            this.trialDiscount == other.trialDiscount
+        return /* spotless:off */ other is InvoiceLevelDiscount && this.percentageDiscount == other.percentageDiscount && this.amountDiscount == other.amountDiscount && this.trialDiscount == other.trialDiscount /* spotless:on */
     }
 
     override fun hashCode(): Int {
-        return Objects.hash(
-            percentageDiscount,
-            amountDiscount,
-            trialDiscount,
-        )
+        return /* spotless:off */ Objects.hash(percentageDiscount, amountDiscount, trialDiscount) /* spotless:on */
     }
 
     override fun toString(): String {

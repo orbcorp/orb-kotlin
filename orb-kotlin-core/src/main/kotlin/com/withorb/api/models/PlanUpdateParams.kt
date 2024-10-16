@@ -57,8 +57,6 @@ constructor(
         private val additionalProperties: Map<String, JsonValue>,
     ) {
 
-        private var hashCode: Int = 0
-
         /**
          * An optional user-defined ID for this plan resource, used throughout the system as an
          * alias for this Plan. Use this field to identify a plan by an existing identifier in your
@@ -78,32 +76,6 @@ constructor(
         fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
 
         fun toBuilder() = Builder().from(this)
-
-        override fun equals(other: Any?): Boolean {
-            if (this === other) {
-                return true
-            }
-
-            return other is PlanUpdateBody &&
-                this.externalPlanId == other.externalPlanId &&
-                this.metadata == other.metadata &&
-                this.additionalProperties == other.additionalProperties
-        }
-
-        override fun hashCode(): Int {
-            if (hashCode == 0) {
-                hashCode =
-                    Objects.hash(
-                        externalPlanId,
-                        metadata,
-                        additionalProperties,
-                    )
-            }
-            return hashCode
-        }
-
-        override fun toString() =
-            "PlanUpdateBody{externalPlanId=$externalPlanId, metadata=$metadata, additionalProperties=$additionalProperties}"
 
         companion object {
 
@@ -161,6 +133,26 @@ constructor(
                     additionalProperties.toUnmodifiable(),
                 )
         }
+
+        override fun equals(other: Any?): Boolean {
+            if (this === other) {
+                return true
+            }
+
+            return /* spotless:off */ other is PlanUpdateBody && this.externalPlanId == other.externalPlanId && this.metadata == other.metadata && this.additionalProperties == other.additionalProperties /* spotless:on */
+        }
+
+        private var hashCode: Int = 0
+
+        override fun hashCode(): Int {
+            if (hashCode == 0) {
+                hashCode = /* spotless:off */ Objects.hash(externalPlanId, metadata, additionalProperties) /* spotless:on */
+            }
+            return hashCode
+        }
+
+        override fun toString() =
+            "PlanUpdateBody{externalPlanId=$externalPlanId, metadata=$metadata, additionalProperties=$additionalProperties}"
     }
 
     fun _additionalQueryParams(): Map<String, List<String>> = additionalQueryParams
@@ -174,24 +166,11 @@ constructor(
             return true
         }
 
-        return other is PlanUpdateParams &&
-            this.planId == other.planId &&
-            this.externalPlanId == other.externalPlanId &&
-            this.metadata == other.metadata &&
-            this.additionalQueryParams == other.additionalQueryParams &&
-            this.additionalHeaders == other.additionalHeaders &&
-            this.additionalBodyProperties == other.additionalBodyProperties
+        return /* spotless:off */ other is PlanUpdateParams && this.planId == other.planId && this.externalPlanId == other.externalPlanId && this.metadata == other.metadata && this.additionalQueryParams == other.additionalQueryParams && this.additionalHeaders == other.additionalHeaders && this.additionalBodyProperties == other.additionalBodyProperties /* spotless:on */
     }
 
     override fun hashCode(): Int {
-        return Objects.hash(
-            planId,
-            externalPlanId,
-            metadata,
-            additionalQueryParams,
-            additionalHeaders,
-            additionalBodyProperties,
-        )
+        return /* spotless:off */ Objects.hash(planId, externalPlanId, metadata, additionalQueryParams, additionalHeaders, additionalBodyProperties) /* spotless:on */
     }
 
     override fun toString() =
@@ -316,30 +295,11 @@ constructor(
         private val additionalProperties: Map<String, JsonValue>,
     ) {
 
-        private var hashCode: Int = 0
-
         @JsonAnyGetter
         @ExcludeMissing
         fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
 
         fun toBuilder() = Builder().from(this)
-
-        override fun equals(other: Any?): Boolean {
-            if (this === other) {
-                return true
-            }
-
-            return other is Metadata && this.additionalProperties == other.additionalProperties
-        }
-
-        override fun hashCode(): Int {
-            if (hashCode == 0) {
-                hashCode = Objects.hash(additionalProperties)
-            }
-            return hashCode
-        }
-
-        override fun toString() = "Metadata{additionalProperties=$additionalProperties}"
 
         companion object {
 
@@ -370,5 +330,24 @@ constructor(
 
             fun build(): Metadata = Metadata(additionalProperties.toUnmodifiable())
         }
+
+        override fun equals(other: Any?): Boolean {
+            if (this === other) {
+                return true
+            }
+
+            return /* spotless:off */ other is Metadata && this.additionalProperties == other.additionalProperties /* spotless:on */
+        }
+
+        private var hashCode: Int = 0
+
+        override fun hashCode(): Int {
+            if (hashCode == 0) {
+                hashCode = /* spotless:off */ Objects.hash(additionalProperties) /* spotless:on */
+            }
+            return hashCode
+        }
+
+        override fun toString() = "Metadata{additionalProperties=$additionalProperties}"
     }
 }

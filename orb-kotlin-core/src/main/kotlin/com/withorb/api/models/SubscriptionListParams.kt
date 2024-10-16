@@ -81,34 +81,11 @@ constructor(
             return true
         }
 
-        return other is SubscriptionListParams &&
-            this.createdAtGt == other.createdAtGt &&
-            this.createdAtGte == other.createdAtGte &&
-            this.createdAtLt == other.createdAtLt &&
-            this.createdAtLte == other.createdAtLte &&
-            this.cursor == other.cursor &&
-            this.customerId == other.customerId &&
-            this.externalCustomerId == other.externalCustomerId &&
-            this.limit == other.limit &&
-            this.status == other.status &&
-            this.additionalQueryParams == other.additionalQueryParams &&
-            this.additionalHeaders == other.additionalHeaders
+        return /* spotless:off */ other is SubscriptionListParams && this.createdAtGt == other.createdAtGt && this.createdAtGte == other.createdAtGte && this.createdAtLt == other.createdAtLt && this.createdAtLte == other.createdAtLte && this.cursor == other.cursor && this.customerId == other.customerId && this.externalCustomerId == other.externalCustomerId && this.limit == other.limit && this.status == other.status && this.additionalQueryParams == other.additionalQueryParams && this.additionalHeaders == other.additionalHeaders /* spotless:on */
     }
 
     override fun hashCode(): Int {
-        return Objects.hash(
-            createdAtGt,
-            createdAtGte,
-            createdAtLt,
-            createdAtLte,
-            cursor,
-            customerId,
-            externalCustomerId,
-            limit,
-            status,
-            additionalQueryParams,
-            additionalHeaders,
-        )
+        return /* spotless:off */ Objects.hash(createdAtGt, createdAtGte, createdAtLt, createdAtLte, cursor, customerId, externalCustomerId, limit, status, additionalQueryParams, additionalHeaders) /* spotless:on */
     }
 
     override fun toString() =
@@ -249,7 +226,7 @@ constructor(
                 return true
             }
 
-            return other is Status && this.value == other.value
+            return /* spotless:off */ other is Status && this.value == other.value /* spotless:on */
         }
 
         override fun hashCode() = value.hashCode()

@@ -134,54 +134,11 @@ constructor(
             return true
         }
 
-        return other is InvoiceListParams &&
-            this.amount == other.amount &&
-            this.amountGt == other.amountGt &&
-            this.amountLt == other.amountLt &&
-            this.cursor == other.cursor &&
-            this.customerId == other.customerId &&
-            this.dateType == other.dateType &&
-            this.dueDate == other.dueDate &&
-            this.dueDateWindow == other.dueDateWindow &&
-            this.dueDateGt == other.dueDateGt &&
-            this.dueDateLt == other.dueDateLt &&
-            this.externalCustomerId == other.externalCustomerId &&
-            this.invoiceDateGt == other.invoiceDateGt &&
-            this.invoiceDateGte == other.invoiceDateGte &&
-            this.invoiceDateLt == other.invoiceDateLt &&
-            this.invoiceDateLte == other.invoiceDateLte &&
-            this.isRecurring == other.isRecurring &&
-            this.limit == other.limit &&
-            this.status == other.status &&
-            this.subscriptionId == other.subscriptionId &&
-            this.additionalQueryParams == other.additionalQueryParams &&
-            this.additionalHeaders == other.additionalHeaders
+        return /* spotless:off */ other is InvoiceListParams && this.amount == other.amount && this.amountGt == other.amountGt && this.amountLt == other.amountLt && this.cursor == other.cursor && this.customerId == other.customerId && this.dateType == other.dateType && this.dueDate == other.dueDate && this.dueDateWindow == other.dueDateWindow && this.dueDateGt == other.dueDateGt && this.dueDateLt == other.dueDateLt && this.externalCustomerId == other.externalCustomerId && this.invoiceDateGt == other.invoiceDateGt && this.invoiceDateGte == other.invoiceDateGte && this.invoiceDateLt == other.invoiceDateLt && this.invoiceDateLte == other.invoiceDateLte && this.isRecurring == other.isRecurring && this.limit == other.limit && this.status == other.status && this.subscriptionId == other.subscriptionId && this.additionalQueryParams == other.additionalQueryParams && this.additionalHeaders == other.additionalHeaders /* spotless:on */
     }
 
     override fun hashCode(): Int {
-        return Objects.hash(
-            amount,
-            amountGt,
-            amountLt,
-            cursor,
-            customerId,
-            dateType,
-            dueDate,
-            dueDateWindow,
-            dueDateGt,
-            dueDateLt,
-            externalCustomerId,
-            invoiceDateGt,
-            invoiceDateGte,
-            invoiceDateLt,
-            invoiceDateLte,
-            isRecurring,
-            limit,
-            status,
-            subscriptionId,
-            additionalQueryParams,
-            additionalHeaders,
-        )
+        return /* spotless:off */ Objects.hash(amount, amountGt, amountLt, cursor, customerId, dateType, dueDate, dueDateWindow, dueDateGt, dueDateLt, externalCustomerId, invoiceDateGt, invoiceDateGte, invoiceDateLt, invoiceDateLte, isRecurring, limit, status, subscriptionId, additionalQueryParams, additionalHeaders) /* spotless:on */
     }
 
     override fun toString() =
@@ -380,7 +337,7 @@ constructor(
                 return true
             }
 
-            return other is DateType && this.value == other.value
+            return /* spotless:off */ other is DateType && this.value == other.value /* spotless:on */
         }
 
         override fun hashCode() = value.hashCode()
@@ -437,7 +394,7 @@ constructor(
                 return true
             }
 
-            return other is Status && this.value == other.value
+            return /* spotless:off */ other is Status && this.value == other.value /* spotless:on */
         }
 
         override fun hashCode() = value.hashCode()

@@ -24,8 +24,6 @@ private constructor(
 
     private var validated: Boolean = false
 
-    private var hashCode: Int = 0
-
     /** event_id of the deprecated event, if successfully updated */
     fun deprecated(): String = deprecated.getRequired("deprecated")
 
@@ -44,26 +42,6 @@ private constructor(
     }
 
     fun toBuilder() = Builder().from(this)
-
-    override fun equals(other: Any?): Boolean {
-        if (this === other) {
-            return true
-        }
-
-        return other is EventDeprecateResponse &&
-            this.deprecated == other.deprecated &&
-            this.additionalProperties == other.additionalProperties
-    }
-
-    override fun hashCode(): Int {
-        if (hashCode == 0) {
-            hashCode = Objects.hash(deprecated, additionalProperties)
-        }
-        return hashCode
-    }
-
-    override fun toString() =
-        "EventDeprecateResponse{deprecated=$deprecated, additionalProperties=$additionalProperties}"
 
     companion object {
 
@@ -105,4 +83,24 @@ private constructor(
         fun build(): EventDeprecateResponse =
             EventDeprecateResponse(deprecated, additionalProperties.toUnmodifiable())
     }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) {
+            return true
+        }
+
+        return /* spotless:off */ other is EventDeprecateResponse && this.deprecated == other.deprecated && this.additionalProperties == other.additionalProperties /* spotless:on */
+    }
+
+    private var hashCode: Int = 0
+
+    override fun hashCode(): Int {
+        if (hashCode == 0) {
+            hashCode = /* spotless:off */ Objects.hash(deprecated, additionalProperties) /* spotless:on */
+        }
+        return hashCode
+    }
+
+    override fun toString() =
+        "EventDeprecateResponse{deprecated=$deprecated, additionalProperties=$additionalProperties}"
 }

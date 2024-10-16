@@ -24,8 +24,6 @@ private constructor(
 
     private var validated: Boolean = false
 
-    private var hashCode: Int = 0
-
     /** event_id of the amended event, if successfully ingested */
     fun amended(): String = amended.getRequired("amended")
 
@@ -44,26 +42,6 @@ private constructor(
     }
 
     fun toBuilder() = Builder().from(this)
-
-    override fun equals(other: Any?): Boolean {
-        if (this === other) {
-            return true
-        }
-
-        return other is EventUpdateResponse &&
-            this.amended == other.amended &&
-            this.additionalProperties == other.additionalProperties
-    }
-
-    override fun hashCode(): Int {
-        if (hashCode == 0) {
-            hashCode = Objects.hash(amended, additionalProperties)
-        }
-        return hashCode
-    }
-
-    override fun toString() =
-        "EventUpdateResponse{amended=$amended, additionalProperties=$additionalProperties}"
 
     companion object {
 
@@ -105,4 +83,24 @@ private constructor(
         fun build(): EventUpdateResponse =
             EventUpdateResponse(amended, additionalProperties.toUnmodifiable())
     }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) {
+            return true
+        }
+
+        return /* spotless:off */ other is EventUpdateResponse && this.amended == other.amended && this.additionalProperties == other.additionalProperties /* spotless:on */
+    }
+
+    private var hashCode: Int = 0
+
+    override fun hashCode(): Int {
+        if (hashCode == 0) {
+            hashCode = /* spotless:off */ Objects.hash(amended, additionalProperties) /* spotless:on */
+        }
+        return hashCode
+    }
+
+    override fun toString() =
+        "EventUpdateResponse{amended=$amended, additionalProperties=$additionalProperties}"
 }

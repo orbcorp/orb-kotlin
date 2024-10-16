@@ -64,28 +64,11 @@ constructor(
             return true
         }
 
-        return other is MetricListParams &&
-            this.createdAtGt == other.createdAtGt &&
-            this.createdAtGte == other.createdAtGte &&
-            this.createdAtLt == other.createdAtLt &&
-            this.createdAtLte == other.createdAtLte &&
-            this.cursor == other.cursor &&
-            this.limit == other.limit &&
-            this.additionalQueryParams == other.additionalQueryParams &&
-            this.additionalHeaders == other.additionalHeaders
+        return /* spotless:off */ other is MetricListParams && this.createdAtGt == other.createdAtGt && this.createdAtGte == other.createdAtGte && this.createdAtLt == other.createdAtLt && this.createdAtLte == other.createdAtLte && this.cursor == other.cursor && this.limit == other.limit && this.additionalQueryParams == other.additionalQueryParams && this.additionalHeaders == other.additionalHeaders /* spotless:on */
     }
 
     override fun hashCode(): Int {
-        return Objects.hash(
-            createdAtGt,
-            createdAtGte,
-            createdAtLt,
-            createdAtLte,
-            cursor,
-            limit,
-            additionalQueryParams,
-            additionalHeaders,
-        )
+        return /* spotless:off */ Objects.hash(createdAtGt, createdAtGte, createdAtLt, createdAtLte, cursor, limit, additionalQueryParams, additionalHeaders) /* spotless:on */
     }
 
     override fun toString() =

@@ -4,6 +4,9 @@ package com.withorb.api.services.async.customers
 
 import com.withorb.api.core.ClientOptions
 import com.withorb.api.core.RequestOptions
+import com.withorb.api.core.handlers.errorHandler
+import com.withorb.api.core.handlers.jsonHandler
+import com.withorb.api.core.handlers.withErrorHandler
 import com.withorb.api.core.http.HttpMethod
 import com.withorb.api.core.http.HttpRequest
 import com.withorb.api.core.http.HttpResponse.Handler
@@ -12,9 +15,6 @@ import com.withorb.api.models.CustomerCostListByExternalIdParams
 import com.withorb.api.models.CustomerCostListByExternalIdResponse
 import com.withorb.api.models.CustomerCostListParams
 import com.withorb.api.models.CustomerCostListResponse
-import com.withorb.api.services.errorHandler
-import com.withorb.api.services.jsonHandler
-import com.withorb.api.services.withErrorHandler
 
 class CostServiceAsyncImpl
 constructor(
