@@ -197,27 +197,11 @@ constructor(
                 return true
             }
 
-            return other is CustomerCreditLedgerCreateEntryBody &&
-                this.addIncrementCreditLedgerEntryRequestParams ==
-                    other.addIncrementCreditLedgerEntryRequestParams &&
-                this.addDecrementCreditLedgerEntryRequestParams ==
-                    other.addDecrementCreditLedgerEntryRequestParams &&
-                this.addExpirationChangeCreditLedgerEntryRequestParams ==
-                    other.addExpirationChangeCreditLedgerEntryRequestParams &&
-                this.addVoidCreditLedgerEntryRequestParams ==
-                    other.addVoidCreditLedgerEntryRequestParams &&
-                this.addAmendmentCreditLedgerEntryRequestParams ==
-                    other.addAmendmentCreditLedgerEntryRequestParams
+            return /* spotless:off */ other is CustomerCreditLedgerCreateEntryBody && this.addIncrementCreditLedgerEntryRequestParams == other.addIncrementCreditLedgerEntryRequestParams && this.addDecrementCreditLedgerEntryRequestParams == other.addDecrementCreditLedgerEntryRequestParams && this.addExpirationChangeCreditLedgerEntryRequestParams == other.addExpirationChangeCreditLedgerEntryRequestParams && this.addVoidCreditLedgerEntryRequestParams == other.addVoidCreditLedgerEntryRequestParams && this.addAmendmentCreditLedgerEntryRequestParams == other.addAmendmentCreditLedgerEntryRequestParams /* spotless:on */
         }
 
         override fun hashCode(): Int {
-            return Objects.hash(
-                addIncrementCreditLedgerEntryRequestParams,
-                addDecrementCreditLedgerEntryRequestParams,
-                addExpirationChangeCreditLedgerEntryRequestParams,
-                addVoidCreditLedgerEntryRequestParams,
-                addAmendmentCreditLedgerEntryRequestParams,
-            )
+            return /* spotless:off */ Objects.hash(addIncrementCreditLedgerEntryRequestParams, addDecrementCreditLedgerEntryRequestParams, addExpirationChangeCreditLedgerEntryRequestParams, addVoidCreditLedgerEntryRequestParams, addAmendmentCreditLedgerEntryRequestParams) /* spotless:on */
         }
 
         override fun toString(): String {
@@ -405,33 +389,11 @@ constructor(
             return true
         }
 
-        return other is CustomerCreditLedgerCreateEntryParams &&
-            this.customerId == other.customerId &&
-            this.addIncrementCreditLedgerEntryRequestParams ==
-                other.addIncrementCreditLedgerEntryRequestParams &&
-            this.addDecrementCreditLedgerEntryRequestParams ==
-                other.addDecrementCreditLedgerEntryRequestParams &&
-            this.addExpirationChangeCreditLedgerEntryRequestParams ==
-                other.addExpirationChangeCreditLedgerEntryRequestParams &&
-            this.addVoidCreditLedgerEntryRequestParams ==
-                other.addVoidCreditLedgerEntryRequestParams &&
-            this.addAmendmentCreditLedgerEntryRequestParams ==
-                other.addAmendmentCreditLedgerEntryRequestParams &&
-            this.additionalQueryParams == other.additionalQueryParams &&
-            this.additionalHeaders == other.additionalHeaders
+        return /* spotless:off */ other is CustomerCreditLedgerCreateEntryParams && this.customerId == other.customerId && this.addIncrementCreditLedgerEntryRequestParams == other.addIncrementCreditLedgerEntryRequestParams && this.addDecrementCreditLedgerEntryRequestParams == other.addDecrementCreditLedgerEntryRequestParams && this.addExpirationChangeCreditLedgerEntryRequestParams == other.addExpirationChangeCreditLedgerEntryRequestParams && this.addVoidCreditLedgerEntryRequestParams == other.addVoidCreditLedgerEntryRequestParams && this.addAmendmentCreditLedgerEntryRequestParams == other.addAmendmentCreditLedgerEntryRequestParams && this.additionalQueryParams == other.additionalQueryParams && this.additionalHeaders == other.additionalHeaders /* spotless:on */
     }
 
     override fun hashCode(): Int {
-        return Objects.hash(
-            customerId,
-            addIncrementCreditLedgerEntryRequestParams,
-            addDecrementCreditLedgerEntryRequestParams,
-            addExpirationChangeCreditLedgerEntryRequestParams,
-            addVoidCreditLedgerEntryRequestParams,
-            addAmendmentCreditLedgerEntryRequestParams,
-            additionalQueryParams,
-            additionalHeaders,
-        )
+        return /* spotless:off */ Objects.hash(customerId, addIncrementCreditLedgerEntryRequestParams, addDecrementCreditLedgerEntryRequestParams, addExpirationChangeCreditLedgerEntryRequestParams, addVoidCreditLedgerEntryRequestParams, addAmendmentCreditLedgerEntryRequestParams, additionalQueryParams, additionalHeaders) /* spotless:on */
     }
 
     override fun toString() =
@@ -610,8 +572,6 @@ constructor(
         private val additionalProperties: Map<String, JsonValue>,
     ) {
 
-        private var hashCode: Int = 0
-
         /**
          * User-specified key/value pairs for the resource. Individual keys can be removed by
          * setting the value to `null`, and the entire metadata mapping can be cleared by setting
@@ -667,46 +627,6 @@ constructor(
         fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
 
         fun toBuilder() = Builder().from(this)
-
-        override fun equals(other: Any?): Boolean {
-            if (this === other) {
-                return true
-            }
-
-            return other is AddIncrementCreditLedgerEntryRequestParams &&
-                this.metadata == other.metadata &&
-                this.currency == other.currency &&
-                this.description == other.description &&
-                this.entryType == other.entryType &&
-                this.amount == other.amount &&
-                this.expiryDate == other.expiryDate &&
-                this.effectiveDate == other.effectiveDate &&
-                this.perUnitCostBasis == other.perUnitCostBasis &&
-                this.invoiceSettings == other.invoiceSettings &&
-                this.additionalProperties == other.additionalProperties
-        }
-
-        override fun hashCode(): Int {
-            if (hashCode == 0) {
-                hashCode =
-                    Objects.hash(
-                        metadata,
-                        currency,
-                        description,
-                        entryType,
-                        amount,
-                        expiryDate,
-                        effectiveDate,
-                        perUnitCostBasis,
-                        invoiceSettings,
-                        additionalProperties,
-                    )
-            }
-            return hashCode
-        }
-
-        override fun toString() =
-            "AddIncrementCreditLedgerEntryRequestParams{metadata=$metadata, currency=$currency, description=$description, entryType=$entryType, amount=$amount, expiryDate=$expiryDate, effectiveDate=$effectiveDate, perUnitCostBasis=$perUnitCostBasis, invoiceSettings=$invoiceSettings, additionalProperties=$additionalProperties}"
 
         companion object {
 
@@ -850,7 +770,7 @@ constructor(
                     return true
                 }
 
-                return other is EntryType && this.value == other.value
+                return /* spotless:off */ other is EntryType && this.value == other.value /* spotless:on */
             }
 
             override fun hashCode() = value.hashCode()
@@ -904,8 +824,6 @@ constructor(
             private val additionalProperties: Map<String, JsonValue>,
         ) {
 
-            private var hashCode: Int = 0
-
             /**
              * Whether the credits purchase invoice should auto collect with the customer's saved
              * payment method.
@@ -933,36 +851,6 @@ constructor(
             fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
 
             fun toBuilder() = Builder().from(this)
-
-            override fun equals(other: Any?): Boolean {
-                if (this === other) {
-                    return true
-                }
-
-                return other is InvoiceSettings &&
-                    this.autoCollection == other.autoCollection &&
-                    this.netTerms == other.netTerms &&
-                    this.memo == other.memo &&
-                    this.requireSuccessfulPayment == other.requireSuccessfulPayment &&
-                    this.additionalProperties == other.additionalProperties
-            }
-
-            override fun hashCode(): Int {
-                if (hashCode == 0) {
-                    hashCode =
-                        Objects.hash(
-                            autoCollection,
-                            netTerms,
-                            memo,
-                            requireSuccessfulPayment,
-                            additionalProperties,
-                        )
-                }
-                return hashCode
-            }
-
-            override fun toString() =
-                "InvoiceSettings{autoCollection=$autoCollection, netTerms=$netTerms, memo=$memo, requireSuccessfulPayment=$requireSuccessfulPayment, additionalProperties=$additionalProperties}"
 
             companion object {
 
@@ -1040,6 +928,26 @@ constructor(
                         additionalProperties.toUnmodifiable(),
                     )
             }
+
+            override fun equals(other: Any?): Boolean {
+                if (this === other) {
+                    return true
+                }
+
+                return /* spotless:off */ other is InvoiceSettings && this.autoCollection == other.autoCollection && this.netTerms == other.netTerms && this.memo == other.memo && this.requireSuccessfulPayment == other.requireSuccessfulPayment && this.additionalProperties == other.additionalProperties /* spotless:on */
+            }
+
+            private var hashCode: Int = 0
+
+            override fun hashCode(): Int {
+                if (hashCode == 0) {
+                    hashCode = /* spotless:off */ Objects.hash(autoCollection, netTerms, memo, requireSuccessfulPayment, additionalProperties) /* spotless:on */
+                }
+                return hashCode
+            }
+
+            override fun toString() =
+                "InvoiceSettings{autoCollection=$autoCollection, netTerms=$netTerms, memo=$memo, requireSuccessfulPayment=$requireSuccessfulPayment, additionalProperties=$additionalProperties}"
         }
 
         /**
@@ -1054,30 +962,11 @@ constructor(
             private val additionalProperties: Map<String, JsonValue>,
         ) {
 
-            private var hashCode: Int = 0
-
             @JsonAnyGetter
             @ExcludeMissing
             fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
 
             fun toBuilder() = Builder().from(this)
-
-            override fun equals(other: Any?): Boolean {
-                if (this === other) {
-                    return true
-                }
-
-                return other is Metadata && this.additionalProperties == other.additionalProperties
-            }
-
-            override fun hashCode(): Int {
-                if (hashCode == 0) {
-                    hashCode = Objects.hash(additionalProperties)
-                }
-                return hashCode
-            }
-
-            override fun toString() = "Metadata{additionalProperties=$additionalProperties}"
 
             companion object {
 
@@ -1109,7 +998,46 @@ constructor(
 
                 fun build(): Metadata = Metadata(additionalProperties.toUnmodifiable())
             }
+
+            override fun equals(other: Any?): Boolean {
+                if (this === other) {
+                    return true
+                }
+
+                return /* spotless:off */ other is Metadata && this.additionalProperties == other.additionalProperties /* spotless:on */
+            }
+
+            private var hashCode: Int = 0
+
+            override fun hashCode(): Int {
+                if (hashCode == 0) {
+                    hashCode = /* spotless:off */ Objects.hash(additionalProperties) /* spotless:on */
+                }
+                return hashCode
+            }
+
+            override fun toString() = "Metadata{additionalProperties=$additionalProperties}"
         }
+
+        override fun equals(other: Any?): Boolean {
+            if (this === other) {
+                return true
+            }
+
+            return /* spotless:off */ other is AddIncrementCreditLedgerEntryRequestParams && this.metadata == other.metadata && this.currency == other.currency && this.description == other.description && this.entryType == other.entryType && this.amount == other.amount && this.expiryDate == other.expiryDate && this.effectiveDate == other.effectiveDate && this.perUnitCostBasis == other.perUnitCostBasis && this.invoiceSettings == other.invoiceSettings && this.additionalProperties == other.additionalProperties /* spotless:on */
+        }
+
+        private var hashCode: Int = 0
+
+        override fun hashCode(): Int {
+            if (hashCode == 0) {
+                hashCode = /* spotless:off */ Objects.hash(metadata, currency, description, entryType, amount, expiryDate, effectiveDate, perUnitCostBasis, invoiceSettings, additionalProperties) /* spotless:on */
+            }
+            return hashCode
+        }
+
+        override fun toString() =
+            "AddIncrementCreditLedgerEntryRequestParams{metadata=$metadata, currency=$currency, description=$description, entryType=$entryType, amount=$amount, expiryDate=$expiryDate, effectiveDate=$effectiveDate, perUnitCostBasis=$perUnitCostBasis, invoiceSettings=$invoiceSettings, additionalProperties=$additionalProperties}"
     }
 
     @JsonDeserialize(builder = AddDecrementCreditLedgerEntryRequestParams.Builder::class)
@@ -1123,8 +1051,6 @@ constructor(
         private val amount: Double?,
         private val additionalProperties: Map<String, JsonValue>,
     ) {
-
-        private var hashCode: Int = 0
 
         /**
          * User-specified key/value pairs for the resource. Individual keys can be removed by
@@ -1159,38 +1085,6 @@ constructor(
         fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
 
         fun toBuilder() = Builder().from(this)
-
-        override fun equals(other: Any?): Boolean {
-            if (this === other) {
-                return true
-            }
-
-            return other is AddDecrementCreditLedgerEntryRequestParams &&
-                this.metadata == other.metadata &&
-                this.currency == other.currency &&
-                this.description == other.description &&
-                this.entryType == other.entryType &&
-                this.amount == other.amount &&
-                this.additionalProperties == other.additionalProperties
-        }
-
-        override fun hashCode(): Int {
-            if (hashCode == 0) {
-                hashCode =
-                    Objects.hash(
-                        metadata,
-                        currency,
-                        description,
-                        entryType,
-                        amount,
-                        additionalProperties,
-                    )
-            }
-            return hashCode
-        }
-
-        override fun toString() =
-            "AddDecrementCreditLedgerEntryRequestParams{metadata=$metadata, currency=$currency, description=$description, entryType=$entryType, amount=$amount, additionalProperties=$additionalProperties}"
 
         companion object {
 
@@ -1290,7 +1184,7 @@ constructor(
                     return true
                 }
 
-                return other is EntryType && this.value == other.value
+                return /* spotless:off */ other is EntryType && this.value == other.value /* spotless:on */
             }
 
             override fun hashCode() = value.hashCode()
@@ -1340,30 +1234,11 @@ constructor(
             private val additionalProperties: Map<String, JsonValue>,
         ) {
 
-            private var hashCode: Int = 0
-
             @JsonAnyGetter
             @ExcludeMissing
             fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
 
             fun toBuilder() = Builder().from(this)
-
-            override fun equals(other: Any?): Boolean {
-                if (this === other) {
-                    return true
-                }
-
-                return other is Metadata && this.additionalProperties == other.additionalProperties
-            }
-
-            override fun hashCode(): Int {
-                if (hashCode == 0) {
-                    hashCode = Objects.hash(additionalProperties)
-                }
-                return hashCode
-            }
-
-            override fun toString() = "Metadata{additionalProperties=$additionalProperties}"
 
             companion object {
 
@@ -1395,7 +1270,46 @@ constructor(
 
                 fun build(): Metadata = Metadata(additionalProperties.toUnmodifiable())
             }
+
+            override fun equals(other: Any?): Boolean {
+                if (this === other) {
+                    return true
+                }
+
+                return /* spotless:off */ other is Metadata && this.additionalProperties == other.additionalProperties /* spotless:on */
+            }
+
+            private var hashCode: Int = 0
+
+            override fun hashCode(): Int {
+                if (hashCode == 0) {
+                    hashCode = /* spotless:off */ Objects.hash(additionalProperties) /* spotless:on */
+                }
+                return hashCode
+            }
+
+            override fun toString() = "Metadata{additionalProperties=$additionalProperties}"
         }
+
+        override fun equals(other: Any?): Boolean {
+            if (this === other) {
+                return true
+            }
+
+            return /* spotless:off */ other is AddDecrementCreditLedgerEntryRequestParams && this.metadata == other.metadata && this.currency == other.currency && this.description == other.description && this.entryType == other.entryType && this.amount == other.amount && this.additionalProperties == other.additionalProperties /* spotless:on */
+        }
+
+        private var hashCode: Int = 0
+
+        override fun hashCode(): Int {
+            if (hashCode == 0) {
+                hashCode = /* spotless:off */ Objects.hash(metadata, currency, description, entryType, amount, additionalProperties) /* spotless:on */
+            }
+            return hashCode
+        }
+
+        override fun toString() =
+            "AddDecrementCreditLedgerEntryRequestParams{metadata=$metadata, currency=$currency, description=$description, entryType=$entryType, amount=$amount, additionalProperties=$additionalProperties}"
     }
 
     @JsonDeserialize(builder = AddExpirationChangeCreditLedgerEntryRequestParams.Builder::class)
@@ -1412,8 +1326,6 @@ constructor(
         private val targetExpiryDate: LocalDate?,
         private val additionalProperties: Map<String, JsonValue>,
     ) {
-
-        private var hashCode: Int = 0
 
         /**
          * User-specified key/value pairs for the resource. Individual keys can be removed by
@@ -1463,44 +1375,6 @@ constructor(
         fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
 
         fun toBuilder() = Builder().from(this)
-
-        override fun equals(other: Any?): Boolean {
-            if (this === other) {
-                return true
-            }
-
-            return other is AddExpirationChangeCreditLedgerEntryRequestParams &&
-                this.metadata == other.metadata &&
-                this.currency == other.currency &&
-                this.description == other.description &&
-                this.entryType == other.entryType &&
-                this.amount == other.amount &&
-                this.expiryDate == other.expiryDate &&
-                this.blockId == other.blockId &&
-                this.targetExpiryDate == other.targetExpiryDate &&
-                this.additionalProperties == other.additionalProperties
-        }
-
-        override fun hashCode(): Int {
-            if (hashCode == 0) {
-                hashCode =
-                    Objects.hash(
-                        metadata,
-                        currency,
-                        description,
-                        entryType,
-                        amount,
-                        expiryDate,
-                        blockId,
-                        targetExpiryDate,
-                        additionalProperties,
-                    )
-            }
-            return hashCode
-        }
-
-        override fun toString() =
-            "AddExpirationChangeCreditLedgerEntryRequestParams{metadata=$metadata, currency=$currency, description=$description, entryType=$entryType, amount=$amount, expiryDate=$expiryDate, blockId=$blockId, targetExpiryDate=$targetExpiryDate, additionalProperties=$additionalProperties}"
 
         companion object {
 
@@ -1632,7 +1506,7 @@ constructor(
                     return true
                 }
 
-                return other is EntryType && this.value == other.value
+                return /* spotless:off */ other is EntryType && this.value == other.value /* spotless:on */
             }
 
             override fun hashCode() = value.hashCode()
@@ -1682,30 +1556,11 @@ constructor(
             private val additionalProperties: Map<String, JsonValue>,
         ) {
 
-            private var hashCode: Int = 0
-
             @JsonAnyGetter
             @ExcludeMissing
             fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
 
             fun toBuilder() = Builder().from(this)
-
-            override fun equals(other: Any?): Boolean {
-                if (this === other) {
-                    return true
-                }
-
-                return other is Metadata && this.additionalProperties == other.additionalProperties
-            }
-
-            override fun hashCode(): Int {
-                if (hashCode == 0) {
-                    hashCode = Objects.hash(additionalProperties)
-                }
-                return hashCode
-            }
-
-            override fun toString() = "Metadata{additionalProperties=$additionalProperties}"
 
             companion object {
 
@@ -1737,7 +1592,46 @@ constructor(
 
                 fun build(): Metadata = Metadata(additionalProperties.toUnmodifiable())
             }
+
+            override fun equals(other: Any?): Boolean {
+                if (this === other) {
+                    return true
+                }
+
+                return /* spotless:off */ other is Metadata && this.additionalProperties == other.additionalProperties /* spotless:on */
+            }
+
+            private var hashCode: Int = 0
+
+            override fun hashCode(): Int {
+                if (hashCode == 0) {
+                    hashCode = /* spotless:off */ Objects.hash(additionalProperties) /* spotless:on */
+                }
+                return hashCode
+            }
+
+            override fun toString() = "Metadata{additionalProperties=$additionalProperties}"
         }
+
+        override fun equals(other: Any?): Boolean {
+            if (this === other) {
+                return true
+            }
+
+            return /* spotless:off */ other is AddExpirationChangeCreditLedgerEntryRequestParams && this.metadata == other.metadata && this.currency == other.currency && this.description == other.description && this.entryType == other.entryType && this.amount == other.amount && this.expiryDate == other.expiryDate && this.blockId == other.blockId && this.targetExpiryDate == other.targetExpiryDate && this.additionalProperties == other.additionalProperties /* spotless:on */
+        }
+
+        private var hashCode: Int = 0
+
+        override fun hashCode(): Int {
+            if (hashCode == 0) {
+                hashCode = /* spotless:off */ Objects.hash(metadata, currency, description, entryType, amount, expiryDate, blockId, targetExpiryDate, additionalProperties) /* spotless:on */
+            }
+            return hashCode
+        }
+
+        override fun toString() =
+            "AddExpirationChangeCreditLedgerEntryRequestParams{metadata=$metadata, currency=$currency, description=$description, entryType=$entryType, amount=$amount, expiryDate=$expiryDate, blockId=$blockId, targetExpiryDate=$targetExpiryDate, additionalProperties=$additionalProperties}"
     }
 
     @JsonDeserialize(builder = AddVoidCreditLedgerEntryRequestParams.Builder::class)
@@ -1753,8 +1647,6 @@ constructor(
         private val amount: Double?,
         private val additionalProperties: Map<String, JsonValue>,
     ) {
-
-        private var hashCode: Int = 0
 
         /**
          * User-specified key/value pairs for the resource. Individual keys can be removed by
@@ -1795,42 +1687,6 @@ constructor(
         fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
 
         fun toBuilder() = Builder().from(this)
-
-        override fun equals(other: Any?): Boolean {
-            if (this === other) {
-                return true
-            }
-
-            return other is AddVoidCreditLedgerEntryRequestParams &&
-                this.metadata == other.metadata &&
-                this.currency == other.currency &&
-                this.description == other.description &&
-                this.entryType == other.entryType &&
-                this.blockId == other.blockId &&
-                this.voidReason == other.voidReason &&
-                this.amount == other.amount &&
-                this.additionalProperties == other.additionalProperties
-        }
-
-        override fun hashCode(): Int {
-            if (hashCode == 0) {
-                hashCode =
-                    Objects.hash(
-                        metadata,
-                        currency,
-                        description,
-                        entryType,
-                        blockId,
-                        voidReason,
-                        amount,
-                        additionalProperties,
-                    )
-            }
-            return hashCode
-        }
-
-        override fun toString() =
-            "AddVoidCreditLedgerEntryRequestParams{metadata=$metadata, currency=$currency, description=$description, entryType=$entryType, blockId=$blockId, voidReason=$voidReason, amount=$amount, additionalProperties=$additionalProperties}"
 
         companion object {
 
@@ -1941,7 +1797,7 @@ constructor(
                     return true
                 }
 
-                return other is EntryType && this.value == other.value
+                return /* spotless:off */ other is EntryType && this.value == other.value /* spotless:on */
             }
 
             override fun hashCode() = value.hashCode()
@@ -1991,30 +1847,11 @@ constructor(
             private val additionalProperties: Map<String, JsonValue>,
         ) {
 
-            private var hashCode: Int = 0
-
             @JsonAnyGetter
             @ExcludeMissing
             fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
 
             fun toBuilder() = Builder().from(this)
-
-            override fun equals(other: Any?): Boolean {
-                if (this === other) {
-                    return true
-                }
-
-                return other is Metadata && this.additionalProperties == other.additionalProperties
-            }
-
-            override fun hashCode(): Int {
-                if (hashCode == 0) {
-                    hashCode = Objects.hash(additionalProperties)
-                }
-                return hashCode
-            }
-
-            override fun toString() = "Metadata{additionalProperties=$additionalProperties}"
 
             companion object {
 
@@ -2046,6 +1883,25 @@ constructor(
 
                 fun build(): Metadata = Metadata(additionalProperties.toUnmodifiable())
             }
+
+            override fun equals(other: Any?): Boolean {
+                if (this === other) {
+                    return true
+                }
+
+                return /* spotless:off */ other is Metadata && this.additionalProperties == other.additionalProperties /* spotless:on */
+            }
+
+            private var hashCode: Int = 0
+
+            override fun hashCode(): Int {
+                if (hashCode == 0) {
+                    hashCode = /* spotless:off */ Objects.hash(additionalProperties) /* spotless:on */
+                }
+                return hashCode
+            }
+
+            override fun toString() = "Metadata{additionalProperties=$additionalProperties}"
         }
 
         class VoidReason
@@ -2061,7 +1917,7 @@ constructor(
                     return true
                 }
 
-                return other is VoidReason && this.value == other.value
+                return /* spotless:off */ other is VoidReason && this.value == other.value /* spotless:on */
             }
 
             override fun hashCode() = value.hashCode()
@@ -2098,6 +1954,26 @@ constructor(
 
             fun asString(): String = _value().asStringOrThrow()
         }
+
+        override fun equals(other: Any?): Boolean {
+            if (this === other) {
+                return true
+            }
+
+            return /* spotless:off */ other is AddVoidCreditLedgerEntryRequestParams && this.metadata == other.metadata && this.currency == other.currency && this.description == other.description && this.entryType == other.entryType && this.blockId == other.blockId && this.voidReason == other.voidReason && this.amount == other.amount && this.additionalProperties == other.additionalProperties /* spotless:on */
+        }
+
+        private var hashCode: Int = 0
+
+        override fun hashCode(): Int {
+            if (hashCode == 0) {
+                hashCode = /* spotless:off */ Objects.hash(metadata, currency, description, entryType, blockId, voidReason, amount, additionalProperties) /* spotless:on */
+            }
+            return hashCode
+        }
+
+        override fun toString() =
+            "AddVoidCreditLedgerEntryRequestParams{metadata=$metadata, currency=$currency, description=$description, entryType=$entryType, blockId=$blockId, voidReason=$voidReason, amount=$amount, additionalProperties=$additionalProperties}"
     }
 
     @JsonDeserialize(builder = AddAmendmentCreditLedgerEntryRequestParams.Builder::class)
@@ -2112,8 +1988,6 @@ constructor(
         private val blockId: String?,
         private val additionalProperties: Map<String, JsonValue>,
     ) {
-
-        private var hashCode: Int = 0
 
         /**
          * User-specified key/value pairs for the resource. Individual keys can be removed by
@@ -2151,40 +2025,6 @@ constructor(
         fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
 
         fun toBuilder() = Builder().from(this)
-
-        override fun equals(other: Any?): Boolean {
-            if (this === other) {
-                return true
-            }
-
-            return other is AddAmendmentCreditLedgerEntryRequestParams &&
-                this.metadata == other.metadata &&
-                this.currency == other.currency &&
-                this.description == other.description &&
-                this.entryType == other.entryType &&
-                this.amount == other.amount &&
-                this.blockId == other.blockId &&
-                this.additionalProperties == other.additionalProperties
-        }
-
-        override fun hashCode(): Int {
-            if (hashCode == 0) {
-                hashCode =
-                    Objects.hash(
-                        metadata,
-                        currency,
-                        description,
-                        entryType,
-                        amount,
-                        blockId,
-                        additionalProperties,
-                    )
-            }
-            return hashCode
-        }
-
-        override fun toString() =
-            "AddAmendmentCreditLedgerEntryRequestParams{metadata=$metadata, currency=$currency, description=$description, entryType=$entryType, amount=$amount, blockId=$blockId, additionalProperties=$additionalProperties}"
 
         companion object {
 
@@ -2291,7 +2131,7 @@ constructor(
                     return true
                 }
 
-                return other is EntryType && this.value == other.value
+                return /* spotless:off */ other is EntryType && this.value == other.value /* spotless:on */
             }
 
             override fun hashCode() = value.hashCode()
@@ -2341,30 +2181,11 @@ constructor(
             private val additionalProperties: Map<String, JsonValue>,
         ) {
 
-            private var hashCode: Int = 0
-
             @JsonAnyGetter
             @ExcludeMissing
             fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
 
             fun toBuilder() = Builder().from(this)
-
-            override fun equals(other: Any?): Boolean {
-                if (this === other) {
-                    return true
-                }
-
-                return other is Metadata && this.additionalProperties == other.additionalProperties
-            }
-
-            override fun hashCode(): Int {
-                if (hashCode == 0) {
-                    hashCode = Objects.hash(additionalProperties)
-                }
-                return hashCode
-            }
-
-            override fun toString() = "Metadata{additionalProperties=$additionalProperties}"
 
             companion object {
 
@@ -2396,6 +2217,45 @@ constructor(
 
                 fun build(): Metadata = Metadata(additionalProperties.toUnmodifiable())
             }
+
+            override fun equals(other: Any?): Boolean {
+                if (this === other) {
+                    return true
+                }
+
+                return /* spotless:off */ other is Metadata && this.additionalProperties == other.additionalProperties /* spotless:on */
+            }
+
+            private var hashCode: Int = 0
+
+            override fun hashCode(): Int {
+                if (hashCode == 0) {
+                    hashCode = /* spotless:off */ Objects.hash(additionalProperties) /* spotless:on */
+                }
+                return hashCode
+            }
+
+            override fun toString() = "Metadata{additionalProperties=$additionalProperties}"
         }
+
+        override fun equals(other: Any?): Boolean {
+            if (this === other) {
+                return true
+            }
+
+            return /* spotless:off */ other is AddAmendmentCreditLedgerEntryRequestParams && this.metadata == other.metadata && this.currency == other.currency && this.description == other.description && this.entryType == other.entryType && this.amount == other.amount && this.blockId == other.blockId && this.additionalProperties == other.additionalProperties /* spotless:on */
+        }
+
+        private var hashCode: Int = 0
+
+        override fun hashCode(): Int {
+            if (hashCode == 0) {
+                hashCode = /* spotless:off */ Objects.hash(metadata, currency, description, entryType, amount, blockId, additionalProperties) /* spotless:on */
+            }
+            return hashCode
+        }
+
+        override fun toString() =
+            "AddAmendmentCreditLedgerEntryRequestParams{metadata=$metadata, currency=$currency, description=$description, entryType=$entryType, amount=$amount, blockId=$blockId, additionalProperties=$additionalProperties}"
     }
 }

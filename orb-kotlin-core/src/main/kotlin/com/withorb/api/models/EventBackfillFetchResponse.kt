@@ -41,8 +41,6 @@ private constructor(
 
     private var validated: Boolean = false
 
-    private var hashCode: Int = 0
-
     fun id(): String = id.getRequired("id")
 
     /** The status of the backfill. */
@@ -134,48 +132,6 @@ private constructor(
     }
 
     fun toBuilder() = Builder().from(this)
-
-    override fun equals(other: Any?): Boolean {
-        if (this === other) {
-            return true
-        }
-
-        return other is EventBackfillFetchResponse &&
-            this.id == other.id &&
-            this.status == other.status &&
-            this.createdAt == other.createdAt &&
-            this.timeframeStart == other.timeframeStart &&
-            this.timeframeEnd == other.timeframeEnd &&
-            this.eventsIngested == other.eventsIngested &&
-            this.closeTime == other.closeTime &&
-            this.revertedAt == other.revertedAt &&
-            this.customerId == other.customerId &&
-            this.deprecationFilter == other.deprecationFilter &&
-            this.additionalProperties == other.additionalProperties
-    }
-
-    override fun hashCode(): Int {
-        if (hashCode == 0) {
-            hashCode =
-                Objects.hash(
-                    id,
-                    status,
-                    createdAt,
-                    timeframeStart,
-                    timeframeEnd,
-                    eventsIngested,
-                    closeTime,
-                    revertedAt,
-                    customerId,
-                    deprecationFilter,
-                    additionalProperties,
-                )
-        }
-        return hashCode
-    }
-
-    override fun toString() =
-        "EventBackfillFetchResponse{id=$id, status=$status, createdAt=$createdAt, timeframeStart=$timeframeStart, timeframeEnd=$timeframeEnd, eventsIngested=$eventsIngested, closeTime=$closeTime, revertedAt=$revertedAt, customerId=$customerId, deprecationFilter=$deprecationFilter, additionalProperties=$additionalProperties}"
 
     companion object {
 
@@ -355,7 +311,7 @@ private constructor(
                 return true
             }
 
-            return other is Status && this.value == other.value
+            return /* spotless:off */ other is Status && this.value == other.value /* spotless:on */
         }
 
         override fun hashCode() = value.hashCode()
@@ -410,4 +366,24 @@ private constructor(
 
         fun asString(): String = _value().asStringOrThrow()
     }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) {
+            return true
+        }
+
+        return /* spotless:off */ other is EventBackfillFetchResponse && this.id == other.id && this.status == other.status && this.createdAt == other.createdAt && this.timeframeStart == other.timeframeStart && this.timeframeEnd == other.timeframeEnd && this.eventsIngested == other.eventsIngested && this.closeTime == other.closeTime && this.revertedAt == other.revertedAt && this.customerId == other.customerId && this.deprecationFilter == other.deprecationFilter && this.additionalProperties == other.additionalProperties /* spotless:on */
+    }
+
+    private var hashCode: Int = 0
+
+    override fun hashCode(): Int {
+        if (hashCode == 0) {
+            hashCode = /* spotless:off */ Objects.hash(id, status, createdAt, timeframeStart, timeframeEnd, eventsIngested, closeTime, revertedAt, customerId, deprecationFilter, additionalProperties) /* spotless:on */
+        }
+        return hashCode
+    }
+
+    override fun toString() =
+        "EventBackfillFetchResponse{id=$id, status=$status, createdAt=$createdAt, timeframeStart=$timeframeStart, timeframeEnd=$timeframeEnd, eventsIngested=$eventsIngested, closeTime=$closeTime, revertedAt=$revertedAt, customerId=$customerId, deprecationFilter=$deprecationFilter, additionalProperties=$additionalProperties}"
 }

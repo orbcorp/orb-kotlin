@@ -73,8 +73,6 @@ constructor(
         private val additionalProperties: Map<String, JsonValue>,
     ) {
 
-        private var hashCode: Int = 0
-
         /** A name to meaningfully identify the action or event type. */
         @JsonProperty("event_name") fun eventName(): String? = eventName
 
@@ -102,38 +100,6 @@ constructor(
         fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
 
         fun toBuilder() = Builder().from(this)
-
-        override fun equals(other: Any?): Boolean {
-            if (this === other) {
-                return true
-            }
-
-            return other is EventUpdateBody &&
-                this.eventName == other.eventName &&
-                this.properties == other.properties &&
-                this.timestamp == other.timestamp &&
-                this.customerId == other.customerId &&
-                this.externalCustomerId == other.externalCustomerId &&
-                this.additionalProperties == other.additionalProperties
-        }
-
-        override fun hashCode(): Int {
-            if (hashCode == 0) {
-                hashCode =
-                    Objects.hash(
-                        eventName,
-                        properties,
-                        timestamp,
-                        customerId,
-                        externalCustomerId,
-                        additionalProperties,
-                    )
-            }
-            return hashCode
-        }
-
-        override fun toString() =
-            "EventUpdateBody{eventName=$eventName, properties=$properties, timestamp=$timestamp, customerId=$customerId, externalCustomerId=$externalCustomerId, additionalProperties=$additionalProperties}"
 
         companion object {
 
@@ -213,6 +179,26 @@ constructor(
                     additionalProperties.toUnmodifiable(),
                 )
         }
+
+        override fun equals(other: Any?): Boolean {
+            if (this === other) {
+                return true
+            }
+
+            return /* spotless:off */ other is EventUpdateBody && this.eventName == other.eventName && this.properties == other.properties && this.timestamp == other.timestamp && this.customerId == other.customerId && this.externalCustomerId == other.externalCustomerId && this.additionalProperties == other.additionalProperties /* spotless:on */
+        }
+
+        private var hashCode: Int = 0
+
+        override fun hashCode(): Int {
+            if (hashCode == 0) {
+                hashCode = /* spotless:off */ Objects.hash(eventName, properties, timestamp, customerId, externalCustomerId, additionalProperties) /* spotless:on */
+            }
+            return hashCode
+        }
+
+        override fun toString() =
+            "EventUpdateBody{eventName=$eventName, properties=$properties, timestamp=$timestamp, customerId=$customerId, externalCustomerId=$externalCustomerId, additionalProperties=$additionalProperties}"
     }
 
     fun _additionalQueryParams(): Map<String, List<String>> = additionalQueryParams
@@ -226,30 +212,11 @@ constructor(
             return true
         }
 
-        return other is EventUpdateParams &&
-            this.eventId == other.eventId &&
-            this.eventName == other.eventName &&
-            this.properties == other.properties &&
-            this.timestamp == other.timestamp &&
-            this.customerId == other.customerId &&
-            this.externalCustomerId == other.externalCustomerId &&
-            this.additionalQueryParams == other.additionalQueryParams &&
-            this.additionalHeaders == other.additionalHeaders &&
-            this.additionalBodyProperties == other.additionalBodyProperties
+        return /* spotless:off */ other is EventUpdateParams && this.eventId == other.eventId && this.eventName == other.eventName && this.properties == other.properties && this.timestamp == other.timestamp && this.customerId == other.customerId && this.externalCustomerId == other.externalCustomerId && this.additionalQueryParams == other.additionalQueryParams && this.additionalHeaders == other.additionalHeaders && this.additionalBodyProperties == other.additionalBodyProperties /* spotless:on */
     }
 
     override fun hashCode(): Int {
-        return Objects.hash(
-            eventId,
-            eventName,
-            properties,
-            timestamp,
-            customerId,
-            externalCustomerId,
-            additionalQueryParams,
-            additionalHeaders,
-            additionalBodyProperties,
-        )
+        return /* spotless:off */ Objects.hash(eventId, eventName, properties, timestamp, customerId, externalCustomerId, additionalQueryParams, additionalHeaders, additionalBodyProperties) /* spotless:on */
     }
 
     override fun toString() =

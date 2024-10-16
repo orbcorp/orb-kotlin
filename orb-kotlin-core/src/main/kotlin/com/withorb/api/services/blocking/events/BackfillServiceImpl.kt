@@ -4,9 +4,13 @@ package com.withorb.api.services.blocking.events
 
 import com.withorb.api.core.ClientOptions
 import com.withorb.api.core.RequestOptions
+import com.withorb.api.core.handlers.errorHandler
+import com.withorb.api.core.handlers.jsonHandler
+import com.withorb.api.core.handlers.withErrorHandler
 import com.withorb.api.core.http.HttpMethod
 import com.withorb.api.core.http.HttpRequest
 import com.withorb.api.core.http.HttpResponse.Handler
+import com.withorb.api.core.json
 import com.withorb.api.errors.OrbError
 import com.withorb.api.models.EventBackfillCloseParams
 import com.withorb.api.models.EventBackfillCloseResponse
@@ -18,10 +22,6 @@ import com.withorb.api.models.EventBackfillListPage
 import com.withorb.api.models.EventBackfillListParams
 import com.withorb.api.models.EventBackfillRevertParams
 import com.withorb.api.models.EventBackfillRevertResponse
-import com.withorb.api.services.errorHandler
-import com.withorb.api.services.json
-import com.withorb.api.services.jsonHandler
-import com.withorb.api.services.withErrorHandler
 
 class BackfillServiceImpl
 constructor(
