@@ -56,26 +56,11 @@ constructor(
             return true
         }
 
-        return other is CustomerCreditListParams &&
-            this.customerId == other.customerId &&
-            this.currency == other.currency &&
-            this.cursor == other.cursor &&
-            this.includeAllBlocks == other.includeAllBlocks &&
-            this.limit == other.limit &&
-            this.additionalQueryParams == other.additionalQueryParams &&
-            this.additionalHeaders == other.additionalHeaders
+        return /* spotless:off */ other is CustomerCreditListParams && this.customerId == other.customerId && this.currency == other.currency && this.cursor == other.cursor && this.includeAllBlocks == other.includeAllBlocks && this.limit == other.limit && this.additionalQueryParams == other.additionalQueryParams && this.additionalHeaders == other.additionalHeaders /* spotless:on */
     }
 
     override fun hashCode(): Int {
-        return Objects.hash(
-            customerId,
-            currency,
-            cursor,
-            includeAllBlocks,
-            limit,
-            additionalQueryParams,
-            additionalHeaders,
-        )
+        return /* spotless:off */ Objects.hash(customerId, currency, cursor, includeAllBlocks, limit, additionalQueryParams, additionalHeaders) /* spotless:on */
     }
 
     override fun toString() =

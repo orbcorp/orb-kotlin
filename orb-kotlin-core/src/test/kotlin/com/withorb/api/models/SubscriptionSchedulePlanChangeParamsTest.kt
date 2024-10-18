@@ -29,6 +29,7 @@ class SubscriptionSchedulePlanChangeParamsTest {
             .netTerms(123L)
             .perCreditOverageAmount(42.23)
             .planId("ZMwNQefe7J3ecf7W")
+            .planVersionNumber(123L)
             .priceOverrides(
                 listOf(
                     SubscriptionSchedulePlanChangeParams.PriceOverride.ofOverrideUnitPrice(
@@ -61,9 +62,7 @@ class SubscriptionSchedulePlanChangeParamsTest {
                                             .PERCENTAGE
                                     )
                                     .amountDiscount("amount_discount")
-                                    .appliesToPriceIds(listOf("string"))
                                     .percentageDiscount(42.23)
-                                    .trialAmountDiscount("trial_amount_discount")
                                     .usageDiscount(42.23)
                                     .build()
                             )
@@ -74,6 +73,7 @@ class SubscriptionSchedulePlanChangeParamsTest {
                     )
                 )
             )
+            .trialDurationDays(123L)
             .build()
     }
 
@@ -98,6 +98,7 @@ class SubscriptionSchedulePlanChangeParamsTest {
                 .netTerms(123L)
                 .perCreditOverageAmount(42.23)
                 .planId("ZMwNQefe7J3ecf7W")
+                .planVersionNumber(123L)
                 .priceOverrides(
                     listOf(
                         SubscriptionSchedulePlanChangeParams.PriceOverride.ofOverrideUnitPrice(
@@ -133,9 +134,7 @@ class SubscriptionSchedulePlanChangeParamsTest {
                                                 .PERCENTAGE
                                         )
                                         .amountDiscount("amount_discount")
-                                        .appliesToPriceIds(listOf("string"))
                                         .percentageDiscount(42.23)
-                                        .trialAmountDiscount("trial_amount_discount")
                                         .usageDiscount(42.23)
                                         .build()
                                 )
@@ -146,6 +145,7 @@ class SubscriptionSchedulePlanChangeParamsTest {
                         )
                     )
                 )
+                .trialDurationDays(123L)
                 .build()
         val body = params.getBody()
         assertThat(body).isNotNull
@@ -165,6 +165,7 @@ class SubscriptionSchedulePlanChangeParamsTest {
         assertThat(body.netTerms()).isEqualTo(123L)
         assertThat(body.perCreditOverageAmount()).isEqualTo(42.23)
         assertThat(body.planId()).isEqualTo("ZMwNQefe7J3ecf7W")
+        assertThat(body.planVersionNumber()).isEqualTo(123L)
         assertThat(body.priceOverrides())
             .isEqualTo(
                 listOf(
@@ -198,9 +199,7 @@ class SubscriptionSchedulePlanChangeParamsTest {
                                             .PERCENTAGE
                                     )
                                     .amountDiscount("amount_discount")
-                                    .appliesToPriceIds(listOf("string"))
                                     .percentageDiscount(42.23)
-                                    .trialAmountDiscount("trial_amount_discount")
                                     .usageDiscount(42.23)
                                     .build()
                             )
@@ -211,6 +210,7 @@ class SubscriptionSchedulePlanChangeParamsTest {
                     )
                 )
             )
+        assertThat(body.trialDurationDays()).isEqualTo(123L)
     }
 
     @Test

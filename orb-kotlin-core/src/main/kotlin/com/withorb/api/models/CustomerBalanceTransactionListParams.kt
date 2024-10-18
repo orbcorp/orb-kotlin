@@ -86,30 +86,11 @@ constructor(
             return true
         }
 
-        return other is CustomerBalanceTransactionListParams &&
-            this.customerId == other.customerId &&
-            this.cursor == other.cursor &&
-            this.limit == other.limit &&
-            this.operationTimeGt == other.operationTimeGt &&
-            this.operationTimeGte == other.operationTimeGte &&
-            this.operationTimeLt == other.operationTimeLt &&
-            this.operationTimeLte == other.operationTimeLte &&
-            this.additionalQueryParams == other.additionalQueryParams &&
-            this.additionalHeaders == other.additionalHeaders
+        return /* spotless:off */ other is CustomerBalanceTransactionListParams && this.customerId == other.customerId && this.cursor == other.cursor && this.limit == other.limit && this.operationTimeGt == other.operationTimeGt && this.operationTimeGte == other.operationTimeGte && this.operationTimeLt == other.operationTimeLt && this.operationTimeLte == other.operationTimeLte && this.additionalQueryParams == other.additionalQueryParams && this.additionalHeaders == other.additionalHeaders /* spotless:on */
     }
 
     override fun hashCode(): Int {
-        return Objects.hash(
-            customerId,
-            cursor,
-            limit,
-            operationTimeGt,
-            operationTimeGte,
-            operationTimeLt,
-            operationTimeLte,
-            additionalQueryParams,
-            additionalHeaders,
-        )
+        return /* spotless:off */ Objects.hash(customerId, cursor, limit, operationTimeGt, operationTimeGte, operationTimeLt, operationTimeLte, additionalQueryParams, additionalHeaders) /* spotless:on */
     }
 
     override fun toString() =

@@ -74,30 +74,11 @@ constructor(
             return true
         }
 
-        return other is SubscriptionFetchScheduleParams &&
-            this.subscriptionId == other.subscriptionId &&
-            this.cursor == other.cursor &&
-            this.limit == other.limit &&
-            this.startDateGt == other.startDateGt &&
-            this.startDateGte == other.startDateGte &&
-            this.startDateLt == other.startDateLt &&
-            this.startDateLte == other.startDateLte &&
-            this.additionalQueryParams == other.additionalQueryParams &&
-            this.additionalHeaders == other.additionalHeaders
+        return /* spotless:off */ other is SubscriptionFetchScheduleParams && this.subscriptionId == other.subscriptionId && this.cursor == other.cursor && this.limit == other.limit && this.startDateGt == other.startDateGt && this.startDateGte == other.startDateGte && this.startDateLt == other.startDateLt && this.startDateLte == other.startDateLte && this.additionalQueryParams == other.additionalQueryParams && this.additionalHeaders == other.additionalHeaders /* spotless:on */
     }
 
     override fun hashCode(): Int {
-        return Objects.hash(
-            subscriptionId,
-            cursor,
-            limit,
-            startDateGt,
-            startDateGte,
-            startDateLt,
-            startDateLte,
-            additionalQueryParams,
-            additionalHeaders,
-        )
+        return /* spotless:off */ Objects.hash(subscriptionId, cursor, limit, startDateGt, startDateGte, startDateLt, startDateLte, additionalQueryParams, additionalHeaders) /* spotless:on */
     }
 
     override fun toString() =

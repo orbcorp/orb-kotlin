@@ -58,7 +58,7 @@ class ServiceParamsTest {
 
         val params =
             CustomerCreateParams.builder()
-                .email("email")
+                .email("dev@stainlessapi.com")
                 .name("x")
                 .accountingSyncConfiguration(
                     CustomerCreateParams.AccountingSyncConfiguration.builder()
@@ -105,6 +105,19 @@ class ServiceParamsTest {
                         .state("state")
                         .build()
                 )
+                .taxConfiguration(
+                    CustomerCreateParams.TaxConfiguration.ofNewAvalaraTaxConfiguration(
+                        CustomerCreateParams.TaxConfiguration.NewAvalaraTaxConfiguration.builder()
+                            .taxExempt(true)
+                            .taxProvider(
+                                CustomerCreateParams.TaxConfiguration.NewAvalaraTaxConfiguration
+                                    .TaxProvider
+                                    .AVALARA
+                            )
+                            .taxExemptionCode("tax_exemption_code")
+                            .build()
+                    )
+                )
                 .taxId(
                     CustomerCreateParams.TaxId.builder()
                         .country(CustomerCreateParams.TaxId.Country.AD)
@@ -138,6 +151,7 @@ class ServiceParamsTest {
                 .currency("currency")
                 .email("email")
                 .emailDelivery(true)
+                .exemptFromAutomatedTax(true)
                 .externalCustomerId("external_customer_id")
                 .metadata(Customer.Metadata.builder().build())
                 .name("name")

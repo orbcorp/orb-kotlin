@@ -48,9 +48,9 @@ class InvoiceServiceTest {
                     .customerId("4khy3nwzktxv7")
                     .discount(
                         Discount.ofPercentageDiscount(
-                            Discount.PercentageDiscount.builder()
+                            PercentageDiscount.builder()
                                 .appliesToPriceIds(listOf("string"))
-                                .discountType(Discount.PercentageDiscount.DiscountType.PERCENTAGE)
+                                .discountType(PercentageDiscount.DiscountType.PERCENTAGE)
                                 .percentageDiscount(1.0)
                                 .reason("reason")
                                 .build()
@@ -137,7 +137,9 @@ class InvoiceServiceTest {
                 .build()
         val invoiceService = client.invoices()
         val invoice =
-            invoiceService.issue(InvoiceIssueParams.builder().invoiceId("invoice_id").build())
+            invoiceService.issue(
+                InvoiceIssueParams.builder().invoiceId("invoice_id").synchronous(true).build()
+            )
         println(invoice)
         invoice.validate()
     }

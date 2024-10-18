@@ -36,18 +36,11 @@ constructor(
             return true
         }
 
-        return other is InvoiceFetchParams &&
-            this.invoiceId == other.invoiceId &&
-            this.additionalQueryParams == other.additionalQueryParams &&
-            this.additionalHeaders == other.additionalHeaders
+        return /* spotless:off */ other is InvoiceFetchParams && this.invoiceId == other.invoiceId && this.additionalQueryParams == other.additionalQueryParams && this.additionalHeaders == other.additionalHeaders /* spotless:on */
     }
 
     override fun hashCode(): Int {
-        return Objects.hash(
-            invoiceId,
-            additionalQueryParams,
-            additionalHeaders,
-        )
+        return /* spotless:off */ Objects.hash(invoiceId, additionalQueryParams, additionalHeaders) /* spotless:on */
     }
 
     override fun toString() =

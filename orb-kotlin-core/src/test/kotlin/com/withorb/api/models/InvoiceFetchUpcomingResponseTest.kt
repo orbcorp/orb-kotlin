@@ -93,10 +93,10 @@ class InvoiceFetchUpcomingResponseTest {
                         .build()
                 )
                 .discount(
-                    Discount.ofPercentageDiscount(
-                        Discount.PercentageDiscount.builder()
+                    InvoiceLevelDiscount.ofPercentageDiscount(
+                        PercentageDiscount.builder()
                             .appliesToPriceIds(listOf("string"))
-                            .discountType(Discount.PercentageDiscount.DiscountType.PERCENTAGE)
+                            .discountType(PercentageDiscount.DiscountType.PERCENTAGE)
                             .percentageDiscount(1.0)
                             .reason("reason")
                             .build()
@@ -104,10 +104,10 @@ class InvoiceFetchUpcomingResponseTest {
                 )
                 .discounts(
                     listOf(
-                        Discount.ofPercentageDiscount(
-                            Discount.PercentageDiscount.builder()
+                        InvoiceLevelDiscount.ofPercentageDiscount(
+                            PercentageDiscount.builder()
                                 .appliesToPriceIds(listOf("string"))
-                                .discountType(Discount.PercentageDiscount.DiscountType.PERCENTAGE)
+                                .discountType(PercentageDiscount.DiscountType.PERCENTAGE)
                                 .percentageDiscount(1.0)
                                 .reason("reason")
                                 .build()
@@ -129,11 +129,9 @@ class InvoiceFetchUpcomingResponseTest {
                             .amount("7.00")
                             .discount(
                                 Discount.ofPercentageDiscount(
-                                    Discount.PercentageDiscount.builder()
+                                    PercentageDiscount.builder()
                                         .appliesToPriceIds(listOf("string"))
-                                        .discountType(
-                                            Discount.PercentageDiscount.DiscountType.PERCENTAGE
-                                        )
+                                        .discountType(PercentageDiscount.DiscountType.PERCENTAGE)
                                         .percentageDiscount(1.0)
                                         .reason("reason")
                                         .build()
@@ -187,11 +185,10 @@ class InvoiceFetchUpcomingResponseTest {
                                         .currency("currency")
                                         .discount(
                                             Discount.ofPercentageDiscount(
-                                                Discount.PercentageDiscount.builder()
+                                                PercentageDiscount.builder()
                                                     .appliesToPriceIds(listOf("string"))
                                                     .discountType(
-                                                        Discount.PercentageDiscount.DiscountType
-                                                            .PERCENTAGE
+                                                        PercentageDiscount.DiscountType.PERCENTAGE
                                                     )
                                                     .percentageDiscount(1.0)
                                                     .reason("reason")
@@ -422,10 +419,10 @@ class InvoiceFetchUpcomingResponseTest {
             )
         assertThat(invoiceFetchUpcomingResponse.discount())
             .isEqualTo(
-                Discount.ofPercentageDiscount(
-                    Discount.PercentageDiscount.builder()
+                InvoiceLevelDiscount.ofPercentageDiscount(
+                    PercentageDiscount.builder()
                         .appliesToPriceIds(listOf("string"))
-                        .discountType(Discount.PercentageDiscount.DiscountType.PERCENTAGE)
+                        .discountType(PercentageDiscount.DiscountType.PERCENTAGE)
                         .percentageDiscount(1.0)
                         .reason("reason")
                         .build()
@@ -433,10 +430,10 @@ class InvoiceFetchUpcomingResponseTest {
             )
         assertThat(invoiceFetchUpcomingResponse.discounts())
             .containsExactly(
-                Discount.ofPercentageDiscount(
-                    Discount.PercentageDiscount.builder()
+                InvoiceLevelDiscount.ofPercentageDiscount(
+                    PercentageDiscount.builder()
                         .appliesToPriceIds(listOf("string"))
-                        .discountType(Discount.PercentageDiscount.DiscountType.PERCENTAGE)
+                        .discountType(PercentageDiscount.DiscountType.PERCENTAGE)
                         .percentageDiscount(1.0)
                         .reason("reason")
                         .build()
@@ -463,9 +460,9 @@ class InvoiceFetchUpcomingResponseTest {
                     .amount("7.00")
                     .discount(
                         Discount.ofPercentageDiscount(
-                            Discount.PercentageDiscount.builder()
+                            PercentageDiscount.builder()
                                 .appliesToPriceIds(listOf("string"))
-                                .discountType(Discount.PercentageDiscount.DiscountType.PERCENTAGE)
+                                .discountType(PercentageDiscount.DiscountType.PERCENTAGE)
                                 .percentageDiscount(1.0)
                                 .reason("reason")
                                 .build()
@@ -516,10 +513,10 @@ class InvoiceFetchUpcomingResponseTest {
                                 .currency("currency")
                                 .discount(
                                     Discount.ofPercentageDiscount(
-                                        Discount.PercentageDiscount.builder()
+                                        PercentageDiscount.builder()
                                             .appliesToPriceIds(listOf("string"))
                                             .discountType(
-                                                Discount.PercentageDiscount.DiscountType.PERCENTAGE
+                                                PercentageDiscount.DiscountType.PERCENTAGE
                                             )
                                             .percentageDiscount(1.0)
                                             .reason("reason")

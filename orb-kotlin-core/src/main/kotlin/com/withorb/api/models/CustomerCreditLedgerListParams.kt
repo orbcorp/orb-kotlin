@@ -95,38 +95,11 @@ constructor(
             return true
         }
 
-        return other is CustomerCreditLedgerListParams &&
-            this.customerId == other.customerId &&
-            this.createdAtGt == other.createdAtGt &&
-            this.createdAtGte == other.createdAtGte &&
-            this.createdAtLt == other.createdAtLt &&
-            this.createdAtLte == other.createdAtLte &&
-            this.currency == other.currency &&
-            this.cursor == other.cursor &&
-            this.entryStatus == other.entryStatus &&
-            this.entryType == other.entryType &&
-            this.limit == other.limit &&
-            this.minimumAmount == other.minimumAmount &&
-            this.additionalQueryParams == other.additionalQueryParams &&
-            this.additionalHeaders == other.additionalHeaders
+        return /* spotless:off */ other is CustomerCreditLedgerListParams && this.customerId == other.customerId && this.createdAtGt == other.createdAtGt && this.createdAtGte == other.createdAtGte && this.createdAtLt == other.createdAtLt && this.createdAtLte == other.createdAtLte && this.currency == other.currency && this.cursor == other.cursor && this.entryStatus == other.entryStatus && this.entryType == other.entryType && this.limit == other.limit && this.minimumAmount == other.minimumAmount && this.additionalQueryParams == other.additionalQueryParams && this.additionalHeaders == other.additionalHeaders /* spotless:on */
     }
 
     override fun hashCode(): Int {
-        return Objects.hash(
-            customerId,
-            createdAtGt,
-            createdAtGte,
-            createdAtLt,
-            createdAtLte,
-            currency,
-            cursor,
-            entryStatus,
-            entryType,
-            limit,
-            minimumAmount,
-            additionalQueryParams,
-            additionalHeaders,
-        )
+        return /* spotless:off */ Objects.hash(customerId, createdAtGt, createdAtGte, createdAtLt, createdAtLte, currency, cursor, entryStatus, entryType, limit, minimumAmount, additionalQueryParams, additionalHeaders) /* spotless:on */
     }
 
     override fun toString() =
@@ -271,7 +244,7 @@ constructor(
                 return true
             }
 
-            return other is EntryStatus && this.value == other.value
+            return /* spotless:off */ other is EntryStatus && this.value == other.value /* spotless:on */
         }
 
         override fun hashCode() = value.hashCode()
@@ -328,7 +301,7 @@ constructor(
                 return true
             }
 
-            return other is EntryType && this.value == other.value
+            return /* spotless:off */ other is EntryType && this.value == other.value /* spotless:on */
         }
 
         override fun hashCode() = value.hashCode()
