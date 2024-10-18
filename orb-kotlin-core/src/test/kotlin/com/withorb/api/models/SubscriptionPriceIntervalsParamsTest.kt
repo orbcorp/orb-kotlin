@@ -17,7 +17,7 @@ class SubscriptionPriceIntervalsParamsTest {
                 listOf(
                     SubscriptionPriceIntervalsParams.Add.builder()
                         .startDate(
-                            SubscriptionPriceIntervalsParams.Add.StartDate.ofOffsetDateTime(
+                            SubscriptionPriceIntervalsParams.Add.StartDate.ofDateTime(
                                 OffsetDateTime.parse("2019-12-27T18:11:19.117Z")
                             )
                         )
@@ -51,7 +51,7 @@ class SubscriptionPriceIntervalsParamsTest {
                             )
                         )
                         .endDate(
-                            SubscriptionPriceIntervalsParams.Add.EndDate.ofOffsetDateTime(
+                            SubscriptionPriceIntervalsParams.Add.EndDate.ofDateTime(
                                 OffsetDateTime.parse("2019-12-27T18:11:19.117Z")
                             )
                         )
@@ -166,11 +166,12 @@ class SubscriptionPriceIntervalsParamsTest {
                                 )
                         )
                         .startDate(
-                            SubscriptionPriceIntervalsParams.AddAdjustment.StartDate
-                                .ofOffsetDateTime(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                            SubscriptionPriceIntervalsParams.AddAdjustment.StartDate.ofDateTime(
+                                OffsetDateTime.parse("2019-12-27T18:11:19.117Z")
+                            )
                         )
                         .endDate(
-                            SubscriptionPriceIntervalsParams.AddAdjustment.EndDate.ofOffsetDateTime(
+                            SubscriptionPriceIntervalsParams.AddAdjustment.EndDate.ofDateTime(
                                 OffsetDateTime.parse("2019-12-27T18:11:19.117Z")
                             )
                         )
@@ -183,7 +184,7 @@ class SubscriptionPriceIntervalsParamsTest {
                         .priceIntervalId("sdfs6wdjvn7ujokd")
                         .billingCycleDay(123L)
                         .endDate(
-                            SubscriptionPriceIntervalsParams.Edit.EndDate.ofOffsetDateTime(
+                            SubscriptionPriceIntervalsParams.Edit.EndDate.ofDateTime(
                                 OffsetDateTime.parse("2019-12-27T18:11:19.117Z")
                             )
                         )
@@ -197,7 +198,7 @@ class SubscriptionPriceIntervalsParamsTest {
                             )
                         )
                         .startDate(
-                            SubscriptionPriceIntervalsParams.Edit.StartDate.ofOffsetDateTime(
+                            SubscriptionPriceIntervalsParams.Edit.StartDate.ofDateTime(
                                 OffsetDateTime.parse("2019-12-27T18:11:19.117Z")
                             )
                         )
@@ -209,12 +210,14 @@ class SubscriptionPriceIntervalsParamsTest {
                     SubscriptionPriceIntervalsParams.EditAdjustment.builder()
                         .adjustmentIntervalId("sdfs6wdjvn7ujokd")
                         .endDate(
-                            SubscriptionPriceIntervalsParams.EditAdjustment.EndDate
-                                .ofOffsetDateTime(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                            SubscriptionPriceIntervalsParams.EditAdjustment.EndDate.ofDateTime(
+                                OffsetDateTime.parse("2019-12-27T18:11:19.117Z")
+                            )
                         )
                         .startDate(
-                            SubscriptionPriceIntervalsParams.EditAdjustment.StartDate
-                                .ofOffsetDateTime(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                            SubscriptionPriceIntervalsParams.EditAdjustment.StartDate.ofDateTime(
+                                OffsetDateTime.parse("2019-12-27T18:11:19.117Z")
+                            )
                         )
                         .build()
                 )
@@ -231,7 +234,7 @@ class SubscriptionPriceIntervalsParamsTest {
                     listOf(
                         SubscriptionPriceIntervalsParams.Add.builder()
                             .startDate(
-                                SubscriptionPriceIntervalsParams.Add.StartDate.ofOffsetDateTime(
+                                SubscriptionPriceIntervalsParams.Add.StartDate.ofDateTime(
                                     OffsetDateTime.parse("2019-12-27T18:11:19.117Z")
                                 )
                             )
@@ -265,7 +268,7 @@ class SubscriptionPriceIntervalsParamsTest {
                                 )
                             )
                             .endDate(
-                                SubscriptionPriceIntervalsParams.Add.EndDate.ofOffsetDateTime(
+                                SubscriptionPriceIntervalsParams.Add.EndDate.ofDateTime(
                                     OffsetDateTime.parse("2019-12-27T18:11:19.117Z")
                                 )
                             )
@@ -382,16 +385,14 @@ class SubscriptionPriceIntervalsParamsTest {
                                     )
                             )
                             .startDate(
-                                SubscriptionPriceIntervalsParams.AddAdjustment.StartDate
-                                    .ofOffsetDateTime(
-                                        OffsetDateTime.parse("2019-12-27T18:11:19.117Z")
-                                    )
+                                SubscriptionPriceIntervalsParams.AddAdjustment.StartDate.ofDateTime(
+                                    OffsetDateTime.parse("2019-12-27T18:11:19.117Z")
+                                )
                             )
                             .endDate(
-                                SubscriptionPriceIntervalsParams.AddAdjustment.EndDate
-                                    .ofOffsetDateTime(
-                                        OffsetDateTime.parse("2019-12-27T18:11:19.117Z")
-                                    )
+                                SubscriptionPriceIntervalsParams.AddAdjustment.EndDate.ofDateTime(
+                                    OffsetDateTime.parse("2019-12-27T18:11:19.117Z")
+                                )
                             )
                             .build()
                     )
@@ -402,7 +403,7 @@ class SubscriptionPriceIntervalsParamsTest {
                             .priceIntervalId("sdfs6wdjvn7ujokd")
                             .billingCycleDay(123L)
                             .endDate(
-                                SubscriptionPriceIntervalsParams.Edit.EndDate.ofOffsetDateTime(
+                                SubscriptionPriceIntervalsParams.Edit.EndDate.ofDateTime(
                                     OffsetDateTime.parse("2019-12-27T18:11:19.117Z")
                                 )
                             )
@@ -418,7 +419,7 @@ class SubscriptionPriceIntervalsParamsTest {
                                 )
                             )
                             .startDate(
-                                SubscriptionPriceIntervalsParams.Edit.StartDate.ofOffsetDateTime(
+                                SubscriptionPriceIntervalsParams.Edit.StartDate.ofDateTime(
                                     OffsetDateTime.parse("2019-12-27T18:11:19.117Z")
                                 )
                             )
@@ -430,16 +431,13 @@ class SubscriptionPriceIntervalsParamsTest {
                         SubscriptionPriceIntervalsParams.EditAdjustment.builder()
                             .adjustmentIntervalId("sdfs6wdjvn7ujokd")
                             .endDate(
-                                SubscriptionPriceIntervalsParams.EditAdjustment.EndDate
-                                    .ofOffsetDateTime(
-                                        OffsetDateTime.parse("2019-12-27T18:11:19.117Z")
-                                    )
+                                SubscriptionPriceIntervalsParams.EditAdjustment.EndDate.ofDateTime(
+                                    OffsetDateTime.parse("2019-12-27T18:11:19.117Z")
+                                )
                             )
                             .startDate(
                                 SubscriptionPriceIntervalsParams.EditAdjustment.StartDate
-                                    .ofOffsetDateTime(
-                                        OffsetDateTime.parse("2019-12-27T18:11:19.117Z")
-                                    )
+                                    .ofDateTime(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                             )
                             .build()
                     )
@@ -452,7 +450,7 @@ class SubscriptionPriceIntervalsParamsTest {
                 listOf(
                     SubscriptionPriceIntervalsParams.Add.builder()
                         .startDate(
-                            SubscriptionPriceIntervalsParams.Add.StartDate.ofOffsetDateTime(
+                            SubscriptionPriceIntervalsParams.Add.StartDate.ofDateTime(
                                 OffsetDateTime.parse("2019-12-27T18:11:19.117Z")
                             )
                         )
@@ -486,7 +484,7 @@ class SubscriptionPriceIntervalsParamsTest {
                             )
                         )
                         .endDate(
-                            SubscriptionPriceIntervalsParams.Add.EndDate.ofOffsetDateTime(
+                            SubscriptionPriceIntervalsParams.Add.EndDate.ofDateTime(
                                 OffsetDateTime.parse("2019-12-27T18:11:19.117Z")
                             )
                         )
@@ -602,11 +600,12 @@ class SubscriptionPriceIntervalsParamsTest {
                                 )
                         )
                         .startDate(
-                            SubscriptionPriceIntervalsParams.AddAdjustment.StartDate
-                                .ofOffsetDateTime(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                            SubscriptionPriceIntervalsParams.AddAdjustment.StartDate.ofDateTime(
+                                OffsetDateTime.parse("2019-12-27T18:11:19.117Z")
+                            )
                         )
                         .endDate(
-                            SubscriptionPriceIntervalsParams.AddAdjustment.EndDate.ofOffsetDateTime(
+                            SubscriptionPriceIntervalsParams.AddAdjustment.EndDate.ofDateTime(
                                 OffsetDateTime.parse("2019-12-27T18:11:19.117Z")
                             )
                         )
@@ -620,7 +619,7 @@ class SubscriptionPriceIntervalsParamsTest {
                         .priceIntervalId("sdfs6wdjvn7ujokd")
                         .billingCycleDay(123L)
                         .endDate(
-                            SubscriptionPriceIntervalsParams.Edit.EndDate.ofOffsetDateTime(
+                            SubscriptionPriceIntervalsParams.Edit.EndDate.ofDateTime(
                                 OffsetDateTime.parse("2019-12-27T18:11:19.117Z")
                             )
                         )
@@ -634,7 +633,7 @@ class SubscriptionPriceIntervalsParamsTest {
                             )
                         )
                         .startDate(
-                            SubscriptionPriceIntervalsParams.Edit.StartDate.ofOffsetDateTime(
+                            SubscriptionPriceIntervalsParams.Edit.StartDate.ofDateTime(
                                 OffsetDateTime.parse("2019-12-27T18:11:19.117Z")
                             )
                         )
@@ -647,12 +646,14 @@ class SubscriptionPriceIntervalsParamsTest {
                     SubscriptionPriceIntervalsParams.EditAdjustment.builder()
                         .adjustmentIntervalId("sdfs6wdjvn7ujokd")
                         .endDate(
-                            SubscriptionPriceIntervalsParams.EditAdjustment.EndDate
-                                .ofOffsetDateTime(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                            SubscriptionPriceIntervalsParams.EditAdjustment.EndDate.ofDateTime(
+                                OffsetDateTime.parse("2019-12-27T18:11:19.117Z")
+                            )
                         )
                         .startDate(
-                            SubscriptionPriceIntervalsParams.EditAdjustment.StartDate
-                                .ofOffsetDateTime(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                            SubscriptionPriceIntervalsParams.EditAdjustment.StartDate.ofDateTime(
+                                OffsetDateTime.parse("2019-12-27T18:11:19.117Z")
+                            )
                         )
                         .build()
                 )
