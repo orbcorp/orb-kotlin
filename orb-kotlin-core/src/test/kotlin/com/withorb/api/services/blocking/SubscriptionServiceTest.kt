@@ -52,6 +52,7 @@ class SubscriptionServiceTest {
                     .netTerms(123L)
                     .perCreditOverageAmount(42.23)
                     .planId("ZMwNQefe7J3ecf7W")
+                    .planVersionNumber(123L)
                     .priceOverrides(
                         listOf(
                             SubscriptionCreateParams.PriceOverride.ofOverrideUnitPrice(
@@ -95,6 +96,7 @@ class SubscriptionServiceTest {
                         )
                     )
                     .startDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                    .trialDurationDays(123L)
                     .build()
             )
         println(subscription)
@@ -256,7 +258,7 @@ class SubscriptionServiceTest {
                         listOf(
                             SubscriptionPriceIntervalsParams.Add.builder()
                                 .startDate(
-                                    SubscriptionPriceIntervalsParams.Add.StartDate.ofOffsetDateTime(
+                                    SubscriptionPriceIntervalsParams.Add.StartDate.ofDateTime(
                                         OffsetDateTime.parse("2019-12-27T18:11:19.117Z")
                                     )
                                 )
@@ -292,7 +294,7 @@ class SubscriptionServiceTest {
                                     )
                                 )
                                 .endDate(
-                                    SubscriptionPriceIntervalsParams.Add.EndDate.ofOffsetDateTime(
+                                    SubscriptionPriceIntervalsParams.Add.EndDate.ofDateTime(
                                         OffsetDateTime.parse("2019-12-27T18:11:19.117Z")
                                     )
                                 )
@@ -416,13 +418,13 @@ class SubscriptionServiceTest {
                                 )
                                 .startDate(
                                     SubscriptionPriceIntervalsParams.AddAdjustment.StartDate
-                                        .ofOffsetDateTime(
+                                        .ofDateTime(
                                             OffsetDateTime.parse("2019-12-27T18:11:19.117Z")
                                         )
                                 )
                                 .endDate(
                                     SubscriptionPriceIntervalsParams.AddAdjustment.EndDate
-                                        .ofOffsetDateTime(
+                                        .ofDateTime(
                                             OffsetDateTime.parse("2019-12-27T18:11:19.117Z")
                                         )
                                 )
@@ -435,7 +437,7 @@ class SubscriptionServiceTest {
                                 .priceIntervalId("sdfs6wdjvn7ujokd")
                                 .billingCycleDay(123L)
                                 .endDate(
-                                    SubscriptionPriceIntervalsParams.Edit.EndDate.ofOffsetDateTime(
+                                    SubscriptionPriceIntervalsParams.Edit.EndDate.ofDateTime(
                                         OffsetDateTime.parse("2019-12-27T18:11:19.117Z")
                                     )
                                 )
@@ -452,10 +454,9 @@ class SubscriptionServiceTest {
                                     )
                                 )
                                 .startDate(
-                                    SubscriptionPriceIntervalsParams.Edit.StartDate
-                                        .ofOffsetDateTime(
-                                            OffsetDateTime.parse("2019-12-27T18:11:19.117Z")
-                                        )
+                                    SubscriptionPriceIntervalsParams.Edit.StartDate.ofDateTime(
+                                        OffsetDateTime.parse("2019-12-27T18:11:19.117Z")
+                                    )
                                 )
                                 .build()
                         )
@@ -466,13 +467,13 @@ class SubscriptionServiceTest {
                                 .adjustmentIntervalId("sdfs6wdjvn7ujokd")
                                 .endDate(
                                     SubscriptionPriceIntervalsParams.EditAdjustment.EndDate
-                                        .ofOffsetDateTime(
+                                        .ofDateTime(
                                             OffsetDateTime.parse("2019-12-27T18:11:19.117Z")
                                         )
                                 )
                                 .startDate(
                                     SubscriptionPriceIntervalsParams.EditAdjustment.StartDate
-                                        .ofOffsetDateTime(
+                                        .ofDateTime(
                                             OffsetDateTime.parse("2019-12-27T18:11:19.117Z")
                                         )
                                 )
@@ -513,6 +514,7 @@ class SubscriptionServiceTest {
                     .netTerms(123L)
                     .perCreditOverageAmount(42.23)
                     .planId("ZMwNQefe7J3ecf7W")
+                    .planVersionNumber(123L)
                     .priceOverrides(
                         listOf(
                             SubscriptionSchedulePlanChangeParams.PriceOverride.ofOverrideUnitPrice(
@@ -559,6 +561,7 @@ class SubscriptionServiceTest {
                             )
                         )
                     )
+                    .trialDurationDays(123L)
                     .build()
             )
         println(subscription)
@@ -655,6 +658,30 @@ class SubscriptionServiceTest {
                     .quantity(42.23)
                     .changeOption(SubscriptionUpdateFixedFeeQuantityParams.ChangeOption.IMMEDIATE)
                     .effectiveDate(LocalDate.parse("2022-12-21"))
+                    .build()
+            )
+        println(subscription)
+        subscription.validate()
+    }
+
+    @Test
+    fun callUpdateTrial() {
+        val client =
+            OrbOkHttpClient.builder()
+                .baseUrl(TestServerExtension.BASE_URL)
+                .apiKey("My API Key")
+                .build()
+        val subscriptionService = client.subscriptions()
+        val subscription =
+            subscriptionService.updateTrial(
+                SubscriptionUpdateTrialParams.builder()
+                    .subscriptionId("subscription_id")
+                    .trialEndDate(
+                        SubscriptionUpdateTrialParams.TrialEndDate.ofOffsetDateTime(
+                            OffsetDateTime.parse("2019-12-27T18:11:19.117Z")
+                        )
+                    )
+                    .shift(true)
                     .build()
             )
         println(subscription)

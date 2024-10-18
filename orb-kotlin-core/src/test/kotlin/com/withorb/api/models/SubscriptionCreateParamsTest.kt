@@ -37,6 +37,7 @@ class SubscriptionCreateParamsTest {
             .netTerms(123L)
             .perCreditOverageAmount(42.23)
             .planId("ZMwNQefe7J3ecf7W")
+            .planVersionNumber(123L)
             .priceOverrides(
                 listOf(
                     SubscriptionCreateParams.PriceOverride.ofOverrideUnitPrice(
@@ -76,6 +77,7 @@ class SubscriptionCreateParamsTest {
                 )
             )
             .startDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+            .trialDurationDays(123L)
             .build()
     }
 
@@ -108,6 +110,7 @@ class SubscriptionCreateParamsTest {
                 .netTerms(123L)
                 .perCreditOverageAmount(42.23)
                 .planId("ZMwNQefe7J3ecf7W")
+                .planVersionNumber(123L)
                 .priceOverrides(
                     listOf(
                         SubscriptionCreateParams.PriceOverride.ofOverrideUnitPrice(
@@ -150,6 +153,7 @@ class SubscriptionCreateParamsTest {
                     )
                 )
                 .startDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                .trialDurationDays(123L)
                 .build()
         val body = params.getBody()
         assertThat(body).isNotNull
@@ -181,6 +185,7 @@ class SubscriptionCreateParamsTest {
         assertThat(body.netTerms()).isEqualTo(123L)
         assertThat(body.perCreditOverageAmount()).isEqualTo(42.23)
         assertThat(body.planId()).isEqualTo("ZMwNQefe7J3ecf7W")
+        assertThat(body.planVersionNumber()).isEqualTo(123L)
         assertThat(body.priceOverrides())
             .isEqualTo(
                 listOf(
@@ -221,6 +226,7 @@ class SubscriptionCreateParamsTest {
                 )
             )
         assertThat(body.startDate()).isEqualTo(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+        assertThat(body.trialDurationDays()).isEqualTo(123L)
     }
 
     @Test

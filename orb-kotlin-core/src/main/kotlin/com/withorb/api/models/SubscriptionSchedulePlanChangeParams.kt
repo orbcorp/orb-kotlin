@@ -45,7 +45,9 @@ constructor(
     private val netTerms: Long?,
     private val perCreditOverageAmount: Double?,
     private val planId: String?,
+    private val planVersionNumber: Long?,
     private val priceOverrides: List<PriceOverride>?,
+    private val trialDurationDays: Long?,
     private val additionalQueryParams: Map<String, List<String>>,
     private val additionalHeaders: Map<String, List<String>>,
     private val additionalBodyProperties: Map<String, JsonValue>,
@@ -81,7 +83,11 @@ constructor(
 
     fun planId(): String? = planId
 
+    fun planVersionNumber(): Long? = planVersionNumber
+
     fun priceOverrides(): List<PriceOverride>? = priceOverrides
+
+    fun trialDurationDays(): Long? = trialDurationDays
 
     internal fun getBody(): SubscriptionSchedulePlanChangeBody {
         return SubscriptionSchedulePlanChangeBody(
@@ -99,7 +105,9 @@ constructor(
             netTerms,
             perCreditOverageAmount,
             planId,
+            planVersionNumber,
             priceOverrides,
+            trialDurationDays,
             additionalBodyProperties,
         )
     }
@@ -133,7 +141,9 @@ constructor(
         private val netTerms: Long?,
         private val perCreditOverageAmount: Double?,
         private val planId: String?,
+        private val planVersionNumber: Long?,
         private val priceOverrides: List<PriceOverride>?,
+        private val trialDurationDays: Long?,
         private val additionalProperties: Map<String, JsonValue>,
     ) {
 
@@ -215,8 +225,20 @@ constructor(
          */
         @JsonProperty("plan_id") fun planId(): String? = planId
 
+        /**
+         * Specifies which version of the plan to change to. If null, the default version will be
+         * used.
+         */
+        @JsonProperty("plan_version_number") fun planVersionNumber(): Long? = planVersionNumber
+
         /** Optionally provide a list of overrides for prices on the plan */
         @JsonProperty("price_overrides") fun priceOverrides(): List<PriceOverride>? = priceOverrides
+
+        /**
+         * The duration of the trial period in days. If not provided, this defaults to the value
+         * specified in the plan. If `0` is provided, the trial on the plan will be skipped.
+         */
+        @JsonProperty("trial_duration_days") fun trialDurationDays(): Long? = trialDurationDays
 
         @JsonAnyGetter
         @ExcludeMissing
@@ -245,7 +267,9 @@ constructor(
             private var netTerms: Long? = null
             private var perCreditOverageAmount: Double? = null
             private var planId: String? = null
+            private var planVersionNumber: Long? = null
             private var priceOverrides: List<PriceOverride>? = null
+            private var trialDurationDays: Long? = null
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             internal fun from(
@@ -268,7 +292,9 @@ constructor(
                 this.perCreditOverageAmount =
                     subscriptionSchedulePlanChangeBody.perCreditOverageAmount
                 this.planId = subscriptionSchedulePlanChangeBody.planId
+                this.planVersionNumber = subscriptionSchedulePlanChangeBody.planVersionNumber
                 this.priceOverrides = subscriptionSchedulePlanChangeBody.priceOverrides
+                this.trialDurationDays = subscriptionSchedulePlanChangeBody.trialDurationDays
                 additionalProperties(subscriptionSchedulePlanChangeBody.additionalProperties)
             }
 
@@ -381,10 +407,28 @@ constructor(
              */
             @JsonProperty("plan_id") fun planId(planId: String) = apply { this.planId = planId }
 
+            /**
+             * Specifies which version of the plan to change to. If null, the default version will
+             * be used.
+             */
+            @JsonProperty("plan_version_number")
+            fun planVersionNumber(planVersionNumber: Long) = apply {
+                this.planVersionNumber = planVersionNumber
+            }
+
             /** Optionally provide a list of overrides for prices on the plan */
             @JsonProperty("price_overrides")
             fun priceOverrides(priceOverrides: List<PriceOverride>) = apply {
                 this.priceOverrides = priceOverrides
+            }
+
+            /**
+             * The duration of the trial period in days. If not provided, this defaults to the value
+             * specified in the plan. If `0` is provided, the trial on the plan will be skipped.
+             */
+            @JsonProperty("trial_duration_days")
+            fun trialDurationDays(trialDurationDays: Long) = apply {
+                this.trialDurationDays = trialDurationDays
             }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
@@ -417,7 +461,9 @@ constructor(
                     netTerms,
                     perCreditOverageAmount,
                     planId,
+                    planVersionNumber,
                     priceOverrides?.toUnmodifiable(),
+                    trialDurationDays,
                     additionalProperties.toUnmodifiable(),
                 )
         }
@@ -427,20 +473,20 @@ constructor(
                 return true
             }
 
-            return /* spotless:off */ other is SubscriptionSchedulePlanChangeBody && this.changeOption == other.changeOption && this.alignBillingWithPlanChangeDate == other.alignBillingWithPlanChangeDate && this.autoCollection == other.autoCollection && this.billingCycleAlignment == other.billingCycleAlignment && this.changeDate == other.changeDate && this.couponRedemptionCode == other.couponRedemptionCode && this.creditsOverageRate == other.creditsOverageRate && this.defaultInvoiceMemo == other.defaultInvoiceMemo && this.externalPlanId == other.externalPlanId && this.initialPhaseOrder == other.initialPhaseOrder && this.invoicingThreshold == other.invoicingThreshold && this.netTerms == other.netTerms && this.perCreditOverageAmount == other.perCreditOverageAmount && this.planId == other.planId && this.priceOverrides == other.priceOverrides && this.additionalProperties == other.additionalProperties /* spotless:on */
+            return /* spotless:off */ other is SubscriptionSchedulePlanChangeBody && this.changeOption == other.changeOption && this.alignBillingWithPlanChangeDate == other.alignBillingWithPlanChangeDate && this.autoCollection == other.autoCollection && this.billingCycleAlignment == other.billingCycleAlignment && this.changeDate == other.changeDate && this.couponRedemptionCode == other.couponRedemptionCode && this.creditsOverageRate == other.creditsOverageRate && this.defaultInvoiceMemo == other.defaultInvoiceMemo && this.externalPlanId == other.externalPlanId && this.initialPhaseOrder == other.initialPhaseOrder && this.invoicingThreshold == other.invoicingThreshold && this.netTerms == other.netTerms && this.perCreditOverageAmount == other.perCreditOverageAmount && this.planId == other.planId && this.planVersionNumber == other.planVersionNumber && this.priceOverrides == other.priceOverrides && this.trialDurationDays == other.trialDurationDays && this.additionalProperties == other.additionalProperties /* spotless:on */
         }
 
         private var hashCode: Int = 0
 
         override fun hashCode(): Int {
             if (hashCode == 0) {
-                hashCode = /* spotless:off */ Objects.hash(changeOption, alignBillingWithPlanChangeDate, autoCollection, billingCycleAlignment, changeDate, couponRedemptionCode, creditsOverageRate, defaultInvoiceMemo, externalPlanId, initialPhaseOrder, invoicingThreshold, netTerms, perCreditOverageAmount, planId, priceOverrides, additionalProperties) /* spotless:on */
+                hashCode = /* spotless:off */ Objects.hash(changeOption, alignBillingWithPlanChangeDate, autoCollection, billingCycleAlignment, changeDate, couponRedemptionCode, creditsOverageRate, defaultInvoiceMemo, externalPlanId, initialPhaseOrder, invoicingThreshold, netTerms, perCreditOverageAmount, planId, planVersionNumber, priceOverrides, trialDurationDays, additionalProperties) /* spotless:on */
             }
             return hashCode
         }
 
         override fun toString() =
-            "SubscriptionSchedulePlanChangeBody{changeOption=$changeOption, alignBillingWithPlanChangeDate=$alignBillingWithPlanChangeDate, autoCollection=$autoCollection, billingCycleAlignment=$billingCycleAlignment, changeDate=$changeDate, couponRedemptionCode=$couponRedemptionCode, creditsOverageRate=$creditsOverageRate, defaultInvoiceMemo=$defaultInvoiceMemo, externalPlanId=$externalPlanId, initialPhaseOrder=$initialPhaseOrder, invoicingThreshold=$invoicingThreshold, netTerms=$netTerms, perCreditOverageAmount=$perCreditOverageAmount, planId=$planId, priceOverrides=$priceOverrides, additionalProperties=$additionalProperties}"
+            "SubscriptionSchedulePlanChangeBody{changeOption=$changeOption, alignBillingWithPlanChangeDate=$alignBillingWithPlanChangeDate, autoCollection=$autoCollection, billingCycleAlignment=$billingCycleAlignment, changeDate=$changeDate, couponRedemptionCode=$couponRedemptionCode, creditsOverageRate=$creditsOverageRate, defaultInvoiceMemo=$defaultInvoiceMemo, externalPlanId=$externalPlanId, initialPhaseOrder=$initialPhaseOrder, invoicingThreshold=$invoicingThreshold, netTerms=$netTerms, perCreditOverageAmount=$perCreditOverageAmount, planId=$planId, planVersionNumber=$planVersionNumber, priceOverrides=$priceOverrides, trialDurationDays=$trialDurationDays, additionalProperties=$additionalProperties}"
     }
 
     fun _additionalQueryParams(): Map<String, List<String>> = additionalQueryParams
@@ -454,15 +500,15 @@ constructor(
             return true
         }
 
-        return /* spotless:off */ other is SubscriptionSchedulePlanChangeParams && this.subscriptionId == other.subscriptionId && this.changeOption == other.changeOption && this.alignBillingWithPlanChangeDate == other.alignBillingWithPlanChangeDate && this.autoCollection == other.autoCollection && this.billingCycleAlignment == other.billingCycleAlignment && this.changeDate == other.changeDate && this.couponRedemptionCode == other.couponRedemptionCode && this.creditsOverageRate == other.creditsOverageRate && this.defaultInvoiceMemo == other.defaultInvoiceMemo && this.externalPlanId == other.externalPlanId && this.initialPhaseOrder == other.initialPhaseOrder && this.invoicingThreshold == other.invoicingThreshold && this.netTerms == other.netTerms && this.perCreditOverageAmount == other.perCreditOverageAmount && this.planId == other.planId && this.priceOverrides == other.priceOverrides && this.additionalQueryParams == other.additionalQueryParams && this.additionalHeaders == other.additionalHeaders && this.additionalBodyProperties == other.additionalBodyProperties /* spotless:on */
+        return /* spotless:off */ other is SubscriptionSchedulePlanChangeParams && this.subscriptionId == other.subscriptionId && this.changeOption == other.changeOption && this.alignBillingWithPlanChangeDate == other.alignBillingWithPlanChangeDate && this.autoCollection == other.autoCollection && this.billingCycleAlignment == other.billingCycleAlignment && this.changeDate == other.changeDate && this.couponRedemptionCode == other.couponRedemptionCode && this.creditsOverageRate == other.creditsOverageRate && this.defaultInvoiceMemo == other.defaultInvoiceMemo && this.externalPlanId == other.externalPlanId && this.initialPhaseOrder == other.initialPhaseOrder && this.invoicingThreshold == other.invoicingThreshold && this.netTerms == other.netTerms && this.perCreditOverageAmount == other.perCreditOverageAmount && this.planId == other.planId && this.planVersionNumber == other.planVersionNumber && this.priceOverrides == other.priceOverrides && this.trialDurationDays == other.trialDurationDays && this.additionalQueryParams == other.additionalQueryParams && this.additionalHeaders == other.additionalHeaders && this.additionalBodyProperties == other.additionalBodyProperties /* spotless:on */
     }
 
     override fun hashCode(): Int {
-        return /* spotless:off */ Objects.hash(subscriptionId, changeOption, alignBillingWithPlanChangeDate, autoCollection, billingCycleAlignment, changeDate, couponRedemptionCode, creditsOverageRate, defaultInvoiceMemo, externalPlanId, initialPhaseOrder, invoicingThreshold, netTerms, perCreditOverageAmount, planId, priceOverrides, additionalQueryParams, additionalHeaders, additionalBodyProperties) /* spotless:on */
+        return /* spotless:off */ Objects.hash(subscriptionId, changeOption, alignBillingWithPlanChangeDate, autoCollection, billingCycleAlignment, changeDate, couponRedemptionCode, creditsOverageRate, defaultInvoiceMemo, externalPlanId, initialPhaseOrder, invoicingThreshold, netTerms, perCreditOverageAmount, planId, planVersionNumber, priceOverrides, trialDurationDays, additionalQueryParams, additionalHeaders, additionalBodyProperties) /* spotless:on */
     }
 
     override fun toString() =
-        "SubscriptionSchedulePlanChangeParams{subscriptionId=$subscriptionId, changeOption=$changeOption, alignBillingWithPlanChangeDate=$alignBillingWithPlanChangeDate, autoCollection=$autoCollection, billingCycleAlignment=$billingCycleAlignment, changeDate=$changeDate, couponRedemptionCode=$couponRedemptionCode, creditsOverageRate=$creditsOverageRate, defaultInvoiceMemo=$defaultInvoiceMemo, externalPlanId=$externalPlanId, initialPhaseOrder=$initialPhaseOrder, invoicingThreshold=$invoicingThreshold, netTerms=$netTerms, perCreditOverageAmount=$perCreditOverageAmount, planId=$planId, priceOverrides=$priceOverrides, additionalQueryParams=$additionalQueryParams, additionalHeaders=$additionalHeaders, additionalBodyProperties=$additionalBodyProperties}"
+        "SubscriptionSchedulePlanChangeParams{subscriptionId=$subscriptionId, changeOption=$changeOption, alignBillingWithPlanChangeDate=$alignBillingWithPlanChangeDate, autoCollection=$autoCollection, billingCycleAlignment=$billingCycleAlignment, changeDate=$changeDate, couponRedemptionCode=$couponRedemptionCode, creditsOverageRate=$creditsOverageRate, defaultInvoiceMemo=$defaultInvoiceMemo, externalPlanId=$externalPlanId, initialPhaseOrder=$initialPhaseOrder, invoicingThreshold=$invoicingThreshold, netTerms=$netTerms, perCreditOverageAmount=$perCreditOverageAmount, planId=$planId, planVersionNumber=$planVersionNumber, priceOverrides=$priceOverrides, trialDurationDays=$trialDurationDays, additionalQueryParams=$additionalQueryParams, additionalHeaders=$additionalHeaders, additionalBodyProperties=$additionalBodyProperties}"
 
     fun toBuilder() = Builder().from(this)
 
@@ -489,7 +535,9 @@ constructor(
         private var netTerms: Long? = null
         private var perCreditOverageAmount: Double? = null
         private var planId: String? = null
+        private var planVersionNumber: Long? = null
         private var priceOverrides: MutableList<PriceOverride> = mutableListOf()
+        private var trialDurationDays: Long? = null
         private var additionalQueryParams: MutableMap<String, MutableList<String>> = mutableMapOf()
         private var additionalHeaders: MutableMap<String, MutableList<String>> = mutableMapOf()
         private var additionalBodyProperties: MutableMap<String, JsonValue> = mutableMapOf()
@@ -514,7 +562,9 @@ constructor(
             this.perCreditOverageAmount =
                 subscriptionSchedulePlanChangeParams.perCreditOverageAmount
             this.planId = subscriptionSchedulePlanChangeParams.planId
+            this.planVersionNumber = subscriptionSchedulePlanChangeParams.planVersionNumber
             this.priceOverrides(subscriptionSchedulePlanChangeParams.priceOverrides ?: listOf())
+            this.trialDurationDays = subscriptionSchedulePlanChangeParams.trialDurationDays
             additionalQueryParams(subscriptionSchedulePlanChangeParams.additionalQueryParams)
             additionalHeaders(subscriptionSchedulePlanChangeParams.additionalHeaders)
             additionalBodyProperties(subscriptionSchedulePlanChangeParams.additionalBodyProperties)
@@ -612,6 +662,14 @@ constructor(
          */
         fun planId(planId: String) = apply { this.planId = planId }
 
+        /**
+         * Specifies which version of the plan to change to. If null, the default version will be
+         * used.
+         */
+        fun planVersionNumber(planVersionNumber: Long) = apply {
+            this.planVersionNumber = planVersionNumber
+        }
+
         /** Optionally provide a list of overrides for prices on the plan */
         fun priceOverrides(priceOverrides: List<PriceOverride>) = apply {
             this.priceOverrides.clear()
@@ -621,6 +679,14 @@ constructor(
         /** Optionally provide a list of overrides for prices on the plan */
         fun addPriceOverride(priceOverride: PriceOverride) = apply {
             this.priceOverrides.add(priceOverride)
+        }
+
+        /**
+         * The duration of the trial period in days. If not provided, this defaults to the value
+         * specified in the plan. If `0` is provided, the trial on the plan will be skipped.
+         */
+        fun trialDurationDays(trialDurationDays: Long) = apply {
+            this.trialDurationDays = trialDurationDays
         }
 
         fun additionalQueryParams(additionalQueryParams: Map<String, List<String>>) = apply {
@@ -694,7 +760,9 @@ constructor(
                 netTerms,
                 perCreditOverageAmount,
                 planId,
+                planVersionNumber,
                 if (priceOverrides.size == 0) null else priceOverrides.toUnmodifiable(),
+                trialDurationDays,
                 additionalQueryParams.mapValues { it.value.toUnmodifiable() }.toUnmodifiable(),
                 additionalHeaders.mapValues { it.value.toUnmodifiable() }.toUnmodifiable(),
                 additionalBodyProperties.toUnmodifiable(),

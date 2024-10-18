@@ -31,6 +31,7 @@ import com.withorb.api.models.SubscriptionUnscheduleFixedFeeQuantityUpdatesParam
 import com.withorb.api.models.SubscriptionUnschedulePendingPlanChangesParams
 import com.withorb.api.models.SubscriptionUpdateFixedFeeQuantityParams
 import com.withorb.api.models.SubscriptionUpdateParams
+import com.withorb.api.models.SubscriptionUpdateTrialParams
 import com.withorb.api.models.SubscriptionUsage
 
 class SubscriptionServiceAsyncImpl
@@ -1250,6 +1251,52 @@ constructor(
         return clientOptions.httpClient.executeAsync(request, requestOptions).let { response ->
             response
                 .use { updateFixedFeeQuantityHandler.handle(it) }
+                .apply {
+                    if (requestOptions.responseValidation ?: clientOptions.responseValidation) {
+                        validate()
+                    }
+                }
+        }
+    }
+
+    private val updateTrialHandler: Handler<Subscription> =
+        jsonHandler<Subscription>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+
+    /**
+     * This endpoint is used to update the trial end date for a subscription. The new trial end date
+     * must be within the time range of the current plan (i.e. the new trial end date must be on or
+     * after the subscription's start date on the current plan, and on or before the subscription
+     * end date).
+     *
+     * In order to retroactively remove a trial completely, the end date can be set to the
+     * transition date of the subscription to this plan (or, if this is the first plan for this
+     * subscription, the subscription's start date). In order to end a trial immediately, the
+     * keyword `immediate` can be provided as the trial end date.
+     *
+     * By default, Orb will shift only the trial end date (and price intervals that start or end on
+     * the previous trial end date), and leave all other future price intervals untouched. If the
+     * `shift` parameter is set to `true`, Orb will shift all subsequent price and adjustment
+     * intervals by the same amount as the trial end date shift (so, e.g., if a plan change is
+     * scheduled or an add-on price was added, that change will be pushed back by the same amount of
+     * time the trial is extended).
+     */
+    override suspend fun updateTrial(
+        params: SubscriptionUpdateTrialParams,
+        requestOptions: RequestOptions
+    ): Subscription {
+        val request =
+            HttpRequest.builder()
+                .method(HttpMethod.POST)
+                .addPathSegments("subscriptions", params.getPathParam(0), "update_trial")
+                .putAllQueryParams(clientOptions.queryParams)
+                .putAllQueryParams(params.getQueryParams())
+                .putAllHeaders(clientOptions.headers)
+                .putAllHeaders(params.getHeaders())
+                .body(json(clientOptions.jsonMapper, params.getBody()))
+                .build()
+        return clientOptions.httpClient.executeAsync(request, requestOptions).let { response ->
+            response
+                .use { updateTrialHandler.handle(it) }
                 .apply {
                     if (requestOptions.responseValidation ?: clientOptions.responseValidation) {
                         validate()

@@ -538,22 +538,22 @@ constructor(
         @JsonSerialize(using = StartDate.Serializer::class)
         class StartDate
         private constructor(
-            private val offsetDateTime: OffsetDateTime? = null,
+            private val dateTime: OffsetDateTime? = null,
             private val billingCycleRelativeDate: BillingCycleRelativeDate? = null,
             private val _json: JsonValue? = null,
         ) {
 
             private var validated: Boolean = false
 
-            fun offsetDateTime(): OffsetDateTime? = offsetDateTime
+            fun dateTime(): OffsetDateTime? = dateTime
 
             fun billingCycleRelativeDate(): BillingCycleRelativeDate? = billingCycleRelativeDate
 
-            fun isOffsetDateTime(): Boolean = offsetDateTime != null
+            fun isDateTime(): Boolean = dateTime != null
 
             fun isBillingCycleRelativeDate(): Boolean = billingCycleRelativeDate != null
 
-            fun asOffsetDateTime(): OffsetDateTime = offsetDateTime.getOrThrow("offsetDateTime")
+            fun asDateTime(): OffsetDateTime = dateTime.getOrThrow("dateTime")
 
             fun asBillingCycleRelativeDate(): BillingCycleRelativeDate =
                 billingCycleRelativeDate.getOrThrow("billingCycleRelativeDate")
@@ -562,7 +562,7 @@ constructor(
 
             fun <T> accept(visitor: Visitor<T>): T {
                 return when {
-                    offsetDateTime != null -> visitor.visitOffsetDateTime(offsetDateTime)
+                    dateTime != null -> visitor.visitDateTime(dateTime)
                     billingCycleRelativeDate != null ->
                         visitor.visitBillingCycleRelativeDate(billingCycleRelativeDate)
                     else -> visitor.unknown(_json)
@@ -571,7 +571,7 @@ constructor(
 
             fun validate(): StartDate = apply {
                 if (!validated) {
-                    if (offsetDateTime == null && billingCycleRelativeDate == null) {
+                    if (dateTime == null && billingCycleRelativeDate == null) {
                         throw OrbInvalidDataException("Unknown StartDate: $_json")
                     }
                     validated = true
@@ -583,16 +583,16 @@ constructor(
                     return true
                 }
 
-                return /* spotless:off */ other is StartDate && this.offsetDateTime == other.offsetDateTime && this.billingCycleRelativeDate == other.billingCycleRelativeDate /* spotless:on */
+                return /* spotless:off */ other is StartDate && this.dateTime == other.dateTime && this.billingCycleRelativeDate == other.billingCycleRelativeDate /* spotless:on */
             }
 
             override fun hashCode(): Int {
-                return /* spotless:off */ Objects.hash(offsetDateTime, billingCycleRelativeDate) /* spotless:on */
+                return /* spotless:off */ Objects.hash(dateTime, billingCycleRelativeDate) /* spotless:on */
             }
 
             override fun toString(): String {
                 return when {
-                    offsetDateTime != null -> "StartDate{offsetDateTime=$offsetDateTime}"
+                    dateTime != null -> "StartDate{dateTime=$dateTime}"
                     billingCycleRelativeDate != null ->
                         "StartDate{billingCycleRelativeDate=$billingCycleRelativeDate}"
                     _json != null -> "StartDate{_unknown=$_json}"
@@ -602,8 +602,7 @@ constructor(
 
             companion object {
 
-                fun ofOffsetDateTime(offsetDateTime: OffsetDateTime) =
-                    StartDate(offsetDateTime = offsetDateTime)
+                fun ofDateTime(dateTime: OffsetDateTime) = StartDate(dateTime = dateTime)
 
                 fun ofBillingCycleRelativeDate(billingCycleRelativeDate: BillingCycleRelativeDate) =
                     StartDate(billingCycleRelativeDate = billingCycleRelativeDate)
@@ -611,7 +610,7 @@ constructor(
 
             interface Visitor<out T> {
 
-                fun visitOffsetDateTime(offsetDateTime: OffsetDateTime): T
+                fun visitDateTime(dateTime: OffsetDateTime): T
 
                 fun visitBillingCycleRelativeDate(
                     billingCycleRelativeDate: BillingCycleRelativeDate
@@ -627,7 +626,7 @@ constructor(
                 override fun ObjectCodec.deserialize(node: JsonNode): StartDate {
                     val json = JsonValue.fromJsonNode(node)
                     tryDeserialize(node, jacksonTypeRef<OffsetDateTime>())?.let {
-                        return StartDate(offsetDateTime = it, _json = json)
+                        return StartDate(dateTime = it, _json = json)
                     }
                     tryDeserialize(node, jacksonTypeRef<BillingCycleRelativeDate>())?.let {
                         return StartDate(billingCycleRelativeDate = it, _json = json)
@@ -645,7 +644,7 @@ constructor(
                     provider: SerializerProvider
                 ) {
                     when {
-                        value.offsetDateTime != null -> generator.writeObject(value.offsetDateTime)
+                        value.dateTime != null -> generator.writeObject(value.dateTime)
                         value.billingCycleRelativeDate != null ->
                             generator.writeObject(value.billingCycleRelativeDate)
                         value._json != null -> generator.writeObject(value._json)
@@ -1585,22 +1584,22 @@ constructor(
         @JsonSerialize(using = EndDate.Serializer::class)
         class EndDate
         private constructor(
-            private val offsetDateTime: OffsetDateTime? = null,
+            private val dateTime: OffsetDateTime? = null,
             private val billingCycleRelativeDate: BillingCycleRelativeDate? = null,
             private val _json: JsonValue? = null,
         ) {
 
             private var validated: Boolean = false
 
-            fun offsetDateTime(): OffsetDateTime? = offsetDateTime
+            fun dateTime(): OffsetDateTime? = dateTime
 
             fun billingCycleRelativeDate(): BillingCycleRelativeDate? = billingCycleRelativeDate
 
-            fun isOffsetDateTime(): Boolean = offsetDateTime != null
+            fun isDateTime(): Boolean = dateTime != null
 
             fun isBillingCycleRelativeDate(): Boolean = billingCycleRelativeDate != null
 
-            fun asOffsetDateTime(): OffsetDateTime = offsetDateTime.getOrThrow("offsetDateTime")
+            fun asDateTime(): OffsetDateTime = dateTime.getOrThrow("dateTime")
 
             fun asBillingCycleRelativeDate(): BillingCycleRelativeDate =
                 billingCycleRelativeDate.getOrThrow("billingCycleRelativeDate")
@@ -1609,7 +1608,7 @@ constructor(
 
             fun <T> accept(visitor: Visitor<T>): T {
                 return when {
-                    offsetDateTime != null -> visitor.visitOffsetDateTime(offsetDateTime)
+                    dateTime != null -> visitor.visitDateTime(dateTime)
                     billingCycleRelativeDate != null ->
                         visitor.visitBillingCycleRelativeDate(billingCycleRelativeDate)
                     else -> visitor.unknown(_json)
@@ -1618,7 +1617,7 @@ constructor(
 
             fun validate(): EndDate = apply {
                 if (!validated) {
-                    if (offsetDateTime == null && billingCycleRelativeDate == null) {
+                    if (dateTime == null && billingCycleRelativeDate == null) {
                         throw OrbInvalidDataException("Unknown EndDate: $_json")
                     }
                     validated = true
@@ -1630,16 +1629,16 @@ constructor(
                     return true
                 }
 
-                return /* spotless:off */ other is EndDate && this.offsetDateTime == other.offsetDateTime && this.billingCycleRelativeDate == other.billingCycleRelativeDate /* spotless:on */
+                return /* spotless:off */ other is EndDate && this.dateTime == other.dateTime && this.billingCycleRelativeDate == other.billingCycleRelativeDate /* spotless:on */
             }
 
             override fun hashCode(): Int {
-                return /* spotless:off */ Objects.hash(offsetDateTime, billingCycleRelativeDate) /* spotless:on */
+                return /* spotless:off */ Objects.hash(dateTime, billingCycleRelativeDate) /* spotless:on */
             }
 
             override fun toString(): String {
                 return when {
-                    offsetDateTime != null -> "EndDate{offsetDateTime=$offsetDateTime}"
+                    dateTime != null -> "EndDate{dateTime=$dateTime}"
                     billingCycleRelativeDate != null ->
                         "EndDate{billingCycleRelativeDate=$billingCycleRelativeDate}"
                     _json != null -> "EndDate{_unknown=$_json}"
@@ -1649,8 +1648,7 @@ constructor(
 
             companion object {
 
-                fun ofOffsetDateTime(offsetDateTime: OffsetDateTime) =
-                    EndDate(offsetDateTime = offsetDateTime)
+                fun ofDateTime(dateTime: OffsetDateTime) = EndDate(dateTime = dateTime)
 
                 fun ofBillingCycleRelativeDate(billingCycleRelativeDate: BillingCycleRelativeDate) =
                     EndDate(billingCycleRelativeDate = billingCycleRelativeDate)
@@ -1658,7 +1656,7 @@ constructor(
 
             interface Visitor<out T> {
 
-                fun visitOffsetDateTime(offsetDateTime: OffsetDateTime): T
+                fun visitDateTime(dateTime: OffsetDateTime): T
 
                 fun visitBillingCycleRelativeDate(
                     billingCycleRelativeDate: BillingCycleRelativeDate
@@ -1674,7 +1672,7 @@ constructor(
                 override fun ObjectCodec.deserialize(node: JsonNode): EndDate {
                     val json = JsonValue.fromJsonNode(node)
                     tryDeserialize(node, jacksonTypeRef<OffsetDateTime>())?.let {
-                        return EndDate(offsetDateTime = it, _json = json)
+                        return EndDate(dateTime = it, _json = json)
                     }
                     tryDeserialize(node, jacksonTypeRef<BillingCycleRelativeDate>())?.let {
                         return EndDate(billingCycleRelativeDate = it, _json = json)
@@ -1692,7 +1690,7 @@ constructor(
                     provider: SerializerProvider
                 ) {
                     when {
-                        value.offsetDateTime != null -> generator.writeObject(value.offsetDateTime)
+                        value.dateTime != null -> generator.writeObject(value.dateTime)
                         value.billingCycleRelativeDate != null ->
                             generator.writeObject(value.billingCycleRelativeDate)
                         value._json != null -> generator.writeObject(value._json)
@@ -30420,22 +30418,22 @@ constructor(
         @JsonSerialize(using = StartDate.Serializer::class)
         class StartDate
         private constructor(
-            private val offsetDateTime: OffsetDateTime? = null,
+            private val dateTime: OffsetDateTime? = null,
             private val billingCycleRelativeDate: BillingCycleRelativeDate? = null,
             private val _json: JsonValue? = null,
         ) {
 
             private var validated: Boolean = false
 
-            fun offsetDateTime(): OffsetDateTime? = offsetDateTime
+            fun dateTime(): OffsetDateTime? = dateTime
 
             fun billingCycleRelativeDate(): BillingCycleRelativeDate? = billingCycleRelativeDate
 
-            fun isOffsetDateTime(): Boolean = offsetDateTime != null
+            fun isDateTime(): Boolean = dateTime != null
 
             fun isBillingCycleRelativeDate(): Boolean = billingCycleRelativeDate != null
 
-            fun asOffsetDateTime(): OffsetDateTime = offsetDateTime.getOrThrow("offsetDateTime")
+            fun asDateTime(): OffsetDateTime = dateTime.getOrThrow("dateTime")
 
             fun asBillingCycleRelativeDate(): BillingCycleRelativeDate =
                 billingCycleRelativeDate.getOrThrow("billingCycleRelativeDate")
@@ -30444,7 +30442,7 @@ constructor(
 
             fun <T> accept(visitor: Visitor<T>): T {
                 return when {
-                    offsetDateTime != null -> visitor.visitOffsetDateTime(offsetDateTime)
+                    dateTime != null -> visitor.visitDateTime(dateTime)
                     billingCycleRelativeDate != null ->
                         visitor.visitBillingCycleRelativeDate(billingCycleRelativeDate)
                     else -> visitor.unknown(_json)
@@ -30453,7 +30451,7 @@ constructor(
 
             fun validate(): StartDate = apply {
                 if (!validated) {
-                    if (offsetDateTime == null && billingCycleRelativeDate == null) {
+                    if (dateTime == null && billingCycleRelativeDate == null) {
                         throw OrbInvalidDataException("Unknown StartDate: $_json")
                     }
                     validated = true
@@ -30465,16 +30463,16 @@ constructor(
                     return true
                 }
 
-                return /* spotless:off */ other is StartDate && this.offsetDateTime == other.offsetDateTime && this.billingCycleRelativeDate == other.billingCycleRelativeDate /* spotless:on */
+                return /* spotless:off */ other is StartDate && this.dateTime == other.dateTime && this.billingCycleRelativeDate == other.billingCycleRelativeDate /* spotless:on */
             }
 
             override fun hashCode(): Int {
-                return /* spotless:off */ Objects.hash(offsetDateTime, billingCycleRelativeDate) /* spotless:on */
+                return /* spotless:off */ Objects.hash(dateTime, billingCycleRelativeDate) /* spotless:on */
             }
 
             override fun toString(): String {
                 return when {
-                    offsetDateTime != null -> "StartDate{offsetDateTime=$offsetDateTime}"
+                    dateTime != null -> "StartDate{dateTime=$dateTime}"
                     billingCycleRelativeDate != null ->
                         "StartDate{billingCycleRelativeDate=$billingCycleRelativeDate}"
                     _json != null -> "StartDate{_unknown=$_json}"
@@ -30484,8 +30482,7 @@ constructor(
 
             companion object {
 
-                fun ofOffsetDateTime(offsetDateTime: OffsetDateTime) =
-                    StartDate(offsetDateTime = offsetDateTime)
+                fun ofDateTime(dateTime: OffsetDateTime) = StartDate(dateTime = dateTime)
 
                 fun ofBillingCycleRelativeDate(billingCycleRelativeDate: BillingCycleRelativeDate) =
                     StartDate(billingCycleRelativeDate = billingCycleRelativeDate)
@@ -30493,7 +30490,7 @@ constructor(
 
             interface Visitor<out T> {
 
-                fun visitOffsetDateTime(offsetDateTime: OffsetDateTime): T
+                fun visitDateTime(dateTime: OffsetDateTime): T
 
                 fun visitBillingCycleRelativeDate(
                     billingCycleRelativeDate: BillingCycleRelativeDate
@@ -30509,7 +30506,7 @@ constructor(
                 override fun ObjectCodec.deserialize(node: JsonNode): StartDate {
                     val json = JsonValue.fromJsonNode(node)
                     tryDeserialize(node, jacksonTypeRef<OffsetDateTime>())?.let {
-                        return StartDate(offsetDateTime = it, _json = json)
+                        return StartDate(dateTime = it, _json = json)
                     }
                     tryDeserialize(node, jacksonTypeRef<BillingCycleRelativeDate>())?.let {
                         return StartDate(billingCycleRelativeDate = it, _json = json)
@@ -30527,7 +30524,7 @@ constructor(
                     provider: SerializerProvider
                 ) {
                     when {
-                        value.offsetDateTime != null -> generator.writeObject(value.offsetDateTime)
+                        value.dateTime != null -> generator.writeObject(value.dateTime)
                         value.billingCycleRelativeDate != null ->
                             generator.writeObject(value.billingCycleRelativeDate)
                         value._json != null -> generator.writeObject(value._json)
@@ -30541,22 +30538,22 @@ constructor(
         @JsonSerialize(using = EndDate.Serializer::class)
         class EndDate
         private constructor(
-            private val offsetDateTime: OffsetDateTime? = null,
+            private val dateTime: OffsetDateTime? = null,
             private val billingCycleRelativeDate: BillingCycleRelativeDate? = null,
             private val _json: JsonValue? = null,
         ) {
 
             private var validated: Boolean = false
 
-            fun offsetDateTime(): OffsetDateTime? = offsetDateTime
+            fun dateTime(): OffsetDateTime? = dateTime
 
             fun billingCycleRelativeDate(): BillingCycleRelativeDate? = billingCycleRelativeDate
 
-            fun isOffsetDateTime(): Boolean = offsetDateTime != null
+            fun isDateTime(): Boolean = dateTime != null
 
             fun isBillingCycleRelativeDate(): Boolean = billingCycleRelativeDate != null
 
-            fun asOffsetDateTime(): OffsetDateTime = offsetDateTime.getOrThrow("offsetDateTime")
+            fun asDateTime(): OffsetDateTime = dateTime.getOrThrow("dateTime")
 
             fun asBillingCycleRelativeDate(): BillingCycleRelativeDate =
                 billingCycleRelativeDate.getOrThrow("billingCycleRelativeDate")
@@ -30565,7 +30562,7 @@ constructor(
 
             fun <T> accept(visitor: Visitor<T>): T {
                 return when {
-                    offsetDateTime != null -> visitor.visitOffsetDateTime(offsetDateTime)
+                    dateTime != null -> visitor.visitDateTime(dateTime)
                     billingCycleRelativeDate != null ->
                         visitor.visitBillingCycleRelativeDate(billingCycleRelativeDate)
                     else -> visitor.unknown(_json)
@@ -30574,7 +30571,7 @@ constructor(
 
             fun validate(): EndDate = apply {
                 if (!validated) {
-                    if (offsetDateTime == null && billingCycleRelativeDate == null) {
+                    if (dateTime == null && billingCycleRelativeDate == null) {
                         throw OrbInvalidDataException("Unknown EndDate: $_json")
                     }
                     validated = true
@@ -30586,16 +30583,16 @@ constructor(
                     return true
                 }
 
-                return /* spotless:off */ other is EndDate && this.offsetDateTime == other.offsetDateTime && this.billingCycleRelativeDate == other.billingCycleRelativeDate /* spotless:on */
+                return /* spotless:off */ other is EndDate && this.dateTime == other.dateTime && this.billingCycleRelativeDate == other.billingCycleRelativeDate /* spotless:on */
             }
 
             override fun hashCode(): Int {
-                return /* spotless:off */ Objects.hash(offsetDateTime, billingCycleRelativeDate) /* spotless:on */
+                return /* spotless:off */ Objects.hash(dateTime, billingCycleRelativeDate) /* spotless:on */
             }
 
             override fun toString(): String {
                 return when {
-                    offsetDateTime != null -> "EndDate{offsetDateTime=$offsetDateTime}"
+                    dateTime != null -> "EndDate{dateTime=$dateTime}"
                     billingCycleRelativeDate != null ->
                         "EndDate{billingCycleRelativeDate=$billingCycleRelativeDate}"
                     _json != null -> "EndDate{_unknown=$_json}"
@@ -30605,8 +30602,7 @@ constructor(
 
             companion object {
 
-                fun ofOffsetDateTime(offsetDateTime: OffsetDateTime) =
-                    EndDate(offsetDateTime = offsetDateTime)
+                fun ofDateTime(dateTime: OffsetDateTime) = EndDate(dateTime = dateTime)
 
                 fun ofBillingCycleRelativeDate(billingCycleRelativeDate: BillingCycleRelativeDate) =
                     EndDate(billingCycleRelativeDate = billingCycleRelativeDate)
@@ -30614,7 +30610,7 @@ constructor(
 
             interface Visitor<out T> {
 
-                fun visitOffsetDateTime(offsetDateTime: OffsetDateTime): T
+                fun visitDateTime(dateTime: OffsetDateTime): T
 
                 fun visitBillingCycleRelativeDate(
                     billingCycleRelativeDate: BillingCycleRelativeDate
@@ -30630,7 +30626,7 @@ constructor(
                 override fun ObjectCodec.deserialize(node: JsonNode): EndDate {
                     val json = JsonValue.fromJsonNode(node)
                     tryDeserialize(node, jacksonTypeRef<OffsetDateTime>())?.let {
-                        return EndDate(offsetDateTime = it, _json = json)
+                        return EndDate(dateTime = it, _json = json)
                     }
                     tryDeserialize(node, jacksonTypeRef<BillingCycleRelativeDate>())?.let {
                         return EndDate(billingCycleRelativeDate = it, _json = json)
@@ -30648,7 +30644,7 @@ constructor(
                     provider: SerializerProvider
                 ) {
                     when {
-                        value.offsetDateTime != null -> generator.writeObject(value.offsetDateTime)
+                        value.dateTime != null -> generator.writeObject(value.dateTime)
                         value.billingCycleRelativeDate != null ->
                             generator.writeObject(value.billingCycleRelativeDate)
                         value._json != null -> generator.writeObject(value._json)
@@ -30821,22 +30817,22 @@ constructor(
         @JsonSerialize(using = EndDate.Serializer::class)
         class EndDate
         private constructor(
-            private val offsetDateTime: OffsetDateTime? = null,
+            private val dateTime: OffsetDateTime? = null,
             private val billingCycleRelativeDate: BillingCycleRelativeDate? = null,
             private val _json: JsonValue? = null,
         ) {
 
             private var validated: Boolean = false
 
-            fun offsetDateTime(): OffsetDateTime? = offsetDateTime
+            fun dateTime(): OffsetDateTime? = dateTime
 
             fun billingCycleRelativeDate(): BillingCycleRelativeDate? = billingCycleRelativeDate
 
-            fun isOffsetDateTime(): Boolean = offsetDateTime != null
+            fun isDateTime(): Boolean = dateTime != null
 
             fun isBillingCycleRelativeDate(): Boolean = billingCycleRelativeDate != null
 
-            fun asOffsetDateTime(): OffsetDateTime = offsetDateTime.getOrThrow("offsetDateTime")
+            fun asDateTime(): OffsetDateTime = dateTime.getOrThrow("dateTime")
 
             fun asBillingCycleRelativeDate(): BillingCycleRelativeDate =
                 billingCycleRelativeDate.getOrThrow("billingCycleRelativeDate")
@@ -30845,7 +30841,7 @@ constructor(
 
             fun <T> accept(visitor: Visitor<T>): T {
                 return when {
-                    offsetDateTime != null -> visitor.visitOffsetDateTime(offsetDateTime)
+                    dateTime != null -> visitor.visitDateTime(dateTime)
                     billingCycleRelativeDate != null ->
                         visitor.visitBillingCycleRelativeDate(billingCycleRelativeDate)
                     else -> visitor.unknown(_json)
@@ -30854,7 +30850,7 @@ constructor(
 
             fun validate(): EndDate = apply {
                 if (!validated) {
-                    if (offsetDateTime == null && billingCycleRelativeDate == null) {
+                    if (dateTime == null && billingCycleRelativeDate == null) {
                         throw OrbInvalidDataException("Unknown EndDate: $_json")
                     }
                     validated = true
@@ -30866,16 +30862,16 @@ constructor(
                     return true
                 }
 
-                return /* spotless:off */ other is EndDate && this.offsetDateTime == other.offsetDateTime && this.billingCycleRelativeDate == other.billingCycleRelativeDate /* spotless:on */
+                return /* spotless:off */ other is EndDate && this.dateTime == other.dateTime && this.billingCycleRelativeDate == other.billingCycleRelativeDate /* spotless:on */
             }
 
             override fun hashCode(): Int {
-                return /* spotless:off */ Objects.hash(offsetDateTime, billingCycleRelativeDate) /* spotless:on */
+                return /* spotless:off */ Objects.hash(dateTime, billingCycleRelativeDate) /* spotless:on */
             }
 
             override fun toString(): String {
                 return when {
-                    offsetDateTime != null -> "EndDate{offsetDateTime=$offsetDateTime}"
+                    dateTime != null -> "EndDate{dateTime=$dateTime}"
                     billingCycleRelativeDate != null ->
                         "EndDate{billingCycleRelativeDate=$billingCycleRelativeDate}"
                     _json != null -> "EndDate{_unknown=$_json}"
@@ -30885,8 +30881,7 @@ constructor(
 
             companion object {
 
-                fun ofOffsetDateTime(offsetDateTime: OffsetDateTime) =
-                    EndDate(offsetDateTime = offsetDateTime)
+                fun ofDateTime(dateTime: OffsetDateTime) = EndDate(dateTime = dateTime)
 
                 fun ofBillingCycleRelativeDate(billingCycleRelativeDate: BillingCycleRelativeDate) =
                     EndDate(billingCycleRelativeDate = billingCycleRelativeDate)
@@ -30894,7 +30889,7 @@ constructor(
 
             interface Visitor<out T> {
 
-                fun visitOffsetDateTime(offsetDateTime: OffsetDateTime): T
+                fun visitDateTime(dateTime: OffsetDateTime): T
 
                 fun visitBillingCycleRelativeDate(
                     billingCycleRelativeDate: BillingCycleRelativeDate
@@ -30910,7 +30905,7 @@ constructor(
                 override fun ObjectCodec.deserialize(node: JsonNode): EndDate {
                     val json = JsonValue.fromJsonNode(node)
                     tryDeserialize(node, jacksonTypeRef<OffsetDateTime>())?.let {
-                        return EndDate(offsetDateTime = it, _json = json)
+                        return EndDate(dateTime = it, _json = json)
                     }
                     tryDeserialize(node, jacksonTypeRef<BillingCycleRelativeDate>())?.let {
                         return EndDate(billingCycleRelativeDate = it, _json = json)
@@ -30928,7 +30923,7 @@ constructor(
                     provider: SerializerProvider
                 ) {
                     when {
-                        value.offsetDateTime != null -> generator.writeObject(value.offsetDateTime)
+                        value.dateTime != null -> generator.writeObject(value.dateTime)
                         value.billingCycleRelativeDate != null ->
                             generator.writeObject(value.billingCycleRelativeDate)
                         value._json != null -> generator.writeObject(value._json)
@@ -31036,22 +31031,22 @@ constructor(
         @JsonSerialize(using = StartDate.Serializer::class)
         class StartDate
         private constructor(
-            private val offsetDateTime: OffsetDateTime? = null,
+            private val dateTime: OffsetDateTime? = null,
             private val billingCycleRelativeDate: BillingCycleRelativeDate? = null,
             private val _json: JsonValue? = null,
         ) {
 
             private var validated: Boolean = false
 
-            fun offsetDateTime(): OffsetDateTime? = offsetDateTime
+            fun dateTime(): OffsetDateTime? = dateTime
 
             fun billingCycleRelativeDate(): BillingCycleRelativeDate? = billingCycleRelativeDate
 
-            fun isOffsetDateTime(): Boolean = offsetDateTime != null
+            fun isDateTime(): Boolean = dateTime != null
 
             fun isBillingCycleRelativeDate(): Boolean = billingCycleRelativeDate != null
 
-            fun asOffsetDateTime(): OffsetDateTime = offsetDateTime.getOrThrow("offsetDateTime")
+            fun asDateTime(): OffsetDateTime = dateTime.getOrThrow("dateTime")
 
             fun asBillingCycleRelativeDate(): BillingCycleRelativeDate =
                 billingCycleRelativeDate.getOrThrow("billingCycleRelativeDate")
@@ -31060,7 +31055,7 @@ constructor(
 
             fun <T> accept(visitor: Visitor<T>): T {
                 return when {
-                    offsetDateTime != null -> visitor.visitOffsetDateTime(offsetDateTime)
+                    dateTime != null -> visitor.visitDateTime(dateTime)
                     billingCycleRelativeDate != null ->
                         visitor.visitBillingCycleRelativeDate(billingCycleRelativeDate)
                     else -> visitor.unknown(_json)
@@ -31069,7 +31064,7 @@ constructor(
 
             fun validate(): StartDate = apply {
                 if (!validated) {
-                    if (offsetDateTime == null && billingCycleRelativeDate == null) {
+                    if (dateTime == null && billingCycleRelativeDate == null) {
                         throw OrbInvalidDataException("Unknown StartDate: $_json")
                     }
                     validated = true
@@ -31081,16 +31076,16 @@ constructor(
                     return true
                 }
 
-                return /* spotless:off */ other is StartDate && this.offsetDateTime == other.offsetDateTime && this.billingCycleRelativeDate == other.billingCycleRelativeDate /* spotless:on */
+                return /* spotless:off */ other is StartDate && this.dateTime == other.dateTime && this.billingCycleRelativeDate == other.billingCycleRelativeDate /* spotless:on */
             }
 
             override fun hashCode(): Int {
-                return /* spotless:off */ Objects.hash(offsetDateTime, billingCycleRelativeDate) /* spotless:on */
+                return /* spotless:off */ Objects.hash(dateTime, billingCycleRelativeDate) /* spotless:on */
             }
 
             override fun toString(): String {
                 return when {
-                    offsetDateTime != null -> "StartDate{offsetDateTime=$offsetDateTime}"
+                    dateTime != null -> "StartDate{dateTime=$dateTime}"
                     billingCycleRelativeDate != null ->
                         "StartDate{billingCycleRelativeDate=$billingCycleRelativeDate}"
                     _json != null -> "StartDate{_unknown=$_json}"
@@ -31100,8 +31095,7 @@ constructor(
 
             companion object {
 
-                fun ofOffsetDateTime(offsetDateTime: OffsetDateTime) =
-                    StartDate(offsetDateTime = offsetDateTime)
+                fun ofDateTime(dateTime: OffsetDateTime) = StartDate(dateTime = dateTime)
 
                 fun ofBillingCycleRelativeDate(billingCycleRelativeDate: BillingCycleRelativeDate) =
                     StartDate(billingCycleRelativeDate = billingCycleRelativeDate)
@@ -31109,7 +31103,7 @@ constructor(
 
             interface Visitor<out T> {
 
-                fun visitOffsetDateTime(offsetDateTime: OffsetDateTime): T
+                fun visitDateTime(dateTime: OffsetDateTime): T
 
                 fun visitBillingCycleRelativeDate(
                     billingCycleRelativeDate: BillingCycleRelativeDate
@@ -31125,7 +31119,7 @@ constructor(
                 override fun ObjectCodec.deserialize(node: JsonNode): StartDate {
                     val json = JsonValue.fromJsonNode(node)
                     tryDeserialize(node, jacksonTypeRef<OffsetDateTime>())?.let {
-                        return StartDate(offsetDateTime = it, _json = json)
+                        return StartDate(dateTime = it, _json = json)
                     }
                     tryDeserialize(node, jacksonTypeRef<BillingCycleRelativeDate>())?.let {
                         return StartDate(billingCycleRelativeDate = it, _json = json)
@@ -31143,7 +31137,7 @@ constructor(
                     provider: SerializerProvider
                 ) {
                     when {
-                        value.offsetDateTime != null -> generator.writeObject(value.offsetDateTime)
+                        value.dateTime != null -> generator.writeObject(value.dateTime)
                         value.billingCycleRelativeDate != null ->
                             generator.writeObject(value.billingCycleRelativeDate)
                         value._json != null -> generator.writeObject(value._json)
@@ -31274,22 +31268,22 @@ constructor(
         @JsonSerialize(using = EndDate.Serializer::class)
         class EndDate
         private constructor(
-            private val offsetDateTime: OffsetDateTime? = null,
+            private val dateTime: OffsetDateTime? = null,
             private val billingCycleRelativeDate: BillingCycleRelativeDate? = null,
             private val _json: JsonValue? = null,
         ) {
 
             private var validated: Boolean = false
 
-            fun offsetDateTime(): OffsetDateTime? = offsetDateTime
+            fun dateTime(): OffsetDateTime? = dateTime
 
             fun billingCycleRelativeDate(): BillingCycleRelativeDate? = billingCycleRelativeDate
 
-            fun isOffsetDateTime(): Boolean = offsetDateTime != null
+            fun isDateTime(): Boolean = dateTime != null
 
             fun isBillingCycleRelativeDate(): Boolean = billingCycleRelativeDate != null
 
-            fun asOffsetDateTime(): OffsetDateTime = offsetDateTime.getOrThrow("offsetDateTime")
+            fun asDateTime(): OffsetDateTime = dateTime.getOrThrow("dateTime")
 
             fun asBillingCycleRelativeDate(): BillingCycleRelativeDate =
                 billingCycleRelativeDate.getOrThrow("billingCycleRelativeDate")
@@ -31298,7 +31292,7 @@ constructor(
 
             fun <T> accept(visitor: Visitor<T>): T {
                 return when {
-                    offsetDateTime != null -> visitor.visitOffsetDateTime(offsetDateTime)
+                    dateTime != null -> visitor.visitDateTime(dateTime)
                     billingCycleRelativeDate != null ->
                         visitor.visitBillingCycleRelativeDate(billingCycleRelativeDate)
                     else -> visitor.unknown(_json)
@@ -31307,7 +31301,7 @@ constructor(
 
             fun validate(): EndDate = apply {
                 if (!validated) {
-                    if (offsetDateTime == null && billingCycleRelativeDate == null) {
+                    if (dateTime == null && billingCycleRelativeDate == null) {
                         throw OrbInvalidDataException("Unknown EndDate: $_json")
                     }
                     validated = true
@@ -31319,16 +31313,16 @@ constructor(
                     return true
                 }
 
-                return /* spotless:off */ other is EndDate && this.offsetDateTime == other.offsetDateTime && this.billingCycleRelativeDate == other.billingCycleRelativeDate /* spotless:on */
+                return /* spotless:off */ other is EndDate && this.dateTime == other.dateTime && this.billingCycleRelativeDate == other.billingCycleRelativeDate /* spotless:on */
             }
 
             override fun hashCode(): Int {
-                return /* spotless:off */ Objects.hash(offsetDateTime, billingCycleRelativeDate) /* spotless:on */
+                return /* spotless:off */ Objects.hash(dateTime, billingCycleRelativeDate) /* spotless:on */
             }
 
             override fun toString(): String {
                 return when {
-                    offsetDateTime != null -> "EndDate{offsetDateTime=$offsetDateTime}"
+                    dateTime != null -> "EndDate{dateTime=$dateTime}"
                     billingCycleRelativeDate != null ->
                         "EndDate{billingCycleRelativeDate=$billingCycleRelativeDate}"
                     _json != null -> "EndDate{_unknown=$_json}"
@@ -31338,8 +31332,7 @@ constructor(
 
             companion object {
 
-                fun ofOffsetDateTime(offsetDateTime: OffsetDateTime) =
-                    EndDate(offsetDateTime = offsetDateTime)
+                fun ofDateTime(dateTime: OffsetDateTime) = EndDate(dateTime = dateTime)
 
                 fun ofBillingCycleRelativeDate(billingCycleRelativeDate: BillingCycleRelativeDate) =
                     EndDate(billingCycleRelativeDate = billingCycleRelativeDate)
@@ -31347,7 +31340,7 @@ constructor(
 
             interface Visitor<out T> {
 
-                fun visitOffsetDateTime(offsetDateTime: OffsetDateTime): T
+                fun visitDateTime(dateTime: OffsetDateTime): T
 
                 fun visitBillingCycleRelativeDate(
                     billingCycleRelativeDate: BillingCycleRelativeDate
@@ -31363,7 +31356,7 @@ constructor(
                 override fun ObjectCodec.deserialize(node: JsonNode): EndDate {
                     val json = JsonValue.fromJsonNode(node)
                     tryDeserialize(node, jacksonTypeRef<OffsetDateTime>())?.let {
-                        return EndDate(offsetDateTime = it, _json = json)
+                        return EndDate(dateTime = it, _json = json)
                     }
                     tryDeserialize(node, jacksonTypeRef<BillingCycleRelativeDate>())?.let {
                         return EndDate(billingCycleRelativeDate = it, _json = json)
@@ -31381,7 +31374,7 @@ constructor(
                     provider: SerializerProvider
                 ) {
                     when {
-                        value.offsetDateTime != null -> generator.writeObject(value.offsetDateTime)
+                        value.dateTime != null -> generator.writeObject(value.dateTime)
                         value.billingCycleRelativeDate != null ->
                             generator.writeObject(value.billingCycleRelativeDate)
                         value._json != null -> generator.writeObject(value._json)
@@ -31395,22 +31388,22 @@ constructor(
         @JsonSerialize(using = StartDate.Serializer::class)
         class StartDate
         private constructor(
-            private val offsetDateTime: OffsetDateTime? = null,
+            private val dateTime: OffsetDateTime? = null,
             private val billingCycleRelativeDate: BillingCycleRelativeDate? = null,
             private val _json: JsonValue? = null,
         ) {
 
             private var validated: Boolean = false
 
-            fun offsetDateTime(): OffsetDateTime? = offsetDateTime
+            fun dateTime(): OffsetDateTime? = dateTime
 
             fun billingCycleRelativeDate(): BillingCycleRelativeDate? = billingCycleRelativeDate
 
-            fun isOffsetDateTime(): Boolean = offsetDateTime != null
+            fun isDateTime(): Boolean = dateTime != null
 
             fun isBillingCycleRelativeDate(): Boolean = billingCycleRelativeDate != null
 
-            fun asOffsetDateTime(): OffsetDateTime = offsetDateTime.getOrThrow("offsetDateTime")
+            fun asDateTime(): OffsetDateTime = dateTime.getOrThrow("dateTime")
 
             fun asBillingCycleRelativeDate(): BillingCycleRelativeDate =
                 billingCycleRelativeDate.getOrThrow("billingCycleRelativeDate")
@@ -31419,7 +31412,7 @@ constructor(
 
             fun <T> accept(visitor: Visitor<T>): T {
                 return when {
-                    offsetDateTime != null -> visitor.visitOffsetDateTime(offsetDateTime)
+                    dateTime != null -> visitor.visitDateTime(dateTime)
                     billingCycleRelativeDate != null ->
                         visitor.visitBillingCycleRelativeDate(billingCycleRelativeDate)
                     else -> visitor.unknown(_json)
@@ -31428,7 +31421,7 @@ constructor(
 
             fun validate(): StartDate = apply {
                 if (!validated) {
-                    if (offsetDateTime == null && billingCycleRelativeDate == null) {
+                    if (dateTime == null && billingCycleRelativeDate == null) {
                         throw OrbInvalidDataException("Unknown StartDate: $_json")
                     }
                     validated = true
@@ -31440,16 +31433,16 @@ constructor(
                     return true
                 }
 
-                return /* spotless:off */ other is StartDate && this.offsetDateTime == other.offsetDateTime && this.billingCycleRelativeDate == other.billingCycleRelativeDate /* spotless:on */
+                return /* spotless:off */ other is StartDate && this.dateTime == other.dateTime && this.billingCycleRelativeDate == other.billingCycleRelativeDate /* spotless:on */
             }
 
             override fun hashCode(): Int {
-                return /* spotless:off */ Objects.hash(offsetDateTime, billingCycleRelativeDate) /* spotless:on */
+                return /* spotless:off */ Objects.hash(dateTime, billingCycleRelativeDate) /* spotless:on */
             }
 
             override fun toString(): String {
                 return when {
-                    offsetDateTime != null -> "StartDate{offsetDateTime=$offsetDateTime}"
+                    dateTime != null -> "StartDate{dateTime=$dateTime}"
                     billingCycleRelativeDate != null ->
                         "StartDate{billingCycleRelativeDate=$billingCycleRelativeDate}"
                     _json != null -> "StartDate{_unknown=$_json}"
@@ -31459,8 +31452,7 @@ constructor(
 
             companion object {
 
-                fun ofOffsetDateTime(offsetDateTime: OffsetDateTime) =
-                    StartDate(offsetDateTime = offsetDateTime)
+                fun ofDateTime(dateTime: OffsetDateTime) = StartDate(dateTime = dateTime)
 
                 fun ofBillingCycleRelativeDate(billingCycleRelativeDate: BillingCycleRelativeDate) =
                     StartDate(billingCycleRelativeDate = billingCycleRelativeDate)
@@ -31468,7 +31460,7 @@ constructor(
 
             interface Visitor<out T> {
 
-                fun visitOffsetDateTime(offsetDateTime: OffsetDateTime): T
+                fun visitDateTime(dateTime: OffsetDateTime): T
 
                 fun visitBillingCycleRelativeDate(
                     billingCycleRelativeDate: BillingCycleRelativeDate
@@ -31484,7 +31476,7 @@ constructor(
                 override fun ObjectCodec.deserialize(node: JsonNode): StartDate {
                     val json = JsonValue.fromJsonNode(node)
                     tryDeserialize(node, jacksonTypeRef<OffsetDateTime>())?.let {
-                        return StartDate(offsetDateTime = it, _json = json)
+                        return StartDate(dateTime = it, _json = json)
                     }
                     tryDeserialize(node, jacksonTypeRef<BillingCycleRelativeDate>())?.let {
                         return StartDate(billingCycleRelativeDate = it, _json = json)
@@ -31502,7 +31494,7 @@ constructor(
                     provider: SerializerProvider
                 ) {
                     when {
-                        value.offsetDateTime != null -> generator.writeObject(value.offsetDateTime)
+                        value.dateTime != null -> generator.writeObject(value.dateTime)
                         value.billingCycleRelativeDate != null ->
                             generator.writeObject(value.billingCycleRelativeDate)
                         value._json != null -> generator.writeObject(value._json)
