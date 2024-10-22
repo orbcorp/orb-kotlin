@@ -4,9 +4,14 @@ package com.withorb.api.services.async
 
 import com.withorb.api.core.ClientOptions
 import com.withorb.api.core.RequestOptions
+import com.withorb.api.core.handlers.emptyHandler
+import com.withorb.api.core.handlers.errorHandler
+import com.withorb.api.core.handlers.jsonHandler
+import com.withorb.api.core.handlers.withErrorHandler
 import com.withorb.api.core.http.HttpMethod
 import com.withorb.api.core.http.HttpRequest
 import com.withorb.api.core.http.HttpResponse.Handler
+import com.withorb.api.core.json
 import com.withorb.api.errors.OrbError
 import com.withorb.api.models.Customer
 import com.withorb.api.models.CustomerCreateParams
@@ -23,11 +28,6 @@ import com.withorb.api.services.async.customers.CostServiceAsync
 import com.withorb.api.services.async.customers.CostServiceAsyncImpl
 import com.withorb.api.services.async.customers.CreditServiceAsync
 import com.withorb.api.services.async.customers.CreditServiceAsyncImpl
-import com.withorb.api.services.emptyHandler
-import com.withorb.api.services.errorHandler
-import com.withorb.api.services.json
-import com.withorb.api.services.jsonHandler
-import com.withorb.api.services.withErrorHandler
 
 class CustomerServiceAsyncImpl
 constructor(
@@ -164,9 +164,10 @@ constructor(
     private val deleteHandler: Handler<Void?> = emptyHandler().withErrorHandler(errorHandler)
 
     /**
-     * This performs a deletion of this customer, its subscriptions, and its invoices. This
-     * operation is irreversible. Note that this is a _soft_ deletion, but the data will be
-     * inaccessible through the API and Orb dashboard. For hard-deletion, please reach out to the
+     * This performs a deletion of this customer, its subscriptions, and its invoices, provided the
+     * customer does not have any issued invoices. Customers with issued invoices cannot be deleted.
+     * This operation is irreversible. Note that this is a _soft_ deletion, but the data will be
+     * inaccessible through the API and Orb dashboard. For a hard-deletion, please reach out to the
      * Orb team directly.
      *
      * **Note**: This operation happens asynchronously and can be expected to take a few minutes to

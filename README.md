@@ -19,7 +19,7 @@ The REST API documentation can be found on [docs.withorb.com](https://docs.with
 <!-- x-release-please-start-version -->
 
 ```kotlin
-implementation("com.withorb.api:orb-kotlin:0.1.0-alpha.6")
+implementation("com.withorb.api:orb-kotlin:0.1.0-alpha.7")
 ```
 
 #### Maven
@@ -28,7 +28,7 @@ implementation("com.withorb.api:orb-kotlin:0.1.0-alpha.6")
 <dependency>
     <groupId>com.withorb.api</groupId>
     <artifactId>orb-kotlin</artifactId>
-    <version>0.1.0-alpha.6</version>
+    <version>0.1.0-alpha.7</version>
 </dependency>
 ```
 
@@ -160,7 +160,7 @@ if (field.isMissing()) {
 Sometimes, the server response may include additional properties that are not yet available in this library's types. You can access them using the model's `_additionalProperties` method:
 
 ```kotlin
-val secret = customer._additionalProperties().get("secret_field")
+val secret = amountDiscount._additionalProperties().get("secret_field")
 ```
 
 ---

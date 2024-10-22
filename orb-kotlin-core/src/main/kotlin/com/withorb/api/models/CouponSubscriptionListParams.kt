@@ -48,22 +48,11 @@ constructor(
             return true
         }
 
-        return other is CouponSubscriptionListParams &&
-            this.couponId == other.couponId &&
-            this.cursor == other.cursor &&
-            this.limit == other.limit &&
-            this.additionalQueryParams == other.additionalQueryParams &&
-            this.additionalHeaders == other.additionalHeaders
+        return /* spotless:off */ other is CouponSubscriptionListParams && this.couponId == other.couponId && this.cursor == other.cursor && this.limit == other.limit && this.additionalQueryParams == other.additionalQueryParams && this.additionalHeaders == other.additionalHeaders /* spotless:on */
     }
 
     override fun hashCode(): Int {
-        return Objects.hash(
-            couponId,
-            cursor,
-            limit,
-            additionalQueryParams,
-            additionalHeaders,
-        )
+        return /* spotless:off */ Objects.hash(couponId, cursor, limit, additionalQueryParams, additionalHeaders) /* spotless:on */
     }
 
     override fun toString() =

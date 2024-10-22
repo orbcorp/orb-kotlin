@@ -50,8 +50,6 @@ constructor(
         private val additionalProperties: Map<String, JsonValue>,
     ) {
 
-        private var hashCode: Int = 0
-
         /**
          * The date on which the phase change should take effect. If not provided, defaults to today
          * in the customer's timezone.
@@ -63,26 +61,6 @@ constructor(
         fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
 
         fun toBuilder() = Builder().from(this)
-
-        override fun equals(other: Any?): Boolean {
-            if (this === other) {
-                return true
-            }
-
-            return other is SubscriptionTriggerPhaseBody &&
-                this.effectiveDate == other.effectiveDate &&
-                this.additionalProperties == other.additionalProperties
-        }
-
-        override fun hashCode(): Int {
-            if (hashCode == 0) {
-                hashCode = Objects.hash(effectiveDate, additionalProperties)
-            }
-            return hashCode
-        }
-
-        override fun toString() =
-            "SubscriptionTriggerPhaseBody{effectiveDate=$effectiveDate, additionalProperties=$additionalProperties}"
 
         companion object {
 
@@ -125,6 +103,26 @@ constructor(
             fun build(): SubscriptionTriggerPhaseBody =
                 SubscriptionTriggerPhaseBody(effectiveDate, additionalProperties.toUnmodifiable())
         }
+
+        override fun equals(other: Any?): Boolean {
+            if (this === other) {
+                return true
+            }
+
+            return /* spotless:off */ other is SubscriptionTriggerPhaseBody && this.effectiveDate == other.effectiveDate && this.additionalProperties == other.additionalProperties /* spotless:on */
+        }
+
+        private var hashCode: Int = 0
+
+        override fun hashCode(): Int {
+            if (hashCode == 0) {
+                hashCode = /* spotless:off */ Objects.hash(effectiveDate, additionalProperties) /* spotless:on */
+            }
+            return hashCode
+        }
+
+        override fun toString() =
+            "SubscriptionTriggerPhaseBody{effectiveDate=$effectiveDate, additionalProperties=$additionalProperties}"
     }
 
     fun _additionalQueryParams(): Map<String, List<String>> = additionalQueryParams
@@ -138,22 +136,11 @@ constructor(
             return true
         }
 
-        return other is SubscriptionTriggerPhaseParams &&
-            this.subscriptionId == other.subscriptionId &&
-            this.effectiveDate == other.effectiveDate &&
-            this.additionalQueryParams == other.additionalQueryParams &&
-            this.additionalHeaders == other.additionalHeaders &&
-            this.additionalBodyProperties == other.additionalBodyProperties
+        return /* spotless:off */ other is SubscriptionTriggerPhaseParams && this.subscriptionId == other.subscriptionId && this.effectiveDate == other.effectiveDate && this.additionalQueryParams == other.additionalQueryParams && this.additionalHeaders == other.additionalHeaders && this.additionalBodyProperties == other.additionalBodyProperties /* spotless:on */
     }
 
     override fun hashCode(): Int {
-        return Objects.hash(
-            subscriptionId,
-            effectiveDate,
-            additionalQueryParams,
-            additionalHeaders,
-            additionalBodyProperties,
-        )
+        return /* spotless:off */ Objects.hash(subscriptionId, effectiveDate, additionalQueryParams, additionalHeaders, additionalBodyProperties) /* spotless:on */
     }
 
     override fun toString() =

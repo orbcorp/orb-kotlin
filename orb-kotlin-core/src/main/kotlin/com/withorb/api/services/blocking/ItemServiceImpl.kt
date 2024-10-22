@@ -4,9 +4,13 @@ package com.withorb.api.services.blocking
 
 import com.withorb.api.core.ClientOptions
 import com.withorb.api.core.RequestOptions
+import com.withorb.api.core.handlers.errorHandler
+import com.withorb.api.core.handlers.jsonHandler
+import com.withorb.api.core.handlers.withErrorHandler
 import com.withorb.api.core.http.HttpMethod
 import com.withorb.api.core.http.HttpRequest
 import com.withorb.api.core.http.HttpResponse.Handler
+import com.withorb.api.core.json
 import com.withorb.api.errors.OrbError
 import com.withorb.api.models.Item
 import com.withorb.api.models.ItemCreateParams
@@ -14,10 +18,6 @@ import com.withorb.api.models.ItemFetchParams
 import com.withorb.api.models.ItemListPage
 import com.withorb.api.models.ItemListParams
 import com.withorb.api.models.ItemUpdateParams
-import com.withorb.api.services.errorHandler
-import com.withorb.api.services.json
-import com.withorb.api.services.jsonHandler
-import com.withorb.api.services.withErrorHandler
 
 class ItemServiceImpl
 constructor(

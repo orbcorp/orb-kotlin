@@ -25,8 +25,6 @@ private constructor(
 
     private var validated: Boolean = false
 
-    private var hashCode: Int = 0
-
     fun data(): List<Subscription> = data.getRequired("data")
 
     fun paginationMetadata(): PaginationMetadata =
@@ -51,32 +49,6 @@ private constructor(
     }
 
     fun toBuilder() = Builder().from(this)
-
-    override fun equals(other: Any?): Boolean {
-        if (this === other) {
-            return true
-        }
-
-        return other is Subscriptions &&
-            this.data == other.data &&
-            this.paginationMetadata == other.paginationMetadata &&
-            this.additionalProperties == other.additionalProperties
-    }
-
-    override fun hashCode(): Int {
-        if (hashCode == 0) {
-            hashCode =
-                Objects.hash(
-                    data,
-                    paginationMetadata,
-                    additionalProperties,
-                )
-        }
-        return hashCode
-    }
-
-    override fun toString() =
-        "Subscriptions{data=$data, paginationMetadata=$paginationMetadata, additionalProperties=$additionalProperties}"
 
     companion object {
 
@@ -131,4 +103,24 @@ private constructor(
                 additionalProperties.toUnmodifiable(),
             )
     }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) {
+            return true
+        }
+
+        return /* spotless:off */ other is Subscriptions && this.data == other.data && this.paginationMetadata == other.paginationMetadata && this.additionalProperties == other.additionalProperties /* spotless:on */
+    }
+
+    private var hashCode: Int = 0
+
+    override fun hashCode(): Int {
+        if (hashCode == 0) {
+            hashCode = /* spotless:off */ Objects.hash(data, paginationMetadata, additionalProperties) /* spotless:on */
+        }
+        return hashCode
+    }
+
+    override fun toString() =
+        "Subscriptions{data=$data, paginationMetadata=$paginationMetadata, additionalProperties=$additionalProperties}"
 }

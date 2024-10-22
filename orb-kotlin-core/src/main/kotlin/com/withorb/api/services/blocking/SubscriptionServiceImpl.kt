@@ -4,9 +4,13 @@ package com.withorb.api.services.blocking
 
 import com.withorb.api.core.ClientOptions
 import com.withorb.api.core.RequestOptions
+import com.withorb.api.core.handlers.errorHandler
+import com.withorb.api.core.handlers.jsonHandler
+import com.withorb.api.core.handlers.withErrorHandler
 import com.withorb.api.core.http.HttpMethod
 import com.withorb.api.core.http.HttpRequest
 import com.withorb.api.core.http.HttpResponse.Handler
+import com.withorb.api.core.json
 import com.withorb.api.errors.OrbError
 import com.withorb.api.models.Subscription
 import com.withorb.api.models.SubscriptionCancelParams
@@ -27,11 +31,8 @@ import com.withorb.api.models.SubscriptionUnscheduleFixedFeeQuantityUpdatesParam
 import com.withorb.api.models.SubscriptionUnschedulePendingPlanChangesParams
 import com.withorb.api.models.SubscriptionUpdateFixedFeeQuantityParams
 import com.withorb.api.models.SubscriptionUpdateParams
+import com.withorb.api.models.SubscriptionUpdateTrialParams
 import com.withorb.api.models.SubscriptionUsage
-import com.withorb.api.services.errorHandler
-import com.withorb.api.services.json
-import com.withorb.api.services.jsonHandler
-import com.withorb.api.services.withErrorHandler
 
 class SubscriptionServiceImpl
 constructor(
@@ -70,261 +71,117 @@ constructor(
      * subscription creation, we set the customer's currency to be the `invoicing_currency` of the
      * plan.
      *
-     * ## Price overrides
+     * ## Customize your customer's subscriptions
+     *
+     * Prices and adjustments in a plan can be added, removed, or replaced for the subscription
+     * being created. This is useful when a customer has prices that differ from the default prices
+     * for a specific plan.
+     *
+     * :::info This feature is only available for accounts that have migrated off of legacy
+     * subscription overrides. :::
+     *
+     * ### Adding Prices
+     *
+     * To add prices, provide a list of objects with the key `add_prices`. An object in the list
+     * must specify an existing add-on price with a `price_id` or `external_price_id` field, or
+     * create a new add-on price by including an object with the key `price`, identical to what
+     * would be used in the request body for the [create price endpoint](../reference/create-price).
+     * See the [Price resource](../reference/price) for the specification of different price model
+     * configurations possible in this object.
+     *
+     * If the plan has phases, each object in the list must include a number with `plan_phase_order`
+     * key to indicate which phase the price should be added to.
+     *
+     * An object in the list can specify an optional `start_date` and optional `end_date`. This is
+     * equivalent to creating a price interval with the
+     * [add/edit price intervals endpoint](../reference/add-edit-price-intervals). If unspecified,
+     * the start or end date of the phase or subscription will be used.
+     *
+     * An object in the list can specify an optional `minimum_amount`, `maximum_amount`, or
+     * `discounts`. This will create adjustments which apply only to this price.
+     *
+     * Additionally, an object in the list can specify an optional `reference_id`. This ID can be
+     * used to reference this price when [adding an adjustment](#adding-adjustments) in the same API
+     * call. However the ID is _transient_ and cannot be used to refer to the price in future API
+     * calls.
+     *
+     * ### Removing Prices
+     *
+     * To remove prices, provide a list of objects with the key `remove_prices`. An object in the
+     * list must specify a plan price with either a `price_id` or `external_price_id` field.
+     *
+     * ### Replacing Prices
+     *
+     * To replace prices, provide a list of objects with the key `replace_prices`. An object in the
+     * list must specify a plan price to replace with the `replaces_price_id` key, and it must
+     * specify a price to replace it with by either referencing an existing add-on price with a
+     * `price_id` or `external_price_id` field, or by creating a new add-on price by including an
+     * object with the key `price`, identical to what would be used in the request body for the
+     * [create price endpoint](../reference/create-price). See the
+     * [Price resource](../reference/price) for the specification of different price model
+     * configurations possible in this object.
+     *
+     * For fixed fees, an object in the list can supply a `fixed_price_quantity` instead of a
+     * `price`, `price_id`, or `external_price_id` field. This will update only the quantity for the
+     * price, similar to the [Update price quantity](../reference/update-fixed-fee-quantity)
+     * endpoint.
+     *
+     * The replacement price will have the same phase, if applicable, and the same start and end
+     * dates as the price it replaces.
+     *
+     * An object in the list can specify an optional `minimum_amount`, `maximum_amount`, or
+     * `discounts`. This will create adjustments which apply only to this price.
+     *
+     * Additionally, an object in the list can specify an optional `reference_id`. This ID can be
+     * used to reference the replacement price when [adding an adjustment](#adding-adjustments) in
+     * the same API call. However the ID is _transient_ and cannot be used to refer to the price in
+     * future API calls.
+     *
+     * ### Adding adjustments
+     *
+     * To add adjustments, provide a list of objects with the key `add_adjustments`. An object in
+     * the list must include an object with the key `adjustment`, identical to the adjustment object
+     * in the [add/edit price intervals endpoint](../reference/add-edit-price-intervals).
+     *
+     * If the plan has phases, each object in the list must include a number with `plan_phase_order`
+     * key to indicate which phase the adjustment should be added to.
+     *
+     * An object in the list can specify an optional `start_date` and optional `end_date`. If
+     * unspecified, the start or end date of the phase or subscription will be used.
+     *
+     * ### Removing adjustments
+     *
+     * To remove adjustments, provide a list of objects with the key `remove_adjustments`. An object
+     * in the list must include a key, `adjustment_id`, with the ID of the adjustment to be removed.
+     *
+     * ### Replacing adjustments
+     *
+     * To replace adjustments, provide a list of objects with the key `replace_adjustments`. An
+     * object in the list must specify a plan adjustment to replace with the
+     * `replaces_adjustment_id` key, and it must specify an adjustment to replace it with by
+     * including an object with the key `adjustment`, identical to the adjustment object in the
+     * [add/edit price intervals endpoint](../reference/add-edit-price-intervals).
+     *
+     * The replacement adjustment will have the same phase, if applicable, and the same start and
+     * end dates as the adjustment it replaces.
+     *
+     * ## Price overrides (DEPRECATED)
+     *
+     * :::info Price overrides are being phased out in favor adding/removing/replacing prices. (See
+     * [Customize your customer's subscriptions](../reference/create-subscription#customize-your-customers-subscriptions))
+     * :::
      *
      * Price overrides are used to update some or all prices in a plan for the specific subscription
-     * being created. This is useful when a new customer has negotiated one or more different prices
-     * for a specific plan than the plan's default prices. Any type of price can be overridden, if
-     * the correct data is provided. The billable metric, cadence, type, and name of a price can not
-     * be overridden.
+     * being created. This is useful when a new customer has negotiated a rate that is unique to the
+     * customer.
      *
      * To override prices, provide a list of objects with the key `price_overrides`. The price
      * object in the list of overrides is expected to contain the existing price id, the
-     * `model_type` and config value in the format below. The specific numerical values can be
-     * updated, but the config value and `model_type` must match the existing price that is being
-     * overridden
+     * `model_type` and configuration. (See the [Price resource](../reference/price) for the
+     * specification of different price model configurations.) The numerical values can be updated,
+     * but the billable metric, cadence, type, and name of a price can not be overridden.
      *
-     * ### Request format for price overrides
-     *
-     * Orb supports a few different pricing models out of the box. The `model_type` field determines
-     * the key for the configuration object that is present.
-     *
-     * ### Unit pricing
-     *
-     * With unit pricing, each unit costs a fixed amount.
-     *
-     * ```json
-     * {
-     *   ...
-     *   "id": "price_id",
-     *   "model_type": "unit",
-     *   "unit_config": {
-     *     "unit_amount": "0.50"
-     *   }
-     *   ...
-     * }
-     * ```
-     *
-     * ### Tiered pricing
-     *
-     * In tiered pricing, the cost of a given unit depends on the tier range that it falls into,
-     * where each tier range is defined by an upper and lower bound. For example, the first ten
-     * units may cost $0.50 each and all units thereafter may cost $0.10 each. Tiered prices can be
-     * overridden with a new number of tiers or new values for `first_unit`, `last_unit`, or
-     * `unit_amount`.
-     *
-     * ```json
-     * {
-     *   ...
-     *   "id": "price_id",
-     *   "model_type": "tiered",
-     *   "tiered_config": {
-     *     "tiers": [
-     *       {
-     *         "first_unit":"1",
-     *         "last_unit": "10",
-     *         "unit_amount": "0.50"
-     *       },
-     *       {
-     *         "first_unit": "10",
-     *         "last_unit": null,
-     *         "unit_amount": "0.10"
-     *       }
-     *     ]
-     *   }
-     *   ...
-     * }
-     * ```
-     *
-     * ### Bulk pricing
-     *
-     * Bulk pricing applies when the number of units determine the cost of _all_ units. For example,
-     * if you've bought less than 10 units, they may each be $0.50 for a total of $5.00. Once you've
-     * bought more than 10 units, all units may now be priced at $0.40 (i.e. 101 units total would
-     * be $40.40). Bulk prices can be overridden with a new number of tiers or new values for
-     * `maximum_units`, or `unit_amount`.
-     *
-     * ```json
-     * {
-     *   ...
-     *   "id": "price_id",
-     *   "model_type": "bulk",
-     *   "bulk_config": {
-     *     "tiers": [
-     *       {
-     *         "maximum_units": "10",
-     *         "unit_amount": "0.50"
-     *       },
-     *       {
-     *         "maximum_units": "1000",
-     *         "unit_amount": "0.40"
-     *       }
-     *     ]
-     *   }
-     *   ...
-     * }
-     * ```
-     *
-     * ### Package pricing
-     *
-     * Package pricing defines the size or granularity of a unit for billing purposes. For example,
-     * if the package size is set to 5, then 4 units will be billed as 5 and 6 units will be billed
-     * at 10.
-     *
-     * ```json
-     * {
-     *   ...
-     *   "id": "price_id",
-     *   "model_type": "package",
-     *   "package_config": {
-     *     "package_amount": "0.80",
-     *     "package_size": 10
-     *   }
-     *   ...
-     * }
-     * ```
-     *
-     * ### BPS pricing
-     *
-     * BPS pricing specifies a per-event (e.g. per-payment) rate in one hundredth of a percent (the
-     * number of basis points to charge), as well as a cap per event to assess. For example, this
-     * would allow you to assess a fee of 0.25% on every payment you process, with a maximum charge
-     * of $25 per payment.
-     *
-     * ```json
-     * {
-     *   ...
-     *   "id": "price_id"
-     *   "model_type": "bps",
-     *   "bps_config": {
-     *     "bps": 125,
-     *     "per_event_cap": "11.00"
-     *   }
-     *   ...
-     * }
-     * ```
-     *
-     * ### Bulk BPS pricing
-     *
-     * Bulk BPS pricing specifies BPS parameters in a tiered manner, dependent on the total quantity
-     * across all events. Similar to bulk pricing, the BPS parameters of a given event depends on
-     * the tier range that the billing period falls into. Each tier range is defined by an upper and
-     * lower bound. For example, after $1.5M of payment volume is reached, each individual payment
-     * may have a lower cap or a smaller take-rate.
-     *
-     * ```json
-     * {
-     *   ...
-     *   "id": "price_id"
-     *   "model_type": "bulk_bps",
-     *   "bulk_bps_config": {
-     *     "tiers": [
-     *       {
-     *         "minimum_amount": "0.00",
-     *         "maximum_amount": "1000000.00",
-     *         "bps": 125,
-     *         "per_event_cap": "19.00"
-     *       },
-     *       {
-     *         "minimum_amount":"1000000.00",
-     *         "maximum_amount": null,
-     *         "bps": 115,
-     *         "per_event_cap": "4.00"
-     *       }
-     *     ]
-     *   }
-     * ...
-     * }
-     * ```
-     *
-     * ### Tiered BPS pricing
-     *
-     * Tiered BPS pricing specifies BPS parameters in a graduated manner, where an event's
-     * applicable parameter is a function of its marginal addition to the period total. Similar to
-     * tiered pricing, the BPS parameters of a given event depends on the tier range that it falls
-     * into, where each tier range is defined by an upper and lower bound. For example, the first
-     * few payments may have a 0.8 BPS take-rate and all payments after a specific volume may incur
-     * a take-rate of 0.5 BPS each.
-     *
-     * ```json
-     * {
-     *   ...
-     *   "id": "price_id"
-     *   "model_type": "tiered_bps",
-     *   "tiered_bps_config": {
-     *     "tiers": [
-     *       {
-     *         "minimum_amount": "0.00",
-     *         "maximum_amount": "1000000.00",
-     *         "bps": 125,
-     *         "per_event_cap": "19.00"
-     *       },
-     *       {
-     *         "minimum_amount":"1000000",
-     *         "maximum_amount": null,
-     *         "bps": 115,
-     *         "per_event_cap": "4.00"
-     *       }
-     *     ]
-     *   }
-     *   ...
-     * }
-     * ```
-     *
-     * ### Matrix pricing
-     *
-     * Matrix pricing defines a set of unit prices in a one or two-dimensional matrix. `dimensions`
-     * defines the two event property values evaluated in this pricing model. In a one-dimensional
-     * matrix, the second value is `null`. Every configuration has a list of `matrix_values` which
-     * give the unit prices for specified property values. In a one-dimensional matrix, the matrix
-     * values will have `dimension_values` where the second value of the pair is null. If an event
-     * does not match any of the dimension values in the matrix, it will resort to the
-     * `default_unit_amount`.
-     *
-     * ```json
-     * {
-     *   ...
-     *   "model_type": "matrix",
-     *   "matrix_config": {
-     *     "default_unit_amount": "3.00",
-     *     "dimensions": [
-     *       "cluster_name",
-     *       "region"
-     *     ],
-     *     "matrix_values": [
-     *       {
-     *         "dimension_values": [
-     *           "alpha",
-     *           "west"
-     *         ],
-     *         "unit_amount": "2.00"
-     *       },
-     *       ...
-     *     ]
-     *   }
-     * }
-     * ```
-     *
-     * ### Fixed fees
-     *
-     * Fixed fees follow unit pricing, and also have an additional parameter `fixed_price_quantity`
-     * that indicates how many of a fixed fee that should be applied for a subscription. This
-     * parameter defaults to 1.
-     *
-     * ```json
-     * {
-     *   ...
-     *   "id": "price_id",
-     *   "model_type": "unit",
-     *   "unit_config": {
-     *     "unit_amount": "2.00"
-     *   },
-     *   "fixed_price_quantity": 3.0
-     *   ...
-     * }
-     * ```
-     *
-     * ## Maximums and Minimums
+     * ### Maximums and Minimums
      *
      * Minimums and maximums, much like price overrides, can be useful when a new customer has
      * negotiated a new or different minimum or maximum spend cap than the default for a given
@@ -369,12 +226,11 @@ constructor(
      * }
      * ```
      *
-     * ## Discounts
+     * ### Discounts
      *
      * Discounts, like price overrides, can be useful when a new customer has negotiated a new or
-     * different discount than the default for a price. A single price price can have at most one
-     * discount. If a discount exists for a price and a null discount is provided on creation, then
-     * there will be no discount on the new subscription.
+     * different discount than the default for a price. If a discount exists for a price and a null
+     * discount is provided on creation, then there will be no discount on the new subscription.
      *
      * To add a discount for a specific price, add `discount` to the price in the `price_overrides`
      * object. Discount should be a dictionary of the format:
@@ -1007,34 +863,154 @@ constructor(
         jsonHandler<Subscription>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
 
     /**
-     * This endpoint can be used to change the plan on an existing subscription. It returns the
+     * This endpoint can be used to change an existing subscription's plan. It returns the
      * serialized updated subscription object.
      *
-     * The body parameter `change_option` determines the timing of the plan change. Orb supports
+     * The body parameter `change_option` determines when the plan change occurrs. Orb supports
      * three options:
      * - `end_of_subscription_term`: changes the plan at the end of the existing plan's term.
      *     - Issuing this plan change request for a monthly subscription will keep the existing plan
-     *       active until the start of the subsequent month, and potentially issue an invoice for
-     *       any usage charges incurred in the intervening period.
-     *     - Issuing this plan change request for a yearly subscription will keep the existing plan
-     *       active for the full year.
-     * - `immediate`: changes the plan immediately. Subscriptions that have their plan changed with
-     *   this option will be invoiced immediately. This invoice will include any usage fees incurred
-     *   in the billing period up to the change, along with any prorated recurring fees for the
-     *   billing period, if applicable.
-     * - `requested_date`: changes the plan on the requested date (`change_date`). If no timezone is
-     *   provided, the customer's timezone is used. The `change_date` body parameter is required if
-     *   this option is chosen.
+     *       active until the start of the subsequent month. Issuing this plan change request for a
+     *       yearly subscription will keep the existing plan active for the full year. Charges
+     *       incurred in the remaining period will be invoiced as normal.
+     *     - Example: The plan is billed monthly on the 1st of the month, the request is made on
+     *       January 15th, so the plan will be changed on February 1st, and invoice will be issued
+     *       on February 1st for the last month of the original plan.
+     * - `immediate`: changes the plan immediately.
+     *     - Subscriptions that have their plan changed with this option will move to the new plan
+     *       immediately, and be invoiced immediately.
+     *     - This invoice will include any usage fees incurred in the billing period up to the
+     *       change, along with any prorated recurring fees for the billing period, if applicable.
+     *     - Example: The plan is billed monthly on the 1st of the month, the request is made on
+     *       January 15th, so the plan will be changed on January 15th, and an invoice will be
+     *       issued for the partial month, from January 1 to January 15, on the original plan.
+     * - `requested_date`: changes the plan on the requested date (`change_date`).
+     *     - If no timezone is provided, the customer's timezone is used. The `change_date` body
+     *       parameter is required if this option is chosen.
+     *     - Example: The plan is billed monthly on the 1st of the month, the request is made on
+     *       January 15th, with a requested `change_date` of February 15th, so the plan will be
+     *       changed on February 15th, and invoices will be issued on February 1st and February
+     *       15th.
      *
      * Note that one of `plan_id` or `external_plan_id` is required in the request body for this
      * operation.
      *
-     * ## Price overrides, maximums, and minimums
+     * ## Customize your customer's subscriptions
+     *
+     * Prices and adjustments in a plan can be added, removed, or replaced on the subscription when
+     * you schedule the plan change. This is useful when a customer has prices that differ from the
+     * default prices for a specific plan.
+     *
+     * :::info This feature is only available for accounts that have migrated off of legacy
+     * subscription overrides. :::
+     *
+     * ### Adding Prices
+     *
+     * To add prices, provide a list of objects with the key `add_prices`. An object in the list
+     * must specify an existing add-on price with a `price_id` or `external_price_id` field, or
+     * create a new add-on price by including an object with the key `price`, identical to what
+     * would be used in the request body for the [create price endpoint](../reference/create-price).
+     * See the [Price resource](../reference/price) for the specification of different price model
+     * configurations possible in this object.
+     *
+     * If the plan has phases, each object in the list must include a number with `plan_phase_order`
+     * key to indicate which phase the price should be added to.
+     *
+     * An object in the list can specify an optional `start_date` and optional `end_date`. This is
+     * equivalent to creating a price interval with the
+     * [add/edit price intervals endpoint](../reference/add-edit-price-intervals). If unspecified,
+     * the start or end date of the phase or subscription will be used.
+     *
+     * An object in the list can specify an optional `minimum_amount`, `maximum_amount`, or
+     * `discounts`. This will create adjustments which apply only to this price.
+     *
+     * Additionally, an object in the list can specify an optional `reference_id`. This ID can be
+     * used to reference this price when [adding an adjustment](#adding-adjustments) in the same API
+     * call. However the ID is _transient_ and cannot be used to refer to the price in future API
+     * calls.
+     *
+     * ### Removing Prices
+     *
+     * To remove prices, provide a list of objects with the key `remove_prices`. An object in the
+     * list must specify a plan price with either a `price_id` or `external_price_id` field.
+     *
+     * ### Replacing Prices
+     *
+     * To replace prices, provide a list of objects with the key `replace_prices`. An object in the
+     * list must specify a plan price to replace with the `replaces_price_id` key, and it must
+     * specify a price to replace it with by either referencing an existing add-on price with a
+     * `price_id` or `external_price_id` field, or by creating a new add-on price by including an
+     * object with the key `price`, identical to what would be used in the request body for the
+     * [create price endpoint](../reference/create-price). See the
+     * [Price resource](../reference/price) for the specification of different price model
+     * configurations possible in this object.
+     *
+     * For fixed fees, an object in the list can supply a `fixed_price_quantity` instead of a
+     * `price`, `price_id`, or `external_price_id` field. This will update only the quantity for the
+     * price, similar to the [Update price quantity](../reference/update-fixed-fee-quantity)
+     * endpoint.
+     *
+     * The replacement price will have the same phase, if applicable, and the same start and end
+     * dates as the price it replaces.
+     *
+     * An object in the list can specify an optional `minimum_amount`, `maximum_amount`, or
+     * `discounts`. This will create adjustments which apply only to this price.
+     *
+     * Additionally, an object in the list can specify an optional `reference_id`. This ID can be
+     * used to reference the replacement price when [adding an adjustment](#adding-adjustments) in
+     * the same API call. However the ID is _transient_ and cannot be used to refer to the price in
+     * future API calls.
+     *
+     * ### Adding adjustments
+     *
+     * To add adjustments, provide a list of objects with the key `add_adjustments`. An object in
+     * the list must include an object with the key `adjustment`, identical to the adjustment object
+     * in the [add/edit price intervals endpoint](../reference/add-edit-price-intervals).
+     *
+     * If the plan has phases, each object in the list must include a number with `plan_phase_order`
+     * key to indicate which phase the adjustment should be added to.
+     *
+     * An object in the list can specify an optional `start_date` and optional `end_date`. If
+     * unspecified, the start or end date of the phase or subscription will be used.
+     *
+     * ### Removing adjustments
+     *
+     * To remove adjustments, provide a list of objects with the key `remove_adjustments`. An object
+     * in the list must include a key, `adjustment_id`, with the ID of the adjustment to be removed.
+     *
+     * ### Replacing adjustments
+     *
+     * To replace adjustments, provide a list of objects with the key `replace_adjustments`. An
+     * object in the list must specify a plan adjustment to replace with the
+     * `replaces_adjustment_id` key, and it must specify an adjustment to replace it with by
+     * including an object with the key `adjustment`, identical to the adjustment object in the
+     * [add/edit price intervals endpoint](../reference/add-edit-price-intervals).
+     *
+     * The replacement adjustment will have the same phase, if applicable, and the same start and
+     * end dates as the adjustment it replaces.
+     *
+     * ## Price overrides (DEPRECATED)
+     *
+     * :::info Price overrides are being phased out in favor adding/removing/replacing prices. (See
+     * [Customize your customer's subscriptions](../reference/schedule-plan-change#customize-your-customers-subscriptions))
+     * :::
+     *
+     * Price overrides are used to update some or all prices in a plan for the specific subscription
+     * being created. This is useful when a new customer has negotiated a rate that is unique to the
+     * customer.
+     *
+     * To override prices, provide a list of objects with the key `price_overrides`. The price
+     * object in the list of overrides is expected to contain the existing price id, the
+     * `model_type` and configuration. (See the [Price resource](../reference/price) for the
+     * specification of different price model configurations.) The numerical values can be updated,
+     * but the billable metric, cadence, type, and name of a price can not be overridden.
+     *
+     * ### Maximums, and minimums
      *
      * Price overrides are used to update some or all prices in the target plan. Minimums and
      * maximums, much like price overrides, can be useful when a new customer has negotiated a new
      * or different minimum or maximum spend cap than the default for the plan. The request format
-     * for price overrides, maximums, and minimums are the same as those in
+     * for maximums and minimums is the same as those in
      * [subscription creation](create-subscription).
      *
      * ## Scheduling multiple plan changes
@@ -1250,6 +1226,52 @@ constructor(
         return clientOptions.httpClient.execute(request, requestOptions).let { response ->
             response
                 .use { updateFixedFeeQuantityHandler.handle(it) }
+                .apply {
+                    if (requestOptions.responseValidation ?: clientOptions.responseValidation) {
+                        validate()
+                    }
+                }
+        }
+    }
+
+    private val updateTrialHandler: Handler<Subscription> =
+        jsonHandler<Subscription>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+
+    /**
+     * This endpoint is used to update the trial end date for a subscription. The new trial end date
+     * must be within the time range of the current plan (i.e. the new trial end date must be on or
+     * after the subscription's start date on the current plan, and on or before the subscription
+     * end date).
+     *
+     * In order to retroactively remove a trial completely, the end date can be set to the
+     * transition date of the subscription to this plan (or, if this is the first plan for this
+     * subscription, the subscription's start date). In order to end a trial immediately, the
+     * keyword `immediate` can be provided as the trial end date.
+     *
+     * By default, Orb will shift only the trial end date (and price intervals that start or end on
+     * the previous trial end date), and leave all other future price intervals untouched. If the
+     * `shift` parameter is set to `true`, Orb will shift all subsequent price and adjustment
+     * intervals by the same amount as the trial end date shift (so, e.g., if a plan change is
+     * scheduled or an add-on price was added, that change will be pushed back by the same amount of
+     * time the trial is extended).
+     */
+    override fun updateTrial(
+        params: SubscriptionUpdateTrialParams,
+        requestOptions: RequestOptions
+    ): Subscription {
+        val request =
+            HttpRequest.builder()
+                .method(HttpMethod.POST)
+                .addPathSegments("subscriptions", params.getPathParam(0), "update_trial")
+                .putAllQueryParams(clientOptions.queryParams)
+                .putAllQueryParams(params.getQueryParams())
+                .putAllHeaders(clientOptions.headers)
+                .putAllHeaders(params.getHeaders())
+                .body(json(clientOptions.jsonMapper, params.getBody()))
+                .build()
+        return clientOptions.httpClient.execute(request, requestOptions).let { response ->
+            response
+                .use { updateTrialHandler.handle(it) }
                 .apply {
                     if (requestOptions.responseValidation ?: clientOptions.responseValidation) {
                         validate()

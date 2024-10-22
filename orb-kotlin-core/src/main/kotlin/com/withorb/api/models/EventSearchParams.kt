@@ -53,8 +53,6 @@ constructor(
         private val additionalProperties: Map<String, JsonValue>,
     ) {
 
-        private var hashCode: Int = 0
-
         /**
          * This is an explicit array of IDs to filter by. Note that an event's ID is the
          * idempotency_key that was originally used for ingestion, and this only supports events
@@ -79,34 +77,6 @@ constructor(
         fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
 
         fun toBuilder() = Builder().from(this)
-
-        override fun equals(other: Any?): Boolean {
-            if (this === other) {
-                return true
-            }
-
-            return other is EventSearchBody &&
-                this.eventIds == other.eventIds &&
-                this.timeframeEnd == other.timeframeEnd &&
-                this.timeframeStart == other.timeframeStart &&
-                this.additionalProperties == other.additionalProperties
-        }
-
-        override fun hashCode(): Int {
-            if (hashCode == 0) {
-                hashCode =
-                    Objects.hash(
-                        eventIds,
-                        timeframeEnd,
-                        timeframeStart,
-                        additionalProperties,
-                    )
-            }
-            return hashCode
-        }
-
-        override fun toString() =
-            "EventSearchBody{eventIds=$eventIds, timeframeEnd=$timeframeEnd, timeframeStart=$timeframeStart, additionalProperties=$additionalProperties}"
 
         companion object {
 
@@ -176,6 +146,26 @@ constructor(
                     additionalProperties.toUnmodifiable(),
                 )
         }
+
+        override fun equals(other: Any?): Boolean {
+            if (this === other) {
+                return true
+            }
+
+            return /* spotless:off */ other is EventSearchBody && this.eventIds == other.eventIds && this.timeframeEnd == other.timeframeEnd && this.timeframeStart == other.timeframeStart && this.additionalProperties == other.additionalProperties /* spotless:on */
+        }
+
+        private var hashCode: Int = 0
+
+        override fun hashCode(): Int {
+            if (hashCode == 0) {
+                hashCode = /* spotless:off */ Objects.hash(eventIds, timeframeEnd, timeframeStart, additionalProperties) /* spotless:on */
+            }
+            return hashCode
+        }
+
+        override fun toString() =
+            "EventSearchBody{eventIds=$eventIds, timeframeEnd=$timeframeEnd, timeframeStart=$timeframeStart, additionalProperties=$additionalProperties}"
     }
 
     fun _additionalQueryParams(): Map<String, List<String>> = additionalQueryParams
@@ -189,24 +179,11 @@ constructor(
             return true
         }
 
-        return other is EventSearchParams &&
-            this.eventIds == other.eventIds &&
-            this.timeframeEnd == other.timeframeEnd &&
-            this.timeframeStart == other.timeframeStart &&
-            this.additionalQueryParams == other.additionalQueryParams &&
-            this.additionalHeaders == other.additionalHeaders &&
-            this.additionalBodyProperties == other.additionalBodyProperties
+        return /* spotless:off */ other is EventSearchParams && this.eventIds == other.eventIds && this.timeframeEnd == other.timeframeEnd && this.timeframeStart == other.timeframeStart && this.additionalQueryParams == other.additionalQueryParams && this.additionalHeaders == other.additionalHeaders && this.additionalBodyProperties == other.additionalBodyProperties /* spotless:on */
     }
 
     override fun hashCode(): Int {
-        return Objects.hash(
-            eventIds,
-            timeframeEnd,
-            timeframeStart,
-            additionalQueryParams,
-            additionalHeaders,
-            additionalBodyProperties,
-        )
+        return /* spotless:off */ Objects.hash(eventIds, timeframeEnd, timeframeStart, additionalQueryParams, additionalHeaders, additionalBodyProperties) /* spotless:on */
     }
 
     override fun toString() =

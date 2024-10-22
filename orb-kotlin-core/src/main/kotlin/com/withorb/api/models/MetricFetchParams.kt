@@ -36,18 +36,11 @@ constructor(
             return true
         }
 
-        return other is MetricFetchParams &&
-            this.metricId == other.metricId &&
-            this.additionalQueryParams == other.additionalQueryParams &&
-            this.additionalHeaders == other.additionalHeaders
+        return /* spotless:off */ other is MetricFetchParams && this.metricId == other.metricId && this.additionalQueryParams == other.additionalQueryParams && this.additionalHeaders == other.additionalHeaders /* spotless:on */
     }
 
     override fun hashCode(): Int {
-        return Objects.hash(
-            metricId,
-            additionalQueryParams,
-            additionalHeaders,
-        )
+        return /* spotless:off */ Objects.hash(metricId, additionalQueryParams, additionalHeaders) /* spotless:on */
     }
 
     override fun toString() =

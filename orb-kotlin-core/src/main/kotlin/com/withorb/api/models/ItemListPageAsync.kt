@@ -35,18 +35,11 @@ private constructor(
             return true
         }
 
-        return other is ItemListPageAsync &&
-            this.itemsService == other.itemsService &&
-            this.params == other.params &&
-            this.response == other.response
+        return /* spotless:off */ other is ItemListPageAsync && this.itemsService == other.itemsService && this.params == other.params && this.response == other.response /* spotless:on */
     }
 
     override fun hashCode(): Int {
-        return Objects.hash(
-            itemsService,
-            params,
-            response,
-        )
+        return /* spotless:off */ Objects.hash(itemsService, params, response) /* spotless:on */
     }
 
     override fun toString() =
@@ -127,18 +120,11 @@ private constructor(
                 return true
             }
 
-            return other is Response &&
-                this.data == other.data &&
-                this.paginationMetadata == other.paginationMetadata &&
-                this.additionalProperties == other.additionalProperties
+            return /* spotless:off */ other is Response && this.data == other.data && this.paginationMetadata == other.paginationMetadata && this.additionalProperties == other.additionalProperties /* spotless:on */
         }
 
         override fun hashCode(): Int {
-            return Objects.hash(
-                data,
-                paginationMetadata,
-                additionalProperties,
-            )
+            return /* spotless:off */ Objects.hash(data, paginationMetadata, additionalProperties) /* spotless:on */
         }
 
         override fun toString() =

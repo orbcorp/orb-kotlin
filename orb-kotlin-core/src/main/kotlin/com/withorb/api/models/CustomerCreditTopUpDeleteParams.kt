@@ -48,22 +48,11 @@ constructor(
             return true
         }
 
-        return other is CustomerCreditTopUpDeleteParams &&
-            this.customerId == other.customerId &&
-            this.topUpId == other.topUpId &&
-            this.additionalQueryParams == other.additionalQueryParams &&
-            this.additionalHeaders == other.additionalHeaders &&
-            this.additionalBodyProperties == other.additionalBodyProperties
+        return /* spotless:off */ other is CustomerCreditTopUpDeleteParams && this.customerId == other.customerId && this.topUpId == other.topUpId && this.additionalQueryParams == other.additionalQueryParams && this.additionalHeaders == other.additionalHeaders && this.additionalBodyProperties == other.additionalBodyProperties /* spotless:on */
     }
 
     override fun hashCode(): Int {
-        return Objects.hash(
-            customerId,
-            topUpId,
-            additionalQueryParams,
-            additionalHeaders,
-            additionalBodyProperties,
-        )
+        return /* spotless:off */ Objects.hash(customerId, topUpId, additionalQueryParams, additionalHeaders, additionalBodyProperties) /* spotless:on */
     }
 
     override fun toString() =

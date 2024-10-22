@@ -49,8 +49,6 @@ constructor(
         private val additionalProperties: Map<String, JsonValue>,
     ) {
 
-        private var hashCode: Int = 0
-
         /** The thresholds that define the values at which the alert will be triggered. */
         @JsonProperty("thresholds") fun thresholds(): List<Threshold>? = thresholds
 
@@ -59,26 +57,6 @@ constructor(
         fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
 
         fun toBuilder() = Builder().from(this)
-
-        override fun equals(other: Any?): Boolean {
-            if (this === other) {
-                return true
-            }
-
-            return other is AlertUpdateBody &&
-                this.thresholds == other.thresholds &&
-                this.additionalProperties == other.additionalProperties
-        }
-
-        override fun hashCode(): Int {
-            if (hashCode == 0) {
-                hashCode = Objects.hash(thresholds, additionalProperties)
-            }
-            return hashCode
-        }
-
-        override fun toString() =
-            "AlertUpdateBody{thresholds=$thresholds, additionalProperties=$additionalProperties}"
 
         companion object {
 
@@ -120,6 +98,26 @@ constructor(
                     additionalProperties.toUnmodifiable()
                 )
         }
+
+        override fun equals(other: Any?): Boolean {
+            if (this === other) {
+                return true
+            }
+
+            return /* spotless:off */ other is AlertUpdateBody && this.thresholds == other.thresholds && this.additionalProperties == other.additionalProperties /* spotless:on */
+        }
+
+        private var hashCode: Int = 0
+
+        override fun hashCode(): Int {
+            if (hashCode == 0) {
+                hashCode = /* spotless:off */ Objects.hash(thresholds, additionalProperties) /* spotless:on */
+            }
+            return hashCode
+        }
+
+        override fun toString() =
+            "AlertUpdateBody{thresholds=$thresholds, additionalProperties=$additionalProperties}"
     }
 
     fun _additionalQueryParams(): Map<String, List<String>> = additionalQueryParams
@@ -133,22 +131,11 @@ constructor(
             return true
         }
 
-        return other is AlertUpdateParams &&
-            this.alertConfigurationId == other.alertConfigurationId &&
-            this.thresholds == other.thresholds &&
-            this.additionalQueryParams == other.additionalQueryParams &&
-            this.additionalHeaders == other.additionalHeaders &&
-            this.additionalBodyProperties == other.additionalBodyProperties
+        return /* spotless:off */ other is AlertUpdateParams && this.alertConfigurationId == other.alertConfigurationId && this.thresholds == other.thresholds && this.additionalQueryParams == other.additionalQueryParams && this.additionalHeaders == other.additionalHeaders && this.additionalBodyProperties == other.additionalBodyProperties /* spotless:on */
     }
 
     override fun hashCode(): Int {
-        return Objects.hash(
-            alertConfigurationId,
-            thresholds,
-            additionalQueryParams,
-            additionalHeaders,
-            additionalBodyProperties,
-        )
+        return /* spotless:off */ Objects.hash(alertConfigurationId, thresholds, additionalQueryParams, additionalHeaders, additionalBodyProperties) /* spotless:on */
     }
 
     override fun toString() =
@@ -267,8 +254,6 @@ constructor(
         private val additionalProperties: Map<String, JsonValue>,
     ) {
 
-        private var hashCode: Int = 0
-
         /**
          * The value at which an alert will fire. For credit balance alerts, the alert will fire at
          * or below this value. For usage and cost alerts, the alert will fire at or above this
@@ -281,26 +266,6 @@ constructor(
         fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
 
         fun toBuilder() = Builder().from(this)
-
-        override fun equals(other: Any?): Boolean {
-            if (this === other) {
-                return true
-            }
-
-            return other is Threshold &&
-                this.value == other.value &&
-                this.additionalProperties == other.additionalProperties
-        }
-
-        override fun hashCode(): Int {
-            if (hashCode == 0) {
-                hashCode = Objects.hash(value, additionalProperties)
-            }
-            return hashCode
-        }
-
-        override fun toString() =
-            "Threshold{value=$value, additionalProperties=$additionalProperties}"
 
         companion object {
 
@@ -344,5 +309,25 @@ constructor(
                     additionalProperties.toUnmodifiable()
                 )
         }
+
+        override fun equals(other: Any?): Boolean {
+            if (this === other) {
+                return true
+            }
+
+            return /* spotless:off */ other is Threshold && this.value == other.value && this.additionalProperties == other.additionalProperties /* spotless:on */
+        }
+
+        private var hashCode: Int = 0
+
+        override fun hashCode(): Int {
+            if (hashCode == 0) {
+                hashCode = /* spotless:off */ Objects.hash(value, additionalProperties) /* spotless:on */
+            }
+            return hashCode
+        }
+
+        override fun toString() =
+            "Threshold{value=$value, additionalProperties=$additionalProperties}"
     }
 }
