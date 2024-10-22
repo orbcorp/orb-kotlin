@@ -307,43 +307,70 @@ constructor(
                 node: JsonNode
             ): CustomerCreditLedgerCreateEntryBody {
                 val json = JsonValue.fromJsonNode(node)
-                tryDeserialize(node, jacksonTypeRef<AddIncrementCreditLedgerEntryRequestParams>())
-                    ?.let {
-                        return CustomerCreditLedgerCreateEntryBody(
-                            addIncrementCreditLedgerEntryRequestParams = it,
-                            _json = json
-                        )
+                val entryType = json.asObject()?.get("entry_type")?.asString()
+
+                when (entryType) {
+                    "increment" -> {
+                        tryDeserialize(
+                                node,
+                                jacksonTypeRef<AddIncrementCreditLedgerEntryRequestParams>()
+                            )
+                            ?.let {
+                                return CustomerCreditLedgerCreateEntryBody(
+                                    addIncrementCreditLedgerEntryRequestParams = it,
+                                    _json = json
+                                )
+                            }
                     }
-                tryDeserialize(node, jacksonTypeRef<AddDecrementCreditLedgerEntryRequestParams>())
-                    ?.let {
-                        return CustomerCreditLedgerCreateEntryBody(
-                            addDecrementCreditLedgerEntryRequestParams = it,
-                            _json = json
-                        )
+                    "decrement" -> {
+                        tryDeserialize(
+                                node,
+                                jacksonTypeRef<AddDecrementCreditLedgerEntryRequestParams>()
+                            )
+                            ?.let {
+                                return CustomerCreditLedgerCreateEntryBody(
+                                    addDecrementCreditLedgerEntryRequestParams = it,
+                                    _json = json
+                                )
+                            }
                     }
-                tryDeserialize(
-                        node,
-                        jacksonTypeRef<AddExpirationChangeCreditLedgerEntryRequestParams>()
-                    )
-                    ?.let {
-                        return CustomerCreditLedgerCreateEntryBody(
-                            addExpirationChangeCreditLedgerEntryRequestParams = it,
-                            _json = json
-                        )
+                    "expiration_change" -> {
+                        tryDeserialize(
+                                node,
+                                jacksonTypeRef<AddExpirationChangeCreditLedgerEntryRequestParams>()
+                            )
+                            ?.let {
+                                return CustomerCreditLedgerCreateEntryBody(
+                                    addExpirationChangeCreditLedgerEntryRequestParams = it,
+                                    _json = json
+                                )
+                            }
                     }
-                tryDeserialize(node, jacksonTypeRef<AddVoidCreditLedgerEntryRequestParams>())?.let {
-                    return CustomerCreditLedgerCreateEntryBody(
-                        addVoidCreditLedgerEntryRequestParams = it,
-                        _json = json
-                    )
+                    "void" -> {
+                        tryDeserialize(
+                                node,
+                                jacksonTypeRef<AddVoidCreditLedgerEntryRequestParams>()
+                            )
+                            ?.let {
+                                return CustomerCreditLedgerCreateEntryBody(
+                                    addVoidCreditLedgerEntryRequestParams = it,
+                                    _json = json
+                                )
+                            }
+                    }
+                    "amendment" -> {
+                        tryDeserialize(
+                                node,
+                                jacksonTypeRef<AddAmendmentCreditLedgerEntryRequestParams>()
+                            )
+                            ?.let {
+                                return CustomerCreditLedgerCreateEntryBody(
+                                    addAmendmentCreditLedgerEntryRequestParams = it,
+                                    _json = json
+                                )
+                            }
+                    }
                 }
-                tryDeserialize(node, jacksonTypeRef<AddAmendmentCreditLedgerEntryRequestParams>())
-                    ?.let {
-                        return CustomerCreditLedgerCreateEntryBody(
-                            addAmendmentCreditLedgerEntryRequestParams = it,
-                            _json = json
-                        )
-                    }
 
                 return CustomerCreditLedgerCreateEntryBody(_json = json)
             }

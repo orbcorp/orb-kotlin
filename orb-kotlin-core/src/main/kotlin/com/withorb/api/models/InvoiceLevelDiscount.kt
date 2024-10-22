@@ -122,18 +122,28 @@ private constructor(
 
         override fun ObjectCodec.deserialize(node: JsonNode): InvoiceLevelDiscount {
             val json = JsonValue.fromJsonNode(node)
-            tryDeserialize(node, jacksonTypeRef<PercentageDiscount>()) { it.validate() }
-                ?.let {
-                    return InvoiceLevelDiscount(percentageDiscount = it, _json = json)
+            val discountType = json.asObject()?.get("discount_type")?.asString()
+
+            when (discountType) {
+                "percentage" -> {
+                    tryDeserialize(node, jacksonTypeRef<PercentageDiscount>()) { it.validate() }
+                        ?.let {
+                            return InvoiceLevelDiscount(percentageDiscount = it, _json = json)
+                        }
                 }
-            tryDeserialize(node, jacksonTypeRef<AmountDiscount>()) { it.validate() }
-                ?.let {
-                    return InvoiceLevelDiscount(amountDiscount = it, _json = json)
+                "amount" -> {
+                    tryDeserialize(node, jacksonTypeRef<AmountDiscount>()) { it.validate() }
+                        ?.let {
+                            return InvoiceLevelDiscount(amountDiscount = it, _json = json)
+                        }
                 }
-            tryDeserialize(node, jacksonTypeRef<TrialDiscount>()) { it.validate() }
-                ?.let {
-                    return InvoiceLevelDiscount(trialDiscount = it, _json = json)
+                "trial" -> {
+                    tryDeserialize(node, jacksonTypeRef<TrialDiscount>()) { it.validate() }
+                        ?.let {
+                            return InvoiceLevelDiscount(trialDiscount = it, _json = json)
+                        }
                 }
+            }
 
             return InvoiceLevelDiscount(_json = json)
         }

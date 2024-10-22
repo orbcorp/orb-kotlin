@@ -625,6 +625,7 @@ constructor(
 
                 override fun ObjectCodec.deserialize(node: JsonNode): StartDate {
                     val json = JsonValue.fromJsonNode(node)
+
                     tryDeserialize(node, jacksonTypeRef<OffsetDateTime>())?.let {
                         return StartDate(dateTime = it, _json = json)
                     }
@@ -998,24 +999,40 @@ constructor(
 
                 override fun ObjectCodec.deserialize(node: JsonNode): Discount {
                     val json = JsonValue.fromJsonNode(node)
-                    tryDeserialize(node, jacksonTypeRef<AmountDiscountCreationParams>()) {
-                            it.validate()
+                    val discountType = json.asObject()?.get("discount_type")?.asString()
+
+                    when (discountType) {
+                        "amount" -> {
+                            tryDeserialize(node, jacksonTypeRef<AmountDiscountCreationParams>()) {
+                                    it.validate()
+                                }
+                                ?.let {
+                                    return Discount(amountDiscountCreationParams = it, _json = json)
+                                }
                         }
-                        ?.let {
-                            return Discount(amountDiscountCreationParams = it, _json = json)
+                        "percentage" -> {
+                            tryDeserialize(
+                                    node,
+                                    jacksonTypeRef<PercentageDiscountCreationParams>()
+                                ) {
+                                    it.validate()
+                                }
+                                ?.let {
+                                    return Discount(
+                                        percentageDiscountCreationParams = it,
+                                        _json = json
+                                    )
+                                }
                         }
-                    tryDeserialize(node, jacksonTypeRef<PercentageDiscountCreationParams>()) {
-                            it.validate()
+                        "usage" -> {
+                            tryDeserialize(node, jacksonTypeRef<UsageDiscountCreationParams>()) {
+                                    it.validate()
+                                }
+                                ?.let {
+                                    return Discount(usageDiscountCreationParams = it, _json = json)
+                                }
                         }
-                        ?.let {
-                            return Discount(percentageDiscountCreationParams = it, _json = json)
-                        }
-                    tryDeserialize(node, jacksonTypeRef<UsageDiscountCreationParams>()) {
-                            it.validate()
-                        }
-                        ?.let {
-                            return Discount(usageDiscountCreationParams = it, _json = json)
-                        }
+                    }
 
                     return Discount(_json = json)
                 }
@@ -1671,6 +1688,7 @@ constructor(
 
                 override fun ObjectCodec.deserialize(node: JsonNode): EndDate {
                     val json = JsonValue.fromJsonNode(node)
+
                     tryDeserialize(node, jacksonTypeRef<OffsetDateTime>())?.let {
                         return EndDate(dateTime = it, _json = json)
                     }
@@ -2434,146 +2452,255 @@ constructor(
 
                 override fun ObjectCodec.deserialize(node: JsonNode): Price {
                     val json = JsonValue.fromJsonNode(node)
-                    tryDeserialize(node, jacksonTypeRef<NewFloatingUnitPrice>()) { it.validate() }
-                        ?.let {
-                            return Price(newFloatingUnitPrice = it, _json = json)
+                    val modelType = json.asObject()?.get("model_type")?.asString()
+
+                    when (modelType) {
+                        "unit" -> {
+                            tryDeserialize(node, jacksonTypeRef<NewFloatingUnitPrice>()) {
+                                    it.validate()
+                                }
+                                ?.let {
+                                    return Price(newFloatingUnitPrice = it, _json = json)
+                                }
                         }
-                    tryDeserialize(node, jacksonTypeRef<NewFloatingPackagePrice>()) {
-                            it.validate()
+                        "package" -> {
+                            tryDeserialize(node, jacksonTypeRef<NewFloatingPackagePrice>()) {
+                                    it.validate()
+                                }
+                                ?.let {
+                                    return Price(newFloatingPackagePrice = it, _json = json)
+                                }
                         }
-                        ?.let {
-                            return Price(newFloatingPackagePrice = it, _json = json)
+                        "matrix" -> {
+                            tryDeserialize(node, jacksonTypeRef<NewFloatingMatrixPrice>()) {
+                                    it.validate()
+                                }
+                                ?.let {
+                                    return Price(newFloatingMatrixPrice = it, _json = json)
+                                }
                         }
-                    tryDeserialize(node, jacksonTypeRef<NewFloatingMatrixPrice>()) { it.validate() }
-                        ?.let {
-                            return Price(newFloatingMatrixPrice = it, _json = json)
+                        "matrix_with_allocation" -> {
+                            tryDeserialize(
+                                    node,
+                                    jacksonTypeRef<NewFloatingMatrixWithAllocationPrice>()
+                                ) {
+                                    it.validate()
+                                }
+                                ?.let {
+                                    return Price(
+                                        newFloatingMatrixWithAllocationPrice = it,
+                                        _json = json
+                                    )
+                                }
                         }
-                    tryDeserialize(node, jacksonTypeRef<NewFloatingMatrixWithAllocationPrice>()) {
-                            it.validate()
+                        "tiered" -> {
+                            tryDeserialize(node, jacksonTypeRef<NewFloatingTieredPrice>()) {
+                                    it.validate()
+                                }
+                                ?.let {
+                                    return Price(newFloatingTieredPrice = it, _json = json)
+                                }
                         }
-                        ?.let {
-                            return Price(newFloatingMatrixWithAllocationPrice = it, _json = json)
+                        "tiered_bps" -> {
+                            tryDeserialize(node, jacksonTypeRef<NewFloatingTieredBpsPrice>()) {
+                                    it.validate()
+                                }
+                                ?.let {
+                                    return Price(newFloatingTieredBpsPrice = it, _json = json)
+                                }
                         }
-                    tryDeserialize(node, jacksonTypeRef<NewFloatingTieredPrice>()) { it.validate() }
-                        ?.let {
-                            return Price(newFloatingTieredPrice = it, _json = json)
+                        "bps" -> {
+                            tryDeserialize(node, jacksonTypeRef<NewFloatingBpsPrice>()) {
+                                    it.validate()
+                                }
+                                ?.let {
+                                    return Price(newFloatingBpsPrice = it, _json = json)
+                                }
                         }
-                    tryDeserialize(node, jacksonTypeRef<NewFloatingTieredBpsPrice>()) {
-                            it.validate()
+                        "bulk_bps" -> {
+                            tryDeserialize(node, jacksonTypeRef<NewFloatingBulkBpsPrice>()) {
+                                    it.validate()
+                                }
+                                ?.let {
+                                    return Price(newFloatingBulkBpsPrice = it, _json = json)
+                                }
                         }
-                        ?.let {
-                            return Price(newFloatingTieredBpsPrice = it, _json = json)
+                        "bulk" -> {
+                            tryDeserialize(node, jacksonTypeRef<NewFloatingBulkPrice>()) {
+                                    it.validate()
+                                }
+                                ?.let {
+                                    return Price(newFloatingBulkPrice = it, _json = json)
+                                }
                         }
-                    tryDeserialize(node, jacksonTypeRef<NewFloatingBpsPrice>()) { it.validate() }
-                        ?.let {
-                            return Price(newFloatingBpsPrice = it, _json = json)
+                        "threshold_total_amount" -> {
+                            tryDeserialize(
+                                    node,
+                                    jacksonTypeRef<NewFloatingThresholdTotalAmountPrice>()
+                                ) {
+                                    it.validate()
+                                }
+                                ?.let {
+                                    return Price(
+                                        newFloatingThresholdTotalAmountPrice = it,
+                                        _json = json
+                                    )
+                                }
                         }
-                    tryDeserialize(node, jacksonTypeRef<NewFloatingBulkBpsPrice>()) {
-                            it.validate()
+                        "tiered_package" -> {
+                            tryDeserialize(node, jacksonTypeRef<NewFloatingTieredPackagePrice>()) {
+                                    it.validate()
+                                }
+                                ?.let {
+                                    return Price(newFloatingTieredPackagePrice = it, _json = json)
+                                }
                         }
-                        ?.let {
-                            return Price(newFloatingBulkBpsPrice = it, _json = json)
+                        "grouped_tiered" -> {
+                            tryDeserialize(node, jacksonTypeRef<NewFloatingGroupedTieredPrice>()) {
+                                    it.validate()
+                                }
+                                ?.let {
+                                    return Price(newFloatingGroupedTieredPrice = it, _json = json)
+                                }
                         }
-                    tryDeserialize(node, jacksonTypeRef<NewFloatingBulkPrice>()) { it.validate() }
-                        ?.let {
-                            return Price(newFloatingBulkPrice = it, _json = json)
+                        "tiered_with_minimum" -> {
+                            tryDeserialize(
+                                    node,
+                                    jacksonTypeRef<NewFloatingTieredWithMinimumPrice>()
+                                ) {
+                                    it.validate()
+                                }
+                                ?.let {
+                                    return Price(
+                                        newFloatingTieredWithMinimumPrice = it,
+                                        _json = json
+                                    )
+                                }
                         }
-                    tryDeserialize(node, jacksonTypeRef<NewFloatingThresholdTotalAmountPrice>()) {
-                            it.validate()
+                        "package_with_allocation" -> {
+                            tryDeserialize(
+                                    node,
+                                    jacksonTypeRef<NewFloatingPackageWithAllocationPrice>()
+                                ) {
+                                    it.validate()
+                                }
+                                ?.let {
+                                    return Price(
+                                        newFloatingPackageWithAllocationPrice = it,
+                                        _json = json
+                                    )
+                                }
                         }
-                        ?.let {
-                            return Price(newFloatingThresholdTotalAmountPrice = it, _json = json)
+                        "tiered_package_with_minimum" -> {
+                            tryDeserialize(
+                                    node,
+                                    jacksonTypeRef<NewFloatingTieredPackageWithMinimumPrice>()
+                                ) {
+                                    it.validate()
+                                }
+                                ?.let {
+                                    return Price(
+                                        newFloatingTieredPackageWithMinimumPrice = it,
+                                        _json = json
+                                    )
+                                }
                         }
-                    tryDeserialize(node, jacksonTypeRef<NewFloatingTieredPackagePrice>()) {
-                            it.validate()
+                        "unit_with_percent" -> {
+                            tryDeserialize(
+                                    node,
+                                    jacksonTypeRef<NewFloatingUnitWithPercentPrice>()
+                                ) {
+                                    it.validate()
+                                }
+                                ?.let {
+                                    return Price(newFloatingUnitWithPercentPrice = it, _json = json)
+                                }
                         }
-                        ?.let {
-                            return Price(newFloatingTieredPackagePrice = it, _json = json)
+                        "tiered_with_proration" -> {
+                            tryDeserialize(
+                                    node,
+                                    jacksonTypeRef<NewFloatingTieredWithProrationPrice>()
+                                ) {
+                                    it.validate()
+                                }
+                                ?.let {
+                                    return Price(
+                                        newFloatingTieredWithProrationPrice = it,
+                                        _json = json
+                                    )
+                                }
                         }
-                    tryDeserialize(node, jacksonTypeRef<NewFloatingGroupedTieredPrice>()) {
-                            it.validate()
+                        "unit_with_proration" -> {
+                            tryDeserialize(
+                                    node,
+                                    jacksonTypeRef<NewFloatingUnitWithProrationPrice>()
+                                ) {
+                                    it.validate()
+                                }
+                                ?.let {
+                                    return Price(
+                                        newFloatingUnitWithProrationPrice = it,
+                                        _json = json
+                                    )
+                                }
                         }
-                        ?.let {
-                            return Price(newFloatingGroupedTieredPrice = it, _json = json)
+                        "grouped_allocation" -> {
+                            tryDeserialize(
+                                    node,
+                                    jacksonTypeRef<NewFloatingGroupedAllocationPrice>()
+                                ) {
+                                    it.validate()
+                                }
+                                ?.let {
+                                    return Price(
+                                        newFloatingGroupedAllocationPrice = it,
+                                        _json = json
+                                    )
+                                }
                         }
-                    tryDeserialize(node, jacksonTypeRef<NewFloatingTieredWithMinimumPrice>()) {
-                            it.validate()
+                        "grouped_with_prorated_minimum" -> {
+                            tryDeserialize(
+                                    node,
+                                    jacksonTypeRef<NewFloatingGroupedWithProratedMinimumPrice>()
+                                ) {
+                                    it.validate()
+                                }
+                                ?.let {
+                                    return Price(
+                                        newFloatingGroupedWithProratedMinimumPrice = it,
+                                        _json = json
+                                    )
+                                }
                         }
-                        ?.let {
-                            return Price(newFloatingTieredWithMinimumPrice = it, _json = json)
+                        "grouped_with_metered_minimum" -> {
+                            tryDeserialize(
+                                    node,
+                                    jacksonTypeRef<NewFloatingGroupedWithMeteredMinimumPrice>()
+                                ) {
+                                    it.validate()
+                                }
+                                ?.let {
+                                    return Price(
+                                        newFloatingGroupedWithMeteredMinimumPrice = it,
+                                        _json = json
+                                    )
+                                }
                         }
-                    tryDeserialize(node, jacksonTypeRef<NewFloatingPackageWithAllocationPrice>()) {
-                            it.validate()
+                        "bulk_with_proration" -> {
+                            tryDeserialize(
+                                    node,
+                                    jacksonTypeRef<NewFloatingBulkWithProrationPrice>()
+                                ) {
+                                    it.validate()
+                                }
+                                ?.let {
+                                    return Price(
+                                        newFloatingBulkWithProrationPrice = it,
+                                        _json = json
+                                    )
+                                }
                         }
-                        ?.let {
-                            return Price(newFloatingPackageWithAllocationPrice = it, _json = json)
-                        }
-                    tryDeserialize(
-                            node,
-                            jacksonTypeRef<NewFloatingTieredPackageWithMinimumPrice>()
-                        ) {
-                            it.validate()
-                        }
-                        ?.let {
-                            return Price(
-                                newFloatingTieredPackageWithMinimumPrice = it,
-                                _json = json
-                            )
-                        }
-                    tryDeserialize(node, jacksonTypeRef<NewFloatingUnitWithPercentPrice>()) {
-                            it.validate()
-                        }
-                        ?.let {
-                            return Price(newFloatingUnitWithPercentPrice = it, _json = json)
-                        }
-                    tryDeserialize(node, jacksonTypeRef<NewFloatingTieredWithProrationPrice>()) {
-                            it.validate()
-                        }
-                        ?.let {
-                            return Price(newFloatingTieredWithProrationPrice = it, _json = json)
-                        }
-                    tryDeserialize(node, jacksonTypeRef<NewFloatingUnitWithProrationPrice>()) {
-                            it.validate()
-                        }
-                        ?.let {
-                            return Price(newFloatingUnitWithProrationPrice = it, _json = json)
-                        }
-                    tryDeserialize(node, jacksonTypeRef<NewFloatingGroupedAllocationPrice>()) {
-                            it.validate()
-                        }
-                        ?.let {
-                            return Price(newFloatingGroupedAllocationPrice = it, _json = json)
-                        }
-                    tryDeserialize(
-                            node,
-                            jacksonTypeRef<NewFloatingGroupedWithProratedMinimumPrice>()
-                        ) {
-                            it.validate()
-                        }
-                        ?.let {
-                            return Price(
-                                newFloatingGroupedWithProratedMinimumPrice = it,
-                                _json = json
-                            )
-                        }
-                    tryDeserialize(
-                            node,
-                            jacksonTypeRef<NewFloatingGroupedWithMeteredMinimumPrice>()
-                        ) {
-                            it.validate()
-                        }
-                        ?.let {
-                            return Price(
-                                newFloatingGroupedWithMeteredMinimumPrice = it,
-                                _json = json
-                            )
-                        }
-                    tryDeserialize(node, jacksonTypeRef<NewFloatingBulkWithProrationPrice>()) {
-                            it.validate()
-                        }
-                        ?.let {
-                            return Price(newFloatingBulkWithProrationPrice = it, _json = json)
-                        }
+                    }
 
                     return Price(_json = json)
                 }
@@ -29583,22 +29710,38 @@ constructor(
 
                 override fun ObjectCodec.deserialize(node: JsonNode): Adjustment {
                     val json = JsonValue.fromJsonNode(node)
-                    tryDeserialize(node, jacksonTypeRef<NewPercentageDiscount>()) { it.validate() }
-                        ?.let {
-                            return Adjustment(newPercentageDiscount = it, _json = json)
+                    val adjustmentType = json.asObject()?.get("adjustment_type")?.asString()
+
+                    when (adjustmentType) {
+                        "percentage_discount" -> {
+                            tryDeserialize(node, jacksonTypeRef<NewPercentageDiscount>()) {
+                                    it.validate()
+                                }
+                                ?.let {
+                                    return Adjustment(newPercentageDiscount = it, _json = json)
+                                }
                         }
-                    tryDeserialize(node, jacksonTypeRef<NewAmountDiscount>()) { it.validate() }
-                        ?.let {
-                            return Adjustment(newAmountDiscount = it, _json = json)
+                        "amount_discount" -> {
+                            tryDeserialize(node, jacksonTypeRef<NewAmountDiscount>()) {
+                                    it.validate()
+                                }
+                                ?.let {
+                                    return Adjustment(newAmountDiscount = it, _json = json)
+                                }
                         }
-                    tryDeserialize(node, jacksonTypeRef<NewMinimum>()) { it.validate() }
-                        ?.let {
-                            return Adjustment(newMinimum = it, _json = json)
+                        "minimum" -> {
+                            tryDeserialize(node, jacksonTypeRef<NewMinimum>()) { it.validate() }
+                                ?.let {
+                                    return Adjustment(newMinimum = it, _json = json)
+                                }
                         }
-                    tryDeserialize(node, jacksonTypeRef<NewMaximum>()) { it.validate() }
-                        ?.let {
-                            return Adjustment(newMaximum = it, _json = json)
+                        "maximum" -> {
+                            tryDeserialize(node, jacksonTypeRef<NewMaximum>()) { it.validate() }
+                                ?.let {
+                                    return Adjustment(newMaximum = it, _json = json)
+                                }
                         }
+                    }
 
                     return Adjustment(_json = json)
                 }
@@ -30505,6 +30648,7 @@ constructor(
 
                 override fun ObjectCodec.deserialize(node: JsonNode): StartDate {
                     val json = JsonValue.fromJsonNode(node)
+
                     tryDeserialize(node, jacksonTypeRef<OffsetDateTime>())?.let {
                         return StartDate(dateTime = it, _json = json)
                     }
@@ -30625,6 +30769,7 @@ constructor(
 
                 override fun ObjectCodec.deserialize(node: JsonNode): EndDate {
                     val json = JsonValue.fromJsonNode(node)
+
                     tryDeserialize(node, jacksonTypeRef<OffsetDateTime>())?.let {
                         return EndDate(dateTime = it, _json = json)
                     }
@@ -30904,6 +31049,7 @@ constructor(
 
                 override fun ObjectCodec.deserialize(node: JsonNode): EndDate {
                     val json = JsonValue.fromJsonNode(node)
+
                     tryDeserialize(node, jacksonTypeRef<OffsetDateTime>())?.let {
                         return EndDate(dateTime = it, _json = json)
                     }
@@ -31118,6 +31264,7 @@ constructor(
 
                 override fun ObjectCodec.deserialize(node: JsonNode): StartDate {
                     val json = JsonValue.fromJsonNode(node)
+
                     tryDeserialize(node, jacksonTypeRef<OffsetDateTime>())?.let {
                         return StartDate(dateTime = it, _json = json)
                     }
@@ -31355,6 +31502,7 @@ constructor(
 
                 override fun ObjectCodec.deserialize(node: JsonNode): EndDate {
                     val json = JsonValue.fromJsonNode(node)
+
                     tryDeserialize(node, jacksonTypeRef<OffsetDateTime>())?.let {
                         return EndDate(dateTime = it, _json = json)
                     }
@@ -31475,6 +31623,7 @@ constructor(
 
                 override fun ObjectCodec.deserialize(node: JsonNode): StartDate {
                     val json = JsonValue.fromJsonNode(node)
+
                     tryDeserialize(node, jacksonTypeRef<OffsetDateTime>())?.let {
                         return StartDate(dateTime = it, _json = json)
                     }

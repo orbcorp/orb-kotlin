@@ -715,83 +715,179 @@ constructor(
 
             override fun ObjectCodec.deserialize(node: JsonNode): PriceCreateBody {
                 val json = JsonValue.fromJsonNode(node)
-                tryDeserialize(node, jacksonTypeRef<NewFloatingUnitPrice>())?.let {
-                    return PriceCreateBody(newFloatingUnitPrice = it, _json = json)
-                }
-                tryDeserialize(node, jacksonTypeRef<NewFloatingPackagePrice>())?.let {
-                    return PriceCreateBody(newFloatingPackagePrice = it, _json = json)
-                }
-                tryDeserialize(node, jacksonTypeRef<NewFloatingMatrixPrice>())?.let {
-                    return PriceCreateBody(newFloatingMatrixPrice = it, _json = json)
-                }
-                tryDeserialize(node, jacksonTypeRef<NewFloatingMatrixWithAllocationPrice>())?.let {
-                    return PriceCreateBody(newFloatingMatrixWithAllocationPrice = it, _json = json)
-                }
-                tryDeserialize(node, jacksonTypeRef<NewFloatingTieredPrice>())?.let {
-                    return PriceCreateBody(newFloatingTieredPrice = it, _json = json)
-                }
-                tryDeserialize(node, jacksonTypeRef<NewFloatingTieredBpsPrice>())?.let {
-                    return PriceCreateBody(newFloatingTieredBpsPrice = it, _json = json)
-                }
-                tryDeserialize(node, jacksonTypeRef<NewFloatingBpsPrice>())?.let {
-                    return PriceCreateBody(newFloatingBpsPrice = it, _json = json)
-                }
-                tryDeserialize(node, jacksonTypeRef<NewFloatingBulkBpsPrice>())?.let {
-                    return PriceCreateBody(newFloatingBulkBpsPrice = it, _json = json)
-                }
-                tryDeserialize(node, jacksonTypeRef<NewFloatingBulkPrice>())?.let {
-                    return PriceCreateBody(newFloatingBulkPrice = it, _json = json)
-                }
-                tryDeserialize(node, jacksonTypeRef<NewFloatingThresholdTotalAmountPrice>())?.let {
-                    return PriceCreateBody(newFloatingThresholdTotalAmountPrice = it, _json = json)
-                }
-                tryDeserialize(node, jacksonTypeRef<NewFloatingTieredPackagePrice>())?.let {
-                    return PriceCreateBody(newFloatingTieredPackagePrice = it, _json = json)
-                }
-                tryDeserialize(node, jacksonTypeRef<NewFloatingGroupedTieredPrice>())?.let {
-                    return PriceCreateBody(newFloatingGroupedTieredPrice = it, _json = json)
-                }
-                tryDeserialize(node, jacksonTypeRef<NewFloatingTieredWithMinimumPrice>())?.let {
-                    return PriceCreateBody(newFloatingTieredWithMinimumPrice = it, _json = json)
-                }
-                tryDeserialize(node, jacksonTypeRef<NewFloatingPackageWithAllocationPrice>())?.let {
-                    return PriceCreateBody(newFloatingPackageWithAllocationPrice = it, _json = json)
-                }
-                tryDeserialize(node, jacksonTypeRef<NewFloatingTieredPackageWithMinimumPrice>())
-                    ?.let {
-                        return PriceCreateBody(
-                            newFloatingTieredPackageWithMinimumPrice = it,
-                            _json = json
-                        )
+                val modelType = json.asObject()?.get("model_type")?.asString()
+
+                when (modelType) {
+                    "unit" -> {
+                        tryDeserialize(node, jacksonTypeRef<NewFloatingUnitPrice>())?.let {
+                            return PriceCreateBody(newFloatingUnitPrice = it, _json = json)
+                        }
                     }
-                tryDeserialize(node, jacksonTypeRef<NewFloatingUnitWithPercentPrice>())?.let {
-                    return PriceCreateBody(newFloatingUnitWithPercentPrice = it, _json = json)
-                }
-                tryDeserialize(node, jacksonTypeRef<NewFloatingTieredWithProrationPrice>())?.let {
-                    return PriceCreateBody(newFloatingTieredWithProrationPrice = it, _json = json)
-                }
-                tryDeserialize(node, jacksonTypeRef<NewFloatingUnitWithProrationPrice>())?.let {
-                    return PriceCreateBody(newFloatingUnitWithProrationPrice = it, _json = json)
-                }
-                tryDeserialize(node, jacksonTypeRef<NewFloatingGroupedAllocationPrice>())?.let {
-                    return PriceCreateBody(newFloatingGroupedAllocationPrice = it, _json = json)
-                }
-                tryDeserialize(node, jacksonTypeRef<NewFloatingGroupedWithProratedMinimumPrice>())
-                    ?.let {
-                        return PriceCreateBody(
-                            newFloatingGroupedWithProratedMinimumPrice = it,
-                            _json = json
-                        )
+                    "package" -> {
+                        tryDeserialize(node, jacksonTypeRef<NewFloatingPackagePrice>())?.let {
+                            return PriceCreateBody(newFloatingPackagePrice = it, _json = json)
+                        }
                     }
-                tryDeserialize(node, jacksonTypeRef<NewFloatingGroupedWithMeteredMinimumPrice>())
-                    ?.let {
-                        return PriceCreateBody(
-                            newFloatingGroupedWithMeteredMinimumPrice = it,
-                            _json = json
-                        )
+                    "matrix" -> {
+                        tryDeserialize(node, jacksonTypeRef<NewFloatingMatrixPrice>())?.let {
+                            return PriceCreateBody(newFloatingMatrixPrice = it, _json = json)
+                        }
                     }
-                tryDeserialize(node, jacksonTypeRef<NewFloatingBulkWithProrationPrice>())?.let {
-                    return PriceCreateBody(newFloatingBulkWithProrationPrice = it, _json = json)
+                    "matrix_with_allocation" -> {
+                        tryDeserialize(node, jacksonTypeRef<NewFloatingMatrixWithAllocationPrice>())
+                            ?.let {
+                                return PriceCreateBody(
+                                    newFloatingMatrixWithAllocationPrice = it,
+                                    _json = json
+                                )
+                            }
+                    }
+                    "tiered" -> {
+                        tryDeserialize(node, jacksonTypeRef<NewFloatingTieredPrice>())?.let {
+                            return PriceCreateBody(newFloatingTieredPrice = it, _json = json)
+                        }
+                    }
+                    "tiered_bps" -> {
+                        tryDeserialize(node, jacksonTypeRef<NewFloatingTieredBpsPrice>())?.let {
+                            return PriceCreateBody(newFloatingTieredBpsPrice = it, _json = json)
+                        }
+                    }
+                    "bps" -> {
+                        tryDeserialize(node, jacksonTypeRef<NewFloatingBpsPrice>())?.let {
+                            return PriceCreateBody(newFloatingBpsPrice = it, _json = json)
+                        }
+                    }
+                    "bulk_bps" -> {
+                        tryDeserialize(node, jacksonTypeRef<NewFloatingBulkBpsPrice>())?.let {
+                            return PriceCreateBody(newFloatingBulkBpsPrice = it, _json = json)
+                        }
+                    }
+                    "bulk" -> {
+                        tryDeserialize(node, jacksonTypeRef<NewFloatingBulkPrice>())?.let {
+                            return PriceCreateBody(newFloatingBulkPrice = it, _json = json)
+                        }
+                    }
+                    "threshold_total_amount" -> {
+                        tryDeserialize(node, jacksonTypeRef<NewFloatingThresholdTotalAmountPrice>())
+                            ?.let {
+                                return PriceCreateBody(
+                                    newFloatingThresholdTotalAmountPrice = it,
+                                    _json = json
+                                )
+                            }
+                    }
+                    "tiered_package" -> {
+                        tryDeserialize(node, jacksonTypeRef<NewFloatingTieredPackagePrice>())?.let {
+                            return PriceCreateBody(newFloatingTieredPackagePrice = it, _json = json)
+                        }
+                    }
+                    "grouped_tiered" -> {
+                        tryDeserialize(node, jacksonTypeRef<NewFloatingGroupedTieredPrice>())?.let {
+                            return PriceCreateBody(newFloatingGroupedTieredPrice = it, _json = json)
+                        }
+                    }
+                    "tiered_with_minimum" -> {
+                        tryDeserialize(node, jacksonTypeRef<NewFloatingTieredWithMinimumPrice>())
+                            ?.let {
+                                return PriceCreateBody(
+                                    newFloatingTieredWithMinimumPrice = it,
+                                    _json = json
+                                )
+                            }
+                    }
+                    "package_with_allocation" -> {
+                        tryDeserialize(
+                                node,
+                                jacksonTypeRef<NewFloatingPackageWithAllocationPrice>()
+                            )
+                            ?.let {
+                                return PriceCreateBody(
+                                    newFloatingPackageWithAllocationPrice = it,
+                                    _json = json
+                                )
+                            }
+                    }
+                    "tiered_package_with_minimum" -> {
+                        tryDeserialize(
+                                node,
+                                jacksonTypeRef<NewFloatingTieredPackageWithMinimumPrice>()
+                            )
+                            ?.let {
+                                return PriceCreateBody(
+                                    newFloatingTieredPackageWithMinimumPrice = it,
+                                    _json = json
+                                )
+                            }
+                    }
+                    "unit_with_percent" -> {
+                        tryDeserialize(node, jacksonTypeRef<NewFloatingUnitWithPercentPrice>())
+                            ?.let {
+                                return PriceCreateBody(
+                                    newFloatingUnitWithPercentPrice = it,
+                                    _json = json
+                                )
+                            }
+                    }
+                    "tiered_with_proration" -> {
+                        tryDeserialize(node, jacksonTypeRef<NewFloatingTieredWithProrationPrice>())
+                            ?.let {
+                                return PriceCreateBody(
+                                    newFloatingTieredWithProrationPrice = it,
+                                    _json = json
+                                )
+                            }
+                    }
+                    "unit_with_proration" -> {
+                        tryDeserialize(node, jacksonTypeRef<NewFloatingUnitWithProrationPrice>())
+                            ?.let {
+                                return PriceCreateBody(
+                                    newFloatingUnitWithProrationPrice = it,
+                                    _json = json
+                                )
+                            }
+                    }
+                    "grouped_allocation" -> {
+                        tryDeserialize(node, jacksonTypeRef<NewFloatingGroupedAllocationPrice>())
+                            ?.let {
+                                return PriceCreateBody(
+                                    newFloatingGroupedAllocationPrice = it,
+                                    _json = json
+                                )
+                            }
+                    }
+                    "grouped_with_prorated_minimum" -> {
+                        tryDeserialize(
+                                node,
+                                jacksonTypeRef<NewFloatingGroupedWithProratedMinimumPrice>()
+                            )
+                            ?.let {
+                                return PriceCreateBody(
+                                    newFloatingGroupedWithProratedMinimumPrice = it,
+                                    _json = json
+                                )
+                            }
+                    }
+                    "grouped_with_metered_minimum" -> {
+                        tryDeserialize(
+                                node,
+                                jacksonTypeRef<NewFloatingGroupedWithMeteredMinimumPrice>()
+                            )
+                            ?.let {
+                                return PriceCreateBody(
+                                    newFloatingGroupedWithMeteredMinimumPrice = it,
+                                    _json = json
+                                )
+                            }
+                    }
+                    "bulk_with_proration" -> {
+                        tryDeserialize(node, jacksonTypeRef<NewFloatingBulkWithProrationPrice>())
+                            ?.let {
+                                return PriceCreateBody(
+                                    newFloatingBulkWithProrationPrice = it,
+                                    _json = json
+                                )
+                            }
+                    }
                 }
 
                 return PriceCreateBody(_json = json)
