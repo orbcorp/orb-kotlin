@@ -1686,18 +1686,28 @@ private constructor(
 
             override fun ObjectCodec.deserialize(node: JsonNode): SubLineItem {
                 val json = JsonValue.fromJsonNode(node)
-                tryDeserialize(node, jacksonTypeRef<MatrixSubLineItem>()) { it.validate() }
-                    ?.let {
-                        return SubLineItem(matrixSubLineItem = it, _json = json)
+                val type = json.asObject()?.get("type")?.asString()
+
+                when (type) {
+                    "matrix" -> {
+                        tryDeserialize(node, jacksonTypeRef<MatrixSubLineItem>()) { it.validate() }
+                            ?.let {
+                                return SubLineItem(matrixSubLineItem = it, _json = json)
+                            }
                     }
-                tryDeserialize(node, jacksonTypeRef<TierSubLineItem>()) { it.validate() }
-                    ?.let {
-                        return SubLineItem(tierSubLineItem = it, _json = json)
+                    "tier" -> {
+                        tryDeserialize(node, jacksonTypeRef<TierSubLineItem>()) { it.validate() }
+                            ?.let {
+                                return SubLineItem(tierSubLineItem = it, _json = json)
+                            }
                     }
-                tryDeserialize(node, jacksonTypeRef<OtherSubLineItem>()) { it.validate() }
-                    ?.let {
-                        return SubLineItem(otherSubLineItem = it, _json = json)
+                    "'null'" -> {
+                        tryDeserialize(node, jacksonTypeRef<OtherSubLineItem>()) { it.validate() }
+                            ?.let {
+                                return SubLineItem(otherSubLineItem = it, _json = json)
+                            }
                     }
+                }
 
                 return SubLineItem(_json = json)
             }

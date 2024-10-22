@@ -124,6 +124,7 @@ private constructor(
 
         override fun ObjectCodec.deserialize(node: JsonNode): SubscriptionUsage {
             val json = JsonValue.fromJsonNode(node)
+
             tryDeserialize(node, jacksonTypeRef<UngroupedSubscriptionUsage>()) { it.validate() }
                 ?.let {
                     return SubscriptionUsage(ungroupedSubscriptionUsage = it, _json = json)

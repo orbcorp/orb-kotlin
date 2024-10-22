@@ -230,43 +230,79 @@ private constructor(
 
         override fun ObjectCodec.deserialize(node: JsonNode): CustomerCreditLedgerListResponse {
             val json = JsonValue.fromJsonNode(node)
-            tryDeserialize(node, jacksonTypeRef<IncrementLedgerEntry>()) { it.validate() }
-                ?.let {
-                    return CustomerCreditLedgerListResponse(incrementLedgerEntry = it, _json = json)
+            val entryType = json.asObject()?.get("entry_type")?.asString()
+
+            when (entryType) {
+                "increment" -> {
+                    tryDeserialize(node, jacksonTypeRef<IncrementLedgerEntry>()) { it.validate() }
+                        ?.let {
+                            return CustomerCreditLedgerListResponse(
+                                incrementLedgerEntry = it,
+                                _json = json
+                            )
+                        }
                 }
-            tryDeserialize(node, jacksonTypeRef<DecrementLedgerEntry>()) { it.validate() }
-                ?.let {
-                    return CustomerCreditLedgerListResponse(decrementLedgerEntry = it, _json = json)
+                "decrement" -> {
+                    tryDeserialize(node, jacksonTypeRef<DecrementLedgerEntry>()) { it.validate() }
+                        ?.let {
+                            return CustomerCreditLedgerListResponse(
+                                decrementLedgerEntry = it,
+                                _json = json
+                            )
+                        }
                 }
-            tryDeserialize(node, jacksonTypeRef<ExpirationChangeLedgerEntry>()) { it.validate() }
-                ?.let {
-                    return CustomerCreditLedgerListResponse(
-                        expirationChangeLedgerEntry = it,
-                        _json = json
-                    )
+                "expiration_change" -> {
+                    tryDeserialize(node, jacksonTypeRef<ExpirationChangeLedgerEntry>()) {
+                            it.validate()
+                        }
+                        ?.let {
+                            return CustomerCreditLedgerListResponse(
+                                expirationChangeLedgerEntry = it,
+                                _json = json
+                            )
+                        }
                 }
-            tryDeserialize(node, jacksonTypeRef<CreditBlockExpiryLedgerEntry>()) { it.validate() }
-                ?.let {
-                    return CustomerCreditLedgerListResponse(
-                        creditBlockExpiryLedgerEntry = it,
-                        _json = json
-                    )
+                "credit_block_expiry" -> {
+                    tryDeserialize(node, jacksonTypeRef<CreditBlockExpiryLedgerEntry>()) {
+                            it.validate()
+                        }
+                        ?.let {
+                            return CustomerCreditLedgerListResponse(
+                                creditBlockExpiryLedgerEntry = it,
+                                _json = json
+                            )
+                        }
                 }
-            tryDeserialize(node, jacksonTypeRef<VoidLedgerEntry>()) { it.validate() }
-                ?.let {
-                    return CustomerCreditLedgerListResponse(voidLedgerEntry = it, _json = json)
+                "void" -> {
+                    tryDeserialize(node, jacksonTypeRef<VoidLedgerEntry>()) { it.validate() }
+                        ?.let {
+                            return CustomerCreditLedgerListResponse(
+                                voidLedgerEntry = it,
+                                _json = json
+                            )
+                        }
                 }
-            tryDeserialize(node, jacksonTypeRef<VoidInitiatedLedgerEntry>()) { it.validate() }
-                ?.let {
-                    return CustomerCreditLedgerListResponse(
-                        voidInitiatedLedgerEntry = it,
-                        _json = json
-                    )
+                "void_initiated" -> {
+                    tryDeserialize(node, jacksonTypeRef<VoidInitiatedLedgerEntry>()) {
+                            it.validate()
+                        }
+                        ?.let {
+                            return CustomerCreditLedgerListResponse(
+                                voidInitiatedLedgerEntry = it,
+                                _json = json
+                            )
+                        }
                 }
-            tryDeserialize(node, jacksonTypeRef<AmendmentLedgerEntry>()) { it.validate() }
-                ?.let {
-                    return CustomerCreditLedgerListResponse(amendmentLedgerEntry = it, _json = json)
+                "amendment" -> {
+                    tryDeserialize(node, jacksonTypeRef<AmendmentLedgerEntry>()) { it.validate() }
+                        ?.let {
+                            return CustomerCreditLedgerListResponse(
+                                amendmentLedgerEntry = it,
+                                _json = json
+                            )
+                        }
                 }
+            }
 
             return CustomerCreditLedgerListResponse(_json = json)
         }
