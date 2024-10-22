@@ -2,6 +2,7 @@
 
 package com.withorb.api.models
 
+import com.withorb.api.core.JsonNull
 import java.time.OffsetDateTime
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
@@ -84,16 +85,7 @@ class InvoiceTest {
                         .value("value")
                         .build()
                 )
-                .discount(
-                    InvoiceLevelDiscount.ofPercentageDiscount(
-                        PercentageDiscount.builder()
-                            .appliesToPriceIds(listOf("string"))
-                            .discountType(PercentageDiscount.DiscountType.PERCENTAGE)
-                            .percentageDiscount(1.0)
-                            .reason("reason")
-                            .build()
-                    )
-                )
+                .discount(JsonNull.of())
                 .discounts(
                     listOf(
                         InvoiceLevelDiscount.ofPercentageDiscount(
@@ -389,17 +381,7 @@ class InvoiceTest {
                     .value("value")
                     .build()
             )
-        assertThat(invoice.discount())
-            .isEqualTo(
-                InvoiceLevelDiscount.ofPercentageDiscount(
-                    PercentageDiscount.builder()
-                        .appliesToPriceIds(listOf("string"))
-                        .discountType(PercentageDiscount.DiscountType.PERCENTAGE)
-                        .percentageDiscount(1.0)
-                        .reason("reason")
-                        .build()
-                )
-            )
+        assertThat(invoice._discount()).isEqualTo(JsonNull.of())
         assertThat(invoice.discounts())
             .containsExactly(
                 InvoiceLevelDiscount.ofPercentageDiscount(

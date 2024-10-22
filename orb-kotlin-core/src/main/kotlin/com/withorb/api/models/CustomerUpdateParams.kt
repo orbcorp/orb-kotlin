@@ -1730,14 +1730,29 @@ constructor(
 
             override fun ObjectCodec.deserialize(node: JsonNode): TaxConfiguration {
                 val json = JsonValue.fromJsonNode(node)
-                tryDeserialize(node, jacksonTypeRef<NewAvalaraTaxConfiguration>()) { it.validate() }
-                    ?.let {
-                        return TaxConfiguration(newAvalaraTaxConfiguration = it, _json = json)
+                val taxProvider = json.asObject()?.get("tax_provider")?.asString()
+
+                when (taxProvider) {
+                    "avalara" -> {
+                        tryDeserialize(node, jacksonTypeRef<NewAvalaraTaxConfiguration>()) {
+                                it.validate()
+                            }
+                            ?.let {
+                                return TaxConfiguration(
+                                    newAvalaraTaxConfiguration = it,
+                                    _json = json
+                                )
+                            }
                     }
-                tryDeserialize(node, jacksonTypeRef<NewTaxJarConfiguration>()) { it.validate() }
-                    ?.let {
-                        return TaxConfiguration(newTaxJarConfiguration = it, _json = json)
+                    "taxjar" -> {
+                        tryDeserialize(node, jacksonTypeRef<NewTaxJarConfiguration>()) {
+                                it.validate()
+                            }
+                            ?.let {
+                                return TaxConfiguration(newTaxJarConfiguration = it, _json = json)
+                            }
                     }
+                }
 
                 return TaxConfiguration(_json = json)
             }

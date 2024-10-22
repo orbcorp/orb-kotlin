@@ -1118,32 +1118,53 @@ private constructor(
 
                 override fun ObjectCodec.deserialize(node: JsonNode): Adjustment {
                     val json = JsonValue.fromJsonNode(node)
-                    tryDeserialize(node, jacksonTypeRef<AmountDiscountAdjustment>()) {
-                            it.validate()
+                    val adjustmentType = json.asObject()?.get("adjustment_type")?.asString()
+
+                    when (adjustmentType) {
+                        "amount_discount" -> {
+                            tryDeserialize(node, jacksonTypeRef<AmountDiscountAdjustment>()) {
+                                    it.validate()
+                                }
+                                ?.let {
+                                    return Adjustment(amountDiscountAdjustment = it, _json = json)
+                                }
                         }
-                        ?.let {
-                            return Adjustment(amountDiscountAdjustment = it, _json = json)
+                        "percentage_discount" -> {
+                            tryDeserialize(node, jacksonTypeRef<PercentageDiscountAdjustment>()) {
+                                    it.validate()
+                                }
+                                ?.let {
+                                    return Adjustment(
+                                        percentageDiscountAdjustment = it,
+                                        _json = json
+                                    )
+                                }
                         }
-                    tryDeserialize(node, jacksonTypeRef<PercentageDiscountAdjustment>()) {
-                            it.validate()
+                        "usage_discount" -> {
+                            tryDeserialize(node, jacksonTypeRef<UsageDiscountAdjustment>()) {
+                                    it.validate()
+                                }
+                                ?.let {
+                                    return Adjustment(usageDiscountAdjustment = it, _json = json)
+                                }
                         }
-                        ?.let {
-                            return Adjustment(percentageDiscountAdjustment = it, _json = json)
+                        "minimum" -> {
+                            tryDeserialize(node, jacksonTypeRef<MinimumAdjustment>()) {
+                                    it.validate()
+                                }
+                                ?.let {
+                                    return Adjustment(minimumAdjustment = it, _json = json)
+                                }
                         }
-                    tryDeserialize(node, jacksonTypeRef<UsageDiscountAdjustment>()) {
-                            it.validate()
+                        "maximum" -> {
+                            tryDeserialize(node, jacksonTypeRef<MaximumAdjustment>()) {
+                                    it.validate()
+                                }
+                                ?.let {
+                                    return Adjustment(maximumAdjustment = it, _json = json)
+                                }
                         }
-                        ?.let {
-                            return Adjustment(usageDiscountAdjustment = it, _json = json)
-                        }
-                    tryDeserialize(node, jacksonTypeRef<MinimumAdjustment>()) { it.validate() }
-                        ?.let {
-                            return Adjustment(minimumAdjustment = it, _json = json)
-                        }
-                    tryDeserialize(node, jacksonTypeRef<MaximumAdjustment>()) { it.validate() }
-                        ?.let {
-                            return Adjustment(maximumAdjustment = it, _json = json)
-                        }
+                    }
 
                     return Adjustment(_json = json)
                 }
@@ -2649,18 +2670,37 @@ private constructor(
 
             override fun ObjectCodec.deserialize(node: JsonNode): DiscountInterval {
                 val json = JsonValue.fromJsonNode(node)
-                tryDeserialize(node, jacksonTypeRef<AmountDiscountInterval>()) { it.validate() }
-                    ?.let {
-                        return DiscountInterval(amountDiscountInterval = it, _json = json)
+                val discountType = json.asObject()?.get("discount_type")?.asString()
+
+                when (discountType) {
+                    "amount" -> {
+                        tryDeserialize(node, jacksonTypeRef<AmountDiscountInterval>()) {
+                                it.validate()
+                            }
+                            ?.let {
+                                return DiscountInterval(amountDiscountInterval = it, _json = json)
+                            }
                     }
-                tryDeserialize(node, jacksonTypeRef<PercentageDiscountInterval>()) { it.validate() }
-                    ?.let {
-                        return DiscountInterval(percentageDiscountInterval = it, _json = json)
+                    "percentage" -> {
+                        tryDeserialize(node, jacksonTypeRef<PercentageDiscountInterval>()) {
+                                it.validate()
+                            }
+                            ?.let {
+                                return DiscountInterval(
+                                    percentageDiscountInterval = it,
+                                    _json = json
+                                )
+                            }
                     }
-                tryDeserialize(node, jacksonTypeRef<UsageDiscountInterval>()) { it.validate() }
-                    ?.let {
-                        return DiscountInterval(usageDiscountInterval = it, _json = json)
+                    "usage" -> {
+                        tryDeserialize(node, jacksonTypeRef<UsageDiscountInterval>()) {
+                                it.validate()
+                            }
+                            ?.let {
+                                return DiscountInterval(usageDiscountInterval = it, _json = json)
+                            }
                     }
+                }
 
                 return DiscountInterval(_json = json)
             }

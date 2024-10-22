@@ -52,7 +52,7 @@ private constructor(
     private val createdAt: JsonField<OffsetDateTime>,
     private val currency: JsonField<String>,
     private val customer: JsonField<Customer>,
-    private val discount: JsonField<InvoiceLevelDiscount>,
+    private val discount: JsonValue,
     private val discounts: JsonField<List<InvoiceLevelDiscount>>,
     private val dueDate: JsonField<OffsetDateTime>,
     private val id: JsonField<String>,
@@ -150,12 +150,6 @@ private constructor(
     fun currency(): String = currency.getRequired("currency")
 
     fun customer(): Customer = customer.getRequired("customer")
-
-    /**
-     * This field is deprecated in favor of `discounts`. If a `discounts` list is provided, the
-     * first discount in the list will be returned. If the list is empty, `None` will be returned.
-     */
-    fun discount(): InvoiceLevelDiscount? = discount.getNullable("discount")
 
     fun discounts(): List<InvoiceLevelDiscount> = discounts.getRequired("discounts")
 
@@ -616,7 +610,6 @@ private constructor(
             createdAt()
             currency()
             customer().validate()
-            discount()
             discounts()
             dueDate()
             id()
@@ -669,7 +662,7 @@ private constructor(
         private var createdAt: JsonField<OffsetDateTime> = JsonMissing.of()
         private var currency: JsonField<String> = JsonMissing.of()
         private var customer: JsonField<Customer> = JsonMissing.of()
-        private var discount: JsonField<InvoiceLevelDiscount> = JsonMissing.of()
+        private var discount: JsonValue = JsonMissing.of()
         private var discounts: JsonField<List<InvoiceLevelDiscount>> = JsonMissing.of()
         private var dueDate: JsonField<OffsetDateTime> = JsonMissing.of()
         private var id: JsonField<String> = JsonMissing.of()
@@ -934,16 +927,9 @@ private constructor(
          * first discount in the list will be returned. If the list is empty, `None` will be
          * returned.
          */
-        fun discount(discount: InvoiceLevelDiscount) = discount(JsonField.of(discount))
-
-        /**
-         * This field is deprecated in favor of `discounts`. If a `discounts` list is provided, the
-         * first discount in the list will be returned. If the list is empty, `None` will be
-         * returned.
-         */
         @JsonProperty("discount")
         @ExcludeMissing
-        fun discount(discount: JsonField<InvoiceLevelDiscount>) = apply { this.discount = discount }
+        fun discount(discount: JsonValue) = apply { this.discount = discount }
 
         fun discounts(discounts: List<InvoiceLevelDiscount>) = discounts(JsonField.of(discounts))
 
@@ -5696,18 +5682,34 @@ private constructor(
 
                 override fun ObjectCodec.deserialize(node: JsonNode): SubLineItem {
                     val json = JsonValue.fromJsonNode(node)
-                    tryDeserialize(node, jacksonTypeRef<MatrixSubLineItem>()) { it.validate() }
-                        ?.let {
-                            return SubLineItem(matrixSubLineItem = it, _json = json)
+                    val type = json.asObject()?.get("type")?.asString()
+
+                    when (type) {
+                        "matrix" -> {
+                            tryDeserialize(node, jacksonTypeRef<MatrixSubLineItem>()) {
+                                    it.validate()
+                                }
+                                ?.let {
+                                    return SubLineItem(matrixSubLineItem = it, _json = json)
+                                }
                         }
-                    tryDeserialize(node, jacksonTypeRef<TierSubLineItem>()) { it.validate() }
-                        ?.let {
-                            return SubLineItem(tierSubLineItem = it, _json = json)
+                        "tier" -> {
+                            tryDeserialize(node, jacksonTypeRef<TierSubLineItem>()) {
+                                    it.validate()
+                                }
+                                ?.let {
+                                    return SubLineItem(tierSubLineItem = it, _json = json)
+                                }
                         }
-                    tryDeserialize(node, jacksonTypeRef<OtherSubLineItem>()) { it.validate() }
-                        ?.let {
-                            return SubLineItem(otherSubLineItem = it, _json = json)
+                        "'null'" -> {
+                            tryDeserialize(node, jacksonTypeRef<OtherSubLineItem>()) {
+                                    it.validate()
+                                }
+                                ?.let {
+                                    return SubLineItem(otherSubLineItem = it, _json = json)
+                                }
                         }
+                    }
 
                     return SubLineItem(_json = json)
                 }

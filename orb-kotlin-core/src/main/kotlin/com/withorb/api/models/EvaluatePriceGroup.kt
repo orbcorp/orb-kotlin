@@ -236,6 +236,7 @@ private constructor(
 
             override fun ObjectCodec.deserialize(node: JsonNode): GroupingValue {
                 val json = JsonValue.fromJsonNode(node)
+
                 tryDeserialize(node, jacksonTypeRef<String>())?.let {
                     return GroupingValue(string = it, _json = json)
                 }

@@ -393,6 +393,7 @@ constructor(
 
             override fun ObjectCodec.deserialize(node: JsonNode): TrialEndDate {
                 val json = JsonValue.fromJsonNode(node)
+
                 tryDeserialize(node, jacksonTypeRef<OffsetDateTime>())?.let {
                     return TrialEndDate(offsetDateTime = it, _json = json)
                 }
