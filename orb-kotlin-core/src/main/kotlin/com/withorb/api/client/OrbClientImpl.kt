@@ -3,6 +3,7 @@
 package com.withorb.api.client
 
 import com.withorb.api.core.ClientOptions
+import com.withorb.api.core.getPackageVersion
 import com.withorb.api.models.*
 import com.withorb.api.services.blocking.*
 
@@ -11,37 +12,52 @@ constructor(
     private val clientOptions: ClientOptions,
 ) : OrbClient {
 
+    private val clientOptionsWithUserAgent =
+        if (clientOptions.headers.containsKey("User-Agent")) clientOptions
+        else
+            clientOptions
+                .toBuilder()
+                .putHeader("User-Agent", "${javaClass.simpleName}/Kotlin ${getPackageVersion()}")
+                .build()
+
+    // Pass the original clientOptions so that this client sets its own User-Agent.
     private val async: OrbClientAsync by lazy { OrbClientAsyncImpl(clientOptions) }
 
-    private val topLevel: TopLevelService by lazy { TopLevelServiceImpl(clientOptions) }
+    private val topLevel: TopLevelService by lazy {
+        TopLevelServiceImpl(clientOptionsWithUserAgent)
+    }
 
-    private val coupons: CouponService by lazy { CouponServiceImpl(clientOptions) }
+    private val coupons: CouponService by lazy { CouponServiceImpl(clientOptionsWithUserAgent) }
 
-    private val creditNotes: CreditNoteService by lazy { CreditNoteServiceImpl(clientOptions) }
+    private val creditNotes: CreditNoteService by lazy {
+        CreditNoteServiceImpl(clientOptionsWithUserAgent)
+    }
 
-    private val customers: CustomerService by lazy { CustomerServiceImpl(clientOptions) }
+    private val customers: CustomerService by lazy {
+        CustomerServiceImpl(clientOptionsWithUserAgent)
+    }
 
-    private val events: EventService by lazy { EventServiceImpl(clientOptions) }
+    private val events: EventService by lazy { EventServiceImpl(clientOptionsWithUserAgent) }
 
     private val invoiceLineItems: InvoiceLineItemService by lazy {
-        InvoiceLineItemServiceImpl(clientOptions)
+        InvoiceLineItemServiceImpl(clientOptionsWithUserAgent)
     }
 
-    private val invoices: InvoiceService by lazy { InvoiceServiceImpl(clientOptions) }
+    private val invoices: InvoiceService by lazy { InvoiceServiceImpl(clientOptionsWithUserAgent) }
 
-    private val items: ItemService by lazy { ItemServiceImpl(clientOptions) }
+    private val items: ItemService by lazy { ItemServiceImpl(clientOptionsWithUserAgent) }
 
-    private val metrics: MetricService by lazy { MetricServiceImpl(clientOptions) }
+    private val metrics: MetricService by lazy { MetricServiceImpl(clientOptionsWithUserAgent) }
 
-    private val plans: PlanService by lazy { PlanServiceImpl(clientOptions) }
+    private val plans: PlanService by lazy { PlanServiceImpl(clientOptionsWithUserAgent) }
 
-    private val prices: PriceService by lazy { PriceServiceImpl(clientOptions) }
+    private val prices: PriceService by lazy { PriceServiceImpl(clientOptionsWithUserAgent) }
 
     private val subscriptions: SubscriptionService by lazy {
-        SubscriptionServiceImpl(clientOptions)
+        SubscriptionServiceImpl(clientOptionsWithUserAgent)
     }
 
-    private val alerts: AlertService by lazy { AlertServiceImpl(clientOptions) }
+    private val alerts: AlertService by lazy { AlertServiceImpl(clientOptionsWithUserAgent) }
 
     override fun async(): OrbClientAsync = async
 
