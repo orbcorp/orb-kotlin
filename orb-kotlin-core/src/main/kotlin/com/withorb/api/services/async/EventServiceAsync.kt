@@ -1,7 +1,5 @@
 // File generated from our OpenAPI spec by Stainless.
 
-@file:Suppress("OVERLOADS_INTERFACE") // See https://youtrack.jetbrains.com/issue/KT-36102
-
 package com.withorb.api.services.async
 
 import com.withorb.api.core.RequestOptions
@@ -14,10 +12,13 @@ import com.withorb.api.models.EventSearchResponse
 import com.withorb.api.models.EventUpdateParams
 import com.withorb.api.models.EventUpdateResponse
 import com.withorb.api.services.async.events.BackfillServiceAsync
+import com.withorb.api.services.async.events.VolumeServiceAsync
 
 interface EventServiceAsync {
 
     fun backfills(): BackfillServiceAsync
+
+    fun volume(): VolumeServiceAsync
 
     /**
      * This endpoint is used to amend a single usage event with a given `event_id`. `event_id`

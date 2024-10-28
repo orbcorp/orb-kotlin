@@ -36,18 +36,11 @@ constructor(
             return true
         }
 
-        return other is PlanExternalPlanIdFetchParams &&
-            this.externalPlanId == other.externalPlanId &&
-            this.additionalQueryParams == other.additionalQueryParams &&
-            this.additionalHeaders == other.additionalHeaders
+        return /* spotless:off */ other is PlanExternalPlanIdFetchParams && this.externalPlanId == other.externalPlanId && this.additionalQueryParams == other.additionalQueryParams && this.additionalHeaders == other.additionalHeaders /* spotless:on */
     }
 
     override fun hashCode(): Int {
-        return Objects.hash(
-            externalPlanId,
-            additionalQueryParams,
-            additionalHeaders,
-        )
+        return /* spotless:off */ Objects.hash(externalPlanId, additionalQueryParams, additionalHeaders) /* spotless:on */
     }
 
     override fun toString() =

@@ -39,7 +39,7 @@ class CustomerUpdateParamsTest {
                     .build()
             )
             .currency("currency")
-            .email("email")
+            .email("dev@stainlessapi.com")
             .emailDelivery(true)
             .externalCustomerId("external_customer_id")
             .metadata(CustomerUpdateParams.Metadata.builder().build())
@@ -58,6 +58,19 @@ class CustomerUpdateParamsTest {
                     .postalCode("postal_code")
                     .state("state")
                     .build()
+            )
+            .taxConfiguration(
+                CustomerUpdateParams.TaxConfiguration.ofNewAvalaraTaxConfiguration(
+                    CustomerUpdateParams.TaxConfiguration.NewAvalaraTaxConfiguration.builder()
+                        .taxExempt(true)
+                        .taxProvider(
+                            CustomerUpdateParams.TaxConfiguration.NewAvalaraTaxConfiguration
+                                .TaxProvider
+                                .AVALARA
+                        )
+                        .taxExemptionCode("tax_exemption_code")
+                        .build()
+                )
             )
             .taxId(
                 CustomerUpdateParams.TaxId.builder()
@@ -101,7 +114,7 @@ class CustomerUpdateParamsTest {
                         .build()
                 )
                 .currency("currency")
-                .email("email")
+                .email("dev@stainlessapi.com")
                 .emailDelivery(true)
                 .externalCustomerId("external_customer_id")
                 .metadata(CustomerUpdateParams.Metadata.builder().build())
@@ -120,6 +133,19 @@ class CustomerUpdateParamsTest {
                         .postalCode("postal_code")
                         .state("state")
                         .build()
+                )
+                .taxConfiguration(
+                    CustomerUpdateParams.TaxConfiguration.ofNewAvalaraTaxConfiguration(
+                        CustomerUpdateParams.TaxConfiguration.NewAvalaraTaxConfiguration.builder()
+                            .taxExempt(true)
+                            .taxProvider(
+                                CustomerUpdateParams.TaxConfiguration.NewAvalaraTaxConfiguration
+                                    .TaxProvider
+                                    .AVALARA
+                            )
+                            .taxExemptionCode("tax_exemption_code")
+                            .build()
+                    )
                 )
                 .taxId(
                     CustomerUpdateParams.TaxId.builder()
@@ -160,7 +186,7 @@ class CustomerUpdateParamsTest {
                     .build()
             )
         assertThat(body.currency()).isEqualTo("currency")
-        assertThat(body.email()).isEqualTo("email")
+        assertThat(body.email()).isEqualTo("dev@stainlessapi.com")
         assertThat(body.emailDelivery()).isEqualTo(true)
         assertThat(body.externalCustomerId()).isEqualTo("external_customer_id")
         assertThat(body.metadata()).isEqualTo(CustomerUpdateParams.Metadata.builder().build())
@@ -180,6 +206,20 @@ class CustomerUpdateParamsTest {
                     .postalCode("postal_code")
                     .state("state")
                     .build()
+            )
+        assertThat(body.taxConfiguration())
+            .isEqualTo(
+                CustomerUpdateParams.TaxConfiguration.ofNewAvalaraTaxConfiguration(
+                    CustomerUpdateParams.TaxConfiguration.NewAvalaraTaxConfiguration.builder()
+                        .taxExempt(true)
+                        .taxProvider(
+                            CustomerUpdateParams.TaxConfiguration.NewAvalaraTaxConfiguration
+                                .TaxProvider
+                                .AVALARA
+                        )
+                        .taxExemptionCode("tax_exemption_code")
+                        .build()
+                )
             )
         assertThat(body.taxId())
             .isEqualTo(

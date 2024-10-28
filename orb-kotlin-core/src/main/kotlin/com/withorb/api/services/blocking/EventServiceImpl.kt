@@ -4,9 +4,13 @@ package com.withorb.api.services.blocking
 
 import com.withorb.api.core.ClientOptions
 import com.withorb.api.core.RequestOptions
+import com.withorb.api.core.handlers.errorHandler
+import com.withorb.api.core.handlers.jsonHandler
+import com.withorb.api.core.handlers.withErrorHandler
 import com.withorb.api.core.http.HttpMethod
 import com.withorb.api.core.http.HttpRequest
 import com.withorb.api.core.http.HttpResponse.Handler
+import com.withorb.api.core.json
 import com.withorb.api.errors.OrbError
 import com.withorb.api.models.EventDeprecateParams
 import com.withorb.api.models.EventDeprecateResponse
@@ -18,10 +22,8 @@ import com.withorb.api.models.EventUpdateParams
 import com.withorb.api.models.EventUpdateResponse
 import com.withorb.api.services.blocking.events.BackfillService
 import com.withorb.api.services.blocking.events.BackfillServiceImpl
-import com.withorb.api.services.errorHandler
-import com.withorb.api.services.json
-import com.withorb.api.services.jsonHandler
-import com.withorb.api.services.withErrorHandler
+import com.withorb.api.services.blocking.events.VolumeService
+import com.withorb.api.services.blocking.events.VolumeServiceImpl
 
 class EventServiceImpl
 constructor(
@@ -32,7 +34,11 @@ constructor(
 
     private val backfills: BackfillService by lazy { BackfillServiceImpl(clientOptions) }
 
+    private val volume: VolumeService by lazy { VolumeServiceImpl(clientOptions) }
+
     override fun backfills(): BackfillService = backfills
+
+    override fun volume(): VolumeService = volume
 
     private val updateHandler: Handler<EventUpdateResponse> =
         jsonHandler<EventUpdateResponse>(clientOptions.jsonMapper).withErrorHandler(errorHandler)

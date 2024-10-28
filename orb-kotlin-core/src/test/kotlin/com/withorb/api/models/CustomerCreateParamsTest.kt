@@ -11,7 +11,7 @@ class CustomerCreateParamsTest {
     @Test
     fun createCustomerCreateParams() {
         CustomerCreateParams.builder()
-            .email("email")
+            .email("dev@stainlessapi.com")
             .name("x")
             .accountingSyncConfiguration(
                 CustomerCreateParams.AccountingSyncConfiguration.builder()
@@ -58,6 +58,19 @@ class CustomerCreateParamsTest {
                     .state("state")
                     .build()
             )
+            .taxConfiguration(
+                CustomerCreateParams.TaxConfiguration.ofNewAvalaraTaxConfiguration(
+                    CustomerCreateParams.TaxConfiguration.NewAvalaraTaxConfiguration.builder()
+                        .taxExempt(true)
+                        .taxProvider(
+                            CustomerCreateParams.TaxConfiguration.NewAvalaraTaxConfiguration
+                                .TaxProvider
+                                .AVALARA
+                        )
+                        .taxExemptionCode("tax_exemption_code")
+                        .build()
+                )
+            )
             .taxId(
                 CustomerCreateParams.TaxId.builder()
                     .country(CustomerCreateParams.TaxId.Country.AD)
@@ -73,7 +86,7 @@ class CustomerCreateParamsTest {
     fun getBody() {
         val params =
             CustomerCreateParams.builder()
-                .email("email")
+                .email("dev@stainlessapi.com")
                 .name("x")
                 .accountingSyncConfiguration(
                     CustomerCreateParams.AccountingSyncConfiguration.builder()
@@ -120,6 +133,19 @@ class CustomerCreateParamsTest {
                         .state("state")
                         .build()
                 )
+                .taxConfiguration(
+                    CustomerCreateParams.TaxConfiguration.ofNewAvalaraTaxConfiguration(
+                        CustomerCreateParams.TaxConfiguration.NewAvalaraTaxConfiguration.builder()
+                            .taxExempt(true)
+                            .taxProvider(
+                                CustomerCreateParams.TaxConfiguration.NewAvalaraTaxConfiguration
+                                    .TaxProvider
+                                    .AVALARA
+                            )
+                            .taxExemptionCode("tax_exemption_code")
+                            .build()
+                    )
+                )
                 .taxId(
                     CustomerCreateParams.TaxId.builder()
                         .country(CustomerCreateParams.TaxId.Country.AD)
@@ -131,7 +157,7 @@ class CustomerCreateParamsTest {
                 .build()
         val body = params.getBody()
         assertThat(body).isNotNull
-        assertThat(body.email()).isEqualTo("email")
+        assertThat(body.email()).isEqualTo("dev@stainlessapi.com")
         assertThat(body.name()).isEqualTo("x")
         assertThat(body.accountingSyncConfiguration())
             .isEqualTo(
@@ -181,6 +207,20 @@ class CustomerCreateParamsTest {
                     .state("state")
                     .build()
             )
+        assertThat(body.taxConfiguration())
+            .isEqualTo(
+                CustomerCreateParams.TaxConfiguration.ofNewAvalaraTaxConfiguration(
+                    CustomerCreateParams.TaxConfiguration.NewAvalaraTaxConfiguration.builder()
+                        .taxExempt(true)
+                        .taxProvider(
+                            CustomerCreateParams.TaxConfiguration.NewAvalaraTaxConfiguration
+                                .TaxProvider
+                                .AVALARA
+                        )
+                        .taxExemptionCode("tax_exemption_code")
+                        .build()
+                )
+            )
         assertThat(body.taxId())
             .isEqualTo(
                 CustomerCreateParams.TaxId.builder()
@@ -194,10 +234,10 @@ class CustomerCreateParamsTest {
 
     @Test
     fun getBodyWithoutOptionalFields() {
-        val params = CustomerCreateParams.builder().email("email").name("x").build()
+        val params = CustomerCreateParams.builder().email("dev@stainlessapi.com").name("x").build()
         val body = params.getBody()
         assertThat(body).isNotNull
-        assertThat(body.email()).isEqualTo("email")
+        assertThat(body.email()).isEqualTo("dev@stainlessapi.com")
         assertThat(body.name()).isEqualTo("x")
     }
 }

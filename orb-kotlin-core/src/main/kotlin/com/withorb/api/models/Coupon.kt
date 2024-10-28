@@ -4,7 +4,6 @@ package com.withorb.api.models
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter
 import com.fasterxml.jackson.annotation.JsonAnySetter
-import com.fasterxml.jackson.annotation.JsonCreator
 import com.fasterxml.jackson.annotation.JsonProperty
 import com.fasterxml.jackson.core.JsonGenerator
 import com.fasterxml.jackson.core.ObjectCodec
@@ -15,7 +14,6 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize
 import com.fasterxml.jackson.module.kotlin.jacksonTypeRef
 import com.withorb.api.core.BaseDeserializer
 import com.withorb.api.core.BaseSerializer
-import com.withorb.api.core.Enum
 import com.withorb.api.core.ExcludeMissing
 import com.withorb.api.core.JsonField
 import com.withorb.api.core.JsonMissing
@@ -51,6 +49,18 @@ import java.util.Objects
  * on the first month of the new plan. This code can be applied during the upgrade process in your
  * billing portal, making it straightforward for users to benefit from the new features at a reduced
  * cost.
+ *
+ * ## Coupon scoping
+ *
+ * When a coupon is applied on a subscription, it creates a discount adjustment that applies to all
+ * of the prices on the subscription at the time of the coupon application. Notably, coupons do not
+ * scope in new price additions to a subscription automatically — if a new price is added to the
+ * subscription with a subscription edit or plan version migration, the discount created with the
+ * coupon will not apply to it automatically. If you'd like the coupon to apply to newly added
+ * prices, you can [edit the adjustment intervals](add-edit-price-intervals.api.mdx) to end the
+ * discount interval created by the coupon at the time of the migration and add a new one starting
+ * at the time of the migration that includes the newly added prices you'd like the coupon to apply
+ * to.
  */
 @JsonDeserialize(builder = Coupon.Builder::class)
 @NoAutoDetect
@@ -67,8 +77,6 @@ private constructor(
 ) {
 
     private var validated: Boolean = false
-
-    private var hashCode: Int = 0
 
     /** Also referred to as coupon_id in this documentation. */
     fun id(): String = id.getRequired("id")
@@ -146,42 +154,6 @@ private constructor(
     }
 
     fun toBuilder() = Builder().from(this)
-
-    override fun equals(other: Any?): Boolean {
-        if (this === other) {
-            return true
-        }
-
-        return other is Coupon &&
-            this.id == other.id &&
-            this.redemptionCode == other.redemptionCode &&
-            this.discount == other.discount &&
-            this.timesRedeemed == other.timesRedeemed &&
-            this.durationInMonths == other.durationInMonths &&
-            this.maxRedemptions == other.maxRedemptions &&
-            this.archivedAt == other.archivedAt &&
-            this.additionalProperties == other.additionalProperties
-    }
-
-    override fun hashCode(): Int {
-        if (hashCode == 0) {
-            hashCode =
-                Objects.hash(
-                    id,
-                    redemptionCode,
-                    discount,
-                    timesRedeemed,
-                    durationInMonths,
-                    maxRedemptions,
-                    archivedAt,
-                    additionalProperties,
-                )
-        }
-        return hashCode
-    }
-
-    override fun toString() =
-        "Coupon{id=$id, redemptionCode=$redemptionCode, discount=$discount, timesRedeemed=$timesRedeemed, durationInMonths=$durationInMonths, maxRedemptions=$maxRedemptions, archivedAt=$archivedAt, additionalProperties=$additionalProperties}"
 
     companion object {
 
@@ -368,13 +340,11 @@ private constructor(
                 return true
             }
 
-            return other is Discount &&
-                this.percentageDiscount == other.percentageDiscount &&
-                this.amountDiscount == other.amountDiscount
+            return /* spotless:off */ other is Discount && this.percentageDiscount == other.percentageDiscount && this.amountDiscount == other.amountDiscount /* spotless:on */
         }
 
         override fun hashCode(): Int {
-            return Objects.hash(percentageDiscount, amountDiscount)
+            return /* spotless:off */ Objects.hash(percentageDiscount, amountDiscount) /* spotless:on */
         }
 
         override fun toString(): String {
@@ -410,14 +380,22 @@ private constructor(
 
             override fun ObjectCodec.deserialize(node: JsonNode): Discount {
                 val json = JsonValue.fromJsonNode(node)
-                tryDeserialize(node, jacksonTypeRef<PercentageDiscount>()) { it.validate() }
-                    ?.let {
-                        return Discount(percentageDiscount = it, _json = json)
+                val discountType = json.asObject()?.get("discount_type")?.asString()
+
+                when (discountType) {
+                    "percentage" -> {
+                        tryDeserialize(node, jacksonTypeRef<PercentageDiscount>()) { it.validate() }
+                            ?.let {
+                                return Discount(percentageDiscount = it, _json = json)
+                            }
                     }
-                tryDeserialize(node, jacksonTypeRef<AmountDiscount>()) { it.validate() }
-                    ?.let {
-                        return Discount(amountDiscount = it, _json = json)
+                    "amount" -> {
+                        tryDeserialize(node, jacksonTypeRef<AmountDiscount>()) { it.validate() }
+                            ?.let {
+                                return Discount(amountDiscount = it, _json = json)
+                            }
                     }
+                }
 
                 return Discount(_json = json)
             }
@@ -439,479 +417,25 @@ private constructor(
                 }
             }
         }
-
-        @JsonDeserialize(builder = PercentageDiscount.Builder::class)
-        @NoAutoDetect
-        class PercentageDiscount
-        private constructor(
-            private val discountType: JsonField<DiscountType>,
-            private val appliesToPriceIds: JsonField<List<String>>,
-            private val reason: JsonField<String>,
-            private val percentageDiscount: JsonField<Double>,
-            private val additionalProperties: Map<String, JsonValue>,
-        ) {
-
-            private var validated: Boolean = false
-
-            private var hashCode: Int = 0
-
-            fun discountType(): DiscountType = discountType.getRequired("discount_type")
-
-            /**
-             * List of price_ids that this discount applies to. For plan/plan phase discounts, this
-             * can be a subset of prices.
-             */
-            fun appliesToPriceIds(): List<String> =
-                appliesToPriceIds.getRequired("applies_to_price_ids")
-
-            fun reason(): String? = reason.getNullable("reason")
-
-            /**
-             * Only available if discount_type is `percentage`. This is a number between 0 and 1.
-             */
-            fun percentageDiscount(): Double = percentageDiscount.getRequired("percentage_discount")
-
-            @JsonProperty("discount_type") @ExcludeMissing fun _discountType() = discountType
-
-            /**
-             * List of price_ids that this discount applies to. For plan/plan phase discounts, this
-             * can be a subset of prices.
-             */
-            @JsonProperty("applies_to_price_ids")
-            @ExcludeMissing
-            fun _appliesToPriceIds() = appliesToPriceIds
-
-            @JsonProperty("reason") @ExcludeMissing fun _reason() = reason
-
-            /**
-             * Only available if discount_type is `percentage`. This is a number between 0 and 1.
-             */
-            @JsonProperty("percentage_discount")
-            @ExcludeMissing
-            fun _percentageDiscount() = percentageDiscount
-
-            @JsonAnyGetter
-            @ExcludeMissing
-            fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
-
-            fun validate(): PercentageDiscount = apply {
-                if (!validated) {
-                    discountType()
-                    appliesToPriceIds()
-                    reason()
-                    percentageDiscount()
-                    validated = true
-                }
-            }
-
-            fun toBuilder() = Builder().from(this)
-
-            override fun equals(other: Any?): Boolean {
-                if (this === other) {
-                    return true
-                }
-
-                return other is PercentageDiscount &&
-                    this.discountType == other.discountType &&
-                    this.appliesToPriceIds == other.appliesToPriceIds &&
-                    this.reason == other.reason &&
-                    this.percentageDiscount == other.percentageDiscount &&
-                    this.additionalProperties == other.additionalProperties
-            }
-
-            override fun hashCode(): Int {
-                if (hashCode == 0) {
-                    hashCode =
-                        Objects.hash(
-                            discountType,
-                            appliesToPriceIds,
-                            reason,
-                            percentageDiscount,
-                            additionalProperties,
-                        )
-                }
-                return hashCode
-            }
-
-            override fun toString() =
-                "PercentageDiscount{discountType=$discountType, appliesToPriceIds=$appliesToPriceIds, reason=$reason, percentageDiscount=$percentageDiscount, additionalProperties=$additionalProperties}"
-
-            companion object {
-
-                fun builder() = Builder()
-            }
-
-            class Builder {
-
-                private var discountType: JsonField<DiscountType> = JsonMissing.of()
-                private var appliesToPriceIds: JsonField<List<String>> = JsonMissing.of()
-                private var reason: JsonField<String> = JsonMissing.of()
-                private var percentageDiscount: JsonField<Double> = JsonMissing.of()
-                private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
-
-                internal fun from(percentageDiscount: PercentageDiscount) = apply {
-                    this.discountType = percentageDiscount.discountType
-                    this.appliesToPriceIds = percentageDiscount.appliesToPriceIds
-                    this.reason = percentageDiscount.reason
-                    this.percentageDiscount = percentageDiscount.percentageDiscount
-                    additionalProperties(percentageDiscount.additionalProperties)
-                }
-
-                fun discountType(discountType: DiscountType) =
-                    discountType(JsonField.of(discountType))
-
-                @JsonProperty("discount_type")
-                @ExcludeMissing
-                fun discountType(discountType: JsonField<DiscountType>) = apply {
-                    this.discountType = discountType
-                }
-
-                /**
-                 * List of price_ids that this discount applies to. For plan/plan phase discounts,
-                 * this can be a subset of prices.
-                 */
-                fun appliesToPriceIds(appliesToPriceIds: List<String>) =
-                    appliesToPriceIds(JsonField.of(appliesToPriceIds))
-
-                /**
-                 * List of price_ids that this discount applies to. For plan/plan phase discounts,
-                 * this can be a subset of prices.
-                 */
-                @JsonProperty("applies_to_price_ids")
-                @ExcludeMissing
-                fun appliesToPriceIds(appliesToPriceIds: JsonField<List<String>>) = apply {
-                    this.appliesToPriceIds = appliesToPriceIds
-                }
-
-                fun reason(reason: String) = reason(JsonField.of(reason))
-
-                @JsonProperty("reason")
-                @ExcludeMissing
-                fun reason(reason: JsonField<String>) = apply { this.reason = reason }
-
-                /**
-                 * Only available if discount_type is `percentage`. This is a number between 0
-                 * and 1.
-                 */
-                fun percentageDiscount(percentageDiscount: Double) =
-                    percentageDiscount(JsonField.of(percentageDiscount))
-
-                /**
-                 * Only available if discount_type is `percentage`. This is a number between 0
-                 * and 1.
-                 */
-                @JsonProperty("percentage_discount")
-                @ExcludeMissing
-                fun percentageDiscount(percentageDiscount: JsonField<Double>) = apply {
-                    this.percentageDiscount = percentageDiscount
-                }
-
-                fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
-                    this.additionalProperties.clear()
-                    this.additionalProperties.putAll(additionalProperties)
-                }
-
-                @JsonAnySetter
-                fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-                    this.additionalProperties.put(key, value)
-                }
-
-                fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) =
-                    apply {
-                        this.additionalProperties.putAll(additionalProperties)
-                    }
-
-                fun build(): PercentageDiscount =
-                    PercentageDiscount(
-                        discountType,
-                        appliesToPriceIds.map { it.toUnmodifiable() },
-                        reason,
-                        percentageDiscount,
-                        additionalProperties.toUnmodifiable(),
-                    )
-            }
-
-            class DiscountType
-            @JsonCreator
-            private constructor(
-                private val value: JsonField<String>,
-            ) : Enum {
-
-                @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
-
-                override fun equals(other: Any?): Boolean {
-                    if (this === other) {
-                        return true
-                    }
-
-                    return other is DiscountType && this.value == other.value
-                }
-
-                override fun hashCode() = value.hashCode()
-
-                override fun toString() = value.toString()
-
-                companion object {
-
-                    val PERCENTAGE = DiscountType(JsonField.of("percentage"))
-
-                    fun of(value: String) = DiscountType(JsonField.of(value))
-                }
-
-                enum class Known {
-                    PERCENTAGE,
-                }
-
-                enum class Value {
-                    PERCENTAGE,
-                    _UNKNOWN,
-                }
-
-                fun value(): Value =
-                    when (this) {
-                        PERCENTAGE -> Value.PERCENTAGE
-                        else -> Value._UNKNOWN
-                    }
-
-                fun known(): Known =
-                    when (this) {
-                        PERCENTAGE -> Known.PERCENTAGE
-                        else -> throw OrbInvalidDataException("Unknown DiscountType: $value")
-                    }
-
-                fun asString(): String = _value().asStringOrThrow()
-            }
-        }
-
-        @JsonDeserialize(builder = AmountDiscount.Builder::class)
-        @NoAutoDetect
-        class AmountDiscount
-        private constructor(
-            private val discountType: JsonField<DiscountType>,
-            private val appliesToPriceIds: JsonField<List<String>>,
-            private val reason: JsonField<String>,
-            private val amountDiscount: JsonField<String>,
-            private val additionalProperties: Map<String, JsonValue>,
-        ) {
-
-            private var validated: Boolean = false
-
-            private var hashCode: Int = 0
-
-            fun discountType(): DiscountType = discountType.getRequired("discount_type")
-
-            /**
-             * List of price_ids that this discount applies to. For plan/plan phase discounts, this
-             * can be a subset of prices.
-             */
-            fun appliesToPriceIds(): List<String> =
-                appliesToPriceIds.getRequired("applies_to_price_ids")
-
-            fun reason(): String? = reason.getNullable("reason")
-
-            /** Only available if discount_type is `amount`. */
-            fun amountDiscount(): String = amountDiscount.getRequired("amount_discount")
-
-            @JsonProperty("discount_type") @ExcludeMissing fun _discountType() = discountType
-
-            /**
-             * List of price_ids that this discount applies to. For plan/plan phase discounts, this
-             * can be a subset of prices.
-             */
-            @JsonProperty("applies_to_price_ids")
-            @ExcludeMissing
-            fun _appliesToPriceIds() = appliesToPriceIds
-
-            @JsonProperty("reason") @ExcludeMissing fun _reason() = reason
-
-            /** Only available if discount_type is `amount`. */
-            @JsonProperty("amount_discount") @ExcludeMissing fun _amountDiscount() = amountDiscount
-
-            @JsonAnyGetter
-            @ExcludeMissing
-            fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
-
-            fun validate(): AmountDiscount = apply {
-                if (!validated) {
-                    discountType()
-                    appliesToPriceIds()
-                    reason()
-                    amountDiscount()
-                    validated = true
-                }
-            }
-
-            fun toBuilder() = Builder().from(this)
-
-            override fun equals(other: Any?): Boolean {
-                if (this === other) {
-                    return true
-                }
-
-                return other is AmountDiscount &&
-                    this.discountType == other.discountType &&
-                    this.appliesToPriceIds == other.appliesToPriceIds &&
-                    this.reason == other.reason &&
-                    this.amountDiscount == other.amountDiscount &&
-                    this.additionalProperties == other.additionalProperties
-            }
-
-            override fun hashCode(): Int {
-                if (hashCode == 0) {
-                    hashCode =
-                        Objects.hash(
-                            discountType,
-                            appliesToPriceIds,
-                            reason,
-                            amountDiscount,
-                            additionalProperties,
-                        )
-                }
-                return hashCode
-            }
-
-            override fun toString() =
-                "AmountDiscount{discountType=$discountType, appliesToPriceIds=$appliesToPriceIds, reason=$reason, amountDiscount=$amountDiscount, additionalProperties=$additionalProperties}"
-
-            companion object {
-
-                fun builder() = Builder()
-            }
-
-            class Builder {
-
-                private var discountType: JsonField<DiscountType> = JsonMissing.of()
-                private var appliesToPriceIds: JsonField<List<String>> = JsonMissing.of()
-                private var reason: JsonField<String> = JsonMissing.of()
-                private var amountDiscount: JsonField<String> = JsonMissing.of()
-                private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
-
-                internal fun from(amountDiscount: AmountDiscount) = apply {
-                    this.discountType = amountDiscount.discountType
-                    this.appliesToPriceIds = amountDiscount.appliesToPriceIds
-                    this.reason = amountDiscount.reason
-                    this.amountDiscount = amountDiscount.amountDiscount
-                    additionalProperties(amountDiscount.additionalProperties)
-                }
-
-                fun discountType(discountType: DiscountType) =
-                    discountType(JsonField.of(discountType))
-
-                @JsonProperty("discount_type")
-                @ExcludeMissing
-                fun discountType(discountType: JsonField<DiscountType>) = apply {
-                    this.discountType = discountType
-                }
-
-                /**
-                 * List of price_ids that this discount applies to. For plan/plan phase discounts,
-                 * this can be a subset of prices.
-                 */
-                fun appliesToPriceIds(appliesToPriceIds: List<String>) =
-                    appliesToPriceIds(JsonField.of(appliesToPriceIds))
-
-                /**
-                 * List of price_ids that this discount applies to. For plan/plan phase discounts,
-                 * this can be a subset of prices.
-                 */
-                @JsonProperty("applies_to_price_ids")
-                @ExcludeMissing
-                fun appliesToPriceIds(appliesToPriceIds: JsonField<List<String>>) = apply {
-                    this.appliesToPriceIds = appliesToPriceIds
-                }
-
-                fun reason(reason: String) = reason(JsonField.of(reason))
-
-                @JsonProperty("reason")
-                @ExcludeMissing
-                fun reason(reason: JsonField<String>) = apply { this.reason = reason }
-
-                /** Only available if discount_type is `amount`. */
-                fun amountDiscount(amountDiscount: String) =
-                    amountDiscount(JsonField.of(amountDiscount))
-
-                /** Only available if discount_type is `amount`. */
-                @JsonProperty("amount_discount")
-                @ExcludeMissing
-                fun amountDiscount(amountDiscount: JsonField<String>) = apply {
-                    this.amountDiscount = amountDiscount
-                }
-
-                fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
-                    this.additionalProperties.clear()
-                    this.additionalProperties.putAll(additionalProperties)
-                }
-
-                @JsonAnySetter
-                fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-                    this.additionalProperties.put(key, value)
-                }
-
-                fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) =
-                    apply {
-                        this.additionalProperties.putAll(additionalProperties)
-                    }
-
-                fun build(): AmountDiscount =
-                    AmountDiscount(
-                        discountType,
-                        appliesToPriceIds.map { it.toUnmodifiable() },
-                        reason,
-                        amountDiscount,
-                        additionalProperties.toUnmodifiable(),
-                    )
-            }
-
-            class DiscountType
-            @JsonCreator
-            private constructor(
-                private val value: JsonField<String>,
-            ) : Enum {
-
-                @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
-
-                override fun equals(other: Any?): Boolean {
-                    if (this === other) {
-                        return true
-                    }
-
-                    return other is DiscountType && this.value == other.value
-                }
-
-                override fun hashCode() = value.hashCode()
-
-                override fun toString() = value.toString()
-
-                companion object {
-
-                    val AMOUNT = DiscountType(JsonField.of("amount"))
-
-                    fun of(value: String) = DiscountType(JsonField.of(value))
-                }
-
-                enum class Known {
-                    AMOUNT,
-                }
-
-                enum class Value {
-                    AMOUNT,
-                    _UNKNOWN,
-                }
-
-                fun value(): Value =
-                    when (this) {
-                        AMOUNT -> Value.AMOUNT
-                        else -> Value._UNKNOWN
-                    }
-
-                fun known(): Known =
-                    when (this) {
-                        AMOUNT -> Known.AMOUNT
-                        else -> throw OrbInvalidDataException("Unknown DiscountType: $value")
-                    }
-
-                fun asString(): String = _value().asStringOrThrow()
-            }
-        }
     }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) {
+            return true
+        }
+
+        return /* spotless:off */ other is Coupon && this.id == other.id && this.redemptionCode == other.redemptionCode && this.discount == other.discount && this.timesRedeemed == other.timesRedeemed && this.durationInMonths == other.durationInMonths && this.maxRedemptions == other.maxRedemptions && this.archivedAt == other.archivedAt && this.additionalProperties == other.additionalProperties /* spotless:on */
+    }
+
+    private var hashCode: Int = 0
+
+    override fun hashCode(): Int {
+        if (hashCode == 0) {
+            hashCode = /* spotless:off */ Objects.hash(id, redemptionCode, discount, timesRedeemed, durationInMonths, maxRedemptions, archivedAt, additionalProperties) /* spotless:on */
+        }
+        return hashCode
+    }
+
+    override fun toString() =
+        "Coupon{id=$id, redemptionCode=$redemptionCode, discount=$discount, timesRedeemed=$timesRedeemed, durationInMonths=$durationInMonths, maxRedemptions=$maxRedemptions, archivedAt=$archivedAt, additionalProperties=$additionalProperties}"
 }

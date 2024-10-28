@@ -93,8 +93,6 @@ constructor(
         private val additionalProperties: Map<String, JsonValue>,
     ) {
 
-        private var hashCode: Int = 0
-
         /**
          * An ISO 4217 currency string. Must be the same as the customer's currency if it is set.
          */
@@ -151,48 +149,6 @@ constructor(
         fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
 
         fun toBuilder() = Builder().from(this)
-
-        override fun equals(other: Any?): Boolean {
-            if (this === other) {
-                return true
-            }
-
-            return other is InvoiceCreateBody &&
-                this.currency == other.currency &&
-                this.invoiceDate == other.invoiceDate &&
-                this.lineItems == other.lineItems &&
-                this.netTerms == other.netTerms &&
-                this.customerId == other.customerId &&
-                this.discount == other.discount &&
-                this.externalCustomerId == other.externalCustomerId &&
-                this.memo == other.memo &&
-                this.metadata == other.metadata &&
-                this.willAutoIssue == other.willAutoIssue &&
-                this.additionalProperties == other.additionalProperties
-        }
-
-        override fun hashCode(): Int {
-            if (hashCode == 0) {
-                hashCode =
-                    Objects.hash(
-                        currency,
-                        invoiceDate,
-                        lineItems,
-                        netTerms,
-                        customerId,
-                        discount,
-                        externalCustomerId,
-                        memo,
-                        metadata,
-                        willAutoIssue,
-                        additionalProperties,
-                    )
-            }
-            return hashCode
-        }
-
-        override fun toString() =
-            "InvoiceCreateBody{currency=$currency, invoiceDate=$invoiceDate, lineItems=$lineItems, netTerms=$netTerms, customerId=$customerId, discount=$discount, externalCustomerId=$externalCustomerId, memo=$memo, metadata=$metadata, willAutoIssue=$willAutoIssue, additionalProperties=$additionalProperties}"
 
         companion object {
 
@@ -321,6 +277,26 @@ constructor(
                     additionalProperties.toUnmodifiable(),
                 )
         }
+
+        override fun equals(other: Any?): Boolean {
+            if (this === other) {
+                return true
+            }
+
+            return /* spotless:off */ other is InvoiceCreateBody && this.currency == other.currency && this.invoiceDate == other.invoiceDate && this.lineItems == other.lineItems && this.netTerms == other.netTerms && this.customerId == other.customerId && this.discount == other.discount && this.externalCustomerId == other.externalCustomerId && this.memo == other.memo && this.metadata == other.metadata && this.willAutoIssue == other.willAutoIssue && this.additionalProperties == other.additionalProperties /* spotless:on */
+        }
+
+        private var hashCode: Int = 0
+
+        override fun hashCode(): Int {
+            if (hashCode == 0) {
+                hashCode = /* spotless:off */ Objects.hash(currency, invoiceDate, lineItems, netTerms, customerId, discount, externalCustomerId, memo, metadata, willAutoIssue, additionalProperties) /* spotless:on */
+            }
+            return hashCode
+        }
+
+        override fun toString() =
+            "InvoiceCreateBody{currency=$currency, invoiceDate=$invoiceDate, lineItems=$lineItems, netTerms=$netTerms, customerId=$customerId, discount=$discount, externalCustomerId=$externalCustomerId, memo=$memo, metadata=$metadata, willAutoIssue=$willAutoIssue, additionalProperties=$additionalProperties}"
     }
 
     fun _additionalQueryParams(): Map<String, List<String>> = additionalQueryParams
@@ -334,38 +310,11 @@ constructor(
             return true
         }
 
-        return other is InvoiceCreateParams &&
-            this.currency == other.currency &&
-            this.invoiceDate == other.invoiceDate &&
-            this.lineItems == other.lineItems &&
-            this.netTerms == other.netTerms &&
-            this.customerId == other.customerId &&
-            this.discount == other.discount &&
-            this.externalCustomerId == other.externalCustomerId &&
-            this.memo == other.memo &&
-            this.metadata == other.metadata &&
-            this.willAutoIssue == other.willAutoIssue &&
-            this.additionalQueryParams == other.additionalQueryParams &&
-            this.additionalHeaders == other.additionalHeaders &&
-            this.additionalBodyProperties == other.additionalBodyProperties
+        return /* spotless:off */ other is InvoiceCreateParams && this.currency == other.currency && this.invoiceDate == other.invoiceDate && this.lineItems == other.lineItems && this.netTerms == other.netTerms && this.customerId == other.customerId && this.discount == other.discount && this.externalCustomerId == other.externalCustomerId && this.memo == other.memo && this.metadata == other.metadata && this.willAutoIssue == other.willAutoIssue && this.additionalQueryParams == other.additionalQueryParams && this.additionalHeaders == other.additionalHeaders && this.additionalBodyProperties == other.additionalBodyProperties /* spotless:on */
     }
 
     override fun hashCode(): Int {
-        return Objects.hash(
-            currency,
-            invoiceDate,
-            lineItems,
-            netTerms,
-            customerId,
-            discount,
-            externalCustomerId,
-            memo,
-            metadata,
-            willAutoIssue,
-            additionalQueryParams,
-            additionalHeaders,
-            additionalBodyProperties,
-        )
+        return /* spotless:off */ Objects.hash(currency, invoiceDate, lineItems, netTerms, customerId, discount, externalCustomerId, memo, metadata, willAutoIssue, additionalQueryParams, additionalHeaders, additionalBodyProperties) /* spotless:on */
     }
 
     override fun toString() =
@@ -446,12 +395,12 @@ constructor(
         fun discount(discount: Discount) = apply { this.discount = discount }
 
         /** An optional discount to attach to the invoice. */
-        fun discount(percentageDiscount: Discount.PercentageDiscount) = apply {
+        fun discount(percentageDiscount: PercentageDiscount) = apply {
             this.discount = Discount.ofPercentageDiscount(percentageDiscount)
         }
 
         /** An optional discount to attach to the invoice. */
-        fun discount(trialDiscount: Discount.TrialDiscount) = apply {
+        fun discount(trialDiscount: TrialDiscount) = apply {
             this.discount = Discount.ofTrialDiscount(trialDiscount)
         }
 
@@ -461,7 +410,7 @@ constructor(
         }
 
         /** An optional discount to attach to the invoice. */
-        fun discount(amountDiscount: Discount.AmountDiscount) = apply {
+        fun discount(amountDiscount: AmountDiscount) = apply {
             this.discount = Discount.ofAmountDiscount(amountDiscount)
         }
 
@@ -576,8 +525,6 @@ constructor(
         private val additionalProperties: Map<String, JsonValue>,
     ) {
 
-        private var hashCode: Int = 0
-
         /** A date string to specify the line item's start date in the customer's timezone. */
         @JsonProperty("start_date") fun startDate(): LocalDate? = startDate
 
@@ -601,42 +548,6 @@ constructor(
         fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
 
         fun toBuilder() = Builder().from(this)
-
-        override fun equals(other: Any?): Boolean {
-            if (this === other) {
-                return true
-            }
-
-            return other is LineItem &&
-                this.startDate == other.startDate &&
-                this.endDate == other.endDate &&
-                this.quantity == other.quantity &&
-                this.name == other.name &&
-                this.itemId == other.itemId &&
-                this.modelType == other.modelType &&
-                this.unitConfig == other.unitConfig &&
-                this.additionalProperties == other.additionalProperties
-        }
-
-        override fun hashCode(): Int {
-            if (hashCode == 0) {
-                hashCode =
-                    Objects.hash(
-                        startDate,
-                        endDate,
-                        quantity,
-                        name,
-                        itemId,
-                        modelType,
-                        unitConfig,
-                        additionalProperties,
-                    )
-            }
-            return hashCode
-        }
-
-        override fun toString() =
-            "LineItem{startDate=$startDate, endDate=$endDate, quantity=$quantity, name=$name, itemId=$itemId, modelType=$modelType, unitConfig=$unitConfig, additionalProperties=$additionalProperties}"
 
         companion object {
 
@@ -728,7 +639,7 @@ constructor(
                     return true
                 }
 
-                return other is ModelType && this.value == other.value
+                return /* spotless:off */ other is ModelType && this.value == other.value /* spotless:on */
             }
 
             override fun hashCode() = value.hashCode()
@@ -774,8 +685,6 @@ constructor(
             private val additionalProperties: Map<String, JsonValue>,
         ) {
 
-            private var hashCode: Int = 0
-
             /** Rate per unit of usage */
             @JsonProperty("unit_amount") fun unitAmount(): String? = unitAmount
 
@@ -784,26 +693,6 @@ constructor(
             fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
 
             fun toBuilder() = Builder().from(this)
-
-            override fun equals(other: Any?): Boolean {
-                if (this === other) {
-                    return true
-                }
-
-                return other is UnitConfig &&
-                    this.unitAmount == other.unitAmount &&
-                    this.additionalProperties == other.additionalProperties
-            }
-
-            override fun hashCode(): Int {
-                if (hashCode == 0) {
-                    hashCode = Objects.hash(unitAmount, additionalProperties)
-                }
-                return hashCode
-            }
-
-            override fun toString() =
-                "UnitConfig{unitAmount=$unitAmount, additionalProperties=$additionalProperties}"
 
             companion object {
 
@@ -845,7 +734,47 @@ constructor(
                         additionalProperties.toUnmodifiable()
                     )
             }
+
+            override fun equals(other: Any?): Boolean {
+                if (this === other) {
+                    return true
+                }
+
+                return /* spotless:off */ other is UnitConfig && this.unitAmount == other.unitAmount && this.additionalProperties == other.additionalProperties /* spotless:on */
+            }
+
+            private var hashCode: Int = 0
+
+            override fun hashCode(): Int {
+                if (hashCode == 0) {
+                    hashCode = /* spotless:off */ Objects.hash(unitAmount, additionalProperties) /* spotless:on */
+                }
+                return hashCode
+            }
+
+            override fun toString() =
+                "UnitConfig{unitAmount=$unitAmount, additionalProperties=$additionalProperties}"
         }
+
+        override fun equals(other: Any?): Boolean {
+            if (this === other) {
+                return true
+            }
+
+            return /* spotless:off */ other is LineItem && this.startDate == other.startDate && this.endDate == other.endDate && this.quantity == other.quantity && this.name == other.name && this.itemId == other.itemId && this.modelType == other.modelType && this.unitConfig == other.unitConfig && this.additionalProperties == other.additionalProperties /* spotless:on */
+        }
+
+        private var hashCode: Int = 0
+
+        override fun hashCode(): Int {
+            if (hashCode == 0) {
+                hashCode = /* spotless:off */ Objects.hash(startDate, endDate, quantity, name, itemId, modelType, unitConfig, additionalProperties) /* spotless:on */
+            }
+            return hashCode
+        }
+
+        override fun toString() =
+            "LineItem{startDate=$startDate, endDate=$endDate, quantity=$quantity, name=$name, itemId=$itemId, modelType=$modelType, unitConfig=$unitConfig, additionalProperties=$additionalProperties}"
     }
 
     /**
@@ -860,30 +789,11 @@ constructor(
         private val additionalProperties: Map<String, JsonValue>,
     ) {
 
-        private var hashCode: Int = 0
-
         @JsonAnyGetter
         @ExcludeMissing
         fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
 
         fun toBuilder() = Builder().from(this)
-
-        override fun equals(other: Any?): Boolean {
-            if (this === other) {
-                return true
-            }
-
-            return other is Metadata && this.additionalProperties == other.additionalProperties
-        }
-
-        override fun hashCode(): Int {
-            if (hashCode == 0) {
-                hashCode = Objects.hash(additionalProperties)
-            }
-            return hashCode
-        }
-
-        override fun toString() = "Metadata{additionalProperties=$additionalProperties}"
 
         companion object {
 
@@ -914,5 +824,24 @@ constructor(
 
             fun build(): Metadata = Metadata(additionalProperties.toUnmodifiable())
         }
+
+        override fun equals(other: Any?): Boolean {
+            if (this === other) {
+                return true
+            }
+
+            return /* spotless:off */ other is Metadata && this.additionalProperties == other.additionalProperties /* spotless:on */
+        }
+
+        private var hashCode: Int = 0
+
+        override fun hashCode(): Int {
+            if (hashCode == 0) {
+                hashCode = /* spotless:off */ Objects.hash(additionalProperties) /* spotless:on */
+            }
+            return hashCode
+        }
+
+        override fun toString() = "Metadata{additionalProperties=$additionalProperties}"
     }
 }

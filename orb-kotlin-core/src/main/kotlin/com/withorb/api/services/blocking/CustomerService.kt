@@ -1,7 +1,5 @@
 // File generated from our OpenAPI spec by Stainless.
 
-@file:Suppress("OVERLOADS_INTERFACE") // See https://youtrack.jetbrains.com/issue/KT-36102
-
 package com.withorb.api.services.blocking
 
 import com.withorb.api.core.RequestOptions
@@ -68,9 +66,10 @@ interface CustomerService {
     ): CustomerListPage
 
     /**
-     * This performs a deletion of this customer, its subscriptions, and its invoices. This
-     * operation is irreversible. Note that this is a _soft_ deletion, but the data will be
-     * inaccessible through the API and Orb dashboard. For hard-deletion, please reach out to the
+     * This performs a deletion of this customer, its subscriptions, and its invoices, provided the
+     * customer does not have any issued invoices. Customers with issued invoices cannot be deleted.
+     * This operation is irreversible. Note that this is a _soft_ deletion, but the data will be
+     * inaccessible through the API and Orb dashboard. For a hard-deletion, please reach out to the
      * Orb team directly.
      *
      * **Note**: This operation happens asynchronously and can be expected to take a few minutes to

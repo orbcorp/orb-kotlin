@@ -1,5 +1,3 @@
-@file:JvmSynthetic
-
 package com.withorb.api.core.http
 
 import com.withorb.api.core.RequestOptions
@@ -37,9 +35,16 @@ private constructor(
 
         maybeAddIdempotencyHeader(request)
 
+        // Don't send the current retry count in the headers if the caller set their own value.
+        val shouldSendRetryCount = !request.headers.containsKey("x-stainless-retry-count")
+
         var retries = 0
 
         while (true) {
+            if (shouldSendRetryCount) {
+                setRetryCountHeader(request, retries)
+            }
+
             val response =
                 try {
                     val response = httpClient.execute(request, requestOptions)
@@ -71,9 +76,16 @@ private constructor(
 
         maybeAddIdempotencyHeader(request)
 
+        // Don't send the current retry count in the headers if the caller set their own value.
+        val shouldSendRetryCount = !request.headers.containsKey("x-stainless-retry-count")
+
         var retries = 0
 
         while (true) {
+            if (shouldSendRetryCount) {
+                setRetryCountHeader(request, retries)
+            }
+
             val response =
                 try {
                     val response = httpClient.execute(request, requestOptions)
@@ -95,14 +107,16 @@ private constructor(
         }
     }
 
-    override fun close() {
-        httpClient.close()
-    }
+    override fun close() = httpClient.close()
 
-    private fun isRetryable(request: HttpRequest): Boolean {
+    private fun isRetryable(request: HttpRequest): Boolean =
         // Some requests, such as when a request body is being streamed, cannot be retried because
         // the body data aren't available on subsequent attempts.
-        return request.body?.repeatable() ?: true
+        request.body?.repeatable() ?: true
+
+    private fun setRetryCountHeader(request: HttpRequest, retries: Int) {
+        request.headers.removeAll("x-stainless-retry-count")
+        request.headers.put("x-stainless-retry-count", retries.toString())
     }
 
     private fun idempotencyKey(): String = "stainless-java-retry-${UUID.randomUUID()}"
@@ -136,11 +150,10 @@ private constructor(
         }
     }
 
-    private fun shouldRetry(throwable: Throwable): Boolean {
+    private fun shouldRetry(throwable: Throwable): Boolean =
         // Only retry IOException and OrbIoException, other exceptions are not intended to be
         // retried.
-        return throwable is IOException || throwable is OrbIoException
-    }
+        throwable is IOException || throwable is OrbIoException
 
     private fun getRetryBackoffMillis(retries: Int, response: HttpResponse?): Duration {
         // About the Retry-After header:

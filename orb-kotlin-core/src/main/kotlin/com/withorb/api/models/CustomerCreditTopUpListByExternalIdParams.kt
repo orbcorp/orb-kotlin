@@ -48,22 +48,11 @@ constructor(
             return true
         }
 
-        return other is CustomerCreditTopUpListByExternalIdParams &&
-            this.externalCustomerId == other.externalCustomerId &&
-            this.cursor == other.cursor &&
-            this.limit == other.limit &&
-            this.additionalQueryParams == other.additionalQueryParams &&
-            this.additionalHeaders == other.additionalHeaders
+        return /* spotless:off */ other is CustomerCreditTopUpListByExternalIdParams && this.externalCustomerId == other.externalCustomerId && this.cursor == other.cursor && this.limit == other.limit && this.additionalQueryParams == other.additionalQueryParams && this.additionalHeaders == other.additionalHeaders /* spotless:on */
     }
 
     override fun hashCode(): Int {
-        return Objects.hash(
-            externalCustomerId,
-            cursor,
-            limit,
-            additionalQueryParams,
-            additionalHeaders,
-        )
+        return /* spotless:off */ Objects.hash(externalCustomerId, cursor, limit, additionalQueryParams, additionalHeaders) /* spotless:on */
     }
 
     override fun toString() =

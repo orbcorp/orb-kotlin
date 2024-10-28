@@ -36,18 +36,11 @@ constructor(
             return true
         }
 
-        return other is PriceExternalPriceIdFetchParams &&
-            this.externalPriceId == other.externalPriceId &&
-            this.additionalQueryParams == other.additionalQueryParams &&
-            this.additionalHeaders == other.additionalHeaders
+        return /* spotless:off */ other is PriceExternalPriceIdFetchParams && this.externalPriceId == other.externalPriceId && this.additionalQueryParams == other.additionalQueryParams && this.additionalHeaders == other.additionalHeaders /* spotless:on */
     }
 
     override fun hashCode(): Int {
-        return Objects.hash(
-            externalPriceId,
-            additionalQueryParams,
-            additionalHeaders,
-        )
+        return /* spotless:off */ Objects.hash(externalPriceId, additionalQueryParams, additionalHeaders) /* spotless:on */
     }
 
     override fun toString() =

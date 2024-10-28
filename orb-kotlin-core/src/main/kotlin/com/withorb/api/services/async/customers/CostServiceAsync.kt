@@ -1,7 +1,5 @@
 // File generated from our OpenAPI spec by Stainless.
 
-@file:Suppress("OVERLOADS_INTERFACE") // See https://youtrack.jetbrains.com/issue/KT-36102
-
 package com.withorb.api.services.async.customers
 
 import com.withorb.api.core.RequestOptions
@@ -114,21 +112,6 @@ interface CostServiceAsync {
      * | 7               | 2023-06-15      | 2023-07-01    |
      *
      * You can see this sliced timeframe visualized [here](https://i.imgur.com/TXhYgme.png).
-     *
-     * ## Grouping by custom attributes
-     *
-     * In order to view costs grouped by a specific _attribute_ that each event is tagged with (i.e.
-     * `cluster`), you can additionally specify a `group_by` key. The `group_by` key denotes the
-     * event property on which to group.
-     *
-     * When returning grouped costs, a separate `price_group` object in the `per_price_costs` array
-     * is returned for each value of the `group_by` key present in your events. The `subtotal` value
-     * of the `per_price_costs` object is the sum of each `price_group`'s total.
-     *
-     * Orb expects events will contain values in the `properties` dictionary that correspond to the
-     * `group_by` key specified. By default, Orb will return a `null` group (i.e. events that match
-     * the metric but do not have the key set). Currently, it is only possible to view costs grouped
-     * by a single attribute at a time.
      *
      * ### Matrix prices
      *
@@ -244,21 +227,6 @@ interface CostServiceAsync {
      * | 7               | 2023-06-15      | 2023-07-01    |
      *
      * You can see this sliced timeframe visualized [here](https://i.imgur.com/TXhYgme.png).
-     *
-     * ## Grouping by custom attributes
-     *
-     * In order to view costs grouped by a specific _attribute_ that each event is tagged with (i.e.
-     * `cluster`), you can additionally specify a `group_by` key. The `group_by` key denotes the
-     * event property on which to group.
-     *
-     * When returning grouped costs, a separate `price_group` object in the `per_price_costs` array
-     * is returned for each value of the `group_by` key present in your events. The `subtotal` value
-     * of the `per_price_costs` object is the sum of each `price_group`'s total.
-     *
-     * Orb expects events will contain values in the `properties` dictionary that correspond to the
-     * `group_by` key specified. By default, Orb will return a `null` group (i.e. events that match
-     * the metric but do not have the key set). Currently, it is only possible to view costs grouped
-     * by a single attribute at a time.
      *
      * ### Matrix prices
      *

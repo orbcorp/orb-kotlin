@@ -73,8 +73,6 @@ constructor(
         private val additionalProperties: Map<String, JsonValue>,
     ) {
 
-        private var hashCode: Int = 0
-
         /** The (exclusive) end of the usage timeframe affected by this backfill. */
         @JsonProperty("timeframe_end") fun timeframeEnd(): OffsetDateTime? = timeframeEnd
 
@@ -88,7 +86,10 @@ constructor(
          */
         @JsonProperty("close_time") fun closeTime(): OffsetDateTime? = closeTime
 
-        /** The ID of the customer to which this backfill is scoped. */
+        /**
+         * The Orb-generated ID of the customer to which this backfill is scoped. Omitting this
+         * field will scope the backfill to all customers.
+         */
         @JsonProperty("customer_id") fun customerId(): String? = customerId
 
         /**
@@ -98,7 +99,10 @@ constructor(
          */
         @JsonProperty("deprecation_filter") fun deprecationFilter(): String? = deprecationFilter
 
-        /** The external customer ID of the customer to which this backfill is scoped. */
+        /**
+         * The external customer ID of the customer to which this backfill is scoped. Omitting this
+         * field will scope the backfill to all customers.
+         */
         @JsonProperty("external_customer_id") fun externalCustomerId(): String? = externalCustomerId
 
         /**
@@ -113,42 +117,6 @@ constructor(
         fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
 
         fun toBuilder() = Builder().from(this)
-
-        override fun equals(other: Any?): Boolean {
-            if (this === other) {
-                return true
-            }
-
-            return other is EventBackfillCreateBody &&
-                this.timeframeEnd == other.timeframeEnd &&
-                this.timeframeStart == other.timeframeStart &&
-                this.closeTime == other.closeTime &&
-                this.customerId == other.customerId &&
-                this.deprecationFilter == other.deprecationFilter &&
-                this.externalCustomerId == other.externalCustomerId &&
-                this.replaceExistingEvents == other.replaceExistingEvents &&
-                this.additionalProperties == other.additionalProperties
-        }
-
-        override fun hashCode(): Int {
-            if (hashCode == 0) {
-                hashCode =
-                    Objects.hash(
-                        timeframeEnd,
-                        timeframeStart,
-                        closeTime,
-                        customerId,
-                        deprecationFilter,
-                        externalCustomerId,
-                        replaceExistingEvents,
-                        additionalProperties,
-                    )
-            }
-            return hashCode
-        }
-
-        override fun toString() =
-            "EventBackfillCreateBody{timeframeEnd=$timeframeEnd, timeframeStart=$timeframeStart, closeTime=$closeTime, customerId=$customerId, deprecationFilter=$deprecationFilter, externalCustomerId=$externalCustomerId, replaceExistingEvents=$replaceExistingEvents, additionalProperties=$additionalProperties}"
 
         companion object {
 
@@ -197,7 +165,10 @@ constructor(
             @JsonProperty("close_time")
             fun closeTime(closeTime: OffsetDateTime) = apply { this.closeTime = closeTime }
 
-            /** The ID of the customer to which this backfill is scoped. */
+            /**
+             * The Orb-generated ID of the customer to which this backfill is scoped. Omitting this
+             * field will scope the backfill to all customers.
+             */
             @JsonProperty("customer_id")
             fun customerId(customerId: String) = apply { this.customerId = customerId }
 
@@ -211,7 +182,10 @@ constructor(
                 this.deprecationFilter = deprecationFilter
             }
 
-            /** The external customer ID of the customer to which this backfill is scoped. */
+            /**
+             * The external customer ID of the customer to which this backfill is scoped. Omitting
+             * this field will scope the backfill to all customers.
+             */
             @JsonProperty("external_customer_id")
             fun externalCustomerId(externalCustomerId: String) = apply {
                 this.externalCustomerId = externalCustomerId
@@ -252,6 +226,26 @@ constructor(
                     additionalProperties.toUnmodifiable(),
                 )
         }
+
+        override fun equals(other: Any?): Boolean {
+            if (this === other) {
+                return true
+            }
+
+            return /* spotless:off */ other is EventBackfillCreateBody && this.timeframeEnd == other.timeframeEnd && this.timeframeStart == other.timeframeStart && this.closeTime == other.closeTime && this.customerId == other.customerId && this.deprecationFilter == other.deprecationFilter && this.externalCustomerId == other.externalCustomerId && this.replaceExistingEvents == other.replaceExistingEvents && this.additionalProperties == other.additionalProperties /* spotless:on */
+        }
+
+        private var hashCode: Int = 0
+
+        override fun hashCode(): Int {
+            if (hashCode == 0) {
+                hashCode = /* spotless:off */ Objects.hash(timeframeEnd, timeframeStart, closeTime, customerId, deprecationFilter, externalCustomerId, replaceExistingEvents, additionalProperties) /* spotless:on */
+            }
+            return hashCode
+        }
+
+        override fun toString() =
+            "EventBackfillCreateBody{timeframeEnd=$timeframeEnd, timeframeStart=$timeframeStart, closeTime=$closeTime, customerId=$customerId, deprecationFilter=$deprecationFilter, externalCustomerId=$externalCustomerId, replaceExistingEvents=$replaceExistingEvents, additionalProperties=$additionalProperties}"
     }
 
     fun _additionalQueryParams(): Map<String, List<String>> = additionalQueryParams
@@ -265,32 +259,11 @@ constructor(
             return true
         }
 
-        return other is EventBackfillCreateParams &&
-            this.timeframeEnd == other.timeframeEnd &&
-            this.timeframeStart == other.timeframeStart &&
-            this.closeTime == other.closeTime &&
-            this.customerId == other.customerId &&
-            this.deprecationFilter == other.deprecationFilter &&
-            this.externalCustomerId == other.externalCustomerId &&
-            this.replaceExistingEvents == other.replaceExistingEvents &&
-            this.additionalQueryParams == other.additionalQueryParams &&
-            this.additionalHeaders == other.additionalHeaders &&
-            this.additionalBodyProperties == other.additionalBodyProperties
+        return /* spotless:off */ other is EventBackfillCreateParams && this.timeframeEnd == other.timeframeEnd && this.timeframeStart == other.timeframeStart && this.closeTime == other.closeTime && this.customerId == other.customerId && this.deprecationFilter == other.deprecationFilter && this.externalCustomerId == other.externalCustomerId && this.replaceExistingEvents == other.replaceExistingEvents && this.additionalQueryParams == other.additionalQueryParams && this.additionalHeaders == other.additionalHeaders && this.additionalBodyProperties == other.additionalBodyProperties /* spotless:on */
     }
 
     override fun hashCode(): Int {
-        return Objects.hash(
-            timeframeEnd,
-            timeframeStart,
-            closeTime,
-            customerId,
-            deprecationFilter,
-            externalCustomerId,
-            replaceExistingEvents,
-            additionalQueryParams,
-            additionalHeaders,
-            additionalBodyProperties,
-        )
+        return /* spotless:off */ Objects.hash(timeframeEnd, timeframeStart, closeTime, customerId, deprecationFilter, externalCustomerId, replaceExistingEvents, additionalQueryParams, additionalHeaders, additionalBodyProperties) /* spotless:on */
     }
 
     override fun toString() =
@@ -345,7 +318,10 @@ constructor(
          */
         fun closeTime(closeTime: OffsetDateTime) = apply { this.closeTime = closeTime }
 
-        /** The ID of the customer to which this backfill is scoped. */
+        /**
+         * The Orb-generated ID of the customer to which this backfill is scoped. Omitting this
+         * field will scope the backfill to all customers.
+         */
         fun customerId(customerId: String) = apply { this.customerId = customerId }
 
         /**
@@ -357,7 +333,10 @@ constructor(
             this.deprecationFilter = deprecationFilter
         }
 
-        /** The external customer ID of the customer to which this backfill is scoped. */
+        /**
+         * The external customer ID of the customer to which this backfill is scoped. Omitting this
+         * field will scope the backfill to all customers.
+         */
         fun externalCustomerId(externalCustomerId: String) = apply {
             this.externalCustomerId = externalCustomerId
         }
