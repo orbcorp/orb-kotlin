@@ -9,16 +9,16 @@ import java.util.Objects
 
 class InvoiceFetchUpcomingParams
 constructor(
-    private val subscriptionId: String?,
+    private val subscriptionId: String,
     private val additionalQueryParams: Map<String, List<String>>,
     private val additionalHeaders: Map<String, List<String>>,
 ) {
 
-    fun subscriptionId(): String? = subscriptionId
+    fun subscriptionId(): String = subscriptionId
 
     internal fun getQueryParams(): Map<String, List<String>> {
         val params = mutableMapOf<String, List<String>>()
-        this.subscriptionId?.let { params.put("subscription_id", listOf(it.toString())) }
+        this.subscriptionId.let { params.put("subscription_id", listOf(it.toString())) }
         params.putAll(additionalQueryParams)
         return params.toUnmodifiable()
     }
@@ -108,7 +108,7 @@ constructor(
 
         fun build(): InvoiceFetchUpcomingParams =
             InvoiceFetchUpcomingParams(
-                subscriptionId,
+                checkNotNull(subscriptionId) { "`subscriptionId` is required but was not set" },
                 additionalQueryParams.mapValues { it.value.toUnmodifiable() }.toUnmodifiable(),
                 additionalHeaders.mapValues { it.value.toUnmodifiable() }.toUnmodifiable(),
             )
