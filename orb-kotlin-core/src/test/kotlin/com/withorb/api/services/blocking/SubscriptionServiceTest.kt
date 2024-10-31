@@ -25,7 +25,7 @@ class SubscriptionServiceTest {
                 .apiKey("My API Key")
                 .build()
         val subscriptionService = client.subscriptions()
-        val subscription =
+        val subscriptionCreateResponse =
             subscriptionService.create(
                 SubscriptionCreateParams.builder()
                     .addAdjustments(
@@ -333,8 +333,8 @@ class SubscriptionServiceTest {
                     .trialDurationDays(123L)
                     .build()
             )
-        println(subscription)
-        subscription.validate()
+        println(subscriptionCreateResponse)
+        subscriptionCreateResponse.validate()
     }
 
     @Test
@@ -381,7 +381,7 @@ class SubscriptionServiceTest {
                 .apiKey("My API Key")
                 .build()
         val subscriptionService = client.subscriptions()
-        val subscription =
+        val subscriptionCancelResponse =
             subscriptionService.cancel(
                 SubscriptionCancelParams.builder()
                     .subscriptionId("subscription_id")
@@ -389,8 +389,8 @@ class SubscriptionServiceTest {
                     .cancellationDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                     .build()
             )
-        println(subscription)
-        subscription.validate()
+        println(subscriptionCancelResponse)
+        subscriptionCancelResponse.validate()
     }
 
     @Test
@@ -484,7 +484,7 @@ class SubscriptionServiceTest {
                 .apiKey("My API Key")
                 .build()
         val subscriptionService = client.subscriptions()
-        val subscription =
+        val subscriptionPriceIntervalsResponse =
             subscriptionService.priceIntervals(
                 SubscriptionPriceIntervalsParams.builder()
                     .subscriptionId("subscription_id")
@@ -716,8 +716,8 @@ class SubscriptionServiceTest {
                     )
                     .build()
             )
-        println(subscription)
-        subscription.validate()
+        println(subscriptionPriceIntervalsResponse)
+        subscriptionPriceIntervalsResponse.validate()
     }
 
     @Test
@@ -728,7 +728,7 @@ class SubscriptionServiceTest {
                 .apiKey("My API Key")
                 .build()
         val subscriptionService = client.subscriptions()
-        val subscription =
+        val subscriptionSchedulePlanChangeResponse =
             subscriptionService.schedulePlanChange(
                 SubscriptionSchedulePlanChangeParams.builder()
                     .subscriptionId("subscription_id")
@@ -1060,8 +1060,8 @@ class SubscriptionServiceTest {
                     .trialDurationDays(123L)
                     .build()
             )
-        println(subscription)
-        subscription.validate()
+        println(subscriptionSchedulePlanChangeResponse)
+        subscriptionSchedulePlanChangeResponse.validate()
     }
 
     @Test
@@ -1072,15 +1072,15 @@ class SubscriptionServiceTest {
                 .apiKey("My API Key")
                 .build()
         val subscriptionService = client.subscriptions()
-        val subscription =
+        val subscriptionTriggerPhaseResponse =
             subscriptionService.triggerPhase(
                 SubscriptionTriggerPhaseParams.builder()
                     .subscriptionId("subscription_id")
                     .effectiveDate(LocalDate.parse("2019-12-27"))
                     .build()
             )
-        println(subscription)
-        subscription.validate()
+        println(subscriptionTriggerPhaseResponse)
+        subscriptionTriggerPhaseResponse.validate()
     }
 
     @Test
@@ -1091,14 +1091,14 @@ class SubscriptionServiceTest {
                 .apiKey("My API Key")
                 .build()
         val subscriptionService = client.subscriptions()
-        val subscription =
+        val subscriptionUnscheduleCancellationResponse =
             subscriptionService.unscheduleCancellation(
                 SubscriptionUnscheduleCancellationParams.builder()
                     .subscriptionId("subscription_id")
                     .build()
             )
-        println(subscription)
-        subscription.validate()
+        println(subscriptionUnscheduleCancellationResponse)
+        subscriptionUnscheduleCancellationResponse.validate()
     }
 
     @Test
@@ -1109,15 +1109,15 @@ class SubscriptionServiceTest {
                 .apiKey("My API Key")
                 .build()
         val subscriptionService = client.subscriptions()
-        val subscription =
+        val subscriptionUnscheduleFixedFeeQuantityUpdatesResponse =
             subscriptionService.unscheduleFixedFeeQuantityUpdates(
                 SubscriptionUnscheduleFixedFeeQuantityUpdatesParams.builder()
                     .subscriptionId("subscription_id")
                     .priceId("price_id")
                     .build()
             )
-        println(subscription)
-        subscription.validate()
+        println(subscriptionUnscheduleFixedFeeQuantityUpdatesResponse)
+        subscriptionUnscheduleFixedFeeQuantityUpdatesResponse.validate()
     }
 
     @Test
@@ -1128,14 +1128,14 @@ class SubscriptionServiceTest {
                 .apiKey("My API Key")
                 .build()
         val subscriptionService = client.subscriptions()
-        val subscription =
+        val subscriptionUnschedulePendingPlanChangesResponse =
             subscriptionService.unschedulePendingPlanChanges(
                 SubscriptionUnschedulePendingPlanChangesParams.builder()
                     .subscriptionId("subscription_id")
                     .build()
             )
-        println(subscription)
-        subscription.validate()
+        println(subscriptionUnschedulePendingPlanChangesResponse)
+        subscriptionUnschedulePendingPlanChangesResponse.validate()
     }
 
     @Test
@@ -1146,7 +1146,7 @@ class SubscriptionServiceTest {
                 .apiKey("My API Key")
                 .build()
         val subscriptionService = client.subscriptions()
-        val subscription =
+        val subscriptionUpdateFixedFeeQuantityResponse =
             subscriptionService.updateFixedFeeQuantity(
                 SubscriptionUpdateFixedFeeQuantityParams.builder()
                     .subscriptionId("subscription_id")
@@ -1156,8 +1156,8 @@ class SubscriptionServiceTest {
                     .effectiveDate(LocalDate.parse("2022-12-21"))
                     .build()
             )
-        println(subscription)
-        subscription.validate()
+        println(subscriptionUpdateFixedFeeQuantityResponse)
+        subscriptionUpdateFixedFeeQuantityResponse.validate()
     }
 
     @Test
@@ -1168,7 +1168,7 @@ class SubscriptionServiceTest {
                 .apiKey("My API Key")
                 .build()
         val subscriptionService = client.subscriptions()
-        val subscription =
+        val subscriptionUpdateTrialResponse =
             subscriptionService.updateTrial(
                 SubscriptionUpdateTrialParams.builder()
                     .subscriptionId("subscription_id")
@@ -1180,7 +1180,7 @@ class SubscriptionServiceTest {
                     .shift(true)
                     .build()
             )
-        println(subscription)
-        subscription.validate()
+        println(subscriptionUpdateTrialResponse)
+        subscriptionUpdateTrialResponse.validate()
     }
 }

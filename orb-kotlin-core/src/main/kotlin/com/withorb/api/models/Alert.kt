@@ -13,7 +13,7 @@ import com.withorb.api.core.JsonField
 import com.withorb.api.core.JsonMissing
 import com.withorb.api.core.JsonValue
 import com.withorb.api.core.NoAutoDetect
-import com.withorb.api.core.toUnmodifiable
+import com.withorb.api.core.toImmutable
 import com.withorb.api.errors.OrbInvalidDataException
 import java.time.OffsetDateTime
 import java.util.Objects
@@ -265,13 +265,13 @@ private constructor(
                 type,
                 createdAt,
                 enabled,
-                thresholds.map { it.toUnmodifiable() },
+                thresholds.map { it.toImmutable() },
                 customer,
                 plan,
                 subscription,
                 metric,
                 currency,
-                additionalProperties.toUnmodifiable(),
+                additionalProperties.toImmutable(),
             )
     }
 
@@ -324,7 +324,7 @@ private constructor(
                 this.additionalProperties.putAll(additionalProperties)
             }
 
-            fun build(): Customer = Customer(additionalProperties.toUnmodifiable())
+            fun build(): Customer = Customer(additionalProperties.toImmutable())
         }
 
         override fun equals(other: Any?): Boolean {
@@ -396,7 +396,7 @@ private constructor(
                 this.additionalProperties.putAll(additionalProperties)
             }
 
-            fun build(): Metric = Metric(additionalProperties.toUnmodifiable())
+            fun build(): Metric = Metric(additionalProperties.toImmutable())
         }
 
         override fun equals(other: Any?): Boolean {
@@ -468,7 +468,7 @@ private constructor(
                 this.additionalProperties.putAll(additionalProperties)
             }
 
-            fun build(): Plan = Plan(additionalProperties.toUnmodifiable())
+            fun build(): Plan = Plan(additionalProperties.toImmutable())
         }
 
         override fun equals(other: Any?): Boolean {
@@ -540,7 +540,7 @@ private constructor(
                 this.additionalProperties.putAll(additionalProperties)
             }
 
-            fun build(): Subscription = Subscription(additionalProperties.toUnmodifiable())
+            fun build(): Subscription = Subscription(additionalProperties.toImmutable())
         }
 
         override fun equals(other: Any?): Boolean {
@@ -646,7 +646,7 @@ private constructor(
                 this.additionalProperties.putAll(additionalProperties)
             }
 
-            fun build(): Threshold = Threshold(value, additionalProperties.toUnmodifiable())
+            fun build(): Threshold = Threshold(value, additionalProperties.toImmutable())
         }
 
         override fun equals(other: Any?): Boolean {

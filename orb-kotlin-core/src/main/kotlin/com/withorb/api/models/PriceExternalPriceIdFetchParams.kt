@@ -3,7 +3,7 @@
 package com.withorb.api.models
 
 import com.withorb.api.core.NoAutoDetect
-import com.withorb.api.core.toUnmodifiable
+import com.withorb.api.core.toImmutable
 import com.withorb.api.models.*
 import java.util.Objects
 
@@ -114,8 +114,8 @@ constructor(
         fun build(): PriceExternalPriceIdFetchParams =
             PriceExternalPriceIdFetchParams(
                 checkNotNull(externalPriceId) { "`externalPriceId` is required but was not set" },
-                additionalQueryParams.mapValues { it.value.toUnmodifiable() }.toUnmodifiable(),
-                additionalHeaders.mapValues { it.value.toUnmodifiable() }.toUnmodifiable(),
+                additionalQueryParams.mapValues { it.value.toImmutable() }.toImmutable(),
+                additionalHeaders.mapValues { it.value.toImmutable() }.toImmutable(),
             )
     }
 }

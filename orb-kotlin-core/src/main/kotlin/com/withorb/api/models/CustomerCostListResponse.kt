@@ -11,7 +11,7 @@ import com.withorb.api.core.JsonField
 import com.withorb.api.core.JsonMissing
 import com.withorb.api.core.JsonValue
 import com.withorb.api.core.NoAutoDetect
-import com.withorb.api.core.toUnmodifiable
+import com.withorb.api.core.toImmutable
 import java.time.OffsetDateTime
 import java.util.Objects
 
@@ -79,8 +79,8 @@ private constructor(
 
         fun build(): CustomerCostListResponse =
             CustomerCostListResponse(
-                data.map { it.toUnmodifiable() },
-                additionalProperties.toUnmodifiable()
+                data.map { it.toImmutable() },
+                additionalProperties.toImmutable()
             )
     }
 
@@ -225,8 +225,8 @@ private constructor(
                     total,
                     timeframeStart,
                     timeframeEnd,
-                    perPriceCosts.map { it.toUnmodifiable() },
-                    additionalProperties.toUnmodifiable(),
+                    perPriceCosts.map { it.toImmutable() },
+                    additionalProperties.toImmutable(),
                 )
         }
 
@@ -1277,7 +1277,7 @@ private constructor(
                         subtotal,
                         total,
                         price,
-                        additionalProperties.toUnmodifiable(),
+                        additionalProperties.toImmutable(),
                     )
             }
 

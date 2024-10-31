@@ -9,7 +9,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize
 import com.withorb.api.core.ExcludeMissing
 import com.withorb.api.core.JsonValue
 import com.withorb.api.core.NoAutoDetect
-import com.withorb.api.core.toUnmodifiable
+import com.withorb.api.core.toImmutable
 import com.withorb.api.models.*
 import java.time.LocalDate
 import java.util.Objects
@@ -101,7 +101,7 @@ constructor(
             }
 
             fun build(): SubscriptionTriggerPhaseBody =
-                SubscriptionTriggerPhaseBody(effectiveDate, additionalProperties.toUnmodifiable())
+                SubscriptionTriggerPhaseBody(effectiveDate, additionalProperties.toImmutable())
         }
 
         override fun equals(other: Any?): Boolean {
@@ -236,9 +236,9 @@ constructor(
             SubscriptionTriggerPhaseParams(
                 checkNotNull(subscriptionId) { "`subscriptionId` is required but was not set" },
                 effectiveDate,
-                additionalQueryParams.mapValues { it.value.toUnmodifiable() }.toUnmodifiable(),
-                additionalHeaders.mapValues { it.value.toUnmodifiable() }.toUnmodifiable(),
-                additionalBodyProperties.toUnmodifiable(),
+                additionalQueryParams.mapValues { it.value.toImmutable() }.toImmutable(),
+                additionalHeaders.mapValues { it.value.toImmutable() }.toImmutable(),
+                additionalBodyProperties.toImmutable(),
             )
     }
 }

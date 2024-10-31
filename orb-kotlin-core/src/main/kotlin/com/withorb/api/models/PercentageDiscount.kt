@@ -13,7 +13,7 @@ import com.withorb.api.core.JsonField
 import com.withorb.api.core.JsonMissing
 import com.withorb.api.core.JsonValue
 import com.withorb.api.core.NoAutoDetect
-import com.withorb.api.core.toUnmodifiable
+import com.withorb.api.core.toImmutable
 import com.withorb.api.errors.OrbInvalidDataException
 import java.util.Objects
 
@@ -156,10 +156,10 @@ private constructor(
         fun build(): PercentageDiscount =
             PercentageDiscount(
                 discountType,
-                appliesToPriceIds.map { it.toUnmodifiable() },
+                appliesToPriceIds.map { it.toImmutable() },
                 reason,
                 percentageDiscount,
-                additionalProperties.toUnmodifiable(),
+                additionalProperties.toImmutable(),
             )
     }
 

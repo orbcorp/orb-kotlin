@@ -13,7 +13,7 @@ import com.withorb.api.core.JsonField
 import com.withorb.api.core.JsonMissing
 import com.withorb.api.core.JsonValue
 import com.withorb.api.core.NoAutoDetect
-import com.withorb.api.core.toUnmodifiable
+import com.withorb.api.core.toImmutable
 import com.withorb.api.errors.OrbInvalidDataException
 import java.time.OffsetDateTime
 import java.util.Objects
@@ -559,7 +559,7 @@ private constructor(
                 product,
                 version,
                 trialConfig,
-                planPhases.map { it.toUnmodifiable() },
+                planPhases.map { it.toImmutable() },
                 basePlan,
                 basePlanId,
                 externalPlanId,
@@ -567,8 +567,8 @@ private constructor(
                 invoicingCurrency,
                 netTerms,
                 defaultInvoiceMemo,
-                prices.map { it.toUnmodifiable() },
-                additionalProperties.toUnmodifiable(),
+                prices.map { it.toImmutable() },
+                additionalProperties.toImmutable(),
             )
     }
 
@@ -690,7 +690,7 @@ private constructor(
                     id,
                     externalPlanId,
                     name,
-                    additionalProperties.toUnmodifiable(),
+                    additionalProperties.toImmutable(),
                 )
         }
 
@@ -822,8 +822,8 @@ private constructor(
             fun build(): Maximum =
                 Maximum(
                     maximumAmount,
-                    appliesToPriceIds.map { it.toUnmodifiable() },
-                    additionalProperties.toUnmodifiable(),
+                    appliesToPriceIds.map { it.toImmutable() },
+                    additionalProperties.toImmutable(),
                 )
         }
 
@@ -901,7 +901,7 @@ private constructor(
                 this.additionalProperties.putAll(additionalProperties)
             }
 
-            fun build(): Metadata = Metadata(additionalProperties.toUnmodifiable())
+            fun build(): Metadata = Metadata(additionalProperties.toImmutable())
         }
 
         override fun equals(other: Any?): Boolean {
@@ -1031,8 +1031,8 @@ private constructor(
             fun build(): Minimum =
                 Minimum(
                     minimumAmount,
-                    appliesToPriceIds.map { it.toUnmodifiable() },
-                    additionalProperties.toUnmodifiable(),
+                    appliesToPriceIds.map { it.toImmutable() },
+                    additionalProperties.toImmutable(),
                 )
         }
 
@@ -1300,7 +1300,7 @@ private constructor(
                     maximumAmount,
                     minimumAmount,
                     discount,
-                    additionalProperties.toUnmodifiable(),
+                    additionalProperties.toImmutable(),
                 )
         }
 
@@ -1488,8 +1488,8 @@ private constructor(
                 fun build(): Maximum =
                     Maximum(
                         maximumAmount,
-                        appliesToPriceIds.map { it.toUnmodifiable() },
-                        additionalProperties.toUnmodifiable(),
+                        appliesToPriceIds.map { it.toImmutable() },
+                        additionalProperties.toImmutable(),
                     )
             }
 
@@ -1623,8 +1623,8 @@ private constructor(
                 fun build(): Minimum =
                     Minimum(
                         minimumAmount,
-                        appliesToPriceIds.map { it.toUnmodifiable() },
-                        additionalProperties.toUnmodifiable(),
+                        appliesToPriceIds.map { it.toImmutable() },
+                        additionalProperties.toImmutable(),
                     )
             }
 
@@ -1767,7 +1767,7 @@ private constructor(
                     createdAt,
                     id,
                     name,
-                    additionalProperties.toUnmodifiable(),
+                    additionalProperties.toImmutable(),
                 )
         }
 
@@ -1938,7 +1938,7 @@ private constructor(
                 TrialConfig(
                     trialPeriod,
                     trialPeriodUnit,
-                    additionalProperties.toUnmodifiable(),
+                    additionalProperties.toImmutable(),
                 )
         }
 

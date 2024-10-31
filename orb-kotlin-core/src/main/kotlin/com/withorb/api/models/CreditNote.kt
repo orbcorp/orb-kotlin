@@ -13,7 +13,7 @@ import com.withorb.api.core.JsonField
 import com.withorb.api.core.JsonMissing
 import com.withorb.api.core.JsonValue
 import com.withorb.api.core.NoAutoDetect
-import com.withorb.api.core.toUnmodifiable
+import com.withorb.api.core.toImmutable
 import com.withorb.api.errors.OrbInvalidDataException
 import java.time.OffsetDateTime
 import java.util.Objects
@@ -377,10 +377,10 @@ private constructor(
                 customer,
                 creditNotePdf,
                 minimumAmountRefunded,
-                discounts.map { it.toUnmodifiable() },
+                discounts.map { it.toImmutable() },
                 maximumAmountAdjustment,
-                lineItems.map { it.toUnmodifiable() },
-                additionalProperties.toUnmodifiable(),
+                lineItems.map { it.toImmutable() },
+                additionalProperties.toImmutable(),
             )
     }
 
@@ -469,7 +469,7 @@ private constructor(
                 Customer(
                     id,
                     externalCustomerId,
-                    additionalProperties.toUnmodifiable(),
+                    additionalProperties.toImmutable(),
                 )
         }
 
@@ -679,9 +679,9 @@ private constructor(
                     subtotal,
                     amount,
                     quantity,
-                    discounts.map { it.toUnmodifiable() },
-                    taxAmounts.map { it.toUnmodifiable() },
-                    additionalProperties.toUnmodifiable(),
+                    discounts.map { it.toImmutable() },
+                    taxAmounts.map { it.toImmutable() },
+                    additionalProperties.toImmutable(),
                 )
         }
 
@@ -804,7 +804,7 @@ private constructor(
                         taxRateDescription,
                         taxRatePercentage,
                         amount,
-                        additionalProperties.toUnmodifiable(),
+                        additionalProperties.toImmutable(),
                     )
             }
 
@@ -1004,8 +1004,8 @@ private constructor(
                         amountDiscount,
                         amountApplied,
                         reason,
-                        appliesToPriceIds.map { it.toUnmodifiable() },
-                        additionalProperties.toUnmodifiable(),
+                        appliesToPriceIds.map { it.toImmutable() },
+                        additionalProperties.toImmutable(),
                     )
             }
 
@@ -1246,8 +1246,8 @@ private constructor(
                     percentageDiscount,
                     amountApplied,
                     reason,
-                    appliesToPrices.map { it.toUnmodifiable() },
-                    additionalProperties.toUnmodifiable(),
+                    appliesToPrices.map { it.toImmutable() },
+                    additionalProperties.toImmutable(),
                 )
         }
 
@@ -1383,7 +1383,7 @@ private constructor(
                     AppliesToPrice(
                         id,
                         name,
-                        additionalProperties.toUnmodifiable(),
+                        additionalProperties.toImmutable(),
                     )
             }
 
@@ -1692,8 +1692,8 @@ private constructor(
                     percentageDiscount,
                     amountApplied,
                     reason,
-                    appliesToPrices.map { it.toUnmodifiable() },
-                    additionalProperties.toUnmodifiable(),
+                    appliesToPrices.map { it.toImmutable() },
+                    additionalProperties.toImmutable(),
                 )
         }
 
@@ -1829,7 +1829,7 @@ private constructor(
                     AppliesToPrice(
                         id,
                         name,
-                        additionalProperties.toUnmodifiable(),
+                        additionalProperties.toImmutable(),
                     )
             }
 
