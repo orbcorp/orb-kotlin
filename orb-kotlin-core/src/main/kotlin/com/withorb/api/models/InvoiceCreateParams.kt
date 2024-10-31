@@ -12,7 +12,7 @@ import com.withorb.api.core.ExcludeMissing
 import com.withorb.api.core.JsonField
 import com.withorb.api.core.JsonValue
 import com.withorb.api.core.NoAutoDetect
-import com.withorb.api.core.toUnmodifiable
+import com.withorb.api.core.toImmutable
 import com.withorb.api.errors.OrbInvalidDataException
 import com.withorb.api.models.*
 import java.time.LocalDate
@@ -266,7 +266,7 @@ constructor(
                     checkNotNull(currency) { "`currency` is required but was not set" },
                     checkNotNull(invoiceDate) { "`invoiceDate` is required but was not set" },
                     checkNotNull(lineItems) { "`lineItems` is required but was not set" }
-                        .toUnmodifiable(),
+                        .toImmutable(),
                     checkNotNull(netTerms) { "`netTerms` is required but was not set" },
                     customerId,
                     discount,
@@ -274,7 +274,7 @@ constructor(
                     memo,
                     metadata,
                     willAutoIssue,
-                    additionalProperties.toUnmodifiable(),
+                    additionalProperties.toImmutable(),
                 )
         }
 
@@ -496,8 +496,7 @@ constructor(
             InvoiceCreateParams(
                 checkNotNull(currency) { "`currency` is required but was not set" },
                 checkNotNull(invoiceDate) { "`invoiceDate` is required but was not set" },
-                checkNotNull(lineItems) { "`lineItems` is required but was not set" }
-                    .toUnmodifiable(),
+                checkNotNull(lineItems) { "`lineItems` is required but was not set" }.toImmutable(),
                 checkNotNull(netTerms) { "`netTerms` is required but was not set" },
                 customerId,
                 discount,
@@ -505,9 +504,9 @@ constructor(
                 memo,
                 metadata,
                 willAutoIssue,
-                additionalQueryParams.mapValues { it.value.toUnmodifiable() }.toUnmodifiable(),
-                additionalHeaders.mapValues { it.value.toUnmodifiable() }.toUnmodifiable(),
-                additionalBodyProperties.toUnmodifiable(),
+                additionalQueryParams.mapValues { it.value.toImmutable() }.toImmutable(),
+                additionalHeaders.mapValues { it.value.toImmutable() }.toImmutable(),
+                additionalBodyProperties.toImmutable(),
             )
     }
 
@@ -622,7 +621,7 @@ constructor(
                     checkNotNull(itemId) { "`itemId` is required but was not set" },
                     checkNotNull(modelType) { "`modelType` is required but was not set" },
                     checkNotNull(unitConfig) { "`unitConfig` is required but was not set" },
-                    additionalProperties.toUnmodifiable(),
+                    additionalProperties.toImmutable(),
                 )
         }
 
@@ -731,7 +730,7 @@ constructor(
                 fun build(): UnitConfig =
                     UnitConfig(
                         checkNotNull(unitAmount) { "`unitAmount` is required but was not set" },
-                        additionalProperties.toUnmodifiable()
+                        additionalProperties.toImmutable()
                     )
             }
 
@@ -822,7 +821,7 @@ constructor(
                 this.additionalProperties.putAll(additionalProperties)
             }
 
-            fun build(): Metadata = Metadata(additionalProperties.toUnmodifiable())
+            fun build(): Metadata = Metadata(additionalProperties.toImmutable())
         }
 
         override fun equals(other: Any?): Boolean {

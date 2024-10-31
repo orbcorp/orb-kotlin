@@ -13,7 +13,7 @@ import com.withorb.api.core.JsonField
 import com.withorb.api.core.JsonMissing
 import com.withorb.api.core.JsonValue
 import com.withorb.api.core.NoAutoDetect
-import com.withorb.api.core.toUnmodifiable
+import com.withorb.api.core.toImmutable
 import com.withorb.api.errors.OrbInvalidDataException
 import java.time.OffsetDateTime
 import java.util.Objects
@@ -981,11 +981,11 @@ private constructor(
                 autoCollection,
                 exemptFromAutomatedTax,
                 emailDelivery,
-                additionalEmails.map { it.toUnmodifiable() },
+                additionalEmails.map { it.toImmutable() },
                 portalUrl,
                 accountingSyncConfiguration,
                 reportingConfiguration,
-                additionalProperties.toUnmodifiable(),
+                additionalProperties.toImmutable(),
             )
     }
 
@@ -1129,7 +1129,7 @@ private constructor(
                     state,
                     postalCode,
                     country,
-                    additionalProperties.toUnmodifiable(),
+                    additionalProperties.toImmutable(),
                 )
         }
 
@@ -1207,7 +1207,7 @@ private constructor(
                 this.additionalProperties.putAll(additionalProperties)
             }
 
-            fun build(): Metadata = Metadata(additionalProperties.toUnmodifiable())
+            fun build(): Metadata = Metadata(additionalProperties.toImmutable())
         }
 
         override fun equals(other: Any?): Boolean {
@@ -1445,7 +1445,7 @@ private constructor(
                     state,
                     postalCode,
                     country,
-                    additionalProperties.toUnmodifiable(),
+                    additionalProperties.toImmutable(),
                 )
         }
 
@@ -1671,7 +1671,7 @@ private constructor(
                     country,
                     type,
                     value,
-                    additionalProperties.toUnmodifiable(),
+                    additionalProperties.toImmutable(),
                 )
         }
 
@@ -2766,8 +2766,8 @@ private constructor(
             fun build(): AccountingSyncConfiguration =
                 AccountingSyncConfiguration(
                     excluded,
-                    accountingProviders.map { it.toUnmodifiable() },
-                    additionalProperties.toUnmodifiable(),
+                    accountingProviders.map { it.toImmutable() },
+                    additionalProperties.toImmutable(),
                 )
         }
 
@@ -2861,7 +2861,7 @@ private constructor(
                     AccountingProvider(
                         providerType,
                         externalProviderId,
-                        additionalProperties.toUnmodifiable(),
+                        additionalProperties.toImmutable(),
                     )
             }
 
@@ -3027,7 +3027,7 @@ private constructor(
             }
 
             fun build(): ReportingConfiguration =
-                ReportingConfiguration(exempt, additionalProperties.toUnmodifiable())
+                ReportingConfiguration(exempt, additionalProperties.toImmutable())
         }
 
         override fun equals(other: Any?): Boolean {

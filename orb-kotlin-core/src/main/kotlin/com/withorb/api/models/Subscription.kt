@@ -22,7 +22,7 @@ import com.withorb.api.core.JsonMissing
 import com.withorb.api.core.JsonValue
 import com.withorb.api.core.NoAutoDetect
 import com.withorb.api.core.getOrThrow
-import com.withorb.api.core.toUnmodifiable
+import com.withorb.api.core.toImmutable
 import com.withorb.api.errors.OrbInvalidDataException
 import java.time.OffsetDateTime
 import java.util.Objects
@@ -790,7 +790,7 @@ private constructor(
                 status,
                 trialInfo,
                 activePlanPhaseOrder,
-                fixedFeeQuantitySchedule.map { it.toUnmodifiable() },
+                fixedFeeQuantitySchedule.map { it.toImmutable() },
                 defaultInvoiceMemo,
                 autoCollection,
                 netTerms,
@@ -798,12 +798,12 @@ private constructor(
                 billingCycleDay,
                 billingCycleAnchorConfiguration,
                 invoicingThreshold,
-                priceIntervals.map { it.toUnmodifiable() },
-                adjustmentIntervals.map { it.toUnmodifiable() },
-                discountIntervals.map { it.toUnmodifiable() },
-                minimumIntervals.map { it.toUnmodifiable() },
-                maximumIntervals.map { it.toUnmodifiable() },
-                additionalProperties.toUnmodifiable(),
+                priceIntervals.map { it.toImmutable() },
+                adjustmentIntervals.map { it.toImmutable() },
+                discountIntervals.map { it.toImmutable() },
+                minimumIntervals.map { it.toImmutable() },
+                maximumIntervals.map { it.toImmutable() },
+                additionalProperties.toImmutable(),
             )
     }
 
@@ -954,8 +954,8 @@ private constructor(
                     adjustment,
                     startDate,
                     endDate,
-                    appliesToPriceIntervalIds.map { it.toUnmodifiable() },
-                    additionalProperties.toUnmodifiable(),
+                    appliesToPriceIntervalIds.map { it.toImmutable() },
+                    additionalProperties.toImmutable(),
                 )
         }
 
@@ -1341,11 +1341,11 @@ private constructor(
 
                     fun build(): AmountDiscountAdjustment =
                         AmountDiscountAdjustment(
-                            appliesToPriceIds.map { it.toUnmodifiable() },
+                            appliesToPriceIds.map { it.toImmutable() },
                             reason,
                             adjustmentType,
                             amountDiscount,
-                            additionalProperties.toUnmodifiable(),
+                            additionalProperties.toImmutable(),
                         )
                 }
 
@@ -1572,11 +1572,11 @@ private constructor(
 
                     fun build(): PercentageDiscountAdjustment =
                         PercentageDiscountAdjustment(
-                            appliesToPriceIds.map { it.toUnmodifiable() },
+                            appliesToPriceIds.map { it.toImmutable() },
                             reason,
                             adjustmentType,
                             percentageDiscount,
-                            additionalProperties.toUnmodifiable(),
+                            additionalProperties.toImmutable(),
                         )
                 }
 
@@ -1799,11 +1799,11 @@ private constructor(
 
                     fun build(): UsageDiscountAdjustment =
                         UsageDiscountAdjustment(
-                            appliesToPriceIds.map { it.toUnmodifiable() },
+                            appliesToPriceIds.map { it.toImmutable() },
                             reason,
                             adjustmentType,
                             usageDiscount,
-                            additionalProperties.toUnmodifiable(),
+                            additionalProperties.toImmutable(),
                         )
                 }
 
@@ -2043,12 +2043,12 @@ private constructor(
 
                     fun build(): MinimumAdjustment =
                         MinimumAdjustment(
-                            appliesToPriceIds.map { it.toUnmodifiable() },
+                            appliesToPriceIds.map { it.toImmutable() },
                             reason,
                             adjustmentType,
                             minimumAmount,
                             itemId,
-                            additionalProperties.toUnmodifiable(),
+                            additionalProperties.toImmutable(),
                         )
                 }
 
@@ -2270,11 +2270,11 @@ private constructor(
 
                     fun build(): MaximumAdjustment =
                         MaximumAdjustment(
-                            appliesToPriceIds.map { it.toUnmodifiable() },
+                            appliesToPriceIds.map { it.toImmutable() },
                             reason,
                             adjustmentType,
                             maximumAmount,
-                            additionalProperties.toUnmodifiable(),
+                            additionalProperties.toImmutable(),
                         )
                 }
 
@@ -2525,7 +2525,7 @@ private constructor(
                     day,
                     month,
                     year,
-                    additionalProperties.toUnmodifiable(),
+                    additionalProperties.toImmutable(),
                 )
         }
 
@@ -2907,9 +2907,9 @@ private constructor(
                         amountDiscount,
                         startDate,
                         endDate,
-                        appliesToPriceIds.map { it.toUnmodifiable() },
-                        appliesToPriceIntervalIds.map { it.toUnmodifiable() },
-                        additionalProperties.toUnmodifiable(),
+                        appliesToPriceIds.map { it.toImmutable() },
+                        appliesToPriceIntervalIds.map { it.toImmutable() },
+                        additionalProperties.toImmutable(),
                     )
             }
 
@@ -3172,9 +3172,9 @@ private constructor(
                         percentageDiscount,
                         startDate,
                         endDate,
-                        appliesToPriceIds.map { it.toUnmodifiable() },
-                        appliesToPriceIntervalIds.map { it.toUnmodifiable() },
-                        additionalProperties.toUnmodifiable(),
+                        appliesToPriceIds.map { it.toImmutable() },
+                        appliesToPriceIntervalIds.map { it.toImmutable() },
+                        additionalProperties.toImmutable(),
                     )
             }
 
@@ -3442,9 +3442,9 @@ private constructor(
                         usageDiscount,
                         startDate,
                         endDate,
-                        appliesToPriceIds.map { it.toUnmodifiable() },
-                        appliesToPriceIntervalIds.map { it.toUnmodifiable() },
-                        additionalProperties.toUnmodifiable(),
+                        appliesToPriceIds.map { it.toImmutable() },
+                        appliesToPriceIntervalIds.map { it.toImmutable() },
+                        additionalProperties.toImmutable(),
                     )
             }
 
@@ -3633,7 +3633,7 @@ private constructor(
                     startDate,
                     endDate,
                     quantity,
-                    additionalProperties.toUnmodifiable(),
+                    additionalProperties.toImmutable(),
                 )
         }
 
@@ -3829,10 +3829,10 @@ private constructor(
                 MaximumInterval(
                     startDate,
                     endDate,
-                    appliesToPriceIds.map { it.toUnmodifiable() },
-                    appliesToPriceIntervalIds.map { it.toUnmodifiable() },
+                    appliesToPriceIds.map { it.toImmutable() },
+                    appliesToPriceIntervalIds.map { it.toImmutable() },
                     maximumAmount,
-                    additionalProperties.toUnmodifiable(),
+                    additionalProperties.toImmutable(),
                 )
         }
 
@@ -3910,7 +3910,7 @@ private constructor(
                 this.additionalProperties.putAll(additionalProperties)
             }
 
-            fun build(): Metadata = Metadata(additionalProperties.toUnmodifiable())
+            fun build(): Metadata = Metadata(additionalProperties.toImmutable())
         }
 
         override fun equals(other: Any?): Boolean {
@@ -4104,10 +4104,10 @@ private constructor(
                 MinimumInterval(
                     startDate,
                     endDate,
-                    appliesToPriceIds.map { it.toUnmodifiable() },
-                    appliesToPriceIntervalIds.map { it.toUnmodifiable() },
+                    appliesToPriceIds.map { it.toImmutable() },
+                    appliesToPriceIntervalIds.map { it.toImmutable() },
                     minimumAmount,
-                    additionalProperties.toUnmodifiable(),
+                    additionalProperties.toImmutable(),
                 )
         }
 
@@ -5332,10 +5332,10 @@ private constructor(
                     endDate,
                     price,
                     billingCycleDay,
-                    fixedFeeQuantityTransitions.map { it.toUnmodifiable() },
+                    fixedFeeQuantityTransitions.map { it.toImmutable() },
                     currentBillingPeriodStartDate,
                     currentBillingPeriodEndDate,
-                    additionalProperties.toUnmodifiable(),
+                    additionalProperties.toImmutable(),
                 )
         }
 
@@ -5438,7 +5438,7 @@ private constructor(
                         priceId,
                         effectiveDate,
                         quantity,
-                        additionalProperties.toUnmodifiable(),
+                        additionalProperties.toImmutable(),
                     )
             }
 
@@ -5581,7 +5581,7 @@ private constructor(
                     couponId,
                     startDate,
                     endDate,
-                    additionalProperties.toUnmodifiable(),
+                    additionalProperties.toImmutable(),
                 )
         }
 
@@ -5731,7 +5731,7 @@ private constructor(
                 this.additionalProperties.putAll(additionalProperties)
             }
 
-            fun build(): TrialInfo = TrialInfo(endDate, additionalProperties.toUnmodifiable())
+            fun build(): TrialInfo = TrialInfo(endDate, additionalProperties.toImmutable())
         }
 
         override fun equals(other: Any?): Boolean {

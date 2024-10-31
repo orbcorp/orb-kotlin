@@ -12,7 +12,7 @@ import com.withorb.api.core.ExcludeMissing
 import com.withorb.api.core.JsonField
 import com.withorb.api.core.JsonValue
 import com.withorb.api.core.NoAutoDetect
-import com.withorb.api.core.toUnmodifiable
+import com.withorb.api.core.toImmutable
 import com.withorb.api.errors.OrbInvalidDataException
 import com.withorb.api.models.*
 import java.util.Objects
@@ -117,9 +117,9 @@ constructor(
 
             fun build(): ItemUpdateBody =
                 ItemUpdateBody(
-                    externalConnections?.toUnmodifiable(),
+                    externalConnections?.toImmutable(),
                     name,
-                    additionalProperties.toUnmodifiable(),
+                    additionalProperties.toImmutable(),
                 )
         }
 
@@ -261,11 +261,11 @@ constructor(
         fun build(): ItemUpdateParams =
             ItemUpdateParams(
                 checkNotNull(itemId) { "`itemId` is required but was not set" },
-                if (externalConnections.size == 0) null else externalConnections.toUnmodifiable(),
+                if (externalConnections.size == 0) null else externalConnections.toImmutable(),
                 name,
-                additionalQueryParams.mapValues { it.value.toUnmodifiable() }.toUnmodifiable(),
-                additionalHeaders.mapValues { it.value.toUnmodifiable() }.toUnmodifiable(),
-                additionalBodyProperties.toUnmodifiable(),
+                additionalQueryParams.mapValues { it.value.toImmutable() }.toImmutable(),
+                additionalHeaders.mapValues { it.value.toImmutable() }.toImmutable(),
+                additionalBodyProperties.toImmutable(),
             )
     }
 
@@ -338,7 +338,7 @@ constructor(
                     checkNotNull(externalEntityId) {
                         "`externalEntityId` is required but was not set"
                     },
-                    additionalProperties.toUnmodifiable(),
+                    additionalProperties.toImmutable(),
                 )
         }
 

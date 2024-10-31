@@ -9,7 +9,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize
 import com.withorb.api.core.ExcludeMissing
 import com.withorb.api.core.JsonValue
 import com.withorb.api.core.NoAutoDetect
-import com.withorb.api.core.toUnmodifiable
+import com.withorb.api.core.toImmutable
 import com.withorb.api.models.*
 import java.util.Objects
 
@@ -83,7 +83,7 @@ constructor(
             fun build(): ItemCreateBody =
                 ItemCreateBody(
                     checkNotNull(name) { "`name` is required but was not set" },
-                    additionalProperties.toUnmodifiable()
+                    additionalProperties.toImmutable()
                 )
         }
 
@@ -211,9 +211,9 @@ constructor(
         fun build(): ItemCreateParams =
             ItemCreateParams(
                 checkNotNull(name) { "`name` is required but was not set" },
-                additionalQueryParams.mapValues { it.value.toUnmodifiable() }.toUnmodifiable(),
-                additionalHeaders.mapValues { it.value.toUnmodifiable() }.toUnmodifiable(),
-                additionalBodyProperties.toUnmodifiable(),
+                additionalQueryParams.mapValues { it.value.toImmutable() }.toImmutable(),
+                additionalHeaders.mapValues { it.value.toImmutable() }.toImmutable(),
+                additionalBodyProperties.toImmutable(),
             )
     }
 }

@@ -11,7 +11,7 @@ import com.withorb.api.core.JsonField
 import com.withorb.api.core.JsonMissing
 import com.withorb.api.core.JsonValue
 import com.withorb.api.core.NoAutoDetect
-import com.withorb.api.core.toUnmodifiable
+import com.withorb.api.core.toImmutable
 import java.util.Objects
 
 @JsonDeserialize(builder = EventUpdateResponse.Builder::class)
@@ -81,7 +81,7 @@ private constructor(
         }
 
         fun build(): EventUpdateResponse =
-            EventUpdateResponse(amended, additionalProperties.toUnmodifiable())
+            EventUpdateResponse(amended, additionalProperties.toImmutable())
     }
 
     override fun equals(other: Any?): Boolean {
