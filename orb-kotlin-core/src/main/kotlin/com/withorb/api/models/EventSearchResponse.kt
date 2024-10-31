@@ -11,7 +11,7 @@ import com.withorb.api.core.JsonField
 import com.withorb.api.core.JsonMissing
 import com.withorb.api.core.JsonValue
 import com.withorb.api.core.NoAutoDetect
-import com.withorb.api.core.toUnmodifiable
+import com.withorb.api.core.toImmutable
 import java.time.OffsetDateTime
 import java.util.Objects
 
@@ -78,10 +78,7 @@ private constructor(
         }
 
         fun build(): EventSearchResponse =
-            EventSearchResponse(
-                data.map { it.toUnmodifiable() },
-                additionalProperties.toUnmodifiable()
-            )
+            EventSearchResponse(data.map { it.toImmutable() }, additionalProperties.toImmutable())
     }
 
     /**
@@ -314,7 +311,7 @@ private constructor(
                     properties,
                     timestamp,
                     deprecated,
-                    additionalProperties.toUnmodifiable(),
+                    additionalProperties.toImmutable(),
                 )
         }
 

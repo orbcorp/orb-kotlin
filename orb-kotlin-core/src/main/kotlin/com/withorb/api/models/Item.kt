@@ -13,7 +13,7 @@ import com.withorb.api.core.JsonField
 import com.withorb.api.core.JsonMissing
 import com.withorb.api.core.JsonValue
 import com.withorb.api.core.NoAutoDetect
-import com.withorb.api.core.toUnmodifiable
+import com.withorb.api.core.toImmutable
 import com.withorb.api.errors.OrbInvalidDataException
 import java.time.OffsetDateTime
 import java.util.Objects
@@ -136,8 +136,8 @@ private constructor(
                 id,
                 name,
                 createdAt,
-                externalConnections.map { it.toUnmodifiable() },
-                additionalProperties.toUnmodifiable(),
+                externalConnections.map { it.toImmutable() },
+                additionalProperties.toImmutable(),
             )
     }
 
@@ -233,7 +233,7 @@ private constructor(
                 ExternalConnection(
                     externalConnectionName,
                     externalEntityId,
-                    additionalProperties.toUnmodifiable(),
+                    additionalProperties.toImmutable(),
                 )
         }
 

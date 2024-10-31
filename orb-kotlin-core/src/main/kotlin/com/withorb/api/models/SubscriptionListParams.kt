@@ -7,7 +7,7 @@ import com.withorb.api.core.Enum
 import com.withorb.api.core.JsonField
 import com.withorb.api.core.JsonValue
 import com.withorb.api.core.NoAutoDetect
-import com.withorb.api.core.toUnmodifiable
+import com.withorb.api.core.toImmutable
 import com.withorb.api.errors.OrbInvalidDataException
 import com.withorb.api.models.*
 import java.time.OffsetDateTime
@@ -67,7 +67,7 @@ constructor(
         this.limit?.let { params.put("limit", listOf(it.toString())) }
         this.status?.let { params.put("status", listOf(it.toString())) }
         params.putAll(additionalQueryParams)
-        return params.toUnmodifiable()
+        return params.toImmutable()
     }
 
     internal fun getHeaders(): Map<String, List<String>> = additionalHeaders
@@ -204,12 +204,12 @@ constructor(
                 createdAtLt,
                 createdAtLte,
                 cursor,
-                if (customerId.size == 0) null else customerId.toUnmodifiable(),
+                if (customerId.size == 0) null else customerId.toImmutable(),
                 externalCustomerId,
                 limit,
                 status,
-                additionalQueryParams.mapValues { it.value.toUnmodifiable() }.toUnmodifiable(),
-                additionalHeaders.mapValues { it.value.toUnmodifiable() }.toUnmodifiable(),
+                additionalQueryParams.mapValues { it.value.toImmutable() }.toImmutable(),
+                additionalHeaders.mapValues { it.value.toImmutable() }.toImmutable(),
             )
     }
 

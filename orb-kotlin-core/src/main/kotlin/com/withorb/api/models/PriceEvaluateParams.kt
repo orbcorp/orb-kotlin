@@ -9,7 +9,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize
 import com.withorb.api.core.ExcludeMissing
 import com.withorb.api.core.JsonValue
 import com.withorb.api.core.NoAutoDetect
-import com.withorb.api.core.toUnmodifiable
+import com.withorb.api.core.toImmutable
 import com.withorb.api.models.*
 import java.time.OffsetDateTime
 import java.util.Objects
@@ -195,8 +195,8 @@ constructor(
                     customerId,
                     externalCustomerId,
                     filter,
-                    groupingKeys?.toUnmodifiable(),
-                    additionalProperties.toUnmodifiable(),
+                    groupingKeys?.toImmutable(),
+                    additionalProperties.toImmutable(),
                 )
         }
 
@@ -380,10 +380,10 @@ constructor(
                 customerId,
                 externalCustomerId,
                 filter,
-                if (groupingKeys.size == 0) null else groupingKeys.toUnmodifiable(),
-                additionalQueryParams.mapValues { it.value.toUnmodifiable() }.toUnmodifiable(),
-                additionalHeaders.mapValues { it.value.toUnmodifiable() }.toUnmodifiable(),
-                additionalBodyProperties.toUnmodifiable(),
+                if (groupingKeys.size == 0) null else groupingKeys.toImmutable(),
+                additionalQueryParams.mapValues { it.value.toImmutable() }.toImmutable(),
+                additionalHeaders.mapValues { it.value.toImmutable() }.toImmutable(),
+                additionalBodyProperties.toImmutable(),
             )
     }
 }

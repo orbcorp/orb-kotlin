@@ -22,7 +22,7 @@ import com.withorb.api.core.JsonMissing
 import com.withorb.api.core.JsonValue
 import com.withorb.api.core.NoAutoDetect
 import com.withorb.api.core.getOrThrow
-import com.withorb.api.core.toUnmodifiable
+import com.withorb.api.core.toImmutable
 import com.withorb.api.errors.OrbInvalidDataException
 import java.time.OffsetDateTime
 import java.util.Objects
@@ -1176,7 +1176,7 @@ private constructor(
                     maximum,
                     maximumAmount,
                     unitConfig,
-                    additionalProperties.toUnmodifiable(),
+                    additionalProperties.toImmutable(),
                 )
         }
 
@@ -1243,8 +1243,7 @@ private constructor(
                         this.additionalProperties.putAll(additionalProperties)
                     }
 
-                fun build(): BillableMetric =
-                    BillableMetric(id, additionalProperties.toUnmodifiable())
+                fun build(): BillableMetric = BillableMetric(id, additionalProperties.toImmutable())
             }
 
             override fun equals(other: Any?): Boolean {
@@ -1352,7 +1351,7 @@ private constructor(
                     BillingCycleConfiguration(
                         duration,
                         durationUnit,
-                        additionalProperties.toUnmodifiable(),
+                        additionalProperties.toImmutable(),
                     )
             }
 
@@ -1599,7 +1598,7 @@ private constructor(
                     CreditAllocation(
                         currency,
                         allowsRollover,
-                        additionalProperties.toUnmodifiable(),
+                        additionalProperties.toImmutable(),
                     )
             }
 
@@ -1709,7 +1708,7 @@ private constructor(
                     InvoicingCycleConfiguration(
                         duration,
                         durationUnit,
-                        additionalProperties.toUnmodifiable(),
+                        additionalProperties.toImmutable(),
                     )
             }
 
@@ -1872,7 +1871,7 @@ private constructor(
                     Item(
                         id,
                         name,
-                        additionalProperties.toUnmodifiable(),
+                        additionalProperties.toImmutable(),
                     )
             }
 
@@ -2006,8 +2005,8 @@ private constructor(
                 fun build(): Maximum =
                     Maximum(
                         maximumAmount,
-                        appliesToPriceIds.map { it.toUnmodifiable() },
-                        additionalProperties.toUnmodifiable(),
+                        appliesToPriceIds.map { it.toImmutable() },
+                        additionalProperties.toImmutable(),
                     )
             }
 
@@ -2086,7 +2085,7 @@ private constructor(
                         this.additionalProperties.putAll(additionalProperties)
                     }
 
-                fun build(): Metadata = Metadata(additionalProperties.toUnmodifiable())
+                fun build(): Metadata = Metadata(additionalProperties.toImmutable())
             }
 
             override fun equals(other: Any?): Boolean {
@@ -2218,8 +2217,8 @@ private constructor(
                 fun build(): Minimum =
                     Minimum(
                         minimumAmount,
-                        appliesToPriceIds.map { it.toUnmodifiable() },
-                        additionalProperties.toUnmodifiable(),
+                        appliesToPriceIds.map { it.toImmutable() },
+                        additionalProperties.toImmutable(),
                     )
             }
 
@@ -2421,8 +2420,7 @@ private constructor(
                         this.additionalProperties.putAll(additionalProperties)
                     }
 
-                fun build(): UnitConfig =
-                    UnitConfig(unitAmount, additionalProperties.toUnmodifiable())
+                fun build(): UnitConfig = UnitConfig(unitAmount, additionalProperties.toImmutable())
             }
 
             override fun equals(other: Any?): Boolean {
@@ -2928,7 +2926,7 @@ private constructor(
                     maximum,
                     maximumAmount,
                     packageConfig,
-                    additionalProperties.toUnmodifiable(),
+                    additionalProperties.toImmutable(),
                 )
         }
 
@@ -2995,8 +2993,7 @@ private constructor(
                         this.additionalProperties.putAll(additionalProperties)
                     }
 
-                fun build(): BillableMetric =
-                    BillableMetric(id, additionalProperties.toUnmodifiable())
+                fun build(): BillableMetric = BillableMetric(id, additionalProperties.toImmutable())
             }
 
             override fun equals(other: Any?): Boolean {
@@ -3104,7 +3101,7 @@ private constructor(
                     BillingCycleConfiguration(
                         duration,
                         durationUnit,
-                        additionalProperties.toUnmodifiable(),
+                        additionalProperties.toImmutable(),
                     )
             }
 
@@ -3351,7 +3348,7 @@ private constructor(
                     CreditAllocation(
                         currency,
                         allowsRollover,
-                        additionalProperties.toUnmodifiable(),
+                        additionalProperties.toImmutable(),
                     )
             }
 
@@ -3461,7 +3458,7 @@ private constructor(
                     InvoicingCycleConfiguration(
                         duration,
                         durationUnit,
-                        additionalProperties.toUnmodifiable(),
+                        additionalProperties.toImmutable(),
                     )
             }
 
@@ -3624,7 +3621,7 @@ private constructor(
                     Item(
                         id,
                         name,
-                        additionalProperties.toUnmodifiable(),
+                        additionalProperties.toImmutable(),
                     )
             }
 
@@ -3758,8 +3755,8 @@ private constructor(
                 fun build(): Maximum =
                     Maximum(
                         maximumAmount,
-                        appliesToPriceIds.map { it.toUnmodifiable() },
-                        additionalProperties.toUnmodifiable(),
+                        appliesToPriceIds.map { it.toImmutable() },
+                        additionalProperties.toImmutable(),
                     )
             }
 
@@ -3838,7 +3835,7 @@ private constructor(
                         this.additionalProperties.putAll(additionalProperties)
                     }
 
-                fun build(): Metadata = Metadata(additionalProperties.toUnmodifiable())
+                fun build(): Metadata = Metadata(additionalProperties.toImmutable())
             }
 
             override fun equals(other: Any?): Boolean {
@@ -3970,8 +3967,8 @@ private constructor(
                 fun build(): Minimum =
                     Minimum(
                         minimumAmount,
-                        appliesToPriceIds.map { it.toUnmodifiable() },
-                        additionalProperties.toUnmodifiable(),
+                        appliesToPriceIds.map { it.toImmutable() },
+                        additionalProperties.toImmutable(),
                     )
             }
 
@@ -4153,7 +4150,7 @@ private constructor(
                     PackageConfig(
                         packageAmount,
                         packageSize,
-                        additionalProperties.toUnmodifiable(),
+                        additionalProperties.toImmutable(),
                     )
             }
 
@@ -4716,7 +4713,7 @@ private constructor(
                     maximum,
                     maximumAmount,
                     matrixConfig,
-                    additionalProperties.toUnmodifiable(),
+                    additionalProperties.toImmutable(),
                 )
         }
 
@@ -4783,8 +4780,7 @@ private constructor(
                         this.additionalProperties.putAll(additionalProperties)
                     }
 
-                fun build(): BillableMetric =
-                    BillableMetric(id, additionalProperties.toUnmodifiable())
+                fun build(): BillableMetric = BillableMetric(id, additionalProperties.toImmutable())
             }
 
             override fun equals(other: Any?): Boolean {
@@ -4892,7 +4888,7 @@ private constructor(
                     BillingCycleConfiguration(
                         duration,
                         durationUnit,
-                        additionalProperties.toUnmodifiable(),
+                        additionalProperties.toImmutable(),
                     )
             }
 
@@ -5139,7 +5135,7 @@ private constructor(
                     CreditAllocation(
                         currency,
                         allowsRollover,
-                        additionalProperties.toUnmodifiable(),
+                        additionalProperties.toImmutable(),
                     )
             }
 
@@ -5249,7 +5245,7 @@ private constructor(
                     InvoicingCycleConfiguration(
                         duration,
                         durationUnit,
-                        additionalProperties.toUnmodifiable(),
+                        additionalProperties.toImmutable(),
                     )
             }
 
@@ -5412,7 +5408,7 @@ private constructor(
                     Item(
                         id,
                         name,
-                        additionalProperties.toUnmodifiable(),
+                        additionalProperties.toImmutable(),
                     )
             }
 
@@ -5556,10 +5552,10 @@ private constructor(
 
                 fun build(): MatrixConfig =
                     MatrixConfig(
-                        dimensions.map { it.toUnmodifiable() },
+                        dimensions.map { it.toImmutable() },
                         defaultUnitAmount,
-                        matrixValues.map { it.toUnmodifiable() },
-                        additionalProperties.toUnmodifiable(),
+                        matrixValues.map { it.toImmutable() },
+                        additionalProperties.toImmutable(),
                     )
             }
 
@@ -5675,8 +5671,8 @@ private constructor(
                     fun build(): MatrixValue =
                         MatrixValue(
                             unitAmount,
-                            dimensionValues.map { it.toUnmodifiable() },
-                            additionalProperties.toUnmodifiable(),
+                            dimensionValues.map { it.toImmutable() },
+                            additionalProperties.toImmutable(),
                         )
                 }
 
@@ -5831,8 +5827,8 @@ private constructor(
                 fun build(): Maximum =
                     Maximum(
                         maximumAmount,
-                        appliesToPriceIds.map { it.toUnmodifiable() },
-                        additionalProperties.toUnmodifiable(),
+                        appliesToPriceIds.map { it.toImmutable() },
+                        additionalProperties.toImmutable(),
                     )
             }
 
@@ -5911,7 +5907,7 @@ private constructor(
                         this.additionalProperties.putAll(additionalProperties)
                     }
 
-                fun build(): Metadata = Metadata(additionalProperties.toUnmodifiable())
+                fun build(): Metadata = Metadata(additionalProperties.toImmutable())
             }
 
             override fun equals(other: Any?): Boolean {
@@ -6043,8 +6039,8 @@ private constructor(
                 fun build(): Minimum =
                     Minimum(
                         minimumAmount,
-                        appliesToPriceIds.map { it.toUnmodifiable() },
-                        additionalProperties.toUnmodifiable(),
+                        appliesToPriceIds.map { it.toImmutable() },
+                        additionalProperties.toImmutable(),
                     )
             }
 
@@ -6658,7 +6654,7 @@ private constructor(
                     maximum,
                     maximumAmount,
                     tieredConfig,
-                    additionalProperties.toUnmodifiable(),
+                    additionalProperties.toImmutable(),
                 )
         }
 
@@ -6725,8 +6721,7 @@ private constructor(
                         this.additionalProperties.putAll(additionalProperties)
                     }
 
-                fun build(): BillableMetric =
-                    BillableMetric(id, additionalProperties.toUnmodifiable())
+                fun build(): BillableMetric = BillableMetric(id, additionalProperties.toImmutable())
             }
 
             override fun equals(other: Any?): Boolean {
@@ -6834,7 +6829,7 @@ private constructor(
                     BillingCycleConfiguration(
                         duration,
                         durationUnit,
-                        additionalProperties.toUnmodifiable(),
+                        additionalProperties.toImmutable(),
                     )
             }
 
@@ -7081,7 +7076,7 @@ private constructor(
                     CreditAllocation(
                         currency,
                         allowsRollover,
-                        additionalProperties.toUnmodifiable(),
+                        additionalProperties.toImmutable(),
                     )
             }
 
@@ -7191,7 +7186,7 @@ private constructor(
                     InvoicingCycleConfiguration(
                         duration,
                         durationUnit,
-                        additionalProperties.toUnmodifiable(),
+                        additionalProperties.toImmutable(),
                     )
             }
 
@@ -7354,7 +7349,7 @@ private constructor(
                     Item(
                         id,
                         name,
-                        additionalProperties.toUnmodifiable(),
+                        additionalProperties.toImmutable(),
                     )
             }
 
@@ -7488,8 +7483,8 @@ private constructor(
                 fun build(): Maximum =
                     Maximum(
                         maximumAmount,
-                        appliesToPriceIds.map { it.toUnmodifiable() },
-                        additionalProperties.toUnmodifiable(),
+                        appliesToPriceIds.map { it.toImmutable() },
+                        additionalProperties.toImmutable(),
                     )
             }
 
@@ -7568,7 +7563,7 @@ private constructor(
                         this.additionalProperties.putAll(additionalProperties)
                     }
 
-                fun build(): Metadata = Metadata(additionalProperties.toUnmodifiable())
+                fun build(): Metadata = Metadata(additionalProperties.toImmutable())
             }
 
             override fun equals(other: Any?): Boolean {
@@ -7700,8 +7695,8 @@ private constructor(
                 fun build(): Minimum =
                     Minimum(
                         minimumAmount,
-                        appliesToPriceIds.map { it.toUnmodifiable() },
-                        additionalProperties.toUnmodifiable(),
+                        appliesToPriceIds.map { it.toImmutable() },
+                        additionalProperties.toImmutable(),
                     )
             }
 
@@ -7902,10 +7897,7 @@ private constructor(
                     }
 
                 fun build(): TieredConfig =
-                    TieredConfig(
-                        tiers.map { it.toUnmodifiable() },
-                        additionalProperties.toUnmodifiable()
-                    )
+                    TieredConfig(tiers.map { it.toImmutable() }, additionalProperties.toImmutable())
             }
 
             @JsonDeserialize(builder = Tier.Builder::class)
@@ -8020,7 +8012,7 @@ private constructor(
                             firstUnit,
                             lastUnit,
                             unitAmount,
-                            additionalProperties.toUnmodifiable(),
+                            additionalProperties.toImmutable(),
                         )
                 }
 
@@ -8548,7 +8540,7 @@ private constructor(
                     maximum,
                     maximumAmount,
                     tieredBpsConfig,
-                    additionalProperties.toUnmodifiable(),
+                    additionalProperties.toImmutable(),
                 )
         }
 
@@ -8615,8 +8607,7 @@ private constructor(
                         this.additionalProperties.putAll(additionalProperties)
                     }
 
-                fun build(): BillableMetric =
-                    BillableMetric(id, additionalProperties.toUnmodifiable())
+                fun build(): BillableMetric = BillableMetric(id, additionalProperties.toImmutable())
             }
 
             override fun equals(other: Any?): Boolean {
@@ -8724,7 +8715,7 @@ private constructor(
                     BillingCycleConfiguration(
                         duration,
                         durationUnit,
-                        additionalProperties.toUnmodifiable(),
+                        additionalProperties.toImmutable(),
                     )
             }
 
@@ -8971,7 +8962,7 @@ private constructor(
                     CreditAllocation(
                         currency,
                         allowsRollover,
-                        additionalProperties.toUnmodifiable(),
+                        additionalProperties.toImmutable(),
                     )
             }
 
@@ -9081,7 +9072,7 @@ private constructor(
                     InvoicingCycleConfiguration(
                         duration,
                         durationUnit,
-                        additionalProperties.toUnmodifiable(),
+                        additionalProperties.toImmutable(),
                     )
             }
 
@@ -9244,7 +9235,7 @@ private constructor(
                     Item(
                         id,
                         name,
-                        additionalProperties.toUnmodifiable(),
+                        additionalProperties.toImmutable(),
                     )
             }
 
@@ -9378,8 +9369,8 @@ private constructor(
                 fun build(): Maximum =
                     Maximum(
                         maximumAmount,
-                        appliesToPriceIds.map { it.toUnmodifiable() },
-                        additionalProperties.toUnmodifiable(),
+                        appliesToPriceIds.map { it.toImmutable() },
+                        additionalProperties.toImmutable(),
                     )
             }
 
@@ -9458,7 +9449,7 @@ private constructor(
                         this.additionalProperties.putAll(additionalProperties)
                     }
 
-                fun build(): Metadata = Metadata(additionalProperties.toUnmodifiable())
+                fun build(): Metadata = Metadata(additionalProperties.toImmutable())
             }
 
             override fun equals(other: Any?): Boolean {
@@ -9590,8 +9581,8 @@ private constructor(
                 fun build(): Minimum =
                     Minimum(
                         minimumAmount,
-                        appliesToPriceIds.map { it.toUnmodifiable() },
-                        additionalProperties.toUnmodifiable(),
+                        appliesToPriceIds.map { it.toImmutable() },
+                        additionalProperties.toImmutable(),
                     )
             }
 
@@ -9803,8 +9794,8 @@ private constructor(
 
                 fun build(): TieredBpsConfig =
                     TieredBpsConfig(
-                        tiers.map { it.toUnmodifiable() },
-                        additionalProperties.toUnmodifiable()
+                        tiers.map { it.toImmutable() },
+                        additionalProperties.toImmutable()
                     )
             }
 
@@ -9946,7 +9937,7 @@ private constructor(
                             maximumAmount,
                             bps,
                             perUnitMaximum,
-                            additionalProperties.toUnmodifiable(),
+                            additionalProperties.toImmutable(),
                         )
                 }
 
@@ -10471,7 +10462,7 @@ private constructor(
                     maximum,
                     maximumAmount,
                     bpsConfig,
-                    additionalProperties.toUnmodifiable(),
+                    additionalProperties.toImmutable(),
                 )
         }
 
@@ -10538,8 +10529,7 @@ private constructor(
                         this.additionalProperties.putAll(additionalProperties)
                     }
 
-                fun build(): BillableMetric =
-                    BillableMetric(id, additionalProperties.toUnmodifiable())
+                fun build(): BillableMetric = BillableMetric(id, additionalProperties.toImmutable())
             }
 
             override fun equals(other: Any?): Boolean {
@@ -10647,7 +10637,7 @@ private constructor(
                     BillingCycleConfiguration(
                         duration,
                         durationUnit,
-                        additionalProperties.toUnmodifiable(),
+                        additionalProperties.toImmutable(),
                     )
             }
 
@@ -10821,7 +10811,7 @@ private constructor(
                     BpsConfig(
                         bps,
                         perUnitMaximum,
-                        additionalProperties.toUnmodifiable(),
+                        additionalProperties.toImmutable(),
                     )
             }
 
@@ -11011,7 +11001,7 @@ private constructor(
                     CreditAllocation(
                         currency,
                         allowsRollover,
-                        additionalProperties.toUnmodifiable(),
+                        additionalProperties.toImmutable(),
                     )
             }
 
@@ -11121,7 +11111,7 @@ private constructor(
                     InvoicingCycleConfiguration(
                         duration,
                         durationUnit,
-                        additionalProperties.toUnmodifiable(),
+                        additionalProperties.toImmutable(),
                     )
             }
 
@@ -11284,7 +11274,7 @@ private constructor(
                     Item(
                         id,
                         name,
-                        additionalProperties.toUnmodifiable(),
+                        additionalProperties.toImmutable(),
                     )
             }
 
@@ -11418,8 +11408,8 @@ private constructor(
                 fun build(): Maximum =
                     Maximum(
                         maximumAmount,
-                        appliesToPriceIds.map { it.toUnmodifiable() },
-                        additionalProperties.toUnmodifiable(),
+                        appliesToPriceIds.map { it.toImmutable() },
+                        additionalProperties.toImmutable(),
                     )
             }
 
@@ -11498,7 +11488,7 @@ private constructor(
                         this.additionalProperties.putAll(additionalProperties)
                     }
 
-                fun build(): Metadata = Metadata(additionalProperties.toUnmodifiable())
+                fun build(): Metadata = Metadata(additionalProperties.toImmutable())
             }
 
             override fun equals(other: Any?): Boolean {
@@ -11630,8 +11620,8 @@ private constructor(
                 fun build(): Minimum =
                     Minimum(
                         minimumAmount,
-                        appliesToPriceIds.map { it.toUnmodifiable() },
-                        additionalProperties.toUnmodifiable(),
+                        appliesToPriceIds.map { it.toImmutable() },
+                        additionalProperties.toImmutable(),
                     )
             }
 
@@ -12246,7 +12236,7 @@ private constructor(
                     maximum,
                     maximumAmount,
                     bulkBpsConfig,
-                    additionalProperties.toUnmodifiable(),
+                    additionalProperties.toImmutable(),
                 )
         }
 
@@ -12313,8 +12303,7 @@ private constructor(
                         this.additionalProperties.putAll(additionalProperties)
                     }
 
-                fun build(): BillableMetric =
-                    BillableMetric(id, additionalProperties.toUnmodifiable())
+                fun build(): BillableMetric = BillableMetric(id, additionalProperties.toImmutable())
             }
 
             override fun equals(other: Any?): Boolean {
@@ -12422,7 +12411,7 @@ private constructor(
                     BillingCycleConfiguration(
                         duration,
                         durationUnit,
-                        additionalProperties.toUnmodifiable(),
+                        additionalProperties.toImmutable(),
                     )
             }
 
@@ -12585,8 +12574,8 @@ private constructor(
 
                 fun build(): BulkBpsConfig =
                     BulkBpsConfig(
-                        tiers.map { it.toUnmodifiable() },
-                        additionalProperties.toUnmodifiable()
+                        tiers.map { it.toImmutable() },
+                        additionalProperties.toImmutable()
                     )
             }
 
@@ -12706,7 +12695,7 @@ private constructor(
                             maximumAmount,
                             bps,
                             perUnitMaximum,
-                            additionalProperties.toUnmodifiable(),
+                            additionalProperties.toImmutable(),
                         )
                 }
 
@@ -12917,7 +12906,7 @@ private constructor(
                     CreditAllocation(
                         currency,
                         allowsRollover,
-                        additionalProperties.toUnmodifiable(),
+                        additionalProperties.toImmutable(),
                     )
             }
 
@@ -13027,7 +13016,7 @@ private constructor(
                     InvoicingCycleConfiguration(
                         duration,
                         durationUnit,
-                        additionalProperties.toUnmodifiable(),
+                        additionalProperties.toImmutable(),
                     )
             }
 
@@ -13190,7 +13179,7 @@ private constructor(
                     Item(
                         id,
                         name,
-                        additionalProperties.toUnmodifiable(),
+                        additionalProperties.toImmutable(),
                     )
             }
 
@@ -13324,8 +13313,8 @@ private constructor(
                 fun build(): Maximum =
                     Maximum(
                         maximumAmount,
-                        appliesToPriceIds.map { it.toUnmodifiable() },
-                        additionalProperties.toUnmodifiable(),
+                        appliesToPriceIds.map { it.toImmutable() },
+                        additionalProperties.toImmutable(),
                     )
             }
 
@@ -13404,7 +13393,7 @@ private constructor(
                         this.additionalProperties.putAll(additionalProperties)
                     }
 
-                fun build(): Metadata = Metadata(additionalProperties.toUnmodifiable())
+                fun build(): Metadata = Metadata(additionalProperties.toImmutable())
             }
 
             override fun equals(other: Any?): Boolean {
@@ -13536,8 +13525,8 @@ private constructor(
                 fun build(): Minimum =
                     Minimum(
                         minimumAmount,
-                        appliesToPriceIds.map { it.toUnmodifiable() },
-                        additionalProperties.toUnmodifiable(),
+                        appliesToPriceIds.map { it.toImmutable() },
+                        additionalProperties.toImmutable(),
                     )
             }
 
@@ -14151,7 +14140,7 @@ private constructor(
                     maximum,
                     maximumAmount,
                     bulkConfig,
-                    additionalProperties.toUnmodifiable(),
+                    additionalProperties.toImmutable(),
                 )
         }
 
@@ -14218,8 +14207,7 @@ private constructor(
                         this.additionalProperties.putAll(additionalProperties)
                     }
 
-                fun build(): BillableMetric =
-                    BillableMetric(id, additionalProperties.toUnmodifiable())
+                fun build(): BillableMetric = BillableMetric(id, additionalProperties.toImmutable())
             }
 
             override fun equals(other: Any?): Boolean {
@@ -14327,7 +14315,7 @@ private constructor(
                     BillingCycleConfiguration(
                         duration,
                         durationUnit,
-                        additionalProperties.toUnmodifiable(),
+                        additionalProperties.toImmutable(),
                     )
             }
 
@@ -14477,10 +14465,7 @@ private constructor(
                     }
 
                 fun build(): BulkConfig =
-                    BulkConfig(
-                        tiers.map { it.toUnmodifiable() },
-                        additionalProperties.toUnmodifiable()
-                    )
+                    BulkConfig(tiers.map { it.toImmutable() }, additionalProperties.toImmutable())
             }
 
             @JsonDeserialize(builder = Tier.Builder::class)
@@ -14577,7 +14562,7 @@ private constructor(
                         Tier(
                             maximumUnits,
                             unitAmount,
-                            additionalProperties.toUnmodifiable(),
+                            additionalProperties.toImmutable(),
                         )
                 }
 
@@ -14788,7 +14773,7 @@ private constructor(
                     CreditAllocation(
                         currency,
                         allowsRollover,
-                        additionalProperties.toUnmodifiable(),
+                        additionalProperties.toImmutable(),
                     )
             }
 
@@ -14898,7 +14883,7 @@ private constructor(
                     InvoicingCycleConfiguration(
                         duration,
                         durationUnit,
-                        additionalProperties.toUnmodifiable(),
+                        additionalProperties.toImmutable(),
                     )
             }
 
@@ -15061,7 +15046,7 @@ private constructor(
                     Item(
                         id,
                         name,
-                        additionalProperties.toUnmodifiable(),
+                        additionalProperties.toImmutable(),
                     )
             }
 
@@ -15195,8 +15180,8 @@ private constructor(
                 fun build(): Maximum =
                     Maximum(
                         maximumAmount,
-                        appliesToPriceIds.map { it.toUnmodifiable() },
-                        additionalProperties.toUnmodifiable(),
+                        appliesToPriceIds.map { it.toImmutable() },
+                        additionalProperties.toImmutable(),
                     )
             }
 
@@ -15275,7 +15260,7 @@ private constructor(
                         this.additionalProperties.putAll(additionalProperties)
                     }
 
-                fun build(): Metadata = Metadata(additionalProperties.toUnmodifiable())
+                fun build(): Metadata = Metadata(additionalProperties.toImmutable())
             }
 
             override fun equals(other: Any?): Boolean {
@@ -15407,8 +15392,8 @@ private constructor(
                 fun build(): Minimum =
                     Minimum(
                         minimumAmount,
-                        appliesToPriceIds.map { it.toUnmodifiable() },
-                        additionalProperties.toUnmodifiable(),
+                        appliesToPriceIds.map { it.toImmutable() },
+                        additionalProperties.toImmutable(),
                     )
             }
 
@@ -16029,7 +16014,7 @@ private constructor(
                     maximum,
                     maximumAmount,
                     thresholdTotalAmountConfig,
-                    additionalProperties.toUnmodifiable(),
+                    additionalProperties.toImmutable(),
                 )
         }
 
@@ -16096,8 +16081,7 @@ private constructor(
                         this.additionalProperties.putAll(additionalProperties)
                     }
 
-                fun build(): BillableMetric =
-                    BillableMetric(id, additionalProperties.toUnmodifiable())
+                fun build(): BillableMetric = BillableMetric(id, additionalProperties.toImmutable())
             }
 
             override fun equals(other: Any?): Boolean {
@@ -16205,7 +16189,7 @@ private constructor(
                     BillingCycleConfiguration(
                         duration,
                         durationUnit,
-                        additionalProperties.toUnmodifiable(),
+                        additionalProperties.toImmutable(),
                     )
             }
 
@@ -16452,7 +16436,7 @@ private constructor(
                     CreditAllocation(
                         currency,
                         allowsRollover,
-                        additionalProperties.toUnmodifiable(),
+                        additionalProperties.toImmutable(),
                     )
             }
 
@@ -16562,7 +16546,7 @@ private constructor(
                     InvoicingCycleConfiguration(
                         duration,
                         durationUnit,
-                        additionalProperties.toUnmodifiable(),
+                        additionalProperties.toImmutable(),
                     )
             }
 
@@ -16725,7 +16709,7 @@ private constructor(
                     Item(
                         id,
                         name,
-                        additionalProperties.toUnmodifiable(),
+                        additionalProperties.toImmutable(),
                     )
             }
 
@@ -16859,8 +16843,8 @@ private constructor(
                 fun build(): Maximum =
                     Maximum(
                         maximumAmount,
-                        appliesToPriceIds.map { it.toUnmodifiable() },
-                        additionalProperties.toUnmodifiable(),
+                        appliesToPriceIds.map { it.toImmutable() },
+                        additionalProperties.toImmutable(),
                     )
             }
 
@@ -16939,7 +16923,7 @@ private constructor(
                         this.additionalProperties.putAll(additionalProperties)
                     }
 
-                fun build(): Metadata = Metadata(additionalProperties.toUnmodifiable())
+                fun build(): Metadata = Metadata(additionalProperties.toImmutable())
             }
 
             override fun equals(other: Any?): Boolean {
@@ -17071,8 +17055,8 @@ private constructor(
                 fun build(): Minimum =
                     Minimum(
                         minimumAmount,
-                        appliesToPriceIds.map { it.toUnmodifiable() },
-                        additionalProperties.toUnmodifiable(),
+                        appliesToPriceIds.map { it.toImmutable() },
+                        additionalProperties.toImmutable(),
                     )
             }
 
@@ -17255,7 +17239,7 @@ private constructor(
                     }
 
                 fun build(): ThresholdTotalAmountConfig =
-                    ThresholdTotalAmountConfig(additionalProperties.toUnmodifiable())
+                    ThresholdTotalAmountConfig(additionalProperties.toImmutable())
             }
 
             override fun equals(other: Any?): Boolean {
@@ -17764,7 +17748,7 @@ private constructor(
                     maximum,
                     maximumAmount,
                     tieredPackageConfig,
-                    additionalProperties.toUnmodifiable(),
+                    additionalProperties.toImmutable(),
                 )
         }
 
@@ -17831,8 +17815,7 @@ private constructor(
                         this.additionalProperties.putAll(additionalProperties)
                     }
 
-                fun build(): BillableMetric =
-                    BillableMetric(id, additionalProperties.toUnmodifiable())
+                fun build(): BillableMetric = BillableMetric(id, additionalProperties.toImmutable())
             }
 
             override fun equals(other: Any?): Boolean {
@@ -17940,7 +17923,7 @@ private constructor(
                     BillingCycleConfiguration(
                         duration,
                         durationUnit,
-                        additionalProperties.toUnmodifiable(),
+                        additionalProperties.toImmutable(),
                     )
             }
 
@@ -18187,7 +18170,7 @@ private constructor(
                     CreditAllocation(
                         currency,
                         allowsRollover,
-                        additionalProperties.toUnmodifiable(),
+                        additionalProperties.toImmutable(),
                     )
             }
 
@@ -18297,7 +18280,7 @@ private constructor(
                     InvoicingCycleConfiguration(
                         duration,
                         durationUnit,
-                        additionalProperties.toUnmodifiable(),
+                        additionalProperties.toImmutable(),
                     )
             }
 
@@ -18460,7 +18443,7 @@ private constructor(
                     Item(
                         id,
                         name,
-                        additionalProperties.toUnmodifiable(),
+                        additionalProperties.toImmutable(),
                     )
             }
 
@@ -18594,8 +18577,8 @@ private constructor(
                 fun build(): Maximum =
                     Maximum(
                         maximumAmount,
-                        appliesToPriceIds.map { it.toUnmodifiable() },
-                        additionalProperties.toUnmodifiable(),
+                        appliesToPriceIds.map { it.toImmutable() },
+                        additionalProperties.toImmutable(),
                     )
             }
 
@@ -18674,7 +18657,7 @@ private constructor(
                         this.additionalProperties.putAll(additionalProperties)
                     }
 
-                fun build(): Metadata = Metadata(additionalProperties.toUnmodifiable())
+                fun build(): Metadata = Metadata(additionalProperties.toImmutable())
             }
 
             override fun equals(other: Any?): Boolean {
@@ -18806,8 +18789,8 @@ private constructor(
                 fun build(): Minimum =
                     Minimum(
                         minimumAmount,
-                        appliesToPriceIds.map { it.toUnmodifiable() },
-                        additionalProperties.toUnmodifiable(),
+                        appliesToPriceIds.map { it.toImmutable() },
+                        additionalProperties.toImmutable(),
                     )
             }
 
@@ -18990,7 +18973,7 @@ private constructor(
                     }
 
                 fun build(): TieredPackageConfig =
-                    TieredPackageConfig(additionalProperties.toUnmodifiable())
+                    TieredPackageConfig(additionalProperties.toImmutable())
             }
 
             override fun equals(other: Any?): Boolean {
@@ -19499,7 +19482,7 @@ private constructor(
                     maximum,
                     maximumAmount,
                     groupedTieredConfig,
-                    additionalProperties.toUnmodifiable(),
+                    additionalProperties.toImmutable(),
                 )
         }
 
@@ -19566,8 +19549,7 @@ private constructor(
                         this.additionalProperties.putAll(additionalProperties)
                     }
 
-                fun build(): BillableMetric =
-                    BillableMetric(id, additionalProperties.toUnmodifiable())
+                fun build(): BillableMetric = BillableMetric(id, additionalProperties.toImmutable())
             }
 
             override fun equals(other: Any?): Boolean {
@@ -19675,7 +19657,7 @@ private constructor(
                     BillingCycleConfiguration(
                         duration,
                         durationUnit,
-                        additionalProperties.toUnmodifiable(),
+                        additionalProperties.toImmutable(),
                     )
             }
 
@@ -19922,7 +19904,7 @@ private constructor(
                     CreditAllocation(
                         currency,
                         allowsRollover,
-                        additionalProperties.toUnmodifiable(),
+                        additionalProperties.toImmutable(),
                     )
             }
 
@@ -19997,7 +19979,7 @@ private constructor(
                     }
 
                 fun build(): GroupedTieredConfig =
-                    GroupedTieredConfig(additionalProperties.toUnmodifiable())
+                    GroupedTieredConfig(additionalProperties.toImmutable())
             }
 
             override fun equals(other: Any?): Boolean {
@@ -20106,7 +20088,7 @@ private constructor(
                     InvoicingCycleConfiguration(
                         duration,
                         durationUnit,
-                        additionalProperties.toUnmodifiable(),
+                        additionalProperties.toImmutable(),
                     )
             }
 
@@ -20269,7 +20251,7 @@ private constructor(
                     Item(
                         id,
                         name,
-                        additionalProperties.toUnmodifiable(),
+                        additionalProperties.toImmutable(),
                     )
             }
 
@@ -20403,8 +20385,8 @@ private constructor(
                 fun build(): Maximum =
                     Maximum(
                         maximumAmount,
-                        appliesToPriceIds.map { it.toUnmodifiable() },
-                        additionalProperties.toUnmodifiable(),
+                        appliesToPriceIds.map { it.toImmutable() },
+                        additionalProperties.toImmutable(),
                     )
             }
 
@@ -20483,7 +20465,7 @@ private constructor(
                         this.additionalProperties.putAll(additionalProperties)
                     }
 
-                fun build(): Metadata = Metadata(additionalProperties.toUnmodifiable())
+                fun build(): Metadata = Metadata(additionalProperties.toImmutable())
             }
 
             override fun equals(other: Any?): Boolean {
@@ -20615,8 +20597,8 @@ private constructor(
                 fun build(): Minimum =
                     Minimum(
                         minimumAmount,
-                        appliesToPriceIds.map { it.toUnmodifiable() },
-                        additionalProperties.toUnmodifiable(),
+                        appliesToPriceIds.map { it.toImmutable() },
+                        additionalProperties.toImmutable(),
                     )
             }
 
@@ -21236,7 +21218,7 @@ private constructor(
                     maximum,
                     maximumAmount,
                     tieredWithMinimumConfig,
-                    additionalProperties.toUnmodifiable(),
+                    additionalProperties.toImmutable(),
                 )
         }
 
@@ -21303,8 +21285,7 @@ private constructor(
                         this.additionalProperties.putAll(additionalProperties)
                     }
 
-                fun build(): BillableMetric =
-                    BillableMetric(id, additionalProperties.toUnmodifiable())
+                fun build(): BillableMetric = BillableMetric(id, additionalProperties.toImmutable())
             }
 
             override fun equals(other: Any?): Boolean {
@@ -21412,7 +21393,7 @@ private constructor(
                     BillingCycleConfiguration(
                         duration,
                         durationUnit,
-                        additionalProperties.toUnmodifiable(),
+                        additionalProperties.toImmutable(),
                     )
             }
 
@@ -21659,7 +21640,7 @@ private constructor(
                     CreditAllocation(
                         currency,
                         allowsRollover,
-                        additionalProperties.toUnmodifiable(),
+                        additionalProperties.toImmutable(),
                     )
             }
 
@@ -21769,7 +21750,7 @@ private constructor(
                     InvoicingCycleConfiguration(
                         duration,
                         durationUnit,
-                        additionalProperties.toUnmodifiable(),
+                        additionalProperties.toImmutable(),
                     )
             }
 
@@ -21932,7 +21913,7 @@ private constructor(
                     Item(
                         id,
                         name,
-                        additionalProperties.toUnmodifiable(),
+                        additionalProperties.toImmutable(),
                     )
             }
 
@@ -22066,8 +22047,8 @@ private constructor(
                 fun build(): Maximum =
                     Maximum(
                         maximumAmount,
-                        appliesToPriceIds.map { it.toUnmodifiable() },
-                        additionalProperties.toUnmodifiable(),
+                        appliesToPriceIds.map { it.toImmutable() },
+                        additionalProperties.toImmutable(),
                     )
             }
 
@@ -22146,7 +22127,7 @@ private constructor(
                         this.additionalProperties.putAll(additionalProperties)
                     }
 
-                fun build(): Metadata = Metadata(additionalProperties.toUnmodifiable())
+                fun build(): Metadata = Metadata(additionalProperties.toImmutable())
             }
 
             override fun equals(other: Any?): Boolean {
@@ -22278,8 +22259,8 @@ private constructor(
                 fun build(): Minimum =
                     Minimum(
                         minimumAmount,
-                        appliesToPriceIds.map { it.toUnmodifiable() },
-                        additionalProperties.toUnmodifiable(),
+                        appliesToPriceIds.map { it.toImmutable() },
+                        additionalProperties.toImmutable(),
                     )
             }
 
@@ -22462,7 +22443,7 @@ private constructor(
                     }
 
                 fun build(): TieredWithMinimumConfig =
-                    TieredWithMinimumConfig(additionalProperties.toUnmodifiable())
+                    TieredWithMinimumConfig(additionalProperties.toImmutable())
             }
 
             override fun equals(other: Any?): Boolean {
@@ -22977,7 +22958,7 @@ private constructor(
                     maximum,
                     maximumAmount,
                     tieredPackageWithMinimumConfig,
-                    additionalProperties.toUnmodifiable(),
+                    additionalProperties.toImmutable(),
                 )
         }
 
@@ -23044,8 +23025,7 @@ private constructor(
                         this.additionalProperties.putAll(additionalProperties)
                     }
 
-                fun build(): BillableMetric =
-                    BillableMetric(id, additionalProperties.toUnmodifiable())
+                fun build(): BillableMetric = BillableMetric(id, additionalProperties.toImmutable())
             }
 
             override fun equals(other: Any?): Boolean {
@@ -23153,7 +23133,7 @@ private constructor(
                     BillingCycleConfiguration(
                         duration,
                         durationUnit,
-                        additionalProperties.toUnmodifiable(),
+                        additionalProperties.toImmutable(),
                     )
             }
 
@@ -23400,7 +23380,7 @@ private constructor(
                     CreditAllocation(
                         currency,
                         allowsRollover,
-                        additionalProperties.toUnmodifiable(),
+                        additionalProperties.toImmutable(),
                     )
             }
 
@@ -23510,7 +23490,7 @@ private constructor(
                     InvoicingCycleConfiguration(
                         duration,
                         durationUnit,
-                        additionalProperties.toUnmodifiable(),
+                        additionalProperties.toImmutable(),
                     )
             }
 
@@ -23673,7 +23653,7 @@ private constructor(
                     Item(
                         id,
                         name,
-                        additionalProperties.toUnmodifiable(),
+                        additionalProperties.toImmutable(),
                     )
             }
 
@@ -23807,8 +23787,8 @@ private constructor(
                 fun build(): Maximum =
                     Maximum(
                         maximumAmount,
-                        appliesToPriceIds.map { it.toUnmodifiable() },
-                        additionalProperties.toUnmodifiable(),
+                        appliesToPriceIds.map { it.toImmutable() },
+                        additionalProperties.toImmutable(),
                     )
             }
 
@@ -23887,7 +23867,7 @@ private constructor(
                         this.additionalProperties.putAll(additionalProperties)
                     }
 
-                fun build(): Metadata = Metadata(additionalProperties.toUnmodifiable())
+                fun build(): Metadata = Metadata(additionalProperties.toImmutable())
             }
 
             override fun equals(other: Any?): Boolean {
@@ -24019,8 +23999,8 @@ private constructor(
                 fun build(): Minimum =
                     Minimum(
                         minimumAmount,
-                        appliesToPriceIds.map { it.toUnmodifiable() },
-                        additionalProperties.toUnmodifiable(),
+                        appliesToPriceIds.map { it.toImmutable() },
+                        additionalProperties.toImmutable(),
                     )
             }
 
@@ -24205,7 +24185,7 @@ private constructor(
                     }
 
                 fun build(): TieredPackageWithMinimumConfig =
-                    TieredPackageWithMinimumConfig(additionalProperties.toUnmodifiable())
+                    TieredPackageWithMinimumConfig(additionalProperties.toImmutable())
             }
 
             override fun equals(other: Any?): Boolean {
@@ -24719,7 +24699,7 @@ private constructor(
                     maximum,
                     maximumAmount,
                     packageWithAllocationConfig,
-                    additionalProperties.toUnmodifiable(),
+                    additionalProperties.toImmutable(),
                 )
         }
 
@@ -24786,8 +24766,7 @@ private constructor(
                         this.additionalProperties.putAll(additionalProperties)
                     }
 
-                fun build(): BillableMetric =
-                    BillableMetric(id, additionalProperties.toUnmodifiable())
+                fun build(): BillableMetric = BillableMetric(id, additionalProperties.toImmutable())
             }
 
             override fun equals(other: Any?): Boolean {
@@ -24895,7 +24874,7 @@ private constructor(
                     BillingCycleConfiguration(
                         duration,
                         durationUnit,
-                        additionalProperties.toUnmodifiable(),
+                        additionalProperties.toImmutable(),
                     )
             }
 
@@ -25142,7 +25121,7 @@ private constructor(
                     CreditAllocation(
                         currency,
                         allowsRollover,
-                        additionalProperties.toUnmodifiable(),
+                        additionalProperties.toImmutable(),
                     )
             }
 
@@ -25252,7 +25231,7 @@ private constructor(
                     InvoicingCycleConfiguration(
                         duration,
                         durationUnit,
-                        additionalProperties.toUnmodifiable(),
+                        additionalProperties.toImmutable(),
                     )
             }
 
@@ -25415,7 +25394,7 @@ private constructor(
                     Item(
                         id,
                         name,
-                        additionalProperties.toUnmodifiable(),
+                        additionalProperties.toImmutable(),
                     )
             }
 
@@ -25549,8 +25528,8 @@ private constructor(
                 fun build(): Maximum =
                     Maximum(
                         maximumAmount,
-                        appliesToPriceIds.map { it.toUnmodifiable() },
-                        additionalProperties.toUnmodifiable(),
+                        appliesToPriceIds.map { it.toImmutable() },
+                        additionalProperties.toImmutable(),
                     )
             }
 
@@ -25629,7 +25608,7 @@ private constructor(
                         this.additionalProperties.putAll(additionalProperties)
                     }
 
-                fun build(): Metadata = Metadata(additionalProperties.toUnmodifiable())
+                fun build(): Metadata = Metadata(additionalProperties.toImmutable())
             }
 
             override fun equals(other: Any?): Boolean {
@@ -25761,8 +25740,8 @@ private constructor(
                 fun build(): Minimum =
                     Minimum(
                         minimumAmount,
-                        appliesToPriceIds.map { it.toUnmodifiable() },
-                        additionalProperties.toUnmodifiable(),
+                        appliesToPriceIds.map { it.toImmutable() },
+                        additionalProperties.toImmutable(),
                     )
             }
 
@@ -25889,7 +25868,7 @@ private constructor(
                     }
 
                 fun build(): PackageWithAllocationConfig =
-                    PackageWithAllocationConfig(additionalProperties.toUnmodifiable())
+                    PackageWithAllocationConfig(additionalProperties.toImmutable())
             }
 
             override fun equals(other: Any?): Boolean {
@@ -26456,7 +26435,7 @@ private constructor(
                     maximum,
                     maximumAmount,
                     unitWithPercentConfig,
-                    additionalProperties.toUnmodifiable(),
+                    additionalProperties.toImmutable(),
                 )
         }
 
@@ -26523,8 +26502,7 @@ private constructor(
                         this.additionalProperties.putAll(additionalProperties)
                     }
 
-                fun build(): BillableMetric =
-                    BillableMetric(id, additionalProperties.toUnmodifiable())
+                fun build(): BillableMetric = BillableMetric(id, additionalProperties.toImmutable())
             }
 
             override fun equals(other: Any?): Boolean {
@@ -26632,7 +26610,7 @@ private constructor(
                     BillingCycleConfiguration(
                         duration,
                         durationUnit,
-                        additionalProperties.toUnmodifiable(),
+                        additionalProperties.toImmutable(),
                     )
             }
 
@@ -26879,7 +26857,7 @@ private constructor(
                     CreditAllocation(
                         currency,
                         allowsRollover,
-                        additionalProperties.toUnmodifiable(),
+                        additionalProperties.toImmutable(),
                     )
             }
 
@@ -26989,7 +26967,7 @@ private constructor(
                     InvoicingCycleConfiguration(
                         duration,
                         durationUnit,
-                        additionalProperties.toUnmodifiable(),
+                        additionalProperties.toImmutable(),
                     )
             }
 
@@ -27152,7 +27130,7 @@ private constructor(
                     Item(
                         id,
                         name,
-                        additionalProperties.toUnmodifiable(),
+                        additionalProperties.toImmutable(),
                     )
             }
 
@@ -27286,8 +27264,8 @@ private constructor(
                 fun build(): Maximum =
                     Maximum(
                         maximumAmount,
-                        appliesToPriceIds.map { it.toUnmodifiable() },
-                        additionalProperties.toUnmodifiable(),
+                        appliesToPriceIds.map { it.toImmutable() },
+                        additionalProperties.toImmutable(),
                     )
             }
 
@@ -27366,7 +27344,7 @@ private constructor(
                         this.additionalProperties.putAll(additionalProperties)
                     }
 
-                fun build(): Metadata = Metadata(additionalProperties.toUnmodifiable())
+                fun build(): Metadata = Metadata(additionalProperties.toImmutable())
             }
 
             override fun equals(other: Any?): Boolean {
@@ -27498,8 +27476,8 @@ private constructor(
                 fun build(): Minimum =
                     Minimum(
                         minimumAmount,
-                        appliesToPriceIds.map { it.toUnmodifiable() },
-                        additionalProperties.toUnmodifiable(),
+                        appliesToPriceIds.map { it.toImmutable() },
+                        additionalProperties.toImmutable(),
                     )
             }
 
@@ -27682,7 +27660,7 @@ private constructor(
                     }
 
                 fun build(): UnitWithPercentConfig =
-                    UnitWithPercentConfig(additionalProperties.toUnmodifiable())
+                    UnitWithPercentConfig(additionalProperties.toImmutable())
             }
 
             override fun equals(other: Any?): Boolean {
@@ -28194,7 +28172,7 @@ private constructor(
                     maximum,
                     maximumAmount,
                     matrixWithAllocationConfig,
-                    additionalProperties.toUnmodifiable(),
+                    additionalProperties.toImmutable(),
                 )
         }
 
@@ -28261,8 +28239,7 @@ private constructor(
                         this.additionalProperties.putAll(additionalProperties)
                     }
 
-                fun build(): BillableMetric =
-                    BillableMetric(id, additionalProperties.toUnmodifiable())
+                fun build(): BillableMetric = BillableMetric(id, additionalProperties.toImmutable())
             }
 
             override fun equals(other: Any?): Boolean {
@@ -28370,7 +28347,7 @@ private constructor(
                     BillingCycleConfiguration(
                         duration,
                         durationUnit,
-                        additionalProperties.toUnmodifiable(),
+                        additionalProperties.toImmutable(),
                     )
             }
 
@@ -28617,7 +28594,7 @@ private constructor(
                     CreditAllocation(
                         currency,
                         allowsRollover,
-                        additionalProperties.toUnmodifiable(),
+                        additionalProperties.toImmutable(),
                     )
             }
 
@@ -28727,7 +28704,7 @@ private constructor(
                     InvoicingCycleConfiguration(
                         duration,
                         durationUnit,
-                        additionalProperties.toUnmodifiable(),
+                        additionalProperties.toImmutable(),
                     )
             }
 
@@ -28890,7 +28867,7 @@ private constructor(
                     Item(
                         id,
                         name,
-                        additionalProperties.toUnmodifiable(),
+                        additionalProperties.toImmutable(),
                     )
             }
 
@@ -29054,11 +29031,11 @@ private constructor(
 
                 fun build(): MatrixWithAllocationConfig =
                     MatrixWithAllocationConfig(
-                        dimensions.map { it.toUnmodifiable() },
+                        dimensions.map { it.toImmutable() },
                         defaultUnitAmount,
-                        matrixValues.map { it.toUnmodifiable() },
+                        matrixValues.map { it.toImmutable() },
                         allocation,
-                        additionalProperties.toUnmodifiable(),
+                        additionalProperties.toImmutable(),
                     )
             }
 
@@ -29174,8 +29151,8 @@ private constructor(
                     fun build(): MatrixValue =
                         MatrixValue(
                             unitAmount,
-                            dimensionValues.map { it.toUnmodifiable() },
-                            additionalProperties.toUnmodifiable(),
+                            dimensionValues.map { it.toImmutable() },
+                            additionalProperties.toImmutable(),
                         )
                 }
 
@@ -29330,8 +29307,8 @@ private constructor(
                 fun build(): Maximum =
                     Maximum(
                         maximumAmount,
-                        appliesToPriceIds.map { it.toUnmodifiable() },
-                        additionalProperties.toUnmodifiable(),
+                        appliesToPriceIds.map { it.toImmutable() },
+                        additionalProperties.toImmutable(),
                     )
             }
 
@@ -29410,7 +29387,7 @@ private constructor(
                         this.additionalProperties.putAll(additionalProperties)
                     }
 
-                fun build(): Metadata = Metadata(additionalProperties.toUnmodifiable())
+                fun build(): Metadata = Metadata(additionalProperties.toImmutable())
             }
 
             override fun equals(other: Any?): Boolean {
@@ -29542,8 +29519,8 @@ private constructor(
                 fun build(): Minimum =
                     Minimum(
                         minimumAmount,
-                        appliesToPriceIds.map { it.toUnmodifiable() },
-                        additionalProperties.toUnmodifiable(),
+                        appliesToPriceIds.map { it.toImmutable() },
+                        additionalProperties.toImmutable(),
                     )
             }
 
@@ -30163,7 +30140,7 @@ private constructor(
                     maximum,
                     maximumAmount,
                     tieredWithProrationConfig,
-                    additionalProperties.toUnmodifiable(),
+                    additionalProperties.toImmutable(),
                 )
         }
 
@@ -30230,8 +30207,7 @@ private constructor(
                         this.additionalProperties.putAll(additionalProperties)
                     }
 
-                fun build(): BillableMetric =
-                    BillableMetric(id, additionalProperties.toUnmodifiable())
+                fun build(): BillableMetric = BillableMetric(id, additionalProperties.toImmutable())
             }
 
             override fun equals(other: Any?): Boolean {
@@ -30339,7 +30315,7 @@ private constructor(
                     BillingCycleConfiguration(
                         duration,
                         durationUnit,
-                        additionalProperties.toUnmodifiable(),
+                        additionalProperties.toImmutable(),
                     )
             }
 
@@ -30586,7 +30562,7 @@ private constructor(
                     CreditAllocation(
                         currency,
                         allowsRollover,
-                        additionalProperties.toUnmodifiable(),
+                        additionalProperties.toImmutable(),
                     )
             }
 
@@ -30696,7 +30672,7 @@ private constructor(
                     InvoicingCycleConfiguration(
                         duration,
                         durationUnit,
-                        additionalProperties.toUnmodifiable(),
+                        additionalProperties.toImmutable(),
                     )
             }
 
@@ -30859,7 +30835,7 @@ private constructor(
                     Item(
                         id,
                         name,
-                        additionalProperties.toUnmodifiable(),
+                        additionalProperties.toImmutable(),
                     )
             }
 
@@ -30993,8 +30969,8 @@ private constructor(
                 fun build(): Maximum =
                     Maximum(
                         maximumAmount,
-                        appliesToPriceIds.map { it.toUnmodifiable() },
-                        additionalProperties.toUnmodifiable(),
+                        appliesToPriceIds.map { it.toImmutable() },
+                        additionalProperties.toImmutable(),
                     )
             }
 
@@ -31073,7 +31049,7 @@ private constructor(
                         this.additionalProperties.putAll(additionalProperties)
                     }
 
-                fun build(): Metadata = Metadata(additionalProperties.toUnmodifiable())
+                fun build(): Metadata = Metadata(additionalProperties.toImmutable())
             }
 
             override fun equals(other: Any?): Boolean {
@@ -31205,8 +31181,8 @@ private constructor(
                 fun build(): Minimum =
                     Minimum(
                         minimumAmount,
-                        appliesToPriceIds.map { it.toUnmodifiable() },
-                        additionalProperties.toUnmodifiable(),
+                        appliesToPriceIds.map { it.toImmutable() },
+                        additionalProperties.toImmutable(),
                     )
             }
 
@@ -31389,7 +31365,7 @@ private constructor(
                     }
 
                 fun build(): TieredWithProrationConfig =
-                    TieredWithProrationConfig(additionalProperties.toUnmodifiable())
+                    TieredWithProrationConfig(additionalProperties.toImmutable())
             }
 
             override fun equals(other: Any?): Boolean {
@@ -31900,7 +31876,7 @@ private constructor(
                     maximum,
                     maximumAmount,
                     unitWithProrationConfig,
-                    additionalProperties.toUnmodifiable(),
+                    additionalProperties.toImmutable(),
                 )
         }
 
@@ -31967,8 +31943,7 @@ private constructor(
                         this.additionalProperties.putAll(additionalProperties)
                     }
 
-                fun build(): BillableMetric =
-                    BillableMetric(id, additionalProperties.toUnmodifiable())
+                fun build(): BillableMetric = BillableMetric(id, additionalProperties.toImmutable())
             }
 
             override fun equals(other: Any?): Boolean {
@@ -32076,7 +32051,7 @@ private constructor(
                     BillingCycleConfiguration(
                         duration,
                         durationUnit,
-                        additionalProperties.toUnmodifiable(),
+                        additionalProperties.toImmutable(),
                     )
             }
 
@@ -32323,7 +32298,7 @@ private constructor(
                     CreditAllocation(
                         currency,
                         allowsRollover,
-                        additionalProperties.toUnmodifiable(),
+                        additionalProperties.toImmutable(),
                     )
             }
 
@@ -32433,7 +32408,7 @@ private constructor(
                     InvoicingCycleConfiguration(
                         duration,
                         durationUnit,
-                        additionalProperties.toUnmodifiable(),
+                        additionalProperties.toImmutable(),
                     )
             }
 
@@ -32596,7 +32571,7 @@ private constructor(
                     Item(
                         id,
                         name,
-                        additionalProperties.toUnmodifiable(),
+                        additionalProperties.toImmutable(),
                     )
             }
 
@@ -32730,8 +32705,8 @@ private constructor(
                 fun build(): Maximum =
                     Maximum(
                         maximumAmount,
-                        appliesToPriceIds.map { it.toUnmodifiable() },
-                        additionalProperties.toUnmodifiable(),
+                        appliesToPriceIds.map { it.toImmutable() },
+                        additionalProperties.toImmutable(),
                     )
             }
 
@@ -32810,7 +32785,7 @@ private constructor(
                         this.additionalProperties.putAll(additionalProperties)
                     }
 
-                fun build(): Metadata = Metadata(additionalProperties.toUnmodifiable())
+                fun build(): Metadata = Metadata(additionalProperties.toImmutable())
             }
 
             override fun equals(other: Any?): Boolean {
@@ -32942,8 +32917,8 @@ private constructor(
                 fun build(): Minimum =
                     Minimum(
                         minimumAmount,
-                        appliesToPriceIds.map { it.toUnmodifiable() },
-                        additionalProperties.toUnmodifiable(),
+                        appliesToPriceIds.map { it.toImmutable() },
+                        additionalProperties.toImmutable(),
                     )
             }
 
@@ -33126,7 +33101,7 @@ private constructor(
                     }
 
                 fun build(): UnitWithProrationConfig =
-                    UnitWithProrationConfig(additionalProperties.toUnmodifiable())
+                    UnitWithProrationConfig(additionalProperties.toImmutable())
             }
 
             override fun equals(other: Any?): Boolean {
@@ -33637,7 +33612,7 @@ private constructor(
                     maximum,
                     maximumAmount,
                     groupedAllocationConfig,
-                    additionalProperties.toUnmodifiable(),
+                    additionalProperties.toImmutable(),
                 )
         }
 
@@ -33704,8 +33679,7 @@ private constructor(
                         this.additionalProperties.putAll(additionalProperties)
                     }
 
-                fun build(): BillableMetric =
-                    BillableMetric(id, additionalProperties.toUnmodifiable())
+                fun build(): BillableMetric = BillableMetric(id, additionalProperties.toImmutable())
             }
 
             override fun equals(other: Any?): Boolean {
@@ -33813,7 +33787,7 @@ private constructor(
                     BillingCycleConfiguration(
                         duration,
                         durationUnit,
-                        additionalProperties.toUnmodifiable(),
+                        additionalProperties.toImmutable(),
                     )
             }
 
@@ -34060,7 +34034,7 @@ private constructor(
                     CreditAllocation(
                         currency,
                         allowsRollover,
-                        additionalProperties.toUnmodifiable(),
+                        additionalProperties.toImmutable(),
                     )
             }
 
@@ -34135,7 +34109,7 @@ private constructor(
                     }
 
                 fun build(): GroupedAllocationConfig =
-                    GroupedAllocationConfig(additionalProperties.toUnmodifiable())
+                    GroupedAllocationConfig(additionalProperties.toImmutable())
             }
 
             override fun equals(other: Any?): Boolean {
@@ -34244,7 +34218,7 @@ private constructor(
                     InvoicingCycleConfiguration(
                         duration,
                         durationUnit,
-                        additionalProperties.toUnmodifiable(),
+                        additionalProperties.toImmutable(),
                     )
             }
 
@@ -34407,7 +34381,7 @@ private constructor(
                     Item(
                         id,
                         name,
-                        additionalProperties.toUnmodifiable(),
+                        additionalProperties.toImmutable(),
                     )
             }
 
@@ -34541,8 +34515,8 @@ private constructor(
                 fun build(): Maximum =
                     Maximum(
                         maximumAmount,
-                        appliesToPriceIds.map { it.toUnmodifiable() },
-                        additionalProperties.toUnmodifiable(),
+                        appliesToPriceIds.map { it.toImmutable() },
+                        additionalProperties.toImmutable(),
                     )
             }
 
@@ -34621,7 +34595,7 @@ private constructor(
                         this.additionalProperties.putAll(additionalProperties)
                     }
 
-                fun build(): Metadata = Metadata(additionalProperties.toUnmodifiable())
+                fun build(): Metadata = Metadata(additionalProperties.toImmutable())
             }
 
             override fun equals(other: Any?): Boolean {
@@ -34753,8 +34727,8 @@ private constructor(
                 fun build(): Minimum =
                     Minimum(
                         minimumAmount,
-                        appliesToPriceIds.map { it.toUnmodifiable() },
-                        additionalProperties.toUnmodifiable(),
+                        appliesToPriceIds.map { it.toImmutable() },
+                        additionalProperties.toImmutable(),
                     )
             }
 
@@ -35379,7 +35353,7 @@ private constructor(
                     maximum,
                     maximumAmount,
                     groupedWithProratedMinimumConfig,
-                    additionalProperties.toUnmodifiable(),
+                    additionalProperties.toImmutable(),
                 )
         }
 
@@ -35446,8 +35420,7 @@ private constructor(
                         this.additionalProperties.putAll(additionalProperties)
                     }
 
-                fun build(): BillableMetric =
-                    BillableMetric(id, additionalProperties.toUnmodifiable())
+                fun build(): BillableMetric = BillableMetric(id, additionalProperties.toImmutable())
             }
 
             override fun equals(other: Any?): Boolean {
@@ -35555,7 +35528,7 @@ private constructor(
                     BillingCycleConfiguration(
                         duration,
                         durationUnit,
-                        additionalProperties.toUnmodifiable(),
+                        additionalProperties.toImmutable(),
                     )
             }
 
@@ -35802,7 +35775,7 @@ private constructor(
                     CreditAllocation(
                         currency,
                         allowsRollover,
-                        additionalProperties.toUnmodifiable(),
+                        additionalProperties.toImmutable(),
                     )
             }
 
@@ -35879,7 +35852,7 @@ private constructor(
                     }
 
                 fun build(): GroupedWithProratedMinimumConfig =
-                    GroupedWithProratedMinimumConfig(additionalProperties.toUnmodifiable())
+                    GroupedWithProratedMinimumConfig(additionalProperties.toImmutable())
             }
 
             override fun equals(other: Any?): Boolean {
@@ -35988,7 +35961,7 @@ private constructor(
                     InvoicingCycleConfiguration(
                         duration,
                         durationUnit,
-                        additionalProperties.toUnmodifiable(),
+                        additionalProperties.toImmutable(),
                     )
             }
 
@@ -36151,7 +36124,7 @@ private constructor(
                     Item(
                         id,
                         name,
-                        additionalProperties.toUnmodifiable(),
+                        additionalProperties.toImmutable(),
                     )
             }
 
@@ -36285,8 +36258,8 @@ private constructor(
                 fun build(): Maximum =
                     Maximum(
                         maximumAmount,
-                        appliesToPriceIds.map { it.toUnmodifiable() },
-                        additionalProperties.toUnmodifiable(),
+                        appliesToPriceIds.map { it.toImmutable() },
+                        additionalProperties.toImmutable(),
                     )
             }
 
@@ -36365,7 +36338,7 @@ private constructor(
                         this.additionalProperties.putAll(additionalProperties)
                     }
 
-                fun build(): Metadata = Metadata(additionalProperties.toUnmodifiable())
+                fun build(): Metadata = Metadata(additionalProperties.toImmutable())
             }
 
             override fun equals(other: Any?): Boolean {
@@ -36497,8 +36470,8 @@ private constructor(
                 fun build(): Minimum =
                     Minimum(
                         minimumAmount,
-                        appliesToPriceIds.map { it.toUnmodifiable() },
-                        additionalProperties.toUnmodifiable(),
+                        appliesToPriceIds.map { it.toImmutable() },
+                        additionalProperties.toImmutable(),
                     )
             }
 
@@ -37124,7 +37097,7 @@ private constructor(
                     maximum,
                     maximumAmount,
                     groupedWithMeteredMinimumConfig,
-                    additionalProperties.toUnmodifiable(),
+                    additionalProperties.toImmutable(),
                 )
         }
 
@@ -37191,8 +37164,7 @@ private constructor(
                         this.additionalProperties.putAll(additionalProperties)
                     }
 
-                fun build(): BillableMetric =
-                    BillableMetric(id, additionalProperties.toUnmodifiable())
+                fun build(): BillableMetric = BillableMetric(id, additionalProperties.toImmutable())
             }
 
             override fun equals(other: Any?): Boolean {
@@ -37300,7 +37272,7 @@ private constructor(
                     BillingCycleConfiguration(
                         duration,
                         durationUnit,
-                        additionalProperties.toUnmodifiable(),
+                        additionalProperties.toImmutable(),
                     )
             }
 
@@ -37547,7 +37519,7 @@ private constructor(
                     CreditAllocation(
                         currency,
                         allowsRollover,
-                        additionalProperties.toUnmodifiable(),
+                        additionalProperties.toImmutable(),
                     )
             }
 
@@ -37624,7 +37596,7 @@ private constructor(
                     }
 
                 fun build(): GroupedWithMeteredMinimumConfig =
-                    GroupedWithMeteredMinimumConfig(additionalProperties.toUnmodifiable())
+                    GroupedWithMeteredMinimumConfig(additionalProperties.toImmutable())
             }
 
             override fun equals(other: Any?): Boolean {
@@ -37733,7 +37705,7 @@ private constructor(
                     InvoicingCycleConfiguration(
                         duration,
                         durationUnit,
-                        additionalProperties.toUnmodifiable(),
+                        additionalProperties.toImmutable(),
                     )
             }
 
@@ -37896,7 +37868,7 @@ private constructor(
                     Item(
                         id,
                         name,
-                        additionalProperties.toUnmodifiable(),
+                        additionalProperties.toImmutable(),
                     )
             }
 
@@ -38030,8 +38002,8 @@ private constructor(
                 fun build(): Maximum =
                     Maximum(
                         maximumAmount,
-                        appliesToPriceIds.map { it.toUnmodifiable() },
-                        additionalProperties.toUnmodifiable(),
+                        appliesToPriceIds.map { it.toImmutable() },
+                        additionalProperties.toImmutable(),
                     )
             }
 
@@ -38110,7 +38082,7 @@ private constructor(
                         this.additionalProperties.putAll(additionalProperties)
                     }
 
-                fun build(): Metadata = Metadata(additionalProperties.toUnmodifiable())
+                fun build(): Metadata = Metadata(additionalProperties.toImmutable())
             }
 
             override fun equals(other: Any?): Boolean {
@@ -38242,8 +38214,8 @@ private constructor(
                 fun build(): Minimum =
                     Minimum(
                         minimumAmount,
-                        appliesToPriceIds.map { it.toUnmodifiable() },
-                        additionalProperties.toUnmodifiable(),
+                        appliesToPriceIds.map { it.toImmutable() },
+                        additionalProperties.toImmutable(),
                     )
             }
 
@@ -38867,7 +38839,7 @@ private constructor(
                     maximum,
                     maximumAmount,
                     matrixWithDisplayNameConfig,
-                    additionalProperties.toUnmodifiable(),
+                    additionalProperties.toImmutable(),
                 )
         }
 
@@ -38934,8 +38906,7 @@ private constructor(
                         this.additionalProperties.putAll(additionalProperties)
                     }
 
-                fun build(): BillableMetric =
-                    BillableMetric(id, additionalProperties.toUnmodifiable())
+                fun build(): BillableMetric = BillableMetric(id, additionalProperties.toImmutable())
             }
 
             override fun equals(other: Any?): Boolean {
@@ -39043,7 +39014,7 @@ private constructor(
                     BillingCycleConfiguration(
                         duration,
                         durationUnit,
-                        additionalProperties.toUnmodifiable(),
+                        additionalProperties.toImmutable(),
                     )
             }
 
@@ -39290,7 +39261,7 @@ private constructor(
                     CreditAllocation(
                         currency,
                         allowsRollover,
-                        additionalProperties.toUnmodifiable(),
+                        additionalProperties.toImmutable(),
                     )
             }
 
@@ -39400,7 +39371,7 @@ private constructor(
                     InvoicingCycleConfiguration(
                         duration,
                         durationUnit,
-                        additionalProperties.toUnmodifiable(),
+                        additionalProperties.toImmutable(),
                     )
             }
 
@@ -39563,7 +39534,7 @@ private constructor(
                     Item(
                         id,
                         name,
-                        additionalProperties.toUnmodifiable(),
+                        additionalProperties.toImmutable(),
                     )
             }
 
@@ -39639,7 +39610,7 @@ private constructor(
                     }
 
                 fun build(): MatrixWithDisplayNameConfig =
-                    MatrixWithDisplayNameConfig(additionalProperties.toUnmodifiable())
+                    MatrixWithDisplayNameConfig(additionalProperties.toImmutable())
             }
 
             override fun equals(other: Any?): Boolean {
@@ -39772,8 +39743,8 @@ private constructor(
                 fun build(): Maximum =
                     Maximum(
                         maximumAmount,
-                        appliesToPriceIds.map { it.toUnmodifiable() },
-                        additionalProperties.toUnmodifiable(),
+                        appliesToPriceIds.map { it.toImmutable() },
+                        additionalProperties.toImmutable(),
                     )
             }
 
@@ -39852,7 +39823,7 @@ private constructor(
                         this.additionalProperties.putAll(additionalProperties)
                     }
 
-                fun build(): Metadata = Metadata(additionalProperties.toUnmodifiable())
+                fun build(): Metadata = Metadata(additionalProperties.toImmutable())
             }
 
             override fun equals(other: Any?): Boolean {
@@ -39984,8 +39955,8 @@ private constructor(
                 fun build(): Minimum =
                     Minimum(
                         minimumAmount,
-                        appliesToPriceIds.map { it.toUnmodifiable() },
-                        additionalProperties.toUnmodifiable(),
+                        appliesToPriceIds.map { it.toImmutable() },
+                        additionalProperties.toImmutable(),
                     )
             }
 
@@ -40605,7 +40576,7 @@ private constructor(
                     maximum,
                     maximumAmount,
                     bulkWithProrationConfig,
-                    additionalProperties.toUnmodifiable(),
+                    additionalProperties.toImmutable(),
                 )
         }
 
@@ -40672,8 +40643,7 @@ private constructor(
                         this.additionalProperties.putAll(additionalProperties)
                     }
 
-                fun build(): BillableMetric =
-                    BillableMetric(id, additionalProperties.toUnmodifiable())
+                fun build(): BillableMetric = BillableMetric(id, additionalProperties.toImmutable())
             }
 
             override fun equals(other: Any?): Boolean {
@@ -40781,7 +40751,7 @@ private constructor(
                     BillingCycleConfiguration(
                         duration,
                         durationUnit,
-                        additionalProperties.toUnmodifiable(),
+                        additionalProperties.toImmutable(),
                     )
             }
 
@@ -40913,7 +40883,7 @@ private constructor(
                     }
 
                 fun build(): BulkWithProrationConfig =
-                    BulkWithProrationConfig(additionalProperties.toUnmodifiable())
+                    BulkWithProrationConfig(additionalProperties.toImmutable())
             }
 
             override fun equals(other: Any?): Boolean {
@@ -41102,7 +41072,7 @@ private constructor(
                     CreditAllocation(
                         currency,
                         allowsRollover,
-                        additionalProperties.toUnmodifiable(),
+                        additionalProperties.toImmutable(),
                     )
             }
 
@@ -41212,7 +41182,7 @@ private constructor(
                     InvoicingCycleConfiguration(
                         duration,
                         durationUnit,
-                        additionalProperties.toUnmodifiable(),
+                        additionalProperties.toImmutable(),
                     )
             }
 
@@ -41375,7 +41345,7 @@ private constructor(
                     Item(
                         id,
                         name,
-                        additionalProperties.toUnmodifiable(),
+                        additionalProperties.toImmutable(),
                     )
             }
 
@@ -41509,8 +41479,8 @@ private constructor(
                 fun build(): Maximum =
                     Maximum(
                         maximumAmount,
-                        appliesToPriceIds.map { it.toUnmodifiable() },
-                        additionalProperties.toUnmodifiable(),
+                        appliesToPriceIds.map { it.toImmutable() },
+                        additionalProperties.toImmutable(),
                     )
             }
 
@@ -41589,7 +41559,7 @@ private constructor(
                         this.additionalProperties.putAll(additionalProperties)
                     }
 
-                fun build(): Metadata = Metadata(additionalProperties.toUnmodifiable())
+                fun build(): Metadata = Metadata(additionalProperties.toImmutable())
             }
 
             override fun equals(other: Any?): Boolean {
@@ -41721,8 +41691,8 @@ private constructor(
                 fun build(): Minimum =
                     Minimum(
                         minimumAmount,
-                        appliesToPriceIds.map { it.toUnmodifiable() },
-                        additionalProperties.toUnmodifiable(),
+                        appliesToPriceIds.map { it.toImmutable() },
+                        additionalProperties.toImmutable(),
                     )
             }
 

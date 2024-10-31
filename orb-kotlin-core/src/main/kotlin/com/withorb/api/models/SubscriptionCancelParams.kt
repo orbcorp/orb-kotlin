@@ -12,7 +12,7 @@ import com.withorb.api.core.ExcludeMissing
 import com.withorb.api.core.JsonField
 import com.withorb.api.core.JsonValue
 import com.withorb.api.core.NoAutoDetect
-import com.withorb.api.core.toUnmodifiable
+import com.withorb.api.core.toImmutable
 import com.withorb.api.errors.OrbInvalidDataException
 import com.withorb.api.models.*
 import java.time.OffsetDateTime
@@ -128,7 +128,7 @@ constructor(
                 SubscriptionCancelBody(
                     checkNotNull(cancelOption) { "`cancelOption` is required but was not set" },
                     cancellationDate,
-                    additionalProperties.toUnmodifiable(),
+                    additionalProperties.toImmutable(),
                 )
         }
 
@@ -272,9 +272,9 @@ constructor(
                 checkNotNull(subscriptionId) { "`subscriptionId` is required but was not set" },
                 checkNotNull(cancelOption) { "`cancelOption` is required but was not set" },
                 cancellationDate,
-                additionalQueryParams.mapValues { it.value.toUnmodifiable() }.toUnmodifiable(),
-                additionalHeaders.mapValues { it.value.toUnmodifiable() }.toUnmodifiable(),
-                additionalBodyProperties.toUnmodifiable(),
+                additionalQueryParams.mapValues { it.value.toImmutable() }.toImmutable(),
+                additionalHeaders.mapValues { it.value.toImmutable() }.toImmutable(),
+                additionalBodyProperties.toImmutable(),
             )
     }
 
