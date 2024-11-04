@@ -13,6 +13,33 @@ import org.junit.jupiter.api.extension.ExtendWith
 class CreditNoteServiceTest {
 
     @Test
+    fun callCreate() {
+        val client =
+            OrbOkHttpClient.builder()
+                .baseUrl(TestServerExtension.BASE_URL)
+                .apiKey("My API Key")
+                .build()
+        val creditNoteService = client.creditNotes()
+        val creditNote =
+            creditNoteService.create(
+                CreditNoteCreateParams.builder()
+                    .lineItems(
+                        listOf(
+                            CreditNoteCreateParams.LineItem.builder()
+                                .amount("amount")
+                                .invoiceLineItemId("4khy3nwzktxv7")
+                                .build()
+                        )
+                    )
+                    .memo("An optional memo for my credit note.")
+                    .reason(CreditNoteCreateParams.Reason.DUPLICATE)
+                    .build()
+            )
+        println(creditNote)
+        creditNote.validate()
+    }
+
+    @Test
     fun callList() {
         val client =
             OrbOkHttpClient.builder()
