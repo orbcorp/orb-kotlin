@@ -51,10 +51,10 @@ constructor(
             HttpRequest.builder()
                 .method(HttpMethod.POST)
                 .addPathSegments("customers", params.getPathParam(0), "credits", "top_ups")
-                .putAllQueryParams(clientOptions.queryParams)
-                .putAllQueryParams(params.getQueryParams())
-                .putAllHeaders(clientOptions.headers)
-                .putAllHeaders(params.getHeaders())
+                .putAllQueryParams(clientOptions.queryParams.asMap())
+                .replaceAllQueryParams(params.getQueryParams())
+                .putAllHeaders(clientOptions.headers.asMap())
+                .replaceAllHeaders(params.getHeaders())
                 .body(json(clientOptions.jsonMapper, params.getBody()))
                 .build()
         return clientOptions.httpClient.execute(request, requestOptions).let { response ->
@@ -81,10 +81,10 @@ constructor(
             HttpRequest.builder()
                 .method(HttpMethod.GET)
                 .addPathSegments("customers", params.getPathParam(0), "credits", "top_ups")
-                .putAllQueryParams(clientOptions.queryParams)
-                .putAllQueryParams(params.getQueryParams())
-                .putAllHeaders(clientOptions.headers)
-                .putAllHeaders(params.getHeaders())
+                .putAllQueryParams(clientOptions.queryParams.asMap())
+                .replaceAllQueryParams(params.getQueryParams())
+                .putAllHeaders(clientOptions.headers.asMap())
+                .replaceAllHeaders(params.getHeaders())
                 .build()
         return clientOptions.httpClient.execute(request, requestOptions).let { response ->
             response
@@ -112,10 +112,10 @@ constructor(
                     "top_ups",
                     params.getPathParam(1)
                 )
-                .putAllQueryParams(clientOptions.queryParams)
-                .putAllQueryParams(params.getQueryParams())
-                .putAllHeaders(clientOptions.headers)
-                .putAllHeaders(params.getHeaders())
+                .putAllQueryParams(clientOptions.queryParams.asMap())
+                .replaceAllQueryParams(params.getQueryParams())
+                .putAllHeaders(clientOptions.headers.asMap())
+                .replaceAllHeaders(params.getHeaders())
                 .apply { params.getBody()?.also { body(json(clientOptions.jsonMapper, it)) } }
                 .build()
         clientOptions.httpClient.execute(request, requestOptions).let { response ->
@@ -149,10 +149,10 @@ constructor(
                     "credits",
                     "top_ups"
                 )
-                .putAllQueryParams(clientOptions.queryParams)
-                .putAllQueryParams(params.getQueryParams())
-                .putAllHeaders(clientOptions.headers)
-                .putAllHeaders(params.getHeaders())
+                .putAllQueryParams(clientOptions.queryParams.asMap())
+                .replaceAllQueryParams(params.getQueryParams())
+                .putAllHeaders(clientOptions.headers.asMap())
+                .replaceAllHeaders(params.getHeaders())
                 .body(json(clientOptions.jsonMapper, params.getBody()))
                 .build()
         return clientOptions.httpClient.execute(request, requestOptions).let { response ->
@@ -185,10 +185,10 @@ constructor(
                     "top_ups",
                     params.getPathParam(1)
                 )
-                .putAllQueryParams(clientOptions.queryParams)
-                .putAllQueryParams(params.getQueryParams())
-                .putAllHeaders(clientOptions.headers)
-                .putAllHeaders(params.getHeaders())
+                .putAllQueryParams(clientOptions.queryParams.asMap())
+                .replaceAllQueryParams(params.getQueryParams())
+                .putAllHeaders(clientOptions.headers.asMap())
+                .replaceAllHeaders(params.getHeaders())
                 .apply { params.getBody()?.also { body(json(clientOptions.jsonMapper, it)) } }
                 .build()
         clientOptions.httpClient.execute(request, requestOptions).let { response ->
@@ -215,10 +215,10 @@ constructor(
                     "credits",
                     "top_ups"
                 )
-                .putAllQueryParams(clientOptions.queryParams)
-                .putAllQueryParams(params.getQueryParams())
-                .putAllHeaders(clientOptions.headers)
-                .putAllHeaders(params.getHeaders())
+                .putAllQueryParams(clientOptions.queryParams.asMap())
+                .replaceAllQueryParams(params.getQueryParams())
+                .putAllHeaders(clientOptions.headers.asMap())
+                .replaceAllHeaders(params.getHeaders())
                 .build()
         return clientOptions.httpClient.execute(request, requestOptions).let { response ->
             response
