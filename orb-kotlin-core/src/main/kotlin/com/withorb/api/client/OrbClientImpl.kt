@@ -59,6 +59,8 @@ constructor(
 
     private val alerts: AlertService by lazy { AlertServiceImpl(clientOptionsWithUserAgent) }
 
+    private val webhooks: WebhookService by lazy { WebhookServiceImpl(clientOptions) }
+
     override fun async(): OrbClientAsync = async
 
     override fun topLevel(): TopLevelService = topLevel
@@ -86,4 +88,6 @@ constructor(
     override fun subscriptions(): SubscriptionService = subscriptions
 
     override fun alerts(): AlertService = alerts
+
+    override fun webhooks(): WebhookService = webhooks
 }
