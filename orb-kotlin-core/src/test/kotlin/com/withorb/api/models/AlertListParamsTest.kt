@@ -2,6 +2,7 @@
 
 package com.withorb.api.models
 
+import com.withorb.api.core.http.QueryParams
 import com.withorb.api.models.*
 import java.time.OffsetDateTime
 import org.assertj.core.api.Assertions.assertThat
@@ -38,23 +39,23 @@ class AlertListParamsTest {
                 .limit(123L)
                 .subscriptionId("subscription_id")
                 .build()
-        val expected = mutableMapOf<String, List<String>>()
-        expected.put("created_at[gt]", listOf("2019-12-27T18:11:19.117Z"))
-        expected.put("created_at[gte]", listOf("2019-12-27T18:11:19.117Z"))
-        expected.put("created_at[lt]", listOf("2019-12-27T18:11:19.117Z"))
-        expected.put("created_at[lte]", listOf("2019-12-27T18:11:19.117Z"))
-        expected.put("cursor", listOf("cursor"))
-        expected.put("customer_id", listOf("customer_id"))
-        expected.put("external_customer_id", listOf("external_customer_id"))
-        expected.put("limit", listOf("123"))
-        expected.put("subscription_id", listOf("subscription_id"))
-        assertThat(params.getQueryParams()).isEqualTo(expected)
+        val expected = QueryParams.builder()
+        expected.put("created_at[gt]", "2019-12-27T18:11:19.117Z")
+        expected.put("created_at[gte]", "2019-12-27T18:11:19.117Z")
+        expected.put("created_at[lt]", "2019-12-27T18:11:19.117Z")
+        expected.put("created_at[lte]", "2019-12-27T18:11:19.117Z")
+        expected.put("cursor", "cursor")
+        expected.put("customer_id", "customer_id")
+        expected.put("external_customer_id", "external_customer_id")
+        expected.put("limit", "123")
+        expected.put("subscription_id", "subscription_id")
+        assertThat(params.getQueryParams()).isEqualTo(expected.build())
     }
 
     @Test
     fun getQueryParamsWithoutOptionalFields() {
         val params = AlertListParams.builder().build()
-        val expected = mutableMapOf<String, List<String>>()
-        assertThat(params.getQueryParams()).isEqualTo(expected)
+        val expected = QueryParams.builder()
+        assertThat(params.getQueryParams()).isEqualTo(expected.build())
     }
 }

@@ -1,9 +1,9 @@
 package com.withorb.api.errors
 
-import com.google.common.collect.ListMultimap
+import com.withorb.api.core.http.Headers
 
 class RateLimitException(
-    headers: ListMultimap<String, String>,
+    headers: Headers,
     body: String,
     error: OrbError,
 ) : OrbServiceException(429, headers, body, error)
