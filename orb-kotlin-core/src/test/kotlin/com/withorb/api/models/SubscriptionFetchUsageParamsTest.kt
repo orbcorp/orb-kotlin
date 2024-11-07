@@ -2,6 +2,7 @@
 
 package com.withorb.api.models
 
+import com.withorb.api.core.http.QueryParams
 import com.withorb.api.models.*
 import java.time.OffsetDateTime
 import org.assertj.core.api.Assertions.assertThat
@@ -42,26 +43,26 @@ class SubscriptionFetchUsageParamsTest {
                 .timeframeStart(OffsetDateTime.parse("2022-02-01T05:00:00Z"))
                 .viewMode(SubscriptionFetchUsageParams.ViewMode.PERIODIC)
                 .build()
-        val expected = mutableMapOf<String, List<String>>()
-        expected.put("billable_metric_id", listOf("billable_metric_id"))
-        expected.put("first_dimension_key", listOf("first_dimension_key"))
-        expected.put("first_dimension_value", listOf("first_dimension_value"))
-        expected.put("granularity", listOf(SubscriptionFetchUsageParams.Granularity.DAY.toString()))
-        expected.put("group_by", listOf("group_by"))
-        expected.put("second_dimension_key", listOf("second_dimension_key"))
-        expected.put("second_dimension_value", listOf("second_dimension_value"))
-        expected.put("timeframe_end", listOf("2022-03-01T05:00:00Z"))
-        expected.put("timeframe_start", listOf("2022-02-01T05:00:00Z"))
-        expected.put("view_mode", listOf(SubscriptionFetchUsageParams.ViewMode.PERIODIC.toString()))
-        assertThat(params.getQueryParams()).isEqualTo(expected)
+        val expected = QueryParams.builder()
+        expected.put("billable_metric_id", "billable_metric_id")
+        expected.put("first_dimension_key", "first_dimension_key")
+        expected.put("first_dimension_value", "first_dimension_value")
+        expected.put("granularity", SubscriptionFetchUsageParams.Granularity.DAY.toString())
+        expected.put("group_by", "group_by")
+        expected.put("second_dimension_key", "second_dimension_key")
+        expected.put("second_dimension_value", "second_dimension_value")
+        expected.put("timeframe_end", "2022-03-01T05:00:00Z")
+        expected.put("timeframe_start", "2022-02-01T05:00:00Z")
+        expected.put("view_mode", SubscriptionFetchUsageParams.ViewMode.PERIODIC.toString())
+        assertThat(params.getQueryParams()).isEqualTo(expected.build())
     }
 
     @Test
     fun getQueryParamsWithoutOptionalFields() {
         val params =
             SubscriptionFetchUsageParams.builder().subscriptionId("subscription_id").build()
-        val expected = mutableMapOf<String, List<String>>()
-        assertThat(params.getQueryParams()).isEqualTo(expected)
+        val expected = QueryParams.builder()
+        assertThat(params.getQueryParams()).isEqualTo(expected.build())
     }
 
     @Test

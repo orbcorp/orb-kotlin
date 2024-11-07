@@ -1,9 +1,9 @@
 package com.withorb.api.errors
 
-import com.google.common.collect.ListMultimap
+import com.withorb.api.core.http.Headers
 
 class BadRequestException(
-    headers: ListMultimap<String, String>,
+    headers: Headers,
     body: String,
     error: OrbError,
 ) : OrbServiceException(400, headers, body, error)
