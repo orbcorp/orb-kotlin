@@ -2,6 +2,7 @@
 
 package com.withorb.api.models
 
+import com.withorb.api.core.http.QueryParams
 import com.withorb.api.models.*
 import java.time.OffsetDateTime
 import org.assertj.core.api.Assertions.assertThat
@@ -30,20 +31,20 @@ class SubscriptionFetchCostsParamsTest {
                 .timeframeStart(OffsetDateTime.parse("2022-02-01T05:00:00Z"))
                 .viewMode(SubscriptionFetchCostsParams.ViewMode.PERIODIC)
                 .build()
-        val expected = mutableMapOf<String, List<String>>()
-        expected.put("currency", listOf("currency"))
-        expected.put("timeframe_end", listOf("2022-03-01T05:00:00Z"))
-        expected.put("timeframe_start", listOf("2022-02-01T05:00:00Z"))
-        expected.put("view_mode", listOf(SubscriptionFetchCostsParams.ViewMode.PERIODIC.toString()))
-        assertThat(params.getQueryParams()).isEqualTo(expected)
+        val expected = QueryParams.builder()
+        expected.put("currency", "currency")
+        expected.put("timeframe_end", "2022-03-01T05:00:00Z")
+        expected.put("timeframe_start", "2022-02-01T05:00:00Z")
+        expected.put("view_mode", SubscriptionFetchCostsParams.ViewMode.PERIODIC.toString())
+        assertThat(params.getQueryParams()).isEqualTo(expected.build())
     }
 
     @Test
     fun getQueryParamsWithoutOptionalFields() {
         val params =
             SubscriptionFetchCostsParams.builder().subscriptionId("subscription_id").build()
-        val expected = mutableMapOf<String, List<String>>()
-        assertThat(params.getQueryParams()).isEqualTo(expected)
+        val expected = QueryParams.builder()
+        assertThat(params.getQueryParams()).isEqualTo(expected.build())
     }
 
     @Test

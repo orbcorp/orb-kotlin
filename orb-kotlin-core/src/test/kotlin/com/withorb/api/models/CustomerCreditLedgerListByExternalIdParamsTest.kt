@@ -2,6 +2,7 @@
 
 package com.withorb.api.models
 
+import com.withorb.api.core.http.QueryParams
 import com.withorb.api.models.*
 import java.time.OffsetDateTime
 import org.assertj.core.api.Assertions.assertThat
@@ -42,24 +43,24 @@ class CustomerCreditLedgerListByExternalIdParamsTest {
                 .limit(123L)
                 .minimumAmount("minimum_amount")
                 .build()
-        val expected = mutableMapOf<String, List<String>>()
-        expected.put("created_at[gt]", listOf("2019-12-27T18:11:19.117Z"))
-        expected.put("created_at[gte]", listOf("2019-12-27T18:11:19.117Z"))
-        expected.put("created_at[lt]", listOf("2019-12-27T18:11:19.117Z"))
-        expected.put("created_at[lte]", listOf("2019-12-27T18:11:19.117Z"))
-        expected.put("currency", listOf("currency"))
-        expected.put("cursor", listOf("cursor"))
+        val expected = QueryParams.builder()
+        expected.put("created_at[gt]", "2019-12-27T18:11:19.117Z")
+        expected.put("created_at[gte]", "2019-12-27T18:11:19.117Z")
+        expected.put("created_at[lt]", "2019-12-27T18:11:19.117Z")
+        expected.put("created_at[lte]", "2019-12-27T18:11:19.117Z")
+        expected.put("currency", "currency")
+        expected.put("cursor", "cursor")
         expected.put(
             "entry_status",
-            listOf(CustomerCreditLedgerListByExternalIdParams.EntryStatus.COMMITTED.toString())
+            CustomerCreditLedgerListByExternalIdParams.EntryStatus.COMMITTED.toString()
         )
         expected.put(
             "entry_type",
-            listOf(CustomerCreditLedgerListByExternalIdParams.EntryType.INCREMENT.toString())
+            CustomerCreditLedgerListByExternalIdParams.EntryType.INCREMENT.toString()
         )
-        expected.put("limit", listOf("123"))
-        expected.put("minimum_amount", listOf("minimum_amount"))
-        assertThat(params.getQueryParams()).isEqualTo(expected)
+        expected.put("limit", "123")
+        expected.put("minimum_amount", "minimum_amount")
+        assertThat(params.getQueryParams()).isEqualTo(expected.build())
     }
 
     @Test
@@ -68,8 +69,8 @@ class CustomerCreditLedgerListByExternalIdParamsTest {
             CustomerCreditLedgerListByExternalIdParams.builder()
                 .externalCustomerId("external_customer_id")
                 .build()
-        val expected = mutableMapOf<String, List<String>>()
-        assertThat(params.getQueryParams()).isEqualTo(expected)
+        val expected = QueryParams.builder()
+        assertThat(params.getQueryParams()).isEqualTo(expected.build())
     }
 
     @Test
