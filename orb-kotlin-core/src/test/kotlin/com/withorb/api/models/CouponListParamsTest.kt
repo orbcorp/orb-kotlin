@@ -2,6 +2,7 @@
 
 package com.withorb.api.models
 
+import com.withorb.api.core.http.QueryParams
 import com.withorb.api.models.*
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
@@ -27,18 +28,18 @@ class CouponListParamsTest {
                 .redemptionCode("redemption_code")
                 .showArchived(true)
                 .build()
-        val expected = mutableMapOf<String, List<String>>()
-        expected.put("cursor", listOf("cursor"))
-        expected.put("limit", listOf("123"))
-        expected.put("redemption_code", listOf("redemption_code"))
-        expected.put("show_archived", listOf("true"))
-        assertThat(params.getQueryParams()).isEqualTo(expected)
+        val expected = QueryParams.builder()
+        expected.put("cursor", "cursor")
+        expected.put("limit", "123")
+        expected.put("redemption_code", "redemption_code")
+        expected.put("show_archived", "true")
+        assertThat(params.getQueryParams()).isEqualTo(expected.build())
     }
 
     @Test
     fun getQueryParamsWithoutOptionalFields() {
         val params = CouponListParams.builder().build()
-        val expected = mutableMapOf<String, List<String>>()
-        assertThat(params.getQueryParams()).isEqualTo(expected)
+        val expected = QueryParams.builder()
+        assertThat(params.getQueryParams()).isEqualTo(expected.build())
     }
 }
