@@ -14,7 +14,8 @@ import com.withorb.api.errors.OrbException
 import java.security.MessageDigest
 import java.time.Duration
 import java.time.Instant
-import java.util.Base64
+import java.time.LocalDateTime
+import java.time.ZoneOffset
 import javax.crypto.Mac
 import javax.crypto.spec.SecretKeySpec
 
@@ -42,22 +43,14 @@ constructor(
                     "The webhook secret must either be set using the env var, ORB_WEBHOOK_SECRET, on the client class, or passed to this method"
                 )
 
-        val whsecret =
-            try {
-                Base64.getDecoder().decode(webhookSecret)
-            } catch (e: RuntimeException) {
-                throw OrbException("Invalid webhook secret")
-            }
-
         val msgSignature = headers.getRequiredHeader("X-Orb-Signature")
         val msgTimestamp = headers.getRequiredHeader("X-Orb-Timestamp")
 
         val timestamp =
             try {
-                // 2024-03-27T15:42:29+00:00
-                Instant.parse(msgTimestamp)
+                LocalDateTime.parse(msgTimestamp).toInstant(ZoneOffset.UTC)
             } catch (e: RuntimeException) {
-                throw OrbException("Invalid signature headers", e)
+                throw OrbException("Invalid timestamp header", e)
             }
         val now = Instant.now(clientOptions.clock)
 
@@ -68,9 +61,13 @@ constructor(
             throw OrbException("Webhook timestamp too new")
         }
 
+        println("checking signature, timestamp: $msgTimestamp, payload: $payload, secret: $secret")
         val mac = Mac.getInstance("HmacSHA256")
-        mac.init(SecretKeySpec(whsecret, "HmacSHA256"))
-        val expectedSignature = mac.doFinal("v1:${timestamp}:$payload".toByteArray())
+        mac.init(SecretKeySpec(webhookSecret.toByteArray(), "HmacSHA256"))
+        val expectedSignature = mac.doFinal("v1:${msgTimestamp}:$payload".toByteArray())
+        println(
+            "expected: ${String(expectedSignature)}, sigString: \"v1:${msgTimestamp}:$payload\""
+        )
 
         msgSignature.splitToSequence(" ").forEach {
             val parts = it.split("=")
@@ -81,7 +78,9 @@ constructor(
             if (parts[0] != "v1") {
                 return@forEach
             }
-            val actualSignature = Base64.getDecoder().decode(parts[1])
+            val actualSignature = parts[1].toByteArray(Charsets.UTF_8)
+
+            println("expected: ${expectedSignature}, actual: ${parts[1]}")
             if (MessageDigest.isEqual(actualSignature, expectedSignature)) {
                 return
             }

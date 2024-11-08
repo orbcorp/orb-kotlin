@@ -52,16 +52,22 @@ class WebhookServiceTest {
 
         val payload =
             "{\"id\": \"o4mmewpfNNTnjfZc\", \"created_at\": \"2024-03-27T15:42:29+00:00\", \"type\": \"resource_event.test\", \"properties\": {\"message\": \"A test webhook from Orb. Happy testing!\"}}"
-        val webhookTimestamp = "2024-03-27T15:42:29+00:00"
-        val webhookTimestampInsant = Instant.parse(webhookTimestamp)
-        val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss+00:00")
+        val webhookTimestamp = "2024-03-27T15:42:29.551"
 
         val webhookSignature = "9d25de966891ab0bc18754faf8d83d0980b44ae330fcc130b41a6cf3daf1f391"
+        val secret = "c-UGKYdnhHh436B_sMouYAPUvXyWpzOdunZBV5dFSD8"
         val headers =
             Headers.builder()
                 .put("X-Orb-Timestamp", webhookTimestamp)
                 .put("X-Orb-Signature", "v1=$webhookSignature")
                 .build()
+
+        // happy path first
+        assertThatCode { client.webhooks().verifySignature(payload, headers, secret) }
+            .doesNotThrowAnyException()
+
+        val webhookTimestampInsant = Instant.parse(webhookTimestamp)
+        val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss+00:00")
 
         assertThatThrownBy {
                 client
@@ -78,7 +84,7 @@ class WebhookServiceTest {
                             )
                             .put("X-Orb-Signature", "v1,$webhookSignature")
                             .build(),
-                        null
+                        secret
                     )
             }
             .isInstanceOf(OrbException::class.java)
@@ -99,7 +105,7 @@ class WebhookServiceTest {
                             )
                             .put("X-Orb-Signature", "v1,$webhookSignature")
                             .build(),
-                        null
+                        secret
                     )
             }
             .isInstanceOf(OrbException::class.java)
@@ -122,7 +128,7 @@ class WebhookServiceTest {
                             .put("X-Orb-Timestamp", webhookTimestamp)
                             .put("X-Orb-Signature", "v1,$webhookSignature v1,Zm9v")
                             .build(),
-                        null
+                        secret
                     )
             }
             .doesNotThrowAnyException()
@@ -136,7 +142,7 @@ class WebhookServiceTest {
                             .put("X-Orb-Timestamp", webhookTimestamp)
                             .put("X-Orb-Signature", "v2,$webhookSignature")
                             .build(),
-                        null
+                        secret
                     )
             }
             .isInstanceOf(OrbException::class.java)
@@ -151,7 +157,7 @@ class WebhookServiceTest {
                             .put("X-Orb-Timestamp", webhookTimestamp)
                             .put("X-Orb-Signature", "v1,$webhookSignature v2,$webhookSignature")
                             .build(),
-                        null
+                        secret
                     )
             }
             .doesNotThrowAnyException()
@@ -168,7 +174,7 @@ class WebhookServiceTest {
                                 webhookSignature,
                             )
                             .build(),
-                        null
+                        secret
                     )
             }
             .isInstanceOf(OrbException::class.java)
