@@ -4,12 +4,12 @@
 
 package com.withorb.api.services.blocking
 
-import com.google.common.collect.ListMultimap
 import com.withorb.api.core.JsonValue
+import com.withorb.api.core.http.Headers
 
 interface WebhookService {
 
-    fun unwrap(payload: String, headers: ListMultimap<String, String>, secret: String?): JsonValue
+    fun unwrap(payload: String, headers: Headers, secret: String?): JsonValue
 
-    fun verifySignature(payload: String, headers: ListMultimap<String, String>, secret: String?)
+    fun verifySignature(payload: String, headers: Headers, secret: String?)
 }

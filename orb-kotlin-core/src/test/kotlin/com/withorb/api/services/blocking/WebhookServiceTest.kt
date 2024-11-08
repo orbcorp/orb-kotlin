@@ -2,9 +2,9 @@
 
 package com.withorb.api.services.blocking
 
-import com.google.common.collect.ImmutableListMultimap
 import com.withorb.api.TestServerExtension
 import com.withorb.api.client.okhttp.OrbOkHttpClient
+import com.withorb.api.core.http.Headers
 import com.withorb.api.errors.OrbException
 import com.withorb.api.models.*
 import java.time.Clock
@@ -31,12 +31,10 @@ class WebhookServiceTest {
         val payload =
             "{\"id\": \"o4mmewpfNNTnjfZc\", \"created_at\": \"2024-03-27T15:42:29+00:00\", \"type\": \"resource_event.test\", \"properties\": {\"message\": \"A test webhook from Orb. Happy testing!\"}}"
         val headers =
-            ImmutableListMultimap.of(
-                "X-Orb-Timestamp",
-                "2024-03-27T15:42:29+00:00",
-                "X-Orb-Signature",
-                "v1=$signature",
-            )
+            Headers.builder()
+                .put("X-Orb-Timestamp", "2024-03-27T15:42:29+00:00")
+                .put("X-Orb-Signature", "v1=$signature")
+                .build()
 
         val event = client.webhooks().unwrap(payload, headers, null)
 
@@ -60,27 +58,26 @@ class WebhookServiceTest {
 
         val webhookSignature = "9d25de966891ab0bc18754faf8d83d0980b44ae330fcc130b41a6cf3daf1f391"
         val headers =
-            ImmutableListMultimap.of(
-                "X-Orb-Timestamp",
-                webhookTimestamp,
-                "X-Orb-Signature",
-                "v1=$webhookSignature"
-            )
+            Headers.builder()
+                .put("X-Orb-Timestamp", webhookTimestamp)
+                .put("X-Orb-Signature", "v1=$webhookSignature")
+                .build()
 
         assertThatThrownBy {
                 client
                     .webhooks()
                     .verifySignature(
                         payload,
-                        ImmutableListMultimap.of(
-                            "X-Orb-Timestamp",
-                            webhookTimestampInsant
-                                .minusSeconds(1000)
-                                .atOffset(ZoneOffset.UTC)
-                                .format(formatter),
-                            "X-Orb-Signature",
-                            "v1,$webhookSignature"
-                        ),
+                        Headers.builder()
+                            .put(
+                                "X-Orb-Timestamp",
+                                webhookTimestampInsant
+                                    .minusSeconds(1000)
+                                    .atOffset(ZoneOffset.UTC)
+                                    .format(formatter)
+                            )
+                            .put("X-Orb-Signature", "v1,$webhookSignature")
+                            .build(),
                         null
                     )
             }
@@ -92,15 +89,16 @@ class WebhookServiceTest {
                     .webhooks()
                     .verifySignature(
                         payload,
-                        ImmutableListMultimap.of(
-                            "X-Orb-Timestamp",
-                            webhookTimestampInsant
-                                .plusSeconds(1000)
-                                .atOffset(ZoneOffset.UTC)
-                                .format(formatter),
-                            "X-Orb-Signature",
-                            "v1,$webhookSignature"
-                        ),
+                        Headers.builder()
+                            .put(
+                                "X-Orb-Timestamp",
+                                webhookTimestampInsant
+                                    .plusSeconds(1000)
+                                    .atOffset(ZoneOffset.UTC)
+                                    .format(formatter)
+                            )
+                            .put("X-Orb-Signature", "v1,$webhookSignature")
+                            .build(),
                         null
                     )
             }
@@ -120,12 +118,10 @@ class WebhookServiceTest {
                     .webhooks()
                     .verifySignature(
                         payload,
-                        ImmutableListMultimap.of(
-                            "X-Orb-Timestamp",
-                            webhookTimestamp,
-                            "X-Orb-Signature",
-                            "v1,$webhookSignature v1,Zm9v",
-                        ),
+                        Headers.builder()
+                            .put("X-Orb-Timestamp", webhookTimestamp)
+                            .put("X-Orb-Signature", "v1,$webhookSignature v1,Zm9v")
+                            .build(),
                         null
                     )
             }
@@ -136,12 +132,10 @@ class WebhookServiceTest {
                     .webhooks()
                     .verifySignature(
                         payload,
-                        ImmutableListMultimap.of(
-                            "X-Orb-Timestamp",
-                            webhookTimestamp,
-                            "X-Orb-Signature",
-                            "v2,$webhookSignature",
-                        ),
+                        Headers.builder()
+                            .put("X-Orb-Timestamp", webhookTimestamp)
+                            .put("X-Orb-Signature", "v2,$webhookSignature")
+                            .build(),
                         null
                     )
             }
@@ -153,12 +147,10 @@ class WebhookServiceTest {
                     .webhooks()
                     .verifySignature(
                         payload,
-                        ImmutableListMultimap.of(
-                            "X-Orb-Timestamp",
-                            webhookTimestamp,
-                            "X-Orb-Signature",
-                            "v1,$webhookSignature v2,$webhookSignature",
-                        ),
+                        Headers.builder()
+                            .put("X-Orb-Timestamp", webhookTimestamp)
+                            .put("X-Orb-Signature", "v1,$webhookSignature v2,$webhookSignature")
+                            .build(),
                         null
                     )
             }
@@ -169,12 +161,13 @@ class WebhookServiceTest {
                     .webhooks()
                     .verifySignature(
                         payload,
-                        ImmutableListMultimap.of(
-                            "X-Orb-Timestamp",
-                            webhookTimestamp,
-                            "X-Orb-Signature",
-                            webhookSignature,
-                        ),
+                        Headers.builder()
+                            .put("X-Orb-Timestamp", webhookTimestamp)
+                            .put(
+                                "X-Orb-Signature",
+                                webhookSignature,
+                            )
+                            .build(),
                         null
                     )
             }
