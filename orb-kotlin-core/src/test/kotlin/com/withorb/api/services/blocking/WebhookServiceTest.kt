@@ -9,6 +9,7 @@ import com.withorb.api.errors.OrbException
 import com.withorb.api.models.*
 import java.time.Clock
 import java.time.Instant
+import java.time.LocalDateTime
 import java.time.ZoneOffset
 import java.time.format.DateTimeFormatter
 import org.assertj.core.api.Assertions.*
@@ -66,8 +67,7 @@ class WebhookServiceTest {
         assertThatCode { client.webhooks().verifySignature(payload, headers, secret) }
             .doesNotThrowAnyException()
 
-        val webhookTimestampInsant = Instant.parse(webhookTimestamp)
-        val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss+00:00")
+        val webhookTimestampInsant = LocalDateTime.parse(webhookTimestamp).toInstant(ZoneOffset.UTC)
 
         assertThatThrownBy {
                 client
@@ -80,9 +80,9 @@ class WebhookServiceTest {
                                 webhookTimestampInsant
                                     .minusSeconds(1000)
                                     .atOffset(ZoneOffset.UTC)
-                                    .format(formatter)
+                                    .format(DateTimeFormatter.ISO_LOCAL_DATE_TIME)
                             )
-                            .put("X-Orb-Signature", "v1,$webhookSignature")
+                            .put("X-Orb-Signature", "v1=$webhookSignature")
                             .build(),
                         secret
                     )
@@ -101,9 +101,9 @@ class WebhookServiceTest {
                                 webhookTimestampInsant
                                     .plusSeconds(1000)
                                     .atOffset(ZoneOffset.UTC)
-                                    .format(formatter)
+                                    .format(DateTimeFormatter.ISO_LOCAL_DATE_TIME)
                             )
-                            .put("X-Orb-Signature", "v1,$webhookSignature")
+                            .put("X-Orb-Signature", "v1=$webhookSignature")
                             .build(),
                         secret
                     )
@@ -113,7 +113,7 @@ class WebhookServiceTest {
 
         assertThatThrownBy { client.webhooks().verifySignature(payload, headers, "invalid-secret") }
             .isInstanceOf(OrbException::class.java)
-            .hasMessage("Invalid webhook secret")
+            .hasMessage("None of the given webhook signatures match the expected signature")
 
         assertThatThrownBy { client.webhooks().verifySignature(payload, headers, "Zm9v") }
             .isInstanceOf(OrbException::class.java)
@@ -126,7 +126,7 @@ class WebhookServiceTest {
                         payload,
                         Headers.builder()
                             .put("X-Orb-Timestamp", webhookTimestamp)
-                            .put("X-Orb-Signature", "v1,$webhookSignature v1,Zm9v")
+                            .put("X-Orb-Signature", "v1=$webhookSignature v1=Zm9v")
                             .build(),
                         secret
                     )
@@ -140,7 +140,7 @@ class WebhookServiceTest {
                         payload,
                         Headers.builder()
                             .put("X-Orb-Timestamp", webhookTimestamp)
-                            .put("X-Orb-Signature", "v2,$webhookSignature")
+                            .put("X-Orb-Signature", "v2=$webhookSignature")
                             .build(),
                         secret
                     )
@@ -155,7 +155,7 @@ class WebhookServiceTest {
                         payload,
                         Headers.builder()
                             .put("X-Orb-Timestamp", webhookTimestamp)
-                            .put("X-Orb-Signature", "v1,$webhookSignature v2,$webhookSignature")
+                            .put("X-Orb-Signature", "v1=$webhookSignature v2=$webhookSignature")
                             .build(),
                         secret
                     )
