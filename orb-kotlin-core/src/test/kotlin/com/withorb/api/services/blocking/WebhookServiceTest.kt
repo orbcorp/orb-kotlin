@@ -33,11 +33,11 @@ class WebhookServiceTest {
             "{\"id\": \"o4mmewpfNNTnjfZc\", \"created_at\": \"2024-03-27T15:42:29+00:00\", \"type\": \"resource_event.test\", \"properties\": {\"message\": \"A test webhook from Orb. Happy testing!\"}}"
         val headers =
             Headers.builder()
-                .put("X-Orb-Timestamp", "2024-03-27T15:42:29+00:00")
+                .put("X-Orb-Timestamp", "2024-03-27T15:42:29.551")
                 .put("X-Orb-Signature", "v1=$signature")
                 .build()
 
-        val event = client.webhooks().unwrap(payload, headers, null)
+        val event = client.webhooks().unwrap(payload, headers, "c-UGKYdnhHh436B_sMouYAPUvXyWpzOdunZBV5dFSD8")
 
         assertThat(event).isNotNull()
     }
