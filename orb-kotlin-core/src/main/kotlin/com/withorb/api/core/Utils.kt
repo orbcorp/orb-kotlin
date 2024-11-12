@@ -2,6 +2,7 @@
 
 package com.withorb.api.core
 
+import com.withorb.api.core.http.Headers
 import com.withorb.api.errors.OrbInvalidDataException
 import java.util.Collections
 import java.util.SortedMap
@@ -18,5 +19,8 @@ internal fun <K, V> Map<K, V>.toImmutable(): Map<K, V> =
 internal fun <K : Comparable<K>, V> SortedMap<K, V>.toImmutable(): SortedMap<K, V> =
     if (isEmpty()) Collections.emptySortedMap()
     else Collections.unmodifiableSortedMap(toSortedMap(comparator()))
+
+internal fun Headers.getRequiredHeader(name: String): String =
+    values(name).firstOrNull() ?: throw OrbInvalidDataException("Could not find $name header")
 
 internal interface Enum

@@ -34,4 +34,6 @@ interface OrbClient {
     fun subscriptions(): SubscriptionService
 
     fun alerts(): AlertService
+
+    fun webhooks(): WebhookService
 }
