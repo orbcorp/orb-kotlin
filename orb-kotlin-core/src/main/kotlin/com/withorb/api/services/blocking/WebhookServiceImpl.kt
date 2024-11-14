@@ -6,10 +6,7 @@ import com.fasterxml.jackson.core.JsonProcessingException
 import com.withorb.api.core.ClientOptions
 import com.withorb.api.core.JsonValue
 import com.withorb.api.core.getRequiredHeader
-import com.withorb.api.core.handlers.errorHandler
 import com.withorb.api.core.http.Headers
-import com.withorb.api.core.http.HttpResponse.Handler
-import com.withorb.api.errors.OrbError
 import com.withorb.api.errors.OrbException
 import java.security.MessageDigest
 import java.time.Duration
@@ -33,8 +30,6 @@ constructor(
     private val clientOptions: ClientOptions,
 ) : WebhookService {
 
-    private val errorHandler: Handler<OrbError> = errorHandler(clientOptions.jsonMapper)
-
     override fun unwrap(payload: String, headers: Headers, secret: String?): JsonValue {
         verifySignature(payload, headers, secret)
         return try {
@@ -44,6 +39,7 @@ constructor(
         }
     }
 
+    // required for `toHexString` usage
     @OptIn(ExperimentalStdlibApi::class)
     override fun verifySignature(payload: String, headers: Headers, secret: String?) {
         val webhookSecret =

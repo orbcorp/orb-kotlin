@@ -37,7 +37,10 @@ class WebhookServiceTest {
                 .put("X-Orb-Signature", "v1=$signature")
                 .build()
 
-        val event = client.webhooks().unwrap(payload, headers, "c-UGKYdnhHh436B_sMouYAPUvXyWpzOdunZBV5dFSD8")
+        val event =
+            client
+                .webhooks()
+                .unwrap(payload, headers, "c-UGKYdnhHh436B_sMouYAPUvXyWpzOdunZBV5dFSD8")
 
         assertThat(event).isNotNull()
     }

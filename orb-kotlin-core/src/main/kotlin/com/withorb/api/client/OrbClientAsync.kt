@@ -34,6 +34,4 @@ interface OrbClientAsync {
     fun subscriptions(): SubscriptionServiceAsync
 
     fun alerts(): AlertServiceAsync
-
-    fun webhooks(): WebhookServiceAsync
 }
