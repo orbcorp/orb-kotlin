@@ -304,6 +304,20 @@ class InvoiceFetchUpcomingResponseTest {
                 )
                 .minimumAmount("minimum_amount")
                 .paidAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                .paymentAttempts(
+                    listOf(
+                        InvoiceFetchUpcomingResponse.PaymentAttempt.builder()
+                            .id("id")
+                            .amount("amount")
+                            .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                            .paymentProvider(
+                                InvoiceFetchUpcomingResponse.PaymentAttempt.PaymentProvider.STRIPE
+                            )
+                            .paymentProviderId("payment_provider_id")
+                            .succeeded(true)
+                            .build()
+                    )
+                )
                 .paymentFailedAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                 .paymentStartedAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                 .scheduledIssueAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
@@ -614,6 +628,19 @@ class InvoiceFetchUpcomingResponseTest {
         assertThat(invoiceFetchUpcomingResponse.minimumAmount()).isEqualTo("minimum_amount")
         assertThat(invoiceFetchUpcomingResponse.paidAt())
             .isEqualTo(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+        assertThat(invoiceFetchUpcomingResponse.paymentAttempts())
+            .containsExactly(
+                InvoiceFetchUpcomingResponse.PaymentAttempt.builder()
+                    .id("id")
+                    .amount("amount")
+                    .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                    .paymentProvider(
+                        InvoiceFetchUpcomingResponse.PaymentAttempt.PaymentProvider.STRIPE
+                    )
+                    .paymentProviderId("payment_provider_id")
+                    .succeeded(true)
+                    .build()
+            )
         assertThat(invoiceFetchUpcomingResponse.paymentFailedAt())
             .isEqualTo(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
         assertThat(invoiceFetchUpcomingResponse.paymentStartedAt())
