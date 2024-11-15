@@ -77,6 +77,7 @@ private constructor(
     private val customerTaxId: JsonField<CustomerTaxId>,
     private val memo: JsonField<String>,
     private val creditNotes: JsonField<List<CreditNote>>,
+    private val paymentAttempts: JsonField<List<PaymentAttempt>>,
     private val invoiceDate: JsonField<OffsetDateTime>,
     private val additionalProperties: Map<String, JsonValue>,
 ) {
@@ -328,6 +329,9 @@ private constructor(
 
     /** A list of credit notes associated with the invoice */
     fun creditNotes(): List<CreditNote> = creditNotes.getRequired("credit_notes")
+
+    /** A list of payment attempts associated with the invoice */
+    fun paymentAttempts(): List<PaymentAttempt> = paymentAttempts.getRequired("payment_attempts")
 
     /** The scheduled date of the invoice */
     fun invoiceDate(): OffsetDateTime = invoiceDate.getRequired("invoice_date")
@@ -587,6 +591,9 @@ private constructor(
     /** A list of credit notes associated with the invoice */
     @JsonProperty("credit_notes") @ExcludeMissing fun _creditNotes() = creditNotes
 
+    /** A list of payment attempts associated with the invoice */
+    @JsonProperty("payment_attempts") @ExcludeMissing fun _paymentAttempts() = paymentAttempts
+
     /** The scheduled date of the invoice */
     @JsonProperty("invoice_date") @ExcludeMissing fun _invoiceDate() = invoiceDate
 
@@ -634,6 +641,7 @@ private constructor(
             customerTaxId()?.validate()
             memo()
             creditNotes().forEach { it.validate() }
+            paymentAttempts().forEach { it.validate() }
             invoiceDate()
             validated = true
         }
@@ -688,6 +696,7 @@ private constructor(
         private var customerTaxId: JsonField<CustomerTaxId> = JsonMissing.of()
         private var memo: JsonField<String> = JsonMissing.of()
         private var creditNotes: JsonField<List<CreditNote>> = JsonMissing.of()
+        private var paymentAttempts: JsonField<List<PaymentAttempt>> = JsonMissing.of()
         private var invoiceDate: JsonField<OffsetDateTime> = JsonMissing.of()
         private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
@@ -731,6 +740,7 @@ private constructor(
             this.customerTaxId = invoice.customerTaxId
             this.memo = invoice.memo
             this.creditNotes = invoice.creditNotes
+            this.paymentAttempts = invoice.paymentAttempts
             this.invoiceDate = invoice.invoiceDate
             additionalProperties(invoice.additionalProperties)
         }
@@ -1367,6 +1377,17 @@ private constructor(
             this.creditNotes = creditNotes
         }
 
+        /** A list of payment attempts associated with the invoice */
+        fun paymentAttempts(paymentAttempts: List<PaymentAttempt>) =
+            paymentAttempts(JsonField.of(paymentAttempts))
+
+        /** A list of payment attempts associated with the invoice */
+        @JsonProperty("payment_attempts")
+        @ExcludeMissing
+        fun paymentAttempts(paymentAttempts: JsonField<List<PaymentAttempt>>) = apply {
+            this.paymentAttempts = paymentAttempts
+        }
+
         /** The scheduled date of the invoice */
         fun invoiceDate(invoiceDate: OffsetDateTime) = invoiceDate(JsonField.of(invoiceDate))
 
@@ -1432,6 +1453,7 @@ private constructor(
                 customerTaxId,
                 memo,
                 creditNotes.map { it.toImmutable() },
+                paymentAttempts.map { it.toImmutable() },
                 invoiceDate,
                 additionalProperties.toImmutable(),
             )
@@ -7462,6 +7484,256 @@ private constructor(
             "Minimum{minimumAmount=$minimumAmount, appliesToPriceIds=$appliesToPriceIds, additionalProperties=$additionalProperties}"
     }
 
+    @JsonDeserialize(builder = PaymentAttempt.Builder::class)
+    @NoAutoDetect
+    class PaymentAttempt
+    private constructor(
+        private val id: JsonField<String>,
+        private val paymentProvider: JsonField<PaymentProvider>,
+        private val paymentProviderId: JsonField<String>,
+        private val amount: JsonField<String>,
+        private val succeeded: JsonField<Boolean>,
+        private val createdAt: JsonField<OffsetDateTime>,
+        private val additionalProperties: Map<String, JsonValue>,
+    ) {
+
+        private var validated: Boolean = false
+
+        /** The ID of the payment attempt. */
+        fun id(): String = id.getRequired("id")
+
+        /** The payment provider that attempted to collect the payment. */
+        fun paymentProvider(): PaymentProvider? = paymentProvider.getNullable("payment_provider")
+
+        /** The ID of the payment attempt in the payment provider. */
+        fun paymentProviderId(): String? = paymentProviderId.getNullable("payment_provider_id")
+
+        /** The amount of the payment attempt. */
+        fun amount(): String = amount.getRequired("amount")
+
+        /** Whether the payment attempt succeeded. */
+        fun succeeded(): Boolean = succeeded.getRequired("succeeded")
+
+        /** The time at which the payment attempt was created. */
+        fun createdAt(): OffsetDateTime = createdAt.getRequired("created_at")
+
+        /** The ID of the payment attempt. */
+        @JsonProperty("id") @ExcludeMissing fun _id() = id
+
+        /** The payment provider that attempted to collect the payment. */
+        @JsonProperty("payment_provider") @ExcludeMissing fun _paymentProvider() = paymentProvider
+
+        /** The ID of the payment attempt in the payment provider. */
+        @JsonProperty("payment_provider_id")
+        @ExcludeMissing
+        fun _paymentProviderId() = paymentProviderId
+
+        /** The amount of the payment attempt. */
+        @JsonProperty("amount") @ExcludeMissing fun _amount() = amount
+
+        /** Whether the payment attempt succeeded. */
+        @JsonProperty("succeeded") @ExcludeMissing fun _succeeded() = succeeded
+
+        /** The time at which the payment attempt was created. */
+        @JsonProperty("created_at") @ExcludeMissing fun _createdAt() = createdAt
+
+        @JsonAnyGetter
+        @ExcludeMissing
+        fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
+
+        fun validate(): PaymentAttempt = apply {
+            if (!validated) {
+                id()
+                paymentProvider()
+                paymentProviderId()
+                amount()
+                succeeded()
+                createdAt()
+                validated = true
+            }
+        }
+
+        fun toBuilder() = Builder().from(this)
+
+        companion object {
+
+            fun builder() = Builder()
+        }
+
+        class Builder {
+
+            private var id: JsonField<String> = JsonMissing.of()
+            private var paymentProvider: JsonField<PaymentProvider> = JsonMissing.of()
+            private var paymentProviderId: JsonField<String> = JsonMissing.of()
+            private var amount: JsonField<String> = JsonMissing.of()
+            private var succeeded: JsonField<Boolean> = JsonMissing.of()
+            private var createdAt: JsonField<OffsetDateTime> = JsonMissing.of()
+            private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
+
+            internal fun from(paymentAttempt: PaymentAttempt) = apply {
+                this.id = paymentAttempt.id
+                this.paymentProvider = paymentAttempt.paymentProvider
+                this.paymentProviderId = paymentAttempt.paymentProviderId
+                this.amount = paymentAttempt.amount
+                this.succeeded = paymentAttempt.succeeded
+                this.createdAt = paymentAttempt.createdAt
+                additionalProperties(paymentAttempt.additionalProperties)
+            }
+
+            /** The ID of the payment attempt. */
+            fun id(id: String) = id(JsonField.of(id))
+
+            /** The ID of the payment attempt. */
+            @JsonProperty("id")
+            @ExcludeMissing
+            fun id(id: JsonField<String>) = apply { this.id = id }
+
+            /** The payment provider that attempted to collect the payment. */
+            fun paymentProvider(paymentProvider: PaymentProvider) =
+                paymentProvider(JsonField.of(paymentProvider))
+
+            /** The payment provider that attempted to collect the payment. */
+            @JsonProperty("payment_provider")
+            @ExcludeMissing
+            fun paymentProvider(paymentProvider: JsonField<PaymentProvider>) = apply {
+                this.paymentProvider = paymentProvider
+            }
+
+            /** The ID of the payment attempt in the payment provider. */
+            fun paymentProviderId(paymentProviderId: String) =
+                paymentProviderId(JsonField.of(paymentProviderId))
+
+            /** The ID of the payment attempt in the payment provider. */
+            @JsonProperty("payment_provider_id")
+            @ExcludeMissing
+            fun paymentProviderId(paymentProviderId: JsonField<String>) = apply {
+                this.paymentProviderId = paymentProviderId
+            }
+
+            /** The amount of the payment attempt. */
+            fun amount(amount: String) = amount(JsonField.of(amount))
+
+            /** The amount of the payment attempt. */
+            @JsonProperty("amount")
+            @ExcludeMissing
+            fun amount(amount: JsonField<String>) = apply { this.amount = amount }
+
+            /** Whether the payment attempt succeeded. */
+            fun succeeded(succeeded: Boolean) = succeeded(JsonField.of(succeeded))
+
+            /** Whether the payment attempt succeeded. */
+            @JsonProperty("succeeded")
+            @ExcludeMissing
+            fun succeeded(succeeded: JsonField<Boolean>) = apply { this.succeeded = succeeded }
+
+            /** The time at which the payment attempt was created. */
+            fun createdAt(createdAt: OffsetDateTime) = createdAt(JsonField.of(createdAt))
+
+            /** The time at which the payment attempt was created. */
+            @JsonProperty("created_at")
+            @ExcludeMissing
+            fun createdAt(createdAt: JsonField<OffsetDateTime>) = apply {
+                this.createdAt = createdAt
+            }
+
+            fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                this.additionalProperties.clear()
+                this.additionalProperties.putAll(additionalProperties)
+            }
+
+            @JsonAnySetter
+            fun putAdditionalProperty(key: String, value: JsonValue) = apply {
+                this.additionalProperties.put(key, value)
+            }
+
+            fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                this.additionalProperties.putAll(additionalProperties)
+            }
+
+            fun build(): PaymentAttempt =
+                PaymentAttempt(
+                    id,
+                    paymentProvider,
+                    paymentProviderId,
+                    amount,
+                    succeeded,
+                    createdAt,
+                    additionalProperties.toImmutable(),
+                )
+        }
+
+        class PaymentProvider
+        @JsonCreator
+        private constructor(
+            private val value: JsonField<String>,
+        ) : Enum {
+
+            @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
+
+            override fun equals(other: Any?): Boolean {
+                if (this === other) {
+                    return true
+                }
+
+                return /* spotless:off */ other is PaymentProvider && this.value == other.value /* spotless:on */
+            }
+
+            override fun hashCode() = value.hashCode()
+
+            override fun toString() = value.toString()
+
+            companion object {
+
+                val STRIPE = PaymentProvider(JsonField.of("stripe"))
+
+                fun of(value: String) = PaymentProvider(JsonField.of(value))
+            }
+
+            enum class Known {
+                STRIPE,
+            }
+
+            enum class Value {
+                STRIPE,
+                _UNKNOWN,
+            }
+
+            fun value(): Value =
+                when (this) {
+                    STRIPE -> Value.STRIPE
+                    else -> Value._UNKNOWN
+                }
+
+            fun known(): Known =
+                when (this) {
+                    STRIPE -> Known.STRIPE
+                    else -> throw OrbInvalidDataException("Unknown PaymentProvider: $value")
+                }
+
+            fun asString(): String = _value().asStringOrThrow()
+        }
+
+        override fun equals(other: Any?): Boolean {
+            if (this === other) {
+                return true
+            }
+
+            return /* spotless:off */ other is PaymentAttempt && this.id == other.id && this.paymentProvider == other.paymentProvider && this.paymentProviderId == other.paymentProviderId && this.amount == other.amount && this.succeeded == other.succeeded && this.createdAt == other.createdAt && this.additionalProperties == other.additionalProperties /* spotless:on */
+        }
+
+        private var hashCode: Int = 0
+
+        override fun hashCode(): Int {
+            if (hashCode == 0) {
+                hashCode = /* spotless:off */ Objects.hash(id, paymentProvider, paymentProviderId, amount, succeeded, createdAt, additionalProperties) /* spotless:on */
+            }
+            return hashCode
+        }
+
+        override fun toString() =
+            "PaymentAttempt{id=$id, paymentProvider=$paymentProvider, paymentProviderId=$paymentProviderId, amount=$amount, succeeded=$succeeded, createdAt=$createdAt, additionalProperties=$additionalProperties}"
+    }
+
     @JsonDeserialize(builder = ShippingAddress.Builder::class)
     @NoAutoDetect
     class ShippingAddress
@@ -7792,18 +8064,18 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is Invoice && this.metadata == other.metadata && this.voidedAt == other.voidedAt && this.paidAt == other.paidAt && this.issuedAt == other.issuedAt && this.scheduledIssueAt == other.scheduledIssueAt && this.autoCollection == other.autoCollection && this.issueFailedAt == other.issueFailedAt && this.syncFailedAt == other.syncFailedAt && this.paymentFailedAt == other.paymentFailedAt && this.paymentStartedAt == other.paymentStartedAt && this.amountDue == other.amountDue && this.createdAt == other.createdAt && this.currency == other.currency && this.customer == other.customer && this.discount == other.discount && this.discounts == other.discounts && this.dueDate == other.dueDate && this.id == other.id && this.invoicePdf == other.invoicePdf && this.invoiceNumber == other.invoiceNumber && this.minimum == other.minimum && this.minimumAmount == other.minimumAmount && this.maximum == other.maximum && this.maximumAmount == other.maximumAmount && this.lineItems == other.lineItems && this.subscription == other.subscription && this.subtotal == other.subtotal && this.total == other.total && this.customerBalanceTransactions == other.customerBalanceTransactions && this.status == other.status && this.invoiceSource == other.invoiceSource && this.shippingAddress == other.shippingAddress && this.billingAddress == other.billingAddress && this.hostedInvoiceUrl == other.hostedInvoiceUrl && this.willAutoIssue == other.willAutoIssue && this.eligibleToIssueAt == other.eligibleToIssueAt && this.customerTaxId == other.customerTaxId && this.memo == other.memo && this.creditNotes == other.creditNotes && this.invoiceDate == other.invoiceDate && this.additionalProperties == other.additionalProperties /* spotless:on */
+        return /* spotless:off */ other is Invoice && this.metadata == other.metadata && this.voidedAt == other.voidedAt && this.paidAt == other.paidAt && this.issuedAt == other.issuedAt && this.scheduledIssueAt == other.scheduledIssueAt && this.autoCollection == other.autoCollection && this.issueFailedAt == other.issueFailedAt && this.syncFailedAt == other.syncFailedAt && this.paymentFailedAt == other.paymentFailedAt && this.paymentStartedAt == other.paymentStartedAt && this.amountDue == other.amountDue && this.createdAt == other.createdAt && this.currency == other.currency && this.customer == other.customer && this.discount == other.discount && this.discounts == other.discounts && this.dueDate == other.dueDate && this.id == other.id && this.invoicePdf == other.invoicePdf && this.invoiceNumber == other.invoiceNumber && this.minimum == other.minimum && this.minimumAmount == other.minimumAmount && this.maximum == other.maximum && this.maximumAmount == other.maximumAmount && this.lineItems == other.lineItems && this.subscription == other.subscription && this.subtotal == other.subtotal && this.total == other.total && this.customerBalanceTransactions == other.customerBalanceTransactions && this.status == other.status && this.invoiceSource == other.invoiceSource && this.shippingAddress == other.shippingAddress && this.billingAddress == other.billingAddress && this.hostedInvoiceUrl == other.hostedInvoiceUrl && this.willAutoIssue == other.willAutoIssue && this.eligibleToIssueAt == other.eligibleToIssueAt && this.customerTaxId == other.customerTaxId && this.memo == other.memo && this.creditNotes == other.creditNotes && this.paymentAttempts == other.paymentAttempts && this.invoiceDate == other.invoiceDate && this.additionalProperties == other.additionalProperties /* spotless:on */
     }
 
     private var hashCode: Int = 0
 
     override fun hashCode(): Int {
         if (hashCode == 0) {
-            hashCode = /* spotless:off */ Objects.hash(metadata, voidedAt, paidAt, issuedAt, scheduledIssueAt, autoCollection, issueFailedAt, syncFailedAt, paymentFailedAt, paymentStartedAt, amountDue, createdAt, currency, customer, discount, discounts, dueDate, id, invoicePdf, invoiceNumber, minimum, minimumAmount, maximum, maximumAmount, lineItems, subscription, subtotal, total, customerBalanceTransactions, status, invoiceSource, shippingAddress, billingAddress, hostedInvoiceUrl, willAutoIssue, eligibleToIssueAt, customerTaxId, memo, creditNotes, invoiceDate, additionalProperties) /* spotless:on */
+            hashCode = /* spotless:off */ Objects.hash(metadata, voidedAt, paidAt, issuedAt, scheduledIssueAt, autoCollection, issueFailedAt, syncFailedAt, paymentFailedAt, paymentStartedAt, amountDue, createdAt, currency, customer, discount, discounts, dueDate, id, invoicePdf, invoiceNumber, minimum, minimumAmount, maximum, maximumAmount, lineItems, subscription, subtotal, total, customerBalanceTransactions, status, invoiceSource, shippingAddress, billingAddress, hostedInvoiceUrl, willAutoIssue, eligibleToIssueAt, customerTaxId, memo, creditNotes, paymentAttempts, invoiceDate, additionalProperties) /* spotless:on */
         }
         return hashCode
     }
 
     override fun toString() =
-        "Invoice{metadata=$metadata, voidedAt=$voidedAt, paidAt=$paidAt, issuedAt=$issuedAt, scheduledIssueAt=$scheduledIssueAt, autoCollection=$autoCollection, issueFailedAt=$issueFailedAt, syncFailedAt=$syncFailedAt, paymentFailedAt=$paymentFailedAt, paymentStartedAt=$paymentStartedAt, amountDue=$amountDue, createdAt=$createdAt, currency=$currency, customer=$customer, discount=$discount, discounts=$discounts, dueDate=$dueDate, id=$id, invoicePdf=$invoicePdf, invoiceNumber=$invoiceNumber, minimum=$minimum, minimumAmount=$minimumAmount, maximum=$maximum, maximumAmount=$maximumAmount, lineItems=$lineItems, subscription=$subscription, subtotal=$subtotal, total=$total, customerBalanceTransactions=$customerBalanceTransactions, status=$status, invoiceSource=$invoiceSource, shippingAddress=$shippingAddress, billingAddress=$billingAddress, hostedInvoiceUrl=$hostedInvoiceUrl, willAutoIssue=$willAutoIssue, eligibleToIssueAt=$eligibleToIssueAt, customerTaxId=$customerTaxId, memo=$memo, creditNotes=$creditNotes, invoiceDate=$invoiceDate, additionalProperties=$additionalProperties}"
+        "Invoice{metadata=$metadata, voidedAt=$voidedAt, paidAt=$paidAt, issuedAt=$issuedAt, scheduledIssueAt=$scheduledIssueAt, autoCollection=$autoCollection, issueFailedAt=$issueFailedAt, syncFailedAt=$syncFailedAt, paymentFailedAt=$paymentFailedAt, paymentStartedAt=$paymentStartedAt, amountDue=$amountDue, createdAt=$createdAt, currency=$currency, customer=$customer, discount=$discount, discounts=$discounts, dueDate=$dueDate, id=$id, invoicePdf=$invoicePdf, invoiceNumber=$invoiceNumber, minimum=$minimum, minimumAmount=$minimumAmount, maximum=$maximum, maximumAmount=$maximumAmount, lineItems=$lineItems, subscription=$subscription, subtotal=$subtotal, total=$total, customerBalanceTransactions=$customerBalanceTransactions, status=$status, invoiceSource=$invoiceSource, shippingAddress=$shippingAddress, billingAddress=$billingAddress, hostedInvoiceUrl=$hostedInvoiceUrl, willAutoIssue=$willAutoIssue, eligibleToIssueAt=$eligibleToIssueAt, customerTaxId=$customerTaxId, memo=$memo, creditNotes=$creditNotes, paymentAttempts=$paymentAttempts, invoiceDate=$invoiceDate, additionalProperties=$additionalProperties}"
 }
