@@ -57,12 +57,10 @@ constructor(
             return true
         }
 
-        return /* spotless:off */ other is CustomerCreditListByExternalIdParams && this.externalCustomerId == other.externalCustomerId && this.currency == other.currency && this.cursor == other.cursor && this.includeAllBlocks == other.includeAllBlocks && this.limit == other.limit && this.additionalHeaders == other.additionalHeaders && this.additionalQueryParams == other.additionalQueryParams /* spotless:on */
+        return /* spotless:off */ other is CustomerCreditListByExternalIdParams && externalCustomerId == other.externalCustomerId && currency == other.currency && cursor == other.cursor && includeAllBlocks == other.includeAllBlocks && limit == other.limit && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
     }
 
-    override fun hashCode(): Int {
-        return /* spotless:off */ Objects.hash(externalCustomerId, currency, cursor, includeAllBlocks, limit, additionalHeaders, additionalQueryParams) /* spotless:on */
-    }
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(externalCustomerId, currency, cursor, includeAllBlocks, limit, additionalHeaders, additionalQueryParams) /* spotless:on */
 
     override fun toString() =
         "CustomerCreditListByExternalIdParams{externalCustomerId=$externalCustomerId, currency=$currency, cursor=$cursor, includeAllBlocks=$includeAllBlocks, limit=$limit, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"

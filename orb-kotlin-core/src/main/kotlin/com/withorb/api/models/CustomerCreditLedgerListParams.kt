@@ -108,12 +108,10 @@ constructor(
             return true
         }
 
-        return /* spotless:off */ other is CustomerCreditLedgerListParams && this.customerId == other.customerId && this.createdAtGt == other.createdAtGt && this.createdAtGte == other.createdAtGte && this.createdAtLt == other.createdAtLt && this.createdAtLte == other.createdAtLte && this.currency == other.currency && this.cursor == other.cursor && this.entryStatus == other.entryStatus && this.entryType == other.entryType && this.limit == other.limit && this.minimumAmount == other.minimumAmount && this.additionalHeaders == other.additionalHeaders && this.additionalQueryParams == other.additionalQueryParams /* spotless:on */
+        return /* spotless:off */ other is CustomerCreditLedgerListParams && customerId == other.customerId && createdAtGt == other.createdAtGt && createdAtGte == other.createdAtGte && createdAtLt == other.createdAtLt && createdAtLte == other.createdAtLte && currency == other.currency && cursor == other.cursor && entryStatus == other.entryStatus && entryType == other.entryType && limit == other.limit && minimumAmount == other.minimumAmount && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
     }
 
-    override fun hashCode(): Int {
-        return /* spotless:off */ Objects.hash(customerId, createdAtGt, createdAtGte, createdAtLt, createdAtLte, currency, cursor, entryStatus, entryType, limit, minimumAmount, additionalHeaders, additionalQueryParams) /* spotless:on */
-    }
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(customerId, createdAtGt, createdAtGte, createdAtLt, createdAtLte, currency, cursor, entryStatus, entryType, limit, minimumAmount, additionalHeaders, additionalQueryParams) /* spotless:on */
 
     override fun toString() =
         "CustomerCreditLedgerListParams{customerId=$customerId, createdAtGt=$createdAtGt, createdAtGte=$createdAtGte, createdAtLt=$createdAtLt, createdAtLte=$createdAtLte, currency=$currency, cursor=$cursor, entryStatus=$entryStatus, entryType=$entryType, limit=$limit, minimumAmount=$minimumAmount, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
@@ -315,7 +313,7 @@ constructor(
                 return true
             }
 
-            return /* spotless:off */ other is EntryStatus && this.value == other.value /* spotless:on */
+            return /* spotless:off */ other is EntryStatus && value == other.value /* spotless:on */
         }
 
         override fun hashCode() = value.hashCode()
@@ -372,7 +370,7 @@ constructor(
                 return true
             }
 
-            return /* spotless:off */ other is EntryType && this.value == other.value /* spotless:on */
+            return /* spotless:off */ other is EntryType && value == other.value /* spotless:on */
         }
 
         override fun hashCode() = value.hashCode()

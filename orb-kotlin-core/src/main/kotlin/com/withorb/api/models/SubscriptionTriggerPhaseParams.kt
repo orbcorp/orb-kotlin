@@ -111,17 +111,14 @@ constructor(
                 return true
             }
 
-            return /* spotless:off */ other is SubscriptionTriggerPhaseBody && this.effectiveDate == other.effectiveDate && this.additionalProperties == other.additionalProperties /* spotless:on */
+            return /* spotless:off */ other is SubscriptionTriggerPhaseBody && effectiveDate == other.effectiveDate && additionalProperties == other.additionalProperties /* spotless:on */
         }
 
-        private var hashCode: Int = 0
+        /* spotless:off */
+        private val hashCode: Int by lazy { Objects.hash(effectiveDate, additionalProperties) }
+        /* spotless:on */
 
-        override fun hashCode(): Int {
-            if (hashCode == 0) {
-                hashCode = /* spotless:off */ Objects.hash(effectiveDate, additionalProperties) /* spotless:on */
-            }
-            return hashCode
-        }
+        override fun hashCode(): Int = hashCode
 
         override fun toString() =
             "SubscriptionTriggerPhaseBody{effectiveDate=$effectiveDate, additionalProperties=$additionalProperties}"
@@ -138,12 +135,10 @@ constructor(
             return true
         }
 
-        return /* spotless:off */ other is SubscriptionTriggerPhaseParams && this.subscriptionId == other.subscriptionId && this.effectiveDate == other.effectiveDate && this.additionalHeaders == other.additionalHeaders && this.additionalQueryParams == other.additionalQueryParams && this.additionalBodyProperties == other.additionalBodyProperties /* spotless:on */
+        return /* spotless:off */ other is SubscriptionTriggerPhaseParams && subscriptionId == other.subscriptionId && effectiveDate == other.effectiveDate && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams && additionalBodyProperties == other.additionalBodyProperties /* spotless:on */
     }
 
-    override fun hashCode(): Int {
-        return /* spotless:off */ Objects.hash(subscriptionId, effectiveDate, additionalHeaders, additionalQueryParams, additionalBodyProperties) /* spotless:on */
-    }
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(subscriptionId, effectiveDate, additionalHeaders, additionalQueryParams, additionalBodyProperties) /* spotless:on */
 
     override fun toString() =
         "SubscriptionTriggerPhaseParams{subscriptionId=$subscriptionId, effectiveDate=$effectiveDate, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams, additionalBodyProperties=$additionalBodyProperties}"

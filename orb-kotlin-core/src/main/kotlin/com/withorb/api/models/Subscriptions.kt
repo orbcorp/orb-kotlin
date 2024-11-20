@@ -109,17 +109,14 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is Subscriptions && this.data == other.data && this.paginationMetadata == other.paginationMetadata && this.additionalProperties == other.additionalProperties /* spotless:on */
+        return /* spotless:off */ other is Subscriptions && data == other.data && paginationMetadata == other.paginationMetadata && additionalProperties == other.additionalProperties /* spotless:on */
     }
 
-    private var hashCode: Int = 0
+    /* spotless:off */
+    private val hashCode: Int by lazy { Objects.hash(data, paginationMetadata, additionalProperties) }
+    /* spotless:on */
 
-    override fun hashCode(): Int {
-        if (hashCode == 0) {
-            hashCode = /* spotless:off */ Objects.hash(data, paginationMetadata, additionalProperties) /* spotless:on */
-        }
-        return hashCode
-    }
+    override fun hashCode(): Int = hashCode
 
     override fun toString() =
         "Subscriptions{data=$data, paginationMetadata=$paginationMetadata, additionalProperties=$additionalProperties}"

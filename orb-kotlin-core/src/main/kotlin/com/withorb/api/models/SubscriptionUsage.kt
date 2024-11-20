@@ -80,15 +80,13 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is SubscriptionUsage && this.ungroupedSubscriptionUsage == other.ungroupedSubscriptionUsage && this.groupedSubscriptionUsage == other.groupedSubscriptionUsage /* spotless:on */
+        return /* spotless:off */ other is SubscriptionUsage && ungroupedSubscriptionUsage == other.ungroupedSubscriptionUsage && groupedSubscriptionUsage == other.groupedSubscriptionUsage /* spotless:on */
     }
 
-    override fun hashCode(): Int {
-        return /* spotless:off */ Objects.hash(ungroupedSubscriptionUsage, groupedSubscriptionUsage) /* spotless:on */
-    }
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(ungroupedSubscriptionUsage, groupedSubscriptionUsage) /* spotless:on */
 
-    override fun toString(): String {
-        return when {
+    override fun toString(): String =
+        when {
             ungroupedSubscriptionUsage != null ->
                 "SubscriptionUsage{ungroupedSubscriptionUsage=$ungroupedSubscriptionUsage}"
             groupedSubscriptionUsage != null ->
@@ -96,7 +94,6 @@ private constructor(
             _json != null -> "SubscriptionUsage{_unknown=$_json}"
             else -> throw IllegalStateException("Invalid SubscriptionUsage")
         }
-    }
 
     companion object {
 
@@ -418,17 +415,14 @@ private constructor(
                         return true
                     }
 
-                    return /* spotless:off */ other is BillableMetric && this.id == other.id && this.name == other.name && this.additionalProperties == other.additionalProperties /* spotless:on */
+                    return /* spotless:off */ other is BillableMetric && id == other.id && name == other.name && additionalProperties == other.additionalProperties /* spotless:on */
                 }
 
-                private var hashCode: Int = 0
+                /* spotless:off */
+                private val hashCode: Int by lazy { Objects.hash(id, name, additionalProperties) }
+                /* spotless:on */
 
-                override fun hashCode(): Int {
-                    if (hashCode == 0) {
-                        hashCode = /* spotless:off */ Objects.hash(id, name, additionalProperties) /* spotless:on */
-                    }
-                    return hashCode
-                }
+                override fun hashCode(): Int = hashCode
 
                 override fun toString() =
                     "BillableMetric{id=$id, name=$name, additionalProperties=$additionalProperties}"
@@ -547,17 +541,14 @@ private constructor(
                         return true
                     }
 
-                    return /* spotless:off */ other is Usage && this.quantity == other.quantity && this.timeframeStart == other.timeframeStart && this.timeframeEnd == other.timeframeEnd && this.additionalProperties == other.additionalProperties /* spotless:on */
+                    return /* spotless:off */ other is Usage && quantity == other.quantity && timeframeStart == other.timeframeStart && timeframeEnd == other.timeframeEnd && additionalProperties == other.additionalProperties /* spotless:on */
                 }
 
-                private var hashCode: Int = 0
+                /* spotless:off */
+                private val hashCode: Int by lazy { Objects.hash(quantity, timeframeStart, timeframeEnd, additionalProperties) }
+                /* spotless:on */
 
-                override fun hashCode(): Int {
-                    if (hashCode == 0) {
-                        hashCode = /* spotless:off */ Objects.hash(quantity, timeframeStart, timeframeEnd, additionalProperties) /* spotless:on */
-                    }
-                    return hashCode
-                }
+                override fun hashCode(): Int = hashCode
 
                 override fun toString() =
                     "Usage{quantity=$quantity, timeframeStart=$timeframeStart, timeframeEnd=$timeframeEnd, additionalProperties=$additionalProperties}"
@@ -576,7 +567,7 @@ private constructor(
                         return true
                     }
 
-                    return /* spotless:off */ other is ViewMode && this.value == other.value /* spotless:on */
+                    return /* spotless:off */ other is ViewMode && value == other.value /* spotless:on */
                 }
 
                 override fun hashCode() = value.hashCode()
@@ -625,17 +616,14 @@ private constructor(
                     return true
                 }
 
-                return /* spotless:off */ other is Data && this.usage == other.usage && this.billableMetric == other.billableMetric && this.viewMode == other.viewMode && this.additionalProperties == other.additionalProperties /* spotless:on */
+                return /* spotless:off */ other is Data && usage == other.usage && billableMetric == other.billableMetric && viewMode == other.viewMode && additionalProperties == other.additionalProperties /* spotless:on */
             }
 
-            private var hashCode: Int = 0
+            /* spotless:off */
+            private val hashCode: Int by lazy { Objects.hash(usage, billableMetric, viewMode, additionalProperties) }
+            /* spotless:on */
 
-            override fun hashCode(): Int {
-                if (hashCode == 0) {
-                    hashCode = /* spotless:off */ Objects.hash(usage, billableMetric, viewMode, additionalProperties) /* spotless:on */
-                }
-                return hashCode
-            }
+            override fun hashCode(): Int = hashCode
 
             override fun toString() =
                 "Data{usage=$usage, billableMetric=$billableMetric, viewMode=$viewMode, additionalProperties=$additionalProperties}"
@@ -646,17 +634,14 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is UngroupedSubscriptionUsage && this.data == other.data && this.additionalProperties == other.additionalProperties /* spotless:on */
+            return /* spotless:off */ other is UngroupedSubscriptionUsage && data == other.data && additionalProperties == other.additionalProperties /* spotless:on */
         }
 
-        private var hashCode: Int = 0
+        /* spotless:off */
+        private val hashCode: Int by lazy { Objects.hash(data, additionalProperties) }
+        /* spotless:on */
 
-        override fun hashCode(): Int {
-            if (hashCode == 0) {
-                hashCode = /* spotless:off */ Objects.hash(data, additionalProperties) /* spotless:on */
-            }
-            return hashCode
-        }
+        override fun hashCode(): Int = hashCode
 
         override fun toString() =
             "UngroupedSubscriptionUsage{data=$data, additionalProperties=$additionalProperties}"
@@ -962,17 +947,14 @@ private constructor(
                         return true
                     }
 
-                    return /* spotless:off */ other is BillableMetric && this.id == other.id && this.name == other.name && this.additionalProperties == other.additionalProperties /* spotless:on */
+                    return /* spotless:off */ other is BillableMetric && id == other.id && name == other.name && additionalProperties == other.additionalProperties /* spotless:on */
                 }
 
-                private var hashCode: Int = 0
+                /* spotless:off */
+                private val hashCode: Int by lazy { Objects.hash(id, name, additionalProperties) }
+                /* spotless:on */
 
-                override fun hashCode(): Int {
-                    if (hashCode == 0) {
-                        hashCode = /* spotless:off */ Objects.hash(id, name, additionalProperties) /* spotless:on */
-                    }
-                    return hashCode
-                }
+                override fun hashCode(): Int = hashCode
 
                 override fun toString() =
                     "BillableMetric{id=$id, name=$name, additionalProperties=$additionalProperties}"
@@ -1073,17 +1055,14 @@ private constructor(
                         return true
                     }
 
-                    return /* spotless:off */ other is MetricGroup && this.propertyKey == other.propertyKey && this.propertyValue == other.propertyValue && this.additionalProperties == other.additionalProperties /* spotless:on */
+                    return /* spotless:off */ other is MetricGroup && propertyKey == other.propertyKey && propertyValue == other.propertyValue && additionalProperties == other.additionalProperties /* spotless:on */
                 }
 
-                private var hashCode: Int = 0
+                /* spotless:off */
+                private val hashCode: Int by lazy { Objects.hash(propertyKey, propertyValue, additionalProperties) }
+                /* spotless:on */
 
-                override fun hashCode(): Int {
-                    if (hashCode == 0) {
-                        hashCode = /* spotless:off */ Objects.hash(propertyKey, propertyValue, additionalProperties) /* spotless:on */
-                    }
-                    return hashCode
-                }
+                override fun hashCode(): Int = hashCode
 
                 override fun toString() =
                     "MetricGroup{propertyKey=$propertyKey, propertyValue=$propertyValue, additionalProperties=$additionalProperties}"
@@ -1202,17 +1181,14 @@ private constructor(
                         return true
                     }
 
-                    return /* spotless:off */ other is Usage && this.quantity == other.quantity && this.timeframeStart == other.timeframeStart && this.timeframeEnd == other.timeframeEnd && this.additionalProperties == other.additionalProperties /* spotless:on */
+                    return /* spotless:off */ other is Usage && quantity == other.quantity && timeframeStart == other.timeframeStart && timeframeEnd == other.timeframeEnd && additionalProperties == other.additionalProperties /* spotless:on */
                 }
 
-                private var hashCode: Int = 0
+                /* spotless:off */
+                private val hashCode: Int by lazy { Objects.hash(quantity, timeframeStart, timeframeEnd, additionalProperties) }
+                /* spotless:on */
 
-                override fun hashCode(): Int {
-                    if (hashCode == 0) {
-                        hashCode = /* spotless:off */ Objects.hash(quantity, timeframeStart, timeframeEnd, additionalProperties) /* spotless:on */
-                    }
-                    return hashCode
-                }
+                override fun hashCode(): Int = hashCode
 
                 override fun toString() =
                     "Usage{quantity=$quantity, timeframeStart=$timeframeStart, timeframeEnd=$timeframeEnd, additionalProperties=$additionalProperties}"
@@ -1231,7 +1207,7 @@ private constructor(
                         return true
                     }
 
-                    return /* spotless:off */ other is ViewMode && this.value == other.value /* spotless:on */
+                    return /* spotless:off */ other is ViewMode && value == other.value /* spotless:on */
                 }
 
                 override fun hashCode() = value.hashCode()
@@ -1280,17 +1256,14 @@ private constructor(
                     return true
                 }
 
-                return /* spotless:off */ other is Data && this.usage == other.usage && this.billableMetric == other.billableMetric && this.metricGroup == other.metricGroup && this.viewMode == other.viewMode && this.additionalProperties == other.additionalProperties /* spotless:on */
+                return /* spotless:off */ other is Data && usage == other.usage && billableMetric == other.billableMetric && metricGroup == other.metricGroup && viewMode == other.viewMode && additionalProperties == other.additionalProperties /* spotless:on */
             }
 
-            private var hashCode: Int = 0
+            /* spotless:off */
+            private val hashCode: Int by lazy { Objects.hash(usage, billableMetric, metricGroup, viewMode, additionalProperties) }
+            /* spotless:on */
 
-            override fun hashCode(): Int {
-                if (hashCode == 0) {
-                    hashCode = /* spotless:off */ Objects.hash(usage, billableMetric, metricGroup, viewMode, additionalProperties) /* spotless:on */
-                }
-                return hashCode
-            }
+            override fun hashCode(): Int = hashCode
 
             override fun toString() =
                 "Data{usage=$usage, billableMetric=$billableMetric, metricGroup=$metricGroup, viewMode=$viewMode, additionalProperties=$additionalProperties}"
@@ -1301,17 +1274,14 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is GroupedSubscriptionUsage && this.data == other.data && this.paginationMetadata == other.paginationMetadata && this.additionalProperties == other.additionalProperties /* spotless:on */
+            return /* spotless:off */ other is GroupedSubscriptionUsage && data == other.data && paginationMetadata == other.paginationMetadata && additionalProperties == other.additionalProperties /* spotless:on */
         }
 
-        private var hashCode: Int = 0
+        /* spotless:off */
+        private val hashCode: Int by lazy { Objects.hash(data, paginationMetadata, additionalProperties) }
+        /* spotless:on */
 
-        override fun hashCode(): Int {
-            if (hashCode == 0) {
-                hashCode = /* spotless:off */ Objects.hash(data, paginationMetadata, additionalProperties) /* spotless:on */
-            }
-            return hashCode
-        }
+        override fun hashCode(): Int = hashCode
 
         override fun toString() =
             "GroupedSubscriptionUsage{data=$data, paginationMetadata=$paginationMetadata, additionalProperties=$additionalProperties}"

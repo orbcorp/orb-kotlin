@@ -106,12 +106,10 @@ constructor(
             return true
         }
 
-        return /* spotless:off */ other is SubscriptionFetchUsageParams && this.subscriptionId == other.subscriptionId && this.billableMetricId == other.billableMetricId && this.firstDimensionKey == other.firstDimensionKey && this.firstDimensionValue == other.firstDimensionValue && this.granularity == other.granularity && this.groupBy == other.groupBy && this.secondDimensionKey == other.secondDimensionKey && this.secondDimensionValue == other.secondDimensionValue && this.timeframeEnd == other.timeframeEnd && this.timeframeStart == other.timeframeStart && this.viewMode == other.viewMode && this.additionalHeaders == other.additionalHeaders && this.additionalQueryParams == other.additionalQueryParams /* spotless:on */
+        return /* spotless:off */ other is SubscriptionFetchUsageParams && subscriptionId == other.subscriptionId && billableMetricId == other.billableMetricId && firstDimensionKey == other.firstDimensionKey && firstDimensionValue == other.firstDimensionValue && granularity == other.granularity && groupBy == other.groupBy && secondDimensionKey == other.secondDimensionKey && secondDimensionValue == other.secondDimensionValue && timeframeEnd == other.timeframeEnd && timeframeStart == other.timeframeStart && viewMode == other.viewMode && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
     }
 
-    override fun hashCode(): Int {
-        return /* spotless:off */ Objects.hash(subscriptionId, billableMetricId, firstDimensionKey, firstDimensionValue, granularity, groupBy, secondDimensionKey, secondDimensionValue, timeframeEnd, timeframeStart, viewMode, additionalHeaders, additionalQueryParams) /* spotless:on */
-    }
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(subscriptionId, billableMetricId, firstDimensionKey, firstDimensionValue, granularity, groupBy, secondDimensionKey, secondDimensionValue, timeframeEnd, timeframeStart, viewMode, additionalHeaders, additionalQueryParams) /* spotless:on */
 
     override fun toString() =
         "SubscriptionFetchUsageParams{subscriptionId=$subscriptionId, billableMetricId=$billableMetricId, firstDimensionKey=$firstDimensionKey, firstDimensionValue=$firstDimensionValue, granularity=$granularity, groupBy=$groupBy, secondDimensionKey=$secondDimensionKey, secondDimensionValue=$secondDimensionValue, timeframeEnd=$timeframeEnd, timeframeStart=$timeframeStart, viewMode=$viewMode, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
@@ -333,7 +331,7 @@ constructor(
                 return true
             }
 
-            return /* spotless:off */ other is Granularity && this.value == other.value /* spotless:on */
+            return /* spotless:off */ other is Granularity && value == other.value /* spotless:on */
         }
 
         override fun hashCode() = value.hashCode()
@@ -384,7 +382,7 @@ constructor(
                 return true
             }
 
-            return /* spotless:off */ other is ViewMode && this.value == other.value /* spotless:on */
+            return /* spotless:off */ other is ViewMode && value == other.value /* spotless:on */
         }
 
         override fun hashCode() = value.hashCode()

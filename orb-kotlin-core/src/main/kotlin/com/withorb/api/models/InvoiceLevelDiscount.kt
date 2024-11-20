@@ -75,15 +75,13 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is InvoiceLevelDiscount && this.percentageDiscount == other.percentageDiscount && this.amountDiscount == other.amountDiscount && this.trialDiscount == other.trialDiscount /* spotless:on */
+        return /* spotless:off */ other is InvoiceLevelDiscount && percentageDiscount == other.percentageDiscount && amountDiscount == other.amountDiscount && trialDiscount == other.trialDiscount /* spotless:on */
     }
 
-    override fun hashCode(): Int {
-        return /* spotless:off */ Objects.hash(percentageDiscount, amountDiscount, trialDiscount) /* spotless:on */
-    }
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(percentageDiscount, amountDiscount, trialDiscount) /* spotless:on */
 
-    override fun toString(): String {
-        return when {
+    override fun toString(): String =
+        when {
             percentageDiscount != null ->
                 "InvoiceLevelDiscount{percentageDiscount=$percentageDiscount}"
             amountDiscount != null -> "InvoiceLevelDiscount{amountDiscount=$amountDiscount}"
@@ -91,7 +89,6 @@ private constructor(
             _json != null -> "InvoiceLevelDiscount{_unknown=$_json}"
             else -> throw IllegalStateException("Invalid InvoiceLevelDiscount")
         }
-    }
 
     companion object {
 

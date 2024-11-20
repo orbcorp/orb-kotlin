@@ -257,17 +257,14 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is Plan && this.id == other.id && this.externalPlanId == other.externalPlanId && this.name == other.name && this.additionalProperties == other.additionalProperties /* spotless:on */
+            return /* spotless:off */ other is Plan && id == other.id && externalPlanId == other.externalPlanId && name == other.name && additionalProperties == other.additionalProperties /* spotless:on */
         }
 
-        private var hashCode: Int = 0
+        /* spotless:off */
+        private val hashCode: Int by lazy { Objects.hash(id, externalPlanId, name, additionalProperties) }
+        /* spotless:on */
 
-        override fun hashCode(): Int {
-            if (hashCode == 0) {
-                hashCode = /* spotless:off */ Objects.hash(id, externalPlanId, name, additionalProperties) /* spotless:on */
-            }
-            return hashCode
-        }
+        override fun hashCode(): Int = hashCode
 
         override fun toString() =
             "Plan{id=$id, externalPlanId=$externalPlanId, name=$name, additionalProperties=$additionalProperties}"
@@ -278,17 +275,14 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is SubscriptionFetchScheduleResponse && this.startDate == other.startDate && this.endDate == other.endDate && this.createdAt == other.createdAt && this.plan == other.plan && this.additionalProperties == other.additionalProperties /* spotless:on */
+        return /* spotless:off */ other is SubscriptionFetchScheduleResponse && startDate == other.startDate && endDate == other.endDate && createdAt == other.createdAt && plan == other.plan && additionalProperties == other.additionalProperties /* spotless:on */
     }
 
-    private var hashCode: Int = 0
+    /* spotless:off */
+    private val hashCode: Int by lazy { Objects.hash(startDate, endDate, createdAt, plan, additionalProperties) }
+    /* spotless:on */
 
-    override fun hashCode(): Int {
-        if (hashCode == 0) {
-            hashCode = /* spotless:off */ Objects.hash(startDate, endDate, createdAt, plan, additionalProperties) /* spotless:on */
-        }
-        return hashCode
-    }
+    override fun hashCode(): Int = hashCode
 
     override fun toString() =
         "SubscriptionFetchScheduleResponse{startDate=$startDate, endDate=$endDate, createdAt=$createdAt, plan=$plan, additionalProperties=$additionalProperties}"

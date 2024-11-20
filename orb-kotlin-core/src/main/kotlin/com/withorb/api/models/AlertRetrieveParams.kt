@@ -37,12 +37,10 @@ constructor(
             return true
         }
 
-        return /* spotless:off */ other is AlertRetrieveParams && this.alertId == other.alertId && this.additionalHeaders == other.additionalHeaders && this.additionalQueryParams == other.additionalQueryParams /* spotless:on */
+        return /* spotless:off */ other is AlertRetrieveParams && alertId == other.alertId && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
     }
 
-    override fun hashCode(): Int {
-        return /* spotless:off */ Objects.hash(alertId, additionalHeaders, additionalQueryParams) /* spotless:on */
-    }
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(alertId, additionalHeaders, additionalQueryParams) /* spotless:on */
 
     override fun toString() =
         "AlertRetrieveParams{alertId=$alertId, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"

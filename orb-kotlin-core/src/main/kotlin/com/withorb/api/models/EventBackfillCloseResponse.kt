@@ -311,7 +311,7 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is Status && this.value == other.value /* spotless:on */
+            return /* spotless:off */ other is Status && value == other.value /* spotless:on */
         }
 
         override fun hashCode() = value.hashCode()
@@ -372,17 +372,14 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is EventBackfillCloseResponse && this.id == other.id && this.status == other.status && this.createdAt == other.createdAt && this.timeframeStart == other.timeframeStart && this.timeframeEnd == other.timeframeEnd && this.eventsIngested == other.eventsIngested && this.closeTime == other.closeTime && this.revertedAt == other.revertedAt && this.customerId == other.customerId && this.deprecationFilter == other.deprecationFilter && this.additionalProperties == other.additionalProperties /* spotless:on */
+        return /* spotless:off */ other is EventBackfillCloseResponse && id == other.id && status == other.status && createdAt == other.createdAt && timeframeStart == other.timeframeStart && timeframeEnd == other.timeframeEnd && eventsIngested == other.eventsIngested && closeTime == other.closeTime && revertedAt == other.revertedAt && customerId == other.customerId && deprecationFilter == other.deprecationFilter && additionalProperties == other.additionalProperties /* spotless:on */
     }
 
-    private var hashCode: Int = 0
+    /* spotless:off */
+    private val hashCode: Int by lazy { Objects.hash(id, status, createdAt, timeframeStart, timeframeEnd, eventsIngested, closeTime, revertedAt, customerId, deprecationFilter, additionalProperties) }
+    /* spotless:on */
 
-    override fun hashCode(): Int {
-        if (hashCode == 0) {
-            hashCode = /* spotless:off */ Objects.hash(id, status, createdAt, timeframeStart, timeframeEnd, eventsIngested, closeTime, revertedAt, customerId, deprecationFilter, additionalProperties) /* spotless:on */
-        }
-        return hashCode
-    }
+    override fun hashCode(): Int = hashCode
 
     override fun toString() =
         "EventBackfillCloseResponse{id=$id, status=$status, createdAt=$createdAt, timeframeStart=$timeframeStart, timeframeEnd=$timeframeEnd, eventsIngested=$eventsIngested, closeTime=$closeTime, revertedAt=$revertedAt, customerId=$customerId, deprecationFilter=$deprecationFilter, additionalProperties=$additionalProperties}"

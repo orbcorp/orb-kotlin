@@ -106,17 +106,14 @@ constructor(
                 return true
             }
 
-            return /* spotless:off */ other is AlertUpdateBody && this.thresholds == other.thresholds && this.additionalProperties == other.additionalProperties /* spotless:on */
+            return /* spotless:off */ other is AlertUpdateBody && thresholds == other.thresholds && additionalProperties == other.additionalProperties /* spotless:on */
         }
 
-        private var hashCode: Int = 0
+        /* spotless:off */
+        private val hashCode: Int by lazy { Objects.hash(thresholds, additionalProperties) }
+        /* spotless:on */
 
-        override fun hashCode(): Int {
-            if (hashCode == 0) {
-                hashCode = /* spotless:off */ Objects.hash(thresholds, additionalProperties) /* spotless:on */
-            }
-            return hashCode
-        }
+        override fun hashCode(): Int = hashCode
 
         override fun toString() =
             "AlertUpdateBody{thresholds=$thresholds, additionalProperties=$additionalProperties}"
@@ -133,12 +130,10 @@ constructor(
             return true
         }
 
-        return /* spotless:off */ other is AlertUpdateParams && this.alertConfigurationId == other.alertConfigurationId && this.thresholds == other.thresholds && this.additionalHeaders == other.additionalHeaders && this.additionalQueryParams == other.additionalQueryParams && this.additionalBodyProperties == other.additionalBodyProperties /* spotless:on */
+        return /* spotless:off */ other is AlertUpdateParams && alertConfigurationId == other.alertConfigurationId && thresholds == other.thresholds && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams && additionalBodyProperties == other.additionalBodyProperties /* spotless:on */
     }
 
-    override fun hashCode(): Int {
-        return /* spotless:off */ Objects.hash(alertConfigurationId, thresholds, additionalHeaders, additionalQueryParams, additionalBodyProperties) /* spotless:on */
-    }
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(alertConfigurationId, thresholds, additionalHeaders, additionalQueryParams, additionalBodyProperties) /* spotless:on */
 
     override fun toString() =
         "AlertUpdateParams{alertConfigurationId=$alertConfigurationId, thresholds=$thresholds, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams, additionalBodyProperties=$additionalBodyProperties}"
@@ -383,17 +378,14 @@ constructor(
                 return true
             }
 
-            return /* spotless:off */ other is Threshold && this.value == other.value && this.additionalProperties == other.additionalProperties /* spotless:on */
+            return /* spotless:off */ other is Threshold && value == other.value && additionalProperties == other.additionalProperties /* spotless:on */
         }
 
-        private var hashCode: Int = 0
+        /* spotless:off */
+        private val hashCode: Int by lazy { Objects.hash(value, additionalProperties) }
+        /* spotless:on */
 
-        override fun hashCode(): Int {
-            if (hashCode == 0) {
-                hashCode = /* spotless:off */ Objects.hash(value, additionalProperties) /* spotless:on */
-            }
-            return hashCode
-        }
+        override fun hashCode(): Int = hashCode
 
         override fun toString() =
             "Threshold{value=$value, additionalProperties=$additionalProperties}"

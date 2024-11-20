@@ -138,12 +138,10 @@ constructor(
             return true
         }
 
-        return /* spotless:off */ other is InvoiceListParams && this.amount == other.amount && this.amountGt == other.amountGt && this.amountLt == other.amountLt && this.cursor == other.cursor && this.customerId == other.customerId && this.dateType == other.dateType && this.dueDate == other.dueDate && this.dueDateWindow == other.dueDateWindow && this.dueDateGt == other.dueDateGt && this.dueDateLt == other.dueDateLt && this.externalCustomerId == other.externalCustomerId && this.invoiceDateGt == other.invoiceDateGt && this.invoiceDateGte == other.invoiceDateGte && this.invoiceDateLt == other.invoiceDateLt && this.invoiceDateLte == other.invoiceDateLte && this.isRecurring == other.isRecurring && this.limit == other.limit && this.status == other.status && this.subscriptionId == other.subscriptionId && this.additionalHeaders == other.additionalHeaders && this.additionalQueryParams == other.additionalQueryParams /* spotless:on */
+        return /* spotless:off */ other is InvoiceListParams && amount == other.amount && amountGt == other.amountGt && amountLt == other.amountLt && cursor == other.cursor && customerId == other.customerId && dateType == other.dateType && dueDate == other.dueDate && dueDateWindow == other.dueDateWindow && dueDateGt == other.dueDateGt && dueDateLt == other.dueDateLt && externalCustomerId == other.externalCustomerId && invoiceDateGt == other.invoiceDateGt && invoiceDateGte == other.invoiceDateGte && invoiceDateLt == other.invoiceDateLt && invoiceDateLte == other.invoiceDateLte && isRecurring == other.isRecurring && limit == other.limit && status == other.status && subscriptionId == other.subscriptionId && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
     }
 
-    override fun hashCode(): Int {
-        return /* spotless:off */ Objects.hash(amount, amountGt, amountLt, cursor, customerId, dateType, dueDate, dueDateWindow, dueDateGt, dueDateLt, externalCustomerId, invoiceDateGt, invoiceDateGte, invoiceDateLt, invoiceDateLte, isRecurring, limit, status, subscriptionId, additionalHeaders, additionalQueryParams) /* spotless:on */
-    }
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(amount, amountGt, amountLt, cursor, customerId, dateType, dueDate, dueDateWindow, dueDateGt, dueDateLt, externalCustomerId, invoiceDateGt, invoiceDateGte, invoiceDateLt, invoiceDateLte, isRecurring, limit, status, subscriptionId, additionalHeaders, additionalQueryParams) /* spotless:on */
 
     override fun toString() =
         "InvoiceListParams{amount=$amount, amountGt=$amountGt, amountLt=$amountLt, cursor=$cursor, customerId=$customerId, dateType=$dateType, dueDate=$dueDate, dueDateWindow=$dueDateWindow, dueDateGt=$dueDateGt, dueDateLt=$dueDateLt, externalCustomerId=$externalCustomerId, invoiceDateGt=$invoiceDateGt, invoiceDateGte=$invoiceDateGte, invoiceDateLt=$invoiceDateLt, invoiceDateLte=$invoiceDateLte, isRecurring=$isRecurring, limit=$limit, status=$status, subscriptionId=$subscriptionId, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
@@ -399,7 +397,7 @@ constructor(
                 return true
             }
 
-            return /* spotless:off */ other is DateType && this.value == other.value /* spotless:on */
+            return /* spotless:off */ other is DateType && value == other.value /* spotless:on */
         }
 
         override fun hashCode() = value.hashCode()
@@ -456,7 +454,7 @@ constructor(
                 return true
             }
 
-            return /* spotless:off */ other is Status && this.value == other.value /* spotless:on */
+            return /* spotless:off */ other is Status && value == other.value /* spotless:on */
         }
 
         override fun hashCode() = value.hashCode()

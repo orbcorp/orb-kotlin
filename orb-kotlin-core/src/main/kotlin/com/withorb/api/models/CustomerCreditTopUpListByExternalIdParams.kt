@@ -49,12 +49,10 @@ constructor(
             return true
         }
 
-        return /* spotless:off */ other is CustomerCreditTopUpListByExternalIdParams && this.externalCustomerId == other.externalCustomerId && this.cursor == other.cursor && this.limit == other.limit && this.additionalHeaders == other.additionalHeaders && this.additionalQueryParams == other.additionalQueryParams /* spotless:on */
+        return /* spotless:off */ other is CustomerCreditTopUpListByExternalIdParams && externalCustomerId == other.externalCustomerId && cursor == other.cursor && limit == other.limit && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
     }
 
-    override fun hashCode(): Int {
-        return /* spotless:off */ Objects.hash(externalCustomerId, cursor, limit, additionalHeaders, additionalQueryParams) /* spotless:on */
-    }
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(externalCustomerId, cursor, limit, additionalHeaders, additionalQueryParams) /* spotless:on */
 
     override fun toString() =
         "CustomerCreditTopUpListByExternalIdParams{externalCustomerId=$externalCustomerId, cursor=$cursor, limit=$limit, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"

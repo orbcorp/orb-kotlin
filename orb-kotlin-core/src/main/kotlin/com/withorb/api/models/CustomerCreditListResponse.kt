@@ -202,7 +202,7 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is Status && this.value == other.value /* spotless:on */
+            return /* spotless:off */ other is Status && value == other.value /* spotless:on */
         }
 
         override fun hashCode() = value.hashCode()
@@ -251,17 +251,14 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is CustomerCreditListResponse && this.id == other.id && this.balance == other.balance && this.effectiveDate == other.effectiveDate && this.expiryDate == other.expiryDate && this.perUnitCostBasis == other.perUnitCostBasis && this.status == other.status && this.maximumInitialBalance == other.maximumInitialBalance && this.additionalProperties == other.additionalProperties /* spotless:on */
+        return /* spotless:off */ other is CustomerCreditListResponse && id == other.id && balance == other.balance && effectiveDate == other.effectiveDate && expiryDate == other.expiryDate && perUnitCostBasis == other.perUnitCostBasis && status == other.status && maximumInitialBalance == other.maximumInitialBalance && additionalProperties == other.additionalProperties /* spotless:on */
     }
 
-    private var hashCode: Int = 0
+    /* spotless:off */
+    private val hashCode: Int by lazy { Objects.hash(id, balance, effectiveDate, expiryDate, perUnitCostBasis, status, maximumInitialBalance, additionalProperties) }
+    /* spotless:on */
 
-    override fun hashCode(): Int {
-        if (hashCode == 0) {
-            hashCode = /* spotless:off */ Objects.hash(id, balance, effectiveDate, expiryDate, perUnitCostBasis, status, maximumInitialBalance, additionalProperties) /* spotless:on */
-        }
-        return hashCode
-    }
+    override fun hashCode(): Int = hashCode
 
     override fun toString() =
         "CustomerCreditListResponse{id=$id, balance=$balance, effectiveDate=$effectiveDate, expiryDate=$expiryDate, perUnitCostBasis=$perUnitCostBasis, status=$status, maximumInitialBalance=$maximumInitialBalance, additionalProperties=$additionalProperties}"
