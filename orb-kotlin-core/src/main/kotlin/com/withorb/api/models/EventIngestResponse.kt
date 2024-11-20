@@ -243,17 +243,14 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is ValidationFailed && this.idempotencyKey == other.idempotencyKey && this.validationErrors == other.validationErrors && this.additionalProperties == other.additionalProperties /* spotless:on */
+            return /* spotless:off */ other is ValidationFailed && idempotencyKey == other.idempotencyKey && validationErrors == other.validationErrors && additionalProperties == other.additionalProperties /* spotless:on */
         }
 
-        private var hashCode: Int = 0
+        /* spotless:off */
+        private val hashCode: Int by lazy { Objects.hash(idempotencyKey, validationErrors, additionalProperties) }
+        /* spotless:on */
 
-        override fun hashCode(): Int {
-            if (hashCode == 0) {
-                hashCode = /* spotless:off */ Objects.hash(idempotencyKey, validationErrors, additionalProperties) /* spotless:on */
-            }
-            return hashCode
-        }
+        override fun hashCode(): Int = hashCode
 
         override fun toString() =
             "ValidationFailed{idempotencyKey=$idempotencyKey, validationErrors=$validationErrors, additionalProperties=$additionalProperties}"
@@ -352,17 +349,14 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is Debug && this.duplicate == other.duplicate && this.ingested == other.ingested && this.additionalProperties == other.additionalProperties /* spotless:on */
+            return /* spotless:off */ other is Debug && duplicate == other.duplicate && ingested == other.ingested && additionalProperties == other.additionalProperties /* spotless:on */
         }
 
-        private var hashCode: Int = 0
+        /* spotless:off */
+        private val hashCode: Int by lazy { Objects.hash(duplicate, ingested, additionalProperties) }
+        /* spotless:on */
 
-        override fun hashCode(): Int {
-            if (hashCode == 0) {
-                hashCode = /* spotless:off */ Objects.hash(duplicate, ingested, additionalProperties) /* spotless:on */
-            }
-            return hashCode
-        }
+        override fun hashCode(): Int = hashCode
 
         override fun toString() =
             "Debug{duplicate=$duplicate, ingested=$ingested, additionalProperties=$additionalProperties}"
@@ -373,17 +367,14 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is EventIngestResponse && this.debug == other.debug && this.validationFailed == other.validationFailed && this.additionalProperties == other.additionalProperties /* spotless:on */
+        return /* spotless:off */ other is EventIngestResponse && debug == other.debug && validationFailed == other.validationFailed && additionalProperties == other.additionalProperties /* spotless:on */
     }
 
-    private var hashCode: Int = 0
+    /* spotless:off */
+    private val hashCode: Int by lazy { Objects.hash(debug, validationFailed, additionalProperties) }
+    /* spotless:on */
 
-    override fun hashCode(): Int {
-        if (hashCode == 0) {
-            hashCode = /* spotless:off */ Objects.hash(debug, validationFailed, additionalProperties) /* spotless:on */
-        }
-        return hashCode
-    }
+    override fun hashCode(): Int = hashCode
 
     override fun toString() =
         "EventIngestResponse{debug=$debug, validationFailed=$validationFailed, additionalProperties=$additionalProperties}"

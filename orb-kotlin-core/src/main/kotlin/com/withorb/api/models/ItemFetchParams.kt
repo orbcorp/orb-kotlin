@@ -37,12 +37,10 @@ constructor(
             return true
         }
 
-        return /* spotless:off */ other is ItemFetchParams && this.itemId == other.itemId && this.additionalHeaders == other.additionalHeaders && this.additionalQueryParams == other.additionalQueryParams /* spotless:on */
+        return /* spotless:off */ other is ItemFetchParams && itemId == other.itemId && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
     }
 
-    override fun hashCode(): Int {
-        return /* spotless:off */ Objects.hash(itemId, additionalHeaders, additionalQueryParams) /* spotless:on */
-    }
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(itemId, additionalHeaders, additionalQueryParams) /* spotless:on */
 
     override fun toString() =
         "ItemFetchParams{itemId=$itemId, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"

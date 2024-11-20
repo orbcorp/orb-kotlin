@@ -478,17 +478,14 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is Customer && this.id == other.id && this.externalCustomerId == other.externalCustomerId && this.additionalProperties == other.additionalProperties /* spotless:on */
+            return /* spotless:off */ other is Customer && id == other.id && externalCustomerId == other.externalCustomerId && additionalProperties == other.additionalProperties /* spotless:on */
         }
 
-        private var hashCode: Int = 0
+        /* spotless:off */
+        private val hashCode: Int by lazy { Objects.hash(id, externalCustomerId, additionalProperties) }
+        /* spotless:on */
 
-        override fun hashCode(): Int {
-            if (hashCode == 0) {
-                hashCode = /* spotless:off */ Objects.hash(id, externalCustomerId, additionalProperties) /* spotless:on */
-            }
-            return hashCode
-        }
+        override fun hashCode(): Int = hashCode
 
         override fun toString() =
             "Customer{id=$id, externalCustomerId=$externalCustomerId, additionalProperties=$additionalProperties}"
@@ -813,17 +810,14 @@ private constructor(
                     return true
                 }
 
-                return /* spotless:off */ other is TaxAmount && this.taxRateDescription == other.taxRateDescription && this.taxRatePercentage == other.taxRatePercentage && this.amount == other.amount && this.additionalProperties == other.additionalProperties /* spotless:on */
+                return /* spotless:off */ other is TaxAmount && taxRateDescription == other.taxRateDescription && taxRatePercentage == other.taxRatePercentage && amount == other.amount && additionalProperties == other.additionalProperties /* spotless:on */
             }
 
-            private var hashCode: Int = 0
+            /* spotless:off */
+            private val hashCode: Int by lazy { Objects.hash(taxRateDescription, taxRatePercentage, amount, additionalProperties) }
+            /* spotless:on */
 
-            override fun hashCode(): Int {
-                if (hashCode == 0) {
-                    hashCode = /* spotless:off */ Objects.hash(taxRateDescription, taxRatePercentage, amount, additionalProperties) /* spotless:on */
-                }
-                return hashCode
-            }
+            override fun hashCode(): Int = hashCode
 
             override fun toString() =
                 "TaxAmount{taxRateDescription=$taxRateDescription, taxRatePercentage=$taxRatePercentage, amount=$amount, additionalProperties=$additionalProperties}"
@@ -1022,7 +1016,7 @@ private constructor(
                         return true
                     }
 
-                    return /* spotless:off */ other is DiscountType && this.value == other.value /* spotless:on */
+                    return /* spotless:off */ other is DiscountType && value == other.value /* spotless:on */
                 }
 
                 override fun hashCode() = value.hashCode()
@@ -1071,17 +1065,14 @@ private constructor(
                     return true
                 }
 
-                return /* spotless:off */ other is Discount && this.id == other.id && this.discountType == other.discountType && this.percentageDiscount == other.percentageDiscount && this.amountDiscount == other.amountDiscount && this.amountApplied == other.amountApplied && this.reason == other.reason && this.appliesToPriceIds == other.appliesToPriceIds && this.additionalProperties == other.additionalProperties /* spotless:on */
+                return /* spotless:off */ other is Discount && id == other.id && discountType == other.discountType && percentageDiscount == other.percentageDiscount && amountDiscount == other.amountDiscount && amountApplied == other.amountApplied && reason == other.reason && appliesToPriceIds == other.appliesToPriceIds && additionalProperties == other.additionalProperties /* spotless:on */
             }
 
-            private var hashCode: Int = 0
+            /* spotless:off */
+            private val hashCode: Int by lazy { Objects.hash(id, discountType, percentageDiscount, amountDiscount, amountApplied, reason, appliesToPriceIds, additionalProperties) }
+            /* spotless:on */
 
-            override fun hashCode(): Int {
-                if (hashCode == 0) {
-                    hashCode = /* spotless:off */ Objects.hash(id, discountType, percentageDiscount, amountDiscount, amountApplied, reason, appliesToPriceIds, additionalProperties) /* spotless:on */
-                }
-                return hashCode
-            }
+            override fun hashCode(): Int = hashCode
 
             override fun toString() =
                 "Discount{id=$id, discountType=$discountType, percentageDiscount=$percentageDiscount, amountDiscount=$amountDiscount, amountApplied=$amountApplied, reason=$reason, appliesToPriceIds=$appliesToPriceIds, additionalProperties=$additionalProperties}"
@@ -1092,17 +1083,14 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is LineItem && this.id == other.id && this.name == other.name && this.subtotal == other.subtotal && this.amount == other.amount && this.quantity == other.quantity && this.discounts == other.discounts && this.taxAmounts == other.taxAmounts && this.additionalProperties == other.additionalProperties /* spotless:on */
+            return /* spotless:off */ other is LineItem && id == other.id && name == other.name && subtotal == other.subtotal && amount == other.amount && quantity == other.quantity && discounts == other.discounts && taxAmounts == other.taxAmounts && additionalProperties == other.additionalProperties /* spotless:on */
         }
 
-        private var hashCode: Int = 0
+        /* spotless:off */
+        private val hashCode: Int by lazy { Objects.hash(id, name, subtotal, amount, quantity, discounts, taxAmounts, additionalProperties) }
+        /* spotless:on */
 
-        override fun hashCode(): Int {
-            if (hashCode == 0) {
-                hashCode = /* spotless:off */ Objects.hash(id, name, subtotal, amount, quantity, discounts, taxAmounts, additionalProperties) /* spotless:on */
-            }
-            return hashCode
-        }
+        override fun hashCode(): Int = hashCode
 
         override fun toString() =
             "LineItem{id=$id, name=$name, subtotal=$subtotal, amount=$amount, quantity=$quantity, discounts=$discounts, taxAmounts=$taxAmounts, additionalProperties=$additionalProperties}"
@@ -1264,7 +1252,7 @@ private constructor(
                     return true
                 }
 
-                return /* spotless:off */ other is DiscountType && this.value == other.value /* spotless:on */
+                return /* spotless:off */ other is DiscountType && value == other.value /* spotless:on */
             }
 
             override fun hashCode() = value.hashCode()
@@ -1392,17 +1380,14 @@ private constructor(
                     return true
                 }
 
-                return /* spotless:off */ other is AppliesToPrice && this.id == other.id && this.name == other.name && this.additionalProperties == other.additionalProperties /* spotless:on */
+                return /* spotless:off */ other is AppliesToPrice && id == other.id && name == other.name && additionalProperties == other.additionalProperties /* spotless:on */
             }
 
-            private var hashCode: Int = 0
+            /* spotless:off */
+            private val hashCode: Int by lazy { Objects.hash(id, name, additionalProperties) }
+            /* spotless:on */
 
-            override fun hashCode(): Int {
-                if (hashCode == 0) {
-                    hashCode = /* spotless:off */ Objects.hash(id, name, additionalProperties) /* spotless:on */
-                }
-                return hashCode
-            }
+            override fun hashCode(): Int = hashCode
 
             override fun toString() =
                 "AppliesToPrice{id=$id, name=$name, additionalProperties=$additionalProperties}"
@@ -1413,17 +1398,14 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is MaximumAmountAdjustment && this.discountType == other.discountType && this.percentageDiscount == other.percentageDiscount && this.amountApplied == other.amountApplied && this.reason == other.reason && this.appliesToPrices == other.appliesToPrices && this.additionalProperties == other.additionalProperties /* spotless:on */
+            return /* spotless:off */ other is MaximumAmountAdjustment && discountType == other.discountType && percentageDiscount == other.percentageDiscount && amountApplied == other.amountApplied && reason == other.reason && appliesToPrices == other.appliesToPrices && additionalProperties == other.additionalProperties /* spotless:on */
         }
 
-        private var hashCode: Int = 0
+        /* spotless:off */
+        private val hashCode: Int by lazy { Objects.hash(discountType, percentageDiscount, amountApplied, reason, appliesToPrices, additionalProperties) }
+        /* spotless:on */
 
-        override fun hashCode(): Int {
-            if (hashCode == 0) {
-                hashCode = /* spotless:off */ Objects.hash(discountType, percentageDiscount, amountApplied, reason, appliesToPrices, additionalProperties) /* spotless:on */
-            }
-            return hashCode
-        }
+        override fun hashCode(): Int = hashCode
 
         override fun toString() =
             "MaximumAmountAdjustment{discountType=$discountType, percentageDiscount=$percentageDiscount, amountApplied=$amountApplied, reason=$reason, appliesToPrices=$appliesToPrices, additionalProperties=$additionalProperties}"
@@ -1442,7 +1424,7 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is Reason && this.value == other.value /* spotless:on */
+            return /* spotless:off */ other is Reason && value == other.value /* spotless:on */
         }
 
         override fun hashCode() = value.hashCode()
@@ -1511,7 +1493,7 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is Type && this.value == other.value /* spotless:on */
+            return /* spotless:off */ other is Type && value == other.value /* spotless:on */
         }
 
         override fun hashCode() = value.hashCode()
@@ -1710,7 +1692,7 @@ private constructor(
                     return true
                 }
 
-                return /* spotless:off */ other is DiscountType && this.value == other.value /* spotless:on */
+                return /* spotless:off */ other is DiscountType && value == other.value /* spotless:on */
             }
 
             override fun hashCode() = value.hashCode()
@@ -1838,17 +1820,14 @@ private constructor(
                     return true
                 }
 
-                return /* spotless:off */ other is AppliesToPrice && this.id == other.id && this.name == other.name && this.additionalProperties == other.additionalProperties /* spotless:on */
+                return /* spotless:off */ other is AppliesToPrice && id == other.id && name == other.name && additionalProperties == other.additionalProperties /* spotless:on */
             }
 
-            private var hashCode: Int = 0
+            /* spotless:off */
+            private val hashCode: Int by lazy { Objects.hash(id, name, additionalProperties) }
+            /* spotless:on */
 
-            override fun hashCode(): Int {
-                if (hashCode == 0) {
-                    hashCode = /* spotless:off */ Objects.hash(id, name, additionalProperties) /* spotless:on */
-                }
-                return hashCode
-            }
+            override fun hashCode(): Int = hashCode
 
             override fun toString() =
                 "AppliesToPrice{id=$id, name=$name, additionalProperties=$additionalProperties}"
@@ -1859,17 +1838,14 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is Discount && this.discountType == other.discountType && this.percentageDiscount == other.percentageDiscount && this.amountApplied == other.amountApplied && this.reason == other.reason && this.appliesToPrices == other.appliesToPrices && this.additionalProperties == other.additionalProperties /* spotless:on */
+            return /* spotless:off */ other is Discount && discountType == other.discountType && percentageDiscount == other.percentageDiscount && amountApplied == other.amountApplied && reason == other.reason && appliesToPrices == other.appliesToPrices && additionalProperties == other.additionalProperties /* spotless:on */
         }
 
-        private var hashCode: Int = 0
+        /* spotless:off */
+        private val hashCode: Int by lazy { Objects.hash(discountType, percentageDiscount, amountApplied, reason, appliesToPrices, additionalProperties) }
+        /* spotless:on */
 
-        override fun hashCode(): Int {
-            if (hashCode == 0) {
-                hashCode = /* spotless:off */ Objects.hash(discountType, percentageDiscount, amountApplied, reason, appliesToPrices, additionalProperties) /* spotless:on */
-            }
-            return hashCode
-        }
+        override fun hashCode(): Int = hashCode
 
         override fun toString() =
             "Discount{discountType=$discountType, percentageDiscount=$percentageDiscount, amountApplied=$amountApplied, reason=$reason, appliesToPrices=$appliesToPrices, additionalProperties=$additionalProperties}"
@@ -1880,17 +1856,14 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is CreditNote && this.id == other.id && this.createdAt == other.createdAt && this.voidedAt == other.voidedAt && this.creditNoteNumber == other.creditNoteNumber && this.invoiceId == other.invoiceId && this.memo == other.memo && this.reason == other.reason && this.type == other.type && this.subtotal == other.subtotal && this.total == other.total && this.customer == other.customer && this.creditNotePdf == other.creditNotePdf && this.minimumAmountRefunded == other.minimumAmountRefunded && this.discounts == other.discounts && this.maximumAmountAdjustment == other.maximumAmountAdjustment && this.lineItems == other.lineItems && this.additionalProperties == other.additionalProperties /* spotless:on */
+        return /* spotless:off */ other is CreditNote && id == other.id && createdAt == other.createdAt && voidedAt == other.voidedAt && creditNoteNumber == other.creditNoteNumber && invoiceId == other.invoiceId && memo == other.memo && reason == other.reason && type == other.type && subtotal == other.subtotal && total == other.total && customer == other.customer && creditNotePdf == other.creditNotePdf && minimumAmountRefunded == other.minimumAmountRefunded && discounts == other.discounts && maximumAmountAdjustment == other.maximumAmountAdjustment && lineItems == other.lineItems && additionalProperties == other.additionalProperties /* spotless:on */
     }
 
-    private var hashCode: Int = 0
+    /* spotless:off */
+    private val hashCode: Int by lazy { Objects.hash(id, createdAt, voidedAt, creditNoteNumber, invoiceId, memo, reason, type, subtotal, total, customer, creditNotePdf, minimumAmountRefunded, discounts, maximumAmountAdjustment, lineItems, additionalProperties) }
+    /* spotless:on */
 
-    override fun hashCode(): Int {
-        if (hashCode == 0) {
-            hashCode = /* spotless:off */ Objects.hash(id, createdAt, voidedAt, creditNoteNumber, invoiceId, memo, reason, type, subtotal, total, customer, creditNotePdf, minimumAmountRefunded, discounts, maximumAmountAdjustment, lineItems, additionalProperties) /* spotless:on */
-        }
-        return hashCode
-    }
+    override fun hashCode(): Int = hashCode
 
     override fun toString() =
         "CreditNote{id=$id, createdAt=$createdAt, voidedAt=$voidedAt, creditNoteNumber=$creditNoteNumber, invoiceId=$invoiceId, memo=$memo, reason=$reason, type=$type, subtotal=$subtotal, total=$total, customer=$customer, creditNotePdf=$creditNotePdf, minimumAmountRefunded=$minimumAmountRefunded, discounts=$discounts, maximumAmountAdjustment=$maximumAmountAdjustment, lineItems=$lineItems, additionalProperties=$additionalProperties}"

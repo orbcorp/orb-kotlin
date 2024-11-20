@@ -99,15 +99,13 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is Discount && this.percentageDiscount == other.percentageDiscount && this.trialDiscount == other.trialDiscount && this.usageDiscount == other.usageDiscount && this.amountDiscount == other.amountDiscount /* spotless:on */
+        return /* spotless:off */ other is Discount && percentageDiscount == other.percentageDiscount && trialDiscount == other.trialDiscount && usageDiscount == other.usageDiscount && amountDiscount == other.amountDiscount /* spotless:on */
     }
 
-    override fun hashCode(): Int {
-        return /* spotless:off */ Objects.hash(percentageDiscount, trialDiscount, usageDiscount, amountDiscount) /* spotless:on */
-    }
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(percentageDiscount, trialDiscount, usageDiscount, amountDiscount) /* spotless:on */
 
-    override fun toString(): String {
-        return when {
+    override fun toString(): String =
+        when {
             percentageDiscount != null -> "Discount{percentageDiscount=$percentageDiscount}"
             trialDiscount != null -> "Discount{trialDiscount=$trialDiscount}"
             usageDiscount != null -> "Discount{usageDiscount=$usageDiscount}"
@@ -115,7 +113,6 @@ private constructor(
             _json != null -> "Discount{_unknown=$_json}"
             else -> throw IllegalStateException("Invalid Discount")
         }
-    }
 
     companion object {
 
@@ -369,7 +366,7 @@ private constructor(
                     return true
                 }
 
-                return /* spotless:off */ other is DiscountType && this.value == other.value /* spotless:on */
+                return /* spotless:off */ other is DiscountType && value == other.value /* spotless:on */
             }
 
             override fun hashCode() = value.hashCode()
@@ -412,17 +409,14 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is UsageDiscount && this.discountType == other.discountType && this.appliesToPriceIds == other.appliesToPriceIds && this.reason == other.reason && this.usageDiscount == other.usageDiscount && this.additionalProperties == other.additionalProperties /* spotless:on */
+            return /* spotless:off */ other is UsageDiscount && discountType == other.discountType && appliesToPriceIds == other.appliesToPriceIds && reason == other.reason && usageDiscount == other.usageDiscount && additionalProperties == other.additionalProperties /* spotless:on */
         }
 
-        private var hashCode: Int = 0
+        /* spotless:off */
+        private val hashCode: Int by lazy { Objects.hash(discountType, appliesToPriceIds, reason, usageDiscount, additionalProperties) }
+        /* spotless:on */
 
-        override fun hashCode(): Int {
-            if (hashCode == 0) {
-                hashCode = /* spotless:off */ Objects.hash(discountType, appliesToPriceIds, reason, usageDiscount, additionalProperties) /* spotless:on */
-            }
-            return hashCode
-        }
+        override fun hashCode(): Int = hashCode
 
         override fun toString() =
             "UsageDiscount{discountType=$discountType, appliesToPriceIds=$appliesToPriceIds, reason=$reason, usageDiscount=$usageDiscount, additionalProperties=$additionalProperties}"
