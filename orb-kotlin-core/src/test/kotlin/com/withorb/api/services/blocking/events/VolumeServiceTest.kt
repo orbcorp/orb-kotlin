@@ -23,10 +23,10 @@ class VolumeServiceTest {
         val eventVolumes =
             volumeService.list(
                 EventVolumeListParams.builder()
+                    .timeframeStart(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                     .cursor("cursor")
                     .limit(123L)
                     .timeframeEnd(OffsetDateTime.parse("2024-10-11T06:00:00Z"))
-                    .timeframeStart(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                     .build()
             )
         println(eventVolumes)

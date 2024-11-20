@@ -14,7 +14,9 @@ import com.withorb.api.core.json
 import com.withorb.api.errors.OrbError
 import com.withorb.api.models.Subscription
 import com.withorb.api.models.SubscriptionCancelParams
+import com.withorb.api.models.SubscriptionCancelResponse
 import com.withorb.api.models.SubscriptionCreateParams
+import com.withorb.api.models.SubscriptionCreateResponse
 import com.withorb.api.models.SubscriptionFetchCostsParams
 import com.withorb.api.models.SubscriptionFetchCostsResponse
 import com.withorb.api.models.SubscriptionFetchParams
@@ -24,14 +26,22 @@ import com.withorb.api.models.SubscriptionFetchUsageParams
 import com.withorb.api.models.SubscriptionListPage
 import com.withorb.api.models.SubscriptionListParams
 import com.withorb.api.models.SubscriptionPriceIntervalsParams
+import com.withorb.api.models.SubscriptionPriceIntervalsResponse
 import com.withorb.api.models.SubscriptionSchedulePlanChangeParams
+import com.withorb.api.models.SubscriptionSchedulePlanChangeResponse
 import com.withorb.api.models.SubscriptionTriggerPhaseParams
+import com.withorb.api.models.SubscriptionTriggerPhaseResponse
 import com.withorb.api.models.SubscriptionUnscheduleCancellationParams
+import com.withorb.api.models.SubscriptionUnscheduleCancellationResponse
 import com.withorb.api.models.SubscriptionUnscheduleFixedFeeQuantityUpdatesParams
+import com.withorb.api.models.SubscriptionUnscheduleFixedFeeQuantityUpdatesResponse
 import com.withorb.api.models.SubscriptionUnschedulePendingPlanChangesParams
+import com.withorb.api.models.SubscriptionUnschedulePendingPlanChangesResponse
 import com.withorb.api.models.SubscriptionUpdateFixedFeeQuantityParams
+import com.withorb.api.models.SubscriptionUpdateFixedFeeQuantityResponse
 import com.withorb.api.models.SubscriptionUpdateParams
 import com.withorb.api.models.SubscriptionUpdateTrialParams
+import com.withorb.api.models.SubscriptionUpdateTrialResponse
 import com.withorb.api.models.SubscriptionUsage
 
 class SubscriptionServiceImpl
@@ -41,8 +51,9 @@ constructor(
 
     private val errorHandler: Handler<OrbError> = errorHandler(clientOptions.jsonMapper)
 
-    private val createHandler: Handler<Subscription> =
-        jsonHandler<Subscription>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+    private val createHandler: Handler<SubscriptionCreateResponse> =
+        jsonHandler<SubscriptionCreateResponse>(clientOptions.jsonMapper)
+            .withErrorHandler(errorHandler)
 
     /**
      * A subscription represents the purchase of a plan by a customer. The customer is identified by
@@ -77,8 +88,9 @@ constructor(
      * being created. This is useful when a customer has prices that differ from the default prices
      * for a specific plan.
      *
-     * :::info This feature is only available for accounts that have migrated off of legacy
-     * subscription overrides. :::
+     * :::info This feature is only available for accounts that have migrated to Subscription
+     * Overrides Version 2. You can find your Subscription Overrides Version at the bottom of your
+     * [Plans page](https://app.withorb.com/plans) :::
      *
      * ### Adding Prices
      *
@@ -281,15 +293,15 @@ constructor(
     override fun create(
         params: SubscriptionCreateParams,
         requestOptions: RequestOptions
-    ): Subscription {
+    ): SubscriptionCreateResponse {
         val request =
             HttpRequest.builder()
                 .method(HttpMethod.POST)
                 .addPathSegments("subscriptions")
                 .putAllQueryParams(clientOptions.queryParams)
-                .putAllQueryParams(params.getQueryParams())
+                .replaceAllQueryParams(params.getQueryParams())
                 .putAllHeaders(clientOptions.headers)
-                .putAllHeaders(params.getHeaders())
+                .replaceAllHeaders(params.getHeaders())
                 .body(json(clientOptions.jsonMapper, params.getBody()))
                 .build()
         return clientOptions.httpClient.execute(request, requestOptions).let { response ->
@@ -319,9 +331,9 @@ constructor(
                 .method(HttpMethod.PUT)
                 .addPathSegments("subscriptions", params.getPathParam(0))
                 .putAllQueryParams(clientOptions.queryParams)
-                .putAllQueryParams(params.getQueryParams())
+                .replaceAllQueryParams(params.getQueryParams())
                 .putAllHeaders(clientOptions.headers)
-                .putAllHeaders(params.getHeaders())
+                .replaceAllHeaders(params.getHeaders())
                 .body(json(clientOptions.jsonMapper, params.getBody()))
                 .build()
         return clientOptions.httpClient.execute(request, requestOptions).let { response ->
@@ -358,9 +370,9 @@ constructor(
                 .method(HttpMethod.GET)
                 .addPathSegments("subscriptions")
                 .putAllQueryParams(clientOptions.queryParams)
-                .putAllQueryParams(params.getQueryParams())
+                .replaceAllQueryParams(params.getQueryParams())
                 .putAllHeaders(clientOptions.headers)
-                .putAllHeaders(params.getHeaders())
+                .replaceAllHeaders(params.getHeaders())
                 .build()
         return clientOptions.httpClient.execute(request, requestOptions).let { response ->
             response
@@ -374,8 +386,9 @@ constructor(
         }
     }
 
-    private val cancelHandler: Handler<Subscription> =
-        jsonHandler<Subscription>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+    private val cancelHandler: Handler<SubscriptionCancelResponse> =
+        jsonHandler<SubscriptionCancelResponse>(clientOptions.jsonMapper)
+            .withErrorHandler(errorHandler)
 
     /**
      * This endpoint can be used to cancel an existing subscription. It returns the serialized
@@ -434,15 +447,15 @@ constructor(
     override fun cancel(
         params: SubscriptionCancelParams,
         requestOptions: RequestOptions
-    ): Subscription {
+    ): SubscriptionCancelResponse {
         val request =
             HttpRequest.builder()
                 .method(HttpMethod.POST)
                 .addPathSegments("subscriptions", params.getPathParam(0), "cancel")
                 .putAllQueryParams(clientOptions.queryParams)
-                .putAllQueryParams(params.getQueryParams())
+                .replaceAllQueryParams(params.getQueryParams())
                 .putAllHeaders(clientOptions.headers)
-                .putAllHeaders(params.getHeaders())
+                .replaceAllHeaders(params.getHeaders())
                 .body(json(clientOptions.jsonMapper, params.getBody()))
                 .build()
         return clientOptions.httpClient.execute(request, requestOptions).let { response ->
@@ -472,9 +485,9 @@ constructor(
                 .method(HttpMethod.GET)
                 .addPathSegments("subscriptions", params.getPathParam(0))
                 .putAllQueryParams(clientOptions.queryParams)
-                .putAllQueryParams(params.getQueryParams())
+                .replaceAllQueryParams(params.getQueryParams())
                 .putAllHeaders(clientOptions.headers)
-                .putAllHeaders(params.getHeaders())
+                .replaceAllHeaders(params.getHeaders())
                 .build()
         return clientOptions.httpClient.execute(request, requestOptions).let { response ->
             response
@@ -511,9 +524,9 @@ constructor(
                 .method(HttpMethod.GET)
                 .addPathSegments("subscriptions", params.getPathParam(0), "costs")
                 .putAllQueryParams(clientOptions.queryParams)
-                .putAllQueryParams(params.getQueryParams())
+                .replaceAllQueryParams(params.getQueryParams())
                 .putAllHeaders(clientOptions.headers)
-                .putAllHeaders(params.getHeaders())
+                .replaceAllHeaders(params.getHeaders())
                 .build()
         return clientOptions.httpClient.execute(request, requestOptions).let { response ->
             response
@@ -544,9 +557,9 @@ constructor(
                 .method(HttpMethod.GET)
                 .addPathSegments("subscriptions", params.getPathParam(0), "schedule")
                 .putAllQueryParams(clientOptions.queryParams)
-                .putAllQueryParams(params.getQueryParams())
+                .replaceAllQueryParams(params.getQueryParams())
                 .putAllHeaders(clientOptions.headers)
-                .putAllHeaders(params.getHeaders())
+                .replaceAllHeaders(params.getHeaders())
                 .build()
         return clientOptions.httpClient.execute(request, requestOptions).let { response ->
             response
@@ -749,9 +762,9 @@ constructor(
                 .method(HttpMethod.GET)
                 .addPathSegments("subscriptions", params.getPathParam(0), "usage")
                 .putAllQueryParams(clientOptions.queryParams)
-                .putAllQueryParams(params.getQueryParams())
+                .replaceAllQueryParams(params.getQueryParams())
                 .putAllHeaders(clientOptions.headers)
-                .putAllHeaders(params.getHeaders())
+                .replaceAllHeaders(params.getHeaders())
                 .build()
         return clientOptions.httpClient.execute(request, requestOptions).let { response ->
             response
@@ -764,8 +777,9 @@ constructor(
         }
     }
 
-    private val priceIntervalsHandler: Handler<Subscription> =
-        jsonHandler<Subscription>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+    private val priceIntervalsHandler: Handler<SubscriptionPriceIntervalsResponse> =
+        jsonHandler<SubscriptionPriceIntervalsResponse>(clientOptions.jsonMapper)
+            .withErrorHandler(errorHandler)
 
     /**
      * This endpoint is used to add and edit subscription
@@ -837,15 +851,15 @@ constructor(
     override fun priceIntervals(
         params: SubscriptionPriceIntervalsParams,
         requestOptions: RequestOptions
-    ): Subscription {
+    ): SubscriptionPriceIntervalsResponse {
         val request =
             HttpRequest.builder()
                 .method(HttpMethod.POST)
                 .addPathSegments("subscriptions", params.getPathParam(0), "price_intervals")
                 .putAllQueryParams(clientOptions.queryParams)
-                .putAllQueryParams(params.getQueryParams())
+                .replaceAllQueryParams(params.getQueryParams())
                 .putAllHeaders(clientOptions.headers)
-                .putAllHeaders(params.getHeaders())
+                .replaceAllHeaders(params.getHeaders())
                 .body(json(clientOptions.jsonMapper, params.getBody()))
                 .build()
         return clientOptions.httpClient.execute(request, requestOptions).let { response ->
@@ -859,8 +873,9 @@ constructor(
         }
     }
 
-    private val schedulePlanChangeHandler: Handler<Subscription> =
-        jsonHandler<Subscription>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+    private val schedulePlanChangeHandler: Handler<SubscriptionSchedulePlanChangeResponse> =
+        jsonHandler<SubscriptionSchedulePlanChangeResponse>(clientOptions.jsonMapper)
+            .withErrorHandler(errorHandler)
 
     /**
      * This endpoint can be used to change an existing subscription's plan. It returns the
@@ -901,8 +916,9 @@ constructor(
      * you schedule the plan change. This is useful when a customer has prices that differ from the
      * default prices for a specific plan.
      *
-     * :::info This feature is only available for accounts that have migrated off of legacy
-     * subscription overrides. :::
+     * :::info This feature is only available for accounts that have migrated to Subscription
+     * Overrides Version 2. You can find your Subscription Overrides Version at the bottom of your
+     * [Plans page](https://app.withorb.com/plans) :::
      *
      * ### Adding Prices
      *
@@ -1027,15 +1043,15 @@ constructor(
     override fun schedulePlanChange(
         params: SubscriptionSchedulePlanChangeParams,
         requestOptions: RequestOptions
-    ): Subscription {
+    ): SubscriptionSchedulePlanChangeResponse {
         val request =
             HttpRequest.builder()
                 .method(HttpMethod.POST)
                 .addPathSegments("subscriptions", params.getPathParam(0), "schedule_plan_change")
                 .putAllQueryParams(clientOptions.queryParams)
-                .putAllQueryParams(params.getQueryParams())
+                .replaceAllQueryParams(params.getQueryParams())
                 .putAllHeaders(clientOptions.headers)
-                .putAllHeaders(params.getHeaders())
+                .replaceAllHeaders(params.getHeaders())
                 .body(json(clientOptions.jsonMapper, params.getBody()))
                 .build()
         return clientOptions.httpClient.execute(request, requestOptions).let { response ->
@@ -1049,8 +1065,9 @@ constructor(
         }
     }
 
-    private val triggerPhaseHandler: Handler<Subscription> =
-        jsonHandler<Subscription>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+    private val triggerPhaseHandler: Handler<SubscriptionTriggerPhaseResponse> =
+        jsonHandler<SubscriptionTriggerPhaseResponse>(clientOptions.jsonMapper)
+            .withErrorHandler(errorHandler)
 
     /**
      * Manually trigger a phase, effective the given date (or the current time, if not specified).
@@ -1058,15 +1075,15 @@ constructor(
     override fun triggerPhase(
         params: SubscriptionTriggerPhaseParams,
         requestOptions: RequestOptions
-    ): Subscription {
+    ): SubscriptionTriggerPhaseResponse {
         val request =
             HttpRequest.builder()
                 .method(HttpMethod.POST)
                 .addPathSegments("subscriptions", params.getPathParam(0), "trigger_phase")
                 .putAllQueryParams(clientOptions.queryParams)
-                .putAllQueryParams(params.getQueryParams())
+                .replaceAllQueryParams(params.getQueryParams())
                 .putAllHeaders(clientOptions.headers)
-                .putAllHeaders(params.getHeaders())
+                .replaceAllHeaders(params.getHeaders())
                 .body(json(clientOptions.jsonMapper, params.getBody()))
                 .build()
         return clientOptions.httpClient.execute(request, requestOptions).let { response ->
@@ -1080,8 +1097,9 @@ constructor(
         }
     }
 
-    private val unscheduleCancellationHandler: Handler<Subscription> =
-        jsonHandler<Subscription>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+    private val unscheduleCancellationHandler: Handler<SubscriptionUnscheduleCancellationResponse> =
+        jsonHandler<SubscriptionUnscheduleCancellationResponse>(clientOptions.jsonMapper)
+            .withErrorHandler(errorHandler)
 
     /**
      * This endpoint can be used to unschedule any pending cancellations for a subscription.
@@ -1093,15 +1111,15 @@ constructor(
     override fun unscheduleCancellation(
         params: SubscriptionUnscheduleCancellationParams,
         requestOptions: RequestOptions
-    ): Subscription {
+    ): SubscriptionUnscheduleCancellationResponse {
         val request =
             HttpRequest.builder()
                 .method(HttpMethod.POST)
                 .addPathSegments("subscriptions", params.getPathParam(0), "unschedule_cancellation")
                 .putAllQueryParams(clientOptions.queryParams)
-                .putAllQueryParams(params.getQueryParams())
+                .replaceAllQueryParams(params.getQueryParams())
                 .putAllHeaders(clientOptions.headers)
-                .putAllHeaders(params.getHeaders())
+                .replaceAllHeaders(params.getHeaders())
                 .apply { params.getBody()?.also { body(json(clientOptions.jsonMapper, it)) } }
                 .build()
         return clientOptions.httpClient.execute(request, requestOptions).let { response ->
@@ -1115,8 +1133,10 @@ constructor(
         }
     }
 
-    private val unscheduleFixedFeeQuantityUpdatesHandler: Handler<Subscription> =
-        jsonHandler<Subscription>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+    private val unscheduleFixedFeeQuantityUpdatesHandler:
+        Handler<SubscriptionUnscheduleFixedFeeQuantityUpdatesResponse> =
+        jsonHandler<SubscriptionUnscheduleFixedFeeQuantityUpdatesResponse>(clientOptions.jsonMapper)
+            .withErrorHandler(errorHandler)
 
     /**
      * This endpoint can be used to clear scheduled updates to the quantity for a fixed fee.
@@ -1127,7 +1147,7 @@ constructor(
     override fun unscheduleFixedFeeQuantityUpdates(
         params: SubscriptionUnscheduleFixedFeeQuantityUpdatesParams,
         requestOptions: RequestOptions
-    ): Subscription {
+    ): SubscriptionUnscheduleFixedFeeQuantityUpdatesResponse {
         val request =
             HttpRequest.builder()
                 .method(HttpMethod.POST)
@@ -1137,9 +1157,9 @@ constructor(
                     "unschedule_fixed_fee_quantity_updates"
                 )
                 .putAllQueryParams(clientOptions.queryParams)
-                .putAllQueryParams(params.getQueryParams())
+                .replaceAllQueryParams(params.getQueryParams())
                 .putAllHeaders(clientOptions.headers)
-                .putAllHeaders(params.getHeaders())
+                .replaceAllHeaders(params.getHeaders())
                 .body(json(clientOptions.jsonMapper, params.getBody()))
                 .build()
         return clientOptions.httpClient.execute(request, requestOptions).let { response ->
@@ -1153,8 +1173,10 @@ constructor(
         }
     }
 
-    private val unschedulePendingPlanChangesHandler: Handler<Subscription> =
-        jsonHandler<Subscription>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+    private val unschedulePendingPlanChangesHandler:
+        Handler<SubscriptionUnschedulePendingPlanChangesResponse> =
+        jsonHandler<SubscriptionUnschedulePendingPlanChangesResponse>(clientOptions.jsonMapper)
+            .withErrorHandler(errorHandler)
 
     /**
      * This endpoint can be used to unschedule any pending plan changes on an existing subscription.
@@ -1162,7 +1184,7 @@ constructor(
     override fun unschedulePendingPlanChanges(
         params: SubscriptionUnschedulePendingPlanChangesParams,
         requestOptions: RequestOptions
-    ): Subscription {
+    ): SubscriptionUnschedulePendingPlanChangesResponse {
         val request =
             HttpRequest.builder()
                 .method(HttpMethod.POST)
@@ -1172,9 +1194,9 @@ constructor(
                     "unschedule_pending_plan_changes"
                 )
                 .putAllQueryParams(clientOptions.queryParams)
-                .putAllQueryParams(params.getQueryParams())
+                .replaceAllQueryParams(params.getQueryParams())
                 .putAllHeaders(clientOptions.headers)
-                .putAllHeaders(params.getHeaders())
+                .replaceAllHeaders(params.getHeaders())
                 .apply { params.getBody()?.also { body(json(clientOptions.jsonMapper, it)) } }
                 .build()
         return clientOptions.httpClient.execute(request, requestOptions).let { response ->
@@ -1188,8 +1210,9 @@ constructor(
         }
     }
 
-    private val updateFixedFeeQuantityHandler: Handler<Subscription> =
-        jsonHandler<Subscription>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+    private val updateFixedFeeQuantityHandler: Handler<SubscriptionUpdateFixedFeeQuantityResponse> =
+        jsonHandler<SubscriptionUpdateFixedFeeQuantityResponse>(clientOptions.jsonMapper)
+            .withErrorHandler(errorHandler)
 
     /**
      * This endpoint can be used to update the quantity for a fixed fee.
@@ -1208,7 +1231,7 @@ constructor(
     override fun updateFixedFeeQuantity(
         params: SubscriptionUpdateFixedFeeQuantityParams,
         requestOptions: RequestOptions
-    ): Subscription {
+    ): SubscriptionUpdateFixedFeeQuantityResponse {
         val request =
             HttpRequest.builder()
                 .method(HttpMethod.POST)
@@ -1218,9 +1241,9 @@ constructor(
                     "update_fixed_fee_quantity"
                 )
                 .putAllQueryParams(clientOptions.queryParams)
-                .putAllQueryParams(params.getQueryParams())
+                .replaceAllQueryParams(params.getQueryParams())
                 .putAllHeaders(clientOptions.headers)
-                .putAllHeaders(params.getHeaders())
+                .replaceAllHeaders(params.getHeaders())
                 .body(json(clientOptions.jsonMapper, params.getBody()))
                 .build()
         return clientOptions.httpClient.execute(request, requestOptions).let { response ->
@@ -1234,8 +1257,9 @@ constructor(
         }
     }
 
-    private val updateTrialHandler: Handler<Subscription> =
-        jsonHandler<Subscription>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+    private val updateTrialHandler: Handler<SubscriptionUpdateTrialResponse> =
+        jsonHandler<SubscriptionUpdateTrialResponse>(clientOptions.jsonMapper)
+            .withErrorHandler(errorHandler)
 
     /**
      * This endpoint is used to update the trial end date for a subscription. The new trial end date
@@ -1258,15 +1282,15 @@ constructor(
     override fun updateTrial(
         params: SubscriptionUpdateTrialParams,
         requestOptions: RequestOptions
-    ): Subscription {
+    ): SubscriptionUpdateTrialResponse {
         val request =
             HttpRequest.builder()
                 .method(HttpMethod.POST)
                 .addPathSegments("subscriptions", params.getPathParam(0), "update_trial")
                 .putAllQueryParams(clientOptions.queryParams)
-                .putAllQueryParams(params.getQueryParams())
+                .replaceAllQueryParams(params.getQueryParams())
                 .putAllHeaders(clientOptions.headers)
-                .putAllHeaders(params.getHeaders())
+                .replaceAllHeaders(params.getHeaders())
                 .body(json(clientOptions.jsonMapper, params.getBody()))
                 .build()
         return clientOptions.httpClient.execute(request, requestOptions).let { response ->

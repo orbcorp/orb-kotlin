@@ -50,9 +50,9 @@ constructor(
                 .method(HttpMethod.POST)
                 .addPathSegments("coupons")
                 .putAllQueryParams(clientOptions.queryParams)
-                .putAllQueryParams(params.getQueryParams())
+                .replaceAllQueryParams(params.getQueryParams())
                 .putAllHeaders(clientOptions.headers)
-                .putAllHeaders(params.getHeaders())
+                .replaceAllHeaders(params.getHeaders())
                 .body(json(clientOptions.jsonMapper, params.getBody()))
                 .build()
         return clientOptions.httpClient.executeAsync(request, requestOptions).let { response ->
@@ -87,9 +87,9 @@ constructor(
                 .method(HttpMethod.GET)
                 .addPathSegments("coupons")
                 .putAllQueryParams(clientOptions.queryParams)
-                .putAllQueryParams(params.getQueryParams())
+                .replaceAllQueryParams(params.getQueryParams())
                 .putAllHeaders(clientOptions.headers)
-                .putAllHeaders(params.getHeaders())
+                .replaceAllHeaders(params.getHeaders())
                 .build()
         return clientOptions.httpClient.executeAsync(request, requestOptions).let { response ->
             response
@@ -120,9 +120,9 @@ constructor(
                 .method(HttpMethod.POST)
                 .addPathSegments("coupons", params.getPathParam(0), "archive")
                 .putAllQueryParams(clientOptions.queryParams)
-                .putAllQueryParams(params.getQueryParams())
+                .replaceAllQueryParams(params.getQueryParams())
                 .putAllHeaders(clientOptions.headers)
-                .putAllHeaders(params.getHeaders())
+                .replaceAllHeaders(params.getHeaders())
                 .apply { params.getBody()?.also { body(json(clientOptions.jsonMapper, it)) } }
                 .build()
         return clientOptions.httpClient.executeAsync(request, requestOptions).let { response ->
@@ -149,9 +149,9 @@ constructor(
                 .method(HttpMethod.GET)
                 .addPathSegments("coupons", params.getPathParam(0))
                 .putAllQueryParams(clientOptions.queryParams)
-                .putAllQueryParams(params.getQueryParams())
+                .replaceAllQueryParams(params.getQueryParams())
                 .putAllHeaders(clientOptions.headers)
-                .putAllHeaders(params.getHeaders())
+                .replaceAllHeaders(params.getHeaders())
                 .build()
         return clientOptions.httpClient.executeAsync(request, requestOptions).let { response ->
             response

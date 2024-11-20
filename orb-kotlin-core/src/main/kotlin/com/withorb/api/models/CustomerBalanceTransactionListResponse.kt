@@ -13,7 +13,7 @@ import com.withorb.api.core.JsonField
 import com.withorb.api.core.JsonMissing
 import com.withorb.api.core.JsonValue
 import com.withorb.api.core.NoAutoDetect
-import com.withorb.api.core.toUnmodifiable
+import com.withorb.api.core.toImmutable
 import com.withorb.api.errors.OrbInvalidDataException
 import java.time.OffsetDateTime
 import java.util.Objects
@@ -269,7 +269,7 @@ private constructor(
                 invoice,
                 type,
                 creditNote,
-                additionalProperties.toUnmodifiable(),
+                additionalProperties.toImmutable(),
             )
     }
 
@@ -432,7 +432,7 @@ private constructor(
                 this.additionalProperties.putAll(additionalProperties)
             }
 
-            fun build(): CreditNote = CreditNote(id, additionalProperties.toUnmodifiable())
+            fun build(): CreditNote = CreditNote(id, additionalProperties.toImmutable())
         }
 
         override fun equals(other: Any?): Boolean {
@@ -521,7 +521,7 @@ private constructor(
                 this.additionalProperties.putAll(additionalProperties)
             }
 
-            fun build(): Invoice = Invoice(id, additionalProperties.toUnmodifiable())
+            fun build(): Invoice = Invoice(id, additionalProperties.toImmutable())
         }
 
         override fun equals(other: Any?): Boolean {

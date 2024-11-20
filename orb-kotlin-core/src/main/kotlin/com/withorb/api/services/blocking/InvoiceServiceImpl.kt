@@ -21,6 +21,7 @@ import com.withorb.api.models.InvoiceIssueParams
 import com.withorb.api.models.InvoiceListPage
 import com.withorb.api.models.InvoiceListParams
 import com.withorb.api.models.InvoiceMarkPaidParams
+import com.withorb.api.models.InvoicePayParams
 import com.withorb.api.models.InvoiceUpdateParams
 import com.withorb.api.models.InvoiceVoidParams
 
@@ -41,9 +42,9 @@ constructor(
                 .method(HttpMethod.POST)
                 .addPathSegments("invoices")
                 .putAllQueryParams(clientOptions.queryParams)
-                .putAllQueryParams(params.getQueryParams())
+                .replaceAllQueryParams(params.getQueryParams())
                 .putAllHeaders(clientOptions.headers)
-                .putAllHeaders(params.getHeaders())
+                .replaceAllHeaders(params.getHeaders())
                 .body(json(clientOptions.jsonMapper, params.getBody()))
                 .build()
         return clientOptions.httpClient.execute(request, requestOptions).let { response ->
@@ -72,9 +73,9 @@ constructor(
                 .method(HttpMethod.PUT)
                 .addPathSegments("invoices", params.getPathParam(0))
                 .putAllQueryParams(clientOptions.queryParams)
-                .putAllQueryParams(params.getQueryParams())
+                .replaceAllQueryParams(params.getQueryParams())
                 .putAllHeaders(clientOptions.headers)
-                .putAllHeaders(params.getHeaders())
+                .replaceAllHeaders(params.getHeaders())
                 .body(json(clientOptions.jsonMapper, params.getBody()))
                 .build()
         return clientOptions.httpClient.execute(request, requestOptions).let { response ->
@@ -112,9 +113,9 @@ constructor(
                 .method(HttpMethod.GET)
                 .addPathSegments("invoices")
                 .putAllQueryParams(clientOptions.queryParams)
-                .putAllQueryParams(params.getQueryParams())
+                .replaceAllQueryParams(params.getQueryParams())
                 .putAllHeaders(clientOptions.headers)
-                .putAllHeaders(params.getHeaders())
+                .replaceAllHeaders(params.getHeaders())
                 .build()
         return clientOptions.httpClient.execute(request, requestOptions).let { response ->
             response
@@ -141,9 +142,9 @@ constructor(
                 .method(HttpMethod.GET)
                 .addPathSegments("invoices", params.getPathParam(0))
                 .putAllQueryParams(clientOptions.queryParams)
-                .putAllQueryParams(params.getQueryParams())
+                .replaceAllQueryParams(params.getQueryParams())
                 .putAllHeaders(clientOptions.headers)
-                .putAllHeaders(params.getHeaders())
+                .replaceAllHeaders(params.getHeaders())
                 .build()
         return clientOptions.httpClient.execute(request, requestOptions).let { response ->
             response
@@ -173,9 +174,9 @@ constructor(
                 .method(HttpMethod.GET)
                 .addPathSegments("invoices", "upcoming")
                 .putAllQueryParams(clientOptions.queryParams)
-                .putAllQueryParams(params.getQueryParams())
+                .replaceAllQueryParams(params.getQueryParams())
                 .putAllHeaders(clientOptions.headers)
-                .putAllHeaders(params.getHeaders())
+                .replaceAllHeaders(params.getHeaders())
                 .build()
         return clientOptions.httpClient.execute(request, requestOptions).let { response ->
             response
@@ -204,9 +205,9 @@ constructor(
                 .method(HttpMethod.POST)
                 .addPathSegments("invoices", params.getPathParam(0), "issue")
                 .putAllQueryParams(clientOptions.queryParams)
-                .putAllQueryParams(params.getQueryParams())
+                .replaceAllQueryParams(params.getQueryParams())
                 .putAllHeaders(clientOptions.headers)
-                .putAllHeaders(params.getHeaders())
+                .replaceAllHeaders(params.getHeaders())
                 .body(json(clientOptions.jsonMapper, params.getBody()))
                 .build()
         return clientOptions.httpClient.execute(request, requestOptions).let { response ->
@@ -233,14 +234,43 @@ constructor(
                 .method(HttpMethod.POST)
                 .addPathSegments("invoices", params.getPathParam(0), "mark_paid")
                 .putAllQueryParams(clientOptions.queryParams)
-                .putAllQueryParams(params.getQueryParams())
+                .replaceAllQueryParams(params.getQueryParams())
                 .putAllHeaders(clientOptions.headers)
-                .putAllHeaders(params.getHeaders())
+                .replaceAllHeaders(params.getHeaders())
                 .body(json(clientOptions.jsonMapper, params.getBody()))
                 .build()
         return clientOptions.httpClient.execute(request, requestOptions).let { response ->
             response
                 .use { markPaidHandler.handle(it) }
+                .apply {
+                    if (requestOptions.responseValidation ?: clientOptions.responseValidation) {
+                        validate()
+                    }
+                }
+        }
+    }
+
+    private val payHandler: Handler<Invoice> =
+        jsonHandler<Invoice>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+
+    /**
+     * This endpoint collects payment for an invoice using the customer's default payment method.
+     * This action can only be taken on invoices with status "issued".
+     */
+    override fun pay(params: InvoicePayParams, requestOptions: RequestOptions): Invoice {
+        val request =
+            HttpRequest.builder()
+                .method(HttpMethod.POST)
+                .addPathSegments("invoices", params.getPathParam(0), "pay")
+                .putAllQueryParams(clientOptions.queryParams)
+                .replaceAllQueryParams(params.getQueryParams())
+                .putAllHeaders(clientOptions.headers)
+                .replaceAllHeaders(params.getHeaders())
+                .apply { params.getBody()?.also { body(json(clientOptions.jsonMapper, it)) } }
+                .build()
+        return clientOptions.httpClient.execute(request, requestOptions).let { response ->
+            response
+                .use { payHandler.handle(it) }
                 .apply {
                     if (requestOptions.responseValidation ?: clientOptions.responseValidation) {
                         validate()
@@ -266,9 +296,9 @@ constructor(
                 .method(HttpMethod.POST)
                 .addPathSegments("invoices", params.getPathParam(0), "void")
                 .putAllQueryParams(clientOptions.queryParams)
-                .putAllQueryParams(params.getQueryParams())
+                .replaceAllQueryParams(params.getQueryParams())
                 .putAllHeaders(clientOptions.headers)
-                .putAllHeaders(params.getHeaders())
+                .replaceAllHeaders(params.getHeaders())
                 .apply { params.getBody()?.also { body(json(clientOptions.jsonMapper, it)) } }
                 .build()
         return clientOptions.httpClient.execute(request, requestOptions).let { response ->

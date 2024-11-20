@@ -19,7 +19,7 @@ The REST API documentation can be found on [docs.withorb.com](https://docs.with
 <!-- x-release-please-start-version -->
 
 ```kotlin
-implementation("com.withorb.api:orb-kotlin:0.1.0-alpha.7")
+implementation("com.withorb.api:orb-kotlin:0.1.0-alpha.8")
 ```
 
 #### Maven
@@ -28,7 +28,7 @@ implementation("com.withorb.api:orb-kotlin:0.1.0-alpha.7")
 <dependency>
     <groupId>com.withorb.api</groupId>
     <artifactId>orb-kotlin</artifactId>
-    <version>0.1.0-alpha.7</version>
+    <version>0.1.0-alpha.8</version>
 </dependency>
 ```
 
@@ -210,6 +210,18 @@ while (page != null) {
     page = page.getNextPage()
 }
 ```
+
+---
+
+## Webhook Verification
+
+We provide helper methods for verifying that a webhook request came from Orb, and not a malicious third party.
+
+You can use `orb.webhooks().verifySignature(body, headers, secret?)` or `orb.webhooks().unwrap(body, headers, secret?)`,
+both of which will raise an error if the signature is invalid.
+
+Note that the `body` parameter must be the raw JSON string sent from the server (do not parse it first).
+The `.unwrap()` method can parse this JSON for you.
 
 ---
 

@@ -2,6 +2,7 @@
 
 package com.withorb.api.models
 
+import com.withorb.api.core.http.QueryParams
 import com.withorb.api.models.*
 import java.time.OffsetDateTime
 import org.assertj.core.api.Assertions.assertThat
@@ -30,15 +31,12 @@ class CustomerCostListByExternalIdParamsTest {
                 .timeframeStart(OffsetDateTime.parse("2022-02-01T05:00:00Z"))
                 .viewMode(CustomerCostListByExternalIdParams.ViewMode.PERIODIC)
                 .build()
-        val expected = mutableMapOf<String, List<String>>()
-        expected.put("currency", listOf("currency"))
-        expected.put("timeframe_end", listOf("2022-03-01T05:00:00Z"))
-        expected.put("timeframe_start", listOf("2022-02-01T05:00:00Z"))
-        expected.put(
-            "view_mode",
-            listOf(CustomerCostListByExternalIdParams.ViewMode.PERIODIC.toString())
-        )
-        assertThat(params.getQueryParams()).isEqualTo(expected)
+        val expected = QueryParams.builder()
+        expected.put("currency", "currency")
+        expected.put("timeframe_end", "2022-03-01T05:00:00Z")
+        expected.put("timeframe_start", "2022-02-01T05:00:00Z")
+        expected.put("view_mode", CustomerCostListByExternalIdParams.ViewMode.PERIODIC.toString())
+        assertThat(params.getQueryParams()).isEqualTo(expected.build())
     }
 
     @Test
@@ -47,8 +45,8 @@ class CustomerCostListByExternalIdParamsTest {
             CustomerCostListByExternalIdParams.builder()
                 .externalCustomerId("external_customer_id")
                 .build()
-        val expected = mutableMapOf<String, List<String>>()
-        assertThat(params.getQueryParams()).isEqualTo(expected)
+        val expected = QueryParams.builder()
+        assertThat(params.getQueryParams()).isEqualTo(expected.build())
     }
 
     @Test

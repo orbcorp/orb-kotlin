@@ -11,7 +11,7 @@ import com.withorb.api.core.JsonField
 import com.withorb.api.core.JsonMissing
 import com.withorb.api.core.JsonValue
 import com.withorb.api.core.NoAutoDetect
-import com.withorb.api.core.toUnmodifiable
+import com.withorb.api.core.toImmutable
 import java.util.Objects
 
 @JsonDeserialize(builder = PriceEvaluateResponse.Builder::class)
@@ -77,10 +77,7 @@ private constructor(
         }
 
         fun build(): PriceEvaluateResponse =
-            PriceEvaluateResponse(
-                data.map { it.toUnmodifiable() },
-                additionalProperties.toUnmodifiable()
-            )
+            PriceEvaluateResponse(data.map { it.toImmutable() }, additionalProperties.toImmutable())
     }
 
     override fun equals(other: Any?): Boolean {

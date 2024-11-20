@@ -7,7 +7,9 @@ import com.withorb.api.core.Enum
 import com.withorb.api.core.JsonField
 import com.withorb.api.core.JsonValue
 import com.withorb.api.core.NoAutoDetect
-import com.withorb.api.core.toUnmodifiable
+import com.withorb.api.core.http.Headers
+import com.withorb.api.core.http.QueryParams
+import com.withorb.api.core.toImmutable
 import com.withorb.api.errors.OrbInvalidDataException
 import com.withorb.api.models.*
 import java.time.LocalDate
@@ -36,8 +38,8 @@ constructor(
     private val limit: Long?,
     private val status: List<Status>?,
     private val subscriptionId: String?,
-    private val additionalQueryParams: Map<String, List<String>>,
-    private val additionalHeaders: Map<String, List<String>>,
+    private val additionalHeaders: Headers,
+    private val additionalQueryParams: QueryParams,
 ) {
 
     fun amount(): String? = amount
@@ -78,71 +80,73 @@ constructor(
 
     fun subscriptionId(): String? = subscriptionId
 
-    internal fun getQueryParams(): Map<String, List<String>> {
-        val params = mutableMapOf<String, List<String>>()
-        this.amount?.let { params.put("amount", listOf(it.toString())) }
-        this.amountGt?.let { params.put("amount[gt]", listOf(it.toString())) }
-        this.amountLt?.let { params.put("amount[lt]", listOf(it.toString())) }
-        this.cursor?.let { params.put("cursor", listOf(it.toString())) }
-        this.customerId?.let { params.put("customer_id", listOf(it.toString())) }
-        this.dateType?.let { params.put("date_type", listOf(it.toString())) }
-        this.dueDate?.let { params.put("due_date", listOf(it.toString())) }
-        this.dueDateWindow?.let { params.put("due_date_window", listOf(it.toString())) }
-        this.dueDateGt?.let { params.put("due_date[gt]", listOf(it.toString())) }
-        this.dueDateLt?.let { params.put("due_date[lt]", listOf(it.toString())) }
-        this.externalCustomerId?.let { params.put("external_customer_id", listOf(it.toString())) }
+    internal fun getHeaders(): Headers = additionalHeaders
+
+    internal fun getQueryParams(): QueryParams {
+        val queryParams = QueryParams.builder()
+        this.amount?.let { queryParams.put("amount", listOf(it.toString())) }
+        this.amountGt?.let { queryParams.put("amount[gt]", listOf(it.toString())) }
+        this.amountLt?.let { queryParams.put("amount[lt]", listOf(it.toString())) }
+        this.cursor?.let { queryParams.put("cursor", listOf(it.toString())) }
+        this.customerId?.let { queryParams.put("customer_id", listOf(it.toString())) }
+        this.dateType?.let { queryParams.put("date_type", listOf(it.toString())) }
+        this.dueDate?.let { queryParams.put("due_date", listOf(it.toString())) }
+        this.dueDateWindow?.let { queryParams.put("due_date_window", listOf(it.toString())) }
+        this.dueDateGt?.let { queryParams.put("due_date[gt]", listOf(it.toString())) }
+        this.dueDateLt?.let { queryParams.put("due_date[lt]", listOf(it.toString())) }
+        this.externalCustomerId?.let {
+            queryParams.put("external_customer_id", listOf(it.toString()))
+        }
         this.invoiceDateGt?.let {
-            params.put(
+            queryParams.put(
                 "invoice_date[gt]",
                 listOf(DateTimeFormatter.ISO_OFFSET_DATE_TIME.format(it))
             )
         }
         this.invoiceDateGte?.let {
-            params.put(
+            queryParams.put(
                 "invoice_date[gte]",
                 listOf(DateTimeFormatter.ISO_OFFSET_DATE_TIME.format(it))
             )
         }
         this.invoiceDateLt?.let {
-            params.put(
+            queryParams.put(
                 "invoice_date[lt]",
                 listOf(DateTimeFormatter.ISO_OFFSET_DATE_TIME.format(it))
             )
         }
         this.invoiceDateLte?.let {
-            params.put(
+            queryParams.put(
                 "invoice_date[lte]",
                 listOf(DateTimeFormatter.ISO_OFFSET_DATE_TIME.format(it))
             )
         }
-        this.isRecurring?.let { params.put("is_recurring", listOf(it.toString())) }
-        this.limit?.let { params.put("limit", listOf(it.toString())) }
-        this.status?.let { params.put("status[]", it.map(Any::toString)) }
-        this.subscriptionId?.let { params.put("subscription_id", listOf(it.toString())) }
-        params.putAll(additionalQueryParams)
-        return params.toUnmodifiable()
+        this.isRecurring?.let { queryParams.put("is_recurring", listOf(it.toString())) }
+        this.limit?.let { queryParams.put("limit", listOf(it.toString())) }
+        this.status?.let { queryParams.put("status[]", it.map(Any::toString)) }
+        this.subscriptionId?.let { queryParams.put("subscription_id", listOf(it.toString())) }
+        queryParams.putAll(additionalQueryParams)
+        return queryParams.build()
     }
 
-    internal fun getHeaders(): Map<String, List<String>> = additionalHeaders
+    fun _additionalHeaders(): Headers = additionalHeaders
 
-    fun _additionalQueryParams(): Map<String, List<String>> = additionalQueryParams
-
-    fun _additionalHeaders(): Map<String, List<String>> = additionalHeaders
+    fun _additionalQueryParams(): QueryParams = additionalQueryParams
 
     override fun equals(other: Any?): Boolean {
         if (this === other) {
             return true
         }
 
-        return /* spotless:off */ other is InvoiceListParams && this.amount == other.amount && this.amountGt == other.amountGt && this.amountLt == other.amountLt && this.cursor == other.cursor && this.customerId == other.customerId && this.dateType == other.dateType && this.dueDate == other.dueDate && this.dueDateWindow == other.dueDateWindow && this.dueDateGt == other.dueDateGt && this.dueDateLt == other.dueDateLt && this.externalCustomerId == other.externalCustomerId && this.invoiceDateGt == other.invoiceDateGt && this.invoiceDateGte == other.invoiceDateGte && this.invoiceDateLt == other.invoiceDateLt && this.invoiceDateLte == other.invoiceDateLte && this.isRecurring == other.isRecurring && this.limit == other.limit && this.status == other.status && this.subscriptionId == other.subscriptionId && this.additionalQueryParams == other.additionalQueryParams && this.additionalHeaders == other.additionalHeaders /* spotless:on */
+        return /* spotless:off */ other is InvoiceListParams && this.amount == other.amount && this.amountGt == other.amountGt && this.amountLt == other.amountLt && this.cursor == other.cursor && this.customerId == other.customerId && this.dateType == other.dateType && this.dueDate == other.dueDate && this.dueDateWindow == other.dueDateWindow && this.dueDateGt == other.dueDateGt && this.dueDateLt == other.dueDateLt && this.externalCustomerId == other.externalCustomerId && this.invoiceDateGt == other.invoiceDateGt && this.invoiceDateGte == other.invoiceDateGte && this.invoiceDateLt == other.invoiceDateLt && this.invoiceDateLte == other.invoiceDateLte && this.isRecurring == other.isRecurring && this.limit == other.limit && this.status == other.status && this.subscriptionId == other.subscriptionId && this.additionalHeaders == other.additionalHeaders && this.additionalQueryParams == other.additionalQueryParams /* spotless:on */
     }
 
     override fun hashCode(): Int {
-        return /* spotless:off */ Objects.hash(amount, amountGt, amountLt, cursor, customerId, dateType, dueDate, dueDateWindow, dueDateGt, dueDateLt, externalCustomerId, invoiceDateGt, invoiceDateGte, invoiceDateLt, invoiceDateLte, isRecurring, limit, status, subscriptionId, additionalQueryParams, additionalHeaders) /* spotless:on */
+        return /* spotless:off */ Objects.hash(amount, amountGt, amountLt, cursor, customerId, dateType, dueDate, dueDateWindow, dueDateGt, dueDateLt, externalCustomerId, invoiceDateGt, invoiceDateGte, invoiceDateLt, invoiceDateLte, isRecurring, limit, status, subscriptionId, additionalHeaders, additionalQueryParams) /* spotless:on */
     }
 
     override fun toString() =
-        "InvoiceListParams{amount=$amount, amountGt=$amountGt, amountLt=$amountLt, cursor=$cursor, customerId=$customerId, dateType=$dateType, dueDate=$dueDate, dueDateWindow=$dueDateWindow, dueDateGt=$dueDateGt, dueDateLt=$dueDateLt, externalCustomerId=$externalCustomerId, invoiceDateGt=$invoiceDateGt, invoiceDateGte=$invoiceDateGte, invoiceDateLt=$invoiceDateLt, invoiceDateLte=$invoiceDateLte, isRecurring=$isRecurring, limit=$limit, status=$status, subscriptionId=$subscriptionId, additionalQueryParams=$additionalQueryParams, additionalHeaders=$additionalHeaders}"
+        "InvoiceListParams{amount=$amount, amountGt=$amountGt, amountLt=$amountLt, cursor=$cursor, customerId=$customerId, dateType=$dateType, dueDate=$dueDate, dueDateWindow=$dueDateWindow, dueDateGt=$dueDateGt, dueDateLt=$dueDateLt, externalCustomerId=$externalCustomerId, invoiceDateGt=$invoiceDateGt, invoiceDateGte=$invoiceDateGte, invoiceDateLt=$invoiceDateLt, invoiceDateLte=$invoiceDateLte, isRecurring=$isRecurring, limit=$limit, status=$status, subscriptionId=$subscriptionId, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
 
     fun toBuilder() = Builder().from(this)
 
@@ -173,8 +177,8 @@ constructor(
         private var limit: Long? = null
         private var status: MutableList<Status> = mutableListOf()
         private var subscriptionId: String? = null
-        private var additionalQueryParams: MutableMap<String, MutableList<String>> = mutableMapOf()
-        private var additionalHeaders: MutableMap<String, MutableList<String>> = mutableMapOf()
+        private var additionalHeaders: Headers.Builder = Headers.builder()
+        private var additionalQueryParams: QueryParams.Builder = QueryParams.builder()
 
         internal fun from(invoiceListParams: InvoiceListParams) = apply {
             this.amount = invoiceListParams.amount
@@ -196,8 +200,8 @@ constructor(
             this.limit = invoiceListParams.limit
             this.status(invoiceListParams.status ?: listOf())
             this.subscriptionId = invoiceListParams.subscriptionId
-            additionalQueryParams(invoiceListParams.additionalQueryParams)
             additionalHeaders(invoiceListParams.additionalHeaders)
+            additionalQueryParams(invoiceListParams.additionalQueryParams)
         }
 
         fun amount(amount: String) = apply { this.amount = amount }
@@ -258,45 +262,103 @@ constructor(
 
         fun subscriptionId(subscriptionId: String) = apply { this.subscriptionId = subscriptionId }
 
-        fun additionalQueryParams(additionalQueryParams: Map<String, List<String>>) = apply {
-            this.additionalQueryParams.clear()
-            putAllQueryParams(additionalQueryParams)
-        }
-
-        fun putQueryParam(name: String, value: String) = apply {
-            this.additionalQueryParams.getOrPut(name) { mutableListOf() }.add(value)
-        }
-
-        fun putQueryParams(name: String, values: Iterable<String>) = apply {
-            this.additionalQueryParams.getOrPut(name) { mutableListOf() }.addAll(values)
-        }
-
-        fun putAllQueryParams(additionalQueryParams: Map<String, Iterable<String>>) = apply {
-            additionalQueryParams.forEach(this::putQueryParams)
-        }
-
-        fun removeQueryParam(name: String) = apply {
-            this.additionalQueryParams.put(name, mutableListOf())
+        fun additionalHeaders(additionalHeaders: Headers) = apply {
+            this.additionalHeaders.clear()
+            putAllAdditionalHeaders(additionalHeaders)
         }
 
         fun additionalHeaders(additionalHeaders: Map<String, Iterable<String>>) = apply {
             this.additionalHeaders.clear()
-            putAllHeaders(additionalHeaders)
+            putAllAdditionalHeaders(additionalHeaders)
         }
 
-        fun putHeader(name: String, value: String) = apply {
-            this.additionalHeaders.getOrPut(name) { mutableListOf() }.add(value)
+        fun putAdditionalHeader(name: String, value: String) = apply {
+            additionalHeaders.put(name, value)
         }
 
-        fun putHeaders(name: String, values: Iterable<String>) = apply {
-            this.additionalHeaders.getOrPut(name) { mutableListOf() }.addAll(values)
+        fun putAdditionalHeaders(name: String, values: Iterable<String>) = apply {
+            additionalHeaders.put(name, values)
         }
 
-        fun putAllHeaders(additionalHeaders: Map<String, Iterable<String>>) = apply {
-            additionalHeaders.forEach(this::putHeaders)
+        fun putAllAdditionalHeaders(additionalHeaders: Headers) = apply {
+            this.additionalHeaders.putAll(additionalHeaders)
         }
 
-        fun removeHeader(name: String) = apply { this.additionalHeaders.put(name, mutableListOf()) }
+        fun putAllAdditionalHeaders(additionalHeaders: Map<String, Iterable<String>>) = apply {
+            this.additionalHeaders.putAll(additionalHeaders)
+        }
+
+        fun replaceAdditionalHeaders(name: String, value: String) = apply {
+            additionalHeaders.replace(name, value)
+        }
+
+        fun replaceAdditionalHeaders(name: String, values: Iterable<String>) = apply {
+            additionalHeaders.replace(name, values)
+        }
+
+        fun replaceAllAdditionalHeaders(additionalHeaders: Headers) = apply {
+            this.additionalHeaders.replaceAll(additionalHeaders)
+        }
+
+        fun replaceAllAdditionalHeaders(additionalHeaders: Map<String, Iterable<String>>) = apply {
+            this.additionalHeaders.replaceAll(additionalHeaders)
+        }
+
+        fun removeAdditionalHeaders(name: String) = apply { additionalHeaders.remove(name) }
+
+        fun removeAllAdditionalHeaders(names: Set<String>) = apply {
+            additionalHeaders.removeAll(names)
+        }
+
+        fun additionalQueryParams(additionalQueryParams: QueryParams) = apply {
+            this.additionalQueryParams.clear()
+            putAllAdditionalQueryParams(additionalQueryParams)
+        }
+
+        fun additionalQueryParams(additionalQueryParams: Map<String, Iterable<String>>) = apply {
+            this.additionalQueryParams.clear()
+            putAllAdditionalQueryParams(additionalQueryParams)
+        }
+
+        fun putAdditionalQueryParam(key: String, value: String) = apply {
+            additionalQueryParams.put(key, value)
+        }
+
+        fun putAdditionalQueryParams(key: String, values: Iterable<String>) = apply {
+            additionalQueryParams.put(key, values)
+        }
+
+        fun putAllAdditionalQueryParams(additionalQueryParams: QueryParams) = apply {
+            this.additionalQueryParams.putAll(additionalQueryParams)
+        }
+
+        fun putAllAdditionalQueryParams(additionalQueryParams: Map<String, Iterable<String>>) =
+            apply {
+                this.additionalQueryParams.putAll(additionalQueryParams)
+            }
+
+        fun replaceAdditionalQueryParams(key: String, value: String) = apply {
+            additionalQueryParams.replace(key, value)
+        }
+
+        fun replaceAdditionalQueryParams(key: String, values: Iterable<String>) = apply {
+            additionalQueryParams.replace(key, values)
+        }
+
+        fun replaceAllAdditionalQueryParams(additionalQueryParams: QueryParams) = apply {
+            this.additionalQueryParams.replaceAll(additionalQueryParams)
+        }
+
+        fun replaceAllAdditionalQueryParams(additionalQueryParams: Map<String, Iterable<String>>) =
+            apply {
+                this.additionalQueryParams.replaceAll(additionalQueryParams)
+            }
+
+        fun removeAdditionalQueryParams(key: String) = apply { additionalQueryParams.remove(key) }
+
+        fun removeAllAdditionalQueryParams(keys: Set<String>) = apply {
+            additionalQueryParams.removeAll(keys)
+        }
 
         fun build(): InvoiceListParams =
             InvoiceListParams(
@@ -317,10 +379,10 @@ constructor(
                 invoiceDateLte,
                 isRecurring,
                 limit,
-                if (status.size == 0) null else status.toUnmodifiable(),
+                if (status.size == 0) null else status.toImmutable(),
                 subscriptionId,
-                additionalQueryParams.mapValues { it.value.toUnmodifiable() }.toUnmodifiable(),
-                additionalHeaders.mapValues { it.value.toUnmodifiable() }.toUnmodifiable(),
+                additionalHeaders.build(),
+                additionalQueryParams.build(),
             )
     }
 

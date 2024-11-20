@@ -22,7 +22,9 @@ import com.withorb.api.core.JsonMissing
 import com.withorb.api.core.JsonValue
 import com.withorb.api.core.NoAutoDetect
 import com.withorb.api.core.getOrThrow
-import com.withorb.api.core.toUnmodifiable
+import com.withorb.api.core.http.Headers
+import com.withorb.api.core.http.QueryParams
+import com.withorb.api.core.toImmutable
 import com.withorb.api.errors.OrbInvalidDataException
 import com.withorb.api.models.*
 import java.util.Objects
@@ -46,8 +48,8 @@ constructor(
     private val taxConfiguration: TaxConfiguration?,
     private val taxId: TaxId?,
     private val timezone: String?,
-    private val additionalQueryParams: Map<String, List<String>>,
-    private val additionalHeaders: Map<String, List<String>>,
+    private val additionalHeaders: Headers,
+    private val additionalQueryParams: QueryParams,
     private val additionalBodyProperties: Map<String, JsonValue>,
 ) {
 
@@ -108,9 +110,9 @@ constructor(
         )
     }
 
-    internal fun getQueryParams(): Map<String, List<String>> = additionalQueryParams
+    internal fun getHeaders(): Headers = additionalHeaders
 
-    internal fun getHeaders(): Map<String, List<String>> = additionalHeaders
+    internal fun getQueryParams(): QueryParams = additionalQueryParams
 
     @JsonDeserialize(builder = CustomerCreateBody.Builder::class)
     @NoAutoDetect
@@ -609,7 +611,7 @@ constructor(
                     checkNotNull(email) { "`email` is required but was not set" },
                     checkNotNull(name) { "`name` is required but was not set" },
                     accountingSyncConfiguration,
-                    additionalEmails?.toUnmodifiable(),
+                    additionalEmails?.toImmutable(),
                     autoCollection,
                     billingAddress,
                     currency,
@@ -623,7 +625,7 @@ constructor(
                     taxConfiguration,
                     taxId,
                     timezone,
-                    additionalProperties.toUnmodifiable(),
+                    additionalProperties.toImmutable(),
                 )
         }
 
@@ -648,9 +650,9 @@ constructor(
             "CustomerCreateBody{email=$email, name=$name, accountingSyncConfiguration=$accountingSyncConfiguration, additionalEmails=$additionalEmails, autoCollection=$autoCollection, billingAddress=$billingAddress, currency=$currency, emailDelivery=$emailDelivery, externalCustomerId=$externalCustomerId, metadata=$metadata, paymentProvider=$paymentProvider, paymentProviderId=$paymentProviderId, reportingConfiguration=$reportingConfiguration, shippingAddress=$shippingAddress, taxConfiguration=$taxConfiguration, taxId=$taxId, timezone=$timezone, additionalProperties=$additionalProperties}"
     }
 
-    fun _additionalQueryParams(): Map<String, List<String>> = additionalQueryParams
+    fun _additionalHeaders(): Headers = additionalHeaders
 
-    fun _additionalHeaders(): Map<String, List<String>> = additionalHeaders
+    fun _additionalQueryParams(): QueryParams = additionalQueryParams
 
     fun _additionalBodyProperties(): Map<String, JsonValue> = additionalBodyProperties
 
@@ -659,15 +661,15 @@ constructor(
             return true
         }
 
-        return /* spotless:off */ other is CustomerCreateParams && this.email == other.email && this.name == other.name && this.accountingSyncConfiguration == other.accountingSyncConfiguration && this.additionalEmails == other.additionalEmails && this.autoCollection == other.autoCollection && this.billingAddress == other.billingAddress && this.currency == other.currency && this.emailDelivery == other.emailDelivery && this.externalCustomerId == other.externalCustomerId && this.metadata == other.metadata && this.paymentProvider == other.paymentProvider && this.paymentProviderId == other.paymentProviderId && this.reportingConfiguration == other.reportingConfiguration && this.shippingAddress == other.shippingAddress && this.taxConfiguration == other.taxConfiguration && this.taxId == other.taxId && this.timezone == other.timezone && this.additionalQueryParams == other.additionalQueryParams && this.additionalHeaders == other.additionalHeaders && this.additionalBodyProperties == other.additionalBodyProperties /* spotless:on */
+        return /* spotless:off */ other is CustomerCreateParams && this.email == other.email && this.name == other.name && this.accountingSyncConfiguration == other.accountingSyncConfiguration && this.additionalEmails == other.additionalEmails && this.autoCollection == other.autoCollection && this.billingAddress == other.billingAddress && this.currency == other.currency && this.emailDelivery == other.emailDelivery && this.externalCustomerId == other.externalCustomerId && this.metadata == other.metadata && this.paymentProvider == other.paymentProvider && this.paymentProviderId == other.paymentProviderId && this.reportingConfiguration == other.reportingConfiguration && this.shippingAddress == other.shippingAddress && this.taxConfiguration == other.taxConfiguration && this.taxId == other.taxId && this.timezone == other.timezone && this.additionalHeaders == other.additionalHeaders && this.additionalQueryParams == other.additionalQueryParams && this.additionalBodyProperties == other.additionalBodyProperties /* spotless:on */
     }
 
     override fun hashCode(): Int {
-        return /* spotless:off */ Objects.hash(email, name, accountingSyncConfiguration, additionalEmails, autoCollection, billingAddress, currency, emailDelivery, externalCustomerId, metadata, paymentProvider, paymentProviderId, reportingConfiguration, shippingAddress, taxConfiguration, taxId, timezone, additionalQueryParams, additionalHeaders, additionalBodyProperties) /* spotless:on */
+        return /* spotless:off */ Objects.hash(email, name, accountingSyncConfiguration, additionalEmails, autoCollection, billingAddress, currency, emailDelivery, externalCustomerId, metadata, paymentProvider, paymentProviderId, reportingConfiguration, shippingAddress, taxConfiguration, taxId, timezone, additionalHeaders, additionalQueryParams, additionalBodyProperties) /* spotless:on */
     }
 
     override fun toString() =
-        "CustomerCreateParams{email=$email, name=$name, accountingSyncConfiguration=$accountingSyncConfiguration, additionalEmails=$additionalEmails, autoCollection=$autoCollection, billingAddress=$billingAddress, currency=$currency, emailDelivery=$emailDelivery, externalCustomerId=$externalCustomerId, metadata=$metadata, paymentProvider=$paymentProvider, paymentProviderId=$paymentProviderId, reportingConfiguration=$reportingConfiguration, shippingAddress=$shippingAddress, taxConfiguration=$taxConfiguration, taxId=$taxId, timezone=$timezone, additionalQueryParams=$additionalQueryParams, additionalHeaders=$additionalHeaders, additionalBodyProperties=$additionalBodyProperties}"
+        "CustomerCreateParams{email=$email, name=$name, accountingSyncConfiguration=$accountingSyncConfiguration, additionalEmails=$additionalEmails, autoCollection=$autoCollection, billingAddress=$billingAddress, currency=$currency, emailDelivery=$emailDelivery, externalCustomerId=$externalCustomerId, metadata=$metadata, paymentProvider=$paymentProvider, paymentProviderId=$paymentProviderId, reportingConfiguration=$reportingConfiguration, shippingAddress=$shippingAddress, taxConfiguration=$taxConfiguration, taxId=$taxId, timezone=$timezone, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams, additionalBodyProperties=$additionalBodyProperties}"
 
     fun toBuilder() = Builder().from(this)
 
@@ -696,8 +698,8 @@ constructor(
         private var taxConfiguration: TaxConfiguration? = null
         private var taxId: TaxId? = null
         private var timezone: String? = null
-        private var additionalQueryParams: MutableMap<String, MutableList<String>> = mutableMapOf()
-        private var additionalHeaders: MutableMap<String, MutableList<String>> = mutableMapOf()
+        private var additionalHeaders: Headers.Builder = Headers.builder()
+        private var additionalQueryParams: QueryParams.Builder = QueryParams.builder()
         private var additionalBodyProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         internal fun from(customerCreateParams: CustomerCreateParams) = apply {
@@ -718,8 +720,8 @@ constructor(
             this.taxConfiguration = customerCreateParams.taxConfiguration
             this.taxId = customerCreateParams.taxId
             this.timezone = customerCreateParams.timezone
-            additionalQueryParams(customerCreateParams.additionalQueryParams)
             additionalHeaders(customerCreateParams.additionalHeaders)
+            additionalQueryParams(customerCreateParams.additionalQueryParams)
             additionalBodyProperties(customerCreateParams.additionalBodyProperties)
         }
 
@@ -945,53 +947,111 @@ constructor(
          */
         fun timezone(timezone: String) = apply { this.timezone = timezone }
 
-        fun additionalQueryParams(additionalQueryParams: Map<String, List<String>>) = apply {
-            this.additionalQueryParams.clear()
-            putAllQueryParams(additionalQueryParams)
-        }
-
-        fun putQueryParam(name: String, value: String) = apply {
-            this.additionalQueryParams.getOrPut(name) { mutableListOf() }.add(value)
-        }
-
-        fun putQueryParams(name: String, values: Iterable<String>) = apply {
-            this.additionalQueryParams.getOrPut(name) { mutableListOf() }.addAll(values)
-        }
-
-        fun putAllQueryParams(additionalQueryParams: Map<String, Iterable<String>>) = apply {
-            additionalQueryParams.forEach(this::putQueryParams)
-        }
-
-        fun removeQueryParam(name: String) = apply {
-            this.additionalQueryParams.put(name, mutableListOf())
+        fun additionalHeaders(additionalHeaders: Headers) = apply {
+            this.additionalHeaders.clear()
+            putAllAdditionalHeaders(additionalHeaders)
         }
 
         fun additionalHeaders(additionalHeaders: Map<String, Iterable<String>>) = apply {
             this.additionalHeaders.clear()
-            putAllHeaders(additionalHeaders)
+            putAllAdditionalHeaders(additionalHeaders)
         }
 
-        fun putHeader(name: String, value: String) = apply {
-            this.additionalHeaders.getOrPut(name) { mutableListOf() }.add(value)
+        fun putAdditionalHeader(name: String, value: String) = apply {
+            additionalHeaders.put(name, value)
         }
 
-        fun putHeaders(name: String, values: Iterable<String>) = apply {
-            this.additionalHeaders.getOrPut(name) { mutableListOf() }.addAll(values)
+        fun putAdditionalHeaders(name: String, values: Iterable<String>) = apply {
+            additionalHeaders.put(name, values)
         }
 
-        fun putAllHeaders(additionalHeaders: Map<String, Iterable<String>>) = apply {
-            additionalHeaders.forEach(this::putHeaders)
+        fun putAllAdditionalHeaders(additionalHeaders: Headers) = apply {
+            this.additionalHeaders.putAll(additionalHeaders)
         }
 
-        fun removeHeader(name: String) = apply { this.additionalHeaders.put(name, mutableListOf()) }
+        fun putAllAdditionalHeaders(additionalHeaders: Map<String, Iterable<String>>) = apply {
+            this.additionalHeaders.putAll(additionalHeaders)
+        }
+
+        fun replaceAdditionalHeaders(name: String, value: String) = apply {
+            additionalHeaders.replace(name, value)
+        }
+
+        fun replaceAdditionalHeaders(name: String, values: Iterable<String>) = apply {
+            additionalHeaders.replace(name, values)
+        }
+
+        fun replaceAllAdditionalHeaders(additionalHeaders: Headers) = apply {
+            this.additionalHeaders.replaceAll(additionalHeaders)
+        }
+
+        fun replaceAllAdditionalHeaders(additionalHeaders: Map<String, Iterable<String>>) = apply {
+            this.additionalHeaders.replaceAll(additionalHeaders)
+        }
+
+        fun removeAdditionalHeaders(name: String) = apply { additionalHeaders.remove(name) }
+
+        fun removeAllAdditionalHeaders(names: Set<String>) = apply {
+            additionalHeaders.removeAll(names)
+        }
+
+        fun additionalQueryParams(additionalQueryParams: QueryParams) = apply {
+            this.additionalQueryParams.clear()
+            putAllAdditionalQueryParams(additionalQueryParams)
+        }
+
+        fun additionalQueryParams(additionalQueryParams: Map<String, Iterable<String>>) = apply {
+            this.additionalQueryParams.clear()
+            putAllAdditionalQueryParams(additionalQueryParams)
+        }
+
+        fun putAdditionalQueryParam(key: String, value: String) = apply {
+            additionalQueryParams.put(key, value)
+        }
+
+        fun putAdditionalQueryParams(key: String, values: Iterable<String>) = apply {
+            additionalQueryParams.put(key, values)
+        }
+
+        fun putAllAdditionalQueryParams(additionalQueryParams: QueryParams) = apply {
+            this.additionalQueryParams.putAll(additionalQueryParams)
+        }
+
+        fun putAllAdditionalQueryParams(additionalQueryParams: Map<String, Iterable<String>>) =
+            apply {
+                this.additionalQueryParams.putAll(additionalQueryParams)
+            }
+
+        fun replaceAdditionalQueryParams(key: String, value: String) = apply {
+            additionalQueryParams.replace(key, value)
+        }
+
+        fun replaceAdditionalQueryParams(key: String, values: Iterable<String>) = apply {
+            additionalQueryParams.replace(key, values)
+        }
+
+        fun replaceAllAdditionalQueryParams(additionalQueryParams: QueryParams) = apply {
+            this.additionalQueryParams.replaceAll(additionalQueryParams)
+        }
+
+        fun replaceAllAdditionalQueryParams(additionalQueryParams: Map<String, Iterable<String>>) =
+            apply {
+                this.additionalQueryParams.replaceAll(additionalQueryParams)
+            }
+
+        fun removeAdditionalQueryParams(key: String) = apply { additionalQueryParams.remove(key) }
+
+        fun removeAllAdditionalQueryParams(keys: Set<String>) = apply {
+            additionalQueryParams.removeAll(keys)
+        }
 
         fun additionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) = apply {
             this.additionalBodyProperties.clear()
-            this.additionalBodyProperties.putAll(additionalBodyProperties)
+            putAllAdditionalBodyProperties(additionalBodyProperties)
         }
 
         fun putAdditionalBodyProperty(key: String, value: JsonValue) = apply {
-            this.additionalBodyProperties.put(key, value)
+            additionalBodyProperties.put(key, value)
         }
 
         fun putAllAdditionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) =
@@ -999,12 +1059,20 @@ constructor(
                 this.additionalBodyProperties.putAll(additionalBodyProperties)
             }
 
+        fun removeAdditionalBodyProperty(key: String) = apply {
+            additionalBodyProperties.remove(key)
+        }
+
+        fun removeAllAdditionalBodyProperties(keys: Set<String>) = apply {
+            keys.forEach(::removeAdditionalBodyProperty)
+        }
+
         fun build(): CustomerCreateParams =
             CustomerCreateParams(
                 checkNotNull(email) { "`email` is required but was not set" },
                 checkNotNull(name) { "`name` is required but was not set" },
                 accountingSyncConfiguration,
-                if (additionalEmails.size == 0) null else additionalEmails.toUnmodifiable(),
+                if (additionalEmails.size == 0) null else additionalEmails.toImmutable(),
                 autoCollection,
                 billingAddress,
                 currency,
@@ -1018,9 +1086,9 @@ constructor(
                 taxConfiguration,
                 taxId,
                 timezone,
-                additionalQueryParams.mapValues { it.value.toUnmodifiable() }.toUnmodifiable(),
-                additionalHeaders.mapValues { it.value.toUnmodifiable() }.toUnmodifiable(),
-                additionalBodyProperties.toUnmodifiable(),
+                additionalHeaders.build(),
+                additionalQueryParams.build(),
+                additionalBodyProperties.toImmutable(),
             )
     }
 
@@ -1086,8 +1154,8 @@ constructor(
             fun build(): AccountingSyncConfiguration =
                 AccountingSyncConfiguration(
                     excluded,
-                    accountingProviders?.toUnmodifiable(),
-                    additionalProperties.toUnmodifiable(),
+                    accountingProviders?.toImmutable(),
+                    additionalProperties.toImmutable(),
                 )
         }
 
@@ -1157,7 +1225,7 @@ constructor(
                         checkNotNull(externalProviderId) {
                             "`externalProviderId` is required but was not set"
                         },
-                        additionalProperties.toUnmodifiable(),
+                        additionalProperties.toImmutable(),
                     )
             }
 
@@ -1294,7 +1362,7 @@ constructor(
                     state,
                     postalCode,
                     country,
-                    additionalProperties.toUnmodifiable(),
+                    additionalProperties.toImmutable(),
                 )
         }
 
@@ -1364,7 +1432,7 @@ constructor(
                 this.additionalProperties.putAll(additionalProperties)
             }
 
-            fun build(): Metadata = Metadata(additionalProperties.toUnmodifiable())
+            fun build(): Metadata = Metadata(additionalProperties.toImmutable())
         }
 
         override fun equals(other: Any?): Boolean {
@@ -1512,7 +1580,7 @@ constructor(
             fun build(): ReportingConfiguration =
                 ReportingConfiguration(
                     checkNotNull(exempt) { "`exempt` is required but was not set" },
-                    additionalProperties.toUnmodifiable()
+                    additionalProperties.toImmutable()
                 )
         }
 
@@ -1628,7 +1696,7 @@ constructor(
                     state,
                     postalCode,
                     country,
-                    additionalProperties.toUnmodifiable(),
+                    additionalProperties.toImmutable(),
                 )
         }
 
@@ -1900,7 +1968,7 @@ constructor(
                         taxExempt,
                         taxProvider,
                         taxExemptionCode,
-                        additionalProperties.toUnmodifiable(),
+                        additionalProperties.toImmutable(),
                     )
             }
 
@@ -2059,7 +2127,7 @@ constructor(
                     NewTaxJarConfiguration(
                         taxExempt,
                         taxProvider,
-                        additionalProperties.toUnmodifiable(),
+                        additionalProperties.toImmutable(),
                     )
             }
 
@@ -2309,7 +2377,7 @@ constructor(
                     checkNotNull(country) { "`country` is required but was not set" },
                     checkNotNull(type) { "`type` is required but was not set" },
                     checkNotNull(value) { "`value` is required but was not set" },
-                    additionalProperties.toUnmodifiable(),
+                    additionalProperties.toImmutable(),
                 )
         }
 

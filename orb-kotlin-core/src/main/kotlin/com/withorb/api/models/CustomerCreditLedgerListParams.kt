@@ -7,7 +7,8 @@ import com.withorb.api.core.Enum
 import com.withorb.api.core.JsonField
 import com.withorb.api.core.JsonValue
 import com.withorb.api.core.NoAutoDetect
-import com.withorb.api.core.toUnmodifiable
+import com.withorb.api.core.http.Headers
+import com.withorb.api.core.http.QueryParams
 import com.withorb.api.errors.OrbInvalidDataException
 import com.withorb.api.models.*
 import java.time.OffsetDateTime
@@ -27,8 +28,8 @@ constructor(
     private val entryType: EntryType?,
     private val limit: Long?,
     private val minimumAmount: String?,
-    private val additionalQueryParams: Map<String, List<String>>,
-    private val additionalHeaders: Map<String, List<String>>,
+    private val additionalHeaders: Headers,
+    private val additionalQueryParams: QueryParams,
 ) {
 
     fun customerId(): String = customerId
@@ -53,31 +54,43 @@ constructor(
 
     fun minimumAmount(): String? = minimumAmount
 
-    internal fun getQueryParams(): Map<String, List<String>> {
-        val params = mutableMapOf<String, List<String>>()
+    internal fun getHeaders(): Headers = additionalHeaders
+
+    internal fun getQueryParams(): QueryParams {
+        val queryParams = QueryParams.builder()
         this.createdAtGt?.let {
-            params.put("created_at[gt]", listOf(DateTimeFormatter.ISO_OFFSET_DATE_TIME.format(it)))
+            queryParams.put(
+                "created_at[gt]",
+                listOf(DateTimeFormatter.ISO_OFFSET_DATE_TIME.format(it))
+            )
         }
         this.createdAtGte?.let {
-            params.put("created_at[gte]", listOf(DateTimeFormatter.ISO_OFFSET_DATE_TIME.format(it)))
+            queryParams.put(
+                "created_at[gte]",
+                listOf(DateTimeFormatter.ISO_OFFSET_DATE_TIME.format(it))
+            )
         }
         this.createdAtLt?.let {
-            params.put("created_at[lt]", listOf(DateTimeFormatter.ISO_OFFSET_DATE_TIME.format(it)))
+            queryParams.put(
+                "created_at[lt]",
+                listOf(DateTimeFormatter.ISO_OFFSET_DATE_TIME.format(it))
+            )
         }
         this.createdAtLte?.let {
-            params.put("created_at[lte]", listOf(DateTimeFormatter.ISO_OFFSET_DATE_TIME.format(it)))
+            queryParams.put(
+                "created_at[lte]",
+                listOf(DateTimeFormatter.ISO_OFFSET_DATE_TIME.format(it))
+            )
         }
-        this.currency?.let { params.put("currency", listOf(it.toString())) }
-        this.cursor?.let { params.put("cursor", listOf(it.toString())) }
-        this.entryStatus?.let { params.put("entry_status", listOf(it.toString())) }
-        this.entryType?.let { params.put("entry_type", listOf(it.toString())) }
-        this.limit?.let { params.put("limit", listOf(it.toString())) }
-        this.minimumAmount?.let { params.put("minimum_amount", listOf(it.toString())) }
-        params.putAll(additionalQueryParams)
-        return params.toUnmodifiable()
+        this.currency?.let { queryParams.put("currency", listOf(it.toString())) }
+        this.cursor?.let { queryParams.put("cursor", listOf(it.toString())) }
+        this.entryStatus?.let { queryParams.put("entry_status", listOf(it.toString())) }
+        this.entryType?.let { queryParams.put("entry_type", listOf(it.toString())) }
+        this.limit?.let { queryParams.put("limit", listOf(it.toString())) }
+        this.minimumAmount?.let { queryParams.put("minimum_amount", listOf(it.toString())) }
+        queryParams.putAll(additionalQueryParams)
+        return queryParams.build()
     }
-
-    internal fun getHeaders(): Map<String, List<String>> = additionalHeaders
 
     fun getPathParam(index: Int): String {
         return when (index) {
@@ -86,24 +99,24 @@ constructor(
         }
     }
 
-    fun _additionalQueryParams(): Map<String, List<String>> = additionalQueryParams
+    fun _additionalHeaders(): Headers = additionalHeaders
 
-    fun _additionalHeaders(): Map<String, List<String>> = additionalHeaders
+    fun _additionalQueryParams(): QueryParams = additionalQueryParams
 
     override fun equals(other: Any?): Boolean {
         if (this === other) {
             return true
         }
 
-        return /* spotless:off */ other is CustomerCreditLedgerListParams && this.customerId == other.customerId && this.createdAtGt == other.createdAtGt && this.createdAtGte == other.createdAtGte && this.createdAtLt == other.createdAtLt && this.createdAtLte == other.createdAtLte && this.currency == other.currency && this.cursor == other.cursor && this.entryStatus == other.entryStatus && this.entryType == other.entryType && this.limit == other.limit && this.minimumAmount == other.minimumAmount && this.additionalQueryParams == other.additionalQueryParams && this.additionalHeaders == other.additionalHeaders /* spotless:on */
+        return /* spotless:off */ other is CustomerCreditLedgerListParams && this.customerId == other.customerId && this.createdAtGt == other.createdAtGt && this.createdAtGte == other.createdAtGte && this.createdAtLt == other.createdAtLt && this.createdAtLte == other.createdAtLte && this.currency == other.currency && this.cursor == other.cursor && this.entryStatus == other.entryStatus && this.entryType == other.entryType && this.limit == other.limit && this.minimumAmount == other.minimumAmount && this.additionalHeaders == other.additionalHeaders && this.additionalQueryParams == other.additionalQueryParams /* spotless:on */
     }
 
     override fun hashCode(): Int {
-        return /* spotless:off */ Objects.hash(customerId, createdAtGt, createdAtGte, createdAtLt, createdAtLte, currency, cursor, entryStatus, entryType, limit, minimumAmount, additionalQueryParams, additionalHeaders) /* spotless:on */
+        return /* spotless:off */ Objects.hash(customerId, createdAtGt, createdAtGte, createdAtLt, createdAtLte, currency, cursor, entryStatus, entryType, limit, minimumAmount, additionalHeaders, additionalQueryParams) /* spotless:on */
     }
 
     override fun toString() =
-        "CustomerCreditLedgerListParams{customerId=$customerId, createdAtGt=$createdAtGt, createdAtGte=$createdAtGte, createdAtLt=$createdAtLt, createdAtLte=$createdAtLte, currency=$currency, cursor=$cursor, entryStatus=$entryStatus, entryType=$entryType, limit=$limit, minimumAmount=$minimumAmount, additionalQueryParams=$additionalQueryParams, additionalHeaders=$additionalHeaders}"
+        "CustomerCreditLedgerListParams{customerId=$customerId, createdAtGt=$createdAtGt, createdAtGte=$createdAtGte, createdAtLt=$createdAtLt, createdAtLte=$createdAtLte, currency=$currency, cursor=$cursor, entryStatus=$entryStatus, entryType=$entryType, limit=$limit, minimumAmount=$minimumAmount, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
 
     fun toBuilder() = Builder().from(this)
 
@@ -126,8 +139,8 @@ constructor(
         private var entryType: EntryType? = null
         private var limit: Long? = null
         private var minimumAmount: String? = null
-        private var additionalQueryParams: MutableMap<String, MutableList<String>> = mutableMapOf()
-        private var additionalHeaders: MutableMap<String, MutableList<String>> = mutableMapOf()
+        private var additionalHeaders: Headers.Builder = Headers.builder()
+        private var additionalQueryParams: QueryParams.Builder = QueryParams.builder()
 
         internal fun from(customerCreditLedgerListParams: CustomerCreditLedgerListParams) = apply {
             this.customerId = customerCreditLedgerListParams.customerId
@@ -141,8 +154,8 @@ constructor(
             this.entryType = customerCreditLedgerListParams.entryType
             this.limit = customerCreditLedgerListParams.limit
             this.minimumAmount = customerCreditLedgerListParams.minimumAmount
-            additionalQueryParams(customerCreditLedgerListParams.additionalQueryParams)
             additionalHeaders(customerCreditLedgerListParams.additionalHeaders)
+            additionalQueryParams(customerCreditLedgerListParams.additionalQueryParams)
         }
 
         fun customerId(customerId: String) = apply { this.customerId = customerId }
@@ -173,45 +186,103 @@ constructor(
 
         fun minimumAmount(minimumAmount: String) = apply { this.minimumAmount = minimumAmount }
 
-        fun additionalQueryParams(additionalQueryParams: Map<String, List<String>>) = apply {
-            this.additionalQueryParams.clear()
-            putAllQueryParams(additionalQueryParams)
-        }
-
-        fun putQueryParam(name: String, value: String) = apply {
-            this.additionalQueryParams.getOrPut(name) { mutableListOf() }.add(value)
-        }
-
-        fun putQueryParams(name: String, values: Iterable<String>) = apply {
-            this.additionalQueryParams.getOrPut(name) { mutableListOf() }.addAll(values)
-        }
-
-        fun putAllQueryParams(additionalQueryParams: Map<String, Iterable<String>>) = apply {
-            additionalQueryParams.forEach(this::putQueryParams)
-        }
-
-        fun removeQueryParam(name: String) = apply {
-            this.additionalQueryParams.put(name, mutableListOf())
+        fun additionalHeaders(additionalHeaders: Headers) = apply {
+            this.additionalHeaders.clear()
+            putAllAdditionalHeaders(additionalHeaders)
         }
 
         fun additionalHeaders(additionalHeaders: Map<String, Iterable<String>>) = apply {
             this.additionalHeaders.clear()
-            putAllHeaders(additionalHeaders)
+            putAllAdditionalHeaders(additionalHeaders)
         }
 
-        fun putHeader(name: String, value: String) = apply {
-            this.additionalHeaders.getOrPut(name) { mutableListOf() }.add(value)
+        fun putAdditionalHeader(name: String, value: String) = apply {
+            additionalHeaders.put(name, value)
         }
 
-        fun putHeaders(name: String, values: Iterable<String>) = apply {
-            this.additionalHeaders.getOrPut(name) { mutableListOf() }.addAll(values)
+        fun putAdditionalHeaders(name: String, values: Iterable<String>) = apply {
+            additionalHeaders.put(name, values)
         }
 
-        fun putAllHeaders(additionalHeaders: Map<String, Iterable<String>>) = apply {
-            additionalHeaders.forEach(this::putHeaders)
+        fun putAllAdditionalHeaders(additionalHeaders: Headers) = apply {
+            this.additionalHeaders.putAll(additionalHeaders)
         }
 
-        fun removeHeader(name: String) = apply { this.additionalHeaders.put(name, mutableListOf()) }
+        fun putAllAdditionalHeaders(additionalHeaders: Map<String, Iterable<String>>) = apply {
+            this.additionalHeaders.putAll(additionalHeaders)
+        }
+
+        fun replaceAdditionalHeaders(name: String, value: String) = apply {
+            additionalHeaders.replace(name, value)
+        }
+
+        fun replaceAdditionalHeaders(name: String, values: Iterable<String>) = apply {
+            additionalHeaders.replace(name, values)
+        }
+
+        fun replaceAllAdditionalHeaders(additionalHeaders: Headers) = apply {
+            this.additionalHeaders.replaceAll(additionalHeaders)
+        }
+
+        fun replaceAllAdditionalHeaders(additionalHeaders: Map<String, Iterable<String>>) = apply {
+            this.additionalHeaders.replaceAll(additionalHeaders)
+        }
+
+        fun removeAdditionalHeaders(name: String) = apply { additionalHeaders.remove(name) }
+
+        fun removeAllAdditionalHeaders(names: Set<String>) = apply {
+            additionalHeaders.removeAll(names)
+        }
+
+        fun additionalQueryParams(additionalQueryParams: QueryParams) = apply {
+            this.additionalQueryParams.clear()
+            putAllAdditionalQueryParams(additionalQueryParams)
+        }
+
+        fun additionalQueryParams(additionalQueryParams: Map<String, Iterable<String>>) = apply {
+            this.additionalQueryParams.clear()
+            putAllAdditionalQueryParams(additionalQueryParams)
+        }
+
+        fun putAdditionalQueryParam(key: String, value: String) = apply {
+            additionalQueryParams.put(key, value)
+        }
+
+        fun putAdditionalQueryParams(key: String, values: Iterable<String>) = apply {
+            additionalQueryParams.put(key, values)
+        }
+
+        fun putAllAdditionalQueryParams(additionalQueryParams: QueryParams) = apply {
+            this.additionalQueryParams.putAll(additionalQueryParams)
+        }
+
+        fun putAllAdditionalQueryParams(additionalQueryParams: Map<String, Iterable<String>>) =
+            apply {
+                this.additionalQueryParams.putAll(additionalQueryParams)
+            }
+
+        fun replaceAdditionalQueryParams(key: String, value: String) = apply {
+            additionalQueryParams.replace(key, value)
+        }
+
+        fun replaceAdditionalQueryParams(key: String, values: Iterable<String>) = apply {
+            additionalQueryParams.replace(key, values)
+        }
+
+        fun replaceAllAdditionalQueryParams(additionalQueryParams: QueryParams) = apply {
+            this.additionalQueryParams.replaceAll(additionalQueryParams)
+        }
+
+        fun replaceAllAdditionalQueryParams(additionalQueryParams: Map<String, Iterable<String>>) =
+            apply {
+                this.additionalQueryParams.replaceAll(additionalQueryParams)
+            }
+
+        fun removeAdditionalQueryParams(key: String) = apply { additionalQueryParams.remove(key) }
+
+        fun removeAllAdditionalQueryParams(keys: Set<String>) = apply {
+            additionalQueryParams.removeAll(keys)
+        }
 
         fun build(): CustomerCreditLedgerListParams =
             CustomerCreditLedgerListParams(
@@ -226,8 +297,8 @@ constructor(
                 entryType,
                 limit,
                 minimumAmount,
-                additionalQueryParams.mapValues { it.value.toUnmodifiable() }.toUnmodifiable(),
-                additionalHeaders.mapValues { it.value.toUnmodifiable() }.toUnmodifiable(),
+                additionalHeaders.build(),
+                additionalQueryParams.build(),
             )
     }
 

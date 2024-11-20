@@ -7,19 +7,15 @@ import com.fasterxml.jackson.annotation.JsonAnySetter
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize
 import com.withorb.api.core.JsonValue
 import com.withorb.api.core.NoAutoDetect
-import com.withorb.api.core.toUnmodifiable
+import com.withorb.api.core.toImmutable
 import java.util.Objects
 
 @JsonDeserialize(builder = OrbError.Builder::class)
 @NoAutoDetect
 class OrbError
-constructor(
-    private val additionalProperties: Map<String, JsonValue>,
+private constructor(
+    @JsonAnyGetter val additionalProperties: Map<String, JsonValue>,
 ) {
-
-    @JsonAnyGetter fun additionalProperties(): Map<String, JsonValue> = additionalProperties
-
-    fun toBuilder() = Builder()
 
     override fun equals(other: Any?): Boolean {
         if (this === other) {
@@ -35,31 +31,41 @@ constructor(
 
     override fun toString() = "OrbError{additionalProperties=$additionalProperties}"
 
+    fun toBuilder() = Builder().from(this)
+
     companion object {
 
-        @JvmStatic fun builder() = Builder()
+        fun builder() = Builder()
     }
 
     class Builder {
 
         private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
-        fun from(error: OrbError) = apply { additionalProperties(error.additionalProperties) }
+        internal fun from(orbError: OrbError) = apply {
+            additionalProperties = orbError.additionalProperties.toMutableMap()
+        }
 
         fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
             this.additionalProperties.clear()
-            this.additionalProperties.putAll(additionalProperties)
+            putAllAdditionalProperties(additionalProperties)
         }
 
         @JsonAnySetter
         fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-            this.additionalProperties.put(key, value)
+            additionalProperties.put(key, value)
         }
 
         fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
             this.additionalProperties.putAll(additionalProperties)
         }
 
-        fun build(): OrbError = OrbError(additionalProperties.toUnmodifiable())
+        fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+
+        fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+            keys.forEach(::removeAdditionalProperty)
+        }
+
+        fun build(): OrbError = OrbError(additionalProperties.toImmutable())
     }
 }

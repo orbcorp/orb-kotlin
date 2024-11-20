@@ -11,7 +11,7 @@ import com.withorb.api.core.JsonField
 import com.withorb.api.core.JsonMissing
 import com.withorb.api.core.JsonValue
 import com.withorb.api.core.NoAutoDetect
-import com.withorb.api.core.toUnmodifiable
+import com.withorb.api.core.toImmutable
 import java.util.Objects
 
 @JsonDeserialize(builder = Subscriptions.Builder::class)
@@ -98,9 +98,9 @@ private constructor(
 
         fun build(): Subscriptions =
             Subscriptions(
-                data.map { it.toUnmodifiable() },
+                data.map { it.toImmutable() },
                 paginationMetadata,
-                additionalProperties.toUnmodifiable(),
+                additionalProperties.toImmutable(),
             )
     }
 

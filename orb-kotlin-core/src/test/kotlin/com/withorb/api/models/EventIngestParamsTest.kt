@@ -3,6 +3,7 @@
 package com.withorb.api.models
 
 import com.withorb.api.core.JsonValue
+import com.withorb.api.core.http.QueryParams
 import com.withorb.api.models.*
 import java.time.OffsetDateTime
 import org.assertj.core.api.Assertions.assertThat
@@ -49,10 +50,10 @@ class EventIngestParamsTest {
                 .backfillId("backfill_id")
                 .debug(true)
                 .build()
-        val expected = mutableMapOf<String, List<String>>()
-        expected.put("backfill_id", listOf("backfill_id"))
-        expected.put("debug", listOf("true"))
-        assertThat(params.getQueryParams()).isEqualTo(expected)
+        val expected = QueryParams.builder()
+        expected.put("backfill_id", "backfill_id")
+        expected.put("debug", "true")
+        assertThat(params.getQueryParams()).isEqualTo(expected.build())
     }
 
     @Test
@@ -70,8 +71,8 @@ class EventIngestParamsTest {
                     )
                 )
                 .build()
-        val expected = mutableMapOf<String, List<String>>()
-        assertThat(params.getQueryParams()).isEqualTo(expected)
+        val expected = QueryParams.builder()
+        assertThat(params.getQueryParams()).isEqualTo(expected.build())
     }
 
     @Test
