@@ -320,17 +320,14 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is Data && this.id == other.id && this.customerId == other.customerId && this.externalCustomerId == other.externalCustomerId && this.eventName == other.eventName && this.properties == other.properties && this.timestamp == other.timestamp && this.deprecated == other.deprecated && this.additionalProperties == other.additionalProperties /* spotless:on */
+            return /* spotless:off */ other is Data && id == other.id && customerId == other.customerId && externalCustomerId == other.externalCustomerId && eventName == other.eventName && properties == other.properties && timestamp == other.timestamp && deprecated == other.deprecated && additionalProperties == other.additionalProperties /* spotless:on */
         }
 
-        private var hashCode: Int = 0
+        /* spotless:off */
+        private val hashCode: Int by lazy { Objects.hash(id, customerId, externalCustomerId, eventName, properties, timestamp, deprecated, additionalProperties) }
+        /* spotless:on */
 
-        override fun hashCode(): Int {
-            if (hashCode == 0) {
-                hashCode = /* spotless:off */ Objects.hash(id, customerId, externalCustomerId, eventName, properties, timestamp, deprecated, additionalProperties) /* spotless:on */
-            }
-            return hashCode
-        }
+        override fun hashCode(): Int = hashCode
 
         override fun toString() =
             "Data{id=$id, customerId=$customerId, externalCustomerId=$externalCustomerId, eventName=$eventName, properties=$properties, timestamp=$timestamp, deprecated=$deprecated, additionalProperties=$additionalProperties}"
@@ -341,17 +338,14 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is EventSearchResponse && this.data == other.data && this.additionalProperties == other.additionalProperties /* spotless:on */
+        return /* spotless:off */ other is EventSearchResponse && data == other.data && additionalProperties == other.additionalProperties /* spotless:on */
     }
 
-    private var hashCode: Int = 0
+    /* spotless:off */
+    private val hashCode: Int by lazy { Objects.hash(data, additionalProperties) }
+    /* spotless:on */
 
-    override fun hashCode(): Int {
-        if (hashCode == 0) {
-            hashCode = /* spotless:off */ Objects.hash(data, additionalProperties) /* spotless:on */
-        }
-        return hashCode
-    }
+    override fun hashCode(): Int = hashCode
 
     override fun toString() =
         "EventSearchResponse{data=$data, additionalProperties=$additionalProperties}"

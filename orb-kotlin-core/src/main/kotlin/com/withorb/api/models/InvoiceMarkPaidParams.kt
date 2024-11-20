@@ -143,17 +143,14 @@ constructor(
                 return true
             }
 
-            return /* spotless:off */ other is InvoiceMarkPaidBody && this.paymentReceivedDate == other.paymentReceivedDate && this.externalId == other.externalId && this.notes == other.notes && this.additionalProperties == other.additionalProperties /* spotless:on */
+            return /* spotless:off */ other is InvoiceMarkPaidBody && paymentReceivedDate == other.paymentReceivedDate && externalId == other.externalId && notes == other.notes && additionalProperties == other.additionalProperties /* spotless:on */
         }
 
-        private var hashCode: Int = 0
+        /* spotless:off */
+        private val hashCode: Int by lazy { Objects.hash(paymentReceivedDate, externalId, notes, additionalProperties) }
+        /* spotless:on */
 
-        override fun hashCode(): Int {
-            if (hashCode == 0) {
-                hashCode = /* spotless:off */ Objects.hash(paymentReceivedDate, externalId, notes, additionalProperties) /* spotless:on */
-            }
-            return hashCode
-        }
+        override fun hashCode(): Int = hashCode
 
         override fun toString() =
             "InvoiceMarkPaidBody{paymentReceivedDate=$paymentReceivedDate, externalId=$externalId, notes=$notes, additionalProperties=$additionalProperties}"
@@ -170,12 +167,10 @@ constructor(
             return true
         }
 
-        return /* spotless:off */ other is InvoiceMarkPaidParams && this.invoiceId == other.invoiceId && this.paymentReceivedDate == other.paymentReceivedDate && this.externalId == other.externalId && this.notes == other.notes && this.additionalHeaders == other.additionalHeaders && this.additionalQueryParams == other.additionalQueryParams && this.additionalBodyProperties == other.additionalBodyProperties /* spotless:on */
+        return /* spotless:off */ other is InvoiceMarkPaidParams && invoiceId == other.invoiceId && paymentReceivedDate == other.paymentReceivedDate && externalId == other.externalId && notes == other.notes && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams && additionalBodyProperties == other.additionalBodyProperties /* spotless:on */
     }
 
-    override fun hashCode(): Int {
-        return /* spotless:off */ Objects.hash(invoiceId, paymentReceivedDate, externalId, notes, additionalHeaders, additionalQueryParams, additionalBodyProperties) /* spotless:on */
-    }
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(invoiceId, paymentReceivedDate, externalId, notes, additionalHeaders, additionalQueryParams, additionalBodyProperties) /* spotless:on */
 
     override fun toString() =
         "InvoiceMarkPaidParams{invoiceId=$invoiceId, paymentReceivedDate=$paymentReceivedDate, externalId=$externalId, notes=$notes, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams, additionalBodyProperties=$additionalBodyProperties}"

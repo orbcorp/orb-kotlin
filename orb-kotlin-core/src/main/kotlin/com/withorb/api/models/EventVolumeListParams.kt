@@ -59,12 +59,10 @@ constructor(
             return true
         }
 
-        return /* spotless:off */ other is EventVolumeListParams && this.timeframeStart == other.timeframeStart && this.cursor == other.cursor && this.limit == other.limit && this.timeframeEnd == other.timeframeEnd && this.additionalHeaders == other.additionalHeaders && this.additionalQueryParams == other.additionalQueryParams /* spotless:on */
+        return /* spotless:off */ other is EventVolumeListParams && timeframeStart == other.timeframeStart && cursor == other.cursor && limit == other.limit && timeframeEnd == other.timeframeEnd && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
     }
 
-    override fun hashCode(): Int {
-        return /* spotless:off */ Objects.hash(timeframeStart, cursor, limit, timeframeEnd, additionalHeaders, additionalQueryParams) /* spotless:on */
-    }
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(timeframeStart, cursor, limit, timeframeEnd, additionalHeaders, additionalQueryParams) /* spotless:on */
 
     override fun toString() =
         "EventVolumeListParams{timeframeStart=$timeframeStart, cursor=$cursor, limit=$limit, timeframeEnd=$timeframeEnd, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"

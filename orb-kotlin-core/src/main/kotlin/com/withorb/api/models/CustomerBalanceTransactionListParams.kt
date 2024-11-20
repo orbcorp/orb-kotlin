@@ -87,12 +87,10 @@ constructor(
             return true
         }
 
-        return /* spotless:off */ other is CustomerBalanceTransactionListParams && this.customerId == other.customerId && this.cursor == other.cursor && this.limit == other.limit && this.operationTimeGt == other.operationTimeGt && this.operationTimeGte == other.operationTimeGte && this.operationTimeLt == other.operationTimeLt && this.operationTimeLte == other.operationTimeLte && this.additionalHeaders == other.additionalHeaders && this.additionalQueryParams == other.additionalQueryParams /* spotless:on */
+        return /* spotless:off */ other is CustomerBalanceTransactionListParams && customerId == other.customerId && cursor == other.cursor && limit == other.limit && operationTimeGt == other.operationTimeGt && operationTimeGte == other.operationTimeGte && operationTimeLt == other.operationTimeLt && operationTimeLte == other.operationTimeLte && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
     }
 
-    override fun hashCode(): Int {
-        return /* spotless:off */ Objects.hash(customerId, cursor, limit, operationTimeGt, operationTimeGte, operationTimeLt, operationTimeLte, additionalHeaders, additionalQueryParams) /* spotless:on */
-    }
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(customerId, cursor, limit, operationTimeGt, operationTimeGte, operationTimeLt, operationTimeLte, additionalHeaders, additionalQueryParams) /* spotless:on */
 
     override fun toString() =
         "CustomerBalanceTransactionListParams{customerId=$customerId, cursor=$cursor, limit=$limit, operationTimeGt=$operationTimeGt, operationTimeGte=$operationTimeGte, operationTimeLt=$operationTimeLt, operationTimeLte=$operationTimeLte, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"

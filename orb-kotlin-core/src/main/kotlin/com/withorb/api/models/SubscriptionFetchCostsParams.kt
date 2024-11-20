@@ -74,12 +74,10 @@ constructor(
             return true
         }
 
-        return /* spotless:off */ other is SubscriptionFetchCostsParams && this.subscriptionId == other.subscriptionId && this.currency == other.currency && this.timeframeEnd == other.timeframeEnd && this.timeframeStart == other.timeframeStart && this.viewMode == other.viewMode && this.additionalHeaders == other.additionalHeaders && this.additionalQueryParams == other.additionalQueryParams /* spotless:on */
+        return /* spotless:off */ other is SubscriptionFetchCostsParams && subscriptionId == other.subscriptionId && currency == other.currency && timeframeEnd == other.timeframeEnd && timeframeStart == other.timeframeStart && viewMode == other.viewMode && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
     }
 
-    override fun hashCode(): Int {
-        return /* spotless:off */ Objects.hash(subscriptionId, currency, timeframeEnd, timeframeStart, viewMode, additionalHeaders, additionalQueryParams) /* spotless:on */
-    }
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(subscriptionId, currency, timeframeEnd, timeframeStart, viewMode, additionalHeaders, additionalQueryParams) /* spotless:on */
 
     override fun toString() =
         "SubscriptionFetchCostsParams{subscriptionId=$subscriptionId, currency=$currency, timeframeEnd=$timeframeEnd, timeframeStart=$timeframeStart, viewMode=$viewMode, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
@@ -255,7 +253,7 @@ constructor(
                 return true
             }
 
-            return /* spotless:off */ other is ViewMode && this.value == other.value /* spotless:on */
+            return /* spotless:off */ other is ViewMode && value == other.value /* spotless:on */
         }
 
         override fun hashCode() = value.hashCode()

@@ -150,17 +150,14 @@ constructor(
                 return true
             }
 
-            return /* spotless:off */ other is SubscriptionUpdateTrialBody && this.trialEndDate == other.trialEndDate && this.shift == other.shift && this.additionalProperties == other.additionalProperties /* spotless:on */
+            return /* spotless:off */ other is SubscriptionUpdateTrialBody && trialEndDate == other.trialEndDate && shift == other.shift && additionalProperties == other.additionalProperties /* spotless:on */
         }
 
-        private var hashCode: Int = 0
+        /* spotless:off */
+        private val hashCode: Int by lazy { Objects.hash(trialEndDate, shift, additionalProperties) }
+        /* spotless:on */
 
-        override fun hashCode(): Int {
-            if (hashCode == 0) {
-                hashCode = /* spotless:off */ Objects.hash(trialEndDate, shift, additionalProperties) /* spotless:on */
-            }
-            return hashCode
-        }
+        override fun hashCode(): Int = hashCode
 
         override fun toString() =
             "SubscriptionUpdateTrialBody{trialEndDate=$trialEndDate, shift=$shift, additionalProperties=$additionalProperties}"
@@ -177,12 +174,10 @@ constructor(
             return true
         }
 
-        return /* spotless:off */ other is SubscriptionUpdateTrialParams && this.subscriptionId == other.subscriptionId && this.trialEndDate == other.trialEndDate && this.shift == other.shift && this.additionalHeaders == other.additionalHeaders && this.additionalQueryParams == other.additionalQueryParams && this.additionalBodyProperties == other.additionalBodyProperties /* spotless:on */
+        return /* spotless:off */ other is SubscriptionUpdateTrialParams && subscriptionId == other.subscriptionId && trialEndDate == other.trialEndDate && shift == other.shift && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams && additionalBodyProperties == other.additionalBodyProperties /* spotless:on */
     }
 
-    override fun hashCode(): Int {
-        return /* spotless:off */ Objects.hash(subscriptionId, trialEndDate, shift, additionalHeaders, additionalQueryParams, additionalBodyProperties) /* spotless:on */
-    }
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(subscriptionId, trialEndDate, shift, additionalHeaders, additionalQueryParams, additionalBodyProperties) /* spotless:on */
 
     override fun toString() =
         "SubscriptionUpdateTrialParams{subscriptionId=$subscriptionId, trialEndDate=$trialEndDate, shift=$shift, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams, additionalBodyProperties=$additionalBodyProperties}"
@@ -421,21 +416,18 @@ constructor(
                 return true
             }
 
-            return /* spotless:off */ other is TrialEndDate && this.offsetDateTime == other.offsetDateTime && this.unionMember1 == other.unionMember1 /* spotless:on */
+            return /* spotless:off */ other is TrialEndDate && offsetDateTime == other.offsetDateTime && unionMember1 == other.unionMember1 /* spotless:on */
         }
 
-        override fun hashCode(): Int {
-            return /* spotless:off */ Objects.hash(offsetDateTime, unionMember1) /* spotless:on */
-        }
+        override fun hashCode(): Int = /* spotless:off */ Objects.hash(offsetDateTime, unionMember1) /* spotless:on */
 
-        override fun toString(): String {
-            return when {
+        override fun toString(): String =
+            when {
                 offsetDateTime != null -> "TrialEndDate{offsetDateTime=$offsetDateTime}"
                 unionMember1 != null -> "TrialEndDate{unionMember1=$unionMember1}"
                 _json != null -> "TrialEndDate{_unknown=$_json}"
                 else -> throw IllegalStateException("Invalid TrialEndDate")
             }
-        }
 
         companion object {
 
@@ -502,7 +494,7 @@ constructor(
                     return true
                 }
 
-                return /* spotless:off */ other is UnionMember1 && this.value == other.value /* spotless:on */
+                return /* spotless:off */ other is UnionMember1 && value == other.value /* spotless:on */
             }
 
             override fun hashCode() = value.hashCode()

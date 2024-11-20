@@ -199,17 +199,14 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is Data && this.timeframeStart == other.timeframeStart && this.timeframeEnd == other.timeframeEnd && this.count == other.count && this.additionalProperties == other.additionalProperties /* spotless:on */
+            return /* spotless:off */ other is Data && timeframeStart == other.timeframeStart && timeframeEnd == other.timeframeEnd && count == other.count && additionalProperties == other.additionalProperties /* spotless:on */
         }
 
-        private var hashCode: Int = 0
+        /* spotless:off */
+        private val hashCode: Int by lazy { Objects.hash(timeframeStart, timeframeEnd, count, additionalProperties) }
+        /* spotless:on */
 
-        override fun hashCode(): Int {
-            if (hashCode == 0) {
-                hashCode = /* spotless:off */ Objects.hash(timeframeStart, timeframeEnd, count, additionalProperties) /* spotless:on */
-            }
-            return hashCode
-        }
+        override fun hashCode(): Int = hashCode
 
         override fun toString() =
             "Data{timeframeStart=$timeframeStart, timeframeEnd=$timeframeEnd, count=$count, additionalProperties=$additionalProperties}"
@@ -220,17 +217,14 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is EventVolumes && this.data == other.data && this.additionalProperties == other.additionalProperties /* spotless:on */
+        return /* spotless:off */ other is EventVolumes && data == other.data && additionalProperties == other.additionalProperties /* spotless:on */
     }
 
-    private var hashCode: Int = 0
+    /* spotless:off */
+    private val hashCode: Int by lazy { Objects.hash(data, additionalProperties) }
+    /* spotless:on */
 
-    override fun hashCode(): Int {
-        if (hashCode == 0) {
-            hashCode = /* spotless:off */ Objects.hash(data, additionalProperties) /* spotless:on */
-        }
-        return hashCode
-    }
+    override fun hashCode(): Int = hashCode
 
     override fun toString() = "EventVolumes{data=$data, additionalProperties=$additionalProperties}"
 }

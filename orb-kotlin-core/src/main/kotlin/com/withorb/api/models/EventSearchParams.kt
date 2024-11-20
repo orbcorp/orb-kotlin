@@ -154,17 +154,14 @@ constructor(
                 return true
             }
 
-            return /* spotless:off */ other is EventSearchBody && this.eventIds == other.eventIds && this.timeframeEnd == other.timeframeEnd && this.timeframeStart == other.timeframeStart && this.additionalProperties == other.additionalProperties /* spotless:on */
+            return /* spotless:off */ other is EventSearchBody && eventIds == other.eventIds && timeframeEnd == other.timeframeEnd && timeframeStart == other.timeframeStart && additionalProperties == other.additionalProperties /* spotless:on */
         }
 
-        private var hashCode: Int = 0
+        /* spotless:off */
+        private val hashCode: Int by lazy { Objects.hash(eventIds, timeframeEnd, timeframeStart, additionalProperties) }
+        /* spotless:on */
 
-        override fun hashCode(): Int {
-            if (hashCode == 0) {
-                hashCode = /* spotless:off */ Objects.hash(eventIds, timeframeEnd, timeframeStart, additionalProperties) /* spotless:on */
-            }
-            return hashCode
-        }
+        override fun hashCode(): Int = hashCode
 
         override fun toString() =
             "EventSearchBody{eventIds=$eventIds, timeframeEnd=$timeframeEnd, timeframeStart=$timeframeStart, additionalProperties=$additionalProperties}"
@@ -181,12 +178,10 @@ constructor(
             return true
         }
 
-        return /* spotless:off */ other is EventSearchParams && this.eventIds == other.eventIds && this.timeframeEnd == other.timeframeEnd && this.timeframeStart == other.timeframeStart && this.additionalHeaders == other.additionalHeaders && this.additionalQueryParams == other.additionalQueryParams && this.additionalBodyProperties == other.additionalBodyProperties /* spotless:on */
+        return /* spotless:off */ other is EventSearchParams && eventIds == other.eventIds && timeframeEnd == other.timeframeEnd && timeframeStart == other.timeframeStart && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams && additionalBodyProperties == other.additionalBodyProperties /* spotless:on */
     }
 
-    override fun hashCode(): Int {
-        return /* spotless:off */ Objects.hash(eventIds, timeframeEnd, timeframeStart, additionalHeaders, additionalQueryParams, additionalBodyProperties) /* spotless:on */
-    }
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(eventIds, timeframeEnd, timeframeStart, additionalHeaders, additionalQueryParams, additionalBodyProperties) /* spotless:on */
 
     override fun toString() =
         "EventSearchParams{eventIds=$eventIds, timeframeEnd=$timeframeEnd, timeframeStart=$timeframeStart, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams, additionalBodyProperties=$additionalBodyProperties}"

@@ -178,17 +178,14 @@ constructor(
                 return true
             }
 
-            return /* spotless:off */ other is InvoiceLineItemCreateBody && this.amount == other.amount && this.endDate == other.endDate && this.invoiceId == other.invoiceId && this.name == other.name && this.quantity == other.quantity && this.startDate == other.startDate && this.additionalProperties == other.additionalProperties /* spotless:on */
+            return /* spotless:off */ other is InvoiceLineItemCreateBody && amount == other.amount && endDate == other.endDate && invoiceId == other.invoiceId && name == other.name && quantity == other.quantity && startDate == other.startDate && additionalProperties == other.additionalProperties /* spotless:on */
         }
 
-        private var hashCode: Int = 0
+        /* spotless:off */
+        private val hashCode: Int by lazy { Objects.hash(amount, endDate, invoiceId, name, quantity, startDate, additionalProperties) }
+        /* spotless:on */
 
-        override fun hashCode(): Int {
-            if (hashCode == 0) {
-                hashCode = /* spotless:off */ Objects.hash(amount, endDate, invoiceId, name, quantity, startDate, additionalProperties) /* spotless:on */
-            }
-            return hashCode
-        }
+        override fun hashCode(): Int = hashCode
 
         override fun toString() =
             "InvoiceLineItemCreateBody{amount=$amount, endDate=$endDate, invoiceId=$invoiceId, name=$name, quantity=$quantity, startDate=$startDate, additionalProperties=$additionalProperties}"
@@ -205,12 +202,10 @@ constructor(
             return true
         }
 
-        return /* spotless:off */ other is InvoiceLineItemCreateParams && this.amount == other.amount && this.endDate == other.endDate && this.invoiceId == other.invoiceId && this.name == other.name && this.quantity == other.quantity && this.startDate == other.startDate && this.additionalHeaders == other.additionalHeaders && this.additionalQueryParams == other.additionalQueryParams && this.additionalBodyProperties == other.additionalBodyProperties /* spotless:on */
+        return /* spotless:off */ other is InvoiceLineItemCreateParams && amount == other.amount && endDate == other.endDate && invoiceId == other.invoiceId && name == other.name && quantity == other.quantity && startDate == other.startDate && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams && additionalBodyProperties == other.additionalBodyProperties /* spotless:on */
     }
 
-    override fun hashCode(): Int {
-        return /* spotless:off */ Objects.hash(amount, endDate, invoiceId, name, quantity, startDate, additionalHeaders, additionalQueryParams, additionalBodyProperties) /* spotless:on */
-    }
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(amount, endDate, invoiceId, name, quantity, startDate, additionalHeaders, additionalQueryParams, additionalBodyProperties) /* spotless:on */
 
     override fun toString() =
         "InvoiceLineItemCreateParams{amount=$amount, endDate=$endDate, invoiceId=$invoiceId, name=$name, quantity=$quantity, startDate=$startDate, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams, additionalBodyProperties=$additionalBodyProperties}"
