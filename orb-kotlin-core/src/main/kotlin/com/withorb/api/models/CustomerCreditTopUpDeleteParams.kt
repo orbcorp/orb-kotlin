@@ -23,6 +23,12 @@ constructor(
 
     fun topUpId(): String = topUpId
 
+    fun _additionalHeaders(): Headers = additionalHeaders
+
+    fun _additionalQueryParams(): QueryParams = additionalQueryParams
+
+    fun _additionalBodyProperties(): Map<String, JsonValue> = additionalBodyProperties
+
     internal fun getBody(): Map<String, JsonValue>? {
         return additionalBodyProperties.ifEmpty { null }
     }
@@ -38,25 +44,6 @@ constructor(
             else -> ""
         }
     }
-
-    fun _additionalHeaders(): Headers = additionalHeaders
-
-    fun _additionalQueryParams(): QueryParams = additionalQueryParams
-
-    fun _additionalBodyProperties(): Map<String, JsonValue> = additionalBodyProperties
-
-    override fun equals(other: Any?): Boolean {
-        if (this === other) {
-            return true
-        }
-
-        return /* spotless:off */ other is CustomerCreditTopUpDeleteParams && customerId == other.customerId && topUpId == other.topUpId && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams && additionalBodyProperties == other.additionalBodyProperties /* spotless:on */
-    }
-
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(customerId, topUpId, additionalHeaders, additionalQueryParams, additionalBodyProperties) /* spotless:on */
-
-    override fun toString() =
-        "CustomerCreditTopUpDeleteParams{customerId=$customerId, topUpId=$topUpId, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams, additionalBodyProperties=$additionalBodyProperties}"
 
     fun toBuilder() = Builder().from(this)
 
@@ -76,11 +63,13 @@ constructor(
 
         internal fun from(customerCreditTopUpDeleteParams: CustomerCreditTopUpDeleteParams) =
             apply {
-                this.customerId = customerCreditTopUpDeleteParams.customerId
-                this.topUpId = customerCreditTopUpDeleteParams.topUpId
-                additionalHeaders(customerCreditTopUpDeleteParams.additionalHeaders)
-                additionalQueryParams(customerCreditTopUpDeleteParams.additionalQueryParams)
-                additionalBodyProperties(customerCreditTopUpDeleteParams.additionalBodyProperties)
+                customerId = customerCreditTopUpDeleteParams.customerId
+                topUpId = customerCreditTopUpDeleteParams.topUpId
+                additionalHeaders = customerCreditTopUpDeleteParams.additionalHeaders.toBuilder()
+                additionalQueryParams =
+                    customerCreditTopUpDeleteParams.additionalQueryParams.toBuilder()
+                additionalBodyProperties =
+                    customerCreditTopUpDeleteParams.additionalBodyProperties.toMutableMap()
             }
 
         fun customerId(customerId: String) = apply { this.customerId = customerId }
@@ -216,4 +205,17 @@ constructor(
                 additionalBodyProperties.toImmutable(),
             )
     }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) {
+            return true
+        }
+
+        return /* spotless:off */ other is CustomerCreditTopUpDeleteParams && customerId == other.customerId && topUpId == other.topUpId && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams && additionalBodyProperties == other.additionalBodyProperties /* spotless:on */
+    }
+
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(customerId, topUpId, additionalHeaders, additionalQueryParams, additionalBodyProperties) /* spotless:on */
+
+    override fun toString() =
+        "CustomerCreditTopUpDeleteParams{customerId=$customerId, topUpId=$topUpId, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams, additionalBodyProperties=$additionalBodyProperties}"
 }

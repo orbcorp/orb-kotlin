@@ -28,6 +28,12 @@ constructor(
 
     fun priceId(): String = priceId
 
+    fun _additionalHeaders(): Headers = additionalHeaders
+
+    fun _additionalQueryParams(): QueryParams = additionalQueryParams
+
+    fun _additionalBodyProperties(): Map<String, JsonValue> = additionalBodyProperties
+
     internal fun getBody(): SubscriptionUnscheduleFixedFeeQuantityUpdatesBody {
         return SubscriptionUnscheduleFixedFeeQuantityUpdatesBody(priceId, additionalBodyProperties)
     }
@@ -123,25 +129,6 @@ constructor(
             "SubscriptionUnscheduleFixedFeeQuantityUpdatesBody{priceId=$priceId, additionalProperties=$additionalProperties}"
     }
 
-    fun _additionalHeaders(): Headers = additionalHeaders
-
-    fun _additionalQueryParams(): QueryParams = additionalQueryParams
-
-    fun _additionalBodyProperties(): Map<String, JsonValue> = additionalBodyProperties
-
-    override fun equals(other: Any?): Boolean {
-        if (this === other) {
-            return true
-        }
-
-        return /* spotless:off */ other is SubscriptionUnscheduleFixedFeeQuantityUpdatesParams && subscriptionId == other.subscriptionId && priceId == other.priceId && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams && additionalBodyProperties == other.additionalBodyProperties /* spotless:on */
-    }
-
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(subscriptionId, priceId, additionalHeaders, additionalQueryParams, additionalBodyProperties) /* spotless:on */
-
-    override fun toString() =
-        "SubscriptionUnscheduleFixedFeeQuantityUpdatesParams{subscriptionId=$subscriptionId, priceId=$priceId, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams, additionalBodyProperties=$additionalBodyProperties}"
-
     fun toBuilder() = Builder().from(this)
 
     companion object {
@@ -162,15 +149,16 @@ constructor(
             subscriptionUnscheduleFixedFeeQuantityUpdatesParams:
                 SubscriptionUnscheduleFixedFeeQuantityUpdatesParams
         ) = apply {
-            this.subscriptionId = subscriptionUnscheduleFixedFeeQuantityUpdatesParams.subscriptionId
-            this.priceId = subscriptionUnscheduleFixedFeeQuantityUpdatesParams.priceId
-            additionalHeaders(subscriptionUnscheduleFixedFeeQuantityUpdatesParams.additionalHeaders)
-            additionalQueryParams(
+            subscriptionId = subscriptionUnscheduleFixedFeeQuantityUpdatesParams.subscriptionId
+            priceId = subscriptionUnscheduleFixedFeeQuantityUpdatesParams.priceId
+            additionalHeaders =
+                subscriptionUnscheduleFixedFeeQuantityUpdatesParams.additionalHeaders.toBuilder()
+            additionalQueryParams =
                 subscriptionUnscheduleFixedFeeQuantityUpdatesParams.additionalQueryParams
-            )
-            additionalBodyProperties(
+                    .toBuilder()
+            additionalBodyProperties =
                 subscriptionUnscheduleFixedFeeQuantityUpdatesParams.additionalBodyProperties
-            )
+                    .toMutableMap()
         }
 
         fun subscriptionId(subscriptionId: String) = apply { this.subscriptionId = subscriptionId }
@@ -307,4 +295,17 @@ constructor(
                 additionalBodyProperties.toImmutable(),
             )
     }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) {
+            return true
+        }
+
+        return /* spotless:off */ other is SubscriptionUnscheduleFixedFeeQuantityUpdatesParams && subscriptionId == other.subscriptionId && priceId == other.priceId && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams && additionalBodyProperties == other.additionalBodyProperties /* spotless:on */
+    }
+
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(subscriptionId, priceId, additionalHeaders, additionalQueryParams, additionalBodyProperties) /* spotless:on */
+
+    override fun toString() =
+        "SubscriptionUnscheduleFixedFeeQuantityUpdatesParams{subscriptionId=$subscriptionId, priceId=$priceId, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams, additionalBodyProperties=$additionalBodyProperties}"
 }

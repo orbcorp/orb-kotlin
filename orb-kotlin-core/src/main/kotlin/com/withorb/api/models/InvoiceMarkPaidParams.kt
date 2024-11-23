@@ -35,6 +35,12 @@ constructor(
 
     fun notes(): String? = notes
 
+    fun _additionalHeaders(): Headers = additionalHeaders
+
+    fun _additionalQueryParams(): QueryParams = additionalQueryParams
+
+    fun _additionalBodyProperties(): Map<String, JsonValue> = additionalBodyProperties
+
     internal fun getBody(): InvoiceMarkPaidBody {
         return InvoiceMarkPaidBody(
             paymentReceivedDate,
@@ -156,25 +162,6 @@ constructor(
             "InvoiceMarkPaidBody{paymentReceivedDate=$paymentReceivedDate, externalId=$externalId, notes=$notes, additionalProperties=$additionalProperties}"
     }
 
-    fun _additionalHeaders(): Headers = additionalHeaders
-
-    fun _additionalQueryParams(): QueryParams = additionalQueryParams
-
-    fun _additionalBodyProperties(): Map<String, JsonValue> = additionalBodyProperties
-
-    override fun equals(other: Any?): Boolean {
-        if (this === other) {
-            return true
-        }
-
-        return /* spotless:off */ other is InvoiceMarkPaidParams && invoiceId == other.invoiceId && paymentReceivedDate == other.paymentReceivedDate && externalId == other.externalId && notes == other.notes && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams && additionalBodyProperties == other.additionalBodyProperties /* spotless:on */
-    }
-
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(invoiceId, paymentReceivedDate, externalId, notes, additionalHeaders, additionalQueryParams, additionalBodyProperties) /* spotless:on */
-
-    override fun toString() =
-        "InvoiceMarkPaidParams{invoiceId=$invoiceId, paymentReceivedDate=$paymentReceivedDate, externalId=$externalId, notes=$notes, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams, additionalBodyProperties=$additionalBodyProperties}"
-
     fun toBuilder() = Builder().from(this)
 
     companion object {
@@ -194,13 +181,13 @@ constructor(
         private var additionalBodyProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         internal fun from(invoiceMarkPaidParams: InvoiceMarkPaidParams) = apply {
-            this.invoiceId = invoiceMarkPaidParams.invoiceId
-            this.paymentReceivedDate = invoiceMarkPaidParams.paymentReceivedDate
-            this.externalId = invoiceMarkPaidParams.externalId
-            this.notes = invoiceMarkPaidParams.notes
-            additionalHeaders(invoiceMarkPaidParams.additionalHeaders)
-            additionalQueryParams(invoiceMarkPaidParams.additionalQueryParams)
-            additionalBodyProperties(invoiceMarkPaidParams.additionalBodyProperties)
+            invoiceId = invoiceMarkPaidParams.invoiceId
+            paymentReceivedDate = invoiceMarkPaidParams.paymentReceivedDate
+            externalId = invoiceMarkPaidParams.externalId
+            notes = invoiceMarkPaidParams.notes
+            additionalHeaders = invoiceMarkPaidParams.additionalHeaders.toBuilder()
+            additionalQueryParams = invoiceMarkPaidParams.additionalQueryParams.toBuilder()
+            additionalBodyProperties = invoiceMarkPaidParams.additionalBodyProperties.toMutableMap()
         }
 
         fun invoiceId(invoiceId: String) = apply { this.invoiceId = invoiceId }
@@ -349,4 +336,17 @@ constructor(
                 additionalBodyProperties.toImmutable(),
             )
     }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) {
+            return true
+        }
+
+        return /* spotless:off */ other is InvoiceMarkPaidParams && invoiceId == other.invoiceId && paymentReceivedDate == other.paymentReceivedDate && externalId == other.externalId && notes == other.notes && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams && additionalBodyProperties == other.additionalBodyProperties /* spotless:on */
+    }
+
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(invoiceId, paymentReceivedDate, externalId, notes, additionalHeaders, additionalQueryParams, additionalBodyProperties) /* spotless:on */
+
+    override fun toString() =
+        "InvoiceMarkPaidParams{invoiceId=$invoiceId, paymentReceivedDate=$paymentReceivedDate, externalId=$externalId, notes=$notes, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams, additionalBodyProperties=$additionalBodyProperties}"
 }

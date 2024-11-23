@@ -36,6 +36,12 @@ constructor(
 
     fun cancellationDate(): OffsetDateTime? = cancellationDate
 
+    fun _additionalHeaders(): Headers = additionalHeaders
+
+    fun _additionalQueryParams(): QueryParams = additionalQueryParams
+
+    fun _additionalBodyProperties(): Map<String, JsonValue> = additionalBodyProperties
+
     internal fun getBody(): SubscriptionCancelBody {
         return SubscriptionCancelBody(
             cancelOption,
@@ -152,25 +158,6 @@ constructor(
             "SubscriptionCancelBody{cancelOption=$cancelOption, cancellationDate=$cancellationDate, additionalProperties=$additionalProperties}"
     }
 
-    fun _additionalHeaders(): Headers = additionalHeaders
-
-    fun _additionalQueryParams(): QueryParams = additionalQueryParams
-
-    fun _additionalBodyProperties(): Map<String, JsonValue> = additionalBodyProperties
-
-    override fun equals(other: Any?): Boolean {
-        if (this === other) {
-            return true
-        }
-
-        return /* spotless:off */ other is SubscriptionCancelParams && subscriptionId == other.subscriptionId && cancelOption == other.cancelOption && cancellationDate == other.cancellationDate && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams && additionalBodyProperties == other.additionalBodyProperties /* spotless:on */
-    }
-
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(subscriptionId, cancelOption, cancellationDate, additionalHeaders, additionalQueryParams, additionalBodyProperties) /* spotless:on */
-
-    override fun toString() =
-        "SubscriptionCancelParams{subscriptionId=$subscriptionId, cancelOption=$cancelOption, cancellationDate=$cancellationDate, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams, additionalBodyProperties=$additionalBodyProperties}"
-
     fun toBuilder() = Builder().from(this)
 
     companion object {
@@ -189,12 +176,13 @@ constructor(
         private var additionalBodyProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         internal fun from(subscriptionCancelParams: SubscriptionCancelParams) = apply {
-            this.subscriptionId = subscriptionCancelParams.subscriptionId
-            this.cancelOption = subscriptionCancelParams.cancelOption
-            this.cancellationDate = subscriptionCancelParams.cancellationDate
-            additionalHeaders(subscriptionCancelParams.additionalHeaders)
-            additionalQueryParams(subscriptionCancelParams.additionalQueryParams)
-            additionalBodyProperties(subscriptionCancelParams.additionalBodyProperties)
+            subscriptionId = subscriptionCancelParams.subscriptionId
+            cancelOption = subscriptionCancelParams.cancelOption
+            cancellationDate = subscriptionCancelParams.cancellationDate
+            additionalHeaders = subscriptionCancelParams.additionalHeaders.toBuilder()
+            additionalQueryParams = subscriptionCancelParams.additionalQueryParams.toBuilder()
+            additionalBodyProperties =
+                subscriptionCancelParams.additionalBodyProperties.toMutableMap()
         }
 
         fun subscriptionId(subscriptionId: String) = apply { this.subscriptionId = subscriptionId }
@@ -403,4 +391,17 @@ constructor(
 
         fun asString(): String = _value().asStringOrThrow()
     }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) {
+            return true
+        }
+
+        return /* spotless:off */ other is SubscriptionCancelParams && subscriptionId == other.subscriptionId && cancelOption == other.cancelOption && cancellationDate == other.cancellationDate && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams && additionalBodyProperties == other.additionalBodyProperties /* spotless:on */
+    }
+
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(subscriptionId, cancelOption, cancellationDate, additionalHeaders, additionalQueryParams, additionalBodyProperties) /* spotless:on */
+
+    override fun toString() =
+        "SubscriptionCancelParams{subscriptionId=$subscriptionId, cancelOption=$cancelOption, cancellationDate=$cancellationDate, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams, additionalBodyProperties=$additionalBodyProperties}"
 }

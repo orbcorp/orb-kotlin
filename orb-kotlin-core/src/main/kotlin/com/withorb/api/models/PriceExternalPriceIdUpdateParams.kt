@@ -28,6 +28,12 @@ constructor(
 
     fun metadata(): Metadata? = metadata
 
+    fun _additionalHeaders(): Headers = additionalHeaders
+
+    fun _additionalQueryParams(): QueryParams = additionalQueryParams
+
+    fun _additionalBodyProperties(): Map<String, JsonValue> = additionalBodyProperties
+
     internal fun getBody(): PriceExternalPriceIdUpdateBody {
         return PriceExternalPriceIdUpdateBody(metadata, additionalBodyProperties)
     }
@@ -124,25 +130,6 @@ constructor(
             "PriceExternalPriceIdUpdateBody{metadata=$metadata, additionalProperties=$additionalProperties}"
     }
 
-    fun _additionalHeaders(): Headers = additionalHeaders
-
-    fun _additionalQueryParams(): QueryParams = additionalQueryParams
-
-    fun _additionalBodyProperties(): Map<String, JsonValue> = additionalBodyProperties
-
-    override fun equals(other: Any?): Boolean {
-        if (this === other) {
-            return true
-        }
-
-        return /* spotless:off */ other is PriceExternalPriceIdUpdateParams && externalPriceId == other.externalPriceId && metadata == other.metadata && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams && additionalBodyProperties == other.additionalBodyProperties /* spotless:on */
-    }
-
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(externalPriceId, metadata, additionalHeaders, additionalQueryParams, additionalBodyProperties) /* spotless:on */
-
-    override fun toString() =
-        "PriceExternalPriceIdUpdateParams{externalPriceId=$externalPriceId, metadata=$metadata, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams, additionalBodyProperties=$additionalBodyProperties}"
-
     fun toBuilder() = Builder().from(this)
 
     companion object {
@@ -161,11 +148,13 @@ constructor(
 
         internal fun from(priceExternalPriceIdUpdateParams: PriceExternalPriceIdUpdateParams) =
             apply {
-                this.externalPriceId = priceExternalPriceIdUpdateParams.externalPriceId
-                this.metadata = priceExternalPriceIdUpdateParams.metadata
-                additionalHeaders(priceExternalPriceIdUpdateParams.additionalHeaders)
-                additionalQueryParams(priceExternalPriceIdUpdateParams.additionalQueryParams)
-                additionalBodyProperties(priceExternalPriceIdUpdateParams.additionalBodyProperties)
+                externalPriceId = priceExternalPriceIdUpdateParams.externalPriceId
+                metadata = priceExternalPriceIdUpdateParams.metadata
+                additionalHeaders = priceExternalPriceIdUpdateParams.additionalHeaders.toBuilder()
+                additionalQueryParams =
+                    priceExternalPriceIdUpdateParams.additionalQueryParams.toBuilder()
+                additionalBodyProperties =
+                    priceExternalPriceIdUpdateParams.additionalBodyProperties.toMutableMap()
             }
 
         fun externalPriceId(externalPriceId: String) = apply {
@@ -373,4 +362,17 @@ constructor(
 
         override fun toString() = "Metadata{additionalProperties=$additionalProperties}"
     }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) {
+            return true
+        }
+
+        return /* spotless:off */ other is PriceExternalPriceIdUpdateParams && externalPriceId == other.externalPriceId && metadata == other.metadata && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams && additionalBodyProperties == other.additionalBodyProperties /* spotless:on */
+    }
+
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(externalPriceId, metadata, additionalHeaders, additionalQueryParams, additionalBodyProperties) /* spotless:on */
+
+    override fun toString() =
+        "PriceExternalPriceIdUpdateParams{externalPriceId=$externalPriceId, metadata=$metadata, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams, additionalBodyProperties=$additionalBodyProperties}"
 }

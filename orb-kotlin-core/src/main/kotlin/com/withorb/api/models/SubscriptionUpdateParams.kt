@@ -40,6 +40,12 @@ constructor(
 
     fun netTerms(): Long? = netTerms
 
+    fun _additionalHeaders(): Headers = additionalHeaders
+
+    fun _additionalQueryParams(): QueryParams = additionalQueryParams
+
+    fun _additionalBodyProperties(): Map<String, JsonValue> = additionalBodyProperties
+
     internal fun getBody(): SubscriptionUpdateBody {
         return SubscriptionUpdateBody(
             autoCollection,
@@ -226,25 +232,6 @@ constructor(
             "SubscriptionUpdateBody{autoCollection=$autoCollection, defaultInvoiceMemo=$defaultInvoiceMemo, invoicingThreshold=$invoicingThreshold, metadata=$metadata, netTerms=$netTerms, additionalProperties=$additionalProperties}"
     }
 
-    fun _additionalHeaders(): Headers = additionalHeaders
-
-    fun _additionalQueryParams(): QueryParams = additionalQueryParams
-
-    fun _additionalBodyProperties(): Map<String, JsonValue> = additionalBodyProperties
-
-    override fun equals(other: Any?): Boolean {
-        if (this === other) {
-            return true
-        }
-
-        return /* spotless:off */ other is SubscriptionUpdateParams && subscriptionId == other.subscriptionId && autoCollection == other.autoCollection && defaultInvoiceMemo == other.defaultInvoiceMemo && invoicingThreshold == other.invoicingThreshold && metadata == other.metadata && netTerms == other.netTerms && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams && additionalBodyProperties == other.additionalBodyProperties /* spotless:on */
-    }
-
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(subscriptionId, autoCollection, defaultInvoiceMemo, invoicingThreshold, metadata, netTerms, additionalHeaders, additionalQueryParams, additionalBodyProperties) /* spotless:on */
-
-    override fun toString() =
-        "SubscriptionUpdateParams{subscriptionId=$subscriptionId, autoCollection=$autoCollection, defaultInvoiceMemo=$defaultInvoiceMemo, invoicingThreshold=$invoicingThreshold, metadata=$metadata, netTerms=$netTerms, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams, additionalBodyProperties=$additionalBodyProperties}"
-
     fun toBuilder() = Builder().from(this)
 
     companion object {
@@ -266,15 +253,16 @@ constructor(
         private var additionalBodyProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         internal fun from(subscriptionUpdateParams: SubscriptionUpdateParams) = apply {
-            this.subscriptionId = subscriptionUpdateParams.subscriptionId
-            this.autoCollection = subscriptionUpdateParams.autoCollection
-            this.defaultInvoiceMemo = subscriptionUpdateParams.defaultInvoiceMemo
-            this.invoicingThreshold = subscriptionUpdateParams.invoicingThreshold
-            this.metadata = subscriptionUpdateParams.metadata
-            this.netTerms = subscriptionUpdateParams.netTerms
-            additionalHeaders(subscriptionUpdateParams.additionalHeaders)
-            additionalQueryParams(subscriptionUpdateParams.additionalQueryParams)
-            additionalBodyProperties(subscriptionUpdateParams.additionalBodyProperties)
+            subscriptionId = subscriptionUpdateParams.subscriptionId
+            autoCollection = subscriptionUpdateParams.autoCollection
+            defaultInvoiceMemo = subscriptionUpdateParams.defaultInvoiceMemo
+            invoicingThreshold = subscriptionUpdateParams.invoicingThreshold
+            metadata = subscriptionUpdateParams.metadata
+            netTerms = subscriptionUpdateParams.netTerms
+            additionalHeaders = subscriptionUpdateParams.additionalHeaders.toBuilder()
+            additionalQueryParams = subscriptionUpdateParams.additionalQueryParams.toBuilder()
+            additionalBodyProperties =
+                subscriptionUpdateParams.additionalBodyProperties.toMutableMap()
         }
 
         fun subscriptionId(subscriptionId: String) = apply { this.subscriptionId = subscriptionId }
@@ -515,4 +503,17 @@ constructor(
 
         override fun toString() = "Metadata{additionalProperties=$additionalProperties}"
     }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) {
+            return true
+        }
+
+        return /* spotless:off */ other is SubscriptionUpdateParams && subscriptionId == other.subscriptionId && autoCollection == other.autoCollection && defaultInvoiceMemo == other.defaultInvoiceMemo && invoicingThreshold == other.invoicingThreshold && metadata == other.metadata && netTerms == other.netTerms && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams && additionalBodyProperties == other.additionalBodyProperties /* spotless:on */
+    }
+
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(subscriptionId, autoCollection, defaultInvoiceMemo, invoicingThreshold, metadata, netTerms, additionalHeaders, additionalQueryParams, additionalBodyProperties) /* spotless:on */
+
+    override fun toString() =
+        "SubscriptionUpdateParams{subscriptionId=$subscriptionId, autoCollection=$autoCollection, defaultInvoiceMemo=$defaultInvoiceMemo, invoicingThreshold=$invoicingThreshold, metadata=$metadata, netTerms=$netTerms, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams, additionalBodyProperties=$additionalBodyProperties}"
 }

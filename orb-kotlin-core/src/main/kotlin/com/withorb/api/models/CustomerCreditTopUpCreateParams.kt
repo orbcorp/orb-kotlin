@@ -50,6 +50,12 @@ constructor(
 
     fun expiresAfterUnit(): ExpiresAfterUnit? = expiresAfterUnit
 
+    fun _additionalHeaders(): Headers = additionalHeaders
+
+    fun _additionalQueryParams(): QueryParams = additionalQueryParams
+
+    fun _additionalBodyProperties(): Map<String, JsonValue> = additionalBodyProperties
+
     internal fun getBody(): CustomerCreditTopUpCreateBody {
         return CustomerCreditTopUpCreateBody(
             amount,
@@ -244,25 +250,6 @@ constructor(
             "CustomerCreditTopUpCreateBody{amount=$amount, currency=$currency, invoiceSettings=$invoiceSettings, perUnitCostBasis=$perUnitCostBasis, threshold=$threshold, expiresAfter=$expiresAfter, expiresAfterUnit=$expiresAfterUnit, additionalProperties=$additionalProperties}"
     }
 
-    fun _additionalHeaders(): Headers = additionalHeaders
-
-    fun _additionalQueryParams(): QueryParams = additionalQueryParams
-
-    fun _additionalBodyProperties(): Map<String, JsonValue> = additionalBodyProperties
-
-    override fun equals(other: Any?): Boolean {
-        if (this === other) {
-            return true
-        }
-
-        return /* spotless:off */ other is CustomerCreditTopUpCreateParams && customerId == other.customerId && amount == other.amount && currency == other.currency && invoiceSettings == other.invoiceSettings && perUnitCostBasis == other.perUnitCostBasis && threshold == other.threshold && expiresAfter == other.expiresAfter && expiresAfterUnit == other.expiresAfterUnit && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams && additionalBodyProperties == other.additionalBodyProperties /* spotless:on */
-    }
-
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(customerId, amount, currency, invoiceSettings, perUnitCostBasis, threshold, expiresAfter, expiresAfterUnit, additionalHeaders, additionalQueryParams, additionalBodyProperties) /* spotless:on */
-
-    override fun toString() =
-        "CustomerCreditTopUpCreateParams{customerId=$customerId, amount=$amount, currency=$currency, invoiceSettings=$invoiceSettings, perUnitCostBasis=$perUnitCostBasis, threshold=$threshold, expiresAfter=$expiresAfter, expiresAfterUnit=$expiresAfterUnit, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams, additionalBodyProperties=$additionalBodyProperties}"
-
     fun toBuilder() = Builder().from(this)
 
     companion object {
@@ -287,17 +274,19 @@ constructor(
 
         internal fun from(customerCreditTopUpCreateParams: CustomerCreditTopUpCreateParams) =
             apply {
-                this.customerId = customerCreditTopUpCreateParams.customerId
-                this.amount = customerCreditTopUpCreateParams.amount
-                this.currency = customerCreditTopUpCreateParams.currency
-                this.invoiceSettings = customerCreditTopUpCreateParams.invoiceSettings
-                this.perUnitCostBasis = customerCreditTopUpCreateParams.perUnitCostBasis
-                this.threshold = customerCreditTopUpCreateParams.threshold
-                this.expiresAfter = customerCreditTopUpCreateParams.expiresAfter
-                this.expiresAfterUnit = customerCreditTopUpCreateParams.expiresAfterUnit
-                additionalHeaders(customerCreditTopUpCreateParams.additionalHeaders)
-                additionalQueryParams(customerCreditTopUpCreateParams.additionalQueryParams)
-                additionalBodyProperties(customerCreditTopUpCreateParams.additionalBodyProperties)
+                customerId = customerCreditTopUpCreateParams.customerId
+                amount = customerCreditTopUpCreateParams.amount
+                currency = customerCreditTopUpCreateParams.currency
+                invoiceSettings = customerCreditTopUpCreateParams.invoiceSettings
+                perUnitCostBasis = customerCreditTopUpCreateParams.perUnitCostBasis
+                threshold = customerCreditTopUpCreateParams.threshold
+                expiresAfter = customerCreditTopUpCreateParams.expiresAfter
+                expiresAfterUnit = customerCreditTopUpCreateParams.expiresAfterUnit
+                additionalHeaders = customerCreditTopUpCreateParams.additionalHeaders.toBuilder()
+                additionalQueryParams =
+                    customerCreditTopUpCreateParams.additionalQueryParams.toBuilder()
+                additionalBodyProperties =
+                    customerCreditTopUpCreateParams.additionalBodyProperties.toMutableMap()
             }
 
         fun customerId(customerId: String) = apply { this.customerId = customerId }
@@ -661,4 +650,17 @@ constructor(
 
         fun asString(): String = _value().asStringOrThrow()
     }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) {
+            return true
+        }
+
+        return /* spotless:off */ other is CustomerCreditTopUpCreateParams && customerId == other.customerId && amount == other.amount && currency == other.currency && invoiceSettings == other.invoiceSettings && perUnitCostBasis == other.perUnitCostBasis && threshold == other.threshold && expiresAfter == other.expiresAfter && expiresAfterUnit == other.expiresAfterUnit && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams && additionalBodyProperties == other.additionalBodyProperties /* spotless:on */
+    }
+
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(customerId, amount, currency, invoiceSettings, perUnitCostBasis, threshold, expiresAfter, expiresAfterUnit, additionalHeaders, additionalQueryParams, additionalBodyProperties) /* spotless:on */
+
+    override fun toString() =
+        "CustomerCreditTopUpCreateParams{customerId=$customerId, amount=$amount, currency=$currency, invoiceSettings=$invoiceSettings, perUnitCostBasis=$perUnitCostBasis, threshold=$threshold, expiresAfter=$expiresAfter, expiresAfterUnit=$expiresAfterUnit, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams, additionalBodyProperties=$additionalBodyProperties}"
 }

@@ -58,6 +58,12 @@ constructor(
 
     fun willAutoIssue(): Boolean? = willAutoIssue
 
+    fun _additionalHeaders(): Headers = additionalHeaders
+
+    fun _additionalQueryParams(): QueryParams = additionalQueryParams
+
+    fun _additionalBodyProperties(): Map<String, JsonValue> = additionalBodyProperties
+
     internal fun getBody(): InvoiceCreateBody {
         return InvoiceCreateBody(
             currency,
@@ -298,25 +304,6 @@ constructor(
             "InvoiceCreateBody{currency=$currency, invoiceDate=$invoiceDate, lineItems=$lineItems, netTerms=$netTerms, customerId=$customerId, discount=$discount, externalCustomerId=$externalCustomerId, memo=$memo, metadata=$metadata, willAutoIssue=$willAutoIssue, additionalProperties=$additionalProperties}"
     }
 
-    fun _additionalHeaders(): Headers = additionalHeaders
-
-    fun _additionalQueryParams(): QueryParams = additionalQueryParams
-
-    fun _additionalBodyProperties(): Map<String, JsonValue> = additionalBodyProperties
-
-    override fun equals(other: Any?): Boolean {
-        if (this === other) {
-            return true
-        }
-
-        return /* spotless:off */ other is InvoiceCreateParams && currency == other.currency && invoiceDate == other.invoiceDate && lineItems == other.lineItems && netTerms == other.netTerms && customerId == other.customerId && discount == other.discount && externalCustomerId == other.externalCustomerId && memo == other.memo && metadata == other.metadata && willAutoIssue == other.willAutoIssue && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams && additionalBodyProperties == other.additionalBodyProperties /* spotless:on */
-    }
-
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(currency, invoiceDate, lineItems, netTerms, customerId, discount, externalCustomerId, memo, metadata, willAutoIssue, additionalHeaders, additionalQueryParams, additionalBodyProperties) /* spotless:on */
-
-    override fun toString() =
-        "InvoiceCreateParams{currency=$currency, invoiceDate=$invoiceDate, lineItems=$lineItems, netTerms=$netTerms, customerId=$customerId, discount=$discount, externalCustomerId=$externalCustomerId, memo=$memo, metadata=$metadata, willAutoIssue=$willAutoIssue, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams, additionalBodyProperties=$additionalBodyProperties}"
-
     fun toBuilder() = Builder().from(this)
 
     companion object {
@@ -342,19 +329,19 @@ constructor(
         private var additionalBodyProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         internal fun from(invoiceCreateParams: InvoiceCreateParams) = apply {
-            this.currency = invoiceCreateParams.currency
-            this.invoiceDate = invoiceCreateParams.invoiceDate
-            this.lineItems(invoiceCreateParams.lineItems)
-            this.netTerms = invoiceCreateParams.netTerms
-            this.customerId = invoiceCreateParams.customerId
-            this.discount = invoiceCreateParams.discount
-            this.externalCustomerId = invoiceCreateParams.externalCustomerId
-            this.memo = invoiceCreateParams.memo
-            this.metadata = invoiceCreateParams.metadata
-            this.willAutoIssue = invoiceCreateParams.willAutoIssue
-            additionalHeaders(invoiceCreateParams.additionalHeaders)
-            additionalQueryParams(invoiceCreateParams.additionalQueryParams)
-            additionalBodyProperties(invoiceCreateParams.additionalBodyProperties)
+            currency = invoiceCreateParams.currency
+            invoiceDate = invoiceCreateParams.invoiceDate
+            lineItems = invoiceCreateParams.lineItems.toMutableList()
+            netTerms = invoiceCreateParams.netTerms
+            customerId = invoiceCreateParams.customerId
+            discount = invoiceCreateParams.discount
+            externalCustomerId = invoiceCreateParams.externalCustomerId
+            memo = invoiceCreateParams.memo
+            metadata = invoiceCreateParams.metadata
+            willAutoIssue = invoiceCreateParams.willAutoIssue
+            additionalHeaders = invoiceCreateParams.additionalHeaders.toBuilder()
+            additionalQueryParams = invoiceCreateParams.additionalQueryParams.toBuilder()
+            additionalBodyProperties = invoiceCreateParams.additionalBodyProperties.toMutableMap()
         }
 
         /**
@@ -559,7 +546,7 @@ constructor(
             InvoiceCreateParams(
                 checkNotNull(currency) { "`currency` is required but was not set" },
                 checkNotNull(invoiceDate) { "`invoiceDate` is required but was not set" },
-                checkNotNull(lineItems) { "`lineItems` is required but was not set" }.toImmutable(),
+                lineItems.toImmutable(),
                 checkNotNull(netTerms) { "`netTerms` is required but was not set" },
                 customerId,
                 discount,
@@ -897,4 +884,17 @@ constructor(
 
         override fun toString() = "Metadata{additionalProperties=$additionalProperties}"
     }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) {
+            return true
+        }
+
+        return /* spotless:off */ other is InvoiceCreateParams && currency == other.currency && invoiceDate == other.invoiceDate && lineItems == other.lineItems && netTerms == other.netTerms && customerId == other.customerId && discount == other.discount && externalCustomerId == other.externalCustomerId && memo == other.memo && metadata == other.metadata && willAutoIssue == other.willAutoIssue && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams && additionalBodyProperties == other.additionalBodyProperties /* spotless:on */
+    }
+
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(currency, invoiceDate, lineItems, netTerms, customerId, discount, externalCustomerId, memo, metadata, willAutoIssue, additionalHeaders, additionalQueryParams, additionalBodyProperties) /* spotless:on */
+
+    override fun toString() =
+        "InvoiceCreateParams{currency=$currency, invoiceDate=$invoiceDate, lineItems=$lineItems, netTerms=$netTerms, customerId=$customerId, discount=$discount, externalCustomerId=$externalCustomerId, memo=$memo, metadata=$metadata, willAutoIssue=$willAutoIssue, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams, additionalBodyProperties=$additionalBodyProperties}"
 }

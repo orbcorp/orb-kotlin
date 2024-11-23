@@ -31,6 +31,12 @@ constructor(
 
     fun metadata(): Metadata? = metadata
 
+    fun _additionalHeaders(): Headers = additionalHeaders
+
+    fun _additionalQueryParams(): QueryParams = additionalQueryParams
+
+    fun _additionalBodyProperties(): Map<String, JsonValue> = additionalBodyProperties
+
     internal fun getBody(): PlanUpdateBody {
         return PlanUpdateBody(
             externalPlanId,
@@ -154,25 +160,6 @@ constructor(
             "PlanUpdateBody{externalPlanId=$externalPlanId, metadata=$metadata, additionalProperties=$additionalProperties}"
     }
 
-    fun _additionalHeaders(): Headers = additionalHeaders
-
-    fun _additionalQueryParams(): QueryParams = additionalQueryParams
-
-    fun _additionalBodyProperties(): Map<String, JsonValue> = additionalBodyProperties
-
-    override fun equals(other: Any?): Boolean {
-        if (this === other) {
-            return true
-        }
-
-        return /* spotless:off */ other is PlanUpdateParams && planId == other.planId && externalPlanId == other.externalPlanId && metadata == other.metadata && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams && additionalBodyProperties == other.additionalBodyProperties /* spotless:on */
-    }
-
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(planId, externalPlanId, metadata, additionalHeaders, additionalQueryParams, additionalBodyProperties) /* spotless:on */
-
-    override fun toString() =
-        "PlanUpdateParams{planId=$planId, externalPlanId=$externalPlanId, metadata=$metadata, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams, additionalBodyProperties=$additionalBodyProperties}"
-
     fun toBuilder() = Builder().from(this)
 
     companion object {
@@ -191,12 +178,12 @@ constructor(
         private var additionalBodyProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         internal fun from(planUpdateParams: PlanUpdateParams) = apply {
-            this.planId = planUpdateParams.planId
-            this.externalPlanId = planUpdateParams.externalPlanId
-            this.metadata = planUpdateParams.metadata
-            additionalHeaders(planUpdateParams.additionalHeaders)
-            additionalQueryParams(planUpdateParams.additionalQueryParams)
-            additionalBodyProperties(planUpdateParams.additionalBodyProperties)
+            planId = planUpdateParams.planId
+            externalPlanId = planUpdateParams.externalPlanId
+            metadata = planUpdateParams.metadata
+            additionalHeaders = planUpdateParams.additionalHeaders.toBuilder()
+            additionalQueryParams = planUpdateParams.additionalQueryParams.toBuilder()
+            additionalBodyProperties = planUpdateParams.additionalBodyProperties.toMutableMap()
         }
 
         fun planId(planId: String) = apply { this.planId = planId }
@@ -410,4 +397,17 @@ constructor(
 
         override fun toString() = "Metadata{additionalProperties=$additionalProperties}"
     }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) {
+            return true
+        }
+
+        return /* spotless:off */ other is PlanUpdateParams && planId == other.planId && externalPlanId == other.externalPlanId && metadata == other.metadata && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams && additionalBodyProperties == other.additionalBodyProperties /* spotless:on */
+    }
+
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(planId, externalPlanId, metadata, additionalHeaders, additionalQueryParams, additionalBodyProperties) /* spotless:on */
+
+    override fun toString() =
+        "PlanUpdateParams{planId=$planId, externalPlanId=$externalPlanId, metadata=$metadata, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams, additionalBodyProperties=$additionalBodyProperties}"
 }
