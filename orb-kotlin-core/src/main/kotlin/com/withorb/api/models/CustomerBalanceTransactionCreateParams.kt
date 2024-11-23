@@ -38,6 +38,12 @@ constructor(
 
     fun description(): String? = description
 
+    fun _additionalHeaders(): Headers = additionalHeaders
+
+    fun _additionalQueryParams(): QueryParams = additionalQueryParams
+
+    fun _additionalBodyProperties(): Map<String, JsonValue> = additionalBodyProperties
+
     internal fun getBody(): CustomerBalanceTransactionCreateBody {
         return CustomerBalanceTransactionCreateBody(
             amount,
@@ -151,25 +157,6 @@ constructor(
             "CustomerBalanceTransactionCreateBody{amount=$amount, type=$type, description=$description, additionalProperties=$additionalProperties}"
     }
 
-    fun _additionalHeaders(): Headers = additionalHeaders
-
-    fun _additionalQueryParams(): QueryParams = additionalQueryParams
-
-    fun _additionalBodyProperties(): Map<String, JsonValue> = additionalBodyProperties
-
-    override fun equals(other: Any?): Boolean {
-        if (this === other) {
-            return true
-        }
-
-        return /* spotless:off */ other is CustomerBalanceTransactionCreateParams && customerId == other.customerId && amount == other.amount && type == other.type && description == other.description && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams && additionalBodyProperties == other.additionalBodyProperties /* spotless:on */
-    }
-
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(customerId, amount, type, description, additionalHeaders, additionalQueryParams, additionalBodyProperties) /* spotless:on */
-
-    override fun toString() =
-        "CustomerBalanceTransactionCreateParams{customerId=$customerId, amount=$amount, type=$type, description=$description, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams, additionalBodyProperties=$additionalBodyProperties}"
-
     fun toBuilder() = Builder().from(this)
 
     companion object {
@@ -191,15 +178,15 @@ constructor(
         internal fun from(
             customerBalanceTransactionCreateParams: CustomerBalanceTransactionCreateParams
         ) = apply {
-            this.customerId = customerBalanceTransactionCreateParams.customerId
-            this.amount = customerBalanceTransactionCreateParams.amount
-            this.type = customerBalanceTransactionCreateParams.type
-            this.description = customerBalanceTransactionCreateParams.description
-            additionalHeaders(customerBalanceTransactionCreateParams.additionalHeaders)
-            additionalQueryParams(customerBalanceTransactionCreateParams.additionalQueryParams)
-            additionalBodyProperties(
-                customerBalanceTransactionCreateParams.additionalBodyProperties
-            )
+            customerId = customerBalanceTransactionCreateParams.customerId
+            amount = customerBalanceTransactionCreateParams.amount
+            type = customerBalanceTransactionCreateParams.type
+            description = customerBalanceTransactionCreateParams.description
+            additionalHeaders = customerBalanceTransactionCreateParams.additionalHeaders.toBuilder()
+            additionalQueryParams =
+                customerBalanceTransactionCreateParams.additionalQueryParams.toBuilder()
+            additionalBodyProperties =
+                customerBalanceTransactionCreateParams.additionalBodyProperties.toMutableMap()
         }
 
         fun customerId(customerId: String) = apply { this.customerId = customerId }
@@ -399,4 +386,17 @@ constructor(
 
         fun asString(): String = _value().asStringOrThrow()
     }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) {
+            return true
+        }
+
+        return /* spotless:off */ other is CustomerBalanceTransactionCreateParams && customerId == other.customerId && amount == other.amount && type == other.type && description == other.description && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams && additionalBodyProperties == other.additionalBodyProperties /* spotless:on */
+    }
+
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(customerId, amount, type, description, additionalHeaders, additionalQueryParams, additionalBodyProperties) /* spotless:on */
+
+    override fun toString() =
+        "CustomerBalanceTransactionCreateParams{customerId=$customerId, amount=$amount, type=$type, description=$description, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams, additionalBodyProperties=$additionalBodyProperties}"
 }

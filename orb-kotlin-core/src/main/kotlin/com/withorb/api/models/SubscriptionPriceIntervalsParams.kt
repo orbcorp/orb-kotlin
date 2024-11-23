@@ -52,6 +52,12 @@ constructor(
 
     fun editAdjustments(): List<EditAdjustment>? = editAdjustments
 
+    fun _additionalHeaders(): Headers = additionalHeaders
+
+    fun _additionalQueryParams(): QueryParams = additionalQueryParams
+
+    fun _additionalBodyProperties(): Map<String, JsonValue> = additionalBodyProperties
+
     internal fun getBody(): SubscriptionPriceIntervalsBody {
         return SubscriptionPriceIntervalsBody(
             add,
@@ -185,25 +191,6 @@ constructor(
             "SubscriptionPriceIntervalsBody{add=$add, addAdjustments=$addAdjustments, edit=$edit, editAdjustments=$editAdjustments, additionalProperties=$additionalProperties}"
     }
 
-    fun _additionalHeaders(): Headers = additionalHeaders
-
-    fun _additionalQueryParams(): QueryParams = additionalQueryParams
-
-    fun _additionalBodyProperties(): Map<String, JsonValue> = additionalBodyProperties
-
-    override fun equals(other: Any?): Boolean {
-        if (this === other) {
-            return true
-        }
-
-        return /* spotless:off */ other is SubscriptionPriceIntervalsParams && subscriptionId == other.subscriptionId && add == other.add && addAdjustments == other.addAdjustments && edit == other.edit && editAdjustments == other.editAdjustments && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams && additionalBodyProperties == other.additionalBodyProperties /* spotless:on */
-    }
-
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(subscriptionId, add, addAdjustments, edit, editAdjustments, additionalHeaders, additionalQueryParams, additionalBodyProperties) /* spotless:on */
-
-    override fun toString() =
-        "SubscriptionPriceIntervalsParams{subscriptionId=$subscriptionId, add=$add, addAdjustments=$addAdjustments, edit=$edit, editAdjustments=$editAdjustments, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams, additionalBodyProperties=$additionalBodyProperties}"
-
     fun toBuilder() = Builder().from(this)
 
     companion object {
@@ -225,14 +212,20 @@ constructor(
 
         internal fun from(subscriptionPriceIntervalsParams: SubscriptionPriceIntervalsParams) =
             apply {
-                this.subscriptionId = subscriptionPriceIntervalsParams.subscriptionId
-                this.add(subscriptionPriceIntervalsParams.add ?: listOf())
-                this.addAdjustments(subscriptionPriceIntervalsParams.addAdjustments ?: listOf())
-                this.edit(subscriptionPriceIntervalsParams.edit ?: listOf())
-                this.editAdjustments(subscriptionPriceIntervalsParams.editAdjustments ?: listOf())
-                additionalHeaders(subscriptionPriceIntervalsParams.additionalHeaders)
-                additionalQueryParams(subscriptionPriceIntervalsParams.additionalQueryParams)
-                additionalBodyProperties(subscriptionPriceIntervalsParams.additionalBodyProperties)
+                subscriptionId = subscriptionPriceIntervalsParams.subscriptionId
+                add = subscriptionPriceIntervalsParams.add?.toMutableList() ?: mutableListOf()
+                addAdjustments =
+                    subscriptionPriceIntervalsParams.addAdjustments?.toMutableList()
+                        ?: mutableListOf()
+                edit = subscriptionPriceIntervalsParams.edit?.toMutableList() ?: mutableListOf()
+                editAdjustments =
+                    subscriptionPriceIntervalsParams.editAdjustments?.toMutableList()
+                        ?: mutableListOf()
+                additionalHeaders = subscriptionPriceIntervalsParams.additionalHeaders.toBuilder()
+                additionalQueryParams =
+                    subscriptionPriceIntervalsParams.additionalQueryParams.toBuilder()
+                additionalBodyProperties =
+                    subscriptionPriceIntervalsParams.additionalBodyProperties.toMutableMap()
             }
 
         fun subscriptionId(subscriptionId: String) = apply { this.subscriptionId = subscriptionId }
@@ -400,10 +393,10 @@ constructor(
         fun build(): SubscriptionPriceIntervalsParams =
             SubscriptionPriceIntervalsParams(
                 checkNotNull(subscriptionId) { "`subscriptionId` is required but was not set" },
-                if (add.size == 0) null else add.toImmutable(),
-                if (addAdjustments.size == 0) null else addAdjustments.toImmutable(),
-                if (edit.size == 0) null else edit.toImmutable(),
-                if (editAdjustments.size == 0) null else editAdjustments.toImmutable(),
+                add.toImmutable().ifEmpty { null },
+                addAdjustments.toImmutable().ifEmpty { null },
+                edit.toImmutable().ifEmpty { null },
+                editAdjustments.toImmutable().ifEmpty { null },
                 additionalHeaders.build(),
                 additionalQueryParams.build(),
                 additionalBodyProperties.toImmutable(),
@@ -33706,4 +33699,17 @@ constructor(
         override fun toString() =
             "EditAdjustment{adjustmentIntervalId=$adjustmentIntervalId, startDate=$startDate, endDate=$endDate, additionalProperties=$additionalProperties}"
     }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) {
+            return true
+        }
+
+        return /* spotless:off */ other is SubscriptionPriceIntervalsParams && subscriptionId == other.subscriptionId && add == other.add && addAdjustments == other.addAdjustments && edit == other.edit && editAdjustments == other.editAdjustments && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams && additionalBodyProperties == other.additionalBodyProperties /* spotless:on */
+    }
+
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(subscriptionId, add, addAdjustments, edit, editAdjustments, additionalHeaders, additionalQueryParams, additionalBodyProperties) /* spotless:on */
+
+    override fun toString() =
+        "SubscriptionPriceIntervalsParams{subscriptionId=$subscriptionId, add=$add, addAdjustments=$addAdjustments, edit=$edit, editAdjustments=$editAdjustments, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams, additionalBodyProperties=$additionalBodyProperties}"
 }

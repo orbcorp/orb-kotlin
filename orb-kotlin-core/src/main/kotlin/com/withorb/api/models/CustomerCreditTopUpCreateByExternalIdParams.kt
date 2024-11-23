@@ -50,6 +50,12 @@ constructor(
 
     fun expiresAfterUnit(): ExpiresAfterUnit? = expiresAfterUnit
 
+    fun _additionalHeaders(): Headers = additionalHeaders
+
+    fun _additionalQueryParams(): QueryParams = additionalQueryParams
+
+    fun _additionalBodyProperties(): Map<String, JsonValue> = additionalBodyProperties
+
     internal fun getBody(): CustomerCreditTopUpCreateByExternalIdBody {
         return CustomerCreditTopUpCreateByExternalIdBody(
             amount,
@@ -245,25 +251,6 @@ constructor(
             "CustomerCreditTopUpCreateByExternalIdBody{amount=$amount, currency=$currency, invoiceSettings=$invoiceSettings, perUnitCostBasis=$perUnitCostBasis, threshold=$threshold, expiresAfter=$expiresAfter, expiresAfterUnit=$expiresAfterUnit, additionalProperties=$additionalProperties}"
     }
 
-    fun _additionalHeaders(): Headers = additionalHeaders
-
-    fun _additionalQueryParams(): QueryParams = additionalQueryParams
-
-    fun _additionalBodyProperties(): Map<String, JsonValue> = additionalBodyProperties
-
-    override fun equals(other: Any?): Boolean {
-        if (this === other) {
-            return true
-        }
-
-        return /* spotless:off */ other is CustomerCreditTopUpCreateByExternalIdParams && externalCustomerId == other.externalCustomerId && amount == other.amount && currency == other.currency && invoiceSettings == other.invoiceSettings && perUnitCostBasis == other.perUnitCostBasis && threshold == other.threshold && expiresAfter == other.expiresAfter && expiresAfterUnit == other.expiresAfterUnit && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams && additionalBodyProperties == other.additionalBodyProperties /* spotless:on */
-    }
-
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(externalCustomerId, amount, currency, invoiceSettings, perUnitCostBasis, threshold, expiresAfter, expiresAfterUnit, additionalHeaders, additionalQueryParams, additionalBodyProperties) /* spotless:on */
-
-    override fun toString() =
-        "CustomerCreditTopUpCreateByExternalIdParams{externalCustomerId=$externalCustomerId, amount=$amount, currency=$currency, invoiceSettings=$invoiceSettings, perUnitCostBasis=$perUnitCostBasis, threshold=$threshold, expiresAfter=$expiresAfter, expiresAfterUnit=$expiresAfterUnit, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams, additionalBodyProperties=$additionalBodyProperties}"
-
     fun toBuilder() = Builder().from(this)
 
     companion object {
@@ -289,19 +276,20 @@ constructor(
         internal fun from(
             customerCreditTopUpCreateByExternalIdParams: CustomerCreditTopUpCreateByExternalIdParams
         ) = apply {
-            this.externalCustomerId = customerCreditTopUpCreateByExternalIdParams.externalCustomerId
-            this.amount = customerCreditTopUpCreateByExternalIdParams.amount
-            this.currency = customerCreditTopUpCreateByExternalIdParams.currency
-            this.invoiceSettings = customerCreditTopUpCreateByExternalIdParams.invoiceSettings
-            this.perUnitCostBasis = customerCreditTopUpCreateByExternalIdParams.perUnitCostBasis
-            this.threshold = customerCreditTopUpCreateByExternalIdParams.threshold
-            this.expiresAfter = customerCreditTopUpCreateByExternalIdParams.expiresAfter
-            this.expiresAfterUnit = customerCreditTopUpCreateByExternalIdParams.expiresAfterUnit
-            additionalHeaders(customerCreditTopUpCreateByExternalIdParams.additionalHeaders)
-            additionalQueryParams(customerCreditTopUpCreateByExternalIdParams.additionalQueryParams)
-            additionalBodyProperties(
-                customerCreditTopUpCreateByExternalIdParams.additionalBodyProperties
-            )
+            externalCustomerId = customerCreditTopUpCreateByExternalIdParams.externalCustomerId
+            amount = customerCreditTopUpCreateByExternalIdParams.amount
+            currency = customerCreditTopUpCreateByExternalIdParams.currency
+            invoiceSettings = customerCreditTopUpCreateByExternalIdParams.invoiceSettings
+            perUnitCostBasis = customerCreditTopUpCreateByExternalIdParams.perUnitCostBasis
+            threshold = customerCreditTopUpCreateByExternalIdParams.threshold
+            expiresAfter = customerCreditTopUpCreateByExternalIdParams.expiresAfter
+            expiresAfterUnit = customerCreditTopUpCreateByExternalIdParams.expiresAfterUnit
+            additionalHeaders =
+                customerCreditTopUpCreateByExternalIdParams.additionalHeaders.toBuilder()
+            additionalQueryParams =
+                customerCreditTopUpCreateByExternalIdParams.additionalQueryParams.toBuilder()
+            additionalBodyProperties =
+                customerCreditTopUpCreateByExternalIdParams.additionalBodyProperties.toMutableMap()
         }
 
         fun externalCustomerId(externalCustomerId: String) = apply {
@@ -669,4 +657,17 @@ constructor(
 
         fun asString(): String = _value().asStringOrThrow()
     }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) {
+            return true
+        }
+
+        return /* spotless:off */ other is CustomerCreditTopUpCreateByExternalIdParams && externalCustomerId == other.externalCustomerId && amount == other.amount && currency == other.currency && invoiceSettings == other.invoiceSettings && perUnitCostBasis == other.perUnitCostBasis && threshold == other.threshold && expiresAfter == other.expiresAfter && expiresAfterUnit == other.expiresAfterUnit && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams && additionalBodyProperties == other.additionalBodyProperties /* spotless:on */
+    }
+
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(externalCustomerId, amount, currency, invoiceSettings, perUnitCostBasis, threshold, expiresAfter, expiresAfterUnit, additionalHeaders, additionalQueryParams, additionalBodyProperties) /* spotless:on */
+
+    override fun toString() =
+        "CustomerCreditTopUpCreateByExternalIdParams{externalCustomerId=$externalCustomerId, amount=$amount, currency=$currency, invoiceSettings=$invoiceSettings, perUnitCostBasis=$perUnitCostBasis, threshold=$threshold, expiresAfter=$expiresAfter, expiresAfterUnit=$expiresAfterUnit, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams, additionalBodyProperties=$additionalBodyProperties}"
 }

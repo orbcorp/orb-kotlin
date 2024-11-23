@@ -14,26 +14,13 @@ constructor(
     private val additionalQueryParams: QueryParams,
 ) {
 
-    internal fun getHeaders(): Headers = additionalHeaders
-
-    internal fun getQueryParams(): QueryParams = additionalQueryParams
-
     fun _additionalHeaders(): Headers = additionalHeaders
 
     fun _additionalQueryParams(): QueryParams = additionalQueryParams
 
-    override fun equals(other: Any?): Boolean {
-        if (this === other) {
-            return true
-        }
+    internal fun getHeaders(): Headers = additionalHeaders
 
-        return /* spotless:off */ other is TopLevelPingParams && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
-    }
-
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(additionalHeaders, additionalQueryParams) /* spotless:on */
-
-    override fun toString() =
-        "TopLevelPingParams{additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
+    internal fun getQueryParams(): QueryParams = additionalQueryParams
 
     fun toBuilder() = Builder().from(this)
 
@@ -49,8 +36,8 @@ constructor(
         private var additionalQueryParams: QueryParams.Builder = QueryParams.builder()
 
         internal fun from(topLevelPingParams: TopLevelPingParams) = apply {
-            additionalHeaders(topLevelPingParams.additionalHeaders)
-            additionalQueryParams(topLevelPingParams.additionalQueryParams)
+            additionalHeaders = topLevelPingParams.additionalHeaders.toBuilder()
+            additionalQueryParams = topLevelPingParams.additionalQueryParams.toBuilder()
         }
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {
@@ -154,4 +141,17 @@ constructor(
         fun build(): TopLevelPingParams =
             TopLevelPingParams(additionalHeaders.build(), additionalQueryParams.build())
     }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) {
+            return true
+        }
+
+        return /* spotless:off */ other is TopLevelPingParams && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
+    }
+
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(additionalHeaders, additionalQueryParams) /* spotless:on */
+
+    override fun toString() =
+        "TopLevelPingParams{additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
 }

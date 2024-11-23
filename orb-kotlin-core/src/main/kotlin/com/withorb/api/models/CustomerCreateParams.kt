@@ -87,6 +87,12 @@ constructor(
 
     fun timezone(): String? = timezone
 
+    fun _additionalHeaders(): Headers = additionalHeaders
+
+    fun _additionalQueryParams(): QueryParams = additionalQueryParams
+
+    fun _additionalBodyProperties(): Map<String, JsonValue> = additionalBodyProperties
+
     internal fun getBody(): CustomerCreateBody {
         return CustomerCreateBody(
             email,
@@ -647,25 +653,6 @@ constructor(
             "CustomerCreateBody{email=$email, name=$name, accountingSyncConfiguration=$accountingSyncConfiguration, additionalEmails=$additionalEmails, autoCollection=$autoCollection, billingAddress=$billingAddress, currency=$currency, emailDelivery=$emailDelivery, externalCustomerId=$externalCustomerId, metadata=$metadata, paymentProvider=$paymentProvider, paymentProviderId=$paymentProviderId, reportingConfiguration=$reportingConfiguration, shippingAddress=$shippingAddress, taxConfiguration=$taxConfiguration, taxId=$taxId, timezone=$timezone, additionalProperties=$additionalProperties}"
     }
 
-    fun _additionalHeaders(): Headers = additionalHeaders
-
-    fun _additionalQueryParams(): QueryParams = additionalQueryParams
-
-    fun _additionalBodyProperties(): Map<String, JsonValue> = additionalBodyProperties
-
-    override fun equals(other: Any?): Boolean {
-        if (this === other) {
-            return true
-        }
-
-        return /* spotless:off */ other is CustomerCreateParams && email == other.email && name == other.name && accountingSyncConfiguration == other.accountingSyncConfiguration && additionalEmails == other.additionalEmails && autoCollection == other.autoCollection && billingAddress == other.billingAddress && currency == other.currency && emailDelivery == other.emailDelivery && externalCustomerId == other.externalCustomerId && metadata == other.metadata && paymentProvider == other.paymentProvider && paymentProviderId == other.paymentProviderId && reportingConfiguration == other.reportingConfiguration && shippingAddress == other.shippingAddress && taxConfiguration == other.taxConfiguration && taxId == other.taxId && timezone == other.timezone && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams && additionalBodyProperties == other.additionalBodyProperties /* spotless:on */
-    }
-
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(email, name, accountingSyncConfiguration, additionalEmails, autoCollection, billingAddress, currency, emailDelivery, externalCustomerId, metadata, paymentProvider, paymentProviderId, reportingConfiguration, shippingAddress, taxConfiguration, taxId, timezone, additionalHeaders, additionalQueryParams, additionalBodyProperties) /* spotless:on */
-
-    override fun toString() =
-        "CustomerCreateParams{email=$email, name=$name, accountingSyncConfiguration=$accountingSyncConfiguration, additionalEmails=$additionalEmails, autoCollection=$autoCollection, billingAddress=$billingAddress, currency=$currency, emailDelivery=$emailDelivery, externalCustomerId=$externalCustomerId, metadata=$metadata, paymentProvider=$paymentProvider, paymentProviderId=$paymentProviderId, reportingConfiguration=$reportingConfiguration, shippingAddress=$shippingAddress, taxConfiguration=$taxConfiguration, taxId=$taxId, timezone=$timezone, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams, additionalBodyProperties=$additionalBodyProperties}"
-
     fun toBuilder() = Builder().from(this)
 
     companion object {
@@ -698,26 +685,27 @@ constructor(
         private var additionalBodyProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         internal fun from(customerCreateParams: CustomerCreateParams) = apply {
-            this.email = customerCreateParams.email
-            this.name = customerCreateParams.name
-            this.accountingSyncConfiguration = customerCreateParams.accountingSyncConfiguration
-            this.additionalEmails(customerCreateParams.additionalEmails ?: listOf())
-            this.autoCollection = customerCreateParams.autoCollection
-            this.billingAddress = customerCreateParams.billingAddress
-            this.currency = customerCreateParams.currency
-            this.emailDelivery = customerCreateParams.emailDelivery
-            this.externalCustomerId = customerCreateParams.externalCustomerId
-            this.metadata = customerCreateParams.metadata
-            this.paymentProvider = customerCreateParams.paymentProvider
-            this.paymentProviderId = customerCreateParams.paymentProviderId
-            this.reportingConfiguration = customerCreateParams.reportingConfiguration
-            this.shippingAddress = customerCreateParams.shippingAddress
-            this.taxConfiguration = customerCreateParams.taxConfiguration
-            this.taxId = customerCreateParams.taxId
-            this.timezone = customerCreateParams.timezone
-            additionalHeaders(customerCreateParams.additionalHeaders)
-            additionalQueryParams(customerCreateParams.additionalQueryParams)
-            additionalBodyProperties(customerCreateParams.additionalBodyProperties)
+            email = customerCreateParams.email
+            name = customerCreateParams.name
+            accountingSyncConfiguration = customerCreateParams.accountingSyncConfiguration
+            additionalEmails =
+                customerCreateParams.additionalEmails?.toMutableList() ?: mutableListOf()
+            autoCollection = customerCreateParams.autoCollection
+            billingAddress = customerCreateParams.billingAddress
+            currency = customerCreateParams.currency
+            emailDelivery = customerCreateParams.emailDelivery
+            externalCustomerId = customerCreateParams.externalCustomerId
+            metadata = customerCreateParams.metadata
+            paymentProvider = customerCreateParams.paymentProvider
+            paymentProviderId = customerCreateParams.paymentProviderId
+            reportingConfiguration = customerCreateParams.reportingConfiguration
+            shippingAddress = customerCreateParams.shippingAddress
+            taxConfiguration = customerCreateParams.taxConfiguration
+            taxId = customerCreateParams.taxId
+            timezone = customerCreateParams.timezone
+            additionalHeaders = customerCreateParams.additionalHeaders.toBuilder()
+            additionalQueryParams = customerCreateParams.additionalQueryParams.toBuilder()
+            additionalBodyProperties = customerCreateParams.additionalBodyProperties.toMutableMap()
         }
 
         /**
@@ -1067,7 +1055,7 @@ constructor(
                 checkNotNull(email) { "`email` is required but was not set" },
                 checkNotNull(name) { "`name` is required but was not set" },
                 accountingSyncConfiguration,
-                if (additionalEmails.size == 0) null else additionalEmails.toImmutable(),
+                additionalEmails.toImmutable().ifEmpty { null },
                 autoCollection,
                 billingAddress,
                 currency,
@@ -3350,4 +3338,17 @@ constructor(
         override fun toString() =
             "TaxId{country=$country, type=$type, value=$value, additionalProperties=$additionalProperties}"
     }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) {
+            return true
+        }
+
+        return /* spotless:off */ other is CustomerCreateParams && email == other.email && name == other.name && accountingSyncConfiguration == other.accountingSyncConfiguration && additionalEmails == other.additionalEmails && autoCollection == other.autoCollection && billingAddress == other.billingAddress && currency == other.currency && emailDelivery == other.emailDelivery && externalCustomerId == other.externalCustomerId && metadata == other.metadata && paymentProvider == other.paymentProvider && paymentProviderId == other.paymentProviderId && reportingConfiguration == other.reportingConfiguration && shippingAddress == other.shippingAddress && taxConfiguration == other.taxConfiguration && taxId == other.taxId && timezone == other.timezone && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams && additionalBodyProperties == other.additionalBodyProperties /* spotless:on */
+    }
+
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(email, name, accountingSyncConfiguration, additionalEmails, autoCollection, billingAddress, currency, emailDelivery, externalCustomerId, metadata, paymentProvider, paymentProviderId, reportingConfiguration, shippingAddress, taxConfiguration, taxId, timezone, additionalHeaders, additionalQueryParams, additionalBodyProperties) /* spotless:on */
+
+    override fun toString() =
+        "CustomerCreateParams{email=$email, name=$name, accountingSyncConfiguration=$accountingSyncConfiguration, additionalEmails=$additionalEmails, autoCollection=$autoCollection, billingAddress=$billingAddress, currency=$currency, emailDelivery=$emailDelivery, externalCustomerId=$externalCustomerId, metadata=$metadata, paymentProvider=$paymentProvider, paymentProviderId=$paymentProviderId, reportingConfiguration=$reportingConfiguration, shippingAddress=$shippingAddress, taxConfiguration=$taxConfiguration, taxId=$taxId, timezone=$timezone, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams, additionalBodyProperties=$additionalBodyProperties}"
 }

@@ -49,6 +49,10 @@ constructor(
 
     fun status(): Status? = status
 
+    fun _additionalHeaders(): Headers = additionalHeaders
+
+    fun _additionalQueryParams(): QueryParams = additionalQueryParams
+
     internal fun getHeaders(): Headers = additionalHeaders
 
     internal fun getQueryParams(): QueryParams {
@@ -88,23 +92,6 @@ constructor(
         return queryParams.build()
     }
 
-    fun _additionalHeaders(): Headers = additionalHeaders
-
-    fun _additionalQueryParams(): QueryParams = additionalQueryParams
-
-    override fun equals(other: Any?): Boolean {
-        if (this === other) {
-            return true
-        }
-
-        return /* spotless:off */ other is SubscriptionListParams && createdAtGt == other.createdAtGt && createdAtGte == other.createdAtGte && createdAtLt == other.createdAtLt && createdAtLte == other.createdAtLte && cursor == other.cursor && customerId == other.customerId && externalCustomerId == other.externalCustomerId && limit == other.limit && status == other.status && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
-    }
-
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(createdAtGt, createdAtGte, createdAtLt, createdAtLte, cursor, customerId, externalCustomerId, limit, status, additionalHeaders, additionalQueryParams) /* spotless:on */
-
-    override fun toString() =
-        "SubscriptionListParams{createdAtGt=$createdAtGt, createdAtGte=$createdAtGte, createdAtLt=$createdAtLt, createdAtLte=$createdAtLte, cursor=$cursor, customerId=$customerId, externalCustomerId=$externalCustomerId, limit=$limit, status=$status, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
-
     fun toBuilder() = Builder().from(this)
 
     companion object {
@@ -128,17 +115,17 @@ constructor(
         private var additionalQueryParams: QueryParams.Builder = QueryParams.builder()
 
         internal fun from(subscriptionListParams: SubscriptionListParams) = apply {
-            this.createdAtGt = subscriptionListParams.createdAtGt
-            this.createdAtGte = subscriptionListParams.createdAtGte
-            this.createdAtLt = subscriptionListParams.createdAtLt
-            this.createdAtLte = subscriptionListParams.createdAtLte
-            this.cursor = subscriptionListParams.cursor
-            this.customerId(subscriptionListParams.customerId ?: listOf())
-            this.externalCustomerId = subscriptionListParams.externalCustomerId
-            this.limit = subscriptionListParams.limit
-            this.status = subscriptionListParams.status
-            additionalHeaders(subscriptionListParams.additionalHeaders)
-            additionalQueryParams(subscriptionListParams.additionalQueryParams)
+            createdAtGt = subscriptionListParams.createdAtGt
+            createdAtGte = subscriptionListParams.createdAtGte
+            createdAtLt = subscriptionListParams.createdAtLt
+            createdAtLte = subscriptionListParams.createdAtLte
+            cursor = subscriptionListParams.cursor
+            customerId = subscriptionListParams.customerId?.toMutableList() ?: mutableListOf()
+            externalCustomerId = subscriptionListParams.externalCustomerId
+            limit = subscriptionListParams.limit
+            status = subscriptionListParams.status
+            additionalHeaders = subscriptionListParams.additionalHeaders.toBuilder()
+            additionalQueryParams = subscriptionListParams.additionalQueryParams.toBuilder()
         }
 
         fun createdAtGt(createdAtGt: OffsetDateTime) = apply { this.createdAtGt = createdAtGt }
@@ -276,7 +263,7 @@ constructor(
                 createdAtLt,
                 createdAtLte,
                 cursor,
-                if (customerId.size == 0) null else customerId.toImmutable(),
+                customerId.toImmutable().ifEmpty { null },
                 externalCustomerId,
                 limit,
                 status,
@@ -347,4 +334,17 @@ constructor(
 
         fun asString(): String = _value().asStringOrThrow()
     }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) {
+            return true
+        }
+
+        return /* spotless:off */ other is SubscriptionListParams && createdAtGt == other.createdAtGt && createdAtGte == other.createdAtGte && createdAtLt == other.createdAtLt && createdAtLte == other.createdAtLte && cursor == other.cursor && customerId == other.customerId && externalCustomerId == other.externalCustomerId && limit == other.limit && status == other.status && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
+    }
+
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(createdAtGt, createdAtGte, createdAtLt, createdAtLte, cursor, customerId, externalCustomerId, limit, status, additionalHeaders, additionalQueryParams) /* spotless:on */
+
+    override fun toString() =
+        "SubscriptionListParams{createdAtGt=$createdAtGt, createdAtGte=$createdAtGte, createdAtLt=$createdAtLt, createdAtLte=$createdAtLte, cursor=$cursor, customerId=$customerId, externalCustomerId=$externalCustomerId, limit=$limit, status=$status, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
 }

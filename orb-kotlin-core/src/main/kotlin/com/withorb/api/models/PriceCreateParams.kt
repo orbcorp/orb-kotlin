@@ -124,6 +124,10 @@ constructor(
     fun newFloatingGroupedTieredPackagePrice(): NewFloatingGroupedTieredPackagePrice? =
         newFloatingGroupedTieredPackagePrice
 
+    fun _additionalHeaders(): Headers = additionalHeaders
+
+    fun _additionalQueryParams(): QueryParams = additionalQueryParams
+
     internal fun getBody(): PriceCreateBody {
         return PriceCreateBody(
             newFloatingUnitPrice,
@@ -1045,23 +1049,6 @@ constructor(
         }
     }
 
-    fun _additionalHeaders(): Headers = additionalHeaders
-
-    fun _additionalQueryParams(): QueryParams = additionalQueryParams
-
-    override fun equals(other: Any?): Boolean {
-        if (this === other) {
-            return true
-        }
-
-        return /* spotless:off */ other is PriceCreateParams && newFloatingUnitPrice == other.newFloatingUnitPrice && newFloatingPackagePrice == other.newFloatingPackagePrice && newFloatingMatrixPrice == other.newFloatingMatrixPrice && newFloatingMatrixWithAllocationPrice == other.newFloatingMatrixWithAllocationPrice && newFloatingTieredPrice == other.newFloatingTieredPrice && newFloatingTieredBpsPrice == other.newFloatingTieredBpsPrice && newFloatingBpsPrice == other.newFloatingBpsPrice && newFloatingBulkBpsPrice == other.newFloatingBulkBpsPrice && newFloatingBulkPrice == other.newFloatingBulkPrice && newFloatingThresholdTotalAmountPrice == other.newFloatingThresholdTotalAmountPrice && newFloatingTieredPackagePrice == other.newFloatingTieredPackagePrice && newFloatingGroupedTieredPrice == other.newFloatingGroupedTieredPrice && newFloatingTieredWithMinimumPrice == other.newFloatingTieredWithMinimumPrice && newFloatingPackageWithAllocationPrice == other.newFloatingPackageWithAllocationPrice && newFloatingTieredPackageWithMinimumPrice == other.newFloatingTieredPackageWithMinimumPrice && newFloatingUnitWithPercentPrice == other.newFloatingUnitWithPercentPrice && newFloatingTieredWithProrationPrice == other.newFloatingTieredWithProrationPrice && newFloatingUnitWithProrationPrice == other.newFloatingUnitWithProrationPrice && newFloatingGroupedAllocationPrice == other.newFloatingGroupedAllocationPrice && newFloatingGroupedWithProratedMinimumPrice == other.newFloatingGroupedWithProratedMinimumPrice && newFloatingGroupedWithMeteredMinimumPrice == other.newFloatingGroupedWithMeteredMinimumPrice && newFloatingMatrixWithDisplayNamePrice == other.newFloatingMatrixWithDisplayNamePrice && newFloatingBulkWithProrationPrice == other.newFloatingBulkWithProrationPrice && newFloatingGroupedTieredPackagePrice == other.newFloatingGroupedTieredPackagePrice && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
-    }
-
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(newFloatingUnitPrice, newFloatingPackagePrice, newFloatingMatrixPrice, newFloatingMatrixWithAllocationPrice, newFloatingTieredPrice, newFloatingTieredBpsPrice, newFloatingBpsPrice, newFloatingBulkBpsPrice, newFloatingBulkPrice, newFloatingThresholdTotalAmountPrice, newFloatingTieredPackagePrice, newFloatingGroupedTieredPrice, newFloatingTieredWithMinimumPrice, newFloatingPackageWithAllocationPrice, newFloatingTieredPackageWithMinimumPrice, newFloatingUnitWithPercentPrice, newFloatingTieredWithProrationPrice, newFloatingUnitWithProrationPrice, newFloatingGroupedAllocationPrice, newFloatingGroupedWithProratedMinimumPrice, newFloatingGroupedWithMeteredMinimumPrice, newFloatingMatrixWithDisplayNamePrice, newFloatingBulkWithProrationPrice, newFloatingGroupedTieredPackagePrice, additionalHeaders, additionalQueryParams) /* spotless:on */
-
-    override fun toString() =
-        "PriceCreateParams{newFloatingUnitPrice=$newFloatingUnitPrice, newFloatingPackagePrice=$newFloatingPackagePrice, newFloatingMatrixPrice=$newFloatingMatrixPrice, newFloatingMatrixWithAllocationPrice=$newFloatingMatrixWithAllocationPrice, newFloatingTieredPrice=$newFloatingTieredPrice, newFloatingTieredBpsPrice=$newFloatingTieredBpsPrice, newFloatingBpsPrice=$newFloatingBpsPrice, newFloatingBulkBpsPrice=$newFloatingBulkBpsPrice, newFloatingBulkPrice=$newFloatingBulkPrice, newFloatingThresholdTotalAmountPrice=$newFloatingThresholdTotalAmountPrice, newFloatingTieredPackagePrice=$newFloatingTieredPackagePrice, newFloatingGroupedTieredPrice=$newFloatingGroupedTieredPrice, newFloatingTieredWithMinimumPrice=$newFloatingTieredWithMinimumPrice, newFloatingPackageWithAllocationPrice=$newFloatingPackageWithAllocationPrice, newFloatingTieredPackageWithMinimumPrice=$newFloatingTieredPackageWithMinimumPrice, newFloatingUnitWithPercentPrice=$newFloatingUnitWithPercentPrice, newFloatingTieredWithProrationPrice=$newFloatingTieredWithProrationPrice, newFloatingUnitWithProrationPrice=$newFloatingUnitWithProrationPrice, newFloatingGroupedAllocationPrice=$newFloatingGroupedAllocationPrice, newFloatingGroupedWithProratedMinimumPrice=$newFloatingGroupedWithProratedMinimumPrice, newFloatingGroupedWithMeteredMinimumPrice=$newFloatingGroupedWithMeteredMinimumPrice, newFloatingMatrixWithDisplayNamePrice=$newFloatingMatrixWithDisplayNamePrice, newFloatingBulkWithProrationPrice=$newFloatingBulkWithProrationPrice, newFloatingGroupedTieredPackagePrice=$newFloatingGroupedTieredPackagePrice, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
-
     fun toBuilder() = Builder().from(this)
 
     companion object {
@@ -1111,45 +1098,41 @@ constructor(
         private var additionalQueryParams: QueryParams.Builder = QueryParams.builder()
 
         internal fun from(priceCreateParams: PriceCreateParams) = apply {
-            this.newFloatingUnitPrice = priceCreateParams.newFloatingUnitPrice
-            this.newFloatingPackagePrice = priceCreateParams.newFloatingPackagePrice
-            this.newFloatingMatrixPrice = priceCreateParams.newFloatingMatrixPrice
-            this.newFloatingMatrixWithAllocationPrice =
+            newFloatingUnitPrice = priceCreateParams.newFloatingUnitPrice
+            newFloatingPackagePrice = priceCreateParams.newFloatingPackagePrice
+            newFloatingMatrixPrice = priceCreateParams.newFloatingMatrixPrice
+            newFloatingMatrixWithAllocationPrice =
                 priceCreateParams.newFloatingMatrixWithAllocationPrice
-            this.newFloatingTieredPrice = priceCreateParams.newFloatingTieredPrice
-            this.newFloatingTieredBpsPrice = priceCreateParams.newFloatingTieredBpsPrice
-            this.newFloatingBpsPrice = priceCreateParams.newFloatingBpsPrice
-            this.newFloatingBulkBpsPrice = priceCreateParams.newFloatingBulkBpsPrice
-            this.newFloatingBulkPrice = priceCreateParams.newFloatingBulkPrice
-            this.newFloatingThresholdTotalAmountPrice =
+            newFloatingTieredPrice = priceCreateParams.newFloatingTieredPrice
+            newFloatingTieredBpsPrice = priceCreateParams.newFloatingTieredBpsPrice
+            newFloatingBpsPrice = priceCreateParams.newFloatingBpsPrice
+            newFloatingBulkBpsPrice = priceCreateParams.newFloatingBulkBpsPrice
+            newFloatingBulkPrice = priceCreateParams.newFloatingBulkPrice
+            newFloatingThresholdTotalAmountPrice =
                 priceCreateParams.newFloatingThresholdTotalAmountPrice
-            this.newFloatingTieredPackagePrice = priceCreateParams.newFloatingTieredPackagePrice
-            this.newFloatingGroupedTieredPrice = priceCreateParams.newFloatingGroupedTieredPrice
-            this.newFloatingTieredWithMinimumPrice =
-                priceCreateParams.newFloatingTieredWithMinimumPrice
-            this.newFloatingPackageWithAllocationPrice =
+            newFloatingTieredPackagePrice = priceCreateParams.newFloatingTieredPackagePrice
+            newFloatingGroupedTieredPrice = priceCreateParams.newFloatingGroupedTieredPrice
+            newFloatingTieredWithMinimumPrice = priceCreateParams.newFloatingTieredWithMinimumPrice
+            newFloatingPackageWithAllocationPrice =
                 priceCreateParams.newFloatingPackageWithAllocationPrice
-            this.newFloatingTieredPackageWithMinimumPrice =
+            newFloatingTieredPackageWithMinimumPrice =
                 priceCreateParams.newFloatingTieredPackageWithMinimumPrice
-            this.newFloatingUnitWithPercentPrice = priceCreateParams.newFloatingUnitWithPercentPrice
-            this.newFloatingTieredWithProrationPrice =
+            newFloatingUnitWithPercentPrice = priceCreateParams.newFloatingUnitWithPercentPrice
+            newFloatingTieredWithProrationPrice =
                 priceCreateParams.newFloatingTieredWithProrationPrice
-            this.newFloatingUnitWithProrationPrice =
-                priceCreateParams.newFloatingUnitWithProrationPrice
-            this.newFloatingGroupedAllocationPrice =
-                priceCreateParams.newFloatingGroupedAllocationPrice
-            this.newFloatingGroupedWithProratedMinimumPrice =
+            newFloatingUnitWithProrationPrice = priceCreateParams.newFloatingUnitWithProrationPrice
+            newFloatingGroupedAllocationPrice = priceCreateParams.newFloatingGroupedAllocationPrice
+            newFloatingGroupedWithProratedMinimumPrice =
                 priceCreateParams.newFloatingGroupedWithProratedMinimumPrice
-            this.newFloatingGroupedWithMeteredMinimumPrice =
+            newFloatingGroupedWithMeteredMinimumPrice =
                 priceCreateParams.newFloatingGroupedWithMeteredMinimumPrice
-            this.newFloatingMatrixWithDisplayNamePrice =
+            newFloatingMatrixWithDisplayNamePrice =
                 priceCreateParams.newFloatingMatrixWithDisplayNamePrice
-            this.newFloatingBulkWithProrationPrice =
-                priceCreateParams.newFloatingBulkWithProrationPrice
-            this.newFloatingGroupedTieredPackagePrice =
+            newFloatingBulkWithProrationPrice = priceCreateParams.newFloatingBulkWithProrationPrice
+            newFloatingGroupedTieredPackagePrice =
                 priceCreateParams.newFloatingGroupedTieredPackagePrice
-            additionalHeaders(priceCreateParams.additionalHeaders)
-            additionalQueryParams(priceCreateParams.additionalQueryParams)
+            additionalHeaders = priceCreateParams.additionalHeaders.toBuilder()
+            additionalQueryParams = priceCreateParams.additionalQueryParams.toBuilder()
         }
 
         fun forNewFloatingUnitPrice(newFloatingUnitPrice: NewFloatingUnitPrice) = apply {
@@ -22875,4 +22858,17 @@ constructor(
         override fun toString() =
             "NewFloatingGroupedTieredPackagePrice{metadata=$metadata, externalPriceId=$externalPriceId, name=$name, billableMetricId=$billableMetricId, itemId=$itemId, billedInAdvance=$billedInAdvance, fixedPriceQuantity=$fixedPriceQuantity, invoiceGroupingKey=$invoiceGroupingKey, cadence=$cadence, billingCycleConfiguration=$billingCycleConfiguration, invoicingCycleConfiguration=$invoicingCycleConfiguration, conversionRate=$conversionRate, modelType=$modelType, groupedTieredPackageConfig=$groupedTieredPackageConfig, currency=$currency, additionalProperties=$additionalProperties}"
     }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) {
+            return true
+        }
+
+        return /* spotless:off */ other is PriceCreateParams && newFloatingUnitPrice == other.newFloatingUnitPrice && newFloatingPackagePrice == other.newFloatingPackagePrice && newFloatingMatrixPrice == other.newFloatingMatrixPrice && newFloatingMatrixWithAllocationPrice == other.newFloatingMatrixWithAllocationPrice && newFloatingTieredPrice == other.newFloatingTieredPrice && newFloatingTieredBpsPrice == other.newFloatingTieredBpsPrice && newFloatingBpsPrice == other.newFloatingBpsPrice && newFloatingBulkBpsPrice == other.newFloatingBulkBpsPrice && newFloatingBulkPrice == other.newFloatingBulkPrice && newFloatingThresholdTotalAmountPrice == other.newFloatingThresholdTotalAmountPrice && newFloatingTieredPackagePrice == other.newFloatingTieredPackagePrice && newFloatingGroupedTieredPrice == other.newFloatingGroupedTieredPrice && newFloatingTieredWithMinimumPrice == other.newFloatingTieredWithMinimumPrice && newFloatingPackageWithAllocationPrice == other.newFloatingPackageWithAllocationPrice && newFloatingTieredPackageWithMinimumPrice == other.newFloatingTieredPackageWithMinimumPrice && newFloatingUnitWithPercentPrice == other.newFloatingUnitWithPercentPrice && newFloatingTieredWithProrationPrice == other.newFloatingTieredWithProrationPrice && newFloatingUnitWithProrationPrice == other.newFloatingUnitWithProrationPrice && newFloatingGroupedAllocationPrice == other.newFloatingGroupedAllocationPrice && newFloatingGroupedWithProratedMinimumPrice == other.newFloatingGroupedWithProratedMinimumPrice && newFloatingGroupedWithMeteredMinimumPrice == other.newFloatingGroupedWithMeteredMinimumPrice && newFloatingMatrixWithDisplayNamePrice == other.newFloatingMatrixWithDisplayNamePrice && newFloatingBulkWithProrationPrice == other.newFloatingBulkWithProrationPrice && newFloatingGroupedTieredPackagePrice == other.newFloatingGroupedTieredPackagePrice && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
+    }
+
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(newFloatingUnitPrice, newFloatingPackagePrice, newFloatingMatrixPrice, newFloatingMatrixWithAllocationPrice, newFloatingTieredPrice, newFloatingTieredBpsPrice, newFloatingBpsPrice, newFloatingBulkBpsPrice, newFloatingBulkPrice, newFloatingThresholdTotalAmountPrice, newFloatingTieredPackagePrice, newFloatingGroupedTieredPrice, newFloatingTieredWithMinimumPrice, newFloatingPackageWithAllocationPrice, newFloatingTieredPackageWithMinimumPrice, newFloatingUnitWithPercentPrice, newFloatingTieredWithProrationPrice, newFloatingUnitWithProrationPrice, newFloatingGroupedAllocationPrice, newFloatingGroupedWithProratedMinimumPrice, newFloatingGroupedWithMeteredMinimumPrice, newFloatingMatrixWithDisplayNamePrice, newFloatingBulkWithProrationPrice, newFloatingGroupedTieredPackagePrice, additionalHeaders, additionalQueryParams) /* spotless:on */
+
+    override fun toString() =
+        "PriceCreateParams{newFloatingUnitPrice=$newFloatingUnitPrice, newFloatingPackagePrice=$newFloatingPackagePrice, newFloatingMatrixPrice=$newFloatingMatrixPrice, newFloatingMatrixWithAllocationPrice=$newFloatingMatrixWithAllocationPrice, newFloatingTieredPrice=$newFloatingTieredPrice, newFloatingTieredBpsPrice=$newFloatingTieredBpsPrice, newFloatingBpsPrice=$newFloatingBpsPrice, newFloatingBulkBpsPrice=$newFloatingBulkBpsPrice, newFloatingBulkPrice=$newFloatingBulkPrice, newFloatingThresholdTotalAmountPrice=$newFloatingThresholdTotalAmountPrice, newFloatingTieredPackagePrice=$newFloatingTieredPackagePrice, newFloatingGroupedTieredPrice=$newFloatingGroupedTieredPrice, newFloatingTieredWithMinimumPrice=$newFloatingTieredWithMinimumPrice, newFloatingPackageWithAllocationPrice=$newFloatingPackageWithAllocationPrice, newFloatingTieredPackageWithMinimumPrice=$newFloatingTieredPackageWithMinimumPrice, newFloatingUnitWithPercentPrice=$newFloatingUnitWithPercentPrice, newFloatingTieredWithProrationPrice=$newFloatingTieredWithProrationPrice, newFloatingUnitWithProrationPrice=$newFloatingUnitWithProrationPrice, newFloatingGroupedAllocationPrice=$newFloatingGroupedAllocationPrice, newFloatingGroupedWithProratedMinimumPrice=$newFloatingGroupedWithProratedMinimumPrice, newFloatingGroupedWithMeteredMinimumPrice=$newFloatingGroupedWithMeteredMinimumPrice, newFloatingMatrixWithDisplayNamePrice=$newFloatingMatrixWithDisplayNamePrice, newFloatingBulkWithProrationPrice=$newFloatingBulkWithProrationPrice, newFloatingGroupedTieredPackagePrice=$newFloatingGroupedTieredPackagePrice, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
 }
