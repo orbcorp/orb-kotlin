@@ -48,6 +48,12 @@ constructor(
 
     fun maxRedemptions(): Long? = maxRedemptions
 
+    fun _additionalHeaders(): Headers = additionalHeaders
+
+    fun _additionalQueryParams(): QueryParams = additionalQueryParams
+
+    fun _additionalBodyProperties(): Map<String, JsonValue> = additionalBodyProperties
+
     internal fun getBody(): CouponCreateBody {
         return CouponCreateBody(
             discount,
@@ -186,25 +192,6 @@ constructor(
             "CouponCreateBody{discount=$discount, redemptionCode=$redemptionCode, durationInMonths=$durationInMonths, maxRedemptions=$maxRedemptions, additionalProperties=$additionalProperties}"
     }
 
-    fun _additionalHeaders(): Headers = additionalHeaders
-
-    fun _additionalQueryParams(): QueryParams = additionalQueryParams
-
-    fun _additionalBodyProperties(): Map<String, JsonValue> = additionalBodyProperties
-
-    override fun equals(other: Any?): Boolean {
-        if (this === other) {
-            return true
-        }
-
-        return /* spotless:off */ other is CouponCreateParams && discount == other.discount && redemptionCode == other.redemptionCode && durationInMonths == other.durationInMonths && maxRedemptions == other.maxRedemptions && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams && additionalBodyProperties == other.additionalBodyProperties /* spotless:on */
-    }
-
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(discount, redemptionCode, durationInMonths, maxRedemptions, additionalHeaders, additionalQueryParams, additionalBodyProperties) /* spotless:on */
-
-    override fun toString() =
-        "CouponCreateParams{discount=$discount, redemptionCode=$redemptionCode, durationInMonths=$durationInMonths, maxRedemptions=$maxRedemptions, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams, additionalBodyProperties=$additionalBodyProperties}"
-
     fun toBuilder() = Builder().from(this)
 
     companion object {
@@ -224,13 +211,13 @@ constructor(
         private var additionalBodyProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         internal fun from(couponCreateParams: CouponCreateParams) = apply {
-            this.discount = couponCreateParams.discount
-            this.redemptionCode = couponCreateParams.redemptionCode
-            this.durationInMonths = couponCreateParams.durationInMonths
-            this.maxRedemptions = couponCreateParams.maxRedemptions
-            additionalHeaders(couponCreateParams.additionalHeaders)
-            additionalQueryParams(couponCreateParams.additionalQueryParams)
-            additionalBodyProperties(couponCreateParams.additionalBodyProperties)
+            discount = couponCreateParams.discount
+            redemptionCode = couponCreateParams.redemptionCode
+            durationInMonths = couponCreateParams.durationInMonths
+            maxRedemptions = couponCreateParams.maxRedemptions
+            additionalHeaders = couponCreateParams.additionalHeaders.toBuilder()
+            additionalQueryParams = couponCreateParams.additionalQueryParams.toBuilder()
+            additionalBodyProperties = couponCreateParams.additionalBodyProperties.toMutableMap()
         }
 
         fun discount(discount: Discount) = apply { this.discount = discount }
@@ -854,4 +841,17 @@ constructor(
                 "NewCouponAmountDiscount{discountType=$discountType, amountDiscount=$amountDiscount, additionalProperties=$additionalProperties}"
         }
     }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) {
+            return true
+        }
+
+        return /* spotless:off */ other is CouponCreateParams && discount == other.discount && redemptionCode == other.redemptionCode && durationInMonths == other.durationInMonths && maxRedemptions == other.maxRedemptions && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams && additionalBodyProperties == other.additionalBodyProperties /* spotless:on */
+    }
+
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(discount, redemptionCode, durationInMonths, maxRedemptions, additionalHeaders, additionalQueryParams, additionalBodyProperties) /* spotless:on */
+
+    override fun toString() =
+        "CouponCreateParams{discount=$discount, redemptionCode=$redemptionCode, durationInMonths=$durationInMonths, maxRedemptions=$maxRedemptions, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams, additionalBodyProperties=$additionalBodyProperties}"
 }

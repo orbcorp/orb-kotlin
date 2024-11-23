@@ -87,6 +87,12 @@ constructor(
 
     fun taxId(): TaxId? = taxId
 
+    fun _additionalHeaders(): Headers = additionalHeaders
+
+    fun _additionalQueryParams(): QueryParams = additionalQueryParams
+
+    fun _additionalBodyProperties(): Map<String, JsonValue> = additionalBodyProperties
+
     internal fun getBody(): CustomerUpdateByExternalIdBody {
         return CustomerUpdateByExternalIdBody(
             accountingSyncConfiguration,
@@ -635,25 +641,6 @@ constructor(
             "CustomerUpdateByExternalIdBody{accountingSyncConfiguration=$accountingSyncConfiguration, additionalEmails=$additionalEmails, autoCollection=$autoCollection, billingAddress=$billingAddress, currency=$currency, email=$email, emailDelivery=$emailDelivery, externalCustomerId=$externalCustomerId, metadata=$metadata, name=$name, paymentProvider=$paymentProvider, paymentProviderId=$paymentProviderId, reportingConfiguration=$reportingConfiguration, shippingAddress=$shippingAddress, taxConfiguration=$taxConfiguration, taxId=$taxId, additionalProperties=$additionalProperties}"
     }
 
-    fun _additionalHeaders(): Headers = additionalHeaders
-
-    fun _additionalQueryParams(): QueryParams = additionalQueryParams
-
-    fun _additionalBodyProperties(): Map<String, JsonValue> = additionalBodyProperties
-
-    override fun equals(other: Any?): Boolean {
-        if (this === other) {
-            return true
-        }
-
-        return /* spotless:off */ other is CustomerUpdateByExternalIdParams && id == other.id && accountingSyncConfiguration == other.accountingSyncConfiguration && additionalEmails == other.additionalEmails && autoCollection == other.autoCollection && billingAddress == other.billingAddress && currency == other.currency && email == other.email && emailDelivery == other.emailDelivery && externalCustomerId == other.externalCustomerId && metadata == other.metadata && name == other.name && paymentProvider == other.paymentProvider && paymentProviderId == other.paymentProviderId && reportingConfiguration == other.reportingConfiguration && shippingAddress == other.shippingAddress && taxConfiguration == other.taxConfiguration && taxId == other.taxId && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams && additionalBodyProperties == other.additionalBodyProperties /* spotless:on */
-    }
-
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(id, accountingSyncConfiguration, additionalEmails, autoCollection, billingAddress, currency, email, emailDelivery, externalCustomerId, metadata, name, paymentProvider, paymentProviderId, reportingConfiguration, shippingAddress, taxConfiguration, taxId, additionalHeaders, additionalQueryParams, additionalBodyProperties) /* spotless:on */
-
-    override fun toString() =
-        "CustomerUpdateByExternalIdParams{id=$id, accountingSyncConfiguration=$accountingSyncConfiguration, additionalEmails=$additionalEmails, autoCollection=$autoCollection, billingAddress=$billingAddress, currency=$currency, email=$email, emailDelivery=$emailDelivery, externalCustomerId=$externalCustomerId, metadata=$metadata, name=$name, paymentProvider=$paymentProvider, paymentProviderId=$paymentProviderId, reportingConfiguration=$reportingConfiguration, shippingAddress=$shippingAddress, taxConfiguration=$taxConfiguration, taxId=$taxId, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams, additionalBodyProperties=$additionalBodyProperties}"
-
     fun toBuilder() = Builder().from(this)
 
     companion object {
@@ -687,28 +674,31 @@ constructor(
 
         internal fun from(customerUpdateByExternalIdParams: CustomerUpdateByExternalIdParams) =
             apply {
-                this.id = customerUpdateByExternalIdParams.id
-                this.accountingSyncConfiguration =
+                id = customerUpdateByExternalIdParams.id
+                accountingSyncConfiguration =
                     customerUpdateByExternalIdParams.accountingSyncConfiguration
-                this.additionalEmails(customerUpdateByExternalIdParams.additionalEmails ?: listOf())
-                this.autoCollection = customerUpdateByExternalIdParams.autoCollection
-                this.billingAddress = customerUpdateByExternalIdParams.billingAddress
-                this.currency = customerUpdateByExternalIdParams.currency
-                this.email = customerUpdateByExternalIdParams.email
-                this.emailDelivery = customerUpdateByExternalIdParams.emailDelivery
-                this.externalCustomerId = customerUpdateByExternalIdParams.externalCustomerId
-                this.metadata = customerUpdateByExternalIdParams.metadata
-                this.name = customerUpdateByExternalIdParams.name
-                this.paymentProvider = customerUpdateByExternalIdParams.paymentProvider
-                this.paymentProviderId = customerUpdateByExternalIdParams.paymentProviderId
-                this.reportingConfiguration =
-                    customerUpdateByExternalIdParams.reportingConfiguration
-                this.shippingAddress = customerUpdateByExternalIdParams.shippingAddress
-                this.taxConfiguration = customerUpdateByExternalIdParams.taxConfiguration
-                this.taxId = customerUpdateByExternalIdParams.taxId
-                additionalHeaders(customerUpdateByExternalIdParams.additionalHeaders)
-                additionalQueryParams(customerUpdateByExternalIdParams.additionalQueryParams)
-                additionalBodyProperties(customerUpdateByExternalIdParams.additionalBodyProperties)
+                additionalEmails =
+                    customerUpdateByExternalIdParams.additionalEmails?.toMutableList()
+                        ?: mutableListOf()
+                autoCollection = customerUpdateByExternalIdParams.autoCollection
+                billingAddress = customerUpdateByExternalIdParams.billingAddress
+                currency = customerUpdateByExternalIdParams.currency
+                email = customerUpdateByExternalIdParams.email
+                emailDelivery = customerUpdateByExternalIdParams.emailDelivery
+                externalCustomerId = customerUpdateByExternalIdParams.externalCustomerId
+                metadata = customerUpdateByExternalIdParams.metadata
+                name = customerUpdateByExternalIdParams.name
+                paymentProvider = customerUpdateByExternalIdParams.paymentProvider
+                paymentProviderId = customerUpdateByExternalIdParams.paymentProviderId
+                reportingConfiguration = customerUpdateByExternalIdParams.reportingConfiguration
+                shippingAddress = customerUpdateByExternalIdParams.shippingAddress
+                taxConfiguration = customerUpdateByExternalIdParams.taxConfiguration
+                taxId = customerUpdateByExternalIdParams.taxId
+                additionalHeaders = customerUpdateByExternalIdParams.additionalHeaders.toBuilder()
+                additionalQueryParams =
+                    customerUpdateByExternalIdParams.additionalQueryParams.toBuilder()
+                additionalBodyProperties =
+                    customerUpdateByExternalIdParams.additionalBodyProperties.toMutableMap()
             }
 
         fun id(id: String) = apply { this.id = id }
@@ -1051,7 +1041,7 @@ constructor(
             CustomerUpdateByExternalIdParams(
                 checkNotNull(id) { "`id` is required but was not set" },
                 accountingSyncConfiguration,
-                if (additionalEmails.size == 0) null else additionalEmails.toImmutable(),
+                additionalEmails.toImmutable().ifEmpty { null },
                 autoCollection,
                 billingAddress,
                 currency,
@@ -3335,4 +3325,17 @@ constructor(
         override fun toString() =
             "TaxId{country=$country, type=$type, value=$value, additionalProperties=$additionalProperties}"
     }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) {
+            return true
+        }
+
+        return /* spotless:off */ other is CustomerUpdateByExternalIdParams && id == other.id && accountingSyncConfiguration == other.accountingSyncConfiguration && additionalEmails == other.additionalEmails && autoCollection == other.autoCollection && billingAddress == other.billingAddress && currency == other.currency && email == other.email && emailDelivery == other.emailDelivery && externalCustomerId == other.externalCustomerId && metadata == other.metadata && name == other.name && paymentProvider == other.paymentProvider && paymentProviderId == other.paymentProviderId && reportingConfiguration == other.reportingConfiguration && shippingAddress == other.shippingAddress && taxConfiguration == other.taxConfiguration && taxId == other.taxId && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams && additionalBodyProperties == other.additionalBodyProperties /* spotless:on */
+    }
+
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(id, accountingSyncConfiguration, additionalEmails, autoCollection, billingAddress, currency, email, emailDelivery, externalCustomerId, metadata, name, paymentProvider, paymentProviderId, reportingConfiguration, shippingAddress, taxConfiguration, taxId, additionalHeaders, additionalQueryParams, additionalBodyProperties) /* spotless:on */
+
+    override fun toString() =
+        "CustomerUpdateByExternalIdParams{id=$id, accountingSyncConfiguration=$accountingSyncConfiguration, additionalEmails=$additionalEmails, autoCollection=$autoCollection, billingAddress=$billingAddress, currency=$currency, email=$email, emailDelivery=$emailDelivery, externalCustomerId=$externalCustomerId, metadata=$metadata, name=$name, paymentProvider=$paymentProvider, paymentProviderId=$paymentProviderId, reportingConfiguration=$reportingConfiguration, shippingAddress=$shippingAddress, taxConfiguration=$taxConfiguration, taxId=$taxId, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams, additionalBodyProperties=$additionalBodyProperties}"
 }

@@ -80,6 +80,10 @@ constructor(
 
     fun subscriptionId(): String? = subscriptionId
 
+    fun _additionalHeaders(): Headers = additionalHeaders
+
+    fun _additionalQueryParams(): QueryParams = additionalQueryParams
+
     internal fun getHeaders(): Headers = additionalHeaders
 
     internal fun getQueryParams(): QueryParams {
@@ -129,23 +133,6 @@ constructor(
         return queryParams.build()
     }
 
-    fun _additionalHeaders(): Headers = additionalHeaders
-
-    fun _additionalQueryParams(): QueryParams = additionalQueryParams
-
-    override fun equals(other: Any?): Boolean {
-        if (this === other) {
-            return true
-        }
-
-        return /* spotless:off */ other is InvoiceListParams && amount == other.amount && amountGt == other.amountGt && amountLt == other.amountLt && cursor == other.cursor && customerId == other.customerId && dateType == other.dateType && dueDate == other.dueDate && dueDateWindow == other.dueDateWindow && dueDateGt == other.dueDateGt && dueDateLt == other.dueDateLt && externalCustomerId == other.externalCustomerId && invoiceDateGt == other.invoiceDateGt && invoiceDateGte == other.invoiceDateGte && invoiceDateLt == other.invoiceDateLt && invoiceDateLte == other.invoiceDateLte && isRecurring == other.isRecurring && limit == other.limit && status == other.status && subscriptionId == other.subscriptionId && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
-    }
-
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(amount, amountGt, amountLt, cursor, customerId, dateType, dueDate, dueDateWindow, dueDateGt, dueDateLt, externalCustomerId, invoiceDateGt, invoiceDateGte, invoiceDateLt, invoiceDateLte, isRecurring, limit, status, subscriptionId, additionalHeaders, additionalQueryParams) /* spotless:on */
-
-    override fun toString() =
-        "InvoiceListParams{amount=$amount, amountGt=$amountGt, amountLt=$amountLt, cursor=$cursor, customerId=$customerId, dateType=$dateType, dueDate=$dueDate, dueDateWindow=$dueDateWindow, dueDateGt=$dueDateGt, dueDateLt=$dueDateLt, externalCustomerId=$externalCustomerId, invoiceDateGt=$invoiceDateGt, invoiceDateGte=$invoiceDateGte, invoiceDateLt=$invoiceDateLt, invoiceDateLte=$invoiceDateLte, isRecurring=$isRecurring, limit=$limit, status=$status, subscriptionId=$subscriptionId, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
-
     fun toBuilder() = Builder().from(this)
 
     companion object {
@@ -179,27 +166,27 @@ constructor(
         private var additionalQueryParams: QueryParams.Builder = QueryParams.builder()
 
         internal fun from(invoiceListParams: InvoiceListParams) = apply {
-            this.amount = invoiceListParams.amount
-            this.amountGt = invoiceListParams.amountGt
-            this.amountLt = invoiceListParams.amountLt
-            this.cursor = invoiceListParams.cursor
-            this.customerId = invoiceListParams.customerId
-            this.dateType = invoiceListParams.dateType
-            this.dueDate = invoiceListParams.dueDate
-            this.dueDateWindow = invoiceListParams.dueDateWindow
-            this.dueDateGt = invoiceListParams.dueDateGt
-            this.dueDateLt = invoiceListParams.dueDateLt
-            this.externalCustomerId = invoiceListParams.externalCustomerId
-            this.invoiceDateGt = invoiceListParams.invoiceDateGt
-            this.invoiceDateGte = invoiceListParams.invoiceDateGte
-            this.invoiceDateLt = invoiceListParams.invoiceDateLt
-            this.invoiceDateLte = invoiceListParams.invoiceDateLte
-            this.isRecurring = invoiceListParams.isRecurring
-            this.limit = invoiceListParams.limit
-            this.status(invoiceListParams.status ?: listOf())
-            this.subscriptionId = invoiceListParams.subscriptionId
-            additionalHeaders(invoiceListParams.additionalHeaders)
-            additionalQueryParams(invoiceListParams.additionalQueryParams)
+            amount = invoiceListParams.amount
+            amountGt = invoiceListParams.amountGt
+            amountLt = invoiceListParams.amountLt
+            cursor = invoiceListParams.cursor
+            customerId = invoiceListParams.customerId
+            dateType = invoiceListParams.dateType
+            dueDate = invoiceListParams.dueDate
+            dueDateWindow = invoiceListParams.dueDateWindow
+            dueDateGt = invoiceListParams.dueDateGt
+            dueDateLt = invoiceListParams.dueDateLt
+            externalCustomerId = invoiceListParams.externalCustomerId
+            invoiceDateGt = invoiceListParams.invoiceDateGt
+            invoiceDateGte = invoiceListParams.invoiceDateGte
+            invoiceDateLt = invoiceListParams.invoiceDateLt
+            invoiceDateLte = invoiceListParams.invoiceDateLte
+            isRecurring = invoiceListParams.isRecurring
+            limit = invoiceListParams.limit
+            status = invoiceListParams.status?.toMutableList() ?: mutableListOf()
+            subscriptionId = invoiceListParams.subscriptionId
+            additionalHeaders = invoiceListParams.additionalHeaders.toBuilder()
+            additionalQueryParams = invoiceListParams.additionalQueryParams.toBuilder()
         }
 
         fun amount(amount: String) = apply { this.amount = amount }
@@ -377,7 +364,7 @@ constructor(
                 invoiceDateLte,
                 isRecurring,
                 limit,
-                if (status.size == 0) null else status.toImmutable(),
+                status.toImmutable().ifEmpty { null },
                 subscriptionId,
                 additionalHeaders.build(),
                 additionalQueryParams.build(),
@@ -515,4 +502,17 @@ constructor(
 
         fun asString(): String = _value().asStringOrThrow()
     }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) {
+            return true
+        }
+
+        return /* spotless:off */ other is InvoiceListParams && amount == other.amount && amountGt == other.amountGt && amountLt == other.amountLt && cursor == other.cursor && customerId == other.customerId && dateType == other.dateType && dueDate == other.dueDate && dueDateWindow == other.dueDateWindow && dueDateGt == other.dueDateGt && dueDateLt == other.dueDateLt && externalCustomerId == other.externalCustomerId && invoiceDateGt == other.invoiceDateGt && invoiceDateGte == other.invoiceDateGte && invoiceDateLt == other.invoiceDateLt && invoiceDateLte == other.invoiceDateLte && isRecurring == other.isRecurring && limit == other.limit && status == other.status && subscriptionId == other.subscriptionId && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
+    }
+
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(amount, amountGt, amountLt, cursor, customerId, dateType, dueDate, dueDateWindow, dueDateGt, dueDateLt, externalCustomerId, invoiceDateGt, invoiceDateGte, invoiceDateLt, invoiceDateLte, isRecurring, limit, status, subscriptionId, additionalHeaders, additionalQueryParams) /* spotless:on */
+
+    override fun toString() =
+        "InvoiceListParams{amount=$amount, amountGt=$amountGt, amountLt=$amountLt, cursor=$cursor, customerId=$customerId, dateType=$dateType, dueDate=$dueDate, dueDateWindow=$dueDateWindow, dueDateGt=$dueDateGt, dueDateLt=$dueDateLt, externalCustomerId=$externalCustomerId, invoiceDateGt=$invoiceDateGt, invoiceDateGte=$invoiceDateGte, invoiceDateLt=$invoiceDateLt, invoiceDateLte=$invoiceDateLte, isRecurring=$isRecurring, limit=$limit, status=$status, subscriptionId=$subscriptionId, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
 }

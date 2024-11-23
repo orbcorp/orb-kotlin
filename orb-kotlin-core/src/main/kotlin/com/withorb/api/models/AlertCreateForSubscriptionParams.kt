@@ -38,6 +38,12 @@ constructor(
 
     fun metricId(): String? = metricId
 
+    fun _additionalHeaders(): Headers = additionalHeaders
+
+    fun _additionalQueryParams(): QueryParams = additionalQueryParams
+
+    fun _additionalBodyProperties(): Map<String, JsonValue> = additionalBodyProperties
+
     internal fun getBody(): AlertCreateForSubscriptionBody {
         return AlertCreateForSubscriptionBody(
             thresholds,
@@ -156,25 +162,6 @@ constructor(
             "AlertCreateForSubscriptionBody{thresholds=$thresholds, type=$type, metricId=$metricId, additionalProperties=$additionalProperties}"
     }
 
-    fun _additionalHeaders(): Headers = additionalHeaders
-
-    fun _additionalQueryParams(): QueryParams = additionalQueryParams
-
-    fun _additionalBodyProperties(): Map<String, JsonValue> = additionalBodyProperties
-
-    override fun equals(other: Any?): Boolean {
-        if (this === other) {
-            return true
-        }
-
-        return /* spotless:off */ other is AlertCreateForSubscriptionParams && subscriptionId == other.subscriptionId && thresholds == other.thresholds && type == other.type && metricId == other.metricId && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams && additionalBodyProperties == other.additionalBodyProperties /* spotless:on */
-    }
-
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(subscriptionId, thresholds, type, metricId, additionalHeaders, additionalQueryParams, additionalBodyProperties) /* spotless:on */
-
-    override fun toString() =
-        "AlertCreateForSubscriptionParams{subscriptionId=$subscriptionId, thresholds=$thresholds, type=$type, metricId=$metricId, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams, additionalBodyProperties=$additionalBodyProperties}"
-
     fun toBuilder() = Builder().from(this)
 
     companion object {
@@ -195,13 +182,15 @@ constructor(
 
         internal fun from(alertCreateForSubscriptionParams: AlertCreateForSubscriptionParams) =
             apply {
-                this.subscriptionId = alertCreateForSubscriptionParams.subscriptionId
-                this.thresholds(alertCreateForSubscriptionParams.thresholds)
-                this.type = alertCreateForSubscriptionParams.type
-                this.metricId = alertCreateForSubscriptionParams.metricId
-                additionalHeaders(alertCreateForSubscriptionParams.additionalHeaders)
-                additionalQueryParams(alertCreateForSubscriptionParams.additionalQueryParams)
-                additionalBodyProperties(alertCreateForSubscriptionParams.additionalBodyProperties)
+                subscriptionId = alertCreateForSubscriptionParams.subscriptionId
+                thresholds = alertCreateForSubscriptionParams.thresholds.toMutableList()
+                type = alertCreateForSubscriptionParams.type
+                metricId = alertCreateForSubscriptionParams.metricId
+                additionalHeaders = alertCreateForSubscriptionParams.additionalHeaders.toBuilder()
+                additionalQueryParams =
+                    alertCreateForSubscriptionParams.additionalQueryParams.toBuilder()
+                additionalBodyProperties =
+                    alertCreateForSubscriptionParams.additionalBodyProperties.toMutableMap()
             }
 
         fun subscriptionId(subscriptionId: String) = apply { this.subscriptionId = subscriptionId }
@@ -344,8 +333,7 @@ constructor(
         fun build(): AlertCreateForSubscriptionParams =
             AlertCreateForSubscriptionParams(
                 checkNotNull(subscriptionId) { "`subscriptionId` is required but was not set" },
-                checkNotNull(thresholds) { "`thresholds` is required but was not set" }
-                    .toImmutable(),
+                thresholds.toImmutable(),
                 checkNotNull(type) { "`type` is required but was not set" },
                 metricId,
                 additionalHeaders.build(),
@@ -511,4 +499,17 @@ constructor(
 
         fun asString(): String = _value().asStringOrThrow()
     }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) {
+            return true
+        }
+
+        return /* spotless:off */ other is AlertCreateForSubscriptionParams && subscriptionId == other.subscriptionId && thresholds == other.thresholds && type == other.type && metricId == other.metricId && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams && additionalBodyProperties == other.additionalBodyProperties /* spotless:on */
+    }
+
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(subscriptionId, thresholds, type, metricId, additionalHeaders, additionalQueryParams, additionalBodyProperties) /* spotless:on */
+
+    override fun toString() =
+        "AlertCreateForSubscriptionParams{subscriptionId=$subscriptionId, thresholds=$thresholds, type=$type, metricId=$metricId, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams, additionalBodyProperties=$additionalBodyProperties}"
 }

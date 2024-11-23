@@ -109,6 +109,12 @@ constructor(
 
     fun trialDurationDays(): Long? = trialDurationDays
 
+    fun _additionalHeaders(): Headers = additionalHeaders
+
+    fun _additionalQueryParams(): QueryParams = additionalQueryParams
+
+    fun _additionalBodyProperties(): Map<String, JsonValue> = additionalBodyProperties
+
     internal fun getBody(): SubscriptionSchedulePlanChangeBody {
         return SubscriptionSchedulePlanChangeBody(
             changeOption,
@@ -626,25 +632,6 @@ constructor(
             "SubscriptionSchedulePlanChangeBody{changeOption=$changeOption, addAdjustments=$addAdjustments, addPrices=$addPrices, alignBillingWithPlanChangeDate=$alignBillingWithPlanChangeDate, autoCollection=$autoCollection, billingCycleAlignment=$billingCycleAlignment, changeDate=$changeDate, couponRedemptionCode=$couponRedemptionCode, creditsOverageRate=$creditsOverageRate, defaultInvoiceMemo=$defaultInvoiceMemo, externalPlanId=$externalPlanId, initialPhaseOrder=$initialPhaseOrder, invoicingThreshold=$invoicingThreshold, netTerms=$netTerms, perCreditOverageAmount=$perCreditOverageAmount, planId=$planId, planVersionNumber=$planVersionNumber, priceOverrides=$priceOverrides, removeAdjustments=$removeAdjustments, removePrices=$removePrices, replaceAdjustments=$replaceAdjustments, replacePrices=$replacePrices, trialDurationDays=$trialDurationDays, additionalProperties=$additionalProperties}"
     }
 
-    fun _additionalHeaders(): Headers = additionalHeaders
-
-    fun _additionalQueryParams(): QueryParams = additionalQueryParams
-
-    fun _additionalBodyProperties(): Map<String, JsonValue> = additionalBodyProperties
-
-    override fun equals(other: Any?): Boolean {
-        if (this === other) {
-            return true
-        }
-
-        return /* spotless:off */ other is SubscriptionSchedulePlanChangeParams && subscriptionId == other.subscriptionId && changeOption == other.changeOption && addAdjustments == other.addAdjustments && addPrices == other.addPrices && alignBillingWithPlanChangeDate == other.alignBillingWithPlanChangeDate && autoCollection == other.autoCollection && billingCycleAlignment == other.billingCycleAlignment && changeDate == other.changeDate && couponRedemptionCode == other.couponRedemptionCode && creditsOverageRate == other.creditsOverageRate && defaultInvoiceMemo == other.defaultInvoiceMemo && externalPlanId == other.externalPlanId && initialPhaseOrder == other.initialPhaseOrder && invoicingThreshold == other.invoicingThreshold && netTerms == other.netTerms && perCreditOverageAmount == other.perCreditOverageAmount && planId == other.planId && planVersionNumber == other.planVersionNumber && priceOverrides == other.priceOverrides && removeAdjustments == other.removeAdjustments && removePrices == other.removePrices && replaceAdjustments == other.replaceAdjustments && replacePrices == other.replacePrices && trialDurationDays == other.trialDurationDays && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams && additionalBodyProperties == other.additionalBodyProperties /* spotless:on */
-    }
-
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(subscriptionId, changeOption, addAdjustments, addPrices, alignBillingWithPlanChangeDate, autoCollection, billingCycleAlignment, changeDate, couponRedemptionCode, creditsOverageRate, defaultInvoiceMemo, externalPlanId, initialPhaseOrder, invoicingThreshold, netTerms, perCreditOverageAmount, planId, planVersionNumber, priceOverrides, removeAdjustments, removePrices, replaceAdjustments, replacePrices, trialDurationDays, additionalHeaders, additionalQueryParams, additionalBodyProperties) /* spotless:on */
-
-    override fun toString() =
-        "SubscriptionSchedulePlanChangeParams{subscriptionId=$subscriptionId, changeOption=$changeOption, addAdjustments=$addAdjustments, addPrices=$addPrices, alignBillingWithPlanChangeDate=$alignBillingWithPlanChangeDate, autoCollection=$autoCollection, billingCycleAlignment=$billingCycleAlignment, changeDate=$changeDate, couponRedemptionCode=$couponRedemptionCode, creditsOverageRate=$creditsOverageRate, defaultInvoiceMemo=$defaultInvoiceMemo, externalPlanId=$externalPlanId, initialPhaseOrder=$initialPhaseOrder, invoicingThreshold=$invoicingThreshold, netTerms=$netTerms, perCreditOverageAmount=$perCreditOverageAmount, planId=$planId, planVersionNumber=$planVersionNumber, priceOverrides=$priceOverrides, removeAdjustments=$removeAdjustments, removePrices=$removePrices, replaceAdjustments=$replaceAdjustments, replacePrices=$replacePrices, trialDurationDays=$trialDurationDays, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams, additionalBodyProperties=$additionalBodyProperties}"
-
     fun toBuilder() = Builder().from(this)
 
     companion object {
@@ -686,39 +673,49 @@ constructor(
         internal fun from(
             subscriptionSchedulePlanChangeParams: SubscriptionSchedulePlanChangeParams
         ) = apply {
-            this.subscriptionId = subscriptionSchedulePlanChangeParams.subscriptionId
-            this.changeOption = subscriptionSchedulePlanChangeParams.changeOption
-            this.addAdjustments(subscriptionSchedulePlanChangeParams.addAdjustments ?: listOf())
-            this.addPrices(subscriptionSchedulePlanChangeParams.addPrices ?: listOf())
-            this.alignBillingWithPlanChangeDate =
+            subscriptionId = subscriptionSchedulePlanChangeParams.subscriptionId
+            changeOption = subscriptionSchedulePlanChangeParams.changeOption
+            addAdjustments =
+                subscriptionSchedulePlanChangeParams.addAdjustments?.toMutableList()
+                    ?: mutableListOf()
+            addPrices =
+                subscriptionSchedulePlanChangeParams.addPrices?.toMutableList() ?: mutableListOf()
+            alignBillingWithPlanChangeDate =
                 subscriptionSchedulePlanChangeParams.alignBillingWithPlanChangeDate
-            this.autoCollection = subscriptionSchedulePlanChangeParams.autoCollection
-            this.billingCycleAlignment = subscriptionSchedulePlanChangeParams.billingCycleAlignment
-            this.changeDate = subscriptionSchedulePlanChangeParams.changeDate
-            this.couponRedemptionCode = subscriptionSchedulePlanChangeParams.couponRedemptionCode
-            this.creditsOverageRate = subscriptionSchedulePlanChangeParams.creditsOverageRate
-            this.defaultInvoiceMemo = subscriptionSchedulePlanChangeParams.defaultInvoiceMemo
-            this.externalPlanId = subscriptionSchedulePlanChangeParams.externalPlanId
-            this.initialPhaseOrder = subscriptionSchedulePlanChangeParams.initialPhaseOrder
-            this.invoicingThreshold = subscriptionSchedulePlanChangeParams.invoicingThreshold
-            this.netTerms = subscriptionSchedulePlanChangeParams.netTerms
-            this.perCreditOverageAmount =
-                subscriptionSchedulePlanChangeParams.perCreditOverageAmount
-            this.planId = subscriptionSchedulePlanChangeParams.planId
-            this.planVersionNumber = subscriptionSchedulePlanChangeParams.planVersionNumber
-            this.priceOverrides(subscriptionSchedulePlanChangeParams.priceOverrides ?: listOf())
-            this.removeAdjustments(
-                subscriptionSchedulePlanChangeParams.removeAdjustments ?: listOf()
-            )
-            this.removePrices(subscriptionSchedulePlanChangeParams.removePrices ?: listOf())
-            this.replaceAdjustments(
-                subscriptionSchedulePlanChangeParams.replaceAdjustments ?: listOf()
-            )
-            this.replacePrices(subscriptionSchedulePlanChangeParams.replacePrices ?: listOf())
-            this.trialDurationDays = subscriptionSchedulePlanChangeParams.trialDurationDays
-            additionalHeaders(subscriptionSchedulePlanChangeParams.additionalHeaders)
-            additionalQueryParams(subscriptionSchedulePlanChangeParams.additionalQueryParams)
-            additionalBodyProperties(subscriptionSchedulePlanChangeParams.additionalBodyProperties)
+            autoCollection = subscriptionSchedulePlanChangeParams.autoCollection
+            billingCycleAlignment = subscriptionSchedulePlanChangeParams.billingCycleAlignment
+            changeDate = subscriptionSchedulePlanChangeParams.changeDate
+            couponRedemptionCode = subscriptionSchedulePlanChangeParams.couponRedemptionCode
+            creditsOverageRate = subscriptionSchedulePlanChangeParams.creditsOverageRate
+            defaultInvoiceMemo = subscriptionSchedulePlanChangeParams.defaultInvoiceMemo
+            externalPlanId = subscriptionSchedulePlanChangeParams.externalPlanId
+            initialPhaseOrder = subscriptionSchedulePlanChangeParams.initialPhaseOrder
+            invoicingThreshold = subscriptionSchedulePlanChangeParams.invoicingThreshold
+            netTerms = subscriptionSchedulePlanChangeParams.netTerms
+            perCreditOverageAmount = subscriptionSchedulePlanChangeParams.perCreditOverageAmount
+            planId = subscriptionSchedulePlanChangeParams.planId
+            planVersionNumber = subscriptionSchedulePlanChangeParams.planVersionNumber
+            priceOverrides =
+                subscriptionSchedulePlanChangeParams.priceOverrides?.toMutableList()
+                    ?: mutableListOf()
+            removeAdjustments =
+                subscriptionSchedulePlanChangeParams.removeAdjustments?.toMutableList()
+                    ?: mutableListOf()
+            removePrices =
+                subscriptionSchedulePlanChangeParams.removePrices?.toMutableList()
+                    ?: mutableListOf()
+            replaceAdjustments =
+                subscriptionSchedulePlanChangeParams.replaceAdjustments?.toMutableList()
+                    ?: mutableListOf()
+            replacePrices =
+                subscriptionSchedulePlanChangeParams.replacePrices?.toMutableList()
+                    ?: mutableListOf()
+            trialDurationDays = subscriptionSchedulePlanChangeParams.trialDurationDays
+            additionalHeaders = subscriptionSchedulePlanChangeParams.additionalHeaders.toBuilder()
+            additionalQueryParams =
+                subscriptionSchedulePlanChangeParams.additionalQueryParams.toBuilder()
+            additionalBodyProperties =
+                subscriptionSchedulePlanChangeParams.additionalBodyProperties.toMutableMap()
         }
 
         fun subscriptionId(subscriptionId: String) = apply { this.subscriptionId = subscriptionId }
@@ -1062,8 +1059,8 @@ constructor(
             SubscriptionSchedulePlanChangeParams(
                 checkNotNull(subscriptionId) { "`subscriptionId` is required but was not set" },
                 checkNotNull(changeOption) { "`changeOption` is required but was not set" },
-                if (addAdjustments.size == 0) null else addAdjustments.toImmutable(),
-                if (addPrices.size == 0) null else addPrices.toImmutable(),
+                addAdjustments.toImmutable().ifEmpty { null },
+                addPrices.toImmutable().ifEmpty { null },
                 alignBillingWithPlanChangeDate,
                 autoCollection,
                 billingCycleAlignment,
@@ -1078,11 +1075,11 @@ constructor(
                 perCreditOverageAmount,
                 planId,
                 planVersionNumber,
-                if (priceOverrides.size == 0) null else priceOverrides.toImmutable(),
-                if (removeAdjustments.size == 0) null else removeAdjustments.toImmutable(),
-                if (removePrices.size == 0) null else removePrices.toImmutable(),
-                if (replaceAdjustments.size == 0) null else replaceAdjustments.toImmutable(),
-                if (replacePrices.size == 0) null else replacePrices.toImmutable(),
+                priceOverrides.toImmutable().ifEmpty { null },
+                removeAdjustments.toImmutable().ifEmpty { null },
+                removePrices.toImmutable().ifEmpty { null },
+                replaceAdjustments.toImmutable().ifEmpty { null },
+                replacePrices.toImmutable().ifEmpty { null },
                 trialDurationDays,
                 additionalHeaders.build(),
                 additionalQueryParams.build(),
@@ -50627,4 +50624,17 @@ constructor(
         override fun toString() =
             "ReplacePrice{priceId=$priceId, externalPriceId=$externalPriceId, price=$price, fixedPriceQuantity=$fixedPriceQuantity, replacesPriceId=$replacesPriceId, minimumAmount=$minimumAmount, maximumAmount=$maximumAmount, discounts=$discounts, additionalProperties=$additionalProperties}"
     }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) {
+            return true
+        }
+
+        return /* spotless:off */ other is SubscriptionSchedulePlanChangeParams && subscriptionId == other.subscriptionId && changeOption == other.changeOption && addAdjustments == other.addAdjustments && addPrices == other.addPrices && alignBillingWithPlanChangeDate == other.alignBillingWithPlanChangeDate && autoCollection == other.autoCollection && billingCycleAlignment == other.billingCycleAlignment && changeDate == other.changeDate && couponRedemptionCode == other.couponRedemptionCode && creditsOverageRate == other.creditsOverageRate && defaultInvoiceMemo == other.defaultInvoiceMemo && externalPlanId == other.externalPlanId && initialPhaseOrder == other.initialPhaseOrder && invoicingThreshold == other.invoicingThreshold && netTerms == other.netTerms && perCreditOverageAmount == other.perCreditOverageAmount && planId == other.planId && planVersionNumber == other.planVersionNumber && priceOverrides == other.priceOverrides && removeAdjustments == other.removeAdjustments && removePrices == other.removePrices && replaceAdjustments == other.replaceAdjustments && replacePrices == other.replacePrices && trialDurationDays == other.trialDurationDays && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams && additionalBodyProperties == other.additionalBodyProperties /* spotless:on */
+    }
+
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(subscriptionId, changeOption, addAdjustments, addPrices, alignBillingWithPlanChangeDate, autoCollection, billingCycleAlignment, changeDate, couponRedemptionCode, creditsOverageRate, defaultInvoiceMemo, externalPlanId, initialPhaseOrder, invoicingThreshold, netTerms, perCreditOverageAmount, planId, planVersionNumber, priceOverrides, removeAdjustments, removePrices, replaceAdjustments, replacePrices, trialDurationDays, additionalHeaders, additionalQueryParams, additionalBodyProperties) /* spotless:on */
+
+    override fun toString() =
+        "SubscriptionSchedulePlanChangeParams{subscriptionId=$subscriptionId, changeOption=$changeOption, addAdjustments=$addAdjustments, addPrices=$addPrices, alignBillingWithPlanChangeDate=$alignBillingWithPlanChangeDate, autoCollection=$autoCollection, billingCycleAlignment=$billingCycleAlignment, changeDate=$changeDate, couponRedemptionCode=$couponRedemptionCode, creditsOverageRate=$creditsOverageRate, defaultInvoiceMemo=$defaultInvoiceMemo, externalPlanId=$externalPlanId, initialPhaseOrder=$initialPhaseOrder, invoicingThreshold=$invoicingThreshold, netTerms=$netTerms, perCreditOverageAmount=$perCreditOverageAmount, planId=$planId, planVersionNumber=$planVersionNumber, priceOverrides=$priceOverrides, removeAdjustments=$removeAdjustments, removePrices=$removePrices, replaceAdjustments=$replaceAdjustments, replacePrices=$replacePrices, trialDurationDays=$trialDurationDays, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams, additionalBodyProperties=$additionalBodyProperties}"
 }

@@ -20,6 +20,12 @@ constructor(
 
     fun alertConfigurationId(): String = alertConfigurationId
 
+    fun _additionalHeaders(): Headers = additionalHeaders
+
+    fun _additionalQueryParams(): QueryParams = additionalQueryParams
+
+    fun _additionalBodyProperties(): Map<String, JsonValue> = additionalBodyProperties
+
     internal fun getBody(): Map<String, JsonValue>? {
         return additionalBodyProperties.ifEmpty { null }
     }
@@ -34,25 +40,6 @@ constructor(
             else -> ""
         }
     }
-
-    fun _additionalHeaders(): Headers = additionalHeaders
-
-    fun _additionalQueryParams(): QueryParams = additionalQueryParams
-
-    fun _additionalBodyProperties(): Map<String, JsonValue> = additionalBodyProperties
-
-    override fun equals(other: Any?): Boolean {
-        if (this === other) {
-            return true
-        }
-
-        return /* spotless:off */ other is AlertDisableParams && alertConfigurationId == other.alertConfigurationId && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams && additionalBodyProperties == other.additionalBodyProperties /* spotless:on */
-    }
-
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(alertConfigurationId, additionalHeaders, additionalQueryParams, additionalBodyProperties) /* spotless:on */
-
-    override fun toString() =
-        "AlertDisableParams{alertConfigurationId=$alertConfigurationId, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams, additionalBodyProperties=$additionalBodyProperties}"
 
     fun toBuilder() = Builder().from(this)
 
@@ -70,10 +57,10 @@ constructor(
         private var additionalBodyProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         internal fun from(alertDisableParams: AlertDisableParams) = apply {
-            this.alertConfigurationId = alertDisableParams.alertConfigurationId
-            additionalHeaders(alertDisableParams.additionalHeaders)
-            additionalQueryParams(alertDisableParams.additionalQueryParams)
-            additionalBodyProperties(alertDisableParams.additionalBodyProperties)
+            alertConfigurationId = alertDisableParams.alertConfigurationId
+            additionalHeaders = alertDisableParams.additionalHeaders.toBuilder()
+            additionalQueryParams = alertDisableParams.additionalQueryParams.toBuilder()
+            additionalBodyProperties = alertDisableParams.additionalBodyProperties.toMutableMap()
         }
 
         fun alertConfigurationId(alertConfigurationId: String) = apply {
@@ -210,4 +197,17 @@ constructor(
                 additionalBodyProperties.toImmutable(),
             )
     }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) {
+            return true
+        }
+
+        return /* spotless:off */ other is AlertDisableParams && alertConfigurationId == other.alertConfigurationId && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams && additionalBodyProperties == other.additionalBodyProperties /* spotless:on */
+    }
+
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(alertConfigurationId, additionalHeaders, additionalQueryParams, additionalBodyProperties) /* spotless:on */
+
+    override fun toString() =
+        "AlertDisableParams{alertConfigurationId=$alertConfigurationId, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams, additionalBodyProperties=$additionalBodyProperties}"
 }

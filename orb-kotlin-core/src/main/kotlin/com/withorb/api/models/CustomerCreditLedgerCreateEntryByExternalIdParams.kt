@@ -64,6 +64,10 @@ constructor(
     fun addAmendmentCreditLedgerEntryRequestParams(): AddAmendmentCreditLedgerEntryRequestParams? =
         addAmendmentCreditLedgerEntryRequestParams
 
+    fun _additionalHeaders(): Headers = additionalHeaders
+
+    fun _additionalQueryParams(): QueryParams = additionalQueryParams
+
     internal fun getBody(): CustomerCreditLedgerCreateEntryByExternalIdBody {
         return CustomerCreditLedgerCreateEntryByExternalIdBody(
             addIncrementCreditLedgerEntryRequestParams,
@@ -413,23 +417,6 @@ constructor(
         }
     }
 
-    fun _additionalHeaders(): Headers = additionalHeaders
-
-    fun _additionalQueryParams(): QueryParams = additionalQueryParams
-
-    override fun equals(other: Any?): Boolean {
-        if (this === other) {
-            return true
-        }
-
-        return /* spotless:off */ other is CustomerCreditLedgerCreateEntryByExternalIdParams && externalCustomerId == other.externalCustomerId && addIncrementCreditLedgerEntryRequestParams == other.addIncrementCreditLedgerEntryRequestParams && addDecrementCreditLedgerEntryRequestParams == other.addDecrementCreditLedgerEntryRequestParams && addExpirationChangeCreditLedgerEntryRequestParams == other.addExpirationChangeCreditLedgerEntryRequestParams && addVoidCreditLedgerEntryRequestParams == other.addVoidCreditLedgerEntryRequestParams && addAmendmentCreditLedgerEntryRequestParams == other.addAmendmentCreditLedgerEntryRequestParams && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
-    }
-
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(externalCustomerId, addIncrementCreditLedgerEntryRequestParams, addDecrementCreditLedgerEntryRequestParams, addExpirationChangeCreditLedgerEntryRequestParams, addVoidCreditLedgerEntryRequestParams, addAmendmentCreditLedgerEntryRequestParams, additionalHeaders, additionalQueryParams) /* spotless:on */
-
-    override fun toString() =
-        "CustomerCreditLedgerCreateEntryByExternalIdParams{externalCustomerId=$externalCustomerId, addIncrementCreditLedgerEntryRequestParams=$addIncrementCreditLedgerEntryRequestParams, addDecrementCreditLedgerEntryRequestParams=$addDecrementCreditLedgerEntryRequestParams, addExpirationChangeCreditLedgerEntryRequestParams=$addExpirationChangeCreditLedgerEntryRequestParams, addVoidCreditLedgerEntryRequestParams=$addVoidCreditLedgerEntryRequestParams, addAmendmentCreditLedgerEntryRequestParams=$addAmendmentCreditLedgerEntryRequestParams, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
-
     fun toBuilder() = Builder().from(this)
 
     companion object {
@@ -462,27 +449,27 @@ constructor(
             customerCreditLedgerCreateEntryByExternalIdParams:
                 CustomerCreditLedgerCreateEntryByExternalIdParams
         ) = apply {
-            this.externalCustomerId =
+            externalCustomerId =
                 customerCreditLedgerCreateEntryByExternalIdParams.externalCustomerId
-            this.addIncrementCreditLedgerEntryRequestParams =
+            addIncrementCreditLedgerEntryRequestParams =
                 customerCreditLedgerCreateEntryByExternalIdParams
                     .addIncrementCreditLedgerEntryRequestParams
-            this.addDecrementCreditLedgerEntryRequestParams =
+            addDecrementCreditLedgerEntryRequestParams =
                 customerCreditLedgerCreateEntryByExternalIdParams
                     .addDecrementCreditLedgerEntryRequestParams
-            this.addExpirationChangeCreditLedgerEntryRequestParams =
+            addExpirationChangeCreditLedgerEntryRequestParams =
                 customerCreditLedgerCreateEntryByExternalIdParams
                     .addExpirationChangeCreditLedgerEntryRequestParams
-            this.addVoidCreditLedgerEntryRequestParams =
+            addVoidCreditLedgerEntryRequestParams =
                 customerCreditLedgerCreateEntryByExternalIdParams
                     .addVoidCreditLedgerEntryRequestParams
-            this.addAmendmentCreditLedgerEntryRequestParams =
+            addAmendmentCreditLedgerEntryRequestParams =
                 customerCreditLedgerCreateEntryByExternalIdParams
                     .addAmendmentCreditLedgerEntryRequestParams
-            additionalHeaders(customerCreditLedgerCreateEntryByExternalIdParams.additionalHeaders)
-            additionalQueryParams(
-                customerCreditLedgerCreateEntryByExternalIdParams.additionalQueryParams
-            )
+            additionalHeaders =
+                customerCreditLedgerCreateEntryByExternalIdParams.additionalHeaders.toBuilder()
+            additionalQueryParams =
+                customerCreditLedgerCreateEntryByExternalIdParams.additionalQueryParams.toBuilder()
         }
 
         fun externalCustomerId(externalCustomerId: String) = apply {
@@ -2326,4 +2313,17 @@ constructor(
         override fun toString() =
             "AddAmendmentCreditLedgerEntryRequestParams{metadata=$metadata, currency=$currency, description=$description, entryType=$entryType, amount=$amount, blockId=$blockId, additionalProperties=$additionalProperties}"
     }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) {
+            return true
+        }
+
+        return /* spotless:off */ other is CustomerCreditLedgerCreateEntryByExternalIdParams && externalCustomerId == other.externalCustomerId && addIncrementCreditLedgerEntryRequestParams == other.addIncrementCreditLedgerEntryRequestParams && addDecrementCreditLedgerEntryRequestParams == other.addDecrementCreditLedgerEntryRequestParams && addExpirationChangeCreditLedgerEntryRequestParams == other.addExpirationChangeCreditLedgerEntryRequestParams && addVoidCreditLedgerEntryRequestParams == other.addVoidCreditLedgerEntryRequestParams && addAmendmentCreditLedgerEntryRequestParams == other.addAmendmentCreditLedgerEntryRequestParams && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
+    }
+
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(externalCustomerId, addIncrementCreditLedgerEntryRequestParams, addDecrementCreditLedgerEntryRequestParams, addExpirationChangeCreditLedgerEntryRequestParams, addVoidCreditLedgerEntryRequestParams, addAmendmentCreditLedgerEntryRequestParams, additionalHeaders, additionalQueryParams) /* spotless:on */
+
+    override fun toString() =
+        "CustomerCreditLedgerCreateEntryByExternalIdParams{externalCustomerId=$externalCustomerId, addIncrementCreditLedgerEntryRequestParams=$addIncrementCreditLedgerEntryRequestParams, addDecrementCreditLedgerEntryRequestParams=$addDecrementCreditLedgerEntryRequestParams, addExpirationChangeCreditLedgerEntryRequestParams=$addExpirationChangeCreditLedgerEntryRequestParams, addVoidCreditLedgerEntryRequestParams=$addVoidCreditLedgerEntryRequestParams, addAmendmentCreditLedgerEntryRequestParams=$addAmendmentCreditLedgerEntryRequestParams, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
 }

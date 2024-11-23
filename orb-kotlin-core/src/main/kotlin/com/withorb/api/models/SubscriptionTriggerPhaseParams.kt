@@ -29,6 +29,12 @@ constructor(
 
     fun effectiveDate(): LocalDate? = effectiveDate
 
+    fun _additionalHeaders(): Headers = additionalHeaders
+
+    fun _additionalQueryParams(): QueryParams = additionalQueryParams
+
+    fun _additionalBodyProperties(): Map<String, JsonValue> = additionalBodyProperties
+
     internal fun getBody(): SubscriptionTriggerPhaseBody {
         return SubscriptionTriggerPhaseBody(effectiveDate, additionalBodyProperties)
     }
@@ -124,25 +130,6 @@ constructor(
             "SubscriptionTriggerPhaseBody{effectiveDate=$effectiveDate, additionalProperties=$additionalProperties}"
     }
 
-    fun _additionalHeaders(): Headers = additionalHeaders
-
-    fun _additionalQueryParams(): QueryParams = additionalQueryParams
-
-    fun _additionalBodyProperties(): Map<String, JsonValue> = additionalBodyProperties
-
-    override fun equals(other: Any?): Boolean {
-        if (this === other) {
-            return true
-        }
-
-        return /* spotless:off */ other is SubscriptionTriggerPhaseParams && subscriptionId == other.subscriptionId && effectiveDate == other.effectiveDate && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams && additionalBodyProperties == other.additionalBodyProperties /* spotless:on */
-    }
-
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(subscriptionId, effectiveDate, additionalHeaders, additionalQueryParams, additionalBodyProperties) /* spotless:on */
-
-    override fun toString() =
-        "SubscriptionTriggerPhaseParams{subscriptionId=$subscriptionId, effectiveDate=$effectiveDate, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams, additionalBodyProperties=$additionalBodyProperties}"
-
     fun toBuilder() = Builder().from(this)
 
     companion object {
@@ -160,11 +147,12 @@ constructor(
         private var additionalBodyProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         internal fun from(subscriptionTriggerPhaseParams: SubscriptionTriggerPhaseParams) = apply {
-            this.subscriptionId = subscriptionTriggerPhaseParams.subscriptionId
-            this.effectiveDate = subscriptionTriggerPhaseParams.effectiveDate
-            additionalHeaders(subscriptionTriggerPhaseParams.additionalHeaders)
-            additionalQueryParams(subscriptionTriggerPhaseParams.additionalQueryParams)
-            additionalBodyProperties(subscriptionTriggerPhaseParams.additionalBodyProperties)
+            subscriptionId = subscriptionTriggerPhaseParams.subscriptionId
+            effectiveDate = subscriptionTriggerPhaseParams.effectiveDate
+            additionalHeaders = subscriptionTriggerPhaseParams.additionalHeaders.toBuilder()
+            additionalQueryParams = subscriptionTriggerPhaseParams.additionalQueryParams.toBuilder()
+            additionalBodyProperties =
+                subscriptionTriggerPhaseParams.additionalBodyProperties.toMutableMap()
         }
 
         fun subscriptionId(subscriptionId: String) = apply { this.subscriptionId = subscriptionId }
@@ -304,4 +292,17 @@ constructor(
                 additionalBodyProperties.toImmutable(),
             )
     }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) {
+            return true
+        }
+
+        return /* spotless:off */ other is SubscriptionTriggerPhaseParams && subscriptionId == other.subscriptionId && effectiveDate == other.effectiveDate && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams && additionalBodyProperties == other.additionalBodyProperties /* spotless:on */
+    }
+
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(subscriptionId, effectiveDate, additionalHeaders, additionalQueryParams, additionalBodyProperties) /* spotless:on */
+
+    override fun toString() =
+        "SubscriptionTriggerPhaseParams{subscriptionId=$subscriptionId, effectiveDate=$effectiveDate, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams, additionalBodyProperties=$additionalBodyProperties}"
 }

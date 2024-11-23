@@ -37,6 +37,10 @@ constructor(
 
     fun operationTimeLte(): OffsetDateTime? = operationTimeLte
 
+    fun _additionalHeaders(): Headers = additionalHeaders
+
+    fun _additionalQueryParams(): QueryParams = additionalQueryParams
+
     internal fun getHeaders(): Headers = additionalHeaders
 
     internal fun getQueryParams(): QueryParams {
@@ -78,23 +82,6 @@ constructor(
         }
     }
 
-    fun _additionalHeaders(): Headers = additionalHeaders
-
-    fun _additionalQueryParams(): QueryParams = additionalQueryParams
-
-    override fun equals(other: Any?): Boolean {
-        if (this === other) {
-            return true
-        }
-
-        return /* spotless:off */ other is CustomerBalanceTransactionListParams && customerId == other.customerId && cursor == other.cursor && limit == other.limit && operationTimeGt == other.operationTimeGt && operationTimeGte == other.operationTimeGte && operationTimeLt == other.operationTimeLt && operationTimeLte == other.operationTimeLte && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
-    }
-
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(customerId, cursor, limit, operationTimeGt, operationTimeGte, operationTimeLt, operationTimeLte, additionalHeaders, additionalQueryParams) /* spotless:on */
-
-    override fun toString() =
-        "CustomerBalanceTransactionListParams{customerId=$customerId, cursor=$cursor, limit=$limit, operationTimeGt=$operationTimeGt, operationTimeGte=$operationTimeGte, operationTimeLt=$operationTimeLt, operationTimeLte=$operationTimeLte, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
-
     fun toBuilder() = Builder().from(this)
 
     companion object {
@@ -118,15 +105,16 @@ constructor(
         internal fun from(
             customerBalanceTransactionListParams: CustomerBalanceTransactionListParams
         ) = apply {
-            this.customerId = customerBalanceTransactionListParams.customerId
-            this.cursor = customerBalanceTransactionListParams.cursor
-            this.limit = customerBalanceTransactionListParams.limit
-            this.operationTimeGt = customerBalanceTransactionListParams.operationTimeGt
-            this.operationTimeGte = customerBalanceTransactionListParams.operationTimeGte
-            this.operationTimeLt = customerBalanceTransactionListParams.operationTimeLt
-            this.operationTimeLte = customerBalanceTransactionListParams.operationTimeLte
-            additionalHeaders(customerBalanceTransactionListParams.additionalHeaders)
-            additionalQueryParams(customerBalanceTransactionListParams.additionalQueryParams)
+            customerId = customerBalanceTransactionListParams.customerId
+            cursor = customerBalanceTransactionListParams.cursor
+            limit = customerBalanceTransactionListParams.limit
+            operationTimeGt = customerBalanceTransactionListParams.operationTimeGt
+            operationTimeGte = customerBalanceTransactionListParams.operationTimeGte
+            operationTimeLt = customerBalanceTransactionListParams.operationTimeLt
+            operationTimeLte = customerBalanceTransactionListParams.operationTimeLte
+            additionalHeaders = customerBalanceTransactionListParams.additionalHeaders.toBuilder()
+            additionalQueryParams =
+                customerBalanceTransactionListParams.additionalQueryParams.toBuilder()
         }
 
         fun customerId(customerId: String) = apply { this.customerId = customerId }
@@ -267,4 +255,17 @@ constructor(
                 additionalQueryParams.build(),
             )
     }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) {
+            return true
+        }
+
+        return /* spotless:off */ other is CustomerBalanceTransactionListParams && customerId == other.customerId && cursor == other.cursor && limit == other.limit && operationTimeGt == other.operationTimeGt && operationTimeGte == other.operationTimeGte && operationTimeLt == other.operationTimeLt && operationTimeLte == other.operationTimeLte && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
+    }
+
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(customerId, cursor, limit, operationTimeGt, operationTimeGte, operationTimeLt, operationTimeLte, additionalHeaders, additionalQueryParams) /* spotless:on */
+
+    override fun toString() =
+        "CustomerBalanceTransactionListParams{customerId=$customerId, cursor=$cursor, limit=$limit, operationTimeGt=$operationTimeGt, operationTimeGte=$operationTimeGte, operationTimeLt=$operationTimeLt, operationTimeLte=$operationTimeLte, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
 }
