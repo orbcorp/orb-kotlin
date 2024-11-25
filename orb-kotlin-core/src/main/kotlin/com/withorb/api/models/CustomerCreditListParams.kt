@@ -29,6 +29,10 @@ constructor(
 
     fun limit(): Long? = limit
 
+    fun _additionalHeaders(): Headers = additionalHeaders
+
+    fun _additionalQueryParams(): QueryParams = additionalQueryParams
+
     internal fun getHeaders(): Headers = additionalHeaders
 
     internal fun getQueryParams(): QueryParams {
@@ -47,25 +51,6 @@ constructor(
             else -> ""
         }
     }
-
-    fun _additionalHeaders(): Headers = additionalHeaders
-
-    fun _additionalQueryParams(): QueryParams = additionalQueryParams
-
-    override fun equals(other: Any?): Boolean {
-        if (this === other) {
-            return true
-        }
-
-        return /* spotless:off */ other is CustomerCreditListParams && this.customerId == other.customerId && this.currency == other.currency && this.cursor == other.cursor && this.includeAllBlocks == other.includeAllBlocks && this.limit == other.limit && this.additionalHeaders == other.additionalHeaders && this.additionalQueryParams == other.additionalQueryParams /* spotless:on */
-    }
-
-    override fun hashCode(): Int {
-        return /* spotless:off */ Objects.hash(customerId, currency, cursor, includeAllBlocks, limit, additionalHeaders, additionalQueryParams) /* spotless:on */
-    }
-
-    override fun toString() =
-        "CustomerCreditListParams{customerId=$customerId, currency=$currency, cursor=$cursor, includeAllBlocks=$includeAllBlocks, limit=$limit, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
 
     fun toBuilder() = Builder().from(this)
 
@@ -86,13 +71,13 @@ constructor(
         private var additionalQueryParams: QueryParams.Builder = QueryParams.builder()
 
         internal fun from(customerCreditListParams: CustomerCreditListParams) = apply {
-            this.customerId = customerCreditListParams.customerId
-            this.currency = customerCreditListParams.currency
-            this.cursor = customerCreditListParams.cursor
-            this.includeAllBlocks = customerCreditListParams.includeAllBlocks
-            this.limit = customerCreditListParams.limit
-            additionalHeaders(customerCreditListParams.additionalHeaders)
-            additionalQueryParams(customerCreditListParams.additionalQueryParams)
+            customerId = customerCreditListParams.customerId
+            currency = customerCreditListParams.currency
+            cursor = customerCreditListParams.cursor
+            includeAllBlocks = customerCreditListParams.includeAllBlocks
+            limit = customerCreditListParams.limit
+            additionalHeaders = customerCreditListParams.additionalHeaders.toBuilder()
+            additionalQueryParams = customerCreditListParams.additionalQueryParams.toBuilder()
         }
 
         fun customerId(customerId: String) = apply { this.customerId = customerId }
@@ -223,4 +208,17 @@ constructor(
                 additionalQueryParams.build(),
             )
     }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) {
+            return true
+        }
+
+        return /* spotless:off */ other is CustomerCreditListParams && customerId == other.customerId && currency == other.currency && cursor == other.cursor && includeAllBlocks == other.includeAllBlocks && limit == other.limit && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
+    }
+
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(customerId, currency, cursor, includeAllBlocks, limit, additionalHeaders, additionalQueryParams) /* spotless:on */
+
+    override fun toString() =
+        "CustomerCreditListParams{customerId=$customerId, currency=$currency, cursor=$cursor, includeAllBlocks=$includeAllBlocks, limit=$limit, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
 }

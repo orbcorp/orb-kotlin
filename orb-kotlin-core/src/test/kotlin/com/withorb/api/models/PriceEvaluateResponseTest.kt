@@ -18,7 +18,7 @@ class PriceEvaluateResponseTest {
                             .groupingValues(
                                 listOf(EvaluatePriceGroup.GroupingValue.ofString("string"))
                             )
-                            .quantity(42.23)
+                            .quantity(0.0)
                             .build()
                     )
                 )
@@ -29,7 +29,7 @@ class PriceEvaluateResponseTest {
                 EvaluatePriceGroup.builder()
                     .amount("amount")
                     .groupingValues(listOf(EvaluatePriceGroup.GroupingValue.ofString("string")))
-                    .quantity(42.23)
+                    .quantity(0.0)
                     .build()
             )
     }

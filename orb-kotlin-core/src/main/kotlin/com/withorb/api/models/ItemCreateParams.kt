@@ -25,6 +25,12 @@ constructor(
 
     fun name(): String = name
 
+    fun _additionalHeaders(): Headers = additionalHeaders
+
+    fun _additionalQueryParams(): QueryParams = additionalQueryParams
+
+    fun _additionalBodyProperties(): Map<String, JsonValue> = additionalBodyProperties
+
     internal fun getBody(): ItemCreateBody {
         return ItemCreateBody(name, additionalBodyProperties)
     }
@@ -94,42 +100,18 @@ constructor(
                 return true
             }
 
-            return /* spotless:off */ other is ItemCreateBody && this.name == other.name && this.additionalProperties == other.additionalProperties /* spotless:on */
+            return /* spotless:off */ other is ItemCreateBody && name == other.name && additionalProperties == other.additionalProperties /* spotless:on */
         }
 
-        private var hashCode: Int = 0
+        /* spotless:off */
+        private val hashCode: Int by lazy { Objects.hash(name, additionalProperties) }
+        /* spotless:on */
 
-        override fun hashCode(): Int {
-            if (hashCode == 0) {
-                hashCode = /* spotless:off */ Objects.hash(name, additionalProperties) /* spotless:on */
-            }
-            return hashCode
-        }
+        override fun hashCode(): Int = hashCode
 
         override fun toString() =
             "ItemCreateBody{name=$name, additionalProperties=$additionalProperties}"
     }
-
-    fun _additionalHeaders(): Headers = additionalHeaders
-
-    fun _additionalQueryParams(): QueryParams = additionalQueryParams
-
-    fun _additionalBodyProperties(): Map<String, JsonValue> = additionalBodyProperties
-
-    override fun equals(other: Any?): Boolean {
-        if (this === other) {
-            return true
-        }
-
-        return /* spotless:off */ other is ItemCreateParams && this.name == other.name && this.additionalHeaders == other.additionalHeaders && this.additionalQueryParams == other.additionalQueryParams && this.additionalBodyProperties == other.additionalBodyProperties /* spotless:on */
-    }
-
-    override fun hashCode(): Int {
-        return /* spotless:off */ Objects.hash(name, additionalHeaders, additionalQueryParams, additionalBodyProperties) /* spotless:on */
-    }
-
-    override fun toString() =
-        "ItemCreateParams{name=$name, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams, additionalBodyProperties=$additionalBodyProperties}"
 
     fun toBuilder() = Builder().from(this)
 
@@ -147,10 +129,10 @@ constructor(
         private var additionalBodyProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         internal fun from(itemCreateParams: ItemCreateParams) = apply {
-            this.name = itemCreateParams.name
-            additionalHeaders(itemCreateParams.additionalHeaders)
-            additionalQueryParams(itemCreateParams.additionalQueryParams)
-            additionalBodyProperties(itemCreateParams.additionalBodyProperties)
+            name = itemCreateParams.name
+            additionalHeaders = itemCreateParams.additionalHeaders.toBuilder()
+            additionalQueryParams = itemCreateParams.additionalQueryParams.toBuilder()
+            additionalBodyProperties = itemCreateParams.additionalBodyProperties.toMutableMap()
         }
 
         /** The name of the item. */
@@ -284,4 +266,17 @@ constructor(
                 additionalBodyProperties.toImmutable(),
             )
     }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) {
+            return true
+        }
+
+        return /* spotless:off */ other is ItemCreateParams && name == other.name && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams && additionalBodyProperties == other.additionalBodyProperties /* spotless:on */
+    }
+
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(name, additionalHeaders, additionalQueryParams, additionalBodyProperties) /* spotless:on */
+
+    override fun toString() =
+        "ItemCreateParams{name=$name, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams, additionalBodyProperties=$additionalBodyProperties}"
 }

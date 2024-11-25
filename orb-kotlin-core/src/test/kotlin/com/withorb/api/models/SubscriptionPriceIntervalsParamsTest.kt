@@ -39,7 +39,7 @@ class SubscriptionPriceIntervalsParamsTest {
                                         SubscriptionPriceIntervalsParams.Add.Discount
                                             .AmountDiscountCreationParams
                                             .builder()
-                                            .amountDiscount(42.23)
+                                            .amountDiscount(0.0)
                                             .discountType(
                                                 SubscriptionPriceIntervalsParams.Add.Discount
                                                     .AmountDiscountCreationParams
@@ -61,12 +61,12 @@ class SubscriptionPriceIntervalsParamsTest {
                                 SubscriptionPriceIntervalsParams.Add.FixedFeeQuantityTransition
                                     .builder()
                                     .effectiveDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
-                                    .quantity(123L)
+                                    .quantity(5L)
                                     .build()
                             )
                         )
-                        .maximumAmount(42.23)
-                        .minimumAmount(42.23)
+                        .maximumAmount(0.0)
+                        .minimumAmount(0.0)
                         .price(
                             SubscriptionPriceIntervalsParams.Add.Price.ofNewFloatingUnitPrice(
                                 SubscriptionPriceIntervalsParams.Add.Price.NewFloatingUnitPrice
@@ -101,7 +101,7 @@ class SubscriptionPriceIntervalsParamsTest {
                                             .NewFloatingUnitPrice
                                             .BillingCycleConfiguration
                                             .builder()
-                                            .duration(123L)
+                                            .duration(0L)
                                             .durationUnit(
                                                 SubscriptionPriceIntervalsParams.Add.Price
                                                     .NewFloatingUnitPrice
@@ -111,16 +111,16 @@ class SubscriptionPriceIntervalsParamsTest {
                                             )
                                             .build()
                                     )
-                                    .conversionRate(42.23)
+                                    .conversionRate(0.0)
                                     .externalPriceId("external_price_id")
-                                    .fixedPriceQuantity(42.23)
+                                    .fixedPriceQuantity(0.0)
                                     .invoiceGroupingKey("invoice_grouping_key")
                                     .invoicingCycleConfiguration(
                                         SubscriptionPriceIntervalsParams.Add.Price
                                             .NewFloatingUnitPrice
                                             .InvoicingCycleConfiguration
                                             .builder()
-                                            .duration(123L)
+                                            .duration(0L)
                                             .durationUnit(
                                                 SubscriptionPriceIntervalsParams.Add.Price
                                                     .NewFloatingUnitPrice
@@ -161,7 +161,7 @@ class SubscriptionPriceIntervalsParamsTest {
                                                 .PERCENTAGE_DISCOUNT
                                         )
                                         .appliesToPriceIds(listOf("string"))
-                                        .percentageDiscount(42.23)
+                                        .percentageDiscount(0.0)
                                         .build()
                                 )
                         )
@@ -182,7 +182,7 @@ class SubscriptionPriceIntervalsParamsTest {
                 listOf(
                     SubscriptionPriceIntervalsParams.Edit.builder()
                         .priceIntervalId("sdfs6wdjvn7ujokd")
-                        .billingCycleDay(123L)
+                        .billingCycleDay(0L)
                         .endDate(
                             SubscriptionPriceIntervalsParams.Edit.EndDate.ofDateTime(
                                 OffsetDateTime.parse("2019-12-27T18:11:19.117Z")
@@ -193,7 +193,7 @@ class SubscriptionPriceIntervalsParamsTest {
                                 SubscriptionPriceIntervalsParams.Edit.FixedFeeQuantityTransition
                                     .builder()
                                     .effectiveDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
-                                    .quantity(123L)
+                                    .quantity(5L)
                                     .build()
                             )
                         )
@@ -256,7 +256,7 @@ class SubscriptionPriceIntervalsParamsTest {
                                             SubscriptionPriceIntervalsParams.Add.Discount
                                                 .AmountDiscountCreationParams
                                                 .builder()
-                                                .amountDiscount(42.23)
+                                                .amountDiscount(0.0)
                                                 .discountType(
                                                     SubscriptionPriceIntervalsParams.Add.Discount
                                                         .AmountDiscountCreationParams
@@ -280,12 +280,12 @@ class SubscriptionPriceIntervalsParamsTest {
                                         .effectiveDate(
                                             OffsetDateTime.parse("2019-12-27T18:11:19.117Z")
                                         )
-                                        .quantity(123L)
+                                        .quantity(5L)
                                         .build()
                                 )
                             )
-                            .maximumAmount(42.23)
-                            .minimumAmount(42.23)
+                            .maximumAmount(0.0)
+                            .minimumAmount(0.0)
                             .price(
                                 SubscriptionPriceIntervalsParams.Add.Price.ofNewFloatingUnitPrice(
                                     SubscriptionPriceIntervalsParams.Add.Price.NewFloatingUnitPrice
@@ -320,7 +320,7 @@ class SubscriptionPriceIntervalsParamsTest {
                                                 .NewFloatingUnitPrice
                                                 .BillingCycleConfiguration
                                                 .builder()
-                                                .duration(123L)
+                                                .duration(0L)
                                                 .durationUnit(
                                                     SubscriptionPriceIntervalsParams.Add.Price
                                                         .NewFloatingUnitPrice
@@ -330,16 +330,16 @@ class SubscriptionPriceIntervalsParamsTest {
                                                 )
                                                 .build()
                                         )
-                                        .conversionRate(42.23)
+                                        .conversionRate(0.0)
                                         .externalPriceId("external_price_id")
-                                        .fixedPriceQuantity(42.23)
+                                        .fixedPriceQuantity(0.0)
                                         .invoiceGroupingKey("invoice_grouping_key")
                                         .invoicingCycleConfiguration(
                                             SubscriptionPriceIntervalsParams.Add.Price
                                                 .NewFloatingUnitPrice
                                                 .InvoicingCycleConfiguration
                                                 .builder()
-                                                .duration(123L)
+                                                .duration(0L)
                                                 .durationUnit(
                                                     SubscriptionPriceIntervalsParams.Add.Price
                                                         .NewFloatingUnitPrice
@@ -380,7 +380,7 @@ class SubscriptionPriceIntervalsParamsTest {
                                                     .PERCENTAGE_DISCOUNT
                                             )
                                             .appliesToPriceIds(listOf("string"))
-                                            .percentageDiscount(42.23)
+                                            .percentageDiscount(0.0)
                                             .build()
                                     )
                             )
@@ -401,7 +401,7 @@ class SubscriptionPriceIntervalsParamsTest {
                     listOf(
                         SubscriptionPriceIntervalsParams.Edit.builder()
                             .priceIntervalId("sdfs6wdjvn7ujokd")
-                            .billingCycleDay(123L)
+                            .billingCycleDay(0L)
                             .endDate(
                                 SubscriptionPriceIntervalsParams.Edit.EndDate.ofDateTime(
                                     OffsetDateTime.parse("2019-12-27T18:11:19.117Z")
@@ -414,7 +414,7 @@ class SubscriptionPriceIntervalsParamsTest {
                                         .effectiveDate(
                                             OffsetDateTime.parse("2019-12-27T18:11:19.117Z")
                                         )
-                                        .quantity(123L)
+                                        .quantity(5L)
                                         .build()
                                 )
                             )
@@ -472,7 +472,7 @@ class SubscriptionPriceIntervalsParamsTest {
                                         SubscriptionPriceIntervalsParams.Add.Discount
                                             .AmountDiscountCreationParams
                                             .builder()
-                                            .amountDiscount(42.23)
+                                            .amountDiscount(0.0)
                                             .discountType(
                                                 SubscriptionPriceIntervalsParams.Add.Discount
                                                     .AmountDiscountCreationParams
@@ -494,12 +494,12 @@ class SubscriptionPriceIntervalsParamsTest {
                                 SubscriptionPriceIntervalsParams.Add.FixedFeeQuantityTransition
                                     .builder()
                                     .effectiveDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
-                                    .quantity(123L)
+                                    .quantity(5L)
                                     .build()
                             )
                         )
-                        .maximumAmount(42.23)
-                        .minimumAmount(42.23)
+                        .maximumAmount(0.0)
+                        .minimumAmount(0.0)
                         .price(
                             SubscriptionPriceIntervalsParams.Add.Price.ofNewFloatingUnitPrice(
                                 SubscriptionPriceIntervalsParams.Add.Price.NewFloatingUnitPrice
@@ -534,7 +534,7 @@ class SubscriptionPriceIntervalsParamsTest {
                                             .NewFloatingUnitPrice
                                             .BillingCycleConfiguration
                                             .builder()
-                                            .duration(123L)
+                                            .duration(0L)
                                             .durationUnit(
                                                 SubscriptionPriceIntervalsParams.Add.Price
                                                     .NewFloatingUnitPrice
@@ -544,16 +544,16 @@ class SubscriptionPriceIntervalsParamsTest {
                                             )
                                             .build()
                                     )
-                                    .conversionRate(42.23)
+                                    .conversionRate(0.0)
                                     .externalPriceId("external_price_id")
-                                    .fixedPriceQuantity(42.23)
+                                    .fixedPriceQuantity(0.0)
                                     .invoiceGroupingKey("invoice_grouping_key")
                                     .invoicingCycleConfiguration(
                                         SubscriptionPriceIntervalsParams.Add.Price
                                             .NewFloatingUnitPrice
                                             .InvoicingCycleConfiguration
                                             .builder()
-                                            .duration(123L)
+                                            .duration(0L)
                                             .durationUnit(
                                                 SubscriptionPriceIntervalsParams.Add.Price
                                                     .NewFloatingUnitPrice
@@ -595,7 +595,7 @@ class SubscriptionPriceIntervalsParamsTest {
                                                 .PERCENTAGE_DISCOUNT
                                         )
                                         .appliesToPriceIds(listOf("string"))
-                                        .percentageDiscount(42.23)
+                                        .percentageDiscount(0.0)
                                         .build()
                                 )
                         )
@@ -617,7 +617,7 @@ class SubscriptionPriceIntervalsParamsTest {
                 listOf(
                     SubscriptionPriceIntervalsParams.Edit.builder()
                         .priceIntervalId("sdfs6wdjvn7ujokd")
-                        .billingCycleDay(123L)
+                        .billingCycleDay(0L)
                         .endDate(
                             SubscriptionPriceIntervalsParams.Edit.EndDate.ofDateTime(
                                 OffsetDateTime.parse("2019-12-27T18:11:19.117Z")
@@ -628,7 +628,7 @@ class SubscriptionPriceIntervalsParamsTest {
                                 SubscriptionPriceIntervalsParams.Edit.FixedFeeQuantityTransition
                                     .builder()
                                     .effectiveDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
-                                    .quantity(123L)
+                                    .quantity(5L)
                                     .build()
                             )
                         )

@@ -54,6 +54,10 @@ constructor(
 
     fun minimumAmount(): String? = minimumAmount
 
+    fun _additionalHeaders(): Headers = additionalHeaders
+
+    fun _additionalQueryParams(): QueryParams = additionalQueryParams
+
     internal fun getHeaders(): Headers = additionalHeaders
 
     internal fun getQueryParams(): QueryParams {
@@ -99,25 +103,6 @@ constructor(
         }
     }
 
-    fun _additionalHeaders(): Headers = additionalHeaders
-
-    fun _additionalQueryParams(): QueryParams = additionalQueryParams
-
-    override fun equals(other: Any?): Boolean {
-        if (this === other) {
-            return true
-        }
-
-        return /* spotless:off */ other is CustomerCreditLedgerListByExternalIdParams && this.externalCustomerId == other.externalCustomerId && this.createdAtGt == other.createdAtGt && this.createdAtGte == other.createdAtGte && this.createdAtLt == other.createdAtLt && this.createdAtLte == other.createdAtLte && this.currency == other.currency && this.cursor == other.cursor && this.entryStatus == other.entryStatus && this.entryType == other.entryType && this.limit == other.limit && this.minimumAmount == other.minimumAmount && this.additionalHeaders == other.additionalHeaders && this.additionalQueryParams == other.additionalQueryParams /* spotless:on */
-    }
-
-    override fun hashCode(): Int {
-        return /* spotless:off */ Objects.hash(externalCustomerId, createdAtGt, createdAtGte, createdAtLt, createdAtLte, currency, cursor, entryStatus, entryType, limit, minimumAmount, additionalHeaders, additionalQueryParams) /* spotless:on */
-    }
-
-    override fun toString() =
-        "CustomerCreditLedgerListByExternalIdParams{externalCustomerId=$externalCustomerId, createdAtGt=$createdAtGt, createdAtGte=$createdAtGte, createdAtLt=$createdAtLt, createdAtLte=$createdAtLte, currency=$currency, cursor=$cursor, entryStatus=$entryStatus, entryType=$entryType, limit=$limit, minimumAmount=$minimumAmount, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
-
     fun toBuilder() = Builder().from(this)
 
     companion object {
@@ -145,19 +130,21 @@ constructor(
         internal fun from(
             customerCreditLedgerListByExternalIdParams: CustomerCreditLedgerListByExternalIdParams
         ) = apply {
-            this.externalCustomerId = customerCreditLedgerListByExternalIdParams.externalCustomerId
-            this.createdAtGt = customerCreditLedgerListByExternalIdParams.createdAtGt
-            this.createdAtGte = customerCreditLedgerListByExternalIdParams.createdAtGte
-            this.createdAtLt = customerCreditLedgerListByExternalIdParams.createdAtLt
-            this.createdAtLte = customerCreditLedgerListByExternalIdParams.createdAtLte
-            this.currency = customerCreditLedgerListByExternalIdParams.currency
-            this.cursor = customerCreditLedgerListByExternalIdParams.cursor
-            this.entryStatus = customerCreditLedgerListByExternalIdParams.entryStatus
-            this.entryType = customerCreditLedgerListByExternalIdParams.entryType
-            this.limit = customerCreditLedgerListByExternalIdParams.limit
-            this.minimumAmount = customerCreditLedgerListByExternalIdParams.minimumAmount
-            additionalHeaders(customerCreditLedgerListByExternalIdParams.additionalHeaders)
-            additionalQueryParams(customerCreditLedgerListByExternalIdParams.additionalQueryParams)
+            externalCustomerId = customerCreditLedgerListByExternalIdParams.externalCustomerId
+            createdAtGt = customerCreditLedgerListByExternalIdParams.createdAtGt
+            createdAtGte = customerCreditLedgerListByExternalIdParams.createdAtGte
+            createdAtLt = customerCreditLedgerListByExternalIdParams.createdAtLt
+            createdAtLte = customerCreditLedgerListByExternalIdParams.createdAtLte
+            currency = customerCreditLedgerListByExternalIdParams.currency
+            cursor = customerCreditLedgerListByExternalIdParams.cursor
+            entryStatus = customerCreditLedgerListByExternalIdParams.entryStatus
+            entryType = customerCreditLedgerListByExternalIdParams.entryType
+            limit = customerCreditLedgerListByExternalIdParams.limit
+            minimumAmount = customerCreditLedgerListByExternalIdParams.minimumAmount
+            additionalHeaders =
+                customerCreditLedgerListByExternalIdParams.additionalHeaders.toBuilder()
+            additionalQueryParams =
+                customerCreditLedgerListByExternalIdParams.additionalQueryParams.toBuilder()
         }
 
         fun externalCustomerId(externalCustomerId: String) = apply {
@@ -321,7 +308,7 @@ constructor(
                 return true
             }
 
-            return /* spotless:off */ other is EntryStatus && this.value == other.value /* spotless:on */
+            return /* spotless:off */ other is EntryStatus && value == other.value /* spotless:on */
         }
 
         override fun hashCode() = value.hashCode()
@@ -378,7 +365,7 @@ constructor(
                 return true
             }
 
-            return /* spotless:off */ other is EntryType && this.value == other.value /* spotless:on */
+            return /* spotless:off */ other is EntryType && value == other.value /* spotless:on */
         }
 
         override fun hashCode() = value.hashCode()
@@ -451,4 +438,17 @@ constructor(
 
         fun asString(): String = _value().asStringOrThrow()
     }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) {
+            return true
+        }
+
+        return /* spotless:off */ other is CustomerCreditLedgerListByExternalIdParams && externalCustomerId == other.externalCustomerId && createdAtGt == other.createdAtGt && createdAtGte == other.createdAtGte && createdAtLt == other.createdAtLt && createdAtLte == other.createdAtLte && currency == other.currency && cursor == other.cursor && entryStatus == other.entryStatus && entryType == other.entryType && limit == other.limit && minimumAmount == other.minimumAmount && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
+    }
+
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(externalCustomerId, createdAtGt, createdAtGte, createdAtLt, createdAtLte, currency, cursor, entryStatus, entryType, limit, minimumAmount, additionalHeaders, additionalQueryParams) /* spotless:on */
+
+    override fun toString() =
+        "CustomerCreditLedgerListByExternalIdParams{externalCustomerId=$externalCustomerId, createdAtGt=$createdAtGt, createdAtGte=$createdAtGte, createdAtLt=$createdAtLt, createdAtLte=$createdAtLte, currency=$currency, cursor=$cursor, entryStatus=$entryStatus, entryType=$entryType, limit=$limit, minimumAmount=$minimumAmount, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
 }

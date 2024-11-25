@@ -37,6 +37,10 @@ constructor(
 
     fun startDateLte(): OffsetDateTime? = startDateLte
 
+    fun _additionalHeaders(): Headers = additionalHeaders
+
+    fun _additionalQueryParams(): QueryParams = additionalQueryParams
+
     internal fun getHeaders(): Headers = additionalHeaders
 
     internal fun getQueryParams(): QueryParams {
@@ -78,25 +82,6 @@ constructor(
         }
     }
 
-    fun _additionalHeaders(): Headers = additionalHeaders
-
-    fun _additionalQueryParams(): QueryParams = additionalQueryParams
-
-    override fun equals(other: Any?): Boolean {
-        if (this === other) {
-            return true
-        }
-
-        return /* spotless:off */ other is SubscriptionFetchScheduleParams && this.subscriptionId == other.subscriptionId && this.cursor == other.cursor && this.limit == other.limit && this.startDateGt == other.startDateGt && this.startDateGte == other.startDateGte && this.startDateLt == other.startDateLt && this.startDateLte == other.startDateLte && this.additionalHeaders == other.additionalHeaders && this.additionalQueryParams == other.additionalQueryParams /* spotless:on */
-    }
-
-    override fun hashCode(): Int {
-        return /* spotless:off */ Objects.hash(subscriptionId, cursor, limit, startDateGt, startDateGte, startDateLt, startDateLte, additionalHeaders, additionalQueryParams) /* spotless:on */
-    }
-
-    override fun toString() =
-        "SubscriptionFetchScheduleParams{subscriptionId=$subscriptionId, cursor=$cursor, limit=$limit, startDateGt=$startDateGt, startDateGte=$startDateGte, startDateLt=$startDateLt, startDateLte=$startDateLte, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
-
     fun toBuilder() = Builder().from(this)
 
     companion object {
@@ -119,15 +104,16 @@ constructor(
 
         internal fun from(subscriptionFetchScheduleParams: SubscriptionFetchScheduleParams) =
             apply {
-                this.subscriptionId = subscriptionFetchScheduleParams.subscriptionId
-                this.cursor = subscriptionFetchScheduleParams.cursor
-                this.limit = subscriptionFetchScheduleParams.limit
-                this.startDateGt = subscriptionFetchScheduleParams.startDateGt
-                this.startDateGte = subscriptionFetchScheduleParams.startDateGte
-                this.startDateLt = subscriptionFetchScheduleParams.startDateLt
-                this.startDateLte = subscriptionFetchScheduleParams.startDateLte
-                additionalHeaders(subscriptionFetchScheduleParams.additionalHeaders)
-                additionalQueryParams(subscriptionFetchScheduleParams.additionalQueryParams)
+                subscriptionId = subscriptionFetchScheduleParams.subscriptionId
+                cursor = subscriptionFetchScheduleParams.cursor
+                limit = subscriptionFetchScheduleParams.limit
+                startDateGt = subscriptionFetchScheduleParams.startDateGt
+                startDateGte = subscriptionFetchScheduleParams.startDateGte
+                startDateLt = subscriptionFetchScheduleParams.startDateLt
+                startDateLte = subscriptionFetchScheduleParams.startDateLte
+                additionalHeaders = subscriptionFetchScheduleParams.additionalHeaders.toBuilder()
+                additionalQueryParams =
+                    subscriptionFetchScheduleParams.additionalQueryParams.toBuilder()
             }
 
         fun subscriptionId(subscriptionId: String) = apply { this.subscriptionId = subscriptionId }
@@ -260,4 +246,17 @@ constructor(
                 additionalQueryParams.build(),
             )
     }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) {
+            return true
+        }
+
+        return /* spotless:off */ other is SubscriptionFetchScheduleParams && subscriptionId == other.subscriptionId && cursor == other.cursor && limit == other.limit && startDateGt == other.startDateGt && startDateGte == other.startDateGte && startDateLt == other.startDateLt && startDateLte == other.startDateLte && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
+    }
+
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(subscriptionId, cursor, limit, startDateGt, startDateGte, startDateLt, startDateLte, additionalHeaders, additionalQueryParams) /* spotless:on */
+
+    override fun toString() =
+        "SubscriptionFetchScheduleParams{subscriptionId=$subscriptionId, cursor=$cursor, limit=$limit, startDateGt=$startDateGt, startDateGte=$startDateGte, startDateLt=$startDateLt, startDateLte=$startDateLte, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
 }

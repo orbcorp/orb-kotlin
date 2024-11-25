@@ -32,6 +32,12 @@ constructor(
 
     fun debug(): Boolean? = debug
 
+    fun _additionalHeaders(): Headers = additionalHeaders
+
+    fun _additionalQueryParams(): QueryParams = additionalQueryParams
+
+    fun _additionalBodyProperties(): Map<String, JsonValue> = additionalBodyProperties
+
     internal fun getBody(): EventIngestBody {
         return EventIngestBody(events, additionalBodyProperties)
     }
@@ -105,42 +111,18 @@ constructor(
                 return true
             }
 
-            return /* spotless:off */ other is EventIngestBody && this.events == other.events && this.additionalProperties == other.additionalProperties /* spotless:on */
+            return /* spotless:off */ other is EventIngestBody && events == other.events && additionalProperties == other.additionalProperties /* spotless:on */
         }
 
-        private var hashCode: Int = 0
+        /* spotless:off */
+        private val hashCode: Int by lazy { Objects.hash(events, additionalProperties) }
+        /* spotless:on */
 
-        override fun hashCode(): Int {
-            if (hashCode == 0) {
-                hashCode = /* spotless:off */ Objects.hash(events, additionalProperties) /* spotless:on */
-            }
-            return hashCode
-        }
+        override fun hashCode(): Int = hashCode
 
         override fun toString() =
             "EventIngestBody{events=$events, additionalProperties=$additionalProperties}"
     }
-
-    fun _additionalHeaders(): Headers = additionalHeaders
-
-    fun _additionalQueryParams(): QueryParams = additionalQueryParams
-
-    fun _additionalBodyProperties(): Map<String, JsonValue> = additionalBodyProperties
-
-    override fun equals(other: Any?): Boolean {
-        if (this === other) {
-            return true
-        }
-
-        return /* spotless:off */ other is EventIngestParams && this.events == other.events && this.backfillId == other.backfillId && this.debug == other.debug && this.additionalHeaders == other.additionalHeaders && this.additionalQueryParams == other.additionalQueryParams && this.additionalBodyProperties == other.additionalBodyProperties /* spotless:on */
-    }
-
-    override fun hashCode(): Int {
-        return /* spotless:off */ Objects.hash(events, backfillId, debug, additionalHeaders, additionalQueryParams, additionalBodyProperties) /* spotless:on */
-    }
-
-    override fun toString() =
-        "EventIngestParams{events=$events, backfillId=$backfillId, debug=$debug, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams, additionalBodyProperties=$additionalBodyProperties}"
 
     fun toBuilder() = Builder().from(this)
 
@@ -160,12 +142,12 @@ constructor(
         private var additionalBodyProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         internal fun from(eventIngestParams: EventIngestParams) = apply {
-            this.events(eventIngestParams.events)
-            this.backfillId = eventIngestParams.backfillId
-            this.debug = eventIngestParams.debug
-            additionalHeaders(eventIngestParams.additionalHeaders)
-            additionalQueryParams(eventIngestParams.additionalQueryParams)
-            additionalBodyProperties(eventIngestParams.additionalBodyProperties)
+            events = eventIngestParams.events.toMutableList()
+            backfillId = eventIngestParams.backfillId
+            debug = eventIngestParams.debug
+            additionalHeaders = eventIngestParams.additionalHeaders.toBuilder()
+            additionalQueryParams = eventIngestParams.additionalQueryParams.toBuilder()
+            additionalBodyProperties = eventIngestParams.additionalBodyProperties.toMutableMap()
         }
 
         fun events(events: List<Event>) = apply {
@@ -306,7 +288,7 @@ constructor(
 
         fun build(): EventIngestParams =
             EventIngestParams(
-                checkNotNull(events) { "`events` is required but was not set" }.toImmutable(),
+                events.toImmutable(),
                 backfillId,
                 debug,
                 additionalHeaders.build(),
@@ -460,19 +442,29 @@ constructor(
                 return true
             }
 
-            return /* spotless:off */ other is Event && this.customerId == other.customerId && this.externalCustomerId == other.externalCustomerId && this.eventName == other.eventName && this.timestamp == other.timestamp && this.properties == other.properties && this.idempotencyKey == other.idempotencyKey && this.additionalProperties == other.additionalProperties /* spotless:on */
+            return /* spotless:off */ other is Event && customerId == other.customerId && externalCustomerId == other.externalCustomerId && eventName == other.eventName && timestamp == other.timestamp && properties == other.properties && idempotencyKey == other.idempotencyKey && additionalProperties == other.additionalProperties /* spotless:on */
         }
 
-        private var hashCode: Int = 0
+        /* spotless:off */
+        private val hashCode: Int by lazy { Objects.hash(customerId, externalCustomerId, eventName, timestamp, properties, idempotencyKey, additionalProperties) }
+        /* spotless:on */
 
-        override fun hashCode(): Int {
-            if (hashCode == 0) {
-                hashCode = /* spotless:off */ Objects.hash(customerId, externalCustomerId, eventName, timestamp, properties, idempotencyKey, additionalProperties) /* spotless:on */
-            }
-            return hashCode
-        }
+        override fun hashCode(): Int = hashCode
 
         override fun toString() =
             "Event{customerId=$customerId, externalCustomerId=$externalCustomerId, eventName=$eventName, timestamp=$timestamp, properties=$properties, idempotencyKey=$idempotencyKey, additionalProperties=$additionalProperties}"
     }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) {
+            return true
+        }
+
+        return /* spotless:off */ other is EventIngestParams && events == other.events && backfillId == other.backfillId && debug == other.debug && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams && additionalBodyProperties == other.additionalBodyProperties /* spotless:on */
+    }
+
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(events, backfillId, debug, additionalHeaders, additionalQueryParams, additionalBodyProperties) /* spotless:on */
+
+    override fun toString() =
+        "EventIngestParams{events=$events, backfillId=$backfillId, debug=$debug, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams, additionalBodyProperties=$additionalBodyProperties}"
 }

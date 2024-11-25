@@ -16,7 +16,7 @@ class CustomerCreditLedgerCreateEntryParamsTest {
             .forAddIncrementCreditLedgerEntryRequestParams(
                 CustomerCreditLedgerCreateEntryParams.AddIncrementCreditLedgerEntryRequestParams
                     .builder()
-                    .amount(42.23)
+                    .amount(0.0)
                     .entryType(
                         CustomerCreditLedgerCreateEntryParams
                             .AddIncrementCreditLedgerEntryRequestParams
@@ -33,7 +33,7 @@ class CustomerCreditLedgerCreateEntryParamsTest {
                             .InvoiceSettings
                             .builder()
                             .autoCollection(true)
-                            .netTerms(123L)
+                            .netTerms(0L)
                             .memo("memo")
                             .requireSuccessfulPayment(true)
                             .build()

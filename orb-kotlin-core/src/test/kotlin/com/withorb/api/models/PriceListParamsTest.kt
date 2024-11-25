@@ -11,15 +11,15 @@ class PriceListParamsTest {
 
     @Test
     fun createPriceListParams() {
-        PriceListParams.builder().cursor("cursor").limit(123L).build()
+        PriceListParams.builder().cursor("cursor").limit(1L).build()
     }
 
     @Test
     fun getQueryParams() {
-        val params = PriceListParams.builder().cursor("cursor").limit(123L).build()
+        val params = PriceListParams.builder().cursor("cursor").limit(1L).build()
         val expected = QueryParams.builder()
         expected.put("cursor", "cursor")
-        expected.put("limit", "123")
+        expected.put("limit", "1")
         assertThat(params.getQueryParams()).isEqualTo(expected.build())
     }
 

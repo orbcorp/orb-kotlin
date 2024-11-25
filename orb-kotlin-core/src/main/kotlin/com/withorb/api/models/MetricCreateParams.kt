@@ -37,6 +37,12 @@ constructor(
 
     fun metadata(): Metadata? = metadata
 
+    fun _additionalHeaders(): Headers = additionalHeaders
+
+    fun _additionalQueryParams(): QueryParams = additionalQueryParams
+
+    fun _additionalBodyProperties(): Map<String, JsonValue> = additionalBodyProperties
+
     internal fun getBody(): MetricCreateBody {
         return MetricCreateBody(
             description,
@@ -163,42 +169,18 @@ constructor(
                 return true
             }
 
-            return /* spotless:off */ other is MetricCreateBody && this.description == other.description && this.itemId == other.itemId && this.name == other.name && this.sql == other.sql && this.metadata == other.metadata && this.additionalProperties == other.additionalProperties /* spotless:on */
+            return /* spotless:off */ other is MetricCreateBody && description == other.description && itemId == other.itemId && name == other.name && sql == other.sql && metadata == other.metadata && additionalProperties == other.additionalProperties /* spotless:on */
         }
 
-        private var hashCode: Int = 0
+        /* spotless:off */
+        private val hashCode: Int by lazy { Objects.hash(description, itemId, name, sql, metadata, additionalProperties) }
+        /* spotless:on */
 
-        override fun hashCode(): Int {
-            if (hashCode == 0) {
-                hashCode = /* spotless:off */ Objects.hash(description, itemId, name, sql, metadata, additionalProperties) /* spotless:on */
-            }
-            return hashCode
-        }
+        override fun hashCode(): Int = hashCode
 
         override fun toString() =
             "MetricCreateBody{description=$description, itemId=$itemId, name=$name, sql=$sql, metadata=$metadata, additionalProperties=$additionalProperties}"
     }
-
-    fun _additionalHeaders(): Headers = additionalHeaders
-
-    fun _additionalQueryParams(): QueryParams = additionalQueryParams
-
-    fun _additionalBodyProperties(): Map<String, JsonValue> = additionalBodyProperties
-
-    override fun equals(other: Any?): Boolean {
-        if (this === other) {
-            return true
-        }
-
-        return /* spotless:off */ other is MetricCreateParams && this.description == other.description && this.itemId == other.itemId && this.name == other.name && this.sql == other.sql && this.metadata == other.metadata && this.additionalHeaders == other.additionalHeaders && this.additionalQueryParams == other.additionalQueryParams && this.additionalBodyProperties == other.additionalBodyProperties /* spotless:on */
-    }
-
-    override fun hashCode(): Int {
-        return /* spotless:off */ Objects.hash(description, itemId, name, sql, metadata, additionalHeaders, additionalQueryParams, additionalBodyProperties) /* spotless:on */
-    }
-
-    override fun toString() =
-        "MetricCreateParams{description=$description, itemId=$itemId, name=$name, sql=$sql, metadata=$metadata, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams, additionalBodyProperties=$additionalBodyProperties}"
 
     fun toBuilder() = Builder().from(this)
 
@@ -220,14 +202,14 @@ constructor(
         private var additionalBodyProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         internal fun from(metricCreateParams: MetricCreateParams) = apply {
-            this.description = metricCreateParams.description
-            this.itemId = metricCreateParams.itemId
-            this.name = metricCreateParams.name
-            this.sql = metricCreateParams.sql
-            this.metadata = metricCreateParams.metadata
-            additionalHeaders(metricCreateParams.additionalHeaders)
-            additionalQueryParams(metricCreateParams.additionalQueryParams)
-            additionalBodyProperties(metricCreateParams.additionalBodyProperties)
+            description = metricCreateParams.description
+            itemId = metricCreateParams.itemId
+            name = metricCreateParams.name
+            sql = metricCreateParams.sql
+            metadata = metricCreateParams.metadata
+            additionalHeaders = metricCreateParams.additionalHeaders.toBuilder()
+            additionalQueryParams = metricCreateParams.additionalQueryParams.toBuilder()
+            additionalBodyProperties = metricCreateParams.additionalBodyProperties.toMutableMap()
         }
 
         /** A description of the metric. */
@@ -435,18 +417,28 @@ constructor(
                 return true
             }
 
-            return /* spotless:off */ other is Metadata && this.additionalProperties == other.additionalProperties /* spotless:on */
+            return /* spotless:off */ other is Metadata && additionalProperties == other.additionalProperties /* spotless:on */
         }
 
-        private var hashCode: Int = 0
+        /* spotless:off */
+        private val hashCode: Int by lazy { Objects.hash(additionalProperties) }
+        /* spotless:on */
 
-        override fun hashCode(): Int {
-            if (hashCode == 0) {
-                hashCode = /* spotless:off */ Objects.hash(additionalProperties) /* spotless:on */
-            }
-            return hashCode
-        }
+        override fun hashCode(): Int = hashCode
 
         override fun toString() = "Metadata{additionalProperties=$additionalProperties}"
     }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) {
+            return true
+        }
+
+        return /* spotless:off */ other is MetricCreateParams && description == other.description && itemId == other.itemId && name == other.name && sql == other.sql && metadata == other.metadata && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams && additionalBodyProperties == other.additionalBodyProperties /* spotless:on */
+    }
+
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(description, itemId, name, sql, metadata, additionalHeaders, additionalQueryParams, additionalBodyProperties) /* spotless:on */
+
+    override fun toString() =
+        "MetricCreateParams{description=$description, itemId=$itemId, name=$name, sql=$sql, metadata=$metadata, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams, additionalBodyProperties=$additionalBodyProperties}"
 }

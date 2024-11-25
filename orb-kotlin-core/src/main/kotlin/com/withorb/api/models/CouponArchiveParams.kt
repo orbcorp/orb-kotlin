@@ -20,6 +20,12 @@ constructor(
 
     fun couponId(): String = couponId
 
+    fun _additionalHeaders(): Headers = additionalHeaders
+
+    fun _additionalQueryParams(): QueryParams = additionalQueryParams
+
+    fun _additionalBodyProperties(): Map<String, JsonValue> = additionalBodyProperties
+
     internal fun getBody(): Map<String, JsonValue>? {
         return additionalBodyProperties.ifEmpty { null }
     }
@@ -34,27 +40,6 @@ constructor(
             else -> ""
         }
     }
-
-    fun _additionalHeaders(): Headers = additionalHeaders
-
-    fun _additionalQueryParams(): QueryParams = additionalQueryParams
-
-    fun _additionalBodyProperties(): Map<String, JsonValue> = additionalBodyProperties
-
-    override fun equals(other: Any?): Boolean {
-        if (this === other) {
-            return true
-        }
-
-        return /* spotless:off */ other is CouponArchiveParams && this.couponId == other.couponId && this.additionalHeaders == other.additionalHeaders && this.additionalQueryParams == other.additionalQueryParams && this.additionalBodyProperties == other.additionalBodyProperties /* spotless:on */
-    }
-
-    override fun hashCode(): Int {
-        return /* spotless:off */ Objects.hash(couponId, additionalHeaders, additionalQueryParams, additionalBodyProperties) /* spotless:on */
-    }
-
-    override fun toString() =
-        "CouponArchiveParams{couponId=$couponId, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams, additionalBodyProperties=$additionalBodyProperties}"
 
     fun toBuilder() = Builder().from(this)
 
@@ -72,10 +57,10 @@ constructor(
         private var additionalBodyProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         internal fun from(couponArchiveParams: CouponArchiveParams) = apply {
-            this.couponId = couponArchiveParams.couponId
-            additionalHeaders(couponArchiveParams.additionalHeaders)
-            additionalQueryParams(couponArchiveParams.additionalQueryParams)
-            additionalBodyProperties(couponArchiveParams.additionalBodyProperties)
+            couponId = couponArchiveParams.couponId
+            additionalHeaders = couponArchiveParams.additionalHeaders.toBuilder()
+            additionalQueryParams = couponArchiveParams.additionalQueryParams.toBuilder()
+            additionalBodyProperties = couponArchiveParams.additionalBodyProperties.toMutableMap()
         }
 
         fun couponId(couponId: String) = apply { this.couponId = couponId }
@@ -208,4 +193,17 @@ constructor(
                 additionalBodyProperties.toImmutable(),
             )
     }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) {
+            return true
+        }
+
+        return /* spotless:off */ other is CouponArchiveParams && couponId == other.couponId && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams && additionalBodyProperties == other.additionalBodyProperties /* spotless:on */
+    }
+
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(couponId, additionalHeaders, additionalQueryParams, additionalBodyProperties) /* spotless:on */
+
+    override fun toString() =
+        "CouponArchiveParams{couponId=$couponId, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams, additionalBodyProperties=$additionalBodyProperties}"
 }

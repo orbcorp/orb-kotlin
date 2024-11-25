@@ -36,6 +36,10 @@ constructor(
 
     fun viewMode(): ViewMode? = viewMode
 
+    fun _additionalHeaders(): Headers = additionalHeaders
+
+    fun _additionalQueryParams(): QueryParams = additionalQueryParams
+
     internal fun getHeaders(): Headers = additionalHeaders
 
     internal fun getQueryParams(): QueryParams {
@@ -65,25 +69,6 @@ constructor(
         }
     }
 
-    fun _additionalHeaders(): Headers = additionalHeaders
-
-    fun _additionalQueryParams(): QueryParams = additionalQueryParams
-
-    override fun equals(other: Any?): Boolean {
-        if (this === other) {
-            return true
-        }
-
-        return /* spotless:off */ other is SubscriptionFetchCostsParams && this.subscriptionId == other.subscriptionId && this.currency == other.currency && this.timeframeEnd == other.timeframeEnd && this.timeframeStart == other.timeframeStart && this.viewMode == other.viewMode && this.additionalHeaders == other.additionalHeaders && this.additionalQueryParams == other.additionalQueryParams /* spotless:on */
-    }
-
-    override fun hashCode(): Int {
-        return /* spotless:off */ Objects.hash(subscriptionId, currency, timeframeEnd, timeframeStart, viewMode, additionalHeaders, additionalQueryParams) /* spotless:on */
-    }
-
-    override fun toString() =
-        "SubscriptionFetchCostsParams{subscriptionId=$subscriptionId, currency=$currency, timeframeEnd=$timeframeEnd, timeframeStart=$timeframeStart, viewMode=$viewMode, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
-
     fun toBuilder() = Builder().from(this)
 
     companion object {
@@ -103,13 +88,13 @@ constructor(
         private var additionalQueryParams: QueryParams.Builder = QueryParams.builder()
 
         internal fun from(subscriptionFetchCostsParams: SubscriptionFetchCostsParams) = apply {
-            this.subscriptionId = subscriptionFetchCostsParams.subscriptionId
-            this.currency = subscriptionFetchCostsParams.currency
-            this.timeframeEnd = subscriptionFetchCostsParams.timeframeEnd
-            this.timeframeStart = subscriptionFetchCostsParams.timeframeStart
-            this.viewMode = subscriptionFetchCostsParams.viewMode
-            additionalHeaders(subscriptionFetchCostsParams.additionalHeaders)
-            additionalQueryParams(subscriptionFetchCostsParams.additionalQueryParams)
+            subscriptionId = subscriptionFetchCostsParams.subscriptionId
+            currency = subscriptionFetchCostsParams.currency
+            timeframeEnd = subscriptionFetchCostsParams.timeframeEnd
+            timeframeStart = subscriptionFetchCostsParams.timeframeStart
+            viewMode = subscriptionFetchCostsParams.viewMode
+            additionalHeaders = subscriptionFetchCostsParams.additionalHeaders.toBuilder()
+            additionalQueryParams = subscriptionFetchCostsParams.additionalQueryParams.toBuilder()
         }
 
         fun subscriptionId(subscriptionId: String) = apply { this.subscriptionId = subscriptionId }
@@ -255,7 +240,7 @@ constructor(
                 return true
             }
 
-            return /* spotless:off */ other is ViewMode && this.value == other.value /* spotless:on */
+            return /* spotless:off */ other is ViewMode && value == other.value /* spotless:on */
         }
 
         override fun hashCode() = value.hashCode()
@@ -298,4 +283,17 @@ constructor(
 
         fun asString(): String = _value().asStringOrThrow()
     }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) {
+            return true
+        }
+
+        return /* spotless:off */ other is SubscriptionFetchCostsParams && subscriptionId == other.subscriptionId && currency == other.currency && timeframeEnd == other.timeframeEnd && timeframeStart == other.timeframeStart && viewMode == other.viewMode && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
+    }
+
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(subscriptionId, currency, timeframeEnd, timeframeStart, viewMode, additionalHeaders, additionalQueryParams) /* spotless:on */
+
+    override fun toString() =
+        "SubscriptionFetchCostsParams{subscriptionId=$subscriptionId, currency=$currency, timeframeEnd=$timeframeEnd, timeframeStart=$timeframeStart, viewMode=$viewMode, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
 }

@@ -17,6 +17,10 @@ constructor(
 
     fun priceId(): String = priceId
 
+    fun _additionalHeaders(): Headers = additionalHeaders
+
+    fun _additionalQueryParams(): QueryParams = additionalQueryParams
+
     internal fun getHeaders(): Headers = additionalHeaders
 
     internal fun getQueryParams(): QueryParams = additionalQueryParams
@@ -27,25 +31,6 @@ constructor(
             else -> ""
         }
     }
-
-    fun _additionalHeaders(): Headers = additionalHeaders
-
-    fun _additionalQueryParams(): QueryParams = additionalQueryParams
-
-    override fun equals(other: Any?): Boolean {
-        if (this === other) {
-            return true
-        }
-
-        return /* spotless:off */ other is PriceFetchParams && this.priceId == other.priceId && this.additionalHeaders == other.additionalHeaders && this.additionalQueryParams == other.additionalQueryParams /* spotless:on */
-    }
-
-    override fun hashCode(): Int {
-        return /* spotless:off */ Objects.hash(priceId, additionalHeaders, additionalQueryParams) /* spotless:on */
-    }
-
-    override fun toString() =
-        "PriceFetchParams{priceId=$priceId, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
 
     fun toBuilder() = Builder().from(this)
 
@@ -62,9 +47,9 @@ constructor(
         private var additionalQueryParams: QueryParams.Builder = QueryParams.builder()
 
         internal fun from(priceFetchParams: PriceFetchParams) = apply {
-            this.priceId = priceFetchParams.priceId
-            additionalHeaders(priceFetchParams.additionalHeaders)
-            additionalQueryParams(priceFetchParams.additionalQueryParams)
+            priceId = priceFetchParams.priceId
+            additionalHeaders = priceFetchParams.additionalHeaders.toBuilder()
+            additionalQueryParams = priceFetchParams.additionalQueryParams.toBuilder()
         }
 
         fun priceId(priceId: String) = apply { this.priceId = priceId }
@@ -174,4 +159,17 @@ constructor(
                 additionalQueryParams.build(),
             )
     }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) {
+            return true
+        }
+
+        return /* spotless:off */ other is PriceFetchParams && priceId == other.priceId && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
+    }
+
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(priceId, additionalHeaders, additionalQueryParams) /* spotless:on */
+
+    override fun toString() =
+        "PriceFetchParams{priceId=$priceId, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
 }

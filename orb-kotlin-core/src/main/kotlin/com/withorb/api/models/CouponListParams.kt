@@ -26,6 +26,10 @@ constructor(
 
     fun showArchived(): Boolean? = showArchived
 
+    fun _additionalHeaders(): Headers = additionalHeaders
+
+    fun _additionalQueryParams(): QueryParams = additionalQueryParams
+
     internal fun getHeaders(): Headers = additionalHeaders
 
     internal fun getQueryParams(): QueryParams {
@@ -37,25 +41,6 @@ constructor(
         queryParams.putAll(additionalQueryParams)
         return queryParams.build()
     }
-
-    fun _additionalHeaders(): Headers = additionalHeaders
-
-    fun _additionalQueryParams(): QueryParams = additionalQueryParams
-
-    override fun equals(other: Any?): Boolean {
-        if (this === other) {
-            return true
-        }
-
-        return /* spotless:off */ other is CouponListParams && this.cursor == other.cursor && this.limit == other.limit && this.redemptionCode == other.redemptionCode && this.showArchived == other.showArchived && this.additionalHeaders == other.additionalHeaders && this.additionalQueryParams == other.additionalQueryParams /* spotless:on */
-    }
-
-    override fun hashCode(): Int {
-        return /* spotless:off */ Objects.hash(cursor, limit, redemptionCode, showArchived, additionalHeaders, additionalQueryParams) /* spotless:on */
-    }
-
-    override fun toString() =
-        "CouponListParams{cursor=$cursor, limit=$limit, redemptionCode=$redemptionCode, showArchived=$showArchived, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
 
     fun toBuilder() = Builder().from(this)
 
@@ -75,12 +60,12 @@ constructor(
         private var additionalQueryParams: QueryParams.Builder = QueryParams.builder()
 
         internal fun from(couponListParams: CouponListParams) = apply {
-            this.cursor = couponListParams.cursor
-            this.limit = couponListParams.limit
-            this.redemptionCode = couponListParams.redemptionCode
-            this.showArchived = couponListParams.showArchived
-            additionalHeaders(couponListParams.additionalHeaders)
-            additionalQueryParams(couponListParams.additionalQueryParams)
+            cursor = couponListParams.cursor
+            limit = couponListParams.limit
+            redemptionCode = couponListParams.redemptionCode
+            showArchived = couponListParams.showArchived
+            additionalHeaders = couponListParams.additionalHeaders.toBuilder()
+            additionalQueryParams = couponListParams.additionalQueryParams.toBuilder()
         }
 
         /**
@@ -208,4 +193,17 @@ constructor(
                 additionalQueryParams.build(),
             )
     }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) {
+            return true
+        }
+
+        return /* spotless:off */ other is CouponListParams && cursor == other.cursor && limit == other.limit && redemptionCode == other.redemptionCode && showArchived == other.showArchived && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
+    }
+
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(cursor, limit, redemptionCode, showArchived, additionalHeaders, additionalQueryParams) /* spotless:on */
+
+    override fun toString() =
+        "CouponListParams{cursor=$cursor, limit=$limit, redemptionCode=$redemptionCode, showArchived=$showArchived, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
 }

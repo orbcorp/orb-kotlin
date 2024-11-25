@@ -17,6 +17,10 @@ constructor(
 
     fun externalCustomerId(): String = externalCustomerId
 
+    fun _additionalHeaders(): Headers = additionalHeaders
+
+    fun _additionalQueryParams(): QueryParams = additionalQueryParams
+
     internal fun getHeaders(): Headers = additionalHeaders
 
     internal fun getQueryParams(): QueryParams = additionalQueryParams
@@ -27,25 +31,6 @@ constructor(
             else -> ""
         }
     }
-
-    fun _additionalHeaders(): Headers = additionalHeaders
-
-    fun _additionalQueryParams(): QueryParams = additionalQueryParams
-
-    override fun equals(other: Any?): Boolean {
-        if (this === other) {
-            return true
-        }
-
-        return /* spotless:off */ other is CustomerFetchByExternalIdParams && this.externalCustomerId == other.externalCustomerId && this.additionalHeaders == other.additionalHeaders && this.additionalQueryParams == other.additionalQueryParams /* spotless:on */
-    }
-
-    override fun hashCode(): Int {
-        return /* spotless:off */ Objects.hash(externalCustomerId, additionalHeaders, additionalQueryParams) /* spotless:on */
-    }
-
-    override fun toString() =
-        "CustomerFetchByExternalIdParams{externalCustomerId=$externalCustomerId, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
 
     fun toBuilder() = Builder().from(this)
 
@@ -63,9 +48,10 @@ constructor(
 
         internal fun from(customerFetchByExternalIdParams: CustomerFetchByExternalIdParams) =
             apply {
-                this.externalCustomerId = customerFetchByExternalIdParams.externalCustomerId
-                additionalHeaders(customerFetchByExternalIdParams.additionalHeaders)
-                additionalQueryParams(customerFetchByExternalIdParams.additionalQueryParams)
+                externalCustomerId = customerFetchByExternalIdParams.externalCustomerId
+                additionalHeaders = customerFetchByExternalIdParams.additionalHeaders.toBuilder()
+                additionalQueryParams =
+                    customerFetchByExternalIdParams.additionalQueryParams.toBuilder()
             }
 
         fun externalCustomerId(externalCustomerId: String) = apply {
@@ -179,4 +165,17 @@ constructor(
                 additionalQueryParams.build(),
             )
     }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) {
+            return true
+        }
+
+        return /* spotless:off */ other is CustomerFetchByExternalIdParams && externalCustomerId == other.externalCustomerId && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
+    }
+
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(externalCustomerId, additionalHeaders, additionalQueryParams) /* spotless:on */
+
+    override fun toString() =
+        "CustomerFetchByExternalIdParams{externalCustomerId=$externalCustomerId, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
 }

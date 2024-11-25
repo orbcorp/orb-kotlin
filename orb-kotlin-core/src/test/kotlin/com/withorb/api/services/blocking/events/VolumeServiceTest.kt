@@ -25,7 +25,7 @@ class VolumeServiceTest {
                 EventVolumeListParams.builder()
                     .timeframeStart(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                     .cursor("cursor")
-                    .limit(123L)
+                    .limit(1L)
                     .timeframeEnd(OffsetDateTime.parse("2024-10-11T06:00:00Z"))
                     .build()
             )

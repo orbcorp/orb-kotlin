@@ -17,6 +17,10 @@ constructor(
 
     fun externalPriceId(): String = externalPriceId
 
+    fun _additionalHeaders(): Headers = additionalHeaders
+
+    fun _additionalQueryParams(): QueryParams = additionalQueryParams
+
     internal fun getHeaders(): Headers = additionalHeaders
 
     internal fun getQueryParams(): QueryParams = additionalQueryParams
@@ -27,25 +31,6 @@ constructor(
             else -> ""
         }
     }
-
-    fun _additionalHeaders(): Headers = additionalHeaders
-
-    fun _additionalQueryParams(): QueryParams = additionalQueryParams
-
-    override fun equals(other: Any?): Boolean {
-        if (this === other) {
-            return true
-        }
-
-        return /* spotless:off */ other is PriceExternalPriceIdFetchParams && this.externalPriceId == other.externalPriceId && this.additionalHeaders == other.additionalHeaders && this.additionalQueryParams == other.additionalQueryParams /* spotless:on */
-    }
-
-    override fun hashCode(): Int {
-        return /* spotless:off */ Objects.hash(externalPriceId, additionalHeaders, additionalQueryParams) /* spotless:on */
-    }
-
-    override fun toString() =
-        "PriceExternalPriceIdFetchParams{externalPriceId=$externalPriceId, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
 
     fun toBuilder() = Builder().from(this)
 
@@ -63,9 +48,10 @@ constructor(
 
         internal fun from(priceExternalPriceIdFetchParams: PriceExternalPriceIdFetchParams) =
             apply {
-                this.externalPriceId = priceExternalPriceIdFetchParams.externalPriceId
-                additionalHeaders(priceExternalPriceIdFetchParams.additionalHeaders)
-                additionalQueryParams(priceExternalPriceIdFetchParams.additionalQueryParams)
+                externalPriceId = priceExternalPriceIdFetchParams.externalPriceId
+                additionalHeaders = priceExternalPriceIdFetchParams.additionalHeaders.toBuilder()
+                additionalQueryParams =
+                    priceExternalPriceIdFetchParams.additionalQueryParams.toBuilder()
             }
 
         fun externalPriceId(externalPriceId: String) = apply {
@@ -177,4 +163,17 @@ constructor(
                 additionalQueryParams.build(),
             )
     }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) {
+            return true
+        }
+
+        return /* spotless:off */ other is PriceExternalPriceIdFetchParams && externalPriceId == other.externalPriceId && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
+    }
+
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(externalPriceId, additionalHeaders, additionalQueryParams) /* spotless:on */
+
+    override fun toString() =
+        "PriceExternalPriceIdFetchParams{externalPriceId=$externalPriceId, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
 }

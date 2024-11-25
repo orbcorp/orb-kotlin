@@ -28,6 +28,12 @@ constructor(
 
     fun thresholds(): List<Threshold> = thresholds
 
+    fun _additionalHeaders(): Headers = additionalHeaders
+
+    fun _additionalQueryParams(): QueryParams = additionalQueryParams
+
+    fun _additionalBodyProperties(): Map<String, JsonValue> = additionalBodyProperties
+
     internal fun getBody(): AlertUpdateBody {
         return AlertUpdateBody(thresholds, additionalBodyProperties)
     }
@@ -106,42 +112,18 @@ constructor(
                 return true
             }
 
-            return /* spotless:off */ other is AlertUpdateBody && this.thresholds == other.thresholds && this.additionalProperties == other.additionalProperties /* spotless:on */
+            return /* spotless:off */ other is AlertUpdateBody && thresholds == other.thresholds && additionalProperties == other.additionalProperties /* spotless:on */
         }
 
-        private var hashCode: Int = 0
+        /* spotless:off */
+        private val hashCode: Int by lazy { Objects.hash(thresholds, additionalProperties) }
+        /* spotless:on */
 
-        override fun hashCode(): Int {
-            if (hashCode == 0) {
-                hashCode = /* spotless:off */ Objects.hash(thresholds, additionalProperties) /* spotless:on */
-            }
-            return hashCode
-        }
+        override fun hashCode(): Int = hashCode
 
         override fun toString() =
             "AlertUpdateBody{thresholds=$thresholds, additionalProperties=$additionalProperties}"
     }
-
-    fun _additionalHeaders(): Headers = additionalHeaders
-
-    fun _additionalQueryParams(): QueryParams = additionalQueryParams
-
-    fun _additionalBodyProperties(): Map<String, JsonValue> = additionalBodyProperties
-
-    override fun equals(other: Any?): Boolean {
-        if (this === other) {
-            return true
-        }
-
-        return /* spotless:off */ other is AlertUpdateParams && this.alertConfigurationId == other.alertConfigurationId && this.thresholds == other.thresholds && this.additionalHeaders == other.additionalHeaders && this.additionalQueryParams == other.additionalQueryParams && this.additionalBodyProperties == other.additionalBodyProperties /* spotless:on */
-    }
-
-    override fun hashCode(): Int {
-        return /* spotless:off */ Objects.hash(alertConfigurationId, thresholds, additionalHeaders, additionalQueryParams, additionalBodyProperties) /* spotless:on */
-    }
-
-    override fun toString() =
-        "AlertUpdateParams{alertConfigurationId=$alertConfigurationId, thresholds=$thresholds, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams, additionalBodyProperties=$additionalBodyProperties}"
 
     fun toBuilder() = Builder().from(this)
 
@@ -160,11 +142,11 @@ constructor(
         private var additionalBodyProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         internal fun from(alertUpdateParams: AlertUpdateParams) = apply {
-            this.alertConfigurationId = alertUpdateParams.alertConfigurationId
-            this.thresholds(alertUpdateParams.thresholds)
-            additionalHeaders(alertUpdateParams.additionalHeaders)
-            additionalQueryParams(alertUpdateParams.additionalQueryParams)
-            additionalBodyProperties(alertUpdateParams.additionalBodyProperties)
+            alertConfigurationId = alertUpdateParams.alertConfigurationId
+            thresholds = alertUpdateParams.thresholds.toMutableList()
+            additionalHeaders = alertUpdateParams.additionalHeaders.toBuilder()
+            additionalQueryParams = alertUpdateParams.additionalQueryParams.toBuilder()
+            additionalBodyProperties = alertUpdateParams.additionalBodyProperties.toMutableMap()
         }
 
         fun alertConfigurationId(alertConfigurationId: String) = apply {
@@ -305,8 +287,7 @@ constructor(
                 checkNotNull(alertConfigurationId) {
                     "`alertConfigurationId` is required but was not set"
                 },
-                checkNotNull(thresholds) { "`thresholds` is required but was not set" }
-                    .toImmutable(),
+                thresholds.toImmutable(),
                 additionalHeaders.build(),
                 additionalQueryParams.build(),
                 additionalBodyProperties.toImmutable(),
@@ -383,19 +364,29 @@ constructor(
                 return true
             }
 
-            return /* spotless:off */ other is Threshold && this.value == other.value && this.additionalProperties == other.additionalProperties /* spotless:on */
+            return /* spotless:off */ other is Threshold && value == other.value && additionalProperties == other.additionalProperties /* spotless:on */
         }
 
-        private var hashCode: Int = 0
+        /* spotless:off */
+        private val hashCode: Int by lazy { Objects.hash(value, additionalProperties) }
+        /* spotless:on */
 
-        override fun hashCode(): Int {
-            if (hashCode == 0) {
-                hashCode = /* spotless:off */ Objects.hash(value, additionalProperties) /* spotless:on */
-            }
-            return hashCode
-        }
+        override fun hashCode(): Int = hashCode
 
         override fun toString() =
             "Threshold{value=$value, additionalProperties=$additionalProperties}"
     }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) {
+            return true
+        }
+
+        return /* spotless:off */ other is AlertUpdateParams && alertConfigurationId == other.alertConfigurationId && thresholds == other.thresholds && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams && additionalBodyProperties == other.additionalBodyProperties /* spotless:on */
+    }
+
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(alertConfigurationId, thresholds, additionalHeaders, additionalQueryParams, additionalBodyProperties) /* spotless:on */
+
+    override fun toString() =
+        "AlertUpdateParams{alertConfigurationId=$alertConfigurationId, thresholds=$thresholds, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams, additionalBodyProperties=$additionalBodyProperties}"
 }

@@ -87,6 +87,12 @@ constructor(
 
     fun taxId(): TaxId? = taxId
 
+    fun _additionalHeaders(): Headers = additionalHeaders
+
+    fun _additionalQueryParams(): QueryParams = additionalQueryParams
+
+    fun _additionalBodyProperties(): Map<String, JsonValue> = additionalBodyProperties
+
     internal fun getBody(): CustomerUpdateByExternalIdBody {
         return CustomerUpdateByExternalIdBody(
             accountingSyncConfiguration,
@@ -622,42 +628,18 @@ constructor(
                 return true
             }
 
-            return /* spotless:off */ other is CustomerUpdateByExternalIdBody && this.accountingSyncConfiguration == other.accountingSyncConfiguration && this.additionalEmails == other.additionalEmails && this.autoCollection == other.autoCollection && this.billingAddress == other.billingAddress && this.currency == other.currency && this.email == other.email && this.emailDelivery == other.emailDelivery && this.externalCustomerId == other.externalCustomerId && this.metadata == other.metadata && this.name == other.name && this.paymentProvider == other.paymentProvider && this.paymentProviderId == other.paymentProviderId && this.reportingConfiguration == other.reportingConfiguration && this.shippingAddress == other.shippingAddress && this.taxConfiguration == other.taxConfiguration && this.taxId == other.taxId && this.additionalProperties == other.additionalProperties /* spotless:on */
+            return /* spotless:off */ other is CustomerUpdateByExternalIdBody && accountingSyncConfiguration == other.accountingSyncConfiguration && additionalEmails == other.additionalEmails && autoCollection == other.autoCollection && billingAddress == other.billingAddress && currency == other.currency && email == other.email && emailDelivery == other.emailDelivery && externalCustomerId == other.externalCustomerId && metadata == other.metadata && name == other.name && paymentProvider == other.paymentProvider && paymentProviderId == other.paymentProviderId && reportingConfiguration == other.reportingConfiguration && shippingAddress == other.shippingAddress && taxConfiguration == other.taxConfiguration && taxId == other.taxId && additionalProperties == other.additionalProperties /* spotless:on */
         }
 
-        private var hashCode: Int = 0
+        /* spotless:off */
+        private val hashCode: Int by lazy { Objects.hash(accountingSyncConfiguration, additionalEmails, autoCollection, billingAddress, currency, email, emailDelivery, externalCustomerId, metadata, name, paymentProvider, paymentProviderId, reportingConfiguration, shippingAddress, taxConfiguration, taxId, additionalProperties) }
+        /* spotless:on */
 
-        override fun hashCode(): Int {
-            if (hashCode == 0) {
-                hashCode = /* spotless:off */ Objects.hash(accountingSyncConfiguration, additionalEmails, autoCollection, billingAddress, currency, email, emailDelivery, externalCustomerId, metadata, name, paymentProvider, paymentProviderId, reportingConfiguration, shippingAddress, taxConfiguration, taxId, additionalProperties) /* spotless:on */
-            }
-            return hashCode
-        }
+        override fun hashCode(): Int = hashCode
 
         override fun toString() =
             "CustomerUpdateByExternalIdBody{accountingSyncConfiguration=$accountingSyncConfiguration, additionalEmails=$additionalEmails, autoCollection=$autoCollection, billingAddress=$billingAddress, currency=$currency, email=$email, emailDelivery=$emailDelivery, externalCustomerId=$externalCustomerId, metadata=$metadata, name=$name, paymentProvider=$paymentProvider, paymentProviderId=$paymentProviderId, reportingConfiguration=$reportingConfiguration, shippingAddress=$shippingAddress, taxConfiguration=$taxConfiguration, taxId=$taxId, additionalProperties=$additionalProperties}"
     }
-
-    fun _additionalHeaders(): Headers = additionalHeaders
-
-    fun _additionalQueryParams(): QueryParams = additionalQueryParams
-
-    fun _additionalBodyProperties(): Map<String, JsonValue> = additionalBodyProperties
-
-    override fun equals(other: Any?): Boolean {
-        if (this === other) {
-            return true
-        }
-
-        return /* spotless:off */ other is CustomerUpdateByExternalIdParams && this.id == other.id && this.accountingSyncConfiguration == other.accountingSyncConfiguration && this.additionalEmails == other.additionalEmails && this.autoCollection == other.autoCollection && this.billingAddress == other.billingAddress && this.currency == other.currency && this.email == other.email && this.emailDelivery == other.emailDelivery && this.externalCustomerId == other.externalCustomerId && this.metadata == other.metadata && this.name == other.name && this.paymentProvider == other.paymentProvider && this.paymentProviderId == other.paymentProviderId && this.reportingConfiguration == other.reportingConfiguration && this.shippingAddress == other.shippingAddress && this.taxConfiguration == other.taxConfiguration && this.taxId == other.taxId && this.additionalHeaders == other.additionalHeaders && this.additionalQueryParams == other.additionalQueryParams && this.additionalBodyProperties == other.additionalBodyProperties /* spotless:on */
-    }
-
-    override fun hashCode(): Int {
-        return /* spotless:off */ Objects.hash(id, accountingSyncConfiguration, additionalEmails, autoCollection, billingAddress, currency, email, emailDelivery, externalCustomerId, metadata, name, paymentProvider, paymentProviderId, reportingConfiguration, shippingAddress, taxConfiguration, taxId, additionalHeaders, additionalQueryParams, additionalBodyProperties) /* spotless:on */
-    }
-
-    override fun toString() =
-        "CustomerUpdateByExternalIdParams{id=$id, accountingSyncConfiguration=$accountingSyncConfiguration, additionalEmails=$additionalEmails, autoCollection=$autoCollection, billingAddress=$billingAddress, currency=$currency, email=$email, emailDelivery=$emailDelivery, externalCustomerId=$externalCustomerId, metadata=$metadata, name=$name, paymentProvider=$paymentProvider, paymentProviderId=$paymentProviderId, reportingConfiguration=$reportingConfiguration, shippingAddress=$shippingAddress, taxConfiguration=$taxConfiguration, taxId=$taxId, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams, additionalBodyProperties=$additionalBodyProperties}"
 
     fun toBuilder() = Builder().from(this)
 
@@ -692,28 +674,31 @@ constructor(
 
         internal fun from(customerUpdateByExternalIdParams: CustomerUpdateByExternalIdParams) =
             apply {
-                this.id = customerUpdateByExternalIdParams.id
-                this.accountingSyncConfiguration =
+                id = customerUpdateByExternalIdParams.id
+                accountingSyncConfiguration =
                     customerUpdateByExternalIdParams.accountingSyncConfiguration
-                this.additionalEmails(customerUpdateByExternalIdParams.additionalEmails ?: listOf())
-                this.autoCollection = customerUpdateByExternalIdParams.autoCollection
-                this.billingAddress = customerUpdateByExternalIdParams.billingAddress
-                this.currency = customerUpdateByExternalIdParams.currency
-                this.email = customerUpdateByExternalIdParams.email
-                this.emailDelivery = customerUpdateByExternalIdParams.emailDelivery
-                this.externalCustomerId = customerUpdateByExternalIdParams.externalCustomerId
-                this.metadata = customerUpdateByExternalIdParams.metadata
-                this.name = customerUpdateByExternalIdParams.name
-                this.paymentProvider = customerUpdateByExternalIdParams.paymentProvider
-                this.paymentProviderId = customerUpdateByExternalIdParams.paymentProviderId
-                this.reportingConfiguration =
-                    customerUpdateByExternalIdParams.reportingConfiguration
-                this.shippingAddress = customerUpdateByExternalIdParams.shippingAddress
-                this.taxConfiguration = customerUpdateByExternalIdParams.taxConfiguration
-                this.taxId = customerUpdateByExternalIdParams.taxId
-                additionalHeaders(customerUpdateByExternalIdParams.additionalHeaders)
-                additionalQueryParams(customerUpdateByExternalIdParams.additionalQueryParams)
-                additionalBodyProperties(customerUpdateByExternalIdParams.additionalBodyProperties)
+                additionalEmails =
+                    customerUpdateByExternalIdParams.additionalEmails?.toMutableList()
+                        ?: mutableListOf()
+                autoCollection = customerUpdateByExternalIdParams.autoCollection
+                billingAddress = customerUpdateByExternalIdParams.billingAddress
+                currency = customerUpdateByExternalIdParams.currency
+                email = customerUpdateByExternalIdParams.email
+                emailDelivery = customerUpdateByExternalIdParams.emailDelivery
+                externalCustomerId = customerUpdateByExternalIdParams.externalCustomerId
+                metadata = customerUpdateByExternalIdParams.metadata
+                name = customerUpdateByExternalIdParams.name
+                paymentProvider = customerUpdateByExternalIdParams.paymentProvider
+                paymentProviderId = customerUpdateByExternalIdParams.paymentProviderId
+                reportingConfiguration = customerUpdateByExternalIdParams.reportingConfiguration
+                shippingAddress = customerUpdateByExternalIdParams.shippingAddress
+                taxConfiguration = customerUpdateByExternalIdParams.taxConfiguration
+                taxId = customerUpdateByExternalIdParams.taxId
+                additionalHeaders = customerUpdateByExternalIdParams.additionalHeaders.toBuilder()
+                additionalQueryParams =
+                    customerUpdateByExternalIdParams.additionalQueryParams.toBuilder()
+                additionalBodyProperties =
+                    customerUpdateByExternalIdParams.additionalBodyProperties.toMutableMap()
             }
 
         fun id(id: String) = apply { this.id = id }
@@ -1056,7 +1041,7 @@ constructor(
             CustomerUpdateByExternalIdParams(
                 checkNotNull(id) { "`id` is required but was not set" },
                 accountingSyncConfiguration,
-                if (additionalEmails.size == 0) null else additionalEmails.toImmutable(),
+                additionalEmails.toImmutable().ifEmpty { null },
                 autoCollection,
                 billingAddress,
                 currency,
@@ -1219,17 +1204,14 @@ constructor(
                     return true
                 }
 
-                return /* spotless:off */ other is AccountingProvider && this.providerType == other.providerType && this.externalProviderId == other.externalProviderId && this.additionalProperties == other.additionalProperties /* spotless:on */
+                return /* spotless:off */ other is AccountingProvider && providerType == other.providerType && externalProviderId == other.externalProviderId && additionalProperties == other.additionalProperties /* spotless:on */
             }
 
-            private var hashCode: Int = 0
+            /* spotless:off */
+            private val hashCode: Int by lazy { Objects.hash(providerType, externalProviderId, additionalProperties) }
+            /* spotless:on */
 
-            override fun hashCode(): Int {
-                if (hashCode == 0) {
-                    hashCode = /* spotless:off */ Objects.hash(providerType, externalProviderId, additionalProperties) /* spotless:on */
-                }
-                return hashCode
-            }
+            override fun hashCode(): Int = hashCode
 
             override fun toString() =
                 "AccountingProvider{providerType=$providerType, externalProviderId=$externalProviderId, additionalProperties=$additionalProperties}"
@@ -1240,17 +1222,14 @@ constructor(
                 return true
             }
 
-            return /* spotless:off */ other is AccountingSyncConfiguration && this.excluded == other.excluded && this.accountingProviders == other.accountingProviders && this.additionalProperties == other.additionalProperties /* spotless:on */
+            return /* spotless:off */ other is AccountingSyncConfiguration && excluded == other.excluded && accountingProviders == other.accountingProviders && additionalProperties == other.additionalProperties /* spotless:on */
         }
 
-        private var hashCode: Int = 0
+        /* spotless:off */
+        private val hashCode: Int by lazy { Objects.hash(excluded, accountingProviders, additionalProperties) }
+        /* spotless:on */
 
-        override fun hashCode(): Int {
-            if (hashCode == 0) {
-                hashCode = /* spotless:off */ Objects.hash(excluded, accountingProviders, additionalProperties) /* spotless:on */
-            }
-            return hashCode
-        }
+        override fun hashCode(): Int = hashCode
 
         override fun toString() =
             "AccountingSyncConfiguration{excluded=$excluded, accountingProviders=$accountingProviders, additionalProperties=$additionalProperties}"
@@ -1356,17 +1335,14 @@ constructor(
                 return true
             }
 
-            return /* spotless:off */ other is BillingAddress && this.line1 == other.line1 && this.line2 == other.line2 && this.city == other.city && this.state == other.state && this.postalCode == other.postalCode && this.country == other.country && this.additionalProperties == other.additionalProperties /* spotless:on */
+            return /* spotless:off */ other is BillingAddress && line1 == other.line1 && line2 == other.line2 && city == other.city && state == other.state && postalCode == other.postalCode && country == other.country && additionalProperties == other.additionalProperties /* spotless:on */
         }
 
-        private var hashCode: Int = 0
+        /* spotless:off */
+        private val hashCode: Int by lazy { Objects.hash(line1, line2, city, state, postalCode, country, additionalProperties) }
+        /* spotless:on */
 
-        override fun hashCode(): Int {
-            if (hashCode == 0) {
-                hashCode = /* spotless:off */ Objects.hash(line1, line2, city, state, postalCode, country, additionalProperties) /* spotless:on */
-            }
-            return hashCode
-        }
+        override fun hashCode(): Int = hashCode
 
         override fun toString() =
             "BillingAddress{line1=$line1, line2=$line2, city=$city, state=$state, postalCode=$postalCode, country=$country, additionalProperties=$additionalProperties}"
@@ -1425,17 +1401,14 @@ constructor(
                 return true
             }
 
-            return /* spotless:off */ other is Metadata && this.additionalProperties == other.additionalProperties /* spotless:on */
+            return /* spotless:off */ other is Metadata && additionalProperties == other.additionalProperties /* spotless:on */
         }
 
-        private var hashCode: Int = 0
+        /* spotless:off */
+        private val hashCode: Int by lazy { Objects.hash(additionalProperties) }
+        /* spotless:on */
 
-        override fun hashCode(): Int {
-            if (hashCode == 0) {
-                hashCode = /* spotless:off */ Objects.hash(additionalProperties) /* spotless:on */
-            }
-            return hashCode
-        }
+        override fun hashCode(): Int = hashCode
 
         override fun toString() = "Metadata{additionalProperties=$additionalProperties}"
     }
@@ -1453,7 +1426,7 @@ constructor(
                 return true
             }
 
-            return /* spotless:off */ other is PaymentProvider && this.value == other.value /* spotless:on */
+            return /* spotless:off */ other is PaymentProvider && value == other.value /* spotless:on */
         }
 
         override fun hashCode() = value.hashCode()
@@ -1574,17 +1547,14 @@ constructor(
                 return true
             }
 
-            return /* spotless:off */ other is ReportingConfiguration && this.exempt == other.exempt && this.additionalProperties == other.additionalProperties /* spotless:on */
+            return /* spotless:off */ other is ReportingConfiguration && exempt == other.exempt && additionalProperties == other.additionalProperties /* spotless:on */
         }
 
-        private var hashCode: Int = 0
+        /* spotless:off */
+        private val hashCode: Int by lazy { Objects.hash(exempt, additionalProperties) }
+        /* spotless:on */
 
-        override fun hashCode(): Int {
-            if (hashCode == 0) {
-                hashCode = /* spotless:off */ Objects.hash(exempt, additionalProperties) /* spotless:on */
-            }
-            return hashCode
-        }
+        override fun hashCode(): Int = hashCode
 
         override fun toString() =
             "ReportingConfiguration{exempt=$exempt, additionalProperties=$additionalProperties}"
@@ -1690,17 +1660,14 @@ constructor(
                 return true
             }
 
-            return /* spotless:off */ other is ShippingAddress && this.line1 == other.line1 && this.line2 == other.line2 && this.city == other.city && this.state == other.state && this.postalCode == other.postalCode && this.country == other.country && this.additionalProperties == other.additionalProperties /* spotless:on */
+            return /* spotless:off */ other is ShippingAddress && line1 == other.line1 && line2 == other.line2 && city == other.city && state == other.state && postalCode == other.postalCode && country == other.country && additionalProperties == other.additionalProperties /* spotless:on */
         }
 
-        private var hashCode: Int = 0
+        /* spotless:off */
+        private val hashCode: Int by lazy { Objects.hash(line1, line2, city, state, postalCode, country, additionalProperties) }
+        /* spotless:on */
 
-        override fun hashCode(): Int {
-            if (hashCode == 0) {
-                hashCode = /* spotless:off */ Objects.hash(line1, line2, city, state, postalCode, country, additionalProperties) /* spotless:on */
-            }
-            return hashCode
-        }
+        override fun hashCode(): Int = hashCode
 
         override fun toString() =
             "ShippingAddress{line1=$line1, line2=$line2, city=$city, state=$state, postalCode=$postalCode, country=$country, additionalProperties=$additionalProperties}"
@@ -1759,15 +1726,13 @@ constructor(
                 return true
             }
 
-            return /* spotless:off */ other is TaxConfiguration && this.newAvalaraTaxConfiguration == other.newAvalaraTaxConfiguration && this.newTaxJarConfiguration == other.newTaxJarConfiguration /* spotless:on */
+            return /* spotless:off */ other is TaxConfiguration && newAvalaraTaxConfiguration == other.newAvalaraTaxConfiguration && newTaxJarConfiguration == other.newTaxJarConfiguration /* spotless:on */
         }
 
-        override fun hashCode(): Int {
-            return /* spotless:off */ Objects.hash(newAvalaraTaxConfiguration, newTaxJarConfiguration) /* spotless:on */
-        }
+        override fun hashCode(): Int = /* spotless:off */ Objects.hash(newAvalaraTaxConfiguration, newTaxJarConfiguration) /* spotless:on */
 
-        override fun toString(): String {
-            return when {
+        override fun toString(): String =
+            when {
                 newAvalaraTaxConfiguration != null ->
                     "TaxConfiguration{newAvalaraTaxConfiguration=$newAvalaraTaxConfiguration}"
                 newTaxJarConfiguration != null ->
@@ -1775,7 +1740,6 @@ constructor(
                 _json != null -> "TaxConfiguration{_unknown=$_json}"
                 else -> throw IllegalStateException("Invalid TaxConfiguration")
             }
-        }
 
         companion object {
 
@@ -1970,7 +1934,7 @@ constructor(
                         return true
                     }
 
-                    return /* spotless:off */ other is TaxProvider && this.value == other.value /* spotless:on */
+                    return /* spotless:off */ other is TaxProvider && value == other.value /* spotless:on */
                 }
 
                 override fun hashCode() = value.hashCode()
@@ -2013,17 +1977,14 @@ constructor(
                     return true
                 }
 
-                return /* spotless:off */ other is NewAvalaraTaxConfiguration && this.taxExempt == other.taxExempt && this.taxProvider == other.taxProvider && this.taxExemptionCode == other.taxExemptionCode && this.additionalProperties == other.additionalProperties /* spotless:on */
+                return /* spotless:off */ other is NewAvalaraTaxConfiguration && taxExempt == other.taxExempt && taxProvider == other.taxProvider && taxExemptionCode == other.taxExemptionCode && additionalProperties == other.additionalProperties /* spotless:on */
             }
 
-            private var hashCode: Int = 0
+            /* spotless:off */
+            private val hashCode: Int by lazy { Objects.hash(taxExempt, taxProvider, taxExemptionCode, additionalProperties) }
+            /* spotless:on */
 
-            override fun hashCode(): Int {
-                if (hashCode == 0) {
-                    hashCode = /* spotless:off */ Objects.hash(taxExempt, taxProvider, taxExemptionCode, additionalProperties) /* spotless:on */
-                }
-                return hashCode
-            }
+            override fun hashCode(): Int = hashCode
 
             override fun toString() =
                 "NewAvalaraTaxConfiguration{taxExempt=$taxExempt, taxProvider=$taxProvider, taxExemptionCode=$taxExemptionCode, additionalProperties=$additionalProperties}"
@@ -2129,7 +2090,7 @@ constructor(
                         return true
                     }
 
-                    return /* spotless:off */ other is TaxProvider && this.value == other.value /* spotless:on */
+                    return /* spotless:off */ other is TaxProvider && value == other.value /* spotless:on */
                 }
 
                 override fun hashCode() = value.hashCode()
@@ -2172,17 +2133,14 @@ constructor(
                     return true
                 }
 
-                return /* spotless:off */ other is NewTaxJarConfiguration && this.taxExempt == other.taxExempt && this.taxProvider == other.taxProvider && this.additionalProperties == other.additionalProperties /* spotless:on */
+                return /* spotless:off */ other is NewTaxJarConfiguration && taxExempt == other.taxExempt && taxProvider == other.taxProvider && additionalProperties == other.additionalProperties /* spotless:on */
             }
 
-            private var hashCode: Int = 0
+            /* spotless:off */
+            private val hashCode: Int by lazy { Objects.hash(taxExempt, taxProvider, additionalProperties) }
+            /* spotless:on */
 
-            override fun hashCode(): Int {
-                if (hashCode == 0) {
-                    hashCode = /* spotless:off */ Objects.hash(taxExempt, taxProvider, additionalProperties) /* spotless:on */
-                }
-                return hashCode
-            }
+            override fun hashCode(): Int = hashCode
 
             override fun toString() =
                 "NewTaxJarConfiguration{taxExempt=$taxExempt, taxProvider=$taxProvider, additionalProperties=$additionalProperties}"
@@ -2379,7 +2337,7 @@ constructor(
                     return true
                 }
 
-                return /* spotless:off */ other is Country && this.value == other.value /* spotless:on */
+                return /* spotless:off */ other is Country && value == other.value /* spotless:on */
             }
 
             override fun hashCode() = value.hashCode()
@@ -2892,7 +2850,7 @@ constructor(
                     return true
                 }
 
-                return /* spotless:off */ other is Type && this.value == other.value /* spotless:on */
+                return /* spotless:off */ other is Type && value == other.value /* spotless:on */
             }
 
             override fun hashCode() = value.hashCode()
@@ -3355,19 +3313,29 @@ constructor(
                 return true
             }
 
-            return /* spotless:off */ other is TaxId && this.country == other.country && this.type == other.type && this.value == other.value && this.additionalProperties == other.additionalProperties /* spotless:on */
+            return /* spotless:off */ other is TaxId && country == other.country && type == other.type && value == other.value && additionalProperties == other.additionalProperties /* spotless:on */
         }
 
-        private var hashCode: Int = 0
+        /* spotless:off */
+        private val hashCode: Int by lazy { Objects.hash(country, type, value, additionalProperties) }
+        /* spotless:on */
 
-        override fun hashCode(): Int {
-            if (hashCode == 0) {
-                hashCode = /* spotless:off */ Objects.hash(country, type, value, additionalProperties) /* spotless:on */
-            }
-            return hashCode
-        }
+        override fun hashCode(): Int = hashCode
 
         override fun toString() =
             "TaxId{country=$country, type=$type, value=$value, additionalProperties=$additionalProperties}"
     }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) {
+            return true
+        }
+
+        return /* spotless:off */ other is CustomerUpdateByExternalIdParams && id == other.id && accountingSyncConfiguration == other.accountingSyncConfiguration && additionalEmails == other.additionalEmails && autoCollection == other.autoCollection && billingAddress == other.billingAddress && currency == other.currency && email == other.email && emailDelivery == other.emailDelivery && externalCustomerId == other.externalCustomerId && metadata == other.metadata && name == other.name && paymentProvider == other.paymentProvider && paymentProviderId == other.paymentProviderId && reportingConfiguration == other.reportingConfiguration && shippingAddress == other.shippingAddress && taxConfiguration == other.taxConfiguration && taxId == other.taxId && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams && additionalBodyProperties == other.additionalBodyProperties /* spotless:on */
+    }
+
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(id, accountingSyncConfiguration, additionalEmails, autoCollection, billingAddress, currency, email, emailDelivery, externalCustomerId, metadata, name, paymentProvider, paymentProviderId, reportingConfiguration, shippingAddress, taxConfiguration, taxId, additionalHeaders, additionalQueryParams, additionalBodyProperties) /* spotless:on */
+
+    override fun toString() =
+        "CustomerUpdateByExternalIdParams{id=$id, accountingSyncConfiguration=$accountingSyncConfiguration, additionalEmails=$additionalEmails, autoCollection=$autoCollection, billingAddress=$billingAddress, currency=$currency, email=$email, emailDelivery=$emailDelivery, externalCustomerId=$externalCustomerId, metadata=$metadata, name=$name, paymentProvider=$paymentProvider, paymentProviderId=$paymentProviderId, reportingConfiguration=$reportingConfiguration, shippingAddress=$shippingAddress, taxConfiguration=$taxConfiguration, taxId=$taxId, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams, additionalBodyProperties=$additionalBodyProperties}"
 }

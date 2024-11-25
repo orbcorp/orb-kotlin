@@ -23,6 +23,12 @@ constructor(
 
     fun topUpId(): String = topUpId
 
+    fun _additionalHeaders(): Headers = additionalHeaders
+
+    fun _additionalQueryParams(): QueryParams = additionalQueryParams
+
+    fun _additionalBodyProperties(): Map<String, JsonValue> = additionalBodyProperties
+
     internal fun getBody(): Map<String, JsonValue>? {
         return additionalBodyProperties.ifEmpty { null }
     }
@@ -38,27 +44,6 @@ constructor(
             else -> ""
         }
     }
-
-    fun _additionalHeaders(): Headers = additionalHeaders
-
-    fun _additionalQueryParams(): QueryParams = additionalQueryParams
-
-    fun _additionalBodyProperties(): Map<String, JsonValue> = additionalBodyProperties
-
-    override fun equals(other: Any?): Boolean {
-        if (this === other) {
-            return true
-        }
-
-        return /* spotless:off */ other is CustomerCreditTopUpDeleteByExternalIdParams && this.externalCustomerId == other.externalCustomerId && this.topUpId == other.topUpId && this.additionalHeaders == other.additionalHeaders && this.additionalQueryParams == other.additionalQueryParams && this.additionalBodyProperties == other.additionalBodyProperties /* spotless:on */
-    }
-
-    override fun hashCode(): Int {
-        return /* spotless:off */ Objects.hash(externalCustomerId, topUpId, additionalHeaders, additionalQueryParams, additionalBodyProperties) /* spotless:on */
-    }
-
-    override fun toString() =
-        "CustomerCreditTopUpDeleteByExternalIdParams{externalCustomerId=$externalCustomerId, topUpId=$topUpId, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams, additionalBodyProperties=$additionalBodyProperties}"
 
     fun toBuilder() = Builder().from(this)
 
@@ -79,13 +64,14 @@ constructor(
         internal fun from(
             customerCreditTopUpDeleteByExternalIdParams: CustomerCreditTopUpDeleteByExternalIdParams
         ) = apply {
-            this.externalCustomerId = customerCreditTopUpDeleteByExternalIdParams.externalCustomerId
-            this.topUpId = customerCreditTopUpDeleteByExternalIdParams.topUpId
-            additionalHeaders(customerCreditTopUpDeleteByExternalIdParams.additionalHeaders)
-            additionalQueryParams(customerCreditTopUpDeleteByExternalIdParams.additionalQueryParams)
-            additionalBodyProperties(
-                customerCreditTopUpDeleteByExternalIdParams.additionalBodyProperties
-            )
+            externalCustomerId = customerCreditTopUpDeleteByExternalIdParams.externalCustomerId
+            topUpId = customerCreditTopUpDeleteByExternalIdParams.topUpId
+            additionalHeaders =
+                customerCreditTopUpDeleteByExternalIdParams.additionalHeaders.toBuilder()
+            additionalQueryParams =
+                customerCreditTopUpDeleteByExternalIdParams.additionalQueryParams.toBuilder()
+            additionalBodyProperties =
+                customerCreditTopUpDeleteByExternalIdParams.additionalBodyProperties.toMutableMap()
         }
 
         fun externalCustomerId(externalCustomerId: String) = apply {
@@ -225,4 +211,17 @@ constructor(
                 additionalBodyProperties.toImmutable(),
             )
     }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) {
+            return true
+        }
+
+        return /* spotless:off */ other is CustomerCreditTopUpDeleteByExternalIdParams && externalCustomerId == other.externalCustomerId && topUpId == other.topUpId && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams && additionalBodyProperties == other.additionalBodyProperties /* spotless:on */
+    }
+
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(externalCustomerId, topUpId, additionalHeaders, additionalQueryParams, additionalBodyProperties) /* spotless:on */
+
+    override fun toString() =
+        "CustomerCreditTopUpDeleteByExternalIdParams{externalCustomerId=$externalCustomerId, topUpId=$topUpId, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams, additionalBodyProperties=$additionalBodyProperties}"
 }

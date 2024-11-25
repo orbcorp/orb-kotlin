@@ -19,7 +19,7 @@ The REST API documentation can be found on [docs.withorb.com](https://docs.with
 <!-- x-release-please-start-version -->
 
 ```kotlin
-implementation("com.withorb.api:orb-kotlin:0.1.0-alpha.8")
+implementation("com.withorb.api:orb-kotlin:0.1.0-alpha.9")
 ```
 
 #### Maven
@@ -28,7 +28,7 @@ implementation("com.withorb.api:orb-kotlin:0.1.0-alpha.8")
 <dependency>
     <groupId>com.withorb.api</groupId>
     <artifactId>orb-kotlin</artifactId>
-    <version>0.1.0-alpha.8</version>
+    <version>0.1.0-alpha.9</version>
 </dependency>
 ```
 
@@ -285,6 +285,22 @@ val client = OrbOkHttpClient.builder()
         new InetSocketAddress("proxy.com", 8080)
     ))
     .build()
+```
+
+## Logging
+
+We use the standard [OkHttp logging interceptor](https://github.com/square/okhttp/tree/master/okhttp-logging-interceptor).
+
+You can enable logging by setting the environment variable `ORB_LOG` to `info`.
+
+```sh
+$ export ORB_LOG=info
+```
+
+Or to `debug` for more verbose logging.
+
+```sh
+$ export ORB_LOG=debug
 ```
 
 ## Semantic versioning

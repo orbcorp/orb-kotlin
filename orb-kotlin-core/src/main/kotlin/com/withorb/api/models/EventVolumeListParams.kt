@@ -28,6 +28,10 @@ constructor(
 
     fun timeframeEnd(): OffsetDateTime? = timeframeEnd
 
+    fun _additionalHeaders(): Headers = additionalHeaders
+
+    fun _additionalQueryParams(): QueryParams = additionalQueryParams
+
     internal fun getHeaders(): Headers = additionalHeaders
 
     internal fun getQueryParams(): QueryParams {
@@ -50,25 +54,6 @@ constructor(
         return queryParams.build()
     }
 
-    fun _additionalHeaders(): Headers = additionalHeaders
-
-    fun _additionalQueryParams(): QueryParams = additionalQueryParams
-
-    override fun equals(other: Any?): Boolean {
-        if (this === other) {
-            return true
-        }
-
-        return /* spotless:off */ other is EventVolumeListParams && this.timeframeStart == other.timeframeStart && this.cursor == other.cursor && this.limit == other.limit && this.timeframeEnd == other.timeframeEnd && this.additionalHeaders == other.additionalHeaders && this.additionalQueryParams == other.additionalQueryParams /* spotless:on */
-    }
-
-    override fun hashCode(): Int {
-        return /* spotless:off */ Objects.hash(timeframeStart, cursor, limit, timeframeEnd, additionalHeaders, additionalQueryParams) /* spotless:on */
-    }
-
-    override fun toString() =
-        "EventVolumeListParams{timeframeStart=$timeframeStart, cursor=$cursor, limit=$limit, timeframeEnd=$timeframeEnd, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
-
     fun toBuilder() = Builder().from(this)
 
     companion object {
@@ -87,12 +72,12 @@ constructor(
         private var additionalQueryParams: QueryParams.Builder = QueryParams.builder()
 
         internal fun from(eventVolumeListParams: EventVolumeListParams) = apply {
-            this.timeframeStart = eventVolumeListParams.timeframeStart
-            this.cursor = eventVolumeListParams.cursor
-            this.limit = eventVolumeListParams.limit
-            this.timeframeEnd = eventVolumeListParams.timeframeEnd
-            additionalHeaders(eventVolumeListParams.additionalHeaders)
-            additionalQueryParams(eventVolumeListParams.additionalQueryParams)
+            timeframeStart = eventVolumeListParams.timeframeStart
+            cursor = eventVolumeListParams.cursor
+            limit = eventVolumeListParams.limit
+            timeframeEnd = eventVolumeListParams.timeframeEnd
+            additionalHeaders = eventVolumeListParams.additionalHeaders.toBuilder()
+            additionalQueryParams = eventVolumeListParams.additionalQueryParams.toBuilder()
         }
 
         /**
@@ -229,4 +214,17 @@ constructor(
                 additionalQueryParams.build(),
             )
     }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) {
+            return true
+        }
+
+        return /* spotless:off */ other is EventVolumeListParams && timeframeStart == other.timeframeStart && cursor == other.cursor && limit == other.limit && timeframeEnd == other.timeframeEnd && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
+    }
+
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(timeframeStart, cursor, limit, timeframeEnd, additionalHeaders, additionalQueryParams) /* spotless:on */
+
+    override fun toString() =
+        "EventVolumeListParams{timeframeStart=$timeframeStart, cursor=$cursor, limit=$limit, timeframeEnd=$timeframeEnd, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
 }

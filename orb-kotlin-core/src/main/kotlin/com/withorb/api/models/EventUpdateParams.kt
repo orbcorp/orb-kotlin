@@ -41,6 +41,12 @@ constructor(
 
     fun externalCustomerId(): String? = externalCustomerId
 
+    fun _additionalHeaders(): Headers = additionalHeaders
+
+    fun _additionalQueryParams(): QueryParams = additionalQueryParams
+
+    fun _additionalBodyProperties(): Map<String, JsonValue> = additionalBodyProperties
+
     internal fun getBody(): EventUpdateBody {
         return EventUpdateBody(
             eventName,
@@ -187,42 +193,18 @@ constructor(
                 return true
             }
 
-            return /* spotless:off */ other is EventUpdateBody && this.eventName == other.eventName && this.properties == other.properties && this.timestamp == other.timestamp && this.customerId == other.customerId && this.externalCustomerId == other.externalCustomerId && this.additionalProperties == other.additionalProperties /* spotless:on */
+            return /* spotless:off */ other is EventUpdateBody && eventName == other.eventName && properties == other.properties && timestamp == other.timestamp && customerId == other.customerId && externalCustomerId == other.externalCustomerId && additionalProperties == other.additionalProperties /* spotless:on */
         }
 
-        private var hashCode: Int = 0
+        /* spotless:off */
+        private val hashCode: Int by lazy { Objects.hash(eventName, properties, timestamp, customerId, externalCustomerId, additionalProperties) }
+        /* spotless:on */
 
-        override fun hashCode(): Int {
-            if (hashCode == 0) {
-                hashCode = /* spotless:off */ Objects.hash(eventName, properties, timestamp, customerId, externalCustomerId, additionalProperties) /* spotless:on */
-            }
-            return hashCode
-        }
+        override fun hashCode(): Int = hashCode
 
         override fun toString() =
             "EventUpdateBody{eventName=$eventName, properties=$properties, timestamp=$timestamp, customerId=$customerId, externalCustomerId=$externalCustomerId, additionalProperties=$additionalProperties}"
     }
-
-    fun _additionalHeaders(): Headers = additionalHeaders
-
-    fun _additionalQueryParams(): QueryParams = additionalQueryParams
-
-    fun _additionalBodyProperties(): Map<String, JsonValue> = additionalBodyProperties
-
-    override fun equals(other: Any?): Boolean {
-        if (this === other) {
-            return true
-        }
-
-        return /* spotless:off */ other is EventUpdateParams && this.eventId == other.eventId && this.eventName == other.eventName && this.properties == other.properties && this.timestamp == other.timestamp && this.customerId == other.customerId && this.externalCustomerId == other.externalCustomerId && this.additionalHeaders == other.additionalHeaders && this.additionalQueryParams == other.additionalQueryParams && this.additionalBodyProperties == other.additionalBodyProperties /* spotless:on */
-    }
-
-    override fun hashCode(): Int {
-        return /* spotless:off */ Objects.hash(eventId, eventName, properties, timestamp, customerId, externalCustomerId, additionalHeaders, additionalQueryParams, additionalBodyProperties) /* spotless:on */
-    }
-
-    override fun toString() =
-        "EventUpdateParams{eventId=$eventId, eventName=$eventName, properties=$properties, timestamp=$timestamp, customerId=$customerId, externalCustomerId=$externalCustomerId, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams, additionalBodyProperties=$additionalBodyProperties}"
 
     fun toBuilder() = Builder().from(this)
 
@@ -245,15 +227,15 @@ constructor(
         private var additionalBodyProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         internal fun from(eventUpdateParams: EventUpdateParams) = apply {
-            this.eventId = eventUpdateParams.eventId
-            this.eventName = eventUpdateParams.eventName
-            this.properties = eventUpdateParams.properties
-            this.timestamp = eventUpdateParams.timestamp
-            this.customerId = eventUpdateParams.customerId
-            this.externalCustomerId = eventUpdateParams.externalCustomerId
-            additionalHeaders(eventUpdateParams.additionalHeaders)
-            additionalQueryParams(eventUpdateParams.additionalQueryParams)
-            additionalBodyProperties(eventUpdateParams.additionalBodyProperties)
+            eventId = eventUpdateParams.eventId
+            eventName = eventUpdateParams.eventName
+            properties = eventUpdateParams.properties
+            timestamp = eventUpdateParams.timestamp
+            customerId = eventUpdateParams.customerId
+            externalCustomerId = eventUpdateParams.externalCustomerId
+            additionalHeaders = eventUpdateParams.additionalHeaders.toBuilder()
+            additionalQueryParams = eventUpdateParams.additionalQueryParams.toBuilder()
+            additionalBodyProperties = eventUpdateParams.additionalBodyProperties.toMutableMap()
         }
 
         fun eventId(eventId: String) = apply { this.eventId = eventId }
@@ -415,4 +397,17 @@ constructor(
                 additionalBodyProperties.toImmutable(),
             )
     }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) {
+            return true
+        }
+
+        return /* spotless:off */ other is EventUpdateParams && eventId == other.eventId && eventName == other.eventName && properties == other.properties && timestamp == other.timestamp && customerId == other.customerId && externalCustomerId == other.externalCustomerId && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams && additionalBodyProperties == other.additionalBodyProperties /* spotless:on */
+    }
+
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(eventId, eventName, properties, timestamp, customerId, externalCustomerId, additionalHeaders, additionalQueryParams, additionalBodyProperties) /* spotless:on */
+
+    override fun toString() =
+        "EventUpdateParams{eventId=$eventId, eventName=$eventName, properties=$properties, timestamp=$timestamp, customerId=$customerId, externalCustomerId=$externalCustomerId, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams, additionalBodyProperties=$additionalBodyProperties}"
 }

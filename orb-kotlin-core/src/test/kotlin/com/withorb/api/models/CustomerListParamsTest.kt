@@ -18,7 +18,7 @@ class CustomerListParamsTest {
             .createdAtLt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
             .createdAtLte(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
             .cursor("cursor")
-            .limit(123L)
+            .limit(1L)
             .build()
     }
 
@@ -31,7 +31,7 @@ class CustomerListParamsTest {
                 .createdAtLt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                 .createdAtLte(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                 .cursor("cursor")
-                .limit(123L)
+                .limit(1L)
                 .build()
         val expected = QueryParams.builder()
         expected.put("created_at[gt]", "2019-12-27T18:11:19.117Z")
@@ -39,7 +39,7 @@ class CustomerListParamsTest {
         expected.put("created_at[lt]", "2019-12-27T18:11:19.117Z")
         expected.put("created_at[lte]", "2019-12-27T18:11:19.117Z")
         expected.put("cursor", "cursor")
-        expected.put("limit", "123")
+        expected.put("limit", "1")
         assertThat(params.getQueryParams()).isEqualTo(expected.build())
     }
 

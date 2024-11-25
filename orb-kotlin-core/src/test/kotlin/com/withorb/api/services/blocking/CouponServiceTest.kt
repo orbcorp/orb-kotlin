@@ -31,13 +31,13 @@ class CouponServiceTest {
                                         .DiscountType
                                         .PERCENTAGE
                                 )
-                                .percentageDiscount(42.23)
+                                .percentageDiscount(0.0)
                                 .build()
                         )
                     )
                     .redemptionCode("HALFOFF")
-                    .durationInMonths(120L)
-                    .maxRedemptions(123L)
+                    .durationInMonths(12L)
+                    .maxRedemptions(1L)
                     .build()
             )
         println(coupon)

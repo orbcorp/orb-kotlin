@@ -35,12 +35,10 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is CustomerListPageAsync && this.customersService == other.customersService && this.params == other.params && this.response == other.response /* spotless:on */
+        return /* spotless:off */ other is CustomerListPageAsync && customersService == other.customersService && params == other.params && response == other.response /* spotless:on */
     }
 
-    override fun hashCode(): Int {
-        return /* spotless:off */ Objects.hash(customersService, params, response) /* spotless:on */
-    }
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(customersService, params, response) /* spotless:on */
 
     override fun toString() =
         "CustomerListPageAsync{customersService=$customersService, params=$params, response=$response}"
@@ -124,15 +122,13 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is Response && this.data == other.data && this.paginationMetadata == other.paginationMetadata && this.additionalProperties == other.additionalProperties /* spotless:on */
+            return /* spotless:off */ other is Response && data == other.data && paginationMetadata == other.paginationMetadata && additionalProperties == other.additionalProperties /* spotless:on */
         }
 
-        override fun hashCode(): Int {
-            return /* spotless:off */ Objects.hash(data, paginationMetadata, additionalProperties) /* spotless:on */
-        }
+        override fun hashCode(): Int = /* spotless:off */ Objects.hash(data, paginationMetadata, additionalProperties) /* spotless:on */
 
         override fun toString() =
-            "CustomerListPageAsync.Response{data=$data, paginationMetadata=$paginationMetadata, additionalProperties=$additionalProperties}"
+            "Response{data=$data, paginationMetadata=$paginationMetadata, additionalProperties=$additionalProperties}"
 
         companion object {
 

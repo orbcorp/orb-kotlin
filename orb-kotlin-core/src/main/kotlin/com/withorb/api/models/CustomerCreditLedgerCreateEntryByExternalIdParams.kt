@@ -64,6 +64,10 @@ constructor(
     fun addAmendmentCreditLedgerEntryRequestParams(): AddAmendmentCreditLedgerEntryRequestParams? =
         addAmendmentCreditLedgerEntryRequestParams
 
+    fun _additionalHeaders(): Headers = additionalHeaders
+
+    fun _additionalQueryParams(): QueryParams = additionalQueryParams
+
     internal fun getBody(): CustomerCreditLedgerCreateEntryByExternalIdBody {
         return CustomerCreditLedgerCreateEntryByExternalIdBody(
             addIncrementCreditLedgerEntryRequestParams,
@@ -199,15 +203,13 @@ constructor(
                 return true
             }
 
-            return /* spotless:off */ other is CustomerCreditLedgerCreateEntryByExternalIdBody && this.addIncrementCreditLedgerEntryRequestParams == other.addIncrementCreditLedgerEntryRequestParams && this.addDecrementCreditLedgerEntryRequestParams == other.addDecrementCreditLedgerEntryRequestParams && this.addExpirationChangeCreditLedgerEntryRequestParams == other.addExpirationChangeCreditLedgerEntryRequestParams && this.addVoidCreditLedgerEntryRequestParams == other.addVoidCreditLedgerEntryRequestParams && this.addAmendmentCreditLedgerEntryRequestParams == other.addAmendmentCreditLedgerEntryRequestParams /* spotless:on */
+            return /* spotless:off */ other is CustomerCreditLedgerCreateEntryByExternalIdBody && addIncrementCreditLedgerEntryRequestParams == other.addIncrementCreditLedgerEntryRequestParams && addDecrementCreditLedgerEntryRequestParams == other.addDecrementCreditLedgerEntryRequestParams && addExpirationChangeCreditLedgerEntryRequestParams == other.addExpirationChangeCreditLedgerEntryRequestParams && addVoidCreditLedgerEntryRequestParams == other.addVoidCreditLedgerEntryRequestParams && addAmendmentCreditLedgerEntryRequestParams == other.addAmendmentCreditLedgerEntryRequestParams /* spotless:on */
         }
 
-        override fun hashCode(): Int {
-            return /* spotless:off */ Objects.hash(addIncrementCreditLedgerEntryRequestParams, addDecrementCreditLedgerEntryRequestParams, addExpirationChangeCreditLedgerEntryRequestParams, addVoidCreditLedgerEntryRequestParams, addAmendmentCreditLedgerEntryRequestParams) /* spotless:on */
-        }
+        override fun hashCode(): Int = /* spotless:off */ Objects.hash(addIncrementCreditLedgerEntryRequestParams, addDecrementCreditLedgerEntryRequestParams, addExpirationChangeCreditLedgerEntryRequestParams, addVoidCreditLedgerEntryRequestParams, addAmendmentCreditLedgerEntryRequestParams) /* spotless:on */
 
-        override fun toString(): String {
-            return when {
+        override fun toString(): String =
+            when {
                 addIncrementCreditLedgerEntryRequestParams != null ->
                     "CustomerCreditLedgerCreateEntryByExternalIdBody{addIncrementCreditLedgerEntryRequestParams=$addIncrementCreditLedgerEntryRequestParams}"
                 addDecrementCreditLedgerEntryRequestParams != null ->
@@ -224,7 +226,6 @@ constructor(
                         "Invalid CustomerCreditLedgerCreateEntryByExternalIdBody"
                     )
             }
-        }
 
         companion object {
 
@@ -416,25 +417,6 @@ constructor(
         }
     }
 
-    fun _additionalHeaders(): Headers = additionalHeaders
-
-    fun _additionalQueryParams(): QueryParams = additionalQueryParams
-
-    override fun equals(other: Any?): Boolean {
-        if (this === other) {
-            return true
-        }
-
-        return /* spotless:off */ other is CustomerCreditLedgerCreateEntryByExternalIdParams && this.externalCustomerId == other.externalCustomerId && this.addIncrementCreditLedgerEntryRequestParams == other.addIncrementCreditLedgerEntryRequestParams && this.addDecrementCreditLedgerEntryRequestParams == other.addDecrementCreditLedgerEntryRequestParams && this.addExpirationChangeCreditLedgerEntryRequestParams == other.addExpirationChangeCreditLedgerEntryRequestParams && this.addVoidCreditLedgerEntryRequestParams == other.addVoidCreditLedgerEntryRequestParams && this.addAmendmentCreditLedgerEntryRequestParams == other.addAmendmentCreditLedgerEntryRequestParams && this.additionalHeaders == other.additionalHeaders && this.additionalQueryParams == other.additionalQueryParams /* spotless:on */
-    }
-
-    override fun hashCode(): Int {
-        return /* spotless:off */ Objects.hash(externalCustomerId, addIncrementCreditLedgerEntryRequestParams, addDecrementCreditLedgerEntryRequestParams, addExpirationChangeCreditLedgerEntryRequestParams, addVoidCreditLedgerEntryRequestParams, addAmendmentCreditLedgerEntryRequestParams, additionalHeaders, additionalQueryParams) /* spotless:on */
-    }
-
-    override fun toString() =
-        "CustomerCreditLedgerCreateEntryByExternalIdParams{externalCustomerId=$externalCustomerId, addIncrementCreditLedgerEntryRequestParams=$addIncrementCreditLedgerEntryRequestParams, addDecrementCreditLedgerEntryRequestParams=$addDecrementCreditLedgerEntryRequestParams, addExpirationChangeCreditLedgerEntryRequestParams=$addExpirationChangeCreditLedgerEntryRequestParams, addVoidCreditLedgerEntryRequestParams=$addVoidCreditLedgerEntryRequestParams, addAmendmentCreditLedgerEntryRequestParams=$addAmendmentCreditLedgerEntryRequestParams, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
-
     fun toBuilder() = Builder().from(this)
 
     companion object {
@@ -467,27 +449,27 @@ constructor(
             customerCreditLedgerCreateEntryByExternalIdParams:
                 CustomerCreditLedgerCreateEntryByExternalIdParams
         ) = apply {
-            this.externalCustomerId =
+            externalCustomerId =
                 customerCreditLedgerCreateEntryByExternalIdParams.externalCustomerId
-            this.addIncrementCreditLedgerEntryRequestParams =
+            addIncrementCreditLedgerEntryRequestParams =
                 customerCreditLedgerCreateEntryByExternalIdParams
                     .addIncrementCreditLedgerEntryRequestParams
-            this.addDecrementCreditLedgerEntryRequestParams =
+            addDecrementCreditLedgerEntryRequestParams =
                 customerCreditLedgerCreateEntryByExternalIdParams
                     .addDecrementCreditLedgerEntryRequestParams
-            this.addExpirationChangeCreditLedgerEntryRequestParams =
+            addExpirationChangeCreditLedgerEntryRequestParams =
                 customerCreditLedgerCreateEntryByExternalIdParams
                     .addExpirationChangeCreditLedgerEntryRequestParams
-            this.addVoidCreditLedgerEntryRequestParams =
+            addVoidCreditLedgerEntryRequestParams =
                 customerCreditLedgerCreateEntryByExternalIdParams
                     .addVoidCreditLedgerEntryRequestParams
-            this.addAmendmentCreditLedgerEntryRequestParams =
+            addAmendmentCreditLedgerEntryRequestParams =
                 customerCreditLedgerCreateEntryByExternalIdParams
                     .addAmendmentCreditLedgerEntryRequestParams
-            additionalHeaders(customerCreditLedgerCreateEntryByExternalIdParams.additionalHeaders)
-            additionalQueryParams(
-                customerCreditLedgerCreateEntryByExternalIdParams.additionalQueryParams
-            )
+            additionalHeaders =
+                customerCreditLedgerCreateEntryByExternalIdParams.additionalHeaders.toBuilder()
+            additionalQueryParams =
+                customerCreditLedgerCreateEntryByExternalIdParams.additionalQueryParams.toBuilder()
         }
 
         fun externalCustomerId(externalCustomerId: String) = apply {
@@ -876,7 +858,7 @@ constructor(
                     return true
                 }
 
-                return /* spotless:off */ other is EntryType && this.value == other.value /* spotless:on */
+                return /* spotless:off */ other is EntryType && value == other.value /* spotless:on */
             }
 
             override fun hashCode() = value.hashCode()
@@ -1040,17 +1022,14 @@ constructor(
                     return true
                 }
 
-                return /* spotless:off */ other is InvoiceSettings && this.autoCollection == other.autoCollection && this.netTerms == other.netTerms && this.memo == other.memo && this.requireSuccessfulPayment == other.requireSuccessfulPayment && this.additionalProperties == other.additionalProperties /* spotless:on */
+                return /* spotless:off */ other is InvoiceSettings && autoCollection == other.autoCollection && netTerms == other.netTerms && memo == other.memo && requireSuccessfulPayment == other.requireSuccessfulPayment && additionalProperties == other.additionalProperties /* spotless:on */
             }
 
-            private var hashCode: Int = 0
+            /* spotless:off */
+            private val hashCode: Int by lazy { Objects.hash(autoCollection, netTerms, memo, requireSuccessfulPayment, additionalProperties) }
+            /* spotless:on */
 
-            override fun hashCode(): Int {
-                if (hashCode == 0) {
-                    hashCode = /* spotless:off */ Objects.hash(autoCollection, netTerms, memo, requireSuccessfulPayment, additionalProperties) /* spotless:on */
-                }
-                return hashCode
-            }
+            override fun hashCode(): Int = hashCode
 
             override fun toString() =
                 "InvoiceSettings{autoCollection=$autoCollection, netTerms=$netTerms, memo=$memo, requireSuccessfulPayment=$requireSuccessfulPayment, additionalProperties=$additionalProperties}"
@@ -1110,17 +1089,14 @@ constructor(
                     return true
                 }
 
-                return /* spotless:off */ other is Metadata && this.additionalProperties == other.additionalProperties /* spotless:on */
+                return /* spotless:off */ other is Metadata && additionalProperties == other.additionalProperties /* spotless:on */
             }
 
-            private var hashCode: Int = 0
+            /* spotless:off */
+            private val hashCode: Int by lazy { Objects.hash(additionalProperties) }
+            /* spotless:on */
 
-            override fun hashCode(): Int {
-                if (hashCode == 0) {
-                    hashCode = /* spotless:off */ Objects.hash(additionalProperties) /* spotless:on */
-                }
-                return hashCode
-            }
+            override fun hashCode(): Int = hashCode
 
             override fun toString() = "Metadata{additionalProperties=$additionalProperties}"
         }
@@ -1130,17 +1106,14 @@ constructor(
                 return true
             }
 
-            return /* spotless:off */ other is AddIncrementCreditLedgerEntryRequestParams && this.metadata == other.metadata && this.currency == other.currency && this.description == other.description && this.entryType == other.entryType && this.amount == other.amount && this.expiryDate == other.expiryDate && this.effectiveDate == other.effectiveDate && this.perUnitCostBasis == other.perUnitCostBasis && this.invoiceSettings == other.invoiceSettings && this.additionalProperties == other.additionalProperties /* spotless:on */
+            return /* spotless:off */ other is AddIncrementCreditLedgerEntryRequestParams && metadata == other.metadata && currency == other.currency && description == other.description && entryType == other.entryType && amount == other.amount && expiryDate == other.expiryDate && effectiveDate == other.effectiveDate && perUnitCostBasis == other.perUnitCostBasis && invoiceSettings == other.invoiceSettings && additionalProperties == other.additionalProperties /* spotless:on */
         }
 
-        private var hashCode: Int = 0
+        /* spotless:off */
+        private val hashCode: Int by lazy { Objects.hash(metadata, currency, description, entryType, amount, expiryDate, effectiveDate, perUnitCostBasis, invoiceSettings, additionalProperties) }
+        /* spotless:on */
 
-        override fun hashCode(): Int {
-            if (hashCode == 0) {
-                hashCode = /* spotless:off */ Objects.hash(metadata, currency, description, entryType, amount, expiryDate, effectiveDate, perUnitCostBasis, invoiceSettings, additionalProperties) /* spotless:on */
-            }
-            return hashCode
-        }
+        override fun hashCode(): Int = hashCode
 
         override fun toString() =
             "AddIncrementCreditLedgerEntryRequestParams{metadata=$metadata, currency=$currency, description=$description, entryType=$entryType, amount=$amount, expiryDate=$expiryDate, effectiveDate=$effectiveDate, perUnitCostBasis=$perUnitCostBasis, invoiceSettings=$invoiceSettings, additionalProperties=$additionalProperties}"
@@ -1290,7 +1263,7 @@ constructor(
                     return true
                 }
 
-                return /* spotless:off */ other is EntryType && this.value == other.value /* spotless:on */
+                return /* spotless:off */ other is EntryType && value == other.value /* spotless:on */
             }
 
             override fun hashCode() = value.hashCode()
@@ -1382,17 +1355,14 @@ constructor(
                     return true
                 }
 
-                return /* spotless:off */ other is Metadata && this.additionalProperties == other.additionalProperties /* spotless:on */
+                return /* spotless:off */ other is Metadata && additionalProperties == other.additionalProperties /* spotless:on */
             }
 
-            private var hashCode: Int = 0
+            /* spotless:off */
+            private val hashCode: Int by lazy { Objects.hash(additionalProperties) }
+            /* spotless:on */
 
-            override fun hashCode(): Int {
-                if (hashCode == 0) {
-                    hashCode = /* spotless:off */ Objects.hash(additionalProperties) /* spotless:on */
-                }
-                return hashCode
-            }
+            override fun hashCode(): Int = hashCode
 
             override fun toString() = "Metadata{additionalProperties=$additionalProperties}"
         }
@@ -1402,17 +1372,14 @@ constructor(
                 return true
             }
 
-            return /* spotless:off */ other is AddDecrementCreditLedgerEntryRequestParams && this.metadata == other.metadata && this.currency == other.currency && this.description == other.description && this.entryType == other.entryType && this.amount == other.amount && this.additionalProperties == other.additionalProperties /* spotless:on */
+            return /* spotless:off */ other is AddDecrementCreditLedgerEntryRequestParams && metadata == other.metadata && currency == other.currency && description == other.description && entryType == other.entryType && amount == other.amount && additionalProperties == other.additionalProperties /* spotless:on */
         }
 
-        private var hashCode: Int = 0
+        /* spotless:off */
+        private val hashCode: Int by lazy { Objects.hash(metadata, currency, description, entryType, amount, additionalProperties) }
+        /* spotless:on */
 
-        override fun hashCode(): Int {
-            if (hashCode == 0) {
-                hashCode = /* spotless:off */ Objects.hash(metadata, currency, description, entryType, amount, additionalProperties) /* spotless:on */
-            }
-            return hashCode
-        }
+        override fun hashCode(): Int = hashCode
 
         override fun toString() =
             "AddDecrementCreditLedgerEntryRequestParams{metadata=$metadata, currency=$currency, description=$description, entryType=$entryType, amount=$amount, additionalProperties=$additionalProperties}"
@@ -1612,7 +1579,7 @@ constructor(
                     return true
                 }
 
-                return /* spotless:off */ other is EntryType && this.value == other.value /* spotless:on */
+                return /* spotless:off */ other is EntryType && value == other.value /* spotless:on */
             }
 
             override fun hashCode() = value.hashCode()
@@ -1704,17 +1671,14 @@ constructor(
                     return true
                 }
 
-                return /* spotless:off */ other is Metadata && this.additionalProperties == other.additionalProperties /* spotless:on */
+                return /* spotless:off */ other is Metadata && additionalProperties == other.additionalProperties /* spotless:on */
             }
 
-            private var hashCode: Int = 0
+            /* spotless:off */
+            private val hashCode: Int by lazy { Objects.hash(additionalProperties) }
+            /* spotless:on */
 
-            override fun hashCode(): Int {
-                if (hashCode == 0) {
-                    hashCode = /* spotless:off */ Objects.hash(additionalProperties) /* spotless:on */
-                }
-                return hashCode
-            }
+            override fun hashCode(): Int = hashCode
 
             override fun toString() = "Metadata{additionalProperties=$additionalProperties}"
         }
@@ -1724,17 +1688,14 @@ constructor(
                 return true
             }
 
-            return /* spotless:off */ other is AddExpirationChangeCreditLedgerEntryRequestParams && this.metadata == other.metadata && this.currency == other.currency && this.description == other.description && this.entryType == other.entryType && this.amount == other.amount && this.expiryDate == other.expiryDate && this.blockId == other.blockId && this.targetExpiryDate == other.targetExpiryDate && this.additionalProperties == other.additionalProperties /* spotless:on */
+            return /* spotless:off */ other is AddExpirationChangeCreditLedgerEntryRequestParams && metadata == other.metadata && currency == other.currency && description == other.description && entryType == other.entryType && amount == other.amount && expiryDate == other.expiryDate && blockId == other.blockId && targetExpiryDate == other.targetExpiryDate && additionalProperties == other.additionalProperties /* spotless:on */
         }
 
-        private var hashCode: Int = 0
+        /* spotless:off */
+        private val hashCode: Int by lazy { Objects.hash(metadata, currency, description, entryType, amount, expiryDate, blockId, targetExpiryDate, additionalProperties) }
+        /* spotless:on */
 
-        override fun hashCode(): Int {
-            if (hashCode == 0) {
-                hashCode = /* spotless:off */ Objects.hash(metadata, currency, description, entryType, amount, expiryDate, blockId, targetExpiryDate, additionalProperties) /* spotless:on */
-            }
-            return hashCode
-        }
+        override fun hashCode(): Int = hashCode
 
         override fun toString() =
             "AddExpirationChangeCreditLedgerEntryRequestParams{metadata=$metadata, currency=$currency, description=$description, entryType=$entryType, amount=$amount, expiryDate=$expiryDate, blockId=$blockId, targetExpiryDate=$targetExpiryDate, additionalProperties=$additionalProperties}"
@@ -1903,7 +1864,7 @@ constructor(
                     return true
                 }
 
-                return /* spotless:off */ other is EntryType && this.value == other.value /* spotless:on */
+                return /* spotless:off */ other is EntryType && value == other.value /* spotless:on */
             }
 
             override fun hashCode() = value.hashCode()
@@ -1995,17 +1956,14 @@ constructor(
                     return true
                 }
 
-                return /* spotless:off */ other is Metadata && this.additionalProperties == other.additionalProperties /* spotless:on */
+                return /* spotless:off */ other is Metadata && additionalProperties == other.additionalProperties /* spotless:on */
             }
 
-            private var hashCode: Int = 0
+            /* spotless:off */
+            private val hashCode: Int by lazy { Objects.hash(additionalProperties) }
+            /* spotless:on */
 
-            override fun hashCode(): Int {
-                if (hashCode == 0) {
-                    hashCode = /* spotless:off */ Objects.hash(additionalProperties) /* spotless:on */
-                }
-                return hashCode
-            }
+            override fun hashCode(): Int = hashCode
 
             override fun toString() = "Metadata{additionalProperties=$additionalProperties}"
         }
@@ -2023,7 +1981,7 @@ constructor(
                     return true
                 }
 
-                return /* spotless:off */ other is VoidReason && this.value == other.value /* spotless:on */
+                return /* spotless:off */ other is VoidReason && value == other.value /* spotless:on */
             }
 
             override fun hashCode() = value.hashCode()
@@ -2066,17 +2024,14 @@ constructor(
                 return true
             }
 
-            return /* spotless:off */ other is AddVoidCreditLedgerEntryRequestParams && this.metadata == other.metadata && this.currency == other.currency && this.description == other.description && this.entryType == other.entryType && this.blockId == other.blockId && this.voidReason == other.voidReason && this.amount == other.amount && this.additionalProperties == other.additionalProperties /* spotless:on */
+            return /* spotless:off */ other is AddVoidCreditLedgerEntryRequestParams && metadata == other.metadata && currency == other.currency && description == other.description && entryType == other.entryType && blockId == other.blockId && voidReason == other.voidReason && amount == other.amount && additionalProperties == other.additionalProperties /* spotless:on */
         }
 
-        private var hashCode: Int = 0
+        /* spotless:off */
+        private val hashCode: Int by lazy { Objects.hash(metadata, currency, description, entryType, blockId, voidReason, amount, additionalProperties) }
+        /* spotless:on */
 
-        override fun hashCode(): Int {
-            if (hashCode == 0) {
-                hashCode = /* spotless:off */ Objects.hash(metadata, currency, description, entryType, blockId, voidReason, amount, additionalProperties) /* spotless:on */
-            }
-            return hashCode
-        }
+        override fun hashCode(): Int = hashCode
 
         override fun toString() =
             "AddVoidCreditLedgerEntryRequestParams{metadata=$metadata, currency=$currency, description=$description, entryType=$entryType, blockId=$blockId, voidReason=$voidReason, amount=$amount, additionalProperties=$additionalProperties}"
@@ -2237,7 +2192,7 @@ constructor(
                     return true
                 }
 
-                return /* spotless:off */ other is EntryType && this.value == other.value /* spotless:on */
+                return /* spotless:off */ other is EntryType && value == other.value /* spotless:on */
             }
 
             override fun hashCode() = value.hashCode()
@@ -2329,17 +2284,14 @@ constructor(
                     return true
                 }
 
-                return /* spotless:off */ other is Metadata && this.additionalProperties == other.additionalProperties /* spotless:on */
+                return /* spotless:off */ other is Metadata && additionalProperties == other.additionalProperties /* spotless:on */
             }
 
-            private var hashCode: Int = 0
+            /* spotless:off */
+            private val hashCode: Int by lazy { Objects.hash(additionalProperties) }
+            /* spotless:on */
 
-            override fun hashCode(): Int {
-                if (hashCode == 0) {
-                    hashCode = /* spotless:off */ Objects.hash(additionalProperties) /* spotless:on */
-                }
-                return hashCode
-            }
+            override fun hashCode(): Int = hashCode
 
             override fun toString() = "Metadata{additionalProperties=$additionalProperties}"
         }
@@ -2349,19 +2301,29 @@ constructor(
                 return true
             }
 
-            return /* spotless:off */ other is AddAmendmentCreditLedgerEntryRequestParams && this.metadata == other.metadata && this.currency == other.currency && this.description == other.description && this.entryType == other.entryType && this.amount == other.amount && this.blockId == other.blockId && this.additionalProperties == other.additionalProperties /* spotless:on */
+            return /* spotless:off */ other is AddAmendmentCreditLedgerEntryRequestParams && metadata == other.metadata && currency == other.currency && description == other.description && entryType == other.entryType && amount == other.amount && blockId == other.blockId && additionalProperties == other.additionalProperties /* spotless:on */
         }
 
-        private var hashCode: Int = 0
+        /* spotless:off */
+        private val hashCode: Int by lazy { Objects.hash(metadata, currency, description, entryType, amount, blockId, additionalProperties) }
+        /* spotless:on */
 
-        override fun hashCode(): Int {
-            if (hashCode == 0) {
-                hashCode = /* spotless:off */ Objects.hash(metadata, currency, description, entryType, amount, blockId, additionalProperties) /* spotless:on */
-            }
-            return hashCode
-        }
+        override fun hashCode(): Int = hashCode
 
         override fun toString() =
             "AddAmendmentCreditLedgerEntryRequestParams{metadata=$metadata, currency=$currency, description=$description, entryType=$entryType, amount=$amount, blockId=$blockId, additionalProperties=$additionalProperties}"
     }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) {
+            return true
+        }
+
+        return /* spotless:off */ other is CustomerCreditLedgerCreateEntryByExternalIdParams && externalCustomerId == other.externalCustomerId && addIncrementCreditLedgerEntryRequestParams == other.addIncrementCreditLedgerEntryRequestParams && addDecrementCreditLedgerEntryRequestParams == other.addDecrementCreditLedgerEntryRequestParams && addExpirationChangeCreditLedgerEntryRequestParams == other.addExpirationChangeCreditLedgerEntryRequestParams && addVoidCreditLedgerEntryRequestParams == other.addVoidCreditLedgerEntryRequestParams && addAmendmentCreditLedgerEntryRequestParams == other.addAmendmentCreditLedgerEntryRequestParams && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
+    }
+
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(externalCustomerId, addIncrementCreditLedgerEntryRequestParams, addDecrementCreditLedgerEntryRequestParams, addExpirationChangeCreditLedgerEntryRequestParams, addVoidCreditLedgerEntryRequestParams, addAmendmentCreditLedgerEntryRequestParams, additionalHeaders, additionalQueryParams) /* spotless:on */
+
+    override fun toString() =
+        "CustomerCreditLedgerCreateEntryByExternalIdParams{externalCustomerId=$externalCustomerId, addIncrementCreditLedgerEntryRequestParams=$addIncrementCreditLedgerEntryRequestParams, addDecrementCreditLedgerEntryRequestParams=$addDecrementCreditLedgerEntryRequestParams, addExpirationChangeCreditLedgerEntryRequestParams=$addExpirationChangeCreditLedgerEntryRequestParams, addVoidCreditLedgerEntryRequestParams=$addVoidCreditLedgerEntryRequestParams, addAmendmentCreditLedgerEntryRequestParams=$addAmendmentCreditLedgerEntryRequestParams, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
 }

@@ -250,7 +250,7 @@ private constructor(
                     return true
                 }
 
-                return /* spotless:off */ other is ExternalConnectionName && this.value == other.value /* spotless:on */
+                return /* spotless:off */ other is ExternalConnectionName && value == other.value /* spotless:on */
             }
 
             override fun hashCode() = value.hashCode()
@@ -329,17 +329,14 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is ExternalConnection && this.externalConnectionName == other.externalConnectionName && this.externalEntityId == other.externalEntityId && this.additionalProperties == other.additionalProperties /* spotless:on */
+            return /* spotless:off */ other is ExternalConnection && externalConnectionName == other.externalConnectionName && externalEntityId == other.externalEntityId && additionalProperties == other.additionalProperties /* spotless:on */
         }
 
-        private var hashCode: Int = 0
+        /* spotless:off */
+        private val hashCode: Int by lazy { Objects.hash(externalConnectionName, externalEntityId, additionalProperties) }
+        /* spotless:on */
 
-        override fun hashCode(): Int {
-            if (hashCode == 0) {
-                hashCode = /* spotless:off */ Objects.hash(externalConnectionName, externalEntityId, additionalProperties) /* spotless:on */
-            }
-            return hashCode
-        }
+        override fun hashCode(): Int = hashCode
 
         override fun toString() =
             "ExternalConnection{externalConnectionName=$externalConnectionName, externalEntityId=$externalEntityId, additionalProperties=$additionalProperties}"
@@ -350,17 +347,14 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is Item && this.id == other.id && this.name == other.name && this.createdAt == other.createdAt && this.externalConnections == other.externalConnections && this.additionalProperties == other.additionalProperties /* spotless:on */
+        return /* spotless:off */ other is Item && id == other.id && name == other.name && createdAt == other.createdAt && externalConnections == other.externalConnections && additionalProperties == other.additionalProperties /* spotless:on */
     }
 
-    private var hashCode: Int = 0
+    /* spotless:off */
+    private val hashCode: Int by lazy { Objects.hash(id, name, createdAt, externalConnections, additionalProperties) }
+    /* spotless:on */
 
-    override fun hashCode(): Int {
-        if (hashCode == 0) {
-            hashCode = /* spotless:off */ Objects.hash(id, name, createdAt, externalConnections, additionalProperties) /* spotless:on */
-        }
-        return hashCode
-    }
+    override fun hashCode(): Int = hashCode
 
     override fun toString() =
         "Item{id=$id, name=$name, createdAt=$createdAt, externalConnections=$externalConnections, additionalProperties=$additionalProperties}"

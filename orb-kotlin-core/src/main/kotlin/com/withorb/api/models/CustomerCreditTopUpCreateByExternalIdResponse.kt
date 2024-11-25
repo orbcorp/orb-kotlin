@@ -446,17 +446,14 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is InvoiceSettings && this.autoCollection == other.autoCollection && this.netTerms == other.netTerms && this.memo == other.memo && this.requireSuccessfulPayment == other.requireSuccessfulPayment && this.additionalProperties == other.additionalProperties /* spotless:on */
+            return /* spotless:off */ other is InvoiceSettings && autoCollection == other.autoCollection && netTerms == other.netTerms && memo == other.memo && requireSuccessfulPayment == other.requireSuccessfulPayment && additionalProperties == other.additionalProperties /* spotless:on */
         }
 
-        private var hashCode: Int = 0
+        /* spotless:off */
+        private val hashCode: Int by lazy { Objects.hash(autoCollection, netTerms, memo, requireSuccessfulPayment, additionalProperties) }
+        /* spotless:on */
 
-        override fun hashCode(): Int {
-            if (hashCode == 0) {
-                hashCode = /* spotless:off */ Objects.hash(autoCollection, netTerms, memo, requireSuccessfulPayment, additionalProperties) /* spotless:on */
-            }
-            return hashCode
-        }
+        override fun hashCode(): Int = hashCode
 
         override fun toString() =
             "InvoiceSettings{autoCollection=$autoCollection, netTerms=$netTerms, memo=$memo, requireSuccessfulPayment=$requireSuccessfulPayment, additionalProperties=$additionalProperties}"
@@ -475,7 +472,7 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is ExpiresAfterUnit && this.value == other.value /* spotless:on */
+            return /* spotless:off */ other is ExpiresAfterUnit && value == other.value /* spotless:on */
         }
 
         override fun hashCode() = value.hashCode()
@@ -524,17 +521,14 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is CustomerCreditTopUpCreateByExternalIdResponse && this.id == other.id && this.currency == other.currency && this.threshold == other.threshold && this.amount == other.amount && this.perUnitCostBasis == other.perUnitCostBasis && this.invoiceSettings == other.invoiceSettings && this.expiresAfter == other.expiresAfter && this.expiresAfterUnit == other.expiresAfterUnit && this.additionalProperties == other.additionalProperties /* spotless:on */
+        return /* spotless:off */ other is CustomerCreditTopUpCreateByExternalIdResponse && id == other.id && currency == other.currency && threshold == other.threshold && amount == other.amount && perUnitCostBasis == other.perUnitCostBasis && invoiceSettings == other.invoiceSettings && expiresAfter == other.expiresAfter && expiresAfterUnit == other.expiresAfterUnit && additionalProperties == other.additionalProperties /* spotless:on */
     }
 
-    private var hashCode: Int = 0
+    /* spotless:off */
+    private val hashCode: Int by lazy { Objects.hash(id, currency, threshold, amount, perUnitCostBasis, invoiceSettings, expiresAfter, expiresAfterUnit, additionalProperties) }
+    /* spotless:on */
 
-    override fun hashCode(): Int {
-        if (hashCode == 0) {
-            hashCode = /* spotless:off */ Objects.hash(id, currency, threshold, amount, perUnitCostBasis, invoiceSettings, expiresAfter, expiresAfterUnit, additionalProperties) /* spotless:on */
-        }
-        return hashCode
-    }
+    override fun hashCode(): Int = hashCode
 
     override fun toString() =
         "CustomerCreditTopUpCreateByExternalIdResponse{id=$id, currency=$currency, threshold=$threshold, amount=$amount, perUnitCostBasis=$perUnitCostBasis, invoiceSettings=$invoiceSettings, expiresAfter=$expiresAfter, expiresAfterUnit=$expiresAfterUnit, additionalProperties=$additionalProperties}"

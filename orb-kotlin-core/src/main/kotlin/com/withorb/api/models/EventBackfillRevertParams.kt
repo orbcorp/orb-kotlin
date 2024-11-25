@@ -20,6 +20,12 @@ constructor(
 
     fun backfillId(): String = backfillId
 
+    fun _additionalHeaders(): Headers = additionalHeaders
+
+    fun _additionalQueryParams(): QueryParams = additionalQueryParams
+
+    fun _additionalBodyProperties(): Map<String, JsonValue> = additionalBodyProperties
+
     internal fun getBody(): Map<String, JsonValue>? {
         return additionalBodyProperties.ifEmpty { null }
     }
@@ -34,27 +40,6 @@ constructor(
             else -> ""
         }
     }
-
-    fun _additionalHeaders(): Headers = additionalHeaders
-
-    fun _additionalQueryParams(): QueryParams = additionalQueryParams
-
-    fun _additionalBodyProperties(): Map<String, JsonValue> = additionalBodyProperties
-
-    override fun equals(other: Any?): Boolean {
-        if (this === other) {
-            return true
-        }
-
-        return /* spotless:off */ other is EventBackfillRevertParams && this.backfillId == other.backfillId && this.additionalHeaders == other.additionalHeaders && this.additionalQueryParams == other.additionalQueryParams && this.additionalBodyProperties == other.additionalBodyProperties /* spotless:on */
-    }
-
-    override fun hashCode(): Int {
-        return /* spotless:off */ Objects.hash(backfillId, additionalHeaders, additionalQueryParams, additionalBodyProperties) /* spotless:on */
-    }
-
-    override fun toString() =
-        "EventBackfillRevertParams{backfillId=$backfillId, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams, additionalBodyProperties=$additionalBodyProperties}"
 
     fun toBuilder() = Builder().from(this)
 
@@ -72,10 +57,11 @@ constructor(
         private var additionalBodyProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         internal fun from(eventBackfillRevertParams: EventBackfillRevertParams) = apply {
-            this.backfillId = eventBackfillRevertParams.backfillId
-            additionalHeaders(eventBackfillRevertParams.additionalHeaders)
-            additionalQueryParams(eventBackfillRevertParams.additionalQueryParams)
-            additionalBodyProperties(eventBackfillRevertParams.additionalBodyProperties)
+            backfillId = eventBackfillRevertParams.backfillId
+            additionalHeaders = eventBackfillRevertParams.additionalHeaders.toBuilder()
+            additionalQueryParams = eventBackfillRevertParams.additionalQueryParams.toBuilder()
+            additionalBodyProperties =
+                eventBackfillRevertParams.additionalBodyProperties.toMutableMap()
         }
 
         fun backfillId(backfillId: String) = apply { this.backfillId = backfillId }
@@ -208,4 +194,17 @@ constructor(
                 additionalBodyProperties.toImmutable(),
             )
     }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) {
+            return true
+        }
+
+        return /* spotless:off */ other is EventBackfillRevertParams && backfillId == other.backfillId && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams && additionalBodyProperties == other.additionalBodyProperties /* spotless:on */
+    }
+
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(backfillId, additionalHeaders, additionalQueryParams, additionalBodyProperties) /* spotless:on */
+
+    override fun toString() =
+        "EventBackfillRevertParams{backfillId=$backfillId, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams, additionalBodyProperties=$additionalBodyProperties}"
 }

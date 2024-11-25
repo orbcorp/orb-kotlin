@@ -38,6 +38,12 @@ constructor(
 
     fun thresholds(): List<Threshold>? = thresholds
 
+    fun _additionalHeaders(): Headers = additionalHeaders
+
+    fun _additionalQueryParams(): QueryParams = additionalQueryParams
+
+    fun _additionalBodyProperties(): Map<String, JsonValue> = additionalBodyProperties
+
     internal fun getBody(): AlertCreateForExternalCustomerBody {
         return AlertCreateForExternalCustomerBody(
             currency,
@@ -143,42 +149,18 @@ constructor(
                 return true
             }
 
-            return /* spotless:off */ other is AlertCreateForExternalCustomerBody && this.currency == other.currency && this.type == other.type && this.thresholds == other.thresholds && this.additionalProperties == other.additionalProperties /* spotless:on */
+            return /* spotless:off */ other is AlertCreateForExternalCustomerBody && currency == other.currency && type == other.type && thresholds == other.thresholds && additionalProperties == other.additionalProperties /* spotless:on */
         }
 
-        private var hashCode: Int = 0
+        /* spotless:off */
+        private val hashCode: Int by lazy { Objects.hash(currency, type, thresholds, additionalProperties) }
+        /* spotless:on */
 
-        override fun hashCode(): Int {
-            if (hashCode == 0) {
-                hashCode = /* spotless:off */ Objects.hash(currency, type, thresholds, additionalProperties) /* spotless:on */
-            }
-            return hashCode
-        }
+        override fun hashCode(): Int = hashCode
 
         override fun toString() =
             "AlertCreateForExternalCustomerBody{currency=$currency, type=$type, thresholds=$thresholds, additionalProperties=$additionalProperties}"
     }
-
-    fun _additionalHeaders(): Headers = additionalHeaders
-
-    fun _additionalQueryParams(): QueryParams = additionalQueryParams
-
-    fun _additionalBodyProperties(): Map<String, JsonValue> = additionalBodyProperties
-
-    override fun equals(other: Any?): Boolean {
-        if (this === other) {
-            return true
-        }
-
-        return /* spotless:off */ other is AlertCreateForExternalCustomerParams && this.externalCustomerId == other.externalCustomerId && this.currency == other.currency && this.type == other.type && this.thresholds == other.thresholds && this.additionalHeaders == other.additionalHeaders && this.additionalQueryParams == other.additionalQueryParams && this.additionalBodyProperties == other.additionalBodyProperties /* spotless:on */
-    }
-
-    override fun hashCode(): Int {
-        return /* spotless:off */ Objects.hash(externalCustomerId, currency, type, thresholds, additionalHeaders, additionalQueryParams, additionalBodyProperties) /* spotless:on */
-    }
-
-    override fun toString() =
-        "AlertCreateForExternalCustomerParams{externalCustomerId=$externalCustomerId, currency=$currency, type=$type, thresholds=$thresholds, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams, additionalBodyProperties=$additionalBodyProperties}"
 
     fun toBuilder() = Builder().from(this)
 
@@ -201,13 +183,16 @@ constructor(
         internal fun from(
             alertCreateForExternalCustomerParams: AlertCreateForExternalCustomerParams
         ) = apply {
-            this.externalCustomerId = alertCreateForExternalCustomerParams.externalCustomerId
-            this.currency = alertCreateForExternalCustomerParams.currency
-            this.type = alertCreateForExternalCustomerParams.type
-            this.thresholds(alertCreateForExternalCustomerParams.thresholds ?: listOf())
-            additionalHeaders(alertCreateForExternalCustomerParams.additionalHeaders)
-            additionalQueryParams(alertCreateForExternalCustomerParams.additionalQueryParams)
-            additionalBodyProperties(alertCreateForExternalCustomerParams.additionalBodyProperties)
+            externalCustomerId = alertCreateForExternalCustomerParams.externalCustomerId
+            currency = alertCreateForExternalCustomerParams.currency
+            type = alertCreateForExternalCustomerParams.type
+            thresholds =
+                alertCreateForExternalCustomerParams.thresholds?.toMutableList() ?: mutableListOf()
+            additionalHeaders = alertCreateForExternalCustomerParams.additionalHeaders.toBuilder()
+            additionalQueryParams =
+                alertCreateForExternalCustomerParams.additionalQueryParams.toBuilder()
+            additionalBodyProperties =
+                alertCreateForExternalCustomerParams.additionalBodyProperties.toMutableMap()
         }
 
         fun externalCustomerId(externalCustomerId: String) = apply {
@@ -356,7 +341,7 @@ constructor(
                 },
                 checkNotNull(currency) { "`currency` is required but was not set" },
                 checkNotNull(type) { "`type` is required but was not set" },
-                if (thresholds.size == 0) null else thresholds.toImmutable(),
+                thresholds.toImmutable().ifEmpty { null },
                 additionalHeaders.build(),
                 additionalQueryParams.build(),
                 additionalBodyProperties.toImmutable(),
@@ -376,7 +361,7 @@ constructor(
                 return true
             }
 
-            return /* spotless:off */ other is Type && this.value == other.value /* spotless:on */
+            return /* spotless:off */ other is Type && value == other.value /* spotless:on */
         }
 
         override fun hashCode() = value.hashCode()
@@ -508,19 +493,29 @@ constructor(
                 return true
             }
 
-            return /* spotless:off */ other is Threshold && this.value == other.value && this.additionalProperties == other.additionalProperties /* spotless:on */
+            return /* spotless:off */ other is Threshold && value == other.value && additionalProperties == other.additionalProperties /* spotless:on */
         }
 
-        private var hashCode: Int = 0
+        /* spotless:off */
+        private val hashCode: Int by lazy { Objects.hash(value, additionalProperties) }
+        /* spotless:on */
 
-        override fun hashCode(): Int {
-            if (hashCode == 0) {
-                hashCode = /* spotless:off */ Objects.hash(value, additionalProperties) /* spotless:on */
-            }
-            return hashCode
-        }
+        override fun hashCode(): Int = hashCode
 
         override fun toString() =
             "Threshold{value=$value, additionalProperties=$additionalProperties}"
     }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) {
+            return true
+        }
+
+        return /* spotless:off */ other is AlertCreateForExternalCustomerParams && externalCustomerId == other.externalCustomerId && currency == other.currency && type == other.type && thresholds == other.thresholds && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams && additionalBodyProperties == other.additionalBodyProperties /* spotless:on */
+    }
+
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(externalCustomerId, currency, type, thresholds, additionalHeaders, additionalQueryParams, additionalBodyProperties) /* spotless:on */
+
+    override fun toString() =
+        "AlertCreateForExternalCustomerParams{externalCustomerId=$externalCustomerId, currency=$currency, type=$type, thresholds=$thresholds, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams, additionalBodyProperties=$additionalBodyProperties}"
 }
