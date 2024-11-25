@@ -47,6 +47,7 @@ constructor(
     private val externalMarketplace: ExternalMarketplace?,
     private val externalMarketplaceReportingId: String?,
     private val externalPlanId: String?,
+    private val filter: String?,
     private val initialPhaseOrder: Long?,
     private val invoicingThreshold: String?,
     private val metadata: Metadata?,
@@ -96,6 +97,8 @@ constructor(
     fun externalMarketplaceReportingId(): String? = externalMarketplaceReportingId
 
     fun externalPlanId(): String? = externalPlanId
+
+    fun filter(): String? = filter
 
     fun initialPhaseOrder(): Long? = initialPhaseOrder
 
@@ -148,6 +151,7 @@ constructor(
             externalMarketplace,
             externalMarketplaceReportingId,
             externalPlanId,
+            filter,
             initialPhaseOrder,
             invoicingThreshold,
             metadata,
@@ -189,6 +193,7 @@ constructor(
         private val externalMarketplace: ExternalMarketplace?,
         private val externalMarketplaceReportingId: String?,
         private val externalPlanId: String?,
+        private val filter: String?,
         private val initialPhaseOrder: Long?,
         private val invoicingThreshold: String?,
         private val metadata: Metadata?,
@@ -268,6 +273,14 @@ constructor(
          * that either this property or `plan_id` must be specified.
          */
         @JsonProperty("external_plan_id") fun externalPlanId(): String? = externalPlanId
+
+        /**
+         * An additional filter to apply to usage queries. This filter must be expressed as a
+         * boolean
+         * [computed property](../guides/extensibility/advanced-metrics#computed-properties). If
+         * null, usage queries will not include any additional filter.
+         */
+        @JsonProperty("filter") fun filter(): String? = filter
 
         /** The phase of the plan to start with */
         @JsonProperty("initial_phase_order") fun initialPhaseOrder(): Long? = initialPhaseOrder
@@ -373,6 +386,7 @@ constructor(
             private var externalMarketplace: ExternalMarketplace? = null
             private var externalMarketplaceReportingId: String? = null
             private var externalPlanId: String? = null
+            private var filter: String? = null
             private var initialPhaseOrder: Long? = null
             private var invoicingThreshold: String? = null
             private var metadata: Metadata? = null
@@ -408,6 +422,7 @@ constructor(
                 this.externalMarketplaceReportingId =
                     subscriptionCreateBody.externalMarketplaceReportingId
                 this.externalPlanId = subscriptionCreateBody.externalPlanId
+                this.filter = subscriptionCreateBody.filter
                 this.initialPhaseOrder = subscriptionCreateBody.initialPhaseOrder
                 this.invoicingThreshold = subscriptionCreateBody.invoicingThreshold
                 this.metadata = subscriptionCreateBody.metadata
@@ -519,6 +534,14 @@ constructor(
             fun externalPlanId(externalPlanId: String) = apply {
                 this.externalPlanId = externalPlanId
             }
+
+            /**
+             * An additional filter to apply to usage queries. This filter must be expressed as a
+             * boolean
+             * [computed property](../guides/extensibility/advanced-metrics#computed-properties). If
+             * null, usage queries will not include any additional filter.
+             */
+            @JsonProperty("filter") fun filter(filter: String) = apply { this.filter = filter }
 
             /** The phase of the plan to start with */
             @JsonProperty("initial_phase_order")
@@ -657,6 +680,7 @@ constructor(
                     externalMarketplace,
                     externalMarketplaceReportingId,
                     externalPlanId,
+                    filter,
                     initialPhaseOrder,
                     invoicingThreshold,
                     metadata,
@@ -680,17 +704,17 @@ constructor(
                 return true
             }
 
-            return /* spotless:off */ other is SubscriptionCreateBody && addAdjustments == other.addAdjustments && addPrices == other.addPrices && alignBillingWithSubscriptionStartDate == other.alignBillingWithSubscriptionStartDate && autoCollection == other.autoCollection && awsRegion == other.awsRegion && billingCycleAnchorConfiguration == other.billingCycleAnchorConfiguration && couponRedemptionCode == other.couponRedemptionCode && creditsOverageRate == other.creditsOverageRate && customerId == other.customerId && defaultInvoiceMemo == other.defaultInvoiceMemo && endDate == other.endDate && externalCustomerId == other.externalCustomerId && externalMarketplace == other.externalMarketplace && externalMarketplaceReportingId == other.externalMarketplaceReportingId && externalPlanId == other.externalPlanId && initialPhaseOrder == other.initialPhaseOrder && invoicingThreshold == other.invoicingThreshold && metadata == other.metadata && netTerms == other.netTerms && perCreditOverageAmount == other.perCreditOverageAmount && planId == other.planId && planVersionNumber == other.planVersionNumber && priceOverrides == other.priceOverrides && removeAdjustments == other.removeAdjustments && removePrices == other.removePrices && replaceAdjustments == other.replaceAdjustments && replacePrices == other.replacePrices && startDate == other.startDate && trialDurationDays == other.trialDurationDays && additionalProperties == other.additionalProperties /* spotless:on */
+            return /* spotless:off */ other is SubscriptionCreateBody && addAdjustments == other.addAdjustments && addPrices == other.addPrices && alignBillingWithSubscriptionStartDate == other.alignBillingWithSubscriptionStartDate && autoCollection == other.autoCollection && awsRegion == other.awsRegion && billingCycleAnchorConfiguration == other.billingCycleAnchorConfiguration && couponRedemptionCode == other.couponRedemptionCode && creditsOverageRate == other.creditsOverageRate && customerId == other.customerId && defaultInvoiceMemo == other.defaultInvoiceMemo && endDate == other.endDate && externalCustomerId == other.externalCustomerId && externalMarketplace == other.externalMarketplace && externalMarketplaceReportingId == other.externalMarketplaceReportingId && externalPlanId == other.externalPlanId && filter == other.filter && initialPhaseOrder == other.initialPhaseOrder && invoicingThreshold == other.invoicingThreshold && metadata == other.metadata && netTerms == other.netTerms && perCreditOverageAmount == other.perCreditOverageAmount && planId == other.planId && planVersionNumber == other.planVersionNumber && priceOverrides == other.priceOverrides && removeAdjustments == other.removeAdjustments && removePrices == other.removePrices && replaceAdjustments == other.replaceAdjustments && replacePrices == other.replacePrices && startDate == other.startDate && trialDurationDays == other.trialDurationDays && additionalProperties == other.additionalProperties /* spotless:on */
         }
 
         /* spotless:off */
-        private val hashCode: Int by lazy { Objects.hash(addAdjustments, addPrices, alignBillingWithSubscriptionStartDate, autoCollection, awsRegion, billingCycleAnchorConfiguration, couponRedemptionCode, creditsOverageRate, customerId, defaultInvoiceMemo, endDate, externalCustomerId, externalMarketplace, externalMarketplaceReportingId, externalPlanId, initialPhaseOrder, invoicingThreshold, metadata, netTerms, perCreditOverageAmount, planId, planVersionNumber, priceOverrides, removeAdjustments, removePrices, replaceAdjustments, replacePrices, startDate, trialDurationDays, additionalProperties) }
+        private val hashCode: Int by lazy { Objects.hash(addAdjustments, addPrices, alignBillingWithSubscriptionStartDate, autoCollection, awsRegion, billingCycleAnchorConfiguration, couponRedemptionCode, creditsOverageRate, customerId, defaultInvoiceMemo, endDate, externalCustomerId, externalMarketplace, externalMarketplaceReportingId, externalPlanId, filter, initialPhaseOrder, invoicingThreshold, metadata, netTerms, perCreditOverageAmount, planId, planVersionNumber, priceOverrides, removeAdjustments, removePrices, replaceAdjustments, replacePrices, startDate, trialDurationDays, additionalProperties) }
         /* spotless:on */
 
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "SubscriptionCreateBody{addAdjustments=$addAdjustments, addPrices=$addPrices, alignBillingWithSubscriptionStartDate=$alignBillingWithSubscriptionStartDate, autoCollection=$autoCollection, awsRegion=$awsRegion, billingCycleAnchorConfiguration=$billingCycleAnchorConfiguration, couponRedemptionCode=$couponRedemptionCode, creditsOverageRate=$creditsOverageRate, customerId=$customerId, defaultInvoiceMemo=$defaultInvoiceMemo, endDate=$endDate, externalCustomerId=$externalCustomerId, externalMarketplace=$externalMarketplace, externalMarketplaceReportingId=$externalMarketplaceReportingId, externalPlanId=$externalPlanId, initialPhaseOrder=$initialPhaseOrder, invoicingThreshold=$invoicingThreshold, metadata=$metadata, netTerms=$netTerms, perCreditOverageAmount=$perCreditOverageAmount, planId=$planId, planVersionNumber=$planVersionNumber, priceOverrides=$priceOverrides, removeAdjustments=$removeAdjustments, removePrices=$removePrices, replaceAdjustments=$replaceAdjustments, replacePrices=$replacePrices, startDate=$startDate, trialDurationDays=$trialDurationDays, additionalProperties=$additionalProperties}"
+            "SubscriptionCreateBody{addAdjustments=$addAdjustments, addPrices=$addPrices, alignBillingWithSubscriptionStartDate=$alignBillingWithSubscriptionStartDate, autoCollection=$autoCollection, awsRegion=$awsRegion, billingCycleAnchorConfiguration=$billingCycleAnchorConfiguration, couponRedemptionCode=$couponRedemptionCode, creditsOverageRate=$creditsOverageRate, customerId=$customerId, defaultInvoiceMemo=$defaultInvoiceMemo, endDate=$endDate, externalCustomerId=$externalCustomerId, externalMarketplace=$externalMarketplace, externalMarketplaceReportingId=$externalMarketplaceReportingId, externalPlanId=$externalPlanId, filter=$filter, initialPhaseOrder=$initialPhaseOrder, invoicingThreshold=$invoicingThreshold, metadata=$metadata, netTerms=$netTerms, perCreditOverageAmount=$perCreditOverageAmount, planId=$planId, planVersionNumber=$planVersionNumber, priceOverrides=$priceOverrides, removeAdjustments=$removeAdjustments, removePrices=$removePrices, replaceAdjustments=$replaceAdjustments, replacePrices=$replacePrices, startDate=$startDate, trialDurationDays=$trialDurationDays, additionalProperties=$additionalProperties}"
     }
 
     fun toBuilder() = Builder().from(this)
@@ -718,6 +742,7 @@ constructor(
         private var externalMarketplace: ExternalMarketplace? = null
         private var externalMarketplaceReportingId: String? = null
         private var externalPlanId: String? = null
+        private var filter: String? = null
         private var initialPhaseOrder: Long? = null
         private var invoicingThreshold: String? = null
         private var metadata: Metadata? = null
@@ -755,6 +780,7 @@ constructor(
             externalMarketplace = subscriptionCreateParams.externalMarketplace
             externalMarketplaceReportingId = subscriptionCreateParams.externalMarketplaceReportingId
             externalPlanId = subscriptionCreateParams.externalPlanId
+            filter = subscriptionCreateParams.filter
             initialPhaseOrder = subscriptionCreateParams.initialPhaseOrder
             invoicingThreshold = subscriptionCreateParams.invoicingThreshold
             metadata = subscriptionCreateParams.metadata
@@ -871,6 +897,14 @@ constructor(
          * that either this property or `plan_id` must be specified.
          */
         fun externalPlanId(externalPlanId: String) = apply { this.externalPlanId = externalPlanId }
+
+        /**
+         * An additional filter to apply to usage queries. This filter must be expressed as a
+         * boolean
+         * [computed property](../guides/extensibility/advanced-metrics#computed-properties). If
+         * null, usage queries will not include any additional filter.
+         */
+        fun filter(filter: String) = apply { this.filter = filter }
 
         /** The phase of the plan to start with */
         fun initialPhaseOrder(initialPhaseOrder: Long) = apply {
@@ -1142,6 +1176,7 @@ constructor(
                 externalMarketplace,
                 externalMarketplaceReportingId,
                 externalPlanId,
+                filter,
                 initialPhaseOrder,
                 invoicingThreshold,
                 metadata,
@@ -50824,11 +50859,11 @@ constructor(
             return true
         }
 
-        return /* spotless:off */ other is SubscriptionCreateParams && addAdjustments == other.addAdjustments && addPrices == other.addPrices && alignBillingWithSubscriptionStartDate == other.alignBillingWithSubscriptionStartDate && autoCollection == other.autoCollection && awsRegion == other.awsRegion && billingCycleAnchorConfiguration == other.billingCycleAnchorConfiguration && couponRedemptionCode == other.couponRedemptionCode && creditsOverageRate == other.creditsOverageRate && customerId == other.customerId && defaultInvoiceMemo == other.defaultInvoiceMemo && endDate == other.endDate && externalCustomerId == other.externalCustomerId && externalMarketplace == other.externalMarketplace && externalMarketplaceReportingId == other.externalMarketplaceReportingId && externalPlanId == other.externalPlanId && initialPhaseOrder == other.initialPhaseOrder && invoicingThreshold == other.invoicingThreshold && metadata == other.metadata && netTerms == other.netTerms && perCreditOverageAmount == other.perCreditOverageAmount && planId == other.planId && planVersionNumber == other.planVersionNumber && priceOverrides == other.priceOverrides && removeAdjustments == other.removeAdjustments && removePrices == other.removePrices && replaceAdjustments == other.replaceAdjustments && replacePrices == other.replacePrices && startDate == other.startDate && trialDurationDays == other.trialDurationDays && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams && additionalBodyProperties == other.additionalBodyProperties /* spotless:on */
+        return /* spotless:off */ other is SubscriptionCreateParams && addAdjustments == other.addAdjustments && addPrices == other.addPrices && alignBillingWithSubscriptionStartDate == other.alignBillingWithSubscriptionStartDate && autoCollection == other.autoCollection && awsRegion == other.awsRegion && billingCycleAnchorConfiguration == other.billingCycleAnchorConfiguration && couponRedemptionCode == other.couponRedemptionCode && creditsOverageRate == other.creditsOverageRate && customerId == other.customerId && defaultInvoiceMemo == other.defaultInvoiceMemo && endDate == other.endDate && externalCustomerId == other.externalCustomerId && externalMarketplace == other.externalMarketplace && externalMarketplaceReportingId == other.externalMarketplaceReportingId && externalPlanId == other.externalPlanId && filter == other.filter && initialPhaseOrder == other.initialPhaseOrder && invoicingThreshold == other.invoicingThreshold && metadata == other.metadata && netTerms == other.netTerms && perCreditOverageAmount == other.perCreditOverageAmount && planId == other.planId && planVersionNumber == other.planVersionNumber && priceOverrides == other.priceOverrides && removeAdjustments == other.removeAdjustments && removePrices == other.removePrices && replaceAdjustments == other.replaceAdjustments && replacePrices == other.replacePrices && startDate == other.startDate && trialDurationDays == other.trialDurationDays && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams && additionalBodyProperties == other.additionalBodyProperties /* spotless:on */
     }
 
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(addAdjustments, addPrices, alignBillingWithSubscriptionStartDate, autoCollection, awsRegion, billingCycleAnchorConfiguration, couponRedemptionCode, creditsOverageRate, customerId, defaultInvoiceMemo, endDate, externalCustomerId, externalMarketplace, externalMarketplaceReportingId, externalPlanId, initialPhaseOrder, invoicingThreshold, metadata, netTerms, perCreditOverageAmount, planId, planVersionNumber, priceOverrides, removeAdjustments, removePrices, replaceAdjustments, replacePrices, startDate, trialDurationDays, additionalHeaders, additionalQueryParams, additionalBodyProperties) /* spotless:on */
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(addAdjustments, addPrices, alignBillingWithSubscriptionStartDate, autoCollection, awsRegion, billingCycleAnchorConfiguration, couponRedemptionCode, creditsOverageRate, customerId, defaultInvoiceMemo, endDate, externalCustomerId, externalMarketplace, externalMarketplaceReportingId, externalPlanId, filter, initialPhaseOrder, invoicingThreshold, metadata, netTerms, perCreditOverageAmount, planId, planVersionNumber, priceOverrides, removeAdjustments, removePrices, replaceAdjustments, replacePrices, startDate, trialDurationDays, additionalHeaders, additionalQueryParams, additionalBodyProperties) /* spotless:on */
 
     override fun toString() =
-        "SubscriptionCreateParams{addAdjustments=$addAdjustments, addPrices=$addPrices, alignBillingWithSubscriptionStartDate=$alignBillingWithSubscriptionStartDate, autoCollection=$autoCollection, awsRegion=$awsRegion, billingCycleAnchorConfiguration=$billingCycleAnchorConfiguration, couponRedemptionCode=$couponRedemptionCode, creditsOverageRate=$creditsOverageRate, customerId=$customerId, defaultInvoiceMemo=$defaultInvoiceMemo, endDate=$endDate, externalCustomerId=$externalCustomerId, externalMarketplace=$externalMarketplace, externalMarketplaceReportingId=$externalMarketplaceReportingId, externalPlanId=$externalPlanId, initialPhaseOrder=$initialPhaseOrder, invoicingThreshold=$invoicingThreshold, metadata=$metadata, netTerms=$netTerms, perCreditOverageAmount=$perCreditOverageAmount, planId=$planId, planVersionNumber=$planVersionNumber, priceOverrides=$priceOverrides, removeAdjustments=$removeAdjustments, removePrices=$removePrices, replaceAdjustments=$replaceAdjustments, replacePrices=$replacePrices, startDate=$startDate, trialDurationDays=$trialDurationDays, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams, additionalBodyProperties=$additionalBodyProperties}"
+        "SubscriptionCreateParams{addAdjustments=$addAdjustments, addPrices=$addPrices, alignBillingWithSubscriptionStartDate=$alignBillingWithSubscriptionStartDate, autoCollection=$autoCollection, awsRegion=$awsRegion, billingCycleAnchorConfiguration=$billingCycleAnchorConfiguration, couponRedemptionCode=$couponRedemptionCode, creditsOverageRate=$creditsOverageRate, customerId=$customerId, defaultInvoiceMemo=$defaultInvoiceMemo, endDate=$endDate, externalCustomerId=$externalCustomerId, externalMarketplace=$externalMarketplace, externalMarketplaceReportingId=$externalMarketplaceReportingId, externalPlanId=$externalPlanId, filter=$filter, initialPhaseOrder=$initialPhaseOrder, invoicingThreshold=$invoicingThreshold, metadata=$metadata, netTerms=$netTerms, perCreditOverageAmount=$perCreditOverageAmount, planId=$planId, planVersionNumber=$planVersionNumber, priceOverrides=$priceOverrides, removeAdjustments=$removeAdjustments, removePrices=$removePrices, replaceAdjustments=$replaceAdjustments, replacePrices=$replacePrices, startDate=$startDate, trialDurationDays=$trialDurationDays, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams, additionalBodyProperties=$additionalBodyProperties}"
 }
