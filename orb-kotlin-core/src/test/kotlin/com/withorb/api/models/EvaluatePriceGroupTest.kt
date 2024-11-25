@@ -13,12 +13,12 @@ class EvaluatePriceGroupTest {
             EvaluatePriceGroup.builder()
                 .amount("amount")
                 .groupingValues(listOf(EvaluatePriceGroup.GroupingValue.ofString("string")))
-                .quantity(42.23)
+                .quantity(0.0)
                 .build()
         assertThat(evaluatePriceGroup).isNotNull
         assertThat(evaluatePriceGroup.amount()).isEqualTo("amount")
         assertThat(evaluatePriceGroup.groupingValues())
             .containsExactly(EvaluatePriceGroup.GroupingValue.ofString("string"))
-        assertThat(evaluatePriceGroup.quantity()).isEqualTo(42.23)
+        assertThat(evaluatePriceGroup.quantity()).isEqualTo(0.0)
     }
 }

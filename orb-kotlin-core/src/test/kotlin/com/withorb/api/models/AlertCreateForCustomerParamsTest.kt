@@ -14,9 +14,7 @@ class AlertCreateForCustomerParamsTest {
             .customerId("customer_id")
             .currency("currency")
             .type(AlertCreateForCustomerParams.Type.USAGE_EXCEEDED)
-            .thresholds(
-                listOf(AlertCreateForCustomerParams.Threshold.builder().value(42.23).build())
-            )
+            .thresholds(listOf(AlertCreateForCustomerParams.Threshold.builder().value(0.0).build()))
             .build()
     }
 
@@ -28,7 +26,7 @@ class AlertCreateForCustomerParamsTest {
                 .currency("currency")
                 .type(AlertCreateForCustomerParams.Type.USAGE_EXCEEDED)
                 .thresholds(
-                    listOf(AlertCreateForCustomerParams.Threshold.builder().value(42.23).build())
+                    listOf(AlertCreateForCustomerParams.Threshold.builder().value(0.0).build())
                 )
                 .build()
         val body = params.getBody()
@@ -36,9 +34,7 @@ class AlertCreateForCustomerParamsTest {
         assertThat(body.currency()).isEqualTo("currency")
         assertThat(body.type()).isEqualTo(AlertCreateForCustomerParams.Type.USAGE_EXCEEDED)
         assertThat(body.thresholds())
-            .isEqualTo(
-                listOf(AlertCreateForCustomerParams.Threshold.builder().value(42.23).build())
-            )
+            .isEqualTo(listOf(AlertCreateForCustomerParams.Threshold.builder().value(0.0).build()))
     }
 
     @Test

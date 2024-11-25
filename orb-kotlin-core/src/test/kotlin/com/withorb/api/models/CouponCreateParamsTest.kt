@@ -18,13 +18,13 @@ class CouponCreateParamsTest {
                             CouponCreateParams.Discount.NewCouponPercentageDiscount.DiscountType
                                 .PERCENTAGE
                         )
-                        .percentageDiscount(42.23)
+                        .percentageDiscount(0.0)
                         .build()
                 )
             )
             .redemptionCode("HALFOFF")
-            .durationInMonths(120L)
-            .maxRedemptions(123L)
+            .durationInMonths(12L)
+            .maxRedemptions(1L)
             .build()
     }
 
@@ -39,13 +39,13 @@ class CouponCreateParamsTest {
                                 CouponCreateParams.Discount.NewCouponPercentageDiscount.DiscountType
                                     .PERCENTAGE
                             )
-                            .percentageDiscount(42.23)
+                            .percentageDiscount(0.0)
                             .build()
                     )
                 )
                 .redemptionCode("HALFOFF")
-                .durationInMonths(120L)
-                .maxRedemptions(123L)
+                .durationInMonths(12L)
+                .maxRedemptions(1L)
                 .build()
         val body = params.getBody()
         assertThat(body).isNotNull
@@ -57,13 +57,13 @@ class CouponCreateParamsTest {
                             CouponCreateParams.Discount.NewCouponPercentageDiscount.DiscountType
                                 .PERCENTAGE
                         )
-                        .percentageDiscount(42.23)
+                        .percentageDiscount(0.0)
                         .build()
                 )
             )
         assertThat(body.redemptionCode()).isEqualTo("HALFOFF")
-        assertThat(body.durationInMonths()).isEqualTo(120L)
-        assertThat(body.maxRedemptions()).isEqualTo(123L)
+        assertThat(body.durationInMonths()).isEqualTo(12L)
+        assertThat(body.maxRedemptions()).isEqualTo(1L)
     }
 
     @Test
@@ -77,7 +77,7 @@ class CouponCreateParamsTest {
                                 CouponCreateParams.Discount.NewCouponPercentageDiscount.DiscountType
                                     .PERCENTAGE
                             )
-                            .percentageDiscount(42.23)
+                            .percentageDiscount(0.0)
                             .build()
                     )
                 )
@@ -93,7 +93,7 @@ class CouponCreateParamsTest {
                             CouponCreateParams.Discount.NewCouponPercentageDiscount.DiscountType
                                 .PERCENTAGE
                         )
-                        .percentageDiscount(42.23)
+                        .percentageDiscount(0.0)
                         .build()
                 )
             )

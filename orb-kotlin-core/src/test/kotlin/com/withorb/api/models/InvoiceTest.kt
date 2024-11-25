@@ -19,7 +19,7 @@ class InvoiceTest {
                     Invoice.AutoCollection.builder()
                         .enabled(true)
                         .nextAttemptAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
-                        .numAttempts(123L)
+                        .numAttempts(0L)
                         .previouslyAttemptedAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                         .build()
                 )
@@ -92,7 +92,7 @@ class InvoiceTest {
                             PercentageDiscount.builder()
                                 .appliesToPriceIds(listOf("string"))
                                 .discountType(PercentageDiscount.DiscountType.PERCENTAGE)
-                                .percentageDiscount(1.0)
+                                .percentageDiscount(0.15)
                                 .reason("reason")
                                 .build()
                         )
@@ -117,7 +117,7 @@ class InvoiceTest {
                                     PercentageDiscount.builder()
                                         .appliesToPriceIds(listOf("string"))
                                         .discountType(PercentageDiscount.DiscountType.PERCENTAGE)
-                                        .percentageDiscount(1.0)
+                                        .percentageDiscount(0.15)
                                         .reason("reason")
                                         .build()
                                 )
@@ -150,7 +150,7 @@ class InvoiceTest {
                                         )
                                         .billingCycleConfiguration(
                                             Price.UnitPrice.BillingCycleConfiguration.builder()
-                                                .duration(123L)
+                                                .duration(0L)
                                                 .durationUnit(
                                                     Price.UnitPrice.BillingCycleConfiguration
                                                         .DurationUnit
@@ -159,7 +159,7 @@ class InvoiceTest {
                                                 .build()
                                         )
                                         .cadence(Price.UnitPrice.Cadence.ONE_TIME)
-                                        .conversionRate(42.23)
+                                        .conversionRate(0.0)
                                         .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                                         .creditAllocation(
                                             Price.UnitPrice.CreditAllocation.builder()
@@ -175,16 +175,16 @@ class InvoiceTest {
                                                     .discountType(
                                                         PercentageDiscount.DiscountType.PERCENTAGE
                                                     )
-                                                    .percentageDiscount(1.0)
+                                                    .percentageDiscount(0.15)
                                                     .reason("reason")
                                                     .build()
                                             )
                                         )
                                         .externalPriceId("external_price_id")
-                                        .fixedPriceQuantity(42.23)
+                                        .fixedPriceQuantity(0.0)
                                         .invoicingCycleConfiguration(
                                             Price.UnitPrice.InvoicingCycleConfiguration.builder()
-                                                .duration(123L)
+                                                .duration(0L)
                                                 .durationUnit(
                                                     Price.UnitPrice.InvoicingCycleConfiguration
                                                         .DurationUnit
@@ -215,7 +215,7 @@ class InvoiceTest {
                                         .minimumAmount("minimum_amount")
                                         .modelType(Price.UnitPrice.ModelType.UNIT)
                                         .name("name")
-                                        .planPhaseOrder(123L)
+                                        .planPhaseOrder(0L)
                                         .priceType(Price.UnitPrice.PriceType.USAGE_PRICE)
                                         .unitConfig(
                                             Price.UnitPrice.UnitConfig.builder()
@@ -225,7 +225,7 @@ class InvoiceTest {
                                         .build()
                                 )
                             )
-                            .quantity(42.23)
+                            .quantity(1.0)
                             .startDate(OffsetDateTime.parse("2022-02-01T08:00:00+00:00"))
                             .subLineItems(
                                 listOf(
@@ -248,7 +248,7 @@ class InvoiceTest {
                                                     .build()
                                             )
                                             .name("Tier One")
-                                            .quantity(42.23)
+                                            .quantity(5.0)
                                             .type(
                                                 Invoice.LineItem.SubLineItem.MatrixSubLineItem.Type
                                                     .MATRIX
@@ -328,7 +328,7 @@ class InvoiceTest {
                 Invoice.AutoCollection.builder()
                     .enabled(true)
                     .nextAttemptAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
-                    .numAttempts(123L)
+                    .numAttempts(0L)
                     .previouslyAttemptedAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                     .build()
             )
@@ -400,7 +400,7 @@ class InvoiceTest {
                     PercentageDiscount.builder()
                         .appliesToPriceIds(listOf("string"))
                         .discountType(PercentageDiscount.DiscountType.PERCENTAGE)
-                        .percentageDiscount(1.0)
+                        .percentageDiscount(0.15)
                         .reason("reason")
                         .build()
                 )
@@ -428,7 +428,7 @@ class InvoiceTest {
                             PercentageDiscount.builder()
                                 .appliesToPriceIds(listOf("string"))
                                 .discountType(PercentageDiscount.DiscountType.PERCENTAGE)
-                                .percentageDiscount(1.0)
+                                .percentageDiscount(0.15)
                                 .reason("reason")
                                 .build()
                         )
@@ -459,7 +459,7 @@ class InvoiceTest {
                                 )
                                 .billingCycleConfiguration(
                                     Price.UnitPrice.BillingCycleConfiguration.builder()
-                                        .duration(123L)
+                                        .duration(0L)
                                         .durationUnit(
                                             Price.UnitPrice.BillingCycleConfiguration.DurationUnit
                                                 .DAY
@@ -467,7 +467,7 @@ class InvoiceTest {
                                         .build()
                                 )
                                 .cadence(Price.UnitPrice.Cadence.ONE_TIME)
-                                .conversionRate(42.23)
+                                .conversionRate(0.0)
                                 .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                                 .creditAllocation(
                                     Price.UnitPrice.CreditAllocation.builder()
@@ -483,16 +483,16 @@ class InvoiceTest {
                                             .discountType(
                                                 PercentageDiscount.DiscountType.PERCENTAGE
                                             )
-                                            .percentageDiscount(1.0)
+                                            .percentageDiscount(0.15)
                                             .reason("reason")
                                             .build()
                                     )
                                 )
                                 .externalPriceId("external_price_id")
-                                .fixedPriceQuantity(42.23)
+                                .fixedPriceQuantity(0.0)
                                 .invoicingCycleConfiguration(
                                     Price.UnitPrice.InvoicingCycleConfiguration.builder()
-                                        .duration(123L)
+                                        .duration(0L)
                                         .durationUnit(
                                             Price.UnitPrice.InvoicingCycleConfiguration.DurationUnit
                                                 .DAY
@@ -517,7 +517,7 @@ class InvoiceTest {
                                 .minimumAmount("minimum_amount")
                                 .modelType(Price.UnitPrice.ModelType.UNIT)
                                 .name("name")
-                                .planPhaseOrder(123L)
+                                .planPhaseOrder(0L)
                                 .priceType(Price.UnitPrice.PriceType.USAGE_PRICE)
                                 .unitConfig(
                                     Price.UnitPrice.UnitConfig.builder()
@@ -527,7 +527,7 @@ class InvoiceTest {
                                 .build()
                         )
                     )
-                    .quantity(42.23)
+                    .quantity(1.0)
                     .startDate(OffsetDateTime.parse("2022-02-01T08:00:00+00:00"))
                     .subLineItems(
                         listOf(
@@ -548,7 +548,7 @@ class InvoiceTest {
                                             .build()
                                     )
                                     .name("Tier One")
-                                    .quantity(42.23)
+                                    .quantity(5.0)
                                     .type(
                                         Invoice.LineItem.SubLineItem.MatrixSubLineItem.Type.MATRIX
                                     )

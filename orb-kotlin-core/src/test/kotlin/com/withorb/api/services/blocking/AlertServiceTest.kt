@@ -38,7 +38,7 @@ class AlertServiceTest {
             alertService.update(
                 AlertUpdateParams.builder()
                     .alertConfigurationId("alert_configuration_id")
-                    .thresholds(listOf(AlertUpdateParams.Threshold.builder().value(42.23).build()))
+                    .thresholds(listOf(AlertUpdateParams.Threshold.builder().value(0.0).build()))
                     .build()
             )
         println(alert)
@@ -74,9 +74,7 @@ class AlertServiceTest {
                     .currency("currency")
                     .type(AlertCreateForCustomerParams.Type.USAGE_EXCEEDED)
                     .thresholds(
-                        listOf(
-                            AlertCreateForCustomerParams.Threshold.builder().value(42.23).build()
-                        )
+                        listOf(AlertCreateForCustomerParams.Threshold.builder().value(0.0).build())
                     )
                     .build()
             )
@@ -101,7 +99,7 @@ class AlertServiceTest {
                     .thresholds(
                         listOf(
                             AlertCreateForExternalCustomerParams.Threshold.builder()
-                                .value(42.23)
+                                .value(0.0)
                                 .build()
                         )
                     )
@@ -125,9 +123,7 @@ class AlertServiceTest {
                     .subscriptionId("subscription_id")
                     .thresholds(
                         listOf(
-                            AlertCreateForSubscriptionParams.Threshold.builder()
-                                .value(42.23)
-                                .build()
+                            AlertCreateForSubscriptionParams.Threshold.builder().value(0.0).build()
                         )
                     )
                     .type(AlertCreateForSubscriptionParams.Type.USAGE_EXCEEDED)

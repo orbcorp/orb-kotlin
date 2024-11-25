@@ -13,7 +13,7 @@ class SubscriptionUpdateTrialResponseTest {
         val subscriptionUpdateTrialResponse =
             SubscriptionUpdateTrialResponse.builder()
                 .id("id")
-                .activePlanPhaseOrder(123L)
+                .activePlanPhaseOrder(0L)
                 .adjustmentIntervals(
                     listOf(
                         SubscriptionUpdateTrialResponse.AdjustmentInterval.builder()
@@ -47,12 +47,12 @@ class SubscriptionUpdateTrialResponseTest {
                 .autoCollection(true)
                 .billingCycleAnchorConfiguration(
                     SubscriptionUpdateTrialResponse.BillingCycleAnchorConfiguration.builder()
-                        .day(31L)
-                        .month(12L)
-                        .year(123L)
+                        .day(1L)
+                        .month(1L)
+                        .year(0L)
                         .build()
                 )
-                .billingCycleDay(31L)
+                .billingCycleDay(1L)
                 .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                 .currentBillingPeriodEndDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                 .currentBillingPeriodStartDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
@@ -152,7 +152,7 @@ class SubscriptionUpdateTrialResponseTest {
                         SubscriptionUpdateTrialResponse.FixedFeeQuantitySchedule.builder()
                             .endDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                             .priceId("price_id")
-                            .quantity(42.23)
+                            .quantity(0.0)
                             .startDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                             .build()
                     )
@@ -181,7 +181,7 @@ class SubscriptionUpdateTrialResponseTest {
                             .build()
                     )
                 )
-                .netTerms(123L)
+                .netTerms(0L)
                 .plan(
                     Plan.builder()
                         .id("id")
@@ -202,7 +202,7 @@ class SubscriptionUpdateTrialResponseTest {
                                 PercentageDiscount.builder()
                                     .appliesToPriceIds(listOf("string"))
                                     .discountType(PercentageDiscount.DiscountType.PERCENTAGE)
-                                    .percentageDiscount(1.0)
+                                    .percentageDiscount(0.15)
                                     .reason("reason")
                                     .build()
                             )
@@ -225,7 +225,7 @@ class SubscriptionUpdateTrialResponseTest {
                         )
                         .minimumAmount("minimum_amount")
                         .name("name")
-                        .netTerms(123L)
+                        .netTerms(0L)
                         .planPhases(
                             listOf(
                                 Plan.PlanPhase.builder()
@@ -238,12 +238,12 @@ class SubscriptionUpdateTrialResponseTest {
                                                 .discountType(
                                                     PercentageDiscount.DiscountType.PERCENTAGE
                                                 )
-                                                .percentageDiscount(1.0)
+                                                .percentageDiscount(0.15)
                                                 .reason("reason")
                                                 .build()
                                         )
                                     )
-                                    .duration(123L)
+                                    .duration(0L)
                                     .durationUnit(Plan.PlanPhase.DurationUnit.DAILY)
                                     .maximum(
                                         Plan.PlanPhase.Maximum.builder()
@@ -260,7 +260,7 @@ class SubscriptionUpdateTrialResponseTest {
                                     )
                                     .minimumAmount("minimum_amount")
                                     .name("name")
-                                    .order(123L)
+                                    .order(0L)
                                     .build()
                             )
                         )
@@ -276,7 +276,7 @@ class SubscriptionUpdateTrialResponseTest {
                                         )
                                         .billingCycleConfiguration(
                                             Price.UnitPrice.BillingCycleConfiguration.builder()
-                                                .duration(123L)
+                                                .duration(0L)
                                                 .durationUnit(
                                                     Price.UnitPrice.BillingCycleConfiguration
                                                         .DurationUnit
@@ -285,7 +285,7 @@ class SubscriptionUpdateTrialResponseTest {
                                                 .build()
                                         )
                                         .cadence(Price.UnitPrice.Cadence.ONE_TIME)
-                                        .conversionRate(42.23)
+                                        .conversionRate(0.0)
                                         .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                                         .creditAllocation(
                                             Price.UnitPrice.CreditAllocation.builder()
@@ -301,16 +301,16 @@ class SubscriptionUpdateTrialResponseTest {
                                                     .discountType(
                                                         PercentageDiscount.DiscountType.PERCENTAGE
                                                     )
-                                                    .percentageDiscount(1.0)
+                                                    .percentageDiscount(0.15)
                                                     .reason("reason")
                                                     .build()
                                             )
                                         )
                                         .externalPriceId("external_price_id")
-                                        .fixedPriceQuantity(42.23)
+                                        .fixedPriceQuantity(0.0)
                                         .invoicingCycleConfiguration(
                                             Price.UnitPrice.InvoicingCycleConfiguration.builder()
-                                                .duration(123L)
+                                                .duration(0L)
                                                 .durationUnit(
                                                     Price.UnitPrice.InvoicingCycleConfiguration
                                                         .DurationUnit
@@ -341,7 +341,7 @@ class SubscriptionUpdateTrialResponseTest {
                                         .minimumAmount("minimum_amount")
                                         .modelType(Price.UnitPrice.ModelType.UNIT)
                                         .name("name")
-                                        .planPhaseOrder(123L)
+                                        .planPhaseOrder(0L)
                                         .priceType(Price.UnitPrice.PriceType.USAGE_PRICE)
                                         .unitConfig(
                                             Price.UnitPrice.UnitConfig.builder()
@@ -362,18 +362,18 @@ class SubscriptionUpdateTrialResponseTest {
                         .status(Plan.Status.ACTIVE)
                         .trialConfig(
                             Plan.TrialConfig.builder()
-                                .trialPeriod(123L)
+                                .trialPeriod(0L)
                                 .trialPeriodUnit(Plan.TrialConfig.TrialPeriodUnit.DAYS)
                                 .build()
                         )
-                        .version(123L)
+                        .version(0L)
                         .build()
                 )
                 .priceIntervals(
                     listOf(
                         SubscriptionUpdateTrialResponse.PriceInterval.builder()
                             .id("id")
-                            .billingCycleDay(123L)
+                            .billingCycleDay(0L)
                             .currentBillingPeriodEndDate(
                                 OffsetDateTime.parse("2019-12-27T18:11:19.117Z")
                             )
@@ -390,7 +390,7 @@ class SubscriptionUpdateTrialResponseTest {
                                             OffsetDateTime.parse("2019-12-27T18:11:19.117Z")
                                         )
                                         .priceId("price_id")
-                                        .quantity(123L)
+                                        .quantity(0L)
                                         .build()
                                 )
                             )
@@ -405,7 +405,7 @@ class SubscriptionUpdateTrialResponseTest {
                                         )
                                         .billingCycleConfiguration(
                                             Price.UnitPrice.BillingCycleConfiguration.builder()
-                                                .duration(123L)
+                                                .duration(0L)
                                                 .durationUnit(
                                                     Price.UnitPrice.BillingCycleConfiguration
                                                         .DurationUnit
@@ -414,7 +414,7 @@ class SubscriptionUpdateTrialResponseTest {
                                                 .build()
                                         )
                                         .cadence(Price.UnitPrice.Cadence.ONE_TIME)
-                                        .conversionRate(42.23)
+                                        .conversionRate(0.0)
                                         .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                                         .creditAllocation(
                                             Price.UnitPrice.CreditAllocation.builder()
@@ -430,16 +430,16 @@ class SubscriptionUpdateTrialResponseTest {
                                                     .discountType(
                                                         PercentageDiscount.DiscountType.PERCENTAGE
                                                     )
-                                                    .percentageDiscount(1.0)
+                                                    .percentageDiscount(0.15)
                                                     .reason("reason")
                                                     .build()
                                             )
                                         )
                                         .externalPriceId("external_price_id")
-                                        .fixedPriceQuantity(42.23)
+                                        .fixedPriceQuantity(0.0)
                                         .invoicingCycleConfiguration(
                                             Price.UnitPrice.InvoicingCycleConfiguration.builder()
-                                                .duration(123L)
+                                                .duration(0L)
                                                 .durationUnit(
                                                     Price.UnitPrice.InvoicingCycleConfiguration
                                                         .DurationUnit
@@ -470,7 +470,7 @@ class SubscriptionUpdateTrialResponseTest {
                                         .minimumAmount("minimum_amount")
                                         .modelType(Price.UnitPrice.ModelType.UNIT)
                                         .name("name")
-                                        .planPhaseOrder(123L)
+                                        .planPhaseOrder(0L)
                                         .priceType(Price.UnitPrice.PriceType.USAGE_PRICE)
                                         .unitConfig(
                                             Price.UnitPrice.UnitConfig.builder()
@@ -501,7 +501,7 @@ class SubscriptionUpdateTrialResponseTest {
                 .build()
         assertThat(subscriptionUpdateTrialResponse).isNotNull
         assertThat(subscriptionUpdateTrialResponse.id()).isEqualTo("id")
-        assertThat(subscriptionUpdateTrialResponse.activePlanPhaseOrder()).isEqualTo(123L)
+        assertThat(subscriptionUpdateTrialResponse.activePlanPhaseOrder()).isEqualTo(0L)
         assertThat(subscriptionUpdateTrialResponse.adjustmentIntervals())
             .containsExactly(
                 SubscriptionUpdateTrialResponse.AdjustmentInterval.builder()
@@ -534,12 +534,12 @@ class SubscriptionUpdateTrialResponseTest {
         assertThat(subscriptionUpdateTrialResponse.billingCycleAnchorConfiguration())
             .isEqualTo(
                 SubscriptionUpdateTrialResponse.BillingCycleAnchorConfiguration.builder()
-                    .day(31L)
-                    .month(12L)
-                    .year(123L)
+                    .day(1L)
+                    .month(1L)
+                    .year(0L)
                     .build()
             )
-        assertThat(subscriptionUpdateTrialResponse.billingCycleDay()).isEqualTo(31L)
+        assertThat(subscriptionUpdateTrialResponse.billingCycleDay()).isEqualTo(1L)
         assertThat(subscriptionUpdateTrialResponse.createdAt())
             .isEqualTo(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
         assertThat(subscriptionUpdateTrialResponse.currentBillingPeriodEndDate())
@@ -642,7 +642,7 @@ class SubscriptionUpdateTrialResponseTest {
                 SubscriptionUpdateTrialResponse.FixedFeeQuantitySchedule.builder()
                     .endDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                     .priceId("price_id")
-                    .quantity(42.23)
+                    .quantity(0.0)
                     .startDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                     .build()
             )
@@ -670,7 +670,7 @@ class SubscriptionUpdateTrialResponseTest {
                     .startDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                     .build()
             )
-        assertThat(subscriptionUpdateTrialResponse.netTerms()).isEqualTo(123L)
+        assertThat(subscriptionUpdateTrialResponse.netTerms()).isEqualTo(0L)
         assertThat(subscriptionUpdateTrialResponse.plan())
             .isEqualTo(
                 Plan.builder()
@@ -692,7 +692,7 @@ class SubscriptionUpdateTrialResponseTest {
                             PercentageDiscount.builder()
                                 .appliesToPriceIds(listOf("string"))
                                 .discountType(PercentageDiscount.DiscountType.PERCENTAGE)
-                                .percentageDiscount(1.0)
+                                .percentageDiscount(0.15)
                                 .reason("reason")
                                 .build()
                         )
@@ -715,7 +715,7 @@ class SubscriptionUpdateTrialResponseTest {
                     )
                     .minimumAmount("minimum_amount")
                     .name("name")
-                    .netTerms(123L)
+                    .netTerms(0L)
                     .planPhases(
                         listOf(
                             Plan.PlanPhase.builder()
@@ -728,12 +728,12 @@ class SubscriptionUpdateTrialResponseTest {
                                             .discountType(
                                                 PercentageDiscount.DiscountType.PERCENTAGE
                                             )
-                                            .percentageDiscount(1.0)
+                                            .percentageDiscount(0.15)
                                             .reason("reason")
                                             .build()
                                     )
                                 )
-                                .duration(123L)
+                                .duration(0L)
                                 .durationUnit(Plan.PlanPhase.DurationUnit.DAILY)
                                 .maximum(
                                     Plan.PlanPhase.Maximum.builder()
@@ -750,7 +750,7 @@ class SubscriptionUpdateTrialResponseTest {
                                 )
                                 .minimumAmount("minimum_amount")
                                 .name("name")
-                                .order(123L)
+                                .order(0L)
                                 .build()
                         )
                     )
@@ -764,7 +764,7 @@ class SubscriptionUpdateTrialResponseTest {
                                     )
                                     .billingCycleConfiguration(
                                         Price.UnitPrice.BillingCycleConfiguration.builder()
-                                            .duration(123L)
+                                            .duration(0L)
                                             .durationUnit(
                                                 Price.UnitPrice.BillingCycleConfiguration
                                                     .DurationUnit
@@ -773,7 +773,7 @@ class SubscriptionUpdateTrialResponseTest {
                                             .build()
                                     )
                                     .cadence(Price.UnitPrice.Cadence.ONE_TIME)
-                                    .conversionRate(42.23)
+                                    .conversionRate(0.0)
                                     .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                                     .creditAllocation(
                                         Price.UnitPrice.CreditAllocation.builder()
@@ -789,16 +789,16 @@ class SubscriptionUpdateTrialResponseTest {
                                                 .discountType(
                                                     PercentageDiscount.DiscountType.PERCENTAGE
                                                 )
-                                                .percentageDiscount(1.0)
+                                                .percentageDiscount(0.15)
                                                 .reason("reason")
                                                 .build()
                                         )
                                     )
                                     .externalPriceId("external_price_id")
-                                    .fixedPriceQuantity(42.23)
+                                    .fixedPriceQuantity(0.0)
                                     .invoicingCycleConfiguration(
                                         Price.UnitPrice.InvoicingCycleConfiguration.builder()
-                                            .duration(123L)
+                                            .duration(0L)
                                             .durationUnit(
                                                 Price.UnitPrice.InvoicingCycleConfiguration
                                                     .DurationUnit
@@ -826,7 +826,7 @@ class SubscriptionUpdateTrialResponseTest {
                                     .minimumAmount("minimum_amount")
                                     .modelType(Price.UnitPrice.ModelType.UNIT)
                                     .name("name")
-                                    .planPhaseOrder(123L)
+                                    .planPhaseOrder(0L)
                                     .priceType(Price.UnitPrice.PriceType.USAGE_PRICE)
                                     .unitConfig(
                                         Price.UnitPrice.UnitConfig.builder()
@@ -847,18 +847,18 @@ class SubscriptionUpdateTrialResponseTest {
                     .status(Plan.Status.ACTIVE)
                     .trialConfig(
                         Plan.TrialConfig.builder()
-                            .trialPeriod(123L)
+                            .trialPeriod(0L)
                             .trialPeriodUnit(Plan.TrialConfig.TrialPeriodUnit.DAYS)
                             .build()
                     )
-                    .version(123L)
+                    .version(0L)
                     .build()
             )
         assertThat(subscriptionUpdateTrialResponse.priceIntervals())
             .containsExactly(
                 SubscriptionUpdateTrialResponse.PriceInterval.builder()
                     .id("id")
-                    .billingCycleDay(123L)
+                    .billingCycleDay(0L)
                     .currentBillingPeriodEndDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                     .currentBillingPeriodStartDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                     .endDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
@@ -868,7 +868,7 @@ class SubscriptionUpdateTrialResponseTest {
                                 .builder()
                                 .effectiveDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                                 .priceId("price_id")
-                                .quantity(123L)
+                                .quantity(0L)
                                 .build()
                         )
                     )
@@ -881,7 +881,7 @@ class SubscriptionUpdateTrialResponseTest {
                                 )
                                 .billingCycleConfiguration(
                                     Price.UnitPrice.BillingCycleConfiguration.builder()
-                                        .duration(123L)
+                                        .duration(0L)
                                         .durationUnit(
                                             Price.UnitPrice.BillingCycleConfiguration.DurationUnit
                                                 .DAY
@@ -889,7 +889,7 @@ class SubscriptionUpdateTrialResponseTest {
                                         .build()
                                 )
                                 .cadence(Price.UnitPrice.Cadence.ONE_TIME)
-                                .conversionRate(42.23)
+                                .conversionRate(0.0)
                                 .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                                 .creditAllocation(
                                     Price.UnitPrice.CreditAllocation.builder()
@@ -905,16 +905,16 @@ class SubscriptionUpdateTrialResponseTest {
                                             .discountType(
                                                 PercentageDiscount.DiscountType.PERCENTAGE
                                             )
-                                            .percentageDiscount(1.0)
+                                            .percentageDiscount(0.15)
                                             .reason("reason")
                                             .build()
                                     )
                                 )
                                 .externalPriceId("external_price_id")
-                                .fixedPriceQuantity(42.23)
+                                .fixedPriceQuantity(0.0)
                                 .invoicingCycleConfiguration(
                                     Price.UnitPrice.InvoicingCycleConfiguration.builder()
-                                        .duration(123L)
+                                        .duration(0L)
                                         .durationUnit(
                                             Price.UnitPrice.InvoicingCycleConfiguration.DurationUnit
                                                 .DAY
@@ -939,7 +939,7 @@ class SubscriptionUpdateTrialResponseTest {
                                 .minimumAmount("minimum_amount")
                                 .modelType(Price.UnitPrice.ModelType.UNIT)
                                 .name("name")
-                                .planPhaseOrder(123L)
+                                .planPhaseOrder(0L)
                                 .priceType(Price.UnitPrice.PriceType.USAGE_PRICE)
                                 .unitConfig(
                                     Price.UnitPrice.UnitConfig.builder()

@@ -22,7 +22,7 @@ class CustomerCreditLedgerListByExternalIdParamsTest {
             .cursor("cursor")
             .entryStatus(CustomerCreditLedgerListByExternalIdParams.EntryStatus.COMMITTED)
             .entryType(CustomerCreditLedgerListByExternalIdParams.EntryType.INCREMENT)
-            .limit(123L)
+            .limit(1L)
             .minimumAmount("minimum_amount")
             .build()
     }
@@ -40,7 +40,7 @@ class CustomerCreditLedgerListByExternalIdParamsTest {
                 .cursor("cursor")
                 .entryStatus(CustomerCreditLedgerListByExternalIdParams.EntryStatus.COMMITTED)
                 .entryType(CustomerCreditLedgerListByExternalIdParams.EntryType.INCREMENT)
-                .limit(123L)
+                .limit(1L)
                 .minimumAmount("minimum_amount")
                 .build()
         val expected = QueryParams.builder()
@@ -58,7 +58,7 @@ class CustomerCreditLedgerListByExternalIdParamsTest {
             "entry_type",
             CustomerCreditLedgerListByExternalIdParams.EntryType.INCREMENT.toString()
         )
-        expected.put("limit", "123")
+        expected.put("limit", "1")
         expected.put("minimum_amount", "minimum_amount")
         assertThat(params.getQueryParams()).isEqualTo(expected.build())
     }

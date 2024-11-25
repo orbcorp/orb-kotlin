@@ -17,14 +17,14 @@ class CustomerCreditTopUpCreateResponseTest {
                 .invoiceSettings(
                     CustomerCreditTopUpCreateResponse.InvoiceSettings.builder()
                         .autoCollection(true)
-                        .netTerms(123L)
+                        .netTerms(0L)
                         .memo("memo")
                         .requireSuccessfulPayment(true)
                         .build()
                 )
                 .perUnitCostBasis("per_unit_cost_basis")
                 .threshold("threshold")
-                .expiresAfter(123L)
+                .expiresAfter(0L)
                 .expiresAfterUnit(CustomerCreditTopUpCreateResponse.ExpiresAfterUnit.DAY)
                 .build()
         assertThat(customerCreditTopUpCreateResponse).isNotNull
@@ -35,7 +35,7 @@ class CustomerCreditTopUpCreateResponseTest {
             .isEqualTo(
                 CustomerCreditTopUpCreateResponse.InvoiceSettings.builder()
                     .autoCollection(true)
-                    .netTerms(123L)
+                    .netTerms(0L)
                     .memo("memo")
                     .requireSuccessfulPayment(true)
                     .build()
@@ -43,7 +43,7 @@ class CustomerCreditTopUpCreateResponseTest {
         assertThat(customerCreditTopUpCreateResponse.perUnitCostBasis())
             .isEqualTo("per_unit_cost_basis")
         assertThat(customerCreditTopUpCreateResponse.threshold()).isEqualTo("threshold")
-        assertThat(customerCreditTopUpCreateResponse.expiresAfter()).isEqualTo(123L)
+        assertThat(customerCreditTopUpCreateResponse.expiresAfter()).isEqualTo(0L)
         assertThat(customerCreditTopUpCreateResponse.expiresAfterUnit())
             .isEqualTo(CustomerCreditTopUpCreateResponse.ExpiresAfterUnit.DAY)
     }
