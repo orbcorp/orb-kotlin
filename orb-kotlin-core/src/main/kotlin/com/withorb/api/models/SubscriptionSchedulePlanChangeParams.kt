@@ -39,6 +39,7 @@ constructor(
     private val alignBillingWithPlanChangeDate: Boolean?,
     private val autoCollection: Boolean?,
     private val billingCycleAlignment: BillingCycleAlignment?,
+    private val billingCycleAnchorConfiguration: BillingCycleAnchorConfiguration?,
     private val changeDate: OffsetDateTime?,
     private val couponRedemptionCode: String?,
     private val creditsOverageRate: Double?,
@@ -74,6 +75,9 @@ constructor(
     fun autoCollection(): Boolean? = autoCollection
 
     fun billingCycleAlignment(): BillingCycleAlignment? = billingCycleAlignment
+
+    fun billingCycleAnchorConfiguration(): BillingCycleAnchorConfiguration? =
+        billingCycleAnchorConfiguration
 
     fun changeDate(): OffsetDateTime? = changeDate
 
@@ -123,6 +127,7 @@ constructor(
             alignBillingWithPlanChangeDate,
             autoCollection,
             billingCycleAlignment,
+            billingCycleAnchorConfiguration,
             changeDate,
             couponRedemptionCode,
             creditsOverageRate,
@@ -165,6 +170,7 @@ constructor(
         private val alignBillingWithPlanChangeDate: Boolean?,
         private val autoCollection: Boolean?,
         private val billingCycleAlignment: BillingCycleAlignment?,
+        private val billingCycleAnchorConfiguration: BillingCycleAnchorConfiguration?,
         private val changeDate: OffsetDateTime?,
         private val couponRedemptionCode: String?,
         private val creditsOverageRate: Double?,
@@ -220,6 +226,10 @@ constructor(
          */
         @JsonProperty("billing_cycle_alignment")
         fun billingCycleAlignment(): BillingCycleAlignment? = billingCycleAlignment
+
+        @JsonProperty("billing_cycle_anchor_configuration")
+        fun billingCycleAnchorConfiguration(): BillingCycleAnchorConfiguration? =
+            billingCycleAnchorConfiguration
 
         /**
          * The date that the plan change should take effect. This parameter can only be passed if
@@ -335,6 +345,7 @@ constructor(
             private var alignBillingWithPlanChangeDate: Boolean? = null
             private var autoCollection: Boolean? = null
             private var billingCycleAlignment: BillingCycleAlignment? = null
+            private var billingCycleAnchorConfiguration: BillingCycleAnchorConfiguration? = null
             private var changeDate: OffsetDateTime? = null
             private var couponRedemptionCode: String? = null
             private var creditsOverageRate: Double? = null
@@ -365,6 +376,8 @@ constructor(
                 this.autoCollection = subscriptionSchedulePlanChangeBody.autoCollection
                 this.billingCycleAlignment =
                     subscriptionSchedulePlanChangeBody.billingCycleAlignment
+                this.billingCycleAnchorConfiguration =
+                    subscriptionSchedulePlanChangeBody.billingCycleAnchorConfiguration
                 this.changeDate = subscriptionSchedulePlanChangeBody.changeDate
                 this.couponRedemptionCode = subscriptionSchedulePlanChangeBody.couponRedemptionCode
                 this.creditsOverageRate = subscriptionSchedulePlanChangeBody.creditsOverageRate
@@ -435,6 +448,11 @@ constructor(
             fun billingCycleAlignment(billingCycleAlignment: BillingCycleAlignment) = apply {
                 this.billingCycleAlignment = billingCycleAlignment
             }
+
+            @JsonProperty("billing_cycle_anchor_configuration")
+            fun billingCycleAnchorConfiguration(
+                billingCycleAnchorConfiguration: BillingCycleAnchorConfiguration
+            ) = apply { this.billingCycleAnchorConfiguration = billingCycleAnchorConfiguration }
 
             /**
              * The date that the plan change should take effect. This parameter can only be passed
@@ -593,6 +611,7 @@ constructor(
                     alignBillingWithPlanChangeDate,
                     autoCollection,
                     billingCycleAlignment,
+                    billingCycleAnchorConfiguration,
                     changeDate,
                     couponRedemptionCode,
                     creditsOverageRate,
@@ -619,17 +638,17 @@ constructor(
                 return true
             }
 
-            return /* spotless:off */ other is SubscriptionSchedulePlanChangeBody && changeOption == other.changeOption && addAdjustments == other.addAdjustments && addPrices == other.addPrices && alignBillingWithPlanChangeDate == other.alignBillingWithPlanChangeDate && autoCollection == other.autoCollection && billingCycleAlignment == other.billingCycleAlignment && changeDate == other.changeDate && couponRedemptionCode == other.couponRedemptionCode && creditsOverageRate == other.creditsOverageRate && defaultInvoiceMemo == other.defaultInvoiceMemo && externalPlanId == other.externalPlanId && initialPhaseOrder == other.initialPhaseOrder && invoicingThreshold == other.invoicingThreshold && netTerms == other.netTerms && perCreditOverageAmount == other.perCreditOverageAmount && planId == other.planId && planVersionNumber == other.planVersionNumber && priceOverrides == other.priceOverrides && removeAdjustments == other.removeAdjustments && removePrices == other.removePrices && replaceAdjustments == other.replaceAdjustments && replacePrices == other.replacePrices && trialDurationDays == other.trialDurationDays && additionalProperties == other.additionalProperties /* spotless:on */
+            return /* spotless:off */ other is SubscriptionSchedulePlanChangeBody && changeOption == other.changeOption && addAdjustments == other.addAdjustments && addPrices == other.addPrices && alignBillingWithPlanChangeDate == other.alignBillingWithPlanChangeDate && autoCollection == other.autoCollection && billingCycleAlignment == other.billingCycleAlignment && billingCycleAnchorConfiguration == other.billingCycleAnchorConfiguration && changeDate == other.changeDate && couponRedemptionCode == other.couponRedemptionCode && creditsOverageRate == other.creditsOverageRate && defaultInvoiceMemo == other.defaultInvoiceMemo && externalPlanId == other.externalPlanId && initialPhaseOrder == other.initialPhaseOrder && invoicingThreshold == other.invoicingThreshold && netTerms == other.netTerms && perCreditOverageAmount == other.perCreditOverageAmount && planId == other.planId && planVersionNumber == other.planVersionNumber && priceOverrides == other.priceOverrides && removeAdjustments == other.removeAdjustments && removePrices == other.removePrices && replaceAdjustments == other.replaceAdjustments && replacePrices == other.replacePrices && trialDurationDays == other.trialDurationDays && additionalProperties == other.additionalProperties /* spotless:on */
         }
 
         /* spotless:off */
-        private val hashCode: Int by lazy { Objects.hash(changeOption, addAdjustments, addPrices, alignBillingWithPlanChangeDate, autoCollection, billingCycleAlignment, changeDate, couponRedemptionCode, creditsOverageRate, defaultInvoiceMemo, externalPlanId, initialPhaseOrder, invoicingThreshold, netTerms, perCreditOverageAmount, planId, planVersionNumber, priceOverrides, removeAdjustments, removePrices, replaceAdjustments, replacePrices, trialDurationDays, additionalProperties) }
+        private val hashCode: Int by lazy { Objects.hash(changeOption, addAdjustments, addPrices, alignBillingWithPlanChangeDate, autoCollection, billingCycleAlignment, billingCycleAnchorConfiguration, changeDate, couponRedemptionCode, creditsOverageRate, defaultInvoiceMemo, externalPlanId, initialPhaseOrder, invoicingThreshold, netTerms, perCreditOverageAmount, planId, planVersionNumber, priceOverrides, removeAdjustments, removePrices, replaceAdjustments, replacePrices, trialDurationDays, additionalProperties) }
         /* spotless:on */
 
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "SubscriptionSchedulePlanChangeBody{changeOption=$changeOption, addAdjustments=$addAdjustments, addPrices=$addPrices, alignBillingWithPlanChangeDate=$alignBillingWithPlanChangeDate, autoCollection=$autoCollection, billingCycleAlignment=$billingCycleAlignment, changeDate=$changeDate, couponRedemptionCode=$couponRedemptionCode, creditsOverageRate=$creditsOverageRate, defaultInvoiceMemo=$defaultInvoiceMemo, externalPlanId=$externalPlanId, initialPhaseOrder=$initialPhaseOrder, invoicingThreshold=$invoicingThreshold, netTerms=$netTerms, perCreditOverageAmount=$perCreditOverageAmount, planId=$planId, planVersionNumber=$planVersionNumber, priceOverrides=$priceOverrides, removeAdjustments=$removeAdjustments, removePrices=$removePrices, replaceAdjustments=$replaceAdjustments, replacePrices=$replacePrices, trialDurationDays=$trialDurationDays, additionalProperties=$additionalProperties}"
+            "SubscriptionSchedulePlanChangeBody{changeOption=$changeOption, addAdjustments=$addAdjustments, addPrices=$addPrices, alignBillingWithPlanChangeDate=$alignBillingWithPlanChangeDate, autoCollection=$autoCollection, billingCycleAlignment=$billingCycleAlignment, billingCycleAnchorConfiguration=$billingCycleAnchorConfiguration, changeDate=$changeDate, couponRedemptionCode=$couponRedemptionCode, creditsOverageRate=$creditsOverageRate, defaultInvoiceMemo=$defaultInvoiceMemo, externalPlanId=$externalPlanId, initialPhaseOrder=$initialPhaseOrder, invoicingThreshold=$invoicingThreshold, netTerms=$netTerms, perCreditOverageAmount=$perCreditOverageAmount, planId=$planId, planVersionNumber=$planVersionNumber, priceOverrides=$priceOverrides, removeAdjustments=$removeAdjustments, removePrices=$removePrices, replaceAdjustments=$replaceAdjustments, replacePrices=$replacePrices, trialDurationDays=$trialDurationDays, additionalProperties=$additionalProperties}"
     }
 
     fun toBuilder() = Builder().from(this)
@@ -649,6 +668,7 @@ constructor(
         private var alignBillingWithPlanChangeDate: Boolean? = null
         private var autoCollection: Boolean? = null
         private var billingCycleAlignment: BillingCycleAlignment? = null
+        private var billingCycleAnchorConfiguration: BillingCycleAnchorConfiguration? = null
         private var changeDate: OffsetDateTime? = null
         private var couponRedemptionCode: String? = null
         private var creditsOverageRate: Double? = null
@@ -684,6 +704,8 @@ constructor(
                 subscriptionSchedulePlanChangeParams.alignBillingWithPlanChangeDate
             autoCollection = subscriptionSchedulePlanChangeParams.autoCollection
             billingCycleAlignment = subscriptionSchedulePlanChangeParams.billingCycleAlignment
+            billingCycleAnchorConfiguration =
+                subscriptionSchedulePlanChangeParams.billingCycleAnchorConfiguration
             changeDate = subscriptionSchedulePlanChangeParams.changeDate
             couponRedemptionCode = subscriptionSchedulePlanChangeParams.couponRedemptionCode
             creditsOverageRate = subscriptionSchedulePlanChangeParams.creditsOverageRate
@@ -777,6 +799,10 @@ constructor(
         fun billingCycleAlignment(billingCycleAlignment: BillingCycleAlignment) = apply {
             this.billingCycleAlignment = billingCycleAlignment
         }
+
+        fun billingCycleAnchorConfiguration(
+            billingCycleAnchorConfiguration: BillingCycleAnchorConfiguration
+        ) = apply { this.billingCycleAnchorConfiguration = billingCycleAnchorConfiguration }
 
         /**
          * The date that the plan change should take effect. This parameter can only be passed if
@@ -1064,6 +1090,7 @@ constructor(
                 alignBillingWithPlanChangeDate,
                 autoCollection,
                 billingCycleAlignment,
+                billingCycleAnchorConfiguration,
                 changeDate,
                 couponRedemptionCode,
                 creditsOverageRate,
@@ -25865,6 +25892,123 @@ constructor(
         fun asString(): String = _value().asStringOrThrow()
     }
 
+    @JsonDeserialize(builder = BillingCycleAnchorConfiguration.Builder::class)
+    @NoAutoDetect
+    class BillingCycleAnchorConfiguration
+    private constructor(
+        private val day: Long?,
+        private val month: Long?,
+        private val year: Long?,
+        private val additionalProperties: Map<String, JsonValue>,
+    ) {
+
+        /**
+         * The day of the month on which the billing cycle is anchored. If the maximum number of
+         * days in a month is greater than this value, the last day of the month is the billing
+         * cycle day (e.g. billing_cycle_day=31 for April means the billing period begins on the
+         * 30th.
+         */
+        @JsonProperty("day") fun day(): Long? = day
+
+        /**
+         * The month on which the billing cycle is anchored (e.g. a quarterly price anchored in
+         * February would have cycles starting February, May, August, and November).
+         */
+        @JsonProperty("month") fun month(): Long? = month
+
+        /**
+         * The year on which the billing cycle is anchored (e.g. a 2 year billing cycle anchored on
+         * 2021 would have cycles starting on 2021, 2023, 2025, etc.).
+         */
+        @JsonProperty("year") fun year(): Long? = year
+
+        @JsonAnyGetter
+        @ExcludeMissing
+        fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
+
+        fun toBuilder() = Builder().from(this)
+
+        companion object {
+
+            fun builder() = Builder()
+        }
+
+        class Builder {
+
+            private var day: Long? = null
+            private var month: Long? = null
+            private var year: Long? = null
+            private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
+
+            internal fun from(billingCycleAnchorConfiguration: BillingCycleAnchorConfiguration) =
+                apply {
+                    this.day = billingCycleAnchorConfiguration.day
+                    this.month = billingCycleAnchorConfiguration.month
+                    this.year = billingCycleAnchorConfiguration.year
+                    additionalProperties(billingCycleAnchorConfiguration.additionalProperties)
+                }
+
+            /**
+             * The day of the month on which the billing cycle is anchored. If the maximum number of
+             * days in a month is greater than this value, the last day of the month is the billing
+             * cycle day (e.g. billing_cycle_day=31 for April means the billing period begins on the
+             * 30th.
+             */
+            @JsonProperty("day") fun day(day: Long) = apply { this.day = day }
+
+            /**
+             * The month on which the billing cycle is anchored (e.g. a quarterly price anchored in
+             * February would have cycles starting February, May, August, and November).
+             */
+            @JsonProperty("month") fun month(month: Long) = apply { this.month = month }
+
+            /**
+             * The year on which the billing cycle is anchored (e.g. a 2 year billing cycle anchored
+             * on 2021 would have cycles starting on 2021, 2023, 2025, etc.).
+             */
+            @JsonProperty("year") fun year(year: Long) = apply { this.year = year }
+
+            fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                this.additionalProperties.clear()
+                this.additionalProperties.putAll(additionalProperties)
+            }
+
+            @JsonAnySetter
+            fun putAdditionalProperty(key: String, value: JsonValue) = apply {
+                this.additionalProperties.put(key, value)
+            }
+
+            fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                this.additionalProperties.putAll(additionalProperties)
+            }
+
+            fun build(): BillingCycleAnchorConfiguration =
+                BillingCycleAnchorConfiguration(
+                    checkNotNull(day) { "`day` is required but was not set" },
+                    month,
+                    year,
+                    additionalProperties.toImmutable(),
+                )
+        }
+
+        override fun equals(other: Any?): Boolean {
+            if (this === other) {
+                return true
+            }
+
+            return /* spotless:off */ other is BillingCycleAnchorConfiguration && day == other.day && month == other.month && year == other.year && additionalProperties == other.additionalProperties /* spotless:on */
+        }
+
+        /* spotless:off */
+        private val hashCode: Int by lazy { Objects.hash(day, month, year, additionalProperties) }
+        /* spotless:on */
+
+        override fun hashCode(): Int = hashCode
+
+        override fun toString() =
+            "BillingCycleAnchorConfiguration{day=$day, month=$month, year=$year, additionalProperties=$additionalProperties}"
+    }
+
     @JsonDeserialize(builder = RemoveAdjustment.Builder::class)
     @NoAutoDetect
     class RemoveAdjustment
@@ -50630,11 +50774,11 @@ constructor(
             return true
         }
 
-        return /* spotless:off */ other is SubscriptionSchedulePlanChangeParams && subscriptionId == other.subscriptionId && changeOption == other.changeOption && addAdjustments == other.addAdjustments && addPrices == other.addPrices && alignBillingWithPlanChangeDate == other.alignBillingWithPlanChangeDate && autoCollection == other.autoCollection && billingCycleAlignment == other.billingCycleAlignment && changeDate == other.changeDate && couponRedemptionCode == other.couponRedemptionCode && creditsOverageRate == other.creditsOverageRate && defaultInvoiceMemo == other.defaultInvoiceMemo && externalPlanId == other.externalPlanId && initialPhaseOrder == other.initialPhaseOrder && invoicingThreshold == other.invoicingThreshold && netTerms == other.netTerms && perCreditOverageAmount == other.perCreditOverageAmount && planId == other.planId && planVersionNumber == other.planVersionNumber && priceOverrides == other.priceOverrides && removeAdjustments == other.removeAdjustments && removePrices == other.removePrices && replaceAdjustments == other.replaceAdjustments && replacePrices == other.replacePrices && trialDurationDays == other.trialDurationDays && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams && additionalBodyProperties == other.additionalBodyProperties /* spotless:on */
+        return /* spotless:off */ other is SubscriptionSchedulePlanChangeParams && subscriptionId == other.subscriptionId && changeOption == other.changeOption && addAdjustments == other.addAdjustments && addPrices == other.addPrices && alignBillingWithPlanChangeDate == other.alignBillingWithPlanChangeDate && autoCollection == other.autoCollection && billingCycleAlignment == other.billingCycleAlignment && billingCycleAnchorConfiguration == other.billingCycleAnchorConfiguration && changeDate == other.changeDate && couponRedemptionCode == other.couponRedemptionCode && creditsOverageRate == other.creditsOverageRate && defaultInvoiceMemo == other.defaultInvoiceMemo && externalPlanId == other.externalPlanId && initialPhaseOrder == other.initialPhaseOrder && invoicingThreshold == other.invoicingThreshold && netTerms == other.netTerms && perCreditOverageAmount == other.perCreditOverageAmount && planId == other.planId && planVersionNumber == other.planVersionNumber && priceOverrides == other.priceOverrides && removeAdjustments == other.removeAdjustments && removePrices == other.removePrices && replaceAdjustments == other.replaceAdjustments && replacePrices == other.replacePrices && trialDurationDays == other.trialDurationDays && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams && additionalBodyProperties == other.additionalBodyProperties /* spotless:on */
     }
 
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(subscriptionId, changeOption, addAdjustments, addPrices, alignBillingWithPlanChangeDate, autoCollection, billingCycleAlignment, changeDate, couponRedemptionCode, creditsOverageRate, defaultInvoiceMemo, externalPlanId, initialPhaseOrder, invoicingThreshold, netTerms, perCreditOverageAmount, planId, planVersionNumber, priceOverrides, removeAdjustments, removePrices, replaceAdjustments, replacePrices, trialDurationDays, additionalHeaders, additionalQueryParams, additionalBodyProperties) /* spotless:on */
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(subscriptionId, changeOption, addAdjustments, addPrices, alignBillingWithPlanChangeDate, autoCollection, billingCycleAlignment, billingCycleAnchorConfiguration, changeDate, couponRedemptionCode, creditsOverageRate, defaultInvoiceMemo, externalPlanId, initialPhaseOrder, invoicingThreshold, netTerms, perCreditOverageAmount, planId, planVersionNumber, priceOverrides, removeAdjustments, removePrices, replaceAdjustments, replacePrices, trialDurationDays, additionalHeaders, additionalQueryParams, additionalBodyProperties) /* spotless:on */
 
     override fun toString() =
-        "SubscriptionSchedulePlanChangeParams{subscriptionId=$subscriptionId, changeOption=$changeOption, addAdjustments=$addAdjustments, addPrices=$addPrices, alignBillingWithPlanChangeDate=$alignBillingWithPlanChangeDate, autoCollection=$autoCollection, billingCycleAlignment=$billingCycleAlignment, changeDate=$changeDate, couponRedemptionCode=$couponRedemptionCode, creditsOverageRate=$creditsOverageRate, defaultInvoiceMemo=$defaultInvoiceMemo, externalPlanId=$externalPlanId, initialPhaseOrder=$initialPhaseOrder, invoicingThreshold=$invoicingThreshold, netTerms=$netTerms, perCreditOverageAmount=$perCreditOverageAmount, planId=$planId, planVersionNumber=$planVersionNumber, priceOverrides=$priceOverrides, removeAdjustments=$removeAdjustments, removePrices=$removePrices, replaceAdjustments=$replaceAdjustments, replacePrices=$replacePrices, trialDurationDays=$trialDurationDays, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams, additionalBodyProperties=$additionalBodyProperties}"
+        "SubscriptionSchedulePlanChangeParams{subscriptionId=$subscriptionId, changeOption=$changeOption, addAdjustments=$addAdjustments, addPrices=$addPrices, alignBillingWithPlanChangeDate=$alignBillingWithPlanChangeDate, autoCollection=$autoCollection, billingCycleAlignment=$billingCycleAlignment, billingCycleAnchorConfiguration=$billingCycleAnchorConfiguration, changeDate=$changeDate, couponRedemptionCode=$couponRedemptionCode, creditsOverageRate=$creditsOverageRate, defaultInvoiceMemo=$defaultInvoiceMemo, externalPlanId=$externalPlanId, initialPhaseOrder=$initialPhaseOrder, invoicingThreshold=$invoicingThreshold, netTerms=$netTerms, perCreditOverageAmount=$perCreditOverageAmount, planId=$planId, planVersionNumber=$planVersionNumber, priceOverrides=$priceOverrides, removeAdjustments=$removeAdjustments, removePrices=$removePrices, replaceAdjustments=$replaceAdjustments, replacePrices=$replacePrices, trialDurationDays=$trialDurationDays, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams, additionalBodyProperties=$additionalBodyProperties}"
 }
