@@ -30,7 +30,7 @@ class CustomerCostListByExternalIdResponseTest {
                                                     .billingCycleConfiguration(
                                                         Price.UnitPrice.BillingCycleConfiguration
                                                             .builder()
-                                                            .duration(123L)
+                                                            .duration(0L)
                                                             .durationUnit(
                                                                 Price.UnitPrice
                                                                     .BillingCycleConfiguration
@@ -40,7 +40,7 @@ class CustomerCostListByExternalIdResponseTest {
                                                             .build()
                                                     )
                                                     .cadence(Price.UnitPrice.Cadence.ONE_TIME)
-                                                    .conversionRate(42.23)
+                                                    .conversionRate(0.0)
                                                     .createdAt(
                                                         OffsetDateTime.parse(
                                                             "2019-12-27T18:11:19.117Z"
@@ -61,17 +61,17 @@ class CustomerCostListByExternalIdResponseTest {
                                                                     PercentageDiscount.DiscountType
                                                                         .PERCENTAGE
                                                                 )
-                                                                .percentageDiscount(1.0)
+                                                                .percentageDiscount(0.15)
                                                                 .reason("reason")
                                                                 .build()
                                                         )
                                                     )
                                                     .externalPriceId("external_price_id")
-                                                    .fixedPriceQuantity(42.23)
+                                                    .fixedPriceQuantity(0.0)
                                                     .invoicingCycleConfiguration(
                                                         Price.UnitPrice.InvoicingCycleConfiguration
                                                             .builder()
-                                                            .duration(123L)
+                                                            .duration(0L)
                                                             .durationUnit(
                                                                 Price.UnitPrice
                                                                     .InvoicingCycleConfiguration
@@ -105,7 +105,7 @@ class CustomerCostListByExternalIdResponseTest {
                                                     .minimumAmount("minimum_amount")
                                                     .modelType(Price.UnitPrice.ModelType.UNIT)
                                                     .name("name")
-                                                    .planPhaseOrder(123L)
+                                                    .planPhaseOrder(0L)
                                                     .priceType(
                                                         Price.UnitPrice.PriceType.USAGE_PRICE
                                                     )
@@ -119,7 +119,7 @@ class CustomerCostListByExternalIdResponseTest {
                                         )
                                         .subtotal("subtotal")
                                         .total("total")
-                                        .quantity(42.23)
+                                        .quantity(0.0)
                                         .build()
                                 )
                             )
@@ -149,7 +149,7 @@ class CustomerCostListByExternalIdResponseTest {
                                             )
                                             .billingCycleConfiguration(
                                                 Price.UnitPrice.BillingCycleConfiguration.builder()
-                                                    .duration(123L)
+                                                    .duration(0L)
                                                     .durationUnit(
                                                         Price.UnitPrice.BillingCycleConfiguration
                                                             .DurationUnit
@@ -158,7 +158,7 @@ class CustomerCostListByExternalIdResponseTest {
                                                     .build()
                                             )
                                             .cadence(Price.UnitPrice.Cadence.ONE_TIME)
-                                            .conversionRate(42.23)
+                                            .conversionRate(0.0)
                                             .createdAt(
                                                 OffsetDateTime.parse("2019-12-27T18:11:19.117Z")
                                             )
@@ -177,17 +177,17 @@ class CustomerCostListByExternalIdResponseTest {
                                                             PercentageDiscount.DiscountType
                                                                 .PERCENTAGE
                                                         )
-                                                        .percentageDiscount(1.0)
+                                                        .percentageDiscount(0.15)
                                                         .reason("reason")
                                                         .build()
                                                 )
                                             )
                                             .externalPriceId("external_price_id")
-                                            .fixedPriceQuantity(42.23)
+                                            .fixedPriceQuantity(0.0)
                                             .invoicingCycleConfiguration(
                                                 Price.UnitPrice.InvoicingCycleConfiguration
                                                     .builder()
-                                                    .duration(123L)
+                                                    .duration(0L)
                                                     .durationUnit(
                                                         Price.UnitPrice.InvoicingCycleConfiguration
                                                             .DurationUnit
@@ -218,7 +218,7 @@ class CustomerCostListByExternalIdResponseTest {
                                             .minimumAmount("minimum_amount")
                                             .modelType(Price.UnitPrice.ModelType.UNIT)
                                             .name("name")
-                                            .planPhaseOrder(123L)
+                                            .planPhaseOrder(0L)
                                             .priceType(Price.UnitPrice.PriceType.USAGE_PRICE)
                                             .unitConfig(
                                                 Price.UnitPrice.UnitConfig.builder()
@@ -230,7 +230,7 @@ class CustomerCostListByExternalIdResponseTest {
                                 )
                                 .subtotal("subtotal")
                                 .total("total")
-                                .quantity(42.23)
+                                .quantity(0.0)
                                 .build()
                         )
                     )

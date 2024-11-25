@@ -18,7 +18,7 @@ class PlanListParamsTest {
             .createdAtLt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
             .createdAtLte(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
             .cursor("cursor")
-            .limit(123L)
+            .limit(1L)
             .status(PlanListParams.Status.ACTIVE)
             .build()
     }
@@ -32,7 +32,7 @@ class PlanListParamsTest {
                 .createdAtLt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                 .createdAtLte(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                 .cursor("cursor")
-                .limit(123L)
+                .limit(1L)
                 .status(PlanListParams.Status.ACTIVE)
                 .build()
         val expected = QueryParams.builder()
@@ -41,7 +41,7 @@ class PlanListParamsTest {
         expected.put("created_at[lt]", "2019-12-27T18:11:19.117Z")
         expected.put("created_at[lte]", "2019-12-27T18:11:19.117Z")
         expected.put("cursor", "cursor")
-        expected.put("limit", "123")
+        expected.put("limit", "1")
         expected.put("status", PlanListParams.Status.ACTIVE.toString())
         assertThat(params.getQueryParams()).isEqualTo(expected.build())
     }

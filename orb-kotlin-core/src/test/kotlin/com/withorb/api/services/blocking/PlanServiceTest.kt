@@ -46,7 +46,7 @@ class PlanServiceTest {
                                         PlanCreateParams.Price.NewPlanUnitPrice
                                             .BillingCycleConfiguration
                                             .builder()
-                                            .duration(123L)
+                                            .duration(0L)
                                             .durationUnit(
                                                 PlanCreateParams.Price.NewPlanUnitPrice
                                                     .BillingCycleConfiguration
@@ -55,16 +55,16 @@ class PlanServiceTest {
                                             )
                                             .build()
                                     )
-                                    .conversionRate(42.23)
+                                    .conversionRate(0.0)
                                     .currency("currency")
                                     .externalPriceId("external_price_id")
-                                    .fixedPriceQuantity(42.23)
+                                    .fixedPriceQuantity(0.0)
                                     .invoiceGroupingKey("invoice_grouping_key")
                                     .invoicingCycleConfiguration(
                                         PlanCreateParams.Price.NewPlanUnitPrice
                                             .InvoicingCycleConfiguration
                                             .builder()
-                                            .duration(123L)
+                                            .duration(0L)
                                             .durationUnit(
                                                 PlanCreateParams.Price.NewPlanUnitPrice
                                                     .InvoicingCycleConfiguration
@@ -84,7 +84,7 @@ class PlanServiceTest {
                     .defaultInvoiceMemo("default_invoice_memo")
                     .externalPlanId("external_plan_id")
                     .metadata(PlanCreateParams.Metadata.builder().build())
-                    .netTerms(123L)
+                    .netTerms(0L)
                     .status(PlanCreateParams.Status.ACTIVE)
                     .build()
             )

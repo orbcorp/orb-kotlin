@@ -29,12 +29,12 @@ class SubscriptionCreateParamsTest {
                                                 .PERCENTAGE_DISCOUNT
                                         )
                                         .appliesToPriceIds(listOf("string"))
-                                        .percentageDiscount(42.23)
+                                        .percentageDiscount(0.0)
                                         .build()
                                 )
                         )
                         .endDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
-                        .planPhaseOrder(123L)
+                        .planPhaseOrder(0L)
                         .startDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                         .build()
                 )
@@ -50,8 +50,8 @@ class SubscriptionCreateParamsTest {
                                             .PERCENTAGE
                                     )
                                     .amountDiscount("amount_discount")
-                                    .percentageDiscount(42.23)
-                                    .usageDiscount(42.23)
+                                    .percentageDiscount(0.15)
+                                    .usageDiscount(0.0)
                                     .build()
                             )
                         )
@@ -59,7 +59,7 @@ class SubscriptionCreateParamsTest {
                         .externalPriceId("external_price_id")
                         .maximumAmount("1.23")
                         .minimumAmount("1.23")
-                        .planPhaseOrder(123L)
+                        .planPhaseOrder(0L)
                         .price(
                             SubscriptionCreateParams.AddPrice.Price.ofNewSubscriptionUnitPrice(
                                 SubscriptionCreateParams.AddPrice.Price.NewSubscriptionUnitPrice
@@ -93,7 +93,7 @@ class SubscriptionCreateParamsTest {
                                             .NewSubscriptionUnitPrice
                                             .BillingCycleConfiguration
                                             .builder()
-                                            .duration(123L)
+                                            .duration(0L)
                                             .durationUnit(
                                                 SubscriptionCreateParams.AddPrice.Price
                                                     .NewSubscriptionUnitPrice
@@ -103,17 +103,17 @@ class SubscriptionCreateParamsTest {
                                             )
                                             .build()
                                     )
-                                    .conversionRate(42.23)
+                                    .conversionRate(0.0)
                                     .currency("currency")
                                     .externalPriceId("external_price_id")
-                                    .fixedPriceQuantity(42.23)
+                                    .fixedPriceQuantity(0.0)
                                     .invoiceGroupingKey("invoice_grouping_key")
                                     .invoicingCycleConfiguration(
                                         SubscriptionCreateParams.AddPrice.Price
                                             .NewSubscriptionUnitPrice
                                             .InvoicingCycleConfiguration
                                             .builder()
-                                            .duration(123L)
+                                            .duration(0L)
                                             .durationUnit(
                                                 SubscriptionCreateParams.AddPrice.Price
                                                     .NewSubscriptionUnitPrice
@@ -144,13 +144,13 @@ class SubscriptionCreateParamsTest {
             .awsRegion("aws_region")
             .billingCycleAnchorConfiguration(
                 SubscriptionCreateParams.BillingCycleAnchorConfiguration.builder()
-                    .day(31L)
-                    .month(12L)
-                    .year(123L)
+                    .day(1L)
+                    .month(1L)
+                    .year(0L)
                     .build()
             )
             .couponRedemptionCode("coupon_redemption_code")
-            .creditsOverageRate(42.23)
+            .creditsOverageRate(0.0)
             .customerId("customer_id")
             .defaultInvoiceMemo("default_invoice_memo")
             .endDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
@@ -158,13 +158,13 @@ class SubscriptionCreateParamsTest {
             .externalMarketplace(SubscriptionCreateParams.ExternalMarketplace.GOOGLE)
             .externalMarketplaceReportingId("external_marketplace_reporting_id")
             .externalPlanId("ZMwNQefe7J3ecf7W")
-            .initialPhaseOrder(123L)
+            .initialPhaseOrder(2L)
             .invoicingThreshold("10.00")
             .metadata(SubscriptionCreateParams.Metadata.builder().build())
-            .netTerms(123L)
-            .perCreditOverageAmount(42.23)
+            .netTerms(0L)
+            .perCreditOverageAmount(0.0)
             .planId("ZMwNQefe7J3ecf7W")
-            .planVersionNumber(123L)
+            .planVersionNumber(0L)
             .priceOverrides(listOf(JsonValue.from(mapOf<String, Any>())))
             .removeAdjustments(
                 listOf(
@@ -197,7 +197,7 @@ class SubscriptionCreateParamsTest {
                                                 .PERCENTAGE_DISCOUNT
                                         )
                                         .appliesToPriceIds(listOf("string"))
-                                        .percentageDiscount(42.23)
+                                        .percentageDiscount(0.0)
                                         .build()
                                 )
                         )
@@ -217,13 +217,13 @@ class SubscriptionCreateParamsTest {
                                             .PERCENTAGE
                                     )
                                     .amountDiscount("amount_discount")
-                                    .percentageDiscount(42.23)
-                                    .usageDiscount(42.23)
+                                    .percentageDiscount(0.15)
+                                    .usageDiscount(0.0)
                                     .build()
                             )
                         )
                         .externalPriceId("external_price_id")
-                        .fixedPriceQuantity(42.23)
+                        .fixedPriceQuantity(2.0)
                         .maximumAmount("1.23")
                         .minimumAmount("1.23")
                         .price(
@@ -259,7 +259,7 @@ class SubscriptionCreateParamsTest {
                                             .NewSubscriptionUnitPrice
                                             .BillingCycleConfiguration
                                             .builder()
-                                            .duration(123L)
+                                            .duration(0L)
                                             .durationUnit(
                                                 SubscriptionCreateParams.ReplacePrice.Price
                                                     .NewSubscriptionUnitPrice
@@ -269,17 +269,17 @@ class SubscriptionCreateParamsTest {
                                             )
                                             .build()
                                     )
-                                    .conversionRate(42.23)
+                                    .conversionRate(0.0)
                                     .currency("currency")
                                     .externalPriceId("external_price_id")
-                                    .fixedPriceQuantity(42.23)
+                                    .fixedPriceQuantity(0.0)
                                     .invoiceGroupingKey("invoice_grouping_key")
                                     .invoicingCycleConfiguration(
                                         SubscriptionCreateParams.ReplacePrice.Price
                                             .NewSubscriptionUnitPrice
                                             .InvoicingCycleConfiguration
                                             .builder()
-                                            .duration(123L)
+                                            .duration(0L)
                                             .durationUnit(
                                                 SubscriptionCreateParams.ReplacePrice.Price
                                                     .NewSubscriptionUnitPrice
@@ -305,7 +305,7 @@ class SubscriptionCreateParamsTest {
                 )
             )
             .startDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
-            .trialDurationDays(123L)
+            .trialDurationDays(0L)
             .build()
     }
 
@@ -329,12 +329,12 @@ class SubscriptionCreateParamsTest {
                                                     .PERCENTAGE_DISCOUNT
                                             )
                                             .appliesToPriceIds(listOf("string"))
-                                            .percentageDiscount(42.23)
+                                            .percentageDiscount(0.0)
                                             .build()
                                     )
                             )
                             .endDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
-                            .planPhaseOrder(123L)
+                            .planPhaseOrder(0L)
                             .startDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                             .build()
                     )
@@ -350,8 +350,8 @@ class SubscriptionCreateParamsTest {
                                                 .PERCENTAGE
                                         )
                                         .amountDiscount("amount_discount")
-                                        .percentageDiscount(42.23)
-                                        .usageDiscount(42.23)
+                                        .percentageDiscount(0.15)
+                                        .usageDiscount(0.0)
                                         .build()
                                 )
                             )
@@ -359,7 +359,7 @@ class SubscriptionCreateParamsTest {
                             .externalPriceId("external_price_id")
                             .maximumAmount("1.23")
                             .minimumAmount("1.23")
-                            .planPhaseOrder(123L)
+                            .planPhaseOrder(0L)
                             .price(
                                 SubscriptionCreateParams.AddPrice.Price.ofNewSubscriptionUnitPrice(
                                     SubscriptionCreateParams.AddPrice.Price.NewSubscriptionUnitPrice
@@ -393,7 +393,7 @@ class SubscriptionCreateParamsTest {
                                                 .NewSubscriptionUnitPrice
                                                 .BillingCycleConfiguration
                                                 .builder()
-                                                .duration(123L)
+                                                .duration(0L)
                                                 .durationUnit(
                                                     SubscriptionCreateParams.AddPrice.Price
                                                         .NewSubscriptionUnitPrice
@@ -403,17 +403,17 @@ class SubscriptionCreateParamsTest {
                                                 )
                                                 .build()
                                         )
-                                        .conversionRate(42.23)
+                                        .conversionRate(0.0)
                                         .currency("currency")
                                         .externalPriceId("external_price_id")
-                                        .fixedPriceQuantity(42.23)
+                                        .fixedPriceQuantity(0.0)
                                         .invoiceGroupingKey("invoice_grouping_key")
                                         .invoicingCycleConfiguration(
                                             SubscriptionCreateParams.AddPrice.Price
                                                 .NewSubscriptionUnitPrice
                                                 .InvoicingCycleConfiguration
                                                 .builder()
-                                                .duration(123L)
+                                                .duration(0L)
                                                 .durationUnit(
                                                     SubscriptionCreateParams.AddPrice.Price
                                                         .NewSubscriptionUnitPrice
@@ -444,13 +444,13 @@ class SubscriptionCreateParamsTest {
                 .awsRegion("aws_region")
                 .billingCycleAnchorConfiguration(
                     SubscriptionCreateParams.BillingCycleAnchorConfiguration.builder()
-                        .day(31L)
-                        .month(12L)
-                        .year(123L)
+                        .day(1L)
+                        .month(1L)
+                        .year(0L)
                         .build()
                 )
                 .couponRedemptionCode("coupon_redemption_code")
-                .creditsOverageRate(42.23)
+                .creditsOverageRate(0.0)
                 .customerId("customer_id")
                 .defaultInvoiceMemo("default_invoice_memo")
                 .endDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
@@ -458,13 +458,13 @@ class SubscriptionCreateParamsTest {
                 .externalMarketplace(SubscriptionCreateParams.ExternalMarketplace.GOOGLE)
                 .externalMarketplaceReportingId("external_marketplace_reporting_id")
                 .externalPlanId("ZMwNQefe7J3ecf7W")
-                .initialPhaseOrder(123L)
+                .initialPhaseOrder(2L)
                 .invoicingThreshold("10.00")
                 .metadata(SubscriptionCreateParams.Metadata.builder().build())
-                .netTerms(123L)
-                .perCreditOverageAmount(42.23)
+                .netTerms(0L)
+                .perCreditOverageAmount(0.0)
                 .planId("ZMwNQefe7J3ecf7W")
-                .planVersionNumber(123L)
+                .planVersionNumber(0L)
                 .priceOverrides(listOf(JsonValue.from(mapOf<String, Any>())))
                 .removeAdjustments(
                     listOf(
@@ -498,7 +498,7 @@ class SubscriptionCreateParamsTest {
                                                     .PERCENTAGE_DISCOUNT
                                             )
                                             .appliesToPriceIds(listOf("string"))
-                                            .percentageDiscount(42.23)
+                                            .percentageDiscount(0.0)
                                             .build()
                                     )
                             )
@@ -519,13 +519,13 @@ class SubscriptionCreateParamsTest {
                                                 .PERCENTAGE
                                         )
                                         .amountDiscount("amount_discount")
-                                        .percentageDiscount(42.23)
-                                        .usageDiscount(42.23)
+                                        .percentageDiscount(0.15)
+                                        .usageDiscount(0.0)
                                         .build()
                                 )
                             )
                             .externalPriceId("external_price_id")
-                            .fixedPriceQuantity(42.23)
+                            .fixedPriceQuantity(2.0)
                             .maximumAmount("1.23")
                             .minimumAmount("1.23")
                             .price(
@@ -563,7 +563,7 @@ class SubscriptionCreateParamsTest {
                                                     .NewSubscriptionUnitPrice
                                                     .BillingCycleConfiguration
                                                     .builder()
-                                                    .duration(123L)
+                                                    .duration(0L)
                                                     .durationUnit(
                                                         SubscriptionCreateParams.ReplacePrice.Price
                                                             .NewSubscriptionUnitPrice
@@ -573,17 +573,17 @@ class SubscriptionCreateParamsTest {
                                                     )
                                                     .build()
                                             )
-                                            .conversionRate(42.23)
+                                            .conversionRate(0.0)
                                             .currency("currency")
                                             .externalPriceId("external_price_id")
-                                            .fixedPriceQuantity(42.23)
+                                            .fixedPriceQuantity(0.0)
                                             .invoiceGroupingKey("invoice_grouping_key")
                                             .invoicingCycleConfiguration(
                                                 SubscriptionCreateParams.ReplacePrice.Price
                                                     .NewSubscriptionUnitPrice
                                                     .InvoicingCycleConfiguration
                                                     .builder()
-                                                    .duration(123L)
+                                                    .duration(0L)
                                                     .durationUnit(
                                                         SubscriptionCreateParams.ReplacePrice.Price
                                                             .NewSubscriptionUnitPrice
@@ -609,7 +609,7 @@ class SubscriptionCreateParamsTest {
                     )
                 )
                 .startDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
-                .trialDurationDays(123L)
+                .trialDurationDays(0L)
                 .build()
         val body = params.getBody()
         assertThat(body).isNotNull
@@ -630,12 +630,12 @@ class SubscriptionCreateParamsTest {
                                                 .PERCENTAGE_DISCOUNT
                                         )
                                         .appliesToPriceIds(listOf("string"))
-                                        .percentageDiscount(42.23)
+                                        .percentageDiscount(0.0)
                                         .build()
                                 )
                         )
                         .endDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
-                        .planPhaseOrder(123L)
+                        .planPhaseOrder(0L)
                         .startDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                         .build()
                 )
@@ -652,8 +652,8 @@ class SubscriptionCreateParamsTest {
                                             .PERCENTAGE
                                     )
                                     .amountDiscount("amount_discount")
-                                    .percentageDiscount(42.23)
-                                    .usageDiscount(42.23)
+                                    .percentageDiscount(0.15)
+                                    .usageDiscount(0.0)
                                     .build()
                             )
                         )
@@ -661,7 +661,7 @@ class SubscriptionCreateParamsTest {
                         .externalPriceId("external_price_id")
                         .maximumAmount("1.23")
                         .minimumAmount("1.23")
-                        .planPhaseOrder(123L)
+                        .planPhaseOrder(0L)
                         .price(
                             SubscriptionCreateParams.AddPrice.Price.ofNewSubscriptionUnitPrice(
                                 SubscriptionCreateParams.AddPrice.Price.NewSubscriptionUnitPrice
@@ -695,7 +695,7 @@ class SubscriptionCreateParamsTest {
                                             .NewSubscriptionUnitPrice
                                             .BillingCycleConfiguration
                                             .builder()
-                                            .duration(123L)
+                                            .duration(0L)
                                             .durationUnit(
                                                 SubscriptionCreateParams.AddPrice.Price
                                                     .NewSubscriptionUnitPrice
@@ -705,17 +705,17 @@ class SubscriptionCreateParamsTest {
                                             )
                                             .build()
                                     )
-                                    .conversionRate(42.23)
+                                    .conversionRate(0.0)
                                     .currency("currency")
                                     .externalPriceId("external_price_id")
-                                    .fixedPriceQuantity(42.23)
+                                    .fixedPriceQuantity(0.0)
                                     .invoiceGroupingKey("invoice_grouping_key")
                                     .invoicingCycleConfiguration(
                                         SubscriptionCreateParams.AddPrice.Price
                                             .NewSubscriptionUnitPrice
                                             .InvoicingCycleConfiguration
                                             .builder()
-                                            .duration(123L)
+                                            .duration(0L)
                                             .durationUnit(
                                                 SubscriptionCreateParams.AddPrice.Price
                                                     .NewSubscriptionUnitPrice
@@ -747,13 +747,13 @@ class SubscriptionCreateParamsTest {
         assertThat(body.billingCycleAnchorConfiguration())
             .isEqualTo(
                 SubscriptionCreateParams.BillingCycleAnchorConfiguration.builder()
-                    .day(31L)
-                    .month(12L)
-                    .year(123L)
+                    .day(1L)
+                    .month(1L)
+                    .year(0L)
                     .build()
             )
         assertThat(body.couponRedemptionCode()).isEqualTo("coupon_redemption_code")
-        assertThat(body.creditsOverageRate()).isEqualTo(42.23)
+        assertThat(body.creditsOverageRate()).isEqualTo(0.0)
         assertThat(body.customerId()).isEqualTo("customer_id")
         assertThat(body.defaultInvoiceMemo()).isEqualTo("default_invoice_memo")
         assertThat(body.endDate()).isEqualTo(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
@@ -763,13 +763,13 @@ class SubscriptionCreateParamsTest {
         assertThat(body.externalMarketplaceReportingId())
             .isEqualTo("external_marketplace_reporting_id")
         assertThat(body.externalPlanId()).isEqualTo("ZMwNQefe7J3ecf7W")
-        assertThat(body.initialPhaseOrder()).isEqualTo(123L)
+        assertThat(body.initialPhaseOrder()).isEqualTo(2L)
         assertThat(body.invoicingThreshold()).isEqualTo("10.00")
         assertThat(body.metadata()).isEqualTo(SubscriptionCreateParams.Metadata.builder().build())
-        assertThat(body.netTerms()).isEqualTo(123L)
-        assertThat(body.perCreditOverageAmount()).isEqualTo(42.23)
+        assertThat(body.netTerms()).isEqualTo(0L)
+        assertThat(body.perCreditOverageAmount()).isEqualTo(0.0)
         assertThat(body.planId()).isEqualTo("ZMwNQefe7J3ecf7W")
-        assertThat(body.planVersionNumber()).isEqualTo(123L)
+        assertThat(body.planVersionNumber()).isEqualTo(0L)
         assertThat(body.priceOverrides()).isEqualTo(listOf(JsonValue.from(mapOf<String, Any>())))
         assertThat(body.removeAdjustments())
             .isEqualTo(
@@ -805,7 +805,7 @@ class SubscriptionCreateParamsTest {
                                                 .PERCENTAGE_DISCOUNT
                                         )
                                         .appliesToPriceIds(listOf("string"))
-                                        .percentageDiscount(42.23)
+                                        .percentageDiscount(0.0)
                                         .build()
                                 )
                         )
@@ -826,13 +826,13 @@ class SubscriptionCreateParamsTest {
                                             .PERCENTAGE
                                     )
                                     .amountDiscount("amount_discount")
-                                    .percentageDiscount(42.23)
-                                    .usageDiscount(42.23)
+                                    .percentageDiscount(0.15)
+                                    .usageDiscount(0.0)
                                     .build()
                             )
                         )
                         .externalPriceId("external_price_id")
-                        .fixedPriceQuantity(42.23)
+                        .fixedPriceQuantity(2.0)
                         .maximumAmount("1.23")
                         .minimumAmount("1.23")
                         .price(
@@ -868,7 +868,7 @@ class SubscriptionCreateParamsTest {
                                             .NewSubscriptionUnitPrice
                                             .BillingCycleConfiguration
                                             .builder()
-                                            .duration(123L)
+                                            .duration(0L)
                                             .durationUnit(
                                                 SubscriptionCreateParams.ReplacePrice.Price
                                                     .NewSubscriptionUnitPrice
@@ -878,17 +878,17 @@ class SubscriptionCreateParamsTest {
                                             )
                                             .build()
                                     )
-                                    .conversionRate(42.23)
+                                    .conversionRate(0.0)
                                     .currency("currency")
                                     .externalPriceId("external_price_id")
-                                    .fixedPriceQuantity(42.23)
+                                    .fixedPriceQuantity(0.0)
                                     .invoiceGroupingKey("invoice_grouping_key")
                                     .invoicingCycleConfiguration(
                                         SubscriptionCreateParams.ReplacePrice.Price
                                             .NewSubscriptionUnitPrice
                                             .InvoicingCycleConfiguration
                                             .builder()
-                                            .duration(123L)
+                                            .duration(0L)
                                             .durationUnit(
                                                 SubscriptionCreateParams.ReplacePrice.Price
                                                     .NewSubscriptionUnitPrice
@@ -914,7 +914,7 @@ class SubscriptionCreateParamsTest {
                 )
             )
         assertThat(body.startDate()).isEqualTo(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
-        assertThat(body.trialDurationDays()).isEqualTo(123L)
+        assertThat(body.trialDurationDays()).isEqualTo(0L)
     }
 
     @Test

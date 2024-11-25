@@ -15,7 +15,7 @@ class EventVolumesTest {
                 .data(
                     listOf(
                         EventVolumes.Data.builder()
-                            .count(123L)
+                            .count(0L)
                             .timeframeEnd(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                             .timeframeStart(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                             .build()
@@ -26,7 +26,7 @@ class EventVolumesTest {
         assertThat(eventVolumes.data())
             .containsExactly(
                 EventVolumes.Data.builder()
-                    .count(123L)
+                    .count(0L)
                     .timeframeEnd(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                     .timeframeStart(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                     .build()

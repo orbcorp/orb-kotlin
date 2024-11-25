@@ -19,7 +19,7 @@ class InvoiceFetchUpcomingResponseTest {
                     InvoiceFetchUpcomingResponse.AutoCollection.builder()
                         .enabled(true)
                         .nextAttemptAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
-                        .numAttempts(123L)
+                        .numAttempts(0L)
                         .previouslyAttemptedAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                         .build()
                 )
@@ -100,7 +100,7 @@ class InvoiceFetchUpcomingResponseTest {
                             PercentageDiscount.builder()
                                 .appliesToPriceIds(listOf("string"))
                                 .discountType(PercentageDiscount.DiscountType.PERCENTAGE)
-                                .percentageDiscount(1.0)
+                                .percentageDiscount(0.15)
                                 .reason("reason")
                                 .build()
                         )
@@ -124,7 +124,7 @@ class InvoiceFetchUpcomingResponseTest {
                                     PercentageDiscount.builder()
                                         .appliesToPriceIds(listOf("string"))
                                         .discountType(PercentageDiscount.DiscountType.PERCENTAGE)
-                                        .percentageDiscount(1.0)
+                                        .percentageDiscount(0.15)
                                         .reason("reason")
                                         .build()
                                 )
@@ -157,7 +157,7 @@ class InvoiceFetchUpcomingResponseTest {
                                         )
                                         .billingCycleConfiguration(
                                             Price.UnitPrice.BillingCycleConfiguration.builder()
-                                                .duration(123L)
+                                                .duration(0L)
                                                 .durationUnit(
                                                     Price.UnitPrice.BillingCycleConfiguration
                                                         .DurationUnit
@@ -166,7 +166,7 @@ class InvoiceFetchUpcomingResponseTest {
                                                 .build()
                                         )
                                         .cadence(Price.UnitPrice.Cadence.ONE_TIME)
-                                        .conversionRate(42.23)
+                                        .conversionRate(0.0)
                                         .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                                         .creditAllocation(
                                             Price.UnitPrice.CreditAllocation.builder()
@@ -182,16 +182,16 @@ class InvoiceFetchUpcomingResponseTest {
                                                     .discountType(
                                                         PercentageDiscount.DiscountType.PERCENTAGE
                                                     )
-                                                    .percentageDiscount(1.0)
+                                                    .percentageDiscount(0.15)
                                                     .reason("reason")
                                                     .build()
                                             )
                                         )
                                         .externalPriceId("external_price_id")
-                                        .fixedPriceQuantity(42.23)
+                                        .fixedPriceQuantity(0.0)
                                         .invoicingCycleConfiguration(
                                             Price.UnitPrice.InvoicingCycleConfiguration.builder()
-                                                .duration(123L)
+                                                .duration(0L)
                                                 .durationUnit(
                                                     Price.UnitPrice.InvoicingCycleConfiguration
                                                         .DurationUnit
@@ -222,7 +222,7 @@ class InvoiceFetchUpcomingResponseTest {
                                         .minimumAmount("minimum_amount")
                                         .modelType(Price.UnitPrice.ModelType.UNIT)
                                         .name("name")
-                                        .planPhaseOrder(123L)
+                                        .planPhaseOrder(0L)
                                         .priceType(Price.UnitPrice.PriceType.USAGE_PRICE)
                                         .unitConfig(
                                             Price.UnitPrice.UnitConfig.builder()
@@ -232,7 +232,7 @@ class InvoiceFetchUpcomingResponseTest {
                                         .build()
                                 )
                             )
-                            .quantity(42.23)
+                            .quantity(1.0)
                             .startDate(OffsetDateTime.parse("2022-02-01T08:00:00+00:00"))
                             .subLineItems(
                                 listOf(
@@ -262,7 +262,7 @@ class InvoiceFetchUpcomingResponseTest {
                                                         .build()
                                                 )
                                                 .name("Tier One")
-                                                .quantity(42.23)
+                                                .quantity(5.0)
                                                 .type(
                                                     InvoiceFetchUpcomingResponse.LineItem
                                                         .SubLineItem
@@ -352,7 +352,7 @@ class InvoiceFetchUpcomingResponseTest {
                 InvoiceFetchUpcomingResponse.AutoCollection.builder()
                     .enabled(true)
                     .nextAttemptAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
-                    .numAttempts(123L)
+                    .numAttempts(0L)
                     .previouslyAttemptedAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                     .build()
             )
@@ -430,7 +430,7 @@ class InvoiceFetchUpcomingResponseTest {
                     PercentageDiscount.builder()
                         .appliesToPriceIds(listOf("string"))
                         .discountType(PercentageDiscount.DiscountType.PERCENTAGE)
-                        .percentageDiscount(1.0)
+                        .percentageDiscount(0.15)
                         .reason("reason")
                         .build()
                 )
@@ -459,7 +459,7 @@ class InvoiceFetchUpcomingResponseTest {
                             PercentageDiscount.builder()
                                 .appliesToPriceIds(listOf("string"))
                                 .discountType(PercentageDiscount.DiscountType.PERCENTAGE)
-                                .percentageDiscount(1.0)
+                                .percentageDiscount(0.15)
                                 .reason("reason")
                                 .build()
                         )
@@ -490,7 +490,7 @@ class InvoiceFetchUpcomingResponseTest {
                                 )
                                 .billingCycleConfiguration(
                                     Price.UnitPrice.BillingCycleConfiguration.builder()
-                                        .duration(123L)
+                                        .duration(0L)
                                         .durationUnit(
                                             Price.UnitPrice.BillingCycleConfiguration.DurationUnit
                                                 .DAY
@@ -498,7 +498,7 @@ class InvoiceFetchUpcomingResponseTest {
                                         .build()
                                 )
                                 .cadence(Price.UnitPrice.Cadence.ONE_TIME)
-                                .conversionRate(42.23)
+                                .conversionRate(0.0)
                                 .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                                 .creditAllocation(
                                     Price.UnitPrice.CreditAllocation.builder()
@@ -514,16 +514,16 @@ class InvoiceFetchUpcomingResponseTest {
                                             .discountType(
                                                 PercentageDiscount.DiscountType.PERCENTAGE
                                             )
-                                            .percentageDiscount(1.0)
+                                            .percentageDiscount(0.15)
                                             .reason("reason")
                                             .build()
                                     )
                                 )
                                 .externalPriceId("external_price_id")
-                                .fixedPriceQuantity(42.23)
+                                .fixedPriceQuantity(0.0)
                                 .invoicingCycleConfiguration(
                                     Price.UnitPrice.InvoicingCycleConfiguration.builder()
-                                        .duration(123L)
+                                        .duration(0L)
                                         .durationUnit(
                                             Price.UnitPrice.InvoicingCycleConfiguration.DurationUnit
                                                 .DAY
@@ -548,7 +548,7 @@ class InvoiceFetchUpcomingResponseTest {
                                 .minimumAmount("minimum_amount")
                                 .modelType(Price.UnitPrice.ModelType.UNIT)
                                 .name("name")
-                                .planPhaseOrder(123L)
+                                .planPhaseOrder(0L)
                                 .priceType(Price.UnitPrice.PriceType.USAGE_PRICE)
                                 .unitConfig(
                                     Price.UnitPrice.UnitConfig.builder()
@@ -558,7 +558,7 @@ class InvoiceFetchUpcomingResponseTest {
                                 .build()
                         )
                     )
-                    .quantity(42.23)
+                    .quantity(1.0)
                     .startDate(OffsetDateTime.parse("2022-02-01T08:00:00+00:00"))
                     .subLineItems(
                         listOf(
@@ -584,7 +584,7 @@ class InvoiceFetchUpcomingResponseTest {
                                             .build()
                                     )
                                     .name("Tier One")
-                                    .quantity(42.23)
+                                    .quantity(5.0)
                                     .type(
                                         InvoiceFetchUpcomingResponse.LineItem.SubLineItem
                                             .MatrixSubLineItem

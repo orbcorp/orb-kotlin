@@ -30,14 +30,14 @@ class TopUpServiceTest {
                     .invoiceSettings(
                         CustomerCreditTopUpCreateParams.InvoiceSettings.builder()
                             .autoCollection(true)
-                            .netTerms(123L)
+                            .netTerms(0L)
                             .memo("memo")
                             .requireSuccessfulPayment(true)
                             .build()
                     )
                     .perUnitCostBasis("per_unit_cost_basis")
                     .threshold("threshold")
-                    .expiresAfter(123L)
+                    .expiresAfter(0L)
                     .expiresAfterUnit(CustomerCreditTopUpCreateParams.ExpiresAfterUnit.DAY)
                     .build()
             )
@@ -94,14 +94,14 @@ class TopUpServiceTest {
                     .invoiceSettings(
                         CustomerCreditTopUpCreateByExternalIdParams.InvoiceSettings.builder()
                             .autoCollection(true)
-                            .netTerms(123L)
+                            .netTerms(0L)
                             .memo("memo")
                             .requireSuccessfulPayment(true)
                             .build()
                     )
                     .perUnitCostBasis("per_unit_cost_basis")
                     .threshold("threshold")
-                    .expiresAfter(123L)
+                    .expiresAfter(0L)
                     .expiresAfterUnit(
                         CustomerCreditTopUpCreateByExternalIdParams.ExpiresAfterUnit.DAY
                     )

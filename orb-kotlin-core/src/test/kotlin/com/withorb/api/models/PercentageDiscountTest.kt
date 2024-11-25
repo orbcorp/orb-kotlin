@@ -13,14 +13,14 @@ class PercentageDiscountTest {
             PercentageDiscount.builder()
                 .appliesToPriceIds(listOf("string"))
                 .discountType(PercentageDiscount.DiscountType.PERCENTAGE)
-                .percentageDiscount(1.0)
+                .percentageDiscount(0.15)
                 .reason("reason")
                 .build()
         assertThat(percentageDiscount).isNotNull
         assertThat(percentageDiscount.appliesToPriceIds()).containsExactly("string")
         assertThat(percentageDiscount.discountType())
             .isEqualTo(PercentageDiscount.DiscountType.PERCENTAGE)
-        assertThat(percentageDiscount.percentageDiscount()).isEqualTo(1.0)
+        assertThat(percentageDiscount.percentageDiscount()).isEqualTo(0.15)
         assertThat(percentageDiscount.reason()).isEqualTo("reason")
     }
 }

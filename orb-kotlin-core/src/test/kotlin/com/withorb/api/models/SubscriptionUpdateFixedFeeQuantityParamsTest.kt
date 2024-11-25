@@ -14,7 +14,7 @@ class SubscriptionUpdateFixedFeeQuantityParamsTest {
         SubscriptionUpdateFixedFeeQuantityParams.builder()
             .subscriptionId("subscription_id")
             .priceId("price_id")
-            .quantity(42.23)
+            .quantity(0.0)
             .changeOption(SubscriptionUpdateFixedFeeQuantityParams.ChangeOption.IMMEDIATE)
             .effectiveDate(LocalDate.parse("2022-12-21"))
             .build()
@@ -26,14 +26,14 @@ class SubscriptionUpdateFixedFeeQuantityParamsTest {
             SubscriptionUpdateFixedFeeQuantityParams.builder()
                 .subscriptionId("subscription_id")
                 .priceId("price_id")
-                .quantity(42.23)
+                .quantity(0.0)
                 .changeOption(SubscriptionUpdateFixedFeeQuantityParams.ChangeOption.IMMEDIATE)
                 .effectiveDate(LocalDate.parse("2022-12-21"))
                 .build()
         val body = params.getBody()
         assertThat(body).isNotNull
         assertThat(body.priceId()).isEqualTo("price_id")
-        assertThat(body.quantity()).isEqualTo(42.23)
+        assertThat(body.quantity()).isEqualTo(0.0)
         assertThat(body.changeOption())
             .isEqualTo(SubscriptionUpdateFixedFeeQuantityParams.ChangeOption.IMMEDIATE)
         assertThat(body.effectiveDate()).isEqualTo(LocalDate.parse("2022-12-21"))
@@ -45,12 +45,12 @@ class SubscriptionUpdateFixedFeeQuantityParamsTest {
             SubscriptionUpdateFixedFeeQuantityParams.builder()
                 .subscriptionId("subscription_id")
                 .priceId("price_id")
-                .quantity(42.23)
+                .quantity(0.0)
                 .build()
         val body = params.getBody()
         assertThat(body).isNotNull
         assertThat(body.priceId()).isEqualTo("price_id")
-        assertThat(body.quantity()).isEqualTo(42.23)
+        assertThat(body.quantity()).isEqualTo(0.0)
     }
 
     @Test
@@ -59,7 +59,7 @@ class SubscriptionUpdateFixedFeeQuantityParamsTest {
             SubscriptionUpdateFixedFeeQuantityParams.builder()
                 .subscriptionId("subscription_id")
                 .priceId("price_id")
-                .quantity(42.23)
+                .quantity(0.0)
                 .build()
         assertThat(params).isNotNull
         // path param "subscriptionId"

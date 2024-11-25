@@ -30,7 +30,7 @@ class PlanTest {
                         PercentageDiscount.builder()
                             .appliesToPriceIds(listOf("string"))
                             .discountType(PercentageDiscount.DiscountType.PERCENTAGE)
-                            .percentageDiscount(1.0)
+                            .percentageDiscount(0.15)
                             .reason("reason")
                             .build()
                     )
@@ -53,7 +53,7 @@ class PlanTest {
                 )
                 .minimumAmount("minimum_amount")
                 .name("name")
-                .netTerms(123L)
+                .netTerms(0L)
                 .planPhases(
                     listOf(
                         Plan.PlanPhase.builder()
@@ -64,12 +64,12 @@ class PlanTest {
                                     PercentageDiscount.builder()
                                         .appliesToPriceIds(listOf("string"))
                                         .discountType(PercentageDiscount.DiscountType.PERCENTAGE)
-                                        .percentageDiscount(1.0)
+                                        .percentageDiscount(0.15)
                                         .reason("reason")
                                         .build()
                                 )
                             )
-                            .duration(123L)
+                            .duration(0L)
                             .durationUnit(Plan.PlanPhase.DurationUnit.DAILY)
                             .maximum(
                                 Plan.PlanPhase.Maximum.builder()
@@ -86,7 +86,7 @@ class PlanTest {
                             )
                             .minimumAmount("minimum_amount")
                             .name("name")
-                            .order(123L)
+                            .order(0L)
                             .build()
                     )
                 )
@@ -100,7 +100,7 @@ class PlanTest {
                                 )
                                 .billingCycleConfiguration(
                                     Price.UnitPrice.BillingCycleConfiguration.builder()
-                                        .duration(123L)
+                                        .duration(0L)
                                         .durationUnit(
                                             Price.UnitPrice.BillingCycleConfiguration.DurationUnit
                                                 .DAY
@@ -108,7 +108,7 @@ class PlanTest {
                                         .build()
                                 )
                                 .cadence(Price.UnitPrice.Cadence.ONE_TIME)
-                                .conversionRate(42.23)
+                                .conversionRate(0.0)
                                 .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                                 .creditAllocation(
                                     Price.UnitPrice.CreditAllocation.builder()
@@ -124,16 +124,16 @@ class PlanTest {
                                             .discountType(
                                                 PercentageDiscount.DiscountType.PERCENTAGE
                                             )
-                                            .percentageDiscount(1.0)
+                                            .percentageDiscount(0.15)
                                             .reason("reason")
                                             .build()
                                     )
                                 )
                                 .externalPriceId("external_price_id")
-                                .fixedPriceQuantity(42.23)
+                                .fixedPriceQuantity(0.0)
                                 .invoicingCycleConfiguration(
                                     Price.UnitPrice.InvoicingCycleConfiguration.builder()
-                                        .duration(123L)
+                                        .duration(0L)
                                         .durationUnit(
                                             Price.UnitPrice.InvoicingCycleConfiguration.DurationUnit
                                                 .DAY
@@ -158,7 +158,7 @@ class PlanTest {
                                 .minimumAmount("minimum_amount")
                                 .modelType(Price.UnitPrice.ModelType.UNIT)
                                 .name("name")
-                                .planPhaseOrder(123L)
+                                .planPhaseOrder(0L)
                                 .priceType(Price.UnitPrice.PriceType.USAGE_PRICE)
                                 .unitConfig(
                                     Price.UnitPrice.UnitConfig.builder()
@@ -179,11 +179,11 @@ class PlanTest {
                 .status(Plan.Status.ACTIVE)
                 .trialConfig(
                     Plan.TrialConfig.builder()
-                        .trialPeriod(123L)
+                        .trialPeriod(0L)
                         .trialPeriodUnit(Plan.TrialConfig.TrialPeriodUnit.DAYS)
                         .build()
                 )
-                .version(123L)
+                .version(0L)
                 .build()
         assertThat(plan).isNotNull
         assertThat(plan.id()).isEqualTo("id")
@@ -206,7 +206,7 @@ class PlanTest {
                     PercentageDiscount.builder()
                         .appliesToPriceIds(listOf("string"))
                         .discountType(PercentageDiscount.DiscountType.PERCENTAGE)
-                        .percentageDiscount(1.0)
+                        .percentageDiscount(0.15)
                         .reason("reason")
                         .build()
                 )
@@ -231,7 +231,7 @@ class PlanTest {
             )
         assertThat(plan.minimumAmount()).isEqualTo("minimum_amount")
         assertThat(plan.name()).isEqualTo("name")
-        assertThat(plan.netTerms()).isEqualTo(123L)
+        assertThat(plan.netTerms()).isEqualTo(0L)
         assertThat(plan.planPhases())
             .containsExactly(
                 Plan.PlanPhase.builder()
@@ -242,12 +242,12 @@ class PlanTest {
                             PercentageDiscount.builder()
                                 .appliesToPriceIds(listOf("string"))
                                 .discountType(PercentageDiscount.DiscountType.PERCENTAGE)
-                                .percentageDiscount(1.0)
+                                .percentageDiscount(0.15)
                                 .reason("reason")
                                 .build()
                         )
                     )
-                    .duration(123L)
+                    .duration(0L)
                     .durationUnit(Plan.PlanPhase.DurationUnit.DAILY)
                     .maximum(
                         Plan.PlanPhase.Maximum.builder()
@@ -264,7 +264,7 @@ class PlanTest {
                     )
                     .minimumAmount("minimum_amount")
                     .name("name")
-                    .order(123L)
+                    .order(0L)
                     .build()
             )
         assertThat(plan.prices())
@@ -275,14 +275,14 @@ class PlanTest {
                         .billableMetric(Price.UnitPrice.BillableMetric.builder().id("id").build())
                         .billingCycleConfiguration(
                             Price.UnitPrice.BillingCycleConfiguration.builder()
-                                .duration(123L)
+                                .duration(0L)
                                 .durationUnit(
                                     Price.UnitPrice.BillingCycleConfiguration.DurationUnit.DAY
                                 )
                                 .build()
                         )
                         .cadence(Price.UnitPrice.Cadence.ONE_TIME)
-                        .conversionRate(42.23)
+                        .conversionRate(0.0)
                         .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                         .creditAllocation(
                             Price.UnitPrice.CreditAllocation.builder()
@@ -296,16 +296,16 @@ class PlanTest {
                                 PercentageDiscount.builder()
                                     .appliesToPriceIds(listOf("string"))
                                     .discountType(PercentageDiscount.DiscountType.PERCENTAGE)
-                                    .percentageDiscount(1.0)
+                                    .percentageDiscount(0.15)
                                     .reason("reason")
                                     .build()
                             )
                         )
                         .externalPriceId("external_price_id")
-                        .fixedPriceQuantity(42.23)
+                        .fixedPriceQuantity(0.0)
                         .invoicingCycleConfiguration(
                             Price.UnitPrice.InvoicingCycleConfiguration.builder()
-                                .duration(123L)
+                                .duration(0L)
                                 .durationUnit(
                                     Price.UnitPrice.InvoicingCycleConfiguration.DurationUnit.DAY
                                 )
@@ -329,7 +329,7 @@ class PlanTest {
                         .minimumAmount("minimum_amount")
                         .modelType(Price.UnitPrice.ModelType.UNIT)
                         .name("name")
-                        .planPhaseOrder(123L)
+                        .planPhaseOrder(0L)
                         .priceType(Price.UnitPrice.PriceType.USAGE_PRICE)
                         .unitConfig(
                             Price.UnitPrice.UnitConfig.builder().unitAmount("unit_amount").build()
@@ -349,10 +349,10 @@ class PlanTest {
         assertThat(plan.trialConfig())
             .isEqualTo(
                 Plan.TrialConfig.builder()
-                    .trialPeriod(123L)
+                    .trialPeriod(0L)
                     .trialPeriodUnit(Plan.TrialConfig.TrialPeriodUnit.DAYS)
                     .build()
             )
-        assertThat(plan.version()).isEqualTo(123L)
+        assertThat(plan.version()).isEqualTo(0L)
     }
 }

@@ -31,7 +31,7 @@ class PlanCreateParamsTest {
                             .billingCycleConfiguration(
                                 PlanCreateParams.Price.NewPlanUnitPrice.BillingCycleConfiguration
                                     .builder()
-                                    .duration(123L)
+                                    .duration(0L)
                                     .durationUnit(
                                         PlanCreateParams.Price.NewPlanUnitPrice
                                             .BillingCycleConfiguration
@@ -40,15 +40,15 @@ class PlanCreateParamsTest {
                                     )
                                     .build()
                             )
-                            .conversionRate(42.23)
+                            .conversionRate(0.0)
                             .currency("currency")
                             .externalPriceId("external_price_id")
-                            .fixedPriceQuantity(42.23)
+                            .fixedPriceQuantity(0.0)
                             .invoiceGroupingKey("invoice_grouping_key")
                             .invoicingCycleConfiguration(
                                 PlanCreateParams.Price.NewPlanUnitPrice.InvoicingCycleConfiguration
                                     .builder()
-                                    .duration(123L)
+                                    .duration(0L)
                                     .durationUnit(
                                         PlanCreateParams.Price.NewPlanUnitPrice
                                             .InvoicingCycleConfiguration
@@ -67,7 +67,7 @@ class PlanCreateParamsTest {
             .defaultInvoiceMemo("default_invoice_memo")
             .externalPlanId("external_plan_id")
             .metadata(PlanCreateParams.Metadata.builder().build())
-            .netTerms(123L)
+            .netTerms(0L)
             .status(PlanCreateParams.Status.ACTIVE)
             .build()
     }
@@ -97,7 +97,7 @@ class PlanCreateParamsTest {
                                     PlanCreateParams.Price.NewPlanUnitPrice
                                         .BillingCycleConfiguration
                                         .builder()
-                                        .duration(123L)
+                                        .duration(0L)
                                         .durationUnit(
                                             PlanCreateParams.Price.NewPlanUnitPrice
                                                 .BillingCycleConfiguration
@@ -106,16 +106,16 @@ class PlanCreateParamsTest {
                                         )
                                         .build()
                                 )
-                                .conversionRate(42.23)
+                                .conversionRate(0.0)
                                 .currency("currency")
                                 .externalPriceId("external_price_id")
-                                .fixedPriceQuantity(42.23)
+                                .fixedPriceQuantity(0.0)
                                 .invoiceGroupingKey("invoice_grouping_key")
                                 .invoicingCycleConfiguration(
                                     PlanCreateParams.Price.NewPlanUnitPrice
                                         .InvoicingCycleConfiguration
                                         .builder()
-                                        .duration(123L)
+                                        .duration(0L)
                                         .durationUnit(
                                             PlanCreateParams.Price.NewPlanUnitPrice
                                                 .InvoicingCycleConfiguration
@@ -135,7 +135,7 @@ class PlanCreateParamsTest {
                 .defaultInvoiceMemo("default_invoice_memo")
                 .externalPlanId("external_plan_id")
                 .metadata(PlanCreateParams.Metadata.builder().build())
-                .netTerms(123L)
+                .netTerms(0L)
                 .status(PlanCreateParams.Status.ACTIVE)
                 .build()
         val body = params.getBody()
@@ -161,7 +161,7 @@ class PlanCreateParamsTest {
                             .billingCycleConfiguration(
                                 PlanCreateParams.Price.NewPlanUnitPrice.BillingCycleConfiguration
                                     .builder()
-                                    .duration(123L)
+                                    .duration(0L)
                                     .durationUnit(
                                         PlanCreateParams.Price.NewPlanUnitPrice
                                             .BillingCycleConfiguration
@@ -170,15 +170,15 @@ class PlanCreateParamsTest {
                                     )
                                     .build()
                             )
-                            .conversionRate(42.23)
+                            .conversionRate(0.0)
                             .currency("currency")
                             .externalPriceId("external_price_id")
-                            .fixedPriceQuantity(42.23)
+                            .fixedPriceQuantity(0.0)
                             .invoiceGroupingKey("invoice_grouping_key")
                             .invoicingCycleConfiguration(
                                 PlanCreateParams.Price.NewPlanUnitPrice.InvoicingCycleConfiguration
                                     .builder()
-                                    .duration(123L)
+                                    .duration(0L)
                                     .durationUnit(
                                         PlanCreateParams.Price.NewPlanUnitPrice
                                             .InvoicingCycleConfiguration
@@ -197,7 +197,7 @@ class PlanCreateParamsTest {
         assertThat(body.defaultInvoiceMemo()).isEqualTo("default_invoice_memo")
         assertThat(body.externalPlanId()).isEqualTo("external_plan_id")
         assertThat(body.metadata()).isEqualTo(PlanCreateParams.Metadata.builder().build())
-        assertThat(body.netTerms()).isEqualTo(123L)
+        assertThat(body.netTerms()).isEqualTo(0L)
         assertThat(body.status()).isEqualTo(PlanCreateParams.Status.ACTIVE)
     }
 

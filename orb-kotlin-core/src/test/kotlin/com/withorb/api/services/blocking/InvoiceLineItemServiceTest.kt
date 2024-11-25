@@ -27,7 +27,7 @@ class InvoiceLineItemServiceTest {
                     .endDate(LocalDate.parse("2023-09-22"))
                     .invoiceId("4khy3nwzktxv7")
                     .name("Item Name")
-                    .quantity(42.23)
+                    .quantity(1.0)
                     .startDate(LocalDate.parse("2023-09-22"))
                     .build()
             )

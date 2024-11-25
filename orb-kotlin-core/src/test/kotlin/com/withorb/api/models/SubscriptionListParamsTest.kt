@@ -20,7 +20,7 @@ class SubscriptionListParamsTest {
             .cursor("cursor")
             .customerId(listOf("string"))
             .externalCustomerId("external_customer_id")
-            .limit(123L)
+            .limit(1L)
             .status(SubscriptionListParams.Status.ACTIVE)
             .build()
     }
@@ -36,7 +36,7 @@ class SubscriptionListParamsTest {
                 .cursor("cursor")
                 .customerId(listOf("string"))
                 .externalCustomerId("external_customer_id")
-                .limit(123L)
+                .limit(1L)
                 .status(SubscriptionListParams.Status.ACTIVE)
                 .build()
         val expected = QueryParams.builder()
@@ -47,7 +47,7 @@ class SubscriptionListParamsTest {
         expected.put("cursor", "cursor")
         expected.put("customer_id[]", "string")
         expected.put("external_customer_id", "external_customer_id")
-        expected.put("limit", "123")
+        expected.put("limit", "1")
         expected.put("status", SubscriptionListParams.Status.ACTIVE.toString())
         assertThat(params.getQueryParams()).isEqualTo(expected.build())
     }
