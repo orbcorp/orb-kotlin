@@ -16,7 +16,7 @@ class SubscriptionUpdateParamsTest {
             .defaultInvoiceMemo("default_invoice_memo")
             .invoicingThreshold("10.00")
             .metadata(SubscriptionUpdateParams.Metadata.builder().build())
-            .netTerms(123L)
+            .netTerms(0L)
             .build()
     }
 
@@ -29,7 +29,7 @@ class SubscriptionUpdateParamsTest {
                 .defaultInvoiceMemo("default_invoice_memo")
                 .invoicingThreshold("10.00")
                 .metadata(SubscriptionUpdateParams.Metadata.builder().build())
-                .netTerms(123L)
+                .netTerms(0L)
                 .build()
         val body = params.getBody()
         assertThat(body).isNotNull
@@ -37,7 +37,7 @@ class SubscriptionUpdateParamsTest {
         assertThat(body.defaultInvoiceMemo()).isEqualTo("default_invoice_memo")
         assertThat(body.invoicingThreshold()).isEqualTo("10.00")
         assertThat(body.metadata()).isEqualTo(SubscriptionUpdateParams.Metadata.builder().build())
-        assertThat(body.netTerms()).isEqualTo(123L)
+        assertThat(body.netTerms()).isEqualTo(0L)
     }
 
     @Test

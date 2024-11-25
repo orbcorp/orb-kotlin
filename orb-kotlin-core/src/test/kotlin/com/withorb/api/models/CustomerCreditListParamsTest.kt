@@ -16,7 +16,7 @@ class CustomerCreditListParamsTest {
             .currency("currency")
             .cursor("cursor")
             .includeAllBlocks(true)
-            .limit(123L)
+            .limit(1L)
             .build()
     }
 
@@ -28,13 +28,13 @@ class CustomerCreditListParamsTest {
                 .currency("currency")
                 .cursor("cursor")
                 .includeAllBlocks(true)
-                .limit(123L)
+                .limit(1L)
                 .build()
         val expected = QueryParams.builder()
         expected.put("currency", "currency")
         expected.put("cursor", "cursor")
         expected.put("include_all_blocks", "true")
-        expected.put("limit", "123")
+        expected.put("limit", "1")
         assertThat(params.getQueryParams()).isEqualTo(expected.build())
     }
 

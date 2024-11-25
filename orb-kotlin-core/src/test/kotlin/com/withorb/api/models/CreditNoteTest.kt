@@ -29,7 +29,7 @@ class CreditNoteTest {
                             .id("id")
                             .amount("amount")
                             .name("name")
-                            .quantity(42.23)
+                            .quantity(0.0)
                             .subtotal("subtotal")
                             .taxAmounts(
                                 listOf(
@@ -49,7 +49,7 @@ class CreditNoteTest {
                                         .discountType(
                                             CreditNote.LineItem.Discount.DiscountType.PERCENTAGE
                                         )
-                                        .percentageDiscount(42.23)
+                                        .percentageDiscount(0.0)
                                         .amountDiscount("amount_discount")
                                         .reason("reason")
                                         .build()
@@ -62,7 +62,7 @@ class CreditNoteTest {
                     CreditNote.MaximumAmountAdjustment.builder()
                         .amountApplied("amount_applied")
                         .discountType(CreditNote.MaximumAmountAdjustment.DiscountType.PERCENTAGE)
-                        .percentageDiscount(42.23)
+                        .percentageDiscount(0.0)
                         .appliesToPrices(
                             listOf(
                                 CreditNote.MaximumAmountAdjustment.AppliesToPrice.builder()
@@ -86,7 +86,7 @@ class CreditNoteTest {
                         CreditNote.Discount.builder()
                             .amountApplied("amount_applied")
                             .discountType(CreditNote.Discount.DiscountType.PERCENTAGE)
-                            .percentageDiscount(42.23)
+                            .percentageDiscount(0.0)
                             .appliesToPrices(
                                 listOf(
                                     CreditNote.Discount.AppliesToPrice.builder()
@@ -120,7 +120,7 @@ class CreditNoteTest {
                     .id("id")
                     .amount("amount")
                     .name("name")
-                    .quantity(42.23)
+                    .quantity(0.0)
                     .subtotal("subtotal")
                     .taxAmounts(
                         listOf(
@@ -138,7 +138,7 @@ class CreditNoteTest {
                                 .amountApplied("amount_applied")
                                 .appliesToPriceIds(listOf("string"))
                                 .discountType(CreditNote.LineItem.Discount.DiscountType.PERCENTAGE)
-                                .percentageDiscount(42.23)
+                                .percentageDiscount(0.0)
                                 .amountDiscount("amount_discount")
                                 .reason("reason")
                                 .build()
@@ -151,7 +151,7 @@ class CreditNoteTest {
                 CreditNote.MaximumAmountAdjustment.builder()
                     .amountApplied("amount_applied")
                     .discountType(CreditNote.MaximumAmountAdjustment.DiscountType.PERCENTAGE)
-                    .percentageDiscount(42.23)
+                    .percentageDiscount(0.0)
                     .appliesToPrices(
                         listOf(
                             CreditNote.MaximumAmountAdjustment.AppliesToPrice.builder()
@@ -176,7 +176,7 @@ class CreditNoteTest {
                 CreditNote.Discount.builder()
                     .amountApplied("amount_applied")
                     .discountType(CreditNote.Discount.DiscountType.PERCENTAGE)
-                    .percentageDiscount(42.23)
+                    .percentageDiscount(0.0)
                     .appliesToPrices(
                         listOf(
                             CreditNote.Discount.AppliesToPrice.builder()

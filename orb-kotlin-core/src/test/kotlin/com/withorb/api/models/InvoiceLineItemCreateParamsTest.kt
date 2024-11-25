@@ -16,7 +16,7 @@ class InvoiceLineItemCreateParamsTest {
             .endDate(LocalDate.parse("2023-09-22"))
             .invoiceId("4khy3nwzktxv7")
             .name("Item Name")
-            .quantity(42.23)
+            .quantity(1.0)
             .startDate(LocalDate.parse("2023-09-22"))
             .build()
     }
@@ -29,7 +29,7 @@ class InvoiceLineItemCreateParamsTest {
                 .endDate(LocalDate.parse("2023-09-22"))
                 .invoiceId("4khy3nwzktxv7")
                 .name("Item Name")
-                .quantity(42.23)
+                .quantity(1.0)
                 .startDate(LocalDate.parse("2023-09-22"))
                 .build()
         val body = params.getBody()
@@ -38,7 +38,7 @@ class InvoiceLineItemCreateParamsTest {
         assertThat(body.endDate()).isEqualTo(LocalDate.parse("2023-09-22"))
         assertThat(body.invoiceId()).isEqualTo("4khy3nwzktxv7")
         assertThat(body.name()).isEqualTo("Item Name")
-        assertThat(body.quantity()).isEqualTo(42.23)
+        assertThat(body.quantity()).isEqualTo(1.0)
         assertThat(body.startDate()).isEqualTo(LocalDate.parse("2023-09-22"))
     }
 
@@ -50,7 +50,7 @@ class InvoiceLineItemCreateParamsTest {
                 .endDate(LocalDate.parse("2023-09-22"))
                 .invoiceId("4khy3nwzktxv7")
                 .name("Item Name")
-                .quantity(42.23)
+                .quantity(1.0)
                 .startDate(LocalDate.parse("2023-09-22"))
                 .build()
         val body = params.getBody()
@@ -59,7 +59,7 @@ class InvoiceLineItemCreateParamsTest {
         assertThat(body.endDate()).isEqualTo(LocalDate.parse("2023-09-22"))
         assertThat(body.invoiceId()).isEqualTo("4khy3nwzktxv7")
         assertThat(body.name()).isEqualTo("Item Name")
-        assertThat(body.quantity()).isEqualTo(42.23)
+        assertThat(body.quantity()).isEqualTo(1.0)
         assertThat(body.startDate()).isEqualTo(LocalDate.parse("2023-09-22"))
     }
 }

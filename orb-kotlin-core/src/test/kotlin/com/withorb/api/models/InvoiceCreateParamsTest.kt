@@ -22,7 +22,7 @@ class InvoiceCreateParamsTest {
                         .itemId("4khy3nwzktxv7")
                         .modelType(InvoiceCreateParams.LineItem.ModelType.UNIT)
                         .name("Line Item Name")
-                        .quantity(42.23)
+                        .quantity(1.0)
                         .startDate(LocalDate.parse("2023-09-22"))
                         .unitConfig(
                             InvoiceCreateParams.LineItem.UnitConfig.builder()
@@ -32,14 +32,14 @@ class InvoiceCreateParamsTest {
                         .build()
                 )
             )
-            .netTerms(123L)
+            .netTerms(0L)
             .customerId("4khy3nwzktxv7")
             .discount(
                 Discount.ofPercentageDiscount(
                     PercentageDiscount.builder()
                         .appliesToPriceIds(listOf("string"))
                         .discountType(PercentageDiscount.DiscountType.PERCENTAGE)
-                        .percentageDiscount(1.0)
+                        .percentageDiscount(0.15)
                         .reason("reason")
                         .build()
                 )
@@ -47,7 +47,7 @@ class InvoiceCreateParamsTest {
             .externalCustomerId("external-customer-id")
             .memo("An optional memo for my invoice.")
             .metadata(InvoiceCreateParams.Metadata.builder().build())
-            .willAutoIssue(true)
+            .willAutoIssue(false)
             .build()
     }
 
@@ -64,7 +64,7 @@ class InvoiceCreateParamsTest {
                             .itemId("4khy3nwzktxv7")
                             .modelType(InvoiceCreateParams.LineItem.ModelType.UNIT)
                             .name("Line Item Name")
-                            .quantity(42.23)
+                            .quantity(1.0)
                             .startDate(LocalDate.parse("2023-09-22"))
                             .unitConfig(
                                 InvoiceCreateParams.LineItem.UnitConfig.builder()
@@ -74,14 +74,14 @@ class InvoiceCreateParamsTest {
                             .build()
                     )
                 )
-                .netTerms(123L)
+                .netTerms(0L)
                 .customerId("4khy3nwzktxv7")
                 .discount(
                     Discount.ofPercentageDiscount(
                         PercentageDiscount.builder()
                             .appliesToPriceIds(listOf("string"))
                             .discountType(PercentageDiscount.DiscountType.PERCENTAGE)
-                            .percentageDiscount(1.0)
+                            .percentageDiscount(0.15)
                             .reason("reason")
                             .build()
                     )
@@ -89,7 +89,7 @@ class InvoiceCreateParamsTest {
                 .externalCustomerId("external-customer-id")
                 .memo("An optional memo for my invoice.")
                 .metadata(InvoiceCreateParams.Metadata.builder().build())
-                .willAutoIssue(true)
+                .willAutoIssue(false)
                 .build()
         val body = params.getBody()
         assertThat(body).isNotNull
@@ -103,7 +103,7 @@ class InvoiceCreateParamsTest {
                         .itemId("4khy3nwzktxv7")
                         .modelType(InvoiceCreateParams.LineItem.ModelType.UNIT)
                         .name("Line Item Name")
-                        .quantity(42.23)
+                        .quantity(1.0)
                         .startDate(LocalDate.parse("2023-09-22"))
                         .unitConfig(
                             InvoiceCreateParams.LineItem.UnitConfig.builder()
@@ -113,7 +113,7 @@ class InvoiceCreateParamsTest {
                         .build()
                 )
             )
-        assertThat(body.netTerms()).isEqualTo(123L)
+        assertThat(body.netTerms()).isEqualTo(0L)
         assertThat(body.customerId()).isEqualTo("4khy3nwzktxv7")
         assertThat(body.discount())
             .isEqualTo(
@@ -121,7 +121,7 @@ class InvoiceCreateParamsTest {
                     PercentageDiscount.builder()
                         .appliesToPriceIds(listOf("string"))
                         .discountType(PercentageDiscount.DiscountType.PERCENTAGE)
-                        .percentageDiscount(1.0)
+                        .percentageDiscount(0.15)
                         .reason("reason")
                         .build()
                 )
@@ -129,7 +129,7 @@ class InvoiceCreateParamsTest {
         assertThat(body.externalCustomerId()).isEqualTo("external-customer-id")
         assertThat(body.memo()).isEqualTo("An optional memo for my invoice.")
         assertThat(body.metadata()).isEqualTo(InvoiceCreateParams.Metadata.builder().build())
-        assertThat(body.willAutoIssue()).isEqualTo(true)
+        assertThat(body.willAutoIssue()).isEqualTo(false)
     }
 
     @Test
@@ -145,7 +145,7 @@ class InvoiceCreateParamsTest {
                             .itemId("4khy3nwzktxv7")
                             .modelType(InvoiceCreateParams.LineItem.ModelType.UNIT)
                             .name("Line Item Name")
-                            .quantity(42.23)
+                            .quantity(1.0)
                             .startDate(LocalDate.parse("2023-09-22"))
                             .unitConfig(
                                 InvoiceCreateParams.LineItem.UnitConfig.builder()
@@ -155,7 +155,7 @@ class InvoiceCreateParamsTest {
                             .build()
                     )
                 )
-                .netTerms(123L)
+                .netTerms(0L)
                 .build()
         val body = params.getBody()
         assertThat(body).isNotNull
@@ -169,7 +169,7 @@ class InvoiceCreateParamsTest {
                         .itemId("4khy3nwzktxv7")
                         .modelType(InvoiceCreateParams.LineItem.ModelType.UNIT)
                         .name("Line Item Name")
-                        .quantity(42.23)
+                        .quantity(1.0)
                         .startDate(LocalDate.parse("2023-09-22"))
                         .unitConfig(
                             InvoiceCreateParams.LineItem.UnitConfig.builder()
@@ -179,6 +179,6 @@ class InvoiceCreateParamsTest {
                         .build()
                 )
             )
-        assertThat(body.netTerms()).isEqualTo(123L)
+        assertThat(body.netTerms()).isEqualTo(0L)
     }
 }

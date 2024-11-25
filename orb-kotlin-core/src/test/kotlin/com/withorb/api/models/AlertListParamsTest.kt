@@ -20,7 +20,7 @@ class AlertListParamsTest {
             .cursor("cursor")
             .customerId("customer_id")
             .externalCustomerId("external_customer_id")
-            .limit(123L)
+            .limit(1L)
             .subscriptionId("subscription_id")
             .build()
     }
@@ -36,7 +36,7 @@ class AlertListParamsTest {
                 .cursor("cursor")
                 .customerId("customer_id")
                 .externalCustomerId("external_customer_id")
-                .limit(123L)
+                .limit(1L)
                 .subscriptionId("subscription_id")
                 .build()
         val expected = QueryParams.builder()
@@ -47,7 +47,7 @@ class AlertListParamsTest {
         expected.put("cursor", "cursor")
         expected.put("customer_id", "customer_id")
         expected.put("external_customer_id", "external_customer_id")
-        expected.put("limit", "123")
+        expected.put("limit", "1")
         expected.put("subscription_id", "subscription_id")
         assertThat(params.getQueryParams()).isEqualTo(expected.build())
     }

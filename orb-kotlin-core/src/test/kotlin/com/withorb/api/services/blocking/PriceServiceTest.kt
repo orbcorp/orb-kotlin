@@ -41,7 +41,7 @@ class PriceServiceTest {
                             .billingCycleConfiguration(
                                 PriceCreateParams.NewFloatingUnitPrice.BillingCycleConfiguration
                                     .builder()
-                                    .duration(123L)
+                                    .duration(0L)
                                     .durationUnit(
                                         PriceCreateParams.NewFloatingUnitPrice
                                             .BillingCycleConfiguration
@@ -50,14 +50,14 @@ class PriceServiceTest {
                                     )
                                     .build()
                             )
-                            .conversionRate(42.23)
+                            .conversionRate(0.0)
                             .externalPriceId("external_price_id")
-                            .fixedPriceQuantity(42.23)
+                            .fixedPriceQuantity(0.0)
                             .invoiceGroupingKey("invoice_grouping_key")
                             .invoicingCycleConfiguration(
                                 PriceCreateParams.NewFloatingUnitPrice.InvoicingCycleConfiguration
                                     .builder()
-                                    .duration(123L)
+                                    .duration(0L)
                                     .durationUnit(
                                         PriceCreateParams.NewFloatingUnitPrice
                                             .InvoicingCycleConfiguration

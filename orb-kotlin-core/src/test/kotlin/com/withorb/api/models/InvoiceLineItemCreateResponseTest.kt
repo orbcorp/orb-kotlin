@@ -19,7 +19,7 @@ class InvoiceLineItemCreateResponseTest {
                         PercentageDiscount.builder()
                             .appliesToPriceIds(listOf("string"))
                             .discountType(PercentageDiscount.DiscountType.PERCENTAGE)
-                            .percentageDiscount(1.0)
+                            .percentageDiscount(0.15)
                             .reason("reason")
                             .build()
                     )
@@ -50,14 +50,14 @@ class InvoiceLineItemCreateResponseTest {
                             )
                             .billingCycleConfiguration(
                                 Price.UnitPrice.BillingCycleConfiguration.builder()
-                                    .duration(123L)
+                                    .duration(0L)
                                     .durationUnit(
                                         Price.UnitPrice.BillingCycleConfiguration.DurationUnit.DAY
                                     )
                                     .build()
                             )
                             .cadence(Price.UnitPrice.Cadence.ONE_TIME)
-                            .conversionRate(42.23)
+                            .conversionRate(0.0)
                             .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                             .creditAllocation(
                                 Price.UnitPrice.CreditAllocation.builder()
@@ -71,16 +71,16 @@ class InvoiceLineItemCreateResponseTest {
                                     PercentageDiscount.builder()
                                         .appliesToPriceIds(listOf("string"))
                                         .discountType(PercentageDiscount.DiscountType.PERCENTAGE)
-                                        .percentageDiscount(1.0)
+                                        .percentageDiscount(0.15)
                                         .reason("reason")
                                         .build()
                                 )
                             )
                             .externalPriceId("external_price_id")
-                            .fixedPriceQuantity(42.23)
+                            .fixedPriceQuantity(0.0)
                             .invoicingCycleConfiguration(
                                 Price.UnitPrice.InvoicingCycleConfiguration.builder()
-                                    .duration(123L)
+                                    .duration(0L)
                                     .durationUnit(
                                         Price.UnitPrice.InvoicingCycleConfiguration.DurationUnit.DAY
                                     )
@@ -104,7 +104,7 @@ class InvoiceLineItemCreateResponseTest {
                             .minimumAmount("minimum_amount")
                             .modelType(Price.UnitPrice.ModelType.UNIT)
                             .name("name")
-                            .planPhaseOrder(123L)
+                            .planPhaseOrder(0L)
                             .priceType(Price.UnitPrice.PriceType.USAGE_PRICE)
                             .unitConfig(
                                 Price.UnitPrice.UnitConfig.builder()
@@ -114,7 +114,7 @@ class InvoiceLineItemCreateResponseTest {
                             .build()
                     )
                 )
-                .quantity(42.23)
+                .quantity(1.0)
                 .startDate(OffsetDateTime.parse("2022-02-01T08:00:00+00:00"))
                 .subLineItems(
                     listOf(
@@ -137,7 +137,7 @@ class InvoiceLineItemCreateResponseTest {
                                         .build()
                                 )
                                 .name("Tier One")
-                                .quantity(42.23)
+                                .quantity(5.0)
                                 .type(
                                     InvoiceLineItemCreateResponse.SubLineItem.MatrixSubLineItem.Type
                                         .MATRIX
@@ -166,7 +166,7 @@ class InvoiceLineItemCreateResponseTest {
                     PercentageDiscount.builder()
                         .appliesToPriceIds(listOf("string"))
                         .discountType(PercentageDiscount.DiscountType.PERCENTAGE)
-                        .percentageDiscount(1.0)
+                        .percentageDiscount(0.15)
                         .reason("reason")
                         .build()
                 )
@@ -199,14 +199,14 @@ class InvoiceLineItemCreateResponseTest {
                         .billableMetric(Price.UnitPrice.BillableMetric.builder().id("id").build())
                         .billingCycleConfiguration(
                             Price.UnitPrice.BillingCycleConfiguration.builder()
-                                .duration(123L)
+                                .duration(0L)
                                 .durationUnit(
                                     Price.UnitPrice.BillingCycleConfiguration.DurationUnit.DAY
                                 )
                                 .build()
                         )
                         .cadence(Price.UnitPrice.Cadence.ONE_TIME)
-                        .conversionRate(42.23)
+                        .conversionRate(0.0)
                         .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                         .creditAllocation(
                             Price.UnitPrice.CreditAllocation.builder()
@@ -220,16 +220,16 @@ class InvoiceLineItemCreateResponseTest {
                                 PercentageDiscount.builder()
                                     .appliesToPriceIds(listOf("string"))
                                     .discountType(PercentageDiscount.DiscountType.PERCENTAGE)
-                                    .percentageDiscount(1.0)
+                                    .percentageDiscount(0.15)
                                     .reason("reason")
                                     .build()
                             )
                         )
                         .externalPriceId("external_price_id")
-                        .fixedPriceQuantity(42.23)
+                        .fixedPriceQuantity(0.0)
                         .invoicingCycleConfiguration(
                             Price.UnitPrice.InvoicingCycleConfiguration.builder()
-                                .duration(123L)
+                                .duration(0L)
                                 .durationUnit(
                                     Price.UnitPrice.InvoicingCycleConfiguration.DurationUnit.DAY
                                 )
@@ -253,7 +253,7 @@ class InvoiceLineItemCreateResponseTest {
                         .minimumAmount("minimum_amount")
                         .modelType(Price.UnitPrice.ModelType.UNIT)
                         .name("name")
-                        .planPhaseOrder(123L)
+                        .planPhaseOrder(0L)
                         .priceType(Price.UnitPrice.PriceType.USAGE_PRICE)
                         .unitConfig(
                             Price.UnitPrice.UnitConfig.builder().unitAmount("unit_amount").build()
@@ -261,7 +261,7 @@ class InvoiceLineItemCreateResponseTest {
                         .build()
                 )
             )
-        assertThat(invoiceLineItemCreateResponse.quantity()).isEqualTo(42.23)
+        assertThat(invoiceLineItemCreateResponse.quantity()).isEqualTo(1.0)
         assertThat(invoiceLineItemCreateResponse.startDate())
             .isEqualTo(OffsetDateTime.parse("2022-02-01T08:00:00+00:00"))
         assertThat(invoiceLineItemCreateResponse.subLineItems())
@@ -283,7 +283,7 @@ class InvoiceLineItemCreateResponseTest {
                                 .build()
                         )
                         .name("Tier One")
-                        .quantity(42.23)
+                        .quantity(5.0)
                         .type(
                             InvoiceLineItemCreateResponse.SubLineItem.MatrixSubLineItem.Type.MATRIX
                         )
