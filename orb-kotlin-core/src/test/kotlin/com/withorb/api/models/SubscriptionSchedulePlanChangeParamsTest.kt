@@ -152,6 +152,13 @@ class SubscriptionSchedulePlanChangeParamsTest {
             .billingCycleAlignment(
                 SubscriptionSchedulePlanChangeParams.BillingCycleAlignment.UNCHANGED
             )
+            .billingCycleAnchorConfiguration(
+                SubscriptionSchedulePlanChangeParams.BillingCycleAnchorConfiguration.builder()
+                    .day(31L)
+                    .month(12L)
+                    .year(123L)
+                    .build()
+            )
             .changeDate(OffsetDateTime.parse("2017-07-21T17:32:28Z"))
             .couponRedemptionCode("coupon_redemption_code")
             .creditsOverageRate(42.23)
@@ -460,6 +467,13 @@ class SubscriptionSchedulePlanChangeParamsTest {
                 .autoCollection(true)
                 .billingCycleAlignment(
                     SubscriptionSchedulePlanChangeParams.BillingCycleAlignment.UNCHANGED
+                )
+                .billingCycleAnchorConfiguration(
+                    SubscriptionSchedulePlanChangeParams.BillingCycleAnchorConfiguration.builder()
+                        .day(31L)
+                        .month(12L)
+                        .year(123L)
+                        .build()
                 )
                 .changeDate(OffsetDateTime.parse("2017-07-21T17:32:28Z"))
                 .couponRedemptionCode("coupon_redemption_code")
@@ -773,6 +787,14 @@ class SubscriptionSchedulePlanChangeParamsTest {
         assertThat(body.autoCollection()).isEqualTo(true)
         assertThat(body.billingCycleAlignment())
             .isEqualTo(SubscriptionSchedulePlanChangeParams.BillingCycleAlignment.UNCHANGED)
+        assertThat(body.billingCycleAnchorConfiguration())
+            .isEqualTo(
+                SubscriptionSchedulePlanChangeParams.BillingCycleAnchorConfiguration.builder()
+                    .day(31L)
+                    .month(12L)
+                    .year(123L)
+                    .build()
+            )
         assertThat(body.changeDate()).isEqualTo(OffsetDateTime.parse("2017-07-21T17:32:28Z"))
         assertThat(body.couponRedemptionCode()).isEqualTo("coupon_redemption_code")
         assertThat(body.creditsOverageRate()).isEqualTo(42.23)

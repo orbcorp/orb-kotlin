@@ -882,6 +882,14 @@ class SubscriptionServiceTest {
                     .billingCycleAlignment(
                         SubscriptionSchedulePlanChangeParams.BillingCycleAlignment.UNCHANGED
                     )
+                    .billingCycleAnchorConfiguration(
+                        SubscriptionSchedulePlanChangeParams.BillingCycleAnchorConfiguration
+                            .builder()
+                            .day(31L)
+                            .month(12L)
+                            .year(123L)
+                            .build()
+                    )
                     .changeDate(OffsetDateTime.parse("2017-07-21T17:32:28Z"))
                     .couponRedemptionCode("coupon_redemption_code")
                     .creditsOverageRate(42.23)
