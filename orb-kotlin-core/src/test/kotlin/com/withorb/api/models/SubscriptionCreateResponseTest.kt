@@ -24,6 +24,7 @@ class SubscriptionCreateResponseTest {
                                         SubscriptionCreateResponse.AdjustmentInterval.Adjustment
                                             .AmountDiscountAdjustment
                                             .builder()
+                                            .id("id")
                                             .adjustmentType(
                                                 SubscriptionCreateResponse.AdjustmentInterval
                                                     .Adjustment
@@ -33,6 +34,8 @@ class SubscriptionCreateResponseTest {
                                             )
                                             .amountDiscount("amount_discount")
                                             .appliesToPriceIds(listOf("string"))
+                                            .isInvoiceLevel(true)
+                                            .planPhaseOrder(0L)
                                             .reason("reason")
                                             .build()
                                     )
@@ -184,6 +187,24 @@ class SubscriptionCreateResponseTest {
                 .plan(
                     Plan.builder()
                         .id("id")
+                        .adjustments(
+                            listOf(
+                                Plan.Adjustment.ofAmountDiscountAdjustment(
+                                    Plan.Adjustment.AmountDiscountAdjustment.builder()
+                                        .id("id")
+                                        .adjustmentType(
+                                            Plan.Adjustment.AmountDiscountAdjustment.AdjustmentType
+                                                .AMOUNT_DISCOUNT
+                                        )
+                                        .amountDiscount("amount_discount")
+                                        .appliesToPriceIds(listOf("string"))
+                                        .isInvoiceLevel(true)
+                                        .planPhaseOrder(0L)
+                                        .reason("reason")
+                                        .build()
+                                )
+                            )
+                        )
                         .basePlan(
                             Plan.BasePlan.builder()
                                 .id("m2t5akQeh2obwxeU")
@@ -511,6 +532,7 @@ class SubscriptionCreateResponseTest {
                                 SubscriptionCreateResponse.AdjustmentInterval.Adjustment
                                     .AmountDiscountAdjustment
                                     .builder()
+                                    .id("id")
                                     .adjustmentType(
                                         SubscriptionCreateResponse.AdjustmentInterval.Adjustment
                                             .AmountDiscountAdjustment
@@ -519,6 +541,8 @@ class SubscriptionCreateResponseTest {
                                     )
                                     .amountDiscount("amount_discount")
                                     .appliesToPriceIds(listOf("string"))
+                                    .isInvoiceLevel(true)
+                                    .planPhaseOrder(0L)
                                     .reason("reason")
                                     .build()
                             )
@@ -671,6 +695,24 @@ class SubscriptionCreateResponseTest {
             .isEqualTo(
                 Plan.builder()
                     .id("id")
+                    .adjustments(
+                        listOf(
+                            Plan.Adjustment.ofAmountDiscountAdjustment(
+                                Plan.Adjustment.AmountDiscountAdjustment.builder()
+                                    .id("id")
+                                    .adjustmentType(
+                                        Plan.Adjustment.AmountDiscountAdjustment.AdjustmentType
+                                            .AMOUNT_DISCOUNT
+                                    )
+                                    .amountDiscount("amount_discount")
+                                    .appliesToPriceIds(listOf("string"))
+                                    .isInvoiceLevel(true)
+                                    .planPhaseOrder(0L)
+                                    .reason("reason")
+                                    .build()
+                            )
+                        )
+                    )
                     .basePlan(
                         Plan.BasePlan.builder()
                             .id("m2t5akQeh2obwxeU")
