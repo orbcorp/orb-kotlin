@@ -13,6 +13,24 @@ class PlanTest {
         val plan =
             Plan.builder()
                 .id("id")
+                .adjustments(
+                    listOf(
+                        Plan.Adjustment.ofAmountDiscountAdjustment(
+                            Plan.Adjustment.AmountDiscountAdjustment.builder()
+                                .id("id")
+                                .adjustmentType(
+                                    Plan.Adjustment.AmountDiscountAdjustment.AdjustmentType
+                                        .AMOUNT_DISCOUNT
+                                )
+                                .amountDiscount("amount_discount")
+                                .appliesToPriceIds(listOf("string"))
+                                .isInvoiceLevel(true)
+                                .planPhaseOrder(0L)
+                                .reason("reason")
+                                .build()
+                        )
+                    )
+                )
                 .basePlan(
                     Plan.BasePlan.builder()
                         .id("m2t5akQeh2obwxeU")
@@ -187,6 +205,22 @@ class PlanTest {
                 .build()
         assertThat(plan).isNotNull
         assertThat(plan.id()).isEqualTo("id")
+        assertThat(plan.adjustments())
+            .containsExactly(
+                Plan.Adjustment.ofAmountDiscountAdjustment(
+                    Plan.Adjustment.AmountDiscountAdjustment.builder()
+                        .id("id")
+                        .adjustmentType(
+                            Plan.Adjustment.AmountDiscountAdjustment.AdjustmentType.AMOUNT_DISCOUNT
+                        )
+                        .amountDiscount("amount_discount")
+                        .appliesToPriceIds(listOf("string"))
+                        .isInvoiceLevel(true)
+                        .planPhaseOrder(0L)
+                        .reason("reason")
+                        .build()
+                )
+            )
         assertThat(plan.basePlan())
             .isEqualTo(
                 Plan.BasePlan.builder()

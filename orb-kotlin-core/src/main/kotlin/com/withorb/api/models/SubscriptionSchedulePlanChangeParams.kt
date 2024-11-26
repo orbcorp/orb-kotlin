@@ -1325,6 +1325,7 @@ constructor(
         class Adjustment
         private constructor(
             private val newPercentageDiscount: NewPercentageDiscount? = null,
+            private val newUsageDiscount: NewUsageDiscount? = null,
             private val newAmountDiscount: NewAmountDiscount? = null,
             private val newMinimum: NewMinimum? = null,
             private val newMaximum: NewMaximum? = null,
@@ -1335,6 +1336,8 @@ constructor(
 
             fun newPercentageDiscount(): NewPercentageDiscount? = newPercentageDiscount
 
+            fun newUsageDiscount(): NewUsageDiscount? = newUsageDiscount
+
             fun newAmountDiscount(): NewAmountDiscount? = newAmountDiscount
 
             fun newMinimum(): NewMinimum? = newMinimum
@@ -1342,6 +1345,8 @@ constructor(
             fun newMaximum(): NewMaximum? = newMaximum
 
             fun isNewPercentageDiscount(): Boolean = newPercentageDiscount != null
+
+            fun isNewUsageDiscount(): Boolean = newUsageDiscount != null
 
             fun isNewAmountDiscount(): Boolean = newAmountDiscount != null
 
@@ -1351,6 +1356,9 @@ constructor(
 
             fun asNewPercentageDiscount(): NewPercentageDiscount =
                 newPercentageDiscount.getOrThrow("newPercentageDiscount")
+
+            fun asNewUsageDiscount(): NewUsageDiscount =
+                newUsageDiscount.getOrThrow("newUsageDiscount")
 
             fun asNewAmountDiscount(): NewAmountDiscount =
                 newAmountDiscount.getOrThrow("newAmountDiscount")
@@ -1365,6 +1373,7 @@ constructor(
                 return when {
                     newPercentageDiscount != null ->
                         visitor.visitNewPercentageDiscount(newPercentageDiscount)
+                    newUsageDiscount != null -> visitor.visitNewUsageDiscount(newUsageDiscount)
                     newAmountDiscount != null -> visitor.visitNewAmountDiscount(newAmountDiscount)
                     newMinimum != null -> visitor.visitNewMinimum(newMinimum)
                     newMaximum != null -> visitor.visitNewMaximum(newMaximum)
@@ -1376,6 +1385,7 @@ constructor(
                 if (!validated) {
                     if (
                         newPercentageDiscount == null &&
+                            newUsageDiscount == null &&
                             newAmountDiscount == null &&
                             newMinimum == null &&
                             newMaximum == null
@@ -1383,6 +1393,7 @@ constructor(
                         throw OrbInvalidDataException("Unknown Adjustment: $_json")
                     }
                     newPercentageDiscount?.validate()
+                    newUsageDiscount?.validate()
                     newAmountDiscount?.validate()
                     newMinimum?.validate()
                     newMaximum?.validate()
@@ -1395,15 +1406,16 @@ constructor(
                     return true
                 }
 
-                return /* spotless:off */ other is Adjustment && newPercentageDiscount == other.newPercentageDiscount && newAmountDiscount == other.newAmountDiscount && newMinimum == other.newMinimum && newMaximum == other.newMaximum /* spotless:on */
+                return /* spotless:off */ other is Adjustment && newPercentageDiscount == other.newPercentageDiscount && newUsageDiscount == other.newUsageDiscount && newAmountDiscount == other.newAmountDiscount && newMinimum == other.newMinimum && newMaximum == other.newMaximum /* spotless:on */
             }
 
-            override fun hashCode(): Int = /* spotless:off */ Objects.hash(newPercentageDiscount, newAmountDiscount, newMinimum, newMaximum) /* spotless:on */
+            override fun hashCode(): Int = /* spotless:off */ Objects.hash(newPercentageDiscount, newUsageDiscount, newAmountDiscount, newMinimum, newMaximum) /* spotless:on */
 
             override fun toString(): String =
                 when {
                     newPercentageDiscount != null ->
                         "Adjustment{newPercentageDiscount=$newPercentageDiscount}"
+                    newUsageDiscount != null -> "Adjustment{newUsageDiscount=$newUsageDiscount}"
                     newAmountDiscount != null -> "Adjustment{newAmountDiscount=$newAmountDiscount}"
                     newMinimum != null -> "Adjustment{newMinimum=$newMinimum}"
                     newMaximum != null -> "Adjustment{newMaximum=$newMaximum}"
@@ -1416,6 +1428,9 @@ constructor(
                 fun ofNewPercentageDiscount(newPercentageDiscount: NewPercentageDiscount) =
                     Adjustment(newPercentageDiscount = newPercentageDiscount)
 
+                fun ofNewUsageDiscount(newUsageDiscount: NewUsageDiscount) =
+                    Adjustment(newUsageDiscount = newUsageDiscount)
+
                 fun ofNewAmountDiscount(newAmountDiscount: NewAmountDiscount) =
                     Adjustment(newAmountDiscount = newAmountDiscount)
 
@@ -1427,6 +1442,8 @@ constructor(
             interface Visitor<out T> {
 
                 fun visitNewPercentageDiscount(newPercentageDiscount: NewPercentageDiscount): T
+
+                fun visitNewUsageDiscount(newUsageDiscount: NewUsageDiscount): T
 
                 fun visitNewAmountDiscount(newAmountDiscount: NewAmountDiscount): T
 
@@ -1452,6 +1469,14 @@ constructor(
                                 }
                                 ?.let {
                                     return Adjustment(newPercentageDiscount = it, _json = json)
+                                }
+                        }
+                        "usage_discount" -> {
+                            tryDeserialize(node, jacksonTypeRef<NewUsageDiscount>()) {
+                                    it.validate()
+                                }
+                                ?.let {
+                                    return Adjustment(newUsageDiscount = it, _json = json)
                                 }
                         }
                         "amount_discount" -> {
@@ -1490,6 +1515,8 @@ constructor(
                     when {
                         value.newPercentageDiscount != null ->
                             generator.writeObject(value.newPercentageDiscount)
+                        value.newUsageDiscount != null ->
+                            generator.writeObject(value.newUsageDiscount)
                         value.newAmountDiscount != null ->
                             generator.writeObject(value.newAmountDiscount)
                         value.newMinimum != null -> generator.writeObject(value.newMinimum)
@@ -1505,6 +1532,7 @@ constructor(
             class NewPercentageDiscount
             private constructor(
                 private val appliesToPriceIds: JsonField<List<String>>,
+                private val isInvoiceLevel: JsonField<Boolean>,
                 private val adjustmentType: JsonField<AdjustmentType>,
                 private val percentageDiscount: JsonField<Double>,
                 private val additionalProperties: Map<String, JsonValue>,
@@ -1516,6 +1544,12 @@ constructor(
                 fun appliesToPriceIds(): List<String> =
                     appliesToPriceIds.getRequired("applies_to_price_ids")
 
+                /**
+                 * When false, this adjustment will be applied to a single price. Otherwise, it will
+                 * be applied at the invoice level, possibly to multiple prices.
+                 */
+                fun isInvoiceLevel(): Boolean? = isInvoiceLevel.getNullable("is_invoice_level")
+
                 fun adjustmentType(): AdjustmentType = adjustmentType.getRequired("adjustment_type")
 
                 fun percentageDiscount(): Double =
@@ -1525,6 +1559,14 @@ constructor(
                 @JsonProperty("applies_to_price_ids")
                 @ExcludeMissing
                 fun _appliesToPriceIds() = appliesToPriceIds
+
+                /**
+                 * When false, this adjustment will be applied to a single price. Otherwise, it will
+                 * be applied at the invoice level, possibly to multiple prices.
+                 */
+                @JsonProperty("is_invoice_level")
+                @ExcludeMissing
+                fun _isInvoiceLevel() = isInvoiceLevel
 
                 @JsonProperty("adjustment_type")
                 @ExcludeMissing
@@ -1541,6 +1583,7 @@ constructor(
                 fun validate(): NewPercentageDiscount = apply {
                     if (!validated) {
                         appliesToPriceIds()
+                        isInvoiceLevel()
                         adjustmentType()
                         percentageDiscount()
                         validated = true
@@ -1557,12 +1600,14 @@ constructor(
                 class Builder {
 
                     private var appliesToPriceIds: JsonField<List<String>> = JsonMissing.of()
+                    private var isInvoiceLevel: JsonField<Boolean> = JsonMissing.of()
                     private var adjustmentType: JsonField<AdjustmentType> = JsonMissing.of()
                     private var percentageDiscount: JsonField<Double> = JsonMissing.of()
                     private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
                     internal fun from(newPercentageDiscount: NewPercentageDiscount) = apply {
                         this.appliesToPriceIds = newPercentageDiscount.appliesToPriceIds
+                        this.isInvoiceLevel = newPercentageDiscount.isInvoiceLevel
                         this.adjustmentType = newPercentageDiscount.adjustmentType
                         this.percentageDiscount = newPercentageDiscount.percentageDiscount
                         additionalProperties(newPercentageDiscount.additionalProperties)
@@ -1577,6 +1622,23 @@ constructor(
                     @ExcludeMissing
                     fun appliesToPriceIds(appliesToPriceIds: JsonField<List<String>>) = apply {
                         this.appliesToPriceIds = appliesToPriceIds
+                    }
+
+                    /**
+                     * When false, this adjustment will be applied to a single price. Otherwise, it
+                     * will be applied at the invoice level, possibly to multiple prices.
+                     */
+                    fun isInvoiceLevel(isInvoiceLevel: Boolean) =
+                        isInvoiceLevel(JsonField.of(isInvoiceLevel))
+
+                    /**
+                     * When false, this adjustment will be applied to a single price. Otherwise, it
+                     * will be applied at the invoice level, possibly to multiple prices.
+                     */
+                    @JsonProperty("is_invoice_level")
+                    @ExcludeMissing
+                    fun isInvoiceLevel(isInvoiceLevel: JsonField<Boolean>) = apply {
+                        this.isInvoiceLevel = isInvoiceLevel
                     }
 
                     fun adjustmentType(adjustmentType: AdjustmentType) =
@@ -1615,6 +1677,7 @@ constructor(
                     fun build(): NewPercentageDiscount =
                         NewPercentageDiscount(
                             appliesToPriceIds.map { it.toImmutable() },
+                            isInvoiceLevel,
                             adjustmentType,
                             percentageDiscount,
                             additionalProperties.toImmutable(),
@@ -1679,17 +1742,241 @@ constructor(
                         return true
                     }
 
-                    return /* spotless:off */ other is NewPercentageDiscount && appliesToPriceIds == other.appliesToPriceIds && adjustmentType == other.adjustmentType && percentageDiscount == other.percentageDiscount && additionalProperties == other.additionalProperties /* spotless:on */
+                    return /* spotless:off */ other is NewPercentageDiscount && appliesToPriceIds == other.appliesToPriceIds && isInvoiceLevel == other.isInvoiceLevel && adjustmentType == other.adjustmentType && percentageDiscount == other.percentageDiscount && additionalProperties == other.additionalProperties /* spotless:on */
                 }
 
                 /* spotless:off */
-                private val hashCode: Int by lazy { Objects.hash(appliesToPriceIds, adjustmentType, percentageDiscount, additionalProperties) }
+                private val hashCode: Int by lazy { Objects.hash(appliesToPriceIds, isInvoiceLevel, adjustmentType, percentageDiscount, additionalProperties) }
                 /* spotless:on */
 
                 override fun hashCode(): Int = hashCode
 
                 override fun toString() =
-                    "NewPercentageDiscount{appliesToPriceIds=$appliesToPriceIds, adjustmentType=$adjustmentType, percentageDiscount=$percentageDiscount, additionalProperties=$additionalProperties}"
+                    "NewPercentageDiscount{appliesToPriceIds=$appliesToPriceIds, isInvoiceLevel=$isInvoiceLevel, adjustmentType=$adjustmentType, percentageDiscount=$percentageDiscount, additionalProperties=$additionalProperties}"
+            }
+
+            @JsonDeserialize(builder = NewUsageDiscount.Builder::class)
+            @NoAutoDetect
+            class NewUsageDiscount
+            private constructor(
+                private val appliesToPriceIds: JsonField<List<String>>,
+                private val isInvoiceLevel: JsonField<Boolean>,
+                private val adjustmentType: JsonField<AdjustmentType>,
+                private val usageDiscount: JsonField<Double>,
+                private val additionalProperties: Map<String, JsonValue>,
+            ) {
+
+                private var validated: Boolean = false
+
+                /** The set of price IDs to which this adjustment applies. */
+                fun appliesToPriceIds(): List<String> =
+                    appliesToPriceIds.getRequired("applies_to_price_ids")
+
+                /**
+                 * When false, this adjustment will be applied to a single price. Otherwise, it will
+                 * be applied at the invoice level, possibly to multiple prices.
+                 */
+                fun isInvoiceLevel(): Boolean? = isInvoiceLevel.getNullable("is_invoice_level")
+
+                fun adjustmentType(): AdjustmentType = adjustmentType.getRequired("adjustment_type")
+
+                fun usageDiscount(): Double = usageDiscount.getRequired("usage_discount")
+
+                /** The set of price IDs to which this adjustment applies. */
+                @JsonProperty("applies_to_price_ids")
+                @ExcludeMissing
+                fun _appliesToPriceIds() = appliesToPriceIds
+
+                /**
+                 * When false, this adjustment will be applied to a single price. Otherwise, it will
+                 * be applied at the invoice level, possibly to multiple prices.
+                 */
+                @JsonProperty("is_invoice_level")
+                @ExcludeMissing
+                fun _isInvoiceLevel() = isInvoiceLevel
+
+                @JsonProperty("adjustment_type")
+                @ExcludeMissing
+                fun _adjustmentType() = adjustmentType
+
+                @JsonProperty("usage_discount") @ExcludeMissing fun _usageDiscount() = usageDiscount
+
+                @JsonAnyGetter
+                @ExcludeMissing
+                fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
+
+                fun validate(): NewUsageDiscount = apply {
+                    if (!validated) {
+                        appliesToPriceIds()
+                        isInvoiceLevel()
+                        adjustmentType()
+                        usageDiscount()
+                        validated = true
+                    }
+                }
+
+                fun toBuilder() = Builder().from(this)
+
+                companion object {
+
+                    fun builder() = Builder()
+                }
+
+                class Builder {
+
+                    private var appliesToPriceIds: JsonField<List<String>> = JsonMissing.of()
+                    private var isInvoiceLevel: JsonField<Boolean> = JsonMissing.of()
+                    private var adjustmentType: JsonField<AdjustmentType> = JsonMissing.of()
+                    private var usageDiscount: JsonField<Double> = JsonMissing.of()
+                    private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
+
+                    internal fun from(newUsageDiscount: NewUsageDiscount) = apply {
+                        this.appliesToPriceIds = newUsageDiscount.appliesToPriceIds
+                        this.isInvoiceLevel = newUsageDiscount.isInvoiceLevel
+                        this.adjustmentType = newUsageDiscount.adjustmentType
+                        this.usageDiscount = newUsageDiscount.usageDiscount
+                        additionalProperties(newUsageDiscount.additionalProperties)
+                    }
+
+                    /** The set of price IDs to which this adjustment applies. */
+                    fun appliesToPriceIds(appliesToPriceIds: List<String>) =
+                        appliesToPriceIds(JsonField.of(appliesToPriceIds))
+
+                    /** The set of price IDs to which this adjustment applies. */
+                    @JsonProperty("applies_to_price_ids")
+                    @ExcludeMissing
+                    fun appliesToPriceIds(appliesToPriceIds: JsonField<List<String>>) = apply {
+                        this.appliesToPriceIds = appliesToPriceIds
+                    }
+
+                    /**
+                     * When false, this adjustment will be applied to a single price. Otherwise, it
+                     * will be applied at the invoice level, possibly to multiple prices.
+                     */
+                    fun isInvoiceLevel(isInvoiceLevel: Boolean) =
+                        isInvoiceLevel(JsonField.of(isInvoiceLevel))
+
+                    /**
+                     * When false, this adjustment will be applied to a single price. Otherwise, it
+                     * will be applied at the invoice level, possibly to multiple prices.
+                     */
+                    @JsonProperty("is_invoice_level")
+                    @ExcludeMissing
+                    fun isInvoiceLevel(isInvoiceLevel: JsonField<Boolean>) = apply {
+                        this.isInvoiceLevel = isInvoiceLevel
+                    }
+
+                    fun adjustmentType(adjustmentType: AdjustmentType) =
+                        adjustmentType(JsonField.of(adjustmentType))
+
+                    @JsonProperty("adjustment_type")
+                    @ExcludeMissing
+                    fun adjustmentType(adjustmentType: JsonField<AdjustmentType>) = apply {
+                        this.adjustmentType = adjustmentType
+                    }
+
+                    fun usageDiscount(usageDiscount: Double) =
+                        usageDiscount(JsonField.of(usageDiscount))
+
+                    @JsonProperty("usage_discount")
+                    @ExcludeMissing
+                    fun usageDiscount(usageDiscount: JsonField<Double>) = apply {
+                        this.usageDiscount = usageDiscount
+                    }
+
+                    fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                        this.additionalProperties.clear()
+                        this.additionalProperties.putAll(additionalProperties)
+                    }
+
+                    @JsonAnySetter
+                    fun putAdditionalProperty(key: String, value: JsonValue) = apply {
+                        this.additionalProperties.put(key, value)
+                    }
+
+                    fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) =
+                        apply {
+                            this.additionalProperties.putAll(additionalProperties)
+                        }
+
+                    fun build(): NewUsageDiscount =
+                        NewUsageDiscount(
+                            appliesToPriceIds.map { it.toImmutable() },
+                            isInvoiceLevel,
+                            adjustmentType,
+                            usageDiscount,
+                            additionalProperties.toImmutable(),
+                        )
+                }
+
+                class AdjustmentType
+                @JsonCreator
+                private constructor(
+                    private val value: JsonField<String>,
+                ) : Enum {
+
+                    @com.fasterxml.jackson.annotation.JsonValue
+                    fun _value(): JsonField<String> = value
+
+                    override fun equals(other: Any?): Boolean {
+                        if (this === other) {
+                            return true
+                        }
+
+                        return /* spotless:off */ other is AdjustmentType && value == other.value /* spotless:on */
+                    }
+
+                    override fun hashCode() = value.hashCode()
+
+                    override fun toString() = value.toString()
+
+                    companion object {
+
+                        val USAGE_DISCOUNT = AdjustmentType(JsonField.of("usage_discount"))
+
+                        fun of(value: String) = AdjustmentType(JsonField.of(value))
+                    }
+
+                    enum class Known {
+                        USAGE_DISCOUNT,
+                    }
+
+                    enum class Value {
+                        USAGE_DISCOUNT,
+                        _UNKNOWN,
+                    }
+
+                    fun value(): Value =
+                        when (this) {
+                            USAGE_DISCOUNT -> Value.USAGE_DISCOUNT
+                            else -> Value._UNKNOWN
+                        }
+
+                    fun known(): Known =
+                        when (this) {
+                            USAGE_DISCOUNT -> Known.USAGE_DISCOUNT
+                            else -> throw OrbInvalidDataException("Unknown AdjustmentType: $value")
+                        }
+
+                    fun asString(): String = _value().asStringOrThrow()
+                }
+
+                override fun equals(other: Any?): Boolean {
+                    if (this === other) {
+                        return true
+                    }
+
+                    return /* spotless:off */ other is NewUsageDiscount && appliesToPriceIds == other.appliesToPriceIds && isInvoiceLevel == other.isInvoiceLevel && adjustmentType == other.adjustmentType && usageDiscount == other.usageDiscount && additionalProperties == other.additionalProperties /* spotless:on */
+                }
+
+                /* spotless:off */
+                private val hashCode: Int by lazy { Objects.hash(appliesToPriceIds, isInvoiceLevel, adjustmentType, usageDiscount, additionalProperties) }
+                /* spotless:on */
+
+                override fun hashCode(): Int = hashCode
+
+                override fun toString() =
+                    "NewUsageDiscount{appliesToPriceIds=$appliesToPriceIds, isInvoiceLevel=$isInvoiceLevel, adjustmentType=$adjustmentType, usageDiscount=$usageDiscount, additionalProperties=$additionalProperties}"
             }
 
             @JsonDeserialize(builder = NewAmountDiscount.Builder::class)
@@ -1697,6 +1984,7 @@ constructor(
             class NewAmountDiscount
             private constructor(
                 private val appliesToPriceIds: JsonField<List<String>>,
+                private val isInvoiceLevel: JsonField<Boolean>,
                 private val adjustmentType: JsonField<AdjustmentType>,
                 private val amountDiscount: JsonField<String>,
                 private val additionalProperties: Map<String, JsonValue>,
@@ -1708,6 +1996,12 @@ constructor(
                 fun appliesToPriceIds(): List<String> =
                     appliesToPriceIds.getRequired("applies_to_price_ids")
 
+                /**
+                 * When false, this adjustment will be applied to a single price. Otherwise, it will
+                 * be applied at the invoice level, possibly to multiple prices.
+                 */
+                fun isInvoiceLevel(): Boolean? = isInvoiceLevel.getNullable("is_invoice_level")
+
                 fun adjustmentType(): AdjustmentType = adjustmentType.getRequired("adjustment_type")
 
                 fun amountDiscount(): String = amountDiscount.getRequired("amount_discount")
@@ -1716,6 +2010,14 @@ constructor(
                 @JsonProperty("applies_to_price_ids")
                 @ExcludeMissing
                 fun _appliesToPriceIds() = appliesToPriceIds
+
+                /**
+                 * When false, this adjustment will be applied to a single price. Otherwise, it will
+                 * be applied at the invoice level, possibly to multiple prices.
+                 */
+                @JsonProperty("is_invoice_level")
+                @ExcludeMissing
+                fun _isInvoiceLevel() = isInvoiceLevel
 
                 @JsonProperty("adjustment_type")
                 @ExcludeMissing
@@ -1732,6 +2034,7 @@ constructor(
                 fun validate(): NewAmountDiscount = apply {
                     if (!validated) {
                         appliesToPriceIds()
+                        isInvoiceLevel()
                         adjustmentType()
                         amountDiscount()
                         validated = true
@@ -1748,12 +2051,14 @@ constructor(
                 class Builder {
 
                     private var appliesToPriceIds: JsonField<List<String>> = JsonMissing.of()
+                    private var isInvoiceLevel: JsonField<Boolean> = JsonMissing.of()
                     private var adjustmentType: JsonField<AdjustmentType> = JsonMissing.of()
                     private var amountDiscount: JsonField<String> = JsonMissing.of()
                     private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
                     internal fun from(newAmountDiscount: NewAmountDiscount) = apply {
                         this.appliesToPriceIds = newAmountDiscount.appliesToPriceIds
+                        this.isInvoiceLevel = newAmountDiscount.isInvoiceLevel
                         this.adjustmentType = newAmountDiscount.adjustmentType
                         this.amountDiscount = newAmountDiscount.amountDiscount
                         additionalProperties(newAmountDiscount.additionalProperties)
@@ -1768,6 +2073,23 @@ constructor(
                     @ExcludeMissing
                     fun appliesToPriceIds(appliesToPriceIds: JsonField<List<String>>) = apply {
                         this.appliesToPriceIds = appliesToPriceIds
+                    }
+
+                    /**
+                     * When false, this adjustment will be applied to a single price. Otherwise, it
+                     * will be applied at the invoice level, possibly to multiple prices.
+                     */
+                    fun isInvoiceLevel(isInvoiceLevel: Boolean) =
+                        isInvoiceLevel(JsonField.of(isInvoiceLevel))
+
+                    /**
+                     * When false, this adjustment will be applied to a single price. Otherwise, it
+                     * will be applied at the invoice level, possibly to multiple prices.
+                     */
+                    @JsonProperty("is_invoice_level")
+                    @ExcludeMissing
+                    fun isInvoiceLevel(isInvoiceLevel: JsonField<Boolean>) = apply {
+                        this.isInvoiceLevel = isInvoiceLevel
                     }
 
                     fun adjustmentType(adjustmentType: AdjustmentType) =
@@ -1806,6 +2128,7 @@ constructor(
                     fun build(): NewAmountDiscount =
                         NewAmountDiscount(
                             appliesToPriceIds.map { it.toImmutable() },
+                            isInvoiceLevel,
                             adjustmentType,
                             amountDiscount,
                             additionalProperties.toImmutable(),
@@ -1869,17 +2192,17 @@ constructor(
                         return true
                     }
 
-                    return /* spotless:off */ other is NewAmountDiscount && appliesToPriceIds == other.appliesToPriceIds && adjustmentType == other.adjustmentType && amountDiscount == other.amountDiscount && additionalProperties == other.additionalProperties /* spotless:on */
+                    return /* spotless:off */ other is NewAmountDiscount && appliesToPriceIds == other.appliesToPriceIds && isInvoiceLevel == other.isInvoiceLevel && adjustmentType == other.adjustmentType && amountDiscount == other.amountDiscount && additionalProperties == other.additionalProperties /* spotless:on */
                 }
 
                 /* spotless:off */
-                private val hashCode: Int by lazy { Objects.hash(appliesToPriceIds, adjustmentType, amountDiscount, additionalProperties) }
+                private val hashCode: Int by lazy { Objects.hash(appliesToPriceIds, isInvoiceLevel, adjustmentType, amountDiscount, additionalProperties) }
                 /* spotless:on */
 
                 override fun hashCode(): Int = hashCode
 
                 override fun toString() =
-                    "NewAmountDiscount{appliesToPriceIds=$appliesToPriceIds, adjustmentType=$adjustmentType, amountDiscount=$amountDiscount, additionalProperties=$additionalProperties}"
+                    "NewAmountDiscount{appliesToPriceIds=$appliesToPriceIds, isInvoiceLevel=$isInvoiceLevel, adjustmentType=$adjustmentType, amountDiscount=$amountDiscount, additionalProperties=$additionalProperties}"
             }
 
             @JsonDeserialize(builder = NewMinimum.Builder::class)
@@ -1887,6 +2210,7 @@ constructor(
             class NewMinimum
             private constructor(
                 private val appliesToPriceIds: JsonField<List<String>>,
+                private val isInvoiceLevel: JsonField<Boolean>,
                 private val adjustmentType: JsonField<AdjustmentType>,
                 private val minimumAmount: JsonField<String>,
                 private val itemId: JsonField<String>,
@@ -1899,6 +2223,12 @@ constructor(
                 fun appliesToPriceIds(): List<String> =
                     appliesToPriceIds.getRequired("applies_to_price_ids")
 
+                /**
+                 * When false, this adjustment will be applied to a single price. Otherwise, it will
+                 * be applied at the invoice level, possibly to multiple prices.
+                 */
+                fun isInvoiceLevel(): Boolean? = isInvoiceLevel.getNullable("is_invoice_level")
+
                 fun adjustmentType(): AdjustmentType = adjustmentType.getRequired("adjustment_type")
 
                 fun minimumAmount(): String = minimumAmount.getRequired("minimum_amount")
@@ -1910,6 +2240,14 @@ constructor(
                 @JsonProperty("applies_to_price_ids")
                 @ExcludeMissing
                 fun _appliesToPriceIds() = appliesToPriceIds
+
+                /**
+                 * When false, this adjustment will be applied to a single price. Otherwise, it will
+                 * be applied at the invoice level, possibly to multiple prices.
+                 */
+                @JsonProperty("is_invoice_level")
+                @ExcludeMissing
+                fun _isInvoiceLevel() = isInvoiceLevel
 
                 @JsonProperty("adjustment_type")
                 @ExcludeMissing
@@ -1927,6 +2265,7 @@ constructor(
                 fun validate(): NewMinimum = apply {
                     if (!validated) {
                         appliesToPriceIds()
+                        isInvoiceLevel()
                         adjustmentType()
                         minimumAmount()
                         itemId()
@@ -1944,6 +2283,7 @@ constructor(
                 class Builder {
 
                     private var appliesToPriceIds: JsonField<List<String>> = JsonMissing.of()
+                    private var isInvoiceLevel: JsonField<Boolean> = JsonMissing.of()
                     private var adjustmentType: JsonField<AdjustmentType> = JsonMissing.of()
                     private var minimumAmount: JsonField<String> = JsonMissing.of()
                     private var itemId: JsonField<String> = JsonMissing.of()
@@ -1951,6 +2291,7 @@ constructor(
 
                     internal fun from(newMinimum: NewMinimum) = apply {
                         this.appliesToPriceIds = newMinimum.appliesToPriceIds
+                        this.isInvoiceLevel = newMinimum.isInvoiceLevel
                         this.adjustmentType = newMinimum.adjustmentType
                         this.minimumAmount = newMinimum.minimumAmount
                         this.itemId = newMinimum.itemId
@@ -1966,6 +2307,23 @@ constructor(
                     @ExcludeMissing
                     fun appliesToPriceIds(appliesToPriceIds: JsonField<List<String>>) = apply {
                         this.appliesToPriceIds = appliesToPriceIds
+                    }
+
+                    /**
+                     * When false, this adjustment will be applied to a single price. Otherwise, it
+                     * will be applied at the invoice level, possibly to multiple prices.
+                     */
+                    fun isInvoiceLevel(isInvoiceLevel: Boolean) =
+                        isInvoiceLevel(JsonField.of(isInvoiceLevel))
+
+                    /**
+                     * When false, this adjustment will be applied to a single price. Otherwise, it
+                     * will be applied at the invoice level, possibly to multiple prices.
+                     */
+                    @JsonProperty("is_invoice_level")
+                    @ExcludeMissing
+                    fun isInvoiceLevel(isInvoiceLevel: JsonField<Boolean>) = apply {
+                        this.isInvoiceLevel = isInvoiceLevel
                     }
 
                     fun adjustmentType(adjustmentType: AdjustmentType) =
@@ -2012,6 +2370,7 @@ constructor(
                     fun build(): NewMinimum =
                         NewMinimum(
                             appliesToPriceIds.map { it.toImmutable() },
+                            isInvoiceLevel,
                             adjustmentType,
                             minimumAmount,
                             itemId,
@@ -2076,17 +2435,17 @@ constructor(
                         return true
                     }
 
-                    return /* spotless:off */ other is NewMinimum && appliesToPriceIds == other.appliesToPriceIds && adjustmentType == other.adjustmentType && minimumAmount == other.minimumAmount && itemId == other.itemId && additionalProperties == other.additionalProperties /* spotless:on */
+                    return /* spotless:off */ other is NewMinimum && appliesToPriceIds == other.appliesToPriceIds && isInvoiceLevel == other.isInvoiceLevel && adjustmentType == other.adjustmentType && minimumAmount == other.minimumAmount && itemId == other.itemId && additionalProperties == other.additionalProperties /* spotless:on */
                 }
 
                 /* spotless:off */
-                private val hashCode: Int by lazy { Objects.hash(appliesToPriceIds, adjustmentType, minimumAmount, itemId, additionalProperties) }
+                private val hashCode: Int by lazy { Objects.hash(appliesToPriceIds, isInvoiceLevel, adjustmentType, minimumAmount, itemId, additionalProperties) }
                 /* spotless:on */
 
                 override fun hashCode(): Int = hashCode
 
                 override fun toString() =
-                    "NewMinimum{appliesToPriceIds=$appliesToPriceIds, adjustmentType=$adjustmentType, minimumAmount=$minimumAmount, itemId=$itemId, additionalProperties=$additionalProperties}"
+                    "NewMinimum{appliesToPriceIds=$appliesToPriceIds, isInvoiceLevel=$isInvoiceLevel, adjustmentType=$adjustmentType, minimumAmount=$minimumAmount, itemId=$itemId, additionalProperties=$additionalProperties}"
             }
 
             @JsonDeserialize(builder = NewMaximum.Builder::class)
@@ -2094,6 +2453,7 @@ constructor(
             class NewMaximum
             private constructor(
                 private val appliesToPriceIds: JsonField<List<String>>,
+                private val isInvoiceLevel: JsonField<Boolean>,
                 private val adjustmentType: JsonField<AdjustmentType>,
                 private val maximumAmount: JsonField<String>,
                 private val additionalProperties: Map<String, JsonValue>,
@@ -2105,6 +2465,12 @@ constructor(
                 fun appliesToPriceIds(): List<String> =
                     appliesToPriceIds.getRequired("applies_to_price_ids")
 
+                /**
+                 * When false, this adjustment will be applied to a single price. Otherwise, it will
+                 * be applied at the invoice level, possibly to multiple prices.
+                 */
+                fun isInvoiceLevel(): Boolean? = isInvoiceLevel.getNullable("is_invoice_level")
+
                 fun adjustmentType(): AdjustmentType = adjustmentType.getRequired("adjustment_type")
 
                 fun maximumAmount(): String = maximumAmount.getRequired("maximum_amount")
@@ -2113,6 +2479,14 @@ constructor(
                 @JsonProperty("applies_to_price_ids")
                 @ExcludeMissing
                 fun _appliesToPriceIds() = appliesToPriceIds
+
+                /**
+                 * When false, this adjustment will be applied to a single price. Otherwise, it will
+                 * be applied at the invoice level, possibly to multiple prices.
+                 */
+                @JsonProperty("is_invoice_level")
+                @ExcludeMissing
+                fun _isInvoiceLevel() = isInvoiceLevel
 
                 @JsonProperty("adjustment_type")
                 @ExcludeMissing
@@ -2127,6 +2501,7 @@ constructor(
                 fun validate(): NewMaximum = apply {
                     if (!validated) {
                         appliesToPriceIds()
+                        isInvoiceLevel()
                         adjustmentType()
                         maximumAmount()
                         validated = true
@@ -2143,12 +2518,14 @@ constructor(
                 class Builder {
 
                     private var appliesToPriceIds: JsonField<List<String>> = JsonMissing.of()
+                    private var isInvoiceLevel: JsonField<Boolean> = JsonMissing.of()
                     private var adjustmentType: JsonField<AdjustmentType> = JsonMissing.of()
                     private var maximumAmount: JsonField<String> = JsonMissing.of()
                     private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
                     internal fun from(newMaximum: NewMaximum) = apply {
                         this.appliesToPriceIds = newMaximum.appliesToPriceIds
+                        this.isInvoiceLevel = newMaximum.isInvoiceLevel
                         this.adjustmentType = newMaximum.adjustmentType
                         this.maximumAmount = newMaximum.maximumAmount
                         additionalProperties(newMaximum.additionalProperties)
@@ -2163,6 +2540,23 @@ constructor(
                     @ExcludeMissing
                     fun appliesToPriceIds(appliesToPriceIds: JsonField<List<String>>) = apply {
                         this.appliesToPriceIds = appliesToPriceIds
+                    }
+
+                    /**
+                     * When false, this adjustment will be applied to a single price. Otherwise, it
+                     * will be applied at the invoice level, possibly to multiple prices.
+                     */
+                    fun isInvoiceLevel(isInvoiceLevel: Boolean) =
+                        isInvoiceLevel(JsonField.of(isInvoiceLevel))
+
+                    /**
+                     * When false, this adjustment will be applied to a single price. Otherwise, it
+                     * will be applied at the invoice level, possibly to multiple prices.
+                     */
+                    @JsonProperty("is_invoice_level")
+                    @ExcludeMissing
+                    fun isInvoiceLevel(isInvoiceLevel: JsonField<Boolean>) = apply {
+                        this.isInvoiceLevel = isInvoiceLevel
                     }
 
                     fun adjustmentType(adjustmentType: AdjustmentType) =
@@ -2201,6 +2595,7 @@ constructor(
                     fun build(): NewMaximum =
                         NewMaximum(
                             appliesToPriceIds.map { it.toImmutable() },
+                            isInvoiceLevel,
                             adjustmentType,
                             maximumAmount,
                             additionalProperties.toImmutable(),
@@ -2264,17 +2659,17 @@ constructor(
                         return true
                     }
 
-                    return /* spotless:off */ other is NewMaximum && appliesToPriceIds == other.appliesToPriceIds && adjustmentType == other.adjustmentType && maximumAmount == other.maximumAmount && additionalProperties == other.additionalProperties /* spotless:on */
+                    return /* spotless:off */ other is NewMaximum && appliesToPriceIds == other.appliesToPriceIds && isInvoiceLevel == other.isInvoiceLevel && adjustmentType == other.adjustmentType && maximumAmount == other.maximumAmount && additionalProperties == other.additionalProperties /* spotless:on */
                 }
 
                 /* spotless:off */
-                private val hashCode: Int by lazy { Objects.hash(appliesToPriceIds, adjustmentType, maximumAmount, additionalProperties) }
+                private val hashCode: Int by lazy { Objects.hash(appliesToPriceIds, isInvoiceLevel, adjustmentType, maximumAmount, additionalProperties) }
                 /* spotless:on */
 
                 override fun hashCode(): Int = hashCode
 
                 override fun toString() =
-                    "NewMaximum{appliesToPriceIds=$appliesToPriceIds, adjustmentType=$adjustmentType, maximumAmount=$maximumAmount, additionalProperties=$additionalProperties}"
+                    "NewMaximum{appliesToPriceIds=$appliesToPriceIds, isInvoiceLevel=$isInvoiceLevel, adjustmentType=$adjustmentType, maximumAmount=$maximumAmount, additionalProperties=$additionalProperties}"
             }
         }
 
@@ -2336,13 +2731,21 @@ constructor(
         /** The phase to add this price to. */
         @JsonProperty("plan_phase_order") fun planPhaseOrder(): Long? = planPhaseOrder
 
-        /** The subscription's minimum amount for this price. */
+        /**
+         * [DEPRECATED] Use add_adjustments instead. The subscription's minimum amount for this
+         * price.
+         */
         @JsonProperty("minimum_amount") fun minimumAmount(): String? = minimumAmount
 
-        /** The subscription's maximum amount for this price. */
+        /**
+         * [DEPRECATED] Use add_adjustments instead. The subscription's maximum amount for this
+         * price.
+         */
         @JsonProperty("maximum_amount") fun maximumAmount(): String? = maximumAmount
 
-        /** The subscription's discounts for this price. */
+        /**
+         * [DEPRECATED] Use add_adjustments instead. The subscription's discounts for this price.
+         */
         @JsonProperty("discounts") fun discounts(): List<Discount>? = discounts
 
         @JsonAnyGetter
@@ -2416,15 +2819,24 @@ constructor(
                 this.planPhaseOrder = planPhaseOrder
             }
 
-            /** The subscription's minimum amount for this price. */
+            /**
+             * [DEPRECATED] Use add_adjustments instead. The subscription's minimum amount for this
+             * price.
+             */
             @JsonProperty("minimum_amount")
             fun minimumAmount(minimumAmount: String) = apply { this.minimumAmount = minimumAmount }
 
-            /** The subscription's maximum amount for this price. */
+            /**
+             * [DEPRECATED] Use add_adjustments instead. The subscription's maximum amount for this
+             * price.
+             */
             @JsonProperty("maximum_amount")
             fun maximumAmount(maximumAmount: String) = apply { this.maximumAmount = maximumAmount }
 
-            /** The subscription's discounts for this price. */
+            /**
+             * [DEPRECATED] Use add_adjustments instead. The subscription's discounts for this
+             * price.
+             */
             @JsonProperty("discounts")
             fun discounts(discounts: List<Discount>) = apply { this.discounts = discounts }
 
@@ -26285,6 +26697,7 @@ constructor(
         class Adjustment
         private constructor(
             private val newPercentageDiscount: NewPercentageDiscount? = null,
+            private val newUsageDiscount: NewUsageDiscount? = null,
             private val newAmountDiscount: NewAmountDiscount? = null,
             private val newMinimum: NewMinimum? = null,
             private val newMaximum: NewMaximum? = null,
@@ -26295,6 +26708,8 @@ constructor(
 
             fun newPercentageDiscount(): NewPercentageDiscount? = newPercentageDiscount
 
+            fun newUsageDiscount(): NewUsageDiscount? = newUsageDiscount
+
             fun newAmountDiscount(): NewAmountDiscount? = newAmountDiscount
 
             fun newMinimum(): NewMinimum? = newMinimum
@@ -26302,6 +26717,8 @@ constructor(
             fun newMaximum(): NewMaximum? = newMaximum
 
             fun isNewPercentageDiscount(): Boolean = newPercentageDiscount != null
+
+            fun isNewUsageDiscount(): Boolean = newUsageDiscount != null
 
             fun isNewAmountDiscount(): Boolean = newAmountDiscount != null
 
@@ -26311,6 +26728,9 @@ constructor(
 
             fun asNewPercentageDiscount(): NewPercentageDiscount =
                 newPercentageDiscount.getOrThrow("newPercentageDiscount")
+
+            fun asNewUsageDiscount(): NewUsageDiscount =
+                newUsageDiscount.getOrThrow("newUsageDiscount")
 
             fun asNewAmountDiscount(): NewAmountDiscount =
                 newAmountDiscount.getOrThrow("newAmountDiscount")
@@ -26325,6 +26745,7 @@ constructor(
                 return when {
                     newPercentageDiscount != null ->
                         visitor.visitNewPercentageDiscount(newPercentageDiscount)
+                    newUsageDiscount != null -> visitor.visitNewUsageDiscount(newUsageDiscount)
                     newAmountDiscount != null -> visitor.visitNewAmountDiscount(newAmountDiscount)
                     newMinimum != null -> visitor.visitNewMinimum(newMinimum)
                     newMaximum != null -> visitor.visitNewMaximum(newMaximum)
@@ -26336,6 +26757,7 @@ constructor(
                 if (!validated) {
                     if (
                         newPercentageDiscount == null &&
+                            newUsageDiscount == null &&
                             newAmountDiscount == null &&
                             newMinimum == null &&
                             newMaximum == null
@@ -26343,6 +26765,7 @@ constructor(
                         throw OrbInvalidDataException("Unknown Adjustment: $_json")
                     }
                     newPercentageDiscount?.validate()
+                    newUsageDiscount?.validate()
                     newAmountDiscount?.validate()
                     newMinimum?.validate()
                     newMaximum?.validate()
@@ -26355,15 +26778,16 @@ constructor(
                     return true
                 }
 
-                return /* spotless:off */ other is Adjustment && newPercentageDiscount == other.newPercentageDiscount && newAmountDiscount == other.newAmountDiscount && newMinimum == other.newMinimum && newMaximum == other.newMaximum /* spotless:on */
+                return /* spotless:off */ other is Adjustment && newPercentageDiscount == other.newPercentageDiscount && newUsageDiscount == other.newUsageDiscount && newAmountDiscount == other.newAmountDiscount && newMinimum == other.newMinimum && newMaximum == other.newMaximum /* spotless:on */
             }
 
-            override fun hashCode(): Int = /* spotless:off */ Objects.hash(newPercentageDiscount, newAmountDiscount, newMinimum, newMaximum) /* spotless:on */
+            override fun hashCode(): Int = /* spotless:off */ Objects.hash(newPercentageDiscount, newUsageDiscount, newAmountDiscount, newMinimum, newMaximum) /* spotless:on */
 
             override fun toString(): String =
                 when {
                     newPercentageDiscount != null ->
                         "Adjustment{newPercentageDiscount=$newPercentageDiscount}"
+                    newUsageDiscount != null -> "Adjustment{newUsageDiscount=$newUsageDiscount}"
                     newAmountDiscount != null -> "Adjustment{newAmountDiscount=$newAmountDiscount}"
                     newMinimum != null -> "Adjustment{newMinimum=$newMinimum}"
                     newMaximum != null -> "Adjustment{newMaximum=$newMaximum}"
@@ -26376,6 +26800,9 @@ constructor(
                 fun ofNewPercentageDiscount(newPercentageDiscount: NewPercentageDiscount) =
                     Adjustment(newPercentageDiscount = newPercentageDiscount)
 
+                fun ofNewUsageDiscount(newUsageDiscount: NewUsageDiscount) =
+                    Adjustment(newUsageDiscount = newUsageDiscount)
+
                 fun ofNewAmountDiscount(newAmountDiscount: NewAmountDiscount) =
                     Adjustment(newAmountDiscount = newAmountDiscount)
 
@@ -26387,6 +26814,8 @@ constructor(
             interface Visitor<out T> {
 
                 fun visitNewPercentageDiscount(newPercentageDiscount: NewPercentageDiscount): T
+
+                fun visitNewUsageDiscount(newUsageDiscount: NewUsageDiscount): T
 
                 fun visitNewAmountDiscount(newAmountDiscount: NewAmountDiscount): T
 
@@ -26412,6 +26841,14 @@ constructor(
                                 }
                                 ?.let {
                                     return Adjustment(newPercentageDiscount = it, _json = json)
+                                }
+                        }
+                        "usage_discount" -> {
+                            tryDeserialize(node, jacksonTypeRef<NewUsageDiscount>()) {
+                                    it.validate()
+                                }
+                                ?.let {
+                                    return Adjustment(newUsageDiscount = it, _json = json)
                                 }
                         }
                         "amount_discount" -> {
@@ -26450,6 +26887,8 @@ constructor(
                     when {
                         value.newPercentageDiscount != null ->
                             generator.writeObject(value.newPercentageDiscount)
+                        value.newUsageDiscount != null ->
+                            generator.writeObject(value.newUsageDiscount)
                         value.newAmountDiscount != null ->
                             generator.writeObject(value.newAmountDiscount)
                         value.newMinimum != null -> generator.writeObject(value.newMinimum)
@@ -26465,6 +26904,7 @@ constructor(
             class NewPercentageDiscount
             private constructor(
                 private val appliesToPriceIds: JsonField<List<String>>,
+                private val isInvoiceLevel: JsonField<Boolean>,
                 private val adjustmentType: JsonField<AdjustmentType>,
                 private val percentageDiscount: JsonField<Double>,
                 private val additionalProperties: Map<String, JsonValue>,
@@ -26476,6 +26916,12 @@ constructor(
                 fun appliesToPriceIds(): List<String> =
                     appliesToPriceIds.getRequired("applies_to_price_ids")
 
+                /**
+                 * When false, this adjustment will be applied to a single price. Otherwise, it will
+                 * be applied at the invoice level, possibly to multiple prices.
+                 */
+                fun isInvoiceLevel(): Boolean? = isInvoiceLevel.getNullable("is_invoice_level")
+
                 fun adjustmentType(): AdjustmentType = adjustmentType.getRequired("adjustment_type")
 
                 fun percentageDiscount(): Double =
@@ -26485,6 +26931,14 @@ constructor(
                 @JsonProperty("applies_to_price_ids")
                 @ExcludeMissing
                 fun _appliesToPriceIds() = appliesToPriceIds
+
+                /**
+                 * When false, this adjustment will be applied to a single price. Otherwise, it will
+                 * be applied at the invoice level, possibly to multiple prices.
+                 */
+                @JsonProperty("is_invoice_level")
+                @ExcludeMissing
+                fun _isInvoiceLevel() = isInvoiceLevel
 
                 @JsonProperty("adjustment_type")
                 @ExcludeMissing
@@ -26501,6 +26955,7 @@ constructor(
                 fun validate(): NewPercentageDiscount = apply {
                     if (!validated) {
                         appliesToPriceIds()
+                        isInvoiceLevel()
                         adjustmentType()
                         percentageDiscount()
                         validated = true
@@ -26517,12 +26972,14 @@ constructor(
                 class Builder {
 
                     private var appliesToPriceIds: JsonField<List<String>> = JsonMissing.of()
+                    private var isInvoiceLevel: JsonField<Boolean> = JsonMissing.of()
                     private var adjustmentType: JsonField<AdjustmentType> = JsonMissing.of()
                     private var percentageDiscount: JsonField<Double> = JsonMissing.of()
                     private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
                     internal fun from(newPercentageDiscount: NewPercentageDiscount) = apply {
                         this.appliesToPriceIds = newPercentageDiscount.appliesToPriceIds
+                        this.isInvoiceLevel = newPercentageDiscount.isInvoiceLevel
                         this.adjustmentType = newPercentageDiscount.adjustmentType
                         this.percentageDiscount = newPercentageDiscount.percentageDiscount
                         additionalProperties(newPercentageDiscount.additionalProperties)
@@ -26537,6 +26994,23 @@ constructor(
                     @ExcludeMissing
                     fun appliesToPriceIds(appliesToPriceIds: JsonField<List<String>>) = apply {
                         this.appliesToPriceIds = appliesToPriceIds
+                    }
+
+                    /**
+                     * When false, this adjustment will be applied to a single price. Otherwise, it
+                     * will be applied at the invoice level, possibly to multiple prices.
+                     */
+                    fun isInvoiceLevel(isInvoiceLevel: Boolean) =
+                        isInvoiceLevel(JsonField.of(isInvoiceLevel))
+
+                    /**
+                     * When false, this adjustment will be applied to a single price. Otherwise, it
+                     * will be applied at the invoice level, possibly to multiple prices.
+                     */
+                    @JsonProperty("is_invoice_level")
+                    @ExcludeMissing
+                    fun isInvoiceLevel(isInvoiceLevel: JsonField<Boolean>) = apply {
+                        this.isInvoiceLevel = isInvoiceLevel
                     }
 
                     fun adjustmentType(adjustmentType: AdjustmentType) =
@@ -26575,6 +27049,7 @@ constructor(
                     fun build(): NewPercentageDiscount =
                         NewPercentageDiscount(
                             appliesToPriceIds.map { it.toImmutable() },
+                            isInvoiceLevel,
                             adjustmentType,
                             percentageDiscount,
                             additionalProperties.toImmutable(),
@@ -26639,17 +27114,241 @@ constructor(
                         return true
                     }
 
-                    return /* spotless:off */ other is NewPercentageDiscount && appliesToPriceIds == other.appliesToPriceIds && adjustmentType == other.adjustmentType && percentageDiscount == other.percentageDiscount && additionalProperties == other.additionalProperties /* spotless:on */
+                    return /* spotless:off */ other is NewPercentageDiscount && appliesToPriceIds == other.appliesToPriceIds && isInvoiceLevel == other.isInvoiceLevel && adjustmentType == other.adjustmentType && percentageDiscount == other.percentageDiscount && additionalProperties == other.additionalProperties /* spotless:on */
                 }
 
                 /* spotless:off */
-                private val hashCode: Int by lazy { Objects.hash(appliesToPriceIds, adjustmentType, percentageDiscount, additionalProperties) }
+                private val hashCode: Int by lazy { Objects.hash(appliesToPriceIds, isInvoiceLevel, adjustmentType, percentageDiscount, additionalProperties) }
                 /* spotless:on */
 
                 override fun hashCode(): Int = hashCode
 
                 override fun toString() =
-                    "NewPercentageDiscount{appliesToPriceIds=$appliesToPriceIds, adjustmentType=$adjustmentType, percentageDiscount=$percentageDiscount, additionalProperties=$additionalProperties}"
+                    "NewPercentageDiscount{appliesToPriceIds=$appliesToPriceIds, isInvoiceLevel=$isInvoiceLevel, adjustmentType=$adjustmentType, percentageDiscount=$percentageDiscount, additionalProperties=$additionalProperties}"
+            }
+
+            @JsonDeserialize(builder = NewUsageDiscount.Builder::class)
+            @NoAutoDetect
+            class NewUsageDiscount
+            private constructor(
+                private val appliesToPriceIds: JsonField<List<String>>,
+                private val isInvoiceLevel: JsonField<Boolean>,
+                private val adjustmentType: JsonField<AdjustmentType>,
+                private val usageDiscount: JsonField<Double>,
+                private val additionalProperties: Map<String, JsonValue>,
+            ) {
+
+                private var validated: Boolean = false
+
+                /** The set of price IDs to which this adjustment applies. */
+                fun appliesToPriceIds(): List<String> =
+                    appliesToPriceIds.getRequired("applies_to_price_ids")
+
+                /**
+                 * When false, this adjustment will be applied to a single price. Otherwise, it will
+                 * be applied at the invoice level, possibly to multiple prices.
+                 */
+                fun isInvoiceLevel(): Boolean? = isInvoiceLevel.getNullable("is_invoice_level")
+
+                fun adjustmentType(): AdjustmentType = adjustmentType.getRequired("adjustment_type")
+
+                fun usageDiscount(): Double = usageDiscount.getRequired("usage_discount")
+
+                /** The set of price IDs to which this adjustment applies. */
+                @JsonProperty("applies_to_price_ids")
+                @ExcludeMissing
+                fun _appliesToPriceIds() = appliesToPriceIds
+
+                /**
+                 * When false, this adjustment will be applied to a single price. Otherwise, it will
+                 * be applied at the invoice level, possibly to multiple prices.
+                 */
+                @JsonProperty("is_invoice_level")
+                @ExcludeMissing
+                fun _isInvoiceLevel() = isInvoiceLevel
+
+                @JsonProperty("adjustment_type")
+                @ExcludeMissing
+                fun _adjustmentType() = adjustmentType
+
+                @JsonProperty("usage_discount") @ExcludeMissing fun _usageDiscount() = usageDiscount
+
+                @JsonAnyGetter
+                @ExcludeMissing
+                fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
+
+                fun validate(): NewUsageDiscount = apply {
+                    if (!validated) {
+                        appliesToPriceIds()
+                        isInvoiceLevel()
+                        adjustmentType()
+                        usageDiscount()
+                        validated = true
+                    }
+                }
+
+                fun toBuilder() = Builder().from(this)
+
+                companion object {
+
+                    fun builder() = Builder()
+                }
+
+                class Builder {
+
+                    private var appliesToPriceIds: JsonField<List<String>> = JsonMissing.of()
+                    private var isInvoiceLevel: JsonField<Boolean> = JsonMissing.of()
+                    private var adjustmentType: JsonField<AdjustmentType> = JsonMissing.of()
+                    private var usageDiscount: JsonField<Double> = JsonMissing.of()
+                    private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
+
+                    internal fun from(newUsageDiscount: NewUsageDiscount) = apply {
+                        this.appliesToPriceIds = newUsageDiscount.appliesToPriceIds
+                        this.isInvoiceLevel = newUsageDiscount.isInvoiceLevel
+                        this.adjustmentType = newUsageDiscount.adjustmentType
+                        this.usageDiscount = newUsageDiscount.usageDiscount
+                        additionalProperties(newUsageDiscount.additionalProperties)
+                    }
+
+                    /** The set of price IDs to which this adjustment applies. */
+                    fun appliesToPriceIds(appliesToPriceIds: List<String>) =
+                        appliesToPriceIds(JsonField.of(appliesToPriceIds))
+
+                    /** The set of price IDs to which this adjustment applies. */
+                    @JsonProperty("applies_to_price_ids")
+                    @ExcludeMissing
+                    fun appliesToPriceIds(appliesToPriceIds: JsonField<List<String>>) = apply {
+                        this.appliesToPriceIds = appliesToPriceIds
+                    }
+
+                    /**
+                     * When false, this adjustment will be applied to a single price. Otherwise, it
+                     * will be applied at the invoice level, possibly to multiple prices.
+                     */
+                    fun isInvoiceLevel(isInvoiceLevel: Boolean) =
+                        isInvoiceLevel(JsonField.of(isInvoiceLevel))
+
+                    /**
+                     * When false, this adjustment will be applied to a single price. Otherwise, it
+                     * will be applied at the invoice level, possibly to multiple prices.
+                     */
+                    @JsonProperty("is_invoice_level")
+                    @ExcludeMissing
+                    fun isInvoiceLevel(isInvoiceLevel: JsonField<Boolean>) = apply {
+                        this.isInvoiceLevel = isInvoiceLevel
+                    }
+
+                    fun adjustmentType(adjustmentType: AdjustmentType) =
+                        adjustmentType(JsonField.of(adjustmentType))
+
+                    @JsonProperty("adjustment_type")
+                    @ExcludeMissing
+                    fun adjustmentType(adjustmentType: JsonField<AdjustmentType>) = apply {
+                        this.adjustmentType = adjustmentType
+                    }
+
+                    fun usageDiscount(usageDiscount: Double) =
+                        usageDiscount(JsonField.of(usageDiscount))
+
+                    @JsonProperty("usage_discount")
+                    @ExcludeMissing
+                    fun usageDiscount(usageDiscount: JsonField<Double>) = apply {
+                        this.usageDiscount = usageDiscount
+                    }
+
+                    fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                        this.additionalProperties.clear()
+                        this.additionalProperties.putAll(additionalProperties)
+                    }
+
+                    @JsonAnySetter
+                    fun putAdditionalProperty(key: String, value: JsonValue) = apply {
+                        this.additionalProperties.put(key, value)
+                    }
+
+                    fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) =
+                        apply {
+                            this.additionalProperties.putAll(additionalProperties)
+                        }
+
+                    fun build(): NewUsageDiscount =
+                        NewUsageDiscount(
+                            appliesToPriceIds.map { it.toImmutable() },
+                            isInvoiceLevel,
+                            adjustmentType,
+                            usageDiscount,
+                            additionalProperties.toImmutable(),
+                        )
+                }
+
+                class AdjustmentType
+                @JsonCreator
+                private constructor(
+                    private val value: JsonField<String>,
+                ) : Enum {
+
+                    @com.fasterxml.jackson.annotation.JsonValue
+                    fun _value(): JsonField<String> = value
+
+                    override fun equals(other: Any?): Boolean {
+                        if (this === other) {
+                            return true
+                        }
+
+                        return /* spotless:off */ other is AdjustmentType && value == other.value /* spotless:on */
+                    }
+
+                    override fun hashCode() = value.hashCode()
+
+                    override fun toString() = value.toString()
+
+                    companion object {
+
+                        val USAGE_DISCOUNT = AdjustmentType(JsonField.of("usage_discount"))
+
+                        fun of(value: String) = AdjustmentType(JsonField.of(value))
+                    }
+
+                    enum class Known {
+                        USAGE_DISCOUNT,
+                    }
+
+                    enum class Value {
+                        USAGE_DISCOUNT,
+                        _UNKNOWN,
+                    }
+
+                    fun value(): Value =
+                        when (this) {
+                            USAGE_DISCOUNT -> Value.USAGE_DISCOUNT
+                            else -> Value._UNKNOWN
+                        }
+
+                    fun known(): Known =
+                        when (this) {
+                            USAGE_DISCOUNT -> Known.USAGE_DISCOUNT
+                            else -> throw OrbInvalidDataException("Unknown AdjustmentType: $value")
+                        }
+
+                    fun asString(): String = _value().asStringOrThrow()
+                }
+
+                override fun equals(other: Any?): Boolean {
+                    if (this === other) {
+                        return true
+                    }
+
+                    return /* spotless:off */ other is NewUsageDiscount && appliesToPriceIds == other.appliesToPriceIds && isInvoiceLevel == other.isInvoiceLevel && adjustmentType == other.adjustmentType && usageDiscount == other.usageDiscount && additionalProperties == other.additionalProperties /* spotless:on */
+                }
+
+                /* spotless:off */
+                private val hashCode: Int by lazy { Objects.hash(appliesToPriceIds, isInvoiceLevel, adjustmentType, usageDiscount, additionalProperties) }
+                /* spotless:on */
+
+                override fun hashCode(): Int = hashCode
+
+                override fun toString() =
+                    "NewUsageDiscount{appliesToPriceIds=$appliesToPriceIds, isInvoiceLevel=$isInvoiceLevel, adjustmentType=$adjustmentType, usageDiscount=$usageDiscount, additionalProperties=$additionalProperties}"
             }
 
             @JsonDeserialize(builder = NewAmountDiscount.Builder::class)
@@ -26657,6 +27356,7 @@ constructor(
             class NewAmountDiscount
             private constructor(
                 private val appliesToPriceIds: JsonField<List<String>>,
+                private val isInvoiceLevel: JsonField<Boolean>,
                 private val adjustmentType: JsonField<AdjustmentType>,
                 private val amountDiscount: JsonField<String>,
                 private val additionalProperties: Map<String, JsonValue>,
@@ -26668,6 +27368,12 @@ constructor(
                 fun appliesToPriceIds(): List<String> =
                     appliesToPriceIds.getRequired("applies_to_price_ids")
 
+                /**
+                 * When false, this adjustment will be applied to a single price. Otherwise, it will
+                 * be applied at the invoice level, possibly to multiple prices.
+                 */
+                fun isInvoiceLevel(): Boolean? = isInvoiceLevel.getNullable("is_invoice_level")
+
                 fun adjustmentType(): AdjustmentType = adjustmentType.getRequired("adjustment_type")
 
                 fun amountDiscount(): String = amountDiscount.getRequired("amount_discount")
@@ -26676,6 +27382,14 @@ constructor(
                 @JsonProperty("applies_to_price_ids")
                 @ExcludeMissing
                 fun _appliesToPriceIds() = appliesToPriceIds
+
+                /**
+                 * When false, this adjustment will be applied to a single price. Otherwise, it will
+                 * be applied at the invoice level, possibly to multiple prices.
+                 */
+                @JsonProperty("is_invoice_level")
+                @ExcludeMissing
+                fun _isInvoiceLevel() = isInvoiceLevel
 
                 @JsonProperty("adjustment_type")
                 @ExcludeMissing
@@ -26692,6 +27406,7 @@ constructor(
                 fun validate(): NewAmountDiscount = apply {
                     if (!validated) {
                         appliesToPriceIds()
+                        isInvoiceLevel()
                         adjustmentType()
                         amountDiscount()
                         validated = true
@@ -26708,12 +27423,14 @@ constructor(
                 class Builder {
 
                     private var appliesToPriceIds: JsonField<List<String>> = JsonMissing.of()
+                    private var isInvoiceLevel: JsonField<Boolean> = JsonMissing.of()
                     private var adjustmentType: JsonField<AdjustmentType> = JsonMissing.of()
                     private var amountDiscount: JsonField<String> = JsonMissing.of()
                     private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
                     internal fun from(newAmountDiscount: NewAmountDiscount) = apply {
                         this.appliesToPriceIds = newAmountDiscount.appliesToPriceIds
+                        this.isInvoiceLevel = newAmountDiscount.isInvoiceLevel
                         this.adjustmentType = newAmountDiscount.adjustmentType
                         this.amountDiscount = newAmountDiscount.amountDiscount
                         additionalProperties(newAmountDiscount.additionalProperties)
@@ -26728,6 +27445,23 @@ constructor(
                     @ExcludeMissing
                     fun appliesToPriceIds(appliesToPriceIds: JsonField<List<String>>) = apply {
                         this.appliesToPriceIds = appliesToPriceIds
+                    }
+
+                    /**
+                     * When false, this adjustment will be applied to a single price. Otherwise, it
+                     * will be applied at the invoice level, possibly to multiple prices.
+                     */
+                    fun isInvoiceLevel(isInvoiceLevel: Boolean) =
+                        isInvoiceLevel(JsonField.of(isInvoiceLevel))
+
+                    /**
+                     * When false, this adjustment will be applied to a single price. Otherwise, it
+                     * will be applied at the invoice level, possibly to multiple prices.
+                     */
+                    @JsonProperty("is_invoice_level")
+                    @ExcludeMissing
+                    fun isInvoiceLevel(isInvoiceLevel: JsonField<Boolean>) = apply {
+                        this.isInvoiceLevel = isInvoiceLevel
                     }
 
                     fun adjustmentType(adjustmentType: AdjustmentType) =
@@ -26766,6 +27500,7 @@ constructor(
                     fun build(): NewAmountDiscount =
                         NewAmountDiscount(
                             appliesToPriceIds.map { it.toImmutable() },
+                            isInvoiceLevel,
                             adjustmentType,
                             amountDiscount,
                             additionalProperties.toImmutable(),
@@ -26829,17 +27564,17 @@ constructor(
                         return true
                     }
 
-                    return /* spotless:off */ other is NewAmountDiscount && appliesToPriceIds == other.appliesToPriceIds && adjustmentType == other.adjustmentType && amountDiscount == other.amountDiscount && additionalProperties == other.additionalProperties /* spotless:on */
+                    return /* spotless:off */ other is NewAmountDiscount && appliesToPriceIds == other.appliesToPriceIds && isInvoiceLevel == other.isInvoiceLevel && adjustmentType == other.adjustmentType && amountDiscount == other.amountDiscount && additionalProperties == other.additionalProperties /* spotless:on */
                 }
 
                 /* spotless:off */
-                private val hashCode: Int by lazy { Objects.hash(appliesToPriceIds, adjustmentType, amountDiscount, additionalProperties) }
+                private val hashCode: Int by lazy { Objects.hash(appliesToPriceIds, isInvoiceLevel, adjustmentType, amountDiscount, additionalProperties) }
                 /* spotless:on */
 
                 override fun hashCode(): Int = hashCode
 
                 override fun toString() =
-                    "NewAmountDiscount{appliesToPriceIds=$appliesToPriceIds, adjustmentType=$adjustmentType, amountDiscount=$amountDiscount, additionalProperties=$additionalProperties}"
+                    "NewAmountDiscount{appliesToPriceIds=$appliesToPriceIds, isInvoiceLevel=$isInvoiceLevel, adjustmentType=$adjustmentType, amountDiscount=$amountDiscount, additionalProperties=$additionalProperties}"
             }
 
             @JsonDeserialize(builder = NewMinimum.Builder::class)
@@ -26847,6 +27582,7 @@ constructor(
             class NewMinimum
             private constructor(
                 private val appliesToPriceIds: JsonField<List<String>>,
+                private val isInvoiceLevel: JsonField<Boolean>,
                 private val adjustmentType: JsonField<AdjustmentType>,
                 private val minimumAmount: JsonField<String>,
                 private val itemId: JsonField<String>,
@@ -26859,6 +27595,12 @@ constructor(
                 fun appliesToPriceIds(): List<String> =
                     appliesToPriceIds.getRequired("applies_to_price_ids")
 
+                /**
+                 * When false, this adjustment will be applied to a single price. Otherwise, it will
+                 * be applied at the invoice level, possibly to multiple prices.
+                 */
+                fun isInvoiceLevel(): Boolean? = isInvoiceLevel.getNullable("is_invoice_level")
+
                 fun adjustmentType(): AdjustmentType = adjustmentType.getRequired("adjustment_type")
 
                 fun minimumAmount(): String = minimumAmount.getRequired("minimum_amount")
@@ -26870,6 +27612,14 @@ constructor(
                 @JsonProperty("applies_to_price_ids")
                 @ExcludeMissing
                 fun _appliesToPriceIds() = appliesToPriceIds
+
+                /**
+                 * When false, this adjustment will be applied to a single price. Otherwise, it will
+                 * be applied at the invoice level, possibly to multiple prices.
+                 */
+                @JsonProperty("is_invoice_level")
+                @ExcludeMissing
+                fun _isInvoiceLevel() = isInvoiceLevel
 
                 @JsonProperty("adjustment_type")
                 @ExcludeMissing
@@ -26887,6 +27637,7 @@ constructor(
                 fun validate(): NewMinimum = apply {
                     if (!validated) {
                         appliesToPriceIds()
+                        isInvoiceLevel()
                         adjustmentType()
                         minimumAmount()
                         itemId()
@@ -26904,6 +27655,7 @@ constructor(
                 class Builder {
 
                     private var appliesToPriceIds: JsonField<List<String>> = JsonMissing.of()
+                    private var isInvoiceLevel: JsonField<Boolean> = JsonMissing.of()
                     private var adjustmentType: JsonField<AdjustmentType> = JsonMissing.of()
                     private var minimumAmount: JsonField<String> = JsonMissing.of()
                     private var itemId: JsonField<String> = JsonMissing.of()
@@ -26911,6 +27663,7 @@ constructor(
 
                     internal fun from(newMinimum: NewMinimum) = apply {
                         this.appliesToPriceIds = newMinimum.appliesToPriceIds
+                        this.isInvoiceLevel = newMinimum.isInvoiceLevel
                         this.adjustmentType = newMinimum.adjustmentType
                         this.minimumAmount = newMinimum.minimumAmount
                         this.itemId = newMinimum.itemId
@@ -26926,6 +27679,23 @@ constructor(
                     @ExcludeMissing
                     fun appliesToPriceIds(appliesToPriceIds: JsonField<List<String>>) = apply {
                         this.appliesToPriceIds = appliesToPriceIds
+                    }
+
+                    /**
+                     * When false, this adjustment will be applied to a single price. Otherwise, it
+                     * will be applied at the invoice level, possibly to multiple prices.
+                     */
+                    fun isInvoiceLevel(isInvoiceLevel: Boolean) =
+                        isInvoiceLevel(JsonField.of(isInvoiceLevel))
+
+                    /**
+                     * When false, this adjustment will be applied to a single price. Otherwise, it
+                     * will be applied at the invoice level, possibly to multiple prices.
+                     */
+                    @JsonProperty("is_invoice_level")
+                    @ExcludeMissing
+                    fun isInvoiceLevel(isInvoiceLevel: JsonField<Boolean>) = apply {
+                        this.isInvoiceLevel = isInvoiceLevel
                     }
 
                     fun adjustmentType(adjustmentType: AdjustmentType) =
@@ -26972,6 +27742,7 @@ constructor(
                     fun build(): NewMinimum =
                         NewMinimum(
                             appliesToPriceIds.map { it.toImmutable() },
+                            isInvoiceLevel,
                             adjustmentType,
                             minimumAmount,
                             itemId,
@@ -27036,17 +27807,17 @@ constructor(
                         return true
                     }
 
-                    return /* spotless:off */ other is NewMinimum && appliesToPriceIds == other.appliesToPriceIds && adjustmentType == other.adjustmentType && minimumAmount == other.minimumAmount && itemId == other.itemId && additionalProperties == other.additionalProperties /* spotless:on */
+                    return /* spotless:off */ other is NewMinimum && appliesToPriceIds == other.appliesToPriceIds && isInvoiceLevel == other.isInvoiceLevel && adjustmentType == other.adjustmentType && minimumAmount == other.minimumAmount && itemId == other.itemId && additionalProperties == other.additionalProperties /* spotless:on */
                 }
 
                 /* spotless:off */
-                private val hashCode: Int by lazy { Objects.hash(appliesToPriceIds, adjustmentType, minimumAmount, itemId, additionalProperties) }
+                private val hashCode: Int by lazy { Objects.hash(appliesToPriceIds, isInvoiceLevel, adjustmentType, minimumAmount, itemId, additionalProperties) }
                 /* spotless:on */
 
                 override fun hashCode(): Int = hashCode
 
                 override fun toString() =
-                    "NewMinimum{appliesToPriceIds=$appliesToPriceIds, adjustmentType=$adjustmentType, minimumAmount=$minimumAmount, itemId=$itemId, additionalProperties=$additionalProperties}"
+                    "NewMinimum{appliesToPriceIds=$appliesToPriceIds, isInvoiceLevel=$isInvoiceLevel, adjustmentType=$adjustmentType, minimumAmount=$minimumAmount, itemId=$itemId, additionalProperties=$additionalProperties}"
             }
 
             @JsonDeserialize(builder = NewMaximum.Builder::class)
@@ -27054,6 +27825,7 @@ constructor(
             class NewMaximum
             private constructor(
                 private val appliesToPriceIds: JsonField<List<String>>,
+                private val isInvoiceLevel: JsonField<Boolean>,
                 private val adjustmentType: JsonField<AdjustmentType>,
                 private val maximumAmount: JsonField<String>,
                 private val additionalProperties: Map<String, JsonValue>,
@@ -27065,6 +27837,12 @@ constructor(
                 fun appliesToPriceIds(): List<String> =
                     appliesToPriceIds.getRequired("applies_to_price_ids")
 
+                /**
+                 * When false, this adjustment will be applied to a single price. Otherwise, it will
+                 * be applied at the invoice level, possibly to multiple prices.
+                 */
+                fun isInvoiceLevel(): Boolean? = isInvoiceLevel.getNullable("is_invoice_level")
+
                 fun adjustmentType(): AdjustmentType = adjustmentType.getRequired("adjustment_type")
 
                 fun maximumAmount(): String = maximumAmount.getRequired("maximum_amount")
@@ -27073,6 +27851,14 @@ constructor(
                 @JsonProperty("applies_to_price_ids")
                 @ExcludeMissing
                 fun _appliesToPriceIds() = appliesToPriceIds
+
+                /**
+                 * When false, this adjustment will be applied to a single price. Otherwise, it will
+                 * be applied at the invoice level, possibly to multiple prices.
+                 */
+                @JsonProperty("is_invoice_level")
+                @ExcludeMissing
+                fun _isInvoiceLevel() = isInvoiceLevel
 
                 @JsonProperty("adjustment_type")
                 @ExcludeMissing
@@ -27087,6 +27873,7 @@ constructor(
                 fun validate(): NewMaximum = apply {
                     if (!validated) {
                         appliesToPriceIds()
+                        isInvoiceLevel()
                         adjustmentType()
                         maximumAmount()
                         validated = true
@@ -27103,12 +27890,14 @@ constructor(
                 class Builder {
 
                     private var appliesToPriceIds: JsonField<List<String>> = JsonMissing.of()
+                    private var isInvoiceLevel: JsonField<Boolean> = JsonMissing.of()
                     private var adjustmentType: JsonField<AdjustmentType> = JsonMissing.of()
                     private var maximumAmount: JsonField<String> = JsonMissing.of()
                     private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
                     internal fun from(newMaximum: NewMaximum) = apply {
                         this.appliesToPriceIds = newMaximum.appliesToPriceIds
+                        this.isInvoiceLevel = newMaximum.isInvoiceLevel
                         this.adjustmentType = newMaximum.adjustmentType
                         this.maximumAmount = newMaximum.maximumAmount
                         additionalProperties(newMaximum.additionalProperties)
@@ -27123,6 +27912,23 @@ constructor(
                     @ExcludeMissing
                     fun appliesToPriceIds(appliesToPriceIds: JsonField<List<String>>) = apply {
                         this.appliesToPriceIds = appliesToPriceIds
+                    }
+
+                    /**
+                     * When false, this adjustment will be applied to a single price. Otherwise, it
+                     * will be applied at the invoice level, possibly to multiple prices.
+                     */
+                    fun isInvoiceLevel(isInvoiceLevel: Boolean) =
+                        isInvoiceLevel(JsonField.of(isInvoiceLevel))
+
+                    /**
+                     * When false, this adjustment will be applied to a single price. Otherwise, it
+                     * will be applied at the invoice level, possibly to multiple prices.
+                     */
+                    @JsonProperty("is_invoice_level")
+                    @ExcludeMissing
+                    fun isInvoiceLevel(isInvoiceLevel: JsonField<Boolean>) = apply {
+                        this.isInvoiceLevel = isInvoiceLevel
                     }
 
                     fun adjustmentType(adjustmentType: AdjustmentType) =
@@ -27161,6 +27967,7 @@ constructor(
                     fun build(): NewMaximum =
                         NewMaximum(
                             appliesToPriceIds.map { it.toImmutable() },
+                            isInvoiceLevel,
                             adjustmentType,
                             maximumAmount,
                             additionalProperties.toImmutable(),
@@ -27224,17 +28031,17 @@ constructor(
                         return true
                     }
 
-                    return /* spotless:off */ other is NewMaximum && appliesToPriceIds == other.appliesToPriceIds && adjustmentType == other.adjustmentType && maximumAmount == other.maximumAmount && additionalProperties == other.additionalProperties /* spotless:on */
+                    return /* spotless:off */ other is NewMaximum && appliesToPriceIds == other.appliesToPriceIds && isInvoiceLevel == other.isInvoiceLevel && adjustmentType == other.adjustmentType && maximumAmount == other.maximumAmount && additionalProperties == other.additionalProperties /* spotless:on */
                 }
 
                 /* spotless:off */
-                private val hashCode: Int by lazy { Objects.hash(appliesToPriceIds, adjustmentType, maximumAmount, additionalProperties) }
+                private val hashCode: Int by lazy { Objects.hash(appliesToPriceIds, isInvoiceLevel, adjustmentType, maximumAmount, additionalProperties) }
                 /* spotless:on */
 
                 override fun hashCode(): Int = hashCode
 
                 override fun toString() =
-                    "NewMaximum{appliesToPriceIds=$appliesToPriceIds, adjustmentType=$adjustmentType, maximumAmount=$maximumAmount, additionalProperties=$additionalProperties}"
+                    "NewMaximum{appliesToPriceIds=$appliesToPriceIds, isInvoiceLevel=$isInvoiceLevel, adjustmentType=$adjustmentType, maximumAmount=$maximumAmount, additionalProperties=$additionalProperties}"
             }
         }
 
@@ -27286,13 +28093,22 @@ constructor(
         /** The id of the price on the plan to replace in the subscription. */
         @JsonProperty("replaces_price_id") fun replacesPriceId(): String? = replacesPriceId
 
-        /** The subscription's minimum amount for the replacement price. */
+        /**
+         * [DEPRECATED] Use add_adjustments instead. The subscription's minimum amount for the
+         * replacement price.
+         */
         @JsonProperty("minimum_amount") fun minimumAmount(): String? = minimumAmount
 
-        /** The subscription's maximum amount for the replacement price. */
+        /**
+         * [DEPRECATED] Use add_adjustments instead. The subscription's maximum amount for the
+         * replacement price.
+         */
         @JsonProperty("maximum_amount") fun maximumAmount(): String? = maximumAmount
 
-        /** The subscription's discounts for the replacement price. */
+        /**
+         * [DEPRECATED] Use add_adjustments instead. The subscription's discounts for the
+         * replacement price.
+         */
         @JsonProperty("discounts") fun discounts(): List<Discount>? = discounts
 
         @JsonAnyGetter
@@ -27355,15 +28171,24 @@ constructor(
                 this.replacesPriceId = replacesPriceId
             }
 
-            /** The subscription's minimum amount for the replacement price. */
+            /**
+             * [DEPRECATED] Use add_adjustments instead. The subscription's minimum amount for the
+             * replacement price.
+             */
             @JsonProperty("minimum_amount")
             fun minimumAmount(minimumAmount: String) = apply { this.minimumAmount = minimumAmount }
 
-            /** The subscription's maximum amount for the replacement price. */
+            /**
+             * [DEPRECATED] Use add_adjustments instead. The subscription's maximum amount for the
+             * replacement price.
+             */
             @JsonProperty("maximum_amount")
             fun maximumAmount(maximumAmount: String) = apply { this.maximumAmount = maximumAmount }
 
-            /** The subscription's discounts for the replacement price. */
+            /**
+             * [DEPRECATED] Use add_adjustments instead. The subscription's discounts for the
+             * replacement price.
+             */
             @JsonProperty("discounts")
             fun discounts(discounts: List<Discount>) = apply { this.discounts = discounts }
 
