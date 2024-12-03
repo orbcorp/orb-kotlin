@@ -1886,8 +1886,8 @@ private constructor(
 
         fun entryType(): EntryType = entryType.getRequired("entry_type")
 
-        fun newBlockExpiryDate(): OffsetDateTime =
-            newBlockExpiryDate.getRequired("new_block_expiry_date")
+        fun newBlockExpiryDate(): OffsetDateTime? =
+            newBlockExpiryDate.getNullable("new_block_expiry_date")
 
         /**
          * User specified key-value pairs for the resource. If not present, this defaults to an

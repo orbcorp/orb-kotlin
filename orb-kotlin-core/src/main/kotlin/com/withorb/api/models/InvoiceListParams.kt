@@ -207,6 +207,11 @@ constructor(
 
         fun dueDate(dueDate: LocalDate) = apply { this.dueDate = dueDate }
 
+        /**
+         * Filters invoices by their due dates within a specific time range in the past. Specify the
+         * range as a number followed by 'd' (days) or 'm' (months). For example, '7d' filters
+         * invoices due in the last 7 days, and '2m' filters those due in the last 2 months.
+         */
         fun dueDateWindow(dueDateWindow: String) = apply { this.dueDateWindow = dueDateWindow }
 
         fun dueDateGt(dueDateGt: LocalDate) = apply { this.dueDateGt = dueDateGt }
