@@ -267,11 +267,11 @@ constructor(
 
         companion object {
 
-            val ACTIVE = Status(JsonField.of("active"))
+            val ACTIVE = of("active")
 
-            val ARCHIVED = Status(JsonField.of("archived"))
+            val ARCHIVED = of("archived")
 
-            val DRAFT = Status(JsonField.of("draft"))
+            val DRAFT = of("draft")
 
             fun of(value: String) = Status(JsonField.of(value))
         }

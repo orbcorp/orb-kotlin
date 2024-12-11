@@ -849,7 +849,7 @@ constructor(
 
             companion object {
 
-                val INCREMENT = EntryType(JsonField.of("increment"))
+                val INCREMENT = of("increment")
 
                 fun of(value: String) = EntryType(JsonField.of(value))
             }
@@ -1254,7 +1254,7 @@ constructor(
 
             companion object {
 
-                val DECREMENT = EntryType(JsonField.of("decrement"))
+                val DECREMENT = of("decrement")
 
                 fun of(value: String) = EntryType(JsonField.of(value))
             }
@@ -1570,7 +1570,7 @@ constructor(
 
             companion object {
 
-                val EXPIRATION_CHANGE = EntryType(JsonField.of("expiration_change"))
+                val EXPIRATION_CHANGE = of("expiration_change")
 
                 fun of(value: String) = EntryType(JsonField.of(value))
             }
@@ -1855,7 +1855,7 @@ constructor(
 
             companion object {
 
-                val VOID = EntryType(JsonField.of("void"))
+                val VOID = of("void")
 
                 fun of(value: String) = EntryType(JsonField.of(value))
             }
@@ -1972,7 +1972,7 @@ constructor(
 
             companion object {
 
-                val REFUND = VoidReason(JsonField.of("refund"))
+                val REFUND = of("refund")
 
                 fun of(value: String) = VoidReason(JsonField.of(value))
             }
@@ -2183,7 +2183,7 @@ constructor(
 
             companion object {
 
-                val AMENDMENT = EntryType(JsonField.of("amendment"))
+                val AMENDMENT = of("amendment")
 
                 fun of(value: String) = EntryType(JsonField.of(value))
             }

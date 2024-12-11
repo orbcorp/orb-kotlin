@@ -185,7 +185,7 @@ private constructor(
 
         companion object {
 
-            val PERCENTAGE = DiscountType(JsonField.of("percentage"))
+            val PERCENTAGE = of("percentage")
 
             fun of(value: String) = DiscountType(JsonField.of(value))
         }

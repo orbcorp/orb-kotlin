@@ -320,13 +320,13 @@ private constructor(
 
         companion object {
 
-            val PENDING = Status(JsonField.of("pending"))
+            val PENDING = of("pending")
 
-            val REFLECTED = Status(JsonField.of("reflected"))
+            val REFLECTED = of("reflected")
 
-            val PENDING_REVERT = Status(JsonField.of("pending_revert"))
+            val PENDING_REVERT = of("pending_revert")
 
-            val REVERTED = Status(JsonField.of("reverted"))
+            val REVERTED = of("reverted")
 
             fun of(value: String) = Status(JsonField.of(value))
         }
