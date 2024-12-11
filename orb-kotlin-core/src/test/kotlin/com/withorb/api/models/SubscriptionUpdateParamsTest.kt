@@ -2,6 +2,7 @@
 
 package com.withorb.api.models
 
+import com.withorb.api.core.JsonValue
 import com.withorb.api.models.*
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
@@ -15,7 +16,11 @@ class SubscriptionUpdateParamsTest {
             .autoCollection(true)
             .defaultInvoiceMemo("default_invoice_memo")
             .invoicingThreshold("10.00")
-            .metadata(SubscriptionUpdateParams.Metadata.builder().build())
+            .metadata(
+                SubscriptionUpdateParams.Metadata.builder()
+                    .putAdditionalProperty("foo", JsonValue.from("string"))
+                    .build()
+            )
             .netTerms(0L)
             .build()
     }
@@ -28,7 +33,11 @@ class SubscriptionUpdateParamsTest {
                 .autoCollection(true)
                 .defaultInvoiceMemo("default_invoice_memo")
                 .invoicingThreshold("10.00")
-                .metadata(SubscriptionUpdateParams.Metadata.builder().build())
+                .metadata(
+                    SubscriptionUpdateParams.Metadata.builder()
+                        .putAdditionalProperty("foo", JsonValue.from("string"))
+                        .build()
+                )
                 .netTerms(0L)
                 .build()
         val body = params.getBody()
@@ -36,7 +45,12 @@ class SubscriptionUpdateParamsTest {
         assertThat(body.autoCollection()).isEqualTo(true)
         assertThat(body.defaultInvoiceMemo()).isEqualTo("default_invoice_memo")
         assertThat(body.invoicingThreshold()).isEqualTo("10.00")
-        assertThat(body.metadata()).isEqualTo(SubscriptionUpdateParams.Metadata.builder().build())
+        assertThat(body.metadata())
+            .isEqualTo(
+                SubscriptionUpdateParams.Metadata.builder()
+                    .putAdditionalProperty("foo", JsonValue.from("string"))
+                    .build()
+            )
         assertThat(body.netTerms()).isEqualTo(0L)
     }
 

@@ -2,6 +2,7 @@
 
 package com.withorb.api.models
 
+import com.withorb.api.core.JsonValue
 import com.withorb.api.models.*
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
@@ -13,7 +14,11 @@ class PlanUpdateParamsTest {
         PlanUpdateParams.builder()
             .planId("plan_id")
             .externalPlanId("external_plan_id")
-            .metadata(PlanUpdateParams.Metadata.builder().build())
+            .metadata(
+                PlanUpdateParams.Metadata.builder()
+                    .putAdditionalProperty("foo", JsonValue.from("string"))
+                    .build()
+            )
             .build()
     }
 
@@ -23,12 +28,21 @@ class PlanUpdateParamsTest {
             PlanUpdateParams.builder()
                 .planId("plan_id")
                 .externalPlanId("external_plan_id")
-                .metadata(PlanUpdateParams.Metadata.builder().build())
+                .metadata(
+                    PlanUpdateParams.Metadata.builder()
+                        .putAdditionalProperty("foo", JsonValue.from("string"))
+                        .build()
+                )
                 .build()
         val body = params.getBody()
         assertThat(body).isNotNull
         assertThat(body.externalPlanId()).isEqualTo("external_plan_id")
-        assertThat(body.metadata()).isEqualTo(PlanUpdateParams.Metadata.builder().build())
+        assertThat(body.metadata())
+            .isEqualTo(
+                PlanUpdateParams.Metadata.builder()
+                    .putAdditionalProperty("foo", JsonValue.from("string"))
+                    .build()
+            )
     }
 
     @Test

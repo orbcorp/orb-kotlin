@@ -2,6 +2,7 @@
 
 package com.withorb.api.models
 
+import com.withorb.api.core.JsonValue
 import com.withorb.api.models.*
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
@@ -12,7 +13,11 @@ class PriceExternalPriceIdUpdateParamsTest {
     fun createPriceExternalPriceIdUpdateParams() {
         PriceExternalPriceIdUpdateParams.builder()
             .externalPriceId("external_price_id")
-            .metadata(PriceExternalPriceIdUpdateParams.Metadata.builder().build())
+            .metadata(
+                PriceExternalPriceIdUpdateParams.Metadata.builder()
+                    .putAdditionalProperty("foo", JsonValue.from("string"))
+                    .build()
+            )
             .build()
     }
 
@@ -21,12 +26,20 @@ class PriceExternalPriceIdUpdateParamsTest {
         val params =
             PriceExternalPriceIdUpdateParams.builder()
                 .externalPriceId("external_price_id")
-                .metadata(PriceExternalPriceIdUpdateParams.Metadata.builder().build())
+                .metadata(
+                    PriceExternalPriceIdUpdateParams.Metadata.builder()
+                        .putAdditionalProperty("foo", JsonValue.from("string"))
+                        .build()
+                )
                 .build()
         val body = params.getBody()
         assertThat(body).isNotNull
         assertThat(body.metadata())
-            .isEqualTo(PriceExternalPriceIdUpdateParams.Metadata.builder().build())
+            .isEqualTo(
+                PriceExternalPriceIdUpdateParams.Metadata.builder()
+                    .putAdditionalProperty("foo", JsonValue.from("string"))
+                    .build()
+            )
     }
 
     @Test

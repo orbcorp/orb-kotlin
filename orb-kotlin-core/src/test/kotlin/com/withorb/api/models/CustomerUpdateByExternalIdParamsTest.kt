@@ -2,6 +2,7 @@
 
 package com.withorb.api.models
 
+import com.withorb.api.core.JsonValue
 import com.withorb.api.models.*
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
@@ -43,7 +44,11 @@ class CustomerUpdateByExternalIdParamsTest {
             .email("dev@stainlessapi.com")
             .emailDelivery(true)
             .externalCustomerId("external_customer_id")
-            .metadata(CustomerUpdateByExternalIdParams.Metadata.builder().build())
+            .metadata(
+                CustomerUpdateByExternalIdParams.Metadata.builder()
+                    .putAdditionalProperty("foo", JsonValue.from("string"))
+                    .build()
+            )
             .name("name")
             .paymentProvider(CustomerUpdateByExternalIdParams.PaymentProvider.QUICKBOOKS)
             .paymentProviderId("payment_provider_id")
@@ -123,7 +128,11 @@ class CustomerUpdateByExternalIdParamsTest {
                 .email("dev@stainlessapi.com")
                 .emailDelivery(true)
                 .externalCustomerId("external_customer_id")
-                .metadata(CustomerUpdateByExternalIdParams.Metadata.builder().build())
+                .metadata(
+                    CustomerUpdateByExternalIdParams.Metadata.builder()
+                        .putAdditionalProperty("foo", JsonValue.from("string"))
+                        .build()
+                )
                 .name("name")
                 .paymentProvider(CustomerUpdateByExternalIdParams.PaymentProvider.QUICKBOOKS)
                 .paymentProviderId("payment_provider_id")
@@ -201,7 +210,11 @@ class CustomerUpdateByExternalIdParamsTest {
         assertThat(body.emailDelivery()).isEqualTo(true)
         assertThat(body.externalCustomerId()).isEqualTo("external_customer_id")
         assertThat(body.metadata())
-            .isEqualTo(CustomerUpdateByExternalIdParams.Metadata.builder().build())
+            .isEqualTo(
+                CustomerUpdateByExternalIdParams.Metadata.builder()
+                    .putAdditionalProperty("foo", JsonValue.from("string"))
+                    .build()
+            )
         assertThat(body.name()).isEqualTo("name")
         assertThat(body.paymentProvider())
             .isEqualTo(CustomerUpdateByExternalIdParams.PaymentProvider.QUICKBOOKS)

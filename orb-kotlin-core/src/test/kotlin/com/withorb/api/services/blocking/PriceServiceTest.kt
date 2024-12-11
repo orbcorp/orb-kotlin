@@ -4,6 +4,7 @@ package com.withorb.api.services.blocking
 
 import com.withorb.api.TestServerExtension
 import com.withorb.api.client.okhttp.OrbOkHttpClient
+import com.withorb.api.core.JsonValue
 import com.withorb.api.models.*
 import com.withorb.api.models.PriceListParams
 import java.time.OffsetDateTime
@@ -67,7 +68,9 @@ class PriceServiceTest {
                                     .build()
                             )
                             .metadata(
-                                PriceCreateParams.NewFloatingUnitPrice.Metadata.builder().build()
+                                PriceCreateParams.NewFloatingUnitPrice.Metadata.builder()
+                                    .putAdditionalProperty("foo", JsonValue.from("string"))
+                                    .build()
                             )
                             .build()
                     )
@@ -88,7 +91,11 @@ class PriceServiceTest {
             priceService.update(
                 PriceUpdateParams.builder()
                     .priceId("price_id")
-                    .metadata(PriceUpdateParams.Metadata.builder().build())
+                    .metadata(
+                        PriceUpdateParams.Metadata.builder()
+                            .putAdditionalProperty("foo", JsonValue.from("string"))
+                            .build()
+                    )
                     .build()
             )
         println(price)
@@ -124,7 +131,9 @@ class PriceServiceTest {
                     .customerId("customer_id")
                     .externalCustomerId("external_customer_id")
                     .filter("my_numeric_property > 100 AND my_other_property = 'bar'")
-                    .groupingKeys(listOf("string"))
+                    .groupingKeys(
+                        listOf("case when my_event_type = 'foo' then true else false end")
+                    )
                     .build()
             )
         println(priceEvaluateResponse)

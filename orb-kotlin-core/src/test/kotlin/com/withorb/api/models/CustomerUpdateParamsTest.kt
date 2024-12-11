@@ -2,6 +2,7 @@
 
 package com.withorb.api.models
 
+import com.withorb.api.core.JsonValue
 import com.withorb.api.models.*
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
@@ -42,7 +43,11 @@ class CustomerUpdateParamsTest {
             .email("dev@stainlessapi.com")
             .emailDelivery(true)
             .externalCustomerId("external_customer_id")
-            .metadata(CustomerUpdateParams.Metadata.builder().build())
+            .metadata(
+                CustomerUpdateParams.Metadata.builder()
+                    .putAdditionalProperty("foo", JsonValue.from("string"))
+                    .build()
+            )
             .name("name")
             .paymentProvider(CustomerUpdateParams.PaymentProvider.QUICKBOOKS)
             .paymentProviderId("payment_provider_id")
@@ -117,7 +122,11 @@ class CustomerUpdateParamsTest {
                 .email("dev@stainlessapi.com")
                 .emailDelivery(true)
                 .externalCustomerId("external_customer_id")
-                .metadata(CustomerUpdateParams.Metadata.builder().build())
+                .metadata(
+                    CustomerUpdateParams.Metadata.builder()
+                        .putAdditionalProperty("foo", JsonValue.from("string"))
+                        .build()
+                )
                 .name("name")
                 .paymentProvider(CustomerUpdateParams.PaymentProvider.QUICKBOOKS)
                 .paymentProviderId("payment_provider_id")
@@ -189,7 +198,12 @@ class CustomerUpdateParamsTest {
         assertThat(body.email()).isEqualTo("dev@stainlessapi.com")
         assertThat(body.emailDelivery()).isEqualTo(true)
         assertThat(body.externalCustomerId()).isEqualTo("external_customer_id")
-        assertThat(body.metadata()).isEqualTo(CustomerUpdateParams.Metadata.builder().build())
+        assertThat(body.metadata())
+            .isEqualTo(
+                CustomerUpdateParams.Metadata.builder()
+                    .putAdditionalProperty("foo", JsonValue.from("string"))
+                    .build()
+            )
         assertThat(body.name()).isEqualTo("name")
         assertThat(body.paymentProvider())
             .isEqualTo(CustomerUpdateParams.PaymentProvider.QUICKBOOKS)

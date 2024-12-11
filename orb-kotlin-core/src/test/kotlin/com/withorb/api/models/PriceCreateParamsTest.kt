@@ -2,6 +2,7 @@
 
 package com.withorb.api.models
 
+import com.withorb.api.core.JsonValue
 import com.withorb.api.models.*
 import org.junit.jupiter.api.Test
 
@@ -48,7 +49,11 @@ class PriceCreateParamsTest {
                             )
                             .build()
                     )
-                    .metadata(PriceCreateParams.NewFloatingUnitPrice.Metadata.builder().build())
+                    .metadata(
+                        PriceCreateParams.NewFloatingUnitPrice.Metadata.builder()
+                            .putAdditionalProperty("foo", JsonValue.from("string"))
+                            .build()
+                    )
                     .build()
             )
             .build()

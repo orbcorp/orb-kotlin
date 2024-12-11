@@ -2,6 +2,7 @@
 
 package com.withorb.api.models
 
+import com.withorb.api.core.JsonValue
 import java.time.OffsetDateTime
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
@@ -31,7 +32,11 @@ class BillableMetricTest {
                         .name("name")
                         .build()
                 )
-                .metadata(BillableMetric.Metadata.builder().build())
+                .metadata(
+                    BillableMetric.Metadata.builder()
+                        .putAdditionalProperty("foo", JsonValue.from("string"))
+                        .build()
+                )
                 .name("name")
                 .status(BillableMetric.Status.ACTIVE)
                 .build()
@@ -56,7 +61,12 @@ class BillableMetricTest {
                     .name("name")
                     .build()
             )
-        assertThat(billableMetric.metadata()).isEqualTo(BillableMetric.Metadata.builder().build())
+        assertThat(billableMetric.metadata())
+            .isEqualTo(
+                BillableMetric.Metadata.builder()
+                    .putAdditionalProperty("foo", JsonValue.from("string"))
+                    .build()
+            )
         assertThat(billableMetric.name()).isEqualTo("name")
         assertThat(billableMetric.status()).isEqualTo(BillableMetric.Status.ACTIVE)
     }

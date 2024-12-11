@@ -394,25 +394,13 @@ constructor(
 
         @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
 
-        override fun equals(other: Any?): Boolean {
-            if (this === other) {
-                return true
-            }
-
-            return /* spotless:off */ other is ChangeOption && value == other.value /* spotless:on */
-        }
-
-        override fun hashCode() = value.hashCode()
-
-        override fun toString() = value.toString()
-
         companion object {
 
-            val IMMEDIATE = ChangeOption(JsonField.of("immediate"))
+            val IMMEDIATE = of("immediate")
 
-            val UPCOMING_INVOICE = ChangeOption(JsonField.of("upcoming_invoice"))
+            val UPCOMING_INVOICE = of("upcoming_invoice")
 
-            val EFFECTIVE_DATE = ChangeOption(JsonField.of("effective_date"))
+            val EFFECTIVE_DATE = of("effective_date")
 
             fun of(value: String) = ChangeOption(JsonField.of(value))
         }
@@ -447,6 +435,18 @@ constructor(
             }
 
         fun asString(): String = _value().asStringOrThrow()
+
+        override fun equals(other: Any?): Boolean {
+            if (this === other) {
+                return true
+            }
+
+            return /* spotless:off */ other is ChangeOption && value == other.value /* spotless:on */
+        }
+
+        override fun hashCode() = value.hashCode()
+
+        override fun toString() = value.toString()
     }
 
     override fun equals(other: Any?): Boolean {

@@ -2,6 +2,7 @@
 
 package com.withorb.api.models
 
+import com.withorb.api.core.JsonValue
 import java.time.OffsetDateTime
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
@@ -81,7 +82,11 @@ class SubscriptionTriggerPhaseResponseTest {
                         .emailDelivery(true)
                         .exemptFromAutomatedTax(true)
                         .externalCustomerId("external_customer_id")
-                        .metadata(Customer.Metadata.builder().build())
+                        .metadata(
+                            Customer.Metadata.builder()
+                                .putAdditionalProperty("foo", JsonValue.from("string"))
+                                .build()
+                        )
                         .name("name")
                         .paymentProvider(Customer.PaymentProvider.QUICKBOOKS)
                         .paymentProviderId("payment_provider_id")
@@ -172,7 +177,11 @@ class SubscriptionTriggerPhaseResponseTest {
                             .build()
                     )
                 )
-                .metadata(SubscriptionTriggerPhaseResponse.Metadata.builder().build())
+                .metadata(
+                    SubscriptionTriggerPhaseResponse.Metadata.builder()
+                        .putAdditionalProperty("foo", JsonValue.from("string"))
+                        .build()
+                )
                 .minimumIntervals(
                     listOf(
                         SubscriptionTriggerPhaseResponse.MinimumInterval.builder()
@@ -221,7 +230,9 @@ class SubscriptionTriggerPhaseResponseTest {
                         .discount(
                             Discount.ofPercentageDiscount(
                                 PercentageDiscount.builder()
-                                    .appliesToPriceIds(listOf("string"))
+                                    .appliesToPriceIds(
+                                        listOf("h74gfhdjvn7ujokd", "7hfgtgjnbvc3ujkl")
+                                    )
                                     .discountType(PercentageDiscount.DiscountType.PERCENTAGE)
                                     .percentageDiscount(0.15)
                                     .reason("reason")
@@ -237,7 +248,11 @@ class SubscriptionTriggerPhaseResponseTest {
                                 .build()
                         )
                         .maximumAmount("maximum_amount")
-                        .metadata(Plan.Metadata.builder().build())
+                        .metadata(
+                            Plan.Metadata.builder()
+                                .putAdditionalProperty("foo", JsonValue.from("string"))
+                                .build()
+                        )
                         .minimum(
                             Plan.Minimum.builder()
                                 .appliesToPriceIds(listOf("string"))
@@ -255,7 +270,9 @@ class SubscriptionTriggerPhaseResponseTest {
                                     .discount(
                                         Discount.ofPercentageDiscount(
                                             PercentageDiscount.builder()
-                                                .appliesToPriceIds(listOf("string"))
+                                                .appliesToPriceIds(
+                                                    listOf("h74gfhdjvn7ujokd", "7hfgtgjnbvc3ujkl")
+                                                )
                                                 .discountType(
                                                     PercentageDiscount.DiscountType.PERCENTAGE
                                                 )
@@ -318,7 +335,12 @@ class SubscriptionTriggerPhaseResponseTest {
                                         .discount(
                                             Discount.ofPercentageDiscount(
                                                 PercentageDiscount.builder()
-                                                    .appliesToPriceIds(listOf("string"))
+                                                    .appliesToPriceIds(
+                                                        listOf(
+                                                            "h74gfhdjvn7ujokd",
+                                                            "7hfgtgjnbvc3ujkl"
+                                                        )
+                                                    )
                                                     .discountType(
                                                         PercentageDiscount.DiscountType.PERCENTAGE
                                                     )
@@ -352,7 +374,14 @@ class SubscriptionTriggerPhaseResponseTest {
                                                 .build()
                                         )
                                         .maximumAmount("maximum_amount")
-                                        .metadata(Price.UnitPrice.Metadata.builder().build())
+                                        .metadata(
+                                            Price.UnitPrice.Metadata.builder()
+                                                .putAdditionalProperty(
+                                                    "foo",
+                                                    JsonValue.from("string")
+                                                )
+                                                .build()
+                                        )
                                         .minimum(
                                             Price.UnitPrice.Minimum.builder()
                                                 .appliesToPriceIds(listOf("string"))
@@ -447,7 +476,12 @@ class SubscriptionTriggerPhaseResponseTest {
                                         .discount(
                                             Discount.ofPercentageDiscount(
                                                 PercentageDiscount.builder()
-                                                    .appliesToPriceIds(listOf("string"))
+                                                    .appliesToPriceIds(
+                                                        listOf(
+                                                            "h74gfhdjvn7ujokd",
+                                                            "7hfgtgjnbvc3ujkl"
+                                                        )
+                                                    )
                                                     .discountType(
                                                         PercentageDiscount.DiscountType.PERCENTAGE
                                                     )
@@ -481,7 +515,14 @@ class SubscriptionTriggerPhaseResponseTest {
                                                 .build()
                                         )
                                         .maximumAmount("maximum_amount")
-                                        .metadata(Price.UnitPrice.Metadata.builder().build())
+                                        .metadata(
+                                            Price.UnitPrice.Metadata.builder()
+                                                .putAdditionalProperty(
+                                                    "foo",
+                                                    JsonValue.from("string")
+                                                )
+                                                .build()
+                                        )
                                         .minimum(
                                             Price.UnitPrice.Minimum.builder()
                                                 .appliesToPriceIds(listOf("string"))
@@ -593,7 +634,11 @@ class SubscriptionTriggerPhaseResponseTest {
                     .emailDelivery(true)
                     .exemptFromAutomatedTax(true)
                     .externalCustomerId("external_customer_id")
-                    .metadata(Customer.Metadata.builder().build())
+                    .metadata(
+                        Customer.Metadata.builder()
+                            .putAdditionalProperty("foo", JsonValue.from("string"))
+                            .build()
+                    )
                     .name("name")
                     .paymentProvider(Customer.PaymentProvider.QUICKBOOKS)
                     .paymentProviderId("payment_provider_id")
@@ -683,7 +728,11 @@ class SubscriptionTriggerPhaseResponseTest {
                     .build()
             )
         assertThat(subscriptionTriggerPhaseResponse.metadata())
-            .isEqualTo(SubscriptionTriggerPhaseResponse.Metadata.builder().build())
+            .isEqualTo(
+                SubscriptionTriggerPhaseResponse.Metadata.builder()
+                    .putAdditionalProperty("foo", JsonValue.from("string"))
+                    .build()
+            )
         assertThat(subscriptionTriggerPhaseResponse.minimumIntervals())
             .containsExactly(
                 SubscriptionTriggerPhaseResponse.MinimumInterval.builder()
@@ -732,7 +781,7 @@ class SubscriptionTriggerPhaseResponseTest {
                     .discount(
                         Discount.ofPercentageDiscount(
                             PercentageDiscount.builder()
-                                .appliesToPriceIds(listOf("string"))
+                                .appliesToPriceIds(listOf("h74gfhdjvn7ujokd", "7hfgtgjnbvc3ujkl"))
                                 .discountType(PercentageDiscount.DiscountType.PERCENTAGE)
                                 .percentageDiscount(0.15)
                                 .reason("reason")
@@ -748,7 +797,11 @@ class SubscriptionTriggerPhaseResponseTest {
                             .build()
                     )
                     .maximumAmount("maximum_amount")
-                    .metadata(Plan.Metadata.builder().build())
+                    .metadata(
+                        Plan.Metadata.builder()
+                            .putAdditionalProperty("foo", JsonValue.from("string"))
+                            .build()
+                    )
                     .minimum(
                         Plan.Minimum.builder()
                             .appliesToPriceIds(listOf("string"))
@@ -766,7 +819,9 @@ class SubscriptionTriggerPhaseResponseTest {
                                 .discount(
                                     Discount.ofPercentageDiscount(
                                         PercentageDiscount.builder()
-                                            .appliesToPriceIds(listOf("string"))
+                                            .appliesToPriceIds(
+                                                listOf("h74gfhdjvn7ujokd", "7hfgtgjnbvc3ujkl")
+                                            )
                                             .discountType(
                                                 PercentageDiscount.DiscountType.PERCENTAGE
                                             )
@@ -827,7 +882,9 @@ class SubscriptionTriggerPhaseResponseTest {
                                     .discount(
                                         Discount.ofPercentageDiscount(
                                             PercentageDiscount.builder()
-                                                .appliesToPriceIds(listOf("string"))
+                                                .appliesToPriceIds(
+                                                    listOf("h74gfhdjvn7ujokd", "7hfgtgjnbvc3ujkl")
+                                                )
                                                 .discountType(
                                                     PercentageDiscount.DiscountType.PERCENTAGE
                                                 )
@@ -858,7 +915,11 @@ class SubscriptionTriggerPhaseResponseTest {
                                             .build()
                                     )
                                     .maximumAmount("maximum_amount")
-                                    .metadata(Price.UnitPrice.Metadata.builder().build())
+                                    .metadata(
+                                        Price.UnitPrice.Metadata.builder()
+                                            .putAdditionalProperty("foo", JsonValue.from("string"))
+                                            .build()
+                                    )
                                     .minimum(
                                         Price.UnitPrice.Minimum.builder()
                                             .appliesToPriceIds(listOf("string"))
@@ -944,7 +1005,9 @@ class SubscriptionTriggerPhaseResponseTest {
                                 .discount(
                                     Discount.ofPercentageDiscount(
                                         PercentageDiscount.builder()
-                                            .appliesToPriceIds(listOf("string"))
+                                            .appliesToPriceIds(
+                                                listOf("h74gfhdjvn7ujokd", "7hfgtgjnbvc3ujkl")
+                                            )
                                             .discountType(
                                                 PercentageDiscount.DiscountType.PERCENTAGE
                                             )
@@ -972,7 +1035,11 @@ class SubscriptionTriggerPhaseResponseTest {
                                         .build()
                                 )
                                 .maximumAmount("maximum_amount")
-                                .metadata(Price.UnitPrice.Metadata.builder().build())
+                                .metadata(
+                                    Price.UnitPrice.Metadata.builder()
+                                        .putAdditionalProperty("foo", JsonValue.from("string"))
+                                        .build()
+                                )
                                 .minimum(
                                     Price.UnitPrice.Minimum.builder()
                                         .appliesToPriceIds(listOf("string"))

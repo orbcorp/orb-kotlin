@@ -4,6 +4,7 @@ package com.withorb.api.services.blocking
 
 import com.withorb.api.TestServerExtension
 import com.withorb.api.client.okhttp.OrbOkHttpClient
+import com.withorb.api.core.JsonValue
 import com.withorb.api.models.*
 import com.withorb.api.models.MetricListParams
 import org.junit.jupiter.api.Test
@@ -27,7 +28,11 @@ class MetricServiceTest {
                     .itemId("item_id")
                     .name("Bytes downloaded")
                     .sql("SELECT sum(bytes_downloaded) FROM events WHERE download_speed = 'fast'")
-                    .metadata(MetricCreateParams.Metadata.builder().build())
+                    .metadata(
+                        MetricCreateParams.Metadata.builder()
+                            .putAdditionalProperty("foo", JsonValue.from("string"))
+                            .build()
+                    )
                     .build()
             )
         println(billableMetric)
@@ -46,7 +51,11 @@ class MetricServiceTest {
             metricService.update(
                 MetricUpdateParams.builder()
                     .metricId("metric_id")
-                    .metadata(MetricUpdateParams.Metadata.builder().build())
+                    .metadata(
+                        MetricUpdateParams.Metadata.builder()
+                            .putAdditionalProperty("foo", JsonValue.from("string"))
+                            .build()
+                    )
                     .build()
             )
         println(billableMetric)

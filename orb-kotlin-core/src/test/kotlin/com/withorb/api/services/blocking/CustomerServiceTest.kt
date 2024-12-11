@@ -4,6 +4,7 @@ package com.withorb.api.services.blocking
 
 import com.withorb.api.TestServerExtension
 import com.withorb.api.client.okhttp.OrbOkHttpClient
+import com.withorb.api.core.JsonValue
 import com.withorb.api.models.*
 import com.withorb.api.models.CustomerListParams
 import org.junit.jupiter.api.Test
@@ -55,7 +56,11 @@ class CustomerServiceTest {
                     .currency("currency")
                     .emailDelivery(true)
                     .externalCustomerId("external_customer_id")
-                    .metadata(CustomerCreateParams.Metadata.builder().build())
+                    .metadata(
+                        CustomerCreateParams.Metadata.builder()
+                            .putAdditionalProperty("foo", JsonValue.from("string"))
+                            .build()
+                    )
                     .paymentProvider(CustomerCreateParams.PaymentProvider.QUICKBOOKS)
                     .paymentProviderId("payment_provider_id")
                     .reportingConfiguration(
@@ -142,7 +147,11 @@ class CustomerServiceTest {
                     .email("dev@stainlessapi.com")
                     .emailDelivery(true)
                     .externalCustomerId("external_customer_id")
-                    .metadata(CustomerUpdateParams.Metadata.builder().build())
+                    .metadata(
+                        CustomerUpdateParams.Metadata.builder()
+                            .putAdditionalProperty("foo", JsonValue.from("string"))
+                            .build()
+                    )
                     .name("name")
                     .paymentProvider(CustomerUpdateParams.PaymentProvider.QUICKBOOKS)
                     .paymentProviderId("payment_provider_id")
@@ -285,7 +294,11 @@ class CustomerServiceTest {
                     .email("dev@stainlessapi.com")
                     .emailDelivery(true)
                     .externalCustomerId("external_customer_id")
-                    .metadata(CustomerUpdateByExternalIdParams.Metadata.builder().build())
+                    .metadata(
+                        CustomerUpdateByExternalIdParams.Metadata.builder()
+                            .putAdditionalProperty("foo", JsonValue.from("string"))
+                            .build()
+                    )
                     .name("name")
                     .paymentProvider(CustomerUpdateByExternalIdParams.PaymentProvider.QUICKBOOKS)
                     .paymentProviderId("payment_provider_id")

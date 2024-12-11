@@ -4,6 +4,7 @@ package com.withorb.api.services.blocking.plans
 
 import com.withorb.api.TestServerExtension
 import com.withorb.api.client.okhttp.OrbOkHttpClient
+import com.withorb.api.core.JsonValue
 import com.withorb.api.models.*
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
@@ -24,7 +25,11 @@ class ExternalPlanIdServiceTest {
                 PlanExternalPlanIdUpdateParams.builder()
                     .otherExternalPlanId("external_plan_id")
                     .externalPlanId("external_plan_id")
-                    .metadata(PlanExternalPlanIdUpdateParams.Metadata.builder().build())
+                    .metadata(
+                        PlanExternalPlanIdUpdateParams.Metadata.builder()
+                            .putAdditionalProperty("foo", JsonValue.from("string"))
+                            .build()
+                    )
                     .build()
             )
         println(plan)

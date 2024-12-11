@@ -2,6 +2,7 @@
 
 package com.withorb.api.models
 
+import com.withorb.api.core.JsonValue
 import com.withorb.api.models.*
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
@@ -12,7 +13,11 @@ class PriceUpdateParamsTest {
     fun createPriceUpdateParams() {
         PriceUpdateParams.builder()
             .priceId("price_id")
-            .metadata(PriceUpdateParams.Metadata.builder().build())
+            .metadata(
+                PriceUpdateParams.Metadata.builder()
+                    .putAdditionalProperty("foo", JsonValue.from("string"))
+                    .build()
+            )
             .build()
     }
 
@@ -21,11 +26,20 @@ class PriceUpdateParamsTest {
         val params =
             PriceUpdateParams.builder()
                 .priceId("price_id")
-                .metadata(PriceUpdateParams.Metadata.builder().build())
+                .metadata(
+                    PriceUpdateParams.Metadata.builder()
+                        .putAdditionalProperty("foo", JsonValue.from("string"))
+                        .build()
+                )
                 .build()
         val body = params.getBody()
         assertThat(body).isNotNull
-        assertThat(body.metadata()).isEqualTo(PriceUpdateParams.Metadata.builder().build())
+        assertThat(body.metadata())
+            .isEqualTo(
+                PriceUpdateParams.Metadata.builder()
+                    .putAdditionalProperty("foo", JsonValue.from("string"))
+                    .build()
+            )
     }
 
     @Test

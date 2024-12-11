@@ -89,7 +89,11 @@ class ServiceParamsTest {
                 .currency("currency")
                 .emailDelivery(true)
                 .externalCustomerId("external_customer_id")
-                .metadata(CustomerCreateParams.Metadata.builder().build())
+                .metadata(
+                    CustomerCreateParams.Metadata.builder()
+                        .putAdditionalProperty("foo", JsonValue.from("string"))
+                        .build()
+                )
                 .paymentProvider(CustomerCreateParams.PaymentProvider.QUICKBOOKS)
                 .paymentProviderId("payment_provider_id")
                 .reportingConfiguration(
@@ -153,7 +157,11 @@ class ServiceParamsTest {
                 .emailDelivery(true)
                 .exemptFromAutomatedTax(true)
                 .externalCustomerId("external_customer_id")
-                .metadata(Customer.Metadata.builder().build())
+                .metadata(
+                    Customer.Metadata.builder()
+                        .putAdditionalProperty("foo", JsonValue.from("string"))
+                        .build()
+                )
                 .name("name")
                 .paymentProvider(Customer.PaymentProvider.QUICKBOOKS)
                 .paymentProviderId("payment_provider_id")
