@@ -576,9 +576,9 @@ private constructor(
 
                 companion object {
 
-                    val PERIODIC = ViewMode(JsonField.of("periodic"))
+                    val PERIODIC = of("periodic")
 
-                    val CUMULATIVE = ViewMode(JsonField.of("cumulative"))
+                    val CUMULATIVE = of("cumulative")
 
                     fun of(value: String) = ViewMode(JsonField.of(value))
                 }
@@ -1216,9 +1216,9 @@ private constructor(
 
                 companion object {
 
-                    val PERIODIC = ViewMode(JsonField.of("periodic"))
+                    val PERIODIC = of("periodic")
 
-                    val CUMULATIVE = ViewMode(JsonField.of("cumulative"))
+                    val CUMULATIVE = of("cumulative")
 
                     fun of(value: String) = ViewMode(JsonField.of(value))
                 }

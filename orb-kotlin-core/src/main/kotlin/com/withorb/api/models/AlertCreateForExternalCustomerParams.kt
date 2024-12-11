@@ -370,15 +370,15 @@ constructor(
 
         companion object {
 
-            val USAGE_EXCEEDED = Type(JsonField.of("usage_exceeded"))
+            val USAGE_EXCEEDED = of("usage_exceeded")
 
-            val COST_EXCEEDED = Type(JsonField.of("cost_exceeded"))
+            val COST_EXCEEDED = of("cost_exceeded")
 
-            val CREDIT_BALANCE_DEPLETED = Type(JsonField.of("credit_balance_depleted"))
+            val CREDIT_BALANCE_DEPLETED = of("credit_balance_depleted")
 
-            val CREDIT_BALANCE_DROPPED = Type(JsonField.of("credit_balance_dropped"))
+            val CREDIT_BALANCE_DROPPED = of("credit_balance_dropped")
 
-            val CREDIT_BALANCE_RECOVERED = Type(JsonField.of("credit_balance_recovered"))
+            val CREDIT_BALANCE_RECOVERED = of("credit_balance_recovered")
 
             fun of(value: String) = Type(JsonField.of(value))
         }

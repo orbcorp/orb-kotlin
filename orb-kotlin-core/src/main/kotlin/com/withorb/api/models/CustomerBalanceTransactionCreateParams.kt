@@ -352,9 +352,9 @@ constructor(
 
         companion object {
 
-            val INCREMENT = Type(JsonField.of("increment"))
+            val INCREMENT = of("increment")
 
-            val DECREMENT = Type(JsonField.of("decrement"))
+            val DECREMENT = of("decrement")
 
             fun of(value: String) = Type(JsonField.of(value))
         }

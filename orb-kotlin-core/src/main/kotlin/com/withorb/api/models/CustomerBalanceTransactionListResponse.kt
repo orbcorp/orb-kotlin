@@ -295,21 +295,21 @@ private constructor(
 
         companion object {
 
-            val APPLIED_TO_INVOICE = Action(JsonField.of("applied_to_invoice"))
+            val APPLIED_TO_INVOICE = of("applied_to_invoice")
 
-            val MANUAL_ADJUSTMENT = Action(JsonField.of("manual_adjustment"))
+            val MANUAL_ADJUSTMENT = of("manual_adjustment")
 
-            val PRORATED_REFUND = Action(JsonField.of("prorated_refund"))
+            val PRORATED_REFUND = of("prorated_refund")
 
-            val REVERT_PRORATED_REFUND = Action(JsonField.of("revert_prorated_refund"))
+            val REVERT_PRORATED_REFUND = of("revert_prorated_refund")
 
-            val RETURN_FROM_VOIDING = Action(JsonField.of("return_from_voiding"))
+            val RETURN_FROM_VOIDING = of("return_from_voiding")
 
-            val CREDIT_NOTE_APPLIED = Action(JsonField.of("credit_note_applied"))
+            val CREDIT_NOTE_APPLIED = of("credit_note_applied")
 
-            val CREDIT_NOTE_VOIDED = Action(JsonField.of("credit_note_voided"))
+            val CREDIT_NOTE_VOIDED = of("credit_note_voided")
 
-            val OVERPAYMENT_REFUND = Action(JsonField.of("overpayment_refund"))
+            val OVERPAYMENT_REFUND = of("overpayment_refund")
 
             fun of(value: String) = Action(JsonField.of(value))
         }
@@ -560,9 +560,9 @@ private constructor(
 
         companion object {
 
-            val INCREMENT = Type(JsonField.of("increment"))
+            val INCREMENT = of("increment")
 
-            val DECREMENT = Type(JsonField.of("decrement"))
+            val DECREMENT = of("decrement")
 
             fun of(value: String) = Type(JsonField.of(value))
         }

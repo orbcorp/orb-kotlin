@@ -294,11 +294,11 @@ constructor(
 
         companion object {
 
-            val ACTIVE = Status(JsonField.of("active"))
+            val ACTIVE = of("active")
 
-            val ENDED = Status(JsonField.of("ended"))
+            val ENDED = of("ended")
 
-            val UPCOMING = Status(JsonField.of("upcoming"))
+            val UPCOMING = of("upcoming")
 
             fun of(value: String) = Status(JsonField.of(value))
         }

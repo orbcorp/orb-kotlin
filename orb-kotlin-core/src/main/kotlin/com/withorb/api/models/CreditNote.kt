@@ -1025,9 +1025,9 @@ private constructor(
 
                 companion object {
 
-                    val PERCENTAGE = DiscountType(JsonField.of("percentage"))
+                    val PERCENTAGE = of("percentage")
 
-                    val AMOUNT = DiscountType(JsonField.of("amount"))
+                    val AMOUNT = of("amount")
 
                     fun of(value: String) = DiscountType(JsonField.of(value))
                 }
@@ -1261,7 +1261,7 @@ private constructor(
 
             companion object {
 
-                val PERCENTAGE = DiscountType(JsonField.of("percentage"))
+                val PERCENTAGE = of("percentage")
 
                 fun of(value: String) = DiscountType(JsonField.of(value))
             }
@@ -1433,13 +1433,13 @@ private constructor(
 
         companion object {
 
-            val DUPLICATE = Reason(JsonField.of("Duplicate"))
+            val DUPLICATE = of("Duplicate")
 
-            val FRAUDULENT = Reason(JsonField.of("Fraudulent"))
+            val FRAUDULENT = of("Fraudulent")
 
-            val ORDER_CHANGE = Reason(JsonField.of("Order change"))
+            val ORDER_CHANGE = of("Order change")
 
-            val PRODUCT_UNSATISFACTORY = Reason(JsonField.of("Product unsatisfactory"))
+            val PRODUCT_UNSATISFACTORY = of("Product unsatisfactory")
 
             fun of(value: String) = Reason(JsonField.of(value))
         }
@@ -1502,9 +1502,9 @@ private constructor(
 
         companion object {
 
-            val REFUND = Type(JsonField.of("refund"))
+            val REFUND = of("refund")
 
-            val ADJUSTMENT = Type(JsonField.of("adjustment"))
+            val ADJUSTMENT = of("adjustment")
 
             fun of(value: String) = Type(JsonField.of(value))
         }
@@ -1701,7 +1701,7 @@ private constructor(
 
             companion object {
 
-                val PERCENTAGE = DiscountType(JsonField.of("percentage"))
+                val PERCENTAGE = of("percentage")
 
                 fun of(value: String) = DiscountType(JsonField.of(value))
             }
