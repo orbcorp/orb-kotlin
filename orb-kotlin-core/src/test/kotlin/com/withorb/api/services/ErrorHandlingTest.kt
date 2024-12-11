@@ -15,6 +15,7 @@ import com.github.tomakehurst.wiremock.junit5.WireMockTest
 import com.withorb.api.client.OrbClient
 import com.withorb.api.client.okhttp.OrbOkHttpClient
 import com.withorb.api.core.JsonString
+import com.withorb.api.core.JsonValue
 import com.withorb.api.core.http.Headers
 import com.withorb.api.core.jsonMapper
 import com.withorb.api.errors.BadRequestException
@@ -90,7 +91,11 @@ class ErrorHandlingTest {
                 .currency("currency")
                 .emailDelivery(true)
                 .externalCustomerId("external_customer_id")
-                .metadata(CustomerCreateParams.Metadata.builder().build())
+                .metadata(
+                    CustomerCreateParams.Metadata.builder()
+                        .putAdditionalProperty("foo", JsonValue.from("string"))
+                        .build()
+                )
                 .paymentProvider(CustomerCreateParams.PaymentProvider.QUICKBOOKS)
                 .paymentProviderId("payment_provider_id")
                 .reportingConfiguration(
@@ -151,7 +156,11 @@ class ErrorHandlingTest {
                 .emailDelivery(true)
                 .exemptFromAutomatedTax(true)
                 .externalCustomerId("external_customer_id")
-                .metadata(Customer.Metadata.builder().build())
+                .metadata(
+                    Customer.Metadata.builder()
+                        .putAdditionalProperty("foo", JsonValue.from("string"))
+                        .build()
+                )
                 .name("name")
                 .paymentProvider(Customer.PaymentProvider.QUICKBOOKS)
                 .paymentProviderId("payment_provider_id")
@@ -236,7 +245,11 @@ class ErrorHandlingTest {
                 .currency("currency")
                 .emailDelivery(true)
                 .externalCustomerId("external_customer_id")
-                .metadata(CustomerCreateParams.Metadata.builder().build())
+                .metadata(
+                    CustomerCreateParams.Metadata.builder()
+                        .putAdditionalProperty("foo", JsonValue.from("string"))
+                        .build()
+                )
                 .paymentProvider(CustomerCreateParams.PaymentProvider.QUICKBOOKS)
                 .paymentProviderId("payment_provider_id")
                 .reportingConfiguration(
@@ -321,7 +334,11 @@ class ErrorHandlingTest {
                 .currency("currency")
                 .emailDelivery(true)
                 .externalCustomerId("external_customer_id")
-                .metadata(CustomerCreateParams.Metadata.builder().build())
+                .metadata(
+                    CustomerCreateParams.Metadata.builder()
+                        .putAdditionalProperty("foo", JsonValue.from("string"))
+                        .build()
+                )
                 .paymentProvider(CustomerCreateParams.PaymentProvider.QUICKBOOKS)
                 .paymentProviderId("payment_provider_id")
                 .reportingConfiguration(
@@ -406,7 +423,11 @@ class ErrorHandlingTest {
                 .currency("currency")
                 .emailDelivery(true)
                 .externalCustomerId("external_customer_id")
-                .metadata(CustomerCreateParams.Metadata.builder().build())
+                .metadata(
+                    CustomerCreateParams.Metadata.builder()
+                        .putAdditionalProperty("foo", JsonValue.from("string"))
+                        .build()
+                )
                 .paymentProvider(CustomerCreateParams.PaymentProvider.QUICKBOOKS)
                 .paymentProviderId("payment_provider_id")
                 .reportingConfiguration(
@@ -491,7 +512,11 @@ class ErrorHandlingTest {
                 .currency("currency")
                 .emailDelivery(true)
                 .externalCustomerId("external_customer_id")
-                .metadata(CustomerCreateParams.Metadata.builder().build())
+                .metadata(
+                    CustomerCreateParams.Metadata.builder()
+                        .putAdditionalProperty("foo", JsonValue.from("string"))
+                        .build()
+                )
                 .paymentProvider(CustomerCreateParams.PaymentProvider.QUICKBOOKS)
                 .paymentProviderId("payment_provider_id")
                 .reportingConfiguration(
@@ -576,7 +601,11 @@ class ErrorHandlingTest {
                 .currency("currency")
                 .emailDelivery(true)
                 .externalCustomerId("external_customer_id")
-                .metadata(CustomerCreateParams.Metadata.builder().build())
+                .metadata(
+                    CustomerCreateParams.Metadata.builder()
+                        .putAdditionalProperty("foo", JsonValue.from("string"))
+                        .build()
+                )
                 .paymentProvider(CustomerCreateParams.PaymentProvider.QUICKBOOKS)
                 .paymentProviderId("payment_provider_id")
                 .reportingConfiguration(
@@ -661,7 +690,11 @@ class ErrorHandlingTest {
                 .currency("currency")
                 .emailDelivery(true)
                 .externalCustomerId("external_customer_id")
-                .metadata(CustomerCreateParams.Metadata.builder().build())
+                .metadata(
+                    CustomerCreateParams.Metadata.builder()
+                        .putAdditionalProperty("foo", JsonValue.from("string"))
+                        .build()
+                )
                 .paymentProvider(CustomerCreateParams.PaymentProvider.QUICKBOOKS)
                 .paymentProviderId("payment_provider_id")
                 .reportingConfiguration(
@@ -746,7 +779,11 @@ class ErrorHandlingTest {
                 .currency("currency")
                 .emailDelivery(true)
                 .externalCustomerId("external_customer_id")
-                .metadata(CustomerCreateParams.Metadata.builder().build())
+                .metadata(
+                    CustomerCreateParams.Metadata.builder()
+                        .putAdditionalProperty("foo", JsonValue.from("string"))
+                        .build()
+                )
                 .paymentProvider(CustomerCreateParams.PaymentProvider.QUICKBOOKS)
                 .paymentProviderId("payment_provider_id")
                 .reportingConfiguration(
@@ -831,7 +868,11 @@ class ErrorHandlingTest {
                 .currency("currency")
                 .emailDelivery(true)
                 .externalCustomerId("external_customer_id")
-                .metadata(CustomerCreateParams.Metadata.builder().build())
+                .metadata(
+                    CustomerCreateParams.Metadata.builder()
+                        .putAdditionalProperty("foo", JsonValue.from("string"))
+                        .build()
+                )
                 .paymentProvider(CustomerCreateParams.PaymentProvider.QUICKBOOKS)
                 .paymentProviderId("payment_provider_id")
                 .reportingConfiguration(
@@ -921,7 +962,11 @@ class ErrorHandlingTest {
                 .currency("currency")
                 .emailDelivery(true)
                 .externalCustomerId("external_customer_id")
-                .metadata(CustomerCreateParams.Metadata.builder().build())
+                .metadata(
+                    CustomerCreateParams.Metadata.builder()
+                        .putAdditionalProperty("foo", JsonValue.from("string"))
+                        .build()
+                )
                 .paymentProvider(CustomerCreateParams.PaymentProvider.QUICKBOOKS)
                 .paymentProviderId("payment_provider_id")
                 .reportingConfiguration(
@@ -1005,7 +1050,11 @@ class ErrorHandlingTest {
                 .currency("currency")
                 .emailDelivery(true)
                 .externalCustomerId("external_customer_id")
-                .metadata(CustomerCreateParams.Metadata.builder().build())
+                .metadata(
+                    CustomerCreateParams.Metadata.builder()
+                        .putAdditionalProperty("foo", JsonValue.from("string"))
+                        .build()
+                )
                 .paymentProvider(CustomerCreateParams.PaymentProvider.QUICKBOOKS)
                 .paymentProviderId("payment_provider_id")
                 .reportingConfiguration(

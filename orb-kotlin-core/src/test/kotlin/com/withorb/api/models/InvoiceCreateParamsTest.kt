@@ -2,6 +2,7 @@
 
 package com.withorb.api.models
 
+import com.withorb.api.core.JsonValue
 import com.withorb.api.models.*
 import java.time.LocalDate
 import java.time.OffsetDateTime
@@ -37,7 +38,7 @@ class InvoiceCreateParamsTest {
             .discount(
                 Discount.ofPercentageDiscount(
                     PercentageDiscount.builder()
-                        .appliesToPriceIds(listOf("string"))
+                        .appliesToPriceIds(listOf("h74gfhdjvn7ujokd", "7hfgtgjnbvc3ujkl"))
                         .discountType(PercentageDiscount.DiscountType.PERCENTAGE)
                         .percentageDiscount(0.15)
                         .reason("reason")
@@ -46,7 +47,11 @@ class InvoiceCreateParamsTest {
             )
             .externalCustomerId("external-customer-id")
             .memo("An optional memo for my invoice.")
-            .metadata(InvoiceCreateParams.Metadata.builder().build())
+            .metadata(
+                InvoiceCreateParams.Metadata.builder()
+                    .putAdditionalProperty("foo", JsonValue.from("string"))
+                    .build()
+            )
             .willAutoIssue(false)
             .build()
     }
@@ -79,7 +84,7 @@ class InvoiceCreateParamsTest {
                 .discount(
                     Discount.ofPercentageDiscount(
                         PercentageDiscount.builder()
-                            .appliesToPriceIds(listOf("string"))
+                            .appliesToPriceIds(listOf("h74gfhdjvn7ujokd", "7hfgtgjnbvc3ujkl"))
                             .discountType(PercentageDiscount.DiscountType.PERCENTAGE)
                             .percentageDiscount(0.15)
                             .reason("reason")
@@ -88,7 +93,11 @@ class InvoiceCreateParamsTest {
                 )
                 .externalCustomerId("external-customer-id")
                 .memo("An optional memo for my invoice.")
-                .metadata(InvoiceCreateParams.Metadata.builder().build())
+                .metadata(
+                    InvoiceCreateParams.Metadata.builder()
+                        .putAdditionalProperty("foo", JsonValue.from("string"))
+                        .build()
+                )
                 .willAutoIssue(false)
                 .build()
         val body = params.getBody()
@@ -119,7 +128,7 @@ class InvoiceCreateParamsTest {
             .isEqualTo(
                 Discount.ofPercentageDiscount(
                     PercentageDiscount.builder()
-                        .appliesToPriceIds(listOf("string"))
+                        .appliesToPriceIds(listOf("h74gfhdjvn7ujokd", "7hfgtgjnbvc3ujkl"))
                         .discountType(PercentageDiscount.DiscountType.PERCENTAGE)
                         .percentageDiscount(0.15)
                         .reason("reason")
@@ -128,7 +137,12 @@ class InvoiceCreateParamsTest {
             )
         assertThat(body.externalCustomerId()).isEqualTo("external-customer-id")
         assertThat(body.memo()).isEqualTo("An optional memo for my invoice.")
-        assertThat(body.metadata()).isEqualTo(InvoiceCreateParams.Metadata.builder().build())
+        assertThat(body.metadata())
+            .isEqualTo(
+                InvoiceCreateParams.Metadata.builder()
+                    .putAdditionalProperty("foo", JsonValue.from("string"))
+                    .build()
+            )
         assertThat(body.willAutoIssue()).isEqualTo(false)
     }
 
