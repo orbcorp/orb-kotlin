@@ -351,11 +351,11 @@ constructor(
 
         companion object {
 
-            val END_OF_SUBSCRIPTION_TERM = CancelOption(JsonField.of("end_of_subscription_term"))
+            val END_OF_SUBSCRIPTION_TERM = of("end_of_subscription_term")
 
-            val IMMEDIATE = CancelOption(JsonField.of("immediate"))
+            val IMMEDIATE = of("immediate")
 
-            val REQUESTED_DATE = CancelOption(JsonField.of("requested_date"))
+            val REQUESTED_DATE = of("requested_date")
 
             fun of(value: String) = CancelOption(JsonField.of(value))
         }

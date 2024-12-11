@@ -877,9 +877,9 @@ private constructor(
 
             companion object {
 
-                val COMMITTED = EntryStatus(JsonField.of("committed"))
+                val COMMITTED = of("committed")
 
-                val PENDING = EntryStatus(JsonField.of("pending"))
+                val PENDING = of("pending")
 
                 fun of(value: String) = EntryStatus(JsonField.of(value))
             }
@@ -934,7 +934,7 @@ private constructor(
 
             companion object {
 
-                val INCREMENT = EntryType(JsonField.of("increment"))
+                val INCREMENT = of("increment")
 
                 fun of(value: String) = EntryType(JsonField.of(value))
             }
@@ -1644,9 +1644,9 @@ private constructor(
 
             companion object {
 
-                val COMMITTED = EntryStatus(JsonField.of("committed"))
+                val COMMITTED = of("committed")
 
-                val PENDING = EntryStatus(JsonField.of("pending"))
+                val PENDING = of("pending")
 
                 fun of(value: String) = EntryStatus(JsonField.of(value))
             }
@@ -1701,7 +1701,7 @@ private constructor(
 
             companion object {
 
-                val DECREMENT = EntryType(JsonField.of("decrement"))
+                val DECREMENT = of("decrement")
 
                 fun of(value: String) = EntryType(JsonField.of(value))
             }
@@ -2387,9 +2387,9 @@ private constructor(
 
             companion object {
 
-                val COMMITTED = EntryStatus(JsonField.of("committed"))
+                val COMMITTED = of("committed")
 
-                val PENDING = EntryStatus(JsonField.of("pending"))
+                val PENDING = of("pending")
 
                 fun of(value: String) = EntryStatus(JsonField.of(value))
             }
@@ -2444,7 +2444,7 @@ private constructor(
 
             companion object {
 
-                val EXPIRATION_CHANGE = EntryType(JsonField.of("expiration_change"))
+                val EXPIRATION_CHANGE = of("expiration_change")
 
                 fun of(value: String) = EntryType(JsonField.of(value))
             }
@@ -3109,9 +3109,9 @@ private constructor(
 
             companion object {
 
-                val COMMITTED = EntryStatus(JsonField.of("committed"))
+                val COMMITTED = of("committed")
 
-                val PENDING = EntryStatus(JsonField.of("pending"))
+                val PENDING = of("pending")
 
                 fun of(value: String) = EntryStatus(JsonField.of(value))
             }
@@ -3166,7 +3166,7 @@ private constructor(
 
             companion object {
 
-                val CREDIT_BLOCK_EXPIRY = EntryType(JsonField.of("credit_block_expiry"))
+                val CREDIT_BLOCK_EXPIRY = of("credit_block_expiry")
 
                 fun of(value: String) = EntryType(JsonField.of(value))
             }
@@ -3861,9 +3861,9 @@ private constructor(
 
             companion object {
 
-                val COMMITTED = EntryStatus(JsonField.of("committed"))
+                val COMMITTED = of("committed")
 
-                val PENDING = EntryStatus(JsonField.of("pending"))
+                val PENDING = of("pending")
 
                 fun of(value: String) = EntryStatus(JsonField.of(value))
             }
@@ -3918,7 +3918,7 @@ private constructor(
 
             companion object {
 
-                val VOID = EntryType(JsonField.of("void"))
+                val VOID = of("void")
 
                 fun of(value: String) = EntryType(JsonField.of(value))
             }
@@ -4634,9 +4634,9 @@ private constructor(
 
             companion object {
 
-                val COMMITTED = EntryStatus(JsonField.of("committed"))
+                val COMMITTED = of("committed")
 
-                val PENDING = EntryStatus(JsonField.of("pending"))
+                val PENDING = of("pending")
 
                 fun of(value: String) = EntryStatus(JsonField.of(value))
             }
@@ -4691,7 +4691,7 @@ private constructor(
 
             companion object {
 
-                val VOID_INITIATED = EntryType(JsonField.of("void_initiated"))
+                val VOID_INITIATED = of("void_initiated")
 
                 fun of(value: String) = EntryType(JsonField.of(value))
             }
@@ -5356,9 +5356,9 @@ private constructor(
 
             companion object {
 
-                val COMMITTED = EntryStatus(JsonField.of("committed"))
+                val COMMITTED = of("committed")
 
-                val PENDING = EntryStatus(JsonField.of("pending"))
+                val PENDING = of("pending")
 
                 fun of(value: String) = EntryStatus(JsonField.of(value))
             }
@@ -5413,7 +5413,7 @@ private constructor(
 
             companion object {
 
-                val AMENDMENT = EntryType(JsonField.of("amendment"))
+                val AMENDMENT = of("amendment")
 
                 fun of(value: String) = EntryType(JsonField.of(value))
             }

@@ -1427,15 +1427,15 @@ constructor(
 
         companion object {
 
-            val QUICKBOOKS = PaymentProvider(JsonField.of("quickbooks"))
+            val QUICKBOOKS = of("quickbooks")
 
-            val BILL_COM = PaymentProvider(JsonField.of("bill.com"))
+            val BILL_COM = of("bill.com")
 
-            val STRIPE_CHARGE = PaymentProvider(JsonField.of("stripe_charge"))
+            val STRIPE_CHARGE = of("stripe_charge")
 
-            val STRIPE_INVOICE = PaymentProvider(JsonField.of("stripe_invoice"))
+            val STRIPE_INVOICE = of("stripe_invoice")
 
-            val NETSUITE = PaymentProvider(JsonField.of("netsuite"))
+            val NETSUITE = of("netsuite")
 
             fun of(value: String) = PaymentProvider(JsonField.of(value))
         }
@@ -1935,7 +1935,7 @@ constructor(
 
                 companion object {
 
-                    val AVALARA = TaxProvider(JsonField.of("avalara"))
+                    val AVALARA = of("avalara")
 
                     fun of(value: String) = TaxProvider(JsonField.of(value))
                 }
@@ -2091,7 +2091,7 @@ constructor(
 
                 companion object {
 
-                    val TAXJAR = TaxProvider(JsonField.of("taxjar"))
+                    val TAXJAR = of("taxjar")
 
                     fun of(value: String) = TaxProvider(JsonField.of(value))
                 }
@@ -2338,161 +2338,161 @@ constructor(
 
             companion object {
 
-                val AD = Country(JsonField.of("AD"))
+                val AD = of("AD")
 
-                val AE = Country(JsonField.of("AE"))
+                val AE = of("AE")
 
-                val AR = Country(JsonField.of("AR"))
+                val AR = of("AR")
 
-                val AT = Country(JsonField.of("AT"))
+                val AT = of("AT")
 
-                val AU = Country(JsonField.of("AU"))
+                val AU = of("AU")
 
-                val BE = Country(JsonField.of("BE"))
+                val BE = of("BE")
 
-                val BG = Country(JsonField.of("BG"))
+                val BG = of("BG")
 
-                val BH = Country(JsonField.of("BH"))
+                val BH = of("BH")
 
-                val BO = Country(JsonField.of("BO"))
+                val BO = of("BO")
 
-                val BR = Country(JsonField.of("BR"))
+                val BR = of("BR")
 
-                val CA = Country(JsonField.of("CA"))
+                val CA = of("CA")
 
-                val CH = Country(JsonField.of("CH"))
+                val CH = of("CH")
 
-                val CL = Country(JsonField.of("CL"))
+                val CL = of("CL")
 
-                val CN = Country(JsonField.of("CN"))
+                val CN = of("CN")
 
-                val CO = Country(JsonField.of("CO"))
+                val CO = of("CO")
 
-                val CR = Country(JsonField.of("CR"))
+                val CR = of("CR")
 
-                val CY = Country(JsonField.of("CY"))
+                val CY = of("CY")
 
-                val CZ = Country(JsonField.of("CZ"))
+                val CZ = of("CZ")
 
-                val DE = Country(JsonField.of("DE"))
+                val DE = of("DE")
 
-                val DK = Country(JsonField.of("DK"))
+                val DK = of("DK")
 
-                val EE = Country(JsonField.of("EE"))
+                val EE = of("EE")
 
-                val DO = Country(JsonField.of("DO"))
+                val DO = of("DO")
 
-                val EC = Country(JsonField.of("EC"))
+                val EC = of("EC")
 
-                val EG = Country(JsonField.of("EG"))
+                val EG = of("EG")
 
-                val ES = Country(JsonField.of("ES"))
+                val ES = of("ES")
 
-                val EU = Country(JsonField.of("EU"))
+                val EU = of("EU")
 
-                val FI = Country(JsonField.of("FI"))
+                val FI = of("FI")
 
-                val FR = Country(JsonField.of("FR"))
+                val FR = of("FR")
 
-                val GB = Country(JsonField.of("GB"))
+                val GB = of("GB")
 
-                val GE = Country(JsonField.of("GE"))
+                val GE = of("GE")
 
-                val GR = Country(JsonField.of("GR"))
+                val GR = of("GR")
 
-                val HK = Country(JsonField.of("HK"))
+                val HK = of("HK")
 
-                val HR = Country(JsonField.of("HR"))
+                val HR = of("HR")
 
-                val HU = Country(JsonField.of("HU"))
+                val HU = of("HU")
 
-                val ID = Country(JsonField.of("ID"))
+                val ID = of("ID")
 
-                val IE = Country(JsonField.of("IE"))
+                val IE = of("IE")
 
-                val IL = Country(JsonField.of("IL"))
+                val IL = of("IL")
 
-                val IN = Country(JsonField.of("IN"))
+                val IN = of("IN")
 
-                val IS = Country(JsonField.of("IS"))
+                val IS = of("IS")
 
-                val IT = Country(JsonField.of("IT"))
+                val IT = of("IT")
 
-                val JP = Country(JsonField.of("JP"))
+                val JP = of("JP")
 
-                val KE = Country(JsonField.of("KE"))
+                val KE = of("KE")
 
-                val KR = Country(JsonField.of("KR"))
+                val KR = of("KR")
 
-                val KZ = Country(JsonField.of("KZ"))
+                val KZ = of("KZ")
 
-                val LI = Country(JsonField.of("LI"))
+                val LI = of("LI")
 
-                val LT = Country(JsonField.of("LT"))
+                val LT = of("LT")
 
-                val LU = Country(JsonField.of("LU"))
+                val LU = of("LU")
 
-                val LV = Country(JsonField.of("LV"))
+                val LV = of("LV")
 
-                val MT = Country(JsonField.of("MT"))
+                val MT = of("MT")
 
-                val MX = Country(JsonField.of("MX"))
+                val MX = of("MX")
 
-                val MY = Country(JsonField.of("MY"))
+                val MY = of("MY")
 
-                val NG = Country(JsonField.of("NG"))
+                val NG = of("NG")
 
-                val NL = Country(JsonField.of("NL"))
+                val NL = of("NL")
 
-                val NO = Country(JsonField.of("NO"))
+                val NO = of("NO")
 
-                val NZ = Country(JsonField.of("NZ"))
+                val NZ = of("NZ")
 
-                val OM = Country(JsonField.of("OM"))
+                val OM = of("OM")
 
-                val PE = Country(JsonField.of("PE"))
+                val PE = of("PE")
 
-                val PH = Country(JsonField.of("PH"))
+                val PH = of("PH")
 
-                val PL = Country(JsonField.of("PL"))
+                val PL = of("PL")
 
-                val PT = Country(JsonField.of("PT"))
+                val PT = of("PT")
 
-                val RO = Country(JsonField.of("RO"))
+                val RO = of("RO")
 
-                val RS = Country(JsonField.of("RS"))
+                val RS = of("RS")
 
-                val RU = Country(JsonField.of("RU"))
+                val RU = of("RU")
 
-                val SA = Country(JsonField.of("SA"))
+                val SA = of("SA")
 
-                val SE = Country(JsonField.of("SE"))
+                val SE = of("SE")
 
-                val SG = Country(JsonField.of("SG"))
+                val SG = of("SG")
 
-                val SI = Country(JsonField.of("SI"))
+                val SI = of("SI")
 
-                val SK = Country(JsonField.of("SK"))
+                val SK = of("SK")
 
-                val SV = Country(JsonField.of("SV"))
+                val SV = of("SV")
 
-                val TH = Country(JsonField.of("TH"))
+                val TH = of("TH")
 
-                val TR = Country(JsonField.of("TR"))
+                val TR = of("TR")
 
-                val TW = Country(JsonField.of("TW"))
+                val TW = of("TW")
 
-                val UA = Country(JsonField.of("UA"))
+                val UA = of("UA")
 
-                val US = Country(JsonField.of("US"))
+                val US = of("US")
 
-                val UY = Country(JsonField.of("UY"))
+                val UY = of("UY")
 
-                val VE = Country(JsonField.of("VE"))
+                val VE = of("VE")
 
-                val VN = Country(JsonField.of("VN"))
+                val VN = of("VN")
 
-                val ZA = Country(JsonField.of("ZA"))
+                val ZA = of("ZA")
 
                 fun of(value: String) = Country(JsonField.of(value))
             }
@@ -2851,147 +2851,147 @@ constructor(
 
             companion object {
 
-                val AD_NRT = Type(JsonField.of("ad_nrt"))
+                val AD_NRT = of("ad_nrt")
 
-                val AE_TRN = Type(JsonField.of("ae_trn"))
+                val AE_TRN = of("ae_trn")
 
-                val AR_CUIT = Type(JsonField.of("ar_cuit"))
+                val AR_CUIT = of("ar_cuit")
 
-                val EU_VAT = Type(JsonField.of("eu_vat"))
+                val EU_VAT = of("eu_vat")
 
-                val AU_ABN = Type(JsonField.of("au_abn"))
+                val AU_ABN = of("au_abn")
 
-                val AU_ARN = Type(JsonField.of("au_arn"))
+                val AU_ARN = of("au_arn")
 
-                val BG_UIC = Type(JsonField.of("bg_uic"))
+                val BG_UIC = of("bg_uic")
 
-                val BH_VAT = Type(JsonField.of("bh_vat"))
+                val BH_VAT = of("bh_vat")
 
-                val BO_TIN = Type(JsonField.of("bo_tin"))
+                val BO_TIN = of("bo_tin")
 
-                val BR_CNPJ = Type(JsonField.of("br_cnpj"))
+                val BR_CNPJ = of("br_cnpj")
 
-                val BR_CPF = Type(JsonField.of("br_cpf"))
+                val BR_CPF = of("br_cpf")
 
-                val CA_BN = Type(JsonField.of("ca_bn"))
+                val CA_BN = of("ca_bn")
 
-                val CA_GST_HST = Type(JsonField.of("ca_gst_hst"))
+                val CA_GST_HST = of("ca_gst_hst")
 
-                val CA_PST_BC = Type(JsonField.of("ca_pst_bc"))
+                val CA_PST_BC = of("ca_pst_bc")
 
-                val CA_PST_MB = Type(JsonField.of("ca_pst_mb"))
+                val CA_PST_MB = of("ca_pst_mb")
 
-                val CA_PST_SK = Type(JsonField.of("ca_pst_sk"))
+                val CA_PST_SK = of("ca_pst_sk")
 
-                val CA_QST = Type(JsonField.of("ca_qst"))
+                val CA_QST = of("ca_qst")
 
-                val CH_VAT = Type(JsonField.of("ch_vat"))
+                val CH_VAT = of("ch_vat")
 
-                val CL_TIN = Type(JsonField.of("cl_tin"))
+                val CL_TIN = of("cl_tin")
 
-                val CN_TIN = Type(JsonField.of("cn_tin"))
+                val CN_TIN = of("cn_tin")
 
-                val CO_NIT = Type(JsonField.of("co_nit"))
+                val CO_NIT = of("co_nit")
 
-                val CR_TIN = Type(JsonField.of("cr_tin"))
+                val CR_TIN = of("cr_tin")
 
-                val DO_RCN = Type(JsonField.of("do_rcn"))
+                val DO_RCN = of("do_rcn")
 
-                val EC_RUC = Type(JsonField.of("ec_ruc"))
+                val EC_RUC = of("ec_ruc")
 
-                val EG_TIN = Type(JsonField.of("eg_tin"))
+                val EG_TIN = of("eg_tin")
 
-                val ES_CIF = Type(JsonField.of("es_cif"))
+                val ES_CIF = of("es_cif")
 
-                val EU_OSS_VAT = Type(JsonField.of("eu_oss_vat"))
+                val EU_OSS_VAT = of("eu_oss_vat")
 
-                val GB_VAT = Type(JsonField.of("gb_vat"))
+                val GB_VAT = of("gb_vat")
 
-                val GE_VAT = Type(JsonField.of("ge_vat"))
+                val GE_VAT = of("ge_vat")
 
-                val HK_BR = Type(JsonField.of("hk_br"))
+                val HK_BR = of("hk_br")
 
-                val HU_TIN = Type(JsonField.of("hu_tin"))
+                val HU_TIN = of("hu_tin")
 
-                val ID_NPWP = Type(JsonField.of("id_npwp"))
+                val ID_NPWP = of("id_npwp")
 
-                val IL_VAT = Type(JsonField.of("il_vat"))
+                val IL_VAT = of("il_vat")
 
-                val IN_GST = Type(JsonField.of("in_gst"))
+                val IN_GST = of("in_gst")
 
-                val IS_VAT = Type(JsonField.of("is_vat"))
+                val IS_VAT = of("is_vat")
 
-                val JP_CN = Type(JsonField.of("jp_cn"))
+                val JP_CN = of("jp_cn")
 
-                val JP_RN = Type(JsonField.of("jp_rn"))
+                val JP_RN = of("jp_rn")
 
-                val JP_TRN = Type(JsonField.of("jp_trn"))
+                val JP_TRN = of("jp_trn")
 
-                val KE_PIN = Type(JsonField.of("ke_pin"))
+                val KE_PIN = of("ke_pin")
 
-                val KR_BRN = Type(JsonField.of("kr_brn"))
+                val KR_BRN = of("kr_brn")
 
-                val KZ_BIN = Type(JsonField.of("kz_bin"))
+                val KZ_BIN = of("kz_bin")
 
-                val LI_UID = Type(JsonField.of("li_uid"))
+                val LI_UID = of("li_uid")
 
-                val MX_RFC = Type(JsonField.of("mx_rfc"))
+                val MX_RFC = of("mx_rfc")
 
-                val MY_FRP = Type(JsonField.of("my_frp"))
+                val MY_FRP = of("my_frp")
 
-                val MY_ITN = Type(JsonField.of("my_itn"))
+                val MY_ITN = of("my_itn")
 
-                val MY_SST = Type(JsonField.of("my_sst"))
+                val MY_SST = of("my_sst")
 
-                val NG_TIN = Type(JsonField.of("ng_tin"))
+                val NG_TIN = of("ng_tin")
 
-                val NO_VAT = Type(JsonField.of("no_vat"))
+                val NO_VAT = of("no_vat")
 
-                val NO_VOEC = Type(JsonField.of("no_voec"))
+                val NO_VOEC = of("no_voec")
 
-                val NZ_GST = Type(JsonField.of("nz_gst"))
+                val NZ_GST = of("nz_gst")
 
-                val OM_VAT = Type(JsonField.of("om_vat"))
+                val OM_VAT = of("om_vat")
 
-                val PE_RUC = Type(JsonField.of("pe_ruc"))
+                val PE_RUC = of("pe_ruc")
 
-                val PH_TIN = Type(JsonField.of("ph_tin"))
+                val PH_TIN = of("ph_tin")
 
-                val RO_TIN = Type(JsonField.of("ro_tin"))
+                val RO_TIN = of("ro_tin")
 
-                val RS_PIB = Type(JsonField.of("rs_pib"))
+                val RS_PIB = of("rs_pib")
 
-                val RU_INN = Type(JsonField.of("ru_inn"))
+                val RU_INN = of("ru_inn")
 
-                val RU_KPP = Type(JsonField.of("ru_kpp"))
+                val RU_KPP = of("ru_kpp")
 
-                val SA_VAT = Type(JsonField.of("sa_vat"))
+                val SA_VAT = of("sa_vat")
 
-                val SG_GST = Type(JsonField.of("sg_gst"))
+                val SG_GST = of("sg_gst")
 
-                val SG_UEN = Type(JsonField.of("sg_uen"))
+                val SG_UEN = of("sg_uen")
 
-                val SI_TIN = Type(JsonField.of("si_tin"))
+                val SI_TIN = of("si_tin")
 
-                val SV_NIT = Type(JsonField.of("sv_nit"))
+                val SV_NIT = of("sv_nit")
 
-                val TH_VAT = Type(JsonField.of("th_vat"))
+                val TH_VAT = of("th_vat")
 
-                val TR_TIN = Type(JsonField.of("tr_tin"))
+                val TR_TIN = of("tr_tin")
 
-                val TW_VAT = Type(JsonField.of("tw_vat"))
+                val TW_VAT = of("tw_vat")
 
-                val UA_VAT = Type(JsonField.of("ua_vat"))
+                val UA_VAT = of("ua_vat")
 
-                val US_EIN = Type(JsonField.of("us_ein"))
+                val US_EIN = of("us_ein")
 
-                val UY_RUC = Type(JsonField.of("uy_ruc"))
+                val UY_RUC = of("uy_ruc")
 
-                val VE_RIF = Type(JsonField.of("ve_rif"))
+                val VE_RIF = of("ve_rif")
 
-                val VN_TIN = Type(JsonField.of("vn_tin"))
+                val VN_TIN = of("vn_tin")
 
-                val ZA_VAT = Type(JsonField.of("za_vat"))
+                val ZA_VAT = of("za_vat")
 
                 fun of(value: String) = Type(JsonField.of(value))
             }

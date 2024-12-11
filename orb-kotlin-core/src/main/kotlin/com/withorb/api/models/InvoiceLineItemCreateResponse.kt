@@ -2101,7 +2101,7 @@ private constructor(
 
                 companion object {
 
-                    val MATRIX = Type(JsonField.of("matrix"))
+                    val MATRIX = of("matrix")
 
                     fun of(value: String) = Type(JsonField.of(value))
                 }
@@ -2550,7 +2550,7 @@ private constructor(
 
                 companion object {
 
-                    val TIER = Type(JsonField.of("tier"))
+                    val TIER = of("tier")
 
                     fun of(value: String) = Type(JsonField.of(value))
                 }
@@ -2860,7 +2860,7 @@ private constructor(
 
                 companion object {
 
-                    val NULL = Type(JsonField.of("'null'"))
+                    val NULL = of("'null'")
 
                     fun of(value: String) = Type(JsonField.of(value))
                 }
