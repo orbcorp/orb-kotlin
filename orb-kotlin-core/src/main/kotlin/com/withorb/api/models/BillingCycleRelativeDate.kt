@@ -5,7 +5,6 @@ package com.withorb.api.models
 import com.fasterxml.jackson.annotation.JsonCreator
 import com.withorb.api.core.Enum
 import com.withorb.api.core.JsonField
-import com.withorb.api.core.JsonValue
 import com.withorb.api.errors.OrbInvalidDataException
 
 class BillingCycleRelativeDate
