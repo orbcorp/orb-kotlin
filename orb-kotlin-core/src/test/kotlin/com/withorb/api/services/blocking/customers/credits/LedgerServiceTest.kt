@@ -4,6 +4,7 @@ package com.withorb.api.services.blocking.customers.credits
 
 import com.withorb.api.TestServerExtension
 import com.withorb.api.client.okhttp.OrbOkHttpClient
+import com.withorb.api.core.JsonValue
 import com.withorb.api.models.*
 import com.withorb.api.models.CustomerCreditLedgerListByExternalIdParams
 import com.withorb.api.models.CustomerCreditLedgerListParams
@@ -73,6 +74,7 @@ class LedgerServiceTest {
                                     .AddIncrementCreditLedgerEntryRequestParams
                                     .Metadata
                                     .builder()
+                                    .putAdditionalProperty("foo", JsonValue.from("string"))
                                     .build()
                             )
                             .perUnitCostBasis("per_unit_cost_basis")
@@ -126,6 +128,7 @@ class LedgerServiceTest {
                                     .AddIncrementCreditLedgerEntryRequestParams
                                     .Metadata
                                     .builder()
+                                    .putAdditionalProperty("foo", JsonValue.from("string"))
                                     .build()
                             )
                             .perUnitCostBasis("per_unit_cost_basis")

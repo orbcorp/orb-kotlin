@@ -2,6 +2,7 @@
 
 package com.withorb.api.models
 
+import com.withorb.api.core.JsonValue
 import java.time.OffsetDateTime
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
@@ -56,7 +57,12 @@ class SubscriptionFetchCostsResponseTest {
                                                     .discount(
                                                         Discount.ofPercentageDiscount(
                                                             PercentageDiscount.builder()
-                                                                .appliesToPriceIds(listOf("string"))
+                                                                .appliesToPriceIds(
+                                                                    listOf(
+                                                                        "h74gfhdjvn7ujokd",
+                                                                        "7hfgtgjnbvc3ujkl"
+                                                                    )
+                                                                )
                                                                 .discountType(
                                                                     PercentageDiscount.DiscountType
                                                                         .PERCENTAGE
@@ -94,7 +100,12 @@ class SubscriptionFetchCostsResponseTest {
                                                     )
                                                     .maximumAmount("maximum_amount")
                                                     .metadata(
-                                                        Price.UnitPrice.Metadata.builder().build()
+                                                        Price.UnitPrice.Metadata.builder()
+                                                            .putAdditionalProperty(
+                                                                "foo",
+                                                                JsonValue.from("string")
+                                                            )
+                                                            .build()
                                                     )
                                                     .minimum(
                                                         Price.UnitPrice.Minimum.builder()
@@ -172,7 +183,12 @@ class SubscriptionFetchCostsResponseTest {
                                             .discount(
                                                 Discount.ofPercentageDiscount(
                                                     PercentageDiscount.builder()
-                                                        .appliesToPriceIds(listOf("string"))
+                                                        .appliesToPriceIds(
+                                                            listOf(
+                                                                "h74gfhdjvn7ujokd",
+                                                                "7hfgtgjnbvc3ujkl"
+                                                            )
+                                                        )
                                                         .discountType(
                                                             PercentageDiscount.DiscountType
                                                                 .PERCENTAGE
@@ -208,7 +224,14 @@ class SubscriptionFetchCostsResponseTest {
                                                     .build()
                                             )
                                             .maximumAmount("maximum_amount")
-                                            .metadata(Price.UnitPrice.Metadata.builder().build())
+                                            .metadata(
+                                                Price.UnitPrice.Metadata.builder()
+                                                    .putAdditionalProperty(
+                                                        "foo",
+                                                        JsonValue.from("string")
+                                                    )
+                                                    .build()
+                                            )
                                             .minimum(
                                                 Price.UnitPrice.Minimum.builder()
                                                     .appliesToPriceIds(listOf("string"))

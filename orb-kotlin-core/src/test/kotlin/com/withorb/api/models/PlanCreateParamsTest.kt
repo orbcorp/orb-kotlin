@@ -2,6 +2,7 @@
 
 package com.withorb.api.models
 
+import com.withorb.api.core.JsonValue
 import com.withorb.api.models.*
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
@@ -58,7 +59,9 @@ class PlanCreateParamsTest {
                                     .build()
                             )
                             .metadata(
-                                PlanCreateParams.Price.NewPlanUnitPrice.Metadata.builder().build()
+                                PlanCreateParams.Price.NewPlanUnitPrice.Metadata.builder()
+                                    .putAdditionalProperty("foo", JsonValue.from("string"))
+                                    .build()
                             )
                             .build()
                     )
@@ -66,7 +69,11 @@ class PlanCreateParamsTest {
             )
             .defaultInvoiceMemo("default_invoice_memo")
             .externalPlanId("external_plan_id")
-            .metadata(PlanCreateParams.Metadata.builder().build())
+            .metadata(
+                PlanCreateParams.Metadata.builder()
+                    .putAdditionalProperty("foo", JsonValue.from("string"))
+                    .build()
+            )
             .netTerms(0L)
             .status(PlanCreateParams.Status.ACTIVE)
             .build()
@@ -126,6 +133,7 @@ class PlanCreateParamsTest {
                                 )
                                 .metadata(
                                     PlanCreateParams.Price.NewPlanUnitPrice.Metadata.builder()
+                                        .putAdditionalProperty("foo", JsonValue.from("string"))
                                         .build()
                                 )
                                 .build()
@@ -134,7 +142,11 @@ class PlanCreateParamsTest {
                 )
                 .defaultInvoiceMemo("default_invoice_memo")
                 .externalPlanId("external_plan_id")
-                .metadata(PlanCreateParams.Metadata.builder().build())
+                .metadata(
+                    PlanCreateParams.Metadata.builder()
+                        .putAdditionalProperty("foo", JsonValue.from("string"))
+                        .build()
+                )
                 .netTerms(0L)
                 .status(PlanCreateParams.Status.ACTIVE)
                 .build()
@@ -188,7 +200,9 @@ class PlanCreateParamsTest {
                                     .build()
                             )
                             .metadata(
-                                PlanCreateParams.Price.NewPlanUnitPrice.Metadata.builder().build()
+                                PlanCreateParams.Price.NewPlanUnitPrice.Metadata.builder()
+                                    .putAdditionalProperty("foo", JsonValue.from("string"))
+                                    .build()
                             )
                             .build()
                     )
@@ -196,7 +210,12 @@ class PlanCreateParamsTest {
             )
         assertThat(body.defaultInvoiceMemo()).isEqualTo("default_invoice_memo")
         assertThat(body.externalPlanId()).isEqualTo("external_plan_id")
-        assertThat(body.metadata()).isEqualTo(PlanCreateParams.Metadata.builder().build())
+        assertThat(body.metadata())
+            .isEqualTo(
+                PlanCreateParams.Metadata.builder()
+                    .putAdditionalProperty("foo", JsonValue.from("string"))
+                    .build()
+            )
         assertThat(body.netTerms()).isEqualTo(0L)
         assertThat(body.status()).isEqualTo(PlanCreateParams.Status.ACTIVE)
     }

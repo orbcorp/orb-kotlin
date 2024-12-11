@@ -2,6 +2,7 @@
 
 package com.withorb.api.models
 
+import com.withorb.api.core.JsonValue
 import com.withorb.api.models.*
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
@@ -13,7 +14,11 @@ class PlanExternalPlanIdUpdateParamsTest {
         PlanExternalPlanIdUpdateParams.builder()
             .otherExternalPlanId("external_plan_id")
             .externalPlanId("external_plan_id")
-            .metadata(PlanExternalPlanIdUpdateParams.Metadata.builder().build())
+            .metadata(
+                PlanExternalPlanIdUpdateParams.Metadata.builder()
+                    .putAdditionalProperty("foo", JsonValue.from("string"))
+                    .build()
+            )
             .build()
     }
 
@@ -23,13 +28,21 @@ class PlanExternalPlanIdUpdateParamsTest {
             PlanExternalPlanIdUpdateParams.builder()
                 .otherExternalPlanId("external_plan_id")
                 .externalPlanId("external_plan_id")
-                .metadata(PlanExternalPlanIdUpdateParams.Metadata.builder().build())
+                .metadata(
+                    PlanExternalPlanIdUpdateParams.Metadata.builder()
+                        .putAdditionalProperty("foo", JsonValue.from("string"))
+                        .build()
+                )
                 .build()
         val body = params.getBody()
         assertThat(body).isNotNull
         assertThat(body.externalPlanId()).isEqualTo("external_plan_id")
         assertThat(body.metadata())
-            .isEqualTo(PlanExternalPlanIdUpdateParams.Metadata.builder().build())
+            .isEqualTo(
+                PlanExternalPlanIdUpdateParams.Metadata.builder()
+                    .putAdditionalProperty("foo", JsonValue.from("string"))
+                    .build()
+            )
     }
 
     @Test
