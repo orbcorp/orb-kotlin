@@ -430,13 +430,13 @@ constructor(
 
         companion object {
 
-            val DUPLICATE = Reason(JsonField.of("duplicate"))
+            val DUPLICATE = of("duplicate")
 
-            val FRAUDULENT = Reason(JsonField.of("fraudulent"))
+            val FRAUDULENT = of("fraudulent")
 
-            val ORDER_CHANGE = Reason(JsonField.of("order_change"))
+            val ORDER_CHANGE = of("order_change")
 
-            val PRODUCT_UNSATISFACTORY = Reason(JsonField.of("product_unsatisfactory"))
+            val PRODUCT_UNSATISFACTORY = of("product_unsatisfactory")
 
             fun of(value: String) = Reason(JsonField.of(value))
         }

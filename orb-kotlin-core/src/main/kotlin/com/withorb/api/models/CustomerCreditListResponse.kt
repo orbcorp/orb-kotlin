@@ -211,9 +211,9 @@ private constructor(
 
         companion object {
 
-            val ACTIVE = Status(JsonField.of("active"))
+            val ACTIVE = of("active")
 
-            val PENDING_PAYMENT = Status(JsonField.of("pending_payment"))
+            val PENDING_PAYMENT = of("pending_payment")
 
             fun of(value: String) = Status(JsonField.of(value))
         }

@@ -408,11 +408,11 @@ constructor(
 
         companion object {
 
-            val IMMEDIATE = ChangeOption(JsonField.of("immediate"))
+            val IMMEDIATE = of("immediate")
 
-            val UPCOMING_INVOICE = ChangeOption(JsonField.of("upcoming_invoice"))
+            val UPCOMING_INVOICE = of("upcoming_invoice")
 
-            val EFFECTIVE_DATE = ChangeOption(JsonField.of("effective_date"))
+            val EFFECTIVE_DATE = of("effective_date")
 
             fun of(value: String) = ChangeOption(JsonField.of(value))
         }

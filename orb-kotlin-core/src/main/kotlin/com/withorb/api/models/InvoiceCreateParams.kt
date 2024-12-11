@@ -697,7 +697,7 @@ constructor(
 
             companion object {
 
-                val UNIT = ModelType(JsonField.of("unit"))
+                val UNIT = of("unit")
 
                 fun of(value: String) = ModelType(JsonField.of(value))
             }

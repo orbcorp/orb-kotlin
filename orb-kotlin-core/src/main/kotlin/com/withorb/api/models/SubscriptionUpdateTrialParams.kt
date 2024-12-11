@@ -491,7 +491,7 @@ constructor(
 
             companion object {
 
-                val IMMEDIATE = UnionMember1(JsonField.of("immediate"))
+                val IMMEDIATE = of("immediate")
 
                 fun of(value: String) = UnionMember1(JsonField.of(value))
             }

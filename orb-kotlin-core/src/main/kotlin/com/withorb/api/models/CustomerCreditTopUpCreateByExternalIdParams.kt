@@ -623,9 +623,9 @@ constructor(
 
         companion object {
 
-            val DAY = ExpiresAfterUnit(JsonField.of("day"))
+            val DAY = of("day")
 
-            val MONTH = ExpiresAfterUnit(JsonField.of("month"))
+            val MONTH = of("month")
 
             fun of(value: String) = ExpiresAfterUnit(JsonField.of(value))
         }
