@@ -4,6 +4,7 @@ package com.withorb.api.services.blocking
 
 import com.withorb.api.TestServerExtension
 import com.withorb.api.client.okhttp.OrbOkHttpClient
+import com.withorb.api.core.JsonValue
 import com.withorb.api.models.*
 import com.withorb.api.models.InvoiceListParams
 import java.time.LocalDate
@@ -49,7 +50,7 @@ class InvoiceServiceTest {
                     .discount(
                         Discount.ofPercentageDiscount(
                             PercentageDiscount.builder()
-                                .appliesToPriceIds(listOf("string"))
+                                .appliesToPriceIds(listOf("h74gfhdjvn7ujokd", "7hfgtgjnbvc3ujkl"))
                                 .discountType(PercentageDiscount.DiscountType.PERCENTAGE)
                                 .percentageDiscount(0.15)
                                 .reason("reason")
@@ -58,7 +59,11 @@ class InvoiceServiceTest {
                     )
                     .externalCustomerId("external-customer-id")
                     .memo("An optional memo for my invoice.")
-                    .metadata(InvoiceCreateParams.Metadata.builder().build())
+                    .metadata(
+                        InvoiceCreateParams.Metadata.builder()
+                            .putAdditionalProperty("foo", JsonValue.from("string"))
+                            .build()
+                    )
                     .willAutoIssue(false)
                     .build()
             )
@@ -78,7 +83,11 @@ class InvoiceServiceTest {
             invoiceService.update(
                 InvoiceUpdateParams.builder()
                     .invoiceId("invoice_id")
-                    .metadata(InvoiceUpdateParams.Metadata.builder().build())
+                    .metadata(
+                        InvoiceUpdateParams.Metadata.builder()
+                            .putAdditionalProperty("foo", JsonValue.from("string"))
+                            .build()
+                    )
                     .build()
             )
         println(invoice)

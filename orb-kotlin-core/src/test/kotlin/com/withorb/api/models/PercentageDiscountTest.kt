@@ -11,13 +11,14 @@ class PercentageDiscountTest {
     fun createPercentageDiscount() {
         val percentageDiscount =
             PercentageDiscount.builder()
-                .appliesToPriceIds(listOf("string"))
+                .appliesToPriceIds(listOf("h74gfhdjvn7ujokd", "7hfgtgjnbvc3ujkl"))
                 .discountType(PercentageDiscount.DiscountType.PERCENTAGE)
                 .percentageDiscount(0.15)
                 .reason("reason")
                 .build()
         assertThat(percentageDiscount).isNotNull
-        assertThat(percentageDiscount.appliesToPriceIds()).containsExactly("string")
+        assertThat(percentageDiscount.appliesToPriceIds())
+            .containsExactly("h74gfhdjvn7ujokd", "7hfgtgjnbvc3ujkl")
         assertThat(percentageDiscount.discountType())
             .isEqualTo(PercentageDiscount.DiscountType.PERCENTAGE)
         assertThat(percentageDiscount.percentageDiscount()).isEqualTo(0.15)

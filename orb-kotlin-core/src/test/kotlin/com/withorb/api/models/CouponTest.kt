@@ -17,7 +17,7 @@ class CouponTest {
                 .discount(
                     Coupon.Discount.ofPercentageDiscount(
                         PercentageDiscount.builder()
-                            .appliesToPriceIds(listOf("string"))
+                            .appliesToPriceIds(listOf("h74gfhdjvn7ujokd", "7hfgtgjnbvc3ujkl"))
                             .discountType(PercentageDiscount.DiscountType.PERCENTAGE)
                             .percentageDiscount(0.15)
                             .reason("reason")
@@ -36,7 +36,7 @@ class CouponTest {
             .isEqualTo(
                 Coupon.Discount.ofPercentageDiscount(
                     PercentageDiscount.builder()
-                        .appliesToPriceIds(listOf("string"))
+                        .appliesToPriceIds(listOf("h74gfhdjvn7ujokd", "7hfgtgjnbvc3ujkl"))
                         .discountType(PercentageDiscount.DiscountType.PERCENTAGE)
                         .percentageDiscount(0.15)
                         .reason("reason")

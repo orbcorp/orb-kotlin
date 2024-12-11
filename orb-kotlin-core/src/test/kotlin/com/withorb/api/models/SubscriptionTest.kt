@@ -2,6 +2,7 @@
 
 package com.withorb.api.models
 
+import com.withorb.api.core.JsonValue
 import java.time.OffsetDateTime
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
@@ -79,7 +80,11 @@ class SubscriptionTest {
                         .emailDelivery(true)
                         .exemptFromAutomatedTax(true)
                         .externalCustomerId("external_customer_id")
-                        .metadata(Customer.Metadata.builder().build())
+                        .metadata(
+                            Customer.Metadata.builder()
+                                .putAdditionalProperty("foo", JsonValue.from("string"))
+                                .build()
+                        )
                         .name("name")
                         .paymentProvider(Customer.PaymentProvider.QUICKBOOKS)
                         .paymentProviderId("payment_provider_id")
@@ -168,7 +173,11 @@ class SubscriptionTest {
                             .build()
                     )
                 )
-                .metadata(Subscription.Metadata.builder().build())
+                .metadata(
+                    Subscription.Metadata.builder()
+                        .putAdditionalProperty("foo", JsonValue.from("string"))
+                        .build()
+                )
                 .minimumIntervals(
                     listOf(
                         Subscription.MinimumInterval.builder()
@@ -217,7 +226,9 @@ class SubscriptionTest {
                         .discount(
                             Discount.ofPercentageDiscount(
                                 PercentageDiscount.builder()
-                                    .appliesToPriceIds(listOf("string"))
+                                    .appliesToPriceIds(
+                                        listOf("h74gfhdjvn7ujokd", "7hfgtgjnbvc3ujkl")
+                                    )
                                     .discountType(PercentageDiscount.DiscountType.PERCENTAGE)
                                     .percentageDiscount(0.15)
                                     .reason("reason")
@@ -233,7 +244,11 @@ class SubscriptionTest {
                                 .build()
                         )
                         .maximumAmount("maximum_amount")
-                        .metadata(Plan.Metadata.builder().build())
+                        .metadata(
+                            Plan.Metadata.builder()
+                                .putAdditionalProperty("foo", JsonValue.from("string"))
+                                .build()
+                        )
                         .minimum(
                             Plan.Minimum.builder()
                                 .appliesToPriceIds(listOf("string"))
@@ -251,7 +266,9 @@ class SubscriptionTest {
                                     .discount(
                                         Discount.ofPercentageDiscount(
                                             PercentageDiscount.builder()
-                                                .appliesToPriceIds(listOf("string"))
+                                                .appliesToPriceIds(
+                                                    listOf("h74gfhdjvn7ujokd", "7hfgtgjnbvc3ujkl")
+                                                )
                                                 .discountType(
                                                     PercentageDiscount.DiscountType.PERCENTAGE
                                                 )
@@ -314,7 +331,12 @@ class SubscriptionTest {
                                         .discount(
                                             Discount.ofPercentageDiscount(
                                                 PercentageDiscount.builder()
-                                                    .appliesToPriceIds(listOf("string"))
+                                                    .appliesToPriceIds(
+                                                        listOf(
+                                                            "h74gfhdjvn7ujokd",
+                                                            "7hfgtgjnbvc3ujkl"
+                                                        )
+                                                    )
                                                     .discountType(
                                                         PercentageDiscount.DiscountType.PERCENTAGE
                                                     )
@@ -348,7 +370,14 @@ class SubscriptionTest {
                                                 .build()
                                         )
                                         .maximumAmount("maximum_amount")
-                                        .metadata(Price.UnitPrice.Metadata.builder().build())
+                                        .metadata(
+                                            Price.UnitPrice.Metadata.builder()
+                                                .putAdditionalProperty(
+                                                    "foo",
+                                                    JsonValue.from("string")
+                                                )
+                                                .build()
+                                        )
                                         .minimum(
                                             Price.UnitPrice.Minimum.builder()
                                                 .appliesToPriceIds(listOf("string"))
@@ -441,7 +470,12 @@ class SubscriptionTest {
                                         .discount(
                                             Discount.ofPercentageDiscount(
                                                 PercentageDiscount.builder()
-                                                    .appliesToPriceIds(listOf("string"))
+                                                    .appliesToPriceIds(
+                                                        listOf(
+                                                            "h74gfhdjvn7ujokd",
+                                                            "7hfgtgjnbvc3ujkl"
+                                                        )
+                                                    )
                                                     .discountType(
                                                         PercentageDiscount.DiscountType.PERCENTAGE
                                                     )
@@ -475,7 +509,14 @@ class SubscriptionTest {
                                                 .build()
                                         )
                                         .maximumAmount("maximum_amount")
-                                        .metadata(Price.UnitPrice.Metadata.builder().build())
+                                        .metadata(
+                                            Price.UnitPrice.Metadata.builder()
+                                                .putAdditionalProperty(
+                                                    "foo",
+                                                    JsonValue.from("string")
+                                                )
+                                                .build()
+                                        )
                                         .minimum(
                                             Price.UnitPrice.Minimum.builder()
                                                 .appliesToPriceIds(listOf("string"))
@@ -584,7 +625,11 @@ class SubscriptionTest {
                     .emailDelivery(true)
                     .exemptFromAutomatedTax(true)
                     .externalCustomerId("external_customer_id")
-                    .metadata(Customer.Metadata.builder().build())
+                    .metadata(
+                        Customer.Metadata.builder()
+                            .putAdditionalProperty("foo", JsonValue.from("string"))
+                            .build()
+                    )
                     .name("name")
                     .paymentProvider(Customer.PaymentProvider.QUICKBOOKS)
                     .paymentProviderId("payment_provider_id")
@@ -668,7 +713,12 @@ class SubscriptionTest {
                     .startDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                     .build()
             )
-        assertThat(subscription.metadata()).isEqualTo(Subscription.Metadata.builder().build())
+        assertThat(subscription.metadata())
+            .isEqualTo(
+                Subscription.Metadata.builder()
+                    .putAdditionalProperty("foo", JsonValue.from("string"))
+                    .build()
+            )
         assertThat(subscription.minimumIntervals())
             .containsExactly(
                 Subscription.MinimumInterval.builder()
@@ -717,7 +767,7 @@ class SubscriptionTest {
                     .discount(
                         Discount.ofPercentageDiscount(
                             PercentageDiscount.builder()
-                                .appliesToPriceIds(listOf("string"))
+                                .appliesToPriceIds(listOf("h74gfhdjvn7ujokd", "7hfgtgjnbvc3ujkl"))
                                 .discountType(PercentageDiscount.DiscountType.PERCENTAGE)
                                 .percentageDiscount(0.15)
                                 .reason("reason")
@@ -733,7 +783,11 @@ class SubscriptionTest {
                             .build()
                     )
                     .maximumAmount("maximum_amount")
-                    .metadata(Plan.Metadata.builder().build())
+                    .metadata(
+                        Plan.Metadata.builder()
+                            .putAdditionalProperty("foo", JsonValue.from("string"))
+                            .build()
+                    )
                     .minimum(
                         Plan.Minimum.builder()
                             .appliesToPriceIds(listOf("string"))
@@ -751,7 +805,9 @@ class SubscriptionTest {
                                 .discount(
                                     Discount.ofPercentageDiscount(
                                         PercentageDiscount.builder()
-                                            .appliesToPriceIds(listOf("string"))
+                                            .appliesToPriceIds(
+                                                listOf("h74gfhdjvn7ujokd", "7hfgtgjnbvc3ujkl")
+                                            )
                                             .discountType(
                                                 PercentageDiscount.DiscountType.PERCENTAGE
                                             )
@@ -812,7 +868,9 @@ class SubscriptionTest {
                                     .discount(
                                         Discount.ofPercentageDiscount(
                                             PercentageDiscount.builder()
-                                                .appliesToPriceIds(listOf("string"))
+                                                .appliesToPriceIds(
+                                                    listOf("h74gfhdjvn7ujokd", "7hfgtgjnbvc3ujkl")
+                                                )
                                                 .discountType(
                                                     PercentageDiscount.DiscountType.PERCENTAGE
                                                 )
@@ -843,7 +901,11 @@ class SubscriptionTest {
                                             .build()
                                     )
                                     .maximumAmount("maximum_amount")
-                                    .metadata(Price.UnitPrice.Metadata.builder().build())
+                                    .metadata(
+                                        Price.UnitPrice.Metadata.builder()
+                                            .putAdditionalProperty("foo", JsonValue.from("string"))
+                                            .build()
+                                    )
                                     .minimum(
                                         Price.UnitPrice.Minimum.builder()
                                             .appliesToPriceIds(listOf("string"))
@@ -927,7 +989,9 @@ class SubscriptionTest {
                                 .discount(
                                     Discount.ofPercentageDiscount(
                                         PercentageDiscount.builder()
-                                            .appliesToPriceIds(listOf("string"))
+                                            .appliesToPriceIds(
+                                                listOf("h74gfhdjvn7ujokd", "7hfgtgjnbvc3ujkl")
+                                            )
                                             .discountType(
                                                 PercentageDiscount.DiscountType.PERCENTAGE
                                             )
@@ -955,7 +1019,11 @@ class SubscriptionTest {
                                         .build()
                                 )
                                 .maximumAmount("maximum_amount")
-                                .metadata(Price.UnitPrice.Metadata.builder().build())
+                                .metadata(
+                                    Price.UnitPrice.Metadata.builder()
+                                        .putAdditionalProperty("foo", JsonValue.from("string"))
+                                        .build()
+                                )
                                 .minimum(
                                     Price.UnitPrice.Minimum.builder()
                                         .appliesToPriceIds(listOf("string"))
