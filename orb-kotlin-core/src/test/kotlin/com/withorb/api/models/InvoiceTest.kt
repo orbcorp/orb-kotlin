@@ -2,7 +2,7 @@
 
 package com.withorb.api.models
 
-import com.withorb.api.core.JsonNull
+import com.withorb.api.core.JsonValue
 import java.time.OffsetDateTime
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
@@ -85,12 +85,12 @@ class InvoiceTest {
                         .value("value")
                         .build()
                 )
-                .discount(JsonNull.of())
+                .discount(JsonValue.from(mapOf<String, Any>()))
                 .discounts(
                     listOf(
                         InvoiceLevelDiscount.ofPercentageDiscount(
                             PercentageDiscount.builder()
-                                .appliesToPriceIds(listOf("string"))
+                                .appliesToPriceIds(listOf("h74gfhdjvn7ujokd", "7hfgtgjnbvc3ujkl"))
                                 .discountType(PercentageDiscount.DiscountType.PERCENTAGE)
                                 .percentageDiscount(0.15)
                                 .reason("reason")
@@ -115,7 +115,9 @@ class InvoiceTest {
                             .discount(
                                 Discount.ofPercentageDiscount(
                                     PercentageDiscount.builder()
-                                        .appliesToPriceIds(listOf("string"))
+                                        .appliesToPriceIds(
+                                            listOf("h74gfhdjvn7ujokd", "7hfgtgjnbvc3ujkl")
+                                        )
                                         .discountType(PercentageDiscount.DiscountType.PERCENTAGE)
                                         .percentageDiscount(0.15)
                                         .reason("reason")
@@ -171,7 +173,12 @@ class InvoiceTest {
                                         .discount(
                                             Discount.ofPercentageDiscount(
                                                 PercentageDiscount.builder()
-                                                    .appliesToPriceIds(listOf("string"))
+                                                    .appliesToPriceIds(
+                                                        listOf(
+                                                            "h74gfhdjvn7ujokd",
+                                                            "7hfgtgjnbvc3ujkl"
+                                                        )
+                                                    )
                                                     .discountType(
                                                         PercentageDiscount.DiscountType.PERCENTAGE
                                                     )
@@ -205,7 +212,14 @@ class InvoiceTest {
                                                 .build()
                                         )
                                         .maximumAmount("maximum_amount")
-                                        .metadata(Price.UnitPrice.Metadata.builder().build())
+                                        .metadata(
+                                            Price.UnitPrice.Metadata.builder()
+                                                .putAdditionalProperty(
+                                                    "foo",
+                                                    JsonValue.from("string")
+                                                )
+                                                .build()
+                                        )
                                         .minimum(
                                             Price.UnitPrice.Minimum.builder()
                                                 .appliesToPriceIds(listOf("string"))
@@ -278,7 +292,11 @@ class InvoiceTest {
                 )
                 .maximumAmount("maximum_amount")
                 .memo("memo")
-                .metadata(Invoice.Metadata.builder().build())
+                .metadata(
+                    Invoice.Metadata.builder()
+                        .putAdditionalProperty("foo", JsonValue.from("string"))
+                        .build()
+                )
                 .minimum(
                     Invoice.Minimum.builder()
                         .appliesToPriceIds(listOf("string"))
@@ -393,12 +411,12 @@ class InvoiceTest {
                     .value("value")
                     .build()
             )
-        assertThat(invoice._discount()).isEqualTo(JsonNull.of())
+        assertThat(invoice._discount()).isEqualTo(JsonValue.from(mapOf<String, Any>()))
         assertThat(invoice.discounts())
             .containsExactly(
                 InvoiceLevelDiscount.ofPercentageDiscount(
                     PercentageDiscount.builder()
-                        .appliesToPriceIds(listOf("string"))
+                        .appliesToPriceIds(listOf("h74gfhdjvn7ujokd", "7hfgtgjnbvc3ujkl"))
                         .discountType(PercentageDiscount.DiscountType.PERCENTAGE)
                         .percentageDiscount(0.15)
                         .reason("reason")
@@ -426,7 +444,7 @@ class InvoiceTest {
                     .discount(
                         Discount.ofPercentageDiscount(
                             PercentageDiscount.builder()
-                                .appliesToPriceIds(listOf("string"))
+                                .appliesToPriceIds(listOf("h74gfhdjvn7ujokd", "7hfgtgjnbvc3ujkl"))
                                 .discountType(PercentageDiscount.DiscountType.PERCENTAGE)
                                 .percentageDiscount(0.15)
                                 .reason("reason")
@@ -479,7 +497,9 @@ class InvoiceTest {
                                 .discount(
                                     Discount.ofPercentageDiscount(
                                         PercentageDiscount.builder()
-                                            .appliesToPriceIds(listOf("string"))
+                                            .appliesToPriceIds(
+                                                listOf("h74gfhdjvn7ujokd", "7hfgtgjnbvc3ujkl")
+                                            )
                                             .discountType(
                                                 PercentageDiscount.DiscountType.PERCENTAGE
                                             )
@@ -507,7 +527,11 @@ class InvoiceTest {
                                         .build()
                                 )
                                 .maximumAmount("maximum_amount")
-                                .metadata(Price.UnitPrice.Metadata.builder().build())
+                                .metadata(
+                                    Price.UnitPrice.Metadata.builder()
+                                        .putAdditionalProperty("foo", JsonValue.from("string"))
+                                        .build()
+                                )
                                 .minimum(
                                     Price.UnitPrice.Minimum.builder()
                                         .appliesToPriceIds(listOf("string"))
@@ -577,7 +601,12 @@ class InvoiceTest {
             )
         assertThat(invoice.maximumAmount()).isEqualTo("maximum_amount")
         assertThat(invoice.memo()).isEqualTo("memo")
-        assertThat(invoice.metadata()).isEqualTo(Invoice.Metadata.builder().build())
+        assertThat(invoice.metadata())
+            .isEqualTo(
+                Invoice.Metadata.builder()
+                    .putAdditionalProperty("foo", JsonValue.from("string"))
+                    .build()
+            )
         assertThat(invoice.minimum())
             .isEqualTo(
                 Invoice.Minimum.builder()
