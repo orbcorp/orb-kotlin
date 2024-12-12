@@ -4,8 +4,10 @@ package com.withorb.api.services.blocking
 
 import com.withorb.api.TestServerExtension
 import com.withorb.api.client.okhttp.OrbOkHttpClient
-import com.withorb.api.models.*
+import com.withorb.api.models.ItemCreateParams
+import com.withorb.api.models.ItemFetchParams
 import com.withorb.api.models.ItemListParams
+import com.withorb.api.models.ItemUpdateParams
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 

@@ -25,7 +25,8 @@ import com.withorb.api.errors.RateLimitException
 import com.withorb.api.errors.UnauthorizedException
 import com.withorb.api.errors.UnexpectedStatusCodeException
 import com.withorb.api.errors.UnprocessableEntityException
-import com.withorb.api.models.*
+import com.withorb.api.models.Customer
+import com.withorb.api.models.CustomerCreateParams
 import java.time.OffsetDateTime
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.assertThatThrownBy

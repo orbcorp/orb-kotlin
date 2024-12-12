@@ -2,7 +2,6 @@
 
 package com.withorb.api.client
 
-import com.withorb.api.models.*
 import com.withorb.api.services.async.*
 
 interface OrbClientAsync {
