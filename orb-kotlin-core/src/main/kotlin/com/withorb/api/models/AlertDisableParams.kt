@@ -13,12 +13,15 @@ import java.util.Objects
 class AlertDisableParams
 constructor(
     private val alertConfigurationId: String,
+    private val subscriptionId: String?,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
     private val additionalBodyProperties: Map<String, JsonValue>,
 ) {
 
     fun alertConfigurationId(): String = alertConfigurationId
+
+    fun subscriptionId(): String? = subscriptionId
 
     fun _additionalHeaders(): Headers = additionalHeaders
 
@@ -32,7 +35,12 @@ constructor(
 
     internal fun getHeaders(): Headers = additionalHeaders
 
-    internal fun getQueryParams(): QueryParams = additionalQueryParams
+    internal fun getQueryParams(): QueryParams {
+        val queryParams = QueryParams.builder()
+        this.subscriptionId?.let { queryParams.put("subscription_id", listOf(it.toString())) }
+        queryParams.putAll(additionalQueryParams)
+        return queryParams.build()
+    }
 
     fun getPathParam(index: Int): String {
         return when (index) {
@@ -52,12 +60,14 @@ constructor(
     class Builder {
 
         private var alertConfigurationId: String? = null
+        private var subscriptionId: String? = null
         private var additionalHeaders: Headers.Builder = Headers.builder()
         private var additionalQueryParams: QueryParams.Builder = QueryParams.builder()
         private var additionalBodyProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         internal fun from(alertDisableParams: AlertDisableParams) = apply {
             alertConfigurationId = alertDisableParams.alertConfigurationId
+            subscriptionId = alertDisableParams.subscriptionId
             additionalHeaders = alertDisableParams.additionalHeaders.toBuilder()
             additionalQueryParams = alertDisableParams.additionalQueryParams.toBuilder()
             additionalBodyProperties = alertDisableParams.additionalBodyProperties.toMutableMap()
@@ -66,6 +76,9 @@ constructor(
         fun alertConfigurationId(alertConfigurationId: String) = apply {
             this.alertConfigurationId = alertConfigurationId
         }
+
+        /** Used to update the status of a plan alert scoped to this subscription_id */
+        fun subscriptionId(subscriptionId: String) = apply { this.subscriptionId = subscriptionId }
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {
             this.additionalHeaders.clear()
@@ -192,6 +205,7 @@ constructor(
                 checkNotNull(alertConfigurationId) {
                     "`alertConfigurationId` is required but was not set"
                 },
+                subscriptionId,
                 additionalHeaders.build(),
                 additionalQueryParams.build(),
                 additionalBodyProperties.toImmutable(),
@@ -203,11 +217,11 @@ constructor(
             return true
         }
 
-        return /* spotless:off */ other is AlertDisableParams && alertConfigurationId == other.alertConfigurationId && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams && additionalBodyProperties == other.additionalBodyProperties /* spotless:on */
+        return /* spotless:off */ other is AlertDisableParams && alertConfigurationId == other.alertConfigurationId && subscriptionId == other.subscriptionId && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams && additionalBodyProperties == other.additionalBodyProperties /* spotless:on */
     }
 
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(alertConfigurationId, additionalHeaders, additionalQueryParams, additionalBodyProperties) /* spotless:on */
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(alertConfigurationId, subscriptionId, additionalHeaders, additionalQueryParams, additionalBodyProperties) /* spotless:on */
 
     override fun toString() =
-        "AlertDisableParams{alertConfigurationId=$alertConfigurationId, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams, additionalBodyProperties=$additionalBodyProperties}"
+        "AlertDisableParams{alertConfigurationId=$alertConfigurationId, subscriptionId=$subscriptionId, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams, additionalBodyProperties=$additionalBodyProperties}"
 }
