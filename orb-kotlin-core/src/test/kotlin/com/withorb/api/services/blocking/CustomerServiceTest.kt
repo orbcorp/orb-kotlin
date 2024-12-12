@@ -5,8 +5,13 @@ package com.withorb.api.services.blocking
 import com.withorb.api.TestServerExtension
 import com.withorb.api.client.okhttp.OrbOkHttpClient
 import com.withorb.api.core.JsonValue
-import com.withorb.api.models.*
+import com.withorb.api.models.CustomerCreateParams
+import com.withorb.api.models.CustomerDeleteParams
+import com.withorb.api.models.CustomerFetchByExternalIdParams
+import com.withorb.api.models.CustomerFetchParams
 import com.withorb.api.models.CustomerListParams
+import com.withorb.api.models.CustomerUpdateByExternalIdParams
+import com.withorb.api.models.CustomerUpdateParams
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 

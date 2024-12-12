@@ -4,7 +4,6 @@ package com.withorb.api.services.blocking.customers
 
 import com.withorb.api.TestServerExtension
 import com.withorb.api.client.okhttp.OrbOkHttpClient
-import com.withorb.api.models.*
 import com.withorb.api.models.CustomerCreditListByExternalIdParams
 import com.withorb.api.models.CustomerCreditListParams
 import org.junit.jupiter.api.Test

@@ -4,7 +4,6 @@ package com.withorb.api.client
 
 import com.withorb.api.core.ClientOptions
 import com.withorb.api.core.getPackageVersion
-import com.withorb.api.models.*
 import com.withorb.api.services.blocking.*
 
 class OrbClientImpl
