@@ -12,7 +12,6 @@ import com.github.tomakehurst.wiremock.junit5.WireMockRuntimeInfo
 import com.github.tomakehurst.wiremock.junit5.WireMockTest
 import com.withorb.api.client.OrbClient
 import com.withorb.api.client.okhttp.OrbOkHttpClient
-import com.withorb.api.core.JsonString
 import com.withorb.api.core.JsonValue
 import com.withorb.api.core.http.Headers
 import com.withorb.api.core.jsonMapper
@@ -40,7 +39,7 @@ class ErrorHandlingTest {
     private val JSON_MAPPER: JsonMapper = jsonMapper()
 
     private val ORB_ERROR: OrbError =
-        OrbError.builder().putAdditionalProperty("key", JsonString.of("value")).build()
+        OrbError.builder().putAdditionalProperty("key", JsonValue.from("value")).build()
 
     private lateinit var client: OrbClient
 
