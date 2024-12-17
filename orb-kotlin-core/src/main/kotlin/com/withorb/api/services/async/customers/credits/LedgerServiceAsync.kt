@@ -107,7 +107,7 @@ interface LedgerServiceAsync {
      * 1. After calling this endpoint, [Fetch Credit Balance](fetch-customer-credits) will return a
      *    credit block that represents the changes (i.e. balance changes or transfers).
      * 2. A ledger entry will be added to the credits ledger for this customer, and therefore
-     *    returned in the [View Credits Ledger](fetch-customer-credits) response as well as
+     *    returned in the [View Credits Ledger](fetch-customer-credits-ledger) response as well as
      *    serialized in the response to this request. In the case of deductions without a specified
      *    block, multiple ledger entries may be created if the deduction spans credit blocks.
      * 3. If `invoice_settings` is specified, an invoice will be created that reflects the cost of
@@ -215,7 +215,7 @@ interface LedgerServiceAsync {
      * 1. After calling this endpoint, [Fetch Credit Balance](fetch-customer-credits) will return a
      *    credit block that represents the changes (i.e. balance changes or transfers).
      * 2. A ledger entry will be added to the credits ledger for this customer, and therefore
-     *    returned in the [View Credits Ledger](fetch-customer-credits) response as well as
+     *    returned in the [View Credits Ledger](fetch-customer-credits-ledger) response as well as
      *    serialized in the response to this request. In the case of deductions without a specified
      *    block, multiple ledger entries may be created if the deduction spans credit blocks.
      * 3. If `invoice_settings` is specified, an invoice will be created that reflects the cost of
