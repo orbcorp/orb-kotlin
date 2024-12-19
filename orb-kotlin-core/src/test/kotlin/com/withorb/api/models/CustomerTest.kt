@@ -2,6 +2,7 @@
 
 package com.withorb.api.models
 
+import com.withorb.api.core.JsonValue
 import java.time.OffsetDateTime
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
@@ -32,7 +33,11 @@ class CustomerTest {
                 .emailDelivery(true)
                 .exemptFromAutomatedTax(true)
                 .externalCustomerId("external_customer_id")
-                .metadata(Customer.Metadata.builder().build())
+                .metadata(
+                    Customer.Metadata.builder()
+                        .putAdditionalProperty("foo", JsonValue.from("string"))
+                        .build()
+                )
                 .name("name")
                 .paymentProvider(Customer.PaymentProvider.QUICKBOOKS)
                 .paymentProviderId("payment_provider_id")
@@ -98,7 +103,12 @@ class CustomerTest {
         assertThat(customer.emailDelivery()).isEqualTo(true)
         assertThat(customer.exemptFromAutomatedTax()).isEqualTo(true)
         assertThat(customer.externalCustomerId()).isEqualTo("external_customer_id")
-        assertThat(customer.metadata()).isEqualTo(Customer.Metadata.builder().build())
+        assertThat(customer.metadata())
+            .isEqualTo(
+                Customer.Metadata.builder()
+                    .putAdditionalProperty("foo", JsonValue.from("string"))
+                    .build()
+            )
         assertThat(customer.name()).isEqualTo("name")
         assertThat(customer.paymentProvider()).isEqualTo(Customer.PaymentProvider.QUICKBOOKS)
         assertThat(customer.paymentProviderId()).isEqualTo("payment_provider_id")

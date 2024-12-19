@@ -11,14 +11,15 @@ class TrialDiscountTest {
     fun createTrialDiscount() {
         val trialDiscount =
             TrialDiscount.builder()
-                .appliesToPriceIds(listOf("string"))
+                .appliesToPriceIds(listOf("h74gfhdjvn7ujokd", "7hfgtgjnbvc3ujkl"))
                 .discountType(TrialDiscount.DiscountType.TRIAL)
                 .reason("reason")
                 .trialAmountDiscount("trial_amount_discount")
                 .trialPercentageDiscount(0.0)
                 .build()
         assertThat(trialDiscount).isNotNull
-        assertThat(trialDiscount.appliesToPriceIds()).containsExactly("string")
+        assertThat(trialDiscount.appliesToPriceIds())
+            .containsExactly("h74gfhdjvn7ujokd", "7hfgtgjnbvc3ujkl")
         assertThat(trialDiscount.discountType()).isEqualTo(TrialDiscount.DiscountType.TRIAL)
         assertThat(trialDiscount.reason()).isEqualTo("reason")
         assertThat(trialDiscount.trialAmountDiscount()).isEqualTo("trial_amount_discount")

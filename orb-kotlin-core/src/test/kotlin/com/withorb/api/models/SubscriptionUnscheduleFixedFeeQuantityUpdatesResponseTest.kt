@@ -2,6 +2,7 @@
 
 package com.withorb.api.models
 
+import com.withorb.api.core.JsonValue
 import java.time.OffsetDateTime
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
@@ -88,7 +89,11 @@ class SubscriptionUnscheduleFixedFeeQuantityUpdatesResponseTest {
                         .emailDelivery(true)
                         .exemptFromAutomatedTax(true)
                         .externalCustomerId("external_customer_id")
-                        .metadata(Customer.Metadata.builder().build())
+                        .metadata(
+                            Customer.Metadata.builder()
+                                .putAdditionalProperty("foo", JsonValue.from("string"))
+                                .build()
+                        )
                         .name("name")
                         .paymentProvider(Customer.PaymentProvider.QUICKBOOKS)
                         .paymentProviderId("payment_provider_id")
@@ -187,7 +192,9 @@ class SubscriptionUnscheduleFixedFeeQuantityUpdatesResponseTest {
                     )
                 )
                 .metadata(
-                    SubscriptionUnscheduleFixedFeeQuantityUpdatesResponse.Metadata.builder().build()
+                    SubscriptionUnscheduleFixedFeeQuantityUpdatesResponse.Metadata.builder()
+                        .putAdditionalProperty("foo", JsonValue.from("string"))
+                        .build()
                 )
                 .minimumIntervals(
                     listOf(
@@ -238,7 +245,9 @@ class SubscriptionUnscheduleFixedFeeQuantityUpdatesResponseTest {
                         .discount(
                             Discount.ofPercentageDiscount(
                                 PercentageDiscount.builder()
-                                    .appliesToPriceIds(listOf("string"))
+                                    .appliesToPriceIds(
+                                        listOf("h74gfhdjvn7ujokd", "7hfgtgjnbvc3ujkl")
+                                    )
                                     .discountType(PercentageDiscount.DiscountType.PERCENTAGE)
                                     .percentageDiscount(0.15)
                                     .reason("reason")
@@ -254,7 +263,11 @@ class SubscriptionUnscheduleFixedFeeQuantityUpdatesResponseTest {
                                 .build()
                         )
                         .maximumAmount("maximum_amount")
-                        .metadata(Plan.Metadata.builder().build())
+                        .metadata(
+                            Plan.Metadata.builder()
+                                .putAdditionalProperty("foo", JsonValue.from("string"))
+                                .build()
+                        )
                         .minimum(
                             Plan.Minimum.builder()
                                 .appliesToPriceIds(listOf("string"))
@@ -272,7 +285,9 @@ class SubscriptionUnscheduleFixedFeeQuantityUpdatesResponseTest {
                                     .discount(
                                         Discount.ofPercentageDiscount(
                                             PercentageDiscount.builder()
-                                                .appliesToPriceIds(listOf("string"))
+                                                .appliesToPriceIds(
+                                                    listOf("h74gfhdjvn7ujokd", "7hfgtgjnbvc3ujkl")
+                                                )
                                                 .discountType(
                                                     PercentageDiscount.DiscountType.PERCENTAGE
                                                 )
@@ -335,7 +350,12 @@ class SubscriptionUnscheduleFixedFeeQuantityUpdatesResponseTest {
                                         .discount(
                                             Discount.ofPercentageDiscount(
                                                 PercentageDiscount.builder()
-                                                    .appliesToPriceIds(listOf("string"))
+                                                    .appliesToPriceIds(
+                                                        listOf(
+                                                            "h74gfhdjvn7ujokd",
+                                                            "7hfgtgjnbvc3ujkl"
+                                                        )
+                                                    )
                                                     .discountType(
                                                         PercentageDiscount.DiscountType.PERCENTAGE
                                                     )
@@ -369,7 +389,14 @@ class SubscriptionUnscheduleFixedFeeQuantityUpdatesResponseTest {
                                                 .build()
                                         )
                                         .maximumAmount("maximum_amount")
-                                        .metadata(Price.UnitPrice.Metadata.builder().build())
+                                        .metadata(
+                                            Price.UnitPrice.Metadata.builder()
+                                                .putAdditionalProperty(
+                                                    "foo",
+                                                    JsonValue.from("string")
+                                                )
+                                                .build()
+                                        )
                                         .minimum(
                                             Price.UnitPrice.Minimum.builder()
                                                 .appliesToPriceIds(listOf("string"))
@@ -466,7 +493,12 @@ class SubscriptionUnscheduleFixedFeeQuantityUpdatesResponseTest {
                                         .discount(
                                             Discount.ofPercentageDiscount(
                                                 PercentageDiscount.builder()
-                                                    .appliesToPriceIds(listOf("string"))
+                                                    .appliesToPriceIds(
+                                                        listOf(
+                                                            "h74gfhdjvn7ujokd",
+                                                            "7hfgtgjnbvc3ujkl"
+                                                        )
+                                                    )
                                                     .discountType(
                                                         PercentageDiscount.DiscountType.PERCENTAGE
                                                     )
@@ -500,7 +532,14 @@ class SubscriptionUnscheduleFixedFeeQuantityUpdatesResponseTest {
                                                 .build()
                                         )
                                         .maximumAmount("maximum_amount")
-                                        .metadata(Price.UnitPrice.Metadata.builder().build())
+                                        .metadata(
+                                            Price.UnitPrice.Metadata.builder()
+                                                .putAdditionalProperty(
+                                                    "foo",
+                                                    JsonValue.from("string")
+                                                )
+                                                .build()
+                                        )
                                         .minimum(
                                             Price.UnitPrice.Minimum.builder()
                                                 .appliesToPriceIds(listOf("string"))
@@ -629,7 +668,11 @@ class SubscriptionUnscheduleFixedFeeQuantityUpdatesResponseTest {
                     .emailDelivery(true)
                     .exemptFromAutomatedTax(true)
                     .externalCustomerId("external_customer_id")
-                    .metadata(Customer.Metadata.builder().build())
+                    .metadata(
+                        Customer.Metadata.builder()
+                            .putAdditionalProperty("foo", JsonValue.from("string"))
+                            .build()
+                    )
                     .name("name")
                     .paymentProvider(Customer.PaymentProvider.QUICKBOOKS)
                     .paymentProviderId("payment_provider_id")
@@ -725,7 +768,9 @@ class SubscriptionUnscheduleFixedFeeQuantityUpdatesResponseTest {
             )
         assertThat(subscriptionUnscheduleFixedFeeQuantityUpdatesResponse.metadata())
             .isEqualTo(
-                SubscriptionUnscheduleFixedFeeQuantityUpdatesResponse.Metadata.builder().build()
+                SubscriptionUnscheduleFixedFeeQuantityUpdatesResponse.Metadata.builder()
+                    .putAdditionalProperty("foo", JsonValue.from("string"))
+                    .build()
             )
         assertThat(subscriptionUnscheduleFixedFeeQuantityUpdatesResponse.minimumIntervals())
             .containsExactly(
@@ -775,7 +820,7 @@ class SubscriptionUnscheduleFixedFeeQuantityUpdatesResponseTest {
                     .discount(
                         Discount.ofPercentageDiscount(
                             PercentageDiscount.builder()
-                                .appliesToPriceIds(listOf("string"))
+                                .appliesToPriceIds(listOf("h74gfhdjvn7ujokd", "7hfgtgjnbvc3ujkl"))
                                 .discountType(PercentageDiscount.DiscountType.PERCENTAGE)
                                 .percentageDiscount(0.15)
                                 .reason("reason")
@@ -791,7 +836,11 @@ class SubscriptionUnscheduleFixedFeeQuantityUpdatesResponseTest {
                             .build()
                     )
                     .maximumAmount("maximum_amount")
-                    .metadata(Plan.Metadata.builder().build())
+                    .metadata(
+                        Plan.Metadata.builder()
+                            .putAdditionalProperty("foo", JsonValue.from("string"))
+                            .build()
+                    )
                     .minimum(
                         Plan.Minimum.builder()
                             .appliesToPriceIds(listOf("string"))
@@ -809,7 +858,9 @@ class SubscriptionUnscheduleFixedFeeQuantityUpdatesResponseTest {
                                 .discount(
                                     Discount.ofPercentageDiscount(
                                         PercentageDiscount.builder()
-                                            .appliesToPriceIds(listOf("string"))
+                                            .appliesToPriceIds(
+                                                listOf("h74gfhdjvn7ujokd", "7hfgtgjnbvc3ujkl")
+                                            )
                                             .discountType(
                                                 PercentageDiscount.DiscountType.PERCENTAGE
                                             )
@@ -870,7 +921,9 @@ class SubscriptionUnscheduleFixedFeeQuantityUpdatesResponseTest {
                                     .discount(
                                         Discount.ofPercentageDiscount(
                                             PercentageDiscount.builder()
-                                                .appliesToPriceIds(listOf("string"))
+                                                .appliesToPriceIds(
+                                                    listOf("h74gfhdjvn7ujokd", "7hfgtgjnbvc3ujkl")
+                                                )
                                                 .discountType(
                                                     PercentageDiscount.DiscountType.PERCENTAGE
                                                 )
@@ -901,7 +954,11 @@ class SubscriptionUnscheduleFixedFeeQuantityUpdatesResponseTest {
                                             .build()
                                     )
                                     .maximumAmount("maximum_amount")
-                                    .metadata(Price.UnitPrice.Metadata.builder().build())
+                                    .metadata(
+                                        Price.UnitPrice.Metadata.builder()
+                                            .putAdditionalProperty("foo", JsonValue.from("string"))
+                                            .build()
+                                    )
                                     .minimum(
                                         Price.UnitPrice.Minimum.builder()
                                             .appliesToPriceIds(listOf("string"))
@@ -987,7 +1044,9 @@ class SubscriptionUnscheduleFixedFeeQuantityUpdatesResponseTest {
                                 .discount(
                                     Discount.ofPercentageDiscount(
                                         PercentageDiscount.builder()
-                                            .appliesToPriceIds(listOf("string"))
+                                            .appliesToPriceIds(
+                                                listOf("h74gfhdjvn7ujokd", "7hfgtgjnbvc3ujkl")
+                                            )
                                             .discountType(
                                                 PercentageDiscount.DiscountType.PERCENTAGE
                                             )
@@ -1015,7 +1074,11 @@ class SubscriptionUnscheduleFixedFeeQuantityUpdatesResponseTest {
                                         .build()
                                 )
                                 .maximumAmount("maximum_amount")
-                                .metadata(Price.UnitPrice.Metadata.builder().build())
+                                .metadata(
+                                    Price.UnitPrice.Metadata.builder()
+                                        .putAdditionalProperty("foo", JsonValue.from("string"))
+                                        .build()
+                                )
                                 .minimum(
                                     Price.UnitPrice.Minimum.builder()
                                         .appliesToPriceIds(listOf("string"))

@@ -4,7 +4,9 @@ package com.withorb.api.services.blocking.customers.credits
 
 import com.withorb.api.TestServerExtension
 import com.withorb.api.client.okhttp.OrbOkHttpClient
-import com.withorb.api.models.*
+import com.withorb.api.core.JsonValue
+import com.withorb.api.models.CustomerCreditLedgerCreateEntryByExternalIdParams
+import com.withorb.api.models.CustomerCreditLedgerCreateEntryParams
 import com.withorb.api.models.CustomerCreditLedgerListByExternalIdParams
 import com.withorb.api.models.CustomerCreditLedgerListParams
 import java.time.OffsetDateTime
@@ -41,7 +43,6 @@ class LedgerServiceTest {
         val customerCreditLedgerCreateEntryResponse =
             ledgerService.createEntry(
                 CustomerCreditLedgerCreateEntryParams.builder()
-                    .customerId("customer_id")
                     .forAddIncrementCreditLedgerEntryRequestParams(
                         CustomerCreditLedgerCreateEntryParams
                             .AddIncrementCreditLedgerEntryRequestParams
@@ -73,11 +74,13 @@ class LedgerServiceTest {
                                     .AddIncrementCreditLedgerEntryRequestParams
                                     .Metadata
                                     .builder()
+                                    .putAdditionalProperty("foo", JsonValue.from("string"))
                                     .build()
                             )
                             .perUnitCostBasis("per_unit_cost_basis")
                             .build()
                     )
+                    .customerId("customer_id")
                     .build()
             )
         println(customerCreditLedgerCreateEntryResponse)
@@ -94,7 +97,6 @@ class LedgerServiceTest {
         val customerCreditLedgerCreateEntryByExternalIdResponse =
             ledgerService.createEntryByExternalId(
                 CustomerCreditLedgerCreateEntryByExternalIdParams.builder()
-                    .externalCustomerId("external_customer_id")
                     .forAddIncrementCreditLedgerEntryRequestParams(
                         CustomerCreditLedgerCreateEntryByExternalIdParams
                             .AddIncrementCreditLedgerEntryRequestParams
@@ -126,11 +128,13 @@ class LedgerServiceTest {
                                     .AddIncrementCreditLedgerEntryRequestParams
                                     .Metadata
                                     .builder()
+                                    .putAdditionalProperty("foo", JsonValue.from("string"))
                                     .build()
                             )
                             .perUnitCostBasis("per_unit_cost_basis")
                             .build()
                     )
+                    .externalCustomerId("external_customer_id")
                     .build()
             )
         println(customerCreditLedgerCreateEntryByExternalIdResponse)

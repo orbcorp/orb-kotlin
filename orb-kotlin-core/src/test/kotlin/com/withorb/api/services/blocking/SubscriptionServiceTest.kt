@@ -5,9 +5,22 @@ package com.withorb.api.services.blocking
 import com.withorb.api.TestServerExtension
 import com.withorb.api.client.okhttp.OrbOkHttpClient
 import com.withorb.api.core.JsonValue
-import com.withorb.api.models.*
+import com.withorb.api.models.SubscriptionCancelParams
+import com.withorb.api.models.SubscriptionCreateParams
+import com.withorb.api.models.SubscriptionFetchCostsParams
+import com.withorb.api.models.SubscriptionFetchParams
 import com.withorb.api.models.SubscriptionFetchScheduleParams
+import com.withorb.api.models.SubscriptionFetchUsageParams
 import com.withorb.api.models.SubscriptionListParams
+import com.withorb.api.models.SubscriptionPriceIntervalsParams
+import com.withorb.api.models.SubscriptionSchedulePlanChangeParams
+import com.withorb.api.models.SubscriptionTriggerPhaseParams
+import com.withorb.api.models.SubscriptionUnscheduleCancellationParams
+import com.withorb.api.models.SubscriptionUnscheduleFixedFeeQuantityUpdatesParams
+import com.withorb.api.models.SubscriptionUnschedulePendingPlanChangesParams
+import com.withorb.api.models.SubscriptionUpdateFixedFeeQuantityParams
+import com.withorb.api.models.SubscriptionUpdateParams
+import com.withorb.api.models.SubscriptionUpdateTrialParams
 import java.time.LocalDate
 import java.time.OffsetDateTime
 import org.junit.jupiter.api.Disabled
@@ -44,7 +57,7 @@ class SubscriptionServiceTest {
                                                         .AdjustmentType
                                                         .PERCENTAGE_DISCOUNT
                                                 )
-                                                .appliesToPriceIds(listOf("string"))
+                                                .appliesToPriceIds(listOf("price_1", "price_2"))
                                                 .percentageDiscount(0.0)
                                                 .isInvoiceLevel(true)
                                                 .build()
@@ -148,6 +161,10 @@ class SubscriptionServiceTest {
                                                         .NewSubscriptionUnitPrice
                                                         .Metadata
                                                         .builder()
+                                                        .putAdditionalProperty(
+                                                            "foo",
+                                                            JsonValue.from("string")
+                                                        )
                                                         .build()
                                                 )
                                                 .referenceId("reference_id")
@@ -181,7 +198,11 @@ class SubscriptionServiceTest {
                     .filter("my_property > 100 AND my_other_property = 'bar'")
                     .initialPhaseOrder(2L)
                     .invoicingThreshold("10.00")
-                    .metadata(SubscriptionCreateParams.Metadata.builder().build())
+                    .metadata(
+                        SubscriptionCreateParams.Metadata.builder()
+                            .putAdditionalProperty("foo", JsonValue.from("string"))
+                            .build()
+                    )
                     .netTerms(0L)
                     .perCreditOverageAmount(0.0)
                     .planId("ZMwNQefe7J3ecf7W")
@@ -218,7 +239,7 @@ class SubscriptionServiceTest {
                                                         .AdjustmentType
                                                         .PERCENTAGE_DISCOUNT
                                                 )
-                                                .appliesToPriceIds(listOf("string"))
+                                                .appliesToPriceIds(listOf("price_1", "price_2"))
                                                 .percentageDiscount(0.0)
                                                 .isInvoiceLevel(true)
                                                 .build()
@@ -322,6 +343,10 @@ class SubscriptionServiceTest {
                                                         .NewSubscriptionUnitPrice
                                                         .Metadata
                                                         .builder()
+                                                        .putAdditionalProperty(
+                                                            "foo",
+                                                            JsonValue.from("string")
+                                                        )
                                                         .build()
                                                 )
                                                 .referenceId("reference_id")
@@ -355,7 +380,11 @@ class SubscriptionServiceTest {
                     .autoCollection(true)
                     .defaultInvoiceMemo("default_invoice_memo")
                     .invoicingThreshold("10.00")
-                    .metadata(SubscriptionUpdateParams.Metadata.builder().build())
+                    .metadata(
+                        SubscriptionUpdateParams.Metadata.builder()
+                            .putAdditionalProperty("foo", JsonValue.from("string"))
+                            .build()
+                    )
                     .netTerms(0L)
                     .build()
             )
@@ -622,6 +651,10 @@ class SubscriptionServiceTest {
                                                         .NewFloatingUnitPrice
                                                         .Metadata
                                                         .builder()
+                                                        .putAdditionalProperty(
+                                                            "foo",
+                                                            JsonValue.from("string")
+                                                        )
                                                         .build()
                                                 )
                                                 .build()
@@ -648,7 +681,7 @@ class SubscriptionServiceTest {
                                                         .AdjustmentType
                                                         .PERCENTAGE_DISCOUNT
                                                 )
-                                                .appliesToPriceIds(listOf("string"))
+                                                .appliesToPriceIds(listOf("price_1", "price_2"))
                                                 .percentageDiscount(0.0)
                                                 .isInvoiceLevel(true)
                                                 .build()
@@ -755,7 +788,7 @@ class SubscriptionServiceTest {
                                                         .AdjustmentType
                                                         .PERCENTAGE_DISCOUNT
                                                 )
-                                                .appliesToPriceIds(listOf("string"))
+                                                .appliesToPriceIds(listOf("price_1", "price_2"))
                                                 .percentageDiscount(0.0)
                                                 .isInvoiceLevel(true)
                                                 .build()
@@ -871,6 +904,10 @@ class SubscriptionServiceTest {
                                                         .NewSubscriptionUnitPrice
                                                         .Metadata
                                                         .builder()
+                                                        .putAdditionalProperty(
+                                                            "foo",
+                                                            JsonValue.from("string")
+                                                        )
                                                         .build()
                                                 )
                                                 .referenceId("reference_id")
@@ -942,7 +979,7 @@ class SubscriptionServiceTest {
                                                         .AdjustmentType
                                                         .PERCENTAGE_DISCOUNT
                                                 )
-                                                .appliesToPriceIds(listOf("string"))
+                                                .appliesToPriceIds(listOf("price_1", "price_2"))
                                                 .percentageDiscount(0.0)
                                                 .isInvoiceLevel(true)
                                                 .build()
@@ -1062,6 +1099,10 @@ class SubscriptionServiceTest {
                                                         .NewSubscriptionUnitPrice
                                                         .Metadata
                                                         .builder()
+                                                        .putAdditionalProperty(
+                                                            "foo",
+                                                            JsonValue.from("string")
+                                                        )
                                                         .build()
                                                 )
                                                 .referenceId("reference_id")
@@ -1189,7 +1230,7 @@ class SubscriptionServiceTest {
                     .subscriptionId("subscription_id")
                     .trialEndDate(
                         SubscriptionUpdateTrialParams.TrialEndDate.ofOffsetDateTime(
-                            OffsetDateTime.parse("2019-12-27T18:11:19.117Z")
+                            OffsetDateTime.parse("2017-07-21T17:32:28Z")
                         )
                     )
                     .shift(true)

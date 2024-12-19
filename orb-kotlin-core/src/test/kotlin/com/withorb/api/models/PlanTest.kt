@@ -2,6 +2,7 @@
 
 package com.withorb.api.models
 
+import com.withorb.api.core.JsonValue
 import java.time.OffsetDateTime
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
@@ -46,7 +47,7 @@ class PlanTest {
                 .discount(
                     Discount.ofPercentageDiscount(
                         PercentageDiscount.builder()
-                            .appliesToPriceIds(listOf("string"))
+                            .appliesToPriceIds(listOf("h74gfhdjvn7ujokd", "7hfgtgjnbvc3ujkl"))
                             .discountType(PercentageDiscount.DiscountType.PERCENTAGE)
                             .percentageDiscount(0.15)
                             .reason("reason")
@@ -62,7 +63,11 @@ class PlanTest {
                         .build()
                 )
                 .maximumAmount("maximum_amount")
-                .metadata(Plan.Metadata.builder().build())
+                .metadata(
+                    Plan.Metadata.builder()
+                        .putAdditionalProperty("foo", JsonValue.from("string"))
+                        .build()
+                )
                 .minimum(
                     Plan.Minimum.builder()
                         .appliesToPriceIds(listOf("string"))
@@ -80,7 +85,9 @@ class PlanTest {
                             .discount(
                                 Discount.ofPercentageDiscount(
                                     PercentageDiscount.builder()
-                                        .appliesToPriceIds(listOf("string"))
+                                        .appliesToPriceIds(
+                                            listOf("h74gfhdjvn7ujokd", "7hfgtgjnbvc3ujkl")
+                                        )
                                         .discountType(PercentageDiscount.DiscountType.PERCENTAGE)
                                         .percentageDiscount(0.15)
                                         .reason("reason")
@@ -138,7 +145,9 @@ class PlanTest {
                                 .discount(
                                     Discount.ofPercentageDiscount(
                                         PercentageDiscount.builder()
-                                            .appliesToPriceIds(listOf("string"))
+                                            .appliesToPriceIds(
+                                                listOf("h74gfhdjvn7ujokd", "7hfgtgjnbvc3ujkl")
+                                            )
                                             .discountType(
                                                 PercentageDiscount.DiscountType.PERCENTAGE
                                             )
@@ -166,7 +175,11 @@ class PlanTest {
                                         .build()
                                 )
                                 .maximumAmount("maximum_amount")
-                                .metadata(Price.UnitPrice.Metadata.builder().build())
+                                .metadata(
+                                    Price.UnitPrice.Metadata.builder()
+                                        .putAdditionalProperty("foo", JsonValue.from("string"))
+                                        .build()
+                                )
                                 .minimum(
                                     Price.UnitPrice.Minimum.builder()
                                         .appliesToPriceIds(listOf("string"))
@@ -238,7 +251,7 @@ class PlanTest {
             .isEqualTo(
                 Discount.ofPercentageDiscount(
                     PercentageDiscount.builder()
-                        .appliesToPriceIds(listOf("string"))
+                        .appliesToPriceIds(listOf("h74gfhdjvn7ujokd", "7hfgtgjnbvc3ujkl"))
                         .discountType(PercentageDiscount.DiscountType.PERCENTAGE)
                         .percentageDiscount(0.15)
                         .reason("reason")
@@ -255,7 +268,12 @@ class PlanTest {
                     .build()
             )
         assertThat(plan.maximumAmount()).isEqualTo("maximum_amount")
-        assertThat(plan.metadata()).isEqualTo(Plan.Metadata.builder().build())
+        assertThat(plan.metadata())
+            .isEqualTo(
+                Plan.Metadata.builder()
+                    .putAdditionalProperty("foo", JsonValue.from("string"))
+                    .build()
+            )
         assertThat(plan.minimum())
             .isEqualTo(
                 Plan.Minimum.builder()
@@ -274,7 +292,7 @@ class PlanTest {
                     .discount(
                         Discount.ofPercentageDiscount(
                             PercentageDiscount.builder()
-                                .appliesToPriceIds(listOf("string"))
+                                .appliesToPriceIds(listOf("h74gfhdjvn7ujokd", "7hfgtgjnbvc3ujkl"))
                                 .discountType(PercentageDiscount.DiscountType.PERCENTAGE)
                                 .percentageDiscount(0.15)
                                 .reason("reason")
@@ -328,7 +346,9 @@ class PlanTest {
                         .discount(
                             Discount.ofPercentageDiscount(
                                 PercentageDiscount.builder()
-                                    .appliesToPriceIds(listOf("string"))
+                                    .appliesToPriceIds(
+                                        listOf("h74gfhdjvn7ujokd", "7hfgtgjnbvc3ujkl")
+                                    )
                                     .discountType(PercentageDiscount.DiscountType.PERCENTAGE)
                                     .percentageDiscount(0.15)
                                     .reason("reason")
@@ -353,7 +373,11 @@ class PlanTest {
                                 .build()
                         )
                         .maximumAmount("maximum_amount")
-                        .metadata(Price.UnitPrice.Metadata.builder().build())
+                        .metadata(
+                            Price.UnitPrice.Metadata.builder()
+                                .putAdditionalProperty("foo", JsonValue.from("string"))
+                                .build()
+                        )
                         .minimum(
                             Price.UnitPrice.Minimum.builder()
                                 .appliesToPriceIds(listOf("string"))

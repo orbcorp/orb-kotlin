@@ -16,7 +16,6 @@ import com.withorb.api.core.http.Headers
 import com.withorb.api.core.http.QueryParams
 import com.withorb.api.core.toImmutable
 import com.withorb.api.errors.OrbInvalidDataException
-import com.withorb.api.models.*
 import java.util.Objects
 
 class CreditNoteCreateParams
@@ -416,27 +415,15 @@ constructor(
 
         @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
 
-        override fun equals(other: Any?): Boolean {
-            if (this === other) {
-                return true
-            }
-
-            return /* spotless:off */ other is Reason && value == other.value /* spotless:on */
-        }
-
-        override fun hashCode() = value.hashCode()
-
-        override fun toString() = value.toString()
-
         companion object {
 
-            val DUPLICATE = Reason(JsonField.of("duplicate"))
+            val DUPLICATE = of("duplicate")
 
-            val FRAUDULENT = Reason(JsonField.of("fraudulent"))
+            val FRAUDULENT = of("fraudulent")
 
-            val ORDER_CHANGE = Reason(JsonField.of("order_change"))
+            val ORDER_CHANGE = of("order_change")
 
-            val PRODUCT_UNSATISFACTORY = Reason(JsonField.of("product_unsatisfactory"))
+            val PRODUCT_UNSATISFACTORY = of("product_unsatisfactory")
 
             fun of(value: String) = Reason(JsonField.of(value))
         }
@@ -475,6 +462,18 @@ constructor(
             }
 
         fun asString(): String = _value().asStringOrThrow()
+
+        override fun equals(other: Any?): Boolean {
+            if (this === other) {
+                return true
+            }
+
+            return /* spotless:off */ other is Reason && value == other.value /* spotless:on */
+        }
+
+        override fun hashCode() = value.hashCode()
+
+        override fun toString() = value.toString()
     }
 
     override fun equals(other: Any?): Boolean {

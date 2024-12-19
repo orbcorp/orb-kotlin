@@ -19,7 +19,7 @@ The REST API documentation can be found on [docs.withorb.com](https://docs.with
 <!-- x-release-please-start-version -->
 
 ```kotlin
-implementation("com.withorb.api:orb-kotlin:0.1.0-alpha.10")
+implementation("com.withorb.api:orb-kotlin:0.1.0-alpha.11")
 ```
 
 #### Maven
@@ -28,7 +28,7 @@ implementation("com.withorb.api:orb-kotlin:0.1.0-alpha.10")
 <dependency>
     <groupId>com.withorb.api</groupId>
     <artifactId>orb-kotlin</artifactId>
-    <version>0.1.0-alpha.10</version>
+    <version>0.1.0-alpha.11</version>
 </dependency>
 ```
 
@@ -42,7 +42,7 @@ Use `OrbOkHttpClient.builder()` to configure the client. At a minimum you need t
 import com.withorb.api.client.OrbClient
 import com.withorb.api.client.okhttp.OrbOkHttpClient
 
-val client = OrbOkHttpClient.builder()
+val client: OrbClient = OrbOkHttpClient.builder()
     .apiKey("My API Key")
     .build()
 ```
@@ -50,10 +50,13 @@ val client = OrbOkHttpClient.builder()
 Alternately, set the environment with `ORB_API_KEY` or `ORB_WEBHOOK_SECRET`, and use `OrbOkHttpClient.fromEnv()` to read from the environment.
 
 ```kotlin
-val client = OrbOkHttpClient.fromEnv()
+import com.withorb.api.client.OrbClient
+import com.withorb.api.client.okhttp.OrbOkHttpClient
+
+val client: OrbClient = OrbOkHttpClient.fromEnv()
 
 // Note: you can also call fromEnv() from the client builder, for example if you need to set additional properties
-val client = OrbOkHttpClient.builder()
+val client: OrbClient = OrbOkHttpClient.builder()
     .fromEnv()
     // ... set properties on the builder
     .build()
@@ -70,33 +73,55 @@ Read the documentation for more configuration options.
 
 ### Example: creating a resource
 
-To create a new customer, first use the `CustomerCreateParams` builder to specify attributes,
-then pass that to the `create` method of the `customers` service.
+To create a new customer, first use the `CustomerCreateParams` builder to specify attributes, then pass that to the `create` method of the `customers` service.
 
 ```kotlin
 import com.withorb.api.models.Customer
 import com.withorb.api.models.CustomerCreateParams
 
-val params = CustomerCreateParams.builder()
+val params: CustomerCreateParams = CustomerCreateParams.builder()
     .email("example-customer@withorb.com")
     .name("My Customer")
     .build()
-val customer = client.customers().create(params)
+val customer: Customer = client.customers().create(params)
 ```
 
 ### Example: listing resources
 
-The Orb API provides a `list` method to get a paginated list of coupons.
-You can retrieve the first page by:
+The Orb API provides a `list` method to get a paginated list of coupons. You can retrieve the first page by:
 
 ```kotlin
 import com.withorb.api.models.Coupon
-import com.withorb.api.models.Page
+import com.withorb.api.models.CouponListPage
 
-val page = client.coupons().list()
+val page: CouponListPage = client.coupons().list()
 for (coupon: Coupon in page.data()) {
     print(coupon)
 }
+```
+
+Use the `CouponListParams` builder to set parameters:
+
+```kotlin
+import com.withorb.api.models.CouponListPage
+import com.withorb.api.models.CouponListParams
+
+val params: CouponListParams = CouponListParams.builder()
+    .cursor("cursor")
+    .limit(1L)
+    .redemptionCode("redemption_code")
+    .showArchived(true)
+    .build()
+val page1: CouponListPage = client.coupons().list(params)
+
+// Using the `from` method of the builder you can reuse previous params values:
+val page2: CouponListPage = client.coupons().list(CouponListParams.builder()
+    .from(params)
+    .nextCursor("abc123...")
+    .build())
+
+// Or easily get params for the next page by using the helper `getNextPageParams`:
+val page3: CouponListPage = client.coupons().list(params.getNextPageParams(page2))
 ```
 
 See [Pagination](#pagination) below for more information on transparently working with lists of objects without worrying about fetching each page.
@@ -109,15 +134,15 @@ See [Pagination](#pagination) below for more information on transparently workin
 
 To make a request to the Orb API, you generally build an instance of the appropriate `Params` class.
 
-In [Example: creating a resource](#example-creating-a-resource) above, we used the `CustomerCreateParams.builder()` to pass to
-the `create` method of the `customers` service.
+In [Example: creating a resource](#example-creating-a-resource) above, we used the `CustomerCreateParams.builder()` to pass to the `create` method of the `customers` service.
 
-Sometimes, the API may support other properties that are not yet supported in the Kotlin SDK types. In that case,
-you can attach them using the `putAdditionalProperty` method.
+Sometimes, the API may support other properties that are not yet supported in the Kotlin SDK types. In that case, you can attach them using the `putAdditionalProperty` method.
 
 ```kotlin
-import com.withorb.api.models.core.JsonValue
-val params = CustomerCreateParams.builder()
+import com.withorb.api.core.JsonValue
+import com.withorb.api.models.CustomerCreateParams
+
+val params: CustomerCreateParams = CustomerCreateParams.builder()
     // ... normal properties
     .putAdditionalProperty("secret_param", JsonValue.from("4242"))
     .build()
@@ -130,16 +155,20 @@ val params = CustomerCreateParams.builder()
 When receiving a response, the Orb Kotlin SDK will deserialize it into instances of the typed model classes. In rare cases, the API may return a response property that doesn't match the expected Kotlin type. If you directly access the mistaken property, the SDK will throw an unchecked `OrbInvalidDataException` at runtime. If you would prefer to check in advance that that response is completely well-typed, call `.validate()` on the returned model.
 
 ```kotlin
-val customer = client.customers().create().validate()
+import com.withorb.api.models.Customer
+
+val customer: Customer = client.customers().create().validate()
 ```
 
 ### Response properties as JSON
 
-In rare cases, you may want to access the underlying JSON value for a response property rather than using the typed version provided by
-this SDK. Each model property has a corresponding JSON version, with an underscore before the method name, which returns a `JsonField` value.
+In rare cases, you may want to access the underlying JSON value for a response property rather than using the typed version provided by this SDK. Each model property has a corresponding JSON version, with an underscore before the method name, which returns a `JsonField` value.
 
 ```kotlin
-val field = responseObj._field
+import com.withorb.api.core.JsonField
+import java.util.Optional
+
+val field: JsonField = responseObj._field
 
 if (field.isMissing()) {
   // Value was not specified in the JSON response
@@ -151,7 +180,7 @@ if (field.isMissing()) {
 
   // If the value given by the API did not match the shape that the SDK expects
   // you can deserialise into a custom type
-  val myObj = responseObj._field.asUnknown()?.convert(MyClass.class)
+  val myObj: MyClass = responseObj._field.asUnknown()?.convert(MyClass.class)
 }
 ```
 
@@ -160,24 +189,27 @@ if (field.isMissing()) {
 Sometimes, the server response may include additional properties that are not yet available in this library's types. You can access them using the model's `_additionalProperties` method:
 
 ```kotlin
-val secret = amountDiscount._additionalProperties().get("secret_field")
+import com.withorb.api.core.JsonValue
+
+val secret: JsonValue = amountDiscount._additionalProperties().get("secret_field")
 ```
 
 ---
 
 ## Pagination
 
-For methods that return a paginated list of results, this library provides convenient ways access
-the results either one page at a time, or item-by-item across all pages.
+For methods that return a paginated list of results, this library provides convenient ways access the results either one page at a time, or item-by-item across all pages.
 
 ### Auto-pagination
 
-To iterate through all results across all pages, you can use `autoPager`,
-which automatically handles fetching more pages for you:
+To iterate through all results across all pages, you can use `autoPager`, which automatically handles fetching more pages for you:
 
 ### Synchronous
 
 ```kotlin
+import com.withorb.api.models.Coupon
+import com.withorb.api.models.CouponListPage
+
 // As a Sequence:
 client.coupons().list(params).autoPager()
     .take(50)
@@ -195,12 +227,12 @@ asyncClient.coupons().list(params).autoPager()
 
 ### Manual pagination
 
-If none of the above helpers meet your needs, you can also manually request pages one-by-one.
-A page of results has a `data()` method to fetch the list of objects, as well as top-level
-`response` and other methods to fetch top-level data about the page. It also has methods
-`hasNextPage`, `getNextPage`, and `getNextPageParams` methods to help with pagination.
+If none of the above helpers meet your needs, you can also manually request pages one-by-one. A page of results has a `data()` method to fetch the list of objects, as well as top-level `response` and other methods to fetch top-level data about the page. It also has methods `hasNextPage`, `getNextPage`, and `getNextPageParams` methods to help with pagination.
 
 ```kotlin
+import com.withorb.api.models.Coupon
+import com.withorb.api.models.CouponListPage
+
 val page = client.coupons().list(params)
 while (page != null) {
     for (coupon in page.data) {
@@ -231,32 +263,34 @@ This library throws exceptions in a single hierarchy for easy handling:
 
 - **`OrbException`** - Base exception for all exceptions
 
-  - **`OrbServiceException`** - HTTP errors with a well-formed response body we were able to parse. The exception message and the `.debuggingRequestId()` will be set by the server.
+- **`OrbServiceException`** - HTTP errors with a well-formed response body we were able to parse. The exception message and the `.debuggingRequestId()` will be set by the server.
 
-    | 400    | BadRequestException           |
-    | ------ | ----------------------------- |
-    | 401    | AuthenticationException       |
-    | 403    | PermissionDeniedException     |
-    | 404    | NotFoundException             |
-    | 422    | UnprocessableEntityException  |
-    | 429    | RateLimitException            |
-    | 5xx    | InternalServerException       |
-    | others | UnexpectedStatusCodeException |
+  | 400    | BadRequestException           |
+  | ------ | ----------------------------- |
+  | 401    | AuthenticationException       |
+  | 403    | PermissionDeniedException     |
+  | 404    | NotFoundException             |
+  | 422    | UnprocessableEntityException  |
+  | 429    | RateLimitException            |
+  | 5xx    | InternalServerException       |
+  | others | UnexpectedStatusCodeException |
 
-  - **`OrbIoException`** - I/O networking errors
-  - **`OrbInvalidDataException`** - any other exceptions on the client side, e.g.:
-    - We failed to serialize the request body
-    - We failed to parse the response body (has access to response code and body)
+- **`OrbIoException`** - I/O networking errors
+- **`OrbInvalidDataException`** - any other exceptions on the client side, e.g.:
+  - We failed to serialize the request body
+  - We failed to parse the response body (has access to response code and body)
 
 ## Network options
 
 ### Retries
 
-Requests that experience certain errors are automatically retried 2 times by default, with a short exponential backoff. Connection errors (for example, due to a network connectivity problem), 408 Request Timeout, 409 Conflict, 429 Rate Limit, and >=500 Internal errors will all be retried by default.
-You can provide a `maxRetries` on the client builder to configure this:
+Requests that experience certain errors are automatically retried 2 times by default, with a short exponential backoff. Connection errors (for example, due to a network connectivity problem), 408 Request Timeout, 409 Conflict, 429 Rate Limit, and >=500 Internal errors will all be retried by default. You can provide a `maxRetries` on the client builder to configure this:
 
 ```kotlin
-val client = OrbOkHttpClient.builder()
+import com.withorb.api.client.OrbClient
+import com.withorb.api.client.okhttp.OrbOkHttpClient
+
+val client: OrbClient = OrbOkHttpClient.builder()
     .fromEnv()
     .maxRetries(4)
     .build()
@@ -267,7 +301,11 @@ val client = OrbOkHttpClient.builder()
 Requests time out after 1 minute by default. You can configure this on the client builder:
 
 ```kotlin
-val client = OrbOkHttpClient.builder()
+import com.withorb.api.client.OrbClient
+import com.withorb.api.client.okhttp.OrbOkHttpClient
+import java.time.Duration
+
+val client: OrbClient = OrbOkHttpClient.builder()
     .fromEnv()
     .timeout(Duration.ofSeconds(30))
     .build()
@@ -278,12 +316,14 @@ val client = OrbOkHttpClient.builder()
 Requests can be routed through a proxy. You can configure this on the client builder:
 
 ```kotlin
-val client = OrbOkHttpClient.builder()
+import com.withorb.api.client.OrbClient
+import com.withorb.api.client.okhttp.OrbOkHttpClient
+import java.net.InetSocketAddress
+import java.net.Proxy
+
+val client: OrbClient = OrbOkHttpClient.builder()
     .fromEnv()
-    .proxy(new Proxy(
-        Type.HTTP,
-        new InetSocketAddress("proxy.com", 8080)
-    ))
+    .proxy(Proxy(Proxy.Type.HTTP, InetSocketAddress("example.com", 8080)))
     .build()
 ```
 

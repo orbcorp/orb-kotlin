@@ -2,7 +2,6 @@
 
 package com.withorb.api.models
 
-import com.withorb.api.models.*
 import org.junit.jupiter.api.Test
 
 class TopLevelPingParamsTest {
