@@ -43,7 +43,6 @@ class LedgerServiceTest {
         val customerCreditLedgerCreateEntryResponse =
             ledgerService.createEntry(
                 CustomerCreditLedgerCreateEntryParams.builder()
-                    .customerId("customer_id")
                     .forAddIncrementCreditLedgerEntryRequestParams(
                         CustomerCreditLedgerCreateEntryParams
                             .AddIncrementCreditLedgerEntryRequestParams
@@ -81,6 +80,7 @@ class LedgerServiceTest {
                             .perUnitCostBasis("per_unit_cost_basis")
                             .build()
                     )
+                    .customerId("customer_id")
                     .build()
             )
         println(customerCreditLedgerCreateEntryResponse)
@@ -97,7 +97,6 @@ class LedgerServiceTest {
         val customerCreditLedgerCreateEntryByExternalIdResponse =
             ledgerService.createEntryByExternalId(
                 CustomerCreditLedgerCreateEntryByExternalIdParams.builder()
-                    .externalCustomerId("external_customer_id")
                     .forAddIncrementCreditLedgerEntryRequestParams(
                         CustomerCreditLedgerCreateEntryByExternalIdParams
                             .AddIncrementCreditLedgerEntryRequestParams
@@ -135,6 +134,7 @@ class LedgerServiceTest {
                             .perUnitCostBasis("per_unit_cost_basis")
                             .build()
                     )
+                    .externalCustomerId("external_customer_id")
                     .build()
             )
         println(customerCreditLedgerCreateEntryByExternalIdResponse)

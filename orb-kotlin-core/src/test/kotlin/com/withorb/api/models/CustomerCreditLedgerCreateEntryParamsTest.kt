@@ -12,7 +12,6 @@ class CustomerCreditLedgerCreateEntryParamsTest {
     @Test
     fun createCustomerCreditLedgerCreateEntryParams() {
         CustomerCreditLedgerCreateEntryParams.builder()
-            .customerId("customer_id")
             .forAddIncrementCreditLedgerEntryRequestParams(
                 CustomerCreditLedgerCreateEntryParams.AddIncrementCreditLedgerEntryRequestParams
                     .builder()
@@ -49,6 +48,7 @@ class CustomerCreditLedgerCreateEntryParamsTest {
                     .perUnitCostBasis("per_unit_cost_basis")
                     .build()
             )
+            .customerId("customer_id")
             .build()
     }
 
