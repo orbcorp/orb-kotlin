@@ -99,6 +99,27 @@ for (coupon: Coupon in page.data()) {
 }
 ```
 
+Use the `CouponListParams` builder to set parameters:
+
+```kotlin
+CouponListParams params = CouponListParams.builder()
+    .cursor("cursor")
+    .limit(1L)
+    .redemptionCode("redemption_code")
+    .showArchived(true)
+    .build();
+val page1 = client.coupons().list(params)
+
+// Using the `from` method of the builder you can reuse previous params values:
+val page2 = client.coupons().list(CouponListParams.builder()
+    .from(params)
+    .nextCursor("abc123...")
+    .build())
+
+// Or easily get params for the next page by using the helper `getNextPageParams`:
+val page3 = client.coupons().list(params.getNextPageParams(page2))
+```
+
 See [Pagination](#pagination) below for more information on transparently working with lists of objects without worrying about fetching each page.
 
 ---

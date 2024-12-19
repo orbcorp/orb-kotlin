@@ -12,7 +12,6 @@ class CustomerCreditLedgerCreateEntryByExternalIdParamsTest {
     @Test
     fun createCustomerCreditLedgerCreateEntryByExternalIdParams() {
         CustomerCreditLedgerCreateEntryByExternalIdParams.builder()
-            .externalCustomerId("external_customer_id")
             .forAddIncrementCreditLedgerEntryRequestParams(
                 CustomerCreditLedgerCreateEntryByExternalIdParams
                     .AddIncrementCreditLedgerEntryRequestParams
@@ -50,6 +49,7 @@ class CustomerCreditLedgerCreateEntryByExternalIdParamsTest {
                     .perUnitCostBasis("per_unit_cost_basis")
                     .build()
             )
+            .externalCustomerId("external_customer_id")
             .build()
     }
 
