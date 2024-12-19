@@ -2,7 +2,7 @@
 
 package com.withorb.api.models
 
-import com.withorb.api.models.*
+import com.withorb.api.core.JsonValue
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
@@ -42,7 +42,11 @@ class CustomerCreateParamsTest {
             .currency("currency")
             .emailDelivery(true)
             .externalCustomerId("external_customer_id")
-            .metadata(CustomerCreateParams.Metadata.builder().build())
+            .metadata(
+                CustomerCreateParams.Metadata.builder()
+                    .putAdditionalProperty("foo", JsonValue.from("string"))
+                    .build()
+            )
             .paymentProvider(CustomerCreateParams.PaymentProvider.QUICKBOOKS)
             .paymentProviderId("payment_provider_id")
             .reportingConfiguration(
@@ -117,7 +121,11 @@ class CustomerCreateParamsTest {
                 .currency("currency")
                 .emailDelivery(true)
                 .externalCustomerId("external_customer_id")
-                .metadata(CustomerCreateParams.Metadata.builder().build())
+                .metadata(
+                    CustomerCreateParams.Metadata.builder()
+                        .putAdditionalProperty("foo", JsonValue.from("string"))
+                        .build()
+                )
                 .paymentProvider(CustomerCreateParams.PaymentProvider.QUICKBOOKS)
                 .paymentProviderId("payment_provider_id")
                 .reportingConfiguration(
@@ -190,7 +198,12 @@ class CustomerCreateParamsTest {
         assertThat(body.currency()).isEqualTo("currency")
         assertThat(body.emailDelivery()).isEqualTo(true)
         assertThat(body.externalCustomerId()).isEqualTo("external_customer_id")
-        assertThat(body.metadata()).isEqualTo(CustomerCreateParams.Metadata.builder().build())
+        assertThat(body.metadata())
+            .isEqualTo(
+                CustomerCreateParams.Metadata.builder()
+                    .putAdditionalProperty("foo", JsonValue.from("string"))
+                    .build()
+            )
         assertThat(body.paymentProvider())
             .isEqualTo(CustomerCreateParams.PaymentProvider.QUICKBOOKS)
         assertThat(body.paymentProviderId()).isEqualTo("payment_provider_id")

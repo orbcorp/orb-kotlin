@@ -4,7 +4,8 @@ package com.withorb.api.services.blocking
 
 import com.withorb.api.TestServerExtension
 import com.withorb.api.client.okhttp.OrbOkHttpClient
-import com.withorb.api.models.*
+import com.withorb.api.models.CreditNoteCreateParams
+import com.withorb.api.models.CreditNoteFetchParams
 import com.withorb.api.models.CreditNoteListParams
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith

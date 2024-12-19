@@ -16,7 +16,6 @@ import com.withorb.api.core.http.Headers
 import com.withorb.api.core.http.QueryParams
 import com.withorb.api.core.toImmutable
 import com.withorb.api.errors.OrbInvalidDataException
-import com.withorb.api.models.*
 import java.util.Objects
 
 class AlertCreateForExternalCustomerParams
@@ -356,29 +355,17 @@ constructor(
 
         @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
 
-        override fun equals(other: Any?): Boolean {
-            if (this === other) {
-                return true
-            }
-
-            return /* spotless:off */ other is Type && value == other.value /* spotless:on */
-        }
-
-        override fun hashCode() = value.hashCode()
-
-        override fun toString() = value.toString()
-
         companion object {
 
-            val USAGE_EXCEEDED = Type(JsonField.of("usage_exceeded"))
+            val USAGE_EXCEEDED = of("usage_exceeded")
 
-            val COST_EXCEEDED = Type(JsonField.of("cost_exceeded"))
+            val COST_EXCEEDED = of("cost_exceeded")
 
-            val CREDIT_BALANCE_DEPLETED = Type(JsonField.of("credit_balance_depleted"))
+            val CREDIT_BALANCE_DEPLETED = of("credit_balance_depleted")
 
-            val CREDIT_BALANCE_DROPPED = Type(JsonField.of("credit_balance_dropped"))
+            val CREDIT_BALANCE_DROPPED = of("credit_balance_dropped")
 
-            val CREDIT_BALANCE_RECOVERED = Type(JsonField.of("credit_balance_recovered"))
+            val CREDIT_BALANCE_RECOVERED = of("credit_balance_recovered")
 
             fun of(value: String) = Type(JsonField.of(value))
         }
@@ -421,6 +408,18 @@ constructor(
             }
 
         fun asString(): String = _value().asStringOrThrow()
+
+        override fun equals(other: Any?): Boolean {
+            if (this === other) {
+                return true
+            }
+
+            return /* spotless:off */ other is Type && value == other.value /* spotless:on */
+        }
+
+        override fun hashCode() = value.hashCode()
+
+        override fun toString() = value.toString()
     }
 
     /** Thresholds are used to define the conditions under which an alert will be triggered. */

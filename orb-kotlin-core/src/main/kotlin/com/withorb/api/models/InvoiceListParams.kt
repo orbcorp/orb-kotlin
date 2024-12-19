@@ -5,13 +5,11 @@ package com.withorb.api.models
 import com.fasterxml.jackson.annotation.JsonCreator
 import com.withorb.api.core.Enum
 import com.withorb.api.core.JsonField
-import com.withorb.api.core.JsonValue
 import com.withorb.api.core.NoAutoDetect
 import com.withorb.api.core.http.Headers
 import com.withorb.api.core.http.QueryParams
 import com.withorb.api.core.toImmutable
 import com.withorb.api.errors.OrbInvalidDataException
-import com.withorb.api.models.*
 import java.time.LocalDate
 import java.time.OffsetDateTime
 import java.time.format.DateTimeFormatter
@@ -207,6 +205,11 @@ constructor(
 
         fun dueDate(dueDate: LocalDate) = apply { this.dueDate = dueDate }
 
+        /**
+         * Filters invoices by their due dates within a specific time range in the past. Specify the
+         * range as a number followed by 'd' (days) or 'm' (months). For example, '7d' filters
+         * invoices due in the last 7 days, and '2m' filters those due in the last 2 months.
+         */
         fun dueDateWindow(dueDateWindow: String) = apply { this.dueDateWindow = dueDateWindow }
 
         fun dueDateGt(dueDateGt: LocalDate) = apply { this.dueDateGt = dueDateGt }
@@ -379,23 +382,11 @@ constructor(
 
         @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
 
-        override fun equals(other: Any?): Boolean {
-            if (this === other) {
-                return true
-            }
-
-            return /* spotless:off */ other is DateType && value == other.value /* spotless:on */
-        }
-
-        override fun hashCode() = value.hashCode()
-
-        override fun toString() = value.toString()
-
         companion object {
 
-            val DUE_DATE = DateType(JsonField.of("due_date"))
+            val DUE_DATE = of("due_date")
 
-            val INVOICE_DATE = DateType(JsonField.of("invoice_date"))
+            val INVOICE_DATE = of("invoice_date")
 
             fun of(value: String) = DateType(JsonField.of(value))
         }
@@ -426,6 +417,18 @@ constructor(
             }
 
         fun asString(): String = _value().asStringOrThrow()
+
+        override fun equals(other: Any?): Boolean {
+            if (this === other) {
+                return true
+            }
+
+            return /* spotless:off */ other is DateType && value == other.value /* spotless:on */
+        }
+
+        override fun hashCode() = value.hashCode()
+
+        override fun toString() = value.toString()
     }
 
     class Status
@@ -436,29 +439,17 @@ constructor(
 
         @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
 
-        override fun equals(other: Any?): Boolean {
-            if (this === other) {
-                return true
-            }
-
-            return /* spotless:off */ other is Status && value == other.value /* spotless:on */
-        }
-
-        override fun hashCode() = value.hashCode()
-
-        override fun toString() = value.toString()
-
         companion object {
 
-            val DRAFT = Status(JsonField.of("draft"))
+            val DRAFT = of("draft")
 
-            val ISSUED = Status(JsonField.of("issued"))
+            val ISSUED = of("issued")
 
-            val PAID = Status(JsonField.of("paid"))
+            val PAID = of("paid")
 
-            val SYNCED = Status(JsonField.of("synced"))
+            val SYNCED = of("synced")
 
-            val VOID = Status(JsonField.of("void"))
+            val VOID = of("void")
 
             fun of(value: String) = Status(JsonField.of(value))
         }
@@ -501,6 +492,18 @@ constructor(
             }
 
         fun asString(): String = _value().asStringOrThrow()
+
+        override fun equals(other: Any?): Boolean {
+            if (this === other) {
+                return true
+            }
+
+            return /* spotless:off */ other is Status && value == other.value /* spotless:on */
+        }
+
+        override fun hashCode() = value.hashCode()
+
+        override fun toString() = value.toString()
     }
 
     override fun equals(other: Any?): Boolean {

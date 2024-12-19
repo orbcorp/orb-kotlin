@@ -4,8 +4,11 @@ package com.withorb.api.services.blocking
 
 import com.withorb.api.TestServerExtension
 import com.withorb.api.client.okhttp.OrbOkHttpClient
-import com.withorb.api.models.*
+import com.withorb.api.core.JsonValue
+import com.withorb.api.models.PlanCreateParams
+import com.withorb.api.models.PlanFetchParams
 import com.withorb.api.models.PlanListParams
+import com.withorb.api.models.PlanUpdateParams
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 
@@ -75,6 +78,7 @@ class PlanServiceTest {
                                     )
                                     .metadata(
                                         PlanCreateParams.Price.NewPlanUnitPrice.Metadata.builder()
+                                            .putAdditionalProperty("foo", JsonValue.from("string"))
                                             .build()
                                     )
                                     .build()
@@ -83,7 +87,11 @@ class PlanServiceTest {
                     )
                     .defaultInvoiceMemo("default_invoice_memo")
                     .externalPlanId("external_plan_id")
-                    .metadata(PlanCreateParams.Metadata.builder().build())
+                    .metadata(
+                        PlanCreateParams.Metadata.builder()
+                            .putAdditionalProperty("foo", JsonValue.from("string"))
+                            .build()
+                    )
                     .netTerms(0L)
                     .status(PlanCreateParams.Status.ACTIVE)
                     .build()
@@ -105,7 +113,11 @@ class PlanServiceTest {
                 PlanUpdateParams.builder()
                     .planId("plan_id")
                     .externalPlanId("external_plan_id")
-                    .metadata(PlanUpdateParams.Metadata.builder().build())
+                    .metadata(
+                        PlanUpdateParams.Metadata.builder()
+                            .putAdditionalProperty("foo", JsonValue.from("string"))
+                            .build()
+                    )
                     .build()
             )
         println(plan)
