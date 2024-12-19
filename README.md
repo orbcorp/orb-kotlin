@@ -42,7 +42,7 @@ Use `OrbOkHttpClient.builder()` to configure the client. At a minimum you need t
 import com.withorb.api.client.OrbClient
 import com.withorb.api.client.okhttp.OrbOkHttpClient
 
-val client = OrbOkHttpClient.builder()
+val client: OrbClient = OrbOkHttpClient.builder()
     .apiKey("My API Key")
     .build()
 ```
@@ -53,10 +53,10 @@ Alternately, set the environment with `ORB_API_KEY` or `ORB_WEBHOOK_SECRET`, and
 import com.withorb.api.client.OrbClient
 import com.withorb.api.client.okhttp.OrbOkHttpClient
 
-val client = OrbOkHttpClient.fromEnv()
+val client: OrbClient = OrbOkHttpClient.fromEnv()
 
 // Note: you can also call fromEnv() from the client builder, for example if you need to set additional properties
-val client = OrbOkHttpClient.builder()
+val client: OrbClient = OrbOkHttpClient.builder()
     .fromEnv()
     // ... set properties on the builder
     .build()
@@ -79,11 +79,11 @@ To create a new customer, first use the `CustomerCreateParams` builder to specif
 import com.withorb.api.models.Customer
 import com.withorb.api.models.CustomerCreateParams
 
-val params = CustomerCreateParams.builder()
+val params: CustomerCreateParams = CustomerCreateParams.builder()
     .email("example-customer@withorb.com")
     .name("My Customer")
     .build()
-val customer = client.customers().create(params)
+val customer: Customer = client.customers().create(params)
 ```
 
 ### Example: listing resources
@@ -94,7 +94,7 @@ The Orb API provides a `list` method to get a paginated list of coupons. You can
 import com.withorb.api.models.Coupon
 import com.withorb.api.models.CouponListPage
 
-val page = client.coupons().list()
+val page: CouponListPage = client.coupons().list()
 for (coupon: Coupon in page.data()) {
     print(coupon)
 }
@@ -106,22 +106,22 @@ Use the `CouponListParams` builder to set parameters:
 import com.withorb.api.models.CouponListPage
 import com.withorb.api.models.CouponListParams
 
-val params = CouponListParams.builder()
+val params: CouponListParams = CouponListParams.builder()
     .cursor("cursor")
     .limit(1L)
     .redemptionCode("redemption_code")
     .showArchived(true)
     .build()
-val page1 = client.coupons().list(params)
+val page1: CouponListPage = client.coupons().list(params)
 
 // Using the `from` method of the builder you can reuse previous params values:
-val page2 = client.coupons().list(CouponListParams.builder()
+val page2: CouponListPage = client.coupons().list(CouponListParams.builder()
     .from(params)
     .nextCursor("abc123...")
     .build())
 
 // Or easily get params for the next page by using the helper `getNextPageParams`:
-val page3 = client.coupons().list(params.getNextPageParams(page2))
+val page3: CouponListPage = client.coupons().list(params.getNextPageParams(page2))
 ```
 
 See [Pagination](#pagination) below for more information on transparently working with lists of objects without worrying about fetching each page.
@@ -142,7 +142,7 @@ Sometimes, the API may support other properties that are not yet supported in th
 import com.withorb.api.core.JsonValue
 import com.withorb.api.models.CustomerCreateParams
 
-val params = CustomerCreateParams.builder()
+val params: CustomerCreateParams = CustomerCreateParams.builder()
     // ... normal properties
     .putAdditionalProperty("secret_param", JsonValue.from("4242"))
     .build()
@@ -157,7 +157,7 @@ When receiving a response, the Orb Kotlin SDK will deserialize it into instances
 ```kotlin
 import com.withorb.api.models.Customer
 
-val customer = client.customers().create().validate()
+val customer: Customer = client.customers().create().validate()
 ```
 
 ### Response properties as JSON
@@ -168,7 +168,7 @@ In rare cases, you may want to access the underlying JSON value for a response p
 import com.withorb.api.core.JsonField
 import java.util.Optional
 
-val field = responseObj._field
+val field: JsonField = responseObj._field
 
 if (field.isMissing()) {
   // Value was not specified in the JSON response
@@ -180,7 +180,7 @@ if (field.isMissing()) {
 
   // If the value given by the API did not match the shape that the SDK expects
   // you can deserialise into a custom type
-  val myObj = responseObj._field.asUnknown()?.convert(MyClass.class)
+  val myObj: MyClass = responseObj._field.asUnknown()?.convert(MyClass.class)
 }
 ```
 
@@ -191,7 +191,7 @@ Sometimes, the server response may include additional properties that are not ye
 ```kotlin
 import com.withorb.api.core.JsonValue
 
-val secret = amountDiscount._additionalProperties().get("secret_field")
+val secret: JsonValue = amountDiscount._additionalProperties().get("secret_field")
 ```
 
 ---
@@ -278,7 +278,7 @@ Requests that experience certain errors are automatically retried 2 times by def
 import com.withorb.api.client.OrbClient
 import com.withorb.api.client.okhttp.OrbOkHttpClient
 
-val client = OrbOkHttpClient.builder()
+val client: OrbClient = OrbOkHttpClient.builder()
     .fromEnv()
     .maxRetries(4)
     .build()
@@ -293,7 +293,7 @@ import com.withorb.api.client.OrbClient
 import com.withorb.api.client.okhttp.OrbOkHttpClient
 import java.time.Duration
 
-val client = OrbOkHttpClient.builder()
+val client: OrbClient = OrbOkHttpClient.builder()
     .fromEnv()
     .timeout(Duration.ofSeconds(30))
     .build()
@@ -309,7 +309,7 @@ import com.withorb.api.client.okhttp.OrbOkHttpClient
 import java.net.InetSocketAddress
 import java.net.Proxy
 
-val client = OrbOkHttpClient.builder()
+val client: OrbClient = OrbOkHttpClient.builder()
     .fromEnv()
     .proxy(Proxy(Proxy.Type.HTTP, InetSocketAddress("example.com", 8080)))
     .build()
