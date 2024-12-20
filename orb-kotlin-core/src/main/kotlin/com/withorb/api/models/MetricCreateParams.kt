@@ -62,9 +62,9 @@ constructor(
     class MetricCreateBody
     internal constructor(
         private val description: String?,
-        private val itemId: String?,
-        private val name: String?,
-        private val sql: String?,
+        private val itemId: String,
+        private val name: String,
+        private val sql: String,
         private val metadata: Metadata?,
         private val additionalProperties: Map<String, JsonValue>,
     ) {
@@ -73,13 +73,13 @@ constructor(
         @JsonProperty("description") fun description(): String? = description
 
         /** The id of the item */
-        @JsonProperty("item_id") fun itemId(): String? = itemId
+        @JsonProperty("item_id") fun itemId(): String = itemId
 
         /** The name of the metric. */
-        @JsonProperty("name") fun name(): String? = name
+        @JsonProperty("name") fun name(): String = name
 
         /** A sql string defining the metric. */
-        @JsonProperty("sql") fun sql(): String? = sql
+        @JsonProperty("sql") fun sql(): String = sql
 
         /**
          * User-specified key/value pairs for the resource. Individual keys can be removed by
@@ -109,17 +109,17 @@ constructor(
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             internal fun from(metricCreateBody: MetricCreateBody) = apply {
-                this.description = metricCreateBody.description
-                this.itemId = metricCreateBody.itemId
-                this.name = metricCreateBody.name
-                this.sql = metricCreateBody.sql
-                this.metadata = metricCreateBody.metadata
-                additionalProperties(metricCreateBody.additionalProperties)
+                description = metricCreateBody.description
+                itemId = metricCreateBody.itemId
+                name = metricCreateBody.name
+                sql = metricCreateBody.sql
+                metadata = metricCreateBody.metadata
+                additionalProperties = metricCreateBody.additionalProperties.toMutableMap()
             }
 
             /** A description of the metric. */
             @JsonProperty("description")
-            fun description(description: String) = apply { this.description = description }
+            fun description(description: String?) = apply { this.description = description }
 
             /** The id of the item */
             @JsonProperty("item_id") fun itemId(itemId: String) = apply { this.itemId = itemId }
@@ -136,20 +136,26 @@ constructor(
              * setting `metadata` to `null`.
              */
             @JsonProperty("metadata")
-            fun metadata(metadata: Metadata) = apply { this.metadata = metadata }
+            fun metadata(metadata: Metadata?) = apply { this.metadata = metadata }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
-                this.additionalProperties.putAll(additionalProperties)
+                putAllAdditionalProperties(additionalProperties)
             }
 
             @JsonAnySetter
             fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-                this.additionalProperties.put(key, value)
+                additionalProperties.put(key, value)
             }
 
             fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.putAll(additionalProperties)
+            }
+
+            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+
+            fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                keys.forEach(::removeAdditionalProperty)
             }
 
             fun build(): MetricCreateBody =
@@ -391,21 +397,27 @@ constructor(
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             internal fun from(metadata: Metadata) = apply {
-                additionalProperties(metadata.additionalProperties)
+                additionalProperties = metadata.additionalProperties.toMutableMap()
             }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
-                this.additionalProperties.putAll(additionalProperties)
+                putAllAdditionalProperties(additionalProperties)
             }
 
             @JsonAnySetter
             fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-                this.additionalProperties.put(key, value)
+                additionalProperties.put(key, value)
             }
 
             fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.putAll(additionalProperties)
+            }
+
+            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+
+            fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                keys.forEach(::removeAdditionalProperty)
             }
 
             fun build(): Metadata = Metadata(additionalProperties.toImmutable())

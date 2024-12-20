@@ -67,17 +67,17 @@ constructor(
     @NoAutoDetect
     class AlertCreateForSubscriptionBody
     internal constructor(
-        private val thresholds: List<Threshold>?,
-        private val type: Type?,
+        private val thresholds: List<Threshold>,
+        private val type: Type,
         private val metricId: String?,
         private val additionalProperties: Map<String, JsonValue>,
     ) {
 
         /** The thresholds that define the values at which the alert will be triggered. */
-        @JsonProperty("thresholds") fun thresholds(): List<Threshold>? = thresholds
+        @JsonProperty("thresholds") fun thresholds(): List<Threshold> = thresholds
 
         /** The type of alert to create. This must be a valid alert type. */
-        @JsonProperty("type") fun type(): Type? = type
+        @JsonProperty("type") fun type(): Type = type
 
         /** The metric to track usage for. */
         @JsonProperty("metric_id") fun metricId(): String? = metricId
@@ -102,10 +102,11 @@ constructor(
 
             internal fun from(alertCreateForSubscriptionBody: AlertCreateForSubscriptionBody) =
                 apply {
-                    this.thresholds = alertCreateForSubscriptionBody.thresholds
-                    this.type = alertCreateForSubscriptionBody.type
-                    this.metricId = alertCreateForSubscriptionBody.metricId
-                    additionalProperties(alertCreateForSubscriptionBody.additionalProperties)
+                    thresholds = alertCreateForSubscriptionBody.thresholds.toMutableList()
+                    type = alertCreateForSubscriptionBody.type
+                    metricId = alertCreateForSubscriptionBody.metricId
+                    additionalProperties =
+                        alertCreateForSubscriptionBody.additionalProperties.toMutableMap()
                 }
 
             /** The thresholds that define the values at which the alert will be triggered. */
@@ -117,20 +118,26 @@ constructor(
 
             /** The metric to track usage for. */
             @JsonProperty("metric_id")
-            fun metricId(metricId: String) = apply { this.metricId = metricId }
+            fun metricId(metricId: String?) = apply { this.metricId = metricId }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
-                this.additionalProperties.putAll(additionalProperties)
+                putAllAdditionalProperties(additionalProperties)
             }
 
             @JsonAnySetter
             fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-                this.additionalProperties.put(key, value)
+                additionalProperties.put(key, value)
             }
 
             fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.putAll(additionalProperties)
+            }
+
+            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+
+            fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                keys.forEach(::removeAdditionalProperty)
             }
 
             fun build(): AlertCreateForSubscriptionBody =
@@ -346,7 +353,7 @@ constructor(
     @NoAutoDetect
     class Threshold
     private constructor(
-        private val value: Double?,
+        private val value: Double,
         private val additionalProperties: Map<String, JsonValue>,
     ) {
 
@@ -355,7 +362,7 @@ constructor(
          * or below this value. For usage and cost alerts, the alert will fire at or above this
          * value.
          */
-        @JsonProperty("value") fun value(): Double? = value
+        @JsonProperty("value") fun value(): Double = value
 
         @JsonAnyGetter
         @ExcludeMissing
@@ -374,8 +381,8 @@ constructor(
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             internal fun from(threshold: Threshold) = apply {
-                this.value = threshold.value
-                additionalProperties(threshold.additionalProperties)
+                value = threshold.value
+                additionalProperties = threshold.additionalProperties.toMutableMap()
             }
 
             /**
@@ -387,16 +394,22 @@ constructor(
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
-                this.additionalProperties.putAll(additionalProperties)
+                putAllAdditionalProperties(additionalProperties)
             }
 
             @JsonAnySetter
             fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-                this.additionalProperties.put(key, value)
+                additionalProperties.put(key, value)
             }
 
             fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.putAll(additionalProperties)
+            }
+
+            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+
+            fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                keys.forEach(::removeAdditionalProperty)
             }
 
             fun build(): Threshold =

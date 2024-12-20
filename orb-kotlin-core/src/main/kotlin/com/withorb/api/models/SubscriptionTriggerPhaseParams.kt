@@ -80,8 +80,9 @@ constructor(
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             internal fun from(subscriptionTriggerPhaseBody: SubscriptionTriggerPhaseBody) = apply {
-                this.effectiveDate = subscriptionTriggerPhaseBody.effectiveDate
-                additionalProperties(subscriptionTriggerPhaseBody.additionalProperties)
+                effectiveDate = subscriptionTriggerPhaseBody.effectiveDate
+                additionalProperties =
+                    subscriptionTriggerPhaseBody.additionalProperties.toMutableMap()
             }
 
             /**
@@ -89,22 +90,28 @@ constructor(
              * today in the customer's timezone.
              */
             @JsonProperty("effective_date")
-            fun effectiveDate(effectiveDate: LocalDate) = apply {
+            fun effectiveDate(effectiveDate: LocalDate?) = apply {
                 this.effectiveDate = effectiveDate
             }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
-                this.additionalProperties.putAll(additionalProperties)
+                putAllAdditionalProperties(additionalProperties)
             }
 
             @JsonAnySetter
             fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-                this.additionalProperties.put(key, value)
+                additionalProperties.put(key, value)
             }
 
             fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.putAll(additionalProperties)
+            }
+
+            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+
+            fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                keys.forEach(::removeAdditionalProperty)
             }
 
             fun build(): SubscriptionTriggerPhaseBody =

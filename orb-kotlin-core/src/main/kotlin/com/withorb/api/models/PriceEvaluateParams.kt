@@ -76,8 +76,8 @@ constructor(
     @NoAutoDetect
     class PriceEvaluateBody
     internal constructor(
-        private val timeframeEnd: OffsetDateTime?,
-        private val timeframeStart: OffsetDateTime?,
+        private val timeframeEnd: OffsetDateTime,
+        private val timeframeStart: OffsetDateTime,
         private val customerId: String?,
         private val externalCustomerId: String?,
         private val filter: String?,
@@ -86,10 +86,10 @@ constructor(
     ) {
 
         /** The exclusive upper bound for event timestamps */
-        @JsonProperty("timeframe_end") fun timeframeEnd(): OffsetDateTime? = timeframeEnd
+        @JsonProperty("timeframe_end") fun timeframeEnd(): OffsetDateTime = timeframeEnd
 
         /** The inclusive lower bound for event timestamps */
-        @JsonProperty("timeframe_start") fun timeframeStart(): OffsetDateTime? = timeframeStart
+        @JsonProperty("timeframe_start") fun timeframeStart(): OffsetDateTime = timeframeStart
 
         /** The ID of the customer to which this evaluation is scoped. */
         @JsonProperty("customer_id") fun customerId(): String? = customerId
@@ -133,13 +133,13 @@ constructor(
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             internal fun from(priceEvaluateBody: PriceEvaluateBody) = apply {
-                this.timeframeEnd = priceEvaluateBody.timeframeEnd
-                this.timeframeStart = priceEvaluateBody.timeframeStart
-                this.customerId = priceEvaluateBody.customerId
-                this.externalCustomerId = priceEvaluateBody.externalCustomerId
-                this.filter = priceEvaluateBody.filter
-                this.groupingKeys = priceEvaluateBody.groupingKeys
-                additionalProperties(priceEvaluateBody.additionalProperties)
+                timeframeEnd = priceEvaluateBody.timeframeEnd
+                timeframeStart = priceEvaluateBody.timeframeStart
+                customerId = priceEvaluateBody.customerId
+                externalCustomerId = priceEvaluateBody.externalCustomerId
+                filter = priceEvaluateBody.filter
+                groupingKeys = priceEvaluateBody.groupingKeys?.toMutableList()
+                additionalProperties = priceEvaluateBody.additionalProperties.toMutableMap()
             }
 
             /** The exclusive upper bound for event timestamps */
@@ -156,11 +156,11 @@ constructor(
 
             /** The ID of the customer to which this evaluation is scoped. */
             @JsonProperty("customer_id")
-            fun customerId(customerId: String) = apply { this.customerId = customerId }
+            fun customerId(customerId: String?) = apply { this.customerId = customerId }
 
             /** The external customer ID of the customer to which this evaluation is scoped. */
             @JsonProperty("external_customer_id")
-            fun externalCustomerId(externalCustomerId: String) = apply {
+            fun externalCustomerId(externalCustomerId: String?) = apply {
                 this.externalCustomerId = externalCustomerId
             }
 
@@ -169,7 +169,7 @@ constructor(
              * [computed property](../guides/extensibility/advanced-metrics#computed-properties)
              * used to filter the underlying billable metric
              */
-            @JsonProperty("filter") fun filter(filter: String) = apply { this.filter = filter }
+            @JsonProperty("filter") fun filter(filter: String?) = apply { this.filter = filter }
 
             /**
              * Properties (or
@@ -177,22 +177,28 @@ constructor(
              * used to group the underlying billable metric
              */
             @JsonProperty("grouping_keys")
-            fun groupingKeys(groupingKeys: List<String>) = apply {
+            fun groupingKeys(groupingKeys: List<String>?) = apply {
                 this.groupingKeys = groupingKeys
             }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
-                this.additionalProperties.putAll(additionalProperties)
+                putAllAdditionalProperties(additionalProperties)
             }
 
             @JsonAnySetter
             fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-                this.additionalProperties.put(key, value)
+                additionalProperties.put(key, value)
             }
 
             fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.putAll(additionalProperties)
+            }
+
+            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+
+            fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                keys.forEach(::removeAdditionalProperty)
             }
 
             fun build(): PriceEvaluateBody =
