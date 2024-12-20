@@ -67,15 +67,15 @@ constructor(
     @NoAutoDetect
     class CustomerBalanceTransactionCreateBody
     internal constructor(
-        private val amount: String?,
-        private val type: Type?,
+        private val amount: String,
+        private val type: Type,
         private val description: String?,
         private val additionalProperties: Map<String, JsonValue>,
     ) {
 
-        @JsonProperty("amount") fun amount(): String? = amount
+        @JsonProperty("amount") fun amount(): String = amount
 
-        @JsonProperty("type") fun type(): Type? = type
+        @JsonProperty("type") fun type(): Type = type
 
         /** An optional description that can be specified around this entry. */
         @JsonProperty("description") fun description(): String? = description
@@ -101,10 +101,11 @@ constructor(
             internal fun from(
                 customerBalanceTransactionCreateBody: CustomerBalanceTransactionCreateBody
             ) = apply {
-                this.amount = customerBalanceTransactionCreateBody.amount
-                this.type = customerBalanceTransactionCreateBody.type
-                this.description = customerBalanceTransactionCreateBody.description
-                additionalProperties(customerBalanceTransactionCreateBody.additionalProperties)
+                amount = customerBalanceTransactionCreateBody.amount
+                type = customerBalanceTransactionCreateBody.type
+                description = customerBalanceTransactionCreateBody.description
+                additionalProperties =
+                    customerBalanceTransactionCreateBody.additionalProperties.toMutableMap()
             }
 
             @JsonProperty("amount") fun amount(amount: String) = apply { this.amount = amount }
@@ -113,20 +114,26 @@ constructor(
 
             /** An optional description that can be specified around this entry. */
             @JsonProperty("description")
-            fun description(description: String) = apply { this.description = description }
+            fun description(description: String?) = apply { this.description = description }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
-                this.additionalProperties.putAll(additionalProperties)
+                putAllAdditionalProperties(additionalProperties)
             }
 
             @JsonAnySetter
             fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-                this.additionalProperties.put(key, value)
+                additionalProperties.put(key, value)
             }
 
             fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.putAll(additionalProperties)
+            }
+
+            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+
+            fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                keys.forEach(::removeAdditionalProperty)
             }
 
             fun build(): CustomerBalanceTransactionCreateBody =

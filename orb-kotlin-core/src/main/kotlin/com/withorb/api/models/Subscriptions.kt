@@ -23,8 +23,6 @@ private constructor(
     private val additionalProperties: Map<String, JsonValue>,
 ) {
 
-    private var validated: Boolean = false
-
     fun data(): List<Subscription> = data.getRequired("data")
 
     fun paginationMetadata(): PaginationMetadata =
@@ -39,6 +37,8 @@ private constructor(
     @JsonAnyGetter
     @ExcludeMissing
     fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
+
+    private var validated: Boolean = false
 
     fun validate(): Subscriptions = apply {
         if (!validated) {
@@ -62,9 +62,9 @@ private constructor(
         private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         internal fun from(subscriptions: Subscriptions) = apply {
-            this.data = subscriptions.data
-            this.paginationMetadata = subscriptions.paginationMetadata
-            additionalProperties(subscriptions.additionalProperties)
+            data = subscriptions.data
+            paginationMetadata = subscriptions.paginationMetadata
+            additionalProperties = subscriptions.additionalProperties.toMutableMap()
         }
 
         fun data(data: List<Subscription>) = data(JsonField.of(data))
@@ -84,16 +84,22 @@ private constructor(
 
         fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
             this.additionalProperties.clear()
-            this.additionalProperties.putAll(additionalProperties)
+            putAllAdditionalProperties(additionalProperties)
         }
 
         @JsonAnySetter
         fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-            this.additionalProperties.put(key, value)
+            additionalProperties.put(key, value)
         }
 
         fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
             this.additionalProperties.putAll(additionalProperties)
+        }
+
+        fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+
+        fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+            keys.forEach(::removeAdditionalProperty)
         }
 
         fun build(): Subscriptions =

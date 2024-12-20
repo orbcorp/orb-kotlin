@@ -50,8 +50,6 @@ private constructor(
     private val additionalProperties: Map<String, JsonValue>,
 ) {
 
-    private var validated: Boolean = false
-
     /** The final amount after any discounts or minimums. */
     fun amount(): String = amount.getRequired("amount")
 
@@ -612,6 +610,8 @@ private constructor(
     @ExcludeMissing
     fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
 
+    private var validated: Boolean = false
+
     fun validate(): InvoiceLineItemCreateResponse = apply {
         if (!validated) {
             amount()
@@ -662,23 +662,23 @@ private constructor(
         private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         internal fun from(invoiceLineItemCreateResponse: InvoiceLineItemCreateResponse) = apply {
-            this.amount = invoiceLineItemCreateResponse.amount
-            this.discount = invoiceLineItemCreateResponse.discount
-            this.endDate = invoiceLineItemCreateResponse.endDate
-            this.grouping = invoiceLineItemCreateResponse.grouping
-            this.minimum = invoiceLineItemCreateResponse.minimum
-            this.minimumAmount = invoiceLineItemCreateResponse.minimumAmount
-            this.maximum = invoiceLineItemCreateResponse.maximum
-            this.maximumAmount = invoiceLineItemCreateResponse.maximumAmount
-            this.name = invoiceLineItemCreateResponse.name
-            this.quantity = invoiceLineItemCreateResponse.quantity
-            this.startDate = invoiceLineItemCreateResponse.startDate
-            this.subtotal = invoiceLineItemCreateResponse.subtotal
-            this.subLineItems = invoiceLineItemCreateResponse.subLineItems
-            this.taxAmounts = invoiceLineItemCreateResponse.taxAmounts
-            this.id = invoiceLineItemCreateResponse.id
-            this.price = invoiceLineItemCreateResponse.price
-            additionalProperties(invoiceLineItemCreateResponse.additionalProperties)
+            amount = invoiceLineItemCreateResponse.amount
+            discount = invoiceLineItemCreateResponse.discount
+            endDate = invoiceLineItemCreateResponse.endDate
+            grouping = invoiceLineItemCreateResponse.grouping
+            minimum = invoiceLineItemCreateResponse.minimum
+            minimumAmount = invoiceLineItemCreateResponse.minimumAmount
+            maximum = invoiceLineItemCreateResponse.maximum
+            maximumAmount = invoiceLineItemCreateResponse.maximumAmount
+            name = invoiceLineItemCreateResponse.name
+            quantity = invoiceLineItemCreateResponse.quantity
+            startDate = invoiceLineItemCreateResponse.startDate
+            subtotal = invoiceLineItemCreateResponse.subtotal
+            subLineItems = invoiceLineItemCreateResponse.subLineItems
+            taxAmounts = invoiceLineItemCreateResponse.taxAmounts
+            id = invoiceLineItemCreateResponse.id
+            price = invoiceLineItemCreateResponse.price
+            additionalProperties = invoiceLineItemCreateResponse.additionalProperties.toMutableMap()
         }
 
         /** The final amount after any discounts or minimums. */
@@ -1279,16 +1279,22 @@ private constructor(
 
         fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
             this.additionalProperties.clear()
-            this.additionalProperties.putAll(additionalProperties)
+            putAllAdditionalProperties(additionalProperties)
         }
 
         @JsonAnySetter
         fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-            this.additionalProperties.put(key, value)
+            additionalProperties.put(key, value)
         }
 
         fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
             this.additionalProperties.putAll(additionalProperties)
+        }
+
+        fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+
+        fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+            keys.forEach(::removeAdditionalProperty)
         }
 
         fun build(): InvoiceLineItemCreateResponse =
@@ -1322,8 +1328,6 @@ private constructor(
         private val additionalProperties: Map<String, JsonValue>,
     ) {
 
-        private var validated: Boolean = false
-
         /** Maximum amount applied */
         fun maximumAmount(): String = maximumAmount.getRequired("maximum_amount")
 
@@ -1349,6 +1353,8 @@ private constructor(
         @ExcludeMissing
         fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
 
+        private var validated: Boolean = false
+
         fun validate(): Maximum = apply {
             if (!validated) {
                 maximumAmount()
@@ -1371,9 +1377,9 @@ private constructor(
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             internal fun from(maximum: Maximum) = apply {
-                this.maximumAmount = maximum.maximumAmount
-                this.appliesToPriceIds = maximum.appliesToPriceIds
-                additionalProperties(maximum.additionalProperties)
+                maximumAmount = maximum.maximumAmount
+                appliesToPriceIds = maximum.appliesToPriceIds
+                additionalProperties = maximum.additionalProperties.toMutableMap()
             }
 
             /** Maximum amount applied */
@@ -1405,16 +1411,22 @@ private constructor(
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
-                this.additionalProperties.putAll(additionalProperties)
+                putAllAdditionalProperties(additionalProperties)
             }
 
             @JsonAnySetter
             fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-                this.additionalProperties.put(key, value)
+                additionalProperties.put(key, value)
             }
 
             fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.putAll(additionalProperties)
+            }
+
+            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+
+            fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                keys.forEach(::removeAdditionalProperty)
             }
 
             fun build(): Maximum =
@@ -1452,8 +1464,6 @@ private constructor(
         private val additionalProperties: Map<String, JsonValue>,
     ) {
 
-        private var validated: Boolean = false
-
         /** Minimum amount applied */
         fun minimumAmount(): String = minimumAmount.getRequired("minimum_amount")
 
@@ -1479,6 +1489,8 @@ private constructor(
         @ExcludeMissing
         fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
 
+        private var validated: Boolean = false
+
         fun validate(): Minimum = apply {
             if (!validated) {
                 minimumAmount()
@@ -1501,9 +1513,9 @@ private constructor(
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             internal fun from(minimum: Minimum) = apply {
-                this.minimumAmount = minimum.minimumAmount
-                this.appliesToPriceIds = minimum.appliesToPriceIds
-                additionalProperties(minimum.additionalProperties)
+                minimumAmount = minimum.minimumAmount
+                appliesToPriceIds = minimum.appliesToPriceIds
+                additionalProperties = minimum.additionalProperties.toMutableMap()
             }
 
             /** Minimum amount applied */
@@ -1535,16 +1547,22 @@ private constructor(
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
-                this.additionalProperties.putAll(additionalProperties)
+                putAllAdditionalProperties(additionalProperties)
             }
 
             @JsonAnySetter
             fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-                this.additionalProperties.put(key, value)
+                additionalProperties.put(key, value)
             }
 
             fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.putAll(additionalProperties)
+            }
+
+            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+
+            fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                keys.forEach(::removeAdditionalProperty)
             }
 
             fun build(): Minimum =
@@ -1735,8 +1753,6 @@ private constructor(
             private val additionalProperties: Map<String, JsonValue>,
         ) {
 
-            private var validated: Boolean = false
-
             /** The total amount for this sub line item. */
             fun amount(): String = amount.getRequired("amount")
 
@@ -1766,6 +1782,8 @@ private constructor(
             @JsonAnyGetter
             @ExcludeMissing
             fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
+
+            private var validated: Boolean = false
 
             fun validate(): MatrixSubLineItem = apply {
                 if (!validated) {
@@ -1797,13 +1815,13 @@ private constructor(
                 private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
                 internal fun from(matrixSubLineItem: MatrixSubLineItem) = apply {
-                    this.amount = matrixSubLineItem.amount
-                    this.name = matrixSubLineItem.name
-                    this.quantity = matrixSubLineItem.quantity
-                    this.grouping = matrixSubLineItem.grouping
-                    this.type = matrixSubLineItem.type
-                    this.matrixConfig = matrixSubLineItem.matrixConfig
-                    additionalProperties(matrixSubLineItem.additionalProperties)
+                    amount = matrixSubLineItem.amount
+                    name = matrixSubLineItem.name
+                    quantity = matrixSubLineItem.quantity
+                    grouping = matrixSubLineItem.grouping
+                    type = matrixSubLineItem.type
+                    matrixConfig = matrixSubLineItem.matrixConfig
+                    additionalProperties = matrixSubLineItem.additionalProperties.toMutableMap()
                 }
 
                 /** The total amount for this sub line item. */
@@ -1849,18 +1867,26 @@ private constructor(
 
                 fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                     this.additionalProperties.clear()
-                    this.additionalProperties.putAll(additionalProperties)
+                    putAllAdditionalProperties(additionalProperties)
                 }
 
                 @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-                    this.additionalProperties.put(key, value)
+                    additionalProperties.put(key, value)
                 }
 
                 fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) =
                     apply {
                         this.additionalProperties.putAll(additionalProperties)
                     }
+
+                fun removeAdditionalProperty(key: String) = apply {
+                    additionalProperties.remove(key)
+                }
+
+                fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                    keys.forEach(::removeAdditionalProperty)
+                }
 
                 fun build(): MatrixSubLineItem =
                     MatrixSubLineItem(
@@ -1883,8 +1909,6 @@ private constructor(
                 private val additionalProperties: Map<String, JsonValue>,
             ) {
 
-                private var validated: Boolean = false
-
                 fun key(): String = key.getRequired("key")
 
                 /** No value indicates the default group */
@@ -1898,6 +1922,8 @@ private constructor(
                 @JsonAnyGetter
                 @ExcludeMissing
                 fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
+
+                private var validated: Boolean = false
 
                 fun validate(): Grouping = apply {
                     if (!validated) {
@@ -1921,9 +1947,9 @@ private constructor(
                     private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
                     internal fun from(grouping: Grouping) = apply {
-                        this.key = grouping.key
-                        this.value = grouping.value
-                        additionalProperties(grouping.additionalProperties)
+                        key = grouping.key
+                        value = grouping.value
+                        additionalProperties = grouping.additionalProperties.toMutableMap()
                     }
 
                     fun key(key: String) = key(JsonField.of(key))
@@ -1942,18 +1968,26 @@ private constructor(
 
                     fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                         this.additionalProperties.clear()
-                        this.additionalProperties.putAll(additionalProperties)
+                        putAllAdditionalProperties(additionalProperties)
                     }
 
                     @JsonAnySetter
                     fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-                        this.additionalProperties.put(key, value)
+                        additionalProperties.put(key, value)
                     }
 
                     fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) =
                         apply {
                             this.additionalProperties.putAll(additionalProperties)
                         }
+
+                    fun removeAdditionalProperty(key: String) = apply {
+                        additionalProperties.remove(key)
+                    }
+
+                    fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                        keys.forEach(::removeAdditionalProperty)
+                    }
 
                     fun build(): Grouping =
                         Grouping(
@@ -1989,8 +2023,6 @@ private constructor(
                 private val additionalProperties: Map<String, JsonValue>,
             ) {
 
-                private var validated: Boolean = false
-
                 /** The ordered dimension values for this line item. */
                 fun dimensionValues(): List<String?> =
                     dimensionValues.getRequired("dimension_values")
@@ -2003,6 +2035,8 @@ private constructor(
                 @JsonAnyGetter
                 @ExcludeMissing
                 fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
+
+                private var validated: Boolean = false
 
                 fun validate(): MatrixConfig = apply {
                     if (!validated) {
@@ -2024,8 +2058,8 @@ private constructor(
                     private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
                     internal fun from(matrixConfig: MatrixConfig) = apply {
-                        this.dimensionValues = matrixConfig.dimensionValues
-                        additionalProperties(matrixConfig.additionalProperties)
+                        dimensionValues = matrixConfig.dimensionValues
+                        additionalProperties = matrixConfig.additionalProperties.toMutableMap()
                     }
 
                     /** The ordered dimension values for this line item. */
@@ -2041,18 +2075,26 @@ private constructor(
 
                     fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                         this.additionalProperties.clear()
-                        this.additionalProperties.putAll(additionalProperties)
+                        putAllAdditionalProperties(additionalProperties)
                     }
 
                     @JsonAnySetter
                     fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-                        this.additionalProperties.put(key, value)
+                        additionalProperties.put(key, value)
                     }
 
                     fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) =
                         apply {
                             this.additionalProperties.putAll(additionalProperties)
                         }
+
+                    fun removeAdditionalProperty(key: String) = apply {
+                        additionalProperties.remove(key)
+                    }
+
+                    fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                        keys.forEach(::removeAdditionalProperty)
+                    }
 
                     fun build(): MatrixConfig =
                         MatrixConfig(
@@ -2161,8 +2203,6 @@ private constructor(
             private val additionalProperties: Map<String, JsonValue>,
         ) {
 
-            private var validated: Boolean = false
-
             /** The total amount for this sub line item. */
             fun amount(): String = amount.getRequired("amount")
 
@@ -2192,6 +2232,8 @@ private constructor(
             @JsonAnyGetter
             @ExcludeMissing
             fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
+
+            private var validated: Boolean = false
 
             fun validate(): TierSubLineItem = apply {
                 if (!validated) {
@@ -2223,13 +2265,13 @@ private constructor(
                 private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
                 internal fun from(tierSubLineItem: TierSubLineItem) = apply {
-                    this.amount = tierSubLineItem.amount
-                    this.name = tierSubLineItem.name
-                    this.quantity = tierSubLineItem.quantity
-                    this.grouping = tierSubLineItem.grouping
-                    this.type = tierSubLineItem.type
-                    this.tierConfig = tierSubLineItem.tierConfig
-                    additionalProperties(tierSubLineItem.additionalProperties)
+                    amount = tierSubLineItem.amount
+                    name = tierSubLineItem.name
+                    quantity = tierSubLineItem.quantity
+                    grouping = tierSubLineItem.grouping
+                    type = tierSubLineItem.type
+                    tierConfig = tierSubLineItem.tierConfig
+                    additionalProperties = tierSubLineItem.additionalProperties.toMutableMap()
                 }
 
                 /** The total amount for this sub line item. */
@@ -2274,18 +2316,26 @@ private constructor(
 
                 fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                     this.additionalProperties.clear()
-                    this.additionalProperties.putAll(additionalProperties)
+                    putAllAdditionalProperties(additionalProperties)
                 }
 
                 @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-                    this.additionalProperties.put(key, value)
+                    additionalProperties.put(key, value)
                 }
 
                 fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) =
                     apply {
                         this.additionalProperties.putAll(additionalProperties)
                     }
+
+                fun removeAdditionalProperty(key: String) = apply {
+                    additionalProperties.remove(key)
+                }
+
+                fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                    keys.forEach(::removeAdditionalProperty)
+                }
 
                 fun build(): TierSubLineItem =
                     TierSubLineItem(
@@ -2308,8 +2358,6 @@ private constructor(
                 private val additionalProperties: Map<String, JsonValue>,
             ) {
 
-                private var validated: Boolean = false
-
                 fun key(): String = key.getRequired("key")
 
                 /** No value indicates the default group */
@@ -2323,6 +2371,8 @@ private constructor(
                 @JsonAnyGetter
                 @ExcludeMissing
                 fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
+
+                private var validated: Boolean = false
 
                 fun validate(): Grouping = apply {
                     if (!validated) {
@@ -2346,9 +2396,9 @@ private constructor(
                     private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
                     internal fun from(grouping: Grouping) = apply {
-                        this.key = grouping.key
-                        this.value = grouping.value
-                        additionalProperties(grouping.additionalProperties)
+                        key = grouping.key
+                        value = grouping.value
+                        additionalProperties = grouping.additionalProperties.toMutableMap()
                     }
 
                     fun key(key: String) = key(JsonField.of(key))
@@ -2367,18 +2417,26 @@ private constructor(
 
                     fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                         this.additionalProperties.clear()
-                        this.additionalProperties.putAll(additionalProperties)
+                        putAllAdditionalProperties(additionalProperties)
                     }
 
                     @JsonAnySetter
                     fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-                        this.additionalProperties.put(key, value)
+                        additionalProperties.put(key, value)
                     }
 
                     fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) =
                         apply {
                             this.additionalProperties.putAll(additionalProperties)
                         }
+
+                    fun removeAdditionalProperty(key: String) = apply {
+                        additionalProperties.remove(key)
+                    }
+
+                    fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                        keys.forEach(::removeAdditionalProperty)
+                    }
 
                     fun build(): Grouping =
                         Grouping(
@@ -2416,8 +2474,6 @@ private constructor(
                 private val additionalProperties: Map<String, JsonValue>,
             ) {
 
-                private var validated: Boolean = false
-
                 fun firstUnit(): Double = firstUnit.getRequired("first_unit")
 
                 fun lastUnit(): Double? = lastUnit.getNullable("last_unit")
@@ -2433,6 +2489,8 @@ private constructor(
                 @JsonAnyGetter
                 @ExcludeMissing
                 fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
+
+                private var validated: Boolean = false
 
                 fun validate(): TierConfig = apply {
                     if (!validated) {
@@ -2458,10 +2516,10 @@ private constructor(
                     private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
                     internal fun from(tierConfig: TierConfig) = apply {
-                        this.firstUnit = tierConfig.firstUnit
-                        this.lastUnit = tierConfig.lastUnit
-                        this.unitAmount = tierConfig.unitAmount
-                        additionalProperties(tierConfig.additionalProperties)
+                        firstUnit = tierConfig.firstUnit
+                        lastUnit = tierConfig.lastUnit
+                        unitAmount = tierConfig.unitAmount
+                        additionalProperties = tierConfig.additionalProperties.toMutableMap()
                     }
 
                     fun firstUnit(firstUnit: Double) = firstUnit(JsonField.of(firstUnit))
@@ -2488,18 +2546,26 @@ private constructor(
 
                     fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                         this.additionalProperties.clear()
-                        this.additionalProperties.putAll(additionalProperties)
+                        putAllAdditionalProperties(additionalProperties)
                     }
 
                     @JsonAnySetter
                     fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-                        this.additionalProperties.put(key, value)
+                        additionalProperties.put(key, value)
                     }
 
                     fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) =
                         apply {
                             this.additionalProperties.putAll(additionalProperties)
                         }
+
+                    fun removeAdditionalProperty(key: String) = apply {
+                        additionalProperties.remove(key)
+                    }
+
+                    fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                        keys.forEach(::removeAdditionalProperty)
+                    }
 
                     fun build(): TierConfig =
                         TierConfig(
@@ -2609,8 +2675,6 @@ private constructor(
             private val additionalProperties: Map<String, JsonValue>,
         ) {
 
-            private var validated: Boolean = false
-
             /** The total amount for this sub line item. */
             fun amount(): String = amount.getRequired("amount")
 
@@ -2636,6 +2700,8 @@ private constructor(
             @JsonAnyGetter
             @ExcludeMissing
             fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
+
+            private var validated: Boolean = false
 
             fun validate(): OtherSubLineItem = apply {
                 if (!validated) {
@@ -2665,12 +2731,12 @@ private constructor(
                 private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
                 internal fun from(otherSubLineItem: OtherSubLineItem) = apply {
-                    this.amount = otherSubLineItem.amount
-                    this.name = otherSubLineItem.name
-                    this.quantity = otherSubLineItem.quantity
-                    this.grouping = otherSubLineItem.grouping
-                    this.type = otherSubLineItem.type
-                    additionalProperties(otherSubLineItem.additionalProperties)
+                    amount = otherSubLineItem.amount
+                    name = otherSubLineItem.name
+                    quantity = otherSubLineItem.quantity
+                    grouping = otherSubLineItem.grouping
+                    type = otherSubLineItem.type
+                    additionalProperties = otherSubLineItem.additionalProperties.toMutableMap()
                 }
 
                 /** The total amount for this sub line item. */
@@ -2707,18 +2773,26 @@ private constructor(
 
                 fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                     this.additionalProperties.clear()
-                    this.additionalProperties.putAll(additionalProperties)
+                    putAllAdditionalProperties(additionalProperties)
                 }
 
                 @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-                    this.additionalProperties.put(key, value)
+                    additionalProperties.put(key, value)
                 }
 
                 fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) =
                     apply {
                         this.additionalProperties.putAll(additionalProperties)
                     }
+
+                fun removeAdditionalProperty(key: String) = apply {
+                    additionalProperties.remove(key)
+                }
+
+                fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                    keys.forEach(::removeAdditionalProperty)
+                }
 
                 fun build(): OtherSubLineItem =
                     OtherSubLineItem(
@@ -2740,8 +2814,6 @@ private constructor(
                 private val additionalProperties: Map<String, JsonValue>,
             ) {
 
-                private var validated: Boolean = false
-
                 fun key(): String = key.getRequired("key")
 
                 /** No value indicates the default group */
@@ -2755,6 +2827,8 @@ private constructor(
                 @JsonAnyGetter
                 @ExcludeMissing
                 fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
+
+                private var validated: Boolean = false
 
                 fun validate(): Grouping = apply {
                     if (!validated) {
@@ -2778,9 +2852,9 @@ private constructor(
                     private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
                     internal fun from(grouping: Grouping) = apply {
-                        this.key = grouping.key
-                        this.value = grouping.value
-                        additionalProperties(grouping.additionalProperties)
+                        key = grouping.key
+                        value = grouping.value
+                        additionalProperties = grouping.additionalProperties.toMutableMap()
                     }
 
                     fun key(key: String) = key(JsonField.of(key))
@@ -2799,18 +2873,26 @@ private constructor(
 
                     fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                         this.additionalProperties.clear()
-                        this.additionalProperties.putAll(additionalProperties)
+                        putAllAdditionalProperties(additionalProperties)
                     }
 
                     @JsonAnySetter
                     fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-                        this.additionalProperties.put(key, value)
+                        additionalProperties.put(key, value)
                     }
 
                     fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) =
                         apply {
                             this.additionalProperties.putAll(additionalProperties)
                         }
+
+                    fun removeAdditionalProperty(key: String) = apply {
+                        additionalProperties.remove(key)
+                    }
+
+                    fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                        keys.forEach(::removeAdditionalProperty)
+                    }
 
                     fun build(): Grouping =
                         Grouping(
@@ -2918,8 +3000,6 @@ private constructor(
         private val additionalProperties: Map<String, JsonValue>,
     ) {
 
-        private var validated: Boolean = false
-
         /** The human-readable description of the applied tax rate. */
         fun taxRateDescription(): String = taxRateDescription.getRequired("tax_rate_description")
 
@@ -2946,6 +3026,8 @@ private constructor(
         @ExcludeMissing
         fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
 
+        private var validated: Boolean = false
+
         fun validate(): TaxAmount = apply {
             if (!validated) {
                 taxRateDescription()
@@ -2970,10 +3052,10 @@ private constructor(
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             internal fun from(taxAmount: TaxAmount) = apply {
-                this.taxRateDescription = taxAmount.taxRateDescription
-                this.taxRatePercentage = taxAmount.taxRatePercentage
-                this.amount = taxAmount.amount
-                additionalProperties(taxAmount.additionalProperties)
+                taxRateDescription = taxAmount.taxRateDescription
+                taxRatePercentage = taxAmount.taxRatePercentage
+                amount = taxAmount.amount
+                additionalProperties = taxAmount.additionalProperties.toMutableMap()
             }
 
             /** The human-readable description of the applied tax rate. */
@@ -3008,16 +3090,22 @@ private constructor(
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
-                this.additionalProperties.putAll(additionalProperties)
+                putAllAdditionalProperties(additionalProperties)
             }
 
             @JsonAnySetter
             fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-                this.additionalProperties.put(key, value)
+                additionalProperties.put(key, value)
             }
 
             fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.putAll(additionalProperties)
+            }
+
+            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+
+            fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                keys.forEach(::removeAdditionalProperty)
             }
 
             fun build(): TaxAmount =

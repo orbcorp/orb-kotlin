@@ -67,17 +67,17 @@ constructor(
     @NoAutoDetect
     class AlertCreateForExternalCustomerBody
     internal constructor(
-        private val currency: String?,
-        private val type: Type?,
+        private val currency: String,
+        private val type: Type,
         private val thresholds: List<Threshold>?,
         private val additionalProperties: Map<String, JsonValue>,
     ) {
 
         /** The case sensitive currency or custom pricing unit to use for this alert. */
-        @JsonProperty("currency") fun currency(): String? = currency
+        @JsonProperty("currency") fun currency(): String = currency
 
         /** The type of alert to create. This must be a valid alert type. */
-        @JsonProperty("type") fun type(): Type? = type
+        @JsonProperty("type") fun type(): Type = type
 
         /** The thresholds that define the values at which the alert will be triggered. */
         @JsonProperty("thresholds") fun thresholds(): List<Threshold>? = thresholds
@@ -103,10 +103,11 @@ constructor(
             internal fun from(
                 alertCreateForExternalCustomerBody: AlertCreateForExternalCustomerBody
             ) = apply {
-                this.currency = alertCreateForExternalCustomerBody.currency
-                this.type = alertCreateForExternalCustomerBody.type
-                this.thresholds = alertCreateForExternalCustomerBody.thresholds
-                additionalProperties(alertCreateForExternalCustomerBody.additionalProperties)
+                currency = alertCreateForExternalCustomerBody.currency
+                type = alertCreateForExternalCustomerBody.type
+                thresholds = alertCreateForExternalCustomerBody.thresholds?.toMutableList()
+                additionalProperties =
+                    alertCreateForExternalCustomerBody.additionalProperties.toMutableMap()
             }
 
             /** The case sensitive currency or custom pricing unit to use for this alert. */
@@ -118,20 +119,26 @@ constructor(
 
             /** The thresholds that define the values at which the alert will be triggered. */
             @JsonProperty("thresholds")
-            fun thresholds(thresholds: List<Threshold>) = apply { this.thresholds = thresholds }
+            fun thresholds(thresholds: List<Threshold>?) = apply { this.thresholds = thresholds }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
-                this.additionalProperties.putAll(additionalProperties)
+                putAllAdditionalProperties(additionalProperties)
             }
 
             @JsonAnySetter
             fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-                this.additionalProperties.put(key, value)
+                additionalProperties.put(key, value)
             }
 
             fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.putAll(additionalProperties)
+            }
+
+            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+
+            fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                keys.forEach(::removeAdditionalProperty)
             }
 
             fun build(): AlertCreateForExternalCustomerBody =
@@ -427,7 +434,7 @@ constructor(
     @NoAutoDetect
     class Threshold
     private constructor(
-        private val value: Double?,
+        private val value: Double,
         private val additionalProperties: Map<String, JsonValue>,
     ) {
 
@@ -436,7 +443,7 @@ constructor(
          * or below this value. For usage and cost alerts, the alert will fire at or above this
          * value.
          */
-        @JsonProperty("value") fun value(): Double? = value
+        @JsonProperty("value") fun value(): Double = value
 
         @JsonAnyGetter
         @ExcludeMissing
@@ -455,8 +462,8 @@ constructor(
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             internal fun from(threshold: Threshold) = apply {
-                this.value = threshold.value
-                additionalProperties(threshold.additionalProperties)
+                value = threshold.value
+                additionalProperties = threshold.additionalProperties.toMutableMap()
             }
 
             /**
@@ -468,16 +475,22 @@ constructor(
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
-                this.additionalProperties.putAll(additionalProperties)
+                putAllAdditionalProperties(additionalProperties)
             }
 
             @JsonAnySetter
             fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-                this.additionalProperties.put(key, value)
+                additionalProperties.put(key, value)
             }
 
             fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.putAll(additionalProperties)
+            }
+
+            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+
+            fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                keys.forEach(::removeAdditionalProperty)
             }
 
             fun build(): Threshold =

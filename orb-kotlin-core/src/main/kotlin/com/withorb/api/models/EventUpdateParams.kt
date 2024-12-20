@@ -72,29 +72,29 @@ constructor(
     @NoAutoDetect
     class EventUpdateBody
     internal constructor(
-        private val eventName: String?,
-        private val properties: JsonValue?,
-        private val timestamp: OffsetDateTime?,
+        private val eventName: String,
+        private val properties: JsonValue,
+        private val timestamp: OffsetDateTime,
         private val customerId: String?,
         private val externalCustomerId: String?,
         private val additionalProperties: Map<String, JsonValue>,
     ) {
 
         /** A name to meaningfully identify the action or event type. */
-        @JsonProperty("event_name") fun eventName(): String? = eventName
+        @JsonProperty("event_name") fun eventName(): String = eventName
 
         /**
          * A dictionary of custom properties. Values in this dictionary must be numeric, boolean, or
          * strings. Nested dictionaries are disallowed.
          */
-        @JsonProperty("properties") fun properties(): JsonValue? = properties
+        @JsonProperty("properties") fun properties(): JsonValue = properties
 
         /**
          * An ISO 8601 format date with no timezone offset (i.e. UTC). This should represent the
          * time that usage was recorded, and is particularly important to attribute usage to a given
          * billing period.
          */
-        @JsonProperty("timestamp") fun timestamp(): OffsetDateTime? = timestamp
+        @JsonProperty("timestamp") fun timestamp(): OffsetDateTime = timestamp
 
         /** The Orb Customer identifier */
         @JsonProperty("customer_id") fun customerId(): String? = customerId
@@ -123,12 +123,12 @@ constructor(
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             internal fun from(eventUpdateBody: EventUpdateBody) = apply {
-                this.eventName = eventUpdateBody.eventName
-                this.properties = eventUpdateBody.properties
-                this.timestamp = eventUpdateBody.timestamp
-                this.customerId = eventUpdateBody.customerId
-                this.externalCustomerId = eventUpdateBody.externalCustomerId
-                additionalProperties(eventUpdateBody.additionalProperties)
+                eventName = eventUpdateBody.eventName
+                properties = eventUpdateBody.properties
+                timestamp = eventUpdateBody.timestamp
+                customerId = eventUpdateBody.customerId
+                externalCustomerId = eventUpdateBody.externalCustomerId
+                additionalProperties = eventUpdateBody.additionalProperties.toMutableMap()
             }
 
             /** A name to meaningfully identify the action or event type. */
@@ -152,28 +152,34 @@ constructor(
 
             /** The Orb Customer identifier */
             @JsonProperty("customer_id")
-            fun customerId(customerId: String) = apply { this.customerId = customerId }
+            fun customerId(customerId: String?) = apply { this.customerId = customerId }
 
             /**
              * An alias for the Orb customer, whose mapping is specified when creating the customer
              */
             @JsonProperty("external_customer_id")
-            fun externalCustomerId(externalCustomerId: String) = apply {
+            fun externalCustomerId(externalCustomerId: String?) = apply {
                 this.externalCustomerId = externalCustomerId
             }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
-                this.additionalProperties.putAll(additionalProperties)
+                putAllAdditionalProperties(additionalProperties)
             }
 
             @JsonAnySetter
             fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-                this.additionalProperties.put(key, value)
+                additionalProperties.put(key, value)
             }
 
             fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.putAll(additionalProperties)
+            }
+
+            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+
+            fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                keys.forEach(::removeAdditionalProperty)
             }
 
             fun build(): EventUpdateBody =

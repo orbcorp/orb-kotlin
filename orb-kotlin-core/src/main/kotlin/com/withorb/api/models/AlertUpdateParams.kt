@@ -52,12 +52,12 @@ constructor(
     @NoAutoDetect
     class AlertUpdateBody
     internal constructor(
-        private val thresholds: List<Threshold>?,
+        private val thresholds: List<Threshold>,
         private val additionalProperties: Map<String, JsonValue>,
     ) {
 
         /** The thresholds that define the values at which the alert will be triggered. */
-        @JsonProperty("thresholds") fun thresholds(): List<Threshold>? = thresholds
+        @JsonProperty("thresholds") fun thresholds(): List<Threshold> = thresholds
 
         @JsonAnyGetter
         @ExcludeMissing
@@ -76,8 +76,8 @@ constructor(
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             internal fun from(alertUpdateBody: AlertUpdateBody) = apply {
-                this.thresholds = alertUpdateBody.thresholds
-                additionalProperties(alertUpdateBody.additionalProperties)
+                thresholds = alertUpdateBody.thresholds.toMutableList()
+                additionalProperties = alertUpdateBody.additionalProperties.toMutableMap()
             }
 
             /** The thresholds that define the values at which the alert will be triggered. */
@@ -86,16 +86,22 @@ constructor(
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
-                this.additionalProperties.putAll(additionalProperties)
+                putAllAdditionalProperties(additionalProperties)
             }
 
             @JsonAnySetter
             fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-                this.additionalProperties.put(key, value)
+                additionalProperties.put(key, value)
             }
 
             fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.putAll(additionalProperties)
+            }
+
+            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+
+            fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                keys.forEach(::removeAdditionalProperty)
             }
 
             fun build(): AlertUpdateBody =
@@ -298,7 +304,7 @@ constructor(
     @NoAutoDetect
     class Threshold
     private constructor(
-        private val value: Double?,
+        private val value: Double,
         private val additionalProperties: Map<String, JsonValue>,
     ) {
 
@@ -307,7 +313,7 @@ constructor(
          * or below this value. For usage and cost alerts, the alert will fire at or above this
          * value.
          */
-        @JsonProperty("value") fun value(): Double? = value
+        @JsonProperty("value") fun value(): Double = value
 
         @JsonAnyGetter
         @ExcludeMissing
@@ -326,8 +332,8 @@ constructor(
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             internal fun from(threshold: Threshold) = apply {
-                this.value = threshold.value
-                additionalProperties(threshold.additionalProperties)
+                value = threshold.value
+                additionalProperties = threshold.additionalProperties.toMutableMap()
             }
 
             /**
@@ -339,16 +345,22 @@ constructor(
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
-                this.additionalProperties.putAll(additionalProperties)
+                putAllAdditionalProperties(additionalProperties)
             }
 
             @JsonAnySetter
             fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-                this.additionalProperties.put(key, value)
+                additionalProperties.put(key, value)
             }
 
             fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.putAll(additionalProperties)
+            }
+
+            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+
+            fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                keys.forEach(::removeAdditionalProperty)
             }
 
             fun build(): Threshold =

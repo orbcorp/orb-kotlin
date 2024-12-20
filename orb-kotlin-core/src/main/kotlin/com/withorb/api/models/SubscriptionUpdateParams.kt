@@ -134,12 +134,12 @@ constructor(
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             internal fun from(subscriptionUpdateBody: SubscriptionUpdateBody) = apply {
-                this.autoCollection = subscriptionUpdateBody.autoCollection
-                this.defaultInvoiceMemo = subscriptionUpdateBody.defaultInvoiceMemo
-                this.invoicingThreshold = subscriptionUpdateBody.invoicingThreshold
-                this.metadata = subscriptionUpdateBody.metadata
-                this.netTerms = subscriptionUpdateBody.netTerms
-                additionalProperties(subscriptionUpdateBody.additionalProperties)
+                autoCollection = subscriptionUpdateBody.autoCollection
+                defaultInvoiceMemo = subscriptionUpdateBody.defaultInvoiceMemo
+                invoicingThreshold = subscriptionUpdateBody.invoicingThreshold
+                metadata = subscriptionUpdateBody.metadata
+                netTerms = subscriptionUpdateBody.netTerms
+                additionalProperties = subscriptionUpdateBody.additionalProperties.toMutableMap()
             }
 
             /**
@@ -148,7 +148,7 @@ constructor(
              * plan's behavior.
              */
             @JsonProperty("auto_collection")
-            fun autoCollection(autoCollection: Boolean) = apply {
+            fun autoCollection(autoCollection: Boolean?) = apply {
                 this.autoCollection = autoCollection
             }
 
@@ -157,7 +157,7 @@ constructor(
              * provided, it is determined by the plan configuration.
              */
             @JsonProperty("default_invoice_memo")
-            fun defaultInvoiceMemo(defaultInvoiceMemo: String) = apply {
+            fun defaultInvoiceMemo(defaultInvoiceMemo: String?) = apply {
                 this.defaultInvoiceMemo = defaultInvoiceMemo
             }
 
@@ -167,7 +167,7 @@ constructor(
              * end of the billing period.
              */
             @JsonProperty("invoicing_threshold")
-            fun invoicingThreshold(invoicingThreshold: String) = apply {
+            fun invoicingThreshold(invoicingThreshold: String?) = apply {
                 this.invoicingThreshold = invoicingThreshold
             }
 
@@ -177,7 +177,7 @@ constructor(
              * setting `metadata` to `null`.
              */
             @JsonProperty("metadata")
-            fun metadata(metadata: Metadata) = apply { this.metadata = metadata }
+            fun metadata(metadata: Metadata?) = apply { this.metadata = metadata }
 
             /**
              * Determines the difference between the invoice issue date for subscription invoices as
@@ -186,20 +186,26 @@ constructor(
              * invoice.
              */
             @JsonProperty("net_terms")
-            fun netTerms(netTerms: Long) = apply { this.netTerms = netTerms }
+            fun netTerms(netTerms: Long?) = apply { this.netTerms = netTerms }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
-                this.additionalProperties.putAll(additionalProperties)
+                putAllAdditionalProperties(additionalProperties)
             }
 
             @JsonAnySetter
             fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-                this.additionalProperties.put(key, value)
+                additionalProperties.put(key, value)
             }
 
             fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.putAll(additionalProperties)
+            }
+
+            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+
+            fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                keys.forEach(::removeAdditionalProperty)
             }
 
             fun build(): SubscriptionUpdateBody =
@@ -466,21 +472,27 @@ constructor(
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             internal fun from(metadata: Metadata) = apply {
-                additionalProperties(metadata.additionalProperties)
+                additionalProperties = metadata.additionalProperties.toMutableMap()
             }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
-                this.additionalProperties.putAll(additionalProperties)
+                putAllAdditionalProperties(additionalProperties)
             }
 
             @JsonAnySetter
             fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-                this.additionalProperties.put(key, value)
+                additionalProperties.put(key, value)
             }
 
             fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.putAll(additionalProperties)
+            }
+
+            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+
+            fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                keys.forEach(::removeAdditionalProperty)
             }
 
             fun build(): Metadata = Metadata(additionalProperties.toImmutable())
