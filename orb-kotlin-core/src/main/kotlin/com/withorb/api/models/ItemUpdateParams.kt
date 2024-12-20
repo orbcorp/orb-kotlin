@@ -96,30 +96,36 @@ constructor(
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             internal fun from(itemUpdateBody: ItemUpdateBody) = apply {
-                this.externalConnections = itemUpdateBody.externalConnections
-                this.name = itemUpdateBody.name
-                additionalProperties(itemUpdateBody.additionalProperties)
+                externalConnections = itemUpdateBody.externalConnections?.toMutableList()
+                name = itemUpdateBody.name
+                additionalProperties = itemUpdateBody.additionalProperties.toMutableMap()
             }
 
             @JsonProperty("external_connections")
-            fun externalConnections(externalConnections: List<ExternalConnection>) = apply {
+            fun externalConnections(externalConnections: List<ExternalConnection>?) = apply {
                 this.externalConnections = externalConnections
             }
 
-            @JsonProperty("name") fun name(name: String) = apply { this.name = name }
+            @JsonProperty("name") fun name(name: String?) = apply { this.name = name }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
-                this.additionalProperties.putAll(additionalProperties)
+                putAllAdditionalProperties(additionalProperties)
             }
 
             @JsonAnySetter
             fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-                this.additionalProperties.put(key, value)
+                additionalProperties.put(key, value)
             }
 
             fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.putAll(additionalProperties)
+            }
+
+            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+
+            fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                keys.forEach(::removeAdditionalProperty)
             }
 
             fun build(): ItemUpdateBody =
@@ -323,15 +329,15 @@ constructor(
     @NoAutoDetect
     class ExternalConnection
     private constructor(
-        private val externalConnectionName: ExternalConnectionName?,
-        private val externalEntityId: String?,
+        private val externalConnectionName: ExternalConnectionName,
+        private val externalEntityId: String,
         private val additionalProperties: Map<String, JsonValue>,
     ) {
 
         @JsonProperty("external_connection_name")
-        fun externalConnectionName(): ExternalConnectionName? = externalConnectionName
+        fun externalConnectionName(): ExternalConnectionName = externalConnectionName
 
-        @JsonProperty("external_entity_id") fun externalEntityId(): String? = externalEntityId
+        @JsonProperty("external_entity_id") fun externalEntityId(): String = externalEntityId
 
         @JsonAnyGetter
         @ExcludeMissing
@@ -351,9 +357,9 @@ constructor(
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             internal fun from(externalConnection: ExternalConnection) = apply {
-                this.externalConnectionName = externalConnection.externalConnectionName
-                this.externalEntityId = externalConnection.externalEntityId
-                additionalProperties(externalConnection.additionalProperties)
+                externalConnectionName = externalConnection.externalConnectionName
+                externalEntityId = externalConnection.externalEntityId
+                additionalProperties = externalConnection.additionalProperties.toMutableMap()
             }
 
             @JsonProperty("external_connection_name")
@@ -368,16 +374,22 @@ constructor(
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
-                this.additionalProperties.putAll(additionalProperties)
+                putAllAdditionalProperties(additionalProperties)
             }
 
             @JsonAnySetter
             fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-                this.additionalProperties.put(key, value)
+                additionalProperties.put(key, value)
             }
 
             fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.putAll(additionalProperties)
+            }
+
+            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+
+            fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                keys.forEach(::removeAdditionalProperty)
             }
 
             fun build(): ExternalConnection =

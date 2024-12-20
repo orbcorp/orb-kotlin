@@ -35,8 +35,6 @@ private constructor(
     private val additionalProperties: Map<String, JsonValue>,
 ) {
 
-    private var validated: Boolean = false
-
     /** A unique id for this transaction. */
     fun id(): String = id.getRequired("id")
 
@@ -103,6 +101,8 @@ private constructor(
     @ExcludeMissing
     fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
 
+    private var validated: Boolean = false
+
     fun validate(): CustomerBalanceTransactionCreateResponse = apply {
         if (!validated) {
             id()
@@ -143,17 +143,18 @@ private constructor(
         internal fun from(
             customerBalanceTransactionCreateResponse: CustomerBalanceTransactionCreateResponse
         ) = apply {
-            this.id = customerBalanceTransactionCreateResponse.id
-            this.createdAt = customerBalanceTransactionCreateResponse.createdAt
-            this.startingBalance = customerBalanceTransactionCreateResponse.startingBalance
-            this.endingBalance = customerBalanceTransactionCreateResponse.endingBalance
-            this.amount = customerBalanceTransactionCreateResponse.amount
-            this.action = customerBalanceTransactionCreateResponse.action
-            this.description = customerBalanceTransactionCreateResponse.description
-            this.invoice = customerBalanceTransactionCreateResponse.invoice
-            this.type = customerBalanceTransactionCreateResponse.type
-            this.creditNote = customerBalanceTransactionCreateResponse.creditNote
-            additionalProperties(customerBalanceTransactionCreateResponse.additionalProperties)
+            id = customerBalanceTransactionCreateResponse.id
+            createdAt = customerBalanceTransactionCreateResponse.createdAt
+            startingBalance = customerBalanceTransactionCreateResponse.startingBalance
+            endingBalance = customerBalanceTransactionCreateResponse.endingBalance
+            amount = customerBalanceTransactionCreateResponse.amount
+            action = customerBalanceTransactionCreateResponse.action
+            description = customerBalanceTransactionCreateResponse.description
+            invoice = customerBalanceTransactionCreateResponse.invoice
+            type = customerBalanceTransactionCreateResponse.type
+            creditNote = customerBalanceTransactionCreateResponse.creditNote
+            additionalProperties =
+                customerBalanceTransactionCreateResponse.additionalProperties.toMutableMap()
         }
 
         /** A unique id for this transaction. */
@@ -245,16 +246,22 @@ private constructor(
 
         fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
             this.additionalProperties.clear()
-            this.additionalProperties.putAll(additionalProperties)
+            putAllAdditionalProperties(additionalProperties)
         }
 
         @JsonAnySetter
         fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-            this.additionalProperties.put(key, value)
+            additionalProperties.put(key, value)
         }
 
         fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
             this.additionalProperties.putAll(additionalProperties)
+        }
+
+        fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+
+        fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+            keys.forEach(::removeAdditionalProperty)
         }
 
         fun build(): CustomerBalanceTransactionCreateResponse =
@@ -374,8 +381,6 @@ private constructor(
         private val additionalProperties: Map<String, JsonValue>,
     ) {
 
-        private var validated: Boolean = false
-
         /** The id of the Credit note */
         fun id(): String = id.getRequired("id")
 
@@ -385,6 +390,8 @@ private constructor(
         @JsonAnyGetter
         @ExcludeMissing
         fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
+
+        private var validated: Boolean = false
 
         fun validate(): CreditNote = apply {
             if (!validated) {
@@ -406,8 +413,8 @@ private constructor(
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             internal fun from(creditNote: CreditNote) = apply {
-                this.id = creditNote.id
-                additionalProperties(creditNote.additionalProperties)
+                id = creditNote.id
+                additionalProperties = creditNote.additionalProperties.toMutableMap()
             }
 
             /** The id of the Credit note */
@@ -420,16 +427,22 @@ private constructor(
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
-                this.additionalProperties.putAll(additionalProperties)
+                putAllAdditionalProperties(additionalProperties)
             }
 
             @JsonAnySetter
             fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-                this.additionalProperties.put(key, value)
+                additionalProperties.put(key, value)
             }
 
             fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.putAll(additionalProperties)
+            }
+
+            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+
+            fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                keys.forEach(::removeAdditionalProperty)
             }
 
             fun build(): CreditNote = CreditNote(id, additionalProperties.toImmutable())
@@ -460,8 +473,6 @@ private constructor(
         private val additionalProperties: Map<String, JsonValue>,
     ) {
 
-        private var validated: Boolean = false
-
         /** The Invoice id */
         fun id(): String = id.getRequired("id")
 
@@ -471,6 +482,8 @@ private constructor(
         @JsonAnyGetter
         @ExcludeMissing
         fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
+
+        private var validated: Boolean = false
 
         fun validate(): Invoice = apply {
             if (!validated) {
@@ -492,8 +505,8 @@ private constructor(
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             internal fun from(invoice: Invoice) = apply {
-                this.id = invoice.id
-                additionalProperties(invoice.additionalProperties)
+                id = invoice.id
+                additionalProperties = invoice.additionalProperties.toMutableMap()
             }
 
             /** The Invoice id */
@@ -506,16 +519,22 @@ private constructor(
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
-                this.additionalProperties.putAll(additionalProperties)
+                putAllAdditionalProperties(additionalProperties)
             }
 
             @JsonAnySetter
             fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-                this.additionalProperties.put(key, value)
+                additionalProperties.put(key, value)
             }
 
             fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.putAll(additionalProperties)
+            }
+
+            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+
+            fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                keys.forEach(::removeAdditionalProperty)
             }
 
             fun build(): Invoice = Invoice(id, additionalProperties.toImmutable())

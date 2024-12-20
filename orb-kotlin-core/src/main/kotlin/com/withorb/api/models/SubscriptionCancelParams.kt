@@ -64,13 +64,13 @@ constructor(
     @NoAutoDetect
     class SubscriptionCancelBody
     internal constructor(
-        private val cancelOption: CancelOption?,
+        private val cancelOption: CancelOption,
         private val cancellationDate: OffsetDateTime?,
         private val additionalProperties: Map<String, JsonValue>,
     ) {
 
         /** Determines the timing of subscription cancellation */
-        @JsonProperty("cancel_option") fun cancelOption(): CancelOption? = cancelOption
+        @JsonProperty("cancel_option") fun cancelOption(): CancelOption = cancelOption
 
         /**
          * The date that the cancellation should take effect. This parameter can only be passed if
@@ -97,9 +97,9 @@ constructor(
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             internal fun from(subscriptionCancelBody: SubscriptionCancelBody) = apply {
-                this.cancelOption = subscriptionCancelBody.cancelOption
-                this.cancellationDate = subscriptionCancelBody.cancellationDate
-                additionalProperties(subscriptionCancelBody.additionalProperties)
+                cancelOption = subscriptionCancelBody.cancelOption
+                cancellationDate = subscriptionCancelBody.cancellationDate
+                additionalProperties = subscriptionCancelBody.additionalProperties.toMutableMap()
             }
 
             /** Determines the timing of subscription cancellation */
@@ -113,22 +113,28 @@ constructor(
              * if the `cancel_option` is `requested_date`.
              */
             @JsonProperty("cancellation_date")
-            fun cancellationDate(cancellationDate: OffsetDateTime) = apply {
+            fun cancellationDate(cancellationDate: OffsetDateTime?) = apply {
                 this.cancellationDate = cancellationDate
             }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
-                this.additionalProperties.putAll(additionalProperties)
+                putAllAdditionalProperties(additionalProperties)
             }
 
             @JsonAnySetter
             fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-                this.additionalProperties.put(key, value)
+                additionalProperties.put(key, value)
             }
 
             fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.putAll(additionalProperties)
+            }
+
+            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+
+            fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                keys.forEach(::removeAdditionalProperty)
             }
 
             fun build(): SubscriptionCancelBody =

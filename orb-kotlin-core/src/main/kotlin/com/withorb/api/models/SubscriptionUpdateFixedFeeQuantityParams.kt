@@ -72,17 +72,17 @@ constructor(
     @NoAutoDetect
     class SubscriptionUpdateFixedFeeQuantityBody
     internal constructor(
-        private val priceId: String?,
-        private val quantity: Double?,
+        private val priceId: String,
+        private val quantity: Double,
         private val changeOption: ChangeOption?,
         private val effectiveDate: LocalDate?,
         private val additionalProperties: Map<String, JsonValue>,
     ) {
 
         /** Price for which the quantity should be updated. Must be a fixed fee. */
-        @JsonProperty("price_id") fun priceId(): String? = priceId
+        @JsonProperty("price_id") fun priceId(): String = priceId
 
-        @JsonProperty("quantity") fun quantity(): Double? = quantity
+        @JsonProperty("quantity") fun quantity(): Double = quantity
 
         /**
          * Determines when the change takes effect. Note that if `effective_date` is specified, this
@@ -120,11 +120,12 @@ constructor(
             internal fun from(
                 subscriptionUpdateFixedFeeQuantityBody: SubscriptionUpdateFixedFeeQuantityBody
             ) = apply {
-                this.priceId = subscriptionUpdateFixedFeeQuantityBody.priceId
-                this.quantity = subscriptionUpdateFixedFeeQuantityBody.quantity
-                this.changeOption = subscriptionUpdateFixedFeeQuantityBody.changeOption
-                this.effectiveDate = subscriptionUpdateFixedFeeQuantityBody.effectiveDate
-                additionalProperties(subscriptionUpdateFixedFeeQuantityBody.additionalProperties)
+                priceId = subscriptionUpdateFixedFeeQuantityBody.priceId
+                quantity = subscriptionUpdateFixedFeeQuantityBody.quantity
+                changeOption = subscriptionUpdateFixedFeeQuantityBody.changeOption
+                effectiveDate = subscriptionUpdateFixedFeeQuantityBody.effectiveDate
+                additionalProperties =
+                    subscriptionUpdateFixedFeeQuantityBody.additionalProperties.toMutableMap()
             }
 
             /** Price for which the quantity should be updated. Must be a fixed fee. */
@@ -140,7 +141,7 @@ constructor(
              * it's explicitly set to `upcoming_invoice.
              */
             @JsonProperty("change_option")
-            fun changeOption(changeOption: ChangeOption) = apply {
+            fun changeOption(changeOption: ChangeOption?) = apply {
                 this.changeOption = changeOption
             }
 
@@ -150,22 +151,28 @@ constructor(
              * according to `change_option`.
              */
             @JsonProperty("effective_date")
-            fun effectiveDate(effectiveDate: LocalDate) = apply {
+            fun effectiveDate(effectiveDate: LocalDate?) = apply {
                 this.effectiveDate = effectiveDate
             }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
-                this.additionalProperties.putAll(additionalProperties)
+                putAllAdditionalProperties(additionalProperties)
             }
 
             @JsonAnySetter
             fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-                this.additionalProperties.put(key, value)
+                additionalProperties.put(key, value)
             }
 
             fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.putAll(additionalProperties)
+            }
+
+            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+
+            fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                keys.forEach(::removeAdditionalProperty)
             }
 
             fun build(): SubscriptionUpdateFixedFeeQuantityBody =

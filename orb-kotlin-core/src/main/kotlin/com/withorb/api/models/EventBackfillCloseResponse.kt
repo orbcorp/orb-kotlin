@@ -39,8 +39,6 @@ private constructor(
     private val additionalProperties: Map<String, JsonValue>,
 ) {
 
-    private var validated: Boolean = false
-
     fun id(): String = id.getRequired("id")
 
     /** The status of the backfill. */
@@ -115,6 +113,8 @@ private constructor(
     @ExcludeMissing
     fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
 
+    private var validated: Boolean = false
+
     fun validate(): EventBackfillCloseResponse = apply {
         if (!validated) {
             id()
@@ -153,17 +153,17 @@ private constructor(
         private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         internal fun from(eventBackfillCloseResponse: EventBackfillCloseResponse) = apply {
-            this.id = eventBackfillCloseResponse.id
-            this.status = eventBackfillCloseResponse.status
-            this.createdAt = eventBackfillCloseResponse.createdAt
-            this.timeframeStart = eventBackfillCloseResponse.timeframeStart
-            this.timeframeEnd = eventBackfillCloseResponse.timeframeEnd
-            this.eventsIngested = eventBackfillCloseResponse.eventsIngested
-            this.closeTime = eventBackfillCloseResponse.closeTime
-            this.revertedAt = eventBackfillCloseResponse.revertedAt
-            this.customerId = eventBackfillCloseResponse.customerId
-            this.deprecationFilter = eventBackfillCloseResponse.deprecationFilter
-            additionalProperties(eventBackfillCloseResponse.additionalProperties)
+            id = eventBackfillCloseResponse.id
+            status = eventBackfillCloseResponse.status
+            createdAt = eventBackfillCloseResponse.createdAt
+            timeframeStart = eventBackfillCloseResponse.timeframeStart
+            timeframeEnd = eventBackfillCloseResponse.timeframeEnd
+            eventsIngested = eventBackfillCloseResponse.eventsIngested
+            closeTime = eventBackfillCloseResponse.closeTime
+            revertedAt = eventBackfillCloseResponse.revertedAt
+            customerId = eventBackfillCloseResponse.customerId
+            deprecationFilter = eventBackfillCloseResponse.deprecationFilter
+            additionalProperties = eventBackfillCloseResponse.additionalProperties.toMutableMap()
         }
 
         fun id(id: String) = id(JsonField.of(id))
@@ -270,16 +270,22 @@ private constructor(
 
         fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
             this.additionalProperties.clear()
-            this.additionalProperties.putAll(additionalProperties)
+            putAllAdditionalProperties(additionalProperties)
         }
 
         @JsonAnySetter
         fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-            this.additionalProperties.put(key, value)
+            additionalProperties.put(key, value)
         }
 
         fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
             this.additionalProperties.putAll(additionalProperties)
+        }
+
+        fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+
+        fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+            keys.forEach(::removeAdditionalProperty)
         }
 
         fun build(): EventBackfillCloseResponse =

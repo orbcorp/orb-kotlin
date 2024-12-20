@@ -66,35 +66,35 @@ constructor(
     @NoAutoDetect
     class InvoiceLineItemCreateBody
     internal constructor(
-        private val amount: String?,
-        private val endDate: LocalDate?,
-        private val invoiceId: String?,
-        private val name: String?,
-        private val quantity: Double?,
-        private val startDate: LocalDate?,
+        private val amount: String,
+        private val endDate: LocalDate,
+        private val invoiceId: String,
+        private val name: String,
+        private val quantity: Double,
+        private val startDate: LocalDate,
         private val additionalProperties: Map<String, JsonValue>,
     ) {
 
         /** The total amount in the invoice's currency to add to the line item. */
-        @JsonProperty("amount") fun amount(): String? = amount
+        @JsonProperty("amount") fun amount(): String = amount
 
         /** A date string to specify the line item's end date in the customer's timezone. */
-        @JsonProperty("end_date") fun endDate(): LocalDate? = endDate
+        @JsonProperty("end_date") fun endDate(): LocalDate = endDate
 
         /** The id of the Invoice to add this line item. */
-        @JsonProperty("invoice_id") fun invoiceId(): String? = invoiceId
+        @JsonProperty("invoice_id") fun invoiceId(): String = invoiceId
 
         /**
          * The item name associated with this line item. If an item with the same name exists in
          * Orb, that item will be associated with the line item.
          */
-        @JsonProperty("name") fun name(): String? = name
+        @JsonProperty("name") fun name(): String = name
 
         /** The number of units on the line item */
-        @JsonProperty("quantity") fun quantity(): Double? = quantity
+        @JsonProperty("quantity") fun quantity(): Double = quantity
 
         /** A date string to specify the line item's start date in the customer's timezone. */
-        @JsonProperty("start_date") fun startDate(): LocalDate? = startDate
+        @JsonProperty("start_date") fun startDate(): LocalDate = startDate
 
         @JsonAnyGetter
         @ExcludeMissing
@@ -118,13 +118,13 @@ constructor(
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             internal fun from(invoiceLineItemCreateBody: InvoiceLineItemCreateBody) = apply {
-                this.amount = invoiceLineItemCreateBody.amount
-                this.endDate = invoiceLineItemCreateBody.endDate
-                this.invoiceId = invoiceLineItemCreateBody.invoiceId
-                this.name = invoiceLineItemCreateBody.name
-                this.quantity = invoiceLineItemCreateBody.quantity
-                this.startDate = invoiceLineItemCreateBody.startDate
-                additionalProperties(invoiceLineItemCreateBody.additionalProperties)
+                amount = invoiceLineItemCreateBody.amount
+                endDate = invoiceLineItemCreateBody.endDate
+                invoiceId = invoiceLineItemCreateBody.invoiceId
+                name = invoiceLineItemCreateBody.name
+                quantity = invoiceLineItemCreateBody.quantity
+                startDate = invoiceLineItemCreateBody.startDate
+                additionalProperties = invoiceLineItemCreateBody.additionalProperties.toMutableMap()
             }
 
             /** The total amount in the invoice's currency to add to the line item. */
@@ -154,16 +154,22 @@ constructor(
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
-                this.additionalProperties.putAll(additionalProperties)
+                putAllAdditionalProperties(additionalProperties)
             }
 
             @JsonAnySetter
             fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-                this.additionalProperties.put(key, value)
+                additionalProperties.put(key, value)
             }
 
             fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.putAll(additionalProperties)
+            }
+
+            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+
+            fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                keys.forEach(::removeAdditionalProperty)
             }
 
             fun build(): InvoiceLineItemCreateBody =
