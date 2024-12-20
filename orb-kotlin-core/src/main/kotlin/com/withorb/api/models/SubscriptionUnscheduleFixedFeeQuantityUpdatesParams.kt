@@ -52,12 +52,12 @@ constructor(
     @NoAutoDetect
     class SubscriptionUnscheduleFixedFeeQuantityUpdatesBody
     internal constructor(
-        private val priceId: String?,
+        private val priceId: String,
         private val additionalProperties: Map<String, JsonValue>,
     ) {
 
         /** Price for which the updates should be cleared. Must be a fixed fee. */
-        @JsonProperty("price_id") fun priceId(): String? = priceId
+        @JsonProperty("price_id") fun priceId(): String = priceId
 
         @JsonAnyGetter
         @ExcludeMissing
@@ -79,10 +79,10 @@ constructor(
                 subscriptionUnscheduleFixedFeeQuantityUpdatesBody:
                     SubscriptionUnscheduleFixedFeeQuantityUpdatesBody
             ) = apply {
-                this.priceId = subscriptionUnscheduleFixedFeeQuantityUpdatesBody.priceId
-                additionalProperties(
+                priceId = subscriptionUnscheduleFixedFeeQuantityUpdatesBody.priceId
+                additionalProperties =
                     subscriptionUnscheduleFixedFeeQuantityUpdatesBody.additionalProperties
-                )
+                        .toMutableMap()
             }
 
             /** Price for which the updates should be cleared. Must be a fixed fee. */
@@ -91,16 +91,22 @@ constructor(
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
-                this.additionalProperties.putAll(additionalProperties)
+                putAllAdditionalProperties(additionalProperties)
             }
 
             @JsonAnySetter
             fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-                this.additionalProperties.put(key, value)
+                additionalProperties.put(key, value)
             }
 
             fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.putAll(additionalProperties)
+            }
+
+            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+
+            fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                keys.forEach(::removeAdditionalProperty)
             }
 
             fun build(): SubscriptionUnscheduleFixedFeeQuantityUpdatesBody =

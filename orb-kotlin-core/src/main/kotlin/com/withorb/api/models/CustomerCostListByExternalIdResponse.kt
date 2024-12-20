@@ -23,8 +23,6 @@ private constructor(
     private val additionalProperties: Map<String, JsonValue>,
 ) {
 
-    private var validated: Boolean = false
-
     fun data(): List<Data> = data.getRequired("data")
 
     @JsonProperty("data") @ExcludeMissing fun _data() = data
@@ -32,6 +30,8 @@ private constructor(
     @JsonAnyGetter
     @ExcludeMissing
     fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
+
+    private var validated: Boolean = false
 
     fun validate(): CustomerCostListByExternalIdResponse = apply {
         if (!validated) {
@@ -55,8 +55,9 @@ private constructor(
         internal fun from(
             customerCostListByExternalIdResponse: CustomerCostListByExternalIdResponse
         ) = apply {
-            this.data = customerCostListByExternalIdResponse.data
-            additionalProperties(customerCostListByExternalIdResponse.additionalProperties)
+            data = customerCostListByExternalIdResponse.data
+            additionalProperties =
+                customerCostListByExternalIdResponse.additionalProperties.toMutableMap()
         }
 
         fun data(data: List<Data>) = data(JsonField.of(data))
@@ -67,16 +68,22 @@ private constructor(
 
         fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
             this.additionalProperties.clear()
-            this.additionalProperties.putAll(additionalProperties)
+            putAllAdditionalProperties(additionalProperties)
         }
 
         @JsonAnySetter
         fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-            this.additionalProperties.put(key, value)
+            additionalProperties.put(key, value)
         }
 
         fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
             this.additionalProperties.putAll(additionalProperties)
+        }
+
+        fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+
+        fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+            keys.forEach(::removeAdditionalProperty)
         }
 
         fun build(): CustomerCostListByExternalIdResponse =
@@ -97,8 +104,6 @@ private constructor(
         private val perPriceCosts: JsonField<List<PerPriceCost>>,
         private val additionalProperties: Map<String, JsonValue>,
     ) {
-
-        private var validated: Boolean = false
 
         /** Total costs for the timeframe, excluding any minimums and discounts. */
         fun subtotal(): String = subtotal.getRequired("subtotal")
@@ -128,6 +133,8 @@ private constructor(
         @ExcludeMissing
         fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
 
+        private var validated: Boolean = false
+
         fun validate(): Data = apply {
             if (!validated) {
                 subtotal()
@@ -156,12 +163,12 @@ private constructor(
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             internal fun from(data: Data) = apply {
-                this.subtotal = data.subtotal
-                this.total = data.total
-                this.timeframeStart = data.timeframeStart
-                this.timeframeEnd = data.timeframeEnd
-                this.perPriceCosts = data.perPriceCosts
-                additionalProperties(data.additionalProperties)
+                subtotal = data.subtotal
+                total = data.total
+                timeframeStart = data.timeframeStart
+                timeframeEnd = data.timeframeEnd
+                perPriceCosts = data.perPriceCosts
+                additionalProperties = data.additionalProperties.toMutableMap()
             }
 
             /** Total costs for the timeframe, excluding any minimums and discounts. */
@@ -209,16 +216,22 @@ private constructor(
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
-                this.additionalProperties.putAll(additionalProperties)
+                putAllAdditionalProperties(additionalProperties)
             }
 
             @JsonAnySetter
             fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-                this.additionalProperties.put(key, value)
+                additionalProperties.put(key, value)
             }
 
             fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.putAll(additionalProperties)
+            }
+
+            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+
+            fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                keys.forEach(::removeAdditionalProperty)
             }
 
             fun build(): Data =
@@ -242,8 +255,6 @@ private constructor(
             private val price: JsonField<Price>,
             private val additionalProperties: Map<String, JsonValue>,
         ) {
-
-            private var validated: Boolean = false
 
             /** The price's quantity for the timeframe */
             fun quantity(): Double? = quantity.getNullable("quantity")
@@ -727,6 +738,8 @@ private constructor(
             @ExcludeMissing
             fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
 
+            private var validated: Boolean = false
+
             fun validate(): PerPriceCost = apply {
                 if (!validated) {
                     quantity()
@@ -753,11 +766,11 @@ private constructor(
                 private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
                 internal fun from(perPriceCost: PerPriceCost) = apply {
-                    this.quantity = perPriceCost.quantity
-                    this.subtotal = perPriceCost.subtotal
-                    this.total = perPriceCost.total
-                    this.price = perPriceCost.price
-                    additionalProperties(perPriceCost.additionalProperties)
+                    quantity = perPriceCost.quantity
+                    subtotal = perPriceCost.subtotal
+                    total = perPriceCost.total
+                    price = perPriceCost.price
+                    additionalProperties = perPriceCost.additionalProperties.toMutableMap()
                 }
 
                 /** The price's quantity for the timeframe */
@@ -1260,18 +1273,26 @@ private constructor(
 
                 fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                     this.additionalProperties.clear()
-                    this.additionalProperties.putAll(additionalProperties)
+                    putAllAdditionalProperties(additionalProperties)
                 }
 
                 @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-                    this.additionalProperties.put(key, value)
+                    additionalProperties.put(key, value)
                 }
 
                 fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) =
                     apply {
                         this.additionalProperties.putAll(additionalProperties)
                     }
+
+                fun removeAdditionalProperty(key: String) = apply {
+                    additionalProperties.remove(key)
+                }
+
+                fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                    keys.forEach(::removeAdditionalProperty)
+                }
 
                 fun build(): PerPriceCost =
                     PerPriceCost(

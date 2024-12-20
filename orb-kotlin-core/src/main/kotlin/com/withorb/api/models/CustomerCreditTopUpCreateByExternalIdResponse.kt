@@ -32,8 +32,6 @@ private constructor(
     private val additionalProperties: Map<String, JsonValue>,
 ) {
 
-    private var validated: Boolean = false
-
     fun id(): String = id.getRequired("id")
 
     /**
@@ -102,6 +100,8 @@ private constructor(
     @ExcludeMissing
     fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
 
+    private var validated: Boolean = false
+
     fun validate(): CustomerCreditTopUpCreateByExternalIdResponse = apply {
         if (!validated) {
             id()
@@ -139,15 +139,16 @@ private constructor(
             customerCreditTopUpCreateByExternalIdResponse:
                 CustomerCreditTopUpCreateByExternalIdResponse
         ) = apply {
-            this.id = customerCreditTopUpCreateByExternalIdResponse.id
-            this.currency = customerCreditTopUpCreateByExternalIdResponse.currency
-            this.threshold = customerCreditTopUpCreateByExternalIdResponse.threshold
-            this.amount = customerCreditTopUpCreateByExternalIdResponse.amount
-            this.perUnitCostBasis = customerCreditTopUpCreateByExternalIdResponse.perUnitCostBasis
-            this.invoiceSettings = customerCreditTopUpCreateByExternalIdResponse.invoiceSettings
-            this.expiresAfter = customerCreditTopUpCreateByExternalIdResponse.expiresAfter
-            this.expiresAfterUnit = customerCreditTopUpCreateByExternalIdResponse.expiresAfterUnit
-            additionalProperties(customerCreditTopUpCreateByExternalIdResponse.additionalProperties)
+            id = customerCreditTopUpCreateByExternalIdResponse.id
+            currency = customerCreditTopUpCreateByExternalIdResponse.currency
+            threshold = customerCreditTopUpCreateByExternalIdResponse.threshold
+            amount = customerCreditTopUpCreateByExternalIdResponse.amount
+            perUnitCostBasis = customerCreditTopUpCreateByExternalIdResponse.perUnitCostBasis
+            invoiceSettings = customerCreditTopUpCreateByExternalIdResponse.invoiceSettings
+            expiresAfter = customerCreditTopUpCreateByExternalIdResponse.expiresAfter
+            expiresAfterUnit = customerCreditTopUpCreateByExternalIdResponse.expiresAfterUnit
+            additionalProperties =
+                customerCreditTopUpCreateByExternalIdResponse.additionalProperties.toMutableMap()
         }
 
         fun id(id: String) = id(JsonField.of(id))
@@ -239,16 +240,22 @@ private constructor(
 
         fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
             this.additionalProperties.clear()
-            this.additionalProperties.putAll(additionalProperties)
+            putAllAdditionalProperties(additionalProperties)
         }
 
         @JsonAnySetter
         fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-            this.additionalProperties.put(key, value)
+            additionalProperties.put(key, value)
         }
 
         fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
             this.additionalProperties.putAll(additionalProperties)
+        }
+
+        fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+
+        fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+            keys.forEach(::removeAdditionalProperty)
         }
 
         fun build(): CustomerCreditTopUpCreateByExternalIdResponse =
@@ -276,8 +283,6 @@ private constructor(
         private val requireSuccessfulPayment: JsonField<Boolean>,
         private val additionalProperties: Map<String, JsonValue>,
     ) {
-
-        private var validated: Boolean = false
 
         /**
          * Whether the credits purchase invoice should auto collect with the customer's saved
@@ -328,6 +333,8 @@ private constructor(
         @ExcludeMissing
         fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
 
+        private var validated: Boolean = false
+
         fun validate(): InvoiceSettings = apply {
             if (!validated) {
                 autoCollection()
@@ -354,11 +361,11 @@ private constructor(
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             internal fun from(invoiceSettings: InvoiceSettings) = apply {
-                this.autoCollection = invoiceSettings.autoCollection
-                this.netTerms = invoiceSettings.netTerms
-                this.memo = invoiceSettings.memo
-                this.requireSuccessfulPayment = invoiceSettings.requireSuccessfulPayment
-                additionalProperties(invoiceSettings.additionalProperties)
+                autoCollection = invoiceSettings.autoCollection
+                netTerms = invoiceSettings.netTerms
+                memo = invoiceSettings.memo
+                requireSuccessfulPayment = invoiceSettings.requireSuccessfulPayment
+                additionalProperties = invoiceSettings.additionalProperties.toMutableMap()
             }
 
             /**
@@ -419,16 +426,22 @@ private constructor(
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
-                this.additionalProperties.putAll(additionalProperties)
+                putAllAdditionalProperties(additionalProperties)
             }
 
             @JsonAnySetter
             fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-                this.additionalProperties.put(key, value)
+                additionalProperties.put(key, value)
             }
 
             fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.putAll(additionalProperties)
+            }
+
+            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+
+            fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                keys.forEach(::removeAdditionalProperty)
             }
 
             fun build(): InvoiceSettings =

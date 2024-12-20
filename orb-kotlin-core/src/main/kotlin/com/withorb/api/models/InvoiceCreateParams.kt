@@ -87,10 +87,10 @@ constructor(
     @NoAutoDetect
     class InvoiceCreateBody
     internal constructor(
-        private val currency: String?,
-        private val invoiceDate: OffsetDateTime?,
-        private val lineItems: List<LineItem>?,
-        private val netTerms: Long?,
+        private val currency: String,
+        private val invoiceDate: OffsetDateTime,
+        private val lineItems: List<LineItem>,
+        private val netTerms: Long,
         private val customerId: String?,
         private val discount: Discount?,
         private val externalCustomerId: String?,
@@ -103,22 +103,22 @@ constructor(
         /**
          * An ISO 4217 currency string. Must be the same as the customer's currency if it is set.
          */
-        @JsonProperty("currency") fun currency(): String? = currency
+        @JsonProperty("currency") fun currency(): String = currency
 
         /**
          * Optional invoice date to set. Must be in the past, if not set, `invoice_date` is set to
          * the current time in the customer's timezone.
          */
-        @JsonProperty("invoice_date") fun invoiceDate(): OffsetDateTime? = invoiceDate
+        @JsonProperty("invoice_date") fun invoiceDate(): OffsetDateTime = invoiceDate
 
-        @JsonProperty("line_items") fun lineItems(): List<LineItem>? = lineItems
+        @JsonProperty("line_items") fun lineItems(): List<LineItem> = lineItems
 
         /**
          * Determines the difference between the invoice issue date for subscription invoices as the
          * date that they are due. A value of '0' here represents that the invoice is due on issue,
          * whereas a value of 30 represents that the customer has 30 days to pay the invoice.
          */
-        @JsonProperty("net_terms") fun netTerms(): Long? = netTerms
+        @JsonProperty("net_terms") fun netTerms(): Long = netTerms
 
         /**
          * The id of the `Customer` to create this invoice for. One of `customer_id` and
@@ -177,17 +177,17 @@ constructor(
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             internal fun from(invoiceCreateBody: InvoiceCreateBody) = apply {
-                this.currency = invoiceCreateBody.currency
-                this.invoiceDate = invoiceCreateBody.invoiceDate
-                this.lineItems = invoiceCreateBody.lineItems
-                this.netTerms = invoiceCreateBody.netTerms
-                this.customerId = invoiceCreateBody.customerId
-                this.discount = invoiceCreateBody.discount
-                this.externalCustomerId = invoiceCreateBody.externalCustomerId
-                this.memo = invoiceCreateBody.memo
-                this.metadata = invoiceCreateBody.metadata
-                this.willAutoIssue = invoiceCreateBody.willAutoIssue
-                additionalProperties(invoiceCreateBody.additionalProperties)
+                currency = invoiceCreateBody.currency
+                invoiceDate = invoiceCreateBody.invoiceDate
+                lineItems = invoiceCreateBody.lineItems.toMutableList()
+                netTerms = invoiceCreateBody.netTerms
+                customerId = invoiceCreateBody.customerId
+                discount = invoiceCreateBody.discount
+                externalCustomerId = invoiceCreateBody.externalCustomerId
+                memo = invoiceCreateBody.memo
+                metadata = invoiceCreateBody.metadata
+                willAutoIssue = invoiceCreateBody.willAutoIssue
+                additionalProperties = invoiceCreateBody.additionalProperties.toMutableMap()
             }
 
             /**
@@ -221,23 +221,23 @@ constructor(
              * `external_customer_id` are required.
              */
             @JsonProperty("customer_id")
-            fun customerId(customerId: String) = apply { this.customerId = customerId }
+            fun customerId(customerId: String?) = apply { this.customerId = customerId }
 
             /** An optional discount to attach to the invoice. */
             @JsonProperty("discount")
-            fun discount(discount: Discount) = apply { this.discount = discount }
+            fun discount(discount: Discount?) = apply { this.discount = discount }
 
             /**
              * The `external_customer_id` of the `Customer` to create this invoice for. One of
              * `customer_id` and `external_customer_id` are required.
              */
             @JsonProperty("external_customer_id")
-            fun externalCustomerId(externalCustomerId: String) = apply {
+            fun externalCustomerId(externalCustomerId: String?) = apply {
                 this.externalCustomerId = externalCustomerId
             }
 
             /** An optional memo to attach to the invoice. */
-            @JsonProperty("memo") fun memo(memo: String) = apply { this.memo = memo }
+            @JsonProperty("memo") fun memo(memo: String?) = apply { this.memo = memo }
 
             /**
              * User-specified key/value pairs for the resource. Individual keys can be removed by
@@ -245,27 +245,35 @@ constructor(
              * setting `metadata` to `null`.
              */
             @JsonProperty("metadata")
-            fun metadata(metadata: Metadata) = apply { this.metadata = metadata }
+            fun metadata(metadata: Metadata?) = apply { this.metadata = metadata }
 
             /**
              * When true, this invoice will automatically be issued upon creation. When false, the
              * resulting invoice will require manual review to issue. Defaulted to false.
              */
             @JsonProperty("will_auto_issue")
-            fun willAutoIssue(willAutoIssue: Boolean) = apply { this.willAutoIssue = willAutoIssue }
+            fun willAutoIssue(willAutoIssue: Boolean?) = apply {
+                this.willAutoIssue = willAutoIssue
+            }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
-                this.additionalProperties.putAll(additionalProperties)
+                putAllAdditionalProperties(additionalProperties)
             }
 
             @JsonAnySetter
             fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-                this.additionalProperties.put(key, value)
+                additionalProperties.put(key, value)
             }
 
             fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.putAll(additionalProperties)
+            }
+
+            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+
+            fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                keys.forEach(::removeAdditionalProperty)
             }
 
             fun build(): InvoiceCreateBody =
@@ -563,33 +571,33 @@ constructor(
     @NoAutoDetect
     class LineItem
     private constructor(
-        private val startDate: LocalDate?,
-        private val endDate: LocalDate?,
-        private val quantity: Double?,
-        private val name: String?,
-        private val itemId: String?,
-        private val modelType: ModelType?,
-        private val unitConfig: UnitConfig?,
+        private val startDate: LocalDate,
+        private val endDate: LocalDate,
+        private val quantity: Double,
+        private val name: String,
+        private val itemId: String,
+        private val modelType: ModelType,
+        private val unitConfig: UnitConfig,
         private val additionalProperties: Map<String, JsonValue>,
     ) {
 
         /** A date string to specify the line item's start date in the customer's timezone. */
-        @JsonProperty("start_date") fun startDate(): LocalDate? = startDate
+        @JsonProperty("start_date") fun startDate(): LocalDate = startDate
 
         /** A date string to specify the line item's end date in the customer's timezone. */
-        @JsonProperty("end_date") fun endDate(): LocalDate? = endDate
+        @JsonProperty("end_date") fun endDate(): LocalDate = endDate
 
         /** The number of units on the line item */
-        @JsonProperty("quantity") fun quantity(): Double? = quantity
+        @JsonProperty("quantity") fun quantity(): Double = quantity
 
         /** The name of the line item. */
-        @JsonProperty("name") fun name(): String? = name
+        @JsonProperty("name") fun name(): String = name
 
-        @JsonProperty("item_id") fun itemId(): String? = itemId
+        @JsonProperty("item_id") fun itemId(): String = itemId
 
-        @JsonProperty("model_type") fun modelType(): ModelType? = modelType
+        @JsonProperty("model_type") fun modelType(): ModelType = modelType
 
-        @JsonProperty("unit_config") fun unitConfig(): UnitConfig? = unitConfig
+        @JsonProperty("unit_config") fun unitConfig(): UnitConfig = unitConfig
 
         @JsonAnyGetter
         @ExcludeMissing
@@ -614,14 +622,14 @@ constructor(
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             internal fun from(lineItem: LineItem) = apply {
-                this.startDate = lineItem.startDate
-                this.endDate = lineItem.endDate
-                this.quantity = lineItem.quantity
-                this.name = lineItem.name
-                this.itemId = lineItem.itemId
-                this.modelType = lineItem.modelType
-                this.unitConfig = lineItem.unitConfig
-                additionalProperties(lineItem.additionalProperties)
+                startDate = lineItem.startDate
+                endDate = lineItem.endDate
+                quantity = lineItem.quantity
+                name = lineItem.name
+                itemId = lineItem.itemId
+                modelType = lineItem.modelType
+                unitConfig = lineItem.unitConfig
+                additionalProperties = lineItem.additionalProperties.toMutableMap()
             }
 
             /** A date string to specify the line item's start date in the customer's timezone. */
@@ -649,16 +657,22 @@ constructor(
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
-                this.additionalProperties.putAll(additionalProperties)
+                putAllAdditionalProperties(additionalProperties)
             }
 
             @JsonAnySetter
             fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-                this.additionalProperties.put(key, value)
+                additionalProperties.put(key, value)
             }
 
             fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.putAll(additionalProperties)
+            }
+
+            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+
+            fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                keys.forEach(::removeAdditionalProperty)
             }
 
             fun build(): LineItem =
@@ -729,12 +743,12 @@ constructor(
         @NoAutoDetect
         class UnitConfig
         private constructor(
-            private val unitAmount: String?,
+            private val unitAmount: String,
             private val additionalProperties: Map<String, JsonValue>,
         ) {
 
             /** Rate per unit of usage */
-            @JsonProperty("unit_amount") fun unitAmount(): String? = unitAmount
+            @JsonProperty("unit_amount") fun unitAmount(): String = unitAmount
 
             @JsonAnyGetter
             @ExcludeMissing
@@ -753,8 +767,8 @@ constructor(
                 private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
                 internal fun from(unitConfig: UnitConfig) = apply {
-                    this.unitAmount = unitConfig.unitAmount
-                    additionalProperties(unitConfig.additionalProperties)
+                    unitAmount = unitConfig.unitAmount
+                    additionalProperties = unitConfig.additionalProperties.toMutableMap()
                 }
 
                 /** Rate per unit of usage */
@@ -763,18 +777,26 @@ constructor(
 
                 fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                     this.additionalProperties.clear()
-                    this.additionalProperties.putAll(additionalProperties)
+                    putAllAdditionalProperties(additionalProperties)
                 }
 
                 @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-                    this.additionalProperties.put(key, value)
+                    additionalProperties.put(key, value)
                 }
 
                 fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) =
                     apply {
                         this.additionalProperties.putAll(additionalProperties)
                     }
+
+                fun removeAdditionalProperty(key: String) = apply {
+                    additionalProperties.remove(key)
+                }
+
+                fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                    keys.forEach(::removeAdditionalProperty)
+                }
 
                 fun build(): UnitConfig =
                     UnitConfig(
@@ -847,21 +869,27 @@ constructor(
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             internal fun from(metadata: Metadata) = apply {
-                additionalProperties(metadata.additionalProperties)
+                additionalProperties = metadata.additionalProperties.toMutableMap()
             }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
-                this.additionalProperties.putAll(additionalProperties)
+                putAllAdditionalProperties(additionalProperties)
             }
 
             @JsonAnySetter
             fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-                this.additionalProperties.put(key, value)
+                additionalProperties.put(key, value)
             }
 
             fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.putAll(additionalProperties)
+            }
+
+            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+
+            fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                keys.forEach(::removeAdditionalProperty)
             }
 
             fun build(): Metadata = Metadata(additionalProperties.toImmutable())

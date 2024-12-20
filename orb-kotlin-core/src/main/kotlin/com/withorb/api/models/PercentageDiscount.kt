@@ -28,8 +28,6 @@ private constructor(
     private val additionalProperties: Map<String, JsonValue>,
 ) {
 
-    private var validated: Boolean = false
-
     fun discountType(): DiscountType = discountType.getRequired("discount_type")
 
     /**
@@ -64,6 +62,8 @@ private constructor(
     @ExcludeMissing
     fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
 
+    private var validated: Boolean = false
+
     fun validate(): PercentageDiscount = apply {
         if (!validated) {
             discountType()
@@ -90,11 +90,11 @@ private constructor(
         private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         internal fun from(percentageDiscount: PercentageDiscount) = apply {
-            this.discountType = percentageDiscount.discountType
-            this.appliesToPriceIds = percentageDiscount.appliesToPriceIds
-            this.reason = percentageDiscount.reason
+            discountType = percentageDiscount.discountType
+            appliesToPriceIds = percentageDiscount.appliesToPriceIds
+            reason = percentageDiscount.reason
             this.percentageDiscount = percentageDiscount.percentageDiscount
-            additionalProperties(percentageDiscount.additionalProperties)
+            additionalProperties = percentageDiscount.additionalProperties.toMutableMap()
         }
 
         fun discountType(discountType: DiscountType) = discountType(JsonField.of(discountType))
@@ -141,16 +141,22 @@ private constructor(
 
         fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
             this.additionalProperties.clear()
-            this.additionalProperties.putAll(additionalProperties)
+            putAllAdditionalProperties(additionalProperties)
         }
 
         @JsonAnySetter
         fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-            this.additionalProperties.put(key, value)
+            additionalProperties.put(key, value)
         }
 
         fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
             this.additionalProperties.putAll(additionalProperties)
+        }
+
+        fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+
+        fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+            keys.forEach(::removeAdditionalProperty)
         }
 
         fun build(): PercentageDiscount =

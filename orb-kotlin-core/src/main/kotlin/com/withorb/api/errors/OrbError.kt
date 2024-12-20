@@ -5,6 +5,7 @@ package com.withorb.api.errors
 import com.fasterxml.jackson.annotation.JsonAnyGetter
 import com.fasterxml.jackson.annotation.JsonAnySetter
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize
+import com.withorb.api.core.ExcludeMissing
 import com.withorb.api.core.JsonValue
 import com.withorb.api.core.NoAutoDetect
 import com.withorb.api.core.toImmutable
@@ -14,7 +15,7 @@ import java.util.Objects
 @NoAutoDetect
 class OrbError
 private constructor(
-    @JsonAnyGetter val additionalProperties: Map<String, JsonValue>,
+    @JsonAnyGetter @ExcludeMissing val additionalProperties: Map<String, JsonValue>,
 ) {
 
     fun toBuilder() = Builder().from(this)

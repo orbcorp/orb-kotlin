@@ -23,8 +23,6 @@ private constructor(
     private val additionalProperties: Map<String, JsonValue>,
 ) {
 
-    private var validated: Boolean = false
-
     /**
      * Optional debug information (only present when debug=true is passed to the endpoint). Contains
      * ingested and duplicate event idempotency keys.
@@ -54,6 +52,8 @@ private constructor(
     @ExcludeMissing
     fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
 
+    private var validated: Boolean = false
+
     fun validate(): EventIngestResponse = apply {
         if (!validated) {
             debug()?.validate()
@@ -76,9 +76,9 @@ private constructor(
         private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         internal fun from(eventIngestResponse: EventIngestResponse) = apply {
-            this.debug = eventIngestResponse.debug
-            this.validationFailed = eventIngestResponse.validationFailed
-            additionalProperties(eventIngestResponse.additionalProperties)
+            debug = eventIngestResponse.debug
+            validationFailed = eventIngestResponse.validationFailed
+            additionalProperties = eventIngestResponse.additionalProperties.toMutableMap()
         }
 
         /**
@@ -114,16 +114,22 @@ private constructor(
 
         fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
             this.additionalProperties.clear()
-            this.additionalProperties.putAll(additionalProperties)
+            putAllAdditionalProperties(additionalProperties)
         }
 
         @JsonAnySetter
         fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-            this.additionalProperties.put(key, value)
+            additionalProperties.put(key, value)
         }
 
         fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
             this.additionalProperties.putAll(additionalProperties)
+        }
+
+        fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+
+        fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+            keys.forEach(::removeAdditionalProperty)
         }
 
         fun build(): EventIngestResponse =
@@ -143,8 +149,6 @@ private constructor(
         private val additionalProperties: Map<String, JsonValue>,
     ) {
 
-        private var validated: Boolean = false
-
         /** The passed idempotency_key corresponding to the validation_errors */
         fun idempotencyKey(): String = idempotencyKey.getRequired("idempotency_key")
 
@@ -162,6 +166,8 @@ private constructor(
         @JsonAnyGetter
         @ExcludeMissing
         fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
+
+        private var validated: Boolean = false
 
         fun validate(): ValidationFailed = apply {
             if (!validated) {
@@ -185,9 +191,9 @@ private constructor(
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             internal fun from(validationFailed: ValidationFailed) = apply {
-                this.idempotencyKey = validationFailed.idempotencyKey
-                this.validationErrors = validationFailed.validationErrors
-                additionalProperties(validationFailed.additionalProperties)
+                idempotencyKey = validationFailed.idempotencyKey
+                validationErrors = validationFailed.validationErrors
+                additionalProperties = validationFailed.additionalProperties.toMutableMap()
             }
 
             /** The passed idempotency_key corresponding to the validation_errors */
@@ -218,16 +224,22 @@ private constructor(
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
-                this.additionalProperties.putAll(additionalProperties)
+                putAllAdditionalProperties(additionalProperties)
             }
 
             @JsonAnySetter
             fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-                this.additionalProperties.put(key, value)
+                additionalProperties.put(key, value)
             }
 
             fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.putAll(additionalProperties)
+            }
+
+            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+
+            fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                keys.forEach(::removeAdditionalProperty)
             }
 
             fun build(): ValidationFailed =
@@ -269,8 +281,6 @@ private constructor(
         private val additionalProperties: Map<String, JsonValue>,
     ) {
 
-        private var validated: Boolean = false
-
         fun duplicate(): List<String> = duplicate.getRequired("duplicate")
 
         fun ingested(): List<String> = ingested.getRequired("ingested")
@@ -282,6 +292,8 @@ private constructor(
         @JsonAnyGetter
         @ExcludeMissing
         fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
+
+        private var validated: Boolean = false
 
         fun validate(): Debug = apply {
             if (!validated) {
@@ -305,9 +317,9 @@ private constructor(
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             internal fun from(debug: Debug) = apply {
-                this.duplicate = debug.duplicate
-                this.ingested = debug.ingested
-                additionalProperties(debug.additionalProperties)
+                duplicate = debug.duplicate
+                ingested = debug.ingested
+                additionalProperties = debug.additionalProperties.toMutableMap()
             }
 
             fun duplicate(duplicate: List<String>) = duplicate(JsonField.of(duplicate))
@@ -324,16 +336,22 @@ private constructor(
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
-                this.additionalProperties.putAll(additionalProperties)
+                putAllAdditionalProperties(additionalProperties)
             }
 
             @JsonAnySetter
             fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-                this.additionalProperties.put(key, value)
+                additionalProperties.put(key, value)
             }
 
             fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.putAll(additionalProperties)
+            }
+
+            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+
+            fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                keys.forEach(::removeAdditionalProperty)
             }
 
             fun build(): Debug =
