@@ -4,13 +4,14 @@ package com.withorb.api.models
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter
 import com.fasterxml.jackson.annotation.JsonAnySetter
+import com.fasterxml.jackson.annotation.JsonCreator
 import com.fasterxml.jackson.annotation.JsonProperty
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize
 import com.withorb.api.core.ExcludeMissing
 import com.withorb.api.core.JsonValue
 import com.withorb.api.core.NoAutoDetect
 import com.withorb.api.core.http.Headers
 import com.withorb.api.core.http.QueryParams
+import com.withorb.api.core.immutableEmptyMap
 import com.withorb.api.core.toImmutable
 import java.time.LocalDate
 import java.util.Objects
@@ -60,14 +61,15 @@ constructor(
         }
     }
 
-    @JsonDeserialize(builder = InvoiceMarkPaidBody.Builder::class)
     @NoAutoDetect
     class InvoiceMarkPaidBody
+    @JsonCreator
     internal constructor(
-        private val paymentReceivedDate: LocalDate,
-        private val externalId: String?,
-        private val notes: String?,
-        private val additionalProperties: Map<String, JsonValue>,
+        @JsonProperty("payment_received_date") private val paymentReceivedDate: LocalDate,
+        @JsonProperty("external_id") private val externalId: String?,
+        @JsonProperty("notes") private val notes: String?,
+        @JsonAnySetter
+        private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
 
         /** A date string to specify the date of the payment. */
@@ -106,24 +108,21 @@ constructor(
             }
 
             /** A date string to specify the date of the payment. */
-            @JsonProperty("payment_received_date")
             fun paymentReceivedDate(paymentReceivedDate: LocalDate) = apply {
                 this.paymentReceivedDate = paymentReceivedDate
             }
 
             /** An optional external ID to associate with the payment. */
-            @JsonProperty("external_id")
             fun externalId(externalId: String?) = apply { this.externalId = externalId }
 
             /** An optional note to associate with the payment. */
-            @JsonProperty("notes") fun notes(notes: String?) = apply { this.notes = notes }
+            fun notes(notes: String?) = apply { this.notes = notes }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
                 putAllAdditionalProperties(additionalProperties)
             }
 
-            @JsonAnySetter
             fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                 additionalProperties.put(key, value)
             }

@@ -4,23 +4,28 @@ package com.withorb.api.models
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter
 import com.fasterxml.jackson.annotation.JsonAnySetter
+import com.fasterxml.jackson.annotation.JsonCreator
 import com.fasterxml.jackson.annotation.JsonProperty
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize
 import com.withorb.api.core.ExcludeMissing
 import com.withorb.api.core.JsonField
 import com.withorb.api.core.JsonMissing
 import com.withorb.api.core.JsonValue
 import com.withorb.api.core.NoAutoDetect
+import com.withorb.api.core.immutableEmptyMap
 import com.withorb.api.core.toImmutable
 import java.util.Objects
 
-@JsonDeserialize(builder = Subscriptions.Builder::class)
 @NoAutoDetect
 class Subscriptions
+@JsonCreator
 private constructor(
-    private val data: JsonField<List<Subscription>>,
-    private val paginationMetadata: JsonField<PaginationMetadata>,
-    private val additionalProperties: Map<String, JsonValue>,
+    @JsonProperty("data")
+    @ExcludeMissing
+    private val data: JsonField<List<Subscription>> = JsonMissing.of(),
+    @JsonProperty("pagination_metadata")
+    @ExcludeMissing
+    private val paginationMetadata: JsonField<PaginationMetadata> = JsonMissing.of(),
+    @JsonAnySetter private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
 ) {
 
     fun data(): List<Subscription> = data.getRequired("data")
@@ -69,15 +74,11 @@ private constructor(
 
         fun data(data: List<Subscription>) = data(JsonField.of(data))
 
-        @JsonProperty("data")
-        @ExcludeMissing
         fun data(data: JsonField<List<Subscription>>) = apply { this.data = data }
 
         fun paginationMetadata(paginationMetadata: PaginationMetadata) =
             paginationMetadata(JsonField.of(paginationMetadata))
 
-        @JsonProperty("pagination_metadata")
-        @ExcludeMissing
         fun paginationMetadata(paginationMetadata: JsonField<PaginationMetadata>) = apply {
             this.paginationMetadata = paginationMetadata
         }
@@ -87,7 +88,6 @@ private constructor(
             putAllAdditionalProperties(additionalProperties)
         }
 
-        @JsonAnySetter
         fun putAdditionalProperty(key: String, value: JsonValue) = apply {
             additionalProperties.put(key, value)
         }

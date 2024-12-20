@@ -4,13 +4,14 @@ package com.withorb.api.models
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter
 import com.fasterxml.jackson.annotation.JsonAnySetter
+import com.fasterxml.jackson.annotation.JsonCreator
 import com.fasterxml.jackson.annotation.JsonProperty
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize
 import com.withorb.api.core.ExcludeMissing
 import com.withorb.api.core.JsonValue
 import com.withorb.api.core.NoAutoDetect
 import com.withorb.api.core.http.Headers
 import com.withorb.api.core.http.QueryParams
+import com.withorb.api.core.immutableEmptyMap
 import com.withorb.api.core.toImmutable
 import java.util.Objects
 
@@ -67,16 +68,17 @@ constructor(
         }
     }
 
-    @JsonDeserialize(builder = SubscriptionUpdateBody.Builder::class)
     @NoAutoDetect
     class SubscriptionUpdateBody
+    @JsonCreator
     internal constructor(
-        private val autoCollection: Boolean?,
-        private val defaultInvoiceMemo: String?,
-        private val invoicingThreshold: String?,
-        private val metadata: Metadata?,
-        private val netTerms: Long?,
-        private val additionalProperties: Map<String, JsonValue>,
+        @JsonProperty("auto_collection") private val autoCollection: Boolean?,
+        @JsonProperty("default_invoice_memo") private val defaultInvoiceMemo: String?,
+        @JsonProperty("invoicing_threshold") private val invoicingThreshold: String?,
+        @JsonProperty("metadata") private val metadata: Metadata?,
+        @JsonProperty("net_terms") private val netTerms: Long?,
+        @JsonAnySetter
+        private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
 
         /**
@@ -147,7 +149,6 @@ constructor(
              * charged with the saved payment method on the due date. This property defaults to the
              * plan's behavior.
              */
-            @JsonProperty("auto_collection")
             fun autoCollection(autoCollection: Boolean?) = apply {
                 this.autoCollection = autoCollection
             }
@@ -156,7 +157,6 @@ constructor(
              * Determines the default memo on this subscription's invoices. Note that if this is not
              * provided, it is determined by the plan configuration.
              */
-            @JsonProperty("default_invoice_memo")
             fun defaultInvoiceMemo(defaultInvoiceMemo: String?) = apply {
                 this.defaultInvoiceMemo = defaultInvoiceMemo
             }
@@ -166,7 +166,6 @@ constructor(
              * issued for the subscription. If not specified, invoices will only be issued at the
              * end of the billing period.
              */
-            @JsonProperty("invoicing_threshold")
             fun invoicingThreshold(invoicingThreshold: String?) = apply {
                 this.invoicingThreshold = invoicingThreshold
             }
@@ -176,7 +175,6 @@ constructor(
              * setting the value to `null`, and the entire metadata mapping can be cleared by
              * setting `metadata` to `null`.
              */
-            @JsonProperty("metadata")
             fun metadata(metadata: Metadata?) = apply { this.metadata = metadata }
 
             /**
@@ -185,7 +183,6 @@ constructor(
              * issue, whereas a value of `30` represents that the customer has a month to pay the
              * invoice.
              */
-            @JsonProperty("net_terms")
             fun netTerms(netTerms: Long?) = apply { this.netTerms = netTerms }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
@@ -193,7 +190,6 @@ constructor(
                 putAllAdditionalProperties(additionalProperties)
             }
 
-            @JsonAnySetter
             fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                 additionalProperties.put(key, value)
             }
@@ -449,11 +445,12 @@ constructor(
      * the value to `null`, and the entire metadata mapping can be cleared by setting `metadata` to
      * `null`.
      */
-    @JsonDeserialize(builder = Metadata.Builder::class)
     @NoAutoDetect
     class Metadata
+    @JsonCreator
     private constructor(
-        private val additionalProperties: Map<String, JsonValue>,
+        @JsonAnySetter
+        private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
 
         @JsonAnyGetter
@@ -480,7 +477,6 @@ constructor(
                 putAllAdditionalProperties(additionalProperties)
             }
 
-            @JsonAnySetter
             fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                 additionalProperties.put(key, value)
             }

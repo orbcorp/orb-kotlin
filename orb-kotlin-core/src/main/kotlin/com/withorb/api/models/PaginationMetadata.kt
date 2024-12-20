@@ -4,23 +4,28 @@ package com.withorb.api.models
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter
 import com.fasterxml.jackson.annotation.JsonAnySetter
+import com.fasterxml.jackson.annotation.JsonCreator
 import com.fasterxml.jackson.annotation.JsonProperty
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize
 import com.withorb.api.core.ExcludeMissing
 import com.withorb.api.core.JsonField
 import com.withorb.api.core.JsonMissing
 import com.withorb.api.core.JsonValue
 import com.withorb.api.core.NoAutoDetect
+import com.withorb.api.core.immutableEmptyMap
 import com.withorb.api.core.toImmutable
 import java.util.Objects
 
-@JsonDeserialize(builder = PaginationMetadata.Builder::class)
 @NoAutoDetect
 class PaginationMetadata
+@JsonCreator
 private constructor(
-    private val hasMore: JsonField<Boolean>,
-    private val nextCursor: JsonField<String>,
-    private val additionalProperties: Map<String, JsonValue>,
+    @JsonProperty("has_more")
+    @ExcludeMissing
+    private val hasMore: JsonField<Boolean> = JsonMissing.of(),
+    @JsonProperty("next_cursor")
+    @ExcludeMissing
+    private val nextCursor: JsonField<String> = JsonMissing.of(),
+    @JsonAnySetter private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
 ) {
 
     fun hasMore(): Boolean = hasMore.getRequired("has_more")
@@ -66,14 +71,10 @@ private constructor(
 
         fun hasMore(hasMore: Boolean) = hasMore(JsonField.of(hasMore))
 
-        @JsonProperty("has_more")
-        @ExcludeMissing
         fun hasMore(hasMore: JsonField<Boolean>) = apply { this.hasMore = hasMore }
 
         fun nextCursor(nextCursor: String) = nextCursor(JsonField.of(nextCursor))
 
-        @JsonProperty("next_cursor")
-        @ExcludeMissing
         fun nextCursor(nextCursor: JsonField<String>) = apply { this.nextCursor = nextCursor }
 
         fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
@@ -81,7 +82,6 @@ private constructor(
             putAllAdditionalProperties(additionalProperties)
         }
 
-        @JsonAnySetter
         fun putAdditionalProperty(key: String, value: JsonValue) = apply {
             additionalProperties.put(key, value)
         }

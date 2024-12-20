@@ -6,7 +6,6 @@ import com.fasterxml.jackson.annotation.JsonAnyGetter
 import com.fasterxml.jackson.annotation.JsonAnySetter
 import com.fasterxml.jackson.annotation.JsonCreator
 import com.fasterxml.jackson.annotation.JsonProperty
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize
 import com.withorb.api.core.Enum
 import com.withorb.api.core.ExcludeMissing
 import com.withorb.api.core.JsonField
@@ -14,6 +13,7 @@ import com.withorb.api.core.JsonValue
 import com.withorb.api.core.NoAutoDetect
 import com.withorb.api.core.http.Headers
 import com.withorb.api.core.http.QueryParams
+import com.withorb.api.core.immutableEmptyMap
 import com.withorb.api.core.toImmutable
 import com.withorb.api.errors.OrbInvalidDataException
 import java.util.Objects
@@ -63,14 +63,15 @@ constructor(
         }
     }
 
-    @JsonDeserialize(builder = CustomerBalanceTransactionCreateBody.Builder::class)
     @NoAutoDetect
     class CustomerBalanceTransactionCreateBody
+    @JsonCreator
     internal constructor(
-        private val amount: String,
-        private val type: Type,
-        private val description: String?,
-        private val additionalProperties: Map<String, JsonValue>,
+        @JsonProperty("amount") private val amount: String,
+        @JsonProperty("type") private val type: Type,
+        @JsonProperty("description") private val description: String?,
+        @JsonAnySetter
+        private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
 
         @JsonProperty("amount") fun amount(): String = amount
@@ -108,12 +109,11 @@ constructor(
                     customerBalanceTransactionCreateBody.additionalProperties.toMutableMap()
             }
 
-            @JsonProperty("amount") fun amount(amount: String) = apply { this.amount = amount }
+            fun amount(amount: String) = apply { this.amount = amount }
 
-            @JsonProperty("type") fun type(type: Type) = apply { this.type = type }
+            fun type(type: Type) = apply { this.type = type }
 
             /** An optional description that can be specified around this entry. */
-            @JsonProperty("description")
             fun description(description: String?) = apply { this.description = description }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
@@ -121,7 +121,6 @@ constructor(
                 putAllAdditionalProperties(additionalProperties)
             }
 
-            @JsonAnySetter
             fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                 additionalProperties.put(key, value)
             }

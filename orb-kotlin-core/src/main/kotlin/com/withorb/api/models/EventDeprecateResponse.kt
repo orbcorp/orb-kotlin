@@ -4,22 +4,25 @@ package com.withorb.api.models
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter
 import com.fasterxml.jackson.annotation.JsonAnySetter
+import com.fasterxml.jackson.annotation.JsonCreator
 import com.fasterxml.jackson.annotation.JsonProperty
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize
 import com.withorb.api.core.ExcludeMissing
 import com.withorb.api.core.JsonField
 import com.withorb.api.core.JsonMissing
 import com.withorb.api.core.JsonValue
 import com.withorb.api.core.NoAutoDetect
+import com.withorb.api.core.immutableEmptyMap
 import com.withorb.api.core.toImmutable
 import java.util.Objects
 
-@JsonDeserialize(builder = EventDeprecateResponse.Builder::class)
 @NoAutoDetect
 class EventDeprecateResponse
+@JsonCreator
 private constructor(
-    private val deprecated: JsonField<String>,
-    private val additionalProperties: Map<String, JsonValue>,
+    @JsonProperty("deprecated")
+    @ExcludeMissing
+    private val deprecated: JsonField<String> = JsonMissing.of(),
+    @JsonAnySetter private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
 ) {
 
     /** event_id of the deprecated event, if successfully updated */
@@ -62,8 +65,6 @@ private constructor(
         fun deprecated(deprecated: String) = deprecated(JsonField.of(deprecated))
 
         /** event_id of the deprecated event, if successfully updated */
-        @JsonProperty("deprecated")
-        @ExcludeMissing
         fun deprecated(deprecated: JsonField<String>) = apply { this.deprecated = deprecated }
 
         fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
@@ -71,7 +72,6 @@ private constructor(
             putAllAdditionalProperties(additionalProperties)
         }
 
-        @JsonAnySetter
         fun putAdditionalProperty(key: String, value: JsonValue) = apply {
             additionalProperties.put(key, value)
         }

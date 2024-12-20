@@ -23,6 +23,7 @@ import com.withorb.api.core.NoAutoDetect
 import com.withorb.api.core.getOrThrow
 import com.withorb.api.core.http.Headers
 import com.withorb.api.core.http.QueryParams
+import com.withorb.api.core.immutableEmptyMap
 import com.withorb.api.core.toImmutable
 import com.withorb.api.errors.OrbInvalidDataException
 import java.util.Objects
@@ -1946,26 +1947,29 @@ constructor(
             )
     }
 
-    @JsonDeserialize(builder = NewFloatingUnitPrice.Builder::class)
     @NoAutoDetect
     class NewFloatingUnitPrice
+    @JsonCreator
     private constructor(
-        private val metadata: Metadata?,
-        private val externalPriceId: String?,
-        private val name: String,
-        private val billableMetricId: String?,
-        private val itemId: String,
-        private val billedInAdvance: Boolean?,
-        private val fixedPriceQuantity: Double?,
-        private val invoiceGroupingKey: String?,
-        private val cadence: Cadence,
+        @JsonProperty("metadata") private val metadata: Metadata?,
+        @JsonProperty("external_price_id") private val externalPriceId: String?,
+        @JsonProperty("name") private val name: String,
+        @JsonProperty("billable_metric_id") private val billableMetricId: String?,
+        @JsonProperty("item_id") private val itemId: String,
+        @JsonProperty("billed_in_advance") private val billedInAdvance: Boolean?,
+        @JsonProperty("fixed_price_quantity") private val fixedPriceQuantity: Double?,
+        @JsonProperty("invoice_grouping_key") private val invoiceGroupingKey: String?,
+        @JsonProperty("cadence") private val cadence: Cadence,
+        @JsonProperty("billing_cycle_configuration")
         private val billingCycleConfiguration: BillingCycleConfiguration?,
+        @JsonProperty("invoicing_cycle_configuration")
         private val invoicingCycleConfiguration: InvoicingCycleConfiguration?,
-        private val conversionRate: Double?,
-        private val modelType: ModelType,
-        private val unitConfig: UnitConfig,
-        private val currency: String,
-        private val additionalProperties: Map<String, JsonValue>,
+        @JsonProperty("conversion_rate") private val conversionRate: Double?,
+        @JsonProperty("model_type") private val modelType: ModelType,
+        @JsonProperty("unit_config") private val unitConfig: UnitConfig,
+        @JsonProperty("currency") private val currency: String,
+        @JsonAnySetter
+        private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
 
         /**
@@ -2078,34 +2082,30 @@ constructor(
              * setting the value to `null`, and the entire metadata mapping can be cleared by
              * setting `metadata` to `null`.
              */
-            @JsonProperty("metadata")
             fun metadata(metadata: Metadata?) = apply { this.metadata = metadata }
 
             /** An alias for the price. */
-            @JsonProperty("external_price_id")
             fun externalPriceId(externalPriceId: String?) = apply {
                 this.externalPriceId = externalPriceId
             }
 
             /** The name of the price. */
-            @JsonProperty("name") fun name(name: String) = apply { this.name = name }
+            fun name(name: String) = apply { this.name = name }
 
             /**
              * The id of the billable metric for the price. Only needed if the price is usage-based.
              */
-            @JsonProperty("billable_metric_id")
             fun billableMetricId(billableMetricId: String?) = apply {
                 this.billableMetricId = billableMetricId
             }
 
             /** The id of the item the plan will be associated with. */
-            @JsonProperty("item_id") fun itemId(itemId: String) = apply { this.itemId = itemId }
+            fun itemId(itemId: String) = apply { this.itemId = itemId }
 
             /**
              * If the Price represents a fixed cost, the price will be billed in-advance if this is
              * true, and in-arrears if this is false.
              */
-            @JsonProperty("billed_in_advance")
             fun billedInAdvance(billedInAdvance: Boolean?) = apply {
                 this.billedInAdvance = billedInAdvance
             }
@@ -2113,25 +2113,21 @@ constructor(
             /**
              * If the Price represents a fixed cost, this represents the quantity of units applied.
              */
-            @JsonProperty("fixed_price_quantity")
             fun fixedPriceQuantity(fixedPriceQuantity: Double?) = apply {
                 this.fixedPriceQuantity = fixedPriceQuantity
             }
 
             /** The property used to group this price on an invoice */
-            @JsonProperty("invoice_grouping_key")
             fun invoiceGroupingKey(invoiceGroupingKey: String?) = apply {
                 this.invoiceGroupingKey = invoiceGroupingKey
             }
 
             /** The cadence to bill for this price on. */
-            @JsonProperty("cadence")
             fun cadence(cadence: Cadence) = apply { this.cadence = cadence }
 
             /**
              * For custom cadence: specifies the duration of the billing period in days or months.
              */
-            @JsonProperty("billing_cycle_configuration")
             fun billingCycleConfiguration(billingCycleConfiguration: BillingCycleConfiguration?) =
                 apply {
                     this.billingCycleConfiguration = billingCycleConfiguration
@@ -2141,25 +2137,20 @@ constructor(
              * Within each billing cycle, specifies the cadence at which invoices are produced. If
              * unspecified, a single invoice is produced per billing cycle.
              */
-            @JsonProperty("invoicing_cycle_configuration")
             fun invoicingCycleConfiguration(
                 invoicingCycleConfiguration: InvoicingCycleConfiguration?
             ) = apply { this.invoicingCycleConfiguration = invoicingCycleConfiguration }
 
             /** The per unit conversion rate of the price currency to the invoicing currency. */
-            @JsonProperty("conversion_rate")
             fun conversionRate(conversionRate: Double?) = apply {
                 this.conversionRate = conversionRate
             }
 
-            @JsonProperty("model_type")
             fun modelType(modelType: ModelType) = apply { this.modelType = modelType }
 
-            @JsonProperty("unit_config")
             fun unitConfig(unitConfig: UnitConfig) = apply { this.unitConfig = unitConfig }
 
             /** An ISO 4217 currency string for which this price is billed in. */
-            @JsonProperty("currency")
             fun currency(currency: String) = apply { this.currency = currency }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
@@ -2167,7 +2158,6 @@ constructor(
                 putAllAdditionalProperties(additionalProperties)
             }
 
-            @JsonAnySetter
             fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                 additionalProperties.put(key, value)
             }
@@ -2335,12 +2325,13 @@ constructor(
             override fun toString() = value.toString()
         }
 
-        @JsonDeserialize(builder = UnitConfig.Builder::class)
         @NoAutoDetect
         class UnitConfig
+        @JsonCreator
         private constructor(
-            private val unitAmount: String,
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonProperty("unit_amount") private val unitAmount: String,
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             /** Rate per unit of usage */
@@ -2368,7 +2359,6 @@ constructor(
                 }
 
                 /** Rate per unit of usage */
-                @JsonProperty("unit_amount")
                 fun unitAmount(unitAmount: String) = apply { this.unitAmount = unitAmount }
 
                 fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
@@ -2376,7 +2366,6 @@ constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -2420,13 +2409,14 @@ constructor(
         }
 
         /** For custom cadence: specifies the duration of the billing period in days or months. */
-        @JsonDeserialize(builder = BillingCycleConfiguration.Builder::class)
         @NoAutoDetect
         class BillingCycleConfiguration
+        @JsonCreator
         private constructor(
-            private val duration: Long,
-            private val durationUnit: DurationUnit,
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonProperty("duration") private val duration: Long,
+            @JsonProperty("duration_unit") private val durationUnit: DurationUnit,
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             /** The duration of the billing period. */
@@ -2460,11 +2450,9 @@ constructor(
                 }
 
                 /** The duration of the billing period. */
-                @JsonProperty("duration")
                 fun duration(duration: Long) = apply { this.duration = duration }
 
                 /** The unit of billing period duration. */
-                @JsonProperty("duration_unit")
                 fun durationUnit(durationUnit: DurationUnit) = apply {
                     this.durationUnit = durationUnit
                 }
@@ -2474,7 +2462,6 @@ constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -2579,13 +2566,14 @@ constructor(
          * Within each billing cycle, specifies the cadence at which invoices are produced. If
          * unspecified, a single invoice is produced per billing cycle.
          */
-        @JsonDeserialize(builder = InvoicingCycleConfiguration.Builder::class)
         @NoAutoDetect
         class InvoicingCycleConfiguration
+        @JsonCreator
         private constructor(
-            private val duration: Long,
-            private val durationUnit: DurationUnit,
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonProperty("duration") private val duration: Long,
+            @JsonProperty("duration_unit") private val durationUnit: DurationUnit,
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             /** The duration of the billing period. */
@@ -2620,11 +2608,9 @@ constructor(
                     }
 
                 /** The duration of the billing period. */
-                @JsonProperty("duration")
                 fun duration(duration: Long) = apply { this.duration = duration }
 
                 /** The unit of billing period duration. */
-                @JsonProperty("duration_unit")
                 fun durationUnit(durationUnit: DurationUnit) = apply {
                     this.durationUnit = durationUnit
                 }
@@ -2634,7 +2620,6 @@ constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -2740,11 +2725,12 @@ constructor(
          * setting the value to `null`, and the entire metadata mapping can be cleared by setting
          * `metadata` to `null`.
          */
-        @JsonDeserialize(builder = Metadata.Builder::class)
         @NoAutoDetect
         class Metadata
+        @JsonCreator
         private constructor(
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             @JsonAnyGetter
@@ -2771,7 +2757,6 @@ constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -2827,26 +2812,29 @@ constructor(
             "NewFloatingUnitPrice{metadata=$metadata, externalPriceId=$externalPriceId, name=$name, billableMetricId=$billableMetricId, itemId=$itemId, billedInAdvance=$billedInAdvance, fixedPriceQuantity=$fixedPriceQuantity, invoiceGroupingKey=$invoiceGroupingKey, cadence=$cadence, billingCycleConfiguration=$billingCycleConfiguration, invoicingCycleConfiguration=$invoicingCycleConfiguration, conversionRate=$conversionRate, modelType=$modelType, unitConfig=$unitConfig, currency=$currency, additionalProperties=$additionalProperties}"
     }
 
-    @JsonDeserialize(builder = NewFloatingPackagePrice.Builder::class)
     @NoAutoDetect
     class NewFloatingPackagePrice
+    @JsonCreator
     private constructor(
-        private val metadata: Metadata?,
-        private val externalPriceId: String?,
-        private val name: String,
-        private val billableMetricId: String?,
-        private val itemId: String,
-        private val billedInAdvance: Boolean?,
-        private val fixedPriceQuantity: Double?,
-        private val invoiceGroupingKey: String?,
-        private val cadence: Cadence,
+        @JsonProperty("metadata") private val metadata: Metadata?,
+        @JsonProperty("external_price_id") private val externalPriceId: String?,
+        @JsonProperty("name") private val name: String,
+        @JsonProperty("billable_metric_id") private val billableMetricId: String?,
+        @JsonProperty("item_id") private val itemId: String,
+        @JsonProperty("billed_in_advance") private val billedInAdvance: Boolean?,
+        @JsonProperty("fixed_price_quantity") private val fixedPriceQuantity: Double?,
+        @JsonProperty("invoice_grouping_key") private val invoiceGroupingKey: String?,
+        @JsonProperty("cadence") private val cadence: Cadence,
+        @JsonProperty("billing_cycle_configuration")
         private val billingCycleConfiguration: BillingCycleConfiguration?,
+        @JsonProperty("invoicing_cycle_configuration")
         private val invoicingCycleConfiguration: InvoicingCycleConfiguration?,
-        private val conversionRate: Double?,
-        private val modelType: ModelType,
-        private val packageConfig: PackageConfig,
-        private val currency: String,
-        private val additionalProperties: Map<String, JsonValue>,
+        @JsonProperty("conversion_rate") private val conversionRate: Double?,
+        @JsonProperty("model_type") private val modelType: ModelType,
+        @JsonProperty("package_config") private val packageConfig: PackageConfig,
+        @JsonProperty("currency") private val currency: String,
+        @JsonAnySetter
+        private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
 
         /**
@@ -2959,34 +2947,30 @@ constructor(
              * setting the value to `null`, and the entire metadata mapping can be cleared by
              * setting `metadata` to `null`.
              */
-            @JsonProperty("metadata")
             fun metadata(metadata: Metadata?) = apply { this.metadata = metadata }
 
             /** An alias for the price. */
-            @JsonProperty("external_price_id")
             fun externalPriceId(externalPriceId: String?) = apply {
                 this.externalPriceId = externalPriceId
             }
 
             /** The name of the price. */
-            @JsonProperty("name") fun name(name: String) = apply { this.name = name }
+            fun name(name: String) = apply { this.name = name }
 
             /**
              * The id of the billable metric for the price. Only needed if the price is usage-based.
              */
-            @JsonProperty("billable_metric_id")
             fun billableMetricId(billableMetricId: String?) = apply {
                 this.billableMetricId = billableMetricId
             }
 
             /** The id of the item the plan will be associated with. */
-            @JsonProperty("item_id") fun itemId(itemId: String) = apply { this.itemId = itemId }
+            fun itemId(itemId: String) = apply { this.itemId = itemId }
 
             /**
              * If the Price represents a fixed cost, the price will be billed in-advance if this is
              * true, and in-arrears if this is false.
              */
-            @JsonProperty("billed_in_advance")
             fun billedInAdvance(billedInAdvance: Boolean?) = apply {
                 this.billedInAdvance = billedInAdvance
             }
@@ -2994,25 +2978,21 @@ constructor(
             /**
              * If the Price represents a fixed cost, this represents the quantity of units applied.
              */
-            @JsonProperty("fixed_price_quantity")
             fun fixedPriceQuantity(fixedPriceQuantity: Double?) = apply {
                 this.fixedPriceQuantity = fixedPriceQuantity
             }
 
             /** The property used to group this price on an invoice */
-            @JsonProperty("invoice_grouping_key")
             fun invoiceGroupingKey(invoiceGroupingKey: String?) = apply {
                 this.invoiceGroupingKey = invoiceGroupingKey
             }
 
             /** The cadence to bill for this price on. */
-            @JsonProperty("cadence")
             fun cadence(cadence: Cadence) = apply { this.cadence = cadence }
 
             /**
              * For custom cadence: specifies the duration of the billing period in days or months.
              */
-            @JsonProperty("billing_cycle_configuration")
             fun billingCycleConfiguration(billingCycleConfiguration: BillingCycleConfiguration?) =
                 apply {
                     this.billingCycleConfiguration = billingCycleConfiguration
@@ -3022,27 +3002,22 @@ constructor(
              * Within each billing cycle, specifies the cadence at which invoices are produced. If
              * unspecified, a single invoice is produced per billing cycle.
              */
-            @JsonProperty("invoicing_cycle_configuration")
             fun invoicingCycleConfiguration(
                 invoicingCycleConfiguration: InvoicingCycleConfiguration?
             ) = apply { this.invoicingCycleConfiguration = invoicingCycleConfiguration }
 
             /** The per unit conversion rate of the price currency to the invoicing currency. */
-            @JsonProperty("conversion_rate")
             fun conversionRate(conversionRate: Double?) = apply {
                 this.conversionRate = conversionRate
             }
 
-            @JsonProperty("model_type")
             fun modelType(modelType: ModelType) = apply { this.modelType = modelType }
 
-            @JsonProperty("package_config")
             fun packageConfig(packageConfig: PackageConfig) = apply {
                 this.packageConfig = packageConfig
             }
 
             /** An ISO 4217 currency string for which this price is billed in. */
-            @JsonProperty("currency")
             fun currency(currency: String) = apply { this.currency = currency }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
@@ -3050,7 +3025,6 @@ constructor(
                 putAllAdditionalProperties(additionalProperties)
             }
 
-            @JsonAnySetter
             fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                 additionalProperties.put(key, value)
             }
@@ -3218,13 +3192,14 @@ constructor(
             override fun toString() = value.toString()
         }
 
-        @JsonDeserialize(builder = PackageConfig.Builder::class)
         @NoAutoDetect
         class PackageConfig
+        @JsonCreator
         private constructor(
-            private val packageAmount: String,
-            private val packageSize: Long,
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonProperty("package_amount") private val packageAmount: String,
+            @JsonProperty("package_size") private val packageSize: Long,
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             /** A currency amount to rate usage by */
@@ -3260,7 +3235,6 @@ constructor(
                 }
 
                 /** A currency amount to rate usage by */
-                @JsonProperty("package_amount")
                 fun packageAmount(packageAmount: String) = apply {
                     this.packageAmount = packageAmount
                 }
@@ -3269,7 +3243,6 @@ constructor(
                  * An integer amount to represent package size. For example, 1000 here would divide
                  * usage by 1000 before multiplying by package_amount in rating
                  */
-                @JsonProperty("package_size")
                 fun packageSize(packageSize: Long) = apply { this.packageSize = packageSize }
 
                 fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
@@ -3277,7 +3250,6 @@ constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -3324,13 +3296,14 @@ constructor(
         }
 
         /** For custom cadence: specifies the duration of the billing period in days or months. */
-        @JsonDeserialize(builder = BillingCycleConfiguration.Builder::class)
         @NoAutoDetect
         class BillingCycleConfiguration
+        @JsonCreator
         private constructor(
-            private val duration: Long,
-            private val durationUnit: DurationUnit,
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonProperty("duration") private val duration: Long,
+            @JsonProperty("duration_unit") private val durationUnit: DurationUnit,
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             /** The duration of the billing period. */
@@ -3364,11 +3337,9 @@ constructor(
                 }
 
                 /** The duration of the billing period. */
-                @JsonProperty("duration")
                 fun duration(duration: Long) = apply { this.duration = duration }
 
                 /** The unit of billing period duration. */
-                @JsonProperty("duration_unit")
                 fun durationUnit(durationUnit: DurationUnit) = apply {
                     this.durationUnit = durationUnit
                 }
@@ -3378,7 +3349,6 @@ constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -3483,13 +3453,14 @@ constructor(
          * Within each billing cycle, specifies the cadence at which invoices are produced. If
          * unspecified, a single invoice is produced per billing cycle.
          */
-        @JsonDeserialize(builder = InvoicingCycleConfiguration.Builder::class)
         @NoAutoDetect
         class InvoicingCycleConfiguration
+        @JsonCreator
         private constructor(
-            private val duration: Long,
-            private val durationUnit: DurationUnit,
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonProperty("duration") private val duration: Long,
+            @JsonProperty("duration_unit") private val durationUnit: DurationUnit,
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             /** The duration of the billing period. */
@@ -3524,11 +3495,9 @@ constructor(
                     }
 
                 /** The duration of the billing period. */
-                @JsonProperty("duration")
                 fun duration(duration: Long) = apply { this.duration = duration }
 
                 /** The unit of billing period duration. */
-                @JsonProperty("duration_unit")
                 fun durationUnit(durationUnit: DurationUnit) = apply {
                     this.durationUnit = durationUnit
                 }
@@ -3538,7 +3507,6 @@ constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -3644,11 +3612,12 @@ constructor(
          * setting the value to `null`, and the entire metadata mapping can be cleared by setting
          * `metadata` to `null`.
          */
-        @JsonDeserialize(builder = Metadata.Builder::class)
         @NoAutoDetect
         class Metadata
+        @JsonCreator
         private constructor(
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             @JsonAnyGetter
@@ -3675,7 +3644,6 @@ constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -3731,26 +3699,29 @@ constructor(
             "NewFloatingPackagePrice{metadata=$metadata, externalPriceId=$externalPriceId, name=$name, billableMetricId=$billableMetricId, itemId=$itemId, billedInAdvance=$billedInAdvance, fixedPriceQuantity=$fixedPriceQuantity, invoiceGroupingKey=$invoiceGroupingKey, cadence=$cadence, billingCycleConfiguration=$billingCycleConfiguration, invoicingCycleConfiguration=$invoicingCycleConfiguration, conversionRate=$conversionRate, modelType=$modelType, packageConfig=$packageConfig, currency=$currency, additionalProperties=$additionalProperties}"
     }
 
-    @JsonDeserialize(builder = NewFloatingMatrixPrice.Builder::class)
     @NoAutoDetect
     class NewFloatingMatrixPrice
+    @JsonCreator
     private constructor(
-        private val metadata: Metadata?,
-        private val externalPriceId: String?,
-        private val name: String,
-        private val billableMetricId: String?,
-        private val itemId: String,
-        private val billedInAdvance: Boolean?,
-        private val fixedPriceQuantity: Double?,
-        private val invoiceGroupingKey: String?,
-        private val cadence: Cadence,
+        @JsonProperty("metadata") private val metadata: Metadata?,
+        @JsonProperty("external_price_id") private val externalPriceId: String?,
+        @JsonProperty("name") private val name: String,
+        @JsonProperty("billable_metric_id") private val billableMetricId: String?,
+        @JsonProperty("item_id") private val itemId: String,
+        @JsonProperty("billed_in_advance") private val billedInAdvance: Boolean?,
+        @JsonProperty("fixed_price_quantity") private val fixedPriceQuantity: Double?,
+        @JsonProperty("invoice_grouping_key") private val invoiceGroupingKey: String?,
+        @JsonProperty("cadence") private val cadence: Cadence,
+        @JsonProperty("billing_cycle_configuration")
         private val billingCycleConfiguration: BillingCycleConfiguration?,
+        @JsonProperty("invoicing_cycle_configuration")
         private val invoicingCycleConfiguration: InvoicingCycleConfiguration?,
-        private val conversionRate: Double?,
-        private val modelType: ModelType,
-        private val matrixConfig: MatrixConfig,
-        private val currency: String,
-        private val additionalProperties: Map<String, JsonValue>,
+        @JsonProperty("conversion_rate") private val conversionRate: Double?,
+        @JsonProperty("model_type") private val modelType: ModelType,
+        @JsonProperty("matrix_config") private val matrixConfig: MatrixConfig,
+        @JsonProperty("currency") private val currency: String,
+        @JsonAnySetter
+        private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
 
         /**
@@ -3863,34 +3834,30 @@ constructor(
              * setting the value to `null`, and the entire metadata mapping can be cleared by
              * setting `metadata` to `null`.
              */
-            @JsonProperty("metadata")
             fun metadata(metadata: Metadata?) = apply { this.metadata = metadata }
 
             /** An alias for the price. */
-            @JsonProperty("external_price_id")
             fun externalPriceId(externalPriceId: String?) = apply {
                 this.externalPriceId = externalPriceId
             }
 
             /** The name of the price. */
-            @JsonProperty("name") fun name(name: String) = apply { this.name = name }
+            fun name(name: String) = apply { this.name = name }
 
             /**
              * The id of the billable metric for the price. Only needed if the price is usage-based.
              */
-            @JsonProperty("billable_metric_id")
             fun billableMetricId(billableMetricId: String?) = apply {
                 this.billableMetricId = billableMetricId
             }
 
             /** The id of the item the plan will be associated with. */
-            @JsonProperty("item_id") fun itemId(itemId: String) = apply { this.itemId = itemId }
+            fun itemId(itemId: String) = apply { this.itemId = itemId }
 
             /**
              * If the Price represents a fixed cost, the price will be billed in-advance if this is
              * true, and in-arrears if this is false.
              */
-            @JsonProperty("billed_in_advance")
             fun billedInAdvance(billedInAdvance: Boolean?) = apply {
                 this.billedInAdvance = billedInAdvance
             }
@@ -3898,25 +3865,21 @@ constructor(
             /**
              * If the Price represents a fixed cost, this represents the quantity of units applied.
              */
-            @JsonProperty("fixed_price_quantity")
             fun fixedPriceQuantity(fixedPriceQuantity: Double?) = apply {
                 this.fixedPriceQuantity = fixedPriceQuantity
             }
 
             /** The property used to group this price on an invoice */
-            @JsonProperty("invoice_grouping_key")
             fun invoiceGroupingKey(invoiceGroupingKey: String?) = apply {
                 this.invoiceGroupingKey = invoiceGroupingKey
             }
 
             /** The cadence to bill for this price on. */
-            @JsonProperty("cadence")
             fun cadence(cadence: Cadence) = apply { this.cadence = cadence }
 
             /**
              * For custom cadence: specifies the duration of the billing period in days or months.
              */
-            @JsonProperty("billing_cycle_configuration")
             fun billingCycleConfiguration(billingCycleConfiguration: BillingCycleConfiguration?) =
                 apply {
                     this.billingCycleConfiguration = billingCycleConfiguration
@@ -3926,27 +3889,22 @@ constructor(
              * Within each billing cycle, specifies the cadence at which invoices are produced. If
              * unspecified, a single invoice is produced per billing cycle.
              */
-            @JsonProperty("invoicing_cycle_configuration")
             fun invoicingCycleConfiguration(
                 invoicingCycleConfiguration: InvoicingCycleConfiguration?
             ) = apply { this.invoicingCycleConfiguration = invoicingCycleConfiguration }
 
             /** The per unit conversion rate of the price currency to the invoicing currency. */
-            @JsonProperty("conversion_rate")
             fun conversionRate(conversionRate: Double?) = apply {
                 this.conversionRate = conversionRate
             }
 
-            @JsonProperty("model_type")
             fun modelType(modelType: ModelType) = apply { this.modelType = modelType }
 
-            @JsonProperty("matrix_config")
             fun matrixConfig(matrixConfig: MatrixConfig) = apply {
                 this.matrixConfig = matrixConfig
             }
 
             /** An ISO 4217 currency string for which this price is billed in. */
-            @JsonProperty("currency")
             fun currency(currency: String) = apply { this.currency = currency }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
@@ -3954,7 +3912,6 @@ constructor(
                 putAllAdditionalProperties(additionalProperties)
             }
 
-            @JsonAnySetter
             fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                 additionalProperties.put(key, value)
             }
@@ -4071,14 +4028,15 @@ constructor(
             override fun toString() = value.toString()
         }
 
-        @JsonDeserialize(builder = MatrixConfig.Builder::class)
         @NoAutoDetect
         class MatrixConfig
+        @JsonCreator
         private constructor(
-            private val dimensions: List<String?>,
-            private val defaultUnitAmount: String,
-            private val matrixValues: List<MatrixValue>,
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonProperty("dimensions") private val dimensions: List<String?>,
+            @JsonProperty("default_unit_amount") private val defaultUnitAmount: String,
+            @JsonProperty("matrix_values") private val matrixValues: List<MatrixValue>,
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             /** One or two event property values to evaluate matrix groups by */
@@ -4116,19 +4074,16 @@ constructor(
                 }
 
                 /** One or two event property values to evaluate matrix groups by */
-                @JsonProperty("dimensions")
                 fun dimensions(dimensions: List<String?>) = apply { this.dimensions = dimensions }
 
                 /**
                  * Default per unit rate for any usage not bucketed into a specified matrix_value
                  */
-                @JsonProperty("default_unit_amount")
                 fun defaultUnitAmount(defaultUnitAmount: String) = apply {
                     this.defaultUnitAmount = defaultUnitAmount
                 }
 
                 /** Matrix values for specified matrix grouping keys */
-                @JsonProperty("matrix_values")
                 fun matrixValues(matrixValues: List<MatrixValue>) = apply {
                     this.matrixValues = matrixValues
                 }
@@ -4138,7 +4093,6 @@ constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -4169,13 +4123,14 @@ constructor(
                     )
             }
 
-            @JsonDeserialize(builder = MatrixValue.Builder::class)
             @NoAutoDetect
             class MatrixValue
+            @JsonCreator
             private constructor(
-                private val unitAmount: String,
-                private val dimensionValues: List<String?>,
-                private val additionalProperties: Map<String, JsonValue>,
+                @JsonProperty("unit_amount") private val unitAmount: String,
+                @JsonProperty("dimension_values") private val dimensionValues: List<String?>,
+                @JsonAnySetter
+                private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
             ) {
 
                 /** Unit price for the specified dimension_values */
@@ -4213,7 +4168,6 @@ constructor(
                     }
 
                     /** Unit price for the specified dimension_values */
-                    @JsonProperty("unit_amount")
                     fun unitAmount(unitAmount: String) = apply { this.unitAmount = unitAmount }
 
                     /**
@@ -4221,7 +4175,6 @@ constructor(
                      * ["region", "tier"] could be used to filter cloud usage by a cloud region and
                      * an instance tier.
                      */
-                    @JsonProperty("dimension_values")
                     fun dimensionValues(dimensionValues: List<String?>) = apply {
                         this.dimensionValues = dimensionValues
                     }
@@ -4231,7 +4184,6 @@ constructor(
                         putAllAdditionalProperties(additionalProperties)
                     }
 
-                    @JsonAnySetter
                     fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                         additionalProperties.put(key, value)
                     }
@@ -4348,13 +4300,14 @@ constructor(
         }
 
         /** For custom cadence: specifies the duration of the billing period in days or months. */
-        @JsonDeserialize(builder = BillingCycleConfiguration.Builder::class)
         @NoAutoDetect
         class BillingCycleConfiguration
+        @JsonCreator
         private constructor(
-            private val duration: Long,
-            private val durationUnit: DurationUnit,
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonProperty("duration") private val duration: Long,
+            @JsonProperty("duration_unit") private val durationUnit: DurationUnit,
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             /** The duration of the billing period. */
@@ -4388,11 +4341,9 @@ constructor(
                 }
 
                 /** The duration of the billing period. */
-                @JsonProperty("duration")
                 fun duration(duration: Long) = apply { this.duration = duration }
 
                 /** The unit of billing period duration. */
-                @JsonProperty("duration_unit")
                 fun durationUnit(durationUnit: DurationUnit) = apply {
                     this.durationUnit = durationUnit
                 }
@@ -4402,7 +4353,6 @@ constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -4507,13 +4457,14 @@ constructor(
          * Within each billing cycle, specifies the cadence at which invoices are produced. If
          * unspecified, a single invoice is produced per billing cycle.
          */
-        @JsonDeserialize(builder = InvoicingCycleConfiguration.Builder::class)
         @NoAutoDetect
         class InvoicingCycleConfiguration
+        @JsonCreator
         private constructor(
-            private val duration: Long,
-            private val durationUnit: DurationUnit,
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonProperty("duration") private val duration: Long,
+            @JsonProperty("duration_unit") private val durationUnit: DurationUnit,
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             /** The duration of the billing period. */
@@ -4548,11 +4499,9 @@ constructor(
                     }
 
                 /** The duration of the billing period. */
-                @JsonProperty("duration")
                 fun duration(duration: Long) = apply { this.duration = duration }
 
                 /** The unit of billing period duration. */
-                @JsonProperty("duration_unit")
                 fun durationUnit(durationUnit: DurationUnit) = apply {
                     this.durationUnit = durationUnit
                 }
@@ -4562,7 +4511,6 @@ constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -4668,11 +4616,12 @@ constructor(
          * setting the value to `null`, and the entire metadata mapping can be cleared by setting
          * `metadata` to `null`.
          */
-        @JsonDeserialize(builder = Metadata.Builder::class)
         @NoAutoDetect
         class Metadata
+        @JsonCreator
         private constructor(
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             @JsonAnyGetter
@@ -4699,7 +4648,6 @@ constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -4755,26 +4703,30 @@ constructor(
             "NewFloatingMatrixPrice{metadata=$metadata, externalPriceId=$externalPriceId, name=$name, billableMetricId=$billableMetricId, itemId=$itemId, billedInAdvance=$billedInAdvance, fixedPriceQuantity=$fixedPriceQuantity, invoiceGroupingKey=$invoiceGroupingKey, cadence=$cadence, billingCycleConfiguration=$billingCycleConfiguration, invoicingCycleConfiguration=$invoicingCycleConfiguration, conversionRate=$conversionRate, modelType=$modelType, matrixConfig=$matrixConfig, currency=$currency, additionalProperties=$additionalProperties}"
     }
 
-    @JsonDeserialize(builder = NewFloatingMatrixWithAllocationPrice.Builder::class)
     @NoAutoDetect
     class NewFloatingMatrixWithAllocationPrice
+    @JsonCreator
     private constructor(
-        private val metadata: Metadata?,
-        private val externalPriceId: String?,
-        private val name: String,
-        private val billableMetricId: String?,
-        private val itemId: String,
-        private val billedInAdvance: Boolean?,
-        private val fixedPriceQuantity: Double?,
-        private val invoiceGroupingKey: String?,
-        private val cadence: Cadence,
+        @JsonProperty("metadata") private val metadata: Metadata?,
+        @JsonProperty("external_price_id") private val externalPriceId: String?,
+        @JsonProperty("name") private val name: String,
+        @JsonProperty("billable_metric_id") private val billableMetricId: String?,
+        @JsonProperty("item_id") private val itemId: String,
+        @JsonProperty("billed_in_advance") private val billedInAdvance: Boolean?,
+        @JsonProperty("fixed_price_quantity") private val fixedPriceQuantity: Double?,
+        @JsonProperty("invoice_grouping_key") private val invoiceGroupingKey: String?,
+        @JsonProperty("cadence") private val cadence: Cadence,
+        @JsonProperty("billing_cycle_configuration")
         private val billingCycleConfiguration: BillingCycleConfiguration?,
+        @JsonProperty("invoicing_cycle_configuration")
         private val invoicingCycleConfiguration: InvoicingCycleConfiguration?,
-        private val conversionRate: Double?,
-        private val modelType: ModelType,
+        @JsonProperty("conversion_rate") private val conversionRate: Double?,
+        @JsonProperty("model_type") private val modelType: ModelType,
+        @JsonProperty("matrix_with_allocation_config")
         private val matrixWithAllocationConfig: MatrixWithAllocationConfig,
-        private val currency: String,
-        private val additionalProperties: Map<String, JsonValue>,
+        @JsonProperty("currency") private val currency: String,
+        @JsonAnySetter
+        private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
 
         /**
@@ -4894,34 +4846,30 @@ constructor(
              * setting the value to `null`, and the entire metadata mapping can be cleared by
              * setting `metadata` to `null`.
              */
-            @JsonProperty("metadata")
             fun metadata(metadata: Metadata?) = apply { this.metadata = metadata }
 
             /** An alias for the price. */
-            @JsonProperty("external_price_id")
             fun externalPriceId(externalPriceId: String?) = apply {
                 this.externalPriceId = externalPriceId
             }
 
             /** The name of the price. */
-            @JsonProperty("name") fun name(name: String) = apply { this.name = name }
+            fun name(name: String) = apply { this.name = name }
 
             /**
              * The id of the billable metric for the price. Only needed if the price is usage-based.
              */
-            @JsonProperty("billable_metric_id")
             fun billableMetricId(billableMetricId: String?) = apply {
                 this.billableMetricId = billableMetricId
             }
 
             /** The id of the item the plan will be associated with. */
-            @JsonProperty("item_id") fun itemId(itemId: String) = apply { this.itemId = itemId }
+            fun itemId(itemId: String) = apply { this.itemId = itemId }
 
             /**
              * If the Price represents a fixed cost, the price will be billed in-advance if this is
              * true, and in-arrears if this is false.
              */
-            @JsonProperty("billed_in_advance")
             fun billedInAdvance(billedInAdvance: Boolean?) = apply {
                 this.billedInAdvance = billedInAdvance
             }
@@ -4929,25 +4877,21 @@ constructor(
             /**
              * If the Price represents a fixed cost, this represents the quantity of units applied.
              */
-            @JsonProperty("fixed_price_quantity")
             fun fixedPriceQuantity(fixedPriceQuantity: Double?) = apply {
                 this.fixedPriceQuantity = fixedPriceQuantity
             }
 
             /** The property used to group this price on an invoice */
-            @JsonProperty("invoice_grouping_key")
             fun invoiceGroupingKey(invoiceGroupingKey: String?) = apply {
                 this.invoiceGroupingKey = invoiceGroupingKey
             }
 
             /** The cadence to bill for this price on. */
-            @JsonProperty("cadence")
             fun cadence(cadence: Cadence) = apply { this.cadence = cadence }
 
             /**
              * For custom cadence: specifies the duration of the billing period in days or months.
              */
-            @JsonProperty("billing_cycle_configuration")
             fun billingCycleConfiguration(billingCycleConfiguration: BillingCycleConfiguration?) =
                 apply {
                     this.billingCycleConfiguration = billingCycleConfiguration
@@ -4957,28 +4901,23 @@ constructor(
              * Within each billing cycle, specifies the cadence at which invoices are produced. If
              * unspecified, a single invoice is produced per billing cycle.
              */
-            @JsonProperty("invoicing_cycle_configuration")
             fun invoicingCycleConfiguration(
                 invoicingCycleConfiguration: InvoicingCycleConfiguration?
             ) = apply { this.invoicingCycleConfiguration = invoicingCycleConfiguration }
 
             /** The per unit conversion rate of the price currency to the invoicing currency. */
-            @JsonProperty("conversion_rate")
             fun conversionRate(conversionRate: Double?) = apply {
                 this.conversionRate = conversionRate
             }
 
-            @JsonProperty("model_type")
             fun modelType(modelType: ModelType) = apply { this.modelType = modelType }
 
-            @JsonProperty("matrix_with_allocation_config")
             fun matrixWithAllocationConfig(matrixWithAllocationConfig: MatrixWithAllocationConfig) =
                 apply {
                     this.matrixWithAllocationConfig = matrixWithAllocationConfig
                 }
 
             /** An ISO 4217 currency string for which this price is billed in. */
-            @JsonProperty("currency")
             fun currency(currency: String) = apply { this.currency = currency }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
@@ -4986,7 +4925,6 @@ constructor(
                 putAllAdditionalProperties(additionalProperties)
             }
 
-            @JsonAnySetter
             fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                 additionalProperties.put(key, value)
             }
@@ -5105,15 +5043,16 @@ constructor(
             override fun toString() = value.toString()
         }
 
-        @JsonDeserialize(builder = MatrixWithAllocationConfig.Builder::class)
         @NoAutoDetect
         class MatrixWithAllocationConfig
+        @JsonCreator
         private constructor(
-            private val dimensions: List<String?>,
-            private val defaultUnitAmount: String,
-            private val matrixValues: List<MatrixValue>,
-            private val allocation: Double,
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonProperty("dimensions") private val dimensions: List<String?>,
+            @JsonProperty("default_unit_amount") private val defaultUnitAmount: String,
+            @JsonProperty("matrix_values") private val matrixValues: List<MatrixValue>,
+            @JsonProperty("allocation") private val allocation: Double,
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             /** One or two event property values to evaluate matrix groups by */
@@ -5157,25 +5096,21 @@ constructor(
                 }
 
                 /** One or two event property values to evaluate matrix groups by */
-                @JsonProperty("dimensions")
                 fun dimensions(dimensions: List<String?>) = apply { this.dimensions = dimensions }
 
                 /**
                  * Default per unit rate for any usage not bucketed into a specified matrix_value
                  */
-                @JsonProperty("default_unit_amount")
                 fun defaultUnitAmount(defaultUnitAmount: String) = apply {
                     this.defaultUnitAmount = defaultUnitAmount
                 }
 
                 /** Matrix values for specified matrix grouping keys */
-                @JsonProperty("matrix_values")
                 fun matrixValues(matrixValues: List<MatrixValue>) = apply {
                     this.matrixValues = matrixValues
                 }
 
                 /** Allocation to be used to calculate the price */
-                @JsonProperty("allocation")
                 fun allocation(allocation: Double) = apply { this.allocation = allocation }
 
                 fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
@@ -5183,7 +5118,6 @@ constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -5215,13 +5149,14 @@ constructor(
                     )
             }
 
-            @JsonDeserialize(builder = MatrixValue.Builder::class)
             @NoAutoDetect
             class MatrixValue
+            @JsonCreator
             private constructor(
-                private val unitAmount: String,
-                private val dimensionValues: List<String?>,
-                private val additionalProperties: Map<String, JsonValue>,
+                @JsonProperty("unit_amount") private val unitAmount: String,
+                @JsonProperty("dimension_values") private val dimensionValues: List<String?>,
+                @JsonAnySetter
+                private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
             ) {
 
                 /** Unit price for the specified dimension_values */
@@ -5259,7 +5194,6 @@ constructor(
                     }
 
                     /** Unit price for the specified dimension_values */
-                    @JsonProperty("unit_amount")
                     fun unitAmount(unitAmount: String) = apply { this.unitAmount = unitAmount }
 
                     /**
@@ -5267,7 +5201,6 @@ constructor(
                      * ["region", "tier"] could be used to filter cloud usage by a cloud region and
                      * an instance tier.
                      */
-                    @JsonProperty("dimension_values")
                     fun dimensionValues(dimensionValues: List<String?>) = apply {
                         this.dimensionValues = dimensionValues
                     }
@@ -5277,7 +5210,6 @@ constructor(
                         putAllAdditionalProperties(additionalProperties)
                     }
 
-                    @JsonAnySetter
                     fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                         additionalProperties.put(key, value)
                     }
@@ -5394,13 +5326,14 @@ constructor(
         }
 
         /** For custom cadence: specifies the duration of the billing period in days or months. */
-        @JsonDeserialize(builder = BillingCycleConfiguration.Builder::class)
         @NoAutoDetect
         class BillingCycleConfiguration
+        @JsonCreator
         private constructor(
-            private val duration: Long,
-            private val durationUnit: DurationUnit,
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonProperty("duration") private val duration: Long,
+            @JsonProperty("duration_unit") private val durationUnit: DurationUnit,
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             /** The duration of the billing period. */
@@ -5434,11 +5367,9 @@ constructor(
                 }
 
                 /** The duration of the billing period. */
-                @JsonProperty("duration")
                 fun duration(duration: Long) = apply { this.duration = duration }
 
                 /** The unit of billing period duration. */
-                @JsonProperty("duration_unit")
                 fun durationUnit(durationUnit: DurationUnit) = apply {
                     this.durationUnit = durationUnit
                 }
@@ -5448,7 +5379,6 @@ constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -5553,13 +5483,14 @@ constructor(
          * Within each billing cycle, specifies the cadence at which invoices are produced. If
          * unspecified, a single invoice is produced per billing cycle.
          */
-        @JsonDeserialize(builder = InvoicingCycleConfiguration.Builder::class)
         @NoAutoDetect
         class InvoicingCycleConfiguration
+        @JsonCreator
         private constructor(
-            private val duration: Long,
-            private val durationUnit: DurationUnit,
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonProperty("duration") private val duration: Long,
+            @JsonProperty("duration_unit") private val durationUnit: DurationUnit,
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             /** The duration of the billing period. */
@@ -5594,11 +5525,9 @@ constructor(
                     }
 
                 /** The duration of the billing period. */
-                @JsonProperty("duration")
                 fun duration(duration: Long) = apply { this.duration = duration }
 
                 /** The unit of billing period duration. */
-                @JsonProperty("duration_unit")
                 fun durationUnit(durationUnit: DurationUnit) = apply {
                     this.durationUnit = durationUnit
                 }
@@ -5608,7 +5537,6 @@ constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -5714,11 +5642,12 @@ constructor(
          * setting the value to `null`, and the entire metadata mapping can be cleared by setting
          * `metadata` to `null`.
          */
-        @JsonDeserialize(builder = Metadata.Builder::class)
         @NoAutoDetect
         class Metadata
+        @JsonCreator
         private constructor(
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             @JsonAnyGetter
@@ -5745,7 +5674,6 @@ constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -5801,26 +5729,29 @@ constructor(
             "NewFloatingMatrixWithAllocationPrice{metadata=$metadata, externalPriceId=$externalPriceId, name=$name, billableMetricId=$billableMetricId, itemId=$itemId, billedInAdvance=$billedInAdvance, fixedPriceQuantity=$fixedPriceQuantity, invoiceGroupingKey=$invoiceGroupingKey, cadence=$cadence, billingCycleConfiguration=$billingCycleConfiguration, invoicingCycleConfiguration=$invoicingCycleConfiguration, conversionRate=$conversionRate, modelType=$modelType, matrixWithAllocationConfig=$matrixWithAllocationConfig, currency=$currency, additionalProperties=$additionalProperties}"
     }
 
-    @JsonDeserialize(builder = NewFloatingTieredPrice.Builder::class)
     @NoAutoDetect
     class NewFloatingTieredPrice
+    @JsonCreator
     private constructor(
-        private val metadata: Metadata?,
-        private val externalPriceId: String?,
-        private val name: String,
-        private val billableMetricId: String?,
-        private val itemId: String,
-        private val billedInAdvance: Boolean?,
-        private val fixedPriceQuantity: Double?,
-        private val invoiceGroupingKey: String?,
-        private val cadence: Cadence,
+        @JsonProperty("metadata") private val metadata: Metadata?,
+        @JsonProperty("external_price_id") private val externalPriceId: String?,
+        @JsonProperty("name") private val name: String,
+        @JsonProperty("billable_metric_id") private val billableMetricId: String?,
+        @JsonProperty("item_id") private val itemId: String,
+        @JsonProperty("billed_in_advance") private val billedInAdvance: Boolean?,
+        @JsonProperty("fixed_price_quantity") private val fixedPriceQuantity: Double?,
+        @JsonProperty("invoice_grouping_key") private val invoiceGroupingKey: String?,
+        @JsonProperty("cadence") private val cadence: Cadence,
+        @JsonProperty("billing_cycle_configuration")
         private val billingCycleConfiguration: BillingCycleConfiguration?,
+        @JsonProperty("invoicing_cycle_configuration")
         private val invoicingCycleConfiguration: InvoicingCycleConfiguration?,
-        private val conversionRate: Double?,
-        private val modelType: ModelType,
-        private val tieredConfig: TieredConfig,
-        private val currency: String,
-        private val additionalProperties: Map<String, JsonValue>,
+        @JsonProperty("conversion_rate") private val conversionRate: Double?,
+        @JsonProperty("model_type") private val modelType: ModelType,
+        @JsonProperty("tiered_config") private val tieredConfig: TieredConfig,
+        @JsonProperty("currency") private val currency: String,
+        @JsonAnySetter
+        private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
 
         /**
@@ -5933,34 +5864,30 @@ constructor(
              * setting the value to `null`, and the entire metadata mapping can be cleared by
              * setting `metadata` to `null`.
              */
-            @JsonProperty("metadata")
             fun metadata(metadata: Metadata?) = apply { this.metadata = metadata }
 
             /** An alias for the price. */
-            @JsonProperty("external_price_id")
             fun externalPriceId(externalPriceId: String?) = apply {
                 this.externalPriceId = externalPriceId
             }
 
             /** The name of the price. */
-            @JsonProperty("name") fun name(name: String) = apply { this.name = name }
+            fun name(name: String) = apply { this.name = name }
 
             /**
              * The id of the billable metric for the price. Only needed if the price is usage-based.
              */
-            @JsonProperty("billable_metric_id")
             fun billableMetricId(billableMetricId: String?) = apply {
                 this.billableMetricId = billableMetricId
             }
 
             /** The id of the item the plan will be associated with. */
-            @JsonProperty("item_id") fun itemId(itemId: String) = apply { this.itemId = itemId }
+            fun itemId(itemId: String) = apply { this.itemId = itemId }
 
             /**
              * If the Price represents a fixed cost, the price will be billed in-advance if this is
              * true, and in-arrears if this is false.
              */
-            @JsonProperty("billed_in_advance")
             fun billedInAdvance(billedInAdvance: Boolean?) = apply {
                 this.billedInAdvance = billedInAdvance
             }
@@ -5968,25 +5895,21 @@ constructor(
             /**
              * If the Price represents a fixed cost, this represents the quantity of units applied.
              */
-            @JsonProperty("fixed_price_quantity")
             fun fixedPriceQuantity(fixedPriceQuantity: Double?) = apply {
                 this.fixedPriceQuantity = fixedPriceQuantity
             }
 
             /** The property used to group this price on an invoice */
-            @JsonProperty("invoice_grouping_key")
             fun invoiceGroupingKey(invoiceGroupingKey: String?) = apply {
                 this.invoiceGroupingKey = invoiceGroupingKey
             }
 
             /** The cadence to bill for this price on. */
-            @JsonProperty("cadence")
             fun cadence(cadence: Cadence) = apply { this.cadence = cadence }
 
             /**
              * For custom cadence: specifies the duration of the billing period in days or months.
              */
-            @JsonProperty("billing_cycle_configuration")
             fun billingCycleConfiguration(billingCycleConfiguration: BillingCycleConfiguration?) =
                 apply {
                     this.billingCycleConfiguration = billingCycleConfiguration
@@ -5996,27 +5919,22 @@ constructor(
              * Within each billing cycle, specifies the cadence at which invoices are produced. If
              * unspecified, a single invoice is produced per billing cycle.
              */
-            @JsonProperty("invoicing_cycle_configuration")
             fun invoicingCycleConfiguration(
                 invoicingCycleConfiguration: InvoicingCycleConfiguration?
             ) = apply { this.invoicingCycleConfiguration = invoicingCycleConfiguration }
 
             /** The per unit conversion rate of the price currency to the invoicing currency. */
-            @JsonProperty("conversion_rate")
             fun conversionRate(conversionRate: Double?) = apply {
                 this.conversionRate = conversionRate
             }
 
-            @JsonProperty("model_type")
             fun modelType(modelType: ModelType) = apply { this.modelType = modelType }
 
-            @JsonProperty("tiered_config")
             fun tieredConfig(tieredConfig: TieredConfig) = apply {
                 this.tieredConfig = tieredConfig
             }
 
             /** An ISO 4217 currency string for which this price is billed in. */
-            @JsonProperty("currency")
             fun currency(currency: String) = apply { this.currency = currency }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
@@ -6024,7 +5942,6 @@ constructor(
                 putAllAdditionalProperties(additionalProperties)
             }
 
-            @JsonAnySetter
             fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                 additionalProperties.put(key, value)
             }
@@ -6192,12 +6109,13 @@ constructor(
             override fun toString() = value.toString()
         }
 
-        @JsonDeserialize(builder = TieredConfig.Builder::class)
         @NoAutoDetect
         class TieredConfig
+        @JsonCreator
         private constructor(
-            private val tiers: List<Tier>,
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonProperty("tiers") private val tiers: List<Tier>,
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             /** Tiers for rating based on total usage quantities into the specified tier */
@@ -6225,14 +6143,13 @@ constructor(
                 }
 
                 /** Tiers for rating based on total usage quantities into the specified tier */
-                @JsonProperty("tiers") fun tiers(tiers: List<Tier>) = apply { this.tiers = tiers }
+                fun tiers(tiers: List<Tier>) = apply { this.tiers = tiers }
 
                 fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                     this.additionalProperties.clear()
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -6257,14 +6174,15 @@ constructor(
                     )
             }
 
-            @JsonDeserialize(builder = Tier.Builder::class)
             @NoAutoDetect
             class Tier
+            @JsonCreator
             private constructor(
-                private val firstUnit: Double,
-                private val lastUnit: Double?,
-                private val unitAmount: String,
-                private val additionalProperties: Map<String, JsonValue>,
+                @JsonProperty("first_unit") private val firstUnit: Double,
+                @JsonProperty("last_unit") private val lastUnit: Double?,
+                @JsonProperty("unit_amount") private val unitAmount: String,
+                @JsonAnySetter
+                private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
             ) {
 
                 /** Inclusive tier starting value */
@@ -6302,15 +6220,12 @@ constructor(
                     }
 
                     /** Inclusive tier starting value */
-                    @JsonProperty("first_unit")
                     fun firstUnit(firstUnit: Double) = apply { this.firstUnit = firstUnit }
 
                     /** Exclusive tier ending value. If null, this is treated as the last tier */
-                    @JsonProperty("last_unit")
                     fun lastUnit(lastUnit: Double?) = apply { this.lastUnit = lastUnit }
 
                     /** Amount per unit */
-                    @JsonProperty("unit_amount")
                     fun unitAmount(unitAmount: String) = apply { this.unitAmount = unitAmount }
 
                     fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
@@ -6318,7 +6233,6 @@ constructor(
                         putAllAdditionalProperties(additionalProperties)
                     }
 
-                    @JsonAnySetter
                     fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                         additionalProperties.put(key, value)
                     }
@@ -6382,13 +6296,14 @@ constructor(
         }
 
         /** For custom cadence: specifies the duration of the billing period in days or months. */
-        @JsonDeserialize(builder = BillingCycleConfiguration.Builder::class)
         @NoAutoDetect
         class BillingCycleConfiguration
+        @JsonCreator
         private constructor(
-            private val duration: Long,
-            private val durationUnit: DurationUnit,
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonProperty("duration") private val duration: Long,
+            @JsonProperty("duration_unit") private val durationUnit: DurationUnit,
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             /** The duration of the billing period. */
@@ -6422,11 +6337,9 @@ constructor(
                 }
 
                 /** The duration of the billing period. */
-                @JsonProperty("duration")
                 fun duration(duration: Long) = apply { this.duration = duration }
 
                 /** The unit of billing period duration. */
-                @JsonProperty("duration_unit")
                 fun durationUnit(durationUnit: DurationUnit) = apply {
                     this.durationUnit = durationUnit
                 }
@@ -6436,7 +6349,6 @@ constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -6541,13 +6453,14 @@ constructor(
          * Within each billing cycle, specifies the cadence at which invoices are produced. If
          * unspecified, a single invoice is produced per billing cycle.
          */
-        @JsonDeserialize(builder = InvoicingCycleConfiguration.Builder::class)
         @NoAutoDetect
         class InvoicingCycleConfiguration
+        @JsonCreator
         private constructor(
-            private val duration: Long,
-            private val durationUnit: DurationUnit,
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonProperty("duration") private val duration: Long,
+            @JsonProperty("duration_unit") private val durationUnit: DurationUnit,
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             /** The duration of the billing period. */
@@ -6582,11 +6495,9 @@ constructor(
                     }
 
                 /** The duration of the billing period. */
-                @JsonProperty("duration")
                 fun duration(duration: Long) = apply { this.duration = duration }
 
                 /** The unit of billing period duration. */
-                @JsonProperty("duration_unit")
                 fun durationUnit(durationUnit: DurationUnit) = apply {
                     this.durationUnit = durationUnit
                 }
@@ -6596,7 +6507,6 @@ constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -6702,11 +6612,12 @@ constructor(
          * setting the value to `null`, and the entire metadata mapping can be cleared by setting
          * `metadata` to `null`.
          */
-        @JsonDeserialize(builder = Metadata.Builder::class)
         @NoAutoDetect
         class Metadata
+        @JsonCreator
         private constructor(
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             @JsonAnyGetter
@@ -6733,7 +6644,6 @@ constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -6789,26 +6699,29 @@ constructor(
             "NewFloatingTieredPrice{metadata=$metadata, externalPriceId=$externalPriceId, name=$name, billableMetricId=$billableMetricId, itemId=$itemId, billedInAdvance=$billedInAdvance, fixedPriceQuantity=$fixedPriceQuantity, invoiceGroupingKey=$invoiceGroupingKey, cadence=$cadence, billingCycleConfiguration=$billingCycleConfiguration, invoicingCycleConfiguration=$invoicingCycleConfiguration, conversionRate=$conversionRate, modelType=$modelType, tieredConfig=$tieredConfig, currency=$currency, additionalProperties=$additionalProperties}"
     }
 
-    @JsonDeserialize(builder = NewFloatingTieredBpsPrice.Builder::class)
     @NoAutoDetect
     class NewFloatingTieredBpsPrice
+    @JsonCreator
     private constructor(
-        private val metadata: Metadata?,
-        private val externalPriceId: String?,
-        private val name: String,
-        private val billableMetricId: String?,
-        private val itemId: String,
-        private val billedInAdvance: Boolean?,
-        private val fixedPriceQuantity: Double?,
-        private val invoiceGroupingKey: String?,
-        private val cadence: Cadence,
+        @JsonProperty("metadata") private val metadata: Metadata?,
+        @JsonProperty("external_price_id") private val externalPriceId: String?,
+        @JsonProperty("name") private val name: String,
+        @JsonProperty("billable_metric_id") private val billableMetricId: String?,
+        @JsonProperty("item_id") private val itemId: String,
+        @JsonProperty("billed_in_advance") private val billedInAdvance: Boolean?,
+        @JsonProperty("fixed_price_quantity") private val fixedPriceQuantity: Double?,
+        @JsonProperty("invoice_grouping_key") private val invoiceGroupingKey: String?,
+        @JsonProperty("cadence") private val cadence: Cadence,
+        @JsonProperty("billing_cycle_configuration")
         private val billingCycleConfiguration: BillingCycleConfiguration?,
+        @JsonProperty("invoicing_cycle_configuration")
         private val invoicingCycleConfiguration: InvoicingCycleConfiguration?,
-        private val conversionRate: Double?,
-        private val modelType: ModelType,
-        private val tieredBpsConfig: TieredBpsConfig,
-        private val currency: String,
-        private val additionalProperties: Map<String, JsonValue>,
+        @JsonProperty("conversion_rate") private val conversionRate: Double?,
+        @JsonProperty("model_type") private val modelType: ModelType,
+        @JsonProperty("tiered_bps_config") private val tieredBpsConfig: TieredBpsConfig,
+        @JsonProperty("currency") private val currency: String,
+        @JsonAnySetter
+        private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
 
         /**
@@ -6921,34 +6834,30 @@ constructor(
              * setting the value to `null`, and the entire metadata mapping can be cleared by
              * setting `metadata` to `null`.
              */
-            @JsonProperty("metadata")
             fun metadata(metadata: Metadata?) = apply { this.metadata = metadata }
 
             /** An alias for the price. */
-            @JsonProperty("external_price_id")
             fun externalPriceId(externalPriceId: String?) = apply {
                 this.externalPriceId = externalPriceId
             }
 
             /** The name of the price. */
-            @JsonProperty("name") fun name(name: String) = apply { this.name = name }
+            fun name(name: String) = apply { this.name = name }
 
             /**
              * The id of the billable metric for the price. Only needed if the price is usage-based.
              */
-            @JsonProperty("billable_metric_id")
             fun billableMetricId(billableMetricId: String?) = apply {
                 this.billableMetricId = billableMetricId
             }
 
             /** The id of the item the plan will be associated with. */
-            @JsonProperty("item_id") fun itemId(itemId: String) = apply { this.itemId = itemId }
+            fun itemId(itemId: String) = apply { this.itemId = itemId }
 
             /**
              * If the Price represents a fixed cost, the price will be billed in-advance if this is
              * true, and in-arrears if this is false.
              */
-            @JsonProperty("billed_in_advance")
             fun billedInAdvance(billedInAdvance: Boolean?) = apply {
                 this.billedInAdvance = billedInAdvance
             }
@@ -6956,25 +6865,21 @@ constructor(
             /**
              * If the Price represents a fixed cost, this represents the quantity of units applied.
              */
-            @JsonProperty("fixed_price_quantity")
             fun fixedPriceQuantity(fixedPriceQuantity: Double?) = apply {
                 this.fixedPriceQuantity = fixedPriceQuantity
             }
 
             /** The property used to group this price on an invoice */
-            @JsonProperty("invoice_grouping_key")
             fun invoiceGroupingKey(invoiceGroupingKey: String?) = apply {
                 this.invoiceGroupingKey = invoiceGroupingKey
             }
 
             /** The cadence to bill for this price on. */
-            @JsonProperty("cadence")
             fun cadence(cadence: Cadence) = apply { this.cadence = cadence }
 
             /**
              * For custom cadence: specifies the duration of the billing period in days or months.
              */
-            @JsonProperty("billing_cycle_configuration")
             fun billingCycleConfiguration(billingCycleConfiguration: BillingCycleConfiguration?) =
                 apply {
                     this.billingCycleConfiguration = billingCycleConfiguration
@@ -6984,27 +6889,22 @@ constructor(
              * Within each billing cycle, specifies the cadence at which invoices are produced. If
              * unspecified, a single invoice is produced per billing cycle.
              */
-            @JsonProperty("invoicing_cycle_configuration")
             fun invoicingCycleConfiguration(
                 invoicingCycleConfiguration: InvoicingCycleConfiguration?
             ) = apply { this.invoicingCycleConfiguration = invoicingCycleConfiguration }
 
             /** The per unit conversion rate of the price currency to the invoicing currency. */
-            @JsonProperty("conversion_rate")
             fun conversionRate(conversionRate: Double?) = apply {
                 this.conversionRate = conversionRate
             }
 
-            @JsonProperty("model_type")
             fun modelType(modelType: ModelType) = apply { this.modelType = modelType }
 
-            @JsonProperty("tiered_bps_config")
             fun tieredBpsConfig(tieredBpsConfig: TieredBpsConfig) = apply {
                 this.tieredBpsConfig = tieredBpsConfig
             }
 
             /** An ISO 4217 currency string for which this price is billed in. */
-            @JsonProperty("currency")
             fun currency(currency: String) = apply { this.currency = currency }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
@@ -7012,7 +6912,6 @@ constructor(
                 putAllAdditionalProperties(additionalProperties)
             }
 
-            @JsonAnySetter
             fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                 additionalProperties.put(key, value)
             }
@@ -7182,12 +7081,13 @@ constructor(
             override fun toString() = value.toString()
         }
 
-        @JsonDeserialize(builder = TieredBpsConfig.Builder::class)
         @NoAutoDetect
         class TieredBpsConfig
+        @JsonCreator
         private constructor(
-            private val tiers: List<Tier>,
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonProperty("tiers") private val tiers: List<Tier>,
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             /**
@@ -7220,14 +7120,13 @@ constructor(
                  * Tiers for a Graduated BPS pricing model, where usage is bucketed into specified
                  * tiers
                  */
-                @JsonProperty("tiers") fun tiers(tiers: List<Tier>) = apply { this.tiers = tiers }
+                fun tiers(tiers: List<Tier>) = apply { this.tiers = tiers }
 
                 fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                     this.additionalProperties.clear()
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -7252,15 +7151,16 @@ constructor(
                     )
             }
 
-            @JsonDeserialize(builder = Tier.Builder::class)
             @NoAutoDetect
             class Tier
+            @JsonCreator
             private constructor(
-                private val minimumAmount: String,
-                private val maximumAmount: String?,
-                private val bps: Double,
-                private val perUnitMaximum: String?,
-                private val additionalProperties: Map<String, JsonValue>,
+                @JsonProperty("minimum_amount") private val minimumAmount: String,
+                @JsonProperty("maximum_amount") private val maximumAmount: String?,
+                @JsonProperty("bps") private val bps: Double,
+                @JsonProperty("per_unit_maximum") private val perUnitMaximum: String?,
+                @JsonAnySetter
+                private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
             ) {
 
                 /** Inclusive tier starting value */
@@ -7303,22 +7203,19 @@ constructor(
                     }
 
                     /** Inclusive tier starting value */
-                    @JsonProperty("minimum_amount")
                     fun minimumAmount(minimumAmount: String) = apply {
                         this.minimumAmount = minimumAmount
                     }
 
                     /** Exclusive tier ending value */
-                    @JsonProperty("maximum_amount")
                     fun maximumAmount(maximumAmount: String?) = apply {
                         this.maximumAmount = maximumAmount
                     }
 
                     /** Per-event basis point rate */
-                    @JsonProperty("bps") fun bps(bps: Double) = apply { this.bps = bps }
+                    fun bps(bps: Double) = apply { this.bps = bps }
 
                     /** Per unit maximum to charge */
-                    @JsonProperty("per_unit_maximum")
                     fun perUnitMaximum(perUnitMaximum: String?) = apply {
                         this.perUnitMaximum = perUnitMaximum
                     }
@@ -7328,7 +7225,6 @@ constructor(
                         putAllAdditionalProperties(additionalProperties)
                     }
 
-                    @JsonAnySetter
                     fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                         additionalProperties.put(key, value)
                     }
@@ -7395,13 +7291,14 @@ constructor(
         }
 
         /** For custom cadence: specifies the duration of the billing period in days or months. */
-        @JsonDeserialize(builder = BillingCycleConfiguration.Builder::class)
         @NoAutoDetect
         class BillingCycleConfiguration
+        @JsonCreator
         private constructor(
-            private val duration: Long,
-            private val durationUnit: DurationUnit,
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonProperty("duration") private val duration: Long,
+            @JsonProperty("duration_unit") private val durationUnit: DurationUnit,
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             /** The duration of the billing period. */
@@ -7435,11 +7332,9 @@ constructor(
                 }
 
                 /** The duration of the billing period. */
-                @JsonProperty("duration")
                 fun duration(duration: Long) = apply { this.duration = duration }
 
                 /** The unit of billing period duration. */
-                @JsonProperty("duration_unit")
                 fun durationUnit(durationUnit: DurationUnit) = apply {
                     this.durationUnit = durationUnit
                 }
@@ -7449,7 +7344,6 @@ constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -7554,13 +7448,14 @@ constructor(
          * Within each billing cycle, specifies the cadence at which invoices are produced. If
          * unspecified, a single invoice is produced per billing cycle.
          */
-        @JsonDeserialize(builder = InvoicingCycleConfiguration.Builder::class)
         @NoAutoDetect
         class InvoicingCycleConfiguration
+        @JsonCreator
         private constructor(
-            private val duration: Long,
-            private val durationUnit: DurationUnit,
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonProperty("duration") private val duration: Long,
+            @JsonProperty("duration_unit") private val durationUnit: DurationUnit,
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             /** The duration of the billing period. */
@@ -7595,11 +7490,9 @@ constructor(
                     }
 
                 /** The duration of the billing period. */
-                @JsonProperty("duration")
                 fun duration(duration: Long) = apply { this.duration = duration }
 
                 /** The unit of billing period duration. */
-                @JsonProperty("duration_unit")
                 fun durationUnit(durationUnit: DurationUnit) = apply {
                     this.durationUnit = durationUnit
                 }
@@ -7609,7 +7502,6 @@ constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -7715,11 +7607,12 @@ constructor(
          * setting the value to `null`, and the entire metadata mapping can be cleared by setting
          * `metadata` to `null`.
          */
-        @JsonDeserialize(builder = Metadata.Builder::class)
         @NoAutoDetect
         class Metadata
+        @JsonCreator
         private constructor(
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             @JsonAnyGetter
@@ -7746,7 +7639,6 @@ constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -7802,26 +7694,29 @@ constructor(
             "NewFloatingTieredBpsPrice{metadata=$metadata, externalPriceId=$externalPriceId, name=$name, billableMetricId=$billableMetricId, itemId=$itemId, billedInAdvance=$billedInAdvance, fixedPriceQuantity=$fixedPriceQuantity, invoiceGroupingKey=$invoiceGroupingKey, cadence=$cadence, billingCycleConfiguration=$billingCycleConfiguration, invoicingCycleConfiguration=$invoicingCycleConfiguration, conversionRate=$conversionRate, modelType=$modelType, tieredBpsConfig=$tieredBpsConfig, currency=$currency, additionalProperties=$additionalProperties}"
     }
 
-    @JsonDeserialize(builder = NewFloatingBpsPrice.Builder::class)
     @NoAutoDetect
     class NewFloatingBpsPrice
+    @JsonCreator
     private constructor(
-        private val metadata: Metadata?,
-        private val externalPriceId: String?,
-        private val name: String,
-        private val billableMetricId: String?,
-        private val itemId: String,
-        private val billedInAdvance: Boolean?,
-        private val fixedPriceQuantity: Double?,
-        private val invoiceGroupingKey: String?,
-        private val cadence: Cadence,
+        @JsonProperty("metadata") private val metadata: Metadata?,
+        @JsonProperty("external_price_id") private val externalPriceId: String?,
+        @JsonProperty("name") private val name: String,
+        @JsonProperty("billable_metric_id") private val billableMetricId: String?,
+        @JsonProperty("item_id") private val itemId: String,
+        @JsonProperty("billed_in_advance") private val billedInAdvance: Boolean?,
+        @JsonProperty("fixed_price_quantity") private val fixedPriceQuantity: Double?,
+        @JsonProperty("invoice_grouping_key") private val invoiceGroupingKey: String?,
+        @JsonProperty("cadence") private val cadence: Cadence,
+        @JsonProperty("billing_cycle_configuration")
         private val billingCycleConfiguration: BillingCycleConfiguration?,
+        @JsonProperty("invoicing_cycle_configuration")
         private val invoicingCycleConfiguration: InvoicingCycleConfiguration?,
-        private val conversionRate: Double?,
-        private val modelType: ModelType,
-        private val bpsConfig: BpsConfig,
-        private val currency: String,
-        private val additionalProperties: Map<String, JsonValue>,
+        @JsonProperty("conversion_rate") private val conversionRate: Double?,
+        @JsonProperty("model_type") private val modelType: ModelType,
+        @JsonProperty("bps_config") private val bpsConfig: BpsConfig,
+        @JsonProperty("currency") private val currency: String,
+        @JsonAnySetter
+        private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
 
         /**
@@ -7934,34 +7829,30 @@ constructor(
              * setting the value to `null`, and the entire metadata mapping can be cleared by
              * setting `metadata` to `null`.
              */
-            @JsonProperty("metadata")
             fun metadata(metadata: Metadata?) = apply { this.metadata = metadata }
 
             /** An alias for the price. */
-            @JsonProperty("external_price_id")
             fun externalPriceId(externalPriceId: String?) = apply {
                 this.externalPriceId = externalPriceId
             }
 
             /** The name of the price. */
-            @JsonProperty("name") fun name(name: String) = apply { this.name = name }
+            fun name(name: String) = apply { this.name = name }
 
             /**
              * The id of the billable metric for the price. Only needed if the price is usage-based.
              */
-            @JsonProperty("billable_metric_id")
             fun billableMetricId(billableMetricId: String?) = apply {
                 this.billableMetricId = billableMetricId
             }
 
             /** The id of the item the plan will be associated with. */
-            @JsonProperty("item_id") fun itemId(itemId: String) = apply { this.itemId = itemId }
+            fun itemId(itemId: String) = apply { this.itemId = itemId }
 
             /**
              * If the Price represents a fixed cost, the price will be billed in-advance if this is
              * true, and in-arrears if this is false.
              */
-            @JsonProperty("billed_in_advance")
             fun billedInAdvance(billedInAdvance: Boolean?) = apply {
                 this.billedInAdvance = billedInAdvance
             }
@@ -7969,25 +7860,21 @@ constructor(
             /**
              * If the Price represents a fixed cost, this represents the quantity of units applied.
              */
-            @JsonProperty("fixed_price_quantity")
             fun fixedPriceQuantity(fixedPriceQuantity: Double?) = apply {
                 this.fixedPriceQuantity = fixedPriceQuantity
             }
 
             /** The property used to group this price on an invoice */
-            @JsonProperty("invoice_grouping_key")
             fun invoiceGroupingKey(invoiceGroupingKey: String?) = apply {
                 this.invoiceGroupingKey = invoiceGroupingKey
             }
 
             /** The cadence to bill for this price on. */
-            @JsonProperty("cadence")
             fun cadence(cadence: Cadence) = apply { this.cadence = cadence }
 
             /**
              * For custom cadence: specifies the duration of the billing period in days or months.
              */
-            @JsonProperty("billing_cycle_configuration")
             fun billingCycleConfiguration(billingCycleConfiguration: BillingCycleConfiguration?) =
                 apply {
                     this.billingCycleConfiguration = billingCycleConfiguration
@@ -7997,25 +7884,20 @@ constructor(
              * Within each billing cycle, specifies the cadence at which invoices are produced. If
              * unspecified, a single invoice is produced per billing cycle.
              */
-            @JsonProperty("invoicing_cycle_configuration")
             fun invoicingCycleConfiguration(
                 invoicingCycleConfiguration: InvoicingCycleConfiguration?
             ) = apply { this.invoicingCycleConfiguration = invoicingCycleConfiguration }
 
             /** The per unit conversion rate of the price currency to the invoicing currency. */
-            @JsonProperty("conversion_rate")
             fun conversionRate(conversionRate: Double?) = apply {
                 this.conversionRate = conversionRate
             }
 
-            @JsonProperty("model_type")
             fun modelType(modelType: ModelType) = apply { this.modelType = modelType }
 
-            @JsonProperty("bps_config")
             fun bpsConfig(bpsConfig: BpsConfig) = apply { this.bpsConfig = bpsConfig }
 
             /** An ISO 4217 currency string for which this price is billed in. */
-            @JsonProperty("currency")
             fun currency(currency: String) = apply { this.currency = currency }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
@@ -8023,7 +7905,6 @@ constructor(
                 putAllAdditionalProperties(additionalProperties)
             }
 
-            @JsonAnySetter
             fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                 additionalProperties.put(key, value)
             }
@@ -8059,13 +7940,14 @@ constructor(
                 )
         }
 
-        @JsonDeserialize(builder = BpsConfig.Builder::class)
         @NoAutoDetect
         class BpsConfig
+        @JsonCreator
         private constructor(
-            private val bps: Double,
-            private val perUnitMaximum: String?,
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonProperty("bps") private val bps: Double,
+            @JsonProperty("per_unit_maximum") private val perUnitMaximum: String?,
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             /** Basis point take rate per event */
@@ -8098,10 +7980,9 @@ constructor(
                 }
 
                 /** Basis point take rate per event */
-                @JsonProperty("bps") fun bps(bps: Double) = apply { this.bps = bps }
+                fun bps(bps: Double) = apply { this.bps = bps }
 
                 /** Optional currency amount maximum to cap spend per event */
-                @JsonProperty("per_unit_maximum")
                 fun perUnitMaximum(perUnitMaximum: String?) = apply {
                     this.perUnitMaximum = perUnitMaximum
                 }
@@ -8111,7 +7992,6 @@ constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -8288,13 +8168,14 @@ constructor(
         }
 
         /** For custom cadence: specifies the duration of the billing period in days or months. */
-        @JsonDeserialize(builder = BillingCycleConfiguration.Builder::class)
         @NoAutoDetect
         class BillingCycleConfiguration
+        @JsonCreator
         private constructor(
-            private val duration: Long,
-            private val durationUnit: DurationUnit,
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonProperty("duration") private val duration: Long,
+            @JsonProperty("duration_unit") private val durationUnit: DurationUnit,
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             /** The duration of the billing period. */
@@ -8328,11 +8209,9 @@ constructor(
                 }
 
                 /** The duration of the billing period. */
-                @JsonProperty("duration")
                 fun duration(duration: Long) = apply { this.duration = duration }
 
                 /** The unit of billing period duration. */
-                @JsonProperty("duration_unit")
                 fun durationUnit(durationUnit: DurationUnit) = apply {
                     this.durationUnit = durationUnit
                 }
@@ -8342,7 +8221,6 @@ constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -8447,13 +8325,14 @@ constructor(
          * Within each billing cycle, specifies the cadence at which invoices are produced. If
          * unspecified, a single invoice is produced per billing cycle.
          */
-        @JsonDeserialize(builder = InvoicingCycleConfiguration.Builder::class)
         @NoAutoDetect
         class InvoicingCycleConfiguration
+        @JsonCreator
         private constructor(
-            private val duration: Long,
-            private val durationUnit: DurationUnit,
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonProperty("duration") private val duration: Long,
+            @JsonProperty("duration_unit") private val durationUnit: DurationUnit,
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             /** The duration of the billing period. */
@@ -8488,11 +8367,9 @@ constructor(
                     }
 
                 /** The duration of the billing period. */
-                @JsonProperty("duration")
                 fun duration(duration: Long) = apply { this.duration = duration }
 
                 /** The unit of billing period duration. */
-                @JsonProperty("duration_unit")
                 fun durationUnit(durationUnit: DurationUnit) = apply {
                     this.durationUnit = durationUnit
                 }
@@ -8502,7 +8379,6 @@ constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -8608,11 +8484,12 @@ constructor(
          * setting the value to `null`, and the entire metadata mapping can be cleared by setting
          * `metadata` to `null`.
          */
-        @JsonDeserialize(builder = Metadata.Builder::class)
         @NoAutoDetect
         class Metadata
+        @JsonCreator
         private constructor(
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             @JsonAnyGetter
@@ -8639,7 +8516,6 @@ constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -8695,26 +8571,29 @@ constructor(
             "NewFloatingBpsPrice{metadata=$metadata, externalPriceId=$externalPriceId, name=$name, billableMetricId=$billableMetricId, itemId=$itemId, billedInAdvance=$billedInAdvance, fixedPriceQuantity=$fixedPriceQuantity, invoiceGroupingKey=$invoiceGroupingKey, cadence=$cadence, billingCycleConfiguration=$billingCycleConfiguration, invoicingCycleConfiguration=$invoicingCycleConfiguration, conversionRate=$conversionRate, modelType=$modelType, bpsConfig=$bpsConfig, currency=$currency, additionalProperties=$additionalProperties}"
     }
 
-    @JsonDeserialize(builder = NewFloatingBulkBpsPrice.Builder::class)
     @NoAutoDetect
     class NewFloatingBulkBpsPrice
+    @JsonCreator
     private constructor(
-        private val metadata: Metadata?,
-        private val externalPriceId: String?,
-        private val name: String,
-        private val billableMetricId: String?,
-        private val itemId: String,
-        private val billedInAdvance: Boolean?,
-        private val fixedPriceQuantity: Double?,
-        private val invoiceGroupingKey: String?,
-        private val cadence: Cadence,
+        @JsonProperty("metadata") private val metadata: Metadata?,
+        @JsonProperty("external_price_id") private val externalPriceId: String?,
+        @JsonProperty("name") private val name: String,
+        @JsonProperty("billable_metric_id") private val billableMetricId: String?,
+        @JsonProperty("item_id") private val itemId: String,
+        @JsonProperty("billed_in_advance") private val billedInAdvance: Boolean?,
+        @JsonProperty("fixed_price_quantity") private val fixedPriceQuantity: Double?,
+        @JsonProperty("invoice_grouping_key") private val invoiceGroupingKey: String?,
+        @JsonProperty("cadence") private val cadence: Cadence,
+        @JsonProperty("billing_cycle_configuration")
         private val billingCycleConfiguration: BillingCycleConfiguration?,
+        @JsonProperty("invoicing_cycle_configuration")
         private val invoicingCycleConfiguration: InvoicingCycleConfiguration?,
-        private val conversionRate: Double?,
-        private val modelType: ModelType,
-        private val bulkBpsConfig: BulkBpsConfig,
-        private val currency: String,
-        private val additionalProperties: Map<String, JsonValue>,
+        @JsonProperty("conversion_rate") private val conversionRate: Double?,
+        @JsonProperty("model_type") private val modelType: ModelType,
+        @JsonProperty("bulk_bps_config") private val bulkBpsConfig: BulkBpsConfig,
+        @JsonProperty("currency") private val currency: String,
+        @JsonAnySetter
+        private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
 
         /**
@@ -8827,34 +8706,30 @@ constructor(
              * setting the value to `null`, and the entire metadata mapping can be cleared by
              * setting `metadata` to `null`.
              */
-            @JsonProperty("metadata")
             fun metadata(metadata: Metadata?) = apply { this.metadata = metadata }
 
             /** An alias for the price. */
-            @JsonProperty("external_price_id")
             fun externalPriceId(externalPriceId: String?) = apply {
                 this.externalPriceId = externalPriceId
             }
 
             /** The name of the price. */
-            @JsonProperty("name") fun name(name: String) = apply { this.name = name }
+            fun name(name: String) = apply { this.name = name }
 
             /**
              * The id of the billable metric for the price. Only needed if the price is usage-based.
              */
-            @JsonProperty("billable_metric_id")
             fun billableMetricId(billableMetricId: String?) = apply {
                 this.billableMetricId = billableMetricId
             }
 
             /** The id of the item the plan will be associated with. */
-            @JsonProperty("item_id") fun itemId(itemId: String) = apply { this.itemId = itemId }
+            fun itemId(itemId: String) = apply { this.itemId = itemId }
 
             /**
              * If the Price represents a fixed cost, the price will be billed in-advance if this is
              * true, and in-arrears if this is false.
              */
-            @JsonProperty("billed_in_advance")
             fun billedInAdvance(billedInAdvance: Boolean?) = apply {
                 this.billedInAdvance = billedInAdvance
             }
@@ -8862,25 +8737,21 @@ constructor(
             /**
              * If the Price represents a fixed cost, this represents the quantity of units applied.
              */
-            @JsonProperty("fixed_price_quantity")
             fun fixedPriceQuantity(fixedPriceQuantity: Double?) = apply {
                 this.fixedPriceQuantity = fixedPriceQuantity
             }
 
             /** The property used to group this price on an invoice */
-            @JsonProperty("invoice_grouping_key")
             fun invoiceGroupingKey(invoiceGroupingKey: String?) = apply {
                 this.invoiceGroupingKey = invoiceGroupingKey
             }
 
             /** The cadence to bill for this price on. */
-            @JsonProperty("cadence")
             fun cadence(cadence: Cadence) = apply { this.cadence = cadence }
 
             /**
              * For custom cadence: specifies the duration of the billing period in days or months.
              */
-            @JsonProperty("billing_cycle_configuration")
             fun billingCycleConfiguration(billingCycleConfiguration: BillingCycleConfiguration?) =
                 apply {
                     this.billingCycleConfiguration = billingCycleConfiguration
@@ -8890,27 +8761,22 @@ constructor(
              * Within each billing cycle, specifies the cadence at which invoices are produced. If
              * unspecified, a single invoice is produced per billing cycle.
              */
-            @JsonProperty("invoicing_cycle_configuration")
             fun invoicingCycleConfiguration(
                 invoicingCycleConfiguration: InvoicingCycleConfiguration?
             ) = apply { this.invoicingCycleConfiguration = invoicingCycleConfiguration }
 
             /** The per unit conversion rate of the price currency to the invoicing currency. */
-            @JsonProperty("conversion_rate")
             fun conversionRate(conversionRate: Double?) = apply {
                 this.conversionRate = conversionRate
             }
 
-            @JsonProperty("model_type")
             fun modelType(modelType: ModelType) = apply { this.modelType = modelType }
 
-            @JsonProperty("bulk_bps_config")
             fun bulkBpsConfig(bulkBpsConfig: BulkBpsConfig) = apply {
                 this.bulkBpsConfig = bulkBpsConfig
             }
 
             /** An ISO 4217 currency string for which this price is billed in. */
-            @JsonProperty("currency")
             fun currency(currency: String) = apply { this.currency = currency }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
@@ -8918,7 +8784,6 @@ constructor(
                 putAllAdditionalProperties(additionalProperties)
             }
 
-            @JsonAnySetter
             fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                 additionalProperties.put(key, value)
             }
@@ -8954,12 +8819,13 @@ constructor(
                 )
         }
 
-        @JsonDeserialize(builder = BulkBpsConfig.Builder::class)
         @NoAutoDetect
         class BulkBpsConfig
+        @JsonCreator
         private constructor(
-            private val tiers: List<Tier>,
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonProperty("tiers") private val tiers: List<Tier>,
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             /**
@@ -8993,14 +8859,13 @@ constructor(
                  * Tiers for a bulk BPS pricing model where all usage is aggregated to a single tier
                  * based on total volume
                  */
-                @JsonProperty("tiers") fun tiers(tiers: List<Tier>) = apply { this.tiers = tiers }
+                fun tiers(tiers: List<Tier>) = apply { this.tiers = tiers }
 
                 fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                     this.additionalProperties.clear()
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -9025,14 +8890,15 @@ constructor(
                     )
             }
 
-            @JsonDeserialize(builder = Tier.Builder::class)
             @NoAutoDetect
             class Tier
+            @JsonCreator
             private constructor(
-                private val maximumAmount: String?,
-                private val bps: Double,
-                private val perUnitMaximum: String?,
-                private val additionalProperties: Map<String, JsonValue>,
+                @JsonProperty("maximum_amount") private val maximumAmount: String?,
+                @JsonProperty("bps") private val bps: Double,
+                @JsonProperty("per_unit_maximum") private val perUnitMaximum: String?,
+                @JsonAnySetter
+                private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
             ) {
 
                 /** Upper bound for tier */
@@ -9070,16 +8936,14 @@ constructor(
                     }
 
                     /** Upper bound for tier */
-                    @JsonProperty("maximum_amount")
                     fun maximumAmount(maximumAmount: String?) = apply {
                         this.maximumAmount = maximumAmount
                     }
 
                     /** Basis points to rate on */
-                    @JsonProperty("bps") fun bps(bps: Double) = apply { this.bps = bps }
+                    fun bps(bps: Double) = apply { this.bps = bps }
 
                     /** The maximum amount to charge for any one event */
-                    @JsonProperty("per_unit_maximum")
                     fun perUnitMaximum(perUnitMaximum: String?) = apply {
                         this.perUnitMaximum = perUnitMaximum
                     }
@@ -9089,7 +8953,6 @@ constructor(
                         putAllAdditionalProperties(additionalProperties)
                     }
 
-                    @JsonAnySetter
                     fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                         additionalProperties.put(key, value)
                     }
@@ -9285,13 +9148,14 @@ constructor(
         }
 
         /** For custom cadence: specifies the duration of the billing period in days or months. */
-        @JsonDeserialize(builder = BillingCycleConfiguration.Builder::class)
         @NoAutoDetect
         class BillingCycleConfiguration
+        @JsonCreator
         private constructor(
-            private val duration: Long,
-            private val durationUnit: DurationUnit,
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonProperty("duration") private val duration: Long,
+            @JsonProperty("duration_unit") private val durationUnit: DurationUnit,
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             /** The duration of the billing period. */
@@ -9325,11 +9189,9 @@ constructor(
                 }
 
                 /** The duration of the billing period. */
-                @JsonProperty("duration")
                 fun duration(duration: Long) = apply { this.duration = duration }
 
                 /** The unit of billing period duration. */
-                @JsonProperty("duration_unit")
                 fun durationUnit(durationUnit: DurationUnit) = apply {
                     this.durationUnit = durationUnit
                 }
@@ -9339,7 +9201,6 @@ constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -9444,13 +9305,14 @@ constructor(
          * Within each billing cycle, specifies the cadence at which invoices are produced. If
          * unspecified, a single invoice is produced per billing cycle.
          */
-        @JsonDeserialize(builder = InvoicingCycleConfiguration.Builder::class)
         @NoAutoDetect
         class InvoicingCycleConfiguration
+        @JsonCreator
         private constructor(
-            private val duration: Long,
-            private val durationUnit: DurationUnit,
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonProperty("duration") private val duration: Long,
+            @JsonProperty("duration_unit") private val durationUnit: DurationUnit,
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             /** The duration of the billing period. */
@@ -9485,11 +9347,9 @@ constructor(
                     }
 
                 /** The duration of the billing period. */
-                @JsonProperty("duration")
                 fun duration(duration: Long) = apply { this.duration = duration }
 
                 /** The unit of billing period duration. */
-                @JsonProperty("duration_unit")
                 fun durationUnit(durationUnit: DurationUnit) = apply {
                     this.durationUnit = durationUnit
                 }
@@ -9499,7 +9359,6 @@ constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -9605,11 +9464,12 @@ constructor(
          * setting the value to `null`, and the entire metadata mapping can be cleared by setting
          * `metadata` to `null`.
          */
-        @JsonDeserialize(builder = Metadata.Builder::class)
         @NoAutoDetect
         class Metadata
+        @JsonCreator
         private constructor(
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             @JsonAnyGetter
@@ -9636,7 +9496,6 @@ constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -9692,26 +9551,29 @@ constructor(
             "NewFloatingBulkBpsPrice{metadata=$metadata, externalPriceId=$externalPriceId, name=$name, billableMetricId=$billableMetricId, itemId=$itemId, billedInAdvance=$billedInAdvance, fixedPriceQuantity=$fixedPriceQuantity, invoiceGroupingKey=$invoiceGroupingKey, cadence=$cadence, billingCycleConfiguration=$billingCycleConfiguration, invoicingCycleConfiguration=$invoicingCycleConfiguration, conversionRate=$conversionRate, modelType=$modelType, bulkBpsConfig=$bulkBpsConfig, currency=$currency, additionalProperties=$additionalProperties}"
     }
 
-    @JsonDeserialize(builder = NewFloatingBulkPrice.Builder::class)
     @NoAutoDetect
     class NewFloatingBulkPrice
+    @JsonCreator
     private constructor(
-        private val metadata: Metadata?,
-        private val externalPriceId: String?,
-        private val name: String,
-        private val billableMetricId: String?,
-        private val itemId: String,
-        private val billedInAdvance: Boolean?,
-        private val fixedPriceQuantity: Double?,
-        private val invoiceGroupingKey: String?,
-        private val cadence: Cadence,
+        @JsonProperty("metadata") private val metadata: Metadata?,
+        @JsonProperty("external_price_id") private val externalPriceId: String?,
+        @JsonProperty("name") private val name: String,
+        @JsonProperty("billable_metric_id") private val billableMetricId: String?,
+        @JsonProperty("item_id") private val itemId: String,
+        @JsonProperty("billed_in_advance") private val billedInAdvance: Boolean?,
+        @JsonProperty("fixed_price_quantity") private val fixedPriceQuantity: Double?,
+        @JsonProperty("invoice_grouping_key") private val invoiceGroupingKey: String?,
+        @JsonProperty("cadence") private val cadence: Cadence,
+        @JsonProperty("billing_cycle_configuration")
         private val billingCycleConfiguration: BillingCycleConfiguration?,
+        @JsonProperty("invoicing_cycle_configuration")
         private val invoicingCycleConfiguration: InvoicingCycleConfiguration?,
-        private val conversionRate: Double?,
-        private val modelType: ModelType,
-        private val bulkConfig: BulkConfig,
-        private val currency: String,
-        private val additionalProperties: Map<String, JsonValue>,
+        @JsonProperty("conversion_rate") private val conversionRate: Double?,
+        @JsonProperty("model_type") private val modelType: ModelType,
+        @JsonProperty("bulk_config") private val bulkConfig: BulkConfig,
+        @JsonProperty("currency") private val currency: String,
+        @JsonAnySetter
+        private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
 
         /**
@@ -9824,34 +9686,30 @@ constructor(
              * setting the value to `null`, and the entire metadata mapping can be cleared by
              * setting `metadata` to `null`.
              */
-            @JsonProperty("metadata")
             fun metadata(metadata: Metadata?) = apply { this.metadata = metadata }
 
             /** An alias for the price. */
-            @JsonProperty("external_price_id")
             fun externalPriceId(externalPriceId: String?) = apply {
                 this.externalPriceId = externalPriceId
             }
 
             /** The name of the price. */
-            @JsonProperty("name") fun name(name: String) = apply { this.name = name }
+            fun name(name: String) = apply { this.name = name }
 
             /**
              * The id of the billable metric for the price. Only needed if the price is usage-based.
              */
-            @JsonProperty("billable_metric_id")
             fun billableMetricId(billableMetricId: String?) = apply {
                 this.billableMetricId = billableMetricId
             }
 
             /** The id of the item the plan will be associated with. */
-            @JsonProperty("item_id") fun itemId(itemId: String) = apply { this.itemId = itemId }
+            fun itemId(itemId: String) = apply { this.itemId = itemId }
 
             /**
              * If the Price represents a fixed cost, the price will be billed in-advance if this is
              * true, and in-arrears if this is false.
              */
-            @JsonProperty("billed_in_advance")
             fun billedInAdvance(billedInAdvance: Boolean?) = apply {
                 this.billedInAdvance = billedInAdvance
             }
@@ -9859,25 +9717,21 @@ constructor(
             /**
              * If the Price represents a fixed cost, this represents the quantity of units applied.
              */
-            @JsonProperty("fixed_price_quantity")
             fun fixedPriceQuantity(fixedPriceQuantity: Double?) = apply {
                 this.fixedPriceQuantity = fixedPriceQuantity
             }
 
             /** The property used to group this price on an invoice */
-            @JsonProperty("invoice_grouping_key")
             fun invoiceGroupingKey(invoiceGroupingKey: String?) = apply {
                 this.invoiceGroupingKey = invoiceGroupingKey
             }
 
             /** The cadence to bill for this price on. */
-            @JsonProperty("cadence")
             fun cadence(cadence: Cadence) = apply { this.cadence = cadence }
 
             /**
              * For custom cadence: specifies the duration of the billing period in days or months.
              */
-            @JsonProperty("billing_cycle_configuration")
             fun billingCycleConfiguration(billingCycleConfiguration: BillingCycleConfiguration?) =
                 apply {
                     this.billingCycleConfiguration = billingCycleConfiguration
@@ -9887,25 +9741,20 @@ constructor(
              * Within each billing cycle, specifies the cadence at which invoices are produced. If
              * unspecified, a single invoice is produced per billing cycle.
              */
-            @JsonProperty("invoicing_cycle_configuration")
             fun invoicingCycleConfiguration(
                 invoicingCycleConfiguration: InvoicingCycleConfiguration?
             ) = apply { this.invoicingCycleConfiguration = invoicingCycleConfiguration }
 
             /** The per unit conversion rate of the price currency to the invoicing currency. */
-            @JsonProperty("conversion_rate")
             fun conversionRate(conversionRate: Double?) = apply {
                 this.conversionRate = conversionRate
             }
 
-            @JsonProperty("model_type")
             fun modelType(modelType: ModelType) = apply { this.modelType = modelType }
 
-            @JsonProperty("bulk_config")
             fun bulkConfig(bulkConfig: BulkConfig) = apply { this.bulkConfig = bulkConfig }
 
             /** An ISO 4217 currency string for which this price is billed in. */
-            @JsonProperty("currency")
             fun currency(currency: String) = apply { this.currency = currency }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
@@ -9913,7 +9762,6 @@ constructor(
                 putAllAdditionalProperties(additionalProperties)
             }
 
-            @JsonAnySetter
             fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                 additionalProperties.put(key, value)
             }
@@ -9949,12 +9797,13 @@ constructor(
                 )
         }
 
-        @JsonDeserialize(builder = BulkConfig.Builder::class)
         @NoAutoDetect
         class BulkConfig
+        @JsonCreator
         private constructor(
-            private val tiers: List<Tier>,
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonProperty("tiers") private val tiers: List<Tier>,
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             /** Bulk tiers for rating based on total usage volume */
@@ -9982,14 +9831,13 @@ constructor(
                 }
 
                 /** Bulk tiers for rating based on total usage volume */
-                @JsonProperty("tiers") fun tiers(tiers: List<Tier>) = apply { this.tiers = tiers }
+                fun tiers(tiers: List<Tier>) = apply { this.tiers = tiers }
 
                 fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                     this.additionalProperties.clear()
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -10014,13 +9862,14 @@ constructor(
                     )
             }
 
-            @JsonDeserialize(builder = Tier.Builder::class)
             @NoAutoDetect
             class Tier
+            @JsonCreator
             private constructor(
-                private val maximumUnits: Double?,
-                private val unitAmount: String,
-                private val additionalProperties: Map<String, JsonValue>,
+                @JsonProperty("maximum_units") private val maximumUnits: Double?,
+                @JsonProperty("unit_amount") private val unitAmount: String,
+                @JsonAnySetter
+                private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
             ) {
 
                 /** Upper bound for this tier */
@@ -10053,13 +9902,11 @@ constructor(
                     }
 
                     /** Upper bound for this tier */
-                    @JsonProperty("maximum_units")
                     fun maximumUnits(maximumUnits: Double?) = apply {
                         this.maximumUnits = maximumUnits
                     }
 
                     /** Amount per unit */
-                    @JsonProperty("unit_amount")
                     fun unitAmount(unitAmount: String) = apply { this.unitAmount = unitAmount }
 
                     fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
@@ -10067,7 +9914,6 @@ constructor(
                         putAllAdditionalProperties(additionalProperties)
                     }
 
-                    @JsonAnySetter
                     fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                         additionalProperties.put(key, value)
                     }
@@ -10262,13 +10108,14 @@ constructor(
         }
 
         /** For custom cadence: specifies the duration of the billing period in days or months. */
-        @JsonDeserialize(builder = BillingCycleConfiguration.Builder::class)
         @NoAutoDetect
         class BillingCycleConfiguration
+        @JsonCreator
         private constructor(
-            private val duration: Long,
-            private val durationUnit: DurationUnit,
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonProperty("duration") private val duration: Long,
+            @JsonProperty("duration_unit") private val durationUnit: DurationUnit,
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             /** The duration of the billing period. */
@@ -10302,11 +10149,9 @@ constructor(
                 }
 
                 /** The duration of the billing period. */
-                @JsonProperty("duration")
                 fun duration(duration: Long) = apply { this.duration = duration }
 
                 /** The unit of billing period duration. */
-                @JsonProperty("duration_unit")
                 fun durationUnit(durationUnit: DurationUnit) = apply {
                     this.durationUnit = durationUnit
                 }
@@ -10316,7 +10161,6 @@ constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -10421,13 +10265,14 @@ constructor(
          * Within each billing cycle, specifies the cadence at which invoices are produced. If
          * unspecified, a single invoice is produced per billing cycle.
          */
-        @JsonDeserialize(builder = InvoicingCycleConfiguration.Builder::class)
         @NoAutoDetect
         class InvoicingCycleConfiguration
+        @JsonCreator
         private constructor(
-            private val duration: Long,
-            private val durationUnit: DurationUnit,
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonProperty("duration") private val duration: Long,
+            @JsonProperty("duration_unit") private val durationUnit: DurationUnit,
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             /** The duration of the billing period. */
@@ -10462,11 +10307,9 @@ constructor(
                     }
 
                 /** The duration of the billing period. */
-                @JsonProperty("duration")
                 fun duration(duration: Long) = apply { this.duration = duration }
 
                 /** The unit of billing period duration. */
-                @JsonProperty("duration_unit")
                 fun durationUnit(durationUnit: DurationUnit) = apply {
                     this.durationUnit = durationUnit
                 }
@@ -10476,7 +10319,6 @@ constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -10582,11 +10424,12 @@ constructor(
          * setting the value to `null`, and the entire metadata mapping can be cleared by setting
          * `metadata` to `null`.
          */
-        @JsonDeserialize(builder = Metadata.Builder::class)
         @NoAutoDetect
         class Metadata
+        @JsonCreator
         private constructor(
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             @JsonAnyGetter
@@ -10613,7 +10456,6 @@ constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -10669,26 +10511,30 @@ constructor(
             "NewFloatingBulkPrice{metadata=$metadata, externalPriceId=$externalPriceId, name=$name, billableMetricId=$billableMetricId, itemId=$itemId, billedInAdvance=$billedInAdvance, fixedPriceQuantity=$fixedPriceQuantity, invoiceGroupingKey=$invoiceGroupingKey, cadence=$cadence, billingCycleConfiguration=$billingCycleConfiguration, invoicingCycleConfiguration=$invoicingCycleConfiguration, conversionRate=$conversionRate, modelType=$modelType, bulkConfig=$bulkConfig, currency=$currency, additionalProperties=$additionalProperties}"
     }
 
-    @JsonDeserialize(builder = NewFloatingThresholdTotalAmountPrice.Builder::class)
     @NoAutoDetect
     class NewFloatingThresholdTotalAmountPrice
+    @JsonCreator
     private constructor(
-        private val metadata: Metadata?,
-        private val externalPriceId: String?,
-        private val name: String,
-        private val billableMetricId: String?,
-        private val itemId: String,
-        private val billedInAdvance: Boolean?,
-        private val fixedPriceQuantity: Double?,
-        private val invoiceGroupingKey: String?,
-        private val cadence: Cadence,
+        @JsonProperty("metadata") private val metadata: Metadata?,
+        @JsonProperty("external_price_id") private val externalPriceId: String?,
+        @JsonProperty("name") private val name: String,
+        @JsonProperty("billable_metric_id") private val billableMetricId: String?,
+        @JsonProperty("item_id") private val itemId: String,
+        @JsonProperty("billed_in_advance") private val billedInAdvance: Boolean?,
+        @JsonProperty("fixed_price_quantity") private val fixedPriceQuantity: Double?,
+        @JsonProperty("invoice_grouping_key") private val invoiceGroupingKey: String?,
+        @JsonProperty("cadence") private val cadence: Cadence,
+        @JsonProperty("billing_cycle_configuration")
         private val billingCycleConfiguration: BillingCycleConfiguration?,
+        @JsonProperty("invoicing_cycle_configuration")
         private val invoicingCycleConfiguration: InvoicingCycleConfiguration?,
-        private val conversionRate: Double?,
-        private val modelType: ModelType,
+        @JsonProperty("conversion_rate") private val conversionRate: Double?,
+        @JsonProperty("model_type") private val modelType: ModelType,
+        @JsonProperty("threshold_total_amount_config")
         private val thresholdTotalAmountConfig: ThresholdTotalAmountConfig,
-        private val currency: String,
-        private val additionalProperties: Map<String, JsonValue>,
+        @JsonProperty("currency") private val currency: String,
+        @JsonAnySetter
+        private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
 
         /**
@@ -10808,34 +10654,30 @@ constructor(
              * setting the value to `null`, and the entire metadata mapping can be cleared by
              * setting `metadata` to `null`.
              */
-            @JsonProperty("metadata")
             fun metadata(metadata: Metadata?) = apply { this.metadata = metadata }
 
             /** An alias for the price. */
-            @JsonProperty("external_price_id")
             fun externalPriceId(externalPriceId: String?) = apply {
                 this.externalPriceId = externalPriceId
             }
 
             /** The name of the price. */
-            @JsonProperty("name") fun name(name: String) = apply { this.name = name }
+            fun name(name: String) = apply { this.name = name }
 
             /**
              * The id of the billable metric for the price. Only needed if the price is usage-based.
              */
-            @JsonProperty("billable_metric_id")
             fun billableMetricId(billableMetricId: String?) = apply {
                 this.billableMetricId = billableMetricId
             }
 
             /** The id of the item the plan will be associated with. */
-            @JsonProperty("item_id") fun itemId(itemId: String) = apply { this.itemId = itemId }
+            fun itemId(itemId: String) = apply { this.itemId = itemId }
 
             /**
              * If the Price represents a fixed cost, the price will be billed in-advance if this is
              * true, and in-arrears if this is false.
              */
-            @JsonProperty("billed_in_advance")
             fun billedInAdvance(billedInAdvance: Boolean?) = apply {
                 this.billedInAdvance = billedInAdvance
             }
@@ -10843,25 +10685,21 @@ constructor(
             /**
              * If the Price represents a fixed cost, this represents the quantity of units applied.
              */
-            @JsonProperty("fixed_price_quantity")
             fun fixedPriceQuantity(fixedPriceQuantity: Double?) = apply {
                 this.fixedPriceQuantity = fixedPriceQuantity
             }
 
             /** The property used to group this price on an invoice */
-            @JsonProperty("invoice_grouping_key")
             fun invoiceGroupingKey(invoiceGroupingKey: String?) = apply {
                 this.invoiceGroupingKey = invoiceGroupingKey
             }
 
             /** The cadence to bill for this price on. */
-            @JsonProperty("cadence")
             fun cadence(cadence: Cadence) = apply { this.cadence = cadence }
 
             /**
              * For custom cadence: specifies the duration of the billing period in days or months.
              */
-            @JsonProperty("billing_cycle_configuration")
             fun billingCycleConfiguration(billingCycleConfiguration: BillingCycleConfiguration?) =
                 apply {
                     this.billingCycleConfiguration = billingCycleConfiguration
@@ -10871,28 +10709,23 @@ constructor(
              * Within each billing cycle, specifies the cadence at which invoices are produced. If
              * unspecified, a single invoice is produced per billing cycle.
              */
-            @JsonProperty("invoicing_cycle_configuration")
             fun invoicingCycleConfiguration(
                 invoicingCycleConfiguration: InvoicingCycleConfiguration?
             ) = apply { this.invoicingCycleConfiguration = invoicingCycleConfiguration }
 
             /** The per unit conversion rate of the price currency to the invoicing currency. */
-            @JsonProperty("conversion_rate")
             fun conversionRate(conversionRate: Double?) = apply {
                 this.conversionRate = conversionRate
             }
 
-            @JsonProperty("model_type")
             fun modelType(modelType: ModelType) = apply { this.modelType = modelType }
 
-            @JsonProperty("threshold_total_amount_config")
             fun thresholdTotalAmountConfig(thresholdTotalAmountConfig: ThresholdTotalAmountConfig) =
                 apply {
                     this.thresholdTotalAmountConfig = thresholdTotalAmountConfig
                 }
 
             /** An ISO 4217 currency string for which this price is billed in. */
-            @JsonProperty("currency")
             fun currency(currency: String) = apply { this.currency = currency }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
@@ -10900,7 +10733,6 @@ constructor(
                 putAllAdditionalProperties(additionalProperties)
             }
 
-            @JsonAnySetter
             fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                 additionalProperties.put(key, value)
             }
@@ -11070,11 +10902,12 @@ constructor(
             override fun toString() = value.toString()
         }
 
-        @JsonDeserialize(builder = ThresholdTotalAmountConfig.Builder::class)
         @NoAutoDetect
         class ThresholdTotalAmountConfig
+        @JsonCreator
         private constructor(
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             @JsonAnyGetter
@@ -11102,7 +10935,6 @@ constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -11143,13 +10975,14 @@ constructor(
         }
 
         /** For custom cadence: specifies the duration of the billing period in days or months. */
-        @JsonDeserialize(builder = BillingCycleConfiguration.Builder::class)
         @NoAutoDetect
         class BillingCycleConfiguration
+        @JsonCreator
         private constructor(
-            private val duration: Long,
-            private val durationUnit: DurationUnit,
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonProperty("duration") private val duration: Long,
+            @JsonProperty("duration_unit") private val durationUnit: DurationUnit,
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             /** The duration of the billing period. */
@@ -11183,11 +11016,9 @@ constructor(
                 }
 
                 /** The duration of the billing period. */
-                @JsonProperty("duration")
                 fun duration(duration: Long) = apply { this.duration = duration }
 
                 /** The unit of billing period duration. */
-                @JsonProperty("duration_unit")
                 fun durationUnit(durationUnit: DurationUnit) = apply {
                     this.durationUnit = durationUnit
                 }
@@ -11197,7 +11028,6 @@ constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -11302,13 +11132,14 @@ constructor(
          * Within each billing cycle, specifies the cadence at which invoices are produced. If
          * unspecified, a single invoice is produced per billing cycle.
          */
-        @JsonDeserialize(builder = InvoicingCycleConfiguration.Builder::class)
         @NoAutoDetect
         class InvoicingCycleConfiguration
+        @JsonCreator
         private constructor(
-            private val duration: Long,
-            private val durationUnit: DurationUnit,
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonProperty("duration") private val duration: Long,
+            @JsonProperty("duration_unit") private val durationUnit: DurationUnit,
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             /** The duration of the billing period. */
@@ -11343,11 +11174,9 @@ constructor(
                     }
 
                 /** The duration of the billing period. */
-                @JsonProperty("duration")
                 fun duration(duration: Long) = apply { this.duration = duration }
 
                 /** The unit of billing period duration. */
-                @JsonProperty("duration_unit")
                 fun durationUnit(durationUnit: DurationUnit) = apply {
                     this.durationUnit = durationUnit
                 }
@@ -11357,7 +11186,6 @@ constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -11463,11 +11291,12 @@ constructor(
          * setting the value to `null`, and the entire metadata mapping can be cleared by setting
          * `metadata` to `null`.
          */
-        @JsonDeserialize(builder = Metadata.Builder::class)
         @NoAutoDetect
         class Metadata
+        @JsonCreator
         private constructor(
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             @JsonAnyGetter
@@ -11494,7 +11323,6 @@ constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -11550,26 +11378,29 @@ constructor(
             "NewFloatingThresholdTotalAmountPrice{metadata=$metadata, externalPriceId=$externalPriceId, name=$name, billableMetricId=$billableMetricId, itemId=$itemId, billedInAdvance=$billedInAdvance, fixedPriceQuantity=$fixedPriceQuantity, invoiceGroupingKey=$invoiceGroupingKey, cadence=$cadence, billingCycleConfiguration=$billingCycleConfiguration, invoicingCycleConfiguration=$invoicingCycleConfiguration, conversionRate=$conversionRate, modelType=$modelType, thresholdTotalAmountConfig=$thresholdTotalAmountConfig, currency=$currency, additionalProperties=$additionalProperties}"
     }
 
-    @JsonDeserialize(builder = NewFloatingTieredPackagePrice.Builder::class)
     @NoAutoDetect
     class NewFloatingTieredPackagePrice
+    @JsonCreator
     private constructor(
-        private val metadata: Metadata?,
-        private val externalPriceId: String?,
-        private val name: String,
-        private val billableMetricId: String?,
-        private val itemId: String,
-        private val billedInAdvance: Boolean?,
-        private val fixedPriceQuantity: Double?,
-        private val invoiceGroupingKey: String?,
-        private val cadence: Cadence,
+        @JsonProperty("metadata") private val metadata: Metadata?,
+        @JsonProperty("external_price_id") private val externalPriceId: String?,
+        @JsonProperty("name") private val name: String,
+        @JsonProperty("billable_metric_id") private val billableMetricId: String?,
+        @JsonProperty("item_id") private val itemId: String,
+        @JsonProperty("billed_in_advance") private val billedInAdvance: Boolean?,
+        @JsonProperty("fixed_price_quantity") private val fixedPriceQuantity: Double?,
+        @JsonProperty("invoice_grouping_key") private val invoiceGroupingKey: String?,
+        @JsonProperty("cadence") private val cadence: Cadence,
+        @JsonProperty("billing_cycle_configuration")
         private val billingCycleConfiguration: BillingCycleConfiguration?,
+        @JsonProperty("invoicing_cycle_configuration")
         private val invoicingCycleConfiguration: InvoicingCycleConfiguration?,
-        private val conversionRate: Double?,
-        private val modelType: ModelType,
-        private val tieredPackageConfig: TieredPackageConfig,
-        private val currency: String,
-        private val additionalProperties: Map<String, JsonValue>,
+        @JsonProperty("conversion_rate") private val conversionRate: Double?,
+        @JsonProperty("model_type") private val modelType: ModelType,
+        @JsonProperty("tiered_package_config") private val tieredPackageConfig: TieredPackageConfig,
+        @JsonProperty("currency") private val currency: String,
+        @JsonAnySetter
+        private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
 
         /**
@@ -11687,34 +11518,30 @@ constructor(
              * setting the value to `null`, and the entire metadata mapping can be cleared by
              * setting `metadata` to `null`.
              */
-            @JsonProperty("metadata")
             fun metadata(metadata: Metadata?) = apply { this.metadata = metadata }
 
             /** An alias for the price. */
-            @JsonProperty("external_price_id")
             fun externalPriceId(externalPriceId: String?) = apply {
                 this.externalPriceId = externalPriceId
             }
 
             /** The name of the price. */
-            @JsonProperty("name") fun name(name: String) = apply { this.name = name }
+            fun name(name: String) = apply { this.name = name }
 
             /**
              * The id of the billable metric for the price. Only needed if the price is usage-based.
              */
-            @JsonProperty("billable_metric_id")
             fun billableMetricId(billableMetricId: String?) = apply {
                 this.billableMetricId = billableMetricId
             }
 
             /** The id of the item the plan will be associated with. */
-            @JsonProperty("item_id") fun itemId(itemId: String) = apply { this.itemId = itemId }
+            fun itemId(itemId: String) = apply { this.itemId = itemId }
 
             /**
              * If the Price represents a fixed cost, the price will be billed in-advance if this is
              * true, and in-arrears if this is false.
              */
-            @JsonProperty("billed_in_advance")
             fun billedInAdvance(billedInAdvance: Boolean?) = apply {
                 this.billedInAdvance = billedInAdvance
             }
@@ -11722,25 +11549,21 @@ constructor(
             /**
              * If the Price represents a fixed cost, this represents the quantity of units applied.
              */
-            @JsonProperty("fixed_price_quantity")
             fun fixedPriceQuantity(fixedPriceQuantity: Double?) = apply {
                 this.fixedPriceQuantity = fixedPriceQuantity
             }
 
             /** The property used to group this price on an invoice */
-            @JsonProperty("invoice_grouping_key")
             fun invoiceGroupingKey(invoiceGroupingKey: String?) = apply {
                 this.invoiceGroupingKey = invoiceGroupingKey
             }
 
             /** The cadence to bill for this price on. */
-            @JsonProperty("cadence")
             fun cadence(cadence: Cadence) = apply { this.cadence = cadence }
 
             /**
              * For custom cadence: specifies the duration of the billing period in days or months.
              */
-            @JsonProperty("billing_cycle_configuration")
             fun billingCycleConfiguration(billingCycleConfiguration: BillingCycleConfiguration?) =
                 apply {
                     this.billingCycleConfiguration = billingCycleConfiguration
@@ -11750,27 +11573,22 @@ constructor(
              * Within each billing cycle, specifies the cadence at which invoices are produced. If
              * unspecified, a single invoice is produced per billing cycle.
              */
-            @JsonProperty("invoicing_cycle_configuration")
             fun invoicingCycleConfiguration(
                 invoicingCycleConfiguration: InvoicingCycleConfiguration?
             ) = apply { this.invoicingCycleConfiguration = invoicingCycleConfiguration }
 
             /** The per unit conversion rate of the price currency to the invoicing currency. */
-            @JsonProperty("conversion_rate")
             fun conversionRate(conversionRate: Double?) = apply {
                 this.conversionRate = conversionRate
             }
 
-            @JsonProperty("model_type")
             fun modelType(modelType: ModelType) = apply { this.modelType = modelType }
 
-            @JsonProperty("tiered_package_config")
             fun tieredPackageConfig(tieredPackageConfig: TieredPackageConfig) = apply {
                 this.tieredPackageConfig = tieredPackageConfig
             }
 
             /** An ISO 4217 currency string for which this price is billed in. */
-            @JsonProperty("currency")
             fun currency(currency: String) = apply { this.currency = currency }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
@@ -11778,7 +11596,6 @@ constructor(
                 putAllAdditionalProperties(additionalProperties)
             }
 
-            @JsonAnySetter
             fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                 additionalProperties.put(key, value)
             }
@@ -11948,11 +11765,12 @@ constructor(
             override fun toString() = value.toString()
         }
 
-        @JsonDeserialize(builder = TieredPackageConfig.Builder::class)
         @NoAutoDetect
         class TieredPackageConfig
+        @JsonCreator
         private constructor(
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             @JsonAnyGetter
@@ -11979,7 +11797,6 @@ constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -12020,13 +11837,14 @@ constructor(
         }
 
         /** For custom cadence: specifies the duration of the billing period in days or months. */
-        @JsonDeserialize(builder = BillingCycleConfiguration.Builder::class)
         @NoAutoDetect
         class BillingCycleConfiguration
+        @JsonCreator
         private constructor(
-            private val duration: Long,
-            private val durationUnit: DurationUnit,
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonProperty("duration") private val duration: Long,
+            @JsonProperty("duration_unit") private val durationUnit: DurationUnit,
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             /** The duration of the billing period. */
@@ -12060,11 +11878,9 @@ constructor(
                 }
 
                 /** The duration of the billing period. */
-                @JsonProperty("duration")
                 fun duration(duration: Long) = apply { this.duration = duration }
 
                 /** The unit of billing period duration. */
-                @JsonProperty("duration_unit")
                 fun durationUnit(durationUnit: DurationUnit) = apply {
                     this.durationUnit = durationUnit
                 }
@@ -12074,7 +11890,6 @@ constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -12179,13 +11994,14 @@ constructor(
          * Within each billing cycle, specifies the cadence at which invoices are produced. If
          * unspecified, a single invoice is produced per billing cycle.
          */
-        @JsonDeserialize(builder = InvoicingCycleConfiguration.Builder::class)
         @NoAutoDetect
         class InvoicingCycleConfiguration
+        @JsonCreator
         private constructor(
-            private val duration: Long,
-            private val durationUnit: DurationUnit,
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonProperty("duration") private val duration: Long,
+            @JsonProperty("duration_unit") private val durationUnit: DurationUnit,
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             /** The duration of the billing period. */
@@ -12220,11 +12036,9 @@ constructor(
                     }
 
                 /** The duration of the billing period. */
-                @JsonProperty("duration")
                 fun duration(duration: Long) = apply { this.duration = duration }
 
                 /** The unit of billing period duration. */
-                @JsonProperty("duration_unit")
                 fun durationUnit(durationUnit: DurationUnit) = apply {
                     this.durationUnit = durationUnit
                 }
@@ -12234,7 +12048,6 @@ constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -12340,11 +12153,12 @@ constructor(
          * setting the value to `null`, and the entire metadata mapping can be cleared by setting
          * `metadata` to `null`.
          */
-        @JsonDeserialize(builder = Metadata.Builder::class)
         @NoAutoDetect
         class Metadata
+        @JsonCreator
         private constructor(
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             @JsonAnyGetter
@@ -12371,7 +12185,6 @@ constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -12427,26 +12240,29 @@ constructor(
             "NewFloatingTieredPackagePrice{metadata=$metadata, externalPriceId=$externalPriceId, name=$name, billableMetricId=$billableMetricId, itemId=$itemId, billedInAdvance=$billedInAdvance, fixedPriceQuantity=$fixedPriceQuantity, invoiceGroupingKey=$invoiceGroupingKey, cadence=$cadence, billingCycleConfiguration=$billingCycleConfiguration, invoicingCycleConfiguration=$invoicingCycleConfiguration, conversionRate=$conversionRate, modelType=$modelType, tieredPackageConfig=$tieredPackageConfig, currency=$currency, additionalProperties=$additionalProperties}"
     }
 
-    @JsonDeserialize(builder = NewFloatingGroupedTieredPrice.Builder::class)
     @NoAutoDetect
     class NewFloatingGroupedTieredPrice
+    @JsonCreator
     private constructor(
-        private val metadata: Metadata?,
-        private val externalPriceId: String?,
-        private val name: String,
-        private val billableMetricId: String?,
-        private val itemId: String,
-        private val billedInAdvance: Boolean?,
-        private val fixedPriceQuantity: Double?,
-        private val invoiceGroupingKey: String?,
-        private val cadence: Cadence,
+        @JsonProperty("metadata") private val metadata: Metadata?,
+        @JsonProperty("external_price_id") private val externalPriceId: String?,
+        @JsonProperty("name") private val name: String,
+        @JsonProperty("billable_metric_id") private val billableMetricId: String?,
+        @JsonProperty("item_id") private val itemId: String,
+        @JsonProperty("billed_in_advance") private val billedInAdvance: Boolean?,
+        @JsonProperty("fixed_price_quantity") private val fixedPriceQuantity: Double?,
+        @JsonProperty("invoice_grouping_key") private val invoiceGroupingKey: String?,
+        @JsonProperty("cadence") private val cadence: Cadence,
+        @JsonProperty("billing_cycle_configuration")
         private val billingCycleConfiguration: BillingCycleConfiguration?,
+        @JsonProperty("invoicing_cycle_configuration")
         private val invoicingCycleConfiguration: InvoicingCycleConfiguration?,
-        private val conversionRate: Double?,
-        private val modelType: ModelType,
-        private val groupedTieredConfig: GroupedTieredConfig,
-        private val currency: String,
-        private val additionalProperties: Map<String, JsonValue>,
+        @JsonProperty("conversion_rate") private val conversionRate: Double?,
+        @JsonProperty("model_type") private val modelType: ModelType,
+        @JsonProperty("grouped_tiered_config") private val groupedTieredConfig: GroupedTieredConfig,
+        @JsonProperty("currency") private val currency: String,
+        @JsonAnySetter
+        private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
 
         /**
@@ -12564,34 +12380,30 @@ constructor(
              * setting the value to `null`, and the entire metadata mapping can be cleared by
              * setting `metadata` to `null`.
              */
-            @JsonProperty("metadata")
             fun metadata(metadata: Metadata?) = apply { this.metadata = metadata }
 
             /** An alias for the price. */
-            @JsonProperty("external_price_id")
             fun externalPriceId(externalPriceId: String?) = apply {
                 this.externalPriceId = externalPriceId
             }
 
             /** The name of the price. */
-            @JsonProperty("name") fun name(name: String) = apply { this.name = name }
+            fun name(name: String) = apply { this.name = name }
 
             /**
              * The id of the billable metric for the price. Only needed if the price is usage-based.
              */
-            @JsonProperty("billable_metric_id")
             fun billableMetricId(billableMetricId: String?) = apply {
                 this.billableMetricId = billableMetricId
             }
 
             /** The id of the item the plan will be associated with. */
-            @JsonProperty("item_id") fun itemId(itemId: String) = apply { this.itemId = itemId }
+            fun itemId(itemId: String) = apply { this.itemId = itemId }
 
             /**
              * If the Price represents a fixed cost, the price will be billed in-advance if this is
              * true, and in-arrears if this is false.
              */
-            @JsonProperty("billed_in_advance")
             fun billedInAdvance(billedInAdvance: Boolean?) = apply {
                 this.billedInAdvance = billedInAdvance
             }
@@ -12599,25 +12411,21 @@ constructor(
             /**
              * If the Price represents a fixed cost, this represents the quantity of units applied.
              */
-            @JsonProperty("fixed_price_quantity")
             fun fixedPriceQuantity(fixedPriceQuantity: Double?) = apply {
                 this.fixedPriceQuantity = fixedPriceQuantity
             }
 
             /** The property used to group this price on an invoice */
-            @JsonProperty("invoice_grouping_key")
             fun invoiceGroupingKey(invoiceGroupingKey: String?) = apply {
                 this.invoiceGroupingKey = invoiceGroupingKey
             }
 
             /** The cadence to bill for this price on. */
-            @JsonProperty("cadence")
             fun cadence(cadence: Cadence) = apply { this.cadence = cadence }
 
             /**
              * For custom cadence: specifies the duration of the billing period in days or months.
              */
-            @JsonProperty("billing_cycle_configuration")
             fun billingCycleConfiguration(billingCycleConfiguration: BillingCycleConfiguration?) =
                 apply {
                     this.billingCycleConfiguration = billingCycleConfiguration
@@ -12627,27 +12435,22 @@ constructor(
              * Within each billing cycle, specifies the cadence at which invoices are produced. If
              * unspecified, a single invoice is produced per billing cycle.
              */
-            @JsonProperty("invoicing_cycle_configuration")
             fun invoicingCycleConfiguration(
                 invoicingCycleConfiguration: InvoicingCycleConfiguration?
             ) = apply { this.invoicingCycleConfiguration = invoicingCycleConfiguration }
 
             /** The per unit conversion rate of the price currency to the invoicing currency. */
-            @JsonProperty("conversion_rate")
             fun conversionRate(conversionRate: Double?) = apply {
                 this.conversionRate = conversionRate
             }
 
-            @JsonProperty("model_type")
             fun modelType(modelType: ModelType) = apply { this.modelType = modelType }
 
-            @JsonProperty("grouped_tiered_config")
             fun groupedTieredConfig(groupedTieredConfig: GroupedTieredConfig) = apply {
                 this.groupedTieredConfig = groupedTieredConfig
             }
 
             /** An ISO 4217 currency string for which this price is billed in. */
-            @JsonProperty("currency")
             fun currency(currency: String) = apply { this.currency = currency }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
@@ -12655,7 +12458,6 @@ constructor(
                 putAllAdditionalProperties(additionalProperties)
             }
 
-            @JsonAnySetter
             fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                 additionalProperties.put(key, value)
             }
@@ -12774,11 +12576,12 @@ constructor(
             override fun toString() = value.toString()
         }
 
-        @JsonDeserialize(builder = GroupedTieredConfig.Builder::class)
         @NoAutoDetect
         class GroupedTieredConfig
+        @JsonCreator
         private constructor(
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             @JsonAnyGetter
@@ -12805,7 +12608,6 @@ constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -12897,13 +12699,14 @@ constructor(
         }
 
         /** For custom cadence: specifies the duration of the billing period in days or months. */
-        @JsonDeserialize(builder = BillingCycleConfiguration.Builder::class)
         @NoAutoDetect
         class BillingCycleConfiguration
+        @JsonCreator
         private constructor(
-            private val duration: Long,
-            private val durationUnit: DurationUnit,
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonProperty("duration") private val duration: Long,
+            @JsonProperty("duration_unit") private val durationUnit: DurationUnit,
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             /** The duration of the billing period. */
@@ -12937,11 +12740,9 @@ constructor(
                 }
 
                 /** The duration of the billing period. */
-                @JsonProperty("duration")
                 fun duration(duration: Long) = apply { this.duration = duration }
 
                 /** The unit of billing period duration. */
-                @JsonProperty("duration_unit")
                 fun durationUnit(durationUnit: DurationUnit) = apply {
                     this.durationUnit = durationUnit
                 }
@@ -12951,7 +12752,6 @@ constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -13056,13 +12856,14 @@ constructor(
          * Within each billing cycle, specifies the cadence at which invoices are produced. If
          * unspecified, a single invoice is produced per billing cycle.
          */
-        @JsonDeserialize(builder = InvoicingCycleConfiguration.Builder::class)
         @NoAutoDetect
         class InvoicingCycleConfiguration
+        @JsonCreator
         private constructor(
-            private val duration: Long,
-            private val durationUnit: DurationUnit,
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonProperty("duration") private val duration: Long,
+            @JsonProperty("duration_unit") private val durationUnit: DurationUnit,
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             /** The duration of the billing period. */
@@ -13097,11 +12898,9 @@ constructor(
                     }
 
                 /** The duration of the billing period. */
-                @JsonProperty("duration")
                 fun duration(duration: Long) = apply { this.duration = duration }
 
                 /** The unit of billing period duration. */
-                @JsonProperty("duration_unit")
                 fun durationUnit(durationUnit: DurationUnit) = apply {
                     this.durationUnit = durationUnit
                 }
@@ -13111,7 +12910,6 @@ constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -13217,11 +13015,12 @@ constructor(
          * setting the value to `null`, and the entire metadata mapping can be cleared by setting
          * `metadata` to `null`.
          */
-        @JsonDeserialize(builder = Metadata.Builder::class)
         @NoAutoDetect
         class Metadata
+        @JsonCreator
         private constructor(
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             @JsonAnyGetter
@@ -13248,7 +13047,6 @@ constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -13304,26 +13102,30 @@ constructor(
             "NewFloatingGroupedTieredPrice{metadata=$metadata, externalPriceId=$externalPriceId, name=$name, billableMetricId=$billableMetricId, itemId=$itemId, billedInAdvance=$billedInAdvance, fixedPriceQuantity=$fixedPriceQuantity, invoiceGroupingKey=$invoiceGroupingKey, cadence=$cadence, billingCycleConfiguration=$billingCycleConfiguration, invoicingCycleConfiguration=$invoicingCycleConfiguration, conversionRate=$conversionRate, modelType=$modelType, groupedTieredConfig=$groupedTieredConfig, currency=$currency, additionalProperties=$additionalProperties}"
     }
 
-    @JsonDeserialize(builder = NewFloatingTieredWithMinimumPrice.Builder::class)
     @NoAutoDetect
     class NewFloatingTieredWithMinimumPrice
+    @JsonCreator
     private constructor(
-        private val metadata: Metadata?,
-        private val externalPriceId: String?,
-        private val name: String,
-        private val billableMetricId: String?,
-        private val itemId: String,
-        private val billedInAdvance: Boolean?,
-        private val fixedPriceQuantity: Double?,
-        private val invoiceGroupingKey: String?,
-        private val cadence: Cadence,
+        @JsonProperty("metadata") private val metadata: Metadata?,
+        @JsonProperty("external_price_id") private val externalPriceId: String?,
+        @JsonProperty("name") private val name: String,
+        @JsonProperty("billable_metric_id") private val billableMetricId: String?,
+        @JsonProperty("item_id") private val itemId: String,
+        @JsonProperty("billed_in_advance") private val billedInAdvance: Boolean?,
+        @JsonProperty("fixed_price_quantity") private val fixedPriceQuantity: Double?,
+        @JsonProperty("invoice_grouping_key") private val invoiceGroupingKey: String?,
+        @JsonProperty("cadence") private val cadence: Cadence,
+        @JsonProperty("billing_cycle_configuration")
         private val billingCycleConfiguration: BillingCycleConfiguration?,
+        @JsonProperty("invoicing_cycle_configuration")
         private val invoicingCycleConfiguration: InvoicingCycleConfiguration?,
-        private val conversionRate: Double?,
-        private val modelType: ModelType,
+        @JsonProperty("conversion_rate") private val conversionRate: Double?,
+        @JsonProperty("model_type") private val modelType: ModelType,
+        @JsonProperty("tiered_with_minimum_config")
         private val tieredWithMinimumConfig: TieredWithMinimumConfig,
-        private val currency: String,
-        private val additionalProperties: Map<String, JsonValue>,
+        @JsonProperty("currency") private val currency: String,
+        @JsonAnySetter
+        private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
 
         /**
@@ -13442,34 +13244,30 @@ constructor(
              * setting the value to `null`, and the entire metadata mapping can be cleared by
              * setting `metadata` to `null`.
              */
-            @JsonProperty("metadata")
             fun metadata(metadata: Metadata?) = apply { this.metadata = metadata }
 
             /** An alias for the price. */
-            @JsonProperty("external_price_id")
             fun externalPriceId(externalPriceId: String?) = apply {
                 this.externalPriceId = externalPriceId
             }
 
             /** The name of the price. */
-            @JsonProperty("name") fun name(name: String) = apply { this.name = name }
+            fun name(name: String) = apply { this.name = name }
 
             /**
              * The id of the billable metric for the price. Only needed if the price is usage-based.
              */
-            @JsonProperty("billable_metric_id")
             fun billableMetricId(billableMetricId: String?) = apply {
                 this.billableMetricId = billableMetricId
             }
 
             /** The id of the item the plan will be associated with. */
-            @JsonProperty("item_id") fun itemId(itemId: String) = apply { this.itemId = itemId }
+            fun itemId(itemId: String) = apply { this.itemId = itemId }
 
             /**
              * If the Price represents a fixed cost, the price will be billed in-advance if this is
              * true, and in-arrears if this is false.
              */
-            @JsonProperty("billed_in_advance")
             fun billedInAdvance(billedInAdvance: Boolean?) = apply {
                 this.billedInAdvance = billedInAdvance
             }
@@ -13477,25 +13275,21 @@ constructor(
             /**
              * If the Price represents a fixed cost, this represents the quantity of units applied.
              */
-            @JsonProperty("fixed_price_quantity")
             fun fixedPriceQuantity(fixedPriceQuantity: Double?) = apply {
                 this.fixedPriceQuantity = fixedPriceQuantity
             }
 
             /** The property used to group this price on an invoice */
-            @JsonProperty("invoice_grouping_key")
             fun invoiceGroupingKey(invoiceGroupingKey: String?) = apply {
                 this.invoiceGroupingKey = invoiceGroupingKey
             }
 
             /** The cadence to bill for this price on. */
-            @JsonProperty("cadence")
             fun cadence(cadence: Cadence) = apply { this.cadence = cadence }
 
             /**
              * For custom cadence: specifies the duration of the billing period in days or months.
              */
-            @JsonProperty("billing_cycle_configuration")
             fun billingCycleConfiguration(billingCycleConfiguration: BillingCycleConfiguration?) =
                 apply {
                     this.billingCycleConfiguration = billingCycleConfiguration
@@ -13505,27 +13299,22 @@ constructor(
              * Within each billing cycle, specifies the cadence at which invoices are produced. If
              * unspecified, a single invoice is produced per billing cycle.
              */
-            @JsonProperty("invoicing_cycle_configuration")
             fun invoicingCycleConfiguration(
                 invoicingCycleConfiguration: InvoicingCycleConfiguration?
             ) = apply { this.invoicingCycleConfiguration = invoicingCycleConfiguration }
 
             /** The per unit conversion rate of the price currency to the invoicing currency. */
-            @JsonProperty("conversion_rate")
             fun conversionRate(conversionRate: Double?) = apply {
                 this.conversionRate = conversionRate
             }
 
-            @JsonProperty("model_type")
             fun modelType(modelType: ModelType) = apply { this.modelType = modelType }
 
-            @JsonProperty("tiered_with_minimum_config")
             fun tieredWithMinimumConfig(tieredWithMinimumConfig: TieredWithMinimumConfig) = apply {
                 this.tieredWithMinimumConfig = tieredWithMinimumConfig
             }
 
             /** An ISO 4217 currency string for which this price is billed in. */
-            @JsonProperty("currency")
             fun currency(currency: String) = apply { this.currency = currency }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
@@ -13533,7 +13322,6 @@ constructor(
                 putAllAdditionalProperties(additionalProperties)
             }
 
-            @JsonAnySetter
             fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                 additionalProperties.put(key, value)
             }
@@ -13703,11 +13491,12 @@ constructor(
             override fun toString() = value.toString()
         }
 
-        @JsonDeserialize(builder = TieredWithMinimumConfig.Builder::class)
         @NoAutoDetect
         class TieredWithMinimumConfig
+        @JsonCreator
         private constructor(
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             @JsonAnyGetter
@@ -13735,7 +13524,6 @@ constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -13776,13 +13564,14 @@ constructor(
         }
 
         /** For custom cadence: specifies the duration of the billing period in days or months. */
-        @JsonDeserialize(builder = BillingCycleConfiguration.Builder::class)
         @NoAutoDetect
         class BillingCycleConfiguration
+        @JsonCreator
         private constructor(
-            private val duration: Long,
-            private val durationUnit: DurationUnit,
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonProperty("duration") private val duration: Long,
+            @JsonProperty("duration_unit") private val durationUnit: DurationUnit,
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             /** The duration of the billing period. */
@@ -13816,11 +13605,9 @@ constructor(
                 }
 
                 /** The duration of the billing period. */
-                @JsonProperty("duration")
                 fun duration(duration: Long) = apply { this.duration = duration }
 
                 /** The unit of billing period duration. */
-                @JsonProperty("duration_unit")
                 fun durationUnit(durationUnit: DurationUnit) = apply {
                     this.durationUnit = durationUnit
                 }
@@ -13830,7 +13617,6 @@ constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -13935,13 +13721,14 @@ constructor(
          * Within each billing cycle, specifies the cadence at which invoices are produced. If
          * unspecified, a single invoice is produced per billing cycle.
          */
-        @JsonDeserialize(builder = InvoicingCycleConfiguration.Builder::class)
         @NoAutoDetect
         class InvoicingCycleConfiguration
+        @JsonCreator
         private constructor(
-            private val duration: Long,
-            private val durationUnit: DurationUnit,
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonProperty("duration") private val duration: Long,
+            @JsonProperty("duration_unit") private val durationUnit: DurationUnit,
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             /** The duration of the billing period. */
@@ -13976,11 +13763,9 @@ constructor(
                     }
 
                 /** The duration of the billing period. */
-                @JsonProperty("duration")
                 fun duration(duration: Long) = apply { this.duration = duration }
 
                 /** The unit of billing period duration. */
-                @JsonProperty("duration_unit")
                 fun durationUnit(durationUnit: DurationUnit) = apply {
                     this.durationUnit = durationUnit
                 }
@@ -13990,7 +13775,6 @@ constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -14096,11 +13880,12 @@ constructor(
          * setting the value to `null`, and the entire metadata mapping can be cleared by setting
          * `metadata` to `null`.
          */
-        @JsonDeserialize(builder = Metadata.Builder::class)
         @NoAutoDetect
         class Metadata
+        @JsonCreator
         private constructor(
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             @JsonAnyGetter
@@ -14127,7 +13912,6 @@ constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -14183,26 +13967,30 @@ constructor(
             "NewFloatingTieredWithMinimumPrice{metadata=$metadata, externalPriceId=$externalPriceId, name=$name, billableMetricId=$billableMetricId, itemId=$itemId, billedInAdvance=$billedInAdvance, fixedPriceQuantity=$fixedPriceQuantity, invoiceGroupingKey=$invoiceGroupingKey, cadence=$cadence, billingCycleConfiguration=$billingCycleConfiguration, invoicingCycleConfiguration=$invoicingCycleConfiguration, conversionRate=$conversionRate, modelType=$modelType, tieredWithMinimumConfig=$tieredWithMinimumConfig, currency=$currency, additionalProperties=$additionalProperties}"
     }
 
-    @JsonDeserialize(builder = NewFloatingPackageWithAllocationPrice.Builder::class)
     @NoAutoDetect
     class NewFloatingPackageWithAllocationPrice
+    @JsonCreator
     private constructor(
-        private val metadata: Metadata?,
-        private val externalPriceId: String?,
-        private val name: String,
-        private val billableMetricId: String?,
-        private val itemId: String,
-        private val billedInAdvance: Boolean?,
-        private val fixedPriceQuantity: Double?,
-        private val invoiceGroupingKey: String?,
-        private val cadence: Cadence,
+        @JsonProperty("metadata") private val metadata: Metadata?,
+        @JsonProperty("external_price_id") private val externalPriceId: String?,
+        @JsonProperty("name") private val name: String,
+        @JsonProperty("billable_metric_id") private val billableMetricId: String?,
+        @JsonProperty("item_id") private val itemId: String,
+        @JsonProperty("billed_in_advance") private val billedInAdvance: Boolean?,
+        @JsonProperty("fixed_price_quantity") private val fixedPriceQuantity: Double?,
+        @JsonProperty("invoice_grouping_key") private val invoiceGroupingKey: String?,
+        @JsonProperty("cadence") private val cadence: Cadence,
+        @JsonProperty("billing_cycle_configuration")
         private val billingCycleConfiguration: BillingCycleConfiguration?,
+        @JsonProperty("invoicing_cycle_configuration")
         private val invoicingCycleConfiguration: InvoicingCycleConfiguration?,
-        private val conversionRate: Double?,
-        private val modelType: ModelType,
+        @JsonProperty("conversion_rate") private val conversionRate: Double?,
+        @JsonProperty("model_type") private val modelType: ModelType,
+        @JsonProperty("package_with_allocation_config")
         private val packageWithAllocationConfig: PackageWithAllocationConfig,
-        private val currency: String,
-        private val additionalProperties: Map<String, JsonValue>,
+        @JsonProperty("currency") private val currency: String,
+        @JsonAnySetter
+        private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
 
         /**
@@ -14322,34 +14110,30 @@ constructor(
              * setting the value to `null`, and the entire metadata mapping can be cleared by
              * setting `metadata` to `null`.
              */
-            @JsonProperty("metadata")
             fun metadata(metadata: Metadata?) = apply { this.metadata = metadata }
 
             /** An alias for the price. */
-            @JsonProperty("external_price_id")
             fun externalPriceId(externalPriceId: String?) = apply {
                 this.externalPriceId = externalPriceId
             }
 
             /** The name of the price. */
-            @JsonProperty("name") fun name(name: String) = apply { this.name = name }
+            fun name(name: String) = apply { this.name = name }
 
             /**
              * The id of the billable metric for the price. Only needed if the price is usage-based.
              */
-            @JsonProperty("billable_metric_id")
             fun billableMetricId(billableMetricId: String?) = apply {
                 this.billableMetricId = billableMetricId
             }
 
             /** The id of the item the plan will be associated with. */
-            @JsonProperty("item_id") fun itemId(itemId: String) = apply { this.itemId = itemId }
+            fun itemId(itemId: String) = apply { this.itemId = itemId }
 
             /**
              * If the Price represents a fixed cost, the price will be billed in-advance if this is
              * true, and in-arrears if this is false.
              */
-            @JsonProperty("billed_in_advance")
             fun billedInAdvance(billedInAdvance: Boolean?) = apply {
                 this.billedInAdvance = billedInAdvance
             }
@@ -14357,25 +14141,21 @@ constructor(
             /**
              * If the Price represents a fixed cost, this represents the quantity of units applied.
              */
-            @JsonProperty("fixed_price_quantity")
             fun fixedPriceQuantity(fixedPriceQuantity: Double?) = apply {
                 this.fixedPriceQuantity = fixedPriceQuantity
             }
 
             /** The property used to group this price on an invoice */
-            @JsonProperty("invoice_grouping_key")
             fun invoiceGroupingKey(invoiceGroupingKey: String?) = apply {
                 this.invoiceGroupingKey = invoiceGroupingKey
             }
 
             /** The cadence to bill for this price on. */
-            @JsonProperty("cadence")
             fun cadence(cadence: Cadence) = apply { this.cadence = cadence }
 
             /**
              * For custom cadence: specifies the duration of the billing period in days or months.
              */
-            @JsonProperty("billing_cycle_configuration")
             fun billingCycleConfiguration(billingCycleConfiguration: BillingCycleConfiguration?) =
                 apply {
                     this.billingCycleConfiguration = billingCycleConfiguration
@@ -14385,27 +14165,22 @@ constructor(
              * Within each billing cycle, specifies the cadence at which invoices are produced. If
              * unspecified, a single invoice is produced per billing cycle.
              */
-            @JsonProperty("invoicing_cycle_configuration")
             fun invoicingCycleConfiguration(
                 invoicingCycleConfiguration: InvoicingCycleConfiguration?
             ) = apply { this.invoicingCycleConfiguration = invoicingCycleConfiguration }
 
             /** The per unit conversion rate of the price currency to the invoicing currency. */
-            @JsonProperty("conversion_rate")
             fun conversionRate(conversionRate: Double?) = apply {
                 this.conversionRate = conversionRate
             }
 
-            @JsonProperty("model_type")
             fun modelType(modelType: ModelType) = apply { this.modelType = modelType }
 
-            @JsonProperty("package_with_allocation_config")
             fun packageWithAllocationConfig(
                 packageWithAllocationConfig: PackageWithAllocationConfig
             ) = apply { this.packageWithAllocationConfig = packageWithAllocationConfig }
 
             /** An ISO 4217 currency string for which this price is billed in. */
-            @JsonProperty("currency")
             fun currency(currency: String) = apply { this.currency = currency }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
@@ -14413,7 +14188,6 @@ constructor(
                 putAllAdditionalProperties(additionalProperties)
             }
 
-            @JsonAnySetter
             fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                 additionalProperties.put(key, value)
             }
@@ -14583,11 +14357,12 @@ constructor(
             override fun toString() = value.toString()
         }
 
-        @JsonDeserialize(builder = PackageWithAllocationConfig.Builder::class)
         @NoAutoDetect
         class PackageWithAllocationConfig
+        @JsonCreator
         private constructor(
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             @JsonAnyGetter
@@ -14616,7 +14391,6 @@ constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -14657,13 +14431,14 @@ constructor(
         }
 
         /** For custom cadence: specifies the duration of the billing period in days or months. */
-        @JsonDeserialize(builder = BillingCycleConfiguration.Builder::class)
         @NoAutoDetect
         class BillingCycleConfiguration
+        @JsonCreator
         private constructor(
-            private val duration: Long,
-            private val durationUnit: DurationUnit,
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonProperty("duration") private val duration: Long,
+            @JsonProperty("duration_unit") private val durationUnit: DurationUnit,
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             /** The duration of the billing period. */
@@ -14697,11 +14472,9 @@ constructor(
                 }
 
                 /** The duration of the billing period. */
-                @JsonProperty("duration")
                 fun duration(duration: Long) = apply { this.duration = duration }
 
                 /** The unit of billing period duration. */
-                @JsonProperty("duration_unit")
                 fun durationUnit(durationUnit: DurationUnit) = apply {
                     this.durationUnit = durationUnit
                 }
@@ -14711,7 +14484,6 @@ constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -14816,13 +14588,14 @@ constructor(
          * Within each billing cycle, specifies the cadence at which invoices are produced. If
          * unspecified, a single invoice is produced per billing cycle.
          */
-        @JsonDeserialize(builder = InvoicingCycleConfiguration.Builder::class)
         @NoAutoDetect
         class InvoicingCycleConfiguration
+        @JsonCreator
         private constructor(
-            private val duration: Long,
-            private val durationUnit: DurationUnit,
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonProperty("duration") private val duration: Long,
+            @JsonProperty("duration_unit") private val durationUnit: DurationUnit,
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             /** The duration of the billing period. */
@@ -14857,11 +14630,9 @@ constructor(
                     }
 
                 /** The duration of the billing period. */
-                @JsonProperty("duration")
                 fun duration(duration: Long) = apply { this.duration = duration }
 
                 /** The unit of billing period duration. */
-                @JsonProperty("duration_unit")
                 fun durationUnit(durationUnit: DurationUnit) = apply {
                     this.durationUnit = durationUnit
                 }
@@ -14871,7 +14642,6 @@ constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -14977,11 +14747,12 @@ constructor(
          * setting the value to `null`, and the entire metadata mapping can be cleared by setting
          * `metadata` to `null`.
          */
-        @JsonDeserialize(builder = Metadata.Builder::class)
         @NoAutoDetect
         class Metadata
+        @JsonCreator
         private constructor(
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             @JsonAnyGetter
@@ -15008,7 +14779,6 @@ constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -15064,26 +14834,30 @@ constructor(
             "NewFloatingPackageWithAllocationPrice{metadata=$metadata, externalPriceId=$externalPriceId, name=$name, billableMetricId=$billableMetricId, itemId=$itemId, billedInAdvance=$billedInAdvance, fixedPriceQuantity=$fixedPriceQuantity, invoiceGroupingKey=$invoiceGroupingKey, cadence=$cadence, billingCycleConfiguration=$billingCycleConfiguration, invoicingCycleConfiguration=$invoicingCycleConfiguration, conversionRate=$conversionRate, modelType=$modelType, packageWithAllocationConfig=$packageWithAllocationConfig, currency=$currency, additionalProperties=$additionalProperties}"
     }
 
-    @JsonDeserialize(builder = NewFloatingTieredPackageWithMinimumPrice.Builder::class)
     @NoAutoDetect
     class NewFloatingTieredPackageWithMinimumPrice
+    @JsonCreator
     private constructor(
-        private val metadata: Metadata?,
-        private val externalPriceId: String?,
-        private val name: String,
-        private val billableMetricId: String?,
-        private val itemId: String,
-        private val billedInAdvance: Boolean?,
-        private val fixedPriceQuantity: Double?,
-        private val invoiceGroupingKey: String?,
-        private val cadence: Cadence,
+        @JsonProperty("metadata") private val metadata: Metadata?,
+        @JsonProperty("external_price_id") private val externalPriceId: String?,
+        @JsonProperty("name") private val name: String,
+        @JsonProperty("billable_metric_id") private val billableMetricId: String?,
+        @JsonProperty("item_id") private val itemId: String,
+        @JsonProperty("billed_in_advance") private val billedInAdvance: Boolean?,
+        @JsonProperty("fixed_price_quantity") private val fixedPriceQuantity: Double?,
+        @JsonProperty("invoice_grouping_key") private val invoiceGroupingKey: String?,
+        @JsonProperty("cadence") private val cadence: Cadence,
+        @JsonProperty("billing_cycle_configuration")
         private val billingCycleConfiguration: BillingCycleConfiguration?,
+        @JsonProperty("invoicing_cycle_configuration")
         private val invoicingCycleConfiguration: InvoicingCycleConfiguration?,
-        private val conversionRate: Double?,
-        private val modelType: ModelType,
+        @JsonProperty("conversion_rate") private val conversionRate: Double?,
+        @JsonProperty("model_type") private val modelType: ModelType,
+        @JsonProperty("tiered_package_with_minimum_config")
         private val tieredPackageWithMinimumConfig: TieredPackageWithMinimumConfig,
-        private val currency: String,
-        private val additionalProperties: Map<String, JsonValue>,
+        @JsonProperty("currency") private val currency: String,
+        @JsonAnySetter
+        private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
 
         /**
@@ -15204,34 +14978,30 @@ constructor(
              * setting the value to `null`, and the entire metadata mapping can be cleared by
              * setting `metadata` to `null`.
              */
-            @JsonProperty("metadata")
             fun metadata(metadata: Metadata?) = apply { this.metadata = metadata }
 
             /** An alias for the price. */
-            @JsonProperty("external_price_id")
             fun externalPriceId(externalPriceId: String?) = apply {
                 this.externalPriceId = externalPriceId
             }
 
             /** The name of the price. */
-            @JsonProperty("name") fun name(name: String) = apply { this.name = name }
+            fun name(name: String) = apply { this.name = name }
 
             /**
              * The id of the billable metric for the price. Only needed if the price is usage-based.
              */
-            @JsonProperty("billable_metric_id")
             fun billableMetricId(billableMetricId: String?) = apply {
                 this.billableMetricId = billableMetricId
             }
 
             /** The id of the item the plan will be associated with. */
-            @JsonProperty("item_id") fun itemId(itemId: String) = apply { this.itemId = itemId }
+            fun itemId(itemId: String) = apply { this.itemId = itemId }
 
             /**
              * If the Price represents a fixed cost, the price will be billed in-advance if this is
              * true, and in-arrears if this is false.
              */
-            @JsonProperty("billed_in_advance")
             fun billedInAdvance(billedInAdvance: Boolean?) = apply {
                 this.billedInAdvance = billedInAdvance
             }
@@ -15239,25 +15009,21 @@ constructor(
             /**
              * If the Price represents a fixed cost, this represents the quantity of units applied.
              */
-            @JsonProperty("fixed_price_quantity")
             fun fixedPriceQuantity(fixedPriceQuantity: Double?) = apply {
                 this.fixedPriceQuantity = fixedPriceQuantity
             }
 
             /** The property used to group this price on an invoice */
-            @JsonProperty("invoice_grouping_key")
             fun invoiceGroupingKey(invoiceGroupingKey: String?) = apply {
                 this.invoiceGroupingKey = invoiceGroupingKey
             }
 
             /** The cadence to bill for this price on. */
-            @JsonProperty("cadence")
             fun cadence(cadence: Cadence) = apply { this.cadence = cadence }
 
             /**
              * For custom cadence: specifies the duration of the billing period in days or months.
              */
-            @JsonProperty("billing_cycle_configuration")
             fun billingCycleConfiguration(billingCycleConfiguration: BillingCycleConfiguration?) =
                 apply {
                     this.billingCycleConfiguration = billingCycleConfiguration
@@ -15267,27 +15033,22 @@ constructor(
              * Within each billing cycle, specifies the cadence at which invoices are produced. If
              * unspecified, a single invoice is produced per billing cycle.
              */
-            @JsonProperty("invoicing_cycle_configuration")
             fun invoicingCycleConfiguration(
                 invoicingCycleConfiguration: InvoicingCycleConfiguration?
             ) = apply { this.invoicingCycleConfiguration = invoicingCycleConfiguration }
 
             /** The per unit conversion rate of the price currency to the invoicing currency. */
-            @JsonProperty("conversion_rate")
             fun conversionRate(conversionRate: Double?) = apply {
                 this.conversionRate = conversionRate
             }
 
-            @JsonProperty("model_type")
             fun modelType(modelType: ModelType) = apply { this.modelType = modelType }
 
-            @JsonProperty("tiered_package_with_minimum_config")
             fun tieredPackageWithMinimumConfig(
                 tieredPackageWithMinimumConfig: TieredPackageWithMinimumConfig
             ) = apply { this.tieredPackageWithMinimumConfig = tieredPackageWithMinimumConfig }
 
             /** An ISO 4217 currency string for which this price is billed in. */
-            @JsonProperty("currency")
             fun currency(currency: String) = apply { this.currency = currency }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
@@ -15295,7 +15056,6 @@ constructor(
                 putAllAdditionalProperties(additionalProperties)
             }
 
-            @JsonAnySetter
             fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                 additionalProperties.put(key, value)
             }
@@ -15465,11 +15225,12 @@ constructor(
             override fun toString() = value.toString()
         }
 
-        @JsonDeserialize(builder = TieredPackageWithMinimumConfig.Builder::class)
         @NoAutoDetect
         class TieredPackageWithMinimumConfig
+        @JsonCreator
         private constructor(
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             @JsonAnyGetter
@@ -15498,7 +15259,6 @@ constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -15539,13 +15299,14 @@ constructor(
         }
 
         /** For custom cadence: specifies the duration of the billing period in days or months. */
-        @JsonDeserialize(builder = BillingCycleConfiguration.Builder::class)
         @NoAutoDetect
         class BillingCycleConfiguration
+        @JsonCreator
         private constructor(
-            private val duration: Long,
-            private val durationUnit: DurationUnit,
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonProperty("duration") private val duration: Long,
+            @JsonProperty("duration_unit") private val durationUnit: DurationUnit,
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             /** The duration of the billing period. */
@@ -15579,11 +15340,9 @@ constructor(
                 }
 
                 /** The duration of the billing period. */
-                @JsonProperty("duration")
                 fun duration(duration: Long) = apply { this.duration = duration }
 
                 /** The unit of billing period duration. */
-                @JsonProperty("duration_unit")
                 fun durationUnit(durationUnit: DurationUnit) = apply {
                     this.durationUnit = durationUnit
                 }
@@ -15593,7 +15352,6 @@ constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -15698,13 +15456,14 @@ constructor(
          * Within each billing cycle, specifies the cadence at which invoices are produced. If
          * unspecified, a single invoice is produced per billing cycle.
          */
-        @JsonDeserialize(builder = InvoicingCycleConfiguration.Builder::class)
         @NoAutoDetect
         class InvoicingCycleConfiguration
+        @JsonCreator
         private constructor(
-            private val duration: Long,
-            private val durationUnit: DurationUnit,
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonProperty("duration") private val duration: Long,
+            @JsonProperty("duration_unit") private val durationUnit: DurationUnit,
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             /** The duration of the billing period. */
@@ -15739,11 +15498,9 @@ constructor(
                     }
 
                 /** The duration of the billing period. */
-                @JsonProperty("duration")
                 fun duration(duration: Long) = apply { this.duration = duration }
 
                 /** The unit of billing period duration. */
-                @JsonProperty("duration_unit")
                 fun durationUnit(durationUnit: DurationUnit) = apply {
                     this.durationUnit = durationUnit
                 }
@@ -15753,7 +15510,6 @@ constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -15859,11 +15615,12 @@ constructor(
          * setting the value to `null`, and the entire metadata mapping can be cleared by setting
          * `metadata` to `null`.
          */
-        @JsonDeserialize(builder = Metadata.Builder::class)
         @NoAutoDetect
         class Metadata
+        @JsonCreator
         private constructor(
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             @JsonAnyGetter
@@ -15890,7 +15647,6 @@ constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -15946,26 +15702,30 @@ constructor(
             "NewFloatingTieredPackageWithMinimumPrice{metadata=$metadata, externalPriceId=$externalPriceId, name=$name, billableMetricId=$billableMetricId, itemId=$itemId, billedInAdvance=$billedInAdvance, fixedPriceQuantity=$fixedPriceQuantity, invoiceGroupingKey=$invoiceGroupingKey, cadence=$cadence, billingCycleConfiguration=$billingCycleConfiguration, invoicingCycleConfiguration=$invoicingCycleConfiguration, conversionRate=$conversionRate, modelType=$modelType, tieredPackageWithMinimumConfig=$tieredPackageWithMinimumConfig, currency=$currency, additionalProperties=$additionalProperties}"
     }
 
-    @JsonDeserialize(builder = NewFloatingUnitWithPercentPrice.Builder::class)
     @NoAutoDetect
     class NewFloatingUnitWithPercentPrice
+    @JsonCreator
     private constructor(
-        private val metadata: Metadata?,
-        private val externalPriceId: String?,
-        private val name: String,
-        private val billableMetricId: String?,
-        private val itemId: String,
-        private val billedInAdvance: Boolean?,
-        private val fixedPriceQuantity: Double?,
-        private val invoiceGroupingKey: String?,
-        private val cadence: Cadence,
+        @JsonProperty("metadata") private val metadata: Metadata?,
+        @JsonProperty("external_price_id") private val externalPriceId: String?,
+        @JsonProperty("name") private val name: String,
+        @JsonProperty("billable_metric_id") private val billableMetricId: String?,
+        @JsonProperty("item_id") private val itemId: String,
+        @JsonProperty("billed_in_advance") private val billedInAdvance: Boolean?,
+        @JsonProperty("fixed_price_quantity") private val fixedPriceQuantity: Double?,
+        @JsonProperty("invoice_grouping_key") private val invoiceGroupingKey: String?,
+        @JsonProperty("cadence") private val cadence: Cadence,
+        @JsonProperty("billing_cycle_configuration")
         private val billingCycleConfiguration: BillingCycleConfiguration?,
+        @JsonProperty("invoicing_cycle_configuration")
         private val invoicingCycleConfiguration: InvoicingCycleConfiguration?,
-        private val conversionRate: Double?,
-        private val modelType: ModelType,
+        @JsonProperty("conversion_rate") private val conversionRate: Double?,
+        @JsonProperty("model_type") private val modelType: ModelType,
+        @JsonProperty("unit_with_percent_config")
         private val unitWithPercentConfig: UnitWithPercentConfig,
-        private val currency: String,
-        private val additionalProperties: Map<String, JsonValue>,
+        @JsonProperty("currency") private val currency: String,
+        @JsonAnySetter
+        private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
 
         /**
@@ -16083,34 +15843,30 @@ constructor(
              * setting the value to `null`, and the entire metadata mapping can be cleared by
              * setting `metadata` to `null`.
              */
-            @JsonProperty("metadata")
             fun metadata(metadata: Metadata?) = apply { this.metadata = metadata }
 
             /** An alias for the price. */
-            @JsonProperty("external_price_id")
             fun externalPriceId(externalPriceId: String?) = apply {
                 this.externalPriceId = externalPriceId
             }
 
             /** The name of the price. */
-            @JsonProperty("name") fun name(name: String) = apply { this.name = name }
+            fun name(name: String) = apply { this.name = name }
 
             /**
              * The id of the billable metric for the price. Only needed if the price is usage-based.
              */
-            @JsonProperty("billable_metric_id")
             fun billableMetricId(billableMetricId: String?) = apply {
                 this.billableMetricId = billableMetricId
             }
 
             /** The id of the item the plan will be associated with. */
-            @JsonProperty("item_id") fun itemId(itemId: String) = apply { this.itemId = itemId }
+            fun itemId(itemId: String) = apply { this.itemId = itemId }
 
             /**
              * If the Price represents a fixed cost, the price will be billed in-advance if this is
              * true, and in-arrears if this is false.
              */
-            @JsonProperty("billed_in_advance")
             fun billedInAdvance(billedInAdvance: Boolean?) = apply {
                 this.billedInAdvance = billedInAdvance
             }
@@ -16118,25 +15874,21 @@ constructor(
             /**
              * If the Price represents a fixed cost, this represents the quantity of units applied.
              */
-            @JsonProperty("fixed_price_quantity")
             fun fixedPriceQuantity(fixedPriceQuantity: Double?) = apply {
                 this.fixedPriceQuantity = fixedPriceQuantity
             }
 
             /** The property used to group this price on an invoice */
-            @JsonProperty("invoice_grouping_key")
             fun invoiceGroupingKey(invoiceGroupingKey: String?) = apply {
                 this.invoiceGroupingKey = invoiceGroupingKey
             }
 
             /** The cadence to bill for this price on. */
-            @JsonProperty("cadence")
             fun cadence(cadence: Cadence) = apply { this.cadence = cadence }
 
             /**
              * For custom cadence: specifies the duration of the billing period in days or months.
              */
-            @JsonProperty("billing_cycle_configuration")
             fun billingCycleConfiguration(billingCycleConfiguration: BillingCycleConfiguration?) =
                 apply {
                     this.billingCycleConfiguration = billingCycleConfiguration
@@ -16146,27 +15898,22 @@ constructor(
              * Within each billing cycle, specifies the cadence at which invoices are produced. If
              * unspecified, a single invoice is produced per billing cycle.
              */
-            @JsonProperty("invoicing_cycle_configuration")
             fun invoicingCycleConfiguration(
                 invoicingCycleConfiguration: InvoicingCycleConfiguration?
             ) = apply { this.invoicingCycleConfiguration = invoicingCycleConfiguration }
 
             /** The per unit conversion rate of the price currency to the invoicing currency. */
-            @JsonProperty("conversion_rate")
             fun conversionRate(conversionRate: Double?) = apply {
                 this.conversionRate = conversionRate
             }
 
-            @JsonProperty("model_type")
             fun modelType(modelType: ModelType) = apply { this.modelType = modelType }
 
-            @JsonProperty("unit_with_percent_config")
             fun unitWithPercentConfig(unitWithPercentConfig: UnitWithPercentConfig) = apply {
                 this.unitWithPercentConfig = unitWithPercentConfig
             }
 
             /** An ISO 4217 currency string for which this price is billed in. */
-            @JsonProperty("currency")
             fun currency(currency: String) = apply { this.currency = currency }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
@@ -16174,7 +15921,6 @@ constructor(
                 putAllAdditionalProperties(additionalProperties)
             }
 
-            @JsonAnySetter
             fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                 additionalProperties.put(key, value)
             }
@@ -16344,11 +16090,12 @@ constructor(
             override fun toString() = value.toString()
         }
 
-        @JsonDeserialize(builder = UnitWithPercentConfig.Builder::class)
         @NoAutoDetect
         class UnitWithPercentConfig
+        @JsonCreator
         private constructor(
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             @JsonAnyGetter
@@ -16375,7 +16122,6 @@ constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -16416,13 +16162,14 @@ constructor(
         }
 
         /** For custom cadence: specifies the duration of the billing period in days or months. */
-        @JsonDeserialize(builder = BillingCycleConfiguration.Builder::class)
         @NoAutoDetect
         class BillingCycleConfiguration
+        @JsonCreator
         private constructor(
-            private val duration: Long,
-            private val durationUnit: DurationUnit,
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonProperty("duration") private val duration: Long,
+            @JsonProperty("duration_unit") private val durationUnit: DurationUnit,
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             /** The duration of the billing period. */
@@ -16456,11 +16203,9 @@ constructor(
                 }
 
                 /** The duration of the billing period. */
-                @JsonProperty("duration")
                 fun duration(duration: Long) = apply { this.duration = duration }
 
                 /** The unit of billing period duration. */
-                @JsonProperty("duration_unit")
                 fun durationUnit(durationUnit: DurationUnit) = apply {
                     this.durationUnit = durationUnit
                 }
@@ -16470,7 +16215,6 @@ constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -16575,13 +16319,14 @@ constructor(
          * Within each billing cycle, specifies the cadence at which invoices are produced. If
          * unspecified, a single invoice is produced per billing cycle.
          */
-        @JsonDeserialize(builder = InvoicingCycleConfiguration.Builder::class)
         @NoAutoDetect
         class InvoicingCycleConfiguration
+        @JsonCreator
         private constructor(
-            private val duration: Long,
-            private val durationUnit: DurationUnit,
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonProperty("duration") private val duration: Long,
+            @JsonProperty("duration_unit") private val durationUnit: DurationUnit,
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             /** The duration of the billing period. */
@@ -16616,11 +16361,9 @@ constructor(
                     }
 
                 /** The duration of the billing period. */
-                @JsonProperty("duration")
                 fun duration(duration: Long) = apply { this.duration = duration }
 
                 /** The unit of billing period duration. */
-                @JsonProperty("duration_unit")
                 fun durationUnit(durationUnit: DurationUnit) = apply {
                     this.durationUnit = durationUnit
                 }
@@ -16630,7 +16373,6 @@ constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -16736,11 +16478,12 @@ constructor(
          * setting the value to `null`, and the entire metadata mapping can be cleared by setting
          * `metadata` to `null`.
          */
-        @JsonDeserialize(builder = Metadata.Builder::class)
         @NoAutoDetect
         class Metadata
+        @JsonCreator
         private constructor(
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             @JsonAnyGetter
@@ -16767,7 +16510,6 @@ constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -16823,26 +16565,30 @@ constructor(
             "NewFloatingUnitWithPercentPrice{metadata=$metadata, externalPriceId=$externalPriceId, name=$name, billableMetricId=$billableMetricId, itemId=$itemId, billedInAdvance=$billedInAdvance, fixedPriceQuantity=$fixedPriceQuantity, invoiceGroupingKey=$invoiceGroupingKey, cadence=$cadence, billingCycleConfiguration=$billingCycleConfiguration, invoicingCycleConfiguration=$invoicingCycleConfiguration, conversionRate=$conversionRate, modelType=$modelType, unitWithPercentConfig=$unitWithPercentConfig, currency=$currency, additionalProperties=$additionalProperties}"
     }
 
-    @JsonDeserialize(builder = NewFloatingTieredWithProrationPrice.Builder::class)
     @NoAutoDetect
     class NewFloatingTieredWithProrationPrice
+    @JsonCreator
     private constructor(
-        private val metadata: Metadata?,
-        private val externalPriceId: String?,
-        private val name: String,
-        private val billableMetricId: String?,
-        private val itemId: String,
-        private val billedInAdvance: Boolean?,
-        private val fixedPriceQuantity: Double?,
-        private val invoiceGroupingKey: String?,
-        private val cadence: Cadence,
+        @JsonProperty("metadata") private val metadata: Metadata?,
+        @JsonProperty("external_price_id") private val externalPriceId: String?,
+        @JsonProperty("name") private val name: String,
+        @JsonProperty("billable_metric_id") private val billableMetricId: String?,
+        @JsonProperty("item_id") private val itemId: String,
+        @JsonProperty("billed_in_advance") private val billedInAdvance: Boolean?,
+        @JsonProperty("fixed_price_quantity") private val fixedPriceQuantity: Double?,
+        @JsonProperty("invoice_grouping_key") private val invoiceGroupingKey: String?,
+        @JsonProperty("cadence") private val cadence: Cadence,
+        @JsonProperty("billing_cycle_configuration")
         private val billingCycleConfiguration: BillingCycleConfiguration?,
+        @JsonProperty("invoicing_cycle_configuration")
         private val invoicingCycleConfiguration: InvoicingCycleConfiguration?,
-        private val conversionRate: Double?,
-        private val modelType: ModelType,
+        @JsonProperty("conversion_rate") private val conversionRate: Double?,
+        @JsonProperty("model_type") private val modelType: ModelType,
+        @JsonProperty("tiered_with_proration_config")
         private val tieredWithProrationConfig: TieredWithProrationConfig,
-        private val currency: String,
-        private val additionalProperties: Map<String, JsonValue>,
+        @JsonProperty("currency") private val currency: String,
+        @JsonAnySetter
+        private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
 
         /**
@@ -16962,34 +16708,30 @@ constructor(
              * setting the value to `null`, and the entire metadata mapping can be cleared by
              * setting `metadata` to `null`.
              */
-            @JsonProperty("metadata")
             fun metadata(metadata: Metadata?) = apply { this.metadata = metadata }
 
             /** An alias for the price. */
-            @JsonProperty("external_price_id")
             fun externalPriceId(externalPriceId: String?) = apply {
                 this.externalPriceId = externalPriceId
             }
 
             /** The name of the price. */
-            @JsonProperty("name") fun name(name: String) = apply { this.name = name }
+            fun name(name: String) = apply { this.name = name }
 
             /**
              * The id of the billable metric for the price. Only needed if the price is usage-based.
              */
-            @JsonProperty("billable_metric_id")
             fun billableMetricId(billableMetricId: String?) = apply {
                 this.billableMetricId = billableMetricId
             }
 
             /** The id of the item the plan will be associated with. */
-            @JsonProperty("item_id") fun itemId(itemId: String) = apply { this.itemId = itemId }
+            fun itemId(itemId: String) = apply { this.itemId = itemId }
 
             /**
              * If the Price represents a fixed cost, the price will be billed in-advance if this is
              * true, and in-arrears if this is false.
              */
-            @JsonProperty("billed_in_advance")
             fun billedInAdvance(billedInAdvance: Boolean?) = apply {
                 this.billedInAdvance = billedInAdvance
             }
@@ -16997,25 +16739,21 @@ constructor(
             /**
              * If the Price represents a fixed cost, this represents the quantity of units applied.
              */
-            @JsonProperty("fixed_price_quantity")
             fun fixedPriceQuantity(fixedPriceQuantity: Double?) = apply {
                 this.fixedPriceQuantity = fixedPriceQuantity
             }
 
             /** The property used to group this price on an invoice */
-            @JsonProperty("invoice_grouping_key")
             fun invoiceGroupingKey(invoiceGroupingKey: String?) = apply {
                 this.invoiceGroupingKey = invoiceGroupingKey
             }
 
             /** The cadence to bill for this price on. */
-            @JsonProperty("cadence")
             fun cadence(cadence: Cadence) = apply { this.cadence = cadence }
 
             /**
              * For custom cadence: specifies the duration of the billing period in days or months.
              */
-            @JsonProperty("billing_cycle_configuration")
             fun billingCycleConfiguration(billingCycleConfiguration: BillingCycleConfiguration?) =
                 apply {
                     this.billingCycleConfiguration = billingCycleConfiguration
@@ -17025,28 +16763,23 @@ constructor(
              * Within each billing cycle, specifies the cadence at which invoices are produced. If
              * unspecified, a single invoice is produced per billing cycle.
              */
-            @JsonProperty("invoicing_cycle_configuration")
             fun invoicingCycleConfiguration(
                 invoicingCycleConfiguration: InvoicingCycleConfiguration?
             ) = apply { this.invoicingCycleConfiguration = invoicingCycleConfiguration }
 
             /** The per unit conversion rate of the price currency to the invoicing currency. */
-            @JsonProperty("conversion_rate")
             fun conversionRate(conversionRate: Double?) = apply {
                 this.conversionRate = conversionRate
             }
 
-            @JsonProperty("model_type")
             fun modelType(modelType: ModelType) = apply { this.modelType = modelType }
 
-            @JsonProperty("tiered_with_proration_config")
             fun tieredWithProrationConfig(tieredWithProrationConfig: TieredWithProrationConfig) =
                 apply {
                     this.tieredWithProrationConfig = tieredWithProrationConfig
                 }
 
             /** An ISO 4217 currency string for which this price is billed in. */
-            @JsonProperty("currency")
             fun currency(currency: String) = apply { this.currency = currency }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
@@ -17054,7 +16787,6 @@ constructor(
                 putAllAdditionalProperties(additionalProperties)
             }
 
-            @JsonAnySetter
             fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                 additionalProperties.put(key, value)
             }
@@ -17224,11 +16956,12 @@ constructor(
             override fun toString() = value.toString()
         }
 
-        @JsonDeserialize(builder = TieredWithProrationConfig.Builder::class)
         @NoAutoDetect
         class TieredWithProrationConfig
+        @JsonCreator
         private constructor(
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             @JsonAnyGetter
@@ -17256,7 +16989,6 @@ constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -17297,13 +17029,14 @@ constructor(
         }
 
         /** For custom cadence: specifies the duration of the billing period in days or months. */
-        @JsonDeserialize(builder = BillingCycleConfiguration.Builder::class)
         @NoAutoDetect
         class BillingCycleConfiguration
+        @JsonCreator
         private constructor(
-            private val duration: Long,
-            private val durationUnit: DurationUnit,
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonProperty("duration") private val duration: Long,
+            @JsonProperty("duration_unit") private val durationUnit: DurationUnit,
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             /** The duration of the billing period. */
@@ -17337,11 +17070,9 @@ constructor(
                 }
 
                 /** The duration of the billing period. */
-                @JsonProperty("duration")
                 fun duration(duration: Long) = apply { this.duration = duration }
 
                 /** The unit of billing period duration. */
-                @JsonProperty("duration_unit")
                 fun durationUnit(durationUnit: DurationUnit) = apply {
                     this.durationUnit = durationUnit
                 }
@@ -17351,7 +17082,6 @@ constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -17456,13 +17186,14 @@ constructor(
          * Within each billing cycle, specifies the cadence at which invoices are produced. If
          * unspecified, a single invoice is produced per billing cycle.
          */
-        @JsonDeserialize(builder = InvoicingCycleConfiguration.Builder::class)
         @NoAutoDetect
         class InvoicingCycleConfiguration
+        @JsonCreator
         private constructor(
-            private val duration: Long,
-            private val durationUnit: DurationUnit,
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonProperty("duration") private val duration: Long,
+            @JsonProperty("duration_unit") private val durationUnit: DurationUnit,
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             /** The duration of the billing period. */
@@ -17497,11 +17228,9 @@ constructor(
                     }
 
                 /** The duration of the billing period. */
-                @JsonProperty("duration")
                 fun duration(duration: Long) = apply { this.duration = duration }
 
                 /** The unit of billing period duration. */
-                @JsonProperty("duration_unit")
                 fun durationUnit(durationUnit: DurationUnit) = apply {
                     this.durationUnit = durationUnit
                 }
@@ -17511,7 +17240,6 @@ constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -17617,11 +17345,12 @@ constructor(
          * setting the value to `null`, and the entire metadata mapping can be cleared by setting
          * `metadata` to `null`.
          */
-        @JsonDeserialize(builder = Metadata.Builder::class)
         @NoAutoDetect
         class Metadata
+        @JsonCreator
         private constructor(
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             @JsonAnyGetter
@@ -17648,7 +17377,6 @@ constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -17704,26 +17432,30 @@ constructor(
             "NewFloatingTieredWithProrationPrice{metadata=$metadata, externalPriceId=$externalPriceId, name=$name, billableMetricId=$billableMetricId, itemId=$itemId, billedInAdvance=$billedInAdvance, fixedPriceQuantity=$fixedPriceQuantity, invoiceGroupingKey=$invoiceGroupingKey, cadence=$cadence, billingCycleConfiguration=$billingCycleConfiguration, invoicingCycleConfiguration=$invoicingCycleConfiguration, conversionRate=$conversionRate, modelType=$modelType, tieredWithProrationConfig=$tieredWithProrationConfig, currency=$currency, additionalProperties=$additionalProperties}"
     }
 
-    @JsonDeserialize(builder = NewFloatingUnitWithProrationPrice.Builder::class)
     @NoAutoDetect
     class NewFloatingUnitWithProrationPrice
+    @JsonCreator
     private constructor(
-        private val metadata: Metadata?,
-        private val externalPriceId: String?,
-        private val name: String,
-        private val billableMetricId: String?,
-        private val itemId: String,
-        private val billedInAdvance: Boolean?,
-        private val fixedPriceQuantity: Double?,
-        private val invoiceGroupingKey: String?,
-        private val cadence: Cadence,
+        @JsonProperty("metadata") private val metadata: Metadata?,
+        @JsonProperty("external_price_id") private val externalPriceId: String?,
+        @JsonProperty("name") private val name: String,
+        @JsonProperty("billable_metric_id") private val billableMetricId: String?,
+        @JsonProperty("item_id") private val itemId: String,
+        @JsonProperty("billed_in_advance") private val billedInAdvance: Boolean?,
+        @JsonProperty("fixed_price_quantity") private val fixedPriceQuantity: Double?,
+        @JsonProperty("invoice_grouping_key") private val invoiceGroupingKey: String?,
+        @JsonProperty("cadence") private val cadence: Cadence,
+        @JsonProperty("billing_cycle_configuration")
         private val billingCycleConfiguration: BillingCycleConfiguration?,
+        @JsonProperty("invoicing_cycle_configuration")
         private val invoicingCycleConfiguration: InvoicingCycleConfiguration?,
-        private val conversionRate: Double?,
-        private val modelType: ModelType,
+        @JsonProperty("conversion_rate") private val conversionRate: Double?,
+        @JsonProperty("model_type") private val modelType: ModelType,
+        @JsonProperty("unit_with_proration_config")
         private val unitWithProrationConfig: UnitWithProrationConfig,
-        private val currency: String,
-        private val additionalProperties: Map<String, JsonValue>,
+        @JsonProperty("currency") private val currency: String,
+        @JsonAnySetter
+        private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
 
         /**
@@ -17842,34 +17574,30 @@ constructor(
              * setting the value to `null`, and the entire metadata mapping can be cleared by
              * setting `metadata` to `null`.
              */
-            @JsonProperty("metadata")
             fun metadata(metadata: Metadata?) = apply { this.metadata = metadata }
 
             /** An alias for the price. */
-            @JsonProperty("external_price_id")
             fun externalPriceId(externalPriceId: String?) = apply {
                 this.externalPriceId = externalPriceId
             }
 
             /** The name of the price. */
-            @JsonProperty("name") fun name(name: String) = apply { this.name = name }
+            fun name(name: String) = apply { this.name = name }
 
             /**
              * The id of the billable metric for the price. Only needed if the price is usage-based.
              */
-            @JsonProperty("billable_metric_id")
             fun billableMetricId(billableMetricId: String?) = apply {
                 this.billableMetricId = billableMetricId
             }
 
             /** The id of the item the plan will be associated with. */
-            @JsonProperty("item_id") fun itemId(itemId: String) = apply { this.itemId = itemId }
+            fun itemId(itemId: String) = apply { this.itemId = itemId }
 
             /**
              * If the Price represents a fixed cost, the price will be billed in-advance if this is
              * true, and in-arrears if this is false.
              */
-            @JsonProperty("billed_in_advance")
             fun billedInAdvance(billedInAdvance: Boolean?) = apply {
                 this.billedInAdvance = billedInAdvance
             }
@@ -17877,25 +17605,21 @@ constructor(
             /**
              * If the Price represents a fixed cost, this represents the quantity of units applied.
              */
-            @JsonProperty("fixed_price_quantity")
             fun fixedPriceQuantity(fixedPriceQuantity: Double?) = apply {
                 this.fixedPriceQuantity = fixedPriceQuantity
             }
 
             /** The property used to group this price on an invoice */
-            @JsonProperty("invoice_grouping_key")
             fun invoiceGroupingKey(invoiceGroupingKey: String?) = apply {
                 this.invoiceGroupingKey = invoiceGroupingKey
             }
 
             /** The cadence to bill for this price on. */
-            @JsonProperty("cadence")
             fun cadence(cadence: Cadence) = apply { this.cadence = cadence }
 
             /**
              * For custom cadence: specifies the duration of the billing period in days or months.
              */
-            @JsonProperty("billing_cycle_configuration")
             fun billingCycleConfiguration(billingCycleConfiguration: BillingCycleConfiguration?) =
                 apply {
                     this.billingCycleConfiguration = billingCycleConfiguration
@@ -17905,27 +17629,22 @@ constructor(
              * Within each billing cycle, specifies the cadence at which invoices are produced. If
              * unspecified, a single invoice is produced per billing cycle.
              */
-            @JsonProperty("invoicing_cycle_configuration")
             fun invoicingCycleConfiguration(
                 invoicingCycleConfiguration: InvoicingCycleConfiguration?
             ) = apply { this.invoicingCycleConfiguration = invoicingCycleConfiguration }
 
             /** The per unit conversion rate of the price currency to the invoicing currency. */
-            @JsonProperty("conversion_rate")
             fun conversionRate(conversionRate: Double?) = apply {
                 this.conversionRate = conversionRate
             }
 
-            @JsonProperty("model_type")
             fun modelType(modelType: ModelType) = apply { this.modelType = modelType }
 
-            @JsonProperty("unit_with_proration_config")
             fun unitWithProrationConfig(unitWithProrationConfig: UnitWithProrationConfig) = apply {
                 this.unitWithProrationConfig = unitWithProrationConfig
             }
 
             /** An ISO 4217 currency string for which this price is billed in. */
-            @JsonProperty("currency")
             fun currency(currency: String) = apply { this.currency = currency }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
@@ -17933,7 +17652,6 @@ constructor(
                 putAllAdditionalProperties(additionalProperties)
             }
 
-            @JsonAnySetter
             fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                 additionalProperties.put(key, value)
             }
@@ -18103,11 +17821,12 @@ constructor(
             override fun toString() = value.toString()
         }
 
-        @JsonDeserialize(builder = UnitWithProrationConfig.Builder::class)
         @NoAutoDetect
         class UnitWithProrationConfig
+        @JsonCreator
         private constructor(
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             @JsonAnyGetter
@@ -18135,7 +17854,6 @@ constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -18176,13 +17894,14 @@ constructor(
         }
 
         /** For custom cadence: specifies the duration of the billing period in days or months. */
-        @JsonDeserialize(builder = BillingCycleConfiguration.Builder::class)
         @NoAutoDetect
         class BillingCycleConfiguration
+        @JsonCreator
         private constructor(
-            private val duration: Long,
-            private val durationUnit: DurationUnit,
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonProperty("duration") private val duration: Long,
+            @JsonProperty("duration_unit") private val durationUnit: DurationUnit,
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             /** The duration of the billing period. */
@@ -18216,11 +17935,9 @@ constructor(
                 }
 
                 /** The duration of the billing period. */
-                @JsonProperty("duration")
                 fun duration(duration: Long) = apply { this.duration = duration }
 
                 /** The unit of billing period duration. */
-                @JsonProperty("duration_unit")
                 fun durationUnit(durationUnit: DurationUnit) = apply {
                     this.durationUnit = durationUnit
                 }
@@ -18230,7 +17947,6 @@ constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -18335,13 +18051,14 @@ constructor(
          * Within each billing cycle, specifies the cadence at which invoices are produced. If
          * unspecified, a single invoice is produced per billing cycle.
          */
-        @JsonDeserialize(builder = InvoicingCycleConfiguration.Builder::class)
         @NoAutoDetect
         class InvoicingCycleConfiguration
+        @JsonCreator
         private constructor(
-            private val duration: Long,
-            private val durationUnit: DurationUnit,
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonProperty("duration") private val duration: Long,
+            @JsonProperty("duration_unit") private val durationUnit: DurationUnit,
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             /** The duration of the billing period. */
@@ -18376,11 +18093,9 @@ constructor(
                     }
 
                 /** The duration of the billing period. */
-                @JsonProperty("duration")
                 fun duration(duration: Long) = apply { this.duration = duration }
 
                 /** The unit of billing period duration. */
-                @JsonProperty("duration_unit")
                 fun durationUnit(durationUnit: DurationUnit) = apply {
                     this.durationUnit = durationUnit
                 }
@@ -18390,7 +18105,6 @@ constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -18496,11 +18210,12 @@ constructor(
          * setting the value to `null`, and the entire metadata mapping can be cleared by setting
          * `metadata` to `null`.
          */
-        @JsonDeserialize(builder = Metadata.Builder::class)
         @NoAutoDetect
         class Metadata
+        @JsonCreator
         private constructor(
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             @JsonAnyGetter
@@ -18527,7 +18242,6 @@ constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -18583,26 +18297,30 @@ constructor(
             "NewFloatingUnitWithProrationPrice{metadata=$metadata, externalPriceId=$externalPriceId, name=$name, billableMetricId=$billableMetricId, itemId=$itemId, billedInAdvance=$billedInAdvance, fixedPriceQuantity=$fixedPriceQuantity, invoiceGroupingKey=$invoiceGroupingKey, cadence=$cadence, billingCycleConfiguration=$billingCycleConfiguration, invoicingCycleConfiguration=$invoicingCycleConfiguration, conversionRate=$conversionRate, modelType=$modelType, unitWithProrationConfig=$unitWithProrationConfig, currency=$currency, additionalProperties=$additionalProperties}"
     }
 
-    @JsonDeserialize(builder = NewFloatingGroupedAllocationPrice.Builder::class)
     @NoAutoDetect
     class NewFloatingGroupedAllocationPrice
+    @JsonCreator
     private constructor(
-        private val metadata: Metadata?,
-        private val externalPriceId: String?,
-        private val name: String,
-        private val billableMetricId: String?,
-        private val itemId: String,
-        private val billedInAdvance: Boolean?,
-        private val fixedPriceQuantity: Double?,
-        private val invoiceGroupingKey: String?,
-        private val cadence: Cadence,
+        @JsonProperty("metadata") private val metadata: Metadata?,
+        @JsonProperty("external_price_id") private val externalPriceId: String?,
+        @JsonProperty("name") private val name: String,
+        @JsonProperty("billable_metric_id") private val billableMetricId: String?,
+        @JsonProperty("item_id") private val itemId: String,
+        @JsonProperty("billed_in_advance") private val billedInAdvance: Boolean?,
+        @JsonProperty("fixed_price_quantity") private val fixedPriceQuantity: Double?,
+        @JsonProperty("invoice_grouping_key") private val invoiceGroupingKey: String?,
+        @JsonProperty("cadence") private val cadence: Cadence,
+        @JsonProperty("billing_cycle_configuration")
         private val billingCycleConfiguration: BillingCycleConfiguration?,
+        @JsonProperty("invoicing_cycle_configuration")
         private val invoicingCycleConfiguration: InvoicingCycleConfiguration?,
-        private val conversionRate: Double?,
-        private val modelType: ModelType,
+        @JsonProperty("conversion_rate") private val conversionRate: Double?,
+        @JsonProperty("model_type") private val modelType: ModelType,
+        @JsonProperty("grouped_allocation_config")
         private val groupedAllocationConfig: GroupedAllocationConfig,
-        private val currency: String,
-        private val additionalProperties: Map<String, JsonValue>,
+        @JsonProperty("currency") private val currency: String,
+        @JsonAnySetter
+        private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
 
         /**
@@ -18721,34 +18439,30 @@ constructor(
              * setting the value to `null`, and the entire metadata mapping can be cleared by
              * setting `metadata` to `null`.
              */
-            @JsonProperty("metadata")
             fun metadata(metadata: Metadata?) = apply { this.metadata = metadata }
 
             /** An alias for the price. */
-            @JsonProperty("external_price_id")
             fun externalPriceId(externalPriceId: String?) = apply {
                 this.externalPriceId = externalPriceId
             }
 
             /** The name of the price. */
-            @JsonProperty("name") fun name(name: String) = apply { this.name = name }
+            fun name(name: String) = apply { this.name = name }
 
             /**
              * The id of the billable metric for the price. Only needed if the price is usage-based.
              */
-            @JsonProperty("billable_metric_id")
             fun billableMetricId(billableMetricId: String?) = apply {
                 this.billableMetricId = billableMetricId
             }
 
             /** The id of the item the plan will be associated with. */
-            @JsonProperty("item_id") fun itemId(itemId: String) = apply { this.itemId = itemId }
+            fun itemId(itemId: String) = apply { this.itemId = itemId }
 
             /**
              * If the Price represents a fixed cost, the price will be billed in-advance if this is
              * true, and in-arrears if this is false.
              */
-            @JsonProperty("billed_in_advance")
             fun billedInAdvance(billedInAdvance: Boolean?) = apply {
                 this.billedInAdvance = billedInAdvance
             }
@@ -18756,25 +18470,21 @@ constructor(
             /**
              * If the Price represents a fixed cost, this represents the quantity of units applied.
              */
-            @JsonProperty("fixed_price_quantity")
             fun fixedPriceQuantity(fixedPriceQuantity: Double?) = apply {
                 this.fixedPriceQuantity = fixedPriceQuantity
             }
 
             /** The property used to group this price on an invoice */
-            @JsonProperty("invoice_grouping_key")
             fun invoiceGroupingKey(invoiceGroupingKey: String?) = apply {
                 this.invoiceGroupingKey = invoiceGroupingKey
             }
 
             /** The cadence to bill for this price on. */
-            @JsonProperty("cadence")
             fun cadence(cadence: Cadence) = apply { this.cadence = cadence }
 
             /**
              * For custom cadence: specifies the duration of the billing period in days or months.
              */
-            @JsonProperty("billing_cycle_configuration")
             fun billingCycleConfiguration(billingCycleConfiguration: BillingCycleConfiguration?) =
                 apply {
                     this.billingCycleConfiguration = billingCycleConfiguration
@@ -18784,27 +18494,22 @@ constructor(
              * Within each billing cycle, specifies the cadence at which invoices are produced. If
              * unspecified, a single invoice is produced per billing cycle.
              */
-            @JsonProperty("invoicing_cycle_configuration")
             fun invoicingCycleConfiguration(
                 invoicingCycleConfiguration: InvoicingCycleConfiguration?
             ) = apply { this.invoicingCycleConfiguration = invoicingCycleConfiguration }
 
             /** The per unit conversion rate of the price currency to the invoicing currency. */
-            @JsonProperty("conversion_rate")
             fun conversionRate(conversionRate: Double?) = apply {
                 this.conversionRate = conversionRate
             }
 
-            @JsonProperty("model_type")
             fun modelType(modelType: ModelType) = apply { this.modelType = modelType }
 
-            @JsonProperty("grouped_allocation_config")
             fun groupedAllocationConfig(groupedAllocationConfig: GroupedAllocationConfig) = apply {
                 this.groupedAllocationConfig = groupedAllocationConfig
             }
 
             /** An ISO 4217 currency string for which this price is billed in. */
-            @JsonProperty("currency")
             fun currency(currency: String) = apply { this.currency = currency }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
@@ -18812,7 +18517,6 @@ constructor(
                 putAllAdditionalProperties(additionalProperties)
             }
 
-            @JsonAnySetter
             fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                 additionalProperties.put(key, value)
             }
@@ -18931,11 +18635,12 @@ constructor(
             override fun toString() = value.toString()
         }
 
-        @JsonDeserialize(builder = GroupedAllocationConfig.Builder::class)
         @NoAutoDetect
         class GroupedAllocationConfig
+        @JsonCreator
         private constructor(
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             @JsonAnyGetter
@@ -18963,7 +18668,6 @@ constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -19055,13 +18759,14 @@ constructor(
         }
 
         /** For custom cadence: specifies the duration of the billing period in days or months. */
-        @JsonDeserialize(builder = BillingCycleConfiguration.Builder::class)
         @NoAutoDetect
         class BillingCycleConfiguration
+        @JsonCreator
         private constructor(
-            private val duration: Long,
-            private val durationUnit: DurationUnit,
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonProperty("duration") private val duration: Long,
+            @JsonProperty("duration_unit") private val durationUnit: DurationUnit,
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             /** The duration of the billing period. */
@@ -19095,11 +18800,9 @@ constructor(
                 }
 
                 /** The duration of the billing period. */
-                @JsonProperty("duration")
                 fun duration(duration: Long) = apply { this.duration = duration }
 
                 /** The unit of billing period duration. */
-                @JsonProperty("duration_unit")
                 fun durationUnit(durationUnit: DurationUnit) = apply {
                     this.durationUnit = durationUnit
                 }
@@ -19109,7 +18812,6 @@ constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -19214,13 +18916,14 @@ constructor(
          * Within each billing cycle, specifies the cadence at which invoices are produced. If
          * unspecified, a single invoice is produced per billing cycle.
          */
-        @JsonDeserialize(builder = InvoicingCycleConfiguration.Builder::class)
         @NoAutoDetect
         class InvoicingCycleConfiguration
+        @JsonCreator
         private constructor(
-            private val duration: Long,
-            private val durationUnit: DurationUnit,
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonProperty("duration") private val duration: Long,
+            @JsonProperty("duration_unit") private val durationUnit: DurationUnit,
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             /** The duration of the billing period. */
@@ -19255,11 +18958,9 @@ constructor(
                     }
 
                 /** The duration of the billing period. */
-                @JsonProperty("duration")
                 fun duration(duration: Long) = apply { this.duration = duration }
 
                 /** The unit of billing period duration. */
-                @JsonProperty("duration_unit")
                 fun durationUnit(durationUnit: DurationUnit) = apply {
                     this.durationUnit = durationUnit
                 }
@@ -19269,7 +18970,6 @@ constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -19375,11 +19075,12 @@ constructor(
          * setting the value to `null`, and the entire metadata mapping can be cleared by setting
          * `metadata` to `null`.
          */
-        @JsonDeserialize(builder = Metadata.Builder::class)
         @NoAutoDetect
         class Metadata
+        @JsonCreator
         private constructor(
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             @JsonAnyGetter
@@ -19406,7 +19107,6 @@ constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -19462,26 +19162,30 @@ constructor(
             "NewFloatingGroupedAllocationPrice{metadata=$metadata, externalPriceId=$externalPriceId, name=$name, billableMetricId=$billableMetricId, itemId=$itemId, billedInAdvance=$billedInAdvance, fixedPriceQuantity=$fixedPriceQuantity, invoiceGroupingKey=$invoiceGroupingKey, cadence=$cadence, billingCycleConfiguration=$billingCycleConfiguration, invoicingCycleConfiguration=$invoicingCycleConfiguration, conversionRate=$conversionRate, modelType=$modelType, groupedAllocationConfig=$groupedAllocationConfig, currency=$currency, additionalProperties=$additionalProperties}"
     }
 
-    @JsonDeserialize(builder = NewFloatingGroupedWithProratedMinimumPrice.Builder::class)
     @NoAutoDetect
     class NewFloatingGroupedWithProratedMinimumPrice
+    @JsonCreator
     private constructor(
-        private val metadata: Metadata?,
-        private val externalPriceId: String?,
-        private val name: String,
-        private val billableMetricId: String?,
-        private val itemId: String,
-        private val billedInAdvance: Boolean?,
-        private val fixedPriceQuantity: Double?,
-        private val invoiceGroupingKey: String?,
-        private val cadence: Cadence,
+        @JsonProperty("metadata") private val metadata: Metadata?,
+        @JsonProperty("external_price_id") private val externalPriceId: String?,
+        @JsonProperty("name") private val name: String,
+        @JsonProperty("billable_metric_id") private val billableMetricId: String?,
+        @JsonProperty("item_id") private val itemId: String,
+        @JsonProperty("billed_in_advance") private val billedInAdvance: Boolean?,
+        @JsonProperty("fixed_price_quantity") private val fixedPriceQuantity: Double?,
+        @JsonProperty("invoice_grouping_key") private val invoiceGroupingKey: String?,
+        @JsonProperty("cadence") private val cadence: Cadence,
+        @JsonProperty("billing_cycle_configuration")
         private val billingCycleConfiguration: BillingCycleConfiguration?,
+        @JsonProperty("invoicing_cycle_configuration")
         private val invoicingCycleConfiguration: InvoicingCycleConfiguration?,
-        private val conversionRate: Double?,
-        private val modelType: ModelType,
+        @JsonProperty("conversion_rate") private val conversionRate: Double?,
+        @JsonProperty("model_type") private val modelType: ModelType,
+        @JsonProperty("grouped_with_prorated_minimum_config")
         private val groupedWithProratedMinimumConfig: GroupedWithProratedMinimumConfig,
-        private val currency: String,
-        private val additionalProperties: Map<String, JsonValue>,
+        @JsonProperty("currency") private val currency: String,
+        @JsonAnySetter
+        private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
 
         /**
@@ -19603,34 +19307,30 @@ constructor(
              * setting the value to `null`, and the entire metadata mapping can be cleared by
              * setting `metadata` to `null`.
              */
-            @JsonProperty("metadata")
             fun metadata(metadata: Metadata?) = apply { this.metadata = metadata }
 
             /** An alias for the price. */
-            @JsonProperty("external_price_id")
             fun externalPriceId(externalPriceId: String?) = apply {
                 this.externalPriceId = externalPriceId
             }
 
             /** The name of the price. */
-            @JsonProperty("name") fun name(name: String) = apply { this.name = name }
+            fun name(name: String) = apply { this.name = name }
 
             /**
              * The id of the billable metric for the price. Only needed if the price is usage-based.
              */
-            @JsonProperty("billable_metric_id")
             fun billableMetricId(billableMetricId: String?) = apply {
                 this.billableMetricId = billableMetricId
             }
 
             /** The id of the item the plan will be associated with. */
-            @JsonProperty("item_id") fun itemId(itemId: String) = apply { this.itemId = itemId }
+            fun itemId(itemId: String) = apply { this.itemId = itemId }
 
             /**
              * If the Price represents a fixed cost, the price will be billed in-advance if this is
              * true, and in-arrears if this is false.
              */
-            @JsonProperty("billed_in_advance")
             fun billedInAdvance(billedInAdvance: Boolean?) = apply {
                 this.billedInAdvance = billedInAdvance
             }
@@ -19638,25 +19338,21 @@ constructor(
             /**
              * If the Price represents a fixed cost, this represents the quantity of units applied.
              */
-            @JsonProperty("fixed_price_quantity")
             fun fixedPriceQuantity(fixedPriceQuantity: Double?) = apply {
                 this.fixedPriceQuantity = fixedPriceQuantity
             }
 
             /** The property used to group this price on an invoice */
-            @JsonProperty("invoice_grouping_key")
             fun invoiceGroupingKey(invoiceGroupingKey: String?) = apply {
                 this.invoiceGroupingKey = invoiceGroupingKey
             }
 
             /** The cadence to bill for this price on. */
-            @JsonProperty("cadence")
             fun cadence(cadence: Cadence) = apply { this.cadence = cadence }
 
             /**
              * For custom cadence: specifies the duration of the billing period in days or months.
              */
-            @JsonProperty("billing_cycle_configuration")
             fun billingCycleConfiguration(billingCycleConfiguration: BillingCycleConfiguration?) =
                 apply {
                     this.billingCycleConfiguration = billingCycleConfiguration
@@ -19666,27 +19362,22 @@ constructor(
              * Within each billing cycle, specifies the cadence at which invoices are produced. If
              * unspecified, a single invoice is produced per billing cycle.
              */
-            @JsonProperty("invoicing_cycle_configuration")
             fun invoicingCycleConfiguration(
                 invoicingCycleConfiguration: InvoicingCycleConfiguration?
             ) = apply { this.invoicingCycleConfiguration = invoicingCycleConfiguration }
 
             /** The per unit conversion rate of the price currency to the invoicing currency. */
-            @JsonProperty("conversion_rate")
             fun conversionRate(conversionRate: Double?) = apply {
                 this.conversionRate = conversionRate
             }
 
-            @JsonProperty("model_type")
             fun modelType(modelType: ModelType) = apply { this.modelType = modelType }
 
-            @JsonProperty("grouped_with_prorated_minimum_config")
             fun groupedWithProratedMinimumConfig(
                 groupedWithProratedMinimumConfig: GroupedWithProratedMinimumConfig
             ) = apply { this.groupedWithProratedMinimumConfig = groupedWithProratedMinimumConfig }
 
             /** An ISO 4217 currency string for which this price is billed in. */
-            @JsonProperty("currency")
             fun currency(currency: String) = apply { this.currency = currency }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
@@ -19694,7 +19385,6 @@ constructor(
                 putAllAdditionalProperties(additionalProperties)
             }
 
-            @JsonAnySetter
             fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                 additionalProperties.put(key, value)
             }
@@ -19813,11 +19503,12 @@ constructor(
             override fun toString() = value.toString()
         }
 
-        @JsonDeserialize(builder = GroupedWithProratedMinimumConfig.Builder::class)
         @NoAutoDetect
         class GroupedWithProratedMinimumConfig
+        @JsonCreator
         private constructor(
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             @JsonAnyGetter
@@ -19847,7 +19538,6 @@ constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -19939,13 +19629,14 @@ constructor(
         }
 
         /** For custom cadence: specifies the duration of the billing period in days or months. */
-        @JsonDeserialize(builder = BillingCycleConfiguration.Builder::class)
         @NoAutoDetect
         class BillingCycleConfiguration
+        @JsonCreator
         private constructor(
-            private val duration: Long,
-            private val durationUnit: DurationUnit,
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonProperty("duration") private val duration: Long,
+            @JsonProperty("duration_unit") private val durationUnit: DurationUnit,
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             /** The duration of the billing period. */
@@ -19979,11 +19670,9 @@ constructor(
                 }
 
                 /** The duration of the billing period. */
-                @JsonProperty("duration")
                 fun duration(duration: Long) = apply { this.duration = duration }
 
                 /** The unit of billing period duration. */
-                @JsonProperty("duration_unit")
                 fun durationUnit(durationUnit: DurationUnit) = apply {
                     this.durationUnit = durationUnit
                 }
@@ -19993,7 +19682,6 @@ constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -20098,13 +19786,14 @@ constructor(
          * Within each billing cycle, specifies the cadence at which invoices are produced. If
          * unspecified, a single invoice is produced per billing cycle.
          */
-        @JsonDeserialize(builder = InvoicingCycleConfiguration.Builder::class)
         @NoAutoDetect
         class InvoicingCycleConfiguration
+        @JsonCreator
         private constructor(
-            private val duration: Long,
-            private val durationUnit: DurationUnit,
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonProperty("duration") private val duration: Long,
+            @JsonProperty("duration_unit") private val durationUnit: DurationUnit,
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             /** The duration of the billing period. */
@@ -20139,11 +19828,9 @@ constructor(
                     }
 
                 /** The duration of the billing period. */
-                @JsonProperty("duration")
                 fun duration(duration: Long) = apply { this.duration = duration }
 
                 /** The unit of billing period duration. */
-                @JsonProperty("duration_unit")
                 fun durationUnit(durationUnit: DurationUnit) = apply {
                     this.durationUnit = durationUnit
                 }
@@ -20153,7 +19840,6 @@ constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -20259,11 +19945,12 @@ constructor(
          * setting the value to `null`, and the entire metadata mapping can be cleared by setting
          * `metadata` to `null`.
          */
-        @JsonDeserialize(builder = Metadata.Builder::class)
         @NoAutoDetect
         class Metadata
+        @JsonCreator
         private constructor(
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             @JsonAnyGetter
@@ -20290,7 +19977,6 @@ constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -20346,26 +20032,30 @@ constructor(
             "NewFloatingGroupedWithProratedMinimumPrice{metadata=$metadata, externalPriceId=$externalPriceId, name=$name, billableMetricId=$billableMetricId, itemId=$itemId, billedInAdvance=$billedInAdvance, fixedPriceQuantity=$fixedPriceQuantity, invoiceGroupingKey=$invoiceGroupingKey, cadence=$cadence, billingCycleConfiguration=$billingCycleConfiguration, invoicingCycleConfiguration=$invoicingCycleConfiguration, conversionRate=$conversionRate, modelType=$modelType, groupedWithProratedMinimumConfig=$groupedWithProratedMinimumConfig, currency=$currency, additionalProperties=$additionalProperties}"
     }
 
-    @JsonDeserialize(builder = NewFloatingGroupedWithMeteredMinimumPrice.Builder::class)
     @NoAutoDetect
     class NewFloatingGroupedWithMeteredMinimumPrice
+    @JsonCreator
     private constructor(
-        private val metadata: Metadata?,
-        private val externalPriceId: String?,
-        private val name: String,
-        private val billableMetricId: String?,
-        private val itemId: String,
-        private val billedInAdvance: Boolean?,
-        private val fixedPriceQuantity: Double?,
-        private val invoiceGroupingKey: String?,
-        private val cadence: Cadence,
+        @JsonProperty("metadata") private val metadata: Metadata?,
+        @JsonProperty("external_price_id") private val externalPriceId: String?,
+        @JsonProperty("name") private val name: String,
+        @JsonProperty("billable_metric_id") private val billableMetricId: String?,
+        @JsonProperty("item_id") private val itemId: String,
+        @JsonProperty("billed_in_advance") private val billedInAdvance: Boolean?,
+        @JsonProperty("fixed_price_quantity") private val fixedPriceQuantity: Double?,
+        @JsonProperty("invoice_grouping_key") private val invoiceGroupingKey: String?,
+        @JsonProperty("cadence") private val cadence: Cadence,
+        @JsonProperty("billing_cycle_configuration")
         private val billingCycleConfiguration: BillingCycleConfiguration?,
+        @JsonProperty("invoicing_cycle_configuration")
         private val invoicingCycleConfiguration: InvoicingCycleConfiguration?,
-        private val conversionRate: Double?,
-        private val modelType: ModelType,
+        @JsonProperty("conversion_rate") private val conversionRate: Double?,
+        @JsonProperty("model_type") private val modelType: ModelType,
+        @JsonProperty("grouped_with_metered_minimum_config")
         private val groupedWithMeteredMinimumConfig: GroupedWithMeteredMinimumConfig,
-        private val currency: String,
-        private val additionalProperties: Map<String, JsonValue>,
+        @JsonProperty("currency") private val currency: String,
+        @JsonAnySetter
+        private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
 
         /**
@@ -20486,34 +20176,30 @@ constructor(
              * setting the value to `null`, and the entire metadata mapping can be cleared by
              * setting `metadata` to `null`.
              */
-            @JsonProperty("metadata")
             fun metadata(metadata: Metadata?) = apply { this.metadata = metadata }
 
             /** An alias for the price. */
-            @JsonProperty("external_price_id")
             fun externalPriceId(externalPriceId: String?) = apply {
                 this.externalPriceId = externalPriceId
             }
 
             /** The name of the price. */
-            @JsonProperty("name") fun name(name: String) = apply { this.name = name }
+            fun name(name: String) = apply { this.name = name }
 
             /**
              * The id of the billable metric for the price. Only needed if the price is usage-based.
              */
-            @JsonProperty("billable_metric_id")
             fun billableMetricId(billableMetricId: String?) = apply {
                 this.billableMetricId = billableMetricId
             }
 
             /** The id of the item the plan will be associated with. */
-            @JsonProperty("item_id") fun itemId(itemId: String) = apply { this.itemId = itemId }
+            fun itemId(itemId: String) = apply { this.itemId = itemId }
 
             /**
              * If the Price represents a fixed cost, the price will be billed in-advance if this is
              * true, and in-arrears if this is false.
              */
-            @JsonProperty("billed_in_advance")
             fun billedInAdvance(billedInAdvance: Boolean?) = apply {
                 this.billedInAdvance = billedInAdvance
             }
@@ -20521,25 +20207,21 @@ constructor(
             /**
              * If the Price represents a fixed cost, this represents the quantity of units applied.
              */
-            @JsonProperty("fixed_price_quantity")
             fun fixedPriceQuantity(fixedPriceQuantity: Double?) = apply {
                 this.fixedPriceQuantity = fixedPriceQuantity
             }
 
             /** The property used to group this price on an invoice */
-            @JsonProperty("invoice_grouping_key")
             fun invoiceGroupingKey(invoiceGroupingKey: String?) = apply {
                 this.invoiceGroupingKey = invoiceGroupingKey
             }
 
             /** The cadence to bill for this price on. */
-            @JsonProperty("cadence")
             fun cadence(cadence: Cadence) = apply { this.cadence = cadence }
 
             /**
              * For custom cadence: specifies the duration of the billing period in days or months.
              */
-            @JsonProperty("billing_cycle_configuration")
             fun billingCycleConfiguration(billingCycleConfiguration: BillingCycleConfiguration?) =
                 apply {
                     this.billingCycleConfiguration = billingCycleConfiguration
@@ -20549,27 +20231,22 @@ constructor(
              * Within each billing cycle, specifies the cadence at which invoices are produced. If
              * unspecified, a single invoice is produced per billing cycle.
              */
-            @JsonProperty("invoicing_cycle_configuration")
             fun invoicingCycleConfiguration(
                 invoicingCycleConfiguration: InvoicingCycleConfiguration?
             ) = apply { this.invoicingCycleConfiguration = invoicingCycleConfiguration }
 
             /** The per unit conversion rate of the price currency to the invoicing currency. */
-            @JsonProperty("conversion_rate")
             fun conversionRate(conversionRate: Double?) = apply {
                 this.conversionRate = conversionRate
             }
 
-            @JsonProperty("model_type")
             fun modelType(modelType: ModelType) = apply { this.modelType = modelType }
 
-            @JsonProperty("grouped_with_metered_minimum_config")
             fun groupedWithMeteredMinimumConfig(
                 groupedWithMeteredMinimumConfig: GroupedWithMeteredMinimumConfig
             ) = apply { this.groupedWithMeteredMinimumConfig = groupedWithMeteredMinimumConfig }
 
             /** An ISO 4217 currency string for which this price is billed in. */
-            @JsonProperty("currency")
             fun currency(currency: String) = apply { this.currency = currency }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
@@ -20577,7 +20254,6 @@ constructor(
                 putAllAdditionalProperties(additionalProperties)
             }
 
-            @JsonAnySetter
             fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                 additionalProperties.put(key, value)
             }
@@ -20696,11 +20372,12 @@ constructor(
             override fun toString() = value.toString()
         }
 
-        @JsonDeserialize(builder = GroupedWithMeteredMinimumConfig.Builder::class)
         @NoAutoDetect
         class GroupedWithMeteredMinimumConfig
+        @JsonCreator
         private constructor(
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             @JsonAnyGetter
@@ -20730,7 +20407,6 @@ constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -20822,13 +20498,14 @@ constructor(
         }
 
         /** For custom cadence: specifies the duration of the billing period in days or months. */
-        @JsonDeserialize(builder = BillingCycleConfiguration.Builder::class)
         @NoAutoDetect
         class BillingCycleConfiguration
+        @JsonCreator
         private constructor(
-            private val duration: Long,
-            private val durationUnit: DurationUnit,
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonProperty("duration") private val duration: Long,
+            @JsonProperty("duration_unit") private val durationUnit: DurationUnit,
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             /** The duration of the billing period. */
@@ -20862,11 +20539,9 @@ constructor(
                 }
 
                 /** The duration of the billing period. */
-                @JsonProperty("duration")
                 fun duration(duration: Long) = apply { this.duration = duration }
 
                 /** The unit of billing period duration. */
-                @JsonProperty("duration_unit")
                 fun durationUnit(durationUnit: DurationUnit) = apply {
                     this.durationUnit = durationUnit
                 }
@@ -20876,7 +20551,6 @@ constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -20981,13 +20655,14 @@ constructor(
          * Within each billing cycle, specifies the cadence at which invoices are produced. If
          * unspecified, a single invoice is produced per billing cycle.
          */
-        @JsonDeserialize(builder = InvoicingCycleConfiguration.Builder::class)
         @NoAutoDetect
         class InvoicingCycleConfiguration
+        @JsonCreator
         private constructor(
-            private val duration: Long,
-            private val durationUnit: DurationUnit,
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonProperty("duration") private val duration: Long,
+            @JsonProperty("duration_unit") private val durationUnit: DurationUnit,
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             /** The duration of the billing period. */
@@ -21022,11 +20697,9 @@ constructor(
                     }
 
                 /** The duration of the billing period. */
-                @JsonProperty("duration")
                 fun duration(duration: Long) = apply { this.duration = duration }
 
                 /** The unit of billing period duration. */
-                @JsonProperty("duration_unit")
                 fun durationUnit(durationUnit: DurationUnit) = apply {
                     this.durationUnit = durationUnit
                 }
@@ -21036,7 +20709,6 @@ constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -21142,11 +20814,12 @@ constructor(
          * setting the value to `null`, and the entire metadata mapping can be cleared by setting
          * `metadata` to `null`.
          */
-        @JsonDeserialize(builder = Metadata.Builder::class)
         @NoAutoDetect
         class Metadata
+        @JsonCreator
         private constructor(
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             @JsonAnyGetter
@@ -21173,7 +20846,6 @@ constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -21229,26 +20901,30 @@ constructor(
             "NewFloatingGroupedWithMeteredMinimumPrice{metadata=$metadata, externalPriceId=$externalPriceId, name=$name, billableMetricId=$billableMetricId, itemId=$itemId, billedInAdvance=$billedInAdvance, fixedPriceQuantity=$fixedPriceQuantity, invoiceGroupingKey=$invoiceGroupingKey, cadence=$cadence, billingCycleConfiguration=$billingCycleConfiguration, invoicingCycleConfiguration=$invoicingCycleConfiguration, conversionRate=$conversionRate, modelType=$modelType, groupedWithMeteredMinimumConfig=$groupedWithMeteredMinimumConfig, currency=$currency, additionalProperties=$additionalProperties}"
     }
 
-    @JsonDeserialize(builder = NewFloatingMatrixWithDisplayNamePrice.Builder::class)
     @NoAutoDetect
     class NewFloatingMatrixWithDisplayNamePrice
+    @JsonCreator
     private constructor(
-        private val metadata: Metadata?,
-        private val externalPriceId: String?,
-        private val name: String,
-        private val billableMetricId: String?,
-        private val itemId: String,
-        private val billedInAdvance: Boolean?,
-        private val fixedPriceQuantity: Double?,
-        private val invoiceGroupingKey: String?,
-        private val cadence: Cadence,
+        @JsonProperty("metadata") private val metadata: Metadata?,
+        @JsonProperty("external_price_id") private val externalPriceId: String?,
+        @JsonProperty("name") private val name: String,
+        @JsonProperty("billable_metric_id") private val billableMetricId: String?,
+        @JsonProperty("item_id") private val itemId: String,
+        @JsonProperty("billed_in_advance") private val billedInAdvance: Boolean?,
+        @JsonProperty("fixed_price_quantity") private val fixedPriceQuantity: Double?,
+        @JsonProperty("invoice_grouping_key") private val invoiceGroupingKey: String?,
+        @JsonProperty("cadence") private val cadence: Cadence,
+        @JsonProperty("billing_cycle_configuration")
         private val billingCycleConfiguration: BillingCycleConfiguration?,
+        @JsonProperty("invoicing_cycle_configuration")
         private val invoicingCycleConfiguration: InvoicingCycleConfiguration?,
-        private val conversionRate: Double?,
-        private val modelType: ModelType,
+        @JsonProperty("conversion_rate") private val conversionRate: Double?,
+        @JsonProperty("model_type") private val modelType: ModelType,
+        @JsonProperty("matrix_with_display_name_config")
         private val matrixWithDisplayNameConfig: MatrixWithDisplayNameConfig,
-        private val currency: String,
-        private val additionalProperties: Map<String, JsonValue>,
+        @JsonProperty("currency") private val currency: String,
+        @JsonAnySetter
+        private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
 
         /**
@@ -21368,34 +21044,30 @@ constructor(
              * setting the value to `null`, and the entire metadata mapping can be cleared by
              * setting `metadata` to `null`.
              */
-            @JsonProperty("metadata")
             fun metadata(metadata: Metadata?) = apply { this.metadata = metadata }
 
             /** An alias for the price. */
-            @JsonProperty("external_price_id")
             fun externalPriceId(externalPriceId: String?) = apply {
                 this.externalPriceId = externalPriceId
             }
 
             /** The name of the price. */
-            @JsonProperty("name") fun name(name: String) = apply { this.name = name }
+            fun name(name: String) = apply { this.name = name }
 
             /**
              * The id of the billable metric for the price. Only needed if the price is usage-based.
              */
-            @JsonProperty("billable_metric_id")
             fun billableMetricId(billableMetricId: String?) = apply {
                 this.billableMetricId = billableMetricId
             }
 
             /** The id of the item the plan will be associated with. */
-            @JsonProperty("item_id") fun itemId(itemId: String) = apply { this.itemId = itemId }
+            fun itemId(itemId: String) = apply { this.itemId = itemId }
 
             /**
              * If the Price represents a fixed cost, the price will be billed in-advance if this is
              * true, and in-arrears if this is false.
              */
-            @JsonProperty("billed_in_advance")
             fun billedInAdvance(billedInAdvance: Boolean?) = apply {
                 this.billedInAdvance = billedInAdvance
             }
@@ -21403,25 +21075,21 @@ constructor(
             /**
              * If the Price represents a fixed cost, this represents the quantity of units applied.
              */
-            @JsonProperty("fixed_price_quantity")
             fun fixedPriceQuantity(fixedPriceQuantity: Double?) = apply {
                 this.fixedPriceQuantity = fixedPriceQuantity
             }
 
             /** The property used to group this price on an invoice */
-            @JsonProperty("invoice_grouping_key")
             fun invoiceGroupingKey(invoiceGroupingKey: String?) = apply {
                 this.invoiceGroupingKey = invoiceGroupingKey
             }
 
             /** The cadence to bill for this price on. */
-            @JsonProperty("cadence")
             fun cadence(cadence: Cadence) = apply { this.cadence = cadence }
 
             /**
              * For custom cadence: specifies the duration of the billing period in days or months.
              */
-            @JsonProperty("billing_cycle_configuration")
             fun billingCycleConfiguration(billingCycleConfiguration: BillingCycleConfiguration?) =
                 apply {
                     this.billingCycleConfiguration = billingCycleConfiguration
@@ -21431,27 +21099,22 @@ constructor(
              * Within each billing cycle, specifies the cadence at which invoices are produced. If
              * unspecified, a single invoice is produced per billing cycle.
              */
-            @JsonProperty("invoicing_cycle_configuration")
             fun invoicingCycleConfiguration(
                 invoicingCycleConfiguration: InvoicingCycleConfiguration?
             ) = apply { this.invoicingCycleConfiguration = invoicingCycleConfiguration }
 
             /** The per unit conversion rate of the price currency to the invoicing currency. */
-            @JsonProperty("conversion_rate")
             fun conversionRate(conversionRate: Double?) = apply {
                 this.conversionRate = conversionRate
             }
 
-            @JsonProperty("model_type")
             fun modelType(modelType: ModelType) = apply { this.modelType = modelType }
 
-            @JsonProperty("matrix_with_display_name_config")
             fun matrixWithDisplayNameConfig(
                 matrixWithDisplayNameConfig: MatrixWithDisplayNameConfig
             ) = apply { this.matrixWithDisplayNameConfig = matrixWithDisplayNameConfig }
 
             /** An ISO 4217 currency string for which this price is billed in. */
-            @JsonProperty("currency")
             fun currency(currency: String) = apply { this.currency = currency }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
@@ -21459,7 +21122,6 @@ constructor(
                 putAllAdditionalProperties(additionalProperties)
             }
 
-            @JsonAnySetter
             fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                 additionalProperties.put(key, value)
             }
@@ -21578,11 +21240,12 @@ constructor(
             override fun toString() = value.toString()
         }
 
-        @JsonDeserialize(builder = MatrixWithDisplayNameConfig.Builder::class)
         @NoAutoDetect
         class MatrixWithDisplayNameConfig
+        @JsonCreator
         private constructor(
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             @JsonAnyGetter
@@ -21611,7 +21274,6 @@ constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -21703,13 +21365,14 @@ constructor(
         }
 
         /** For custom cadence: specifies the duration of the billing period in days or months. */
-        @JsonDeserialize(builder = BillingCycleConfiguration.Builder::class)
         @NoAutoDetect
         class BillingCycleConfiguration
+        @JsonCreator
         private constructor(
-            private val duration: Long,
-            private val durationUnit: DurationUnit,
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonProperty("duration") private val duration: Long,
+            @JsonProperty("duration_unit") private val durationUnit: DurationUnit,
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             /** The duration of the billing period. */
@@ -21743,11 +21406,9 @@ constructor(
                 }
 
                 /** The duration of the billing period. */
-                @JsonProperty("duration")
                 fun duration(duration: Long) = apply { this.duration = duration }
 
                 /** The unit of billing period duration. */
-                @JsonProperty("duration_unit")
                 fun durationUnit(durationUnit: DurationUnit) = apply {
                     this.durationUnit = durationUnit
                 }
@@ -21757,7 +21418,6 @@ constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -21862,13 +21522,14 @@ constructor(
          * Within each billing cycle, specifies the cadence at which invoices are produced. If
          * unspecified, a single invoice is produced per billing cycle.
          */
-        @JsonDeserialize(builder = InvoicingCycleConfiguration.Builder::class)
         @NoAutoDetect
         class InvoicingCycleConfiguration
+        @JsonCreator
         private constructor(
-            private val duration: Long,
-            private val durationUnit: DurationUnit,
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonProperty("duration") private val duration: Long,
+            @JsonProperty("duration_unit") private val durationUnit: DurationUnit,
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             /** The duration of the billing period. */
@@ -21903,11 +21564,9 @@ constructor(
                     }
 
                 /** The duration of the billing period. */
-                @JsonProperty("duration")
                 fun duration(duration: Long) = apply { this.duration = duration }
 
                 /** The unit of billing period duration. */
-                @JsonProperty("duration_unit")
                 fun durationUnit(durationUnit: DurationUnit) = apply {
                     this.durationUnit = durationUnit
                 }
@@ -21917,7 +21576,6 @@ constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -22023,11 +21681,12 @@ constructor(
          * setting the value to `null`, and the entire metadata mapping can be cleared by setting
          * `metadata` to `null`.
          */
-        @JsonDeserialize(builder = Metadata.Builder::class)
         @NoAutoDetect
         class Metadata
+        @JsonCreator
         private constructor(
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             @JsonAnyGetter
@@ -22054,7 +21713,6 @@ constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -22110,26 +21768,30 @@ constructor(
             "NewFloatingMatrixWithDisplayNamePrice{metadata=$metadata, externalPriceId=$externalPriceId, name=$name, billableMetricId=$billableMetricId, itemId=$itemId, billedInAdvance=$billedInAdvance, fixedPriceQuantity=$fixedPriceQuantity, invoiceGroupingKey=$invoiceGroupingKey, cadence=$cadence, billingCycleConfiguration=$billingCycleConfiguration, invoicingCycleConfiguration=$invoicingCycleConfiguration, conversionRate=$conversionRate, modelType=$modelType, matrixWithDisplayNameConfig=$matrixWithDisplayNameConfig, currency=$currency, additionalProperties=$additionalProperties}"
     }
 
-    @JsonDeserialize(builder = NewFloatingBulkWithProrationPrice.Builder::class)
     @NoAutoDetect
     class NewFloatingBulkWithProrationPrice
+    @JsonCreator
     private constructor(
-        private val metadata: Metadata?,
-        private val externalPriceId: String?,
-        private val name: String,
-        private val billableMetricId: String?,
-        private val itemId: String,
-        private val billedInAdvance: Boolean?,
-        private val fixedPriceQuantity: Double?,
-        private val invoiceGroupingKey: String?,
-        private val cadence: Cadence,
+        @JsonProperty("metadata") private val metadata: Metadata?,
+        @JsonProperty("external_price_id") private val externalPriceId: String?,
+        @JsonProperty("name") private val name: String,
+        @JsonProperty("billable_metric_id") private val billableMetricId: String?,
+        @JsonProperty("item_id") private val itemId: String,
+        @JsonProperty("billed_in_advance") private val billedInAdvance: Boolean?,
+        @JsonProperty("fixed_price_quantity") private val fixedPriceQuantity: Double?,
+        @JsonProperty("invoice_grouping_key") private val invoiceGroupingKey: String?,
+        @JsonProperty("cadence") private val cadence: Cadence,
+        @JsonProperty("billing_cycle_configuration")
         private val billingCycleConfiguration: BillingCycleConfiguration?,
+        @JsonProperty("invoicing_cycle_configuration")
         private val invoicingCycleConfiguration: InvoicingCycleConfiguration?,
-        private val conversionRate: Double?,
-        private val modelType: ModelType,
+        @JsonProperty("conversion_rate") private val conversionRate: Double?,
+        @JsonProperty("model_type") private val modelType: ModelType,
+        @JsonProperty("bulk_with_proration_config")
         private val bulkWithProrationConfig: BulkWithProrationConfig,
-        private val currency: String,
-        private val additionalProperties: Map<String, JsonValue>,
+        @JsonProperty("currency") private val currency: String,
+        @JsonAnySetter
+        private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
 
         /**
@@ -22248,34 +21910,30 @@ constructor(
              * setting the value to `null`, and the entire metadata mapping can be cleared by
              * setting `metadata` to `null`.
              */
-            @JsonProperty("metadata")
             fun metadata(metadata: Metadata?) = apply { this.metadata = metadata }
 
             /** An alias for the price. */
-            @JsonProperty("external_price_id")
             fun externalPriceId(externalPriceId: String?) = apply {
                 this.externalPriceId = externalPriceId
             }
 
             /** The name of the price. */
-            @JsonProperty("name") fun name(name: String) = apply { this.name = name }
+            fun name(name: String) = apply { this.name = name }
 
             /**
              * The id of the billable metric for the price. Only needed if the price is usage-based.
              */
-            @JsonProperty("billable_metric_id")
             fun billableMetricId(billableMetricId: String?) = apply {
                 this.billableMetricId = billableMetricId
             }
 
             /** The id of the item the plan will be associated with. */
-            @JsonProperty("item_id") fun itemId(itemId: String) = apply { this.itemId = itemId }
+            fun itemId(itemId: String) = apply { this.itemId = itemId }
 
             /**
              * If the Price represents a fixed cost, the price will be billed in-advance if this is
              * true, and in-arrears if this is false.
              */
-            @JsonProperty("billed_in_advance")
             fun billedInAdvance(billedInAdvance: Boolean?) = apply {
                 this.billedInAdvance = billedInAdvance
             }
@@ -22283,25 +21941,21 @@ constructor(
             /**
              * If the Price represents a fixed cost, this represents the quantity of units applied.
              */
-            @JsonProperty("fixed_price_quantity")
             fun fixedPriceQuantity(fixedPriceQuantity: Double?) = apply {
                 this.fixedPriceQuantity = fixedPriceQuantity
             }
 
             /** The property used to group this price on an invoice */
-            @JsonProperty("invoice_grouping_key")
             fun invoiceGroupingKey(invoiceGroupingKey: String?) = apply {
                 this.invoiceGroupingKey = invoiceGroupingKey
             }
 
             /** The cadence to bill for this price on. */
-            @JsonProperty("cadence")
             fun cadence(cadence: Cadence) = apply { this.cadence = cadence }
 
             /**
              * For custom cadence: specifies the duration of the billing period in days or months.
              */
-            @JsonProperty("billing_cycle_configuration")
             fun billingCycleConfiguration(billingCycleConfiguration: BillingCycleConfiguration?) =
                 apply {
                     this.billingCycleConfiguration = billingCycleConfiguration
@@ -22311,27 +21965,22 @@ constructor(
              * Within each billing cycle, specifies the cadence at which invoices are produced. If
              * unspecified, a single invoice is produced per billing cycle.
              */
-            @JsonProperty("invoicing_cycle_configuration")
             fun invoicingCycleConfiguration(
                 invoicingCycleConfiguration: InvoicingCycleConfiguration?
             ) = apply { this.invoicingCycleConfiguration = invoicingCycleConfiguration }
 
             /** The per unit conversion rate of the price currency to the invoicing currency. */
-            @JsonProperty("conversion_rate")
             fun conversionRate(conversionRate: Double?) = apply {
                 this.conversionRate = conversionRate
             }
 
-            @JsonProperty("model_type")
             fun modelType(modelType: ModelType) = apply { this.modelType = modelType }
 
-            @JsonProperty("bulk_with_proration_config")
             fun bulkWithProrationConfig(bulkWithProrationConfig: BulkWithProrationConfig) = apply {
                 this.bulkWithProrationConfig = bulkWithProrationConfig
             }
 
             /** An ISO 4217 currency string for which this price is billed in. */
-            @JsonProperty("currency")
             fun currency(currency: String) = apply { this.currency = currency }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
@@ -22339,7 +21988,6 @@ constructor(
                 putAllAdditionalProperties(additionalProperties)
             }
 
-            @JsonAnySetter
             fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                 additionalProperties.put(key, value)
             }
@@ -22377,11 +22025,12 @@ constructor(
                 )
         }
 
-        @JsonDeserialize(builder = BulkWithProrationConfig.Builder::class)
         @NoAutoDetect
         class BulkWithProrationConfig
+        @JsonCreator
         private constructor(
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             @JsonAnyGetter
@@ -22409,7 +22058,6 @@ constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -22582,13 +22230,14 @@ constructor(
         }
 
         /** For custom cadence: specifies the duration of the billing period in days or months. */
-        @JsonDeserialize(builder = BillingCycleConfiguration.Builder::class)
         @NoAutoDetect
         class BillingCycleConfiguration
+        @JsonCreator
         private constructor(
-            private val duration: Long,
-            private val durationUnit: DurationUnit,
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonProperty("duration") private val duration: Long,
+            @JsonProperty("duration_unit") private val durationUnit: DurationUnit,
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             /** The duration of the billing period. */
@@ -22622,11 +22271,9 @@ constructor(
                 }
 
                 /** The duration of the billing period. */
-                @JsonProperty("duration")
                 fun duration(duration: Long) = apply { this.duration = duration }
 
                 /** The unit of billing period duration. */
-                @JsonProperty("duration_unit")
                 fun durationUnit(durationUnit: DurationUnit) = apply {
                     this.durationUnit = durationUnit
                 }
@@ -22636,7 +22283,6 @@ constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -22741,13 +22387,14 @@ constructor(
          * Within each billing cycle, specifies the cadence at which invoices are produced. If
          * unspecified, a single invoice is produced per billing cycle.
          */
-        @JsonDeserialize(builder = InvoicingCycleConfiguration.Builder::class)
         @NoAutoDetect
         class InvoicingCycleConfiguration
+        @JsonCreator
         private constructor(
-            private val duration: Long,
-            private val durationUnit: DurationUnit,
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonProperty("duration") private val duration: Long,
+            @JsonProperty("duration_unit") private val durationUnit: DurationUnit,
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             /** The duration of the billing period. */
@@ -22782,11 +22429,9 @@ constructor(
                     }
 
                 /** The duration of the billing period. */
-                @JsonProperty("duration")
                 fun duration(duration: Long) = apply { this.duration = duration }
 
                 /** The unit of billing period duration. */
-                @JsonProperty("duration_unit")
                 fun durationUnit(durationUnit: DurationUnit) = apply {
                     this.durationUnit = durationUnit
                 }
@@ -22796,7 +22441,6 @@ constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -22902,11 +22546,12 @@ constructor(
          * setting the value to `null`, and the entire metadata mapping can be cleared by setting
          * `metadata` to `null`.
          */
-        @JsonDeserialize(builder = Metadata.Builder::class)
         @NoAutoDetect
         class Metadata
+        @JsonCreator
         private constructor(
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             @JsonAnyGetter
@@ -22933,7 +22578,6 @@ constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -22989,26 +22633,30 @@ constructor(
             "NewFloatingBulkWithProrationPrice{metadata=$metadata, externalPriceId=$externalPriceId, name=$name, billableMetricId=$billableMetricId, itemId=$itemId, billedInAdvance=$billedInAdvance, fixedPriceQuantity=$fixedPriceQuantity, invoiceGroupingKey=$invoiceGroupingKey, cadence=$cadence, billingCycleConfiguration=$billingCycleConfiguration, invoicingCycleConfiguration=$invoicingCycleConfiguration, conversionRate=$conversionRate, modelType=$modelType, bulkWithProrationConfig=$bulkWithProrationConfig, currency=$currency, additionalProperties=$additionalProperties}"
     }
 
-    @JsonDeserialize(builder = NewFloatingGroupedTieredPackagePrice.Builder::class)
     @NoAutoDetect
     class NewFloatingGroupedTieredPackagePrice
+    @JsonCreator
     private constructor(
-        private val metadata: Metadata?,
-        private val externalPriceId: String?,
-        private val name: String,
-        private val billableMetricId: String?,
-        private val itemId: String,
-        private val billedInAdvance: Boolean?,
-        private val fixedPriceQuantity: Double?,
-        private val invoiceGroupingKey: String?,
-        private val cadence: Cadence,
+        @JsonProperty("metadata") private val metadata: Metadata?,
+        @JsonProperty("external_price_id") private val externalPriceId: String?,
+        @JsonProperty("name") private val name: String,
+        @JsonProperty("billable_metric_id") private val billableMetricId: String?,
+        @JsonProperty("item_id") private val itemId: String,
+        @JsonProperty("billed_in_advance") private val billedInAdvance: Boolean?,
+        @JsonProperty("fixed_price_quantity") private val fixedPriceQuantity: Double?,
+        @JsonProperty("invoice_grouping_key") private val invoiceGroupingKey: String?,
+        @JsonProperty("cadence") private val cadence: Cadence,
+        @JsonProperty("billing_cycle_configuration")
         private val billingCycleConfiguration: BillingCycleConfiguration?,
+        @JsonProperty("invoicing_cycle_configuration")
         private val invoicingCycleConfiguration: InvoicingCycleConfiguration?,
-        private val conversionRate: Double?,
-        private val modelType: ModelType,
+        @JsonProperty("conversion_rate") private val conversionRate: Double?,
+        @JsonProperty("model_type") private val modelType: ModelType,
+        @JsonProperty("grouped_tiered_package_config")
         private val groupedTieredPackageConfig: GroupedTieredPackageConfig,
-        private val currency: String,
-        private val additionalProperties: Map<String, JsonValue>,
+        @JsonProperty("currency") private val currency: String,
+        @JsonAnySetter
+        private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
 
         /**
@@ -23128,34 +22776,30 @@ constructor(
              * setting the value to `null`, and the entire metadata mapping can be cleared by
              * setting `metadata` to `null`.
              */
-            @JsonProperty("metadata")
             fun metadata(metadata: Metadata?) = apply { this.metadata = metadata }
 
             /** An alias for the price. */
-            @JsonProperty("external_price_id")
             fun externalPriceId(externalPriceId: String?) = apply {
                 this.externalPriceId = externalPriceId
             }
 
             /** The name of the price. */
-            @JsonProperty("name") fun name(name: String) = apply { this.name = name }
+            fun name(name: String) = apply { this.name = name }
 
             /**
              * The id of the billable metric for the price. Only needed if the price is usage-based.
              */
-            @JsonProperty("billable_metric_id")
             fun billableMetricId(billableMetricId: String?) = apply {
                 this.billableMetricId = billableMetricId
             }
 
             /** The id of the item the plan will be associated with. */
-            @JsonProperty("item_id") fun itemId(itemId: String) = apply { this.itemId = itemId }
+            fun itemId(itemId: String) = apply { this.itemId = itemId }
 
             /**
              * If the Price represents a fixed cost, the price will be billed in-advance if this is
              * true, and in-arrears if this is false.
              */
-            @JsonProperty("billed_in_advance")
             fun billedInAdvance(billedInAdvance: Boolean?) = apply {
                 this.billedInAdvance = billedInAdvance
             }
@@ -23163,25 +22807,21 @@ constructor(
             /**
              * If the Price represents a fixed cost, this represents the quantity of units applied.
              */
-            @JsonProperty("fixed_price_quantity")
             fun fixedPriceQuantity(fixedPriceQuantity: Double?) = apply {
                 this.fixedPriceQuantity = fixedPriceQuantity
             }
 
             /** The property used to group this price on an invoice */
-            @JsonProperty("invoice_grouping_key")
             fun invoiceGroupingKey(invoiceGroupingKey: String?) = apply {
                 this.invoiceGroupingKey = invoiceGroupingKey
             }
 
             /** The cadence to bill for this price on. */
-            @JsonProperty("cadence")
             fun cadence(cadence: Cadence) = apply { this.cadence = cadence }
 
             /**
              * For custom cadence: specifies the duration of the billing period in days or months.
              */
-            @JsonProperty("billing_cycle_configuration")
             fun billingCycleConfiguration(billingCycleConfiguration: BillingCycleConfiguration?) =
                 apply {
                     this.billingCycleConfiguration = billingCycleConfiguration
@@ -23191,28 +22831,23 @@ constructor(
              * Within each billing cycle, specifies the cadence at which invoices are produced. If
              * unspecified, a single invoice is produced per billing cycle.
              */
-            @JsonProperty("invoicing_cycle_configuration")
             fun invoicingCycleConfiguration(
                 invoicingCycleConfiguration: InvoicingCycleConfiguration?
             ) = apply { this.invoicingCycleConfiguration = invoicingCycleConfiguration }
 
             /** The per unit conversion rate of the price currency to the invoicing currency. */
-            @JsonProperty("conversion_rate")
             fun conversionRate(conversionRate: Double?) = apply {
                 this.conversionRate = conversionRate
             }
 
-            @JsonProperty("model_type")
             fun modelType(modelType: ModelType) = apply { this.modelType = modelType }
 
-            @JsonProperty("grouped_tiered_package_config")
             fun groupedTieredPackageConfig(groupedTieredPackageConfig: GroupedTieredPackageConfig) =
                 apply {
                     this.groupedTieredPackageConfig = groupedTieredPackageConfig
                 }
 
             /** An ISO 4217 currency string for which this price is billed in. */
-            @JsonProperty("currency")
             fun currency(currency: String) = apply { this.currency = currency }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
@@ -23220,7 +22855,6 @@ constructor(
                 putAllAdditionalProperties(additionalProperties)
             }
 
-            @JsonAnySetter
             fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                 additionalProperties.put(key, value)
             }
@@ -23339,11 +22973,12 @@ constructor(
             override fun toString() = value.toString()
         }
 
-        @JsonDeserialize(builder = GroupedTieredPackageConfig.Builder::class)
         @NoAutoDetect
         class GroupedTieredPackageConfig
+        @JsonCreator
         private constructor(
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             @JsonAnyGetter
@@ -23371,7 +23006,6 @@ constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -23463,13 +23097,14 @@ constructor(
         }
 
         /** For custom cadence: specifies the duration of the billing period in days or months. */
-        @JsonDeserialize(builder = BillingCycleConfiguration.Builder::class)
         @NoAutoDetect
         class BillingCycleConfiguration
+        @JsonCreator
         private constructor(
-            private val duration: Long,
-            private val durationUnit: DurationUnit,
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonProperty("duration") private val duration: Long,
+            @JsonProperty("duration_unit") private val durationUnit: DurationUnit,
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             /** The duration of the billing period. */
@@ -23503,11 +23138,9 @@ constructor(
                 }
 
                 /** The duration of the billing period. */
-                @JsonProperty("duration")
                 fun duration(duration: Long) = apply { this.duration = duration }
 
                 /** The unit of billing period duration. */
-                @JsonProperty("duration_unit")
                 fun durationUnit(durationUnit: DurationUnit) = apply {
                     this.durationUnit = durationUnit
                 }
@@ -23517,7 +23150,6 @@ constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -23622,13 +23254,14 @@ constructor(
          * Within each billing cycle, specifies the cadence at which invoices are produced. If
          * unspecified, a single invoice is produced per billing cycle.
          */
-        @JsonDeserialize(builder = InvoicingCycleConfiguration.Builder::class)
         @NoAutoDetect
         class InvoicingCycleConfiguration
+        @JsonCreator
         private constructor(
-            private val duration: Long,
-            private val durationUnit: DurationUnit,
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonProperty("duration") private val duration: Long,
+            @JsonProperty("duration_unit") private val durationUnit: DurationUnit,
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             /** The duration of the billing period. */
@@ -23663,11 +23296,9 @@ constructor(
                     }
 
                 /** The duration of the billing period. */
-                @JsonProperty("duration")
                 fun duration(duration: Long) = apply { this.duration = duration }
 
                 /** The unit of billing period duration. */
-                @JsonProperty("duration_unit")
                 fun durationUnit(durationUnit: DurationUnit) = apply {
                     this.durationUnit = durationUnit
                 }
@@ -23677,7 +23308,6 @@ constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -23783,11 +23413,12 @@ constructor(
          * setting the value to `null`, and the entire metadata mapping can be cleared by setting
          * `metadata` to `null`.
          */
-        @JsonDeserialize(builder = Metadata.Builder::class)
         @NoAutoDetect
         class Metadata
+        @JsonCreator
         private constructor(
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             @JsonAnyGetter
@@ -23814,7 +23445,6 @@ constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
