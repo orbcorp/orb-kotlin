@@ -4,13 +4,14 @@ package com.withorb.api.models
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter
 import com.fasterxml.jackson.annotation.JsonAnySetter
+import com.fasterxml.jackson.annotation.JsonCreator
 import com.fasterxml.jackson.annotation.JsonProperty
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize
 import com.withorb.api.core.ExcludeMissing
 import com.withorb.api.core.JsonValue
 import com.withorb.api.core.NoAutoDetect
 import com.withorb.api.core.http.Headers
 import com.withorb.api.core.http.QueryParams
+import com.withorb.api.core.immutableEmptyMap
 import com.withorb.api.core.toImmutable
 import java.time.LocalDate
 import java.util.Objects
@@ -49,12 +50,13 @@ constructor(
         }
     }
 
-    @JsonDeserialize(builder = SubscriptionTriggerPhaseBody.Builder::class)
     @NoAutoDetect
     class SubscriptionTriggerPhaseBody
+    @JsonCreator
     internal constructor(
-        private val effectiveDate: LocalDate?,
-        private val additionalProperties: Map<String, JsonValue>,
+        @JsonProperty("effective_date") private val effectiveDate: LocalDate?,
+        @JsonAnySetter
+        private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
 
         /**
@@ -89,7 +91,6 @@ constructor(
              * The date on which the phase change should take effect. If not provided, defaults to
              * today in the customer's timezone.
              */
-            @JsonProperty("effective_date")
             fun effectiveDate(effectiveDate: LocalDate?) = apply {
                 this.effectiveDate = effectiveDate
             }
@@ -99,7 +100,6 @@ constructor(
                 putAllAdditionalProperties(additionalProperties)
             }
 
-            @JsonAnySetter
             fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                 additionalProperties.put(key, value)
             }

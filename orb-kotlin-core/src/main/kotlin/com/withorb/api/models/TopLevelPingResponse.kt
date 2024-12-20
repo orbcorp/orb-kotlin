@@ -4,22 +4,25 @@ package com.withorb.api.models
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter
 import com.fasterxml.jackson.annotation.JsonAnySetter
+import com.fasterxml.jackson.annotation.JsonCreator
 import com.fasterxml.jackson.annotation.JsonProperty
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize
 import com.withorb.api.core.ExcludeMissing
 import com.withorb.api.core.JsonField
 import com.withorb.api.core.JsonMissing
 import com.withorb.api.core.JsonValue
 import com.withorb.api.core.NoAutoDetect
+import com.withorb.api.core.immutableEmptyMap
 import com.withorb.api.core.toImmutable
 import java.util.Objects
 
-@JsonDeserialize(builder = TopLevelPingResponse.Builder::class)
 @NoAutoDetect
 class TopLevelPingResponse
+@JsonCreator
 private constructor(
-    private val response: JsonField<String>,
-    private val additionalProperties: Map<String, JsonValue>,
+    @JsonProperty("response")
+    @ExcludeMissing
+    private val response: JsonField<String> = JsonMissing.of(),
+    @JsonAnySetter private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
 ) {
 
     fun response(): String = response.getRequired("response")
@@ -58,8 +61,6 @@ private constructor(
 
         fun response(response: String) = response(JsonField.of(response))
 
-        @JsonProperty("response")
-        @ExcludeMissing
         fun response(response: JsonField<String>) = apply { this.response = response }
 
         fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
@@ -67,7 +68,6 @@ private constructor(
             putAllAdditionalProperties(additionalProperties)
         }
 
-        @JsonAnySetter
         fun putAdditionalProperty(key: String, value: JsonValue) = apply {
             additionalProperties.put(key, value)
         }

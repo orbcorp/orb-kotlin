@@ -4,22 +4,25 @@ package com.withorb.api.models
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter
 import com.fasterxml.jackson.annotation.JsonAnySetter
+import com.fasterxml.jackson.annotation.JsonCreator
 import com.fasterxml.jackson.annotation.JsonProperty
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize
 import com.withorb.api.core.ExcludeMissing
 import com.withorb.api.core.JsonField
 import com.withorb.api.core.JsonMissing
 import com.withorb.api.core.JsonValue
 import com.withorb.api.core.NoAutoDetect
+import com.withorb.api.core.immutableEmptyMap
 import com.withorb.api.core.toImmutable
 import java.util.Objects
 
-@JsonDeserialize(builder = EventUpdateResponse.Builder::class)
 @NoAutoDetect
 class EventUpdateResponse
+@JsonCreator
 private constructor(
-    private val amended: JsonField<String>,
-    private val additionalProperties: Map<String, JsonValue>,
+    @JsonProperty("amended")
+    @ExcludeMissing
+    private val amended: JsonField<String> = JsonMissing.of(),
+    @JsonAnySetter private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
 ) {
 
     /** event_id of the amended event, if successfully ingested */
@@ -62,8 +65,6 @@ private constructor(
         fun amended(amended: String) = amended(JsonField.of(amended))
 
         /** event_id of the amended event, if successfully ingested */
-        @JsonProperty("amended")
-        @ExcludeMissing
         fun amended(amended: JsonField<String>) = apply { this.amended = amended }
 
         fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
@@ -71,7 +72,6 @@ private constructor(
             putAllAdditionalProperties(additionalProperties)
         }
 
-        @JsonAnySetter
         fun putAdditionalProperty(key: String, value: JsonValue) = apply {
             additionalProperties.put(key, value)
         }

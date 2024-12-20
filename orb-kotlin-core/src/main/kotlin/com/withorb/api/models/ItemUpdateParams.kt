@@ -6,7 +6,6 @@ import com.fasterxml.jackson.annotation.JsonAnyGetter
 import com.fasterxml.jackson.annotation.JsonAnySetter
 import com.fasterxml.jackson.annotation.JsonCreator
 import com.fasterxml.jackson.annotation.JsonProperty
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize
 import com.withorb.api.core.Enum
 import com.withorb.api.core.ExcludeMissing
 import com.withorb.api.core.JsonField
@@ -14,6 +13,7 @@ import com.withorb.api.core.JsonValue
 import com.withorb.api.core.NoAutoDetect
 import com.withorb.api.core.http.Headers
 import com.withorb.api.core.http.QueryParams
+import com.withorb.api.core.immutableEmptyMap
 import com.withorb.api.core.toImmutable
 import com.withorb.api.errors.OrbInvalidDataException
 import java.util.Objects
@@ -64,13 +64,15 @@ constructor(
      * existing mappings. Orb requires that you pass the full list of mappings; this list will
      * replace the existing item mappings.
      */
-    @JsonDeserialize(builder = ItemUpdateBody.Builder::class)
     @NoAutoDetect
     class ItemUpdateBody
+    @JsonCreator
     internal constructor(
+        @JsonProperty("external_connections")
         private val externalConnections: List<ExternalConnection>?,
-        private val name: String?,
-        private val additionalProperties: Map<String, JsonValue>,
+        @JsonProperty("name") private val name: String?,
+        @JsonAnySetter
+        private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
 
         @JsonProperty("external_connections")
@@ -101,19 +103,17 @@ constructor(
                 additionalProperties = itemUpdateBody.additionalProperties.toMutableMap()
             }
 
-            @JsonProperty("external_connections")
             fun externalConnections(externalConnections: List<ExternalConnection>?) = apply {
                 this.externalConnections = externalConnections
             }
 
-            @JsonProperty("name") fun name(name: String?) = apply { this.name = name }
+            fun name(name: String?) = apply { this.name = name }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
                 putAllAdditionalProperties(additionalProperties)
             }
 
-            @JsonAnySetter
             fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                 additionalProperties.put(key, value)
             }
@@ -325,13 +325,15 @@ constructor(
             )
     }
 
-    @JsonDeserialize(builder = ExternalConnection.Builder::class)
     @NoAutoDetect
     class ExternalConnection
+    @JsonCreator
     private constructor(
+        @JsonProperty("external_connection_name")
         private val externalConnectionName: ExternalConnectionName,
-        private val externalEntityId: String,
-        private val additionalProperties: Map<String, JsonValue>,
+        @JsonProperty("external_entity_id") private val externalEntityId: String,
+        @JsonAnySetter
+        private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
 
         @JsonProperty("external_connection_name")
@@ -362,12 +364,10 @@ constructor(
                 additionalProperties = externalConnection.additionalProperties.toMutableMap()
             }
 
-            @JsonProperty("external_connection_name")
             fun externalConnectionName(externalConnectionName: ExternalConnectionName) = apply {
                 this.externalConnectionName = externalConnectionName
             }
 
-            @JsonProperty("external_entity_id")
             fun externalEntityId(externalEntityId: String) = apply {
                 this.externalEntityId = externalEntityId
             }
@@ -377,7 +377,6 @@ constructor(
                 putAllAdditionalProperties(additionalProperties)
             }
 
-            @JsonAnySetter
             fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                 additionalProperties.put(key, value)
             }

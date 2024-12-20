@@ -4,13 +4,14 @@ package com.withorb.api.models
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter
 import com.fasterxml.jackson.annotation.JsonAnySetter
+import com.fasterxml.jackson.annotation.JsonCreator
 import com.fasterxml.jackson.annotation.JsonProperty
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize
 import com.withorb.api.core.ExcludeMissing
 import com.withorb.api.core.JsonValue
 import com.withorb.api.core.NoAutoDetect
 import com.withorb.api.core.http.Headers
 import com.withorb.api.core.http.QueryParams
+import com.withorb.api.core.immutableEmptyMap
 import com.withorb.api.core.toImmutable
 import java.time.LocalDate
 import java.util.Objects
@@ -62,17 +63,18 @@ constructor(
 
     internal fun getQueryParams(): QueryParams = additionalQueryParams
 
-    @JsonDeserialize(builder = InvoiceLineItemCreateBody.Builder::class)
     @NoAutoDetect
     class InvoiceLineItemCreateBody
+    @JsonCreator
     internal constructor(
-        private val amount: String,
-        private val endDate: LocalDate,
-        private val invoiceId: String,
-        private val name: String,
-        private val quantity: Double,
-        private val startDate: LocalDate,
-        private val additionalProperties: Map<String, JsonValue>,
+        @JsonProperty("amount") private val amount: String,
+        @JsonProperty("end_date") private val endDate: LocalDate,
+        @JsonProperty("invoice_id") private val invoiceId: String,
+        @JsonProperty("name") private val name: String,
+        @JsonProperty("quantity") private val quantity: Double,
+        @JsonProperty("start_date") private val startDate: LocalDate,
+        @JsonAnySetter
+        private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
 
         /** The total amount in the invoice's currency to add to the line item. */
@@ -128,28 +130,24 @@ constructor(
             }
 
             /** The total amount in the invoice's currency to add to the line item. */
-            @JsonProperty("amount") fun amount(amount: String) = apply { this.amount = amount }
+            fun amount(amount: String) = apply { this.amount = amount }
 
             /** A date string to specify the line item's end date in the customer's timezone. */
-            @JsonProperty("end_date")
             fun endDate(endDate: LocalDate) = apply { this.endDate = endDate }
 
             /** The id of the Invoice to add this line item. */
-            @JsonProperty("invoice_id")
             fun invoiceId(invoiceId: String) = apply { this.invoiceId = invoiceId }
 
             /**
              * The item name associated with this line item. If an item with the same name exists in
              * Orb, that item will be associated with the line item.
              */
-            @JsonProperty("name") fun name(name: String) = apply { this.name = name }
+            fun name(name: String) = apply { this.name = name }
 
             /** The number of units on the line item */
-            @JsonProperty("quantity")
             fun quantity(quantity: Double) = apply { this.quantity = quantity }
 
             /** A date string to specify the line item's start date in the customer's timezone. */
-            @JsonProperty("start_date")
             fun startDate(startDate: LocalDate) = apply { this.startDate = startDate }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
@@ -157,7 +155,6 @@ constructor(
                 putAllAdditionalProperties(additionalProperties)
             }
 
-            @JsonAnySetter
             fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                 additionalProperties.put(key, value)
             }

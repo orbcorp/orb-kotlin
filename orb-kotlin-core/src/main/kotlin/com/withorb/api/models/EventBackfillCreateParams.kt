@@ -4,13 +4,14 @@ package com.withorb.api.models
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter
 import com.fasterxml.jackson.annotation.JsonAnySetter
+import com.fasterxml.jackson.annotation.JsonCreator
 import com.fasterxml.jackson.annotation.JsonProperty
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize
 import com.withorb.api.core.ExcludeMissing
 import com.withorb.api.core.JsonValue
 import com.withorb.api.core.NoAutoDetect
 import com.withorb.api.core.http.Headers
 import com.withorb.api.core.http.QueryParams
+import com.withorb.api.core.immutableEmptyMap
 import com.withorb.api.core.toImmutable
 import java.time.OffsetDateTime
 import java.util.Objects
@@ -66,18 +67,19 @@ constructor(
 
     internal fun getQueryParams(): QueryParams = additionalQueryParams
 
-    @JsonDeserialize(builder = EventBackfillCreateBody.Builder::class)
     @NoAutoDetect
     class EventBackfillCreateBody
+    @JsonCreator
     internal constructor(
-        private val timeframeEnd: OffsetDateTime,
-        private val timeframeStart: OffsetDateTime,
-        private val closeTime: OffsetDateTime?,
-        private val customerId: String?,
-        private val deprecationFilter: String?,
-        private val externalCustomerId: String?,
-        private val replaceExistingEvents: Boolean?,
-        private val additionalProperties: Map<String, JsonValue>,
+        @JsonProperty("timeframe_end") private val timeframeEnd: OffsetDateTime,
+        @JsonProperty("timeframe_start") private val timeframeStart: OffsetDateTime,
+        @JsonProperty("close_time") private val closeTime: OffsetDateTime?,
+        @JsonProperty("customer_id") private val customerId: String?,
+        @JsonProperty("deprecation_filter") private val deprecationFilter: String?,
+        @JsonProperty("external_customer_id") private val externalCustomerId: String?,
+        @JsonProperty("replace_existing_events") private val replaceExistingEvents: Boolean?,
+        @JsonAnySetter
+        private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
 
         /** The (exclusive) end of the usage timeframe affected by this backfill. */
@@ -153,13 +155,11 @@ constructor(
             }
 
             /** The (exclusive) end of the usage timeframe affected by this backfill. */
-            @JsonProperty("timeframe_end")
             fun timeframeEnd(timeframeEnd: OffsetDateTime) = apply {
                 this.timeframeEnd = timeframeEnd
             }
 
             /** The (inclusive) start of the usage timeframe affected by this backfill. */
-            @JsonProperty("timeframe_start")
             fun timeframeStart(timeframeStart: OffsetDateTime) = apply {
                 this.timeframeStart = timeframeStart
             }
@@ -169,14 +169,12 @@ constructor(
              * will automatically begin reflecting throughout Orb at the close time. If not
              * specified, it will default to 1 day after the creation of the backfill.
              */
-            @JsonProperty("close_time")
             fun closeTime(closeTime: OffsetDateTime?) = apply { this.closeTime = closeTime }
 
             /**
              * The Orb-generated ID of the customer to which this backfill is scoped. Omitting this
              * field will scope the backfill to all customers.
              */
-            @JsonProperty("customer_id")
             fun customerId(customerId: String?) = apply { this.customerId = customerId }
 
             /**
@@ -184,7 +182,6 @@ constructor(
              * [computed property](../guides/extensibility/advanced-metrics#computed-properties)
              * used to filter the set of events to deprecate
              */
-            @JsonProperty("deprecation_filter")
             fun deprecationFilter(deprecationFilter: String?) = apply {
                 this.deprecationFilter = deprecationFilter
             }
@@ -193,7 +190,6 @@ constructor(
              * The external customer ID of the customer to which this backfill is scoped. Omitting
              * this field will scope the backfill to all customers.
              */
-            @JsonProperty("external_customer_id")
             fun externalCustomerId(externalCustomerId: String?) = apply {
                 this.externalCustomerId = externalCustomerId
             }
@@ -202,7 +198,6 @@ constructor(
              * If true, replaces all existing events in the timeframe with the newly ingested
              * events. If false, adds the newly ingested events to the existing events.
              */
-            @JsonProperty("replace_existing_events")
             fun replaceExistingEvents(replaceExistingEvents: Boolean?) = apply {
                 this.replaceExistingEvents = replaceExistingEvents
             }
@@ -212,7 +207,6 @@ constructor(
                 putAllAdditionalProperties(additionalProperties)
             }
 
-            @JsonAnySetter
             fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                 additionalProperties.put(key, value)
             }

@@ -6,27 +6,37 @@ import com.fasterxml.jackson.annotation.JsonAnyGetter
 import com.fasterxml.jackson.annotation.JsonAnySetter
 import com.fasterxml.jackson.annotation.JsonCreator
 import com.fasterxml.jackson.annotation.JsonProperty
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize
 import com.withorb.api.core.Enum
 import com.withorb.api.core.ExcludeMissing
 import com.withorb.api.core.JsonField
 import com.withorb.api.core.JsonMissing
 import com.withorb.api.core.JsonValue
 import com.withorb.api.core.NoAutoDetect
+import com.withorb.api.core.immutableEmptyMap
 import com.withorb.api.core.toImmutable
 import com.withorb.api.errors.OrbInvalidDataException
 import java.util.Objects
 
-@JsonDeserialize(builder = TrialDiscount.Builder::class)
 @NoAutoDetect
 class TrialDiscount
+@JsonCreator
 private constructor(
-    private val discountType: JsonField<DiscountType>,
-    private val appliesToPriceIds: JsonField<List<String>>,
-    private val reason: JsonField<String>,
-    private val trialAmountDiscount: JsonField<String>,
-    private val trialPercentageDiscount: JsonField<Double>,
-    private val additionalProperties: Map<String, JsonValue>,
+    @JsonProperty("discount_type")
+    @ExcludeMissing
+    private val discountType: JsonField<DiscountType> = JsonMissing.of(),
+    @JsonProperty("applies_to_price_ids")
+    @ExcludeMissing
+    private val appliesToPriceIds: JsonField<List<String>> = JsonMissing.of(),
+    @JsonProperty("reason")
+    @ExcludeMissing
+    private val reason: JsonField<String> = JsonMissing.of(),
+    @JsonProperty("trial_amount_discount")
+    @ExcludeMissing
+    private val trialAmountDiscount: JsonField<String> = JsonMissing.of(),
+    @JsonProperty("trial_percentage_discount")
+    @ExcludeMissing
+    private val trialPercentageDiscount: JsonField<Double> = JsonMissing.of(),
+    @JsonAnySetter private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
 ) {
 
     fun discountType(): DiscountType = discountType.getRequired("discount_type")
@@ -112,8 +122,6 @@ private constructor(
 
         fun discountType(discountType: DiscountType) = discountType(JsonField.of(discountType))
 
-        @JsonProperty("discount_type")
-        @ExcludeMissing
         fun discountType(discountType: JsonField<DiscountType>) = apply {
             this.discountType = discountType
         }
@@ -129,16 +137,12 @@ private constructor(
          * List of price_ids that this discount applies to. For plan/plan phase discounts, this can
          * be a subset of prices.
          */
-        @JsonProperty("applies_to_price_ids")
-        @ExcludeMissing
         fun appliesToPriceIds(appliesToPriceIds: JsonField<List<String>>) = apply {
             this.appliesToPriceIds = appliesToPriceIds
         }
 
         fun reason(reason: String) = reason(JsonField.of(reason))
 
-        @JsonProperty("reason")
-        @ExcludeMissing
         fun reason(reason: JsonField<String>) = apply { this.reason = reason }
 
         /** Only available if discount_type is `trial` */
@@ -146,8 +150,6 @@ private constructor(
             trialAmountDiscount(JsonField.of(trialAmountDiscount))
 
         /** Only available if discount_type is `trial` */
-        @JsonProperty("trial_amount_discount")
-        @ExcludeMissing
         fun trialAmountDiscount(trialAmountDiscount: JsonField<String>) = apply {
             this.trialAmountDiscount = trialAmountDiscount
         }
@@ -157,8 +159,6 @@ private constructor(
             trialPercentageDiscount(JsonField.of(trialPercentageDiscount))
 
         /** Only available if discount_type is `trial` */
-        @JsonProperty("trial_percentage_discount")
-        @ExcludeMissing
         fun trialPercentageDiscount(trialPercentageDiscount: JsonField<Double>) = apply {
             this.trialPercentageDiscount = trialPercentageDiscount
         }
@@ -168,7 +168,6 @@ private constructor(
             putAllAdditionalProperties(additionalProperties)
         }
 
-        @JsonAnySetter
         fun putAdditionalProperty(key: String, value: JsonValue) = apply {
             additionalProperties.put(key, value)
         }
