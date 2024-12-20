@@ -6,26 +6,34 @@ import com.fasterxml.jackson.annotation.JsonAnyGetter
 import com.fasterxml.jackson.annotation.JsonAnySetter
 import com.fasterxml.jackson.annotation.JsonCreator
 import com.fasterxml.jackson.annotation.JsonProperty
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize
 import com.withorb.api.core.Enum
 import com.withorb.api.core.ExcludeMissing
 import com.withorb.api.core.JsonField
 import com.withorb.api.core.JsonMissing
 import com.withorb.api.core.JsonValue
 import com.withorb.api.core.NoAutoDetect
+import com.withorb.api.core.immutableEmptyMap
 import com.withorb.api.core.toImmutable
 import com.withorb.api.errors.OrbInvalidDataException
 import java.util.Objects
 
-@JsonDeserialize(builder = PercentageDiscount.Builder::class)
 @NoAutoDetect
 class PercentageDiscount
+@JsonCreator
 private constructor(
-    private val discountType: JsonField<DiscountType>,
-    private val appliesToPriceIds: JsonField<List<String>>,
-    private val reason: JsonField<String>,
-    private val percentageDiscount: JsonField<Double>,
-    private val additionalProperties: Map<String, JsonValue>,
+    @JsonProperty("discount_type")
+    @ExcludeMissing
+    private val discountType: JsonField<DiscountType> = JsonMissing.of(),
+    @JsonProperty("applies_to_price_ids")
+    @ExcludeMissing
+    private val appliesToPriceIds: JsonField<List<String>> = JsonMissing.of(),
+    @JsonProperty("reason")
+    @ExcludeMissing
+    private val reason: JsonField<String> = JsonMissing.of(),
+    @JsonProperty("percentage_discount")
+    @ExcludeMissing
+    private val percentageDiscount: JsonField<Double> = JsonMissing.of(),
+    @JsonAnySetter private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
 ) {
 
     fun discountType(): DiscountType = discountType.getRequired("discount_type")
@@ -99,8 +107,6 @@ private constructor(
 
         fun discountType(discountType: DiscountType) = discountType(JsonField.of(discountType))
 
-        @JsonProperty("discount_type")
-        @ExcludeMissing
         fun discountType(discountType: JsonField<DiscountType>) = apply {
             this.discountType = discountType
         }
@@ -116,16 +122,12 @@ private constructor(
          * List of price_ids that this discount applies to. For plan/plan phase discounts, this can
          * be a subset of prices.
          */
-        @JsonProperty("applies_to_price_ids")
-        @ExcludeMissing
         fun appliesToPriceIds(appliesToPriceIds: JsonField<List<String>>) = apply {
             this.appliesToPriceIds = appliesToPriceIds
         }
 
         fun reason(reason: String) = reason(JsonField.of(reason))
 
-        @JsonProperty("reason")
-        @ExcludeMissing
         fun reason(reason: JsonField<String>) = apply { this.reason = reason }
 
         /** Only available if discount_type is `percentage`. This is a number between 0 and 1. */
@@ -133,8 +135,6 @@ private constructor(
             percentageDiscount(JsonField.of(percentageDiscount))
 
         /** Only available if discount_type is `percentage`. This is a number between 0 and 1. */
-        @JsonProperty("percentage_discount")
-        @ExcludeMissing
         fun percentageDiscount(percentageDiscount: JsonField<Double>) = apply {
             this.percentageDiscount = percentageDiscount
         }
@@ -144,7 +144,6 @@ private constructor(
             putAllAdditionalProperties(additionalProperties)
         }
 
-        @JsonAnySetter
         fun putAdditionalProperty(key: String, value: JsonValue) = apply {
             additionalProperties.put(key, value)
         }

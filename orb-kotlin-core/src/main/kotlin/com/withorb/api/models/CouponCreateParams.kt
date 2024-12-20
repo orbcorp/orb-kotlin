@@ -23,6 +23,7 @@ import com.withorb.api.core.NoAutoDetect
 import com.withorb.api.core.getOrThrow
 import com.withorb.api.core.http.Headers
 import com.withorb.api.core.http.QueryParams
+import com.withorb.api.core.immutableEmptyMap
 import com.withorb.api.core.toImmutable
 import com.withorb.api.errors.OrbInvalidDataException
 import java.util.Objects
@@ -66,15 +67,16 @@ constructor(
 
     internal fun getQueryParams(): QueryParams = additionalQueryParams
 
-    @JsonDeserialize(builder = CouponCreateBody.Builder::class)
     @NoAutoDetect
     class CouponCreateBody
+    @JsonCreator
     internal constructor(
-        private val discount: Discount,
-        private val redemptionCode: String,
-        private val durationInMonths: Long?,
-        private val maxRedemptions: Long?,
-        private val additionalProperties: Map<String, JsonValue>,
+        @JsonProperty("discount") private val discount: Discount,
+        @JsonProperty("redemption_code") private val redemptionCode: String,
+        @JsonProperty("duration_in_months") private val durationInMonths: Long?,
+        @JsonProperty("max_redemptions") private val maxRedemptions: Long?,
+        @JsonAnySetter
+        private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
 
         @JsonProperty("discount") fun discount(): Discount = discount
@@ -121,11 +123,9 @@ constructor(
                 additionalProperties = couponCreateBody.additionalProperties.toMutableMap()
             }
 
-            @JsonProperty("discount")
             fun discount(discount: Discount) = apply { this.discount = discount }
 
             /** This string can be used to redeem this coupon for a given subscription. */
-            @JsonProperty("redemption_code")
             fun redemptionCode(redemptionCode: String) = apply {
                 this.redemptionCode = redemptionCode
             }
@@ -134,7 +134,6 @@ constructor(
              * This allows for a coupon's discount to apply for a limited time (determined in
              * months); a `null` value here means "unlimited time".
              */
-            @JsonProperty("duration_in_months")
             fun durationInMonths(durationInMonths: Long?) = apply {
                 this.durationInMonths = durationInMonths
             }
@@ -143,7 +142,6 @@ constructor(
              * The maximum number of redemptions allowed for this coupon before it is
              * exhausted;`null` here means "unlimited".
              */
-            @JsonProperty("max_redemptions")
             fun maxRedemptions(maxRedemptions: Long?) = apply {
                 this.maxRedemptions = maxRedemptions
             }
@@ -153,7 +151,6 @@ constructor(
                 putAllAdditionalProperties(additionalProperties)
             }
 
-            @JsonAnySetter
             fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                 additionalProperties.put(key, value)
             }
@@ -503,13 +500,14 @@ constructor(
             }
         }
 
-        @JsonDeserialize(builder = NewCouponPercentageDiscount.Builder::class)
         @NoAutoDetect
         class NewCouponPercentageDiscount
+        @JsonCreator
         private constructor(
-            private val discountType: DiscountType,
-            private val percentageDiscount: Double,
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonProperty("discount_type") private val discountType: DiscountType,
+            @JsonProperty("percentage_discount") private val percentageDiscount: Double,
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             @JsonProperty("discount_type") fun discountType(): DiscountType = discountType
@@ -542,12 +540,10 @@ constructor(
                             newCouponPercentageDiscount.additionalProperties.toMutableMap()
                     }
 
-                @JsonProperty("discount_type")
                 fun discountType(discountType: DiscountType) = apply {
                     this.discountType = discountType
                 }
 
-                @JsonProperty("percentage_discount")
                 fun percentageDiscount(percentageDiscount: Double) = apply {
                     this.percentageDiscount = percentageDiscount
                 }
@@ -557,7 +553,6 @@ constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -654,13 +649,14 @@ constructor(
                 "NewCouponPercentageDiscount{discountType=$discountType, percentageDiscount=$percentageDiscount, additionalProperties=$additionalProperties}"
         }
 
-        @JsonDeserialize(builder = NewCouponAmountDiscount.Builder::class)
         @NoAutoDetect
         class NewCouponAmountDiscount
+        @JsonCreator
         private constructor(
-            private val discountType: DiscountType,
-            private val amountDiscount: String,
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonProperty("discount_type") private val discountType: DiscountType,
+            @JsonProperty("amount_discount") private val amountDiscount: String,
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             @JsonProperty("discount_type") fun discountType(): DiscountType = discountType
@@ -691,12 +687,10 @@ constructor(
                         newCouponAmountDiscount.additionalProperties.toMutableMap()
                 }
 
-                @JsonProperty("discount_type")
                 fun discountType(discountType: DiscountType) = apply {
                     this.discountType = discountType
                 }
 
-                @JsonProperty("amount_discount")
                 fun amountDiscount(amountDiscount: String) = apply {
                     this.amountDiscount = amountDiscount
                 }
@@ -706,7 +700,6 @@ constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }

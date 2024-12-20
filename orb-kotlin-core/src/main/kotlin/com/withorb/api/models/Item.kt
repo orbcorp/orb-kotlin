@@ -6,13 +6,13 @@ import com.fasterxml.jackson.annotation.JsonAnyGetter
 import com.fasterxml.jackson.annotation.JsonAnySetter
 import com.fasterxml.jackson.annotation.JsonCreator
 import com.fasterxml.jackson.annotation.JsonProperty
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize
 import com.withorb.api.core.Enum
 import com.withorb.api.core.ExcludeMissing
 import com.withorb.api.core.JsonField
 import com.withorb.api.core.JsonMissing
 import com.withorb.api.core.JsonValue
 import com.withorb.api.core.NoAutoDetect
+import com.withorb.api.core.immutableEmptyMap
 import com.withorb.api.core.toImmutable
 import com.withorb.api.errors.OrbInvalidDataException
 import java.time.OffsetDateTime
@@ -23,15 +23,19 @@ import java.util.Objects
  * items, billable metrics, and prices and are used for defining external sync behavior for invoices
  * and tax calculation purposes.
  */
-@JsonDeserialize(builder = Item.Builder::class)
 @NoAutoDetect
 class Item
+@JsonCreator
 private constructor(
-    private val id: JsonField<String>,
-    private val name: JsonField<String>,
-    private val createdAt: JsonField<OffsetDateTime>,
-    private val externalConnections: JsonField<List<ExternalConnection>>,
-    private val additionalProperties: Map<String, JsonValue>,
+    @JsonProperty("id") @ExcludeMissing private val id: JsonField<String> = JsonMissing.of(),
+    @JsonProperty("name") @ExcludeMissing private val name: JsonField<String> = JsonMissing.of(),
+    @JsonProperty("created_at")
+    @ExcludeMissing
+    private val createdAt: JsonField<OffsetDateTime> = JsonMissing.of(),
+    @JsonProperty("external_connections")
+    @ExcludeMissing
+    private val externalConnections: JsonField<List<ExternalConnection>> = JsonMissing.of(),
+    @JsonAnySetter private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
 ) {
 
     fun id(): String = id.getRequired("id")
@@ -94,25 +98,19 @@ private constructor(
 
         fun id(id: String) = id(JsonField.of(id))
 
-        @JsonProperty("id") @ExcludeMissing fun id(id: JsonField<String>) = apply { this.id = id }
+        fun id(id: JsonField<String>) = apply { this.id = id }
 
         fun name(name: String) = name(JsonField.of(name))
 
-        @JsonProperty("name")
-        @ExcludeMissing
         fun name(name: JsonField<String>) = apply { this.name = name }
 
         fun createdAt(createdAt: OffsetDateTime) = createdAt(JsonField.of(createdAt))
 
-        @JsonProperty("created_at")
-        @ExcludeMissing
         fun createdAt(createdAt: JsonField<OffsetDateTime>) = apply { this.createdAt = createdAt }
 
         fun externalConnections(externalConnections: List<ExternalConnection>) =
             externalConnections(JsonField.of(externalConnections))
 
-        @JsonProperty("external_connections")
-        @ExcludeMissing
         fun externalConnections(externalConnections: JsonField<List<ExternalConnection>>) = apply {
             this.externalConnections = externalConnections
         }
@@ -122,7 +120,6 @@ private constructor(
             putAllAdditionalProperties(additionalProperties)
         }
 
-        @JsonAnySetter
         fun putAdditionalProperty(key: String, value: JsonValue) = apply {
             additionalProperties.put(key, value)
         }
@@ -147,13 +144,18 @@ private constructor(
             )
     }
 
-    @JsonDeserialize(builder = ExternalConnection.Builder::class)
     @NoAutoDetect
     class ExternalConnection
+    @JsonCreator
     private constructor(
-        private val externalConnectionName: JsonField<ExternalConnectionName>,
-        private val externalEntityId: JsonField<String>,
-        private val additionalProperties: Map<String, JsonValue>,
+        @JsonProperty("external_connection_name")
+        @ExcludeMissing
+        private val externalConnectionName: JsonField<ExternalConnectionName> = JsonMissing.of(),
+        @JsonProperty("external_entity_id")
+        @ExcludeMissing
+        private val externalEntityId: JsonField<String> = JsonMissing.of(),
+        @JsonAnySetter
+        private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
 
         fun externalConnectionName(): ExternalConnectionName =
@@ -205,8 +207,6 @@ private constructor(
             fun externalConnectionName(externalConnectionName: ExternalConnectionName) =
                 externalConnectionName(JsonField.of(externalConnectionName))
 
-            @JsonProperty("external_connection_name")
-            @ExcludeMissing
             fun externalConnectionName(externalConnectionName: JsonField<ExternalConnectionName>) =
                 apply {
                     this.externalConnectionName = externalConnectionName
@@ -215,8 +215,6 @@ private constructor(
             fun externalEntityId(externalEntityId: String) =
                 externalEntityId(JsonField.of(externalEntityId))
 
-            @JsonProperty("external_entity_id")
-            @ExcludeMissing
             fun externalEntityId(externalEntityId: JsonField<String>) = apply {
                 this.externalEntityId = externalEntityId
             }
@@ -226,7 +224,6 @@ private constructor(
                 putAllAdditionalProperties(additionalProperties)
             }
 
-            @JsonAnySetter
             fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                 additionalProperties.put(key, value)
             }

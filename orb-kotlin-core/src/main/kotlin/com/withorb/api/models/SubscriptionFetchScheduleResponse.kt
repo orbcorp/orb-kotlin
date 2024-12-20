@@ -4,26 +4,33 @@ package com.withorb.api.models
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter
 import com.fasterxml.jackson.annotation.JsonAnySetter
+import com.fasterxml.jackson.annotation.JsonCreator
 import com.fasterxml.jackson.annotation.JsonProperty
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize
 import com.withorb.api.core.ExcludeMissing
 import com.withorb.api.core.JsonField
 import com.withorb.api.core.JsonMissing
 import com.withorb.api.core.JsonValue
 import com.withorb.api.core.NoAutoDetect
+import com.withorb.api.core.immutableEmptyMap
 import com.withorb.api.core.toImmutable
 import java.time.OffsetDateTime
 import java.util.Objects
 
-@JsonDeserialize(builder = SubscriptionFetchScheduleResponse.Builder::class)
 @NoAutoDetect
 class SubscriptionFetchScheduleResponse
+@JsonCreator
 private constructor(
-    private val startDate: JsonField<OffsetDateTime>,
-    private val endDate: JsonField<OffsetDateTime>,
-    private val createdAt: JsonField<OffsetDateTime>,
-    private val plan: JsonField<Plan>,
-    private val additionalProperties: Map<String, JsonValue>,
+    @JsonProperty("start_date")
+    @ExcludeMissing
+    private val startDate: JsonField<OffsetDateTime> = JsonMissing.of(),
+    @JsonProperty("end_date")
+    @ExcludeMissing
+    private val endDate: JsonField<OffsetDateTime> = JsonMissing.of(),
+    @JsonProperty("created_at")
+    @ExcludeMissing
+    private val createdAt: JsonField<OffsetDateTime> = JsonMissing.of(),
+    @JsonProperty("plan") @ExcludeMissing private val plan: JsonField<Plan> = JsonMissing.of(),
+    @JsonAnySetter private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
 ) {
 
     fun startDate(): OffsetDateTime = startDate.getRequired("start_date")
@@ -85,26 +92,18 @@ private constructor(
 
         fun startDate(startDate: OffsetDateTime) = startDate(JsonField.of(startDate))
 
-        @JsonProperty("start_date")
-        @ExcludeMissing
         fun startDate(startDate: JsonField<OffsetDateTime>) = apply { this.startDate = startDate }
 
         fun endDate(endDate: OffsetDateTime) = endDate(JsonField.of(endDate))
 
-        @JsonProperty("end_date")
-        @ExcludeMissing
         fun endDate(endDate: JsonField<OffsetDateTime>) = apply { this.endDate = endDate }
 
         fun createdAt(createdAt: OffsetDateTime) = createdAt(JsonField.of(createdAt))
 
-        @JsonProperty("created_at")
-        @ExcludeMissing
         fun createdAt(createdAt: JsonField<OffsetDateTime>) = apply { this.createdAt = createdAt }
 
         fun plan(plan: Plan) = plan(JsonField.of(plan))
 
-        @JsonProperty("plan")
-        @ExcludeMissing
         fun plan(plan: JsonField<Plan>) = apply { this.plan = plan }
 
         fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
@@ -112,7 +111,6 @@ private constructor(
             putAllAdditionalProperties(additionalProperties)
         }
 
-        @JsonAnySetter
         fun putAdditionalProperty(key: String, value: JsonValue) = apply {
             additionalProperties.put(key, value)
         }
@@ -137,14 +135,19 @@ private constructor(
             )
     }
 
-    @JsonDeserialize(builder = Plan.Builder::class)
     @NoAutoDetect
     class Plan
+    @JsonCreator
     private constructor(
-        private val id: JsonField<String>,
-        private val externalPlanId: JsonField<String>,
-        private val name: JsonField<String>,
-        private val additionalProperties: Map<String, JsonValue>,
+        @JsonProperty("id") @ExcludeMissing private val id: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("external_plan_id")
+        @ExcludeMissing
+        private val externalPlanId: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("name")
+        @ExcludeMissing
+        private val name: JsonField<String> = JsonMissing.of(),
+        @JsonAnySetter
+        private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
 
         fun id(): String? = id.getNullable("id")
@@ -207,8 +210,6 @@ private constructor(
 
             fun id(id: String) = id(JsonField.of(id))
 
-            @JsonProperty("id")
-            @ExcludeMissing
             fun id(id: JsonField<String>) = apply { this.id = id }
 
             /**
@@ -224,16 +225,12 @@ private constructor(
              * alias for this Plan. Use this field to identify a plan by an existing identifier in
              * your system.
              */
-            @JsonProperty("external_plan_id")
-            @ExcludeMissing
             fun externalPlanId(externalPlanId: JsonField<String>) = apply {
                 this.externalPlanId = externalPlanId
             }
 
             fun name(name: String) = name(JsonField.of(name))
 
-            @JsonProperty("name")
-            @ExcludeMissing
             fun name(name: JsonField<String>) = apply { this.name = name }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
@@ -241,7 +238,6 @@ private constructor(
                 putAllAdditionalProperties(additionalProperties)
             }
 
-            @JsonAnySetter
             fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                 additionalProperties.put(key, value)
             }

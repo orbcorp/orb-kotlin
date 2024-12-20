@@ -4,13 +4,14 @@ package com.withorb.api.models
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter
 import com.fasterxml.jackson.annotation.JsonAnySetter
+import com.fasterxml.jackson.annotation.JsonCreator
 import com.fasterxml.jackson.annotation.JsonProperty
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize
 import com.withorb.api.core.ExcludeMissing
 import com.withorb.api.core.JsonValue
 import com.withorb.api.core.NoAutoDetect
 import com.withorb.api.core.http.Headers
 import com.withorb.api.core.http.QueryParams
+import com.withorb.api.core.immutableEmptyMap
 import com.withorb.api.core.toImmutable
 import java.time.OffsetDateTime
 import java.util.Objects
@@ -51,12 +52,13 @@ constructor(
         return queryParams.build()
     }
 
-    @JsonDeserialize(builder = EventIngestBody.Builder::class)
     @NoAutoDetect
     class EventIngestBody
+    @JsonCreator
     internal constructor(
-        private val events: List<Event>,
-        private val additionalProperties: Map<String, JsonValue>,
+        @JsonProperty("events") private val events: List<Event>,
+        @JsonAnySetter
+        private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
 
         @JsonProperty("events") fun events(): List<Event> = events
@@ -82,14 +84,13 @@ constructor(
                 additionalProperties = eventIngestBody.additionalProperties.toMutableMap()
             }
 
-            @JsonProperty("events") fun events(events: List<Event>) = apply { this.events = events }
+            fun events(events: List<Event>) = apply { this.events = events }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
                 putAllAdditionalProperties(additionalProperties)
             }
 
-            @JsonAnySetter
             fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                 additionalProperties.put(key, value)
             }
@@ -302,17 +303,18 @@ constructor(
             )
     }
 
-    @JsonDeserialize(builder = Event.Builder::class)
     @NoAutoDetect
     class Event
+    @JsonCreator
     private constructor(
-        private val customerId: String?,
-        private val externalCustomerId: String?,
-        private val eventName: String,
-        private val timestamp: OffsetDateTime,
-        private val properties: JsonValue,
-        private val idempotencyKey: String,
-        private val additionalProperties: Map<String, JsonValue>,
+        @JsonProperty("customer_id") private val customerId: String?,
+        @JsonProperty("external_customer_id") private val externalCustomerId: String?,
+        @JsonProperty("event_name") private val eventName: String,
+        @JsonProperty("timestamp") private val timestamp: OffsetDateTime,
+        @JsonProperty("properties") private val properties: JsonValue,
+        @JsonProperty("idempotency_key") private val idempotencyKey: String,
+        @JsonAnySetter
+        private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
 
         /** The Orb Customer identifier */
@@ -376,19 +378,16 @@ constructor(
             }
 
             /** The Orb Customer identifier */
-            @JsonProperty("customer_id")
             fun customerId(customerId: String?) = apply { this.customerId = customerId }
 
             /**
              * An alias for the Orb customer, whose mapping is specified when creating the customer
              */
-            @JsonProperty("external_customer_id")
             fun externalCustomerId(externalCustomerId: String?) = apply {
                 this.externalCustomerId = externalCustomerId
             }
 
             /** A name to meaningfully identify the action or event type. */
-            @JsonProperty("event_name")
             fun eventName(eventName: String) = apply { this.eventName = eventName }
 
             /**
@@ -396,14 +395,12 @@ constructor(
              * time that usage was recorded, and is particularly important to attribute usage to a
              * given billing period.
              */
-            @JsonProperty("timestamp")
             fun timestamp(timestamp: OffsetDateTime) = apply { this.timestamp = timestamp }
 
             /**
              * A dictionary of custom properties. Values in this dictionary must be numeric,
              * boolean, or strings. Nested dictionaries are disallowed.
              */
-            @JsonProperty("properties")
             fun properties(properties: JsonValue) = apply { this.properties = properties }
 
             /**
@@ -411,7 +408,6 @@ constructor(
              * one event with a given idempotency key will be ingested, which allows for safe
              * request retries.
              */
-            @JsonProperty("idempotency_key")
             fun idempotencyKey(idempotencyKey: String) = apply {
                 this.idempotencyKey = idempotencyKey
             }
@@ -421,7 +417,6 @@ constructor(
                 putAllAdditionalProperties(additionalProperties)
             }
 
-            @JsonAnySetter
             fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                 additionalProperties.put(key, value)
             }

@@ -23,6 +23,7 @@ import com.withorb.api.core.NoAutoDetect
 import com.withorb.api.core.getOrThrow
 import com.withorb.api.core.http.Headers
 import com.withorb.api.core.http.QueryParams
+import com.withorb.api.core.immutableEmptyMap
 import com.withorb.api.core.toImmutable
 import com.withorb.api.errors.OrbInvalidDataException
 import java.util.Objects
@@ -124,27 +125,30 @@ constructor(
         }
     }
 
-    @JsonDeserialize(builder = CustomerUpdateByExternalIdBody.Builder::class)
     @NoAutoDetect
     class CustomerUpdateByExternalIdBody
+    @JsonCreator
     internal constructor(
+        @JsonProperty("accounting_sync_configuration")
         private val accountingSyncConfiguration: AccountingSyncConfiguration?,
-        private val additionalEmails: List<String>?,
-        private val autoCollection: Boolean?,
-        private val billingAddress: BillingAddress?,
-        private val currency: String?,
-        private val email: String?,
-        private val emailDelivery: Boolean?,
-        private val externalCustomerId: String?,
-        private val metadata: Metadata?,
-        private val name: String?,
-        private val paymentProvider: PaymentProvider?,
-        private val paymentProviderId: String?,
+        @JsonProperty("additional_emails") private val additionalEmails: List<String>?,
+        @JsonProperty("auto_collection") private val autoCollection: Boolean?,
+        @JsonProperty("billing_address") private val billingAddress: BillingAddress?,
+        @JsonProperty("currency") private val currency: String?,
+        @JsonProperty("email") private val email: String?,
+        @JsonProperty("email_delivery") private val emailDelivery: Boolean?,
+        @JsonProperty("external_customer_id") private val externalCustomerId: String?,
+        @JsonProperty("metadata") private val metadata: Metadata?,
+        @JsonProperty("name") private val name: String?,
+        @JsonProperty("payment_provider") private val paymentProvider: PaymentProvider?,
+        @JsonProperty("payment_provider_id") private val paymentProviderId: String?,
+        @JsonProperty("reporting_configuration")
         private val reportingConfiguration: ReportingConfiguration?,
-        private val shippingAddress: ShippingAddress?,
-        private val taxConfiguration: TaxConfiguration?,
-        private val taxId: TaxId?,
-        private val additionalProperties: Map<String, JsonValue>,
+        @JsonProperty("shipping_address") private val shippingAddress: ShippingAddress?,
+        @JsonProperty("tax_configuration") private val taxConfiguration: TaxConfiguration?,
+        @JsonProperty("tax_id") private val taxId: TaxId?,
+        @JsonAnySetter
+        private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
 
         @JsonProperty("accounting_sync_configuration")
@@ -379,7 +383,6 @@ constructor(
                         customerUpdateByExternalIdBody.additionalProperties.toMutableMap()
                 }
 
-            @JsonProperty("accounting_sync_configuration")
             fun accountingSyncConfiguration(
                 accountingSyncConfiguration: AccountingSyncConfiguration?
             ) = apply { this.accountingSyncConfiguration = accountingSyncConfiguration }
@@ -388,7 +391,6 @@ constructor(
              * Additional email addresses for this customer. If populated, these email addresses
              * will be CC'd for customer communications.
              */
-            @JsonProperty("additional_emails")
             fun additionalEmails(additionalEmails: List<String>?) = apply {
                 this.additionalEmails = additionalEmails
             }
@@ -398,12 +400,10 @@ constructor(
              * a saved payment method, if available. This parameter defaults to `True` when a
              * payment provider is provided on customer creation.
              */
-            @JsonProperty("auto_collection")
             fun autoCollection(autoCollection: Boolean?) = apply {
                 this.autoCollection = autoCollection
             }
 
-            @JsonProperty("billing_address")
             fun billingAddress(billingAddress: BillingAddress?) = apply {
                 this.billingAddress = billingAddress
             }
@@ -412,13 +412,11 @@ constructor(
              * An ISO 4217 currency string used for the customer's invoices and balance. If not set
              * at creation time, will be set at subscription creation time.
              */
-            @JsonProperty("currency")
             fun currency(currency: String?) = apply { this.currency = currency }
 
             /** A valid customer email, to be used for invoicing and notifications. */
-            @JsonProperty("email") fun email(email: String?) = apply { this.email = email }
+            fun email(email: String?) = apply { this.email = email }
 
-            @JsonProperty("email_delivery")
             fun emailDelivery(emailDelivery: Boolean?) = apply {
                 this.emailDelivery = emailDelivery
             }
@@ -427,7 +425,6 @@ constructor(
              * The external customer ID. This can only be set if empty and the customer has no past
              * or current subscriptions.
              */
-            @JsonProperty("external_customer_id")
             fun externalCustomerId(externalCustomerId: String?) = apply {
                 this.externalCustomerId = externalCustomerId
             }
@@ -437,11 +434,10 @@ constructor(
              * setting the value to `null`, and the entire metadata mapping can be cleared by
              * setting `metadata` to `null`.
              */
-            @JsonProperty("metadata")
             fun metadata(metadata: Metadata?) = apply { this.metadata = metadata }
 
             /** The full name of the customer */
-            @JsonProperty("name") fun name(name: String?) = apply { this.name = name }
+            fun name(name: String?) = apply { this.name = name }
 
             /**
              * This is used for creating charges or invoices in an external system via Orb. When not
@@ -451,7 +447,6 @@ constructor(
              *   `bill.com`, `netsuite`), any product mappings must first be configured with the Orb
              *   team.
              */
-            @JsonProperty("payment_provider")
             fun paymentProvider(paymentProvider: PaymentProvider?) = apply {
                 this.paymentProvider = paymentProvider
             }
@@ -460,22 +455,18 @@ constructor(
              * The ID of this customer in an external payments solution, such as Stripe. This is
              * used for creating charges or invoices in the external system via Orb.
              */
-            @JsonProperty("payment_provider_id")
             fun paymentProviderId(paymentProviderId: String?) = apply {
                 this.paymentProviderId = paymentProviderId
             }
 
-            @JsonProperty("reporting_configuration")
             fun reportingConfiguration(reportingConfiguration: ReportingConfiguration?) = apply {
                 this.reportingConfiguration = reportingConfiguration
             }
 
-            @JsonProperty("shipping_address")
             fun shippingAddress(shippingAddress: ShippingAddress?) = apply {
                 this.shippingAddress = shippingAddress
             }
 
-            @JsonProperty("tax_configuration")
             fun taxConfiguration(taxConfiguration: TaxConfiguration?) = apply {
                 this.taxConfiguration = taxConfiguration
             }
@@ -586,14 +577,13 @@ constructor(
              * |Venezuela           |`ve_rif`    |Venezuelan RIF Number                                                                                  |
              * |Vietnam             |`vn_tin`    |Vietnamese Tax ID Number                                                                               |
              */
-            @JsonProperty("tax_id") fun taxId(taxId: TaxId?) = apply { this.taxId = taxId }
+            fun taxId(taxId: TaxId?) = apply { this.taxId = taxId }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
                 putAllAdditionalProperties(additionalProperties)
             }
 
-            @JsonAnySetter
             fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                 additionalProperties.put(key, value)
             }
@@ -1069,13 +1059,15 @@ constructor(
             )
     }
 
-    @JsonDeserialize(builder = AccountingSyncConfiguration.Builder::class)
     @NoAutoDetect
     class AccountingSyncConfiguration
+    @JsonCreator
     private constructor(
-        private val excluded: Boolean?,
+        @JsonProperty("excluded") private val excluded: Boolean?,
+        @JsonProperty("accounting_providers")
         private val accountingProviders: List<AccountingProvider>?,
-        private val additionalProperties: Map<String, JsonValue>,
+        @JsonAnySetter
+        private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
 
         @JsonProperty("excluded") fun excluded(): Boolean? = excluded
@@ -1108,10 +1100,8 @@ constructor(
                     accountingSyncConfiguration.additionalProperties.toMutableMap()
             }
 
-            @JsonProperty("excluded")
             fun excluded(excluded: Boolean?) = apply { this.excluded = excluded }
 
-            @JsonProperty("accounting_providers")
             fun accountingProviders(accountingProviders: List<AccountingProvider>?) = apply {
                 this.accountingProviders = accountingProviders
             }
@@ -1121,7 +1111,6 @@ constructor(
                 putAllAdditionalProperties(additionalProperties)
             }
 
-            @JsonAnySetter
             fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                 additionalProperties.put(key, value)
             }
@@ -1144,13 +1133,14 @@ constructor(
                 )
         }
 
-        @JsonDeserialize(builder = AccountingProvider.Builder::class)
         @NoAutoDetect
         class AccountingProvider
+        @JsonCreator
         private constructor(
-            private val providerType: String,
-            private val externalProviderId: String,
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonProperty("provider_type") private val providerType: String,
+            @JsonProperty("external_provider_id") private val externalProviderId: String,
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             @JsonProperty("provider_type") fun providerType(): String = providerType
@@ -1181,10 +1171,8 @@ constructor(
                     additionalProperties = accountingProvider.additionalProperties.toMutableMap()
                 }
 
-                @JsonProperty("provider_type")
                 fun providerType(providerType: String) = apply { this.providerType = providerType }
 
-                @JsonProperty("external_provider_id")
                 fun externalProviderId(externalProviderId: String) = apply {
                     this.externalProviderId = externalProviderId
                 }
@@ -1194,7 +1182,6 @@ constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -1258,17 +1245,18 @@ constructor(
             "AccountingSyncConfiguration{excluded=$excluded, accountingProviders=$accountingProviders, additionalProperties=$additionalProperties}"
     }
 
-    @JsonDeserialize(builder = BillingAddress.Builder::class)
     @NoAutoDetect
     class BillingAddress
+    @JsonCreator
     private constructor(
-        private val line1: String?,
-        private val line2: String?,
-        private val city: String?,
-        private val state: String?,
-        private val postalCode: String?,
-        private val country: String?,
-        private val additionalProperties: Map<String, JsonValue>,
+        @JsonProperty("line1") private val line1: String?,
+        @JsonProperty("line2") private val line2: String?,
+        @JsonProperty("city") private val city: String?,
+        @JsonProperty("state") private val state: String?,
+        @JsonProperty("postal_code") private val postalCode: String?,
+        @JsonProperty("country") private val country: String?,
+        @JsonAnySetter
+        private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
 
         @JsonProperty("line1") fun line1(): String? = line1
@@ -1314,18 +1302,16 @@ constructor(
                 additionalProperties = billingAddress.additionalProperties.toMutableMap()
             }
 
-            @JsonProperty("line1") fun line1(line1: String?) = apply { this.line1 = line1 }
+            fun line1(line1: String?) = apply { this.line1 = line1 }
 
-            @JsonProperty("line2") fun line2(line2: String?) = apply { this.line2 = line2 }
+            fun line2(line2: String?) = apply { this.line2 = line2 }
 
-            @JsonProperty("city") fun city(city: String?) = apply { this.city = city }
+            fun city(city: String?) = apply { this.city = city }
 
-            @JsonProperty("state") fun state(state: String?) = apply { this.state = state }
+            fun state(state: String?) = apply { this.state = state }
 
-            @JsonProperty("postal_code")
             fun postalCode(postalCode: String?) = apply { this.postalCode = postalCode }
 
-            @JsonProperty("country")
             fun country(country: String?) = apply { this.country = country }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
@@ -1333,7 +1319,6 @@ constructor(
                 putAllAdditionalProperties(additionalProperties)
             }
 
-            @JsonAnySetter
             fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                 additionalProperties.put(key, value)
             }
@@ -1383,11 +1368,12 @@ constructor(
      * the value to `null`, and the entire metadata mapping can be cleared by setting `metadata` to
      * `null`.
      */
-    @JsonDeserialize(builder = Metadata.Builder::class)
     @NoAutoDetect
     class Metadata
+    @JsonCreator
     private constructor(
-        private val additionalProperties: Map<String, JsonValue>,
+        @JsonAnySetter
+        private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
 
         @JsonAnyGetter
@@ -1414,7 +1400,6 @@ constructor(
                 putAllAdditionalProperties(additionalProperties)
             }
 
-            @JsonAnySetter
             fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                 additionalProperties.put(key, value)
             }
@@ -1524,12 +1509,13 @@ constructor(
         override fun toString() = value.toString()
     }
 
-    @JsonDeserialize(builder = ReportingConfiguration.Builder::class)
     @NoAutoDetect
     class ReportingConfiguration
+    @JsonCreator
     private constructor(
-        private val exempt: Boolean,
-        private val additionalProperties: Map<String, JsonValue>,
+        @JsonProperty("exempt") private val exempt: Boolean,
+        @JsonAnySetter
+        private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
 
         @JsonProperty("exempt") fun exempt(): Boolean = exempt
@@ -1555,14 +1541,13 @@ constructor(
                 additionalProperties = reportingConfiguration.additionalProperties.toMutableMap()
             }
 
-            @JsonProperty("exempt") fun exempt(exempt: Boolean) = apply { this.exempt = exempt }
+            fun exempt(exempt: Boolean) = apply { this.exempt = exempt }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
                 putAllAdditionalProperties(additionalProperties)
             }
 
-            @JsonAnySetter
             fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                 additionalProperties.put(key, value)
             }
@@ -1602,17 +1587,18 @@ constructor(
             "ReportingConfiguration{exempt=$exempt, additionalProperties=$additionalProperties}"
     }
 
-    @JsonDeserialize(builder = ShippingAddress.Builder::class)
     @NoAutoDetect
     class ShippingAddress
+    @JsonCreator
     private constructor(
-        private val line1: String?,
-        private val line2: String?,
-        private val city: String?,
-        private val state: String?,
-        private val postalCode: String?,
-        private val country: String?,
-        private val additionalProperties: Map<String, JsonValue>,
+        @JsonProperty("line1") private val line1: String?,
+        @JsonProperty("line2") private val line2: String?,
+        @JsonProperty("city") private val city: String?,
+        @JsonProperty("state") private val state: String?,
+        @JsonProperty("postal_code") private val postalCode: String?,
+        @JsonProperty("country") private val country: String?,
+        @JsonAnySetter
+        private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
 
         @JsonProperty("line1") fun line1(): String? = line1
@@ -1658,18 +1644,16 @@ constructor(
                 additionalProperties = shippingAddress.additionalProperties.toMutableMap()
             }
 
-            @JsonProperty("line1") fun line1(line1: String?) = apply { this.line1 = line1 }
+            fun line1(line1: String?) = apply { this.line1 = line1 }
 
-            @JsonProperty("line2") fun line2(line2: String?) = apply { this.line2 = line2 }
+            fun line2(line2: String?) = apply { this.line2 = line2 }
 
-            @JsonProperty("city") fun city(city: String?) = apply { this.city = city }
+            fun city(city: String?) = apply { this.city = city }
 
-            @JsonProperty("state") fun state(state: String?) = apply { this.state = state }
+            fun state(state: String?) = apply { this.state = state }
 
-            @JsonProperty("postal_code")
             fun postalCode(postalCode: String?) = apply { this.postalCode = postalCode }
 
-            @JsonProperty("country")
             fun country(country: String?) = apply { this.country = country }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
@@ -1677,7 +1661,6 @@ constructor(
                 putAllAdditionalProperties(additionalProperties)
             }
 
-            @JsonAnySetter
             fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                 additionalProperties.put(key, value)
             }
@@ -1841,14 +1824,15 @@ constructor(
             }
         }
 
-        @JsonDeserialize(builder = NewAvalaraTaxConfiguration.Builder::class)
         @NoAutoDetect
         class NewAvalaraTaxConfiguration
+        @JsonCreator
         private constructor(
-            private val taxExempt: Boolean,
-            private val taxProvider: TaxProvider,
-            private val taxExemptionCode: String?,
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonProperty("tax_exempt") private val taxExempt: Boolean,
+            @JsonProperty("tax_provider") private val taxProvider: TaxProvider,
+            @JsonProperty("tax_exemption_code") private val taxExemptionCode: String?,
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             @JsonProperty("tax_exempt") fun taxExempt(): Boolean = taxExempt
@@ -1883,13 +1867,10 @@ constructor(
                         newAvalaraTaxConfiguration.additionalProperties.toMutableMap()
                 }
 
-                @JsonProperty("tax_exempt")
                 fun taxExempt(taxExempt: Boolean) = apply { this.taxExempt = taxExempt }
 
-                @JsonProperty("tax_provider")
                 fun taxProvider(taxProvider: TaxProvider) = apply { this.taxProvider = taxProvider }
 
-                @JsonProperty("tax_exemption_code")
                 fun taxExemptionCode(taxExemptionCode: String?) = apply {
                     this.taxExemptionCode = taxExemptionCode
                 }
@@ -1899,7 +1880,6 @@ constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -1995,13 +1975,14 @@ constructor(
                 "NewAvalaraTaxConfiguration{taxExempt=$taxExempt, taxProvider=$taxProvider, taxExemptionCode=$taxExemptionCode, additionalProperties=$additionalProperties}"
         }
 
-        @JsonDeserialize(builder = NewTaxJarConfiguration.Builder::class)
         @NoAutoDetect
         class NewTaxJarConfiguration
+        @JsonCreator
         private constructor(
-            private val taxExempt: Boolean,
-            private val taxProvider: TaxProvider,
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonProperty("tax_exempt") private val taxExempt: Boolean,
+            @JsonProperty("tax_provider") private val taxProvider: TaxProvider,
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             @JsonProperty("tax_exempt") fun taxExempt(): Boolean = taxExempt
@@ -2032,10 +2013,8 @@ constructor(
                         newTaxJarConfiguration.additionalProperties.toMutableMap()
                 }
 
-                @JsonProperty("tax_exempt")
                 fun taxExempt(taxExempt: Boolean) = apply { this.taxExempt = taxExempt }
 
-                @JsonProperty("tax_provider")
                 fun taxProvider(taxProvider: TaxProvider) = apply { this.taxProvider = taxProvider }
 
                 fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
@@ -2043,7 +2022,6 @@ constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -2245,14 +2223,15 @@ constructor(
      * |Venezuela           |`ve_rif`    |Venezuelan RIF Number                                                                                  |
      * |Vietnam             |`vn_tin`    |Vietnamese Tax ID Number                                                                               |
      */
-    @JsonDeserialize(builder = TaxId.Builder::class)
     @NoAutoDetect
     class TaxId
+    @JsonCreator
     private constructor(
-        private val country: Country,
-        private val type: Type,
-        private val value: String,
-        private val additionalProperties: Map<String, JsonValue>,
+        @JsonProperty("country") private val country: Country,
+        @JsonProperty("type") private val type: Type,
+        @JsonProperty("value") private val value: String,
+        @JsonAnySetter
+        private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
 
         @JsonProperty("country") fun country(): Country = country
@@ -2286,19 +2265,17 @@ constructor(
                 additionalProperties = taxId.additionalProperties.toMutableMap()
             }
 
-            @JsonProperty("country")
             fun country(country: Country) = apply { this.country = country }
 
-            @JsonProperty("type") fun type(type: Type) = apply { this.type = type }
+            fun type(type: Type) = apply { this.type = type }
 
-            @JsonProperty("value") fun value(value: String) = apply { this.value = value }
+            fun value(value: String) = apply { this.value = value }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
                 putAllAdditionalProperties(additionalProperties)
             }
 
-            @JsonAnySetter
             fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                 additionalProperties.put(key, value)
             }

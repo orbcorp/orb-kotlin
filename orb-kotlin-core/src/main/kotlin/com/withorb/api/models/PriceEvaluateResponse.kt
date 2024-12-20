@@ -4,22 +4,25 @@ package com.withorb.api.models
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter
 import com.fasterxml.jackson.annotation.JsonAnySetter
+import com.fasterxml.jackson.annotation.JsonCreator
 import com.fasterxml.jackson.annotation.JsonProperty
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize
 import com.withorb.api.core.ExcludeMissing
 import com.withorb.api.core.JsonField
 import com.withorb.api.core.JsonMissing
 import com.withorb.api.core.JsonValue
 import com.withorb.api.core.NoAutoDetect
+import com.withorb.api.core.immutableEmptyMap
 import com.withorb.api.core.toImmutable
 import java.util.Objects
 
-@JsonDeserialize(builder = PriceEvaluateResponse.Builder::class)
 @NoAutoDetect
 class PriceEvaluateResponse
+@JsonCreator
 private constructor(
-    private val data: JsonField<List<EvaluatePriceGroup>>,
-    private val additionalProperties: Map<String, JsonValue>,
+    @JsonProperty("data")
+    @ExcludeMissing
+    private val data: JsonField<List<EvaluatePriceGroup>> = JsonMissing.of(),
+    @JsonAnySetter private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
 ) {
 
     fun data(): List<EvaluatePriceGroup> = data.getRequired("data")
@@ -58,8 +61,6 @@ private constructor(
 
         fun data(data: List<EvaluatePriceGroup>) = data(JsonField.of(data))
 
-        @JsonProperty("data")
-        @ExcludeMissing
         fun data(data: JsonField<List<EvaluatePriceGroup>>) = apply { this.data = data }
 
         fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
@@ -67,7 +68,6 @@ private constructor(
             putAllAdditionalProperties(additionalProperties)
         }
 
-        @JsonAnySetter
         fun putAdditionalProperty(key: String, value: JsonValue) = apply {
             additionalProperties.put(key, value)
         }
