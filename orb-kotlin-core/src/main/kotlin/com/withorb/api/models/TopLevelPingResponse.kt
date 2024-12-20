@@ -4,25 +4,26 @@ package com.withorb.api.models
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter
 import com.fasterxml.jackson.annotation.JsonAnySetter
+import com.fasterxml.jackson.annotation.JsonCreator
 import com.fasterxml.jackson.annotation.JsonProperty
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize
 import com.withorb.api.core.ExcludeMissing
 import com.withorb.api.core.JsonField
 import com.withorb.api.core.JsonMissing
 import com.withorb.api.core.JsonValue
 import com.withorb.api.core.NoAutoDetect
+import com.withorb.api.core.immutableEmptyMap
 import com.withorb.api.core.toImmutable
 import java.util.Objects
 
-@JsonDeserialize(builder = TopLevelPingResponse.Builder::class)
 @NoAutoDetect
 class TopLevelPingResponse
+@JsonCreator
 private constructor(
-    private val response: JsonField<String>,
-    private val additionalProperties: Map<String, JsonValue>,
+    @JsonProperty("response")
+    @ExcludeMissing
+    private val response: JsonField<String> = JsonMissing.of(),
+    @JsonAnySetter private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
 ) {
-
-    private var validated: Boolean = false
 
     fun response(): String = response.getRequired("response")
 
@@ -31,6 +32,8 @@ private constructor(
     @JsonAnyGetter
     @ExcludeMissing
     fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
+
+    private var validated: Boolean = false
 
     fun validate(): TopLevelPingResponse = apply {
         if (!validated) {
@@ -52,28 +55,31 @@ private constructor(
         private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         internal fun from(topLevelPingResponse: TopLevelPingResponse) = apply {
-            this.response = topLevelPingResponse.response
-            additionalProperties(topLevelPingResponse.additionalProperties)
+            response = topLevelPingResponse.response
+            additionalProperties = topLevelPingResponse.additionalProperties.toMutableMap()
         }
 
         fun response(response: String) = response(JsonField.of(response))
 
-        @JsonProperty("response")
-        @ExcludeMissing
         fun response(response: JsonField<String>) = apply { this.response = response }
 
         fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
             this.additionalProperties.clear()
-            this.additionalProperties.putAll(additionalProperties)
+            putAllAdditionalProperties(additionalProperties)
         }
 
-        @JsonAnySetter
         fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-            this.additionalProperties.put(key, value)
+            additionalProperties.put(key, value)
         }
 
         fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
             this.additionalProperties.putAll(additionalProperties)
+        }
+
+        fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+
+        fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+            keys.forEach(::removeAdditionalProperty)
         }
 
         fun build(): TopLevelPingResponse =

@@ -6,36 +6,50 @@ import com.fasterxml.jackson.annotation.JsonAnyGetter
 import com.fasterxml.jackson.annotation.JsonAnySetter
 import com.fasterxml.jackson.annotation.JsonCreator
 import com.fasterxml.jackson.annotation.JsonProperty
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize
 import com.withorb.api.core.Enum
 import com.withorb.api.core.ExcludeMissing
 import com.withorb.api.core.JsonField
 import com.withorb.api.core.JsonMissing
 import com.withorb.api.core.JsonValue
 import com.withorb.api.core.NoAutoDetect
+import com.withorb.api.core.immutableEmptyMap
 import com.withorb.api.core.toImmutable
 import com.withorb.api.errors.OrbInvalidDataException
 import java.time.OffsetDateTime
 import java.util.Objects
 
-@JsonDeserialize(builder = CustomerBalanceTransactionListResponse.Builder::class)
 @NoAutoDetect
 class CustomerBalanceTransactionListResponse
+@JsonCreator
 private constructor(
-    private val id: JsonField<String>,
-    private val createdAt: JsonField<OffsetDateTime>,
-    private val startingBalance: JsonField<String>,
-    private val endingBalance: JsonField<String>,
-    private val amount: JsonField<String>,
-    private val action: JsonField<Action>,
-    private val description: JsonField<String>,
-    private val invoice: JsonField<Invoice>,
-    private val type: JsonField<Type>,
-    private val creditNote: JsonField<CreditNote>,
-    private val additionalProperties: Map<String, JsonValue>,
+    @JsonProperty("id") @ExcludeMissing private val id: JsonField<String> = JsonMissing.of(),
+    @JsonProperty("created_at")
+    @ExcludeMissing
+    private val createdAt: JsonField<OffsetDateTime> = JsonMissing.of(),
+    @JsonProperty("starting_balance")
+    @ExcludeMissing
+    private val startingBalance: JsonField<String> = JsonMissing.of(),
+    @JsonProperty("ending_balance")
+    @ExcludeMissing
+    private val endingBalance: JsonField<String> = JsonMissing.of(),
+    @JsonProperty("amount")
+    @ExcludeMissing
+    private val amount: JsonField<String> = JsonMissing.of(),
+    @JsonProperty("action")
+    @ExcludeMissing
+    private val action: JsonField<Action> = JsonMissing.of(),
+    @JsonProperty("description")
+    @ExcludeMissing
+    private val description: JsonField<String> = JsonMissing.of(),
+    @JsonProperty("invoice")
+    @ExcludeMissing
+    private val invoice: JsonField<Invoice> = JsonMissing.of(),
+    @JsonProperty("type") @ExcludeMissing private val type: JsonField<Type> = JsonMissing.of(),
+    @JsonProperty("credit_note")
+    @ExcludeMissing
+    private val creditNote: JsonField<CreditNote> = JsonMissing.of(),
+    @JsonAnySetter private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
 ) {
-
-    private var validated: Boolean = false
 
     /** A unique id for this transaction. */
     fun id(): String = id.getRequired("id")
@@ -103,6 +117,8 @@ private constructor(
     @ExcludeMissing
     fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
 
+    private var validated: Boolean = false
+
     fun validate(): CustomerBalanceTransactionListResponse = apply {
         if (!validated) {
             id()
@@ -143,31 +159,30 @@ private constructor(
         internal fun from(
             customerBalanceTransactionListResponse: CustomerBalanceTransactionListResponse
         ) = apply {
-            this.id = customerBalanceTransactionListResponse.id
-            this.createdAt = customerBalanceTransactionListResponse.createdAt
-            this.startingBalance = customerBalanceTransactionListResponse.startingBalance
-            this.endingBalance = customerBalanceTransactionListResponse.endingBalance
-            this.amount = customerBalanceTransactionListResponse.amount
-            this.action = customerBalanceTransactionListResponse.action
-            this.description = customerBalanceTransactionListResponse.description
-            this.invoice = customerBalanceTransactionListResponse.invoice
-            this.type = customerBalanceTransactionListResponse.type
-            this.creditNote = customerBalanceTransactionListResponse.creditNote
-            additionalProperties(customerBalanceTransactionListResponse.additionalProperties)
+            id = customerBalanceTransactionListResponse.id
+            createdAt = customerBalanceTransactionListResponse.createdAt
+            startingBalance = customerBalanceTransactionListResponse.startingBalance
+            endingBalance = customerBalanceTransactionListResponse.endingBalance
+            amount = customerBalanceTransactionListResponse.amount
+            action = customerBalanceTransactionListResponse.action
+            description = customerBalanceTransactionListResponse.description
+            invoice = customerBalanceTransactionListResponse.invoice
+            type = customerBalanceTransactionListResponse.type
+            creditNote = customerBalanceTransactionListResponse.creditNote
+            additionalProperties =
+                customerBalanceTransactionListResponse.additionalProperties.toMutableMap()
         }
 
         /** A unique id for this transaction. */
         fun id(id: String) = id(JsonField.of(id))
 
         /** A unique id for this transaction. */
-        @JsonProperty("id") @ExcludeMissing fun id(id: JsonField<String>) = apply { this.id = id }
+        fun id(id: JsonField<String>) = apply { this.id = id }
 
         /** The creation time of this transaction. */
         fun createdAt(createdAt: OffsetDateTime) = createdAt(JsonField.of(createdAt))
 
         /** The creation time of this transaction. */
-        @JsonProperty("created_at")
-        @ExcludeMissing
         fun createdAt(createdAt: JsonField<OffsetDateTime>) = apply { this.createdAt = createdAt }
 
         /**
@@ -181,8 +196,6 @@ private constructor(
          * The original value of the customer's balance prior to the transaction, in the customer's
          * currency.
          */
-        @JsonProperty("starting_balance")
-        @ExcludeMissing
         fun startingBalance(startingBalance: JsonField<String>) = apply {
             this.startingBalance = startingBalance
         }
@@ -197,8 +210,6 @@ private constructor(
          * The new value of the customer's balance prior to the transaction, in the customer's
          * currency.
          */
-        @JsonProperty("ending_balance")
-        @ExcludeMissing
         fun endingBalance(endingBalance: JsonField<String>) = apply {
             this.endingBalance = endingBalance
         }
@@ -207,54 +218,47 @@ private constructor(
         fun amount(amount: String) = amount(JsonField.of(amount))
 
         /** The value of the amount changed in the transaction. */
-        @JsonProperty("amount")
-        @ExcludeMissing
         fun amount(amount: JsonField<String>) = apply { this.amount = amount }
 
         fun action(action: Action) = action(JsonField.of(action))
 
-        @JsonProperty("action")
-        @ExcludeMissing
         fun action(action: JsonField<Action>) = apply { this.action = action }
 
         /** An optional description provided for manual customer balance adjustments. */
         fun description(description: String) = description(JsonField.of(description))
 
         /** An optional description provided for manual customer balance adjustments. */
-        @JsonProperty("description")
-        @ExcludeMissing
         fun description(description: JsonField<String>) = apply { this.description = description }
 
         fun invoice(invoice: Invoice) = invoice(JsonField.of(invoice))
 
-        @JsonProperty("invoice")
-        @ExcludeMissing
         fun invoice(invoice: JsonField<Invoice>) = apply { this.invoice = invoice }
 
         fun type(type: Type) = type(JsonField.of(type))
 
-        @JsonProperty("type")
-        @ExcludeMissing
         fun type(type: JsonField<Type>) = apply { this.type = type }
 
         fun creditNote(creditNote: CreditNote) = creditNote(JsonField.of(creditNote))
 
-        @JsonProperty("credit_note")
-        @ExcludeMissing
         fun creditNote(creditNote: JsonField<CreditNote>) = apply { this.creditNote = creditNote }
 
         fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
             this.additionalProperties.clear()
-            this.additionalProperties.putAll(additionalProperties)
+            putAllAdditionalProperties(additionalProperties)
         }
 
-        @JsonAnySetter
         fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-            this.additionalProperties.put(key, value)
+            additionalProperties.put(key, value)
         }
 
         fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
             this.additionalProperties.putAll(additionalProperties)
+        }
+
+        fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+
+        fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+            keys.forEach(::removeAdditionalProperty)
         }
 
         fun build(): CustomerBalanceTransactionListResponse =
@@ -281,35 +285,23 @@ private constructor(
 
         @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
 
-        override fun equals(other: Any?): Boolean {
-            if (this === other) {
-                return true
-            }
-
-            return /* spotless:off */ other is Action && value == other.value /* spotless:on */
-        }
-
-        override fun hashCode() = value.hashCode()
-
-        override fun toString() = value.toString()
-
         companion object {
 
-            val APPLIED_TO_INVOICE = Action(JsonField.of("applied_to_invoice"))
+            val APPLIED_TO_INVOICE = of("applied_to_invoice")
 
-            val MANUAL_ADJUSTMENT = Action(JsonField.of("manual_adjustment"))
+            val MANUAL_ADJUSTMENT = of("manual_adjustment")
 
-            val PRORATED_REFUND = Action(JsonField.of("prorated_refund"))
+            val PRORATED_REFUND = of("prorated_refund")
 
-            val REVERT_PRORATED_REFUND = Action(JsonField.of("revert_prorated_refund"))
+            val REVERT_PRORATED_REFUND = of("revert_prorated_refund")
 
-            val RETURN_FROM_VOIDING = Action(JsonField.of("return_from_voiding"))
+            val RETURN_FROM_VOIDING = of("return_from_voiding")
 
-            val CREDIT_NOTE_APPLIED = Action(JsonField.of("credit_note_applied"))
+            val CREDIT_NOTE_APPLIED = of("credit_note_applied")
 
-            val CREDIT_NOTE_VOIDED = Action(JsonField.of("credit_note_voided"))
+            val CREDIT_NOTE_VOIDED = of("credit_note_voided")
 
-            val OVERPAYMENT_REFUND = Action(JsonField.of("overpayment_refund"))
+            val OVERPAYMENT_REFUND = of("overpayment_refund")
 
             fun of(value: String) = Action(JsonField.of(value))
         }
@@ -364,17 +356,28 @@ private constructor(
             }
 
         fun asString(): String = _value().asStringOrThrow()
+
+        override fun equals(other: Any?): Boolean {
+            if (this === other) {
+                return true
+            }
+
+            return /* spotless:off */ other is Action && value == other.value /* spotless:on */
+        }
+
+        override fun hashCode() = value.hashCode()
+
+        override fun toString() = value.toString()
     }
 
-    @JsonDeserialize(builder = CreditNote.Builder::class)
     @NoAutoDetect
     class CreditNote
+    @JsonCreator
     private constructor(
-        private val id: JsonField<String>,
-        private val additionalProperties: Map<String, JsonValue>,
+        @JsonProperty("id") @ExcludeMissing private val id: JsonField<String> = JsonMissing.of(),
+        @JsonAnySetter
+        private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
-
-        private var validated: Boolean = false
 
         /** The id of the Credit note */
         fun id(): String = id.getRequired("id")
@@ -385,6 +388,8 @@ private constructor(
         @JsonAnyGetter
         @ExcludeMissing
         fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
+
+        private var validated: Boolean = false
 
         fun validate(): CreditNote = apply {
             if (!validated) {
@@ -406,30 +411,33 @@ private constructor(
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             internal fun from(creditNote: CreditNote) = apply {
-                this.id = creditNote.id
-                additionalProperties(creditNote.additionalProperties)
+                id = creditNote.id
+                additionalProperties = creditNote.additionalProperties.toMutableMap()
             }
 
             /** The id of the Credit note */
             fun id(id: String) = id(JsonField.of(id))
 
             /** The id of the Credit note */
-            @JsonProperty("id")
-            @ExcludeMissing
             fun id(id: JsonField<String>) = apply { this.id = id }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
-                this.additionalProperties.putAll(additionalProperties)
+                putAllAdditionalProperties(additionalProperties)
             }
 
-            @JsonAnySetter
             fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-                this.additionalProperties.put(key, value)
+                additionalProperties.put(key, value)
             }
 
             fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.putAll(additionalProperties)
+            }
+
+            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+
+            fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                keys.forEach(::removeAdditionalProperty)
             }
 
             fun build(): CreditNote = CreditNote(id, additionalProperties.toImmutable())
@@ -452,15 +460,14 @@ private constructor(
         override fun toString() = "CreditNote{id=$id, additionalProperties=$additionalProperties}"
     }
 
-    @JsonDeserialize(builder = Invoice.Builder::class)
     @NoAutoDetect
     class Invoice
+    @JsonCreator
     private constructor(
-        private val id: JsonField<String>,
-        private val additionalProperties: Map<String, JsonValue>,
+        @JsonProperty("id") @ExcludeMissing private val id: JsonField<String> = JsonMissing.of(),
+        @JsonAnySetter
+        private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
-
-        private var validated: Boolean = false
 
         /** The Invoice id */
         fun id(): String = id.getRequired("id")
@@ -471,6 +478,8 @@ private constructor(
         @JsonAnyGetter
         @ExcludeMissing
         fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
+
+        private var validated: Boolean = false
 
         fun validate(): Invoice = apply {
             if (!validated) {
@@ -492,30 +501,33 @@ private constructor(
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             internal fun from(invoice: Invoice) = apply {
-                this.id = invoice.id
-                additionalProperties(invoice.additionalProperties)
+                id = invoice.id
+                additionalProperties = invoice.additionalProperties.toMutableMap()
             }
 
             /** The Invoice id */
             fun id(id: String) = id(JsonField.of(id))
 
             /** The Invoice id */
-            @JsonProperty("id")
-            @ExcludeMissing
             fun id(id: JsonField<String>) = apply { this.id = id }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
-                this.additionalProperties.putAll(additionalProperties)
+                putAllAdditionalProperties(additionalProperties)
             }
 
-            @JsonAnySetter
             fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-                this.additionalProperties.put(key, value)
+                additionalProperties.put(key, value)
             }
 
             fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.putAll(additionalProperties)
+            }
+
+            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+
+            fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                keys.forEach(::removeAdditionalProperty)
             }
 
             fun build(): Invoice = Invoice(id, additionalProperties.toImmutable())
@@ -546,23 +558,11 @@ private constructor(
 
         @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
 
-        override fun equals(other: Any?): Boolean {
-            if (this === other) {
-                return true
-            }
-
-            return /* spotless:off */ other is Type && value == other.value /* spotless:on */
-        }
-
-        override fun hashCode() = value.hashCode()
-
-        override fun toString() = value.toString()
-
         companion object {
 
-            val INCREMENT = Type(JsonField.of("increment"))
+            val INCREMENT = of("increment")
 
-            val DECREMENT = Type(JsonField.of("decrement"))
+            val DECREMENT = of("decrement")
 
             fun of(value: String) = Type(JsonField.of(value))
         }
@@ -593,6 +593,18 @@ private constructor(
             }
 
         fun asString(): String = _value().asStringOrThrow()
+
+        override fun equals(other: Any?): Boolean {
+            if (this === other) {
+                return true
+            }
+
+            return /* spotless:off */ other is Type && value == other.value /* spotless:on */
+        }
+
+        override fun hashCode() = value.hashCode()
+
+        override fun toString() = value.toString()
     }
 
     override fun equals(other: Any?): Boolean {

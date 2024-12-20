@@ -4,6 +4,7 @@ package com.withorb.api.models
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter
 import com.fasterxml.jackson.annotation.JsonAnySetter
+import com.fasterxml.jackson.annotation.JsonCreator
 import com.fasterxml.jackson.annotation.JsonProperty
 import com.fasterxml.jackson.core.JsonGenerator
 import com.fasterxml.jackson.core.ObjectCodec
@@ -20,6 +21,7 @@ import com.withorb.api.core.JsonMissing
 import com.withorb.api.core.JsonValue
 import com.withorb.api.core.NoAutoDetect
 import com.withorb.api.core.getOrThrow
+import com.withorb.api.core.immutableEmptyMap
 import com.withorb.api.core.toImmutable
 import com.withorb.api.errors.OrbInvalidDataException
 import java.time.OffsetDateTime
@@ -62,21 +64,31 @@ import java.util.Objects
  * at the time of the migration that includes the newly added prices you'd like the coupon to apply
  * to.
  */
-@JsonDeserialize(builder = Coupon.Builder::class)
 @NoAutoDetect
 class Coupon
+@JsonCreator
 private constructor(
-    private val id: JsonField<String>,
-    private val redemptionCode: JsonField<String>,
-    private val discount: JsonField<Discount>,
-    private val timesRedeemed: JsonField<Long>,
-    private val durationInMonths: JsonField<Long>,
-    private val maxRedemptions: JsonField<Long>,
-    private val archivedAt: JsonField<OffsetDateTime>,
-    private val additionalProperties: Map<String, JsonValue>,
+    @JsonProperty("id") @ExcludeMissing private val id: JsonField<String> = JsonMissing.of(),
+    @JsonProperty("redemption_code")
+    @ExcludeMissing
+    private val redemptionCode: JsonField<String> = JsonMissing.of(),
+    @JsonProperty("discount")
+    @ExcludeMissing
+    private val discount: JsonField<Discount> = JsonMissing.of(),
+    @JsonProperty("times_redeemed")
+    @ExcludeMissing
+    private val timesRedeemed: JsonField<Long> = JsonMissing.of(),
+    @JsonProperty("duration_in_months")
+    @ExcludeMissing
+    private val durationInMonths: JsonField<Long> = JsonMissing.of(),
+    @JsonProperty("max_redemptions")
+    @ExcludeMissing
+    private val maxRedemptions: JsonField<Long> = JsonMissing.of(),
+    @JsonProperty("archived_at")
+    @ExcludeMissing
+    private val archivedAt: JsonField<OffsetDateTime> = JsonMissing.of(),
+    @JsonAnySetter private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
 ) {
-
-    private var validated: Boolean = false
 
     /** Also referred to as coupon_id in this documentation. */
     fun id(): String = id.getRequired("id")
@@ -140,6 +152,8 @@ private constructor(
     @ExcludeMissing
     fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
 
+    private var validated: Boolean = false
+
     fun validate(): Coupon = apply {
         if (!validated) {
             id()
@@ -172,44 +186,38 @@ private constructor(
         private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         internal fun from(coupon: Coupon) = apply {
-            this.id = coupon.id
-            this.redemptionCode = coupon.redemptionCode
-            this.discount = coupon.discount
-            this.timesRedeemed = coupon.timesRedeemed
-            this.durationInMonths = coupon.durationInMonths
-            this.maxRedemptions = coupon.maxRedemptions
-            this.archivedAt = coupon.archivedAt
-            additionalProperties(coupon.additionalProperties)
+            id = coupon.id
+            redemptionCode = coupon.redemptionCode
+            discount = coupon.discount
+            timesRedeemed = coupon.timesRedeemed
+            durationInMonths = coupon.durationInMonths
+            maxRedemptions = coupon.maxRedemptions
+            archivedAt = coupon.archivedAt
+            additionalProperties = coupon.additionalProperties.toMutableMap()
         }
 
         /** Also referred to as coupon_id in this documentation. */
         fun id(id: String) = id(JsonField.of(id))
 
         /** Also referred to as coupon_id in this documentation. */
-        @JsonProperty("id") @ExcludeMissing fun id(id: JsonField<String>) = apply { this.id = id }
+        fun id(id: JsonField<String>) = apply { this.id = id }
 
         /** This string can be used to redeem this coupon for a given subscription. */
         fun redemptionCode(redemptionCode: String) = redemptionCode(JsonField.of(redemptionCode))
 
         /** This string can be used to redeem this coupon for a given subscription. */
-        @JsonProperty("redemption_code")
-        @ExcludeMissing
         fun redemptionCode(redemptionCode: JsonField<String>) = apply {
             this.redemptionCode = redemptionCode
         }
 
         fun discount(discount: Discount) = discount(JsonField.of(discount))
 
-        @JsonProperty("discount")
-        @ExcludeMissing
         fun discount(discount: JsonField<Discount>) = apply { this.discount = discount }
 
         /** The number of times this coupon has been redeemed. */
         fun timesRedeemed(timesRedeemed: Long) = timesRedeemed(JsonField.of(timesRedeemed))
 
         /** The number of times this coupon has been redeemed. */
-        @JsonProperty("times_redeemed")
-        @ExcludeMissing
         fun timesRedeemed(timesRedeemed: JsonField<Long>) = apply {
             this.timesRedeemed = timesRedeemed
         }
@@ -225,8 +233,6 @@ private constructor(
          * This allows for a coupon's discount to apply for a limited time (determined in months); a
          * `null` value here means "unlimited time".
          */
-        @JsonProperty("duration_in_months")
-        @ExcludeMissing
         fun durationInMonths(durationInMonths: JsonField<Long>) = apply {
             this.durationInMonths = durationInMonths
         }
@@ -241,8 +247,6 @@ private constructor(
          * The maximum number of redemptions allowed for this coupon before it is exhausted; `null`
          * here means "unlimited".
          */
-        @JsonProperty("max_redemptions")
-        @ExcludeMissing
         fun maxRedemptions(maxRedemptions: JsonField<Long>) = apply {
             this.maxRedemptions = maxRedemptions
         }
@@ -257,24 +261,27 @@ private constructor(
          * An archived coupon can no longer be redeemed. Active coupons will have a value of null
          * for `archived_at`; this field will be non-null for archived coupons.
          */
-        @JsonProperty("archived_at")
-        @ExcludeMissing
         fun archivedAt(archivedAt: JsonField<OffsetDateTime>) = apply {
             this.archivedAt = archivedAt
         }
 
         fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
             this.additionalProperties.clear()
-            this.additionalProperties.putAll(additionalProperties)
+            putAllAdditionalProperties(additionalProperties)
         }
 
-        @JsonAnySetter
         fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-            this.additionalProperties.put(key, value)
+            additionalProperties.put(key, value)
         }
 
         fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
             this.additionalProperties.putAll(additionalProperties)
+        }
+
+        fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+
+        fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+            keys.forEach(::removeAdditionalProperty)
         }
 
         fun build(): Coupon =

@@ -6,33 +6,45 @@ import com.fasterxml.jackson.annotation.JsonAnyGetter
 import com.fasterxml.jackson.annotation.JsonAnySetter
 import com.fasterxml.jackson.annotation.JsonCreator
 import com.fasterxml.jackson.annotation.JsonProperty
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize
 import com.withorb.api.core.Enum
 import com.withorb.api.core.ExcludeMissing
 import com.withorb.api.core.JsonField
 import com.withorb.api.core.JsonMissing
 import com.withorb.api.core.JsonValue
 import com.withorb.api.core.NoAutoDetect
+import com.withorb.api.core.immutableEmptyMap
 import com.withorb.api.core.toImmutable
 import com.withorb.api.errors.OrbInvalidDataException
 import java.util.Objects
 
-@JsonDeserialize(builder = CustomerCreditTopUpListByExternalIdResponse.Builder::class)
 @NoAutoDetect
 class CustomerCreditTopUpListByExternalIdResponse
+@JsonCreator
 private constructor(
-    private val id: JsonField<String>,
-    private val currency: JsonField<String>,
-    private val threshold: JsonField<String>,
-    private val amount: JsonField<String>,
-    private val perUnitCostBasis: JsonField<String>,
-    private val invoiceSettings: JsonField<InvoiceSettings>,
-    private val expiresAfter: JsonField<Long>,
-    private val expiresAfterUnit: JsonField<ExpiresAfterUnit>,
-    private val additionalProperties: Map<String, JsonValue>,
+    @JsonProperty("id") @ExcludeMissing private val id: JsonField<String> = JsonMissing.of(),
+    @JsonProperty("currency")
+    @ExcludeMissing
+    private val currency: JsonField<String> = JsonMissing.of(),
+    @JsonProperty("threshold")
+    @ExcludeMissing
+    private val threshold: JsonField<String> = JsonMissing.of(),
+    @JsonProperty("amount")
+    @ExcludeMissing
+    private val amount: JsonField<String> = JsonMissing.of(),
+    @JsonProperty("per_unit_cost_basis")
+    @ExcludeMissing
+    private val perUnitCostBasis: JsonField<String> = JsonMissing.of(),
+    @JsonProperty("invoice_settings")
+    @ExcludeMissing
+    private val invoiceSettings: JsonField<InvoiceSettings> = JsonMissing.of(),
+    @JsonProperty("expires_after")
+    @ExcludeMissing
+    private val expiresAfter: JsonField<Long> = JsonMissing.of(),
+    @JsonProperty("expires_after_unit")
+    @ExcludeMissing
+    private val expiresAfterUnit: JsonField<ExpiresAfterUnit> = JsonMissing.of(),
+    @JsonAnySetter private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
 ) {
-
-    private var validated: Boolean = false
 
     fun id(): String = id.getRequired("id")
 
@@ -102,6 +114,8 @@ private constructor(
     @ExcludeMissing
     fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
 
+    private var validated: Boolean = false
+
     fun validate(): CustomerCreditTopUpListByExternalIdResponse = apply {
         if (!validated) {
             id()
@@ -138,20 +152,21 @@ private constructor(
         internal fun from(
             customerCreditTopUpListByExternalIdResponse: CustomerCreditTopUpListByExternalIdResponse
         ) = apply {
-            this.id = customerCreditTopUpListByExternalIdResponse.id
-            this.currency = customerCreditTopUpListByExternalIdResponse.currency
-            this.threshold = customerCreditTopUpListByExternalIdResponse.threshold
-            this.amount = customerCreditTopUpListByExternalIdResponse.amount
-            this.perUnitCostBasis = customerCreditTopUpListByExternalIdResponse.perUnitCostBasis
-            this.invoiceSettings = customerCreditTopUpListByExternalIdResponse.invoiceSettings
-            this.expiresAfter = customerCreditTopUpListByExternalIdResponse.expiresAfter
-            this.expiresAfterUnit = customerCreditTopUpListByExternalIdResponse.expiresAfterUnit
-            additionalProperties(customerCreditTopUpListByExternalIdResponse.additionalProperties)
+            id = customerCreditTopUpListByExternalIdResponse.id
+            currency = customerCreditTopUpListByExternalIdResponse.currency
+            threshold = customerCreditTopUpListByExternalIdResponse.threshold
+            amount = customerCreditTopUpListByExternalIdResponse.amount
+            perUnitCostBasis = customerCreditTopUpListByExternalIdResponse.perUnitCostBasis
+            invoiceSettings = customerCreditTopUpListByExternalIdResponse.invoiceSettings
+            expiresAfter = customerCreditTopUpListByExternalIdResponse.expiresAfter
+            expiresAfterUnit = customerCreditTopUpListByExternalIdResponse.expiresAfterUnit
+            additionalProperties =
+                customerCreditTopUpListByExternalIdResponse.additionalProperties.toMutableMap()
         }
 
         fun id(id: String) = id(JsonField.of(id))
 
-        @JsonProperty("id") @ExcludeMissing fun id(id: JsonField<String>) = apply { this.id = id }
+        fun id(id: JsonField<String>) = apply { this.id = id }
 
         /**
          * The currency or custom pricing unit to use for this top-up. If this is a real-world
@@ -163,8 +178,6 @@ private constructor(
          * The currency or custom pricing unit to use for this top-up. If this is a real-world
          * currency, it must match the customer's invoicing currency.
          */
-        @JsonProperty("currency")
-        @ExcludeMissing
         fun currency(currency: JsonField<String>) = apply { this.currency = currency }
 
         /**
@@ -177,16 +190,12 @@ private constructor(
          * The threshold at which to trigger the top-up. If the balance is at or below this
          * threshold, the top-up will be triggered.
          */
-        @JsonProperty("threshold")
-        @ExcludeMissing
         fun threshold(threshold: JsonField<String>) = apply { this.threshold = threshold }
 
         /** The amount to increment when the threshold is reached. */
         fun amount(amount: String) = amount(JsonField.of(amount))
 
         /** The amount to increment when the threshold is reached. */
-        @JsonProperty("amount")
-        @ExcludeMissing
         fun amount(amount: JsonField<String>) = apply { this.amount = amount }
 
         /** How much, in the customer's currency, to charge for each unit. */
@@ -194,8 +203,6 @@ private constructor(
             perUnitCostBasis(JsonField.of(perUnitCostBasis))
 
         /** How much, in the customer's currency, to charge for each unit. */
-        @JsonProperty("per_unit_cost_basis")
-        @ExcludeMissing
         fun perUnitCostBasis(perUnitCostBasis: JsonField<String>) = apply {
             this.perUnitCostBasis = perUnitCostBasis
         }
@@ -205,8 +212,6 @@ private constructor(
             invoiceSettings(JsonField.of(invoiceSettings))
 
         /** Settings for invoices generated by triggered top-ups. */
-        @JsonProperty("invoice_settings")
-        @ExcludeMissing
         fun invoiceSettings(invoiceSettings: JsonField<InvoiceSettings>) = apply {
             this.invoiceSettings = invoiceSettings
         }
@@ -221,8 +226,6 @@ private constructor(
          * The number of days or months after which the top-up expires. If unspecified, it does not
          * expire.
          */
-        @JsonProperty("expires_after")
-        @ExcludeMissing
         fun expiresAfter(expiresAfter: JsonField<Long>) = apply { this.expiresAfter = expiresAfter }
 
         /** The unit of expires_after. */
@@ -230,24 +233,27 @@ private constructor(
             expiresAfterUnit(JsonField.of(expiresAfterUnit))
 
         /** The unit of expires_after. */
-        @JsonProperty("expires_after_unit")
-        @ExcludeMissing
         fun expiresAfterUnit(expiresAfterUnit: JsonField<ExpiresAfterUnit>) = apply {
             this.expiresAfterUnit = expiresAfterUnit
         }
 
         fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
             this.additionalProperties.clear()
-            this.additionalProperties.putAll(additionalProperties)
+            putAllAdditionalProperties(additionalProperties)
         }
 
-        @JsonAnySetter
         fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-            this.additionalProperties.put(key, value)
+            additionalProperties.put(key, value)
         }
 
         fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
             this.additionalProperties.putAll(additionalProperties)
+        }
+
+        fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+
+        fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+            keys.forEach(::removeAdditionalProperty)
         }
 
         fun build(): CustomerCreditTopUpListByExternalIdResponse =
@@ -265,18 +271,25 @@ private constructor(
     }
 
     /** Settings for invoices generated by triggered top-ups. */
-    @JsonDeserialize(builder = InvoiceSettings.Builder::class)
     @NoAutoDetect
     class InvoiceSettings
+    @JsonCreator
     private constructor(
-        private val autoCollection: JsonField<Boolean>,
-        private val netTerms: JsonField<Long>,
-        private val memo: JsonField<String>,
-        private val requireSuccessfulPayment: JsonField<Boolean>,
-        private val additionalProperties: Map<String, JsonValue>,
+        @JsonProperty("auto_collection")
+        @ExcludeMissing
+        private val autoCollection: JsonField<Boolean> = JsonMissing.of(),
+        @JsonProperty("net_terms")
+        @ExcludeMissing
+        private val netTerms: JsonField<Long> = JsonMissing.of(),
+        @JsonProperty("memo")
+        @ExcludeMissing
+        private val memo: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("require_successful_payment")
+        @ExcludeMissing
+        private val requireSuccessfulPayment: JsonField<Boolean> = JsonMissing.of(),
+        @JsonAnySetter
+        private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
-
-        private var validated: Boolean = false
 
         /**
          * Whether the credits purchase invoice should auto collect with the customer's saved
@@ -327,6 +340,8 @@ private constructor(
         @ExcludeMissing
         fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
 
+        private var validated: Boolean = false
+
         fun validate(): InvoiceSettings = apply {
             if (!validated) {
                 autoCollection()
@@ -353,11 +368,11 @@ private constructor(
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             internal fun from(invoiceSettings: InvoiceSettings) = apply {
-                this.autoCollection = invoiceSettings.autoCollection
-                this.netTerms = invoiceSettings.netTerms
-                this.memo = invoiceSettings.memo
-                this.requireSuccessfulPayment = invoiceSettings.requireSuccessfulPayment
-                additionalProperties(invoiceSettings.additionalProperties)
+                autoCollection = invoiceSettings.autoCollection
+                netTerms = invoiceSettings.netTerms
+                memo = invoiceSettings.memo
+                requireSuccessfulPayment = invoiceSettings.requireSuccessfulPayment
+                additionalProperties = invoiceSettings.additionalProperties.toMutableMap()
             }
 
             /**
@@ -371,8 +386,6 @@ private constructor(
              * Whether the credits purchase invoice should auto collect with the customer's saved
              * payment method.
              */
-            @JsonProperty("auto_collection")
-            @ExcludeMissing
             fun autoCollection(autoCollection: JsonField<Boolean>) = apply {
                 this.autoCollection = autoCollection
             }
@@ -387,16 +400,12 @@ private constructor(
              * The net terms determines the difference between the invoice date and the issue date
              * for the invoice. If you intend the invoice to be due on issue, set this to 0.
              */
-            @JsonProperty("net_terms")
-            @ExcludeMissing
             fun netTerms(netTerms: JsonField<Long>) = apply { this.netTerms = netTerms }
 
             /** An optional memo to display on the invoice. */
             fun memo(memo: String) = memo(JsonField.of(memo))
 
             /** An optional memo to display on the invoice. */
-            @JsonProperty("memo")
-            @ExcludeMissing
             fun memo(memo: JsonField<String>) = apply { this.memo = memo }
 
             /**
@@ -410,24 +419,27 @@ private constructor(
              * If true, new credit blocks created by this top-up will require that the corresponding
              * invoice is paid before they can be drawn down from.
              */
-            @JsonProperty("require_successful_payment")
-            @ExcludeMissing
             fun requireSuccessfulPayment(requireSuccessfulPayment: JsonField<Boolean>) = apply {
                 this.requireSuccessfulPayment = requireSuccessfulPayment
             }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
-                this.additionalProperties.putAll(additionalProperties)
+                putAllAdditionalProperties(additionalProperties)
             }
 
-            @JsonAnySetter
             fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-                this.additionalProperties.put(key, value)
+                additionalProperties.put(key, value)
             }
 
             fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.putAll(additionalProperties)
+            }
+
+            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+
+            fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                keys.forEach(::removeAdditionalProperty)
             }
 
             fun build(): InvoiceSettings =
@@ -466,23 +478,11 @@ private constructor(
 
         @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
 
-        override fun equals(other: Any?): Boolean {
-            if (this === other) {
-                return true
-            }
-
-            return /* spotless:off */ other is ExpiresAfterUnit && value == other.value /* spotless:on */
-        }
-
-        override fun hashCode() = value.hashCode()
-
-        override fun toString() = value.toString()
-
         companion object {
 
-            val DAY = ExpiresAfterUnit(JsonField.of("day"))
+            val DAY = of("day")
 
-            val MONTH = ExpiresAfterUnit(JsonField.of("month"))
+            val MONTH = of("month")
 
             fun of(value: String) = ExpiresAfterUnit(JsonField.of(value))
         }
@@ -513,6 +513,18 @@ private constructor(
             }
 
         fun asString(): String = _value().asStringOrThrow()
+
+        override fun equals(other: Any?): Boolean {
+            if (this === other) {
+                return true
+            }
+
+            return /* spotless:off */ other is ExpiresAfterUnit && value == other.value /* spotless:on */
+        }
+
+        override fun hashCode() = value.hashCode()
+
+        override fun toString() = value.toString()
     }
 
     override fun equals(other: Any?): Boolean {

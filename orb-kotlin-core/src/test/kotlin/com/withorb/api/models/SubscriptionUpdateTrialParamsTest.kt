@@ -2,7 +2,6 @@
 
 package com.withorb.api.models
 
-import com.withorb.api.models.*
 import java.time.OffsetDateTime
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
@@ -15,7 +14,7 @@ class SubscriptionUpdateTrialParamsTest {
             .subscriptionId("subscription_id")
             .trialEndDate(
                 SubscriptionUpdateTrialParams.TrialEndDate.ofOffsetDateTime(
-                    OffsetDateTime.parse("2019-12-27T18:11:19.117Z")
+                    OffsetDateTime.parse("2017-07-21T17:32:28Z")
                 )
             )
             .shift(true)
@@ -29,7 +28,7 @@ class SubscriptionUpdateTrialParamsTest {
                 .subscriptionId("subscription_id")
                 .trialEndDate(
                     SubscriptionUpdateTrialParams.TrialEndDate.ofOffsetDateTime(
-                        OffsetDateTime.parse("2019-12-27T18:11:19.117Z")
+                        OffsetDateTime.parse("2017-07-21T17:32:28Z")
                     )
                 )
                 .shift(true)
@@ -39,7 +38,7 @@ class SubscriptionUpdateTrialParamsTest {
         assertThat(body.trialEndDate())
             .isEqualTo(
                 SubscriptionUpdateTrialParams.TrialEndDate.ofOffsetDateTime(
-                    OffsetDateTime.parse("2019-12-27T18:11:19.117Z")
+                    OffsetDateTime.parse("2017-07-21T17:32:28Z")
                 )
             )
         assertThat(body.shift()).isEqualTo(true)
@@ -52,7 +51,7 @@ class SubscriptionUpdateTrialParamsTest {
                 .subscriptionId("subscription_id")
                 .trialEndDate(
                     SubscriptionUpdateTrialParams.TrialEndDate.ofOffsetDateTime(
-                        OffsetDateTime.parse("2019-12-27T18:11:19.117Z")
+                        OffsetDateTime.parse("2017-07-21T17:32:28Z")
                     )
                 )
                 .build()
@@ -61,7 +60,7 @@ class SubscriptionUpdateTrialParamsTest {
         assertThat(body.trialEndDate())
             .isEqualTo(
                 SubscriptionUpdateTrialParams.TrialEndDate.ofOffsetDateTime(
-                    OffsetDateTime.parse("2019-12-27T18:11:19.117Z")
+                    OffsetDateTime.parse("2017-07-21T17:32:28Z")
                 )
             )
     }
@@ -73,7 +72,7 @@ class SubscriptionUpdateTrialParamsTest {
                 .subscriptionId("subscription_id")
                 .trialEndDate(
                     SubscriptionUpdateTrialParams.TrialEndDate.ofOffsetDateTime(
-                        OffsetDateTime.parse("2019-12-27T18:11:19.117Z")
+                        OffsetDateTime.parse("2017-07-21T17:32:28Z")
                     )
                 )
                 .build()

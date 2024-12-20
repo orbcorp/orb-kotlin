@@ -2,7 +2,7 @@
 
 package com.withorb.api.models
 
-import com.withorb.api.models.*
+import com.withorb.api.core.JsonValue
 import java.time.OffsetDateTime
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
@@ -135,6 +135,7 @@ class SubscriptionPriceIntervalsParamsTest {
                                             .NewFloatingUnitPrice
                                             .Metadata
                                             .builder()
+                                            .putAdditionalProperty("foo", JsonValue.from("string"))
                                             .build()
                                     )
                                     .build()
@@ -160,7 +161,7 @@ class SubscriptionPriceIntervalsParamsTest {
                                                 .AdjustmentType
                                                 .PERCENTAGE_DISCOUNT
                                         )
-                                        .appliesToPriceIds(listOf("string"))
+                                        .appliesToPriceIds(listOf("price_1", "price_2"))
                                         .percentageDiscount(0.0)
                                         .isInvoiceLevel(true)
                                         .build()
@@ -355,6 +356,10 @@ class SubscriptionPriceIntervalsParamsTest {
                                                 .NewFloatingUnitPrice
                                                 .Metadata
                                                 .builder()
+                                                .putAdditionalProperty(
+                                                    "foo",
+                                                    JsonValue.from("string")
+                                                )
                                                 .build()
                                         )
                                         .build()
@@ -380,7 +385,7 @@ class SubscriptionPriceIntervalsParamsTest {
                                                     .AdjustmentType
                                                     .PERCENTAGE_DISCOUNT
                                             )
-                                            .appliesToPriceIds(listOf("string"))
+                                            .appliesToPriceIds(listOf("price_1", "price_2"))
                                             .percentageDiscount(0.0)
                                             .isInvoiceLevel(true)
                                             .build()
@@ -570,6 +575,7 @@ class SubscriptionPriceIntervalsParamsTest {
                                             .NewFloatingUnitPrice
                                             .Metadata
                                             .builder()
+                                            .putAdditionalProperty("foo", JsonValue.from("string"))
                                             .build()
                                     )
                                     .build()
@@ -596,7 +602,7 @@ class SubscriptionPriceIntervalsParamsTest {
                                                 .AdjustmentType
                                                 .PERCENTAGE_DISCOUNT
                                         )
-                                        .appliesToPriceIds(listOf("string"))
+                                        .appliesToPriceIds(listOf("price_1", "price_2"))
                                         .percentageDiscount(0.0)
                                         .isInvoiceLevel(true)
                                         .build()

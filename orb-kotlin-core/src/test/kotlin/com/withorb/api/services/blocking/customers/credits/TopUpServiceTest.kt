@@ -4,7 +4,10 @@ package com.withorb.api.services.blocking.customers.credits
 
 import com.withorb.api.TestServerExtension
 import com.withorb.api.client.okhttp.OrbOkHttpClient
-import com.withorb.api.models.*
+import com.withorb.api.models.CustomerCreditTopUpCreateByExternalIdParams
+import com.withorb.api.models.CustomerCreditTopUpCreateParams
+import com.withorb.api.models.CustomerCreditTopUpDeleteByExternalIdParams
+import com.withorb.api.models.CustomerCreditTopUpDeleteParams
 import com.withorb.api.models.CustomerCreditTopUpListByExternalIdParams
 import com.withorb.api.models.CustomerCreditTopUpListParams
 import org.junit.jupiter.api.Test

@@ -4,13 +4,14 @@ package com.withorb.api.models
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter
 import com.fasterxml.jackson.annotation.JsonAnySetter
+import com.fasterxml.jackson.annotation.JsonCreator
 import com.fasterxml.jackson.annotation.JsonProperty
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize
 import com.withorb.api.core.ExcludeMissing
 import com.withorb.api.core.JsonField
 import com.withorb.api.core.JsonMissing
 import com.withorb.api.core.JsonValue
 import com.withorb.api.core.NoAutoDetect
+import com.withorb.api.core.immutableEmptyMap
 import com.withorb.api.core.toImmutable
 import com.withorb.api.services.blocking.customers.credits.TopUpService
 import java.util.Objects
@@ -80,13 +81,17 @@ private constructor(
             )
     }
 
-    @JsonDeserialize(builder = Response.Builder::class)
     @NoAutoDetect
     class Response
+    @JsonCreator
     constructor(
-        private val data: JsonField<List<CustomerCreditTopUpListByExternalIdResponse>>,
-        private val paginationMetadata: JsonField<PaginationMetadata>,
-        private val additionalProperties: Map<String, JsonValue>,
+        @JsonProperty("data")
+        private val data: JsonField<List<CustomerCreditTopUpListByExternalIdResponse>> =
+            JsonMissing.of(),
+        @JsonProperty("pagination_metadata")
+        private val paginationMetadata: JsonField<PaginationMetadata> = JsonMissing.of(),
+        @JsonAnySetter
+        private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
 
         private var validated: Boolean = false
@@ -151,7 +156,6 @@ private constructor(
             fun data(data: List<CustomerCreditTopUpListByExternalIdResponse>) =
                 data(JsonField.of(data))
 
-            @JsonProperty("data")
             fun data(data: JsonField<List<CustomerCreditTopUpListByExternalIdResponse>>) = apply {
                 this.data = data
             }
@@ -159,12 +163,10 @@ private constructor(
             fun paginationMetadata(paginationMetadata: PaginationMetadata) =
                 paginationMetadata(JsonField.of(paginationMetadata))
 
-            @JsonProperty("pagination_metadata")
             fun paginationMetadata(paginationMetadata: JsonField<PaginationMetadata>) = apply {
                 this.paginationMetadata = paginationMetadata
             }
 
-            @JsonAnySetter
             fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                 this.additionalProperties.put(key, value)
             }

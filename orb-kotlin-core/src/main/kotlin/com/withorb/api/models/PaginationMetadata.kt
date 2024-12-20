@@ -4,26 +4,29 @@ package com.withorb.api.models
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter
 import com.fasterxml.jackson.annotation.JsonAnySetter
+import com.fasterxml.jackson.annotation.JsonCreator
 import com.fasterxml.jackson.annotation.JsonProperty
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize
 import com.withorb.api.core.ExcludeMissing
 import com.withorb.api.core.JsonField
 import com.withorb.api.core.JsonMissing
 import com.withorb.api.core.JsonValue
 import com.withorb.api.core.NoAutoDetect
+import com.withorb.api.core.immutableEmptyMap
 import com.withorb.api.core.toImmutable
 import java.util.Objects
 
-@JsonDeserialize(builder = PaginationMetadata.Builder::class)
 @NoAutoDetect
 class PaginationMetadata
+@JsonCreator
 private constructor(
-    private val hasMore: JsonField<Boolean>,
-    private val nextCursor: JsonField<String>,
-    private val additionalProperties: Map<String, JsonValue>,
+    @JsonProperty("has_more")
+    @ExcludeMissing
+    private val hasMore: JsonField<Boolean> = JsonMissing.of(),
+    @JsonProperty("next_cursor")
+    @ExcludeMissing
+    private val nextCursor: JsonField<String> = JsonMissing.of(),
+    @JsonAnySetter private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
 ) {
-
-    private var validated: Boolean = false
 
     fun hasMore(): Boolean = hasMore.getRequired("has_more")
 
@@ -36,6 +39,8 @@ private constructor(
     @JsonAnyGetter
     @ExcludeMissing
     fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
+
+    private var validated: Boolean = false
 
     fun validate(): PaginationMetadata = apply {
         if (!validated) {
@@ -59,35 +64,36 @@ private constructor(
         private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         internal fun from(paginationMetadata: PaginationMetadata) = apply {
-            this.hasMore = paginationMetadata.hasMore
-            this.nextCursor = paginationMetadata.nextCursor
-            additionalProperties(paginationMetadata.additionalProperties)
+            hasMore = paginationMetadata.hasMore
+            nextCursor = paginationMetadata.nextCursor
+            additionalProperties = paginationMetadata.additionalProperties.toMutableMap()
         }
 
         fun hasMore(hasMore: Boolean) = hasMore(JsonField.of(hasMore))
 
-        @JsonProperty("has_more")
-        @ExcludeMissing
         fun hasMore(hasMore: JsonField<Boolean>) = apply { this.hasMore = hasMore }
 
         fun nextCursor(nextCursor: String) = nextCursor(JsonField.of(nextCursor))
 
-        @JsonProperty("next_cursor")
-        @ExcludeMissing
         fun nextCursor(nextCursor: JsonField<String>) = apply { this.nextCursor = nextCursor }
 
         fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
             this.additionalProperties.clear()
-            this.additionalProperties.putAll(additionalProperties)
+            putAllAdditionalProperties(additionalProperties)
         }
 
-        @JsonAnySetter
         fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-            this.additionalProperties.put(key, value)
+            additionalProperties.put(key, value)
         }
 
         fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
             this.additionalProperties.putAll(additionalProperties)
+        }
+
+        fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+
+        fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+            keys.forEach(::removeAdditionalProperty)
         }
 
         fun build(): PaginationMetadata =

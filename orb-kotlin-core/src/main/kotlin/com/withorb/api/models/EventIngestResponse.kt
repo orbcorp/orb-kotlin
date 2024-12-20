@@ -4,26 +4,27 @@ package com.withorb.api.models
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter
 import com.fasterxml.jackson.annotation.JsonAnySetter
+import com.fasterxml.jackson.annotation.JsonCreator
 import com.fasterxml.jackson.annotation.JsonProperty
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize
 import com.withorb.api.core.ExcludeMissing
 import com.withorb.api.core.JsonField
 import com.withorb.api.core.JsonMissing
 import com.withorb.api.core.JsonValue
 import com.withorb.api.core.NoAutoDetect
+import com.withorb.api.core.immutableEmptyMap
 import com.withorb.api.core.toImmutable
 import java.util.Objects
 
-@JsonDeserialize(builder = EventIngestResponse.Builder::class)
 @NoAutoDetect
 class EventIngestResponse
+@JsonCreator
 private constructor(
-    private val debug: JsonField<Debug>,
-    private val validationFailed: JsonField<List<ValidationFailed>>,
-    private val additionalProperties: Map<String, JsonValue>,
+    @JsonProperty("debug") @ExcludeMissing private val debug: JsonField<Debug> = JsonMissing.of(),
+    @JsonProperty("validation_failed")
+    @ExcludeMissing
+    private val validationFailed: JsonField<List<ValidationFailed>> = JsonMissing.of(),
+    @JsonAnySetter private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
 ) {
-
-    private var validated: Boolean = false
 
     /**
      * Optional debug information (only present when debug=true is passed to the endpoint). Contains
@@ -54,6 +55,8 @@ private constructor(
     @ExcludeMissing
     fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
 
+    private var validated: Boolean = false
+
     fun validate(): EventIngestResponse = apply {
         if (!validated) {
             debug()?.validate()
@@ -76,9 +79,9 @@ private constructor(
         private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         internal fun from(eventIngestResponse: EventIngestResponse) = apply {
-            this.debug = eventIngestResponse.debug
-            this.validationFailed = eventIngestResponse.validationFailed
-            additionalProperties(eventIngestResponse.additionalProperties)
+            debug = eventIngestResponse.debug
+            validationFailed = eventIngestResponse.validationFailed
+            additionalProperties = eventIngestResponse.additionalProperties.toMutableMap()
         }
 
         /**
@@ -91,8 +94,6 @@ private constructor(
          * Optional debug information (only present when debug=true is passed to the endpoint).
          * Contains ingested and duplicate event idempotency keys.
          */
-        @JsonProperty("debug")
-        @ExcludeMissing
         fun debug(debug: JsonField<Debug>) = apply { this.debug = debug }
 
         /**
@@ -106,24 +107,27 @@ private constructor(
          * Contains all failing validation events. In the case of a 200, this array will always be
          * empty. This field will always be present.
          */
-        @JsonProperty("validation_failed")
-        @ExcludeMissing
         fun validationFailed(validationFailed: JsonField<List<ValidationFailed>>) = apply {
             this.validationFailed = validationFailed
         }
 
         fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
             this.additionalProperties.clear()
-            this.additionalProperties.putAll(additionalProperties)
+            putAllAdditionalProperties(additionalProperties)
         }
 
-        @JsonAnySetter
         fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-            this.additionalProperties.put(key, value)
+            additionalProperties.put(key, value)
         }
 
         fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
             this.additionalProperties.putAll(additionalProperties)
+        }
+
+        fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+
+        fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+            keys.forEach(::removeAdditionalProperty)
         }
 
         fun build(): EventIngestResponse =
@@ -134,16 +138,19 @@ private constructor(
             )
     }
 
-    @JsonDeserialize(builder = ValidationFailed.Builder::class)
     @NoAutoDetect
     class ValidationFailed
+    @JsonCreator
     private constructor(
-        private val idempotencyKey: JsonField<String>,
-        private val validationErrors: JsonField<List<String>>,
-        private val additionalProperties: Map<String, JsonValue>,
+        @JsonProperty("idempotency_key")
+        @ExcludeMissing
+        private val idempotencyKey: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("validation_errors")
+        @ExcludeMissing
+        private val validationErrors: JsonField<List<String>> = JsonMissing.of(),
+        @JsonAnySetter
+        private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
-
-        private var validated: Boolean = false
 
         /** The passed idempotency_key corresponding to the validation_errors */
         fun idempotencyKey(): String = idempotencyKey.getRequired("idempotency_key")
@@ -162,6 +169,8 @@ private constructor(
         @JsonAnyGetter
         @ExcludeMissing
         fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
+
+        private var validated: Boolean = false
 
         fun validate(): ValidationFailed = apply {
             if (!validated) {
@@ -185,9 +194,9 @@ private constructor(
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             internal fun from(validationFailed: ValidationFailed) = apply {
-                this.idempotencyKey = validationFailed.idempotencyKey
-                this.validationErrors = validationFailed.validationErrors
-                additionalProperties(validationFailed.additionalProperties)
+                idempotencyKey = validationFailed.idempotencyKey
+                validationErrors = validationFailed.validationErrors
+                additionalProperties = validationFailed.additionalProperties.toMutableMap()
             }
 
             /** The passed idempotency_key corresponding to the validation_errors */
@@ -195,8 +204,6 @@ private constructor(
                 idempotencyKey(JsonField.of(idempotencyKey))
 
             /** The passed idempotency_key corresponding to the validation_errors */
-            @JsonProperty("idempotency_key")
-            @ExcludeMissing
             fun idempotencyKey(idempotencyKey: JsonField<String>) = apply {
                 this.idempotencyKey = idempotencyKey
             }
@@ -210,24 +217,27 @@ private constructor(
             /**
              * An array of strings corresponding to validation failures for this idempotency_key.
              */
-            @JsonProperty("validation_errors")
-            @ExcludeMissing
             fun validationErrors(validationErrors: JsonField<List<String>>) = apply {
                 this.validationErrors = validationErrors
             }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
-                this.additionalProperties.putAll(additionalProperties)
+                putAllAdditionalProperties(additionalProperties)
             }
 
-            @JsonAnySetter
             fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-                this.additionalProperties.put(key, value)
+                additionalProperties.put(key, value)
             }
 
             fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.putAll(additionalProperties)
+            }
+
+            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+
+            fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                keys.forEach(::removeAdditionalProperty)
             }
 
             fun build(): ValidationFailed =
@@ -260,16 +270,19 @@ private constructor(
      * Optional debug information (only present when debug=true is passed to the endpoint). Contains
      * ingested and duplicate event idempotency keys.
      */
-    @JsonDeserialize(builder = Debug.Builder::class)
     @NoAutoDetect
     class Debug
+    @JsonCreator
     private constructor(
-        private val duplicate: JsonField<List<String>>,
-        private val ingested: JsonField<List<String>>,
-        private val additionalProperties: Map<String, JsonValue>,
+        @JsonProperty("duplicate")
+        @ExcludeMissing
+        private val duplicate: JsonField<List<String>> = JsonMissing.of(),
+        @JsonProperty("ingested")
+        @ExcludeMissing
+        private val ingested: JsonField<List<String>> = JsonMissing.of(),
+        @JsonAnySetter
+        private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
-
-        private var validated: Boolean = false
 
         fun duplicate(): List<String> = duplicate.getRequired("duplicate")
 
@@ -282,6 +295,8 @@ private constructor(
         @JsonAnyGetter
         @ExcludeMissing
         fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
+
+        private var validated: Boolean = false
 
         fun validate(): Debug = apply {
             if (!validated) {
@@ -305,35 +320,36 @@ private constructor(
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             internal fun from(debug: Debug) = apply {
-                this.duplicate = debug.duplicate
-                this.ingested = debug.ingested
-                additionalProperties(debug.additionalProperties)
+                duplicate = debug.duplicate
+                ingested = debug.ingested
+                additionalProperties = debug.additionalProperties.toMutableMap()
             }
 
             fun duplicate(duplicate: List<String>) = duplicate(JsonField.of(duplicate))
 
-            @JsonProperty("duplicate")
-            @ExcludeMissing
             fun duplicate(duplicate: JsonField<List<String>>) = apply { this.duplicate = duplicate }
 
             fun ingested(ingested: List<String>) = ingested(JsonField.of(ingested))
 
-            @JsonProperty("ingested")
-            @ExcludeMissing
             fun ingested(ingested: JsonField<List<String>>) = apply { this.ingested = ingested }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
-                this.additionalProperties.putAll(additionalProperties)
+                putAllAdditionalProperties(additionalProperties)
             }
 
-            @JsonAnySetter
             fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-                this.additionalProperties.put(key, value)
+                additionalProperties.put(key, value)
             }
 
             fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.putAll(additionalProperties)
+            }
+
+            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+
+            fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                keys.forEach(::removeAdditionalProperty)
             }
 
             fun build(): Debug =

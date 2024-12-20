@@ -4,7 +4,9 @@ package com.withorb.api.services.blocking.prices
 
 import com.withorb.api.TestServerExtension
 import com.withorb.api.client.okhttp.OrbOkHttpClient
-import com.withorb.api.models.*
+import com.withorb.api.core.JsonValue
+import com.withorb.api.models.PriceExternalPriceIdFetchParams
+import com.withorb.api.models.PriceExternalPriceIdUpdateParams
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 
@@ -23,7 +25,11 @@ class ExternalPriceIdServiceTest {
             externalPriceIdService.update(
                 PriceExternalPriceIdUpdateParams.builder()
                     .externalPriceId("external_price_id")
-                    .metadata(PriceExternalPriceIdUpdateParams.Metadata.builder().build())
+                    .metadata(
+                        PriceExternalPriceIdUpdateParams.Metadata.builder()
+                            .putAdditionalProperty("foo", JsonValue.from("string"))
+                            .build()
+                    )
                     .build()
             )
         println(price)

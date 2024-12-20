@@ -6,13 +6,13 @@ import com.fasterxml.jackson.annotation.JsonAnyGetter
 import com.fasterxml.jackson.annotation.JsonAnySetter
 import com.fasterxml.jackson.annotation.JsonCreator
 import com.fasterxml.jackson.annotation.JsonProperty
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize
 import com.withorb.api.core.Enum
 import com.withorb.api.core.ExcludeMissing
 import com.withorb.api.core.JsonField
 import com.withorb.api.core.JsonMissing
 import com.withorb.api.core.JsonValue
 import com.withorb.api.core.NoAutoDetect
+import com.withorb.api.core.immutableEmptyMap
 import com.withorb.api.core.toImmutable
 import com.withorb.api.errors.OrbInvalidDataException
 import java.time.OffsetDateTime
@@ -29,24 +29,36 @@ import java.util.Objects
  * |Customer    |A customer's credit balance   |`credit_balance_depleted`, `credit_balance_recovered`, and `credit_balance_dropped`|
  * |Subscription|A subscription's usage or cost|`usage_exceeded` and `cost_exceeded`                                               |
  */
-@JsonDeserialize(builder = Alert.Builder::class)
 @NoAutoDetect
 class Alert
+@JsonCreator
 private constructor(
-    private val id: JsonField<String>,
-    private val type: JsonField<Type>,
-    private val createdAt: JsonField<OffsetDateTime>,
-    private val enabled: JsonField<Boolean>,
-    private val thresholds: JsonField<List<Threshold>>,
-    private val customer: JsonField<Customer>,
-    private val plan: JsonField<Plan>,
-    private val subscription: JsonField<Subscription>,
-    private val metric: JsonField<Metric>,
-    private val currency: JsonField<String>,
-    private val additionalProperties: Map<String, JsonValue>,
+    @JsonProperty("id") @ExcludeMissing private val id: JsonField<String> = JsonMissing.of(),
+    @JsonProperty("type") @ExcludeMissing private val type: JsonField<Type> = JsonMissing.of(),
+    @JsonProperty("created_at")
+    @ExcludeMissing
+    private val createdAt: JsonField<OffsetDateTime> = JsonMissing.of(),
+    @JsonProperty("enabled")
+    @ExcludeMissing
+    private val enabled: JsonField<Boolean> = JsonMissing.of(),
+    @JsonProperty("thresholds")
+    @ExcludeMissing
+    private val thresholds: JsonField<List<Threshold>> = JsonMissing.of(),
+    @JsonProperty("customer")
+    @ExcludeMissing
+    private val customer: JsonField<Customer> = JsonMissing.of(),
+    @JsonProperty("plan") @ExcludeMissing private val plan: JsonField<Plan> = JsonMissing.of(),
+    @JsonProperty("subscription")
+    @ExcludeMissing
+    private val subscription: JsonField<Subscription> = JsonMissing.of(),
+    @JsonProperty("metric")
+    @ExcludeMissing
+    private val metric: JsonField<Metric> = JsonMissing.of(),
+    @JsonProperty("currency")
+    @ExcludeMissing
+    private val currency: JsonField<String> = JsonMissing.of(),
+    @JsonAnySetter private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
 ) {
-
-    private var validated: Boolean = false
 
     /** Also referred to as alert_id in this documentation. */
     fun id(): String = id.getRequired("id")
@@ -112,6 +124,8 @@ private constructor(
     @ExcludeMissing
     fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
 
+    private var validated: Boolean = false
+
     fun validate(): Alert = apply {
         if (!validated) {
             id()
@@ -150,55 +164,47 @@ private constructor(
         private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         internal fun from(alert: Alert) = apply {
-            this.id = alert.id
-            this.type = alert.type
-            this.createdAt = alert.createdAt
-            this.enabled = alert.enabled
-            this.thresholds = alert.thresholds
-            this.customer = alert.customer
-            this.plan = alert.plan
-            this.subscription = alert.subscription
-            this.metric = alert.metric
-            this.currency = alert.currency
-            additionalProperties(alert.additionalProperties)
+            id = alert.id
+            type = alert.type
+            createdAt = alert.createdAt
+            enabled = alert.enabled
+            thresholds = alert.thresholds
+            customer = alert.customer
+            plan = alert.plan
+            subscription = alert.subscription
+            metric = alert.metric
+            currency = alert.currency
+            additionalProperties = alert.additionalProperties.toMutableMap()
         }
 
         /** Also referred to as alert_id in this documentation. */
         fun id(id: String) = id(JsonField.of(id))
 
         /** Also referred to as alert_id in this documentation. */
-        @JsonProperty("id") @ExcludeMissing fun id(id: JsonField<String>) = apply { this.id = id }
+        fun id(id: JsonField<String>) = apply { this.id = id }
 
         /** The type of alert. This must be a valid alert type. */
         fun type(type: Type) = type(JsonField.of(type))
 
         /** The type of alert. This must be a valid alert type. */
-        @JsonProperty("type")
-        @ExcludeMissing
         fun type(type: JsonField<Type>) = apply { this.type = type }
 
         /** The creation time of the resource in Orb. */
         fun createdAt(createdAt: OffsetDateTime) = createdAt(JsonField.of(createdAt))
 
         /** The creation time of the resource in Orb. */
-        @JsonProperty("created_at")
-        @ExcludeMissing
         fun createdAt(createdAt: JsonField<OffsetDateTime>) = apply { this.createdAt = createdAt }
 
         /** Whether the alert is enabled or disabled. */
         fun enabled(enabled: Boolean) = enabled(JsonField.of(enabled))
 
         /** Whether the alert is enabled or disabled. */
-        @JsonProperty("enabled")
-        @ExcludeMissing
         fun enabled(enabled: JsonField<Boolean>) = apply { this.enabled = enabled }
 
         /** The thresholds that define the conditions under which the alert will be triggered. */
         fun thresholds(thresholds: List<Threshold>) = thresholds(JsonField.of(thresholds))
 
         /** The thresholds that define the conditions under which the alert will be triggered. */
-        @JsonProperty("thresholds")
-        @ExcludeMissing
         fun thresholds(thresholds: JsonField<List<Threshold>>) = apply {
             this.thresholds = thresholds
         }
@@ -207,24 +213,18 @@ private constructor(
         fun customer(customer: Customer) = customer(JsonField.of(customer))
 
         /** The customer the alert applies to. */
-        @JsonProperty("customer")
-        @ExcludeMissing
         fun customer(customer: JsonField<Customer>) = apply { this.customer = customer }
 
         /** The plan the alert applies to. */
         fun plan(plan: Plan) = plan(JsonField.of(plan))
 
         /** The plan the alert applies to. */
-        @JsonProperty("plan")
-        @ExcludeMissing
         fun plan(plan: JsonField<Plan>) = apply { this.plan = plan }
 
         /** The subscription the alert applies to. */
         fun subscription(subscription: Subscription) = subscription(JsonField.of(subscription))
 
         /** The subscription the alert applies to. */
-        @JsonProperty("subscription")
-        @ExcludeMissing
         fun subscription(subscription: JsonField<Subscription>) = apply {
             this.subscription = subscription
         }
@@ -233,30 +233,31 @@ private constructor(
         fun metric(metric: Metric) = metric(JsonField.of(metric))
 
         /** The metric the alert applies to. */
-        @JsonProperty("metric")
-        @ExcludeMissing
         fun metric(metric: JsonField<Metric>) = apply { this.metric = metric }
 
         /** The name of the currency the credit balance or invoice cost is denominated in. */
         fun currency(currency: String) = currency(JsonField.of(currency))
 
         /** The name of the currency the credit balance or invoice cost is denominated in. */
-        @JsonProperty("currency")
-        @ExcludeMissing
         fun currency(currency: JsonField<String>) = apply { this.currency = currency }
 
         fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
             this.additionalProperties.clear()
-            this.additionalProperties.putAll(additionalProperties)
+            putAllAdditionalProperties(additionalProperties)
         }
 
-        @JsonAnySetter
         fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-            this.additionalProperties.put(key, value)
+            additionalProperties.put(key, value)
         }
 
         fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
             this.additionalProperties.putAll(additionalProperties)
+        }
+
+        fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+
+        fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+            keys.forEach(::removeAdditionalProperty)
         }
 
         fun build(): Alert =
@@ -276,18 +277,19 @@ private constructor(
     }
 
     /** The customer the alert applies to. */
-    @JsonDeserialize(builder = Customer.Builder::class)
     @NoAutoDetect
     class Customer
+    @JsonCreator
     private constructor(
-        private val additionalProperties: Map<String, JsonValue>,
+        @JsonAnySetter
+        private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
-
-        private var validated: Boolean = false
 
         @JsonAnyGetter
         @ExcludeMissing
         fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
+
+        private var validated: Boolean = false
 
         fun validate(): Customer = apply {
             if (!validated) {
@@ -307,21 +309,26 @@ private constructor(
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             internal fun from(customer: Customer) = apply {
-                additionalProperties(customer.additionalProperties)
+                additionalProperties = customer.additionalProperties.toMutableMap()
             }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
-                this.additionalProperties.putAll(additionalProperties)
+                putAllAdditionalProperties(additionalProperties)
             }
 
-            @JsonAnySetter
             fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-                this.additionalProperties.put(key, value)
+                additionalProperties.put(key, value)
             }
 
             fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.putAll(additionalProperties)
+            }
+
+            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+
+            fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                keys.forEach(::removeAdditionalProperty)
             }
 
             fun build(): Customer = Customer(additionalProperties.toImmutable())
@@ -345,18 +352,19 @@ private constructor(
     }
 
     /** The metric the alert applies to. */
-    @JsonDeserialize(builder = Metric.Builder::class)
     @NoAutoDetect
     class Metric
+    @JsonCreator
     private constructor(
-        private val additionalProperties: Map<String, JsonValue>,
+        @JsonAnySetter
+        private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
-
-        private var validated: Boolean = false
 
         @JsonAnyGetter
         @ExcludeMissing
         fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
+
+        private var validated: Boolean = false
 
         fun validate(): Metric = apply {
             if (!validated) {
@@ -376,21 +384,26 @@ private constructor(
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             internal fun from(metric: Metric) = apply {
-                additionalProperties(metric.additionalProperties)
+                additionalProperties = metric.additionalProperties.toMutableMap()
             }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
-                this.additionalProperties.putAll(additionalProperties)
+                putAllAdditionalProperties(additionalProperties)
             }
 
-            @JsonAnySetter
             fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-                this.additionalProperties.put(key, value)
+                additionalProperties.put(key, value)
             }
 
             fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.putAll(additionalProperties)
+            }
+
+            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+
+            fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                keys.forEach(::removeAdditionalProperty)
             }
 
             fun build(): Metric = Metric(additionalProperties.toImmutable())
@@ -414,18 +427,19 @@ private constructor(
     }
 
     /** The plan the alert applies to. */
-    @JsonDeserialize(builder = Plan.Builder::class)
     @NoAutoDetect
     class Plan
+    @JsonCreator
     private constructor(
-        private val additionalProperties: Map<String, JsonValue>,
+        @JsonAnySetter
+        private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
-
-        private var validated: Boolean = false
 
         @JsonAnyGetter
         @ExcludeMissing
         fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
+
+        private var validated: Boolean = false
 
         fun validate(): Plan = apply {
             if (!validated) {
@@ -445,21 +459,26 @@ private constructor(
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             internal fun from(plan: Plan) = apply {
-                additionalProperties(plan.additionalProperties)
+                additionalProperties = plan.additionalProperties.toMutableMap()
             }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
-                this.additionalProperties.putAll(additionalProperties)
+                putAllAdditionalProperties(additionalProperties)
             }
 
-            @JsonAnySetter
             fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-                this.additionalProperties.put(key, value)
+                additionalProperties.put(key, value)
             }
 
             fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.putAll(additionalProperties)
+            }
+
+            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+
+            fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                keys.forEach(::removeAdditionalProperty)
             }
 
             fun build(): Plan = Plan(additionalProperties.toImmutable())
@@ -483,18 +502,19 @@ private constructor(
     }
 
     /** The subscription the alert applies to. */
-    @JsonDeserialize(builder = Subscription.Builder::class)
     @NoAutoDetect
     class Subscription
+    @JsonCreator
     private constructor(
-        private val additionalProperties: Map<String, JsonValue>,
+        @JsonAnySetter
+        private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
-
-        private var validated: Boolean = false
 
         @JsonAnyGetter
         @ExcludeMissing
         fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
+
+        private var validated: Boolean = false
 
         fun validate(): Subscription = apply {
             if (!validated) {
@@ -514,21 +534,26 @@ private constructor(
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             internal fun from(subscription: Subscription) = apply {
-                additionalProperties(subscription.additionalProperties)
+                additionalProperties = subscription.additionalProperties.toMutableMap()
             }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
-                this.additionalProperties.putAll(additionalProperties)
+                putAllAdditionalProperties(additionalProperties)
             }
 
-            @JsonAnySetter
             fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-                this.additionalProperties.put(key, value)
+                additionalProperties.put(key, value)
             }
 
             fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.putAll(additionalProperties)
+            }
+
+            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+
+            fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                keys.forEach(::removeAdditionalProperty)
             }
 
             fun build(): Subscription = Subscription(additionalProperties.toImmutable())
@@ -552,15 +577,16 @@ private constructor(
     }
 
     /** Thresholds are used to define the conditions under which an alert will be triggered. */
-    @JsonDeserialize(builder = Threshold.Builder::class)
     @NoAutoDetect
     class Threshold
+    @JsonCreator
     private constructor(
-        private val value: JsonField<Double>,
-        private val additionalProperties: Map<String, JsonValue>,
+        @JsonProperty("value")
+        @ExcludeMissing
+        private val value: JsonField<Double> = JsonMissing.of(),
+        @JsonAnySetter
+        private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
-
-        private var validated: Boolean = false
 
         /**
          * The value at which an alert will fire. For credit balance alerts, the alert will fire at
@@ -579,6 +605,8 @@ private constructor(
         @JsonAnyGetter
         @ExcludeMissing
         fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
+
+        private var validated: Boolean = false
 
         fun validate(): Threshold = apply {
             if (!validated) {
@@ -600,8 +628,8 @@ private constructor(
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             internal fun from(threshold: Threshold) = apply {
-                this.value = threshold.value
-                additionalProperties(threshold.additionalProperties)
+                value = threshold.value
+                additionalProperties = threshold.additionalProperties.toMutableMap()
             }
 
             /**
@@ -616,22 +644,25 @@ private constructor(
              * at or below this value. For usage and cost alerts, the alert will fire at or above
              * this value.
              */
-            @JsonProperty("value")
-            @ExcludeMissing
             fun value(value: JsonField<Double>) = apply { this.value = value }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
-                this.additionalProperties.putAll(additionalProperties)
+                putAllAdditionalProperties(additionalProperties)
             }
 
-            @JsonAnySetter
             fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-                this.additionalProperties.put(key, value)
+                additionalProperties.put(key, value)
             }
 
             fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.putAll(additionalProperties)
+            }
+
+            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+
+            fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                keys.forEach(::removeAdditionalProperty)
             }
 
             fun build(): Threshold = Threshold(value, additionalProperties.toImmutable())
@@ -663,29 +694,17 @@ private constructor(
 
         @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
 
-        override fun equals(other: Any?): Boolean {
-            if (this === other) {
-                return true
-            }
-
-            return /* spotless:off */ other is Type && value == other.value /* spotless:on */
-        }
-
-        override fun hashCode() = value.hashCode()
-
-        override fun toString() = value.toString()
-
         companion object {
 
-            val USAGE_EXCEEDED = Type(JsonField.of("usage_exceeded"))
+            val USAGE_EXCEEDED = of("usage_exceeded")
 
-            val COST_EXCEEDED = Type(JsonField.of("cost_exceeded"))
+            val COST_EXCEEDED = of("cost_exceeded")
 
-            val CREDIT_BALANCE_DEPLETED = Type(JsonField.of("credit_balance_depleted"))
+            val CREDIT_BALANCE_DEPLETED = of("credit_balance_depleted")
 
-            val CREDIT_BALANCE_DROPPED = Type(JsonField.of("credit_balance_dropped"))
+            val CREDIT_BALANCE_DROPPED = of("credit_balance_dropped")
 
-            val CREDIT_BALANCE_RECOVERED = Type(JsonField.of("credit_balance_recovered"))
+            val CREDIT_BALANCE_RECOVERED = of("credit_balance_recovered")
 
             fun of(value: String) = Type(JsonField.of(value))
         }
@@ -728,6 +747,18 @@ private constructor(
             }
 
         fun asString(): String = _value().asStringOrThrow()
+
+        override fun equals(other: Any?): Boolean {
+            if (this === other) {
+                return true
+            }
+
+            return /* spotless:off */ other is Type && value == other.value /* spotless:on */
+        }
+
+        override fun hashCode() = value.hashCode()
+
+        override fun toString() = value.toString()
     }
 
     override fun equals(other: Any?): Boolean {

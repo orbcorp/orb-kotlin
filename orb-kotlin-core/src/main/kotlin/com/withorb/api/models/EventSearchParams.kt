@@ -4,15 +4,15 @@ package com.withorb.api.models
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter
 import com.fasterxml.jackson.annotation.JsonAnySetter
+import com.fasterxml.jackson.annotation.JsonCreator
 import com.fasterxml.jackson.annotation.JsonProperty
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize
 import com.withorb.api.core.ExcludeMissing
 import com.withorb.api.core.JsonValue
 import com.withorb.api.core.NoAutoDetect
 import com.withorb.api.core.http.Headers
 import com.withorb.api.core.http.QueryParams
+import com.withorb.api.core.immutableEmptyMap
 import com.withorb.api.core.toImmutable
-import com.withorb.api.models.*
 import java.time.OffsetDateTime
 import java.util.Objects
 
@@ -51,14 +51,15 @@ constructor(
 
     internal fun getQueryParams(): QueryParams = additionalQueryParams
 
-    @JsonDeserialize(builder = EventSearchBody.Builder::class)
     @NoAutoDetect
     class EventSearchBody
+    @JsonCreator
     internal constructor(
-        private val eventIds: List<String>?,
-        private val timeframeEnd: OffsetDateTime?,
-        private val timeframeStart: OffsetDateTime?,
-        private val additionalProperties: Map<String, JsonValue>,
+        @JsonProperty("event_ids") private val eventIds: List<String>,
+        @JsonProperty("timeframe_end") private val timeframeEnd: OffsetDateTime?,
+        @JsonProperty("timeframe_start") private val timeframeStart: OffsetDateTime?,
+        @JsonAnySetter
+        private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
 
         /**
@@ -66,7 +67,7 @@ constructor(
          * idempotency_key that was originally used for ingestion, and this only supports events
          * that have not been amended. Values in this array will be treated case sensitively.
          */
-        @JsonProperty("event_ids") fun eventIds(): List<String>? = eventIds
+        @JsonProperty("event_ids") fun eventIds(): List<String> = eventIds
 
         /**
          * The end of the timeframe, exclusive, in which to search events. If not specified, the
@@ -99,10 +100,10 @@ constructor(
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             internal fun from(eventSearchBody: EventSearchBody) = apply {
-                this.eventIds = eventSearchBody.eventIds
-                this.timeframeEnd = eventSearchBody.timeframeEnd
-                this.timeframeStart = eventSearchBody.timeframeStart
-                additionalProperties(eventSearchBody.additionalProperties)
+                eventIds = eventSearchBody.eventIds.toMutableList()
+                timeframeEnd = eventSearchBody.timeframeEnd
+                timeframeStart = eventSearchBody.timeframeStart
+                additionalProperties = eventSearchBody.additionalProperties.toMutableMap()
             }
 
             /**
@@ -110,15 +111,13 @@ constructor(
              * idempotency_key that was originally used for ingestion, and this only supports events
              * that have not been amended. Values in this array will be treated case sensitively.
              */
-            @JsonProperty("event_ids")
             fun eventIds(eventIds: List<String>) = apply { this.eventIds = eventIds }
 
             /**
              * The end of the timeframe, exclusive, in which to search events. If not specified, the
              * current time is used.
              */
-            @JsonProperty("timeframe_end")
-            fun timeframeEnd(timeframeEnd: OffsetDateTime) = apply {
+            fun timeframeEnd(timeframeEnd: OffsetDateTime?) = apply {
                 this.timeframeEnd = timeframeEnd
             }
 
@@ -126,23 +125,27 @@ constructor(
              * The start of the timeframe, inclusive, in which to search events. If not specified,
              * the one week ago is used.
              */
-            @JsonProperty("timeframe_start")
-            fun timeframeStart(timeframeStart: OffsetDateTime) = apply {
+            fun timeframeStart(timeframeStart: OffsetDateTime?) = apply {
                 this.timeframeStart = timeframeStart
             }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
-                this.additionalProperties.putAll(additionalProperties)
+                putAllAdditionalProperties(additionalProperties)
             }
 
-            @JsonAnySetter
             fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-                this.additionalProperties.put(key, value)
+                additionalProperties.put(key, value)
             }
 
             fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.putAll(additionalProperties)
+            }
+
+            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+
+            fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                keys.forEach(::removeAdditionalProperty)
             }
 
             fun build(): EventSearchBody =

@@ -4,26 +4,27 @@ package com.withorb.api.models
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter
 import com.fasterxml.jackson.annotation.JsonAnySetter
+import com.fasterxml.jackson.annotation.JsonCreator
 import com.fasterxml.jackson.annotation.JsonProperty
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize
 import com.withorb.api.core.ExcludeMissing
 import com.withorb.api.core.JsonField
 import com.withorb.api.core.JsonMissing
 import com.withorb.api.core.JsonValue
 import com.withorb.api.core.NoAutoDetect
+import com.withorb.api.core.immutableEmptyMap
 import com.withorb.api.core.toImmutable
 import java.time.OffsetDateTime
 import java.util.Objects
 
-@JsonDeserialize(builder = EventSearchResponse.Builder::class)
 @NoAutoDetect
 class EventSearchResponse
+@JsonCreator
 private constructor(
-    private val data: JsonField<List<Data>>,
-    private val additionalProperties: Map<String, JsonValue>,
+    @JsonProperty("data")
+    @ExcludeMissing
+    private val data: JsonField<List<Data>> = JsonMissing.of(),
+    @JsonAnySetter private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
 ) {
-
-    private var validated: Boolean = false
 
     fun data(): List<Data> = data.getRequired("data")
 
@@ -32,6 +33,8 @@ private constructor(
     @JsonAnyGetter
     @ExcludeMissing
     fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
+
+    private var validated: Boolean = false
 
     fun validate(): EventSearchResponse = apply {
         if (!validated) {
@@ -53,28 +56,31 @@ private constructor(
         private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         internal fun from(eventSearchResponse: EventSearchResponse) = apply {
-            this.data = eventSearchResponse.data
-            additionalProperties(eventSearchResponse.additionalProperties)
+            data = eventSearchResponse.data
+            additionalProperties = eventSearchResponse.additionalProperties.toMutableMap()
         }
 
         fun data(data: List<Data>) = data(JsonField.of(data))
 
-        @JsonProperty("data")
-        @ExcludeMissing
         fun data(data: JsonField<List<Data>>) = apply { this.data = data }
 
         fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
             this.additionalProperties.clear()
-            this.additionalProperties.putAll(additionalProperties)
+            putAllAdditionalProperties(additionalProperties)
         }
 
-        @JsonAnySetter
         fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-            this.additionalProperties.put(key, value)
+            additionalProperties.put(key, value)
         }
 
         fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
             this.additionalProperties.putAll(additionalProperties)
+        }
+
+        fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+
+        fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+            keys.forEach(::removeAdditionalProperty)
         }
 
         fun build(): EventSearchResponse =
@@ -86,21 +92,32 @@ private constructor(
      * been created for a customer. Events are the core of Orb's usage-based billing model, and are
      * used to calculate the usage charges for a given billing period.
      */
-    @JsonDeserialize(builder = Data.Builder::class)
     @NoAutoDetect
     class Data
+    @JsonCreator
     private constructor(
-        private val id: JsonField<String>,
-        private val customerId: JsonField<String>,
-        private val externalCustomerId: JsonField<String>,
-        private val eventName: JsonField<String>,
-        private val properties: JsonValue,
-        private val timestamp: JsonField<OffsetDateTime>,
-        private val deprecated: JsonField<Boolean>,
-        private val additionalProperties: Map<String, JsonValue>,
+        @JsonProperty("id") @ExcludeMissing private val id: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("customer_id")
+        @ExcludeMissing
+        private val customerId: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("external_customer_id")
+        @ExcludeMissing
+        private val externalCustomerId: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("event_name")
+        @ExcludeMissing
+        private val eventName: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("properties")
+        @ExcludeMissing
+        private val properties: JsonValue = JsonMissing.of(),
+        @JsonProperty("timestamp")
+        @ExcludeMissing
+        private val timestamp: JsonField<OffsetDateTime> = JsonMissing.of(),
+        @JsonProperty("deprecated")
+        @ExcludeMissing
+        private val deprecated: JsonField<Boolean> = JsonMissing.of(),
+        @JsonAnySetter
+        private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
-
-        private var validated: Boolean = false
 
         /**
          * A unique value, generated by the client, that is used to de-duplicate events. Exactly one
@@ -166,6 +183,8 @@ private constructor(
         @ExcludeMissing
         fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
 
+        private var validated: Boolean = false
+
         fun validate(): Data = apply {
             if (!validated) {
                 id()
@@ -197,14 +216,14 @@ private constructor(
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             internal fun from(data: Data) = apply {
-                this.id = data.id
-                this.customerId = data.customerId
-                this.externalCustomerId = data.externalCustomerId
-                this.eventName = data.eventName
-                this.properties = data.properties
-                this.timestamp = data.timestamp
-                this.deprecated = data.deprecated
-                additionalProperties(data.additionalProperties)
+                id = data.id
+                customerId = data.customerId
+                externalCustomerId = data.externalCustomerId
+                eventName = data.eventName
+                properties = data.properties
+                timestamp = data.timestamp
+                deprecated = data.deprecated
+                additionalProperties = data.additionalProperties.toMutableMap()
             }
 
             /**
@@ -219,16 +238,12 @@ private constructor(
              * one event with a given idempotency key will be ingested, which allows for safe
              * request retries.
              */
-            @JsonProperty("id")
-            @ExcludeMissing
             fun id(id: JsonField<String>) = apply { this.id = id }
 
             /** The Orb Customer identifier */
             fun customerId(customerId: String) = customerId(JsonField.of(customerId))
 
             /** The Orb Customer identifier */
-            @JsonProperty("customer_id")
-            @ExcludeMissing
             fun customerId(customerId: JsonField<String>) = apply { this.customerId = customerId }
 
             /**
@@ -240,8 +255,6 @@ private constructor(
             /**
              * An alias for the Orb customer, whose mapping is specified when creating the customer
              */
-            @JsonProperty("external_customer_id")
-            @ExcludeMissing
             fun externalCustomerId(externalCustomerId: JsonField<String>) = apply {
                 this.externalCustomerId = externalCustomerId
             }
@@ -250,16 +263,12 @@ private constructor(
             fun eventName(eventName: String) = eventName(JsonField.of(eventName))
 
             /** A name to meaningfully identify the action or event type. */
-            @JsonProperty("event_name")
-            @ExcludeMissing
             fun eventName(eventName: JsonField<String>) = apply { this.eventName = eventName }
 
             /**
              * A dictionary of custom properties. Values in this dictionary must be numeric,
              * boolean, or strings. Nested dictionaries are disallowed.
              */
-            @JsonProperty("properties")
-            @ExcludeMissing
             fun properties(properties: JsonValue) = apply { this.properties = properties }
 
             /**
@@ -274,8 +283,6 @@ private constructor(
              * time that usage was recorded, and is particularly important to attribute usage to a
              * given billing period.
              */
-            @JsonProperty("timestamp")
-            @ExcludeMissing
             fun timestamp(timestamp: JsonField<OffsetDateTime>) = apply {
                 this.timestamp = timestamp
             }
@@ -284,22 +291,25 @@ private constructor(
             fun deprecated(deprecated: Boolean) = deprecated(JsonField.of(deprecated))
 
             /** A boolean indicating whether the event is currently deprecated. */
-            @JsonProperty("deprecated")
-            @ExcludeMissing
             fun deprecated(deprecated: JsonField<Boolean>) = apply { this.deprecated = deprecated }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
-                this.additionalProperties.putAll(additionalProperties)
+                putAllAdditionalProperties(additionalProperties)
             }
 
-            @JsonAnySetter
             fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-                this.additionalProperties.put(key, value)
+                additionalProperties.put(key, value)
             }
 
             fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.putAll(additionalProperties)
+            }
+
+            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+
+            fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                keys.forEach(::removeAdditionalProperty)
             }
 
             fun build(): Data =

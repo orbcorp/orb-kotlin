@@ -22,6 +22,7 @@ import com.withorb.api.core.JsonMissing
 import com.withorb.api.core.JsonValue
 import com.withorb.api.core.NoAutoDetect
 import com.withorb.api.core.getOrThrow
+import com.withorb.api.core.immutableEmptyMap
 import com.withorb.api.core.toImmutable
 import com.withorb.api.errors.OrbInvalidDataException
 import java.time.OffsetDateTime
@@ -333,27 +334,50 @@ private constructor(
         }
     }
 
-    @JsonDeserialize(builder = IncrementLedgerEntry.Builder::class)
     @NoAutoDetect
     class IncrementLedgerEntry
+    @JsonCreator
     private constructor(
-        private val metadata: JsonField<Metadata>,
-        private val id: JsonField<String>,
-        private val ledgerSequenceNumber: JsonField<Long>,
-        private val entryStatus: JsonField<EntryStatus>,
-        private val customer: JsonField<Customer>,
-        private val startingBalance: JsonField<Double>,
-        private val endingBalance: JsonField<Double>,
-        private val amount: JsonField<Double>,
-        private val currency: JsonField<String>,
-        private val createdAt: JsonField<OffsetDateTime>,
-        private val description: JsonField<String>,
-        private val creditBlock: JsonField<CreditBlock>,
-        private val entryType: JsonField<EntryType>,
-        private val additionalProperties: Map<String, JsonValue>,
+        @JsonProperty("metadata")
+        @ExcludeMissing
+        private val metadata: JsonField<Metadata> = JsonMissing.of(),
+        @JsonProperty("id") @ExcludeMissing private val id: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("ledger_sequence_number")
+        @ExcludeMissing
+        private val ledgerSequenceNumber: JsonField<Long> = JsonMissing.of(),
+        @JsonProperty("entry_status")
+        @ExcludeMissing
+        private val entryStatus: JsonField<EntryStatus> = JsonMissing.of(),
+        @JsonProperty("customer")
+        @ExcludeMissing
+        private val customer: JsonField<Customer> = JsonMissing.of(),
+        @JsonProperty("starting_balance")
+        @ExcludeMissing
+        private val startingBalance: JsonField<Double> = JsonMissing.of(),
+        @JsonProperty("ending_balance")
+        @ExcludeMissing
+        private val endingBalance: JsonField<Double> = JsonMissing.of(),
+        @JsonProperty("amount")
+        @ExcludeMissing
+        private val amount: JsonField<Double> = JsonMissing.of(),
+        @JsonProperty("currency")
+        @ExcludeMissing
+        private val currency: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("created_at")
+        @ExcludeMissing
+        private val createdAt: JsonField<OffsetDateTime> = JsonMissing.of(),
+        @JsonProperty("description")
+        @ExcludeMissing
+        private val description: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("credit_block")
+        @ExcludeMissing
+        private val creditBlock: JsonField<CreditBlock> = JsonMissing.of(),
+        @JsonProperty("entry_type")
+        @ExcludeMissing
+        private val entryType: JsonField<EntryType> = JsonMissing.of(),
+        @JsonAnySetter
+        private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
-
-        private var validated: Boolean = false
 
         /**
          * User specified key-value pairs for the resource. If not present, this defaults to an
@@ -424,6 +448,8 @@ private constructor(
         @ExcludeMissing
         fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
 
+        private var validated: Boolean = false
+
         fun validate(): IncrementLedgerEntry = apply {
             if (!validated) {
                 metadata().validate()
@@ -468,20 +494,20 @@ private constructor(
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             internal fun from(incrementLedgerEntry: IncrementLedgerEntry) = apply {
-                this.metadata = incrementLedgerEntry.metadata
-                this.id = incrementLedgerEntry.id
-                this.ledgerSequenceNumber = incrementLedgerEntry.ledgerSequenceNumber
-                this.entryStatus = incrementLedgerEntry.entryStatus
-                this.customer = incrementLedgerEntry.customer
-                this.startingBalance = incrementLedgerEntry.startingBalance
-                this.endingBalance = incrementLedgerEntry.endingBalance
-                this.amount = incrementLedgerEntry.amount
-                this.currency = incrementLedgerEntry.currency
-                this.createdAt = incrementLedgerEntry.createdAt
-                this.description = incrementLedgerEntry.description
-                this.creditBlock = incrementLedgerEntry.creditBlock
-                this.entryType = incrementLedgerEntry.entryType
-                additionalProperties(incrementLedgerEntry.additionalProperties)
+                metadata = incrementLedgerEntry.metadata
+                id = incrementLedgerEntry.id
+                ledgerSequenceNumber = incrementLedgerEntry.ledgerSequenceNumber
+                entryStatus = incrementLedgerEntry.entryStatus
+                customer = incrementLedgerEntry.customer
+                startingBalance = incrementLedgerEntry.startingBalance
+                endingBalance = incrementLedgerEntry.endingBalance
+                amount = incrementLedgerEntry.amount
+                currency = incrementLedgerEntry.currency
+                createdAt = incrementLedgerEntry.createdAt
+                description = incrementLedgerEntry.description
+                creditBlock = incrementLedgerEntry.creditBlock
+                entryType = incrementLedgerEntry.entryType
+                additionalProperties = incrementLedgerEntry.additionalProperties.toMutableMap()
             }
 
             /**
@@ -496,110 +522,89 @@ private constructor(
              * empty dictionary. Individual keys can be removed by setting the value to `null`, and
              * the entire metadata mapping can be cleared by setting `metadata` to `null`.
              */
-            @JsonProperty("metadata")
-            @ExcludeMissing
             fun metadata(metadata: JsonField<Metadata>) = apply { this.metadata = metadata }
 
             fun id(id: String) = id(JsonField.of(id))
 
-            @JsonProperty("id")
-            @ExcludeMissing
             fun id(id: JsonField<String>) = apply { this.id = id }
 
             fun ledgerSequenceNumber(ledgerSequenceNumber: Long) =
                 ledgerSequenceNumber(JsonField.of(ledgerSequenceNumber))
 
-            @JsonProperty("ledger_sequence_number")
-            @ExcludeMissing
             fun ledgerSequenceNumber(ledgerSequenceNumber: JsonField<Long>) = apply {
                 this.ledgerSequenceNumber = ledgerSequenceNumber
             }
 
             fun entryStatus(entryStatus: EntryStatus) = entryStatus(JsonField.of(entryStatus))
 
-            @JsonProperty("entry_status")
-            @ExcludeMissing
             fun entryStatus(entryStatus: JsonField<EntryStatus>) = apply {
                 this.entryStatus = entryStatus
             }
 
             fun customer(customer: Customer) = customer(JsonField.of(customer))
 
-            @JsonProperty("customer")
-            @ExcludeMissing
             fun customer(customer: JsonField<Customer>) = apply { this.customer = customer }
 
             fun startingBalance(startingBalance: Double) =
                 startingBalance(JsonField.of(startingBalance))
 
-            @JsonProperty("starting_balance")
-            @ExcludeMissing
             fun startingBalance(startingBalance: JsonField<Double>) = apply {
                 this.startingBalance = startingBalance
             }
 
             fun endingBalance(endingBalance: Double) = endingBalance(JsonField.of(endingBalance))
 
-            @JsonProperty("ending_balance")
-            @ExcludeMissing
             fun endingBalance(endingBalance: JsonField<Double>) = apply {
                 this.endingBalance = endingBalance
             }
 
             fun amount(amount: Double) = amount(JsonField.of(amount))
 
-            @JsonProperty("amount")
-            @ExcludeMissing
             fun amount(amount: JsonField<Double>) = apply { this.amount = amount }
 
             fun currency(currency: String) = currency(JsonField.of(currency))
 
-            @JsonProperty("currency")
-            @ExcludeMissing
             fun currency(currency: JsonField<String>) = apply { this.currency = currency }
 
             fun createdAt(createdAt: OffsetDateTime) = createdAt(JsonField.of(createdAt))
 
-            @JsonProperty("created_at")
-            @ExcludeMissing
             fun createdAt(createdAt: JsonField<OffsetDateTime>) = apply {
                 this.createdAt = createdAt
             }
 
             fun description(description: String) = description(JsonField.of(description))
 
-            @JsonProperty("description")
-            @ExcludeMissing
             fun description(description: JsonField<String>) = apply {
                 this.description = description
             }
 
             fun creditBlock(creditBlock: CreditBlock) = creditBlock(JsonField.of(creditBlock))
 
-            @JsonProperty("credit_block")
-            @ExcludeMissing
             fun creditBlock(creditBlock: JsonField<CreditBlock>) = apply {
                 this.creditBlock = creditBlock
             }
 
             fun entryType(entryType: EntryType) = entryType(JsonField.of(entryType))
 
-            @JsonProperty("entry_type")
-            @ExcludeMissing
             fun entryType(entryType: JsonField<EntryType>) = apply { this.entryType = entryType }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
-                this.additionalProperties.putAll(additionalProperties)
+                putAllAdditionalProperties(additionalProperties)
             }
 
-            @JsonAnySetter
             fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-                this.additionalProperties.put(key, value)
+                additionalProperties.put(key, value)
             }
 
             fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.putAll(additionalProperties)
+            }
+
+            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+
+            fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                keys.forEach(::removeAdditionalProperty)
             }
 
             fun build(): IncrementLedgerEntry =
@@ -621,17 +626,22 @@ private constructor(
                 )
         }
 
-        @JsonDeserialize(builder = CreditBlock.Builder::class)
         @NoAutoDetect
         class CreditBlock
+        @JsonCreator
         private constructor(
-            private val id: JsonField<String>,
-            private val expiryDate: JsonField<OffsetDateTime>,
-            private val perUnitCostBasis: JsonField<String>,
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonProperty("id")
+            @ExcludeMissing
+            private val id: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("expiry_date")
+            @ExcludeMissing
+            private val expiryDate: JsonField<OffsetDateTime> = JsonMissing.of(),
+            @JsonProperty("per_unit_cost_basis")
+            @ExcludeMissing
+            private val perUnitCostBasis: JsonField<String> = JsonMissing.of(),
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
-
-            private var validated: Boolean = false
 
             fun id(): String = id.getRequired("id")
 
@@ -650,6 +660,8 @@ private constructor(
             @JsonAnyGetter
             @ExcludeMissing
             fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
+
+            private var validated: Boolean = false
 
             fun validate(): CreditBlock = apply {
                 if (!validated) {
@@ -675,22 +687,18 @@ private constructor(
                 private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
                 internal fun from(creditBlock: CreditBlock) = apply {
-                    this.id = creditBlock.id
-                    this.expiryDate = creditBlock.expiryDate
-                    this.perUnitCostBasis = creditBlock.perUnitCostBasis
-                    additionalProperties(creditBlock.additionalProperties)
+                    id = creditBlock.id
+                    expiryDate = creditBlock.expiryDate
+                    perUnitCostBasis = creditBlock.perUnitCostBasis
+                    additionalProperties = creditBlock.additionalProperties.toMutableMap()
                 }
 
                 fun id(id: String) = id(JsonField.of(id))
 
-                @JsonProperty("id")
-                @ExcludeMissing
                 fun id(id: JsonField<String>) = apply { this.id = id }
 
                 fun expiryDate(expiryDate: OffsetDateTime) = expiryDate(JsonField.of(expiryDate))
 
-                @JsonProperty("expiry_date")
-                @ExcludeMissing
                 fun expiryDate(expiryDate: JsonField<OffsetDateTime>) = apply {
                     this.expiryDate = expiryDate
                 }
@@ -698,26 +706,31 @@ private constructor(
                 fun perUnitCostBasis(perUnitCostBasis: String) =
                     perUnitCostBasis(JsonField.of(perUnitCostBasis))
 
-                @JsonProperty("per_unit_cost_basis")
-                @ExcludeMissing
                 fun perUnitCostBasis(perUnitCostBasis: JsonField<String>) = apply {
                     this.perUnitCostBasis = perUnitCostBasis
                 }
 
                 fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                     this.additionalProperties.clear()
-                    this.additionalProperties.putAll(additionalProperties)
+                    putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-                    this.additionalProperties.put(key, value)
+                    additionalProperties.put(key, value)
                 }
 
                 fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) =
                     apply {
                         this.additionalProperties.putAll(additionalProperties)
                     }
+
+                fun removeAdditionalProperty(key: String) = apply {
+                    additionalProperties.remove(key)
+                }
+
+                fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                    keys.forEach(::removeAdditionalProperty)
+                }
 
                 fun build(): CreditBlock =
                     CreditBlock(
@@ -746,16 +759,19 @@ private constructor(
                 "CreditBlock{id=$id, expiryDate=$expiryDate, perUnitCostBasis=$perUnitCostBasis, additionalProperties=$additionalProperties}"
         }
 
-        @JsonDeserialize(builder = Customer.Builder::class)
         @NoAutoDetect
         class Customer
+        @JsonCreator
         private constructor(
-            private val id: JsonField<String>,
-            private val externalCustomerId: JsonField<String>,
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonProperty("id")
+            @ExcludeMissing
+            private val id: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("external_customer_id")
+            @ExcludeMissing
+            private val externalCustomerId: JsonField<String> = JsonMissing.of(),
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
-
-            private var validated: Boolean = false
 
             fun id(): String = id.getRequired("id")
 
@@ -771,6 +787,8 @@ private constructor(
             @JsonAnyGetter
             @ExcludeMissing
             fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
+
+            private var validated: Boolean = false
 
             fun validate(): Customer = apply {
                 if (!validated) {
@@ -794,40 +812,43 @@ private constructor(
                 private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
                 internal fun from(customer: Customer) = apply {
-                    this.id = customer.id
-                    this.externalCustomerId = customer.externalCustomerId
-                    additionalProperties(customer.additionalProperties)
+                    id = customer.id
+                    externalCustomerId = customer.externalCustomerId
+                    additionalProperties = customer.additionalProperties.toMutableMap()
                 }
 
                 fun id(id: String) = id(JsonField.of(id))
 
-                @JsonProperty("id")
-                @ExcludeMissing
                 fun id(id: JsonField<String>) = apply { this.id = id }
 
                 fun externalCustomerId(externalCustomerId: String) =
                     externalCustomerId(JsonField.of(externalCustomerId))
 
-                @JsonProperty("external_customer_id")
-                @ExcludeMissing
                 fun externalCustomerId(externalCustomerId: JsonField<String>) = apply {
                     this.externalCustomerId = externalCustomerId
                 }
 
                 fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                     this.additionalProperties.clear()
-                    this.additionalProperties.putAll(additionalProperties)
+                    putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-                    this.additionalProperties.put(key, value)
+                    additionalProperties.put(key, value)
                 }
 
                 fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) =
                     apply {
                         this.additionalProperties.putAll(additionalProperties)
                     }
+
+                fun removeAdditionalProperty(key: String) = apply {
+                    additionalProperties.remove(key)
+                }
+
+                fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                    keys.forEach(::removeAdditionalProperty)
+                }
 
                 fun build(): Customer =
                     Customer(
@@ -863,23 +884,11 @@ private constructor(
 
             @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
 
-            override fun equals(other: Any?): Boolean {
-                if (this === other) {
-                    return true
-                }
-
-                return /* spotless:off */ other is EntryStatus && value == other.value /* spotless:on */
-            }
-
-            override fun hashCode() = value.hashCode()
-
-            override fun toString() = value.toString()
-
             companion object {
 
-                val COMMITTED = EntryStatus(JsonField.of("committed"))
+                val COMMITTED = of("committed")
 
-                val PENDING = EntryStatus(JsonField.of("pending"))
+                val PENDING = of("pending")
 
                 fun of(value: String) = EntryStatus(JsonField.of(value))
             }
@@ -910,6 +919,18 @@ private constructor(
                 }
 
             fun asString(): String = _value().asStringOrThrow()
+
+            override fun equals(other: Any?): Boolean {
+                if (this === other) {
+                    return true
+                }
+
+                return /* spotless:off */ other is EntryStatus && value == other.value /* spotless:on */
+            }
+
+            override fun hashCode() = value.hashCode()
+
+            override fun toString() = value.toString()
         }
 
         class EntryType
@@ -920,21 +941,9 @@ private constructor(
 
             @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
 
-            override fun equals(other: Any?): Boolean {
-                if (this === other) {
-                    return true
-                }
-
-                return /* spotless:off */ other is EntryType && value == other.value /* spotless:on */
-            }
-
-            override fun hashCode() = value.hashCode()
-
-            override fun toString() = value.toString()
-
             companion object {
 
-                val INCREMENT = EntryType(JsonField.of("increment"))
+                val INCREMENT = of("increment")
 
                 fun of(value: String) = EntryType(JsonField.of(value))
             }
@@ -961,6 +970,18 @@ private constructor(
                 }
 
             fun asString(): String = _value().asStringOrThrow()
+
+            override fun equals(other: Any?): Boolean {
+                if (this === other) {
+                    return true
+                }
+
+                return /* spotless:off */ other is EntryType && value == other.value /* spotless:on */
+            }
+
+            override fun hashCode() = value.hashCode()
+
+            override fun toString() = value.toString()
         }
 
         /**
@@ -968,18 +989,19 @@ private constructor(
          * empty dictionary. Individual keys can be removed by setting the value to `null`, and the
          * entire metadata mapping can be cleared by setting `metadata` to `null`.
          */
-        @JsonDeserialize(builder = Metadata.Builder::class)
         @NoAutoDetect
         class Metadata
+        @JsonCreator
         private constructor(
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
-
-            private var validated: Boolean = false
 
             @JsonAnyGetter
             @ExcludeMissing
             fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
+
+            private var validated: Boolean = false
 
             fun validate(): Metadata = apply {
                 if (!validated) {
@@ -999,23 +1021,30 @@ private constructor(
                 private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
                 internal fun from(metadata: Metadata) = apply {
-                    additionalProperties(metadata.additionalProperties)
+                    additionalProperties = metadata.additionalProperties.toMutableMap()
                 }
 
                 fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                     this.additionalProperties.clear()
-                    this.additionalProperties.putAll(additionalProperties)
+                    putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-                    this.additionalProperties.put(key, value)
+                    additionalProperties.put(key, value)
                 }
 
                 fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) =
                     apply {
                         this.additionalProperties.putAll(additionalProperties)
                     }
+
+                fun removeAdditionalProperty(key: String) = apply {
+                    additionalProperties.remove(key)
+                }
+
+                fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                    keys.forEach(::removeAdditionalProperty)
+                }
 
                 fun build(): Metadata = Metadata(additionalProperties.toImmutable())
             }
@@ -1055,30 +1084,59 @@ private constructor(
             "IncrementLedgerEntry{metadata=$metadata, id=$id, ledgerSequenceNumber=$ledgerSequenceNumber, entryStatus=$entryStatus, customer=$customer, startingBalance=$startingBalance, endingBalance=$endingBalance, amount=$amount, currency=$currency, createdAt=$createdAt, description=$description, creditBlock=$creditBlock, entryType=$entryType, additionalProperties=$additionalProperties}"
     }
 
-    @JsonDeserialize(builder = DecrementLedgerEntry.Builder::class)
     @NoAutoDetect
     class DecrementLedgerEntry
+    @JsonCreator
     private constructor(
-        private val metadata: JsonField<Metadata>,
-        private val id: JsonField<String>,
-        private val ledgerSequenceNumber: JsonField<Long>,
-        private val entryStatus: JsonField<EntryStatus>,
-        private val customer: JsonField<Customer>,
-        private val startingBalance: JsonField<Double>,
-        private val endingBalance: JsonField<Double>,
-        private val amount: JsonField<Double>,
-        private val currency: JsonField<String>,
-        private val createdAt: JsonField<OffsetDateTime>,
-        private val description: JsonField<String>,
-        private val creditBlock: JsonField<CreditBlock>,
-        private val entryType: JsonField<EntryType>,
-        private val priceId: JsonField<String>,
-        private val eventId: JsonField<String>,
-        private val invoiceId: JsonField<String>,
-        private val additionalProperties: Map<String, JsonValue>,
+        @JsonProperty("metadata")
+        @ExcludeMissing
+        private val metadata: JsonField<Metadata> = JsonMissing.of(),
+        @JsonProperty("id") @ExcludeMissing private val id: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("ledger_sequence_number")
+        @ExcludeMissing
+        private val ledgerSequenceNumber: JsonField<Long> = JsonMissing.of(),
+        @JsonProperty("entry_status")
+        @ExcludeMissing
+        private val entryStatus: JsonField<EntryStatus> = JsonMissing.of(),
+        @JsonProperty("customer")
+        @ExcludeMissing
+        private val customer: JsonField<Customer> = JsonMissing.of(),
+        @JsonProperty("starting_balance")
+        @ExcludeMissing
+        private val startingBalance: JsonField<Double> = JsonMissing.of(),
+        @JsonProperty("ending_balance")
+        @ExcludeMissing
+        private val endingBalance: JsonField<Double> = JsonMissing.of(),
+        @JsonProperty("amount")
+        @ExcludeMissing
+        private val amount: JsonField<Double> = JsonMissing.of(),
+        @JsonProperty("currency")
+        @ExcludeMissing
+        private val currency: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("created_at")
+        @ExcludeMissing
+        private val createdAt: JsonField<OffsetDateTime> = JsonMissing.of(),
+        @JsonProperty("description")
+        @ExcludeMissing
+        private val description: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("credit_block")
+        @ExcludeMissing
+        private val creditBlock: JsonField<CreditBlock> = JsonMissing.of(),
+        @JsonProperty("entry_type")
+        @ExcludeMissing
+        private val entryType: JsonField<EntryType> = JsonMissing.of(),
+        @JsonProperty("price_id")
+        @ExcludeMissing
+        private val priceId: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("event_id")
+        @ExcludeMissing
+        private val eventId: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("invoice_id")
+        @ExcludeMissing
+        private val invoiceId: JsonField<String> = JsonMissing.of(),
+        @JsonAnySetter
+        private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
-
-        private var validated: Boolean = false
 
         /**
          * User specified key-value pairs for the resource. If not present, this defaults to an
@@ -1161,6 +1219,8 @@ private constructor(
         @ExcludeMissing
         fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
 
+        private var validated: Boolean = false
+
         fun validate(): DecrementLedgerEntry = apply {
             if (!validated) {
                 metadata().validate()
@@ -1211,23 +1271,23 @@ private constructor(
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             internal fun from(decrementLedgerEntry: DecrementLedgerEntry) = apply {
-                this.metadata = decrementLedgerEntry.metadata
-                this.id = decrementLedgerEntry.id
-                this.ledgerSequenceNumber = decrementLedgerEntry.ledgerSequenceNumber
-                this.entryStatus = decrementLedgerEntry.entryStatus
-                this.customer = decrementLedgerEntry.customer
-                this.startingBalance = decrementLedgerEntry.startingBalance
-                this.endingBalance = decrementLedgerEntry.endingBalance
-                this.amount = decrementLedgerEntry.amount
-                this.currency = decrementLedgerEntry.currency
-                this.createdAt = decrementLedgerEntry.createdAt
-                this.description = decrementLedgerEntry.description
-                this.creditBlock = decrementLedgerEntry.creditBlock
-                this.entryType = decrementLedgerEntry.entryType
-                this.priceId = decrementLedgerEntry.priceId
-                this.eventId = decrementLedgerEntry.eventId
-                this.invoiceId = decrementLedgerEntry.invoiceId
-                additionalProperties(decrementLedgerEntry.additionalProperties)
+                metadata = decrementLedgerEntry.metadata
+                id = decrementLedgerEntry.id
+                ledgerSequenceNumber = decrementLedgerEntry.ledgerSequenceNumber
+                entryStatus = decrementLedgerEntry.entryStatus
+                customer = decrementLedgerEntry.customer
+                startingBalance = decrementLedgerEntry.startingBalance
+                endingBalance = decrementLedgerEntry.endingBalance
+                amount = decrementLedgerEntry.amount
+                currency = decrementLedgerEntry.currency
+                createdAt = decrementLedgerEntry.createdAt
+                description = decrementLedgerEntry.description
+                creditBlock = decrementLedgerEntry.creditBlock
+                entryType = decrementLedgerEntry.entryType
+                priceId = decrementLedgerEntry.priceId
+                eventId = decrementLedgerEntry.eventId
+                invoiceId = decrementLedgerEntry.invoiceId
+                additionalProperties = decrementLedgerEntry.additionalProperties.toMutableMap()
             }
 
             /**
@@ -1242,128 +1302,101 @@ private constructor(
              * empty dictionary. Individual keys can be removed by setting the value to `null`, and
              * the entire metadata mapping can be cleared by setting `metadata` to `null`.
              */
-            @JsonProperty("metadata")
-            @ExcludeMissing
             fun metadata(metadata: JsonField<Metadata>) = apply { this.metadata = metadata }
 
             fun id(id: String) = id(JsonField.of(id))
 
-            @JsonProperty("id")
-            @ExcludeMissing
             fun id(id: JsonField<String>) = apply { this.id = id }
 
             fun ledgerSequenceNumber(ledgerSequenceNumber: Long) =
                 ledgerSequenceNumber(JsonField.of(ledgerSequenceNumber))
 
-            @JsonProperty("ledger_sequence_number")
-            @ExcludeMissing
             fun ledgerSequenceNumber(ledgerSequenceNumber: JsonField<Long>) = apply {
                 this.ledgerSequenceNumber = ledgerSequenceNumber
             }
 
             fun entryStatus(entryStatus: EntryStatus) = entryStatus(JsonField.of(entryStatus))
 
-            @JsonProperty("entry_status")
-            @ExcludeMissing
             fun entryStatus(entryStatus: JsonField<EntryStatus>) = apply {
                 this.entryStatus = entryStatus
             }
 
             fun customer(customer: Customer) = customer(JsonField.of(customer))
 
-            @JsonProperty("customer")
-            @ExcludeMissing
             fun customer(customer: JsonField<Customer>) = apply { this.customer = customer }
 
             fun startingBalance(startingBalance: Double) =
                 startingBalance(JsonField.of(startingBalance))
 
-            @JsonProperty("starting_balance")
-            @ExcludeMissing
             fun startingBalance(startingBalance: JsonField<Double>) = apply {
                 this.startingBalance = startingBalance
             }
 
             fun endingBalance(endingBalance: Double) = endingBalance(JsonField.of(endingBalance))
 
-            @JsonProperty("ending_balance")
-            @ExcludeMissing
             fun endingBalance(endingBalance: JsonField<Double>) = apply {
                 this.endingBalance = endingBalance
             }
 
             fun amount(amount: Double) = amount(JsonField.of(amount))
 
-            @JsonProperty("amount")
-            @ExcludeMissing
             fun amount(amount: JsonField<Double>) = apply { this.amount = amount }
 
             fun currency(currency: String) = currency(JsonField.of(currency))
 
-            @JsonProperty("currency")
-            @ExcludeMissing
             fun currency(currency: JsonField<String>) = apply { this.currency = currency }
 
             fun createdAt(createdAt: OffsetDateTime) = createdAt(JsonField.of(createdAt))
 
-            @JsonProperty("created_at")
-            @ExcludeMissing
             fun createdAt(createdAt: JsonField<OffsetDateTime>) = apply {
                 this.createdAt = createdAt
             }
 
             fun description(description: String) = description(JsonField.of(description))
 
-            @JsonProperty("description")
-            @ExcludeMissing
             fun description(description: JsonField<String>) = apply {
                 this.description = description
             }
 
             fun creditBlock(creditBlock: CreditBlock) = creditBlock(JsonField.of(creditBlock))
 
-            @JsonProperty("credit_block")
-            @ExcludeMissing
             fun creditBlock(creditBlock: JsonField<CreditBlock>) = apply {
                 this.creditBlock = creditBlock
             }
 
             fun entryType(entryType: EntryType) = entryType(JsonField.of(entryType))
 
-            @JsonProperty("entry_type")
-            @ExcludeMissing
             fun entryType(entryType: JsonField<EntryType>) = apply { this.entryType = entryType }
 
             fun priceId(priceId: String) = priceId(JsonField.of(priceId))
 
-            @JsonProperty("price_id")
-            @ExcludeMissing
             fun priceId(priceId: JsonField<String>) = apply { this.priceId = priceId }
 
             fun eventId(eventId: String) = eventId(JsonField.of(eventId))
 
-            @JsonProperty("event_id")
-            @ExcludeMissing
             fun eventId(eventId: JsonField<String>) = apply { this.eventId = eventId }
 
             fun invoiceId(invoiceId: String) = invoiceId(JsonField.of(invoiceId))
 
-            @JsonProperty("invoice_id")
-            @ExcludeMissing
             fun invoiceId(invoiceId: JsonField<String>) = apply { this.invoiceId = invoiceId }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
-                this.additionalProperties.putAll(additionalProperties)
+                putAllAdditionalProperties(additionalProperties)
             }
 
-            @JsonAnySetter
             fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-                this.additionalProperties.put(key, value)
+                additionalProperties.put(key, value)
             }
 
             fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.putAll(additionalProperties)
+            }
+
+            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+
+            fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                keys.forEach(::removeAdditionalProperty)
             }
 
             fun build(): DecrementLedgerEntry =
@@ -1388,17 +1421,22 @@ private constructor(
                 )
         }
 
-        @JsonDeserialize(builder = CreditBlock.Builder::class)
         @NoAutoDetect
         class CreditBlock
+        @JsonCreator
         private constructor(
-            private val id: JsonField<String>,
-            private val expiryDate: JsonField<OffsetDateTime>,
-            private val perUnitCostBasis: JsonField<String>,
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonProperty("id")
+            @ExcludeMissing
+            private val id: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("expiry_date")
+            @ExcludeMissing
+            private val expiryDate: JsonField<OffsetDateTime> = JsonMissing.of(),
+            @JsonProperty("per_unit_cost_basis")
+            @ExcludeMissing
+            private val perUnitCostBasis: JsonField<String> = JsonMissing.of(),
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
-
-            private var validated: Boolean = false
 
             fun id(): String = id.getRequired("id")
 
@@ -1417,6 +1455,8 @@ private constructor(
             @JsonAnyGetter
             @ExcludeMissing
             fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
+
+            private var validated: Boolean = false
 
             fun validate(): CreditBlock = apply {
                 if (!validated) {
@@ -1442,22 +1482,18 @@ private constructor(
                 private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
                 internal fun from(creditBlock: CreditBlock) = apply {
-                    this.id = creditBlock.id
-                    this.expiryDate = creditBlock.expiryDate
-                    this.perUnitCostBasis = creditBlock.perUnitCostBasis
-                    additionalProperties(creditBlock.additionalProperties)
+                    id = creditBlock.id
+                    expiryDate = creditBlock.expiryDate
+                    perUnitCostBasis = creditBlock.perUnitCostBasis
+                    additionalProperties = creditBlock.additionalProperties.toMutableMap()
                 }
 
                 fun id(id: String) = id(JsonField.of(id))
 
-                @JsonProperty("id")
-                @ExcludeMissing
                 fun id(id: JsonField<String>) = apply { this.id = id }
 
                 fun expiryDate(expiryDate: OffsetDateTime) = expiryDate(JsonField.of(expiryDate))
 
-                @JsonProperty("expiry_date")
-                @ExcludeMissing
                 fun expiryDate(expiryDate: JsonField<OffsetDateTime>) = apply {
                     this.expiryDate = expiryDate
                 }
@@ -1465,26 +1501,31 @@ private constructor(
                 fun perUnitCostBasis(perUnitCostBasis: String) =
                     perUnitCostBasis(JsonField.of(perUnitCostBasis))
 
-                @JsonProperty("per_unit_cost_basis")
-                @ExcludeMissing
                 fun perUnitCostBasis(perUnitCostBasis: JsonField<String>) = apply {
                     this.perUnitCostBasis = perUnitCostBasis
                 }
 
                 fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                     this.additionalProperties.clear()
-                    this.additionalProperties.putAll(additionalProperties)
+                    putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-                    this.additionalProperties.put(key, value)
+                    additionalProperties.put(key, value)
                 }
 
                 fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) =
                     apply {
                         this.additionalProperties.putAll(additionalProperties)
                     }
+
+                fun removeAdditionalProperty(key: String) = apply {
+                    additionalProperties.remove(key)
+                }
+
+                fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                    keys.forEach(::removeAdditionalProperty)
+                }
 
                 fun build(): CreditBlock =
                     CreditBlock(
@@ -1513,16 +1554,19 @@ private constructor(
                 "CreditBlock{id=$id, expiryDate=$expiryDate, perUnitCostBasis=$perUnitCostBasis, additionalProperties=$additionalProperties}"
         }
 
-        @JsonDeserialize(builder = Customer.Builder::class)
         @NoAutoDetect
         class Customer
+        @JsonCreator
         private constructor(
-            private val id: JsonField<String>,
-            private val externalCustomerId: JsonField<String>,
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonProperty("id")
+            @ExcludeMissing
+            private val id: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("external_customer_id")
+            @ExcludeMissing
+            private val externalCustomerId: JsonField<String> = JsonMissing.of(),
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
-
-            private var validated: Boolean = false
 
             fun id(): String = id.getRequired("id")
 
@@ -1538,6 +1582,8 @@ private constructor(
             @JsonAnyGetter
             @ExcludeMissing
             fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
+
+            private var validated: Boolean = false
 
             fun validate(): Customer = apply {
                 if (!validated) {
@@ -1561,40 +1607,43 @@ private constructor(
                 private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
                 internal fun from(customer: Customer) = apply {
-                    this.id = customer.id
-                    this.externalCustomerId = customer.externalCustomerId
-                    additionalProperties(customer.additionalProperties)
+                    id = customer.id
+                    externalCustomerId = customer.externalCustomerId
+                    additionalProperties = customer.additionalProperties.toMutableMap()
                 }
 
                 fun id(id: String) = id(JsonField.of(id))
 
-                @JsonProperty("id")
-                @ExcludeMissing
                 fun id(id: JsonField<String>) = apply { this.id = id }
 
                 fun externalCustomerId(externalCustomerId: String) =
                     externalCustomerId(JsonField.of(externalCustomerId))
 
-                @JsonProperty("external_customer_id")
-                @ExcludeMissing
                 fun externalCustomerId(externalCustomerId: JsonField<String>) = apply {
                     this.externalCustomerId = externalCustomerId
                 }
 
                 fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                     this.additionalProperties.clear()
-                    this.additionalProperties.putAll(additionalProperties)
+                    putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-                    this.additionalProperties.put(key, value)
+                    additionalProperties.put(key, value)
                 }
 
                 fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) =
                     apply {
                         this.additionalProperties.putAll(additionalProperties)
                     }
+
+                fun removeAdditionalProperty(key: String) = apply {
+                    additionalProperties.remove(key)
+                }
+
+                fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                    keys.forEach(::removeAdditionalProperty)
+                }
 
                 fun build(): Customer =
                     Customer(
@@ -1630,23 +1679,11 @@ private constructor(
 
             @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
 
-            override fun equals(other: Any?): Boolean {
-                if (this === other) {
-                    return true
-                }
-
-                return /* spotless:off */ other is EntryStatus && value == other.value /* spotless:on */
-            }
-
-            override fun hashCode() = value.hashCode()
-
-            override fun toString() = value.toString()
-
             companion object {
 
-                val COMMITTED = EntryStatus(JsonField.of("committed"))
+                val COMMITTED = of("committed")
 
-                val PENDING = EntryStatus(JsonField.of("pending"))
+                val PENDING = of("pending")
 
                 fun of(value: String) = EntryStatus(JsonField.of(value))
             }
@@ -1677,6 +1714,18 @@ private constructor(
                 }
 
             fun asString(): String = _value().asStringOrThrow()
+
+            override fun equals(other: Any?): Boolean {
+                if (this === other) {
+                    return true
+                }
+
+                return /* spotless:off */ other is EntryStatus && value == other.value /* spotless:on */
+            }
+
+            override fun hashCode() = value.hashCode()
+
+            override fun toString() = value.toString()
         }
 
         class EntryType
@@ -1687,21 +1736,9 @@ private constructor(
 
             @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
 
-            override fun equals(other: Any?): Boolean {
-                if (this === other) {
-                    return true
-                }
-
-                return /* spotless:off */ other is EntryType && value == other.value /* spotless:on */
-            }
-
-            override fun hashCode() = value.hashCode()
-
-            override fun toString() = value.toString()
-
             companion object {
 
-                val DECREMENT = EntryType(JsonField.of("decrement"))
+                val DECREMENT = of("decrement")
 
                 fun of(value: String) = EntryType(JsonField.of(value))
             }
@@ -1728,6 +1765,18 @@ private constructor(
                 }
 
             fun asString(): String = _value().asStringOrThrow()
+
+            override fun equals(other: Any?): Boolean {
+                if (this === other) {
+                    return true
+                }
+
+                return /* spotless:off */ other is EntryType && value == other.value /* spotless:on */
+            }
+
+            override fun hashCode() = value.hashCode()
+
+            override fun toString() = value.toString()
         }
 
         /**
@@ -1735,18 +1784,19 @@ private constructor(
          * empty dictionary. Individual keys can be removed by setting the value to `null`, and the
          * entire metadata mapping can be cleared by setting `metadata` to `null`.
          */
-        @JsonDeserialize(builder = Metadata.Builder::class)
         @NoAutoDetect
         class Metadata
+        @JsonCreator
         private constructor(
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
-
-            private var validated: Boolean = false
 
             @JsonAnyGetter
             @ExcludeMissing
             fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
+
+            private var validated: Boolean = false
 
             fun validate(): Metadata = apply {
                 if (!validated) {
@@ -1766,23 +1816,30 @@ private constructor(
                 private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
                 internal fun from(metadata: Metadata) = apply {
-                    additionalProperties(metadata.additionalProperties)
+                    additionalProperties = metadata.additionalProperties.toMutableMap()
                 }
 
                 fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                     this.additionalProperties.clear()
-                    this.additionalProperties.putAll(additionalProperties)
+                    putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-                    this.additionalProperties.put(key, value)
+                    additionalProperties.put(key, value)
                 }
 
                 fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) =
                     apply {
                         this.additionalProperties.putAll(additionalProperties)
                     }
+
+                fun removeAdditionalProperty(key: String) = apply {
+                    additionalProperties.remove(key)
+                }
+
+                fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                    keys.forEach(::removeAdditionalProperty)
+                }
 
                 fun build(): Metadata = Metadata(additionalProperties.toImmutable())
             }
@@ -1822,28 +1879,53 @@ private constructor(
             "DecrementLedgerEntry{metadata=$metadata, id=$id, ledgerSequenceNumber=$ledgerSequenceNumber, entryStatus=$entryStatus, customer=$customer, startingBalance=$startingBalance, endingBalance=$endingBalance, amount=$amount, currency=$currency, createdAt=$createdAt, description=$description, creditBlock=$creditBlock, entryType=$entryType, priceId=$priceId, eventId=$eventId, invoiceId=$invoiceId, additionalProperties=$additionalProperties}"
     }
 
-    @JsonDeserialize(builder = ExpirationChangeLedgerEntry.Builder::class)
     @NoAutoDetect
     class ExpirationChangeLedgerEntry
+    @JsonCreator
     private constructor(
-        private val metadata: JsonField<Metadata>,
-        private val id: JsonField<String>,
-        private val ledgerSequenceNumber: JsonField<Long>,
-        private val entryStatus: JsonField<EntryStatus>,
-        private val customer: JsonField<Customer>,
-        private val startingBalance: JsonField<Double>,
-        private val endingBalance: JsonField<Double>,
-        private val amount: JsonField<Double>,
-        private val currency: JsonField<String>,
-        private val createdAt: JsonField<OffsetDateTime>,
-        private val description: JsonField<String>,
-        private val creditBlock: JsonField<CreditBlock>,
-        private val entryType: JsonField<EntryType>,
-        private val newBlockExpiryDate: JsonField<OffsetDateTime>,
-        private val additionalProperties: Map<String, JsonValue>,
+        @JsonProperty("metadata")
+        @ExcludeMissing
+        private val metadata: JsonField<Metadata> = JsonMissing.of(),
+        @JsonProperty("id") @ExcludeMissing private val id: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("ledger_sequence_number")
+        @ExcludeMissing
+        private val ledgerSequenceNumber: JsonField<Long> = JsonMissing.of(),
+        @JsonProperty("entry_status")
+        @ExcludeMissing
+        private val entryStatus: JsonField<EntryStatus> = JsonMissing.of(),
+        @JsonProperty("customer")
+        @ExcludeMissing
+        private val customer: JsonField<Customer> = JsonMissing.of(),
+        @JsonProperty("starting_balance")
+        @ExcludeMissing
+        private val startingBalance: JsonField<Double> = JsonMissing.of(),
+        @JsonProperty("ending_balance")
+        @ExcludeMissing
+        private val endingBalance: JsonField<Double> = JsonMissing.of(),
+        @JsonProperty("amount")
+        @ExcludeMissing
+        private val amount: JsonField<Double> = JsonMissing.of(),
+        @JsonProperty("currency")
+        @ExcludeMissing
+        private val currency: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("created_at")
+        @ExcludeMissing
+        private val createdAt: JsonField<OffsetDateTime> = JsonMissing.of(),
+        @JsonProperty("description")
+        @ExcludeMissing
+        private val description: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("credit_block")
+        @ExcludeMissing
+        private val creditBlock: JsonField<CreditBlock> = JsonMissing.of(),
+        @JsonProperty("entry_type")
+        @ExcludeMissing
+        private val entryType: JsonField<EntryType> = JsonMissing.of(),
+        @JsonProperty("new_block_expiry_date")
+        @ExcludeMissing
+        private val newBlockExpiryDate: JsonField<OffsetDateTime> = JsonMissing.of(),
+        @JsonAnySetter
+        private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
-
-        private var validated: Boolean = false
 
         /**
          * User specified key-value pairs for the resource. If not present, this defaults to an
@@ -1877,8 +1959,8 @@ private constructor(
 
         fun entryType(): EntryType = entryType.getRequired("entry_type")
 
-        fun newBlockExpiryDate(): OffsetDateTime =
-            newBlockExpiryDate.getRequired("new_block_expiry_date")
+        fun newBlockExpiryDate(): OffsetDateTime? =
+            newBlockExpiryDate.getNullable("new_block_expiry_date")
 
         /**
          * User specified key-value pairs for the resource. If not present, this defaults to an
@@ -1920,6 +2002,8 @@ private constructor(
         @JsonAnyGetter
         @ExcludeMissing
         fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
+
+        private var validated: Boolean = false
 
         fun validate(): ExpirationChangeLedgerEntry = apply {
             if (!validated) {
@@ -1967,21 +2051,22 @@ private constructor(
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             internal fun from(expirationChangeLedgerEntry: ExpirationChangeLedgerEntry) = apply {
-                this.metadata = expirationChangeLedgerEntry.metadata
-                this.id = expirationChangeLedgerEntry.id
-                this.ledgerSequenceNumber = expirationChangeLedgerEntry.ledgerSequenceNumber
-                this.entryStatus = expirationChangeLedgerEntry.entryStatus
-                this.customer = expirationChangeLedgerEntry.customer
-                this.startingBalance = expirationChangeLedgerEntry.startingBalance
-                this.endingBalance = expirationChangeLedgerEntry.endingBalance
-                this.amount = expirationChangeLedgerEntry.amount
-                this.currency = expirationChangeLedgerEntry.currency
-                this.createdAt = expirationChangeLedgerEntry.createdAt
-                this.description = expirationChangeLedgerEntry.description
-                this.creditBlock = expirationChangeLedgerEntry.creditBlock
-                this.entryType = expirationChangeLedgerEntry.entryType
-                this.newBlockExpiryDate = expirationChangeLedgerEntry.newBlockExpiryDate
-                additionalProperties(expirationChangeLedgerEntry.additionalProperties)
+                metadata = expirationChangeLedgerEntry.metadata
+                id = expirationChangeLedgerEntry.id
+                ledgerSequenceNumber = expirationChangeLedgerEntry.ledgerSequenceNumber
+                entryStatus = expirationChangeLedgerEntry.entryStatus
+                customer = expirationChangeLedgerEntry.customer
+                startingBalance = expirationChangeLedgerEntry.startingBalance
+                endingBalance = expirationChangeLedgerEntry.endingBalance
+                amount = expirationChangeLedgerEntry.amount
+                currency = expirationChangeLedgerEntry.currency
+                createdAt = expirationChangeLedgerEntry.createdAt
+                description = expirationChangeLedgerEntry.description
+                creditBlock = expirationChangeLedgerEntry.creditBlock
+                entryType = expirationChangeLedgerEntry.entryType
+                newBlockExpiryDate = expirationChangeLedgerEntry.newBlockExpiryDate
+                additionalProperties =
+                    expirationChangeLedgerEntry.additionalProperties.toMutableMap()
             }
 
             /**
@@ -1996,119 +2081,96 @@ private constructor(
              * empty dictionary. Individual keys can be removed by setting the value to `null`, and
              * the entire metadata mapping can be cleared by setting `metadata` to `null`.
              */
-            @JsonProperty("metadata")
-            @ExcludeMissing
             fun metadata(metadata: JsonField<Metadata>) = apply { this.metadata = metadata }
 
             fun id(id: String) = id(JsonField.of(id))
 
-            @JsonProperty("id")
-            @ExcludeMissing
             fun id(id: JsonField<String>) = apply { this.id = id }
 
             fun ledgerSequenceNumber(ledgerSequenceNumber: Long) =
                 ledgerSequenceNumber(JsonField.of(ledgerSequenceNumber))
 
-            @JsonProperty("ledger_sequence_number")
-            @ExcludeMissing
             fun ledgerSequenceNumber(ledgerSequenceNumber: JsonField<Long>) = apply {
                 this.ledgerSequenceNumber = ledgerSequenceNumber
             }
 
             fun entryStatus(entryStatus: EntryStatus) = entryStatus(JsonField.of(entryStatus))
 
-            @JsonProperty("entry_status")
-            @ExcludeMissing
             fun entryStatus(entryStatus: JsonField<EntryStatus>) = apply {
                 this.entryStatus = entryStatus
             }
 
             fun customer(customer: Customer) = customer(JsonField.of(customer))
 
-            @JsonProperty("customer")
-            @ExcludeMissing
             fun customer(customer: JsonField<Customer>) = apply { this.customer = customer }
 
             fun startingBalance(startingBalance: Double) =
                 startingBalance(JsonField.of(startingBalance))
 
-            @JsonProperty("starting_balance")
-            @ExcludeMissing
             fun startingBalance(startingBalance: JsonField<Double>) = apply {
                 this.startingBalance = startingBalance
             }
 
             fun endingBalance(endingBalance: Double) = endingBalance(JsonField.of(endingBalance))
 
-            @JsonProperty("ending_balance")
-            @ExcludeMissing
             fun endingBalance(endingBalance: JsonField<Double>) = apply {
                 this.endingBalance = endingBalance
             }
 
             fun amount(amount: Double) = amount(JsonField.of(amount))
 
-            @JsonProperty("amount")
-            @ExcludeMissing
             fun amount(amount: JsonField<Double>) = apply { this.amount = amount }
 
             fun currency(currency: String) = currency(JsonField.of(currency))
 
-            @JsonProperty("currency")
-            @ExcludeMissing
             fun currency(currency: JsonField<String>) = apply { this.currency = currency }
 
             fun createdAt(createdAt: OffsetDateTime) = createdAt(JsonField.of(createdAt))
 
-            @JsonProperty("created_at")
-            @ExcludeMissing
             fun createdAt(createdAt: JsonField<OffsetDateTime>) = apply {
                 this.createdAt = createdAt
             }
 
             fun description(description: String) = description(JsonField.of(description))
 
-            @JsonProperty("description")
-            @ExcludeMissing
             fun description(description: JsonField<String>) = apply {
                 this.description = description
             }
 
             fun creditBlock(creditBlock: CreditBlock) = creditBlock(JsonField.of(creditBlock))
 
-            @JsonProperty("credit_block")
-            @ExcludeMissing
             fun creditBlock(creditBlock: JsonField<CreditBlock>) = apply {
                 this.creditBlock = creditBlock
             }
 
             fun entryType(entryType: EntryType) = entryType(JsonField.of(entryType))
 
-            @JsonProperty("entry_type")
-            @ExcludeMissing
             fun entryType(entryType: JsonField<EntryType>) = apply { this.entryType = entryType }
 
             fun newBlockExpiryDate(newBlockExpiryDate: OffsetDateTime) =
                 newBlockExpiryDate(JsonField.of(newBlockExpiryDate))
 
-            @JsonProperty("new_block_expiry_date")
-            @ExcludeMissing
             fun newBlockExpiryDate(newBlockExpiryDate: JsonField<OffsetDateTime>) = apply {
                 this.newBlockExpiryDate = newBlockExpiryDate
             }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
-                this.additionalProperties.putAll(additionalProperties)
+                putAllAdditionalProperties(additionalProperties)
             }
 
-            @JsonAnySetter
             fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-                this.additionalProperties.put(key, value)
+                additionalProperties.put(key, value)
             }
 
             fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.putAll(additionalProperties)
+            }
+
+            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+
+            fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                keys.forEach(::removeAdditionalProperty)
             }
 
             fun build(): ExpirationChangeLedgerEntry =
@@ -2131,17 +2193,22 @@ private constructor(
                 )
         }
 
-        @JsonDeserialize(builder = CreditBlock.Builder::class)
         @NoAutoDetect
         class CreditBlock
+        @JsonCreator
         private constructor(
-            private val id: JsonField<String>,
-            private val expiryDate: JsonField<OffsetDateTime>,
-            private val perUnitCostBasis: JsonField<String>,
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonProperty("id")
+            @ExcludeMissing
+            private val id: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("expiry_date")
+            @ExcludeMissing
+            private val expiryDate: JsonField<OffsetDateTime> = JsonMissing.of(),
+            @JsonProperty("per_unit_cost_basis")
+            @ExcludeMissing
+            private val perUnitCostBasis: JsonField<String> = JsonMissing.of(),
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
-
-            private var validated: Boolean = false
 
             fun id(): String = id.getRequired("id")
 
@@ -2160,6 +2227,8 @@ private constructor(
             @JsonAnyGetter
             @ExcludeMissing
             fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
+
+            private var validated: Boolean = false
 
             fun validate(): CreditBlock = apply {
                 if (!validated) {
@@ -2185,22 +2254,18 @@ private constructor(
                 private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
                 internal fun from(creditBlock: CreditBlock) = apply {
-                    this.id = creditBlock.id
-                    this.expiryDate = creditBlock.expiryDate
-                    this.perUnitCostBasis = creditBlock.perUnitCostBasis
-                    additionalProperties(creditBlock.additionalProperties)
+                    id = creditBlock.id
+                    expiryDate = creditBlock.expiryDate
+                    perUnitCostBasis = creditBlock.perUnitCostBasis
+                    additionalProperties = creditBlock.additionalProperties.toMutableMap()
                 }
 
                 fun id(id: String) = id(JsonField.of(id))
 
-                @JsonProperty("id")
-                @ExcludeMissing
                 fun id(id: JsonField<String>) = apply { this.id = id }
 
                 fun expiryDate(expiryDate: OffsetDateTime) = expiryDate(JsonField.of(expiryDate))
 
-                @JsonProperty("expiry_date")
-                @ExcludeMissing
                 fun expiryDate(expiryDate: JsonField<OffsetDateTime>) = apply {
                     this.expiryDate = expiryDate
                 }
@@ -2208,26 +2273,31 @@ private constructor(
                 fun perUnitCostBasis(perUnitCostBasis: String) =
                     perUnitCostBasis(JsonField.of(perUnitCostBasis))
 
-                @JsonProperty("per_unit_cost_basis")
-                @ExcludeMissing
                 fun perUnitCostBasis(perUnitCostBasis: JsonField<String>) = apply {
                     this.perUnitCostBasis = perUnitCostBasis
                 }
 
                 fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                     this.additionalProperties.clear()
-                    this.additionalProperties.putAll(additionalProperties)
+                    putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-                    this.additionalProperties.put(key, value)
+                    additionalProperties.put(key, value)
                 }
 
                 fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) =
                     apply {
                         this.additionalProperties.putAll(additionalProperties)
                     }
+
+                fun removeAdditionalProperty(key: String) = apply {
+                    additionalProperties.remove(key)
+                }
+
+                fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                    keys.forEach(::removeAdditionalProperty)
+                }
 
                 fun build(): CreditBlock =
                     CreditBlock(
@@ -2256,16 +2326,19 @@ private constructor(
                 "CreditBlock{id=$id, expiryDate=$expiryDate, perUnitCostBasis=$perUnitCostBasis, additionalProperties=$additionalProperties}"
         }
 
-        @JsonDeserialize(builder = Customer.Builder::class)
         @NoAutoDetect
         class Customer
+        @JsonCreator
         private constructor(
-            private val id: JsonField<String>,
-            private val externalCustomerId: JsonField<String>,
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonProperty("id")
+            @ExcludeMissing
+            private val id: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("external_customer_id")
+            @ExcludeMissing
+            private val externalCustomerId: JsonField<String> = JsonMissing.of(),
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
-
-            private var validated: Boolean = false
 
             fun id(): String = id.getRequired("id")
 
@@ -2281,6 +2354,8 @@ private constructor(
             @JsonAnyGetter
             @ExcludeMissing
             fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
+
+            private var validated: Boolean = false
 
             fun validate(): Customer = apply {
                 if (!validated) {
@@ -2304,40 +2379,43 @@ private constructor(
                 private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
                 internal fun from(customer: Customer) = apply {
-                    this.id = customer.id
-                    this.externalCustomerId = customer.externalCustomerId
-                    additionalProperties(customer.additionalProperties)
+                    id = customer.id
+                    externalCustomerId = customer.externalCustomerId
+                    additionalProperties = customer.additionalProperties.toMutableMap()
                 }
 
                 fun id(id: String) = id(JsonField.of(id))
 
-                @JsonProperty("id")
-                @ExcludeMissing
                 fun id(id: JsonField<String>) = apply { this.id = id }
 
                 fun externalCustomerId(externalCustomerId: String) =
                     externalCustomerId(JsonField.of(externalCustomerId))
 
-                @JsonProperty("external_customer_id")
-                @ExcludeMissing
                 fun externalCustomerId(externalCustomerId: JsonField<String>) = apply {
                     this.externalCustomerId = externalCustomerId
                 }
 
                 fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                     this.additionalProperties.clear()
-                    this.additionalProperties.putAll(additionalProperties)
+                    putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-                    this.additionalProperties.put(key, value)
+                    additionalProperties.put(key, value)
                 }
 
                 fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) =
                     apply {
                         this.additionalProperties.putAll(additionalProperties)
                     }
+
+                fun removeAdditionalProperty(key: String) = apply {
+                    additionalProperties.remove(key)
+                }
+
+                fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                    keys.forEach(::removeAdditionalProperty)
+                }
 
                 fun build(): Customer =
                     Customer(
@@ -2373,23 +2451,11 @@ private constructor(
 
             @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
 
-            override fun equals(other: Any?): Boolean {
-                if (this === other) {
-                    return true
-                }
-
-                return /* spotless:off */ other is EntryStatus && value == other.value /* spotless:on */
-            }
-
-            override fun hashCode() = value.hashCode()
-
-            override fun toString() = value.toString()
-
             companion object {
 
-                val COMMITTED = EntryStatus(JsonField.of("committed"))
+                val COMMITTED = of("committed")
 
-                val PENDING = EntryStatus(JsonField.of("pending"))
+                val PENDING = of("pending")
 
                 fun of(value: String) = EntryStatus(JsonField.of(value))
             }
@@ -2420,6 +2486,18 @@ private constructor(
                 }
 
             fun asString(): String = _value().asStringOrThrow()
+
+            override fun equals(other: Any?): Boolean {
+                if (this === other) {
+                    return true
+                }
+
+                return /* spotless:off */ other is EntryStatus && value == other.value /* spotless:on */
+            }
+
+            override fun hashCode() = value.hashCode()
+
+            override fun toString() = value.toString()
         }
 
         class EntryType
@@ -2430,21 +2508,9 @@ private constructor(
 
             @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
 
-            override fun equals(other: Any?): Boolean {
-                if (this === other) {
-                    return true
-                }
-
-                return /* spotless:off */ other is EntryType && value == other.value /* spotless:on */
-            }
-
-            override fun hashCode() = value.hashCode()
-
-            override fun toString() = value.toString()
-
             companion object {
 
-                val EXPIRATION_CHANGE = EntryType(JsonField.of("expiration_change"))
+                val EXPIRATION_CHANGE = of("expiration_change")
 
                 fun of(value: String) = EntryType(JsonField.of(value))
             }
@@ -2471,6 +2537,18 @@ private constructor(
                 }
 
             fun asString(): String = _value().asStringOrThrow()
+
+            override fun equals(other: Any?): Boolean {
+                if (this === other) {
+                    return true
+                }
+
+                return /* spotless:off */ other is EntryType && value == other.value /* spotless:on */
+            }
+
+            override fun hashCode() = value.hashCode()
+
+            override fun toString() = value.toString()
         }
 
         /**
@@ -2478,18 +2556,19 @@ private constructor(
          * empty dictionary. Individual keys can be removed by setting the value to `null`, and the
          * entire metadata mapping can be cleared by setting `metadata` to `null`.
          */
-        @JsonDeserialize(builder = Metadata.Builder::class)
         @NoAutoDetect
         class Metadata
+        @JsonCreator
         private constructor(
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
-
-            private var validated: Boolean = false
 
             @JsonAnyGetter
             @ExcludeMissing
             fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
+
+            private var validated: Boolean = false
 
             fun validate(): Metadata = apply {
                 if (!validated) {
@@ -2509,23 +2588,30 @@ private constructor(
                 private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
                 internal fun from(metadata: Metadata) = apply {
-                    additionalProperties(metadata.additionalProperties)
+                    additionalProperties = metadata.additionalProperties.toMutableMap()
                 }
 
                 fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                     this.additionalProperties.clear()
-                    this.additionalProperties.putAll(additionalProperties)
+                    putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-                    this.additionalProperties.put(key, value)
+                    additionalProperties.put(key, value)
                 }
 
                 fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) =
                     apply {
                         this.additionalProperties.putAll(additionalProperties)
                     }
+
+                fun removeAdditionalProperty(key: String) = apply {
+                    additionalProperties.remove(key)
+                }
+
+                fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                    keys.forEach(::removeAdditionalProperty)
+                }
 
                 fun build(): Metadata = Metadata(additionalProperties.toImmutable())
             }
@@ -2565,27 +2651,50 @@ private constructor(
             "ExpirationChangeLedgerEntry{metadata=$metadata, id=$id, ledgerSequenceNumber=$ledgerSequenceNumber, entryStatus=$entryStatus, customer=$customer, startingBalance=$startingBalance, endingBalance=$endingBalance, amount=$amount, currency=$currency, createdAt=$createdAt, description=$description, creditBlock=$creditBlock, entryType=$entryType, newBlockExpiryDate=$newBlockExpiryDate, additionalProperties=$additionalProperties}"
     }
 
-    @JsonDeserialize(builder = CreditBlockExpiryLedgerEntry.Builder::class)
     @NoAutoDetect
     class CreditBlockExpiryLedgerEntry
+    @JsonCreator
     private constructor(
-        private val metadata: JsonField<Metadata>,
-        private val id: JsonField<String>,
-        private val ledgerSequenceNumber: JsonField<Long>,
-        private val entryStatus: JsonField<EntryStatus>,
-        private val customer: JsonField<Customer>,
-        private val startingBalance: JsonField<Double>,
-        private val endingBalance: JsonField<Double>,
-        private val amount: JsonField<Double>,
-        private val currency: JsonField<String>,
-        private val createdAt: JsonField<OffsetDateTime>,
-        private val description: JsonField<String>,
-        private val creditBlock: JsonField<CreditBlock>,
-        private val entryType: JsonField<EntryType>,
-        private val additionalProperties: Map<String, JsonValue>,
+        @JsonProperty("metadata")
+        @ExcludeMissing
+        private val metadata: JsonField<Metadata> = JsonMissing.of(),
+        @JsonProperty("id") @ExcludeMissing private val id: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("ledger_sequence_number")
+        @ExcludeMissing
+        private val ledgerSequenceNumber: JsonField<Long> = JsonMissing.of(),
+        @JsonProperty("entry_status")
+        @ExcludeMissing
+        private val entryStatus: JsonField<EntryStatus> = JsonMissing.of(),
+        @JsonProperty("customer")
+        @ExcludeMissing
+        private val customer: JsonField<Customer> = JsonMissing.of(),
+        @JsonProperty("starting_balance")
+        @ExcludeMissing
+        private val startingBalance: JsonField<Double> = JsonMissing.of(),
+        @JsonProperty("ending_balance")
+        @ExcludeMissing
+        private val endingBalance: JsonField<Double> = JsonMissing.of(),
+        @JsonProperty("amount")
+        @ExcludeMissing
+        private val amount: JsonField<Double> = JsonMissing.of(),
+        @JsonProperty("currency")
+        @ExcludeMissing
+        private val currency: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("created_at")
+        @ExcludeMissing
+        private val createdAt: JsonField<OffsetDateTime> = JsonMissing.of(),
+        @JsonProperty("description")
+        @ExcludeMissing
+        private val description: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("credit_block")
+        @ExcludeMissing
+        private val creditBlock: JsonField<CreditBlock> = JsonMissing.of(),
+        @JsonProperty("entry_type")
+        @ExcludeMissing
+        private val entryType: JsonField<EntryType> = JsonMissing.of(),
+        @JsonAnySetter
+        private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
-
-        private var validated: Boolean = false
 
         /**
          * User specified key-value pairs for the resource. If not present, this defaults to an
@@ -2656,6 +2765,8 @@ private constructor(
         @ExcludeMissing
         fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
 
+        private var validated: Boolean = false
+
         fun validate(): CreditBlockExpiryLedgerEntry = apply {
             if (!validated) {
                 metadata().validate()
@@ -2700,20 +2811,21 @@ private constructor(
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             internal fun from(creditBlockExpiryLedgerEntry: CreditBlockExpiryLedgerEntry) = apply {
-                this.metadata = creditBlockExpiryLedgerEntry.metadata
-                this.id = creditBlockExpiryLedgerEntry.id
-                this.ledgerSequenceNumber = creditBlockExpiryLedgerEntry.ledgerSequenceNumber
-                this.entryStatus = creditBlockExpiryLedgerEntry.entryStatus
-                this.customer = creditBlockExpiryLedgerEntry.customer
-                this.startingBalance = creditBlockExpiryLedgerEntry.startingBalance
-                this.endingBalance = creditBlockExpiryLedgerEntry.endingBalance
-                this.amount = creditBlockExpiryLedgerEntry.amount
-                this.currency = creditBlockExpiryLedgerEntry.currency
-                this.createdAt = creditBlockExpiryLedgerEntry.createdAt
-                this.description = creditBlockExpiryLedgerEntry.description
-                this.creditBlock = creditBlockExpiryLedgerEntry.creditBlock
-                this.entryType = creditBlockExpiryLedgerEntry.entryType
-                additionalProperties(creditBlockExpiryLedgerEntry.additionalProperties)
+                metadata = creditBlockExpiryLedgerEntry.metadata
+                id = creditBlockExpiryLedgerEntry.id
+                ledgerSequenceNumber = creditBlockExpiryLedgerEntry.ledgerSequenceNumber
+                entryStatus = creditBlockExpiryLedgerEntry.entryStatus
+                customer = creditBlockExpiryLedgerEntry.customer
+                startingBalance = creditBlockExpiryLedgerEntry.startingBalance
+                endingBalance = creditBlockExpiryLedgerEntry.endingBalance
+                amount = creditBlockExpiryLedgerEntry.amount
+                currency = creditBlockExpiryLedgerEntry.currency
+                createdAt = creditBlockExpiryLedgerEntry.createdAt
+                description = creditBlockExpiryLedgerEntry.description
+                creditBlock = creditBlockExpiryLedgerEntry.creditBlock
+                entryType = creditBlockExpiryLedgerEntry.entryType
+                additionalProperties =
+                    creditBlockExpiryLedgerEntry.additionalProperties.toMutableMap()
             }
 
             /**
@@ -2728,110 +2840,89 @@ private constructor(
              * empty dictionary. Individual keys can be removed by setting the value to `null`, and
              * the entire metadata mapping can be cleared by setting `metadata` to `null`.
              */
-            @JsonProperty("metadata")
-            @ExcludeMissing
             fun metadata(metadata: JsonField<Metadata>) = apply { this.metadata = metadata }
 
             fun id(id: String) = id(JsonField.of(id))
 
-            @JsonProperty("id")
-            @ExcludeMissing
             fun id(id: JsonField<String>) = apply { this.id = id }
 
             fun ledgerSequenceNumber(ledgerSequenceNumber: Long) =
                 ledgerSequenceNumber(JsonField.of(ledgerSequenceNumber))
 
-            @JsonProperty("ledger_sequence_number")
-            @ExcludeMissing
             fun ledgerSequenceNumber(ledgerSequenceNumber: JsonField<Long>) = apply {
                 this.ledgerSequenceNumber = ledgerSequenceNumber
             }
 
             fun entryStatus(entryStatus: EntryStatus) = entryStatus(JsonField.of(entryStatus))
 
-            @JsonProperty("entry_status")
-            @ExcludeMissing
             fun entryStatus(entryStatus: JsonField<EntryStatus>) = apply {
                 this.entryStatus = entryStatus
             }
 
             fun customer(customer: Customer) = customer(JsonField.of(customer))
 
-            @JsonProperty("customer")
-            @ExcludeMissing
             fun customer(customer: JsonField<Customer>) = apply { this.customer = customer }
 
             fun startingBalance(startingBalance: Double) =
                 startingBalance(JsonField.of(startingBalance))
 
-            @JsonProperty("starting_balance")
-            @ExcludeMissing
             fun startingBalance(startingBalance: JsonField<Double>) = apply {
                 this.startingBalance = startingBalance
             }
 
             fun endingBalance(endingBalance: Double) = endingBalance(JsonField.of(endingBalance))
 
-            @JsonProperty("ending_balance")
-            @ExcludeMissing
             fun endingBalance(endingBalance: JsonField<Double>) = apply {
                 this.endingBalance = endingBalance
             }
 
             fun amount(amount: Double) = amount(JsonField.of(amount))
 
-            @JsonProperty("amount")
-            @ExcludeMissing
             fun amount(amount: JsonField<Double>) = apply { this.amount = amount }
 
             fun currency(currency: String) = currency(JsonField.of(currency))
 
-            @JsonProperty("currency")
-            @ExcludeMissing
             fun currency(currency: JsonField<String>) = apply { this.currency = currency }
 
             fun createdAt(createdAt: OffsetDateTime) = createdAt(JsonField.of(createdAt))
 
-            @JsonProperty("created_at")
-            @ExcludeMissing
             fun createdAt(createdAt: JsonField<OffsetDateTime>) = apply {
                 this.createdAt = createdAt
             }
 
             fun description(description: String) = description(JsonField.of(description))
 
-            @JsonProperty("description")
-            @ExcludeMissing
             fun description(description: JsonField<String>) = apply {
                 this.description = description
             }
 
             fun creditBlock(creditBlock: CreditBlock) = creditBlock(JsonField.of(creditBlock))
 
-            @JsonProperty("credit_block")
-            @ExcludeMissing
             fun creditBlock(creditBlock: JsonField<CreditBlock>) = apply {
                 this.creditBlock = creditBlock
             }
 
             fun entryType(entryType: EntryType) = entryType(JsonField.of(entryType))
 
-            @JsonProperty("entry_type")
-            @ExcludeMissing
             fun entryType(entryType: JsonField<EntryType>) = apply { this.entryType = entryType }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
-                this.additionalProperties.putAll(additionalProperties)
+                putAllAdditionalProperties(additionalProperties)
             }
 
-            @JsonAnySetter
             fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-                this.additionalProperties.put(key, value)
+                additionalProperties.put(key, value)
             }
 
             fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.putAll(additionalProperties)
+            }
+
+            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+
+            fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                keys.forEach(::removeAdditionalProperty)
             }
 
             fun build(): CreditBlockExpiryLedgerEntry =
@@ -2853,17 +2944,22 @@ private constructor(
                 )
         }
 
-        @JsonDeserialize(builder = CreditBlock.Builder::class)
         @NoAutoDetect
         class CreditBlock
+        @JsonCreator
         private constructor(
-            private val id: JsonField<String>,
-            private val expiryDate: JsonField<OffsetDateTime>,
-            private val perUnitCostBasis: JsonField<String>,
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonProperty("id")
+            @ExcludeMissing
+            private val id: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("expiry_date")
+            @ExcludeMissing
+            private val expiryDate: JsonField<OffsetDateTime> = JsonMissing.of(),
+            @JsonProperty("per_unit_cost_basis")
+            @ExcludeMissing
+            private val perUnitCostBasis: JsonField<String> = JsonMissing.of(),
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
-
-            private var validated: Boolean = false
 
             fun id(): String = id.getRequired("id")
 
@@ -2882,6 +2978,8 @@ private constructor(
             @JsonAnyGetter
             @ExcludeMissing
             fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
+
+            private var validated: Boolean = false
 
             fun validate(): CreditBlock = apply {
                 if (!validated) {
@@ -2907,22 +3005,18 @@ private constructor(
                 private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
                 internal fun from(creditBlock: CreditBlock) = apply {
-                    this.id = creditBlock.id
-                    this.expiryDate = creditBlock.expiryDate
-                    this.perUnitCostBasis = creditBlock.perUnitCostBasis
-                    additionalProperties(creditBlock.additionalProperties)
+                    id = creditBlock.id
+                    expiryDate = creditBlock.expiryDate
+                    perUnitCostBasis = creditBlock.perUnitCostBasis
+                    additionalProperties = creditBlock.additionalProperties.toMutableMap()
                 }
 
                 fun id(id: String) = id(JsonField.of(id))
 
-                @JsonProperty("id")
-                @ExcludeMissing
                 fun id(id: JsonField<String>) = apply { this.id = id }
 
                 fun expiryDate(expiryDate: OffsetDateTime) = expiryDate(JsonField.of(expiryDate))
 
-                @JsonProperty("expiry_date")
-                @ExcludeMissing
                 fun expiryDate(expiryDate: JsonField<OffsetDateTime>) = apply {
                     this.expiryDate = expiryDate
                 }
@@ -2930,26 +3024,31 @@ private constructor(
                 fun perUnitCostBasis(perUnitCostBasis: String) =
                     perUnitCostBasis(JsonField.of(perUnitCostBasis))
 
-                @JsonProperty("per_unit_cost_basis")
-                @ExcludeMissing
                 fun perUnitCostBasis(perUnitCostBasis: JsonField<String>) = apply {
                     this.perUnitCostBasis = perUnitCostBasis
                 }
 
                 fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                     this.additionalProperties.clear()
-                    this.additionalProperties.putAll(additionalProperties)
+                    putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-                    this.additionalProperties.put(key, value)
+                    additionalProperties.put(key, value)
                 }
 
                 fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) =
                     apply {
                         this.additionalProperties.putAll(additionalProperties)
                     }
+
+                fun removeAdditionalProperty(key: String) = apply {
+                    additionalProperties.remove(key)
+                }
+
+                fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                    keys.forEach(::removeAdditionalProperty)
+                }
 
                 fun build(): CreditBlock =
                     CreditBlock(
@@ -2978,16 +3077,19 @@ private constructor(
                 "CreditBlock{id=$id, expiryDate=$expiryDate, perUnitCostBasis=$perUnitCostBasis, additionalProperties=$additionalProperties}"
         }
 
-        @JsonDeserialize(builder = Customer.Builder::class)
         @NoAutoDetect
         class Customer
+        @JsonCreator
         private constructor(
-            private val id: JsonField<String>,
-            private val externalCustomerId: JsonField<String>,
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonProperty("id")
+            @ExcludeMissing
+            private val id: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("external_customer_id")
+            @ExcludeMissing
+            private val externalCustomerId: JsonField<String> = JsonMissing.of(),
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
-
-            private var validated: Boolean = false
 
             fun id(): String = id.getRequired("id")
 
@@ -3003,6 +3105,8 @@ private constructor(
             @JsonAnyGetter
             @ExcludeMissing
             fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
+
+            private var validated: Boolean = false
 
             fun validate(): Customer = apply {
                 if (!validated) {
@@ -3026,40 +3130,43 @@ private constructor(
                 private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
                 internal fun from(customer: Customer) = apply {
-                    this.id = customer.id
-                    this.externalCustomerId = customer.externalCustomerId
-                    additionalProperties(customer.additionalProperties)
+                    id = customer.id
+                    externalCustomerId = customer.externalCustomerId
+                    additionalProperties = customer.additionalProperties.toMutableMap()
                 }
 
                 fun id(id: String) = id(JsonField.of(id))
 
-                @JsonProperty("id")
-                @ExcludeMissing
                 fun id(id: JsonField<String>) = apply { this.id = id }
 
                 fun externalCustomerId(externalCustomerId: String) =
                     externalCustomerId(JsonField.of(externalCustomerId))
 
-                @JsonProperty("external_customer_id")
-                @ExcludeMissing
                 fun externalCustomerId(externalCustomerId: JsonField<String>) = apply {
                     this.externalCustomerId = externalCustomerId
                 }
 
                 fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                     this.additionalProperties.clear()
-                    this.additionalProperties.putAll(additionalProperties)
+                    putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-                    this.additionalProperties.put(key, value)
+                    additionalProperties.put(key, value)
                 }
 
                 fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) =
                     apply {
                         this.additionalProperties.putAll(additionalProperties)
                     }
+
+                fun removeAdditionalProperty(key: String) = apply {
+                    additionalProperties.remove(key)
+                }
+
+                fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                    keys.forEach(::removeAdditionalProperty)
+                }
 
                 fun build(): Customer =
                     Customer(
@@ -3095,23 +3202,11 @@ private constructor(
 
             @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
 
-            override fun equals(other: Any?): Boolean {
-                if (this === other) {
-                    return true
-                }
-
-                return /* spotless:off */ other is EntryStatus && value == other.value /* spotless:on */
-            }
-
-            override fun hashCode() = value.hashCode()
-
-            override fun toString() = value.toString()
-
             companion object {
 
-                val COMMITTED = EntryStatus(JsonField.of("committed"))
+                val COMMITTED = of("committed")
 
-                val PENDING = EntryStatus(JsonField.of("pending"))
+                val PENDING = of("pending")
 
                 fun of(value: String) = EntryStatus(JsonField.of(value))
             }
@@ -3142,6 +3237,18 @@ private constructor(
                 }
 
             fun asString(): String = _value().asStringOrThrow()
+
+            override fun equals(other: Any?): Boolean {
+                if (this === other) {
+                    return true
+                }
+
+                return /* spotless:off */ other is EntryStatus && value == other.value /* spotless:on */
+            }
+
+            override fun hashCode() = value.hashCode()
+
+            override fun toString() = value.toString()
         }
 
         class EntryType
@@ -3152,21 +3259,9 @@ private constructor(
 
             @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
 
-            override fun equals(other: Any?): Boolean {
-                if (this === other) {
-                    return true
-                }
-
-                return /* spotless:off */ other is EntryType && value == other.value /* spotless:on */
-            }
-
-            override fun hashCode() = value.hashCode()
-
-            override fun toString() = value.toString()
-
             companion object {
 
-                val CREDIT_BLOCK_EXPIRY = EntryType(JsonField.of("credit_block_expiry"))
+                val CREDIT_BLOCK_EXPIRY = of("credit_block_expiry")
 
                 fun of(value: String) = EntryType(JsonField.of(value))
             }
@@ -3193,6 +3288,18 @@ private constructor(
                 }
 
             fun asString(): String = _value().asStringOrThrow()
+
+            override fun equals(other: Any?): Boolean {
+                if (this === other) {
+                    return true
+                }
+
+                return /* spotless:off */ other is EntryType && value == other.value /* spotless:on */
+            }
+
+            override fun hashCode() = value.hashCode()
+
+            override fun toString() = value.toString()
         }
 
         /**
@@ -3200,18 +3307,19 @@ private constructor(
          * empty dictionary. Individual keys can be removed by setting the value to `null`, and the
          * entire metadata mapping can be cleared by setting `metadata` to `null`.
          */
-        @JsonDeserialize(builder = Metadata.Builder::class)
         @NoAutoDetect
         class Metadata
+        @JsonCreator
         private constructor(
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
-
-            private var validated: Boolean = false
 
             @JsonAnyGetter
             @ExcludeMissing
             fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
+
+            private var validated: Boolean = false
 
             fun validate(): Metadata = apply {
                 if (!validated) {
@@ -3231,23 +3339,30 @@ private constructor(
                 private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
                 internal fun from(metadata: Metadata) = apply {
-                    additionalProperties(metadata.additionalProperties)
+                    additionalProperties = metadata.additionalProperties.toMutableMap()
                 }
 
                 fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                     this.additionalProperties.clear()
-                    this.additionalProperties.putAll(additionalProperties)
+                    putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-                    this.additionalProperties.put(key, value)
+                    additionalProperties.put(key, value)
                 }
 
                 fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) =
                     apply {
                         this.additionalProperties.putAll(additionalProperties)
                     }
+
+                fun removeAdditionalProperty(key: String) = apply {
+                    additionalProperties.remove(key)
+                }
+
+                fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                    keys.forEach(::removeAdditionalProperty)
+                }
 
                 fun build(): Metadata = Metadata(additionalProperties.toImmutable())
             }
@@ -3287,29 +3402,56 @@ private constructor(
             "CreditBlockExpiryLedgerEntry{metadata=$metadata, id=$id, ledgerSequenceNumber=$ledgerSequenceNumber, entryStatus=$entryStatus, customer=$customer, startingBalance=$startingBalance, endingBalance=$endingBalance, amount=$amount, currency=$currency, createdAt=$createdAt, description=$description, creditBlock=$creditBlock, entryType=$entryType, additionalProperties=$additionalProperties}"
     }
 
-    @JsonDeserialize(builder = VoidLedgerEntry.Builder::class)
     @NoAutoDetect
     class VoidLedgerEntry
+    @JsonCreator
     private constructor(
-        private val metadata: JsonField<Metadata>,
-        private val id: JsonField<String>,
-        private val ledgerSequenceNumber: JsonField<Long>,
-        private val entryStatus: JsonField<EntryStatus>,
-        private val customer: JsonField<Customer>,
-        private val startingBalance: JsonField<Double>,
-        private val endingBalance: JsonField<Double>,
-        private val amount: JsonField<Double>,
-        private val currency: JsonField<String>,
-        private val createdAt: JsonField<OffsetDateTime>,
-        private val description: JsonField<String>,
-        private val creditBlock: JsonField<CreditBlock>,
-        private val entryType: JsonField<EntryType>,
-        private val voidReason: JsonField<String>,
-        private val voidAmount: JsonField<Double>,
-        private val additionalProperties: Map<String, JsonValue>,
+        @JsonProperty("metadata")
+        @ExcludeMissing
+        private val metadata: JsonField<Metadata> = JsonMissing.of(),
+        @JsonProperty("id") @ExcludeMissing private val id: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("ledger_sequence_number")
+        @ExcludeMissing
+        private val ledgerSequenceNumber: JsonField<Long> = JsonMissing.of(),
+        @JsonProperty("entry_status")
+        @ExcludeMissing
+        private val entryStatus: JsonField<EntryStatus> = JsonMissing.of(),
+        @JsonProperty("customer")
+        @ExcludeMissing
+        private val customer: JsonField<Customer> = JsonMissing.of(),
+        @JsonProperty("starting_balance")
+        @ExcludeMissing
+        private val startingBalance: JsonField<Double> = JsonMissing.of(),
+        @JsonProperty("ending_balance")
+        @ExcludeMissing
+        private val endingBalance: JsonField<Double> = JsonMissing.of(),
+        @JsonProperty("amount")
+        @ExcludeMissing
+        private val amount: JsonField<Double> = JsonMissing.of(),
+        @JsonProperty("currency")
+        @ExcludeMissing
+        private val currency: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("created_at")
+        @ExcludeMissing
+        private val createdAt: JsonField<OffsetDateTime> = JsonMissing.of(),
+        @JsonProperty("description")
+        @ExcludeMissing
+        private val description: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("credit_block")
+        @ExcludeMissing
+        private val creditBlock: JsonField<CreditBlock> = JsonMissing.of(),
+        @JsonProperty("entry_type")
+        @ExcludeMissing
+        private val entryType: JsonField<EntryType> = JsonMissing.of(),
+        @JsonProperty("void_reason")
+        @ExcludeMissing
+        private val voidReason: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("void_amount")
+        @ExcludeMissing
+        private val voidAmount: JsonField<Double> = JsonMissing.of(),
+        @JsonAnySetter
+        private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
-
-        private var validated: Boolean = false
 
         /**
          * User specified key-value pairs for the resource. If not present, this defaults to an
@@ -3387,6 +3529,8 @@ private constructor(
         @JsonAnyGetter
         @ExcludeMissing
         fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
+
+        private var validated: Boolean = false
 
         fun validate(): VoidLedgerEntry = apply {
             if (!validated) {
@@ -3436,22 +3580,22 @@ private constructor(
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             internal fun from(voidLedgerEntry: VoidLedgerEntry) = apply {
-                this.metadata = voidLedgerEntry.metadata
-                this.id = voidLedgerEntry.id
-                this.ledgerSequenceNumber = voidLedgerEntry.ledgerSequenceNumber
-                this.entryStatus = voidLedgerEntry.entryStatus
-                this.customer = voidLedgerEntry.customer
-                this.startingBalance = voidLedgerEntry.startingBalance
-                this.endingBalance = voidLedgerEntry.endingBalance
-                this.amount = voidLedgerEntry.amount
-                this.currency = voidLedgerEntry.currency
-                this.createdAt = voidLedgerEntry.createdAt
-                this.description = voidLedgerEntry.description
-                this.creditBlock = voidLedgerEntry.creditBlock
-                this.entryType = voidLedgerEntry.entryType
-                this.voidReason = voidLedgerEntry.voidReason
-                this.voidAmount = voidLedgerEntry.voidAmount
-                additionalProperties(voidLedgerEntry.additionalProperties)
+                metadata = voidLedgerEntry.metadata
+                id = voidLedgerEntry.id
+                ledgerSequenceNumber = voidLedgerEntry.ledgerSequenceNumber
+                entryStatus = voidLedgerEntry.entryStatus
+                customer = voidLedgerEntry.customer
+                startingBalance = voidLedgerEntry.startingBalance
+                endingBalance = voidLedgerEntry.endingBalance
+                amount = voidLedgerEntry.amount
+                currency = voidLedgerEntry.currency
+                createdAt = voidLedgerEntry.createdAt
+                description = voidLedgerEntry.description
+                creditBlock = voidLedgerEntry.creditBlock
+                entryType = voidLedgerEntry.entryType
+                voidReason = voidLedgerEntry.voidReason
+                voidAmount = voidLedgerEntry.voidAmount
+                additionalProperties = voidLedgerEntry.additionalProperties.toMutableMap()
             }
 
             /**
@@ -3466,122 +3610,97 @@ private constructor(
              * empty dictionary. Individual keys can be removed by setting the value to `null`, and
              * the entire metadata mapping can be cleared by setting `metadata` to `null`.
              */
-            @JsonProperty("metadata")
-            @ExcludeMissing
             fun metadata(metadata: JsonField<Metadata>) = apply { this.metadata = metadata }
 
             fun id(id: String) = id(JsonField.of(id))
 
-            @JsonProperty("id")
-            @ExcludeMissing
             fun id(id: JsonField<String>) = apply { this.id = id }
 
             fun ledgerSequenceNumber(ledgerSequenceNumber: Long) =
                 ledgerSequenceNumber(JsonField.of(ledgerSequenceNumber))
 
-            @JsonProperty("ledger_sequence_number")
-            @ExcludeMissing
             fun ledgerSequenceNumber(ledgerSequenceNumber: JsonField<Long>) = apply {
                 this.ledgerSequenceNumber = ledgerSequenceNumber
             }
 
             fun entryStatus(entryStatus: EntryStatus) = entryStatus(JsonField.of(entryStatus))
 
-            @JsonProperty("entry_status")
-            @ExcludeMissing
             fun entryStatus(entryStatus: JsonField<EntryStatus>) = apply {
                 this.entryStatus = entryStatus
             }
 
             fun customer(customer: Customer) = customer(JsonField.of(customer))
 
-            @JsonProperty("customer")
-            @ExcludeMissing
             fun customer(customer: JsonField<Customer>) = apply { this.customer = customer }
 
             fun startingBalance(startingBalance: Double) =
                 startingBalance(JsonField.of(startingBalance))
 
-            @JsonProperty("starting_balance")
-            @ExcludeMissing
             fun startingBalance(startingBalance: JsonField<Double>) = apply {
                 this.startingBalance = startingBalance
             }
 
             fun endingBalance(endingBalance: Double) = endingBalance(JsonField.of(endingBalance))
 
-            @JsonProperty("ending_balance")
-            @ExcludeMissing
             fun endingBalance(endingBalance: JsonField<Double>) = apply {
                 this.endingBalance = endingBalance
             }
 
             fun amount(amount: Double) = amount(JsonField.of(amount))
 
-            @JsonProperty("amount")
-            @ExcludeMissing
             fun amount(amount: JsonField<Double>) = apply { this.amount = amount }
 
             fun currency(currency: String) = currency(JsonField.of(currency))
 
-            @JsonProperty("currency")
-            @ExcludeMissing
             fun currency(currency: JsonField<String>) = apply { this.currency = currency }
 
             fun createdAt(createdAt: OffsetDateTime) = createdAt(JsonField.of(createdAt))
 
-            @JsonProperty("created_at")
-            @ExcludeMissing
             fun createdAt(createdAt: JsonField<OffsetDateTime>) = apply {
                 this.createdAt = createdAt
             }
 
             fun description(description: String) = description(JsonField.of(description))
 
-            @JsonProperty("description")
-            @ExcludeMissing
             fun description(description: JsonField<String>) = apply {
                 this.description = description
             }
 
             fun creditBlock(creditBlock: CreditBlock) = creditBlock(JsonField.of(creditBlock))
 
-            @JsonProperty("credit_block")
-            @ExcludeMissing
             fun creditBlock(creditBlock: JsonField<CreditBlock>) = apply {
                 this.creditBlock = creditBlock
             }
 
             fun entryType(entryType: EntryType) = entryType(JsonField.of(entryType))
 
-            @JsonProperty("entry_type")
-            @ExcludeMissing
             fun entryType(entryType: JsonField<EntryType>) = apply { this.entryType = entryType }
 
             fun voidReason(voidReason: String) = voidReason(JsonField.of(voidReason))
 
-            @JsonProperty("void_reason")
-            @ExcludeMissing
             fun voidReason(voidReason: JsonField<String>) = apply { this.voidReason = voidReason }
 
             fun voidAmount(voidAmount: Double) = voidAmount(JsonField.of(voidAmount))
 
-            @JsonProperty("void_amount")
-            @ExcludeMissing
             fun voidAmount(voidAmount: JsonField<Double>) = apply { this.voidAmount = voidAmount }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
-                this.additionalProperties.putAll(additionalProperties)
+                putAllAdditionalProperties(additionalProperties)
             }
 
-            @JsonAnySetter
             fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-                this.additionalProperties.put(key, value)
+                additionalProperties.put(key, value)
             }
 
             fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.putAll(additionalProperties)
+            }
+
+            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+
+            fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                keys.forEach(::removeAdditionalProperty)
             }
 
             fun build(): VoidLedgerEntry =
@@ -3605,17 +3724,22 @@ private constructor(
                 )
         }
 
-        @JsonDeserialize(builder = CreditBlock.Builder::class)
         @NoAutoDetect
         class CreditBlock
+        @JsonCreator
         private constructor(
-            private val id: JsonField<String>,
-            private val expiryDate: JsonField<OffsetDateTime>,
-            private val perUnitCostBasis: JsonField<String>,
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonProperty("id")
+            @ExcludeMissing
+            private val id: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("expiry_date")
+            @ExcludeMissing
+            private val expiryDate: JsonField<OffsetDateTime> = JsonMissing.of(),
+            @JsonProperty("per_unit_cost_basis")
+            @ExcludeMissing
+            private val perUnitCostBasis: JsonField<String> = JsonMissing.of(),
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
-
-            private var validated: Boolean = false
 
             fun id(): String = id.getRequired("id")
 
@@ -3634,6 +3758,8 @@ private constructor(
             @JsonAnyGetter
             @ExcludeMissing
             fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
+
+            private var validated: Boolean = false
 
             fun validate(): CreditBlock = apply {
                 if (!validated) {
@@ -3659,22 +3785,18 @@ private constructor(
                 private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
                 internal fun from(creditBlock: CreditBlock) = apply {
-                    this.id = creditBlock.id
-                    this.expiryDate = creditBlock.expiryDate
-                    this.perUnitCostBasis = creditBlock.perUnitCostBasis
-                    additionalProperties(creditBlock.additionalProperties)
+                    id = creditBlock.id
+                    expiryDate = creditBlock.expiryDate
+                    perUnitCostBasis = creditBlock.perUnitCostBasis
+                    additionalProperties = creditBlock.additionalProperties.toMutableMap()
                 }
 
                 fun id(id: String) = id(JsonField.of(id))
 
-                @JsonProperty("id")
-                @ExcludeMissing
                 fun id(id: JsonField<String>) = apply { this.id = id }
 
                 fun expiryDate(expiryDate: OffsetDateTime) = expiryDate(JsonField.of(expiryDate))
 
-                @JsonProperty("expiry_date")
-                @ExcludeMissing
                 fun expiryDate(expiryDate: JsonField<OffsetDateTime>) = apply {
                     this.expiryDate = expiryDate
                 }
@@ -3682,26 +3804,31 @@ private constructor(
                 fun perUnitCostBasis(perUnitCostBasis: String) =
                     perUnitCostBasis(JsonField.of(perUnitCostBasis))
 
-                @JsonProperty("per_unit_cost_basis")
-                @ExcludeMissing
                 fun perUnitCostBasis(perUnitCostBasis: JsonField<String>) = apply {
                     this.perUnitCostBasis = perUnitCostBasis
                 }
 
                 fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                     this.additionalProperties.clear()
-                    this.additionalProperties.putAll(additionalProperties)
+                    putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-                    this.additionalProperties.put(key, value)
+                    additionalProperties.put(key, value)
                 }
 
                 fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) =
                     apply {
                         this.additionalProperties.putAll(additionalProperties)
                     }
+
+                fun removeAdditionalProperty(key: String) = apply {
+                    additionalProperties.remove(key)
+                }
+
+                fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                    keys.forEach(::removeAdditionalProperty)
+                }
 
                 fun build(): CreditBlock =
                     CreditBlock(
@@ -3730,16 +3857,19 @@ private constructor(
                 "CreditBlock{id=$id, expiryDate=$expiryDate, perUnitCostBasis=$perUnitCostBasis, additionalProperties=$additionalProperties}"
         }
 
-        @JsonDeserialize(builder = Customer.Builder::class)
         @NoAutoDetect
         class Customer
+        @JsonCreator
         private constructor(
-            private val id: JsonField<String>,
-            private val externalCustomerId: JsonField<String>,
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonProperty("id")
+            @ExcludeMissing
+            private val id: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("external_customer_id")
+            @ExcludeMissing
+            private val externalCustomerId: JsonField<String> = JsonMissing.of(),
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
-
-            private var validated: Boolean = false
 
             fun id(): String = id.getRequired("id")
 
@@ -3755,6 +3885,8 @@ private constructor(
             @JsonAnyGetter
             @ExcludeMissing
             fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
+
+            private var validated: Boolean = false
 
             fun validate(): Customer = apply {
                 if (!validated) {
@@ -3778,40 +3910,43 @@ private constructor(
                 private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
                 internal fun from(customer: Customer) = apply {
-                    this.id = customer.id
-                    this.externalCustomerId = customer.externalCustomerId
-                    additionalProperties(customer.additionalProperties)
+                    id = customer.id
+                    externalCustomerId = customer.externalCustomerId
+                    additionalProperties = customer.additionalProperties.toMutableMap()
                 }
 
                 fun id(id: String) = id(JsonField.of(id))
 
-                @JsonProperty("id")
-                @ExcludeMissing
                 fun id(id: JsonField<String>) = apply { this.id = id }
 
                 fun externalCustomerId(externalCustomerId: String) =
                     externalCustomerId(JsonField.of(externalCustomerId))
 
-                @JsonProperty("external_customer_id")
-                @ExcludeMissing
                 fun externalCustomerId(externalCustomerId: JsonField<String>) = apply {
                     this.externalCustomerId = externalCustomerId
                 }
 
                 fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                     this.additionalProperties.clear()
-                    this.additionalProperties.putAll(additionalProperties)
+                    putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-                    this.additionalProperties.put(key, value)
+                    additionalProperties.put(key, value)
                 }
 
                 fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) =
                     apply {
                         this.additionalProperties.putAll(additionalProperties)
                     }
+
+                fun removeAdditionalProperty(key: String) = apply {
+                    additionalProperties.remove(key)
+                }
+
+                fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                    keys.forEach(::removeAdditionalProperty)
+                }
 
                 fun build(): Customer =
                     Customer(
@@ -3847,23 +3982,11 @@ private constructor(
 
             @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
 
-            override fun equals(other: Any?): Boolean {
-                if (this === other) {
-                    return true
-                }
-
-                return /* spotless:off */ other is EntryStatus && value == other.value /* spotless:on */
-            }
-
-            override fun hashCode() = value.hashCode()
-
-            override fun toString() = value.toString()
-
             companion object {
 
-                val COMMITTED = EntryStatus(JsonField.of("committed"))
+                val COMMITTED = of("committed")
 
-                val PENDING = EntryStatus(JsonField.of("pending"))
+                val PENDING = of("pending")
 
                 fun of(value: String) = EntryStatus(JsonField.of(value))
             }
@@ -3894,6 +4017,18 @@ private constructor(
                 }
 
             fun asString(): String = _value().asStringOrThrow()
+
+            override fun equals(other: Any?): Boolean {
+                if (this === other) {
+                    return true
+                }
+
+                return /* spotless:off */ other is EntryStatus && value == other.value /* spotless:on */
+            }
+
+            override fun hashCode() = value.hashCode()
+
+            override fun toString() = value.toString()
         }
 
         class EntryType
@@ -3904,21 +4039,9 @@ private constructor(
 
             @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
 
-            override fun equals(other: Any?): Boolean {
-                if (this === other) {
-                    return true
-                }
-
-                return /* spotless:off */ other is EntryType && value == other.value /* spotless:on */
-            }
-
-            override fun hashCode() = value.hashCode()
-
-            override fun toString() = value.toString()
-
             companion object {
 
-                val VOID = EntryType(JsonField.of("void"))
+                val VOID = of("void")
 
                 fun of(value: String) = EntryType(JsonField.of(value))
             }
@@ -3945,6 +4068,18 @@ private constructor(
                 }
 
             fun asString(): String = _value().asStringOrThrow()
+
+            override fun equals(other: Any?): Boolean {
+                if (this === other) {
+                    return true
+                }
+
+                return /* spotless:off */ other is EntryType && value == other.value /* spotless:on */
+            }
+
+            override fun hashCode() = value.hashCode()
+
+            override fun toString() = value.toString()
         }
 
         /**
@@ -3952,18 +4087,19 @@ private constructor(
          * empty dictionary. Individual keys can be removed by setting the value to `null`, and the
          * entire metadata mapping can be cleared by setting `metadata` to `null`.
          */
-        @JsonDeserialize(builder = Metadata.Builder::class)
         @NoAutoDetect
         class Metadata
+        @JsonCreator
         private constructor(
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
-
-            private var validated: Boolean = false
 
             @JsonAnyGetter
             @ExcludeMissing
             fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
+
+            private var validated: Boolean = false
 
             fun validate(): Metadata = apply {
                 if (!validated) {
@@ -3983,23 +4119,30 @@ private constructor(
                 private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
                 internal fun from(metadata: Metadata) = apply {
-                    additionalProperties(metadata.additionalProperties)
+                    additionalProperties = metadata.additionalProperties.toMutableMap()
                 }
 
                 fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                     this.additionalProperties.clear()
-                    this.additionalProperties.putAll(additionalProperties)
+                    putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-                    this.additionalProperties.put(key, value)
+                    additionalProperties.put(key, value)
                 }
 
                 fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) =
                     apply {
                         this.additionalProperties.putAll(additionalProperties)
                     }
+
+                fun removeAdditionalProperty(key: String) = apply {
+                    additionalProperties.remove(key)
+                }
+
+                fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                    keys.forEach(::removeAdditionalProperty)
+                }
 
                 fun build(): Metadata = Metadata(additionalProperties.toImmutable())
             }
@@ -4039,30 +4182,59 @@ private constructor(
             "VoidLedgerEntry{metadata=$metadata, id=$id, ledgerSequenceNumber=$ledgerSequenceNumber, entryStatus=$entryStatus, customer=$customer, startingBalance=$startingBalance, endingBalance=$endingBalance, amount=$amount, currency=$currency, createdAt=$createdAt, description=$description, creditBlock=$creditBlock, entryType=$entryType, voidReason=$voidReason, voidAmount=$voidAmount, additionalProperties=$additionalProperties}"
     }
 
-    @JsonDeserialize(builder = VoidInitiatedLedgerEntry.Builder::class)
     @NoAutoDetect
     class VoidInitiatedLedgerEntry
+    @JsonCreator
     private constructor(
-        private val metadata: JsonField<Metadata>,
-        private val id: JsonField<String>,
-        private val ledgerSequenceNumber: JsonField<Long>,
-        private val entryStatus: JsonField<EntryStatus>,
-        private val customer: JsonField<Customer>,
-        private val startingBalance: JsonField<Double>,
-        private val endingBalance: JsonField<Double>,
-        private val amount: JsonField<Double>,
-        private val currency: JsonField<String>,
-        private val createdAt: JsonField<OffsetDateTime>,
-        private val description: JsonField<String>,
-        private val creditBlock: JsonField<CreditBlock>,
-        private val entryType: JsonField<EntryType>,
-        private val newBlockExpiryDate: JsonField<OffsetDateTime>,
-        private val voidReason: JsonField<String>,
-        private val voidAmount: JsonField<Double>,
-        private val additionalProperties: Map<String, JsonValue>,
+        @JsonProperty("metadata")
+        @ExcludeMissing
+        private val metadata: JsonField<Metadata> = JsonMissing.of(),
+        @JsonProperty("id") @ExcludeMissing private val id: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("ledger_sequence_number")
+        @ExcludeMissing
+        private val ledgerSequenceNumber: JsonField<Long> = JsonMissing.of(),
+        @JsonProperty("entry_status")
+        @ExcludeMissing
+        private val entryStatus: JsonField<EntryStatus> = JsonMissing.of(),
+        @JsonProperty("customer")
+        @ExcludeMissing
+        private val customer: JsonField<Customer> = JsonMissing.of(),
+        @JsonProperty("starting_balance")
+        @ExcludeMissing
+        private val startingBalance: JsonField<Double> = JsonMissing.of(),
+        @JsonProperty("ending_balance")
+        @ExcludeMissing
+        private val endingBalance: JsonField<Double> = JsonMissing.of(),
+        @JsonProperty("amount")
+        @ExcludeMissing
+        private val amount: JsonField<Double> = JsonMissing.of(),
+        @JsonProperty("currency")
+        @ExcludeMissing
+        private val currency: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("created_at")
+        @ExcludeMissing
+        private val createdAt: JsonField<OffsetDateTime> = JsonMissing.of(),
+        @JsonProperty("description")
+        @ExcludeMissing
+        private val description: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("credit_block")
+        @ExcludeMissing
+        private val creditBlock: JsonField<CreditBlock> = JsonMissing.of(),
+        @JsonProperty("entry_type")
+        @ExcludeMissing
+        private val entryType: JsonField<EntryType> = JsonMissing.of(),
+        @JsonProperty("new_block_expiry_date")
+        @ExcludeMissing
+        private val newBlockExpiryDate: JsonField<OffsetDateTime> = JsonMissing.of(),
+        @JsonProperty("void_reason")
+        @ExcludeMissing
+        private val voidReason: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("void_amount")
+        @ExcludeMissing
+        private val voidAmount: JsonField<Double> = JsonMissing.of(),
+        @JsonAnySetter
+        private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
-
-        private var validated: Boolean = false
 
         /**
          * User specified key-value pairs for the resource. If not present, this defaults to an
@@ -4147,6 +4319,8 @@ private constructor(
         @JsonAnyGetter
         @ExcludeMissing
         fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
+
+        private var validated: Boolean = false
 
         fun validate(): VoidInitiatedLedgerEntry = apply {
             if (!validated) {
@@ -4198,23 +4372,23 @@ private constructor(
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             internal fun from(voidInitiatedLedgerEntry: VoidInitiatedLedgerEntry) = apply {
-                this.metadata = voidInitiatedLedgerEntry.metadata
-                this.id = voidInitiatedLedgerEntry.id
-                this.ledgerSequenceNumber = voidInitiatedLedgerEntry.ledgerSequenceNumber
-                this.entryStatus = voidInitiatedLedgerEntry.entryStatus
-                this.customer = voidInitiatedLedgerEntry.customer
-                this.startingBalance = voidInitiatedLedgerEntry.startingBalance
-                this.endingBalance = voidInitiatedLedgerEntry.endingBalance
-                this.amount = voidInitiatedLedgerEntry.amount
-                this.currency = voidInitiatedLedgerEntry.currency
-                this.createdAt = voidInitiatedLedgerEntry.createdAt
-                this.description = voidInitiatedLedgerEntry.description
-                this.creditBlock = voidInitiatedLedgerEntry.creditBlock
-                this.entryType = voidInitiatedLedgerEntry.entryType
-                this.newBlockExpiryDate = voidInitiatedLedgerEntry.newBlockExpiryDate
-                this.voidReason = voidInitiatedLedgerEntry.voidReason
-                this.voidAmount = voidInitiatedLedgerEntry.voidAmount
-                additionalProperties(voidInitiatedLedgerEntry.additionalProperties)
+                metadata = voidInitiatedLedgerEntry.metadata
+                id = voidInitiatedLedgerEntry.id
+                ledgerSequenceNumber = voidInitiatedLedgerEntry.ledgerSequenceNumber
+                entryStatus = voidInitiatedLedgerEntry.entryStatus
+                customer = voidInitiatedLedgerEntry.customer
+                startingBalance = voidInitiatedLedgerEntry.startingBalance
+                endingBalance = voidInitiatedLedgerEntry.endingBalance
+                amount = voidInitiatedLedgerEntry.amount
+                currency = voidInitiatedLedgerEntry.currency
+                createdAt = voidInitiatedLedgerEntry.createdAt
+                description = voidInitiatedLedgerEntry.description
+                creditBlock = voidInitiatedLedgerEntry.creditBlock
+                entryType = voidInitiatedLedgerEntry.entryType
+                newBlockExpiryDate = voidInitiatedLedgerEntry.newBlockExpiryDate
+                voidReason = voidInitiatedLedgerEntry.voidReason
+                voidAmount = voidInitiatedLedgerEntry.voidAmount
+                additionalProperties = voidInitiatedLedgerEntry.additionalProperties.toMutableMap()
             }
 
             /**
@@ -4229,131 +4403,104 @@ private constructor(
              * empty dictionary. Individual keys can be removed by setting the value to `null`, and
              * the entire metadata mapping can be cleared by setting `metadata` to `null`.
              */
-            @JsonProperty("metadata")
-            @ExcludeMissing
             fun metadata(metadata: JsonField<Metadata>) = apply { this.metadata = metadata }
 
             fun id(id: String) = id(JsonField.of(id))
 
-            @JsonProperty("id")
-            @ExcludeMissing
             fun id(id: JsonField<String>) = apply { this.id = id }
 
             fun ledgerSequenceNumber(ledgerSequenceNumber: Long) =
                 ledgerSequenceNumber(JsonField.of(ledgerSequenceNumber))
 
-            @JsonProperty("ledger_sequence_number")
-            @ExcludeMissing
             fun ledgerSequenceNumber(ledgerSequenceNumber: JsonField<Long>) = apply {
                 this.ledgerSequenceNumber = ledgerSequenceNumber
             }
 
             fun entryStatus(entryStatus: EntryStatus) = entryStatus(JsonField.of(entryStatus))
 
-            @JsonProperty("entry_status")
-            @ExcludeMissing
             fun entryStatus(entryStatus: JsonField<EntryStatus>) = apply {
                 this.entryStatus = entryStatus
             }
 
             fun customer(customer: Customer) = customer(JsonField.of(customer))
 
-            @JsonProperty("customer")
-            @ExcludeMissing
             fun customer(customer: JsonField<Customer>) = apply { this.customer = customer }
 
             fun startingBalance(startingBalance: Double) =
                 startingBalance(JsonField.of(startingBalance))
 
-            @JsonProperty("starting_balance")
-            @ExcludeMissing
             fun startingBalance(startingBalance: JsonField<Double>) = apply {
                 this.startingBalance = startingBalance
             }
 
             fun endingBalance(endingBalance: Double) = endingBalance(JsonField.of(endingBalance))
 
-            @JsonProperty("ending_balance")
-            @ExcludeMissing
             fun endingBalance(endingBalance: JsonField<Double>) = apply {
                 this.endingBalance = endingBalance
             }
 
             fun amount(amount: Double) = amount(JsonField.of(amount))
 
-            @JsonProperty("amount")
-            @ExcludeMissing
             fun amount(amount: JsonField<Double>) = apply { this.amount = amount }
 
             fun currency(currency: String) = currency(JsonField.of(currency))
 
-            @JsonProperty("currency")
-            @ExcludeMissing
             fun currency(currency: JsonField<String>) = apply { this.currency = currency }
 
             fun createdAt(createdAt: OffsetDateTime) = createdAt(JsonField.of(createdAt))
 
-            @JsonProperty("created_at")
-            @ExcludeMissing
             fun createdAt(createdAt: JsonField<OffsetDateTime>) = apply {
                 this.createdAt = createdAt
             }
 
             fun description(description: String) = description(JsonField.of(description))
 
-            @JsonProperty("description")
-            @ExcludeMissing
             fun description(description: JsonField<String>) = apply {
                 this.description = description
             }
 
             fun creditBlock(creditBlock: CreditBlock) = creditBlock(JsonField.of(creditBlock))
 
-            @JsonProperty("credit_block")
-            @ExcludeMissing
             fun creditBlock(creditBlock: JsonField<CreditBlock>) = apply {
                 this.creditBlock = creditBlock
             }
 
             fun entryType(entryType: EntryType) = entryType(JsonField.of(entryType))
 
-            @JsonProperty("entry_type")
-            @ExcludeMissing
             fun entryType(entryType: JsonField<EntryType>) = apply { this.entryType = entryType }
 
             fun newBlockExpiryDate(newBlockExpiryDate: OffsetDateTime) =
                 newBlockExpiryDate(JsonField.of(newBlockExpiryDate))
 
-            @JsonProperty("new_block_expiry_date")
-            @ExcludeMissing
             fun newBlockExpiryDate(newBlockExpiryDate: JsonField<OffsetDateTime>) = apply {
                 this.newBlockExpiryDate = newBlockExpiryDate
             }
 
             fun voidReason(voidReason: String) = voidReason(JsonField.of(voidReason))
 
-            @JsonProperty("void_reason")
-            @ExcludeMissing
             fun voidReason(voidReason: JsonField<String>) = apply { this.voidReason = voidReason }
 
             fun voidAmount(voidAmount: Double) = voidAmount(JsonField.of(voidAmount))
 
-            @JsonProperty("void_amount")
-            @ExcludeMissing
             fun voidAmount(voidAmount: JsonField<Double>) = apply { this.voidAmount = voidAmount }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
-                this.additionalProperties.putAll(additionalProperties)
+                putAllAdditionalProperties(additionalProperties)
             }
 
-            @JsonAnySetter
             fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-                this.additionalProperties.put(key, value)
+                additionalProperties.put(key, value)
             }
 
             fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.putAll(additionalProperties)
+            }
+
+            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+
+            fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                keys.forEach(::removeAdditionalProperty)
             }
 
             fun build(): VoidInitiatedLedgerEntry =
@@ -4378,17 +4525,22 @@ private constructor(
                 )
         }
 
-        @JsonDeserialize(builder = CreditBlock.Builder::class)
         @NoAutoDetect
         class CreditBlock
+        @JsonCreator
         private constructor(
-            private val id: JsonField<String>,
-            private val expiryDate: JsonField<OffsetDateTime>,
-            private val perUnitCostBasis: JsonField<String>,
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonProperty("id")
+            @ExcludeMissing
+            private val id: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("expiry_date")
+            @ExcludeMissing
+            private val expiryDate: JsonField<OffsetDateTime> = JsonMissing.of(),
+            @JsonProperty("per_unit_cost_basis")
+            @ExcludeMissing
+            private val perUnitCostBasis: JsonField<String> = JsonMissing.of(),
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
-
-            private var validated: Boolean = false
 
             fun id(): String = id.getRequired("id")
 
@@ -4407,6 +4559,8 @@ private constructor(
             @JsonAnyGetter
             @ExcludeMissing
             fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
+
+            private var validated: Boolean = false
 
             fun validate(): CreditBlock = apply {
                 if (!validated) {
@@ -4432,22 +4586,18 @@ private constructor(
                 private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
                 internal fun from(creditBlock: CreditBlock) = apply {
-                    this.id = creditBlock.id
-                    this.expiryDate = creditBlock.expiryDate
-                    this.perUnitCostBasis = creditBlock.perUnitCostBasis
-                    additionalProperties(creditBlock.additionalProperties)
+                    id = creditBlock.id
+                    expiryDate = creditBlock.expiryDate
+                    perUnitCostBasis = creditBlock.perUnitCostBasis
+                    additionalProperties = creditBlock.additionalProperties.toMutableMap()
                 }
 
                 fun id(id: String) = id(JsonField.of(id))
 
-                @JsonProperty("id")
-                @ExcludeMissing
                 fun id(id: JsonField<String>) = apply { this.id = id }
 
                 fun expiryDate(expiryDate: OffsetDateTime) = expiryDate(JsonField.of(expiryDate))
 
-                @JsonProperty("expiry_date")
-                @ExcludeMissing
                 fun expiryDate(expiryDate: JsonField<OffsetDateTime>) = apply {
                     this.expiryDate = expiryDate
                 }
@@ -4455,26 +4605,31 @@ private constructor(
                 fun perUnitCostBasis(perUnitCostBasis: String) =
                     perUnitCostBasis(JsonField.of(perUnitCostBasis))
 
-                @JsonProperty("per_unit_cost_basis")
-                @ExcludeMissing
                 fun perUnitCostBasis(perUnitCostBasis: JsonField<String>) = apply {
                     this.perUnitCostBasis = perUnitCostBasis
                 }
 
                 fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                     this.additionalProperties.clear()
-                    this.additionalProperties.putAll(additionalProperties)
+                    putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-                    this.additionalProperties.put(key, value)
+                    additionalProperties.put(key, value)
                 }
 
                 fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) =
                     apply {
                         this.additionalProperties.putAll(additionalProperties)
                     }
+
+                fun removeAdditionalProperty(key: String) = apply {
+                    additionalProperties.remove(key)
+                }
+
+                fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                    keys.forEach(::removeAdditionalProperty)
+                }
 
                 fun build(): CreditBlock =
                     CreditBlock(
@@ -4503,16 +4658,19 @@ private constructor(
                 "CreditBlock{id=$id, expiryDate=$expiryDate, perUnitCostBasis=$perUnitCostBasis, additionalProperties=$additionalProperties}"
         }
 
-        @JsonDeserialize(builder = Customer.Builder::class)
         @NoAutoDetect
         class Customer
+        @JsonCreator
         private constructor(
-            private val id: JsonField<String>,
-            private val externalCustomerId: JsonField<String>,
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonProperty("id")
+            @ExcludeMissing
+            private val id: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("external_customer_id")
+            @ExcludeMissing
+            private val externalCustomerId: JsonField<String> = JsonMissing.of(),
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
-
-            private var validated: Boolean = false
 
             fun id(): String = id.getRequired("id")
 
@@ -4528,6 +4686,8 @@ private constructor(
             @JsonAnyGetter
             @ExcludeMissing
             fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
+
+            private var validated: Boolean = false
 
             fun validate(): Customer = apply {
                 if (!validated) {
@@ -4551,40 +4711,43 @@ private constructor(
                 private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
                 internal fun from(customer: Customer) = apply {
-                    this.id = customer.id
-                    this.externalCustomerId = customer.externalCustomerId
-                    additionalProperties(customer.additionalProperties)
+                    id = customer.id
+                    externalCustomerId = customer.externalCustomerId
+                    additionalProperties = customer.additionalProperties.toMutableMap()
                 }
 
                 fun id(id: String) = id(JsonField.of(id))
 
-                @JsonProperty("id")
-                @ExcludeMissing
                 fun id(id: JsonField<String>) = apply { this.id = id }
 
                 fun externalCustomerId(externalCustomerId: String) =
                     externalCustomerId(JsonField.of(externalCustomerId))
 
-                @JsonProperty("external_customer_id")
-                @ExcludeMissing
                 fun externalCustomerId(externalCustomerId: JsonField<String>) = apply {
                     this.externalCustomerId = externalCustomerId
                 }
 
                 fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                     this.additionalProperties.clear()
-                    this.additionalProperties.putAll(additionalProperties)
+                    putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-                    this.additionalProperties.put(key, value)
+                    additionalProperties.put(key, value)
                 }
 
                 fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) =
                     apply {
                         this.additionalProperties.putAll(additionalProperties)
                     }
+
+                fun removeAdditionalProperty(key: String) = apply {
+                    additionalProperties.remove(key)
+                }
+
+                fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                    keys.forEach(::removeAdditionalProperty)
+                }
 
                 fun build(): Customer =
                     Customer(
@@ -4620,23 +4783,11 @@ private constructor(
 
             @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
 
-            override fun equals(other: Any?): Boolean {
-                if (this === other) {
-                    return true
-                }
-
-                return /* spotless:off */ other is EntryStatus && value == other.value /* spotless:on */
-            }
-
-            override fun hashCode() = value.hashCode()
-
-            override fun toString() = value.toString()
-
             companion object {
 
-                val COMMITTED = EntryStatus(JsonField.of("committed"))
+                val COMMITTED = of("committed")
 
-                val PENDING = EntryStatus(JsonField.of("pending"))
+                val PENDING = of("pending")
 
                 fun of(value: String) = EntryStatus(JsonField.of(value))
             }
@@ -4667,6 +4818,18 @@ private constructor(
                 }
 
             fun asString(): String = _value().asStringOrThrow()
+
+            override fun equals(other: Any?): Boolean {
+                if (this === other) {
+                    return true
+                }
+
+                return /* spotless:off */ other is EntryStatus && value == other.value /* spotless:on */
+            }
+
+            override fun hashCode() = value.hashCode()
+
+            override fun toString() = value.toString()
         }
 
         class EntryType
@@ -4677,21 +4840,9 @@ private constructor(
 
             @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
 
-            override fun equals(other: Any?): Boolean {
-                if (this === other) {
-                    return true
-                }
-
-                return /* spotless:off */ other is EntryType && value == other.value /* spotless:on */
-            }
-
-            override fun hashCode() = value.hashCode()
-
-            override fun toString() = value.toString()
-
             companion object {
 
-                val VOID_INITIATED = EntryType(JsonField.of("void_initiated"))
+                val VOID_INITIATED = of("void_initiated")
 
                 fun of(value: String) = EntryType(JsonField.of(value))
             }
@@ -4718,6 +4869,18 @@ private constructor(
                 }
 
             fun asString(): String = _value().asStringOrThrow()
+
+            override fun equals(other: Any?): Boolean {
+                if (this === other) {
+                    return true
+                }
+
+                return /* spotless:off */ other is EntryType && value == other.value /* spotless:on */
+            }
+
+            override fun hashCode() = value.hashCode()
+
+            override fun toString() = value.toString()
         }
 
         /**
@@ -4725,18 +4888,19 @@ private constructor(
          * empty dictionary. Individual keys can be removed by setting the value to `null`, and the
          * entire metadata mapping can be cleared by setting `metadata` to `null`.
          */
-        @JsonDeserialize(builder = Metadata.Builder::class)
         @NoAutoDetect
         class Metadata
+        @JsonCreator
         private constructor(
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
-
-            private var validated: Boolean = false
 
             @JsonAnyGetter
             @ExcludeMissing
             fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
+
+            private var validated: Boolean = false
 
             fun validate(): Metadata = apply {
                 if (!validated) {
@@ -4756,23 +4920,30 @@ private constructor(
                 private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
                 internal fun from(metadata: Metadata) = apply {
-                    additionalProperties(metadata.additionalProperties)
+                    additionalProperties = metadata.additionalProperties.toMutableMap()
                 }
 
                 fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                     this.additionalProperties.clear()
-                    this.additionalProperties.putAll(additionalProperties)
+                    putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-                    this.additionalProperties.put(key, value)
+                    additionalProperties.put(key, value)
                 }
 
                 fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) =
                     apply {
                         this.additionalProperties.putAll(additionalProperties)
                     }
+
+                fun removeAdditionalProperty(key: String) = apply {
+                    additionalProperties.remove(key)
+                }
+
+                fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                    keys.forEach(::removeAdditionalProperty)
+                }
 
                 fun build(): Metadata = Metadata(additionalProperties.toImmutable())
             }
@@ -4812,27 +4983,50 @@ private constructor(
             "VoidInitiatedLedgerEntry{metadata=$metadata, id=$id, ledgerSequenceNumber=$ledgerSequenceNumber, entryStatus=$entryStatus, customer=$customer, startingBalance=$startingBalance, endingBalance=$endingBalance, amount=$amount, currency=$currency, createdAt=$createdAt, description=$description, creditBlock=$creditBlock, entryType=$entryType, newBlockExpiryDate=$newBlockExpiryDate, voidReason=$voidReason, voidAmount=$voidAmount, additionalProperties=$additionalProperties}"
     }
 
-    @JsonDeserialize(builder = AmendmentLedgerEntry.Builder::class)
     @NoAutoDetect
     class AmendmentLedgerEntry
+    @JsonCreator
     private constructor(
-        private val metadata: JsonField<Metadata>,
-        private val id: JsonField<String>,
-        private val ledgerSequenceNumber: JsonField<Long>,
-        private val entryStatus: JsonField<EntryStatus>,
-        private val customer: JsonField<Customer>,
-        private val startingBalance: JsonField<Double>,
-        private val endingBalance: JsonField<Double>,
-        private val amount: JsonField<Double>,
-        private val currency: JsonField<String>,
-        private val createdAt: JsonField<OffsetDateTime>,
-        private val description: JsonField<String>,
-        private val creditBlock: JsonField<CreditBlock>,
-        private val entryType: JsonField<EntryType>,
-        private val additionalProperties: Map<String, JsonValue>,
+        @JsonProperty("metadata")
+        @ExcludeMissing
+        private val metadata: JsonField<Metadata> = JsonMissing.of(),
+        @JsonProperty("id") @ExcludeMissing private val id: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("ledger_sequence_number")
+        @ExcludeMissing
+        private val ledgerSequenceNumber: JsonField<Long> = JsonMissing.of(),
+        @JsonProperty("entry_status")
+        @ExcludeMissing
+        private val entryStatus: JsonField<EntryStatus> = JsonMissing.of(),
+        @JsonProperty("customer")
+        @ExcludeMissing
+        private val customer: JsonField<Customer> = JsonMissing.of(),
+        @JsonProperty("starting_balance")
+        @ExcludeMissing
+        private val startingBalance: JsonField<Double> = JsonMissing.of(),
+        @JsonProperty("ending_balance")
+        @ExcludeMissing
+        private val endingBalance: JsonField<Double> = JsonMissing.of(),
+        @JsonProperty("amount")
+        @ExcludeMissing
+        private val amount: JsonField<Double> = JsonMissing.of(),
+        @JsonProperty("currency")
+        @ExcludeMissing
+        private val currency: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("created_at")
+        @ExcludeMissing
+        private val createdAt: JsonField<OffsetDateTime> = JsonMissing.of(),
+        @JsonProperty("description")
+        @ExcludeMissing
+        private val description: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("credit_block")
+        @ExcludeMissing
+        private val creditBlock: JsonField<CreditBlock> = JsonMissing.of(),
+        @JsonProperty("entry_type")
+        @ExcludeMissing
+        private val entryType: JsonField<EntryType> = JsonMissing.of(),
+        @JsonAnySetter
+        private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
-
-        private var validated: Boolean = false
 
         /**
          * User specified key-value pairs for the resource. If not present, this defaults to an
@@ -4903,6 +5097,8 @@ private constructor(
         @ExcludeMissing
         fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
 
+        private var validated: Boolean = false
+
         fun validate(): AmendmentLedgerEntry = apply {
             if (!validated) {
                 metadata().validate()
@@ -4947,20 +5143,20 @@ private constructor(
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             internal fun from(amendmentLedgerEntry: AmendmentLedgerEntry) = apply {
-                this.metadata = amendmentLedgerEntry.metadata
-                this.id = amendmentLedgerEntry.id
-                this.ledgerSequenceNumber = amendmentLedgerEntry.ledgerSequenceNumber
-                this.entryStatus = amendmentLedgerEntry.entryStatus
-                this.customer = amendmentLedgerEntry.customer
-                this.startingBalance = amendmentLedgerEntry.startingBalance
-                this.endingBalance = amendmentLedgerEntry.endingBalance
-                this.amount = amendmentLedgerEntry.amount
-                this.currency = amendmentLedgerEntry.currency
-                this.createdAt = amendmentLedgerEntry.createdAt
-                this.description = amendmentLedgerEntry.description
-                this.creditBlock = amendmentLedgerEntry.creditBlock
-                this.entryType = amendmentLedgerEntry.entryType
-                additionalProperties(amendmentLedgerEntry.additionalProperties)
+                metadata = amendmentLedgerEntry.metadata
+                id = amendmentLedgerEntry.id
+                ledgerSequenceNumber = amendmentLedgerEntry.ledgerSequenceNumber
+                entryStatus = amendmentLedgerEntry.entryStatus
+                customer = amendmentLedgerEntry.customer
+                startingBalance = amendmentLedgerEntry.startingBalance
+                endingBalance = amendmentLedgerEntry.endingBalance
+                amount = amendmentLedgerEntry.amount
+                currency = amendmentLedgerEntry.currency
+                createdAt = amendmentLedgerEntry.createdAt
+                description = amendmentLedgerEntry.description
+                creditBlock = amendmentLedgerEntry.creditBlock
+                entryType = amendmentLedgerEntry.entryType
+                additionalProperties = amendmentLedgerEntry.additionalProperties.toMutableMap()
             }
 
             /**
@@ -4975,110 +5171,89 @@ private constructor(
              * empty dictionary. Individual keys can be removed by setting the value to `null`, and
              * the entire metadata mapping can be cleared by setting `metadata` to `null`.
              */
-            @JsonProperty("metadata")
-            @ExcludeMissing
             fun metadata(metadata: JsonField<Metadata>) = apply { this.metadata = metadata }
 
             fun id(id: String) = id(JsonField.of(id))
 
-            @JsonProperty("id")
-            @ExcludeMissing
             fun id(id: JsonField<String>) = apply { this.id = id }
 
             fun ledgerSequenceNumber(ledgerSequenceNumber: Long) =
                 ledgerSequenceNumber(JsonField.of(ledgerSequenceNumber))
 
-            @JsonProperty("ledger_sequence_number")
-            @ExcludeMissing
             fun ledgerSequenceNumber(ledgerSequenceNumber: JsonField<Long>) = apply {
                 this.ledgerSequenceNumber = ledgerSequenceNumber
             }
 
             fun entryStatus(entryStatus: EntryStatus) = entryStatus(JsonField.of(entryStatus))
 
-            @JsonProperty("entry_status")
-            @ExcludeMissing
             fun entryStatus(entryStatus: JsonField<EntryStatus>) = apply {
                 this.entryStatus = entryStatus
             }
 
             fun customer(customer: Customer) = customer(JsonField.of(customer))
 
-            @JsonProperty("customer")
-            @ExcludeMissing
             fun customer(customer: JsonField<Customer>) = apply { this.customer = customer }
 
             fun startingBalance(startingBalance: Double) =
                 startingBalance(JsonField.of(startingBalance))
 
-            @JsonProperty("starting_balance")
-            @ExcludeMissing
             fun startingBalance(startingBalance: JsonField<Double>) = apply {
                 this.startingBalance = startingBalance
             }
 
             fun endingBalance(endingBalance: Double) = endingBalance(JsonField.of(endingBalance))
 
-            @JsonProperty("ending_balance")
-            @ExcludeMissing
             fun endingBalance(endingBalance: JsonField<Double>) = apply {
                 this.endingBalance = endingBalance
             }
 
             fun amount(amount: Double) = amount(JsonField.of(amount))
 
-            @JsonProperty("amount")
-            @ExcludeMissing
             fun amount(amount: JsonField<Double>) = apply { this.amount = amount }
 
             fun currency(currency: String) = currency(JsonField.of(currency))
 
-            @JsonProperty("currency")
-            @ExcludeMissing
             fun currency(currency: JsonField<String>) = apply { this.currency = currency }
 
             fun createdAt(createdAt: OffsetDateTime) = createdAt(JsonField.of(createdAt))
 
-            @JsonProperty("created_at")
-            @ExcludeMissing
             fun createdAt(createdAt: JsonField<OffsetDateTime>) = apply {
                 this.createdAt = createdAt
             }
 
             fun description(description: String) = description(JsonField.of(description))
 
-            @JsonProperty("description")
-            @ExcludeMissing
             fun description(description: JsonField<String>) = apply {
                 this.description = description
             }
 
             fun creditBlock(creditBlock: CreditBlock) = creditBlock(JsonField.of(creditBlock))
 
-            @JsonProperty("credit_block")
-            @ExcludeMissing
             fun creditBlock(creditBlock: JsonField<CreditBlock>) = apply {
                 this.creditBlock = creditBlock
             }
 
             fun entryType(entryType: EntryType) = entryType(JsonField.of(entryType))
 
-            @JsonProperty("entry_type")
-            @ExcludeMissing
             fun entryType(entryType: JsonField<EntryType>) = apply { this.entryType = entryType }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
-                this.additionalProperties.putAll(additionalProperties)
+                putAllAdditionalProperties(additionalProperties)
             }
 
-            @JsonAnySetter
             fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-                this.additionalProperties.put(key, value)
+                additionalProperties.put(key, value)
             }
 
             fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.putAll(additionalProperties)
+            }
+
+            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+
+            fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                keys.forEach(::removeAdditionalProperty)
             }
 
             fun build(): AmendmentLedgerEntry =
@@ -5100,17 +5275,22 @@ private constructor(
                 )
         }
 
-        @JsonDeserialize(builder = CreditBlock.Builder::class)
         @NoAutoDetect
         class CreditBlock
+        @JsonCreator
         private constructor(
-            private val id: JsonField<String>,
-            private val expiryDate: JsonField<OffsetDateTime>,
-            private val perUnitCostBasis: JsonField<String>,
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonProperty("id")
+            @ExcludeMissing
+            private val id: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("expiry_date")
+            @ExcludeMissing
+            private val expiryDate: JsonField<OffsetDateTime> = JsonMissing.of(),
+            @JsonProperty("per_unit_cost_basis")
+            @ExcludeMissing
+            private val perUnitCostBasis: JsonField<String> = JsonMissing.of(),
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
-
-            private var validated: Boolean = false
 
             fun id(): String = id.getRequired("id")
 
@@ -5129,6 +5309,8 @@ private constructor(
             @JsonAnyGetter
             @ExcludeMissing
             fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
+
+            private var validated: Boolean = false
 
             fun validate(): CreditBlock = apply {
                 if (!validated) {
@@ -5154,22 +5336,18 @@ private constructor(
                 private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
                 internal fun from(creditBlock: CreditBlock) = apply {
-                    this.id = creditBlock.id
-                    this.expiryDate = creditBlock.expiryDate
-                    this.perUnitCostBasis = creditBlock.perUnitCostBasis
-                    additionalProperties(creditBlock.additionalProperties)
+                    id = creditBlock.id
+                    expiryDate = creditBlock.expiryDate
+                    perUnitCostBasis = creditBlock.perUnitCostBasis
+                    additionalProperties = creditBlock.additionalProperties.toMutableMap()
                 }
 
                 fun id(id: String) = id(JsonField.of(id))
 
-                @JsonProperty("id")
-                @ExcludeMissing
                 fun id(id: JsonField<String>) = apply { this.id = id }
 
                 fun expiryDate(expiryDate: OffsetDateTime) = expiryDate(JsonField.of(expiryDate))
 
-                @JsonProperty("expiry_date")
-                @ExcludeMissing
                 fun expiryDate(expiryDate: JsonField<OffsetDateTime>) = apply {
                     this.expiryDate = expiryDate
                 }
@@ -5177,26 +5355,31 @@ private constructor(
                 fun perUnitCostBasis(perUnitCostBasis: String) =
                     perUnitCostBasis(JsonField.of(perUnitCostBasis))
 
-                @JsonProperty("per_unit_cost_basis")
-                @ExcludeMissing
                 fun perUnitCostBasis(perUnitCostBasis: JsonField<String>) = apply {
                     this.perUnitCostBasis = perUnitCostBasis
                 }
 
                 fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                     this.additionalProperties.clear()
-                    this.additionalProperties.putAll(additionalProperties)
+                    putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-                    this.additionalProperties.put(key, value)
+                    additionalProperties.put(key, value)
                 }
 
                 fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) =
                     apply {
                         this.additionalProperties.putAll(additionalProperties)
                     }
+
+                fun removeAdditionalProperty(key: String) = apply {
+                    additionalProperties.remove(key)
+                }
+
+                fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                    keys.forEach(::removeAdditionalProperty)
+                }
 
                 fun build(): CreditBlock =
                     CreditBlock(
@@ -5225,16 +5408,19 @@ private constructor(
                 "CreditBlock{id=$id, expiryDate=$expiryDate, perUnitCostBasis=$perUnitCostBasis, additionalProperties=$additionalProperties}"
         }
 
-        @JsonDeserialize(builder = Customer.Builder::class)
         @NoAutoDetect
         class Customer
+        @JsonCreator
         private constructor(
-            private val id: JsonField<String>,
-            private val externalCustomerId: JsonField<String>,
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonProperty("id")
+            @ExcludeMissing
+            private val id: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("external_customer_id")
+            @ExcludeMissing
+            private val externalCustomerId: JsonField<String> = JsonMissing.of(),
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
-
-            private var validated: Boolean = false
 
             fun id(): String = id.getRequired("id")
 
@@ -5250,6 +5436,8 @@ private constructor(
             @JsonAnyGetter
             @ExcludeMissing
             fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
+
+            private var validated: Boolean = false
 
             fun validate(): Customer = apply {
                 if (!validated) {
@@ -5273,40 +5461,43 @@ private constructor(
                 private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
                 internal fun from(customer: Customer) = apply {
-                    this.id = customer.id
-                    this.externalCustomerId = customer.externalCustomerId
-                    additionalProperties(customer.additionalProperties)
+                    id = customer.id
+                    externalCustomerId = customer.externalCustomerId
+                    additionalProperties = customer.additionalProperties.toMutableMap()
                 }
 
                 fun id(id: String) = id(JsonField.of(id))
 
-                @JsonProperty("id")
-                @ExcludeMissing
                 fun id(id: JsonField<String>) = apply { this.id = id }
 
                 fun externalCustomerId(externalCustomerId: String) =
                     externalCustomerId(JsonField.of(externalCustomerId))
 
-                @JsonProperty("external_customer_id")
-                @ExcludeMissing
                 fun externalCustomerId(externalCustomerId: JsonField<String>) = apply {
                     this.externalCustomerId = externalCustomerId
                 }
 
                 fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                     this.additionalProperties.clear()
-                    this.additionalProperties.putAll(additionalProperties)
+                    putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-                    this.additionalProperties.put(key, value)
+                    additionalProperties.put(key, value)
                 }
 
                 fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) =
                     apply {
                         this.additionalProperties.putAll(additionalProperties)
                     }
+
+                fun removeAdditionalProperty(key: String) = apply {
+                    additionalProperties.remove(key)
+                }
+
+                fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                    keys.forEach(::removeAdditionalProperty)
+                }
 
                 fun build(): Customer =
                     Customer(
@@ -5342,23 +5533,11 @@ private constructor(
 
             @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
 
-            override fun equals(other: Any?): Boolean {
-                if (this === other) {
-                    return true
-                }
-
-                return /* spotless:off */ other is EntryStatus && value == other.value /* spotless:on */
-            }
-
-            override fun hashCode() = value.hashCode()
-
-            override fun toString() = value.toString()
-
             companion object {
 
-                val COMMITTED = EntryStatus(JsonField.of("committed"))
+                val COMMITTED = of("committed")
 
-                val PENDING = EntryStatus(JsonField.of("pending"))
+                val PENDING = of("pending")
 
                 fun of(value: String) = EntryStatus(JsonField.of(value))
             }
@@ -5389,6 +5568,18 @@ private constructor(
                 }
 
             fun asString(): String = _value().asStringOrThrow()
+
+            override fun equals(other: Any?): Boolean {
+                if (this === other) {
+                    return true
+                }
+
+                return /* spotless:off */ other is EntryStatus && value == other.value /* spotless:on */
+            }
+
+            override fun hashCode() = value.hashCode()
+
+            override fun toString() = value.toString()
         }
 
         class EntryType
@@ -5399,21 +5590,9 @@ private constructor(
 
             @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
 
-            override fun equals(other: Any?): Boolean {
-                if (this === other) {
-                    return true
-                }
-
-                return /* spotless:off */ other is EntryType && value == other.value /* spotless:on */
-            }
-
-            override fun hashCode() = value.hashCode()
-
-            override fun toString() = value.toString()
-
             companion object {
 
-                val AMENDMENT = EntryType(JsonField.of("amendment"))
+                val AMENDMENT = of("amendment")
 
                 fun of(value: String) = EntryType(JsonField.of(value))
             }
@@ -5440,6 +5619,18 @@ private constructor(
                 }
 
             fun asString(): String = _value().asStringOrThrow()
+
+            override fun equals(other: Any?): Boolean {
+                if (this === other) {
+                    return true
+                }
+
+                return /* spotless:off */ other is EntryType && value == other.value /* spotless:on */
+            }
+
+            override fun hashCode() = value.hashCode()
+
+            override fun toString() = value.toString()
         }
 
         /**
@@ -5447,18 +5638,19 @@ private constructor(
          * empty dictionary. Individual keys can be removed by setting the value to `null`, and the
          * entire metadata mapping can be cleared by setting `metadata` to `null`.
          */
-        @JsonDeserialize(builder = Metadata.Builder::class)
         @NoAutoDetect
         class Metadata
+        @JsonCreator
         private constructor(
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
-
-            private var validated: Boolean = false
 
             @JsonAnyGetter
             @ExcludeMissing
             fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
+
+            private var validated: Boolean = false
 
             fun validate(): Metadata = apply {
                 if (!validated) {
@@ -5478,23 +5670,30 @@ private constructor(
                 private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
                 internal fun from(metadata: Metadata) = apply {
-                    additionalProperties(metadata.additionalProperties)
+                    additionalProperties = metadata.additionalProperties.toMutableMap()
                 }
 
                 fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                     this.additionalProperties.clear()
-                    this.additionalProperties.putAll(additionalProperties)
+                    putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-                    this.additionalProperties.put(key, value)
+                    additionalProperties.put(key, value)
                 }
 
                 fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) =
                     apply {
                         this.additionalProperties.putAll(additionalProperties)
                     }
+
+                fun removeAdditionalProperty(key: String) = apply {
+                    additionalProperties.remove(key)
+                }
+
+                fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                    keys.forEach(::removeAdditionalProperty)
+                }
 
                 fun build(): Metadata = Metadata(additionalProperties.toImmutable())
             }

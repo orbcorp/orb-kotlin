@@ -18,15 +18,14 @@ import com.withorb.api.core.BaseSerializer
 import com.withorb.api.core.Enum
 import com.withorb.api.core.ExcludeMissing
 import com.withorb.api.core.JsonField
-import com.withorb.api.core.JsonMissing
 import com.withorb.api.core.JsonValue
 import com.withorb.api.core.NoAutoDetect
 import com.withorb.api.core.getOrThrow
 import com.withorb.api.core.http.Headers
 import com.withorb.api.core.http.QueryParams
+import com.withorb.api.core.immutableEmptyMap
 import com.withorb.api.core.toImmutable
 import com.withorb.api.errors.OrbInvalidDataException
-import com.withorb.api.models.*
 import java.util.Objects
 
 class CustomerUpdateByExternalIdParams
@@ -126,27 +125,30 @@ constructor(
         }
     }
 
-    @JsonDeserialize(builder = CustomerUpdateByExternalIdBody.Builder::class)
     @NoAutoDetect
     class CustomerUpdateByExternalIdBody
+    @JsonCreator
     internal constructor(
+        @JsonProperty("accounting_sync_configuration")
         private val accountingSyncConfiguration: AccountingSyncConfiguration?,
-        private val additionalEmails: List<String>?,
-        private val autoCollection: Boolean?,
-        private val billingAddress: BillingAddress?,
-        private val currency: String?,
-        private val email: String?,
-        private val emailDelivery: Boolean?,
-        private val externalCustomerId: String?,
-        private val metadata: Metadata?,
-        private val name: String?,
-        private val paymentProvider: PaymentProvider?,
-        private val paymentProviderId: String?,
+        @JsonProperty("additional_emails") private val additionalEmails: List<String>?,
+        @JsonProperty("auto_collection") private val autoCollection: Boolean?,
+        @JsonProperty("billing_address") private val billingAddress: BillingAddress?,
+        @JsonProperty("currency") private val currency: String?,
+        @JsonProperty("email") private val email: String?,
+        @JsonProperty("email_delivery") private val emailDelivery: Boolean?,
+        @JsonProperty("external_customer_id") private val externalCustomerId: String?,
+        @JsonProperty("metadata") private val metadata: Metadata?,
+        @JsonProperty("name") private val name: String?,
+        @JsonProperty("payment_provider") private val paymentProvider: PaymentProvider?,
+        @JsonProperty("payment_provider_id") private val paymentProviderId: String?,
+        @JsonProperty("reporting_configuration")
         private val reportingConfiguration: ReportingConfiguration?,
-        private val shippingAddress: ShippingAddress?,
-        private val taxConfiguration: TaxConfiguration?,
-        private val taxId: TaxId?,
-        private val additionalProperties: Map<String, JsonValue>,
+        @JsonProperty("shipping_address") private val shippingAddress: ShippingAddress?,
+        @JsonProperty("tax_configuration") private val taxConfiguration: TaxConfiguration?,
+        @JsonProperty("tax_id") private val taxId: TaxId?,
+        @JsonAnySetter
+        private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
 
         @JsonProperty("accounting_sync_configuration")
@@ -359,38 +361,37 @@ constructor(
 
             internal fun from(customerUpdateByExternalIdBody: CustomerUpdateByExternalIdBody) =
                 apply {
-                    this.accountingSyncConfiguration =
+                    accountingSyncConfiguration =
                         customerUpdateByExternalIdBody.accountingSyncConfiguration
-                    this.additionalEmails = customerUpdateByExternalIdBody.additionalEmails
-                    this.autoCollection = customerUpdateByExternalIdBody.autoCollection
-                    this.billingAddress = customerUpdateByExternalIdBody.billingAddress
-                    this.currency = customerUpdateByExternalIdBody.currency
-                    this.email = customerUpdateByExternalIdBody.email
-                    this.emailDelivery = customerUpdateByExternalIdBody.emailDelivery
-                    this.externalCustomerId = customerUpdateByExternalIdBody.externalCustomerId
-                    this.metadata = customerUpdateByExternalIdBody.metadata
-                    this.name = customerUpdateByExternalIdBody.name
-                    this.paymentProvider = customerUpdateByExternalIdBody.paymentProvider
-                    this.paymentProviderId = customerUpdateByExternalIdBody.paymentProviderId
-                    this.reportingConfiguration =
-                        customerUpdateByExternalIdBody.reportingConfiguration
-                    this.shippingAddress = customerUpdateByExternalIdBody.shippingAddress
-                    this.taxConfiguration = customerUpdateByExternalIdBody.taxConfiguration
-                    this.taxId = customerUpdateByExternalIdBody.taxId
-                    additionalProperties(customerUpdateByExternalIdBody.additionalProperties)
+                    additionalEmails =
+                        customerUpdateByExternalIdBody.additionalEmails?.toMutableList()
+                    autoCollection = customerUpdateByExternalIdBody.autoCollection
+                    billingAddress = customerUpdateByExternalIdBody.billingAddress
+                    currency = customerUpdateByExternalIdBody.currency
+                    email = customerUpdateByExternalIdBody.email
+                    emailDelivery = customerUpdateByExternalIdBody.emailDelivery
+                    externalCustomerId = customerUpdateByExternalIdBody.externalCustomerId
+                    metadata = customerUpdateByExternalIdBody.metadata
+                    name = customerUpdateByExternalIdBody.name
+                    paymentProvider = customerUpdateByExternalIdBody.paymentProvider
+                    paymentProviderId = customerUpdateByExternalIdBody.paymentProviderId
+                    reportingConfiguration = customerUpdateByExternalIdBody.reportingConfiguration
+                    shippingAddress = customerUpdateByExternalIdBody.shippingAddress
+                    taxConfiguration = customerUpdateByExternalIdBody.taxConfiguration
+                    taxId = customerUpdateByExternalIdBody.taxId
+                    additionalProperties =
+                        customerUpdateByExternalIdBody.additionalProperties.toMutableMap()
                 }
 
-            @JsonProperty("accounting_sync_configuration")
             fun accountingSyncConfiguration(
-                accountingSyncConfiguration: AccountingSyncConfiguration
+                accountingSyncConfiguration: AccountingSyncConfiguration?
             ) = apply { this.accountingSyncConfiguration = accountingSyncConfiguration }
 
             /**
              * Additional email addresses for this customer. If populated, these email addresses
              * will be CC'd for customer communications.
              */
-            @JsonProperty("additional_emails")
-            fun additionalEmails(additionalEmails: List<String>) = apply {
+            fun additionalEmails(additionalEmails: List<String>?) = apply {
                 this.additionalEmails = additionalEmails
             }
 
@@ -399,13 +400,11 @@ constructor(
              * a saved payment method, if available. This parameter defaults to `True` when a
              * payment provider is provided on customer creation.
              */
-            @JsonProperty("auto_collection")
-            fun autoCollection(autoCollection: Boolean) = apply {
+            fun autoCollection(autoCollection: Boolean?) = apply {
                 this.autoCollection = autoCollection
             }
 
-            @JsonProperty("billing_address")
-            fun billingAddress(billingAddress: BillingAddress) = apply {
+            fun billingAddress(billingAddress: BillingAddress?) = apply {
                 this.billingAddress = billingAddress
             }
 
@@ -413,21 +412,20 @@ constructor(
              * An ISO 4217 currency string used for the customer's invoices and balance. If not set
              * at creation time, will be set at subscription creation time.
              */
-            @JsonProperty("currency")
-            fun currency(currency: String) = apply { this.currency = currency }
+            fun currency(currency: String?) = apply { this.currency = currency }
 
             /** A valid customer email, to be used for invoicing and notifications. */
-            @JsonProperty("email") fun email(email: String) = apply { this.email = email }
+            fun email(email: String?) = apply { this.email = email }
 
-            @JsonProperty("email_delivery")
-            fun emailDelivery(emailDelivery: Boolean) = apply { this.emailDelivery = emailDelivery }
+            fun emailDelivery(emailDelivery: Boolean?) = apply {
+                this.emailDelivery = emailDelivery
+            }
 
             /**
              * The external customer ID. This can only be set if empty and the customer has no past
              * or current subscriptions.
              */
-            @JsonProperty("external_customer_id")
-            fun externalCustomerId(externalCustomerId: String) = apply {
+            fun externalCustomerId(externalCustomerId: String?) = apply {
                 this.externalCustomerId = externalCustomerId
             }
 
@@ -436,11 +434,10 @@ constructor(
              * setting the value to `null`, and the entire metadata mapping can be cleared by
              * setting `metadata` to `null`.
              */
-            @JsonProperty("metadata")
-            fun metadata(metadata: Metadata) = apply { this.metadata = metadata }
+            fun metadata(metadata: Metadata?) = apply { this.metadata = metadata }
 
             /** The full name of the customer */
-            @JsonProperty("name") fun name(name: String) = apply { this.name = name }
+            fun name(name: String?) = apply { this.name = name }
 
             /**
              * This is used for creating charges or invoices in an external system via Orb. When not
@@ -450,8 +447,7 @@ constructor(
              *   `bill.com`, `netsuite`), any product mappings must first be configured with the Orb
              *   team.
              */
-            @JsonProperty("payment_provider")
-            fun paymentProvider(paymentProvider: PaymentProvider) = apply {
+            fun paymentProvider(paymentProvider: PaymentProvider?) = apply {
                 this.paymentProvider = paymentProvider
             }
 
@@ -459,23 +455,19 @@ constructor(
              * The ID of this customer in an external payments solution, such as Stripe. This is
              * used for creating charges or invoices in the external system via Orb.
              */
-            @JsonProperty("payment_provider_id")
-            fun paymentProviderId(paymentProviderId: String) = apply {
+            fun paymentProviderId(paymentProviderId: String?) = apply {
                 this.paymentProviderId = paymentProviderId
             }
 
-            @JsonProperty("reporting_configuration")
-            fun reportingConfiguration(reportingConfiguration: ReportingConfiguration) = apply {
+            fun reportingConfiguration(reportingConfiguration: ReportingConfiguration?) = apply {
                 this.reportingConfiguration = reportingConfiguration
             }
 
-            @JsonProperty("shipping_address")
-            fun shippingAddress(shippingAddress: ShippingAddress) = apply {
+            fun shippingAddress(shippingAddress: ShippingAddress?) = apply {
                 this.shippingAddress = shippingAddress
             }
 
-            @JsonProperty("tax_configuration")
-            fun taxConfiguration(taxConfiguration: TaxConfiguration) = apply {
+            fun taxConfiguration(taxConfiguration: TaxConfiguration?) = apply {
                 this.taxConfiguration = taxConfiguration
             }
 
@@ -585,20 +577,25 @@ constructor(
              * |Venezuela           |`ve_rif`    |Venezuelan RIF Number                                                                                  |
              * |Vietnam             |`vn_tin`    |Vietnamese Tax ID Number                                                                               |
              */
-            @JsonProperty("tax_id") fun taxId(taxId: TaxId) = apply { this.taxId = taxId }
+            fun taxId(taxId: TaxId?) = apply { this.taxId = taxId }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
-                this.additionalProperties.putAll(additionalProperties)
+                putAllAdditionalProperties(additionalProperties)
             }
 
-            @JsonAnySetter
             fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-                this.additionalProperties.put(key, value)
+                additionalProperties.put(key, value)
             }
 
             fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.putAll(additionalProperties)
+            }
+
+            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+
+            fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                keys.forEach(::removeAdditionalProperty)
             }
 
             fun build(): CustomerUpdateByExternalIdBody =
@@ -1062,13 +1059,15 @@ constructor(
             )
     }
 
-    @JsonDeserialize(builder = AccountingSyncConfiguration.Builder::class)
     @NoAutoDetect
     class AccountingSyncConfiguration
+    @JsonCreator
     private constructor(
-        private val excluded: Boolean?,
+        @JsonProperty("excluded") private val excluded: Boolean?,
+        @JsonProperty("accounting_providers")
         private val accountingProviders: List<AccountingProvider>?,
-        private val additionalProperties: Map<String, JsonValue>,
+        @JsonAnySetter
+        private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
 
         @JsonProperty("excluded") fun excluded(): Boolean? = excluded
@@ -1094,31 +1093,36 @@ constructor(
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             internal fun from(accountingSyncConfiguration: AccountingSyncConfiguration) = apply {
-                this.excluded = accountingSyncConfiguration.excluded
-                this.accountingProviders = accountingSyncConfiguration.accountingProviders
-                additionalProperties(accountingSyncConfiguration.additionalProperties)
+                excluded = accountingSyncConfiguration.excluded
+                accountingProviders =
+                    accountingSyncConfiguration.accountingProviders?.toMutableList()
+                additionalProperties =
+                    accountingSyncConfiguration.additionalProperties.toMutableMap()
             }
 
-            @JsonProperty("excluded")
-            fun excluded(excluded: Boolean) = apply { this.excluded = excluded }
+            fun excluded(excluded: Boolean?) = apply { this.excluded = excluded }
 
-            @JsonProperty("accounting_providers")
-            fun accountingProviders(accountingProviders: List<AccountingProvider>) = apply {
+            fun accountingProviders(accountingProviders: List<AccountingProvider>?) = apply {
                 this.accountingProviders = accountingProviders
             }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
-                this.additionalProperties.putAll(additionalProperties)
+                putAllAdditionalProperties(additionalProperties)
             }
 
-            @JsonAnySetter
             fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-                this.additionalProperties.put(key, value)
+                additionalProperties.put(key, value)
             }
 
             fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.putAll(additionalProperties)
+            }
+
+            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+
+            fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                keys.forEach(::removeAdditionalProperty)
             }
 
             fun build(): AccountingSyncConfiguration =
@@ -1129,19 +1133,20 @@ constructor(
                 )
         }
 
-        @JsonDeserialize(builder = AccountingProvider.Builder::class)
         @NoAutoDetect
         class AccountingProvider
+        @JsonCreator
         private constructor(
-            private val providerType: String?,
-            private val externalProviderId: String?,
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonProperty("provider_type") private val providerType: String,
+            @JsonProperty("external_provider_id") private val externalProviderId: String,
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
-            @JsonProperty("provider_type") fun providerType(): String? = providerType
+            @JsonProperty("provider_type") fun providerType(): String = providerType
 
             @JsonProperty("external_provider_id")
-            fun externalProviderId(): String? = externalProviderId
+            fun externalProviderId(): String = externalProviderId
 
             @JsonAnyGetter
             @ExcludeMissing
@@ -1161,33 +1166,38 @@ constructor(
                 private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
                 internal fun from(accountingProvider: AccountingProvider) = apply {
-                    this.providerType = accountingProvider.providerType
-                    this.externalProviderId = accountingProvider.externalProviderId
-                    additionalProperties(accountingProvider.additionalProperties)
+                    providerType = accountingProvider.providerType
+                    externalProviderId = accountingProvider.externalProviderId
+                    additionalProperties = accountingProvider.additionalProperties.toMutableMap()
                 }
 
-                @JsonProperty("provider_type")
                 fun providerType(providerType: String) = apply { this.providerType = providerType }
 
-                @JsonProperty("external_provider_id")
                 fun externalProviderId(externalProviderId: String) = apply {
                     this.externalProviderId = externalProviderId
                 }
 
                 fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                     this.additionalProperties.clear()
-                    this.additionalProperties.putAll(additionalProperties)
+                    putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-                    this.additionalProperties.put(key, value)
+                    additionalProperties.put(key, value)
                 }
 
                 fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) =
                     apply {
                         this.additionalProperties.putAll(additionalProperties)
                     }
+
+                fun removeAdditionalProperty(key: String) = apply {
+                    additionalProperties.remove(key)
+                }
+
+                fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                    keys.forEach(::removeAdditionalProperty)
+                }
 
                 fun build(): AccountingProvider =
                     AccountingProvider(
@@ -1235,17 +1245,18 @@ constructor(
             "AccountingSyncConfiguration{excluded=$excluded, accountingProviders=$accountingProviders, additionalProperties=$additionalProperties}"
     }
 
-    @JsonDeserialize(builder = BillingAddress.Builder::class)
     @NoAutoDetect
     class BillingAddress
+    @JsonCreator
     private constructor(
-        private val line1: String?,
-        private val line2: String?,
-        private val city: String?,
-        private val state: String?,
-        private val postalCode: String?,
-        private val country: String?,
-        private val additionalProperties: Map<String, JsonValue>,
+        @JsonProperty("line1") private val line1: String?,
+        @JsonProperty("line2") private val line2: String?,
+        @JsonProperty("city") private val city: String?,
+        @JsonProperty("state") private val state: String?,
+        @JsonProperty("postal_code") private val postalCode: String?,
+        @JsonProperty("country") private val country: String?,
+        @JsonAnySetter
+        private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
 
         @JsonProperty("line1") fun line1(): String? = line1
@@ -1282,40 +1293,44 @@ constructor(
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             internal fun from(billingAddress: BillingAddress) = apply {
-                this.line1 = billingAddress.line1
-                this.line2 = billingAddress.line2
-                this.city = billingAddress.city
-                this.state = billingAddress.state
-                this.postalCode = billingAddress.postalCode
-                this.country = billingAddress.country
-                additionalProperties(billingAddress.additionalProperties)
+                line1 = billingAddress.line1
+                line2 = billingAddress.line2
+                city = billingAddress.city
+                state = billingAddress.state
+                postalCode = billingAddress.postalCode
+                country = billingAddress.country
+                additionalProperties = billingAddress.additionalProperties.toMutableMap()
             }
 
-            @JsonProperty("line1") fun line1(line1: String) = apply { this.line1 = line1 }
+            fun line1(line1: String?) = apply { this.line1 = line1 }
 
-            @JsonProperty("line2") fun line2(line2: String) = apply { this.line2 = line2 }
+            fun line2(line2: String?) = apply { this.line2 = line2 }
 
-            @JsonProperty("city") fun city(city: String) = apply { this.city = city }
+            fun city(city: String?) = apply { this.city = city }
 
-            @JsonProperty("state") fun state(state: String) = apply { this.state = state }
+            fun state(state: String?) = apply { this.state = state }
 
-            @JsonProperty("postal_code")
-            fun postalCode(postalCode: String) = apply { this.postalCode = postalCode }
+            fun postalCode(postalCode: String?) = apply { this.postalCode = postalCode }
 
-            @JsonProperty("country") fun country(country: String) = apply { this.country = country }
+            fun country(country: String?) = apply { this.country = country }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
-                this.additionalProperties.putAll(additionalProperties)
+                putAllAdditionalProperties(additionalProperties)
             }
 
-            @JsonAnySetter
             fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-                this.additionalProperties.put(key, value)
+                additionalProperties.put(key, value)
             }
 
             fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.putAll(additionalProperties)
+            }
+
+            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+
+            fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                keys.forEach(::removeAdditionalProperty)
             }
 
             fun build(): BillingAddress =
@@ -1353,11 +1368,12 @@ constructor(
      * the value to `null`, and the entire metadata mapping can be cleared by setting `metadata` to
      * `null`.
      */
-    @JsonDeserialize(builder = Metadata.Builder::class)
     @NoAutoDetect
     class Metadata
+    @JsonCreator
     private constructor(
-        private val additionalProperties: Map<String, JsonValue>,
+        @JsonAnySetter
+        private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
 
         @JsonAnyGetter
@@ -1376,21 +1392,26 @@ constructor(
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             internal fun from(metadata: Metadata) = apply {
-                additionalProperties(metadata.additionalProperties)
+                additionalProperties = metadata.additionalProperties.toMutableMap()
             }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
-                this.additionalProperties.putAll(additionalProperties)
+                putAllAdditionalProperties(additionalProperties)
             }
 
-            @JsonAnySetter
             fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-                this.additionalProperties.put(key, value)
+                additionalProperties.put(key, value)
             }
 
             fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.putAll(additionalProperties)
+            }
+
+            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+
+            fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                keys.forEach(::removeAdditionalProperty)
             }
 
             fun build(): Metadata = Metadata(additionalProperties.toImmutable())
@@ -1421,29 +1442,17 @@ constructor(
 
         @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
 
-        override fun equals(other: Any?): Boolean {
-            if (this === other) {
-                return true
-            }
-
-            return /* spotless:off */ other is PaymentProvider && value == other.value /* spotless:on */
-        }
-
-        override fun hashCode() = value.hashCode()
-
-        override fun toString() = value.toString()
-
         companion object {
 
-            val QUICKBOOKS = PaymentProvider(JsonField.of("quickbooks"))
+            val QUICKBOOKS = of("quickbooks")
 
-            val BILL_COM = PaymentProvider(JsonField.of("bill.com"))
+            val BILL_COM = of("bill.com")
 
-            val STRIPE_CHARGE = PaymentProvider(JsonField.of("stripe_charge"))
+            val STRIPE_CHARGE = of("stripe_charge")
 
-            val STRIPE_INVOICE = PaymentProvider(JsonField.of("stripe_invoice"))
+            val STRIPE_INVOICE = of("stripe_invoice")
 
-            val NETSUITE = PaymentProvider(JsonField.of("netsuite"))
+            val NETSUITE = of("netsuite")
 
             fun of(value: String) = PaymentProvider(JsonField.of(value))
         }
@@ -1486,17 +1495,30 @@ constructor(
             }
 
         fun asString(): String = _value().asStringOrThrow()
+
+        override fun equals(other: Any?): Boolean {
+            if (this === other) {
+                return true
+            }
+
+            return /* spotless:off */ other is PaymentProvider && value == other.value /* spotless:on */
+        }
+
+        override fun hashCode() = value.hashCode()
+
+        override fun toString() = value.toString()
     }
 
-    @JsonDeserialize(builder = ReportingConfiguration.Builder::class)
     @NoAutoDetect
     class ReportingConfiguration
+    @JsonCreator
     private constructor(
-        private val exempt: Boolean?,
-        private val additionalProperties: Map<String, JsonValue>,
+        @JsonProperty("exempt") private val exempt: Boolean,
+        @JsonAnySetter
+        private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
 
-        @JsonProperty("exempt") fun exempt(): Boolean? = exempt
+        @JsonProperty("exempt") fun exempt(): Boolean = exempt
 
         @JsonAnyGetter
         @ExcludeMissing
@@ -1515,24 +1537,29 @@ constructor(
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             internal fun from(reportingConfiguration: ReportingConfiguration) = apply {
-                this.exempt = reportingConfiguration.exempt
-                additionalProperties(reportingConfiguration.additionalProperties)
+                exempt = reportingConfiguration.exempt
+                additionalProperties = reportingConfiguration.additionalProperties.toMutableMap()
             }
 
-            @JsonProperty("exempt") fun exempt(exempt: Boolean) = apply { this.exempt = exempt }
+            fun exempt(exempt: Boolean) = apply { this.exempt = exempt }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
-                this.additionalProperties.putAll(additionalProperties)
+                putAllAdditionalProperties(additionalProperties)
             }
 
-            @JsonAnySetter
             fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-                this.additionalProperties.put(key, value)
+                additionalProperties.put(key, value)
             }
 
             fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.putAll(additionalProperties)
+            }
+
+            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+
+            fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                keys.forEach(::removeAdditionalProperty)
             }
 
             fun build(): ReportingConfiguration =
@@ -1560,17 +1587,18 @@ constructor(
             "ReportingConfiguration{exempt=$exempt, additionalProperties=$additionalProperties}"
     }
 
-    @JsonDeserialize(builder = ShippingAddress.Builder::class)
     @NoAutoDetect
     class ShippingAddress
+    @JsonCreator
     private constructor(
-        private val line1: String?,
-        private val line2: String?,
-        private val city: String?,
-        private val state: String?,
-        private val postalCode: String?,
-        private val country: String?,
-        private val additionalProperties: Map<String, JsonValue>,
+        @JsonProperty("line1") private val line1: String?,
+        @JsonProperty("line2") private val line2: String?,
+        @JsonProperty("city") private val city: String?,
+        @JsonProperty("state") private val state: String?,
+        @JsonProperty("postal_code") private val postalCode: String?,
+        @JsonProperty("country") private val country: String?,
+        @JsonAnySetter
+        private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
 
         @JsonProperty("line1") fun line1(): String? = line1
@@ -1607,40 +1635,44 @@ constructor(
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             internal fun from(shippingAddress: ShippingAddress) = apply {
-                this.line1 = shippingAddress.line1
-                this.line2 = shippingAddress.line2
-                this.city = shippingAddress.city
-                this.state = shippingAddress.state
-                this.postalCode = shippingAddress.postalCode
-                this.country = shippingAddress.country
-                additionalProperties(shippingAddress.additionalProperties)
+                line1 = shippingAddress.line1
+                line2 = shippingAddress.line2
+                city = shippingAddress.city
+                state = shippingAddress.state
+                postalCode = shippingAddress.postalCode
+                country = shippingAddress.country
+                additionalProperties = shippingAddress.additionalProperties.toMutableMap()
             }
 
-            @JsonProperty("line1") fun line1(line1: String) = apply { this.line1 = line1 }
+            fun line1(line1: String?) = apply { this.line1 = line1 }
 
-            @JsonProperty("line2") fun line2(line2: String) = apply { this.line2 = line2 }
+            fun line2(line2: String?) = apply { this.line2 = line2 }
 
-            @JsonProperty("city") fun city(city: String) = apply { this.city = city }
+            fun city(city: String?) = apply { this.city = city }
 
-            @JsonProperty("state") fun state(state: String) = apply { this.state = state }
+            fun state(state: String?) = apply { this.state = state }
 
-            @JsonProperty("postal_code")
-            fun postalCode(postalCode: String) = apply { this.postalCode = postalCode }
+            fun postalCode(postalCode: String?) = apply { this.postalCode = postalCode }
 
-            @JsonProperty("country") fun country(country: String) = apply { this.country = country }
+            fun country(country: String?) = apply { this.country = country }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
-                this.additionalProperties.putAll(additionalProperties)
+                putAllAdditionalProperties(additionalProperties)
             }
 
-            @JsonAnySetter
             fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-                this.additionalProperties.put(key, value)
+                additionalProperties.put(key, value)
             }
 
             fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.putAll(additionalProperties)
+            }
+
+            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+
+            fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                keys.forEach(::removeAdditionalProperty)
             }
 
             fun build(): ShippingAddress =
@@ -1682,8 +1714,6 @@ constructor(
         private val _json: JsonValue? = null,
     ) {
 
-        private var validated: Boolean = false
-
         fun newAvalaraTaxConfiguration(): NewAvalaraTaxConfiguration? = newAvalaraTaxConfiguration
 
         fun newTaxJarConfiguration(): NewTaxJarConfiguration? = newTaxJarConfiguration
@@ -1707,17 +1737,6 @@ constructor(
                 newTaxJarConfiguration != null ->
                     visitor.visitNewTaxJarConfiguration(newTaxJarConfiguration)
                 else -> visitor.unknown(_json)
-            }
-        }
-
-        fun validate(): TaxConfiguration = apply {
-            if (!validated) {
-                if (newAvalaraTaxConfiguration == null && newTaxJarConfiguration == null) {
-                    throw OrbInvalidDataException("Unknown TaxConfiguration: $_json")
-                }
-                newAvalaraTaxConfiguration?.validate()
-                newTaxJarConfiguration?.validate()
-                validated = true
             }
         }
 
@@ -1772,23 +1791,14 @@ constructor(
 
                 when (taxProvider) {
                     "avalara" -> {
-                        tryDeserialize(node, jacksonTypeRef<NewAvalaraTaxConfiguration>()) {
-                                it.validate()
-                            }
-                            ?.let {
-                                return TaxConfiguration(
-                                    newAvalaraTaxConfiguration = it,
-                                    _json = json
-                                )
-                            }
+                        tryDeserialize(node, jacksonTypeRef<NewAvalaraTaxConfiguration>())?.let {
+                            return TaxConfiguration(newAvalaraTaxConfiguration = it, _json = json)
+                        }
                     }
                     "taxjar" -> {
-                        tryDeserialize(node, jacksonTypeRef<NewTaxJarConfiguration>()) {
-                                it.validate()
-                            }
-                            ?.let {
-                                return TaxConfiguration(newTaxJarConfiguration = it, _json = json)
-                            }
+                        tryDeserialize(node, jacksonTypeRef<NewTaxJarConfiguration>())?.let {
+                            return TaxConfiguration(newTaxJarConfiguration = it, _json = json)
+                        }
                     }
                 }
 
@@ -1814,44 +1824,26 @@ constructor(
             }
         }
 
-        @JsonDeserialize(builder = NewAvalaraTaxConfiguration.Builder::class)
         @NoAutoDetect
         class NewAvalaraTaxConfiguration
+        @JsonCreator
         private constructor(
-            private val taxExempt: JsonField<Boolean>,
-            private val taxProvider: JsonField<TaxProvider>,
-            private val taxExemptionCode: JsonField<String>,
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonProperty("tax_exempt") private val taxExempt: Boolean,
+            @JsonProperty("tax_provider") private val taxProvider: TaxProvider,
+            @JsonProperty("tax_exemption_code") private val taxExemptionCode: String?,
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
-            private var validated: Boolean = false
+            @JsonProperty("tax_exempt") fun taxExempt(): Boolean = taxExempt
 
-            fun taxExempt(): Boolean = taxExempt.getRequired("tax_exempt")
+            @JsonProperty("tax_provider") fun taxProvider(): TaxProvider = taxProvider
 
-            fun taxProvider(): TaxProvider = taxProvider.getRequired("tax_provider")
-
-            fun taxExemptionCode(): String? = taxExemptionCode.getNullable("tax_exemption_code")
-
-            @JsonProperty("tax_exempt") @ExcludeMissing fun _taxExempt() = taxExempt
-
-            @JsonProperty("tax_provider") @ExcludeMissing fun _taxProvider() = taxProvider
-
-            @JsonProperty("tax_exemption_code")
-            @ExcludeMissing
-            fun _taxExemptionCode() = taxExemptionCode
+            @JsonProperty("tax_exemption_code") fun taxExemptionCode(): String? = taxExemptionCode
 
             @JsonAnyGetter
             @ExcludeMissing
             fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
-
-            fun validate(): NewAvalaraTaxConfiguration = apply {
-                if (!validated) {
-                    taxExempt()
-                    taxProvider()
-                    taxExemptionCode()
-                    validated = true
-                }
-            }
 
             fun toBuilder() = Builder().from(this)
 
@@ -1862,49 +1854,34 @@ constructor(
 
             class Builder {
 
-                private var taxExempt: JsonField<Boolean> = JsonMissing.of()
-                private var taxProvider: JsonField<TaxProvider> = JsonMissing.of()
-                private var taxExemptionCode: JsonField<String> = JsonMissing.of()
+                private var taxExempt: Boolean? = null
+                private var taxProvider: TaxProvider? = null
+                private var taxExemptionCode: String? = null
                 private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
                 internal fun from(newAvalaraTaxConfiguration: NewAvalaraTaxConfiguration) = apply {
-                    this.taxExempt = newAvalaraTaxConfiguration.taxExempt
-                    this.taxProvider = newAvalaraTaxConfiguration.taxProvider
-                    this.taxExemptionCode = newAvalaraTaxConfiguration.taxExemptionCode
-                    additionalProperties(newAvalaraTaxConfiguration.additionalProperties)
+                    taxExempt = newAvalaraTaxConfiguration.taxExempt
+                    taxProvider = newAvalaraTaxConfiguration.taxProvider
+                    taxExemptionCode = newAvalaraTaxConfiguration.taxExemptionCode
+                    additionalProperties =
+                        newAvalaraTaxConfiguration.additionalProperties.toMutableMap()
                 }
 
-                fun taxExempt(taxExempt: Boolean) = taxExempt(JsonField.of(taxExempt))
+                fun taxExempt(taxExempt: Boolean) = apply { this.taxExempt = taxExempt }
 
-                @JsonProperty("tax_exempt")
-                @ExcludeMissing
-                fun taxExempt(taxExempt: JsonField<Boolean>) = apply { this.taxExempt = taxExempt }
+                fun taxProvider(taxProvider: TaxProvider) = apply { this.taxProvider = taxProvider }
 
-                fun taxProvider(taxProvider: TaxProvider) = taxProvider(JsonField.of(taxProvider))
-
-                @JsonProperty("tax_provider")
-                @ExcludeMissing
-                fun taxProvider(taxProvider: JsonField<TaxProvider>) = apply {
-                    this.taxProvider = taxProvider
-                }
-
-                fun taxExemptionCode(taxExemptionCode: String) =
-                    taxExemptionCode(JsonField.of(taxExemptionCode))
-
-                @JsonProperty("tax_exemption_code")
-                @ExcludeMissing
-                fun taxExemptionCode(taxExemptionCode: JsonField<String>) = apply {
+                fun taxExemptionCode(taxExemptionCode: String?) = apply {
                     this.taxExemptionCode = taxExemptionCode
                 }
 
                 fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                     this.additionalProperties.clear()
-                    this.additionalProperties.putAll(additionalProperties)
+                    putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-                    this.additionalProperties.put(key, value)
+                    additionalProperties.put(key, value)
                 }
 
                 fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) =
@@ -1912,10 +1889,18 @@ constructor(
                         this.additionalProperties.putAll(additionalProperties)
                     }
 
+                fun removeAdditionalProperty(key: String) = apply {
+                    additionalProperties.remove(key)
+                }
+
+                fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                    keys.forEach(::removeAdditionalProperty)
+                }
+
                 fun build(): NewAvalaraTaxConfiguration =
                     NewAvalaraTaxConfiguration(
-                        taxExempt,
-                        taxProvider,
+                        checkNotNull(taxExempt) { "`taxExempt` is required but was not set" },
+                        checkNotNull(taxProvider) { "`taxProvider` is required but was not set" },
                         taxExemptionCode,
                         additionalProperties.toImmutable(),
                     )
@@ -1929,21 +1914,9 @@ constructor(
 
                 @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
 
-                override fun equals(other: Any?): Boolean {
-                    if (this === other) {
-                        return true
-                    }
-
-                    return /* spotless:off */ other is TaxProvider && value == other.value /* spotless:on */
-                }
-
-                override fun hashCode() = value.hashCode()
-
-                override fun toString() = value.toString()
-
                 companion object {
 
-                    val AVALARA = TaxProvider(JsonField.of("avalara"))
+                    val AVALARA = of("avalara")
 
                     fun of(value: String) = TaxProvider(JsonField.of(value))
                 }
@@ -1970,6 +1943,18 @@ constructor(
                     }
 
                 fun asString(): String = _value().asStringOrThrow()
+
+                override fun equals(other: Any?): Boolean {
+                    if (this === other) {
+                        return true
+                    }
+
+                    return /* spotless:off */ other is TaxProvider && value == other.value /* spotless:on */
+                }
+
+                override fun hashCode() = value.hashCode()
+
+                override fun toString() = value.toString()
             }
 
             override fun equals(other: Any?): Boolean {
@@ -1990,36 +1975,23 @@ constructor(
                 "NewAvalaraTaxConfiguration{taxExempt=$taxExempt, taxProvider=$taxProvider, taxExemptionCode=$taxExemptionCode, additionalProperties=$additionalProperties}"
         }
 
-        @JsonDeserialize(builder = NewTaxJarConfiguration.Builder::class)
         @NoAutoDetect
         class NewTaxJarConfiguration
+        @JsonCreator
         private constructor(
-            private val taxExempt: JsonField<Boolean>,
-            private val taxProvider: JsonField<TaxProvider>,
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonProperty("tax_exempt") private val taxExempt: Boolean,
+            @JsonProperty("tax_provider") private val taxProvider: TaxProvider,
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
-            private var validated: Boolean = false
+            @JsonProperty("tax_exempt") fun taxExempt(): Boolean = taxExempt
 
-            fun taxExempt(): Boolean = taxExempt.getRequired("tax_exempt")
-
-            fun taxProvider(): TaxProvider = taxProvider.getRequired("tax_provider")
-
-            @JsonProperty("tax_exempt") @ExcludeMissing fun _taxExempt() = taxExempt
-
-            @JsonProperty("tax_provider") @ExcludeMissing fun _taxProvider() = taxProvider
+            @JsonProperty("tax_provider") fun taxProvider(): TaxProvider = taxProvider
 
             @JsonAnyGetter
             @ExcludeMissing
             fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
-
-            fun validate(): NewTaxJarConfiguration = apply {
-                if (!validated) {
-                    taxExempt()
-                    taxProvider()
-                    validated = true
-                }
-            }
 
             fun toBuilder() = Builder().from(this)
 
@@ -2030,38 +2002,28 @@ constructor(
 
             class Builder {
 
-                private var taxExempt: JsonField<Boolean> = JsonMissing.of()
-                private var taxProvider: JsonField<TaxProvider> = JsonMissing.of()
+                private var taxExempt: Boolean? = null
+                private var taxProvider: TaxProvider? = null
                 private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
                 internal fun from(newTaxJarConfiguration: NewTaxJarConfiguration) = apply {
-                    this.taxExempt = newTaxJarConfiguration.taxExempt
-                    this.taxProvider = newTaxJarConfiguration.taxProvider
-                    additionalProperties(newTaxJarConfiguration.additionalProperties)
+                    taxExempt = newTaxJarConfiguration.taxExempt
+                    taxProvider = newTaxJarConfiguration.taxProvider
+                    additionalProperties =
+                        newTaxJarConfiguration.additionalProperties.toMutableMap()
                 }
 
-                fun taxExempt(taxExempt: Boolean) = taxExempt(JsonField.of(taxExempt))
+                fun taxExempt(taxExempt: Boolean) = apply { this.taxExempt = taxExempt }
 
-                @JsonProperty("tax_exempt")
-                @ExcludeMissing
-                fun taxExempt(taxExempt: JsonField<Boolean>) = apply { this.taxExempt = taxExempt }
-
-                fun taxProvider(taxProvider: TaxProvider) = taxProvider(JsonField.of(taxProvider))
-
-                @JsonProperty("tax_provider")
-                @ExcludeMissing
-                fun taxProvider(taxProvider: JsonField<TaxProvider>) = apply {
-                    this.taxProvider = taxProvider
-                }
+                fun taxProvider(taxProvider: TaxProvider) = apply { this.taxProvider = taxProvider }
 
                 fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                     this.additionalProperties.clear()
-                    this.additionalProperties.putAll(additionalProperties)
+                    putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-                    this.additionalProperties.put(key, value)
+                    additionalProperties.put(key, value)
                 }
 
                 fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) =
@@ -2069,10 +2031,18 @@ constructor(
                         this.additionalProperties.putAll(additionalProperties)
                     }
 
+                fun removeAdditionalProperty(key: String) = apply {
+                    additionalProperties.remove(key)
+                }
+
+                fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                    keys.forEach(::removeAdditionalProperty)
+                }
+
                 fun build(): NewTaxJarConfiguration =
                     NewTaxJarConfiguration(
-                        taxExempt,
-                        taxProvider,
+                        checkNotNull(taxExempt) { "`taxExempt` is required but was not set" },
+                        checkNotNull(taxProvider) { "`taxProvider` is required but was not set" },
                         additionalProperties.toImmutable(),
                     )
             }
@@ -2085,21 +2055,9 @@ constructor(
 
                 @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
 
-                override fun equals(other: Any?): Boolean {
-                    if (this === other) {
-                        return true
-                    }
-
-                    return /* spotless:off */ other is TaxProvider && value == other.value /* spotless:on */
-                }
-
-                override fun hashCode() = value.hashCode()
-
-                override fun toString() = value.toString()
-
                 companion object {
 
-                    val TAXJAR = TaxProvider(JsonField.of("taxjar"))
+                    val TAXJAR = of("taxjar")
 
                     fun of(value: String) = TaxProvider(JsonField.of(value))
                 }
@@ -2126,6 +2084,18 @@ constructor(
                     }
 
                 fun asString(): String = _value().asStringOrThrow()
+
+                override fun equals(other: Any?): Boolean {
+                    if (this === other) {
+                        return true
+                    }
+
+                    return /* spotless:off */ other is TaxProvider && value == other.value /* spotless:on */
+                }
+
+                override fun hashCode() = value.hashCode()
+
+                override fun toString() = value.toString()
             }
 
             override fun equals(other: Any?): Boolean {
@@ -2253,21 +2223,22 @@ constructor(
      * |Venezuela           |`ve_rif`    |Venezuelan RIF Number                                                                                  |
      * |Vietnam             |`vn_tin`    |Vietnamese Tax ID Number                                                                               |
      */
-    @JsonDeserialize(builder = TaxId.Builder::class)
     @NoAutoDetect
     class TaxId
+    @JsonCreator
     private constructor(
-        private val country: Country?,
-        private val type: Type?,
-        private val value: String?,
-        private val additionalProperties: Map<String, JsonValue>,
+        @JsonProperty("country") private val country: Country,
+        @JsonProperty("type") private val type: Type,
+        @JsonProperty("value") private val value: String,
+        @JsonAnySetter
+        private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
 
-        @JsonProperty("country") fun country(): Country? = country
+        @JsonProperty("country") fun country(): Country = country
 
-        @JsonProperty("type") fun type(): Type? = type
+        @JsonProperty("type") fun type(): Type = type
 
-        @JsonProperty("value") fun value(): String? = value
+        @JsonProperty("value") fun value(): String = value
 
         @JsonAnyGetter
         @ExcludeMissing
@@ -2288,31 +2259,35 @@ constructor(
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             internal fun from(taxId: TaxId) = apply {
-                this.country = taxId.country
-                this.type = taxId.type
-                this.value = taxId.value
-                additionalProperties(taxId.additionalProperties)
+                country = taxId.country
+                type = taxId.type
+                value = taxId.value
+                additionalProperties = taxId.additionalProperties.toMutableMap()
             }
 
-            @JsonProperty("country")
             fun country(country: Country) = apply { this.country = country }
 
-            @JsonProperty("type") fun type(type: Type) = apply { this.type = type }
+            fun type(type: Type) = apply { this.type = type }
 
-            @JsonProperty("value") fun value(value: String) = apply { this.value = value }
+            fun value(value: String) = apply { this.value = value }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
-                this.additionalProperties.putAll(additionalProperties)
+                putAllAdditionalProperties(additionalProperties)
             }
 
-            @JsonAnySetter
             fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-                this.additionalProperties.put(key, value)
+                additionalProperties.put(key, value)
             }
 
             fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.putAll(additionalProperties)
+            }
+
+            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+
+            fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                keys.forEach(::removeAdditionalProperty)
             }
 
             fun build(): TaxId =
@@ -2332,175 +2307,163 @@ constructor(
 
             @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
 
-            override fun equals(other: Any?): Boolean {
-                if (this === other) {
-                    return true
-                }
-
-                return /* spotless:off */ other is Country && value == other.value /* spotless:on */
-            }
-
-            override fun hashCode() = value.hashCode()
-
-            override fun toString() = value.toString()
-
             companion object {
 
-                val AD = Country(JsonField.of("AD"))
+                val AD = of("AD")
 
-                val AE = Country(JsonField.of("AE"))
+                val AE = of("AE")
 
-                val AR = Country(JsonField.of("AR"))
+                val AR = of("AR")
 
-                val AT = Country(JsonField.of("AT"))
+                val AT = of("AT")
 
-                val AU = Country(JsonField.of("AU"))
+                val AU = of("AU")
 
-                val BE = Country(JsonField.of("BE"))
+                val BE = of("BE")
 
-                val BG = Country(JsonField.of("BG"))
+                val BG = of("BG")
 
-                val BH = Country(JsonField.of("BH"))
+                val BH = of("BH")
 
-                val BO = Country(JsonField.of("BO"))
+                val BO = of("BO")
 
-                val BR = Country(JsonField.of("BR"))
+                val BR = of("BR")
 
-                val CA = Country(JsonField.of("CA"))
+                val CA = of("CA")
 
-                val CH = Country(JsonField.of("CH"))
+                val CH = of("CH")
 
-                val CL = Country(JsonField.of("CL"))
+                val CL = of("CL")
 
-                val CN = Country(JsonField.of("CN"))
+                val CN = of("CN")
 
-                val CO = Country(JsonField.of("CO"))
+                val CO = of("CO")
 
-                val CR = Country(JsonField.of("CR"))
+                val CR = of("CR")
 
-                val CY = Country(JsonField.of("CY"))
+                val CY = of("CY")
 
-                val CZ = Country(JsonField.of("CZ"))
+                val CZ = of("CZ")
 
-                val DE = Country(JsonField.of("DE"))
+                val DE = of("DE")
 
-                val DK = Country(JsonField.of("DK"))
+                val DK = of("DK")
 
-                val EE = Country(JsonField.of("EE"))
+                val EE = of("EE")
 
-                val DO = Country(JsonField.of("DO"))
+                val DO = of("DO")
 
-                val EC = Country(JsonField.of("EC"))
+                val EC = of("EC")
 
-                val EG = Country(JsonField.of("EG"))
+                val EG = of("EG")
 
-                val ES = Country(JsonField.of("ES"))
+                val ES = of("ES")
 
-                val EU = Country(JsonField.of("EU"))
+                val EU = of("EU")
 
-                val FI = Country(JsonField.of("FI"))
+                val FI = of("FI")
 
-                val FR = Country(JsonField.of("FR"))
+                val FR = of("FR")
 
-                val GB = Country(JsonField.of("GB"))
+                val GB = of("GB")
 
-                val GE = Country(JsonField.of("GE"))
+                val GE = of("GE")
 
-                val GR = Country(JsonField.of("GR"))
+                val GR = of("GR")
 
-                val HK = Country(JsonField.of("HK"))
+                val HK = of("HK")
 
-                val HR = Country(JsonField.of("HR"))
+                val HR = of("HR")
 
-                val HU = Country(JsonField.of("HU"))
+                val HU = of("HU")
 
-                val ID = Country(JsonField.of("ID"))
+                val ID = of("ID")
 
-                val IE = Country(JsonField.of("IE"))
+                val IE = of("IE")
 
-                val IL = Country(JsonField.of("IL"))
+                val IL = of("IL")
 
-                val IN = Country(JsonField.of("IN"))
+                val IN = of("IN")
 
-                val IS = Country(JsonField.of("IS"))
+                val IS = of("IS")
 
-                val IT = Country(JsonField.of("IT"))
+                val IT = of("IT")
 
-                val JP = Country(JsonField.of("JP"))
+                val JP = of("JP")
 
-                val KE = Country(JsonField.of("KE"))
+                val KE = of("KE")
 
-                val KR = Country(JsonField.of("KR"))
+                val KR = of("KR")
 
-                val KZ = Country(JsonField.of("KZ"))
+                val KZ = of("KZ")
 
-                val LI = Country(JsonField.of("LI"))
+                val LI = of("LI")
 
-                val LT = Country(JsonField.of("LT"))
+                val LT = of("LT")
 
-                val LU = Country(JsonField.of("LU"))
+                val LU = of("LU")
 
-                val LV = Country(JsonField.of("LV"))
+                val LV = of("LV")
 
-                val MT = Country(JsonField.of("MT"))
+                val MT = of("MT")
 
-                val MX = Country(JsonField.of("MX"))
+                val MX = of("MX")
 
-                val MY = Country(JsonField.of("MY"))
+                val MY = of("MY")
 
-                val NG = Country(JsonField.of("NG"))
+                val NG = of("NG")
 
-                val NL = Country(JsonField.of("NL"))
+                val NL = of("NL")
 
-                val NO = Country(JsonField.of("NO"))
+                val NO = of("NO")
 
-                val NZ = Country(JsonField.of("NZ"))
+                val NZ = of("NZ")
 
-                val OM = Country(JsonField.of("OM"))
+                val OM = of("OM")
 
-                val PE = Country(JsonField.of("PE"))
+                val PE = of("PE")
 
-                val PH = Country(JsonField.of("PH"))
+                val PH = of("PH")
 
-                val PL = Country(JsonField.of("PL"))
+                val PL = of("PL")
 
-                val PT = Country(JsonField.of("PT"))
+                val PT = of("PT")
 
-                val RO = Country(JsonField.of("RO"))
+                val RO = of("RO")
 
-                val RS = Country(JsonField.of("RS"))
+                val RS = of("RS")
 
-                val RU = Country(JsonField.of("RU"))
+                val RU = of("RU")
 
-                val SA = Country(JsonField.of("SA"))
+                val SA = of("SA")
 
-                val SE = Country(JsonField.of("SE"))
+                val SE = of("SE")
 
-                val SG = Country(JsonField.of("SG"))
+                val SG = of("SG")
 
-                val SI = Country(JsonField.of("SI"))
+                val SI = of("SI")
 
-                val SK = Country(JsonField.of("SK"))
+                val SK = of("SK")
 
-                val SV = Country(JsonField.of("SV"))
+                val SV = of("SV")
 
-                val TH = Country(JsonField.of("TH"))
+                val TH = of("TH")
 
-                val TR = Country(JsonField.of("TR"))
+                val TR = of("TR")
 
-                val TW = Country(JsonField.of("TW"))
+                val TW = of("TW")
 
-                val UA = Country(JsonField.of("UA"))
+                val UA = of("UA")
 
-                val US = Country(JsonField.of("US"))
+                val US = of("US")
 
-                val UY = Country(JsonField.of("UY"))
+                val UY = of("UY")
 
-                val VE = Country(JsonField.of("VE"))
+                val VE = of("VE")
 
-                val VN = Country(JsonField.of("VN"))
+                val VN = of("VN")
 
-                val ZA = Country(JsonField.of("ZA"))
+                val ZA = of("ZA")
 
                 fun of(value: String) = Country(JsonField.of(value))
             }
@@ -2835,6 +2798,18 @@ constructor(
                 }
 
             fun asString(): String = _value().asStringOrThrow()
+
+            override fun equals(other: Any?): Boolean {
+                if (this === other) {
+                    return true
+                }
+
+                return /* spotless:off */ other is Country && value == other.value /* spotless:on */
+            }
+
+            override fun hashCode() = value.hashCode()
+
+            override fun toString() = value.toString()
         }
 
         class Type
@@ -2845,161 +2820,149 @@ constructor(
 
             @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
 
-            override fun equals(other: Any?): Boolean {
-                if (this === other) {
-                    return true
-                }
-
-                return /* spotless:off */ other is Type && value == other.value /* spotless:on */
-            }
-
-            override fun hashCode() = value.hashCode()
-
-            override fun toString() = value.toString()
-
             companion object {
 
-                val AD_NRT = Type(JsonField.of("ad_nrt"))
+                val AD_NRT = of("ad_nrt")
 
-                val AE_TRN = Type(JsonField.of("ae_trn"))
+                val AE_TRN = of("ae_trn")
 
-                val AR_CUIT = Type(JsonField.of("ar_cuit"))
+                val AR_CUIT = of("ar_cuit")
 
-                val EU_VAT = Type(JsonField.of("eu_vat"))
+                val EU_VAT = of("eu_vat")
 
-                val AU_ABN = Type(JsonField.of("au_abn"))
+                val AU_ABN = of("au_abn")
 
-                val AU_ARN = Type(JsonField.of("au_arn"))
+                val AU_ARN = of("au_arn")
 
-                val BG_UIC = Type(JsonField.of("bg_uic"))
+                val BG_UIC = of("bg_uic")
 
-                val BH_VAT = Type(JsonField.of("bh_vat"))
+                val BH_VAT = of("bh_vat")
 
-                val BO_TIN = Type(JsonField.of("bo_tin"))
+                val BO_TIN = of("bo_tin")
 
-                val BR_CNPJ = Type(JsonField.of("br_cnpj"))
+                val BR_CNPJ = of("br_cnpj")
 
-                val BR_CPF = Type(JsonField.of("br_cpf"))
+                val BR_CPF = of("br_cpf")
 
-                val CA_BN = Type(JsonField.of("ca_bn"))
+                val CA_BN = of("ca_bn")
 
-                val CA_GST_HST = Type(JsonField.of("ca_gst_hst"))
+                val CA_GST_HST = of("ca_gst_hst")
 
-                val CA_PST_BC = Type(JsonField.of("ca_pst_bc"))
+                val CA_PST_BC = of("ca_pst_bc")
 
-                val CA_PST_MB = Type(JsonField.of("ca_pst_mb"))
+                val CA_PST_MB = of("ca_pst_mb")
 
-                val CA_PST_SK = Type(JsonField.of("ca_pst_sk"))
+                val CA_PST_SK = of("ca_pst_sk")
 
-                val CA_QST = Type(JsonField.of("ca_qst"))
+                val CA_QST = of("ca_qst")
 
-                val CH_VAT = Type(JsonField.of("ch_vat"))
+                val CH_VAT = of("ch_vat")
 
-                val CL_TIN = Type(JsonField.of("cl_tin"))
+                val CL_TIN = of("cl_tin")
 
-                val CN_TIN = Type(JsonField.of("cn_tin"))
+                val CN_TIN = of("cn_tin")
 
-                val CO_NIT = Type(JsonField.of("co_nit"))
+                val CO_NIT = of("co_nit")
 
-                val CR_TIN = Type(JsonField.of("cr_tin"))
+                val CR_TIN = of("cr_tin")
 
-                val DO_RCN = Type(JsonField.of("do_rcn"))
+                val DO_RCN = of("do_rcn")
 
-                val EC_RUC = Type(JsonField.of("ec_ruc"))
+                val EC_RUC = of("ec_ruc")
 
-                val EG_TIN = Type(JsonField.of("eg_tin"))
+                val EG_TIN = of("eg_tin")
 
-                val ES_CIF = Type(JsonField.of("es_cif"))
+                val ES_CIF = of("es_cif")
 
-                val EU_OSS_VAT = Type(JsonField.of("eu_oss_vat"))
+                val EU_OSS_VAT = of("eu_oss_vat")
 
-                val GB_VAT = Type(JsonField.of("gb_vat"))
+                val GB_VAT = of("gb_vat")
 
-                val GE_VAT = Type(JsonField.of("ge_vat"))
+                val GE_VAT = of("ge_vat")
 
-                val HK_BR = Type(JsonField.of("hk_br"))
+                val HK_BR = of("hk_br")
 
-                val HU_TIN = Type(JsonField.of("hu_tin"))
+                val HU_TIN = of("hu_tin")
 
-                val ID_NPWP = Type(JsonField.of("id_npwp"))
+                val ID_NPWP = of("id_npwp")
 
-                val IL_VAT = Type(JsonField.of("il_vat"))
+                val IL_VAT = of("il_vat")
 
-                val IN_GST = Type(JsonField.of("in_gst"))
+                val IN_GST = of("in_gst")
 
-                val IS_VAT = Type(JsonField.of("is_vat"))
+                val IS_VAT = of("is_vat")
 
-                val JP_CN = Type(JsonField.of("jp_cn"))
+                val JP_CN = of("jp_cn")
 
-                val JP_RN = Type(JsonField.of("jp_rn"))
+                val JP_RN = of("jp_rn")
 
-                val JP_TRN = Type(JsonField.of("jp_trn"))
+                val JP_TRN = of("jp_trn")
 
-                val KE_PIN = Type(JsonField.of("ke_pin"))
+                val KE_PIN = of("ke_pin")
 
-                val KR_BRN = Type(JsonField.of("kr_brn"))
+                val KR_BRN = of("kr_brn")
 
-                val KZ_BIN = Type(JsonField.of("kz_bin"))
+                val KZ_BIN = of("kz_bin")
 
-                val LI_UID = Type(JsonField.of("li_uid"))
+                val LI_UID = of("li_uid")
 
-                val MX_RFC = Type(JsonField.of("mx_rfc"))
+                val MX_RFC = of("mx_rfc")
 
-                val MY_FRP = Type(JsonField.of("my_frp"))
+                val MY_FRP = of("my_frp")
 
-                val MY_ITN = Type(JsonField.of("my_itn"))
+                val MY_ITN = of("my_itn")
 
-                val MY_SST = Type(JsonField.of("my_sst"))
+                val MY_SST = of("my_sst")
 
-                val NG_TIN = Type(JsonField.of("ng_tin"))
+                val NG_TIN = of("ng_tin")
 
-                val NO_VAT = Type(JsonField.of("no_vat"))
+                val NO_VAT = of("no_vat")
 
-                val NO_VOEC = Type(JsonField.of("no_voec"))
+                val NO_VOEC = of("no_voec")
 
-                val NZ_GST = Type(JsonField.of("nz_gst"))
+                val NZ_GST = of("nz_gst")
 
-                val OM_VAT = Type(JsonField.of("om_vat"))
+                val OM_VAT = of("om_vat")
 
-                val PE_RUC = Type(JsonField.of("pe_ruc"))
+                val PE_RUC = of("pe_ruc")
 
-                val PH_TIN = Type(JsonField.of("ph_tin"))
+                val PH_TIN = of("ph_tin")
 
-                val RO_TIN = Type(JsonField.of("ro_tin"))
+                val RO_TIN = of("ro_tin")
 
-                val RS_PIB = Type(JsonField.of("rs_pib"))
+                val RS_PIB = of("rs_pib")
 
-                val RU_INN = Type(JsonField.of("ru_inn"))
+                val RU_INN = of("ru_inn")
 
-                val RU_KPP = Type(JsonField.of("ru_kpp"))
+                val RU_KPP = of("ru_kpp")
 
-                val SA_VAT = Type(JsonField.of("sa_vat"))
+                val SA_VAT = of("sa_vat")
 
-                val SG_GST = Type(JsonField.of("sg_gst"))
+                val SG_GST = of("sg_gst")
 
-                val SG_UEN = Type(JsonField.of("sg_uen"))
+                val SG_UEN = of("sg_uen")
 
-                val SI_TIN = Type(JsonField.of("si_tin"))
+                val SI_TIN = of("si_tin")
 
-                val SV_NIT = Type(JsonField.of("sv_nit"))
+                val SV_NIT = of("sv_nit")
 
-                val TH_VAT = Type(JsonField.of("th_vat"))
+                val TH_VAT = of("th_vat")
 
-                val TR_TIN = Type(JsonField.of("tr_tin"))
+                val TR_TIN = of("tr_tin")
 
-                val TW_VAT = Type(JsonField.of("tw_vat"))
+                val TW_VAT = of("tw_vat")
 
-                val UA_VAT = Type(JsonField.of("ua_vat"))
+                val UA_VAT = of("ua_vat")
 
-                val US_EIN = Type(JsonField.of("us_ein"))
+                val US_EIN = of("us_ein")
 
-                val UY_RUC = Type(JsonField.of("uy_ruc"))
+                val UY_RUC = of("uy_ruc")
 
-                val VE_RIF = Type(JsonField.of("ve_rif"))
+                val VE_RIF = of("ve_rif")
 
-                val VN_TIN = Type(JsonField.of("vn_tin"))
+                val VN_TIN = of("vn_tin")
 
-                val ZA_VAT = Type(JsonField.of("za_vat"))
+                val ZA_VAT = of("za_vat")
 
                 fun of(value: String) = Type(JsonField.of(value))
             }
@@ -3306,6 +3269,18 @@ constructor(
                 }
 
             fun asString(): String = _value().asStringOrThrow()
+
+            override fun equals(other: Any?): Boolean {
+                if (this === other) {
+                    return true
+                }
+
+                return /* spotless:off */ other is Type && value == other.value /* spotless:on */
+            }
+
+            override fun hashCode() = value.hashCode()
+
+            override fun toString() = value.toString()
         }
 
         override fun equals(other: Any?): Boolean {

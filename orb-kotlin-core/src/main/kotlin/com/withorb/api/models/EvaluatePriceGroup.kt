@@ -4,6 +4,7 @@ package com.withorb.api.models
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter
 import com.fasterxml.jackson.annotation.JsonAnySetter
+import com.fasterxml.jackson.annotation.JsonCreator
 import com.fasterxml.jackson.annotation.JsonProperty
 import com.fasterxml.jackson.core.JsonGenerator
 import com.fasterxml.jackson.core.ObjectCodec
@@ -20,21 +21,26 @@ import com.withorb.api.core.JsonMissing
 import com.withorb.api.core.JsonValue
 import com.withorb.api.core.NoAutoDetect
 import com.withorb.api.core.getOrThrow
+import com.withorb.api.core.immutableEmptyMap
 import com.withorb.api.core.toImmutable
 import com.withorb.api.errors.OrbInvalidDataException
 import java.util.Objects
 
-@JsonDeserialize(builder = EvaluatePriceGroup.Builder::class)
 @NoAutoDetect
 class EvaluatePriceGroup
+@JsonCreator
 private constructor(
-    private val groupingValues: JsonField<List<GroupingValue>>,
-    private val quantity: JsonField<Double>,
-    private val amount: JsonField<String>,
-    private val additionalProperties: Map<String, JsonValue>,
+    @JsonProperty("grouping_values")
+    @ExcludeMissing
+    private val groupingValues: JsonField<List<GroupingValue>> = JsonMissing.of(),
+    @JsonProperty("quantity")
+    @ExcludeMissing
+    private val quantity: JsonField<Double> = JsonMissing.of(),
+    @JsonProperty("amount")
+    @ExcludeMissing
+    private val amount: JsonField<String> = JsonMissing.of(),
+    @JsonAnySetter private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
 ) {
-
-    private var validated: Boolean = false
 
     /** The values for the group in the order specified by `grouping_keys` */
     fun groupingValues(): List<GroupingValue> = groupingValues.getRequired("grouping_values")
@@ -57,6 +63,8 @@ private constructor(
     @JsonAnyGetter
     @ExcludeMissing
     fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
+
+    private var validated: Boolean = false
 
     fun validate(): EvaluatePriceGroup = apply {
         if (!validated) {
@@ -82,10 +90,10 @@ private constructor(
         private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         internal fun from(evaluatePriceGroup: EvaluatePriceGroup) = apply {
-            this.groupingValues = evaluatePriceGroup.groupingValues
-            this.quantity = evaluatePriceGroup.quantity
-            this.amount = evaluatePriceGroup.amount
-            additionalProperties(evaluatePriceGroup.additionalProperties)
+            groupingValues = evaluatePriceGroup.groupingValues
+            quantity = evaluatePriceGroup.quantity
+            amount = evaluatePriceGroup.amount
+            additionalProperties = evaluatePriceGroup.additionalProperties.toMutableMap()
         }
 
         /** The values for the group in the order specified by `grouping_keys` */
@@ -93,8 +101,6 @@ private constructor(
             groupingValues(JsonField.of(groupingValues))
 
         /** The values for the group in the order specified by `grouping_keys` */
-        @JsonProperty("grouping_values")
-        @ExcludeMissing
         fun groupingValues(groupingValues: JsonField<List<GroupingValue>>) = apply {
             this.groupingValues = groupingValues
         }
@@ -103,30 +109,31 @@ private constructor(
         fun quantity(quantity: Double) = quantity(JsonField.of(quantity))
 
         /** The price's usage quantity for the group */
-        @JsonProperty("quantity")
-        @ExcludeMissing
         fun quantity(quantity: JsonField<Double>) = apply { this.quantity = quantity }
 
         /** The price's output for the group */
         fun amount(amount: String) = amount(JsonField.of(amount))
 
         /** The price's output for the group */
-        @JsonProperty("amount")
-        @ExcludeMissing
         fun amount(amount: JsonField<String>) = apply { this.amount = amount }
 
         fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
             this.additionalProperties.clear()
-            this.additionalProperties.putAll(additionalProperties)
+            putAllAdditionalProperties(additionalProperties)
         }
 
-        @JsonAnySetter
         fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-            this.additionalProperties.put(key, value)
+            additionalProperties.put(key, value)
         }
 
         fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
             this.additionalProperties.putAll(additionalProperties)
+        }
+
+        fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+
+        fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+            keys.forEach(::removeAdditionalProperty)
         }
 
         fun build(): EvaluatePriceGroup =

@@ -6,7 +6,6 @@ import com.fasterxml.jackson.annotation.JsonAnyGetter
 import com.fasterxml.jackson.annotation.JsonAnySetter
 import com.fasterxml.jackson.annotation.JsonCreator
 import com.fasterxml.jackson.annotation.JsonProperty
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize
 import com.withorb.api.core.Enum
 import com.withorb.api.core.ExcludeMissing
 import com.withorb.api.core.JsonField
@@ -14,9 +13,9 @@ import com.withorb.api.core.JsonValue
 import com.withorb.api.core.NoAutoDetect
 import com.withorb.api.core.http.Headers
 import com.withorb.api.core.http.QueryParams
+import com.withorb.api.core.immutableEmptyMap
 import com.withorb.api.core.toImmutable
 import com.withorb.api.errors.OrbInvalidDataException
-import com.withorb.api.models.*
 import java.util.Objects
 
 class CustomerBalanceTransactionCreateParams
@@ -64,19 +63,20 @@ constructor(
         }
     }
 
-    @JsonDeserialize(builder = CustomerBalanceTransactionCreateBody.Builder::class)
     @NoAutoDetect
     class CustomerBalanceTransactionCreateBody
+    @JsonCreator
     internal constructor(
-        private val amount: String?,
-        private val type: Type?,
-        private val description: String?,
-        private val additionalProperties: Map<String, JsonValue>,
+        @JsonProperty("amount") private val amount: String,
+        @JsonProperty("type") private val type: Type,
+        @JsonProperty("description") private val description: String?,
+        @JsonAnySetter
+        private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
 
-        @JsonProperty("amount") fun amount(): String? = amount
+        @JsonProperty("amount") fun amount(): String = amount
 
-        @JsonProperty("type") fun type(): Type? = type
+        @JsonProperty("type") fun type(): Type = type
 
         /** An optional description that can be specified around this entry. */
         @JsonProperty("description") fun description(): String? = description
@@ -102,32 +102,37 @@ constructor(
             internal fun from(
                 customerBalanceTransactionCreateBody: CustomerBalanceTransactionCreateBody
             ) = apply {
-                this.amount = customerBalanceTransactionCreateBody.amount
-                this.type = customerBalanceTransactionCreateBody.type
-                this.description = customerBalanceTransactionCreateBody.description
-                additionalProperties(customerBalanceTransactionCreateBody.additionalProperties)
+                amount = customerBalanceTransactionCreateBody.amount
+                type = customerBalanceTransactionCreateBody.type
+                description = customerBalanceTransactionCreateBody.description
+                additionalProperties =
+                    customerBalanceTransactionCreateBody.additionalProperties.toMutableMap()
             }
 
-            @JsonProperty("amount") fun amount(amount: String) = apply { this.amount = amount }
+            fun amount(amount: String) = apply { this.amount = amount }
 
-            @JsonProperty("type") fun type(type: Type) = apply { this.type = type }
+            fun type(type: Type) = apply { this.type = type }
 
             /** An optional description that can be specified around this entry. */
-            @JsonProperty("description")
-            fun description(description: String) = apply { this.description = description }
+            fun description(description: String?) = apply { this.description = description }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
-                this.additionalProperties.putAll(additionalProperties)
+                putAllAdditionalProperties(additionalProperties)
             }
 
-            @JsonAnySetter
             fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-                this.additionalProperties.put(key, value)
+                additionalProperties.put(key, value)
             }
 
             fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.putAll(additionalProperties)
+            }
+
+            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+
+            fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                keys.forEach(::removeAdditionalProperty)
             }
 
             fun build(): CustomerBalanceTransactionCreateBody =
@@ -338,23 +343,11 @@ constructor(
 
         @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
 
-        override fun equals(other: Any?): Boolean {
-            if (this === other) {
-                return true
-            }
-
-            return /* spotless:off */ other is Type && value == other.value /* spotless:on */
-        }
-
-        override fun hashCode() = value.hashCode()
-
-        override fun toString() = value.toString()
-
         companion object {
 
-            val INCREMENT = Type(JsonField.of("increment"))
+            val INCREMENT = of("increment")
 
-            val DECREMENT = Type(JsonField.of("decrement"))
+            val DECREMENT = of("decrement")
 
             fun of(value: String) = Type(JsonField.of(value))
         }
@@ -385,6 +378,18 @@ constructor(
             }
 
         fun asString(): String = _value().asStringOrThrow()
+
+        override fun equals(other: Any?): Boolean {
+            if (this === other) {
+                return true
+            }
+
+            return /* spotless:off */ other is Type && value == other.value /* spotless:on */
+        }
+
+        override fun hashCode() = value.hashCode()
+
+        override fun toString() = value.toString()
     }
 
     override fun equals(other: Any?): Boolean {

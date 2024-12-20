@@ -4,8 +4,18 @@ package com.withorb.api.services.blocking
 
 import com.withorb.api.TestServerExtension
 import com.withorb.api.client.okhttp.OrbOkHttpClient
-import com.withorb.api.models.*
+import com.withorb.api.core.JsonValue
+import com.withorb.api.models.Discount
+import com.withorb.api.models.InvoiceCreateParams
+import com.withorb.api.models.InvoiceFetchParams
+import com.withorb.api.models.InvoiceFetchUpcomingParams
+import com.withorb.api.models.InvoiceIssueParams
 import com.withorb.api.models.InvoiceListParams
+import com.withorb.api.models.InvoiceMarkPaidParams
+import com.withorb.api.models.InvoicePayParams
+import com.withorb.api.models.InvoiceUpdateParams
+import com.withorb.api.models.InvoiceVoidParams
+import com.withorb.api.models.PercentageDiscount
 import java.time.LocalDate
 import java.time.OffsetDateTime
 import org.junit.jupiter.api.Test
@@ -49,7 +59,7 @@ class InvoiceServiceTest {
                     .discount(
                         Discount.ofPercentageDiscount(
                             PercentageDiscount.builder()
-                                .appliesToPriceIds(listOf("string"))
+                                .appliesToPriceIds(listOf("h74gfhdjvn7ujokd", "7hfgtgjnbvc3ujkl"))
                                 .discountType(PercentageDiscount.DiscountType.PERCENTAGE)
                                 .percentageDiscount(0.15)
                                 .reason("reason")
@@ -58,7 +68,11 @@ class InvoiceServiceTest {
                     )
                     .externalCustomerId("external-customer-id")
                     .memo("An optional memo for my invoice.")
-                    .metadata(InvoiceCreateParams.Metadata.builder().build())
+                    .metadata(
+                        InvoiceCreateParams.Metadata.builder()
+                            .putAdditionalProperty("foo", JsonValue.from("string"))
+                            .build()
+                    )
                     .willAutoIssue(false)
                     .build()
             )
@@ -78,7 +92,11 @@ class InvoiceServiceTest {
             invoiceService.update(
                 InvoiceUpdateParams.builder()
                     .invoiceId("invoice_id")
-                    .metadata(InvoiceUpdateParams.Metadata.builder().build())
+                    .metadata(
+                        InvoiceUpdateParams.Metadata.builder()
+                            .putAdditionalProperty("foo", JsonValue.from("string"))
+                            .build()
+                    )
                     .build()
             )
         println(invoice)

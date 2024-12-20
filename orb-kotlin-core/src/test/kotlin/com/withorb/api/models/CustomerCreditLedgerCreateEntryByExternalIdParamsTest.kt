@@ -2,7 +2,7 @@
 
 package com.withorb.api.models
 
-import com.withorb.api.models.*
+import com.withorb.api.core.JsonValue
 import java.time.OffsetDateTime
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
@@ -12,7 +12,6 @@ class CustomerCreditLedgerCreateEntryByExternalIdParamsTest {
     @Test
     fun createCustomerCreditLedgerCreateEntryByExternalIdParams() {
         CustomerCreditLedgerCreateEntryByExternalIdParams.builder()
-            .externalCustomerId("external_customer_id")
             .forAddIncrementCreditLedgerEntryRequestParams(
                 CustomerCreditLedgerCreateEntryByExternalIdParams
                     .AddIncrementCreditLedgerEntryRequestParams
@@ -44,11 +43,13 @@ class CustomerCreditLedgerCreateEntryByExternalIdParamsTest {
                             .AddIncrementCreditLedgerEntryRequestParams
                             .Metadata
                             .builder()
+                            .putAdditionalProperty("foo", JsonValue.from("string"))
                             .build()
                     )
                     .perUnitCostBasis("per_unit_cost_basis")
                     .build()
             )
+            .externalCustomerId("external_customer_id")
             .build()
     }
 

@@ -5,7 +5,6 @@ package com.withorb.api.models
 import com.fasterxml.jackson.annotation.JsonCreator
 import com.withorb.api.core.Enum
 import com.withorb.api.core.JsonField
-import com.withorb.api.core.JsonValue
 import com.withorb.api.errors.OrbInvalidDataException
 
 class BillingCycleRelativeDate
@@ -16,23 +15,11 @@ private constructor(
 
     @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
 
-    override fun equals(other: Any?): Boolean {
-        if (this === other) {
-            return true
-        }
-
-        return /* spotless:off */ other is BillingCycleRelativeDate && value == other.value /* spotless:on */
-    }
-
-    override fun hashCode() = value.hashCode()
-
-    override fun toString() = value.toString()
-
     companion object {
 
-        val START_OF_TERM = BillingCycleRelativeDate(JsonField.of("start_of_term"))
+        val START_OF_TERM = of("start_of_term")
 
-        val END_OF_TERM = BillingCycleRelativeDate(JsonField.of("end_of_term"))
+        val END_OF_TERM = of("end_of_term")
 
         fun of(value: String) = BillingCycleRelativeDate(JsonField.of(value))
     }
@@ -63,4 +50,16 @@ private constructor(
         }
 
     fun asString(): String = _value().asStringOrThrow()
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) {
+            return true
+        }
+
+        return /* spotless:off */ other is BillingCycleRelativeDate && value == other.value /* spotless:on */
+    }
+
+    override fun hashCode() = value.hashCode()
+
+    override fun toString() = value.toString()
 }

@@ -6,7 +6,6 @@ import com.fasterxml.jackson.annotation.JsonAnyGetter
 import com.fasterxml.jackson.annotation.JsonAnySetter
 import com.fasterxml.jackson.annotation.JsonCreator
 import com.fasterxml.jackson.annotation.JsonProperty
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize
 import com.withorb.api.core.Enum
 import com.withorb.api.core.ExcludeMissing
 import com.withorb.api.core.JsonField
@@ -14,9 +13,9 @@ import com.withorb.api.core.JsonValue
 import com.withorb.api.core.NoAutoDetect
 import com.withorb.api.core.http.Headers
 import com.withorb.api.core.http.QueryParams
+import com.withorb.api.core.immutableEmptyMap
 import com.withorb.api.core.toImmutable
 import com.withorb.api.errors.OrbInvalidDataException
-import com.withorb.api.models.*
 import java.util.Objects
 
 class ItemUpdateParams
@@ -65,13 +64,15 @@ constructor(
      * existing mappings. Orb requires that you pass the full list of mappings; this list will
      * replace the existing item mappings.
      */
-    @JsonDeserialize(builder = ItemUpdateBody.Builder::class)
     @NoAutoDetect
     class ItemUpdateBody
+    @JsonCreator
     internal constructor(
+        @JsonProperty("external_connections")
         private val externalConnections: List<ExternalConnection>?,
-        private val name: String?,
-        private val additionalProperties: Map<String, JsonValue>,
+        @JsonProperty("name") private val name: String?,
+        @JsonAnySetter
+        private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
 
         @JsonProperty("external_connections")
@@ -97,30 +98,34 @@ constructor(
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             internal fun from(itemUpdateBody: ItemUpdateBody) = apply {
-                this.externalConnections = itemUpdateBody.externalConnections
-                this.name = itemUpdateBody.name
-                additionalProperties(itemUpdateBody.additionalProperties)
+                externalConnections = itemUpdateBody.externalConnections?.toMutableList()
+                name = itemUpdateBody.name
+                additionalProperties = itemUpdateBody.additionalProperties.toMutableMap()
             }
 
-            @JsonProperty("external_connections")
-            fun externalConnections(externalConnections: List<ExternalConnection>) = apply {
+            fun externalConnections(externalConnections: List<ExternalConnection>?) = apply {
                 this.externalConnections = externalConnections
             }
 
-            @JsonProperty("name") fun name(name: String) = apply { this.name = name }
+            fun name(name: String?) = apply { this.name = name }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
-                this.additionalProperties.putAll(additionalProperties)
+                putAllAdditionalProperties(additionalProperties)
             }
 
-            @JsonAnySetter
             fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-                this.additionalProperties.put(key, value)
+                additionalProperties.put(key, value)
             }
 
             fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.putAll(additionalProperties)
+            }
+
+            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+
+            fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                keys.forEach(::removeAdditionalProperty)
             }
 
             fun build(): ItemUpdateBody =
@@ -320,19 +325,21 @@ constructor(
             )
     }
 
-    @JsonDeserialize(builder = ExternalConnection.Builder::class)
     @NoAutoDetect
     class ExternalConnection
+    @JsonCreator
     private constructor(
-        private val externalConnectionName: ExternalConnectionName?,
-        private val externalEntityId: String?,
-        private val additionalProperties: Map<String, JsonValue>,
+        @JsonProperty("external_connection_name")
+        private val externalConnectionName: ExternalConnectionName,
+        @JsonProperty("external_entity_id") private val externalEntityId: String,
+        @JsonAnySetter
+        private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
 
         @JsonProperty("external_connection_name")
-        fun externalConnectionName(): ExternalConnectionName? = externalConnectionName
+        fun externalConnectionName(): ExternalConnectionName = externalConnectionName
 
-        @JsonProperty("external_entity_id") fun externalEntityId(): String? = externalEntityId
+        @JsonProperty("external_entity_id") fun externalEntityId(): String = externalEntityId
 
         @JsonAnyGetter
         @ExcludeMissing
@@ -352,33 +359,36 @@ constructor(
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             internal fun from(externalConnection: ExternalConnection) = apply {
-                this.externalConnectionName = externalConnection.externalConnectionName
-                this.externalEntityId = externalConnection.externalEntityId
-                additionalProperties(externalConnection.additionalProperties)
+                externalConnectionName = externalConnection.externalConnectionName
+                externalEntityId = externalConnection.externalEntityId
+                additionalProperties = externalConnection.additionalProperties.toMutableMap()
             }
 
-            @JsonProperty("external_connection_name")
             fun externalConnectionName(externalConnectionName: ExternalConnectionName) = apply {
                 this.externalConnectionName = externalConnectionName
             }
 
-            @JsonProperty("external_entity_id")
             fun externalEntityId(externalEntityId: String) = apply {
                 this.externalEntityId = externalEntityId
             }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
-                this.additionalProperties.putAll(additionalProperties)
+                putAllAdditionalProperties(additionalProperties)
             }
 
-            @JsonAnySetter
             fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-                this.additionalProperties.put(key, value)
+                additionalProperties.put(key, value)
             }
 
             fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.putAll(additionalProperties)
+            }
+
+            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+
+            fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                keys.forEach(::removeAdditionalProperty)
             }
 
             fun build(): ExternalConnection =
@@ -401,33 +411,21 @@ constructor(
 
             @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
 
-            override fun equals(other: Any?): Boolean {
-                if (this === other) {
-                    return true
-                }
-
-                return /* spotless:off */ other is ExternalConnectionName && value == other.value /* spotless:on */
-            }
-
-            override fun hashCode() = value.hashCode()
-
-            override fun toString() = value.toString()
-
             companion object {
 
-                val STRIPE = ExternalConnectionName(JsonField.of("stripe"))
+                val STRIPE = of("stripe")
 
-                val QUICKBOOKS = ExternalConnectionName(JsonField.of("quickbooks"))
+                val QUICKBOOKS = of("quickbooks")
 
-                val BILL_COM = ExternalConnectionName(JsonField.of("bill.com"))
+                val BILL_COM = of("bill.com")
 
-                val NETSUITE = ExternalConnectionName(JsonField.of("netsuite"))
+                val NETSUITE = of("netsuite")
 
-                val TAXJAR = ExternalConnectionName(JsonField.of("taxjar"))
+                val TAXJAR = of("taxjar")
 
-                val AVALARA = ExternalConnectionName(JsonField.of("avalara"))
+                val AVALARA = of("avalara")
 
-                val ANROK = ExternalConnectionName(JsonField.of("anrok"))
+                val ANROK = of("anrok")
 
                 fun of(value: String) = ExternalConnectionName(JsonField.of(value))
             }
@@ -478,6 +476,18 @@ constructor(
                 }
 
             fun asString(): String = _value().asStringOrThrow()
+
+            override fun equals(other: Any?): Boolean {
+                if (this === other) {
+                    return true
+                }
+
+                return /* spotless:off */ other is ExternalConnectionName && value == other.value /* spotless:on */
+            }
+
+            override fun hashCode() = value.hashCode()
+
+            override fun toString() = value.toString()
         }
 
         override fun equals(other: Any?): Boolean {

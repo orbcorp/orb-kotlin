@@ -23,9 +23,9 @@ import com.withorb.api.core.NoAutoDetect
 import com.withorb.api.core.getOrThrow
 import com.withorb.api.core.http.Headers
 import com.withorb.api.core.http.QueryParams
+import com.withorb.api.core.immutableEmptyMap
 import com.withorb.api.core.toImmutable
 import com.withorb.api.errors.OrbInvalidDataException
-import com.withorb.api.models.*
 import java.time.OffsetDateTime
 import java.util.Objects
 
@@ -70,20 +70,21 @@ constructor(
         }
     }
 
-    @JsonDeserialize(builder = SubscriptionUpdateTrialBody.Builder::class)
     @NoAutoDetect
     class SubscriptionUpdateTrialBody
+    @JsonCreator
     internal constructor(
-        private val trialEndDate: TrialEndDate?,
-        private val shift: Boolean?,
-        private val additionalProperties: Map<String, JsonValue>,
+        @JsonProperty("trial_end_date") private val trialEndDate: TrialEndDate,
+        @JsonProperty("shift") private val shift: Boolean?,
+        @JsonAnySetter
+        private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
 
         /**
          * The new date that the trial should end, or the literal string `immediate` to end the
          * trial immediately.
          */
-        @JsonProperty("trial_end_date") fun trialEndDate(): TrialEndDate? = trialEndDate
+        @JsonProperty("trial_end_date") fun trialEndDate(): TrialEndDate = trialEndDate
 
         /**
          * If true, shifts subsequent price and adjustment intervals (preserving their durations,
@@ -109,16 +110,16 @@ constructor(
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             internal fun from(subscriptionUpdateTrialBody: SubscriptionUpdateTrialBody) = apply {
-                this.trialEndDate = subscriptionUpdateTrialBody.trialEndDate
-                this.shift = subscriptionUpdateTrialBody.shift
-                additionalProperties(subscriptionUpdateTrialBody.additionalProperties)
+                trialEndDate = subscriptionUpdateTrialBody.trialEndDate
+                shift = subscriptionUpdateTrialBody.shift
+                additionalProperties =
+                    subscriptionUpdateTrialBody.additionalProperties.toMutableMap()
             }
 
             /**
              * The new date that the trial should end, or the literal string `immediate` to end the
              * trial immediately.
              */
-            @JsonProperty("trial_end_date")
             fun trialEndDate(trialEndDate: TrialEndDate) = apply {
                 this.trialEndDate = trialEndDate
             }
@@ -127,20 +128,25 @@ constructor(
              * If true, shifts subsequent price and adjustment intervals (preserving their
              * durations, but adjusting their absolute dates).
              */
-            @JsonProperty("shift") fun shift(shift: Boolean) = apply { this.shift = shift }
+            fun shift(shift: Boolean?) = apply { this.shift = shift }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
-                this.additionalProperties.putAll(additionalProperties)
+                putAllAdditionalProperties(additionalProperties)
             }
 
-            @JsonAnySetter
             fun putAdditionalProperty(key: String, value: JsonValue) = apply {
-                this.additionalProperties.put(key, value)
+                additionalProperties.put(key, value)
             }
 
             fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.putAll(additionalProperties)
+            }
+
+            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+
+            fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                keys.forEach(::removeAdditionalProperty)
             }
 
             fun build(): SubscriptionUpdateTrialBody =
@@ -366,8 +372,6 @@ constructor(
         private val _json: JsonValue? = null,
     ) {
 
-        private var validated: Boolean = false
-
         fun offsetDateTime(): OffsetDateTime? = offsetDateTime
 
         fun unionMember1(): UnionMember1? = unionMember1
@@ -387,15 +391,6 @@ constructor(
                 offsetDateTime != null -> visitor.visitOffsetDateTime(offsetDateTime)
                 unionMember1 != null -> visitor.visitUnionMember1(unionMember1)
                 else -> visitor.unknown(_json)
-            }
-        }
-
-        fun validate(): TrialEndDate = apply {
-            if (!validated) {
-                if (offsetDateTime == null && unionMember1 == null) {
-                    throw OrbInvalidDataException("Unknown TrialEndDate: $_json")
-                }
-                validated = true
             }
         }
 
@@ -477,21 +472,9 @@ constructor(
 
             @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
 
-            override fun equals(other: Any?): Boolean {
-                if (this === other) {
-                    return true
-                }
-
-                return /* spotless:off */ other is UnionMember1 && value == other.value /* spotless:on */
-            }
-
-            override fun hashCode() = value.hashCode()
-
-            override fun toString() = value.toString()
-
             companion object {
 
-                val IMMEDIATE = UnionMember1(JsonField.of("immediate"))
+                val IMMEDIATE = of("immediate")
 
                 fun of(value: String) = UnionMember1(JsonField.of(value))
             }
@@ -518,6 +501,18 @@ constructor(
                 }
 
             fun asString(): String = _value().asStringOrThrow()
+
+            override fun equals(other: Any?): Boolean {
+                if (this === other) {
+                    return true
+                }
+
+                return /* spotless:off */ other is UnionMember1 && value == other.value /* spotless:on */
+            }
+
+            override fun hashCode() = value.hashCode()
+
+            override fun toString() = value.toString()
         }
     }
 

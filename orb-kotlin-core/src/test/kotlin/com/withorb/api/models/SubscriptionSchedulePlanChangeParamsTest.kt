@@ -3,7 +3,6 @@
 package com.withorb.api.models
 
 import com.withorb.api.core.JsonValue
-import com.withorb.api.models.*
 import java.time.OffsetDateTime
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
@@ -31,7 +30,7 @@ class SubscriptionSchedulePlanChangeParamsTest {
                                                 .AdjustmentType
                                                 .PERCENTAGE_DISCOUNT
                                         )
-                                        .appliesToPriceIds(listOf("string"))
+                                        .appliesToPriceIds(listOf("price_1", "price_2"))
                                         .percentageDiscount(0.0)
                                         .isInvoiceLevel(true)
                                         .build()
@@ -137,6 +136,10 @@ class SubscriptionSchedulePlanChangeParamsTest {
                                                 .NewSubscriptionUnitPrice
                                                 .Metadata
                                                 .builder()
+                                                .putAdditionalProperty(
+                                                    "foo",
+                                                    JsonValue.from("string")
+                                                )
                                                 .build()
                                         )
                                         .referenceId("reference_id")
@@ -205,7 +208,7 @@ class SubscriptionSchedulePlanChangeParamsTest {
                                                 .AdjustmentType
                                                 .PERCENTAGE_DISCOUNT
                                         )
-                                        .appliesToPriceIds(listOf("string"))
+                                        .appliesToPriceIds(listOf("price_1", "price_2"))
                                         .percentageDiscount(0.0)
                                         .isInvoiceLevel(true)
                                         .build()
@@ -311,6 +314,10 @@ class SubscriptionSchedulePlanChangeParamsTest {
                                                 .NewSubscriptionUnitPrice
                                                 .Metadata
                                                 .builder()
+                                                .putAdditionalProperty(
+                                                    "foo",
+                                                    JsonValue.from("string")
+                                                )
                                                 .build()
                                         )
                                         .referenceId("reference_id")
@@ -348,7 +355,7 @@ class SubscriptionSchedulePlanChangeParamsTest {
                                                     .AdjustmentType
                                                     .PERCENTAGE_DISCOUNT
                                             )
-                                            .appliesToPriceIds(listOf("string"))
+                                            .appliesToPriceIds(listOf("price_1", "price_2"))
                                             .percentageDiscount(0.0)
                                             .isInvoiceLevel(true)
                                             .build()
@@ -456,6 +463,10 @@ class SubscriptionSchedulePlanChangeParamsTest {
                                                     .NewSubscriptionUnitPrice
                                                     .Metadata
                                                     .builder()
+                                                    .putAdditionalProperty(
+                                                        "foo",
+                                                        JsonValue.from("string")
+                                                    )
                                                     .build()
                                             )
                                             .referenceId("reference_id")
@@ -525,7 +536,7 @@ class SubscriptionSchedulePlanChangeParamsTest {
                                                     .AdjustmentType
                                                     .PERCENTAGE_DISCOUNT
                                             )
-                                            .appliesToPriceIds(listOf("string"))
+                                            .appliesToPriceIds(listOf("price_1", "price_2"))
                                             .percentageDiscount(0.0)
                                             .isInvoiceLevel(true)
                                             .build()
@@ -639,6 +650,10 @@ class SubscriptionSchedulePlanChangeParamsTest {
                                                     .NewSubscriptionUnitPrice
                                                     .Metadata
                                                     .builder()
+                                                    .putAdditionalProperty(
+                                                        "foo",
+                                                        JsonValue.from("string")
+                                                    )
                                                     .build()
                                             )
                                             .referenceId("reference_id")
@@ -672,7 +687,7 @@ class SubscriptionSchedulePlanChangeParamsTest {
                                                 .AdjustmentType
                                                 .PERCENTAGE_DISCOUNT
                                         )
-                                        .appliesToPriceIds(listOf("string"))
+                                        .appliesToPriceIds(listOf("price_1", "price_2"))
                                         .percentageDiscount(0.0)
                                         .isInvoiceLevel(true)
                                         .build()
@@ -779,6 +794,10 @@ class SubscriptionSchedulePlanChangeParamsTest {
                                                 .NewSubscriptionUnitPrice
                                                 .Metadata
                                                 .builder()
+                                                .putAdditionalProperty(
+                                                    "foo",
+                                                    JsonValue.from("string")
+                                                )
                                                 .build()
                                         )
                                         .referenceId("reference_id")
@@ -850,7 +869,7 @@ class SubscriptionSchedulePlanChangeParamsTest {
                                                 .AdjustmentType
                                                 .PERCENTAGE_DISCOUNT
                                         )
-                                        .appliesToPriceIds(listOf("string"))
+                                        .appliesToPriceIds(listOf("price_1", "price_2"))
                                         .percentageDiscount(0.0)
                                         .isInvoiceLevel(true)
                                         .build()
@@ -957,6 +976,10 @@ class SubscriptionSchedulePlanChangeParamsTest {
                                                 .NewSubscriptionUnitPrice
                                                 .Metadata
                                                 .builder()
+                                                .putAdditionalProperty(
+                                                    "foo",
+                                                    JsonValue.from("string")
+                                                )
                                                 .build()
                                         )
                                         .referenceId("reference_id")
