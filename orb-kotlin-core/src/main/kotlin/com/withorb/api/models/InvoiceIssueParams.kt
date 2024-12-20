@@ -4,13 +4,14 @@ package com.withorb.api.models
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter
 import com.fasterxml.jackson.annotation.JsonAnySetter
+import com.fasterxml.jackson.annotation.JsonCreator
 import com.fasterxml.jackson.annotation.JsonProperty
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize
 import com.withorb.api.core.ExcludeMissing
 import com.withorb.api.core.JsonValue
 import com.withorb.api.core.NoAutoDetect
 import com.withorb.api.core.http.Headers
 import com.withorb.api.core.http.QueryParams
+import com.withorb.api.core.immutableEmptyMap
 import com.withorb.api.core.toImmutable
 import java.util.Objects
 
@@ -48,12 +49,13 @@ constructor(
         }
     }
 
-    @JsonDeserialize(builder = InvoiceIssueBody.Builder::class)
     @NoAutoDetect
     class InvoiceIssueBody
+    @JsonCreator
     internal constructor(
-        private val synchronous: Boolean?,
-        private val additionalProperties: Map<String, JsonValue>,
+        @JsonProperty("synchronous") private val synchronous: Boolean?,
+        @JsonAnySetter
+        private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
 
         /**
@@ -92,7 +94,6 @@ constructor(
              * provider, a successful response from this endpoint guarantees the invoice is present
              * in the provider.
              */
-            @JsonProperty("synchronous")
             fun synchronous(synchronous: Boolean?) = apply { this.synchronous = synchronous }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
@@ -100,7 +101,6 @@ constructor(
                 putAllAdditionalProperties(additionalProperties)
             }
 
-            @JsonAnySetter
             fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                 additionalProperties.put(key, value)
             }

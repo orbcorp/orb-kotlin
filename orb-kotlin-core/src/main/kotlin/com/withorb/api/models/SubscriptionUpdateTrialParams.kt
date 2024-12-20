@@ -23,6 +23,7 @@ import com.withorb.api.core.NoAutoDetect
 import com.withorb.api.core.getOrThrow
 import com.withorb.api.core.http.Headers
 import com.withorb.api.core.http.QueryParams
+import com.withorb.api.core.immutableEmptyMap
 import com.withorb.api.core.toImmutable
 import com.withorb.api.errors.OrbInvalidDataException
 import java.time.OffsetDateTime
@@ -69,13 +70,14 @@ constructor(
         }
     }
 
-    @JsonDeserialize(builder = SubscriptionUpdateTrialBody.Builder::class)
     @NoAutoDetect
     class SubscriptionUpdateTrialBody
+    @JsonCreator
     internal constructor(
-        private val trialEndDate: TrialEndDate,
-        private val shift: Boolean?,
-        private val additionalProperties: Map<String, JsonValue>,
+        @JsonProperty("trial_end_date") private val trialEndDate: TrialEndDate,
+        @JsonProperty("shift") private val shift: Boolean?,
+        @JsonAnySetter
+        private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
 
         /**
@@ -118,7 +120,6 @@ constructor(
              * The new date that the trial should end, or the literal string `immediate` to end the
              * trial immediately.
              */
-            @JsonProperty("trial_end_date")
             fun trialEndDate(trialEndDate: TrialEndDate) = apply {
                 this.trialEndDate = trialEndDate
             }
@@ -127,14 +128,13 @@ constructor(
              * If true, shifts subsequent price and adjustment intervals (preserving their
              * durations, but adjusting their absolute dates).
              */
-            @JsonProperty("shift") fun shift(shift: Boolean?) = apply { this.shift = shift }
+            fun shift(shift: Boolean?) = apply { this.shift = shift }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
                 putAllAdditionalProperties(additionalProperties)
             }
 
-            @JsonAnySetter
             fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                 additionalProperties.put(key, value)
             }

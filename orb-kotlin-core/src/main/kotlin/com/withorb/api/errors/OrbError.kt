@@ -4,18 +4,22 @@ package com.withorb.api.errors
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter
 import com.fasterxml.jackson.annotation.JsonAnySetter
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize
+import com.fasterxml.jackson.annotation.JsonCreator
 import com.withorb.api.core.ExcludeMissing
 import com.withorb.api.core.JsonValue
 import com.withorb.api.core.NoAutoDetect
+import com.withorb.api.core.immutableEmptyMap
 import com.withorb.api.core.toImmutable
 import java.util.Objects
 
-@JsonDeserialize(builder = OrbError.Builder::class)
 @NoAutoDetect
 class OrbError
+@JsonCreator
 private constructor(
-    @JsonAnyGetter @ExcludeMissing val additionalProperties: Map<String, JsonValue>,
+    @JsonAnyGetter
+    @ExcludeMissing
+    @JsonAnySetter
+    val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
 ) {
 
     fun toBuilder() = Builder().from(this)
@@ -38,7 +42,6 @@ private constructor(
             putAllAdditionalProperties(additionalProperties)
         }
 
-        @JsonAnySetter
         fun putAdditionalProperty(key: String, value: JsonValue) = apply {
             additionalProperties.put(key, value)
         }

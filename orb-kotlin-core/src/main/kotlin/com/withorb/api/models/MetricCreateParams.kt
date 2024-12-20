@@ -4,13 +4,14 @@ package com.withorb.api.models
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter
 import com.fasterxml.jackson.annotation.JsonAnySetter
+import com.fasterxml.jackson.annotation.JsonCreator
 import com.fasterxml.jackson.annotation.JsonProperty
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize
 import com.withorb.api.core.ExcludeMissing
 import com.withorb.api.core.JsonValue
 import com.withorb.api.core.NoAutoDetect
 import com.withorb.api.core.http.Headers
 import com.withorb.api.core.http.QueryParams
+import com.withorb.api.core.immutableEmptyMap
 import com.withorb.api.core.toImmutable
 import java.util.Objects
 
@@ -57,16 +58,17 @@ constructor(
 
     internal fun getQueryParams(): QueryParams = additionalQueryParams
 
-    @JsonDeserialize(builder = MetricCreateBody.Builder::class)
     @NoAutoDetect
     class MetricCreateBody
+    @JsonCreator
     internal constructor(
-        private val description: String?,
-        private val itemId: String,
-        private val name: String,
-        private val sql: String,
-        private val metadata: Metadata?,
-        private val additionalProperties: Map<String, JsonValue>,
+        @JsonProperty("description") private val description: String?,
+        @JsonProperty("item_id") private val itemId: String,
+        @JsonProperty("name") private val name: String,
+        @JsonProperty("sql") private val sql: String,
+        @JsonProperty("metadata") private val metadata: Metadata?,
+        @JsonAnySetter
+        private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
 
         /** A description of the metric. */
@@ -118,24 +120,22 @@ constructor(
             }
 
             /** A description of the metric. */
-            @JsonProperty("description")
             fun description(description: String?) = apply { this.description = description }
 
             /** The id of the item */
-            @JsonProperty("item_id") fun itemId(itemId: String) = apply { this.itemId = itemId }
+            fun itemId(itemId: String) = apply { this.itemId = itemId }
 
             /** The name of the metric. */
-            @JsonProperty("name") fun name(name: String) = apply { this.name = name }
+            fun name(name: String) = apply { this.name = name }
 
             /** A sql string defining the metric. */
-            @JsonProperty("sql") fun sql(sql: String) = apply { this.sql = sql }
+            fun sql(sql: String) = apply { this.sql = sql }
 
             /**
              * User-specified key/value pairs for the resource. Individual keys can be removed by
              * setting the value to `null`, and the entire metadata mapping can be cleared by
              * setting `metadata` to `null`.
              */
-            @JsonProperty("metadata")
             fun metadata(metadata: Metadata?) = apply { this.metadata = metadata }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
@@ -143,7 +143,6 @@ constructor(
                 putAllAdditionalProperties(additionalProperties)
             }
 
-            @JsonAnySetter
             fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                 additionalProperties.put(key, value)
             }
@@ -374,11 +373,12 @@ constructor(
      * the value to `null`, and the entire metadata mapping can be cleared by setting `metadata` to
      * `null`.
      */
-    @JsonDeserialize(builder = Metadata.Builder::class)
     @NoAutoDetect
     class Metadata
+    @JsonCreator
     private constructor(
-        private val additionalProperties: Map<String, JsonValue>,
+        @JsonAnySetter
+        private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
 
         @JsonAnyGetter
@@ -405,7 +405,6 @@ constructor(
                 putAllAdditionalProperties(additionalProperties)
             }
 
-            @JsonAnySetter
             fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                 additionalProperties.put(key, value)
             }

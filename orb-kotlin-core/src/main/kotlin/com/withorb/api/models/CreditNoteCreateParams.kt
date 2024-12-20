@@ -6,7 +6,6 @@ import com.fasterxml.jackson.annotation.JsonAnyGetter
 import com.fasterxml.jackson.annotation.JsonAnySetter
 import com.fasterxml.jackson.annotation.JsonCreator
 import com.fasterxml.jackson.annotation.JsonProperty
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize
 import com.withorb.api.core.Enum
 import com.withorb.api.core.ExcludeMissing
 import com.withorb.api.core.JsonField
@@ -14,6 +13,7 @@ import com.withorb.api.core.JsonValue
 import com.withorb.api.core.NoAutoDetect
 import com.withorb.api.core.http.Headers
 import com.withorb.api.core.http.QueryParams
+import com.withorb.api.core.immutableEmptyMap
 import com.withorb.api.core.toImmutable
 import com.withorb.api.errors.OrbInvalidDataException
 import java.util.Objects
@@ -53,14 +53,15 @@ constructor(
 
     internal fun getQueryParams(): QueryParams = additionalQueryParams
 
-    @JsonDeserialize(builder = CreditNoteCreateBody.Builder::class)
     @NoAutoDetect
     class CreditNoteCreateBody
+    @JsonCreator
     internal constructor(
-        private val lineItems: List<LineItem>,
-        private val memo: String?,
-        private val reason: Reason?,
-        private val additionalProperties: Map<String, JsonValue>,
+        @JsonProperty("line_items") private val lineItems: List<LineItem>,
+        @JsonProperty("memo") private val memo: String?,
+        @JsonProperty("reason") private val reason: Reason?,
+        @JsonAnySetter
+        private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
 
         @JsonProperty("line_items") fun lineItems(): List<LineItem> = lineItems
@@ -96,21 +97,19 @@ constructor(
                 additionalProperties = creditNoteCreateBody.additionalProperties.toMutableMap()
             }
 
-            @JsonProperty("line_items")
             fun lineItems(lineItems: List<LineItem>) = apply { this.lineItems = lineItems }
 
             /** An optional memo to attach to the credit note. */
-            @JsonProperty("memo") fun memo(memo: String?) = apply { this.memo = memo }
+            fun memo(memo: String?) = apply { this.memo = memo }
 
             /** An optional reason for the credit note. */
-            @JsonProperty("reason") fun reason(reason: Reason?) = apply { this.reason = reason }
+            fun reason(reason: Reason?) = apply { this.reason = reason }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
                 putAllAdditionalProperties(additionalProperties)
             }
 
-            @JsonAnySetter
             fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                 additionalProperties.put(key, value)
             }
@@ -324,13 +323,14 @@ constructor(
             )
     }
 
-    @JsonDeserialize(builder = LineItem.Builder::class)
     @NoAutoDetect
     class LineItem
+    @JsonCreator
     private constructor(
-        private val invoiceLineItemId: String,
-        private val amount: String,
-        private val additionalProperties: Map<String, JsonValue>,
+        @JsonProperty("invoice_line_item_id") private val invoiceLineItemId: String,
+        @JsonProperty("amount") private val amount: String,
+        @JsonAnySetter
+        private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
 
         /** The ID of the line item to credit. */
@@ -363,20 +363,18 @@ constructor(
             }
 
             /** The ID of the line item to credit. */
-            @JsonProperty("invoice_line_item_id")
             fun invoiceLineItemId(invoiceLineItemId: String) = apply {
                 this.invoiceLineItemId = invoiceLineItemId
             }
 
             /** The total amount in the invoice's currency to credit this line item. */
-            @JsonProperty("amount") fun amount(amount: String) = apply { this.amount = amount }
+            fun amount(amount: String) = apply { this.amount = amount }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
                 putAllAdditionalProperties(additionalProperties)
             }
 
-            @JsonAnySetter
             fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                 additionalProperties.put(key, value)
             }

@@ -22,6 +22,7 @@ import com.withorb.api.core.JsonMissing
 import com.withorb.api.core.JsonValue
 import com.withorb.api.core.NoAutoDetect
 import com.withorb.api.core.getOrThrow
+import com.withorb.api.core.immutableEmptyMap
 import com.withorb.api.core.toImmutable
 import com.withorb.api.errors.OrbInvalidDataException
 import java.time.OffsetDateTime
@@ -742,34 +743,79 @@ private constructor(
         }
     }
 
-    @JsonDeserialize(builder = UnitPrice.Builder::class)
     @NoAutoDetect
     class UnitPrice
+    @JsonCreator
     private constructor(
-        private val metadata: JsonField<Metadata>,
-        private val id: JsonField<String>,
-        private val name: JsonField<String>,
-        private val externalPriceId: JsonField<String>,
-        private val priceType: JsonField<PriceType>,
-        private val modelType: JsonField<ModelType>,
-        private val createdAt: JsonField<OffsetDateTime>,
-        private val cadence: JsonField<Cadence>,
-        private val billingCycleConfiguration: JsonField<BillingCycleConfiguration>,
-        private val invoicingCycleConfiguration: JsonField<InvoicingCycleConfiguration>,
-        private val billableMetric: JsonField<BillableMetric>,
-        private val fixedPriceQuantity: JsonField<Double>,
-        private val planPhaseOrder: JsonField<Long>,
-        private val currency: JsonField<String>,
-        private val conversionRate: JsonField<Double>,
-        private val item: JsonField<Item>,
-        private val creditAllocation: JsonField<CreditAllocation>,
-        private val discount: JsonField<Discount>,
-        private val minimum: JsonField<Minimum>,
-        private val minimumAmount: JsonField<String>,
-        private val maximum: JsonField<Maximum>,
-        private val maximumAmount: JsonField<String>,
-        private val unitConfig: JsonField<UnitConfig>,
-        private val additionalProperties: Map<String, JsonValue>,
+        @JsonProperty("metadata")
+        @ExcludeMissing
+        private val metadata: JsonField<Metadata> = JsonMissing.of(),
+        @JsonProperty("id") @ExcludeMissing private val id: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("name")
+        @ExcludeMissing
+        private val name: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("external_price_id")
+        @ExcludeMissing
+        private val externalPriceId: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("price_type")
+        @ExcludeMissing
+        private val priceType: JsonField<PriceType> = JsonMissing.of(),
+        @JsonProperty("model_type")
+        @ExcludeMissing
+        private val modelType: JsonField<ModelType> = JsonMissing.of(),
+        @JsonProperty("created_at")
+        @ExcludeMissing
+        private val createdAt: JsonField<OffsetDateTime> = JsonMissing.of(),
+        @JsonProperty("cadence")
+        @ExcludeMissing
+        private val cadence: JsonField<Cadence> = JsonMissing.of(),
+        @JsonProperty("billing_cycle_configuration")
+        @ExcludeMissing
+        private val billingCycleConfiguration: JsonField<BillingCycleConfiguration> =
+            JsonMissing.of(),
+        @JsonProperty("invoicing_cycle_configuration")
+        @ExcludeMissing
+        private val invoicingCycleConfiguration: JsonField<InvoicingCycleConfiguration> =
+            JsonMissing.of(),
+        @JsonProperty("billable_metric")
+        @ExcludeMissing
+        private val billableMetric: JsonField<BillableMetric> = JsonMissing.of(),
+        @JsonProperty("fixed_price_quantity")
+        @ExcludeMissing
+        private val fixedPriceQuantity: JsonField<Double> = JsonMissing.of(),
+        @JsonProperty("plan_phase_order")
+        @ExcludeMissing
+        private val planPhaseOrder: JsonField<Long> = JsonMissing.of(),
+        @JsonProperty("currency")
+        @ExcludeMissing
+        private val currency: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("conversion_rate")
+        @ExcludeMissing
+        private val conversionRate: JsonField<Double> = JsonMissing.of(),
+        @JsonProperty("item") @ExcludeMissing private val item: JsonField<Item> = JsonMissing.of(),
+        @JsonProperty("credit_allocation")
+        @ExcludeMissing
+        private val creditAllocation: JsonField<CreditAllocation> = JsonMissing.of(),
+        @JsonProperty("discount")
+        @ExcludeMissing
+        private val discount: JsonField<Discount> = JsonMissing.of(),
+        @JsonProperty("minimum")
+        @ExcludeMissing
+        private val minimum: JsonField<Minimum> = JsonMissing.of(),
+        @JsonProperty("minimum_amount")
+        @ExcludeMissing
+        private val minimumAmount: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("maximum")
+        @ExcludeMissing
+        private val maximum: JsonField<Maximum> = JsonMissing.of(),
+        @JsonProperty("maximum_amount")
+        @ExcludeMissing
+        private val maximumAmount: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("unit_config")
+        @ExcludeMissing
+        private val unitConfig: JsonField<UnitConfig> = JsonMissing.of(),
+        @JsonAnySetter
+        private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
 
         /**
@@ -995,62 +1041,44 @@ private constructor(
              * empty dictionary. Individual keys can be removed by setting the value to `null`, and
              * the entire metadata mapping can be cleared by setting `metadata` to `null`.
              */
-            @JsonProperty("metadata")
-            @ExcludeMissing
             fun metadata(metadata: JsonField<Metadata>) = apply { this.metadata = metadata }
 
             fun id(id: String) = id(JsonField.of(id))
 
-            @JsonProperty("id")
-            @ExcludeMissing
             fun id(id: JsonField<String>) = apply { this.id = id }
 
             fun name(name: String) = name(JsonField.of(name))
 
-            @JsonProperty("name")
-            @ExcludeMissing
             fun name(name: JsonField<String>) = apply { this.name = name }
 
             fun externalPriceId(externalPriceId: String) =
                 externalPriceId(JsonField.of(externalPriceId))
 
-            @JsonProperty("external_price_id")
-            @ExcludeMissing
             fun externalPriceId(externalPriceId: JsonField<String>) = apply {
                 this.externalPriceId = externalPriceId
             }
 
             fun priceType(priceType: PriceType) = priceType(JsonField.of(priceType))
 
-            @JsonProperty("price_type")
-            @ExcludeMissing
             fun priceType(priceType: JsonField<PriceType>) = apply { this.priceType = priceType }
 
             fun modelType(modelType: ModelType) = modelType(JsonField.of(modelType))
 
-            @JsonProperty("model_type")
-            @ExcludeMissing
             fun modelType(modelType: JsonField<ModelType>) = apply { this.modelType = modelType }
 
             fun createdAt(createdAt: OffsetDateTime) = createdAt(JsonField.of(createdAt))
 
-            @JsonProperty("created_at")
-            @ExcludeMissing
             fun createdAt(createdAt: JsonField<OffsetDateTime>) = apply {
                 this.createdAt = createdAt
             }
 
             fun cadence(cadence: Cadence) = cadence(JsonField.of(cadence))
 
-            @JsonProperty("cadence")
-            @ExcludeMissing
             fun cadence(cadence: JsonField<Cadence>) = apply { this.cadence = cadence }
 
             fun billingCycleConfiguration(billingCycleConfiguration: BillingCycleConfiguration) =
                 billingCycleConfiguration(JsonField.of(billingCycleConfiguration))
 
-            @JsonProperty("billing_cycle_configuration")
-            @ExcludeMissing
             fun billingCycleConfiguration(
                 billingCycleConfiguration: JsonField<BillingCycleConfiguration>
             ) = apply { this.billingCycleConfiguration = billingCycleConfiguration }
@@ -1059,8 +1087,6 @@ private constructor(
                 invoicingCycleConfiguration: InvoicingCycleConfiguration
             ) = invoicingCycleConfiguration(JsonField.of(invoicingCycleConfiguration))
 
-            @JsonProperty("invoicing_cycle_configuration")
-            @ExcludeMissing
             fun invoicingCycleConfiguration(
                 invoicingCycleConfiguration: JsonField<InvoicingCycleConfiguration>
             ) = apply { this.invoicingCycleConfiguration = invoicingCycleConfiguration }
@@ -1068,8 +1094,6 @@ private constructor(
             fun billableMetric(billableMetric: BillableMetric) =
                 billableMetric(JsonField.of(billableMetric))
 
-            @JsonProperty("billable_metric")
-            @ExcludeMissing
             fun billableMetric(billableMetric: JsonField<BillableMetric>) = apply {
                 this.billableMetric = billableMetric
             }
@@ -1077,88 +1101,64 @@ private constructor(
             fun fixedPriceQuantity(fixedPriceQuantity: Double) =
                 fixedPriceQuantity(JsonField.of(fixedPriceQuantity))
 
-            @JsonProperty("fixed_price_quantity")
-            @ExcludeMissing
             fun fixedPriceQuantity(fixedPriceQuantity: JsonField<Double>) = apply {
                 this.fixedPriceQuantity = fixedPriceQuantity
             }
 
             fun planPhaseOrder(planPhaseOrder: Long) = planPhaseOrder(JsonField.of(planPhaseOrder))
 
-            @JsonProperty("plan_phase_order")
-            @ExcludeMissing
             fun planPhaseOrder(planPhaseOrder: JsonField<Long>) = apply {
                 this.planPhaseOrder = planPhaseOrder
             }
 
             fun currency(currency: String) = currency(JsonField.of(currency))
 
-            @JsonProperty("currency")
-            @ExcludeMissing
             fun currency(currency: JsonField<String>) = apply { this.currency = currency }
 
             fun conversionRate(conversionRate: Double) =
                 conversionRate(JsonField.of(conversionRate))
 
-            @JsonProperty("conversion_rate")
-            @ExcludeMissing
             fun conversionRate(conversionRate: JsonField<Double>) = apply {
                 this.conversionRate = conversionRate
             }
 
             fun item(item: Item) = item(JsonField.of(item))
 
-            @JsonProperty("item")
-            @ExcludeMissing
             fun item(item: JsonField<Item>) = apply { this.item = item }
 
             fun creditAllocation(creditAllocation: CreditAllocation) =
                 creditAllocation(JsonField.of(creditAllocation))
 
-            @JsonProperty("credit_allocation")
-            @ExcludeMissing
             fun creditAllocation(creditAllocation: JsonField<CreditAllocation>) = apply {
                 this.creditAllocation = creditAllocation
             }
 
             fun discount(discount: Discount) = discount(JsonField.of(discount))
 
-            @JsonProperty("discount")
-            @ExcludeMissing
             fun discount(discount: JsonField<Discount>) = apply { this.discount = discount }
 
             fun minimum(minimum: Minimum) = minimum(JsonField.of(minimum))
 
-            @JsonProperty("minimum")
-            @ExcludeMissing
             fun minimum(minimum: JsonField<Minimum>) = apply { this.minimum = minimum }
 
             fun minimumAmount(minimumAmount: String) = minimumAmount(JsonField.of(minimumAmount))
 
-            @JsonProperty("minimum_amount")
-            @ExcludeMissing
             fun minimumAmount(minimumAmount: JsonField<String>) = apply {
                 this.minimumAmount = minimumAmount
             }
 
             fun maximum(maximum: Maximum) = maximum(JsonField.of(maximum))
 
-            @JsonProperty("maximum")
-            @ExcludeMissing
             fun maximum(maximum: JsonField<Maximum>) = apply { this.maximum = maximum }
 
             fun maximumAmount(maximumAmount: String) = maximumAmount(JsonField.of(maximumAmount))
 
-            @JsonProperty("maximum_amount")
-            @ExcludeMissing
             fun maximumAmount(maximumAmount: JsonField<String>) = apply {
                 this.maximumAmount = maximumAmount
             }
 
             fun unitConfig(unitConfig: UnitConfig) = unitConfig(JsonField.of(unitConfig))
 
-            @JsonProperty("unit_config")
-            @ExcludeMissing
             fun unitConfig(unitConfig: JsonField<UnitConfig>) = apply {
                 this.unitConfig = unitConfig
             }
@@ -1168,7 +1168,6 @@ private constructor(
                 putAllAdditionalProperties(additionalProperties)
             }
 
-            @JsonAnySetter
             fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                 additionalProperties.put(key, value)
             }
@@ -1212,12 +1211,15 @@ private constructor(
                 )
         }
 
-        @JsonDeserialize(builder = BillableMetric.Builder::class)
         @NoAutoDetect
         class BillableMetric
+        @JsonCreator
         private constructor(
-            private val id: JsonField<String>,
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonProperty("id")
+            @ExcludeMissing
+            private val id: JsonField<String> = JsonMissing.of(),
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             fun id(): String = id.getRequired("id")
@@ -1256,8 +1258,6 @@ private constructor(
 
                 fun id(id: String) = id(JsonField.of(id))
 
-                @JsonProperty("id")
-                @ExcludeMissing
                 fun id(id: JsonField<String>) = apply { this.id = id }
 
                 fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
@@ -1265,7 +1265,6 @@ private constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -1304,13 +1303,18 @@ private constructor(
                 "BillableMetric{id=$id, additionalProperties=$additionalProperties}"
         }
 
-        @JsonDeserialize(builder = BillingCycleConfiguration.Builder::class)
         @NoAutoDetect
         class BillingCycleConfiguration
+        @JsonCreator
         private constructor(
-            private val duration: JsonField<Long>,
-            private val durationUnit: JsonField<DurationUnit>,
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonProperty("duration")
+            @ExcludeMissing
+            private val duration: JsonField<Long> = JsonMissing.of(),
+            @JsonProperty("duration_unit")
+            @ExcludeMissing
+            private val durationUnit: JsonField<DurationUnit> = JsonMissing.of(),
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             fun duration(): Long = duration.getRequired("duration")
@@ -1357,15 +1361,11 @@ private constructor(
 
                 fun duration(duration: Long) = duration(JsonField.of(duration))
 
-                @JsonProperty("duration")
-                @ExcludeMissing
                 fun duration(duration: JsonField<Long>) = apply { this.duration = duration }
 
                 fun durationUnit(durationUnit: DurationUnit) =
                     durationUnit(JsonField.of(durationUnit))
 
-                @JsonProperty("duration_unit")
-                @ExcludeMissing
                 fun durationUnit(durationUnit: JsonField<DurationUnit>) = apply {
                     this.durationUnit = durationUnit
                 }
@@ -1375,7 +1375,6 @@ private constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -1557,13 +1556,18 @@ private constructor(
             override fun toString() = value.toString()
         }
 
-        @JsonDeserialize(builder = CreditAllocation.Builder::class)
         @NoAutoDetect
         class CreditAllocation
+        @JsonCreator
         private constructor(
-            private val currency: JsonField<String>,
-            private val allowsRollover: JsonField<Boolean>,
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonProperty("currency")
+            @ExcludeMissing
+            private val currency: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("allows_rollover")
+            @ExcludeMissing
+            private val allowsRollover: JsonField<Boolean> = JsonMissing.of(),
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             fun currency(): String = currency.getRequired("currency")
@@ -1609,15 +1613,11 @@ private constructor(
 
                 fun currency(currency: String) = currency(JsonField.of(currency))
 
-                @JsonProperty("currency")
-                @ExcludeMissing
                 fun currency(currency: JsonField<String>) = apply { this.currency = currency }
 
                 fun allowsRollover(allowsRollover: Boolean) =
                     allowsRollover(JsonField.of(allowsRollover))
 
-                @JsonProperty("allows_rollover")
-                @ExcludeMissing
                 fun allowsRollover(allowsRollover: JsonField<Boolean>) = apply {
                     this.allowsRollover = allowsRollover
                 }
@@ -1627,7 +1627,6 @@ private constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -1671,13 +1670,18 @@ private constructor(
                 "CreditAllocation{currency=$currency, allowsRollover=$allowsRollover, additionalProperties=$additionalProperties}"
         }
 
-        @JsonDeserialize(builder = InvoicingCycleConfiguration.Builder::class)
         @NoAutoDetect
         class InvoicingCycleConfiguration
+        @JsonCreator
         private constructor(
-            private val duration: JsonField<Long>,
-            private val durationUnit: JsonField<DurationUnit>,
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonProperty("duration")
+            @ExcludeMissing
+            private val duration: JsonField<Long> = JsonMissing.of(),
+            @JsonProperty("duration_unit")
+            @ExcludeMissing
+            private val durationUnit: JsonField<DurationUnit> = JsonMissing.of(),
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             fun duration(): Long = duration.getRequired("duration")
@@ -1725,15 +1729,11 @@ private constructor(
 
                 fun duration(duration: Long) = duration(JsonField.of(duration))
 
-                @JsonProperty("duration")
-                @ExcludeMissing
                 fun duration(duration: JsonField<Long>) = apply { this.duration = duration }
 
                 fun durationUnit(durationUnit: DurationUnit) =
                     durationUnit(JsonField.of(durationUnit))
 
-                @JsonProperty("duration_unit")
-                @ExcludeMissing
                 fun durationUnit(durationUnit: JsonField<DurationUnit>) = apply {
                     this.durationUnit = durationUnit
                 }
@@ -1743,7 +1743,6 @@ private constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -1844,13 +1843,18 @@ private constructor(
                 "InvoicingCycleConfiguration{duration=$duration, durationUnit=$durationUnit, additionalProperties=$additionalProperties}"
         }
 
-        @JsonDeserialize(builder = Item.Builder::class)
         @NoAutoDetect
         class Item
+        @JsonCreator
         private constructor(
-            private val id: JsonField<String>,
-            private val name: JsonField<String>,
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonProperty("id")
+            @ExcludeMissing
+            private val id: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("name")
+            @ExcludeMissing
+            private val name: JsonField<String> = JsonMissing.of(),
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             fun id(): String = id.getRequired("id")
@@ -1896,14 +1900,10 @@ private constructor(
 
                 fun id(id: String) = id(JsonField.of(id))
 
-                @JsonProperty("id")
-                @ExcludeMissing
                 fun id(id: JsonField<String>) = apply { this.id = id }
 
                 fun name(name: String) = name(JsonField.of(name))
 
-                @JsonProperty("name")
-                @ExcludeMissing
                 fun name(name: JsonField<String>) = apply { this.name = name }
 
                 fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
@@ -1911,7 +1911,6 @@ private constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -1955,13 +1954,18 @@ private constructor(
                 "Item{id=$id, name=$name, additionalProperties=$additionalProperties}"
         }
 
-        @JsonDeserialize(builder = Maximum.Builder::class)
         @NoAutoDetect
         class Maximum
+        @JsonCreator
         private constructor(
-            private val maximumAmount: JsonField<String>,
-            private val appliesToPriceIds: JsonField<List<String>>,
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonProperty("maximum_amount")
+            @ExcludeMissing
+            private val maximumAmount: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("applies_to_price_ids")
+            @ExcludeMissing
+            private val appliesToPriceIds: JsonField<List<String>> = JsonMissing.of(),
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             /** Maximum amount applied */
@@ -2023,8 +2027,6 @@ private constructor(
                     maximumAmount(JsonField.of(maximumAmount))
 
                 /** Maximum amount applied */
-                @JsonProperty("maximum_amount")
-                @ExcludeMissing
                 fun maximumAmount(maximumAmount: JsonField<String>) = apply {
                     this.maximumAmount = maximumAmount
                 }
@@ -2040,8 +2042,6 @@ private constructor(
                  * List of price_ids that this maximum amount applies to. For plan/plan phase
                  * maximums, this can be a subset of prices.
                  */
-                @JsonProperty("applies_to_price_ids")
-                @ExcludeMissing
                 fun appliesToPriceIds(appliesToPriceIds: JsonField<List<String>>) = apply {
                     this.appliesToPriceIds = appliesToPriceIds
                 }
@@ -2051,7 +2051,6 @@ private constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -2100,11 +2099,12 @@ private constructor(
          * empty dictionary. Individual keys can be removed by setting the value to `null`, and the
          * entire metadata mapping can be cleared by setting `metadata` to `null`.
          */
-        @JsonDeserialize(builder = Metadata.Builder::class)
         @NoAutoDetect
         class Metadata
+        @JsonCreator
         private constructor(
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             @JsonAnyGetter
@@ -2139,7 +2139,6 @@ private constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -2177,13 +2176,18 @@ private constructor(
             override fun toString() = "Metadata{additionalProperties=$additionalProperties}"
         }
 
-        @JsonDeserialize(builder = Minimum.Builder::class)
         @NoAutoDetect
         class Minimum
+        @JsonCreator
         private constructor(
-            private val minimumAmount: JsonField<String>,
-            private val appliesToPriceIds: JsonField<List<String>>,
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonProperty("minimum_amount")
+            @ExcludeMissing
+            private val minimumAmount: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("applies_to_price_ids")
+            @ExcludeMissing
+            private val appliesToPriceIds: JsonField<List<String>> = JsonMissing.of(),
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             /** Minimum amount applied */
@@ -2245,8 +2249,6 @@ private constructor(
                     minimumAmount(JsonField.of(minimumAmount))
 
                 /** Minimum amount applied */
-                @JsonProperty("minimum_amount")
-                @ExcludeMissing
                 fun minimumAmount(minimumAmount: JsonField<String>) = apply {
                     this.minimumAmount = minimumAmount
                 }
@@ -2262,8 +2264,6 @@ private constructor(
                  * List of price_ids that this minimum amount applies to. For plan/plan phase
                  * minimums, this can be a subset of prices.
                  */
-                @JsonProperty("applies_to_price_ids")
-                @ExcludeMissing
                 fun appliesToPriceIds(appliesToPriceIds: JsonField<List<String>>) = apply {
                     this.appliesToPriceIds = appliesToPriceIds
                 }
@@ -2273,7 +2273,6 @@ private constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -2425,12 +2424,15 @@ private constructor(
             override fun toString() = value.toString()
         }
 
-        @JsonDeserialize(builder = UnitConfig.Builder::class)
         @NoAutoDetect
         class UnitConfig
+        @JsonCreator
         private constructor(
-            private val unitAmount: JsonField<String>,
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonProperty("unit_amount")
+            @ExcludeMissing
+            private val unitAmount: JsonField<String> = JsonMissing.of(),
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             /** Rate per unit of usage */
@@ -2473,8 +2475,6 @@ private constructor(
                 fun unitAmount(unitAmount: String) = unitAmount(JsonField.of(unitAmount))
 
                 /** Rate per unit of usage */
-                @JsonProperty("unit_amount")
-                @ExcludeMissing
                 fun unitAmount(unitAmount: JsonField<String>) = apply {
                     this.unitAmount = unitAmount
                 }
@@ -2484,7 +2484,6 @@ private constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -2541,34 +2540,79 @@ private constructor(
             "UnitPrice{metadata=$metadata, id=$id, name=$name, externalPriceId=$externalPriceId, priceType=$priceType, modelType=$modelType, createdAt=$createdAt, cadence=$cadence, billingCycleConfiguration=$billingCycleConfiguration, invoicingCycleConfiguration=$invoicingCycleConfiguration, billableMetric=$billableMetric, fixedPriceQuantity=$fixedPriceQuantity, planPhaseOrder=$planPhaseOrder, currency=$currency, conversionRate=$conversionRate, item=$item, creditAllocation=$creditAllocation, discount=$discount, minimum=$minimum, minimumAmount=$minimumAmount, maximum=$maximum, maximumAmount=$maximumAmount, unitConfig=$unitConfig, additionalProperties=$additionalProperties}"
     }
 
-    @JsonDeserialize(builder = PackagePrice.Builder::class)
     @NoAutoDetect
     class PackagePrice
+    @JsonCreator
     private constructor(
-        private val metadata: JsonField<Metadata>,
-        private val id: JsonField<String>,
-        private val name: JsonField<String>,
-        private val externalPriceId: JsonField<String>,
-        private val priceType: JsonField<PriceType>,
-        private val modelType: JsonField<ModelType>,
-        private val createdAt: JsonField<OffsetDateTime>,
-        private val cadence: JsonField<Cadence>,
-        private val billingCycleConfiguration: JsonField<BillingCycleConfiguration>,
-        private val invoicingCycleConfiguration: JsonField<InvoicingCycleConfiguration>,
-        private val billableMetric: JsonField<BillableMetric>,
-        private val fixedPriceQuantity: JsonField<Double>,
-        private val planPhaseOrder: JsonField<Long>,
-        private val currency: JsonField<String>,
-        private val conversionRate: JsonField<Double>,
-        private val item: JsonField<Item>,
-        private val creditAllocation: JsonField<CreditAllocation>,
-        private val discount: JsonField<Discount>,
-        private val minimum: JsonField<Minimum>,
-        private val minimumAmount: JsonField<String>,
-        private val maximum: JsonField<Maximum>,
-        private val maximumAmount: JsonField<String>,
-        private val packageConfig: JsonField<PackageConfig>,
-        private val additionalProperties: Map<String, JsonValue>,
+        @JsonProperty("metadata")
+        @ExcludeMissing
+        private val metadata: JsonField<Metadata> = JsonMissing.of(),
+        @JsonProperty("id") @ExcludeMissing private val id: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("name")
+        @ExcludeMissing
+        private val name: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("external_price_id")
+        @ExcludeMissing
+        private val externalPriceId: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("price_type")
+        @ExcludeMissing
+        private val priceType: JsonField<PriceType> = JsonMissing.of(),
+        @JsonProperty("model_type")
+        @ExcludeMissing
+        private val modelType: JsonField<ModelType> = JsonMissing.of(),
+        @JsonProperty("created_at")
+        @ExcludeMissing
+        private val createdAt: JsonField<OffsetDateTime> = JsonMissing.of(),
+        @JsonProperty("cadence")
+        @ExcludeMissing
+        private val cadence: JsonField<Cadence> = JsonMissing.of(),
+        @JsonProperty("billing_cycle_configuration")
+        @ExcludeMissing
+        private val billingCycleConfiguration: JsonField<BillingCycleConfiguration> =
+            JsonMissing.of(),
+        @JsonProperty("invoicing_cycle_configuration")
+        @ExcludeMissing
+        private val invoicingCycleConfiguration: JsonField<InvoicingCycleConfiguration> =
+            JsonMissing.of(),
+        @JsonProperty("billable_metric")
+        @ExcludeMissing
+        private val billableMetric: JsonField<BillableMetric> = JsonMissing.of(),
+        @JsonProperty("fixed_price_quantity")
+        @ExcludeMissing
+        private val fixedPriceQuantity: JsonField<Double> = JsonMissing.of(),
+        @JsonProperty("plan_phase_order")
+        @ExcludeMissing
+        private val planPhaseOrder: JsonField<Long> = JsonMissing.of(),
+        @JsonProperty("currency")
+        @ExcludeMissing
+        private val currency: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("conversion_rate")
+        @ExcludeMissing
+        private val conversionRate: JsonField<Double> = JsonMissing.of(),
+        @JsonProperty("item") @ExcludeMissing private val item: JsonField<Item> = JsonMissing.of(),
+        @JsonProperty("credit_allocation")
+        @ExcludeMissing
+        private val creditAllocation: JsonField<CreditAllocation> = JsonMissing.of(),
+        @JsonProperty("discount")
+        @ExcludeMissing
+        private val discount: JsonField<Discount> = JsonMissing.of(),
+        @JsonProperty("minimum")
+        @ExcludeMissing
+        private val minimum: JsonField<Minimum> = JsonMissing.of(),
+        @JsonProperty("minimum_amount")
+        @ExcludeMissing
+        private val minimumAmount: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("maximum")
+        @ExcludeMissing
+        private val maximum: JsonField<Maximum> = JsonMissing.of(),
+        @JsonProperty("maximum_amount")
+        @ExcludeMissing
+        private val maximumAmount: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("package_config")
+        @ExcludeMissing
+        private val packageConfig: JsonField<PackageConfig> = JsonMissing.of(),
+        @JsonAnySetter
+        private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
 
         /**
@@ -2794,62 +2838,44 @@ private constructor(
              * empty dictionary. Individual keys can be removed by setting the value to `null`, and
              * the entire metadata mapping can be cleared by setting `metadata` to `null`.
              */
-            @JsonProperty("metadata")
-            @ExcludeMissing
             fun metadata(metadata: JsonField<Metadata>) = apply { this.metadata = metadata }
 
             fun id(id: String) = id(JsonField.of(id))
 
-            @JsonProperty("id")
-            @ExcludeMissing
             fun id(id: JsonField<String>) = apply { this.id = id }
 
             fun name(name: String) = name(JsonField.of(name))
 
-            @JsonProperty("name")
-            @ExcludeMissing
             fun name(name: JsonField<String>) = apply { this.name = name }
 
             fun externalPriceId(externalPriceId: String) =
                 externalPriceId(JsonField.of(externalPriceId))
 
-            @JsonProperty("external_price_id")
-            @ExcludeMissing
             fun externalPriceId(externalPriceId: JsonField<String>) = apply {
                 this.externalPriceId = externalPriceId
             }
 
             fun priceType(priceType: PriceType) = priceType(JsonField.of(priceType))
 
-            @JsonProperty("price_type")
-            @ExcludeMissing
             fun priceType(priceType: JsonField<PriceType>) = apply { this.priceType = priceType }
 
             fun modelType(modelType: ModelType) = modelType(JsonField.of(modelType))
 
-            @JsonProperty("model_type")
-            @ExcludeMissing
             fun modelType(modelType: JsonField<ModelType>) = apply { this.modelType = modelType }
 
             fun createdAt(createdAt: OffsetDateTime) = createdAt(JsonField.of(createdAt))
 
-            @JsonProperty("created_at")
-            @ExcludeMissing
             fun createdAt(createdAt: JsonField<OffsetDateTime>) = apply {
                 this.createdAt = createdAt
             }
 
             fun cadence(cadence: Cadence) = cadence(JsonField.of(cadence))
 
-            @JsonProperty("cadence")
-            @ExcludeMissing
             fun cadence(cadence: JsonField<Cadence>) = apply { this.cadence = cadence }
 
             fun billingCycleConfiguration(billingCycleConfiguration: BillingCycleConfiguration) =
                 billingCycleConfiguration(JsonField.of(billingCycleConfiguration))
 
-            @JsonProperty("billing_cycle_configuration")
-            @ExcludeMissing
             fun billingCycleConfiguration(
                 billingCycleConfiguration: JsonField<BillingCycleConfiguration>
             ) = apply { this.billingCycleConfiguration = billingCycleConfiguration }
@@ -2858,8 +2884,6 @@ private constructor(
                 invoicingCycleConfiguration: InvoicingCycleConfiguration
             ) = invoicingCycleConfiguration(JsonField.of(invoicingCycleConfiguration))
 
-            @JsonProperty("invoicing_cycle_configuration")
-            @ExcludeMissing
             fun invoicingCycleConfiguration(
                 invoicingCycleConfiguration: JsonField<InvoicingCycleConfiguration>
             ) = apply { this.invoicingCycleConfiguration = invoicingCycleConfiguration }
@@ -2867,8 +2891,6 @@ private constructor(
             fun billableMetric(billableMetric: BillableMetric) =
                 billableMetric(JsonField.of(billableMetric))
 
-            @JsonProperty("billable_metric")
-            @ExcludeMissing
             fun billableMetric(billableMetric: JsonField<BillableMetric>) = apply {
                 this.billableMetric = billableMetric
             }
@@ -2876,80 +2898,58 @@ private constructor(
             fun fixedPriceQuantity(fixedPriceQuantity: Double) =
                 fixedPriceQuantity(JsonField.of(fixedPriceQuantity))
 
-            @JsonProperty("fixed_price_quantity")
-            @ExcludeMissing
             fun fixedPriceQuantity(fixedPriceQuantity: JsonField<Double>) = apply {
                 this.fixedPriceQuantity = fixedPriceQuantity
             }
 
             fun planPhaseOrder(planPhaseOrder: Long) = planPhaseOrder(JsonField.of(planPhaseOrder))
 
-            @JsonProperty("plan_phase_order")
-            @ExcludeMissing
             fun planPhaseOrder(planPhaseOrder: JsonField<Long>) = apply {
                 this.planPhaseOrder = planPhaseOrder
             }
 
             fun currency(currency: String) = currency(JsonField.of(currency))
 
-            @JsonProperty("currency")
-            @ExcludeMissing
             fun currency(currency: JsonField<String>) = apply { this.currency = currency }
 
             fun conversionRate(conversionRate: Double) =
                 conversionRate(JsonField.of(conversionRate))
 
-            @JsonProperty("conversion_rate")
-            @ExcludeMissing
             fun conversionRate(conversionRate: JsonField<Double>) = apply {
                 this.conversionRate = conversionRate
             }
 
             fun item(item: Item) = item(JsonField.of(item))
 
-            @JsonProperty("item")
-            @ExcludeMissing
             fun item(item: JsonField<Item>) = apply { this.item = item }
 
             fun creditAllocation(creditAllocation: CreditAllocation) =
                 creditAllocation(JsonField.of(creditAllocation))
 
-            @JsonProperty("credit_allocation")
-            @ExcludeMissing
             fun creditAllocation(creditAllocation: JsonField<CreditAllocation>) = apply {
                 this.creditAllocation = creditAllocation
             }
 
             fun discount(discount: Discount) = discount(JsonField.of(discount))
 
-            @JsonProperty("discount")
-            @ExcludeMissing
             fun discount(discount: JsonField<Discount>) = apply { this.discount = discount }
 
             fun minimum(minimum: Minimum) = minimum(JsonField.of(minimum))
 
-            @JsonProperty("minimum")
-            @ExcludeMissing
             fun minimum(minimum: JsonField<Minimum>) = apply { this.minimum = minimum }
 
             fun minimumAmount(minimumAmount: String) = minimumAmount(JsonField.of(minimumAmount))
 
-            @JsonProperty("minimum_amount")
-            @ExcludeMissing
             fun minimumAmount(minimumAmount: JsonField<String>) = apply {
                 this.minimumAmount = minimumAmount
             }
 
             fun maximum(maximum: Maximum) = maximum(JsonField.of(maximum))
 
-            @JsonProperty("maximum")
-            @ExcludeMissing
             fun maximum(maximum: JsonField<Maximum>) = apply { this.maximum = maximum }
 
             fun maximumAmount(maximumAmount: String) = maximumAmount(JsonField.of(maximumAmount))
 
-            @JsonProperty("maximum_amount")
-            @ExcludeMissing
             fun maximumAmount(maximumAmount: JsonField<String>) = apply {
                 this.maximumAmount = maximumAmount
             }
@@ -2957,8 +2957,6 @@ private constructor(
             fun packageConfig(packageConfig: PackageConfig) =
                 packageConfig(JsonField.of(packageConfig))
 
-            @JsonProperty("package_config")
-            @ExcludeMissing
             fun packageConfig(packageConfig: JsonField<PackageConfig>) = apply {
                 this.packageConfig = packageConfig
             }
@@ -2968,7 +2966,6 @@ private constructor(
                 putAllAdditionalProperties(additionalProperties)
             }
 
-            @JsonAnySetter
             fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                 additionalProperties.put(key, value)
             }
@@ -3012,12 +3009,15 @@ private constructor(
                 )
         }
 
-        @JsonDeserialize(builder = BillableMetric.Builder::class)
         @NoAutoDetect
         class BillableMetric
+        @JsonCreator
         private constructor(
-            private val id: JsonField<String>,
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonProperty("id")
+            @ExcludeMissing
+            private val id: JsonField<String> = JsonMissing.of(),
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             fun id(): String = id.getRequired("id")
@@ -3056,8 +3056,6 @@ private constructor(
 
                 fun id(id: String) = id(JsonField.of(id))
 
-                @JsonProperty("id")
-                @ExcludeMissing
                 fun id(id: JsonField<String>) = apply { this.id = id }
 
                 fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
@@ -3065,7 +3063,6 @@ private constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -3104,13 +3101,18 @@ private constructor(
                 "BillableMetric{id=$id, additionalProperties=$additionalProperties}"
         }
 
-        @JsonDeserialize(builder = BillingCycleConfiguration.Builder::class)
         @NoAutoDetect
         class BillingCycleConfiguration
+        @JsonCreator
         private constructor(
-            private val duration: JsonField<Long>,
-            private val durationUnit: JsonField<DurationUnit>,
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonProperty("duration")
+            @ExcludeMissing
+            private val duration: JsonField<Long> = JsonMissing.of(),
+            @JsonProperty("duration_unit")
+            @ExcludeMissing
+            private val durationUnit: JsonField<DurationUnit> = JsonMissing.of(),
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             fun duration(): Long = duration.getRequired("duration")
@@ -3157,15 +3159,11 @@ private constructor(
 
                 fun duration(duration: Long) = duration(JsonField.of(duration))
 
-                @JsonProperty("duration")
-                @ExcludeMissing
                 fun duration(duration: JsonField<Long>) = apply { this.duration = duration }
 
                 fun durationUnit(durationUnit: DurationUnit) =
                     durationUnit(JsonField.of(durationUnit))
 
-                @JsonProperty("duration_unit")
-                @ExcludeMissing
                 fun durationUnit(durationUnit: JsonField<DurationUnit>) = apply {
                     this.durationUnit = durationUnit
                 }
@@ -3175,7 +3173,6 @@ private constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -3357,13 +3354,18 @@ private constructor(
             override fun toString() = value.toString()
         }
 
-        @JsonDeserialize(builder = CreditAllocation.Builder::class)
         @NoAutoDetect
         class CreditAllocation
+        @JsonCreator
         private constructor(
-            private val currency: JsonField<String>,
-            private val allowsRollover: JsonField<Boolean>,
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonProperty("currency")
+            @ExcludeMissing
+            private val currency: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("allows_rollover")
+            @ExcludeMissing
+            private val allowsRollover: JsonField<Boolean> = JsonMissing.of(),
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             fun currency(): String = currency.getRequired("currency")
@@ -3409,15 +3411,11 @@ private constructor(
 
                 fun currency(currency: String) = currency(JsonField.of(currency))
 
-                @JsonProperty("currency")
-                @ExcludeMissing
                 fun currency(currency: JsonField<String>) = apply { this.currency = currency }
 
                 fun allowsRollover(allowsRollover: Boolean) =
                     allowsRollover(JsonField.of(allowsRollover))
 
-                @JsonProperty("allows_rollover")
-                @ExcludeMissing
                 fun allowsRollover(allowsRollover: JsonField<Boolean>) = apply {
                     this.allowsRollover = allowsRollover
                 }
@@ -3427,7 +3425,6 @@ private constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -3471,13 +3468,18 @@ private constructor(
                 "CreditAllocation{currency=$currency, allowsRollover=$allowsRollover, additionalProperties=$additionalProperties}"
         }
 
-        @JsonDeserialize(builder = InvoicingCycleConfiguration.Builder::class)
         @NoAutoDetect
         class InvoicingCycleConfiguration
+        @JsonCreator
         private constructor(
-            private val duration: JsonField<Long>,
-            private val durationUnit: JsonField<DurationUnit>,
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonProperty("duration")
+            @ExcludeMissing
+            private val duration: JsonField<Long> = JsonMissing.of(),
+            @JsonProperty("duration_unit")
+            @ExcludeMissing
+            private val durationUnit: JsonField<DurationUnit> = JsonMissing.of(),
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             fun duration(): Long = duration.getRequired("duration")
@@ -3525,15 +3527,11 @@ private constructor(
 
                 fun duration(duration: Long) = duration(JsonField.of(duration))
 
-                @JsonProperty("duration")
-                @ExcludeMissing
                 fun duration(duration: JsonField<Long>) = apply { this.duration = duration }
 
                 fun durationUnit(durationUnit: DurationUnit) =
                     durationUnit(JsonField.of(durationUnit))
 
-                @JsonProperty("duration_unit")
-                @ExcludeMissing
                 fun durationUnit(durationUnit: JsonField<DurationUnit>) = apply {
                     this.durationUnit = durationUnit
                 }
@@ -3543,7 +3541,6 @@ private constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -3644,13 +3641,18 @@ private constructor(
                 "InvoicingCycleConfiguration{duration=$duration, durationUnit=$durationUnit, additionalProperties=$additionalProperties}"
         }
 
-        @JsonDeserialize(builder = Item.Builder::class)
         @NoAutoDetect
         class Item
+        @JsonCreator
         private constructor(
-            private val id: JsonField<String>,
-            private val name: JsonField<String>,
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonProperty("id")
+            @ExcludeMissing
+            private val id: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("name")
+            @ExcludeMissing
+            private val name: JsonField<String> = JsonMissing.of(),
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             fun id(): String = id.getRequired("id")
@@ -3696,14 +3698,10 @@ private constructor(
 
                 fun id(id: String) = id(JsonField.of(id))
 
-                @JsonProperty("id")
-                @ExcludeMissing
                 fun id(id: JsonField<String>) = apply { this.id = id }
 
                 fun name(name: String) = name(JsonField.of(name))
 
-                @JsonProperty("name")
-                @ExcludeMissing
                 fun name(name: JsonField<String>) = apply { this.name = name }
 
                 fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
@@ -3711,7 +3709,6 @@ private constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -3755,13 +3752,18 @@ private constructor(
                 "Item{id=$id, name=$name, additionalProperties=$additionalProperties}"
         }
 
-        @JsonDeserialize(builder = Maximum.Builder::class)
         @NoAutoDetect
         class Maximum
+        @JsonCreator
         private constructor(
-            private val maximumAmount: JsonField<String>,
-            private val appliesToPriceIds: JsonField<List<String>>,
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonProperty("maximum_amount")
+            @ExcludeMissing
+            private val maximumAmount: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("applies_to_price_ids")
+            @ExcludeMissing
+            private val appliesToPriceIds: JsonField<List<String>> = JsonMissing.of(),
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             /** Maximum amount applied */
@@ -3823,8 +3825,6 @@ private constructor(
                     maximumAmount(JsonField.of(maximumAmount))
 
                 /** Maximum amount applied */
-                @JsonProperty("maximum_amount")
-                @ExcludeMissing
                 fun maximumAmount(maximumAmount: JsonField<String>) = apply {
                     this.maximumAmount = maximumAmount
                 }
@@ -3840,8 +3840,6 @@ private constructor(
                  * List of price_ids that this maximum amount applies to. For plan/plan phase
                  * maximums, this can be a subset of prices.
                  */
-                @JsonProperty("applies_to_price_ids")
-                @ExcludeMissing
                 fun appliesToPriceIds(appliesToPriceIds: JsonField<List<String>>) = apply {
                     this.appliesToPriceIds = appliesToPriceIds
                 }
@@ -3851,7 +3849,6 @@ private constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -3900,11 +3897,12 @@ private constructor(
          * empty dictionary. Individual keys can be removed by setting the value to `null`, and the
          * entire metadata mapping can be cleared by setting `metadata` to `null`.
          */
-        @JsonDeserialize(builder = Metadata.Builder::class)
         @NoAutoDetect
         class Metadata
+        @JsonCreator
         private constructor(
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             @JsonAnyGetter
@@ -3939,7 +3937,6 @@ private constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -3977,13 +3974,18 @@ private constructor(
             override fun toString() = "Metadata{additionalProperties=$additionalProperties}"
         }
 
-        @JsonDeserialize(builder = Minimum.Builder::class)
         @NoAutoDetect
         class Minimum
+        @JsonCreator
         private constructor(
-            private val minimumAmount: JsonField<String>,
-            private val appliesToPriceIds: JsonField<List<String>>,
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonProperty("minimum_amount")
+            @ExcludeMissing
+            private val minimumAmount: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("applies_to_price_ids")
+            @ExcludeMissing
+            private val appliesToPriceIds: JsonField<List<String>> = JsonMissing.of(),
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             /** Minimum amount applied */
@@ -4045,8 +4047,6 @@ private constructor(
                     minimumAmount(JsonField.of(minimumAmount))
 
                 /** Minimum amount applied */
-                @JsonProperty("minimum_amount")
-                @ExcludeMissing
                 fun minimumAmount(minimumAmount: JsonField<String>) = apply {
                     this.minimumAmount = minimumAmount
                 }
@@ -4062,8 +4062,6 @@ private constructor(
                  * List of price_ids that this minimum amount applies to. For plan/plan phase
                  * minimums, this can be a subset of prices.
                  */
-                @JsonProperty("applies_to_price_ids")
-                @ExcludeMissing
                 fun appliesToPriceIds(appliesToPriceIds: JsonField<List<String>>) = apply {
                     this.appliesToPriceIds = appliesToPriceIds
                 }
@@ -4073,7 +4071,6 @@ private constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -4168,13 +4165,18 @@ private constructor(
             override fun toString() = value.toString()
         }
 
-        @JsonDeserialize(builder = PackageConfig.Builder::class)
         @NoAutoDetect
         class PackageConfig
+        @JsonCreator
         private constructor(
-            private val packageAmount: JsonField<String>,
-            private val packageSize: JsonField<Long>,
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonProperty("package_amount")
+            @ExcludeMissing
+            private val packageAmount: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("package_size")
+            @ExcludeMissing
+            private val packageSize: JsonField<Long> = JsonMissing.of(),
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             /** A currency amount to rate usage by */
@@ -4233,8 +4235,6 @@ private constructor(
                     packageAmount(JsonField.of(packageAmount))
 
                 /** A currency amount to rate usage by */
-                @JsonProperty("package_amount")
-                @ExcludeMissing
                 fun packageAmount(packageAmount: JsonField<String>) = apply {
                     this.packageAmount = packageAmount
                 }
@@ -4249,8 +4249,6 @@ private constructor(
                  * An integer amount to represent package size. For example, 1000 here would divide
                  * usage by 1000 before multiplying by package_amount in rating
                  */
-                @JsonProperty("package_size")
-                @ExcludeMissing
                 fun packageSize(packageSize: JsonField<Long>) = apply {
                     this.packageSize = packageSize
                 }
@@ -4260,7 +4258,6 @@ private constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -4379,34 +4376,79 @@ private constructor(
             "PackagePrice{metadata=$metadata, id=$id, name=$name, externalPriceId=$externalPriceId, priceType=$priceType, modelType=$modelType, createdAt=$createdAt, cadence=$cadence, billingCycleConfiguration=$billingCycleConfiguration, invoicingCycleConfiguration=$invoicingCycleConfiguration, billableMetric=$billableMetric, fixedPriceQuantity=$fixedPriceQuantity, planPhaseOrder=$planPhaseOrder, currency=$currency, conversionRate=$conversionRate, item=$item, creditAllocation=$creditAllocation, discount=$discount, minimum=$minimum, minimumAmount=$minimumAmount, maximum=$maximum, maximumAmount=$maximumAmount, packageConfig=$packageConfig, additionalProperties=$additionalProperties}"
     }
 
-    @JsonDeserialize(builder = MatrixPrice.Builder::class)
     @NoAutoDetect
     class MatrixPrice
+    @JsonCreator
     private constructor(
-        private val metadata: JsonField<Metadata>,
-        private val id: JsonField<String>,
-        private val name: JsonField<String>,
-        private val externalPriceId: JsonField<String>,
-        private val priceType: JsonField<PriceType>,
-        private val modelType: JsonField<ModelType>,
-        private val createdAt: JsonField<OffsetDateTime>,
-        private val cadence: JsonField<Cadence>,
-        private val billingCycleConfiguration: JsonField<BillingCycleConfiguration>,
-        private val invoicingCycleConfiguration: JsonField<InvoicingCycleConfiguration>,
-        private val billableMetric: JsonField<BillableMetric>,
-        private val fixedPriceQuantity: JsonField<Double>,
-        private val planPhaseOrder: JsonField<Long>,
-        private val currency: JsonField<String>,
-        private val conversionRate: JsonField<Double>,
-        private val item: JsonField<Item>,
-        private val creditAllocation: JsonField<CreditAllocation>,
-        private val discount: JsonField<Discount>,
-        private val minimum: JsonField<Minimum>,
-        private val minimumAmount: JsonField<String>,
-        private val maximum: JsonField<Maximum>,
-        private val maximumAmount: JsonField<String>,
-        private val matrixConfig: JsonField<MatrixConfig>,
-        private val additionalProperties: Map<String, JsonValue>,
+        @JsonProperty("metadata")
+        @ExcludeMissing
+        private val metadata: JsonField<Metadata> = JsonMissing.of(),
+        @JsonProperty("id") @ExcludeMissing private val id: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("name")
+        @ExcludeMissing
+        private val name: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("external_price_id")
+        @ExcludeMissing
+        private val externalPriceId: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("price_type")
+        @ExcludeMissing
+        private val priceType: JsonField<PriceType> = JsonMissing.of(),
+        @JsonProperty("model_type")
+        @ExcludeMissing
+        private val modelType: JsonField<ModelType> = JsonMissing.of(),
+        @JsonProperty("created_at")
+        @ExcludeMissing
+        private val createdAt: JsonField<OffsetDateTime> = JsonMissing.of(),
+        @JsonProperty("cadence")
+        @ExcludeMissing
+        private val cadence: JsonField<Cadence> = JsonMissing.of(),
+        @JsonProperty("billing_cycle_configuration")
+        @ExcludeMissing
+        private val billingCycleConfiguration: JsonField<BillingCycleConfiguration> =
+            JsonMissing.of(),
+        @JsonProperty("invoicing_cycle_configuration")
+        @ExcludeMissing
+        private val invoicingCycleConfiguration: JsonField<InvoicingCycleConfiguration> =
+            JsonMissing.of(),
+        @JsonProperty("billable_metric")
+        @ExcludeMissing
+        private val billableMetric: JsonField<BillableMetric> = JsonMissing.of(),
+        @JsonProperty("fixed_price_quantity")
+        @ExcludeMissing
+        private val fixedPriceQuantity: JsonField<Double> = JsonMissing.of(),
+        @JsonProperty("plan_phase_order")
+        @ExcludeMissing
+        private val planPhaseOrder: JsonField<Long> = JsonMissing.of(),
+        @JsonProperty("currency")
+        @ExcludeMissing
+        private val currency: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("conversion_rate")
+        @ExcludeMissing
+        private val conversionRate: JsonField<Double> = JsonMissing.of(),
+        @JsonProperty("item") @ExcludeMissing private val item: JsonField<Item> = JsonMissing.of(),
+        @JsonProperty("credit_allocation")
+        @ExcludeMissing
+        private val creditAllocation: JsonField<CreditAllocation> = JsonMissing.of(),
+        @JsonProperty("discount")
+        @ExcludeMissing
+        private val discount: JsonField<Discount> = JsonMissing.of(),
+        @JsonProperty("minimum")
+        @ExcludeMissing
+        private val minimum: JsonField<Minimum> = JsonMissing.of(),
+        @JsonProperty("minimum_amount")
+        @ExcludeMissing
+        private val minimumAmount: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("maximum")
+        @ExcludeMissing
+        private val maximum: JsonField<Maximum> = JsonMissing.of(),
+        @JsonProperty("maximum_amount")
+        @ExcludeMissing
+        private val maximumAmount: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("matrix_config")
+        @ExcludeMissing
+        private val matrixConfig: JsonField<MatrixConfig> = JsonMissing.of(),
+        @JsonAnySetter
+        private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
 
         /**
@@ -4632,62 +4674,44 @@ private constructor(
              * empty dictionary. Individual keys can be removed by setting the value to `null`, and
              * the entire metadata mapping can be cleared by setting `metadata` to `null`.
              */
-            @JsonProperty("metadata")
-            @ExcludeMissing
             fun metadata(metadata: JsonField<Metadata>) = apply { this.metadata = metadata }
 
             fun id(id: String) = id(JsonField.of(id))
 
-            @JsonProperty("id")
-            @ExcludeMissing
             fun id(id: JsonField<String>) = apply { this.id = id }
 
             fun name(name: String) = name(JsonField.of(name))
 
-            @JsonProperty("name")
-            @ExcludeMissing
             fun name(name: JsonField<String>) = apply { this.name = name }
 
             fun externalPriceId(externalPriceId: String) =
                 externalPriceId(JsonField.of(externalPriceId))
 
-            @JsonProperty("external_price_id")
-            @ExcludeMissing
             fun externalPriceId(externalPriceId: JsonField<String>) = apply {
                 this.externalPriceId = externalPriceId
             }
 
             fun priceType(priceType: PriceType) = priceType(JsonField.of(priceType))
 
-            @JsonProperty("price_type")
-            @ExcludeMissing
             fun priceType(priceType: JsonField<PriceType>) = apply { this.priceType = priceType }
 
             fun modelType(modelType: ModelType) = modelType(JsonField.of(modelType))
 
-            @JsonProperty("model_type")
-            @ExcludeMissing
             fun modelType(modelType: JsonField<ModelType>) = apply { this.modelType = modelType }
 
             fun createdAt(createdAt: OffsetDateTime) = createdAt(JsonField.of(createdAt))
 
-            @JsonProperty("created_at")
-            @ExcludeMissing
             fun createdAt(createdAt: JsonField<OffsetDateTime>) = apply {
                 this.createdAt = createdAt
             }
 
             fun cadence(cadence: Cadence) = cadence(JsonField.of(cadence))
 
-            @JsonProperty("cadence")
-            @ExcludeMissing
             fun cadence(cadence: JsonField<Cadence>) = apply { this.cadence = cadence }
 
             fun billingCycleConfiguration(billingCycleConfiguration: BillingCycleConfiguration) =
                 billingCycleConfiguration(JsonField.of(billingCycleConfiguration))
 
-            @JsonProperty("billing_cycle_configuration")
-            @ExcludeMissing
             fun billingCycleConfiguration(
                 billingCycleConfiguration: JsonField<BillingCycleConfiguration>
             ) = apply { this.billingCycleConfiguration = billingCycleConfiguration }
@@ -4696,8 +4720,6 @@ private constructor(
                 invoicingCycleConfiguration: InvoicingCycleConfiguration
             ) = invoicingCycleConfiguration(JsonField.of(invoicingCycleConfiguration))
 
-            @JsonProperty("invoicing_cycle_configuration")
-            @ExcludeMissing
             fun invoicingCycleConfiguration(
                 invoicingCycleConfiguration: JsonField<InvoicingCycleConfiguration>
             ) = apply { this.invoicingCycleConfiguration = invoicingCycleConfiguration }
@@ -4705,8 +4727,6 @@ private constructor(
             fun billableMetric(billableMetric: BillableMetric) =
                 billableMetric(JsonField.of(billableMetric))
 
-            @JsonProperty("billable_metric")
-            @ExcludeMissing
             fun billableMetric(billableMetric: JsonField<BillableMetric>) = apply {
                 this.billableMetric = billableMetric
             }
@@ -4714,88 +4734,64 @@ private constructor(
             fun fixedPriceQuantity(fixedPriceQuantity: Double) =
                 fixedPriceQuantity(JsonField.of(fixedPriceQuantity))
 
-            @JsonProperty("fixed_price_quantity")
-            @ExcludeMissing
             fun fixedPriceQuantity(fixedPriceQuantity: JsonField<Double>) = apply {
                 this.fixedPriceQuantity = fixedPriceQuantity
             }
 
             fun planPhaseOrder(planPhaseOrder: Long) = planPhaseOrder(JsonField.of(planPhaseOrder))
 
-            @JsonProperty("plan_phase_order")
-            @ExcludeMissing
             fun planPhaseOrder(planPhaseOrder: JsonField<Long>) = apply {
                 this.planPhaseOrder = planPhaseOrder
             }
 
             fun currency(currency: String) = currency(JsonField.of(currency))
 
-            @JsonProperty("currency")
-            @ExcludeMissing
             fun currency(currency: JsonField<String>) = apply { this.currency = currency }
 
             fun conversionRate(conversionRate: Double) =
                 conversionRate(JsonField.of(conversionRate))
 
-            @JsonProperty("conversion_rate")
-            @ExcludeMissing
             fun conversionRate(conversionRate: JsonField<Double>) = apply {
                 this.conversionRate = conversionRate
             }
 
             fun item(item: Item) = item(JsonField.of(item))
 
-            @JsonProperty("item")
-            @ExcludeMissing
             fun item(item: JsonField<Item>) = apply { this.item = item }
 
             fun creditAllocation(creditAllocation: CreditAllocation) =
                 creditAllocation(JsonField.of(creditAllocation))
 
-            @JsonProperty("credit_allocation")
-            @ExcludeMissing
             fun creditAllocation(creditAllocation: JsonField<CreditAllocation>) = apply {
                 this.creditAllocation = creditAllocation
             }
 
             fun discount(discount: Discount) = discount(JsonField.of(discount))
 
-            @JsonProperty("discount")
-            @ExcludeMissing
             fun discount(discount: JsonField<Discount>) = apply { this.discount = discount }
 
             fun minimum(minimum: Minimum) = minimum(JsonField.of(minimum))
 
-            @JsonProperty("minimum")
-            @ExcludeMissing
             fun minimum(minimum: JsonField<Minimum>) = apply { this.minimum = minimum }
 
             fun minimumAmount(minimumAmount: String) = minimumAmount(JsonField.of(minimumAmount))
 
-            @JsonProperty("minimum_amount")
-            @ExcludeMissing
             fun minimumAmount(minimumAmount: JsonField<String>) = apply {
                 this.minimumAmount = minimumAmount
             }
 
             fun maximum(maximum: Maximum) = maximum(JsonField.of(maximum))
 
-            @JsonProperty("maximum")
-            @ExcludeMissing
             fun maximum(maximum: JsonField<Maximum>) = apply { this.maximum = maximum }
 
             fun maximumAmount(maximumAmount: String) = maximumAmount(JsonField.of(maximumAmount))
 
-            @JsonProperty("maximum_amount")
-            @ExcludeMissing
             fun maximumAmount(maximumAmount: JsonField<String>) = apply {
                 this.maximumAmount = maximumAmount
             }
 
             fun matrixConfig(matrixConfig: MatrixConfig) = matrixConfig(JsonField.of(matrixConfig))
 
-            @JsonProperty("matrix_config")
-            @ExcludeMissing
             fun matrixConfig(matrixConfig: JsonField<MatrixConfig>) = apply {
                 this.matrixConfig = matrixConfig
             }
@@ -4805,7 +4801,6 @@ private constructor(
                 putAllAdditionalProperties(additionalProperties)
             }
 
-            @JsonAnySetter
             fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                 additionalProperties.put(key, value)
             }
@@ -4849,12 +4844,15 @@ private constructor(
                 )
         }
 
-        @JsonDeserialize(builder = BillableMetric.Builder::class)
         @NoAutoDetect
         class BillableMetric
+        @JsonCreator
         private constructor(
-            private val id: JsonField<String>,
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonProperty("id")
+            @ExcludeMissing
+            private val id: JsonField<String> = JsonMissing.of(),
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             fun id(): String = id.getRequired("id")
@@ -4893,8 +4891,6 @@ private constructor(
 
                 fun id(id: String) = id(JsonField.of(id))
 
-                @JsonProperty("id")
-                @ExcludeMissing
                 fun id(id: JsonField<String>) = apply { this.id = id }
 
                 fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
@@ -4902,7 +4898,6 @@ private constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -4941,13 +4936,18 @@ private constructor(
                 "BillableMetric{id=$id, additionalProperties=$additionalProperties}"
         }
 
-        @JsonDeserialize(builder = BillingCycleConfiguration.Builder::class)
         @NoAutoDetect
         class BillingCycleConfiguration
+        @JsonCreator
         private constructor(
-            private val duration: JsonField<Long>,
-            private val durationUnit: JsonField<DurationUnit>,
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonProperty("duration")
+            @ExcludeMissing
+            private val duration: JsonField<Long> = JsonMissing.of(),
+            @JsonProperty("duration_unit")
+            @ExcludeMissing
+            private val durationUnit: JsonField<DurationUnit> = JsonMissing.of(),
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             fun duration(): Long = duration.getRequired("duration")
@@ -4994,15 +4994,11 @@ private constructor(
 
                 fun duration(duration: Long) = duration(JsonField.of(duration))
 
-                @JsonProperty("duration")
-                @ExcludeMissing
                 fun duration(duration: JsonField<Long>) = apply { this.duration = duration }
 
                 fun durationUnit(durationUnit: DurationUnit) =
                     durationUnit(JsonField.of(durationUnit))
 
-                @JsonProperty("duration_unit")
-                @ExcludeMissing
                 fun durationUnit(durationUnit: JsonField<DurationUnit>) = apply {
                     this.durationUnit = durationUnit
                 }
@@ -5012,7 +5008,6 @@ private constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -5194,13 +5189,18 @@ private constructor(
             override fun toString() = value.toString()
         }
 
-        @JsonDeserialize(builder = CreditAllocation.Builder::class)
         @NoAutoDetect
         class CreditAllocation
+        @JsonCreator
         private constructor(
-            private val currency: JsonField<String>,
-            private val allowsRollover: JsonField<Boolean>,
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonProperty("currency")
+            @ExcludeMissing
+            private val currency: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("allows_rollover")
+            @ExcludeMissing
+            private val allowsRollover: JsonField<Boolean> = JsonMissing.of(),
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             fun currency(): String = currency.getRequired("currency")
@@ -5246,15 +5246,11 @@ private constructor(
 
                 fun currency(currency: String) = currency(JsonField.of(currency))
 
-                @JsonProperty("currency")
-                @ExcludeMissing
                 fun currency(currency: JsonField<String>) = apply { this.currency = currency }
 
                 fun allowsRollover(allowsRollover: Boolean) =
                     allowsRollover(JsonField.of(allowsRollover))
 
-                @JsonProperty("allows_rollover")
-                @ExcludeMissing
                 fun allowsRollover(allowsRollover: JsonField<Boolean>) = apply {
                     this.allowsRollover = allowsRollover
                 }
@@ -5264,7 +5260,6 @@ private constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -5308,13 +5303,18 @@ private constructor(
                 "CreditAllocation{currency=$currency, allowsRollover=$allowsRollover, additionalProperties=$additionalProperties}"
         }
 
-        @JsonDeserialize(builder = InvoicingCycleConfiguration.Builder::class)
         @NoAutoDetect
         class InvoicingCycleConfiguration
+        @JsonCreator
         private constructor(
-            private val duration: JsonField<Long>,
-            private val durationUnit: JsonField<DurationUnit>,
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonProperty("duration")
+            @ExcludeMissing
+            private val duration: JsonField<Long> = JsonMissing.of(),
+            @JsonProperty("duration_unit")
+            @ExcludeMissing
+            private val durationUnit: JsonField<DurationUnit> = JsonMissing.of(),
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             fun duration(): Long = duration.getRequired("duration")
@@ -5362,15 +5362,11 @@ private constructor(
 
                 fun duration(duration: Long) = duration(JsonField.of(duration))
 
-                @JsonProperty("duration")
-                @ExcludeMissing
                 fun duration(duration: JsonField<Long>) = apply { this.duration = duration }
 
                 fun durationUnit(durationUnit: DurationUnit) =
                     durationUnit(JsonField.of(durationUnit))
 
-                @JsonProperty("duration_unit")
-                @ExcludeMissing
                 fun durationUnit(durationUnit: JsonField<DurationUnit>) = apply {
                     this.durationUnit = durationUnit
                 }
@@ -5380,7 +5376,6 @@ private constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -5481,13 +5476,18 @@ private constructor(
                 "InvoicingCycleConfiguration{duration=$duration, durationUnit=$durationUnit, additionalProperties=$additionalProperties}"
         }
 
-        @JsonDeserialize(builder = Item.Builder::class)
         @NoAutoDetect
         class Item
+        @JsonCreator
         private constructor(
-            private val id: JsonField<String>,
-            private val name: JsonField<String>,
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonProperty("id")
+            @ExcludeMissing
+            private val id: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("name")
+            @ExcludeMissing
+            private val name: JsonField<String> = JsonMissing.of(),
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             fun id(): String = id.getRequired("id")
@@ -5533,14 +5533,10 @@ private constructor(
 
                 fun id(id: String) = id(JsonField.of(id))
 
-                @JsonProperty("id")
-                @ExcludeMissing
                 fun id(id: JsonField<String>) = apply { this.id = id }
 
                 fun name(name: String) = name(JsonField.of(name))
 
-                @JsonProperty("name")
-                @ExcludeMissing
                 fun name(name: JsonField<String>) = apply { this.name = name }
 
                 fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
@@ -5548,7 +5544,6 @@ private constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -5592,14 +5587,21 @@ private constructor(
                 "Item{id=$id, name=$name, additionalProperties=$additionalProperties}"
         }
 
-        @JsonDeserialize(builder = MatrixConfig.Builder::class)
         @NoAutoDetect
         class MatrixConfig
+        @JsonCreator
         private constructor(
-            private val dimensions: JsonField<List<String?>>,
-            private val defaultUnitAmount: JsonField<String>,
-            private val matrixValues: JsonField<List<MatrixValue>>,
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonProperty("dimensions")
+            @ExcludeMissing
+            private val dimensions: JsonField<List<String?>> = JsonMissing.of(),
+            @JsonProperty("default_unit_amount")
+            @ExcludeMissing
+            private val defaultUnitAmount: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("matrix_values")
+            @ExcludeMissing
+            private val matrixValues: JsonField<List<MatrixValue>> = JsonMissing.of(),
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             /** One or two event property values to evaluate matrix groups by */
@@ -5662,8 +5664,6 @@ private constructor(
                 fun dimensions(dimensions: List<String?>) = dimensions(JsonField.of(dimensions))
 
                 /** One or two event property values to evaluate matrix groups by */
-                @JsonProperty("dimensions")
-                @ExcludeMissing
                 fun dimensions(dimensions: JsonField<List<String?>>) = apply {
                     this.dimensions = dimensions
                 }
@@ -5677,8 +5677,6 @@ private constructor(
                 /**
                  * Default per unit rate for any usage not bucketed into a specified matrix_value
                  */
-                @JsonProperty("default_unit_amount")
-                @ExcludeMissing
                 fun defaultUnitAmount(defaultUnitAmount: JsonField<String>) = apply {
                     this.defaultUnitAmount = defaultUnitAmount
                 }
@@ -5688,8 +5686,6 @@ private constructor(
                     matrixValues(JsonField.of(matrixValues))
 
                 /** Matrix values for specified matrix grouping keys */
-                @JsonProperty("matrix_values")
-                @ExcludeMissing
                 fun matrixValues(matrixValues: JsonField<List<MatrixValue>>) = apply {
                     this.matrixValues = matrixValues
                 }
@@ -5699,7 +5695,6 @@ private constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -5726,13 +5721,18 @@ private constructor(
                     )
             }
 
-            @JsonDeserialize(builder = MatrixValue.Builder::class)
             @NoAutoDetect
             class MatrixValue
+            @JsonCreator
             private constructor(
-                private val unitAmount: JsonField<String>,
-                private val dimensionValues: JsonField<List<String?>>,
-                private val additionalProperties: Map<String, JsonValue>,
+                @JsonProperty("unit_amount")
+                @ExcludeMissing
+                private val unitAmount: JsonField<String> = JsonMissing.of(),
+                @JsonProperty("dimension_values")
+                @ExcludeMissing
+                private val dimensionValues: JsonField<List<String?>> = JsonMissing.of(),
+                @JsonAnySetter
+                private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
             ) {
 
                 /** Unit price for the specified dimension_values */
@@ -5795,8 +5795,6 @@ private constructor(
                     fun unitAmount(unitAmount: String) = unitAmount(JsonField.of(unitAmount))
 
                     /** Unit price for the specified dimension_values */
-                    @JsonProperty("unit_amount")
-                    @ExcludeMissing
                     fun unitAmount(unitAmount: JsonField<String>) = apply {
                         this.unitAmount = unitAmount
                     }
@@ -5814,8 +5812,6 @@ private constructor(
                      * ["region", "tier"] could be used to filter cloud usage by a cloud region and
                      * an instance tier.
                      */
-                    @JsonProperty("dimension_values")
-                    @ExcludeMissing
                     fun dimensionValues(dimensionValues: JsonField<List<String?>>) = apply {
                         this.dimensionValues = dimensionValues
                     }
@@ -5825,7 +5821,6 @@ private constructor(
                         putAllAdditionalProperties(additionalProperties)
                     }
 
-                    @JsonAnySetter
                     fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                         additionalProperties.put(key, value)
                     }
@@ -5887,13 +5882,18 @@ private constructor(
                 "MatrixConfig{dimensions=$dimensions, defaultUnitAmount=$defaultUnitAmount, matrixValues=$matrixValues, additionalProperties=$additionalProperties}"
         }
 
-        @JsonDeserialize(builder = Maximum.Builder::class)
         @NoAutoDetect
         class Maximum
+        @JsonCreator
         private constructor(
-            private val maximumAmount: JsonField<String>,
-            private val appliesToPriceIds: JsonField<List<String>>,
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonProperty("maximum_amount")
+            @ExcludeMissing
+            private val maximumAmount: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("applies_to_price_ids")
+            @ExcludeMissing
+            private val appliesToPriceIds: JsonField<List<String>> = JsonMissing.of(),
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             /** Maximum amount applied */
@@ -5955,8 +5955,6 @@ private constructor(
                     maximumAmount(JsonField.of(maximumAmount))
 
                 /** Maximum amount applied */
-                @JsonProperty("maximum_amount")
-                @ExcludeMissing
                 fun maximumAmount(maximumAmount: JsonField<String>) = apply {
                     this.maximumAmount = maximumAmount
                 }
@@ -5972,8 +5970,6 @@ private constructor(
                  * List of price_ids that this maximum amount applies to. For plan/plan phase
                  * maximums, this can be a subset of prices.
                  */
-                @JsonProperty("applies_to_price_ids")
-                @ExcludeMissing
                 fun appliesToPriceIds(appliesToPriceIds: JsonField<List<String>>) = apply {
                     this.appliesToPriceIds = appliesToPriceIds
                 }
@@ -5983,7 +5979,6 @@ private constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -6032,11 +6027,12 @@ private constructor(
          * empty dictionary. Individual keys can be removed by setting the value to `null`, and the
          * entire metadata mapping can be cleared by setting `metadata` to `null`.
          */
-        @JsonDeserialize(builder = Metadata.Builder::class)
         @NoAutoDetect
         class Metadata
+        @JsonCreator
         private constructor(
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             @JsonAnyGetter
@@ -6071,7 +6067,6 @@ private constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -6109,13 +6104,18 @@ private constructor(
             override fun toString() = "Metadata{additionalProperties=$additionalProperties}"
         }
 
-        @JsonDeserialize(builder = Minimum.Builder::class)
         @NoAutoDetect
         class Minimum
+        @JsonCreator
         private constructor(
-            private val minimumAmount: JsonField<String>,
-            private val appliesToPriceIds: JsonField<List<String>>,
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonProperty("minimum_amount")
+            @ExcludeMissing
+            private val minimumAmount: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("applies_to_price_ids")
+            @ExcludeMissing
+            private val appliesToPriceIds: JsonField<List<String>> = JsonMissing.of(),
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             /** Minimum amount applied */
@@ -6177,8 +6177,6 @@ private constructor(
                     minimumAmount(JsonField.of(minimumAmount))
 
                 /** Minimum amount applied */
-                @JsonProperty("minimum_amount")
-                @ExcludeMissing
                 fun minimumAmount(minimumAmount: JsonField<String>) = apply {
                     this.minimumAmount = minimumAmount
                 }
@@ -6194,8 +6192,6 @@ private constructor(
                  * List of price_ids that this minimum amount applies to. For plan/plan phase
                  * minimums, this can be a subset of prices.
                  */
-                @JsonProperty("applies_to_price_ids")
-                @ExcludeMissing
                 fun appliesToPriceIds(appliesToPriceIds: JsonField<List<String>>) = apply {
                     this.appliesToPriceIds = appliesToPriceIds
                 }
@@ -6205,7 +6201,6 @@ private constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -6375,34 +6370,79 @@ private constructor(
             "MatrixPrice{metadata=$metadata, id=$id, name=$name, externalPriceId=$externalPriceId, priceType=$priceType, modelType=$modelType, createdAt=$createdAt, cadence=$cadence, billingCycleConfiguration=$billingCycleConfiguration, invoicingCycleConfiguration=$invoicingCycleConfiguration, billableMetric=$billableMetric, fixedPriceQuantity=$fixedPriceQuantity, planPhaseOrder=$planPhaseOrder, currency=$currency, conversionRate=$conversionRate, item=$item, creditAllocation=$creditAllocation, discount=$discount, minimum=$minimum, minimumAmount=$minimumAmount, maximum=$maximum, maximumAmount=$maximumAmount, matrixConfig=$matrixConfig, additionalProperties=$additionalProperties}"
     }
 
-    @JsonDeserialize(builder = TieredPrice.Builder::class)
     @NoAutoDetect
     class TieredPrice
+    @JsonCreator
     private constructor(
-        private val metadata: JsonField<Metadata>,
-        private val id: JsonField<String>,
-        private val name: JsonField<String>,
-        private val externalPriceId: JsonField<String>,
-        private val priceType: JsonField<PriceType>,
-        private val modelType: JsonField<ModelType>,
-        private val createdAt: JsonField<OffsetDateTime>,
-        private val cadence: JsonField<Cadence>,
-        private val billingCycleConfiguration: JsonField<BillingCycleConfiguration>,
-        private val invoicingCycleConfiguration: JsonField<InvoicingCycleConfiguration>,
-        private val billableMetric: JsonField<BillableMetric>,
-        private val fixedPriceQuantity: JsonField<Double>,
-        private val planPhaseOrder: JsonField<Long>,
-        private val currency: JsonField<String>,
-        private val conversionRate: JsonField<Double>,
-        private val item: JsonField<Item>,
-        private val creditAllocation: JsonField<CreditAllocation>,
-        private val discount: JsonField<Discount>,
-        private val minimum: JsonField<Minimum>,
-        private val minimumAmount: JsonField<String>,
-        private val maximum: JsonField<Maximum>,
-        private val maximumAmount: JsonField<String>,
-        private val tieredConfig: JsonField<TieredConfig>,
-        private val additionalProperties: Map<String, JsonValue>,
+        @JsonProperty("metadata")
+        @ExcludeMissing
+        private val metadata: JsonField<Metadata> = JsonMissing.of(),
+        @JsonProperty("id") @ExcludeMissing private val id: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("name")
+        @ExcludeMissing
+        private val name: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("external_price_id")
+        @ExcludeMissing
+        private val externalPriceId: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("price_type")
+        @ExcludeMissing
+        private val priceType: JsonField<PriceType> = JsonMissing.of(),
+        @JsonProperty("model_type")
+        @ExcludeMissing
+        private val modelType: JsonField<ModelType> = JsonMissing.of(),
+        @JsonProperty("created_at")
+        @ExcludeMissing
+        private val createdAt: JsonField<OffsetDateTime> = JsonMissing.of(),
+        @JsonProperty("cadence")
+        @ExcludeMissing
+        private val cadence: JsonField<Cadence> = JsonMissing.of(),
+        @JsonProperty("billing_cycle_configuration")
+        @ExcludeMissing
+        private val billingCycleConfiguration: JsonField<BillingCycleConfiguration> =
+            JsonMissing.of(),
+        @JsonProperty("invoicing_cycle_configuration")
+        @ExcludeMissing
+        private val invoicingCycleConfiguration: JsonField<InvoicingCycleConfiguration> =
+            JsonMissing.of(),
+        @JsonProperty("billable_metric")
+        @ExcludeMissing
+        private val billableMetric: JsonField<BillableMetric> = JsonMissing.of(),
+        @JsonProperty("fixed_price_quantity")
+        @ExcludeMissing
+        private val fixedPriceQuantity: JsonField<Double> = JsonMissing.of(),
+        @JsonProperty("plan_phase_order")
+        @ExcludeMissing
+        private val planPhaseOrder: JsonField<Long> = JsonMissing.of(),
+        @JsonProperty("currency")
+        @ExcludeMissing
+        private val currency: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("conversion_rate")
+        @ExcludeMissing
+        private val conversionRate: JsonField<Double> = JsonMissing.of(),
+        @JsonProperty("item") @ExcludeMissing private val item: JsonField<Item> = JsonMissing.of(),
+        @JsonProperty("credit_allocation")
+        @ExcludeMissing
+        private val creditAllocation: JsonField<CreditAllocation> = JsonMissing.of(),
+        @JsonProperty("discount")
+        @ExcludeMissing
+        private val discount: JsonField<Discount> = JsonMissing.of(),
+        @JsonProperty("minimum")
+        @ExcludeMissing
+        private val minimum: JsonField<Minimum> = JsonMissing.of(),
+        @JsonProperty("minimum_amount")
+        @ExcludeMissing
+        private val minimumAmount: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("maximum")
+        @ExcludeMissing
+        private val maximum: JsonField<Maximum> = JsonMissing.of(),
+        @JsonProperty("maximum_amount")
+        @ExcludeMissing
+        private val maximumAmount: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("tiered_config")
+        @ExcludeMissing
+        private val tieredConfig: JsonField<TieredConfig> = JsonMissing.of(),
+        @JsonAnySetter
+        private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
 
         /**
@@ -6628,62 +6668,44 @@ private constructor(
              * empty dictionary. Individual keys can be removed by setting the value to `null`, and
              * the entire metadata mapping can be cleared by setting `metadata` to `null`.
              */
-            @JsonProperty("metadata")
-            @ExcludeMissing
             fun metadata(metadata: JsonField<Metadata>) = apply { this.metadata = metadata }
 
             fun id(id: String) = id(JsonField.of(id))
 
-            @JsonProperty("id")
-            @ExcludeMissing
             fun id(id: JsonField<String>) = apply { this.id = id }
 
             fun name(name: String) = name(JsonField.of(name))
 
-            @JsonProperty("name")
-            @ExcludeMissing
             fun name(name: JsonField<String>) = apply { this.name = name }
 
             fun externalPriceId(externalPriceId: String) =
                 externalPriceId(JsonField.of(externalPriceId))
 
-            @JsonProperty("external_price_id")
-            @ExcludeMissing
             fun externalPriceId(externalPriceId: JsonField<String>) = apply {
                 this.externalPriceId = externalPriceId
             }
 
             fun priceType(priceType: PriceType) = priceType(JsonField.of(priceType))
 
-            @JsonProperty("price_type")
-            @ExcludeMissing
             fun priceType(priceType: JsonField<PriceType>) = apply { this.priceType = priceType }
 
             fun modelType(modelType: ModelType) = modelType(JsonField.of(modelType))
 
-            @JsonProperty("model_type")
-            @ExcludeMissing
             fun modelType(modelType: JsonField<ModelType>) = apply { this.modelType = modelType }
 
             fun createdAt(createdAt: OffsetDateTime) = createdAt(JsonField.of(createdAt))
 
-            @JsonProperty("created_at")
-            @ExcludeMissing
             fun createdAt(createdAt: JsonField<OffsetDateTime>) = apply {
                 this.createdAt = createdAt
             }
 
             fun cadence(cadence: Cadence) = cadence(JsonField.of(cadence))
 
-            @JsonProperty("cadence")
-            @ExcludeMissing
             fun cadence(cadence: JsonField<Cadence>) = apply { this.cadence = cadence }
 
             fun billingCycleConfiguration(billingCycleConfiguration: BillingCycleConfiguration) =
                 billingCycleConfiguration(JsonField.of(billingCycleConfiguration))
 
-            @JsonProperty("billing_cycle_configuration")
-            @ExcludeMissing
             fun billingCycleConfiguration(
                 billingCycleConfiguration: JsonField<BillingCycleConfiguration>
             ) = apply { this.billingCycleConfiguration = billingCycleConfiguration }
@@ -6692,8 +6714,6 @@ private constructor(
                 invoicingCycleConfiguration: InvoicingCycleConfiguration
             ) = invoicingCycleConfiguration(JsonField.of(invoicingCycleConfiguration))
 
-            @JsonProperty("invoicing_cycle_configuration")
-            @ExcludeMissing
             fun invoicingCycleConfiguration(
                 invoicingCycleConfiguration: JsonField<InvoicingCycleConfiguration>
             ) = apply { this.invoicingCycleConfiguration = invoicingCycleConfiguration }
@@ -6701,8 +6721,6 @@ private constructor(
             fun billableMetric(billableMetric: BillableMetric) =
                 billableMetric(JsonField.of(billableMetric))
 
-            @JsonProperty("billable_metric")
-            @ExcludeMissing
             fun billableMetric(billableMetric: JsonField<BillableMetric>) = apply {
                 this.billableMetric = billableMetric
             }
@@ -6710,88 +6728,64 @@ private constructor(
             fun fixedPriceQuantity(fixedPriceQuantity: Double) =
                 fixedPriceQuantity(JsonField.of(fixedPriceQuantity))
 
-            @JsonProperty("fixed_price_quantity")
-            @ExcludeMissing
             fun fixedPriceQuantity(fixedPriceQuantity: JsonField<Double>) = apply {
                 this.fixedPriceQuantity = fixedPriceQuantity
             }
 
             fun planPhaseOrder(planPhaseOrder: Long) = planPhaseOrder(JsonField.of(planPhaseOrder))
 
-            @JsonProperty("plan_phase_order")
-            @ExcludeMissing
             fun planPhaseOrder(planPhaseOrder: JsonField<Long>) = apply {
                 this.planPhaseOrder = planPhaseOrder
             }
 
             fun currency(currency: String) = currency(JsonField.of(currency))
 
-            @JsonProperty("currency")
-            @ExcludeMissing
             fun currency(currency: JsonField<String>) = apply { this.currency = currency }
 
             fun conversionRate(conversionRate: Double) =
                 conversionRate(JsonField.of(conversionRate))
 
-            @JsonProperty("conversion_rate")
-            @ExcludeMissing
             fun conversionRate(conversionRate: JsonField<Double>) = apply {
                 this.conversionRate = conversionRate
             }
 
             fun item(item: Item) = item(JsonField.of(item))
 
-            @JsonProperty("item")
-            @ExcludeMissing
             fun item(item: JsonField<Item>) = apply { this.item = item }
 
             fun creditAllocation(creditAllocation: CreditAllocation) =
                 creditAllocation(JsonField.of(creditAllocation))
 
-            @JsonProperty("credit_allocation")
-            @ExcludeMissing
             fun creditAllocation(creditAllocation: JsonField<CreditAllocation>) = apply {
                 this.creditAllocation = creditAllocation
             }
 
             fun discount(discount: Discount) = discount(JsonField.of(discount))
 
-            @JsonProperty("discount")
-            @ExcludeMissing
             fun discount(discount: JsonField<Discount>) = apply { this.discount = discount }
 
             fun minimum(minimum: Minimum) = minimum(JsonField.of(minimum))
 
-            @JsonProperty("minimum")
-            @ExcludeMissing
             fun minimum(minimum: JsonField<Minimum>) = apply { this.minimum = minimum }
 
             fun minimumAmount(minimumAmount: String) = minimumAmount(JsonField.of(minimumAmount))
 
-            @JsonProperty("minimum_amount")
-            @ExcludeMissing
             fun minimumAmount(minimumAmount: JsonField<String>) = apply {
                 this.minimumAmount = minimumAmount
             }
 
             fun maximum(maximum: Maximum) = maximum(JsonField.of(maximum))
 
-            @JsonProperty("maximum")
-            @ExcludeMissing
             fun maximum(maximum: JsonField<Maximum>) = apply { this.maximum = maximum }
 
             fun maximumAmount(maximumAmount: String) = maximumAmount(JsonField.of(maximumAmount))
 
-            @JsonProperty("maximum_amount")
-            @ExcludeMissing
             fun maximumAmount(maximumAmount: JsonField<String>) = apply {
                 this.maximumAmount = maximumAmount
             }
 
             fun tieredConfig(tieredConfig: TieredConfig) = tieredConfig(JsonField.of(tieredConfig))
 
-            @JsonProperty("tiered_config")
-            @ExcludeMissing
             fun tieredConfig(tieredConfig: JsonField<TieredConfig>) = apply {
                 this.tieredConfig = tieredConfig
             }
@@ -6801,7 +6795,6 @@ private constructor(
                 putAllAdditionalProperties(additionalProperties)
             }
 
-            @JsonAnySetter
             fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                 additionalProperties.put(key, value)
             }
@@ -6845,12 +6838,15 @@ private constructor(
                 )
         }
 
-        @JsonDeserialize(builder = BillableMetric.Builder::class)
         @NoAutoDetect
         class BillableMetric
+        @JsonCreator
         private constructor(
-            private val id: JsonField<String>,
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonProperty("id")
+            @ExcludeMissing
+            private val id: JsonField<String> = JsonMissing.of(),
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             fun id(): String = id.getRequired("id")
@@ -6889,8 +6885,6 @@ private constructor(
 
                 fun id(id: String) = id(JsonField.of(id))
 
-                @JsonProperty("id")
-                @ExcludeMissing
                 fun id(id: JsonField<String>) = apply { this.id = id }
 
                 fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
@@ -6898,7 +6892,6 @@ private constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -6937,13 +6930,18 @@ private constructor(
                 "BillableMetric{id=$id, additionalProperties=$additionalProperties}"
         }
 
-        @JsonDeserialize(builder = BillingCycleConfiguration.Builder::class)
         @NoAutoDetect
         class BillingCycleConfiguration
+        @JsonCreator
         private constructor(
-            private val duration: JsonField<Long>,
-            private val durationUnit: JsonField<DurationUnit>,
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonProperty("duration")
+            @ExcludeMissing
+            private val duration: JsonField<Long> = JsonMissing.of(),
+            @JsonProperty("duration_unit")
+            @ExcludeMissing
+            private val durationUnit: JsonField<DurationUnit> = JsonMissing.of(),
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             fun duration(): Long = duration.getRequired("duration")
@@ -6990,15 +6988,11 @@ private constructor(
 
                 fun duration(duration: Long) = duration(JsonField.of(duration))
 
-                @JsonProperty("duration")
-                @ExcludeMissing
                 fun duration(duration: JsonField<Long>) = apply { this.duration = duration }
 
                 fun durationUnit(durationUnit: DurationUnit) =
                     durationUnit(JsonField.of(durationUnit))
 
-                @JsonProperty("duration_unit")
-                @ExcludeMissing
                 fun durationUnit(durationUnit: JsonField<DurationUnit>) = apply {
                     this.durationUnit = durationUnit
                 }
@@ -7008,7 +7002,6 @@ private constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -7190,13 +7183,18 @@ private constructor(
             override fun toString() = value.toString()
         }
 
-        @JsonDeserialize(builder = CreditAllocation.Builder::class)
         @NoAutoDetect
         class CreditAllocation
+        @JsonCreator
         private constructor(
-            private val currency: JsonField<String>,
-            private val allowsRollover: JsonField<Boolean>,
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonProperty("currency")
+            @ExcludeMissing
+            private val currency: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("allows_rollover")
+            @ExcludeMissing
+            private val allowsRollover: JsonField<Boolean> = JsonMissing.of(),
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             fun currency(): String = currency.getRequired("currency")
@@ -7242,15 +7240,11 @@ private constructor(
 
                 fun currency(currency: String) = currency(JsonField.of(currency))
 
-                @JsonProperty("currency")
-                @ExcludeMissing
                 fun currency(currency: JsonField<String>) = apply { this.currency = currency }
 
                 fun allowsRollover(allowsRollover: Boolean) =
                     allowsRollover(JsonField.of(allowsRollover))
 
-                @JsonProperty("allows_rollover")
-                @ExcludeMissing
                 fun allowsRollover(allowsRollover: JsonField<Boolean>) = apply {
                     this.allowsRollover = allowsRollover
                 }
@@ -7260,7 +7254,6 @@ private constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -7304,13 +7297,18 @@ private constructor(
                 "CreditAllocation{currency=$currency, allowsRollover=$allowsRollover, additionalProperties=$additionalProperties}"
         }
 
-        @JsonDeserialize(builder = InvoicingCycleConfiguration.Builder::class)
         @NoAutoDetect
         class InvoicingCycleConfiguration
+        @JsonCreator
         private constructor(
-            private val duration: JsonField<Long>,
-            private val durationUnit: JsonField<DurationUnit>,
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonProperty("duration")
+            @ExcludeMissing
+            private val duration: JsonField<Long> = JsonMissing.of(),
+            @JsonProperty("duration_unit")
+            @ExcludeMissing
+            private val durationUnit: JsonField<DurationUnit> = JsonMissing.of(),
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             fun duration(): Long = duration.getRequired("duration")
@@ -7358,15 +7356,11 @@ private constructor(
 
                 fun duration(duration: Long) = duration(JsonField.of(duration))
 
-                @JsonProperty("duration")
-                @ExcludeMissing
                 fun duration(duration: JsonField<Long>) = apply { this.duration = duration }
 
                 fun durationUnit(durationUnit: DurationUnit) =
                     durationUnit(JsonField.of(durationUnit))
 
-                @JsonProperty("duration_unit")
-                @ExcludeMissing
                 fun durationUnit(durationUnit: JsonField<DurationUnit>) = apply {
                     this.durationUnit = durationUnit
                 }
@@ -7376,7 +7370,6 @@ private constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -7477,13 +7470,18 @@ private constructor(
                 "InvoicingCycleConfiguration{duration=$duration, durationUnit=$durationUnit, additionalProperties=$additionalProperties}"
         }
 
-        @JsonDeserialize(builder = Item.Builder::class)
         @NoAutoDetect
         class Item
+        @JsonCreator
         private constructor(
-            private val id: JsonField<String>,
-            private val name: JsonField<String>,
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonProperty("id")
+            @ExcludeMissing
+            private val id: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("name")
+            @ExcludeMissing
+            private val name: JsonField<String> = JsonMissing.of(),
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             fun id(): String = id.getRequired("id")
@@ -7529,14 +7527,10 @@ private constructor(
 
                 fun id(id: String) = id(JsonField.of(id))
 
-                @JsonProperty("id")
-                @ExcludeMissing
                 fun id(id: JsonField<String>) = apply { this.id = id }
 
                 fun name(name: String) = name(JsonField.of(name))
 
-                @JsonProperty("name")
-                @ExcludeMissing
                 fun name(name: JsonField<String>) = apply { this.name = name }
 
                 fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
@@ -7544,7 +7538,6 @@ private constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -7588,13 +7581,18 @@ private constructor(
                 "Item{id=$id, name=$name, additionalProperties=$additionalProperties}"
         }
 
-        @JsonDeserialize(builder = Maximum.Builder::class)
         @NoAutoDetect
         class Maximum
+        @JsonCreator
         private constructor(
-            private val maximumAmount: JsonField<String>,
-            private val appliesToPriceIds: JsonField<List<String>>,
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonProperty("maximum_amount")
+            @ExcludeMissing
+            private val maximumAmount: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("applies_to_price_ids")
+            @ExcludeMissing
+            private val appliesToPriceIds: JsonField<List<String>> = JsonMissing.of(),
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             /** Maximum amount applied */
@@ -7656,8 +7654,6 @@ private constructor(
                     maximumAmount(JsonField.of(maximumAmount))
 
                 /** Maximum amount applied */
-                @JsonProperty("maximum_amount")
-                @ExcludeMissing
                 fun maximumAmount(maximumAmount: JsonField<String>) = apply {
                     this.maximumAmount = maximumAmount
                 }
@@ -7673,8 +7669,6 @@ private constructor(
                  * List of price_ids that this maximum amount applies to. For plan/plan phase
                  * maximums, this can be a subset of prices.
                  */
-                @JsonProperty("applies_to_price_ids")
-                @ExcludeMissing
                 fun appliesToPriceIds(appliesToPriceIds: JsonField<List<String>>) = apply {
                     this.appliesToPriceIds = appliesToPriceIds
                 }
@@ -7684,7 +7678,6 @@ private constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -7733,11 +7726,12 @@ private constructor(
          * empty dictionary. Individual keys can be removed by setting the value to `null`, and the
          * entire metadata mapping can be cleared by setting `metadata` to `null`.
          */
-        @JsonDeserialize(builder = Metadata.Builder::class)
         @NoAutoDetect
         class Metadata
+        @JsonCreator
         private constructor(
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             @JsonAnyGetter
@@ -7772,7 +7766,6 @@ private constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -7810,13 +7803,18 @@ private constructor(
             override fun toString() = "Metadata{additionalProperties=$additionalProperties}"
         }
 
-        @JsonDeserialize(builder = Minimum.Builder::class)
         @NoAutoDetect
         class Minimum
+        @JsonCreator
         private constructor(
-            private val minimumAmount: JsonField<String>,
-            private val appliesToPriceIds: JsonField<List<String>>,
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonProperty("minimum_amount")
+            @ExcludeMissing
+            private val minimumAmount: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("applies_to_price_ids")
+            @ExcludeMissing
+            private val appliesToPriceIds: JsonField<List<String>> = JsonMissing.of(),
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             /** Minimum amount applied */
@@ -7878,8 +7876,6 @@ private constructor(
                     minimumAmount(JsonField.of(minimumAmount))
 
                 /** Minimum amount applied */
-                @JsonProperty("minimum_amount")
-                @ExcludeMissing
                 fun minimumAmount(minimumAmount: JsonField<String>) = apply {
                     this.minimumAmount = minimumAmount
                 }
@@ -7895,8 +7891,6 @@ private constructor(
                  * List of price_ids that this minimum amount applies to. For plan/plan phase
                  * minimums, this can be a subset of prices.
                  */
-                @JsonProperty("applies_to_price_ids")
-                @ExcludeMissing
                 fun appliesToPriceIds(appliesToPriceIds: JsonField<List<String>>) = apply {
                     this.appliesToPriceIds = appliesToPriceIds
                 }
@@ -7906,7 +7900,6 @@ private constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -8058,12 +8051,15 @@ private constructor(
             override fun toString() = value.toString()
         }
 
-        @JsonDeserialize(builder = TieredConfig.Builder::class)
         @NoAutoDetect
         class TieredConfig
+        @JsonCreator
         private constructor(
-            private val tiers: JsonField<List<Tier>>,
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonProperty("tiers")
+            @ExcludeMissing
+            private val tiers: JsonField<List<Tier>> = JsonMissing.of(),
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             /** Tiers for rating based on total usage quantities into the specified tier */
@@ -8106,8 +8102,6 @@ private constructor(
                 fun tiers(tiers: List<Tier>) = tiers(JsonField.of(tiers))
 
                 /** Tiers for rating based on total usage quantities into the specified tier */
-                @JsonProperty("tiers")
-                @ExcludeMissing
                 fun tiers(tiers: JsonField<List<Tier>>) = apply { this.tiers = tiers }
 
                 fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
@@ -8115,7 +8109,6 @@ private constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -8137,14 +8130,21 @@ private constructor(
                     TieredConfig(tiers.map { it.toImmutable() }, additionalProperties.toImmutable())
             }
 
-            @JsonDeserialize(builder = Tier.Builder::class)
             @NoAutoDetect
             class Tier
+            @JsonCreator
             private constructor(
-                private val firstUnit: JsonField<Double>,
-                private val lastUnit: JsonField<Double>,
-                private val unitAmount: JsonField<String>,
-                private val additionalProperties: Map<String, JsonValue>,
+                @JsonProperty("first_unit")
+                @ExcludeMissing
+                private val firstUnit: JsonField<Double> = JsonMissing.of(),
+                @JsonProperty("last_unit")
+                @ExcludeMissing
+                private val lastUnit: JsonField<Double> = JsonMissing.of(),
+                @JsonProperty("unit_amount")
+                @ExcludeMissing
+                private val unitAmount: JsonField<String> = JsonMissing.of(),
+                @JsonAnySetter
+                private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
             ) {
 
                 /** Inclusive tier starting value */
@@ -8205,8 +8205,6 @@ private constructor(
                     fun firstUnit(firstUnit: Double) = firstUnit(JsonField.of(firstUnit))
 
                     /** Inclusive tier starting value */
-                    @JsonProperty("first_unit")
-                    @ExcludeMissing
                     fun firstUnit(firstUnit: JsonField<Double>) = apply {
                         this.firstUnit = firstUnit
                     }
@@ -8215,16 +8213,12 @@ private constructor(
                     fun lastUnit(lastUnit: Double) = lastUnit(JsonField.of(lastUnit))
 
                     /** Exclusive tier ending value. If null, this is treated as the last tier */
-                    @JsonProperty("last_unit")
-                    @ExcludeMissing
                     fun lastUnit(lastUnit: JsonField<Double>) = apply { this.lastUnit = lastUnit }
 
                     /** Amount per unit */
                     fun unitAmount(unitAmount: String) = unitAmount(JsonField.of(unitAmount))
 
                     /** Amount per unit */
-                    @JsonProperty("unit_amount")
-                    @ExcludeMissing
                     fun unitAmount(unitAmount: JsonField<String>) = apply {
                         this.unitAmount = unitAmount
                     }
@@ -8234,7 +8228,6 @@ private constructor(
                         putAllAdditionalProperties(additionalProperties)
                     }
 
-                    @JsonAnySetter
                     fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                         additionalProperties.put(key, value)
                     }
@@ -8315,34 +8308,79 @@ private constructor(
             "TieredPrice{metadata=$metadata, id=$id, name=$name, externalPriceId=$externalPriceId, priceType=$priceType, modelType=$modelType, createdAt=$createdAt, cadence=$cadence, billingCycleConfiguration=$billingCycleConfiguration, invoicingCycleConfiguration=$invoicingCycleConfiguration, billableMetric=$billableMetric, fixedPriceQuantity=$fixedPriceQuantity, planPhaseOrder=$planPhaseOrder, currency=$currency, conversionRate=$conversionRate, item=$item, creditAllocation=$creditAllocation, discount=$discount, minimum=$minimum, minimumAmount=$minimumAmount, maximum=$maximum, maximumAmount=$maximumAmount, tieredConfig=$tieredConfig, additionalProperties=$additionalProperties}"
     }
 
-    @JsonDeserialize(builder = TieredBpsPrice.Builder::class)
     @NoAutoDetect
     class TieredBpsPrice
+    @JsonCreator
     private constructor(
-        private val metadata: JsonField<Metadata>,
-        private val id: JsonField<String>,
-        private val name: JsonField<String>,
-        private val externalPriceId: JsonField<String>,
-        private val priceType: JsonField<PriceType>,
-        private val modelType: JsonField<ModelType>,
-        private val createdAt: JsonField<OffsetDateTime>,
-        private val cadence: JsonField<Cadence>,
-        private val billingCycleConfiguration: JsonField<BillingCycleConfiguration>,
-        private val invoicingCycleConfiguration: JsonField<InvoicingCycleConfiguration>,
-        private val billableMetric: JsonField<BillableMetric>,
-        private val fixedPriceQuantity: JsonField<Double>,
-        private val planPhaseOrder: JsonField<Long>,
-        private val currency: JsonField<String>,
-        private val conversionRate: JsonField<Double>,
-        private val item: JsonField<Item>,
-        private val creditAllocation: JsonField<CreditAllocation>,
-        private val discount: JsonField<Discount>,
-        private val minimum: JsonField<Minimum>,
-        private val minimumAmount: JsonField<String>,
-        private val maximum: JsonField<Maximum>,
-        private val maximumAmount: JsonField<String>,
-        private val tieredBpsConfig: JsonField<TieredBpsConfig>,
-        private val additionalProperties: Map<String, JsonValue>,
+        @JsonProperty("metadata")
+        @ExcludeMissing
+        private val metadata: JsonField<Metadata> = JsonMissing.of(),
+        @JsonProperty("id") @ExcludeMissing private val id: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("name")
+        @ExcludeMissing
+        private val name: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("external_price_id")
+        @ExcludeMissing
+        private val externalPriceId: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("price_type")
+        @ExcludeMissing
+        private val priceType: JsonField<PriceType> = JsonMissing.of(),
+        @JsonProperty("model_type")
+        @ExcludeMissing
+        private val modelType: JsonField<ModelType> = JsonMissing.of(),
+        @JsonProperty("created_at")
+        @ExcludeMissing
+        private val createdAt: JsonField<OffsetDateTime> = JsonMissing.of(),
+        @JsonProperty("cadence")
+        @ExcludeMissing
+        private val cadence: JsonField<Cadence> = JsonMissing.of(),
+        @JsonProperty("billing_cycle_configuration")
+        @ExcludeMissing
+        private val billingCycleConfiguration: JsonField<BillingCycleConfiguration> =
+            JsonMissing.of(),
+        @JsonProperty("invoicing_cycle_configuration")
+        @ExcludeMissing
+        private val invoicingCycleConfiguration: JsonField<InvoicingCycleConfiguration> =
+            JsonMissing.of(),
+        @JsonProperty("billable_metric")
+        @ExcludeMissing
+        private val billableMetric: JsonField<BillableMetric> = JsonMissing.of(),
+        @JsonProperty("fixed_price_quantity")
+        @ExcludeMissing
+        private val fixedPriceQuantity: JsonField<Double> = JsonMissing.of(),
+        @JsonProperty("plan_phase_order")
+        @ExcludeMissing
+        private val planPhaseOrder: JsonField<Long> = JsonMissing.of(),
+        @JsonProperty("currency")
+        @ExcludeMissing
+        private val currency: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("conversion_rate")
+        @ExcludeMissing
+        private val conversionRate: JsonField<Double> = JsonMissing.of(),
+        @JsonProperty("item") @ExcludeMissing private val item: JsonField<Item> = JsonMissing.of(),
+        @JsonProperty("credit_allocation")
+        @ExcludeMissing
+        private val creditAllocation: JsonField<CreditAllocation> = JsonMissing.of(),
+        @JsonProperty("discount")
+        @ExcludeMissing
+        private val discount: JsonField<Discount> = JsonMissing.of(),
+        @JsonProperty("minimum")
+        @ExcludeMissing
+        private val minimum: JsonField<Minimum> = JsonMissing.of(),
+        @JsonProperty("minimum_amount")
+        @ExcludeMissing
+        private val minimumAmount: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("maximum")
+        @ExcludeMissing
+        private val maximum: JsonField<Maximum> = JsonMissing.of(),
+        @JsonProperty("maximum_amount")
+        @ExcludeMissing
+        private val maximumAmount: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("tiered_bps_config")
+        @ExcludeMissing
+        private val tieredBpsConfig: JsonField<TieredBpsConfig> = JsonMissing.of(),
+        @JsonAnySetter
+        private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
 
         /**
@@ -8568,62 +8606,44 @@ private constructor(
              * empty dictionary. Individual keys can be removed by setting the value to `null`, and
              * the entire metadata mapping can be cleared by setting `metadata` to `null`.
              */
-            @JsonProperty("metadata")
-            @ExcludeMissing
             fun metadata(metadata: JsonField<Metadata>) = apply { this.metadata = metadata }
 
             fun id(id: String) = id(JsonField.of(id))
 
-            @JsonProperty("id")
-            @ExcludeMissing
             fun id(id: JsonField<String>) = apply { this.id = id }
 
             fun name(name: String) = name(JsonField.of(name))
 
-            @JsonProperty("name")
-            @ExcludeMissing
             fun name(name: JsonField<String>) = apply { this.name = name }
 
             fun externalPriceId(externalPriceId: String) =
                 externalPriceId(JsonField.of(externalPriceId))
 
-            @JsonProperty("external_price_id")
-            @ExcludeMissing
             fun externalPriceId(externalPriceId: JsonField<String>) = apply {
                 this.externalPriceId = externalPriceId
             }
 
             fun priceType(priceType: PriceType) = priceType(JsonField.of(priceType))
 
-            @JsonProperty("price_type")
-            @ExcludeMissing
             fun priceType(priceType: JsonField<PriceType>) = apply { this.priceType = priceType }
 
             fun modelType(modelType: ModelType) = modelType(JsonField.of(modelType))
 
-            @JsonProperty("model_type")
-            @ExcludeMissing
             fun modelType(modelType: JsonField<ModelType>) = apply { this.modelType = modelType }
 
             fun createdAt(createdAt: OffsetDateTime) = createdAt(JsonField.of(createdAt))
 
-            @JsonProperty("created_at")
-            @ExcludeMissing
             fun createdAt(createdAt: JsonField<OffsetDateTime>) = apply {
                 this.createdAt = createdAt
             }
 
             fun cadence(cadence: Cadence) = cadence(JsonField.of(cadence))
 
-            @JsonProperty("cadence")
-            @ExcludeMissing
             fun cadence(cadence: JsonField<Cadence>) = apply { this.cadence = cadence }
 
             fun billingCycleConfiguration(billingCycleConfiguration: BillingCycleConfiguration) =
                 billingCycleConfiguration(JsonField.of(billingCycleConfiguration))
 
-            @JsonProperty("billing_cycle_configuration")
-            @ExcludeMissing
             fun billingCycleConfiguration(
                 billingCycleConfiguration: JsonField<BillingCycleConfiguration>
             ) = apply { this.billingCycleConfiguration = billingCycleConfiguration }
@@ -8632,8 +8652,6 @@ private constructor(
                 invoicingCycleConfiguration: InvoicingCycleConfiguration
             ) = invoicingCycleConfiguration(JsonField.of(invoicingCycleConfiguration))
 
-            @JsonProperty("invoicing_cycle_configuration")
-            @ExcludeMissing
             fun invoicingCycleConfiguration(
                 invoicingCycleConfiguration: JsonField<InvoicingCycleConfiguration>
             ) = apply { this.invoicingCycleConfiguration = invoicingCycleConfiguration }
@@ -8641,8 +8659,6 @@ private constructor(
             fun billableMetric(billableMetric: BillableMetric) =
                 billableMetric(JsonField.of(billableMetric))
 
-            @JsonProperty("billable_metric")
-            @ExcludeMissing
             fun billableMetric(billableMetric: JsonField<BillableMetric>) = apply {
                 this.billableMetric = billableMetric
             }
@@ -8650,80 +8666,58 @@ private constructor(
             fun fixedPriceQuantity(fixedPriceQuantity: Double) =
                 fixedPriceQuantity(JsonField.of(fixedPriceQuantity))
 
-            @JsonProperty("fixed_price_quantity")
-            @ExcludeMissing
             fun fixedPriceQuantity(fixedPriceQuantity: JsonField<Double>) = apply {
                 this.fixedPriceQuantity = fixedPriceQuantity
             }
 
             fun planPhaseOrder(planPhaseOrder: Long) = planPhaseOrder(JsonField.of(planPhaseOrder))
 
-            @JsonProperty("plan_phase_order")
-            @ExcludeMissing
             fun planPhaseOrder(planPhaseOrder: JsonField<Long>) = apply {
                 this.planPhaseOrder = planPhaseOrder
             }
 
             fun currency(currency: String) = currency(JsonField.of(currency))
 
-            @JsonProperty("currency")
-            @ExcludeMissing
             fun currency(currency: JsonField<String>) = apply { this.currency = currency }
 
             fun conversionRate(conversionRate: Double) =
                 conversionRate(JsonField.of(conversionRate))
 
-            @JsonProperty("conversion_rate")
-            @ExcludeMissing
             fun conversionRate(conversionRate: JsonField<Double>) = apply {
                 this.conversionRate = conversionRate
             }
 
             fun item(item: Item) = item(JsonField.of(item))
 
-            @JsonProperty("item")
-            @ExcludeMissing
             fun item(item: JsonField<Item>) = apply { this.item = item }
 
             fun creditAllocation(creditAllocation: CreditAllocation) =
                 creditAllocation(JsonField.of(creditAllocation))
 
-            @JsonProperty("credit_allocation")
-            @ExcludeMissing
             fun creditAllocation(creditAllocation: JsonField<CreditAllocation>) = apply {
                 this.creditAllocation = creditAllocation
             }
 
             fun discount(discount: Discount) = discount(JsonField.of(discount))
 
-            @JsonProperty("discount")
-            @ExcludeMissing
             fun discount(discount: JsonField<Discount>) = apply { this.discount = discount }
 
             fun minimum(minimum: Minimum) = minimum(JsonField.of(minimum))
 
-            @JsonProperty("minimum")
-            @ExcludeMissing
             fun minimum(minimum: JsonField<Minimum>) = apply { this.minimum = minimum }
 
             fun minimumAmount(minimumAmount: String) = minimumAmount(JsonField.of(minimumAmount))
 
-            @JsonProperty("minimum_amount")
-            @ExcludeMissing
             fun minimumAmount(minimumAmount: JsonField<String>) = apply {
                 this.minimumAmount = minimumAmount
             }
 
             fun maximum(maximum: Maximum) = maximum(JsonField.of(maximum))
 
-            @JsonProperty("maximum")
-            @ExcludeMissing
             fun maximum(maximum: JsonField<Maximum>) = apply { this.maximum = maximum }
 
             fun maximumAmount(maximumAmount: String) = maximumAmount(JsonField.of(maximumAmount))
 
-            @JsonProperty("maximum_amount")
-            @ExcludeMissing
             fun maximumAmount(maximumAmount: JsonField<String>) = apply {
                 this.maximumAmount = maximumAmount
             }
@@ -8731,8 +8725,6 @@ private constructor(
             fun tieredBpsConfig(tieredBpsConfig: TieredBpsConfig) =
                 tieredBpsConfig(JsonField.of(tieredBpsConfig))
 
-            @JsonProperty("tiered_bps_config")
-            @ExcludeMissing
             fun tieredBpsConfig(tieredBpsConfig: JsonField<TieredBpsConfig>) = apply {
                 this.tieredBpsConfig = tieredBpsConfig
             }
@@ -8742,7 +8734,6 @@ private constructor(
                 putAllAdditionalProperties(additionalProperties)
             }
 
-            @JsonAnySetter
             fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                 additionalProperties.put(key, value)
             }
@@ -8786,12 +8777,15 @@ private constructor(
                 )
         }
 
-        @JsonDeserialize(builder = BillableMetric.Builder::class)
         @NoAutoDetect
         class BillableMetric
+        @JsonCreator
         private constructor(
-            private val id: JsonField<String>,
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonProperty("id")
+            @ExcludeMissing
+            private val id: JsonField<String> = JsonMissing.of(),
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             fun id(): String = id.getRequired("id")
@@ -8830,8 +8824,6 @@ private constructor(
 
                 fun id(id: String) = id(JsonField.of(id))
 
-                @JsonProperty("id")
-                @ExcludeMissing
                 fun id(id: JsonField<String>) = apply { this.id = id }
 
                 fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
@@ -8839,7 +8831,6 @@ private constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -8878,13 +8869,18 @@ private constructor(
                 "BillableMetric{id=$id, additionalProperties=$additionalProperties}"
         }
 
-        @JsonDeserialize(builder = BillingCycleConfiguration.Builder::class)
         @NoAutoDetect
         class BillingCycleConfiguration
+        @JsonCreator
         private constructor(
-            private val duration: JsonField<Long>,
-            private val durationUnit: JsonField<DurationUnit>,
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonProperty("duration")
+            @ExcludeMissing
+            private val duration: JsonField<Long> = JsonMissing.of(),
+            @JsonProperty("duration_unit")
+            @ExcludeMissing
+            private val durationUnit: JsonField<DurationUnit> = JsonMissing.of(),
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             fun duration(): Long = duration.getRequired("duration")
@@ -8931,15 +8927,11 @@ private constructor(
 
                 fun duration(duration: Long) = duration(JsonField.of(duration))
 
-                @JsonProperty("duration")
-                @ExcludeMissing
                 fun duration(duration: JsonField<Long>) = apply { this.duration = duration }
 
                 fun durationUnit(durationUnit: DurationUnit) =
                     durationUnit(JsonField.of(durationUnit))
 
-                @JsonProperty("duration_unit")
-                @ExcludeMissing
                 fun durationUnit(durationUnit: JsonField<DurationUnit>) = apply {
                     this.durationUnit = durationUnit
                 }
@@ -8949,7 +8941,6 @@ private constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -9131,13 +9122,18 @@ private constructor(
             override fun toString() = value.toString()
         }
 
-        @JsonDeserialize(builder = CreditAllocation.Builder::class)
         @NoAutoDetect
         class CreditAllocation
+        @JsonCreator
         private constructor(
-            private val currency: JsonField<String>,
-            private val allowsRollover: JsonField<Boolean>,
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonProperty("currency")
+            @ExcludeMissing
+            private val currency: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("allows_rollover")
+            @ExcludeMissing
+            private val allowsRollover: JsonField<Boolean> = JsonMissing.of(),
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             fun currency(): String = currency.getRequired("currency")
@@ -9183,15 +9179,11 @@ private constructor(
 
                 fun currency(currency: String) = currency(JsonField.of(currency))
 
-                @JsonProperty("currency")
-                @ExcludeMissing
                 fun currency(currency: JsonField<String>) = apply { this.currency = currency }
 
                 fun allowsRollover(allowsRollover: Boolean) =
                     allowsRollover(JsonField.of(allowsRollover))
 
-                @JsonProperty("allows_rollover")
-                @ExcludeMissing
                 fun allowsRollover(allowsRollover: JsonField<Boolean>) = apply {
                     this.allowsRollover = allowsRollover
                 }
@@ -9201,7 +9193,6 @@ private constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -9245,13 +9236,18 @@ private constructor(
                 "CreditAllocation{currency=$currency, allowsRollover=$allowsRollover, additionalProperties=$additionalProperties}"
         }
 
-        @JsonDeserialize(builder = InvoicingCycleConfiguration.Builder::class)
         @NoAutoDetect
         class InvoicingCycleConfiguration
+        @JsonCreator
         private constructor(
-            private val duration: JsonField<Long>,
-            private val durationUnit: JsonField<DurationUnit>,
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonProperty("duration")
+            @ExcludeMissing
+            private val duration: JsonField<Long> = JsonMissing.of(),
+            @JsonProperty("duration_unit")
+            @ExcludeMissing
+            private val durationUnit: JsonField<DurationUnit> = JsonMissing.of(),
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             fun duration(): Long = duration.getRequired("duration")
@@ -9299,15 +9295,11 @@ private constructor(
 
                 fun duration(duration: Long) = duration(JsonField.of(duration))
 
-                @JsonProperty("duration")
-                @ExcludeMissing
                 fun duration(duration: JsonField<Long>) = apply { this.duration = duration }
 
                 fun durationUnit(durationUnit: DurationUnit) =
                     durationUnit(JsonField.of(durationUnit))
 
-                @JsonProperty("duration_unit")
-                @ExcludeMissing
                 fun durationUnit(durationUnit: JsonField<DurationUnit>) = apply {
                     this.durationUnit = durationUnit
                 }
@@ -9317,7 +9309,6 @@ private constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -9418,13 +9409,18 @@ private constructor(
                 "InvoicingCycleConfiguration{duration=$duration, durationUnit=$durationUnit, additionalProperties=$additionalProperties}"
         }
 
-        @JsonDeserialize(builder = Item.Builder::class)
         @NoAutoDetect
         class Item
+        @JsonCreator
         private constructor(
-            private val id: JsonField<String>,
-            private val name: JsonField<String>,
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonProperty("id")
+            @ExcludeMissing
+            private val id: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("name")
+            @ExcludeMissing
+            private val name: JsonField<String> = JsonMissing.of(),
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             fun id(): String = id.getRequired("id")
@@ -9470,14 +9466,10 @@ private constructor(
 
                 fun id(id: String) = id(JsonField.of(id))
 
-                @JsonProperty("id")
-                @ExcludeMissing
                 fun id(id: JsonField<String>) = apply { this.id = id }
 
                 fun name(name: String) = name(JsonField.of(name))
 
-                @JsonProperty("name")
-                @ExcludeMissing
                 fun name(name: JsonField<String>) = apply { this.name = name }
 
                 fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
@@ -9485,7 +9477,6 @@ private constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -9529,13 +9520,18 @@ private constructor(
                 "Item{id=$id, name=$name, additionalProperties=$additionalProperties}"
         }
 
-        @JsonDeserialize(builder = Maximum.Builder::class)
         @NoAutoDetect
         class Maximum
+        @JsonCreator
         private constructor(
-            private val maximumAmount: JsonField<String>,
-            private val appliesToPriceIds: JsonField<List<String>>,
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonProperty("maximum_amount")
+            @ExcludeMissing
+            private val maximumAmount: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("applies_to_price_ids")
+            @ExcludeMissing
+            private val appliesToPriceIds: JsonField<List<String>> = JsonMissing.of(),
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             /** Maximum amount applied */
@@ -9597,8 +9593,6 @@ private constructor(
                     maximumAmount(JsonField.of(maximumAmount))
 
                 /** Maximum amount applied */
-                @JsonProperty("maximum_amount")
-                @ExcludeMissing
                 fun maximumAmount(maximumAmount: JsonField<String>) = apply {
                     this.maximumAmount = maximumAmount
                 }
@@ -9614,8 +9608,6 @@ private constructor(
                  * List of price_ids that this maximum amount applies to. For plan/plan phase
                  * maximums, this can be a subset of prices.
                  */
-                @JsonProperty("applies_to_price_ids")
-                @ExcludeMissing
                 fun appliesToPriceIds(appliesToPriceIds: JsonField<List<String>>) = apply {
                     this.appliesToPriceIds = appliesToPriceIds
                 }
@@ -9625,7 +9617,6 @@ private constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -9674,11 +9665,12 @@ private constructor(
          * empty dictionary. Individual keys can be removed by setting the value to `null`, and the
          * entire metadata mapping can be cleared by setting `metadata` to `null`.
          */
-        @JsonDeserialize(builder = Metadata.Builder::class)
         @NoAutoDetect
         class Metadata
+        @JsonCreator
         private constructor(
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             @JsonAnyGetter
@@ -9713,7 +9705,6 @@ private constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -9751,13 +9742,18 @@ private constructor(
             override fun toString() = "Metadata{additionalProperties=$additionalProperties}"
         }
 
-        @JsonDeserialize(builder = Minimum.Builder::class)
         @NoAutoDetect
         class Minimum
+        @JsonCreator
         private constructor(
-            private val minimumAmount: JsonField<String>,
-            private val appliesToPriceIds: JsonField<List<String>>,
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonProperty("minimum_amount")
+            @ExcludeMissing
+            private val minimumAmount: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("applies_to_price_ids")
+            @ExcludeMissing
+            private val appliesToPriceIds: JsonField<List<String>> = JsonMissing.of(),
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             /** Minimum amount applied */
@@ -9819,8 +9815,6 @@ private constructor(
                     minimumAmount(JsonField.of(minimumAmount))
 
                 /** Minimum amount applied */
-                @JsonProperty("minimum_amount")
-                @ExcludeMissing
                 fun minimumAmount(minimumAmount: JsonField<String>) = apply {
                     this.minimumAmount = minimumAmount
                 }
@@ -9836,8 +9830,6 @@ private constructor(
                  * List of price_ids that this minimum amount applies to. For plan/plan phase
                  * minimums, this can be a subset of prices.
                  */
-                @JsonProperty("applies_to_price_ids")
-                @ExcludeMissing
                 fun appliesToPriceIds(appliesToPriceIds: JsonField<List<String>>) = apply {
                     this.appliesToPriceIds = appliesToPriceIds
                 }
@@ -9847,7 +9839,6 @@ private constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -9999,12 +9990,15 @@ private constructor(
             override fun toString() = value.toString()
         }
 
-        @JsonDeserialize(builder = TieredBpsConfig.Builder::class)
         @NoAutoDetect
         class TieredBpsConfig
+        @JsonCreator
         private constructor(
-            private val tiers: JsonField<List<Tier>>,
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonProperty("tiers")
+            @ExcludeMissing
+            private val tiers: JsonField<List<Tier>> = JsonMissing.of(),
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             /**
@@ -10057,8 +10051,6 @@ private constructor(
                  * Tiers for a Graduated BPS pricing model, where usage is bucketed into specified
                  * tiers
                  */
-                @JsonProperty("tiers")
-                @ExcludeMissing
                 fun tiers(tiers: JsonField<List<Tier>>) = apply { this.tiers = tiers }
 
                 fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
@@ -10066,7 +10058,6 @@ private constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -10091,15 +10082,24 @@ private constructor(
                     )
             }
 
-            @JsonDeserialize(builder = Tier.Builder::class)
             @NoAutoDetect
             class Tier
+            @JsonCreator
             private constructor(
-                private val minimumAmount: JsonField<String>,
-                private val maximumAmount: JsonField<String>,
-                private val bps: JsonField<Double>,
-                private val perUnitMaximum: JsonField<String>,
-                private val additionalProperties: Map<String, JsonValue>,
+                @JsonProperty("minimum_amount")
+                @ExcludeMissing
+                private val minimumAmount: JsonField<String> = JsonMissing.of(),
+                @JsonProperty("maximum_amount")
+                @ExcludeMissing
+                private val maximumAmount: JsonField<String> = JsonMissing.of(),
+                @JsonProperty("bps")
+                @ExcludeMissing
+                private val bps: JsonField<Double> = JsonMissing.of(),
+                @JsonProperty("per_unit_maximum")
+                @ExcludeMissing
+                private val perUnitMaximum: JsonField<String> = JsonMissing.of(),
+                @JsonAnySetter
+                private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
             ) {
 
                 /** Inclusive tier starting value */
@@ -10172,8 +10172,6 @@ private constructor(
                         minimumAmount(JsonField.of(minimumAmount))
 
                     /** Inclusive tier starting value */
-                    @JsonProperty("minimum_amount")
-                    @ExcludeMissing
                     fun minimumAmount(minimumAmount: JsonField<String>) = apply {
                         this.minimumAmount = minimumAmount
                     }
@@ -10183,8 +10181,6 @@ private constructor(
                         maximumAmount(JsonField.of(maximumAmount))
 
                     /** Exclusive tier ending value */
-                    @JsonProperty("maximum_amount")
-                    @ExcludeMissing
                     fun maximumAmount(maximumAmount: JsonField<String>) = apply {
                         this.maximumAmount = maximumAmount
                     }
@@ -10193,8 +10189,6 @@ private constructor(
                     fun bps(bps: Double) = bps(JsonField.of(bps))
 
                     /** Per-event basis point rate */
-                    @JsonProperty("bps")
-                    @ExcludeMissing
                     fun bps(bps: JsonField<Double>) = apply { this.bps = bps }
 
                     /** Per unit maximum to charge */
@@ -10202,8 +10196,6 @@ private constructor(
                         perUnitMaximum(JsonField.of(perUnitMaximum))
 
                     /** Per unit maximum to charge */
-                    @JsonProperty("per_unit_maximum")
-                    @ExcludeMissing
                     fun perUnitMaximum(perUnitMaximum: JsonField<String>) = apply {
                         this.perUnitMaximum = perUnitMaximum
                     }
@@ -10213,7 +10205,6 @@ private constructor(
                         putAllAdditionalProperties(additionalProperties)
                     }
 
-                    @JsonAnySetter
                     fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                         additionalProperties.put(key, value)
                     }
@@ -10295,34 +10286,79 @@ private constructor(
             "TieredBpsPrice{metadata=$metadata, id=$id, name=$name, externalPriceId=$externalPriceId, priceType=$priceType, modelType=$modelType, createdAt=$createdAt, cadence=$cadence, billingCycleConfiguration=$billingCycleConfiguration, invoicingCycleConfiguration=$invoicingCycleConfiguration, billableMetric=$billableMetric, fixedPriceQuantity=$fixedPriceQuantity, planPhaseOrder=$planPhaseOrder, currency=$currency, conversionRate=$conversionRate, item=$item, creditAllocation=$creditAllocation, discount=$discount, minimum=$minimum, minimumAmount=$minimumAmount, maximum=$maximum, maximumAmount=$maximumAmount, tieredBpsConfig=$tieredBpsConfig, additionalProperties=$additionalProperties}"
     }
 
-    @JsonDeserialize(builder = BpsPrice.Builder::class)
     @NoAutoDetect
     class BpsPrice
+    @JsonCreator
     private constructor(
-        private val metadata: JsonField<Metadata>,
-        private val id: JsonField<String>,
-        private val name: JsonField<String>,
-        private val externalPriceId: JsonField<String>,
-        private val priceType: JsonField<PriceType>,
-        private val modelType: JsonField<ModelType>,
-        private val createdAt: JsonField<OffsetDateTime>,
-        private val cadence: JsonField<Cadence>,
-        private val billingCycleConfiguration: JsonField<BillingCycleConfiguration>,
-        private val invoicingCycleConfiguration: JsonField<InvoicingCycleConfiguration>,
-        private val billableMetric: JsonField<BillableMetric>,
-        private val fixedPriceQuantity: JsonField<Double>,
-        private val planPhaseOrder: JsonField<Long>,
-        private val currency: JsonField<String>,
-        private val conversionRate: JsonField<Double>,
-        private val item: JsonField<Item>,
-        private val creditAllocation: JsonField<CreditAllocation>,
-        private val discount: JsonField<Discount>,
-        private val minimum: JsonField<Minimum>,
-        private val minimumAmount: JsonField<String>,
-        private val maximum: JsonField<Maximum>,
-        private val maximumAmount: JsonField<String>,
-        private val bpsConfig: JsonField<BpsConfig>,
-        private val additionalProperties: Map<String, JsonValue>,
+        @JsonProperty("metadata")
+        @ExcludeMissing
+        private val metadata: JsonField<Metadata> = JsonMissing.of(),
+        @JsonProperty("id") @ExcludeMissing private val id: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("name")
+        @ExcludeMissing
+        private val name: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("external_price_id")
+        @ExcludeMissing
+        private val externalPriceId: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("price_type")
+        @ExcludeMissing
+        private val priceType: JsonField<PriceType> = JsonMissing.of(),
+        @JsonProperty("model_type")
+        @ExcludeMissing
+        private val modelType: JsonField<ModelType> = JsonMissing.of(),
+        @JsonProperty("created_at")
+        @ExcludeMissing
+        private val createdAt: JsonField<OffsetDateTime> = JsonMissing.of(),
+        @JsonProperty("cadence")
+        @ExcludeMissing
+        private val cadence: JsonField<Cadence> = JsonMissing.of(),
+        @JsonProperty("billing_cycle_configuration")
+        @ExcludeMissing
+        private val billingCycleConfiguration: JsonField<BillingCycleConfiguration> =
+            JsonMissing.of(),
+        @JsonProperty("invoicing_cycle_configuration")
+        @ExcludeMissing
+        private val invoicingCycleConfiguration: JsonField<InvoicingCycleConfiguration> =
+            JsonMissing.of(),
+        @JsonProperty("billable_metric")
+        @ExcludeMissing
+        private val billableMetric: JsonField<BillableMetric> = JsonMissing.of(),
+        @JsonProperty("fixed_price_quantity")
+        @ExcludeMissing
+        private val fixedPriceQuantity: JsonField<Double> = JsonMissing.of(),
+        @JsonProperty("plan_phase_order")
+        @ExcludeMissing
+        private val planPhaseOrder: JsonField<Long> = JsonMissing.of(),
+        @JsonProperty("currency")
+        @ExcludeMissing
+        private val currency: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("conversion_rate")
+        @ExcludeMissing
+        private val conversionRate: JsonField<Double> = JsonMissing.of(),
+        @JsonProperty("item") @ExcludeMissing private val item: JsonField<Item> = JsonMissing.of(),
+        @JsonProperty("credit_allocation")
+        @ExcludeMissing
+        private val creditAllocation: JsonField<CreditAllocation> = JsonMissing.of(),
+        @JsonProperty("discount")
+        @ExcludeMissing
+        private val discount: JsonField<Discount> = JsonMissing.of(),
+        @JsonProperty("minimum")
+        @ExcludeMissing
+        private val minimum: JsonField<Minimum> = JsonMissing.of(),
+        @JsonProperty("minimum_amount")
+        @ExcludeMissing
+        private val minimumAmount: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("maximum")
+        @ExcludeMissing
+        private val maximum: JsonField<Maximum> = JsonMissing.of(),
+        @JsonProperty("maximum_amount")
+        @ExcludeMissing
+        private val maximumAmount: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("bps_config")
+        @ExcludeMissing
+        private val bpsConfig: JsonField<BpsConfig> = JsonMissing.of(),
+        @JsonAnySetter
+        private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
 
         /**
@@ -10548,62 +10584,44 @@ private constructor(
              * empty dictionary. Individual keys can be removed by setting the value to `null`, and
              * the entire metadata mapping can be cleared by setting `metadata` to `null`.
              */
-            @JsonProperty("metadata")
-            @ExcludeMissing
             fun metadata(metadata: JsonField<Metadata>) = apply { this.metadata = metadata }
 
             fun id(id: String) = id(JsonField.of(id))
 
-            @JsonProperty("id")
-            @ExcludeMissing
             fun id(id: JsonField<String>) = apply { this.id = id }
 
             fun name(name: String) = name(JsonField.of(name))
 
-            @JsonProperty("name")
-            @ExcludeMissing
             fun name(name: JsonField<String>) = apply { this.name = name }
 
             fun externalPriceId(externalPriceId: String) =
                 externalPriceId(JsonField.of(externalPriceId))
 
-            @JsonProperty("external_price_id")
-            @ExcludeMissing
             fun externalPriceId(externalPriceId: JsonField<String>) = apply {
                 this.externalPriceId = externalPriceId
             }
 
             fun priceType(priceType: PriceType) = priceType(JsonField.of(priceType))
 
-            @JsonProperty("price_type")
-            @ExcludeMissing
             fun priceType(priceType: JsonField<PriceType>) = apply { this.priceType = priceType }
 
             fun modelType(modelType: ModelType) = modelType(JsonField.of(modelType))
 
-            @JsonProperty("model_type")
-            @ExcludeMissing
             fun modelType(modelType: JsonField<ModelType>) = apply { this.modelType = modelType }
 
             fun createdAt(createdAt: OffsetDateTime) = createdAt(JsonField.of(createdAt))
 
-            @JsonProperty("created_at")
-            @ExcludeMissing
             fun createdAt(createdAt: JsonField<OffsetDateTime>) = apply {
                 this.createdAt = createdAt
             }
 
             fun cadence(cadence: Cadence) = cadence(JsonField.of(cadence))
 
-            @JsonProperty("cadence")
-            @ExcludeMissing
             fun cadence(cadence: JsonField<Cadence>) = apply { this.cadence = cadence }
 
             fun billingCycleConfiguration(billingCycleConfiguration: BillingCycleConfiguration) =
                 billingCycleConfiguration(JsonField.of(billingCycleConfiguration))
 
-            @JsonProperty("billing_cycle_configuration")
-            @ExcludeMissing
             fun billingCycleConfiguration(
                 billingCycleConfiguration: JsonField<BillingCycleConfiguration>
             ) = apply { this.billingCycleConfiguration = billingCycleConfiguration }
@@ -10612,8 +10630,6 @@ private constructor(
                 invoicingCycleConfiguration: InvoicingCycleConfiguration
             ) = invoicingCycleConfiguration(JsonField.of(invoicingCycleConfiguration))
 
-            @JsonProperty("invoicing_cycle_configuration")
-            @ExcludeMissing
             fun invoicingCycleConfiguration(
                 invoicingCycleConfiguration: JsonField<InvoicingCycleConfiguration>
             ) = apply { this.invoicingCycleConfiguration = invoicingCycleConfiguration }
@@ -10621,8 +10637,6 @@ private constructor(
             fun billableMetric(billableMetric: BillableMetric) =
                 billableMetric(JsonField.of(billableMetric))
 
-            @JsonProperty("billable_metric")
-            @ExcludeMissing
             fun billableMetric(billableMetric: JsonField<BillableMetric>) = apply {
                 this.billableMetric = billableMetric
             }
@@ -10630,88 +10644,64 @@ private constructor(
             fun fixedPriceQuantity(fixedPriceQuantity: Double) =
                 fixedPriceQuantity(JsonField.of(fixedPriceQuantity))
 
-            @JsonProperty("fixed_price_quantity")
-            @ExcludeMissing
             fun fixedPriceQuantity(fixedPriceQuantity: JsonField<Double>) = apply {
                 this.fixedPriceQuantity = fixedPriceQuantity
             }
 
             fun planPhaseOrder(planPhaseOrder: Long) = planPhaseOrder(JsonField.of(planPhaseOrder))
 
-            @JsonProperty("plan_phase_order")
-            @ExcludeMissing
             fun planPhaseOrder(planPhaseOrder: JsonField<Long>) = apply {
                 this.planPhaseOrder = planPhaseOrder
             }
 
             fun currency(currency: String) = currency(JsonField.of(currency))
 
-            @JsonProperty("currency")
-            @ExcludeMissing
             fun currency(currency: JsonField<String>) = apply { this.currency = currency }
 
             fun conversionRate(conversionRate: Double) =
                 conversionRate(JsonField.of(conversionRate))
 
-            @JsonProperty("conversion_rate")
-            @ExcludeMissing
             fun conversionRate(conversionRate: JsonField<Double>) = apply {
                 this.conversionRate = conversionRate
             }
 
             fun item(item: Item) = item(JsonField.of(item))
 
-            @JsonProperty("item")
-            @ExcludeMissing
             fun item(item: JsonField<Item>) = apply { this.item = item }
 
             fun creditAllocation(creditAllocation: CreditAllocation) =
                 creditAllocation(JsonField.of(creditAllocation))
 
-            @JsonProperty("credit_allocation")
-            @ExcludeMissing
             fun creditAllocation(creditAllocation: JsonField<CreditAllocation>) = apply {
                 this.creditAllocation = creditAllocation
             }
 
             fun discount(discount: Discount) = discount(JsonField.of(discount))
 
-            @JsonProperty("discount")
-            @ExcludeMissing
             fun discount(discount: JsonField<Discount>) = apply { this.discount = discount }
 
             fun minimum(minimum: Minimum) = minimum(JsonField.of(minimum))
 
-            @JsonProperty("minimum")
-            @ExcludeMissing
             fun minimum(minimum: JsonField<Minimum>) = apply { this.minimum = minimum }
 
             fun minimumAmount(minimumAmount: String) = minimumAmount(JsonField.of(minimumAmount))
 
-            @JsonProperty("minimum_amount")
-            @ExcludeMissing
             fun minimumAmount(minimumAmount: JsonField<String>) = apply {
                 this.minimumAmount = minimumAmount
             }
 
             fun maximum(maximum: Maximum) = maximum(JsonField.of(maximum))
 
-            @JsonProperty("maximum")
-            @ExcludeMissing
             fun maximum(maximum: JsonField<Maximum>) = apply { this.maximum = maximum }
 
             fun maximumAmount(maximumAmount: String) = maximumAmount(JsonField.of(maximumAmount))
 
-            @JsonProperty("maximum_amount")
-            @ExcludeMissing
             fun maximumAmount(maximumAmount: JsonField<String>) = apply {
                 this.maximumAmount = maximumAmount
             }
 
             fun bpsConfig(bpsConfig: BpsConfig) = bpsConfig(JsonField.of(bpsConfig))
 
-            @JsonProperty("bps_config")
-            @ExcludeMissing
             fun bpsConfig(bpsConfig: JsonField<BpsConfig>) = apply { this.bpsConfig = bpsConfig }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
@@ -10719,7 +10709,6 @@ private constructor(
                 putAllAdditionalProperties(additionalProperties)
             }
 
-            @JsonAnySetter
             fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                 additionalProperties.put(key, value)
             }
@@ -10763,12 +10752,15 @@ private constructor(
                 )
         }
 
-        @JsonDeserialize(builder = BillableMetric.Builder::class)
         @NoAutoDetect
         class BillableMetric
+        @JsonCreator
         private constructor(
-            private val id: JsonField<String>,
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonProperty("id")
+            @ExcludeMissing
+            private val id: JsonField<String> = JsonMissing.of(),
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             fun id(): String = id.getRequired("id")
@@ -10807,8 +10799,6 @@ private constructor(
 
                 fun id(id: String) = id(JsonField.of(id))
 
-                @JsonProperty("id")
-                @ExcludeMissing
                 fun id(id: JsonField<String>) = apply { this.id = id }
 
                 fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
@@ -10816,7 +10806,6 @@ private constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -10855,13 +10844,18 @@ private constructor(
                 "BillableMetric{id=$id, additionalProperties=$additionalProperties}"
         }
 
-        @JsonDeserialize(builder = BillingCycleConfiguration.Builder::class)
         @NoAutoDetect
         class BillingCycleConfiguration
+        @JsonCreator
         private constructor(
-            private val duration: JsonField<Long>,
-            private val durationUnit: JsonField<DurationUnit>,
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonProperty("duration")
+            @ExcludeMissing
+            private val duration: JsonField<Long> = JsonMissing.of(),
+            @JsonProperty("duration_unit")
+            @ExcludeMissing
+            private val durationUnit: JsonField<DurationUnit> = JsonMissing.of(),
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             fun duration(): Long = duration.getRequired("duration")
@@ -10908,15 +10902,11 @@ private constructor(
 
                 fun duration(duration: Long) = duration(JsonField.of(duration))
 
-                @JsonProperty("duration")
-                @ExcludeMissing
                 fun duration(duration: JsonField<Long>) = apply { this.duration = duration }
 
                 fun durationUnit(durationUnit: DurationUnit) =
                     durationUnit(JsonField.of(durationUnit))
 
-                @JsonProperty("duration_unit")
-                @ExcludeMissing
                 fun durationUnit(durationUnit: JsonField<DurationUnit>) = apply {
                     this.durationUnit = durationUnit
                 }
@@ -10926,7 +10916,6 @@ private constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -11027,13 +11016,18 @@ private constructor(
                 "BillingCycleConfiguration{duration=$duration, durationUnit=$durationUnit, additionalProperties=$additionalProperties}"
         }
 
-        @JsonDeserialize(builder = BpsConfig.Builder::class)
         @NoAutoDetect
         class BpsConfig
+        @JsonCreator
         private constructor(
-            private val bps: JsonField<Double>,
-            private val perUnitMaximum: JsonField<String>,
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonProperty("bps")
+            @ExcludeMissing
+            private val bps: JsonField<Double> = JsonMissing.of(),
+            @JsonProperty("per_unit_maximum")
+            @ExcludeMissing
+            private val perUnitMaximum: JsonField<String> = JsonMissing.of(),
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             /** Basis point take rate per event */
@@ -11085,8 +11079,6 @@ private constructor(
                 fun bps(bps: Double) = bps(JsonField.of(bps))
 
                 /** Basis point take rate per event */
-                @JsonProperty("bps")
-                @ExcludeMissing
                 fun bps(bps: JsonField<Double>) = apply { this.bps = bps }
 
                 /** Optional currency amount maximum to cap spend per event */
@@ -11094,8 +11086,6 @@ private constructor(
                     perUnitMaximum(JsonField.of(perUnitMaximum))
 
                 /** Optional currency amount maximum to cap spend per event */
-                @JsonProperty("per_unit_maximum")
-                @ExcludeMissing
                 fun perUnitMaximum(perUnitMaximum: JsonField<String>) = apply {
                     this.perUnitMaximum = perUnitMaximum
                 }
@@ -11105,7 +11095,6 @@ private constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -11230,13 +11219,18 @@ private constructor(
             override fun toString() = value.toString()
         }
 
-        @JsonDeserialize(builder = CreditAllocation.Builder::class)
         @NoAutoDetect
         class CreditAllocation
+        @JsonCreator
         private constructor(
-            private val currency: JsonField<String>,
-            private val allowsRollover: JsonField<Boolean>,
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonProperty("currency")
+            @ExcludeMissing
+            private val currency: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("allows_rollover")
+            @ExcludeMissing
+            private val allowsRollover: JsonField<Boolean> = JsonMissing.of(),
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             fun currency(): String = currency.getRequired("currency")
@@ -11282,15 +11276,11 @@ private constructor(
 
                 fun currency(currency: String) = currency(JsonField.of(currency))
 
-                @JsonProperty("currency")
-                @ExcludeMissing
                 fun currency(currency: JsonField<String>) = apply { this.currency = currency }
 
                 fun allowsRollover(allowsRollover: Boolean) =
                     allowsRollover(JsonField.of(allowsRollover))
 
-                @JsonProperty("allows_rollover")
-                @ExcludeMissing
                 fun allowsRollover(allowsRollover: JsonField<Boolean>) = apply {
                     this.allowsRollover = allowsRollover
                 }
@@ -11300,7 +11290,6 @@ private constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -11344,13 +11333,18 @@ private constructor(
                 "CreditAllocation{currency=$currency, allowsRollover=$allowsRollover, additionalProperties=$additionalProperties}"
         }
 
-        @JsonDeserialize(builder = InvoicingCycleConfiguration.Builder::class)
         @NoAutoDetect
         class InvoicingCycleConfiguration
+        @JsonCreator
         private constructor(
-            private val duration: JsonField<Long>,
-            private val durationUnit: JsonField<DurationUnit>,
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonProperty("duration")
+            @ExcludeMissing
+            private val duration: JsonField<Long> = JsonMissing.of(),
+            @JsonProperty("duration_unit")
+            @ExcludeMissing
+            private val durationUnit: JsonField<DurationUnit> = JsonMissing.of(),
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             fun duration(): Long = duration.getRequired("duration")
@@ -11398,15 +11392,11 @@ private constructor(
 
                 fun duration(duration: Long) = duration(JsonField.of(duration))
 
-                @JsonProperty("duration")
-                @ExcludeMissing
                 fun duration(duration: JsonField<Long>) = apply { this.duration = duration }
 
                 fun durationUnit(durationUnit: DurationUnit) =
                     durationUnit(JsonField.of(durationUnit))
 
-                @JsonProperty("duration_unit")
-                @ExcludeMissing
                 fun durationUnit(durationUnit: JsonField<DurationUnit>) = apply {
                     this.durationUnit = durationUnit
                 }
@@ -11416,7 +11406,6 @@ private constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -11517,13 +11506,18 @@ private constructor(
                 "InvoicingCycleConfiguration{duration=$duration, durationUnit=$durationUnit, additionalProperties=$additionalProperties}"
         }
 
-        @JsonDeserialize(builder = Item.Builder::class)
         @NoAutoDetect
         class Item
+        @JsonCreator
         private constructor(
-            private val id: JsonField<String>,
-            private val name: JsonField<String>,
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonProperty("id")
+            @ExcludeMissing
+            private val id: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("name")
+            @ExcludeMissing
+            private val name: JsonField<String> = JsonMissing.of(),
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             fun id(): String = id.getRequired("id")
@@ -11569,14 +11563,10 @@ private constructor(
 
                 fun id(id: String) = id(JsonField.of(id))
 
-                @JsonProperty("id")
-                @ExcludeMissing
                 fun id(id: JsonField<String>) = apply { this.id = id }
 
                 fun name(name: String) = name(JsonField.of(name))
 
-                @JsonProperty("name")
-                @ExcludeMissing
                 fun name(name: JsonField<String>) = apply { this.name = name }
 
                 fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
@@ -11584,7 +11574,6 @@ private constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -11628,13 +11617,18 @@ private constructor(
                 "Item{id=$id, name=$name, additionalProperties=$additionalProperties}"
         }
 
-        @JsonDeserialize(builder = Maximum.Builder::class)
         @NoAutoDetect
         class Maximum
+        @JsonCreator
         private constructor(
-            private val maximumAmount: JsonField<String>,
-            private val appliesToPriceIds: JsonField<List<String>>,
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonProperty("maximum_amount")
+            @ExcludeMissing
+            private val maximumAmount: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("applies_to_price_ids")
+            @ExcludeMissing
+            private val appliesToPriceIds: JsonField<List<String>> = JsonMissing.of(),
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             /** Maximum amount applied */
@@ -11696,8 +11690,6 @@ private constructor(
                     maximumAmount(JsonField.of(maximumAmount))
 
                 /** Maximum amount applied */
-                @JsonProperty("maximum_amount")
-                @ExcludeMissing
                 fun maximumAmount(maximumAmount: JsonField<String>) = apply {
                     this.maximumAmount = maximumAmount
                 }
@@ -11713,8 +11705,6 @@ private constructor(
                  * List of price_ids that this maximum amount applies to. For plan/plan phase
                  * maximums, this can be a subset of prices.
                  */
-                @JsonProperty("applies_to_price_ids")
-                @ExcludeMissing
                 fun appliesToPriceIds(appliesToPriceIds: JsonField<List<String>>) = apply {
                     this.appliesToPriceIds = appliesToPriceIds
                 }
@@ -11724,7 +11714,6 @@ private constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -11773,11 +11762,12 @@ private constructor(
          * empty dictionary. Individual keys can be removed by setting the value to `null`, and the
          * entire metadata mapping can be cleared by setting `metadata` to `null`.
          */
-        @JsonDeserialize(builder = Metadata.Builder::class)
         @NoAutoDetect
         class Metadata
+        @JsonCreator
         private constructor(
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             @JsonAnyGetter
@@ -11812,7 +11802,6 @@ private constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -11850,13 +11839,18 @@ private constructor(
             override fun toString() = "Metadata{additionalProperties=$additionalProperties}"
         }
 
-        @JsonDeserialize(builder = Minimum.Builder::class)
         @NoAutoDetect
         class Minimum
+        @JsonCreator
         private constructor(
-            private val minimumAmount: JsonField<String>,
-            private val appliesToPriceIds: JsonField<List<String>>,
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonProperty("minimum_amount")
+            @ExcludeMissing
+            private val minimumAmount: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("applies_to_price_ids")
+            @ExcludeMissing
+            private val appliesToPriceIds: JsonField<List<String>> = JsonMissing.of(),
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             /** Minimum amount applied */
@@ -11918,8 +11912,6 @@ private constructor(
                     minimumAmount(JsonField.of(minimumAmount))
 
                 /** Minimum amount applied */
-                @JsonProperty("minimum_amount")
-                @ExcludeMissing
                 fun minimumAmount(minimumAmount: JsonField<String>) = apply {
                     this.minimumAmount = minimumAmount
                 }
@@ -11935,8 +11927,6 @@ private constructor(
                  * List of price_ids that this minimum amount applies to. For plan/plan phase
                  * minimums, this can be a subset of prices.
                  */
-                @JsonProperty("applies_to_price_ids")
-                @ExcludeMissing
                 fun appliesToPriceIds(appliesToPriceIds: JsonField<List<String>>) = apply {
                     this.appliesToPriceIds = appliesToPriceIds
                 }
@@ -11946,7 +11936,6 @@ private constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -12116,34 +12105,79 @@ private constructor(
             "BpsPrice{metadata=$metadata, id=$id, name=$name, externalPriceId=$externalPriceId, priceType=$priceType, modelType=$modelType, createdAt=$createdAt, cadence=$cadence, billingCycleConfiguration=$billingCycleConfiguration, invoicingCycleConfiguration=$invoicingCycleConfiguration, billableMetric=$billableMetric, fixedPriceQuantity=$fixedPriceQuantity, planPhaseOrder=$planPhaseOrder, currency=$currency, conversionRate=$conversionRate, item=$item, creditAllocation=$creditAllocation, discount=$discount, minimum=$minimum, minimumAmount=$minimumAmount, maximum=$maximum, maximumAmount=$maximumAmount, bpsConfig=$bpsConfig, additionalProperties=$additionalProperties}"
     }
 
-    @JsonDeserialize(builder = BulkBpsPrice.Builder::class)
     @NoAutoDetect
     class BulkBpsPrice
+    @JsonCreator
     private constructor(
-        private val metadata: JsonField<Metadata>,
-        private val id: JsonField<String>,
-        private val name: JsonField<String>,
-        private val externalPriceId: JsonField<String>,
-        private val priceType: JsonField<PriceType>,
-        private val modelType: JsonField<ModelType>,
-        private val createdAt: JsonField<OffsetDateTime>,
-        private val cadence: JsonField<Cadence>,
-        private val billingCycleConfiguration: JsonField<BillingCycleConfiguration>,
-        private val invoicingCycleConfiguration: JsonField<InvoicingCycleConfiguration>,
-        private val billableMetric: JsonField<BillableMetric>,
-        private val fixedPriceQuantity: JsonField<Double>,
-        private val planPhaseOrder: JsonField<Long>,
-        private val currency: JsonField<String>,
-        private val conversionRate: JsonField<Double>,
-        private val item: JsonField<Item>,
-        private val creditAllocation: JsonField<CreditAllocation>,
-        private val discount: JsonField<Discount>,
-        private val minimum: JsonField<Minimum>,
-        private val minimumAmount: JsonField<String>,
-        private val maximum: JsonField<Maximum>,
-        private val maximumAmount: JsonField<String>,
-        private val bulkBpsConfig: JsonField<BulkBpsConfig>,
-        private val additionalProperties: Map<String, JsonValue>,
+        @JsonProperty("metadata")
+        @ExcludeMissing
+        private val metadata: JsonField<Metadata> = JsonMissing.of(),
+        @JsonProperty("id") @ExcludeMissing private val id: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("name")
+        @ExcludeMissing
+        private val name: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("external_price_id")
+        @ExcludeMissing
+        private val externalPriceId: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("price_type")
+        @ExcludeMissing
+        private val priceType: JsonField<PriceType> = JsonMissing.of(),
+        @JsonProperty("model_type")
+        @ExcludeMissing
+        private val modelType: JsonField<ModelType> = JsonMissing.of(),
+        @JsonProperty("created_at")
+        @ExcludeMissing
+        private val createdAt: JsonField<OffsetDateTime> = JsonMissing.of(),
+        @JsonProperty("cadence")
+        @ExcludeMissing
+        private val cadence: JsonField<Cadence> = JsonMissing.of(),
+        @JsonProperty("billing_cycle_configuration")
+        @ExcludeMissing
+        private val billingCycleConfiguration: JsonField<BillingCycleConfiguration> =
+            JsonMissing.of(),
+        @JsonProperty("invoicing_cycle_configuration")
+        @ExcludeMissing
+        private val invoicingCycleConfiguration: JsonField<InvoicingCycleConfiguration> =
+            JsonMissing.of(),
+        @JsonProperty("billable_metric")
+        @ExcludeMissing
+        private val billableMetric: JsonField<BillableMetric> = JsonMissing.of(),
+        @JsonProperty("fixed_price_quantity")
+        @ExcludeMissing
+        private val fixedPriceQuantity: JsonField<Double> = JsonMissing.of(),
+        @JsonProperty("plan_phase_order")
+        @ExcludeMissing
+        private val planPhaseOrder: JsonField<Long> = JsonMissing.of(),
+        @JsonProperty("currency")
+        @ExcludeMissing
+        private val currency: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("conversion_rate")
+        @ExcludeMissing
+        private val conversionRate: JsonField<Double> = JsonMissing.of(),
+        @JsonProperty("item") @ExcludeMissing private val item: JsonField<Item> = JsonMissing.of(),
+        @JsonProperty("credit_allocation")
+        @ExcludeMissing
+        private val creditAllocation: JsonField<CreditAllocation> = JsonMissing.of(),
+        @JsonProperty("discount")
+        @ExcludeMissing
+        private val discount: JsonField<Discount> = JsonMissing.of(),
+        @JsonProperty("minimum")
+        @ExcludeMissing
+        private val minimum: JsonField<Minimum> = JsonMissing.of(),
+        @JsonProperty("minimum_amount")
+        @ExcludeMissing
+        private val minimumAmount: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("maximum")
+        @ExcludeMissing
+        private val maximum: JsonField<Maximum> = JsonMissing.of(),
+        @JsonProperty("maximum_amount")
+        @ExcludeMissing
+        private val maximumAmount: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("bulk_bps_config")
+        @ExcludeMissing
+        private val bulkBpsConfig: JsonField<BulkBpsConfig> = JsonMissing.of(),
+        @JsonAnySetter
+        private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
 
         /**
@@ -12369,62 +12403,44 @@ private constructor(
              * empty dictionary. Individual keys can be removed by setting the value to `null`, and
              * the entire metadata mapping can be cleared by setting `metadata` to `null`.
              */
-            @JsonProperty("metadata")
-            @ExcludeMissing
             fun metadata(metadata: JsonField<Metadata>) = apply { this.metadata = metadata }
 
             fun id(id: String) = id(JsonField.of(id))
 
-            @JsonProperty("id")
-            @ExcludeMissing
             fun id(id: JsonField<String>) = apply { this.id = id }
 
             fun name(name: String) = name(JsonField.of(name))
 
-            @JsonProperty("name")
-            @ExcludeMissing
             fun name(name: JsonField<String>) = apply { this.name = name }
 
             fun externalPriceId(externalPriceId: String) =
                 externalPriceId(JsonField.of(externalPriceId))
 
-            @JsonProperty("external_price_id")
-            @ExcludeMissing
             fun externalPriceId(externalPriceId: JsonField<String>) = apply {
                 this.externalPriceId = externalPriceId
             }
 
             fun priceType(priceType: PriceType) = priceType(JsonField.of(priceType))
 
-            @JsonProperty("price_type")
-            @ExcludeMissing
             fun priceType(priceType: JsonField<PriceType>) = apply { this.priceType = priceType }
 
             fun modelType(modelType: ModelType) = modelType(JsonField.of(modelType))
 
-            @JsonProperty("model_type")
-            @ExcludeMissing
             fun modelType(modelType: JsonField<ModelType>) = apply { this.modelType = modelType }
 
             fun createdAt(createdAt: OffsetDateTime) = createdAt(JsonField.of(createdAt))
 
-            @JsonProperty("created_at")
-            @ExcludeMissing
             fun createdAt(createdAt: JsonField<OffsetDateTime>) = apply {
                 this.createdAt = createdAt
             }
 
             fun cadence(cadence: Cadence) = cadence(JsonField.of(cadence))
 
-            @JsonProperty("cadence")
-            @ExcludeMissing
             fun cadence(cadence: JsonField<Cadence>) = apply { this.cadence = cadence }
 
             fun billingCycleConfiguration(billingCycleConfiguration: BillingCycleConfiguration) =
                 billingCycleConfiguration(JsonField.of(billingCycleConfiguration))
 
-            @JsonProperty("billing_cycle_configuration")
-            @ExcludeMissing
             fun billingCycleConfiguration(
                 billingCycleConfiguration: JsonField<BillingCycleConfiguration>
             ) = apply { this.billingCycleConfiguration = billingCycleConfiguration }
@@ -12433,8 +12449,6 @@ private constructor(
                 invoicingCycleConfiguration: InvoicingCycleConfiguration
             ) = invoicingCycleConfiguration(JsonField.of(invoicingCycleConfiguration))
 
-            @JsonProperty("invoicing_cycle_configuration")
-            @ExcludeMissing
             fun invoicingCycleConfiguration(
                 invoicingCycleConfiguration: JsonField<InvoicingCycleConfiguration>
             ) = apply { this.invoicingCycleConfiguration = invoicingCycleConfiguration }
@@ -12442,8 +12456,6 @@ private constructor(
             fun billableMetric(billableMetric: BillableMetric) =
                 billableMetric(JsonField.of(billableMetric))
 
-            @JsonProperty("billable_metric")
-            @ExcludeMissing
             fun billableMetric(billableMetric: JsonField<BillableMetric>) = apply {
                 this.billableMetric = billableMetric
             }
@@ -12451,80 +12463,58 @@ private constructor(
             fun fixedPriceQuantity(fixedPriceQuantity: Double) =
                 fixedPriceQuantity(JsonField.of(fixedPriceQuantity))
 
-            @JsonProperty("fixed_price_quantity")
-            @ExcludeMissing
             fun fixedPriceQuantity(fixedPriceQuantity: JsonField<Double>) = apply {
                 this.fixedPriceQuantity = fixedPriceQuantity
             }
 
             fun planPhaseOrder(planPhaseOrder: Long) = planPhaseOrder(JsonField.of(planPhaseOrder))
 
-            @JsonProperty("plan_phase_order")
-            @ExcludeMissing
             fun planPhaseOrder(planPhaseOrder: JsonField<Long>) = apply {
                 this.planPhaseOrder = planPhaseOrder
             }
 
             fun currency(currency: String) = currency(JsonField.of(currency))
 
-            @JsonProperty("currency")
-            @ExcludeMissing
             fun currency(currency: JsonField<String>) = apply { this.currency = currency }
 
             fun conversionRate(conversionRate: Double) =
                 conversionRate(JsonField.of(conversionRate))
 
-            @JsonProperty("conversion_rate")
-            @ExcludeMissing
             fun conversionRate(conversionRate: JsonField<Double>) = apply {
                 this.conversionRate = conversionRate
             }
 
             fun item(item: Item) = item(JsonField.of(item))
 
-            @JsonProperty("item")
-            @ExcludeMissing
             fun item(item: JsonField<Item>) = apply { this.item = item }
 
             fun creditAllocation(creditAllocation: CreditAllocation) =
                 creditAllocation(JsonField.of(creditAllocation))
 
-            @JsonProperty("credit_allocation")
-            @ExcludeMissing
             fun creditAllocation(creditAllocation: JsonField<CreditAllocation>) = apply {
                 this.creditAllocation = creditAllocation
             }
 
             fun discount(discount: Discount) = discount(JsonField.of(discount))
 
-            @JsonProperty("discount")
-            @ExcludeMissing
             fun discount(discount: JsonField<Discount>) = apply { this.discount = discount }
 
             fun minimum(minimum: Minimum) = minimum(JsonField.of(minimum))
 
-            @JsonProperty("minimum")
-            @ExcludeMissing
             fun minimum(minimum: JsonField<Minimum>) = apply { this.minimum = minimum }
 
             fun minimumAmount(minimumAmount: String) = minimumAmount(JsonField.of(minimumAmount))
 
-            @JsonProperty("minimum_amount")
-            @ExcludeMissing
             fun minimumAmount(minimumAmount: JsonField<String>) = apply {
                 this.minimumAmount = minimumAmount
             }
 
             fun maximum(maximum: Maximum) = maximum(JsonField.of(maximum))
 
-            @JsonProperty("maximum")
-            @ExcludeMissing
             fun maximum(maximum: JsonField<Maximum>) = apply { this.maximum = maximum }
 
             fun maximumAmount(maximumAmount: String) = maximumAmount(JsonField.of(maximumAmount))
 
-            @JsonProperty("maximum_amount")
-            @ExcludeMissing
             fun maximumAmount(maximumAmount: JsonField<String>) = apply {
                 this.maximumAmount = maximumAmount
             }
@@ -12532,8 +12522,6 @@ private constructor(
             fun bulkBpsConfig(bulkBpsConfig: BulkBpsConfig) =
                 bulkBpsConfig(JsonField.of(bulkBpsConfig))
 
-            @JsonProperty("bulk_bps_config")
-            @ExcludeMissing
             fun bulkBpsConfig(bulkBpsConfig: JsonField<BulkBpsConfig>) = apply {
                 this.bulkBpsConfig = bulkBpsConfig
             }
@@ -12543,7 +12531,6 @@ private constructor(
                 putAllAdditionalProperties(additionalProperties)
             }
 
-            @JsonAnySetter
             fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                 additionalProperties.put(key, value)
             }
@@ -12587,12 +12574,15 @@ private constructor(
                 )
         }
 
-        @JsonDeserialize(builder = BillableMetric.Builder::class)
         @NoAutoDetect
         class BillableMetric
+        @JsonCreator
         private constructor(
-            private val id: JsonField<String>,
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonProperty("id")
+            @ExcludeMissing
+            private val id: JsonField<String> = JsonMissing.of(),
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             fun id(): String = id.getRequired("id")
@@ -12631,8 +12621,6 @@ private constructor(
 
                 fun id(id: String) = id(JsonField.of(id))
 
-                @JsonProperty("id")
-                @ExcludeMissing
                 fun id(id: JsonField<String>) = apply { this.id = id }
 
                 fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
@@ -12640,7 +12628,6 @@ private constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -12679,13 +12666,18 @@ private constructor(
                 "BillableMetric{id=$id, additionalProperties=$additionalProperties}"
         }
 
-        @JsonDeserialize(builder = BillingCycleConfiguration.Builder::class)
         @NoAutoDetect
         class BillingCycleConfiguration
+        @JsonCreator
         private constructor(
-            private val duration: JsonField<Long>,
-            private val durationUnit: JsonField<DurationUnit>,
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonProperty("duration")
+            @ExcludeMissing
+            private val duration: JsonField<Long> = JsonMissing.of(),
+            @JsonProperty("duration_unit")
+            @ExcludeMissing
+            private val durationUnit: JsonField<DurationUnit> = JsonMissing.of(),
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             fun duration(): Long = duration.getRequired("duration")
@@ -12732,15 +12724,11 @@ private constructor(
 
                 fun duration(duration: Long) = duration(JsonField.of(duration))
 
-                @JsonProperty("duration")
-                @ExcludeMissing
                 fun duration(duration: JsonField<Long>) = apply { this.duration = duration }
 
                 fun durationUnit(durationUnit: DurationUnit) =
                     durationUnit(JsonField.of(durationUnit))
 
-                @JsonProperty("duration_unit")
-                @ExcludeMissing
                 fun durationUnit(durationUnit: JsonField<DurationUnit>) = apply {
                     this.durationUnit = durationUnit
                 }
@@ -12750,7 +12738,6 @@ private constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -12851,12 +12838,15 @@ private constructor(
                 "BillingCycleConfiguration{duration=$duration, durationUnit=$durationUnit, additionalProperties=$additionalProperties}"
         }
 
-        @JsonDeserialize(builder = BulkBpsConfig.Builder::class)
         @NoAutoDetect
         class BulkBpsConfig
+        @JsonCreator
         private constructor(
-            private val tiers: JsonField<List<Tier>>,
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonProperty("tiers")
+            @ExcludeMissing
+            private val tiers: JsonField<List<Tier>> = JsonMissing.of(),
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             /**
@@ -12911,8 +12901,6 @@ private constructor(
                  * Tiers for a bulk BPS pricing model where all usage is aggregated to a single tier
                  * based on total volume
                  */
-                @JsonProperty("tiers")
-                @ExcludeMissing
                 fun tiers(tiers: JsonField<List<Tier>>) = apply { this.tiers = tiers }
 
                 fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
@@ -12920,7 +12908,6 @@ private constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -12945,14 +12932,21 @@ private constructor(
                     )
             }
 
-            @JsonDeserialize(builder = Tier.Builder::class)
             @NoAutoDetect
             class Tier
+            @JsonCreator
             private constructor(
-                private val maximumAmount: JsonField<String>,
-                private val bps: JsonField<Double>,
-                private val perUnitMaximum: JsonField<String>,
-                private val additionalProperties: Map<String, JsonValue>,
+                @JsonProperty("maximum_amount")
+                @ExcludeMissing
+                private val maximumAmount: JsonField<String> = JsonMissing.of(),
+                @JsonProperty("bps")
+                @ExcludeMissing
+                private val bps: JsonField<Double> = JsonMissing.of(),
+                @JsonProperty("per_unit_maximum")
+                @ExcludeMissing
+                private val perUnitMaximum: JsonField<String> = JsonMissing.of(),
+                @JsonAnySetter
+                private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
             ) {
 
                 /** Upper bound for tier */
@@ -13016,8 +13010,6 @@ private constructor(
                         maximumAmount(JsonField.of(maximumAmount))
 
                     /** Upper bound for tier */
-                    @JsonProperty("maximum_amount")
-                    @ExcludeMissing
                     fun maximumAmount(maximumAmount: JsonField<String>) = apply {
                         this.maximumAmount = maximumAmount
                     }
@@ -13026,8 +13018,6 @@ private constructor(
                     fun bps(bps: Double) = bps(JsonField.of(bps))
 
                     /** Basis points to rate on */
-                    @JsonProperty("bps")
-                    @ExcludeMissing
                     fun bps(bps: JsonField<Double>) = apply { this.bps = bps }
 
                     /** The maximum amount to charge for any one event */
@@ -13035,8 +13025,6 @@ private constructor(
                         perUnitMaximum(JsonField.of(perUnitMaximum))
 
                     /** The maximum amount to charge for any one event */
-                    @JsonProperty("per_unit_maximum")
-                    @ExcludeMissing
                     fun perUnitMaximum(perUnitMaximum: JsonField<String>) = apply {
                         this.perUnitMaximum = perUnitMaximum
                     }
@@ -13046,7 +13034,6 @@ private constructor(
                         putAllAdditionalProperties(additionalProperties)
                     }
 
-                    @JsonAnySetter
                     fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                         additionalProperties.put(key, value)
                     }
@@ -13190,13 +13177,18 @@ private constructor(
             override fun toString() = value.toString()
         }
 
-        @JsonDeserialize(builder = CreditAllocation.Builder::class)
         @NoAutoDetect
         class CreditAllocation
+        @JsonCreator
         private constructor(
-            private val currency: JsonField<String>,
-            private val allowsRollover: JsonField<Boolean>,
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonProperty("currency")
+            @ExcludeMissing
+            private val currency: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("allows_rollover")
+            @ExcludeMissing
+            private val allowsRollover: JsonField<Boolean> = JsonMissing.of(),
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             fun currency(): String = currency.getRequired("currency")
@@ -13242,15 +13234,11 @@ private constructor(
 
                 fun currency(currency: String) = currency(JsonField.of(currency))
 
-                @JsonProperty("currency")
-                @ExcludeMissing
                 fun currency(currency: JsonField<String>) = apply { this.currency = currency }
 
                 fun allowsRollover(allowsRollover: Boolean) =
                     allowsRollover(JsonField.of(allowsRollover))
 
-                @JsonProperty("allows_rollover")
-                @ExcludeMissing
                 fun allowsRollover(allowsRollover: JsonField<Boolean>) = apply {
                     this.allowsRollover = allowsRollover
                 }
@@ -13260,7 +13248,6 @@ private constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -13304,13 +13291,18 @@ private constructor(
                 "CreditAllocation{currency=$currency, allowsRollover=$allowsRollover, additionalProperties=$additionalProperties}"
         }
 
-        @JsonDeserialize(builder = InvoicingCycleConfiguration.Builder::class)
         @NoAutoDetect
         class InvoicingCycleConfiguration
+        @JsonCreator
         private constructor(
-            private val duration: JsonField<Long>,
-            private val durationUnit: JsonField<DurationUnit>,
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonProperty("duration")
+            @ExcludeMissing
+            private val duration: JsonField<Long> = JsonMissing.of(),
+            @JsonProperty("duration_unit")
+            @ExcludeMissing
+            private val durationUnit: JsonField<DurationUnit> = JsonMissing.of(),
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             fun duration(): Long = duration.getRequired("duration")
@@ -13358,15 +13350,11 @@ private constructor(
 
                 fun duration(duration: Long) = duration(JsonField.of(duration))
 
-                @JsonProperty("duration")
-                @ExcludeMissing
                 fun duration(duration: JsonField<Long>) = apply { this.duration = duration }
 
                 fun durationUnit(durationUnit: DurationUnit) =
                     durationUnit(JsonField.of(durationUnit))
 
-                @JsonProperty("duration_unit")
-                @ExcludeMissing
                 fun durationUnit(durationUnit: JsonField<DurationUnit>) = apply {
                     this.durationUnit = durationUnit
                 }
@@ -13376,7 +13364,6 @@ private constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -13477,13 +13464,18 @@ private constructor(
                 "InvoicingCycleConfiguration{duration=$duration, durationUnit=$durationUnit, additionalProperties=$additionalProperties}"
         }
 
-        @JsonDeserialize(builder = Item.Builder::class)
         @NoAutoDetect
         class Item
+        @JsonCreator
         private constructor(
-            private val id: JsonField<String>,
-            private val name: JsonField<String>,
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonProperty("id")
+            @ExcludeMissing
+            private val id: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("name")
+            @ExcludeMissing
+            private val name: JsonField<String> = JsonMissing.of(),
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             fun id(): String = id.getRequired("id")
@@ -13529,14 +13521,10 @@ private constructor(
 
                 fun id(id: String) = id(JsonField.of(id))
 
-                @JsonProperty("id")
-                @ExcludeMissing
                 fun id(id: JsonField<String>) = apply { this.id = id }
 
                 fun name(name: String) = name(JsonField.of(name))
 
-                @JsonProperty("name")
-                @ExcludeMissing
                 fun name(name: JsonField<String>) = apply { this.name = name }
 
                 fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
@@ -13544,7 +13532,6 @@ private constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -13588,13 +13575,18 @@ private constructor(
                 "Item{id=$id, name=$name, additionalProperties=$additionalProperties}"
         }
 
-        @JsonDeserialize(builder = Maximum.Builder::class)
         @NoAutoDetect
         class Maximum
+        @JsonCreator
         private constructor(
-            private val maximumAmount: JsonField<String>,
-            private val appliesToPriceIds: JsonField<List<String>>,
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonProperty("maximum_amount")
+            @ExcludeMissing
+            private val maximumAmount: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("applies_to_price_ids")
+            @ExcludeMissing
+            private val appliesToPriceIds: JsonField<List<String>> = JsonMissing.of(),
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             /** Maximum amount applied */
@@ -13656,8 +13648,6 @@ private constructor(
                     maximumAmount(JsonField.of(maximumAmount))
 
                 /** Maximum amount applied */
-                @JsonProperty("maximum_amount")
-                @ExcludeMissing
                 fun maximumAmount(maximumAmount: JsonField<String>) = apply {
                     this.maximumAmount = maximumAmount
                 }
@@ -13673,8 +13663,6 @@ private constructor(
                  * List of price_ids that this maximum amount applies to. For plan/plan phase
                  * maximums, this can be a subset of prices.
                  */
-                @JsonProperty("applies_to_price_ids")
-                @ExcludeMissing
                 fun appliesToPriceIds(appliesToPriceIds: JsonField<List<String>>) = apply {
                     this.appliesToPriceIds = appliesToPriceIds
                 }
@@ -13684,7 +13672,6 @@ private constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -13733,11 +13720,12 @@ private constructor(
          * empty dictionary. Individual keys can be removed by setting the value to `null`, and the
          * entire metadata mapping can be cleared by setting `metadata` to `null`.
          */
-        @JsonDeserialize(builder = Metadata.Builder::class)
         @NoAutoDetect
         class Metadata
+        @JsonCreator
         private constructor(
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             @JsonAnyGetter
@@ -13772,7 +13760,6 @@ private constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -13810,13 +13797,18 @@ private constructor(
             override fun toString() = "Metadata{additionalProperties=$additionalProperties}"
         }
 
-        @JsonDeserialize(builder = Minimum.Builder::class)
         @NoAutoDetect
         class Minimum
+        @JsonCreator
         private constructor(
-            private val minimumAmount: JsonField<String>,
-            private val appliesToPriceIds: JsonField<List<String>>,
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonProperty("minimum_amount")
+            @ExcludeMissing
+            private val minimumAmount: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("applies_to_price_ids")
+            @ExcludeMissing
+            private val appliesToPriceIds: JsonField<List<String>> = JsonMissing.of(),
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             /** Minimum amount applied */
@@ -13878,8 +13870,6 @@ private constructor(
                     minimumAmount(JsonField.of(minimumAmount))
 
                 /** Minimum amount applied */
-                @JsonProperty("minimum_amount")
-                @ExcludeMissing
                 fun minimumAmount(minimumAmount: JsonField<String>) = apply {
                     this.minimumAmount = minimumAmount
                 }
@@ -13895,8 +13885,6 @@ private constructor(
                  * List of price_ids that this minimum amount applies to. For plan/plan phase
                  * minimums, this can be a subset of prices.
                  */
-                @JsonProperty("applies_to_price_ids")
-                @ExcludeMissing
                 fun appliesToPriceIds(appliesToPriceIds: JsonField<List<String>>) = apply {
                     this.appliesToPriceIds = appliesToPriceIds
                 }
@@ -13906,7 +13894,6 @@ private constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -14076,34 +14063,79 @@ private constructor(
             "BulkBpsPrice{metadata=$metadata, id=$id, name=$name, externalPriceId=$externalPriceId, priceType=$priceType, modelType=$modelType, createdAt=$createdAt, cadence=$cadence, billingCycleConfiguration=$billingCycleConfiguration, invoicingCycleConfiguration=$invoicingCycleConfiguration, billableMetric=$billableMetric, fixedPriceQuantity=$fixedPriceQuantity, planPhaseOrder=$planPhaseOrder, currency=$currency, conversionRate=$conversionRate, item=$item, creditAllocation=$creditAllocation, discount=$discount, minimum=$minimum, minimumAmount=$minimumAmount, maximum=$maximum, maximumAmount=$maximumAmount, bulkBpsConfig=$bulkBpsConfig, additionalProperties=$additionalProperties}"
     }
 
-    @JsonDeserialize(builder = BulkPrice.Builder::class)
     @NoAutoDetect
     class BulkPrice
+    @JsonCreator
     private constructor(
-        private val metadata: JsonField<Metadata>,
-        private val id: JsonField<String>,
-        private val name: JsonField<String>,
-        private val externalPriceId: JsonField<String>,
-        private val priceType: JsonField<PriceType>,
-        private val modelType: JsonField<ModelType>,
-        private val createdAt: JsonField<OffsetDateTime>,
-        private val cadence: JsonField<Cadence>,
-        private val billingCycleConfiguration: JsonField<BillingCycleConfiguration>,
-        private val invoicingCycleConfiguration: JsonField<InvoicingCycleConfiguration>,
-        private val billableMetric: JsonField<BillableMetric>,
-        private val fixedPriceQuantity: JsonField<Double>,
-        private val planPhaseOrder: JsonField<Long>,
-        private val currency: JsonField<String>,
-        private val conversionRate: JsonField<Double>,
-        private val item: JsonField<Item>,
-        private val creditAllocation: JsonField<CreditAllocation>,
-        private val discount: JsonField<Discount>,
-        private val minimum: JsonField<Minimum>,
-        private val minimumAmount: JsonField<String>,
-        private val maximum: JsonField<Maximum>,
-        private val maximumAmount: JsonField<String>,
-        private val bulkConfig: JsonField<BulkConfig>,
-        private val additionalProperties: Map<String, JsonValue>,
+        @JsonProperty("metadata")
+        @ExcludeMissing
+        private val metadata: JsonField<Metadata> = JsonMissing.of(),
+        @JsonProperty("id") @ExcludeMissing private val id: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("name")
+        @ExcludeMissing
+        private val name: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("external_price_id")
+        @ExcludeMissing
+        private val externalPriceId: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("price_type")
+        @ExcludeMissing
+        private val priceType: JsonField<PriceType> = JsonMissing.of(),
+        @JsonProperty("model_type")
+        @ExcludeMissing
+        private val modelType: JsonField<ModelType> = JsonMissing.of(),
+        @JsonProperty("created_at")
+        @ExcludeMissing
+        private val createdAt: JsonField<OffsetDateTime> = JsonMissing.of(),
+        @JsonProperty("cadence")
+        @ExcludeMissing
+        private val cadence: JsonField<Cadence> = JsonMissing.of(),
+        @JsonProperty("billing_cycle_configuration")
+        @ExcludeMissing
+        private val billingCycleConfiguration: JsonField<BillingCycleConfiguration> =
+            JsonMissing.of(),
+        @JsonProperty("invoicing_cycle_configuration")
+        @ExcludeMissing
+        private val invoicingCycleConfiguration: JsonField<InvoicingCycleConfiguration> =
+            JsonMissing.of(),
+        @JsonProperty("billable_metric")
+        @ExcludeMissing
+        private val billableMetric: JsonField<BillableMetric> = JsonMissing.of(),
+        @JsonProperty("fixed_price_quantity")
+        @ExcludeMissing
+        private val fixedPriceQuantity: JsonField<Double> = JsonMissing.of(),
+        @JsonProperty("plan_phase_order")
+        @ExcludeMissing
+        private val planPhaseOrder: JsonField<Long> = JsonMissing.of(),
+        @JsonProperty("currency")
+        @ExcludeMissing
+        private val currency: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("conversion_rate")
+        @ExcludeMissing
+        private val conversionRate: JsonField<Double> = JsonMissing.of(),
+        @JsonProperty("item") @ExcludeMissing private val item: JsonField<Item> = JsonMissing.of(),
+        @JsonProperty("credit_allocation")
+        @ExcludeMissing
+        private val creditAllocation: JsonField<CreditAllocation> = JsonMissing.of(),
+        @JsonProperty("discount")
+        @ExcludeMissing
+        private val discount: JsonField<Discount> = JsonMissing.of(),
+        @JsonProperty("minimum")
+        @ExcludeMissing
+        private val minimum: JsonField<Minimum> = JsonMissing.of(),
+        @JsonProperty("minimum_amount")
+        @ExcludeMissing
+        private val minimumAmount: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("maximum")
+        @ExcludeMissing
+        private val maximum: JsonField<Maximum> = JsonMissing.of(),
+        @JsonProperty("maximum_amount")
+        @ExcludeMissing
+        private val maximumAmount: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("bulk_config")
+        @ExcludeMissing
+        private val bulkConfig: JsonField<BulkConfig> = JsonMissing.of(),
+        @JsonAnySetter
+        private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
 
         /**
@@ -14329,62 +14361,44 @@ private constructor(
              * empty dictionary. Individual keys can be removed by setting the value to `null`, and
              * the entire metadata mapping can be cleared by setting `metadata` to `null`.
              */
-            @JsonProperty("metadata")
-            @ExcludeMissing
             fun metadata(metadata: JsonField<Metadata>) = apply { this.metadata = metadata }
 
             fun id(id: String) = id(JsonField.of(id))
 
-            @JsonProperty("id")
-            @ExcludeMissing
             fun id(id: JsonField<String>) = apply { this.id = id }
 
             fun name(name: String) = name(JsonField.of(name))
 
-            @JsonProperty("name")
-            @ExcludeMissing
             fun name(name: JsonField<String>) = apply { this.name = name }
 
             fun externalPriceId(externalPriceId: String) =
                 externalPriceId(JsonField.of(externalPriceId))
 
-            @JsonProperty("external_price_id")
-            @ExcludeMissing
             fun externalPriceId(externalPriceId: JsonField<String>) = apply {
                 this.externalPriceId = externalPriceId
             }
 
             fun priceType(priceType: PriceType) = priceType(JsonField.of(priceType))
 
-            @JsonProperty("price_type")
-            @ExcludeMissing
             fun priceType(priceType: JsonField<PriceType>) = apply { this.priceType = priceType }
 
             fun modelType(modelType: ModelType) = modelType(JsonField.of(modelType))
 
-            @JsonProperty("model_type")
-            @ExcludeMissing
             fun modelType(modelType: JsonField<ModelType>) = apply { this.modelType = modelType }
 
             fun createdAt(createdAt: OffsetDateTime) = createdAt(JsonField.of(createdAt))
 
-            @JsonProperty("created_at")
-            @ExcludeMissing
             fun createdAt(createdAt: JsonField<OffsetDateTime>) = apply {
                 this.createdAt = createdAt
             }
 
             fun cadence(cadence: Cadence) = cadence(JsonField.of(cadence))
 
-            @JsonProperty("cadence")
-            @ExcludeMissing
             fun cadence(cadence: JsonField<Cadence>) = apply { this.cadence = cadence }
 
             fun billingCycleConfiguration(billingCycleConfiguration: BillingCycleConfiguration) =
                 billingCycleConfiguration(JsonField.of(billingCycleConfiguration))
 
-            @JsonProperty("billing_cycle_configuration")
-            @ExcludeMissing
             fun billingCycleConfiguration(
                 billingCycleConfiguration: JsonField<BillingCycleConfiguration>
             ) = apply { this.billingCycleConfiguration = billingCycleConfiguration }
@@ -14393,8 +14407,6 @@ private constructor(
                 invoicingCycleConfiguration: InvoicingCycleConfiguration
             ) = invoicingCycleConfiguration(JsonField.of(invoicingCycleConfiguration))
 
-            @JsonProperty("invoicing_cycle_configuration")
-            @ExcludeMissing
             fun invoicingCycleConfiguration(
                 invoicingCycleConfiguration: JsonField<InvoicingCycleConfiguration>
             ) = apply { this.invoicingCycleConfiguration = invoicingCycleConfiguration }
@@ -14402,8 +14414,6 @@ private constructor(
             fun billableMetric(billableMetric: BillableMetric) =
                 billableMetric(JsonField.of(billableMetric))
 
-            @JsonProperty("billable_metric")
-            @ExcludeMissing
             fun billableMetric(billableMetric: JsonField<BillableMetric>) = apply {
                 this.billableMetric = billableMetric
             }
@@ -14411,88 +14421,64 @@ private constructor(
             fun fixedPriceQuantity(fixedPriceQuantity: Double) =
                 fixedPriceQuantity(JsonField.of(fixedPriceQuantity))
 
-            @JsonProperty("fixed_price_quantity")
-            @ExcludeMissing
             fun fixedPriceQuantity(fixedPriceQuantity: JsonField<Double>) = apply {
                 this.fixedPriceQuantity = fixedPriceQuantity
             }
 
             fun planPhaseOrder(planPhaseOrder: Long) = planPhaseOrder(JsonField.of(planPhaseOrder))
 
-            @JsonProperty("plan_phase_order")
-            @ExcludeMissing
             fun planPhaseOrder(planPhaseOrder: JsonField<Long>) = apply {
                 this.planPhaseOrder = planPhaseOrder
             }
 
             fun currency(currency: String) = currency(JsonField.of(currency))
 
-            @JsonProperty("currency")
-            @ExcludeMissing
             fun currency(currency: JsonField<String>) = apply { this.currency = currency }
 
             fun conversionRate(conversionRate: Double) =
                 conversionRate(JsonField.of(conversionRate))
 
-            @JsonProperty("conversion_rate")
-            @ExcludeMissing
             fun conversionRate(conversionRate: JsonField<Double>) = apply {
                 this.conversionRate = conversionRate
             }
 
             fun item(item: Item) = item(JsonField.of(item))
 
-            @JsonProperty("item")
-            @ExcludeMissing
             fun item(item: JsonField<Item>) = apply { this.item = item }
 
             fun creditAllocation(creditAllocation: CreditAllocation) =
                 creditAllocation(JsonField.of(creditAllocation))
 
-            @JsonProperty("credit_allocation")
-            @ExcludeMissing
             fun creditAllocation(creditAllocation: JsonField<CreditAllocation>) = apply {
                 this.creditAllocation = creditAllocation
             }
 
             fun discount(discount: Discount) = discount(JsonField.of(discount))
 
-            @JsonProperty("discount")
-            @ExcludeMissing
             fun discount(discount: JsonField<Discount>) = apply { this.discount = discount }
 
             fun minimum(minimum: Minimum) = minimum(JsonField.of(minimum))
 
-            @JsonProperty("minimum")
-            @ExcludeMissing
             fun minimum(minimum: JsonField<Minimum>) = apply { this.minimum = minimum }
 
             fun minimumAmount(minimumAmount: String) = minimumAmount(JsonField.of(minimumAmount))
 
-            @JsonProperty("minimum_amount")
-            @ExcludeMissing
             fun minimumAmount(minimumAmount: JsonField<String>) = apply {
                 this.minimumAmount = minimumAmount
             }
 
             fun maximum(maximum: Maximum) = maximum(JsonField.of(maximum))
 
-            @JsonProperty("maximum")
-            @ExcludeMissing
             fun maximum(maximum: JsonField<Maximum>) = apply { this.maximum = maximum }
 
             fun maximumAmount(maximumAmount: String) = maximumAmount(JsonField.of(maximumAmount))
 
-            @JsonProperty("maximum_amount")
-            @ExcludeMissing
             fun maximumAmount(maximumAmount: JsonField<String>) = apply {
                 this.maximumAmount = maximumAmount
             }
 
             fun bulkConfig(bulkConfig: BulkConfig) = bulkConfig(JsonField.of(bulkConfig))
 
-            @JsonProperty("bulk_config")
-            @ExcludeMissing
             fun bulkConfig(bulkConfig: JsonField<BulkConfig>) = apply {
                 this.bulkConfig = bulkConfig
             }
@@ -14502,7 +14488,6 @@ private constructor(
                 putAllAdditionalProperties(additionalProperties)
             }
 
-            @JsonAnySetter
             fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                 additionalProperties.put(key, value)
             }
@@ -14546,12 +14531,15 @@ private constructor(
                 )
         }
 
-        @JsonDeserialize(builder = BillableMetric.Builder::class)
         @NoAutoDetect
         class BillableMetric
+        @JsonCreator
         private constructor(
-            private val id: JsonField<String>,
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonProperty("id")
+            @ExcludeMissing
+            private val id: JsonField<String> = JsonMissing.of(),
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             fun id(): String = id.getRequired("id")
@@ -14590,8 +14578,6 @@ private constructor(
 
                 fun id(id: String) = id(JsonField.of(id))
 
-                @JsonProperty("id")
-                @ExcludeMissing
                 fun id(id: JsonField<String>) = apply { this.id = id }
 
                 fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
@@ -14599,7 +14585,6 @@ private constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -14638,13 +14623,18 @@ private constructor(
                 "BillableMetric{id=$id, additionalProperties=$additionalProperties}"
         }
 
-        @JsonDeserialize(builder = BillingCycleConfiguration.Builder::class)
         @NoAutoDetect
         class BillingCycleConfiguration
+        @JsonCreator
         private constructor(
-            private val duration: JsonField<Long>,
-            private val durationUnit: JsonField<DurationUnit>,
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonProperty("duration")
+            @ExcludeMissing
+            private val duration: JsonField<Long> = JsonMissing.of(),
+            @JsonProperty("duration_unit")
+            @ExcludeMissing
+            private val durationUnit: JsonField<DurationUnit> = JsonMissing.of(),
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             fun duration(): Long = duration.getRequired("duration")
@@ -14691,15 +14681,11 @@ private constructor(
 
                 fun duration(duration: Long) = duration(JsonField.of(duration))
 
-                @JsonProperty("duration")
-                @ExcludeMissing
                 fun duration(duration: JsonField<Long>) = apply { this.duration = duration }
 
                 fun durationUnit(durationUnit: DurationUnit) =
                     durationUnit(JsonField.of(durationUnit))
 
-                @JsonProperty("duration_unit")
-                @ExcludeMissing
                 fun durationUnit(durationUnit: JsonField<DurationUnit>) = apply {
                     this.durationUnit = durationUnit
                 }
@@ -14709,7 +14695,6 @@ private constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -14810,12 +14795,15 @@ private constructor(
                 "BillingCycleConfiguration{duration=$duration, durationUnit=$durationUnit, additionalProperties=$additionalProperties}"
         }
 
-        @JsonDeserialize(builder = BulkConfig.Builder::class)
         @NoAutoDetect
         class BulkConfig
+        @JsonCreator
         private constructor(
-            private val tiers: JsonField<List<Tier>>,
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonProperty("tiers")
+            @ExcludeMissing
+            private val tiers: JsonField<List<Tier>> = JsonMissing.of(),
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             /** Bulk tiers for rating based on total usage volume */
@@ -14858,8 +14846,6 @@ private constructor(
                 fun tiers(tiers: List<Tier>) = tiers(JsonField.of(tiers))
 
                 /** Bulk tiers for rating based on total usage volume */
-                @JsonProperty("tiers")
-                @ExcludeMissing
                 fun tiers(tiers: JsonField<List<Tier>>) = apply { this.tiers = tiers }
 
                 fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
@@ -14867,7 +14853,6 @@ private constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -14889,13 +14874,18 @@ private constructor(
                     BulkConfig(tiers.map { it.toImmutable() }, additionalProperties.toImmutable())
             }
 
-            @JsonDeserialize(builder = Tier.Builder::class)
             @NoAutoDetect
             class Tier
+            @JsonCreator
             private constructor(
-                private val maximumUnits: JsonField<Double>,
-                private val unitAmount: JsonField<String>,
-                private val additionalProperties: Map<String, JsonValue>,
+                @JsonProperty("maximum_units")
+                @ExcludeMissing
+                private val maximumUnits: JsonField<Double> = JsonMissing.of(),
+                @JsonProperty("unit_amount")
+                @ExcludeMissing
+                private val unitAmount: JsonField<String> = JsonMissing.of(),
+                @JsonAnySetter
+                private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
             ) {
 
                 /** Upper bound for this tier */
@@ -14948,8 +14938,6 @@ private constructor(
                         maximumUnits(JsonField.of(maximumUnits))
 
                     /** Upper bound for this tier */
-                    @JsonProperty("maximum_units")
-                    @ExcludeMissing
                     fun maximumUnits(maximumUnits: JsonField<Double>) = apply {
                         this.maximumUnits = maximumUnits
                     }
@@ -14958,8 +14946,6 @@ private constructor(
                     fun unitAmount(unitAmount: String) = unitAmount(JsonField.of(unitAmount))
 
                     /** Amount per unit */
-                    @JsonProperty("unit_amount")
-                    @ExcludeMissing
                     fun unitAmount(unitAmount: JsonField<String>) = apply {
                         this.unitAmount = unitAmount
                     }
@@ -14969,7 +14955,6 @@ private constructor(
                         putAllAdditionalProperties(additionalProperties)
                     }
 
-                    @JsonAnySetter
                     fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                         additionalProperties.put(key, value)
                     }
@@ -15112,13 +15097,18 @@ private constructor(
             override fun toString() = value.toString()
         }
 
-        @JsonDeserialize(builder = CreditAllocation.Builder::class)
         @NoAutoDetect
         class CreditAllocation
+        @JsonCreator
         private constructor(
-            private val currency: JsonField<String>,
-            private val allowsRollover: JsonField<Boolean>,
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonProperty("currency")
+            @ExcludeMissing
+            private val currency: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("allows_rollover")
+            @ExcludeMissing
+            private val allowsRollover: JsonField<Boolean> = JsonMissing.of(),
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             fun currency(): String = currency.getRequired("currency")
@@ -15164,15 +15154,11 @@ private constructor(
 
                 fun currency(currency: String) = currency(JsonField.of(currency))
 
-                @JsonProperty("currency")
-                @ExcludeMissing
                 fun currency(currency: JsonField<String>) = apply { this.currency = currency }
 
                 fun allowsRollover(allowsRollover: Boolean) =
                     allowsRollover(JsonField.of(allowsRollover))
 
-                @JsonProperty("allows_rollover")
-                @ExcludeMissing
                 fun allowsRollover(allowsRollover: JsonField<Boolean>) = apply {
                     this.allowsRollover = allowsRollover
                 }
@@ -15182,7 +15168,6 @@ private constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -15226,13 +15211,18 @@ private constructor(
                 "CreditAllocation{currency=$currency, allowsRollover=$allowsRollover, additionalProperties=$additionalProperties}"
         }
 
-        @JsonDeserialize(builder = InvoicingCycleConfiguration.Builder::class)
         @NoAutoDetect
         class InvoicingCycleConfiguration
+        @JsonCreator
         private constructor(
-            private val duration: JsonField<Long>,
-            private val durationUnit: JsonField<DurationUnit>,
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonProperty("duration")
+            @ExcludeMissing
+            private val duration: JsonField<Long> = JsonMissing.of(),
+            @JsonProperty("duration_unit")
+            @ExcludeMissing
+            private val durationUnit: JsonField<DurationUnit> = JsonMissing.of(),
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             fun duration(): Long = duration.getRequired("duration")
@@ -15280,15 +15270,11 @@ private constructor(
 
                 fun duration(duration: Long) = duration(JsonField.of(duration))
 
-                @JsonProperty("duration")
-                @ExcludeMissing
                 fun duration(duration: JsonField<Long>) = apply { this.duration = duration }
 
                 fun durationUnit(durationUnit: DurationUnit) =
                     durationUnit(JsonField.of(durationUnit))
 
-                @JsonProperty("duration_unit")
-                @ExcludeMissing
                 fun durationUnit(durationUnit: JsonField<DurationUnit>) = apply {
                     this.durationUnit = durationUnit
                 }
@@ -15298,7 +15284,6 @@ private constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -15399,13 +15384,18 @@ private constructor(
                 "InvoicingCycleConfiguration{duration=$duration, durationUnit=$durationUnit, additionalProperties=$additionalProperties}"
         }
 
-        @JsonDeserialize(builder = Item.Builder::class)
         @NoAutoDetect
         class Item
+        @JsonCreator
         private constructor(
-            private val id: JsonField<String>,
-            private val name: JsonField<String>,
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonProperty("id")
+            @ExcludeMissing
+            private val id: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("name")
+            @ExcludeMissing
+            private val name: JsonField<String> = JsonMissing.of(),
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             fun id(): String = id.getRequired("id")
@@ -15451,14 +15441,10 @@ private constructor(
 
                 fun id(id: String) = id(JsonField.of(id))
 
-                @JsonProperty("id")
-                @ExcludeMissing
                 fun id(id: JsonField<String>) = apply { this.id = id }
 
                 fun name(name: String) = name(JsonField.of(name))
 
-                @JsonProperty("name")
-                @ExcludeMissing
                 fun name(name: JsonField<String>) = apply { this.name = name }
 
                 fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
@@ -15466,7 +15452,6 @@ private constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -15510,13 +15495,18 @@ private constructor(
                 "Item{id=$id, name=$name, additionalProperties=$additionalProperties}"
         }
 
-        @JsonDeserialize(builder = Maximum.Builder::class)
         @NoAutoDetect
         class Maximum
+        @JsonCreator
         private constructor(
-            private val maximumAmount: JsonField<String>,
-            private val appliesToPriceIds: JsonField<List<String>>,
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonProperty("maximum_amount")
+            @ExcludeMissing
+            private val maximumAmount: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("applies_to_price_ids")
+            @ExcludeMissing
+            private val appliesToPriceIds: JsonField<List<String>> = JsonMissing.of(),
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             /** Maximum amount applied */
@@ -15578,8 +15568,6 @@ private constructor(
                     maximumAmount(JsonField.of(maximumAmount))
 
                 /** Maximum amount applied */
-                @JsonProperty("maximum_amount")
-                @ExcludeMissing
                 fun maximumAmount(maximumAmount: JsonField<String>) = apply {
                     this.maximumAmount = maximumAmount
                 }
@@ -15595,8 +15583,6 @@ private constructor(
                  * List of price_ids that this maximum amount applies to. For plan/plan phase
                  * maximums, this can be a subset of prices.
                  */
-                @JsonProperty("applies_to_price_ids")
-                @ExcludeMissing
                 fun appliesToPriceIds(appliesToPriceIds: JsonField<List<String>>) = apply {
                     this.appliesToPriceIds = appliesToPriceIds
                 }
@@ -15606,7 +15592,6 @@ private constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -15655,11 +15640,12 @@ private constructor(
          * empty dictionary. Individual keys can be removed by setting the value to `null`, and the
          * entire metadata mapping can be cleared by setting `metadata` to `null`.
          */
-        @JsonDeserialize(builder = Metadata.Builder::class)
         @NoAutoDetect
         class Metadata
+        @JsonCreator
         private constructor(
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             @JsonAnyGetter
@@ -15694,7 +15680,6 @@ private constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -15732,13 +15717,18 @@ private constructor(
             override fun toString() = "Metadata{additionalProperties=$additionalProperties}"
         }
 
-        @JsonDeserialize(builder = Minimum.Builder::class)
         @NoAutoDetect
         class Minimum
+        @JsonCreator
         private constructor(
-            private val minimumAmount: JsonField<String>,
-            private val appliesToPriceIds: JsonField<List<String>>,
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonProperty("minimum_amount")
+            @ExcludeMissing
+            private val minimumAmount: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("applies_to_price_ids")
+            @ExcludeMissing
+            private val appliesToPriceIds: JsonField<List<String>> = JsonMissing.of(),
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             /** Minimum amount applied */
@@ -15800,8 +15790,6 @@ private constructor(
                     minimumAmount(JsonField.of(minimumAmount))
 
                 /** Minimum amount applied */
-                @JsonProperty("minimum_amount")
-                @ExcludeMissing
                 fun minimumAmount(minimumAmount: JsonField<String>) = apply {
                     this.minimumAmount = minimumAmount
                 }
@@ -15817,8 +15805,6 @@ private constructor(
                  * List of price_ids that this minimum amount applies to. For plan/plan phase
                  * minimums, this can be a subset of prices.
                  */
-                @JsonProperty("applies_to_price_ids")
-                @ExcludeMissing
                 fun appliesToPriceIds(appliesToPriceIds: JsonField<List<String>>) = apply {
                     this.appliesToPriceIds = appliesToPriceIds
                 }
@@ -15828,7 +15814,6 @@ private constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -15998,34 +15983,80 @@ private constructor(
             "BulkPrice{metadata=$metadata, id=$id, name=$name, externalPriceId=$externalPriceId, priceType=$priceType, modelType=$modelType, createdAt=$createdAt, cadence=$cadence, billingCycleConfiguration=$billingCycleConfiguration, invoicingCycleConfiguration=$invoicingCycleConfiguration, billableMetric=$billableMetric, fixedPriceQuantity=$fixedPriceQuantity, planPhaseOrder=$planPhaseOrder, currency=$currency, conversionRate=$conversionRate, item=$item, creditAllocation=$creditAllocation, discount=$discount, minimum=$minimum, minimumAmount=$minimumAmount, maximum=$maximum, maximumAmount=$maximumAmount, bulkConfig=$bulkConfig, additionalProperties=$additionalProperties}"
     }
 
-    @JsonDeserialize(builder = ThresholdTotalAmountPrice.Builder::class)
     @NoAutoDetect
     class ThresholdTotalAmountPrice
+    @JsonCreator
     private constructor(
-        private val metadata: JsonField<Metadata>,
-        private val id: JsonField<String>,
-        private val name: JsonField<String>,
-        private val externalPriceId: JsonField<String>,
-        private val priceType: JsonField<PriceType>,
-        private val modelType: JsonField<ModelType>,
-        private val createdAt: JsonField<OffsetDateTime>,
-        private val cadence: JsonField<Cadence>,
-        private val billingCycleConfiguration: JsonField<BillingCycleConfiguration>,
-        private val invoicingCycleConfiguration: JsonField<InvoicingCycleConfiguration>,
-        private val billableMetric: JsonField<BillableMetric>,
-        private val fixedPriceQuantity: JsonField<Double>,
-        private val planPhaseOrder: JsonField<Long>,
-        private val currency: JsonField<String>,
-        private val conversionRate: JsonField<Double>,
-        private val item: JsonField<Item>,
-        private val creditAllocation: JsonField<CreditAllocation>,
-        private val discount: JsonField<Discount>,
-        private val minimum: JsonField<Minimum>,
-        private val minimumAmount: JsonField<String>,
-        private val maximum: JsonField<Maximum>,
-        private val maximumAmount: JsonField<String>,
-        private val thresholdTotalAmountConfig: JsonField<ThresholdTotalAmountConfig>,
-        private val additionalProperties: Map<String, JsonValue>,
+        @JsonProperty("metadata")
+        @ExcludeMissing
+        private val metadata: JsonField<Metadata> = JsonMissing.of(),
+        @JsonProperty("id") @ExcludeMissing private val id: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("name")
+        @ExcludeMissing
+        private val name: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("external_price_id")
+        @ExcludeMissing
+        private val externalPriceId: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("price_type")
+        @ExcludeMissing
+        private val priceType: JsonField<PriceType> = JsonMissing.of(),
+        @JsonProperty("model_type")
+        @ExcludeMissing
+        private val modelType: JsonField<ModelType> = JsonMissing.of(),
+        @JsonProperty("created_at")
+        @ExcludeMissing
+        private val createdAt: JsonField<OffsetDateTime> = JsonMissing.of(),
+        @JsonProperty("cadence")
+        @ExcludeMissing
+        private val cadence: JsonField<Cadence> = JsonMissing.of(),
+        @JsonProperty("billing_cycle_configuration")
+        @ExcludeMissing
+        private val billingCycleConfiguration: JsonField<BillingCycleConfiguration> =
+            JsonMissing.of(),
+        @JsonProperty("invoicing_cycle_configuration")
+        @ExcludeMissing
+        private val invoicingCycleConfiguration: JsonField<InvoicingCycleConfiguration> =
+            JsonMissing.of(),
+        @JsonProperty("billable_metric")
+        @ExcludeMissing
+        private val billableMetric: JsonField<BillableMetric> = JsonMissing.of(),
+        @JsonProperty("fixed_price_quantity")
+        @ExcludeMissing
+        private val fixedPriceQuantity: JsonField<Double> = JsonMissing.of(),
+        @JsonProperty("plan_phase_order")
+        @ExcludeMissing
+        private val planPhaseOrder: JsonField<Long> = JsonMissing.of(),
+        @JsonProperty("currency")
+        @ExcludeMissing
+        private val currency: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("conversion_rate")
+        @ExcludeMissing
+        private val conversionRate: JsonField<Double> = JsonMissing.of(),
+        @JsonProperty("item") @ExcludeMissing private val item: JsonField<Item> = JsonMissing.of(),
+        @JsonProperty("credit_allocation")
+        @ExcludeMissing
+        private val creditAllocation: JsonField<CreditAllocation> = JsonMissing.of(),
+        @JsonProperty("discount")
+        @ExcludeMissing
+        private val discount: JsonField<Discount> = JsonMissing.of(),
+        @JsonProperty("minimum")
+        @ExcludeMissing
+        private val minimum: JsonField<Minimum> = JsonMissing.of(),
+        @JsonProperty("minimum_amount")
+        @ExcludeMissing
+        private val minimumAmount: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("maximum")
+        @ExcludeMissing
+        private val maximum: JsonField<Maximum> = JsonMissing.of(),
+        @JsonProperty("maximum_amount")
+        @ExcludeMissing
+        private val maximumAmount: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("threshold_total_amount_config")
+        @ExcludeMissing
+        private val thresholdTotalAmountConfig: JsonField<ThresholdTotalAmountConfig> =
+            JsonMissing.of(),
+        @JsonAnySetter
+        private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
 
         /**
@@ -16255,62 +16286,44 @@ private constructor(
              * empty dictionary. Individual keys can be removed by setting the value to `null`, and
              * the entire metadata mapping can be cleared by setting `metadata` to `null`.
              */
-            @JsonProperty("metadata")
-            @ExcludeMissing
             fun metadata(metadata: JsonField<Metadata>) = apply { this.metadata = metadata }
 
             fun id(id: String) = id(JsonField.of(id))
 
-            @JsonProperty("id")
-            @ExcludeMissing
             fun id(id: JsonField<String>) = apply { this.id = id }
 
             fun name(name: String) = name(JsonField.of(name))
 
-            @JsonProperty("name")
-            @ExcludeMissing
             fun name(name: JsonField<String>) = apply { this.name = name }
 
             fun externalPriceId(externalPriceId: String) =
                 externalPriceId(JsonField.of(externalPriceId))
 
-            @JsonProperty("external_price_id")
-            @ExcludeMissing
             fun externalPriceId(externalPriceId: JsonField<String>) = apply {
                 this.externalPriceId = externalPriceId
             }
 
             fun priceType(priceType: PriceType) = priceType(JsonField.of(priceType))
 
-            @JsonProperty("price_type")
-            @ExcludeMissing
             fun priceType(priceType: JsonField<PriceType>) = apply { this.priceType = priceType }
 
             fun modelType(modelType: ModelType) = modelType(JsonField.of(modelType))
 
-            @JsonProperty("model_type")
-            @ExcludeMissing
             fun modelType(modelType: JsonField<ModelType>) = apply { this.modelType = modelType }
 
             fun createdAt(createdAt: OffsetDateTime) = createdAt(JsonField.of(createdAt))
 
-            @JsonProperty("created_at")
-            @ExcludeMissing
             fun createdAt(createdAt: JsonField<OffsetDateTime>) = apply {
                 this.createdAt = createdAt
             }
 
             fun cadence(cadence: Cadence) = cadence(JsonField.of(cadence))
 
-            @JsonProperty("cadence")
-            @ExcludeMissing
             fun cadence(cadence: JsonField<Cadence>) = apply { this.cadence = cadence }
 
             fun billingCycleConfiguration(billingCycleConfiguration: BillingCycleConfiguration) =
                 billingCycleConfiguration(JsonField.of(billingCycleConfiguration))
 
-            @JsonProperty("billing_cycle_configuration")
-            @ExcludeMissing
             fun billingCycleConfiguration(
                 billingCycleConfiguration: JsonField<BillingCycleConfiguration>
             ) = apply { this.billingCycleConfiguration = billingCycleConfiguration }
@@ -16319,8 +16332,6 @@ private constructor(
                 invoicingCycleConfiguration: InvoicingCycleConfiguration
             ) = invoicingCycleConfiguration(JsonField.of(invoicingCycleConfiguration))
 
-            @JsonProperty("invoicing_cycle_configuration")
-            @ExcludeMissing
             fun invoicingCycleConfiguration(
                 invoicingCycleConfiguration: JsonField<InvoicingCycleConfiguration>
             ) = apply { this.invoicingCycleConfiguration = invoicingCycleConfiguration }
@@ -16328,8 +16339,6 @@ private constructor(
             fun billableMetric(billableMetric: BillableMetric) =
                 billableMetric(JsonField.of(billableMetric))
 
-            @JsonProperty("billable_metric")
-            @ExcludeMissing
             fun billableMetric(billableMetric: JsonField<BillableMetric>) = apply {
                 this.billableMetric = billableMetric
             }
@@ -16337,80 +16346,58 @@ private constructor(
             fun fixedPriceQuantity(fixedPriceQuantity: Double) =
                 fixedPriceQuantity(JsonField.of(fixedPriceQuantity))
 
-            @JsonProperty("fixed_price_quantity")
-            @ExcludeMissing
             fun fixedPriceQuantity(fixedPriceQuantity: JsonField<Double>) = apply {
                 this.fixedPriceQuantity = fixedPriceQuantity
             }
 
             fun planPhaseOrder(planPhaseOrder: Long) = planPhaseOrder(JsonField.of(planPhaseOrder))
 
-            @JsonProperty("plan_phase_order")
-            @ExcludeMissing
             fun planPhaseOrder(planPhaseOrder: JsonField<Long>) = apply {
                 this.planPhaseOrder = planPhaseOrder
             }
 
             fun currency(currency: String) = currency(JsonField.of(currency))
 
-            @JsonProperty("currency")
-            @ExcludeMissing
             fun currency(currency: JsonField<String>) = apply { this.currency = currency }
 
             fun conversionRate(conversionRate: Double) =
                 conversionRate(JsonField.of(conversionRate))
 
-            @JsonProperty("conversion_rate")
-            @ExcludeMissing
             fun conversionRate(conversionRate: JsonField<Double>) = apply {
                 this.conversionRate = conversionRate
             }
 
             fun item(item: Item) = item(JsonField.of(item))
 
-            @JsonProperty("item")
-            @ExcludeMissing
             fun item(item: JsonField<Item>) = apply { this.item = item }
 
             fun creditAllocation(creditAllocation: CreditAllocation) =
                 creditAllocation(JsonField.of(creditAllocation))
 
-            @JsonProperty("credit_allocation")
-            @ExcludeMissing
             fun creditAllocation(creditAllocation: JsonField<CreditAllocation>) = apply {
                 this.creditAllocation = creditAllocation
             }
 
             fun discount(discount: Discount) = discount(JsonField.of(discount))
 
-            @JsonProperty("discount")
-            @ExcludeMissing
             fun discount(discount: JsonField<Discount>) = apply { this.discount = discount }
 
             fun minimum(minimum: Minimum) = minimum(JsonField.of(minimum))
 
-            @JsonProperty("minimum")
-            @ExcludeMissing
             fun minimum(minimum: JsonField<Minimum>) = apply { this.minimum = minimum }
 
             fun minimumAmount(minimumAmount: String) = minimumAmount(JsonField.of(minimumAmount))
 
-            @JsonProperty("minimum_amount")
-            @ExcludeMissing
             fun minimumAmount(minimumAmount: JsonField<String>) = apply {
                 this.minimumAmount = minimumAmount
             }
 
             fun maximum(maximum: Maximum) = maximum(JsonField.of(maximum))
 
-            @JsonProperty("maximum")
-            @ExcludeMissing
             fun maximum(maximum: JsonField<Maximum>) = apply { this.maximum = maximum }
 
             fun maximumAmount(maximumAmount: String) = maximumAmount(JsonField.of(maximumAmount))
 
-            @JsonProperty("maximum_amount")
-            @ExcludeMissing
             fun maximumAmount(maximumAmount: JsonField<String>) = apply {
                 this.maximumAmount = maximumAmount
             }
@@ -16418,8 +16405,6 @@ private constructor(
             fun thresholdTotalAmountConfig(thresholdTotalAmountConfig: ThresholdTotalAmountConfig) =
                 thresholdTotalAmountConfig(JsonField.of(thresholdTotalAmountConfig))
 
-            @JsonProperty("threshold_total_amount_config")
-            @ExcludeMissing
             fun thresholdTotalAmountConfig(
                 thresholdTotalAmountConfig: JsonField<ThresholdTotalAmountConfig>
             ) = apply { this.thresholdTotalAmountConfig = thresholdTotalAmountConfig }
@@ -16429,7 +16414,6 @@ private constructor(
                 putAllAdditionalProperties(additionalProperties)
             }
 
-            @JsonAnySetter
             fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                 additionalProperties.put(key, value)
             }
@@ -16473,12 +16457,15 @@ private constructor(
                 )
         }
 
-        @JsonDeserialize(builder = BillableMetric.Builder::class)
         @NoAutoDetect
         class BillableMetric
+        @JsonCreator
         private constructor(
-            private val id: JsonField<String>,
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonProperty("id")
+            @ExcludeMissing
+            private val id: JsonField<String> = JsonMissing.of(),
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             fun id(): String = id.getRequired("id")
@@ -16517,8 +16504,6 @@ private constructor(
 
                 fun id(id: String) = id(JsonField.of(id))
 
-                @JsonProperty("id")
-                @ExcludeMissing
                 fun id(id: JsonField<String>) = apply { this.id = id }
 
                 fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
@@ -16526,7 +16511,6 @@ private constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -16565,13 +16549,18 @@ private constructor(
                 "BillableMetric{id=$id, additionalProperties=$additionalProperties}"
         }
 
-        @JsonDeserialize(builder = BillingCycleConfiguration.Builder::class)
         @NoAutoDetect
         class BillingCycleConfiguration
+        @JsonCreator
         private constructor(
-            private val duration: JsonField<Long>,
-            private val durationUnit: JsonField<DurationUnit>,
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonProperty("duration")
+            @ExcludeMissing
+            private val duration: JsonField<Long> = JsonMissing.of(),
+            @JsonProperty("duration_unit")
+            @ExcludeMissing
+            private val durationUnit: JsonField<DurationUnit> = JsonMissing.of(),
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             fun duration(): Long = duration.getRequired("duration")
@@ -16618,15 +16607,11 @@ private constructor(
 
                 fun duration(duration: Long) = duration(JsonField.of(duration))
 
-                @JsonProperty("duration")
-                @ExcludeMissing
                 fun duration(duration: JsonField<Long>) = apply { this.duration = duration }
 
                 fun durationUnit(durationUnit: DurationUnit) =
                     durationUnit(JsonField.of(durationUnit))
 
-                @JsonProperty("duration_unit")
-                @ExcludeMissing
                 fun durationUnit(durationUnit: JsonField<DurationUnit>) = apply {
                     this.durationUnit = durationUnit
                 }
@@ -16636,7 +16621,6 @@ private constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -16818,13 +16802,18 @@ private constructor(
             override fun toString() = value.toString()
         }
 
-        @JsonDeserialize(builder = CreditAllocation.Builder::class)
         @NoAutoDetect
         class CreditAllocation
+        @JsonCreator
         private constructor(
-            private val currency: JsonField<String>,
-            private val allowsRollover: JsonField<Boolean>,
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonProperty("currency")
+            @ExcludeMissing
+            private val currency: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("allows_rollover")
+            @ExcludeMissing
+            private val allowsRollover: JsonField<Boolean> = JsonMissing.of(),
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             fun currency(): String = currency.getRequired("currency")
@@ -16870,15 +16859,11 @@ private constructor(
 
                 fun currency(currency: String) = currency(JsonField.of(currency))
 
-                @JsonProperty("currency")
-                @ExcludeMissing
                 fun currency(currency: JsonField<String>) = apply { this.currency = currency }
 
                 fun allowsRollover(allowsRollover: Boolean) =
                     allowsRollover(JsonField.of(allowsRollover))
 
-                @JsonProperty("allows_rollover")
-                @ExcludeMissing
                 fun allowsRollover(allowsRollover: JsonField<Boolean>) = apply {
                     this.allowsRollover = allowsRollover
                 }
@@ -16888,7 +16873,6 @@ private constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -16932,13 +16916,18 @@ private constructor(
                 "CreditAllocation{currency=$currency, allowsRollover=$allowsRollover, additionalProperties=$additionalProperties}"
         }
 
-        @JsonDeserialize(builder = InvoicingCycleConfiguration.Builder::class)
         @NoAutoDetect
         class InvoicingCycleConfiguration
+        @JsonCreator
         private constructor(
-            private val duration: JsonField<Long>,
-            private val durationUnit: JsonField<DurationUnit>,
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonProperty("duration")
+            @ExcludeMissing
+            private val duration: JsonField<Long> = JsonMissing.of(),
+            @JsonProperty("duration_unit")
+            @ExcludeMissing
+            private val durationUnit: JsonField<DurationUnit> = JsonMissing.of(),
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             fun duration(): Long = duration.getRequired("duration")
@@ -16986,15 +16975,11 @@ private constructor(
 
                 fun duration(duration: Long) = duration(JsonField.of(duration))
 
-                @JsonProperty("duration")
-                @ExcludeMissing
                 fun duration(duration: JsonField<Long>) = apply { this.duration = duration }
 
                 fun durationUnit(durationUnit: DurationUnit) =
                     durationUnit(JsonField.of(durationUnit))
 
-                @JsonProperty("duration_unit")
-                @ExcludeMissing
                 fun durationUnit(durationUnit: JsonField<DurationUnit>) = apply {
                     this.durationUnit = durationUnit
                 }
@@ -17004,7 +16989,6 @@ private constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -17105,13 +17089,18 @@ private constructor(
                 "InvoicingCycleConfiguration{duration=$duration, durationUnit=$durationUnit, additionalProperties=$additionalProperties}"
         }
 
-        @JsonDeserialize(builder = Item.Builder::class)
         @NoAutoDetect
         class Item
+        @JsonCreator
         private constructor(
-            private val id: JsonField<String>,
-            private val name: JsonField<String>,
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonProperty("id")
+            @ExcludeMissing
+            private val id: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("name")
+            @ExcludeMissing
+            private val name: JsonField<String> = JsonMissing.of(),
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             fun id(): String = id.getRequired("id")
@@ -17157,14 +17146,10 @@ private constructor(
 
                 fun id(id: String) = id(JsonField.of(id))
 
-                @JsonProperty("id")
-                @ExcludeMissing
                 fun id(id: JsonField<String>) = apply { this.id = id }
 
                 fun name(name: String) = name(JsonField.of(name))
 
-                @JsonProperty("name")
-                @ExcludeMissing
                 fun name(name: JsonField<String>) = apply { this.name = name }
 
                 fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
@@ -17172,7 +17157,6 @@ private constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -17216,13 +17200,18 @@ private constructor(
                 "Item{id=$id, name=$name, additionalProperties=$additionalProperties}"
         }
 
-        @JsonDeserialize(builder = Maximum.Builder::class)
         @NoAutoDetect
         class Maximum
+        @JsonCreator
         private constructor(
-            private val maximumAmount: JsonField<String>,
-            private val appliesToPriceIds: JsonField<List<String>>,
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonProperty("maximum_amount")
+            @ExcludeMissing
+            private val maximumAmount: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("applies_to_price_ids")
+            @ExcludeMissing
+            private val appliesToPriceIds: JsonField<List<String>> = JsonMissing.of(),
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             /** Maximum amount applied */
@@ -17284,8 +17273,6 @@ private constructor(
                     maximumAmount(JsonField.of(maximumAmount))
 
                 /** Maximum amount applied */
-                @JsonProperty("maximum_amount")
-                @ExcludeMissing
                 fun maximumAmount(maximumAmount: JsonField<String>) = apply {
                     this.maximumAmount = maximumAmount
                 }
@@ -17301,8 +17288,6 @@ private constructor(
                  * List of price_ids that this maximum amount applies to. For plan/plan phase
                  * maximums, this can be a subset of prices.
                  */
-                @JsonProperty("applies_to_price_ids")
-                @ExcludeMissing
                 fun appliesToPriceIds(appliesToPriceIds: JsonField<List<String>>) = apply {
                     this.appliesToPriceIds = appliesToPriceIds
                 }
@@ -17312,7 +17297,6 @@ private constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -17361,11 +17345,12 @@ private constructor(
          * empty dictionary. Individual keys can be removed by setting the value to `null`, and the
          * entire metadata mapping can be cleared by setting `metadata` to `null`.
          */
-        @JsonDeserialize(builder = Metadata.Builder::class)
         @NoAutoDetect
         class Metadata
+        @JsonCreator
         private constructor(
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             @JsonAnyGetter
@@ -17400,7 +17385,6 @@ private constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -17438,13 +17422,18 @@ private constructor(
             override fun toString() = "Metadata{additionalProperties=$additionalProperties}"
         }
 
-        @JsonDeserialize(builder = Minimum.Builder::class)
         @NoAutoDetect
         class Minimum
+        @JsonCreator
         private constructor(
-            private val minimumAmount: JsonField<String>,
-            private val appliesToPriceIds: JsonField<List<String>>,
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonProperty("minimum_amount")
+            @ExcludeMissing
+            private val minimumAmount: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("applies_to_price_ids")
+            @ExcludeMissing
+            private val appliesToPriceIds: JsonField<List<String>> = JsonMissing.of(),
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             /** Minimum amount applied */
@@ -17506,8 +17495,6 @@ private constructor(
                     minimumAmount(JsonField.of(minimumAmount))
 
                 /** Minimum amount applied */
-                @JsonProperty("minimum_amount")
-                @ExcludeMissing
                 fun minimumAmount(minimumAmount: JsonField<String>) = apply {
                     this.minimumAmount = minimumAmount
                 }
@@ -17523,8 +17510,6 @@ private constructor(
                  * List of price_ids that this minimum amount applies to. For plan/plan phase
                  * minimums, this can be a subset of prices.
                  */
-                @JsonProperty("applies_to_price_ids")
-                @ExcludeMissing
                 fun appliesToPriceIds(appliesToPriceIds: JsonField<List<String>>) = apply {
                     this.appliesToPriceIds = appliesToPriceIds
                 }
@@ -17534,7 +17519,6 @@ private constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -17686,11 +17670,12 @@ private constructor(
             override fun toString() = value.toString()
         }
 
-        @JsonDeserialize(builder = ThresholdTotalAmountConfig.Builder::class)
         @NoAutoDetect
         class ThresholdTotalAmountConfig
+        @JsonCreator
         private constructor(
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             @JsonAnyGetter
@@ -17726,7 +17711,6 @@ private constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -17784,34 +17768,79 @@ private constructor(
             "ThresholdTotalAmountPrice{metadata=$metadata, id=$id, name=$name, externalPriceId=$externalPriceId, priceType=$priceType, modelType=$modelType, createdAt=$createdAt, cadence=$cadence, billingCycleConfiguration=$billingCycleConfiguration, invoicingCycleConfiguration=$invoicingCycleConfiguration, billableMetric=$billableMetric, fixedPriceQuantity=$fixedPriceQuantity, planPhaseOrder=$planPhaseOrder, currency=$currency, conversionRate=$conversionRate, item=$item, creditAllocation=$creditAllocation, discount=$discount, minimum=$minimum, minimumAmount=$minimumAmount, maximum=$maximum, maximumAmount=$maximumAmount, thresholdTotalAmountConfig=$thresholdTotalAmountConfig, additionalProperties=$additionalProperties}"
     }
 
-    @JsonDeserialize(builder = TieredPackagePrice.Builder::class)
     @NoAutoDetect
     class TieredPackagePrice
+    @JsonCreator
     private constructor(
-        private val metadata: JsonField<Metadata>,
-        private val id: JsonField<String>,
-        private val name: JsonField<String>,
-        private val externalPriceId: JsonField<String>,
-        private val priceType: JsonField<PriceType>,
-        private val modelType: JsonField<ModelType>,
-        private val createdAt: JsonField<OffsetDateTime>,
-        private val cadence: JsonField<Cadence>,
-        private val billingCycleConfiguration: JsonField<BillingCycleConfiguration>,
-        private val invoicingCycleConfiguration: JsonField<InvoicingCycleConfiguration>,
-        private val billableMetric: JsonField<BillableMetric>,
-        private val fixedPriceQuantity: JsonField<Double>,
-        private val planPhaseOrder: JsonField<Long>,
-        private val currency: JsonField<String>,
-        private val conversionRate: JsonField<Double>,
-        private val item: JsonField<Item>,
-        private val creditAllocation: JsonField<CreditAllocation>,
-        private val discount: JsonField<Discount>,
-        private val minimum: JsonField<Minimum>,
-        private val minimumAmount: JsonField<String>,
-        private val maximum: JsonField<Maximum>,
-        private val maximumAmount: JsonField<String>,
-        private val tieredPackageConfig: JsonField<TieredPackageConfig>,
-        private val additionalProperties: Map<String, JsonValue>,
+        @JsonProperty("metadata")
+        @ExcludeMissing
+        private val metadata: JsonField<Metadata> = JsonMissing.of(),
+        @JsonProperty("id") @ExcludeMissing private val id: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("name")
+        @ExcludeMissing
+        private val name: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("external_price_id")
+        @ExcludeMissing
+        private val externalPriceId: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("price_type")
+        @ExcludeMissing
+        private val priceType: JsonField<PriceType> = JsonMissing.of(),
+        @JsonProperty("model_type")
+        @ExcludeMissing
+        private val modelType: JsonField<ModelType> = JsonMissing.of(),
+        @JsonProperty("created_at")
+        @ExcludeMissing
+        private val createdAt: JsonField<OffsetDateTime> = JsonMissing.of(),
+        @JsonProperty("cadence")
+        @ExcludeMissing
+        private val cadence: JsonField<Cadence> = JsonMissing.of(),
+        @JsonProperty("billing_cycle_configuration")
+        @ExcludeMissing
+        private val billingCycleConfiguration: JsonField<BillingCycleConfiguration> =
+            JsonMissing.of(),
+        @JsonProperty("invoicing_cycle_configuration")
+        @ExcludeMissing
+        private val invoicingCycleConfiguration: JsonField<InvoicingCycleConfiguration> =
+            JsonMissing.of(),
+        @JsonProperty("billable_metric")
+        @ExcludeMissing
+        private val billableMetric: JsonField<BillableMetric> = JsonMissing.of(),
+        @JsonProperty("fixed_price_quantity")
+        @ExcludeMissing
+        private val fixedPriceQuantity: JsonField<Double> = JsonMissing.of(),
+        @JsonProperty("plan_phase_order")
+        @ExcludeMissing
+        private val planPhaseOrder: JsonField<Long> = JsonMissing.of(),
+        @JsonProperty("currency")
+        @ExcludeMissing
+        private val currency: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("conversion_rate")
+        @ExcludeMissing
+        private val conversionRate: JsonField<Double> = JsonMissing.of(),
+        @JsonProperty("item") @ExcludeMissing private val item: JsonField<Item> = JsonMissing.of(),
+        @JsonProperty("credit_allocation")
+        @ExcludeMissing
+        private val creditAllocation: JsonField<CreditAllocation> = JsonMissing.of(),
+        @JsonProperty("discount")
+        @ExcludeMissing
+        private val discount: JsonField<Discount> = JsonMissing.of(),
+        @JsonProperty("minimum")
+        @ExcludeMissing
+        private val minimum: JsonField<Minimum> = JsonMissing.of(),
+        @JsonProperty("minimum_amount")
+        @ExcludeMissing
+        private val minimumAmount: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("maximum")
+        @ExcludeMissing
+        private val maximum: JsonField<Maximum> = JsonMissing.of(),
+        @JsonProperty("maximum_amount")
+        @ExcludeMissing
+        private val maximumAmount: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("tiered_package_config")
+        @ExcludeMissing
+        private val tieredPackageConfig: JsonField<TieredPackageConfig> = JsonMissing.of(),
+        @JsonAnySetter
+        private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
 
         /**
@@ -18040,62 +18069,44 @@ private constructor(
              * empty dictionary. Individual keys can be removed by setting the value to `null`, and
              * the entire metadata mapping can be cleared by setting `metadata` to `null`.
              */
-            @JsonProperty("metadata")
-            @ExcludeMissing
             fun metadata(metadata: JsonField<Metadata>) = apply { this.metadata = metadata }
 
             fun id(id: String) = id(JsonField.of(id))
 
-            @JsonProperty("id")
-            @ExcludeMissing
             fun id(id: JsonField<String>) = apply { this.id = id }
 
             fun name(name: String) = name(JsonField.of(name))
 
-            @JsonProperty("name")
-            @ExcludeMissing
             fun name(name: JsonField<String>) = apply { this.name = name }
 
             fun externalPriceId(externalPriceId: String) =
                 externalPriceId(JsonField.of(externalPriceId))
 
-            @JsonProperty("external_price_id")
-            @ExcludeMissing
             fun externalPriceId(externalPriceId: JsonField<String>) = apply {
                 this.externalPriceId = externalPriceId
             }
 
             fun priceType(priceType: PriceType) = priceType(JsonField.of(priceType))
 
-            @JsonProperty("price_type")
-            @ExcludeMissing
             fun priceType(priceType: JsonField<PriceType>) = apply { this.priceType = priceType }
 
             fun modelType(modelType: ModelType) = modelType(JsonField.of(modelType))
 
-            @JsonProperty("model_type")
-            @ExcludeMissing
             fun modelType(modelType: JsonField<ModelType>) = apply { this.modelType = modelType }
 
             fun createdAt(createdAt: OffsetDateTime) = createdAt(JsonField.of(createdAt))
 
-            @JsonProperty("created_at")
-            @ExcludeMissing
             fun createdAt(createdAt: JsonField<OffsetDateTime>) = apply {
                 this.createdAt = createdAt
             }
 
             fun cadence(cadence: Cadence) = cadence(JsonField.of(cadence))
 
-            @JsonProperty("cadence")
-            @ExcludeMissing
             fun cadence(cadence: JsonField<Cadence>) = apply { this.cadence = cadence }
 
             fun billingCycleConfiguration(billingCycleConfiguration: BillingCycleConfiguration) =
                 billingCycleConfiguration(JsonField.of(billingCycleConfiguration))
 
-            @JsonProperty("billing_cycle_configuration")
-            @ExcludeMissing
             fun billingCycleConfiguration(
                 billingCycleConfiguration: JsonField<BillingCycleConfiguration>
             ) = apply { this.billingCycleConfiguration = billingCycleConfiguration }
@@ -18104,8 +18115,6 @@ private constructor(
                 invoicingCycleConfiguration: InvoicingCycleConfiguration
             ) = invoicingCycleConfiguration(JsonField.of(invoicingCycleConfiguration))
 
-            @JsonProperty("invoicing_cycle_configuration")
-            @ExcludeMissing
             fun invoicingCycleConfiguration(
                 invoicingCycleConfiguration: JsonField<InvoicingCycleConfiguration>
             ) = apply { this.invoicingCycleConfiguration = invoicingCycleConfiguration }
@@ -18113,8 +18122,6 @@ private constructor(
             fun billableMetric(billableMetric: BillableMetric) =
                 billableMetric(JsonField.of(billableMetric))
 
-            @JsonProperty("billable_metric")
-            @ExcludeMissing
             fun billableMetric(billableMetric: JsonField<BillableMetric>) = apply {
                 this.billableMetric = billableMetric
             }
@@ -18122,80 +18129,58 @@ private constructor(
             fun fixedPriceQuantity(fixedPriceQuantity: Double) =
                 fixedPriceQuantity(JsonField.of(fixedPriceQuantity))
 
-            @JsonProperty("fixed_price_quantity")
-            @ExcludeMissing
             fun fixedPriceQuantity(fixedPriceQuantity: JsonField<Double>) = apply {
                 this.fixedPriceQuantity = fixedPriceQuantity
             }
 
             fun planPhaseOrder(planPhaseOrder: Long) = planPhaseOrder(JsonField.of(planPhaseOrder))
 
-            @JsonProperty("plan_phase_order")
-            @ExcludeMissing
             fun planPhaseOrder(planPhaseOrder: JsonField<Long>) = apply {
                 this.planPhaseOrder = planPhaseOrder
             }
 
             fun currency(currency: String) = currency(JsonField.of(currency))
 
-            @JsonProperty("currency")
-            @ExcludeMissing
             fun currency(currency: JsonField<String>) = apply { this.currency = currency }
 
             fun conversionRate(conversionRate: Double) =
                 conversionRate(JsonField.of(conversionRate))
 
-            @JsonProperty("conversion_rate")
-            @ExcludeMissing
             fun conversionRate(conversionRate: JsonField<Double>) = apply {
                 this.conversionRate = conversionRate
             }
 
             fun item(item: Item) = item(JsonField.of(item))
 
-            @JsonProperty("item")
-            @ExcludeMissing
             fun item(item: JsonField<Item>) = apply { this.item = item }
 
             fun creditAllocation(creditAllocation: CreditAllocation) =
                 creditAllocation(JsonField.of(creditAllocation))
 
-            @JsonProperty("credit_allocation")
-            @ExcludeMissing
             fun creditAllocation(creditAllocation: JsonField<CreditAllocation>) = apply {
                 this.creditAllocation = creditAllocation
             }
 
             fun discount(discount: Discount) = discount(JsonField.of(discount))
 
-            @JsonProperty("discount")
-            @ExcludeMissing
             fun discount(discount: JsonField<Discount>) = apply { this.discount = discount }
 
             fun minimum(minimum: Minimum) = minimum(JsonField.of(minimum))
 
-            @JsonProperty("minimum")
-            @ExcludeMissing
             fun minimum(minimum: JsonField<Minimum>) = apply { this.minimum = minimum }
 
             fun minimumAmount(minimumAmount: String) = minimumAmount(JsonField.of(minimumAmount))
 
-            @JsonProperty("minimum_amount")
-            @ExcludeMissing
             fun minimumAmount(minimumAmount: JsonField<String>) = apply {
                 this.minimumAmount = minimumAmount
             }
 
             fun maximum(maximum: Maximum) = maximum(JsonField.of(maximum))
 
-            @JsonProperty("maximum")
-            @ExcludeMissing
             fun maximum(maximum: JsonField<Maximum>) = apply { this.maximum = maximum }
 
             fun maximumAmount(maximumAmount: String) = maximumAmount(JsonField.of(maximumAmount))
 
-            @JsonProperty("maximum_amount")
-            @ExcludeMissing
             fun maximumAmount(maximumAmount: JsonField<String>) = apply {
                 this.maximumAmount = maximumAmount
             }
@@ -18203,8 +18188,6 @@ private constructor(
             fun tieredPackageConfig(tieredPackageConfig: TieredPackageConfig) =
                 tieredPackageConfig(JsonField.of(tieredPackageConfig))
 
-            @JsonProperty("tiered_package_config")
-            @ExcludeMissing
             fun tieredPackageConfig(tieredPackageConfig: JsonField<TieredPackageConfig>) = apply {
                 this.tieredPackageConfig = tieredPackageConfig
             }
@@ -18214,7 +18197,6 @@ private constructor(
                 putAllAdditionalProperties(additionalProperties)
             }
 
-            @JsonAnySetter
             fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                 additionalProperties.put(key, value)
             }
@@ -18258,12 +18240,15 @@ private constructor(
                 )
         }
 
-        @JsonDeserialize(builder = BillableMetric.Builder::class)
         @NoAutoDetect
         class BillableMetric
+        @JsonCreator
         private constructor(
-            private val id: JsonField<String>,
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonProperty("id")
+            @ExcludeMissing
+            private val id: JsonField<String> = JsonMissing.of(),
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             fun id(): String = id.getRequired("id")
@@ -18302,8 +18287,6 @@ private constructor(
 
                 fun id(id: String) = id(JsonField.of(id))
 
-                @JsonProperty("id")
-                @ExcludeMissing
                 fun id(id: JsonField<String>) = apply { this.id = id }
 
                 fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
@@ -18311,7 +18294,6 @@ private constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -18350,13 +18332,18 @@ private constructor(
                 "BillableMetric{id=$id, additionalProperties=$additionalProperties}"
         }
 
-        @JsonDeserialize(builder = BillingCycleConfiguration.Builder::class)
         @NoAutoDetect
         class BillingCycleConfiguration
+        @JsonCreator
         private constructor(
-            private val duration: JsonField<Long>,
-            private val durationUnit: JsonField<DurationUnit>,
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonProperty("duration")
+            @ExcludeMissing
+            private val duration: JsonField<Long> = JsonMissing.of(),
+            @JsonProperty("duration_unit")
+            @ExcludeMissing
+            private val durationUnit: JsonField<DurationUnit> = JsonMissing.of(),
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             fun duration(): Long = duration.getRequired("duration")
@@ -18403,15 +18390,11 @@ private constructor(
 
                 fun duration(duration: Long) = duration(JsonField.of(duration))
 
-                @JsonProperty("duration")
-                @ExcludeMissing
                 fun duration(duration: JsonField<Long>) = apply { this.duration = duration }
 
                 fun durationUnit(durationUnit: DurationUnit) =
                     durationUnit(JsonField.of(durationUnit))
 
-                @JsonProperty("duration_unit")
-                @ExcludeMissing
                 fun durationUnit(durationUnit: JsonField<DurationUnit>) = apply {
                     this.durationUnit = durationUnit
                 }
@@ -18421,7 +18404,6 @@ private constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -18603,13 +18585,18 @@ private constructor(
             override fun toString() = value.toString()
         }
 
-        @JsonDeserialize(builder = CreditAllocation.Builder::class)
         @NoAutoDetect
         class CreditAllocation
+        @JsonCreator
         private constructor(
-            private val currency: JsonField<String>,
-            private val allowsRollover: JsonField<Boolean>,
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonProperty("currency")
+            @ExcludeMissing
+            private val currency: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("allows_rollover")
+            @ExcludeMissing
+            private val allowsRollover: JsonField<Boolean> = JsonMissing.of(),
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             fun currency(): String = currency.getRequired("currency")
@@ -18655,15 +18642,11 @@ private constructor(
 
                 fun currency(currency: String) = currency(JsonField.of(currency))
 
-                @JsonProperty("currency")
-                @ExcludeMissing
                 fun currency(currency: JsonField<String>) = apply { this.currency = currency }
 
                 fun allowsRollover(allowsRollover: Boolean) =
                     allowsRollover(JsonField.of(allowsRollover))
 
-                @JsonProperty("allows_rollover")
-                @ExcludeMissing
                 fun allowsRollover(allowsRollover: JsonField<Boolean>) = apply {
                     this.allowsRollover = allowsRollover
                 }
@@ -18673,7 +18656,6 @@ private constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -18717,13 +18699,18 @@ private constructor(
                 "CreditAllocation{currency=$currency, allowsRollover=$allowsRollover, additionalProperties=$additionalProperties}"
         }
 
-        @JsonDeserialize(builder = InvoicingCycleConfiguration.Builder::class)
         @NoAutoDetect
         class InvoicingCycleConfiguration
+        @JsonCreator
         private constructor(
-            private val duration: JsonField<Long>,
-            private val durationUnit: JsonField<DurationUnit>,
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonProperty("duration")
+            @ExcludeMissing
+            private val duration: JsonField<Long> = JsonMissing.of(),
+            @JsonProperty("duration_unit")
+            @ExcludeMissing
+            private val durationUnit: JsonField<DurationUnit> = JsonMissing.of(),
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             fun duration(): Long = duration.getRequired("duration")
@@ -18771,15 +18758,11 @@ private constructor(
 
                 fun duration(duration: Long) = duration(JsonField.of(duration))
 
-                @JsonProperty("duration")
-                @ExcludeMissing
                 fun duration(duration: JsonField<Long>) = apply { this.duration = duration }
 
                 fun durationUnit(durationUnit: DurationUnit) =
                     durationUnit(JsonField.of(durationUnit))
 
-                @JsonProperty("duration_unit")
-                @ExcludeMissing
                 fun durationUnit(durationUnit: JsonField<DurationUnit>) = apply {
                     this.durationUnit = durationUnit
                 }
@@ -18789,7 +18772,6 @@ private constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -18890,13 +18872,18 @@ private constructor(
                 "InvoicingCycleConfiguration{duration=$duration, durationUnit=$durationUnit, additionalProperties=$additionalProperties}"
         }
 
-        @JsonDeserialize(builder = Item.Builder::class)
         @NoAutoDetect
         class Item
+        @JsonCreator
         private constructor(
-            private val id: JsonField<String>,
-            private val name: JsonField<String>,
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonProperty("id")
+            @ExcludeMissing
+            private val id: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("name")
+            @ExcludeMissing
+            private val name: JsonField<String> = JsonMissing.of(),
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             fun id(): String = id.getRequired("id")
@@ -18942,14 +18929,10 @@ private constructor(
 
                 fun id(id: String) = id(JsonField.of(id))
 
-                @JsonProperty("id")
-                @ExcludeMissing
                 fun id(id: JsonField<String>) = apply { this.id = id }
 
                 fun name(name: String) = name(JsonField.of(name))
 
-                @JsonProperty("name")
-                @ExcludeMissing
                 fun name(name: JsonField<String>) = apply { this.name = name }
 
                 fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
@@ -18957,7 +18940,6 @@ private constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -19001,13 +18983,18 @@ private constructor(
                 "Item{id=$id, name=$name, additionalProperties=$additionalProperties}"
         }
 
-        @JsonDeserialize(builder = Maximum.Builder::class)
         @NoAutoDetect
         class Maximum
+        @JsonCreator
         private constructor(
-            private val maximumAmount: JsonField<String>,
-            private val appliesToPriceIds: JsonField<List<String>>,
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonProperty("maximum_amount")
+            @ExcludeMissing
+            private val maximumAmount: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("applies_to_price_ids")
+            @ExcludeMissing
+            private val appliesToPriceIds: JsonField<List<String>> = JsonMissing.of(),
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             /** Maximum amount applied */
@@ -19069,8 +19056,6 @@ private constructor(
                     maximumAmount(JsonField.of(maximumAmount))
 
                 /** Maximum amount applied */
-                @JsonProperty("maximum_amount")
-                @ExcludeMissing
                 fun maximumAmount(maximumAmount: JsonField<String>) = apply {
                     this.maximumAmount = maximumAmount
                 }
@@ -19086,8 +19071,6 @@ private constructor(
                  * List of price_ids that this maximum amount applies to. For plan/plan phase
                  * maximums, this can be a subset of prices.
                  */
-                @JsonProperty("applies_to_price_ids")
-                @ExcludeMissing
                 fun appliesToPriceIds(appliesToPriceIds: JsonField<List<String>>) = apply {
                     this.appliesToPriceIds = appliesToPriceIds
                 }
@@ -19097,7 +19080,6 @@ private constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -19146,11 +19128,12 @@ private constructor(
          * empty dictionary. Individual keys can be removed by setting the value to `null`, and the
          * entire metadata mapping can be cleared by setting `metadata` to `null`.
          */
-        @JsonDeserialize(builder = Metadata.Builder::class)
         @NoAutoDetect
         class Metadata
+        @JsonCreator
         private constructor(
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             @JsonAnyGetter
@@ -19185,7 +19168,6 @@ private constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -19223,13 +19205,18 @@ private constructor(
             override fun toString() = "Metadata{additionalProperties=$additionalProperties}"
         }
 
-        @JsonDeserialize(builder = Minimum.Builder::class)
         @NoAutoDetect
         class Minimum
+        @JsonCreator
         private constructor(
-            private val minimumAmount: JsonField<String>,
-            private val appliesToPriceIds: JsonField<List<String>>,
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonProperty("minimum_amount")
+            @ExcludeMissing
+            private val minimumAmount: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("applies_to_price_ids")
+            @ExcludeMissing
+            private val appliesToPriceIds: JsonField<List<String>> = JsonMissing.of(),
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             /** Minimum amount applied */
@@ -19291,8 +19278,6 @@ private constructor(
                     minimumAmount(JsonField.of(minimumAmount))
 
                 /** Minimum amount applied */
-                @JsonProperty("minimum_amount")
-                @ExcludeMissing
                 fun minimumAmount(minimumAmount: JsonField<String>) = apply {
                     this.minimumAmount = minimumAmount
                 }
@@ -19308,8 +19293,6 @@ private constructor(
                  * List of price_ids that this minimum amount applies to. For plan/plan phase
                  * minimums, this can be a subset of prices.
                  */
-                @JsonProperty("applies_to_price_ids")
-                @ExcludeMissing
                 fun appliesToPriceIds(appliesToPriceIds: JsonField<List<String>>) = apply {
                     this.appliesToPriceIds = appliesToPriceIds
                 }
@@ -19319,7 +19302,6 @@ private constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -19471,11 +19453,12 @@ private constructor(
             override fun toString() = value.toString()
         }
 
-        @JsonDeserialize(builder = TieredPackageConfig.Builder::class)
         @NoAutoDetect
         class TieredPackageConfig
+        @JsonCreator
         private constructor(
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             @JsonAnyGetter
@@ -19510,7 +19493,6 @@ private constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -19568,34 +19550,79 @@ private constructor(
             "TieredPackagePrice{metadata=$metadata, id=$id, name=$name, externalPriceId=$externalPriceId, priceType=$priceType, modelType=$modelType, createdAt=$createdAt, cadence=$cadence, billingCycleConfiguration=$billingCycleConfiguration, invoicingCycleConfiguration=$invoicingCycleConfiguration, billableMetric=$billableMetric, fixedPriceQuantity=$fixedPriceQuantity, planPhaseOrder=$planPhaseOrder, currency=$currency, conversionRate=$conversionRate, item=$item, creditAllocation=$creditAllocation, discount=$discount, minimum=$minimum, minimumAmount=$minimumAmount, maximum=$maximum, maximumAmount=$maximumAmount, tieredPackageConfig=$tieredPackageConfig, additionalProperties=$additionalProperties}"
     }
 
-    @JsonDeserialize(builder = GroupedTieredPrice.Builder::class)
     @NoAutoDetect
     class GroupedTieredPrice
+    @JsonCreator
     private constructor(
-        private val metadata: JsonField<Metadata>,
-        private val id: JsonField<String>,
-        private val name: JsonField<String>,
-        private val externalPriceId: JsonField<String>,
-        private val priceType: JsonField<PriceType>,
-        private val modelType: JsonField<ModelType>,
-        private val createdAt: JsonField<OffsetDateTime>,
-        private val cadence: JsonField<Cadence>,
-        private val billingCycleConfiguration: JsonField<BillingCycleConfiguration>,
-        private val invoicingCycleConfiguration: JsonField<InvoicingCycleConfiguration>,
-        private val billableMetric: JsonField<BillableMetric>,
-        private val fixedPriceQuantity: JsonField<Double>,
-        private val planPhaseOrder: JsonField<Long>,
-        private val currency: JsonField<String>,
-        private val conversionRate: JsonField<Double>,
-        private val item: JsonField<Item>,
-        private val creditAllocation: JsonField<CreditAllocation>,
-        private val discount: JsonField<Discount>,
-        private val minimum: JsonField<Minimum>,
-        private val minimumAmount: JsonField<String>,
-        private val maximum: JsonField<Maximum>,
-        private val maximumAmount: JsonField<String>,
-        private val groupedTieredConfig: JsonField<GroupedTieredConfig>,
-        private val additionalProperties: Map<String, JsonValue>,
+        @JsonProperty("metadata")
+        @ExcludeMissing
+        private val metadata: JsonField<Metadata> = JsonMissing.of(),
+        @JsonProperty("id") @ExcludeMissing private val id: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("name")
+        @ExcludeMissing
+        private val name: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("external_price_id")
+        @ExcludeMissing
+        private val externalPriceId: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("price_type")
+        @ExcludeMissing
+        private val priceType: JsonField<PriceType> = JsonMissing.of(),
+        @JsonProperty("model_type")
+        @ExcludeMissing
+        private val modelType: JsonField<ModelType> = JsonMissing.of(),
+        @JsonProperty("created_at")
+        @ExcludeMissing
+        private val createdAt: JsonField<OffsetDateTime> = JsonMissing.of(),
+        @JsonProperty("cadence")
+        @ExcludeMissing
+        private val cadence: JsonField<Cadence> = JsonMissing.of(),
+        @JsonProperty("billing_cycle_configuration")
+        @ExcludeMissing
+        private val billingCycleConfiguration: JsonField<BillingCycleConfiguration> =
+            JsonMissing.of(),
+        @JsonProperty("invoicing_cycle_configuration")
+        @ExcludeMissing
+        private val invoicingCycleConfiguration: JsonField<InvoicingCycleConfiguration> =
+            JsonMissing.of(),
+        @JsonProperty("billable_metric")
+        @ExcludeMissing
+        private val billableMetric: JsonField<BillableMetric> = JsonMissing.of(),
+        @JsonProperty("fixed_price_quantity")
+        @ExcludeMissing
+        private val fixedPriceQuantity: JsonField<Double> = JsonMissing.of(),
+        @JsonProperty("plan_phase_order")
+        @ExcludeMissing
+        private val planPhaseOrder: JsonField<Long> = JsonMissing.of(),
+        @JsonProperty("currency")
+        @ExcludeMissing
+        private val currency: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("conversion_rate")
+        @ExcludeMissing
+        private val conversionRate: JsonField<Double> = JsonMissing.of(),
+        @JsonProperty("item") @ExcludeMissing private val item: JsonField<Item> = JsonMissing.of(),
+        @JsonProperty("credit_allocation")
+        @ExcludeMissing
+        private val creditAllocation: JsonField<CreditAllocation> = JsonMissing.of(),
+        @JsonProperty("discount")
+        @ExcludeMissing
+        private val discount: JsonField<Discount> = JsonMissing.of(),
+        @JsonProperty("minimum")
+        @ExcludeMissing
+        private val minimum: JsonField<Minimum> = JsonMissing.of(),
+        @JsonProperty("minimum_amount")
+        @ExcludeMissing
+        private val minimumAmount: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("maximum")
+        @ExcludeMissing
+        private val maximum: JsonField<Maximum> = JsonMissing.of(),
+        @JsonProperty("maximum_amount")
+        @ExcludeMissing
+        private val maximumAmount: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("grouped_tiered_config")
+        @ExcludeMissing
+        private val groupedTieredConfig: JsonField<GroupedTieredConfig> = JsonMissing.of(),
+        @JsonAnySetter
+        private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
 
         /**
@@ -19824,62 +19851,44 @@ private constructor(
              * empty dictionary. Individual keys can be removed by setting the value to `null`, and
              * the entire metadata mapping can be cleared by setting `metadata` to `null`.
              */
-            @JsonProperty("metadata")
-            @ExcludeMissing
             fun metadata(metadata: JsonField<Metadata>) = apply { this.metadata = metadata }
 
             fun id(id: String) = id(JsonField.of(id))
 
-            @JsonProperty("id")
-            @ExcludeMissing
             fun id(id: JsonField<String>) = apply { this.id = id }
 
             fun name(name: String) = name(JsonField.of(name))
 
-            @JsonProperty("name")
-            @ExcludeMissing
             fun name(name: JsonField<String>) = apply { this.name = name }
 
             fun externalPriceId(externalPriceId: String) =
                 externalPriceId(JsonField.of(externalPriceId))
 
-            @JsonProperty("external_price_id")
-            @ExcludeMissing
             fun externalPriceId(externalPriceId: JsonField<String>) = apply {
                 this.externalPriceId = externalPriceId
             }
 
             fun priceType(priceType: PriceType) = priceType(JsonField.of(priceType))
 
-            @JsonProperty("price_type")
-            @ExcludeMissing
             fun priceType(priceType: JsonField<PriceType>) = apply { this.priceType = priceType }
 
             fun modelType(modelType: ModelType) = modelType(JsonField.of(modelType))
 
-            @JsonProperty("model_type")
-            @ExcludeMissing
             fun modelType(modelType: JsonField<ModelType>) = apply { this.modelType = modelType }
 
             fun createdAt(createdAt: OffsetDateTime) = createdAt(JsonField.of(createdAt))
 
-            @JsonProperty("created_at")
-            @ExcludeMissing
             fun createdAt(createdAt: JsonField<OffsetDateTime>) = apply {
                 this.createdAt = createdAt
             }
 
             fun cadence(cadence: Cadence) = cadence(JsonField.of(cadence))
 
-            @JsonProperty("cadence")
-            @ExcludeMissing
             fun cadence(cadence: JsonField<Cadence>) = apply { this.cadence = cadence }
 
             fun billingCycleConfiguration(billingCycleConfiguration: BillingCycleConfiguration) =
                 billingCycleConfiguration(JsonField.of(billingCycleConfiguration))
 
-            @JsonProperty("billing_cycle_configuration")
-            @ExcludeMissing
             fun billingCycleConfiguration(
                 billingCycleConfiguration: JsonField<BillingCycleConfiguration>
             ) = apply { this.billingCycleConfiguration = billingCycleConfiguration }
@@ -19888,8 +19897,6 @@ private constructor(
                 invoicingCycleConfiguration: InvoicingCycleConfiguration
             ) = invoicingCycleConfiguration(JsonField.of(invoicingCycleConfiguration))
 
-            @JsonProperty("invoicing_cycle_configuration")
-            @ExcludeMissing
             fun invoicingCycleConfiguration(
                 invoicingCycleConfiguration: JsonField<InvoicingCycleConfiguration>
             ) = apply { this.invoicingCycleConfiguration = invoicingCycleConfiguration }
@@ -19897,8 +19904,6 @@ private constructor(
             fun billableMetric(billableMetric: BillableMetric) =
                 billableMetric(JsonField.of(billableMetric))
 
-            @JsonProperty("billable_metric")
-            @ExcludeMissing
             fun billableMetric(billableMetric: JsonField<BillableMetric>) = apply {
                 this.billableMetric = billableMetric
             }
@@ -19906,80 +19911,58 @@ private constructor(
             fun fixedPriceQuantity(fixedPriceQuantity: Double) =
                 fixedPriceQuantity(JsonField.of(fixedPriceQuantity))
 
-            @JsonProperty("fixed_price_quantity")
-            @ExcludeMissing
             fun fixedPriceQuantity(fixedPriceQuantity: JsonField<Double>) = apply {
                 this.fixedPriceQuantity = fixedPriceQuantity
             }
 
             fun planPhaseOrder(planPhaseOrder: Long) = planPhaseOrder(JsonField.of(planPhaseOrder))
 
-            @JsonProperty("plan_phase_order")
-            @ExcludeMissing
             fun planPhaseOrder(planPhaseOrder: JsonField<Long>) = apply {
                 this.planPhaseOrder = planPhaseOrder
             }
 
             fun currency(currency: String) = currency(JsonField.of(currency))
 
-            @JsonProperty("currency")
-            @ExcludeMissing
             fun currency(currency: JsonField<String>) = apply { this.currency = currency }
 
             fun conversionRate(conversionRate: Double) =
                 conversionRate(JsonField.of(conversionRate))
 
-            @JsonProperty("conversion_rate")
-            @ExcludeMissing
             fun conversionRate(conversionRate: JsonField<Double>) = apply {
                 this.conversionRate = conversionRate
             }
 
             fun item(item: Item) = item(JsonField.of(item))
 
-            @JsonProperty("item")
-            @ExcludeMissing
             fun item(item: JsonField<Item>) = apply { this.item = item }
 
             fun creditAllocation(creditAllocation: CreditAllocation) =
                 creditAllocation(JsonField.of(creditAllocation))
 
-            @JsonProperty("credit_allocation")
-            @ExcludeMissing
             fun creditAllocation(creditAllocation: JsonField<CreditAllocation>) = apply {
                 this.creditAllocation = creditAllocation
             }
 
             fun discount(discount: Discount) = discount(JsonField.of(discount))
 
-            @JsonProperty("discount")
-            @ExcludeMissing
             fun discount(discount: JsonField<Discount>) = apply { this.discount = discount }
 
             fun minimum(minimum: Minimum) = minimum(JsonField.of(minimum))
 
-            @JsonProperty("minimum")
-            @ExcludeMissing
             fun minimum(minimum: JsonField<Minimum>) = apply { this.minimum = minimum }
 
             fun minimumAmount(minimumAmount: String) = minimumAmount(JsonField.of(minimumAmount))
 
-            @JsonProperty("minimum_amount")
-            @ExcludeMissing
             fun minimumAmount(minimumAmount: JsonField<String>) = apply {
                 this.minimumAmount = minimumAmount
             }
 
             fun maximum(maximum: Maximum) = maximum(JsonField.of(maximum))
 
-            @JsonProperty("maximum")
-            @ExcludeMissing
             fun maximum(maximum: JsonField<Maximum>) = apply { this.maximum = maximum }
 
             fun maximumAmount(maximumAmount: String) = maximumAmount(JsonField.of(maximumAmount))
 
-            @JsonProperty("maximum_amount")
-            @ExcludeMissing
             fun maximumAmount(maximumAmount: JsonField<String>) = apply {
                 this.maximumAmount = maximumAmount
             }
@@ -19987,8 +19970,6 @@ private constructor(
             fun groupedTieredConfig(groupedTieredConfig: GroupedTieredConfig) =
                 groupedTieredConfig(JsonField.of(groupedTieredConfig))
 
-            @JsonProperty("grouped_tiered_config")
-            @ExcludeMissing
             fun groupedTieredConfig(groupedTieredConfig: JsonField<GroupedTieredConfig>) = apply {
                 this.groupedTieredConfig = groupedTieredConfig
             }
@@ -19998,7 +19979,6 @@ private constructor(
                 putAllAdditionalProperties(additionalProperties)
             }
 
-            @JsonAnySetter
             fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                 additionalProperties.put(key, value)
             }
@@ -20042,12 +20022,15 @@ private constructor(
                 )
         }
 
-        @JsonDeserialize(builder = BillableMetric.Builder::class)
         @NoAutoDetect
         class BillableMetric
+        @JsonCreator
         private constructor(
-            private val id: JsonField<String>,
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonProperty("id")
+            @ExcludeMissing
+            private val id: JsonField<String> = JsonMissing.of(),
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             fun id(): String = id.getRequired("id")
@@ -20086,8 +20069,6 @@ private constructor(
 
                 fun id(id: String) = id(JsonField.of(id))
 
-                @JsonProperty("id")
-                @ExcludeMissing
                 fun id(id: JsonField<String>) = apply { this.id = id }
 
                 fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
@@ -20095,7 +20076,6 @@ private constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -20134,13 +20114,18 @@ private constructor(
                 "BillableMetric{id=$id, additionalProperties=$additionalProperties}"
         }
 
-        @JsonDeserialize(builder = BillingCycleConfiguration.Builder::class)
         @NoAutoDetect
         class BillingCycleConfiguration
+        @JsonCreator
         private constructor(
-            private val duration: JsonField<Long>,
-            private val durationUnit: JsonField<DurationUnit>,
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonProperty("duration")
+            @ExcludeMissing
+            private val duration: JsonField<Long> = JsonMissing.of(),
+            @JsonProperty("duration_unit")
+            @ExcludeMissing
+            private val durationUnit: JsonField<DurationUnit> = JsonMissing.of(),
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             fun duration(): Long = duration.getRequired("duration")
@@ -20187,15 +20172,11 @@ private constructor(
 
                 fun duration(duration: Long) = duration(JsonField.of(duration))
 
-                @JsonProperty("duration")
-                @ExcludeMissing
                 fun duration(duration: JsonField<Long>) = apply { this.duration = duration }
 
                 fun durationUnit(durationUnit: DurationUnit) =
                     durationUnit(JsonField.of(durationUnit))
 
-                @JsonProperty("duration_unit")
-                @ExcludeMissing
                 fun durationUnit(durationUnit: JsonField<DurationUnit>) = apply {
                     this.durationUnit = durationUnit
                 }
@@ -20205,7 +20186,6 @@ private constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -20387,13 +20367,18 @@ private constructor(
             override fun toString() = value.toString()
         }
 
-        @JsonDeserialize(builder = CreditAllocation.Builder::class)
         @NoAutoDetect
         class CreditAllocation
+        @JsonCreator
         private constructor(
-            private val currency: JsonField<String>,
-            private val allowsRollover: JsonField<Boolean>,
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonProperty("currency")
+            @ExcludeMissing
+            private val currency: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("allows_rollover")
+            @ExcludeMissing
+            private val allowsRollover: JsonField<Boolean> = JsonMissing.of(),
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             fun currency(): String = currency.getRequired("currency")
@@ -20439,15 +20424,11 @@ private constructor(
 
                 fun currency(currency: String) = currency(JsonField.of(currency))
 
-                @JsonProperty("currency")
-                @ExcludeMissing
                 fun currency(currency: JsonField<String>) = apply { this.currency = currency }
 
                 fun allowsRollover(allowsRollover: Boolean) =
                     allowsRollover(JsonField.of(allowsRollover))
 
-                @JsonProperty("allows_rollover")
-                @ExcludeMissing
                 fun allowsRollover(allowsRollover: JsonField<Boolean>) = apply {
                     this.allowsRollover = allowsRollover
                 }
@@ -20457,7 +20438,6 @@ private constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -20501,11 +20481,12 @@ private constructor(
                 "CreditAllocation{currency=$currency, allowsRollover=$allowsRollover, additionalProperties=$additionalProperties}"
         }
 
-        @JsonDeserialize(builder = GroupedTieredConfig.Builder::class)
         @NoAutoDetect
         class GroupedTieredConfig
+        @JsonCreator
         private constructor(
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             @JsonAnyGetter
@@ -20540,7 +20521,6 @@ private constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -20580,13 +20560,18 @@ private constructor(
                 "GroupedTieredConfig{additionalProperties=$additionalProperties}"
         }
 
-        @JsonDeserialize(builder = InvoicingCycleConfiguration.Builder::class)
         @NoAutoDetect
         class InvoicingCycleConfiguration
+        @JsonCreator
         private constructor(
-            private val duration: JsonField<Long>,
-            private val durationUnit: JsonField<DurationUnit>,
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonProperty("duration")
+            @ExcludeMissing
+            private val duration: JsonField<Long> = JsonMissing.of(),
+            @JsonProperty("duration_unit")
+            @ExcludeMissing
+            private val durationUnit: JsonField<DurationUnit> = JsonMissing.of(),
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             fun duration(): Long = duration.getRequired("duration")
@@ -20634,15 +20619,11 @@ private constructor(
 
                 fun duration(duration: Long) = duration(JsonField.of(duration))
 
-                @JsonProperty("duration")
-                @ExcludeMissing
                 fun duration(duration: JsonField<Long>) = apply { this.duration = duration }
 
                 fun durationUnit(durationUnit: DurationUnit) =
                     durationUnit(JsonField.of(durationUnit))
 
-                @JsonProperty("duration_unit")
-                @ExcludeMissing
                 fun durationUnit(durationUnit: JsonField<DurationUnit>) = apply {
                     this.durationUnit = durationUnit
                 }
@@ -20652,7 +20633,6 @@ private constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -20753,13 +20733,18 @@ private constructor(
                 "InvoicingCycleConfiguration{duration=$duration, durationUnit=$durationUnit, additionalProperties=$additionalProperties}"
         }
 
-        @JsonDeserialize(builder = Item.Builder::class)
         @NoAutoDetect
         class Item
+        @JsonCreator
         private constructor(
-            private val id: JsonField<String>,
-            private val name: JsonField<String>,
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonProperty("id")
+            @ExcludeMissing
+            private val id: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("name")
+            @ExcludeMissing
+            private val name: JsonField<String> = JsonMissing.of(),
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             fun id(): String = id.getRequired("id")
@@ -20805,14 +20790,10 @@ private constructor(
 
                 fun id(id: String) = id(JsonField.of(id))
 
-                @JsonProperty("id")
-                @ExcludeMissing
                 fun id(id: JsonField<String>) = apply { this.id = id }
 
                 fun name(name: String) = name(JsonField.of(name))
 
-                @JsonProperty("name")
-                @ExcludeMissing
                 fun name(name: JsonField<String>) = apply { this.name = name }
 
                 fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
@@ -20820,7 +20801,6 @@ private constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -20864,13 +20844,18 @@ private constructor(
                 "Item{id=$id, name=$name, additionalProperties=$additionalProperties}"
         }
 
-        @JsonDeserialize(builder = Maximum.Builder::class)
         @NoAutoDetect
         class Maximum
+        @JsonCreator
         private constructor(
-            private val maximumAmount: JsonField<String>,
-            private val appliesToPriceIds: JsonField<List<String>>,
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonProperty("maximum_amount")
+            @ExcludeMissing
+            private val maximumAmount: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("applies_to_price_ids")
+            @ExcludeMissing
+            private val appliesToPriceIds: JsonField<List<String>> = JsonMissing.of(),
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             /** Maximum amount applied */
@@ -20932,8 +20917,6 @@ private constructor(
                     maximumAmount(JsonField.of(maximumAmount))
 
                 /** Maximum amount applied */
-                @JsonProperty("maximum_amount")
-                @ExcludeMissing
                 fun maximumAmount(maximumAmount: JsonField<String>) = apply {
                     this.maximumAmount = maximumAmount
                 }
@@ -20949,8 +20932,6 @@ private constructor(
                  * List of price_ids that this maximum amount applies to. For plan/plan phase
                  * maximums, this can be a subset of prices.
                  */
-                @JsonProperty("applies_to_price_ids")
-                @ExcludeMissing
                 fun appliesToPriceIds(appliesToPriceIds: JsonField<List<String>>) = apply {
                     this.appliesToPriceIds = appliesToPriceIds
                 }
@@ -20960,7 +20941,6 @@ private constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -21009,11 +20989,12 @@ private constructor(
          * empty dictionary. Individual keys can be removed by setting the value to `null`, and the
          * entire metadata mapping can be cleared by setting `metadata` to `null`.
          */
-        @JsonDeserialize(builder = Metadata.Builder::class)
         @NoAutoDetect
         class Metadata
+        @JsonCreator
         private constructor(
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             @JsonAnyGetter
@@ -21048,7 +21029,6 @@ private constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -21086,13 +21066,18 @@ private constructor(
             override fun toString() = "Metadata{additionalProperties=$additionalProperties}"
         }
 
-        @JsonDeserialize(builder = Minimum.Builder::class)
         @NoAutoDetect
         class Minimum
+        @JsonCreator
         private constructor(
-            private val minimumAmount: JsonField<String>,
-            private val appliesToPriceIds: JsonField<List<String>>,
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonProperty("minimum_amount")
+            @ExcludeMissing
+            private val minimumAmount: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("applies_to_price_ids")
+            @ExcludeMissing
+            private val appliesToPriceIds: JsonField<List<String>> = JsonMissing.of(),
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             /** Minimum amount applied */
@@ -21154,8 +21139,6 @@ private constructor(
                     minimumAmount(JsonField.of(minimumAmount))
 
                 /** Minimum amount applied */
-                @JsonProperty("minimum_amount")
-                @ExcludeMissing
                 fun minimumAmount(minimumAmount: JsonField<String>) = apply {
                     this.minimumAmount = minimumAmount
                 }
@@ -21171,8 +21154,6 @@ private constructor(
                  * List of price_ids that this minimum amount applies to. For plan/plan phase
                  * minimums, this can be a subset of prices.
                  */
-                @JsonProperty("applies_to_price_ids")
-                @ExcludeMissing
                 fun appliesToPriceIds(appliesToPriceIds: JsonField<List<String>>) = apply {
                     this.appliesToPriceIds = appliesToPriceIds
                 }
@@ -21182,7 +21163,6 @@ private constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -21352,34 +21332,79 @@ private constructor(
             "GroupedTieredPrice{metadata=$metadata, id=$id, name=$name, externalPriceId=$externalPriceId, priceType=$priceType, modelType=$modelType, createdAt=$createdAt, cadence=$cadence, billingCycleConfiguration=$billingCycleConfiguration, invoicingCycleConfiguration=$invoicingCycleConfiguration, billableMetric=$billableMetric, fixedPriceQuantity=$fixedPriceQuantity, planPhaseOrder=$planPhaseOrder, currency=$currency, conversionRate=$conversionRate, item=$item, creditAllocation=$creditAllocation, discount=$discount, minimum=$minimum, minimumAmount=$minimumAmount, maximum=$maximum, maximumAmount=$maximumAmount, groupedTieredConfig=$groupedTieredConfig, additionalProperties=$additionalProperties}"
     }
 
-    @JsonDeserialize(builder = TieredWithMinimumPrice.Builder::class)
     @NoAutoDetect
     class TieredWithMinimumPrice
+    @JsonCreator
     private constructor(
-        private val metadata: JsonField<Metadata>,
-        private val id: JsonField<String>,
-        private val name: JsonField<String>,
-        private val externalPriceId: JsonField<String>,
-        private val priceType: JsonField<PriceType>,
-        private val modelType: JsonField<ModelType>,
-        private val createdAt: JsonField<OffsetDateTime>,
-        private val cadence: JsonField<Cadence>,
-        private val billingCycleConfiguration: JsonField<BillingCycleConfiguration>,
-        private val invoicingCycleConfiguration: JsonField<InvoicingCycleConfiguration>,
-        private val billableMetric: JsonField<BillableMetric>,
-        private val fixedPriceQuantity: JsonField<Double>,
-        private val planPhaseOrder: JsonField<Long>,
-        private val currency: JsonField<String>,
-        private val conversionRate: JsonField<Double>,
-        private val item: JsonField<Item>,
-        private val creditAllocation: JsonField<CreditAllocation>,
-        private val discount: JsonField<Discount>,
-        private val minimum: JsonField<Minimum>,
-        private val minimumAmount: JsonField<String>,
-        private val maximum: JsonField<Maximum>,
-        private val maximumAmount: JsonField<String>,
-        private val tieredWithMinimumConfig: JsonField<TieredWithMinimumConfig>,
-        private val additionalProperties: Map<String, JsonValue>,
+        @JsonProperty("metadata")
+        @ExcludeMissing
+        private val metadata: JsonField<Metadata> = JsonMissing.of(),
+        @JsonProperty("id") @ExcludeMissing private val id: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("name")
+        @ExcludeMissing
+        private val name: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("external_price_id")
+        @ExcludeMissing
+        private val externalPriceId: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("price_type")
+        @ExcludeMissing
+        private val priceType: JsonField<PriceType> = JsonMissing.of(),
+        @JsonProperty("model_type")
+        @ExcludeMissing
+        private val modelType: JsonField<ModelType> = JsonMissing.of(),
+        @JsonProperty("created_at")
+        @ExcludeMissing
+        private val createdAt: JsonField<OffsetDateTime> = JsonMissing.of(),
+        @JsonProperty("cadence")
+        @ExcludeMissing
+        private val cadence: JsonField<Cadence> = JsonMissing.of(),
+        @JsonProperty("billing_cycle_configuration")
+        @ExcludeMissing
+        private val billingCycleConfiguration: JsonField<BillingCycleConfiguration> =
+            JsonMissing.of(),
+        @JsonProperty("invoicing_cycle_configuration")
+        @ExcludeMissing
+        private val invoicingCycleConfiguration: JsonField<InvoicingCycleConfiguration> =
+            JsonMissing.of(),
+        @JsonProperty("billable_metric")
+        @ExcludeMissing
+        private val billableMetric: JsonField<BillableMetric> = JsonMissing.of(),
+        @JsonProperty("fixed_price_quantity")
+        @ExcludeMissing
+        private val fixedPriceQuantity: JsonField<Double> = JsonMissing.of(),
+        @JsonProperty("plan_phase_order")
+        @ExcludeMissing
+        private val planPhaseOrder: JsonField<Long> = JsonMissing.of(),
+        @JsonProperty("currency")
+        @ExcludeMissing
+        private val currency: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("conversion_rate")
+        @ExcludeMissing
+        private val conversionRate: JsonField<Double> = JsonMissing.of(),
+        @JsonProperty("item") @ExcludeMissing private val item: JsonField<Item> = JsonMissing.of(),
+        @JsonProperty("credit_allocation")
+        @ExcludeMissing
+        private val creditAllocation: JsonField<CreditAllocation> = JsonMissing.of(),
+        @JsonProperty("discount")
+        @ExcludeMissing
+        private val discount: JsonField<Discount> = JsonMissing.of(),
+        @JsonProperty("minimum")
+        @ExcludeMissing
+        private val minimum: JsonField<Minimum> = JsonMissing.of(),
+        @JsonProperty("minimum_amount")
+        @ExcludeMissing
+        private val minimumAmount: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("maximum")
+        @ExcludeMissing
+        private val maximum: JsonField<Maximum> = JsonMissing.of(),
+        @JsonProperty("maximum_amount")
+        @ExcludeMissing
+        private val maximumAmount: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("tiered_with_minimum_config")
+        @ExcludeMissing
+        private val tieredWithMinimumConfig: JsonField<TieredWithMinimumConfig> = JsonMissing.of(),
+        @JsonAnySetter
+        private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
 
         /**
@@ -21609,62 +21634,44 @@ private constructor(
              * empty dictionary. Individual keys can be removed by setting the value to `null`, and
              * the entire metadata mapping can be cleared by setting `metadata` to `null`.
              */
-            @JsonProperty("metadata")
-            @ExcludeMissing
             fun metadata(metadata: JsonField<Metadata>) = apply { this.metadata = metadata }
 
             fun id(id: String) = id(JsonField.of(id))
 
-            @JsonProperty("id")
-            @ExcludeMissing
             fun id(id: JsonField<String>) = apply { this.id = id }
 
             fun name(name: String) = name(JsonField.of(name))
 
-            @JsonProperty("name")
-            @ExcludeMissing
             fun name(name: JsonField<String>) = apply { this.name = name }
 
             fun externalPriceId(externalPriceId: String) =
                 externalPriceId(JsonField.of(externalPriceId))
 
-            @JsonProperty("external_price_id")
-            @ExcludeMissing
             fun externalPriceId(externalPriceId: JsonField<String>) = apply {
                 this.externalPriceId = externalPriceId
             }
 
             fun priceType(priceType: PriceType) = priceType(JsonField.of(priceType))
 
-            @JsonProperty("price_type")
-            @ExcludeMissing
             fun priceType(priceType: JsonField<PriceType>) = apply { this.priceType = priceType }
 
             fun modelType(modelType: ModelType) = modelType(JsonField.of(modelType))
 
-            @JsonProperty("model_type")
-            @ExcludeMissing
             fun modelType(modelType: JsonField<ModelType>) = apply { this.modelType = modelType }
 
             fun createdAt(createdAt: OffsetDateTime) = createdAt(JsonField.of(createdAt))
 
-            @JsonProperty("created_at")
-            @ExcludeMissing
             fun createdAt(createdAt: JsonField<OffsetDateTime>) = apply {
                 this.createdAt = createdAt
             }
 
             fun cadence(cadence: Cadence) = cadence(JsonField.of(cadence))
 
-            @JsonProperty("cadence")
-            @ExcludeMissing
             fun cadence(cadence: JsonField<Cadence>) = apply { this.cadence = cadence }
 
             fun billingCycleConfiguration(billingCycleConfiguration: BillingCycleConfiguration) =
                 billingCycleConfiguration(JsonField.of(billingCycleConfiguration))
 
-            @JsonProperty("billing_cycle_configuration")
-            @ExcludeMissing
             fun billingCycleConfiguration(
                 billingCycleConfiguration: JsonField<BillingCycleConfiguration>
             ) = apply { this.billingCycleConfiguration = billingCycleConfiguration }
@@ -21673,8 +21680,6 @@ private constructor(
                 invoicingCycleConfiguration: InvoicingCycleConfiguration
             ) = invoicingCycleConfiguration(JsonField.of(invoicingCycleConfiguration))
 
-            @JsonProperty("invoicing_cycle_configuration")
-            @ExcludeMissing
             fun invoicingCycleConfiguration(
                 invoicingCycleConfiguration: JsonField<InvoicingCycleConfiguration>
             ) = apply { this.invoicingCycleConfiguration = invoicingCycleConfiguration }
@@ -21682,8 +21687,6 @@ private constructor(
             fun billableMetric(billableMetric: BillableMetric) =
                 billableMetric(JsonField.of(billableMetric))
 
-            @JsonProperty("billable_metric")
-            @ExcludeMissing
             fun billableMetric(billableMetric: JsonField<BillableMetric>) = apply {
                 this.billableMetric = billableMetric
             }
@@ -21691,80 +21694,58 @@ private constructor(
             fun fixedPriceQuantity(fixedPriceQuantity: Double) =
                 fixedPriceQuantity(JsonField.of(fixedPriceQuantity))
 
-            @JsonProperty("fixed_price_quantity")
-            @ExcludeMissing
             fun fixedPriceQuantity(fixedPriceQuantity: JsonField<Double>) = apply {
                 this.fixedPriceQuantity = fixedPriceQuantity
             }
 
             fun planPhaseOrder(planPhaseOrder: Long) = planPhaseOrder(JsonField.of(planPhaseOrder))
 
-            @JsonProperty("plan_phase_order")
-            @ExcludeMissing
             fun planPhaseOrder(planPhaseOrder: JsonField<Long>) = apply {
                 this.planPhaseOrder = planPhaseOrder
             }
 
             fun currency(currency: String) = currency(JsonField.of(currency))
 
-            @JsonProperty("currency")
-            @ExcludeMissing
             fun currency(currency: JsonField<String>) = apply { this.currency = currency }
 
             fun conversionRate(conversionRate: Double) =
                 conversionRate(JsonField.of(conversionRate))
 
-            @JsonProperty("conversion_rate")
-            @ExcludeMissing
             fun conversionRate(conversionRate: JsonField<Double>) = apply {
                 this.conversionRate = conversionRate
             }
 
             fun item(item: Item) = item(JsonField.of(item))
 
-            @JsonProperty("item")
-            @ExcludeMissing
             fun item(item: JsonField<Item>) = apply { this.item = item }
 
             fun creditAllocation(creditAllocation: CreditAllocation) =
                 creditAllocation(JsonField.of(creditAllocation))
 
-            @JsonProperty("credit_allocation")
-            @ExcludeMissing
             fun creditAllocation(creditAllocation: JsonField<CreditAllocation>) = apply {
                 this.creditAllocation = creditAllocation
             }
 
             fun discount(discount: Discount) = discount(JsonField.of(discount))
 
-            @JsonProperty("discount")
-            @ExcludeMissing
             fun discount(discount: JsonField<Discount>) = apply { this.discount = discount }
 
             fun minimum(minimum: Minimum) = minimum(JsonField.of(minimum))
 
-            @JsonProperty("minimum")
-            @ExcludeMissing
             fun minimum(minimum: JsonField<Minimum>) = apply { this.minimum = minimum }
 
             fun minimumAmount(minimumAmount: String) = minimumAmount(JsonField.of(minimumAmount))
 
-            @JsonProperty("minimum_amount")
-            @ExcludeMissing
             fun minimumAmount(minimumAmount: JsonField<String>) = apply {
                 this.minimumAmount = minimumAmount
             }
 
             fun maximum(maximum: Maximum) = maximum(JsonField.of(maximum))
 
-            @JsonProperty("maximum")
-            @ExcludeMissing
             fun maximum(maximum: JsonField<Maximum>) = apply { this.maximum = maximum }
 
             fun maximumAmount(maximumAmount: String) = maximumAmount(JsonField.of(maximumAmount))
 
-            @JsonProperty("maximum_amount")
-            @ExcludeMissing
             fun maximumAmount(maximumAmount: JsonField<String>) = apply {
                 this.maximumAmount = maximumAmount
             }
@@ -21772,8 +21753,6 @@ private constructor(
             fun tieredWithMinimumConfig(tieredWithMinimumConfig: TieredWithMinimumConfig) =
                 tieredWithMinimumConfig(JsonField.of(tieredWithMinimumConfig))
 
-            @JsonProperty("tiered_with_minimum_config")
-            @ExcludeMissing
             fun tieredWithMinimumConfig(
                 tieredWithMinimumConfig: JsonField<TieredWithMinimumConfig>
             ) = apply { this.tieredWithMinimumConfig = tieredWithMinimumConfig }
@@ -21783,7 +21762,6 @@ private constructor(
                 putAllAdditionalProperties(additionalProperties)
             }
 
-            @JsonAnySetter
             fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                 additionalProperties.put(key, value)
             }
@@ -21827,12 +21805,15 @@ private constructor(
                 )
         }
 
-        @JsonDeserialize(builder = BillableMetric.Builder::class)
         @NoAutoDetect
         class BillableMetric
+        @JsonCreator
         private constructor(
-            private val id: JsonField<String>,
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonProperty("id")
+            @ExcludeMissing
+            private val id: JsonField<String> = JsonMissing.of(),
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             fun id(): String = id.getRequired("id")
@@ -21871,8 +21852,6 @@ private constructor(
 
                 fun id(id: String) = id(JsonField.of(id))
 
-                @JsonProperty("id")
-                @ExcludeMissing
                 fun id(id: JsonField<String>) = apply { this.id = id }
 
                 fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
@@ -21880,7 +21859,6 @@ private constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -21919,13 +21897,18 @@ private constructor(
                 "BillableMetric{id=$id, additionalProperties=$additionalProperties}"
         }
 
-        @JsonDeserialize(builder = BillingCycleConfiguration.Builder::class)
         @NoAutoDetect
         class BillingCycleConfiguration
+        @JsonCreator
         private constructor(
-            private val duration: JsonField<Long>,
-            private val durationUnit: JsonField<DurationUnit>,
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonProperty("duration")
+            @ExcludeMissing
+            private val duration: JsonField<Long> = JsonMissing.of(),
+            @JsonProperty("duration_unit")
+            @ExcludeMissing
+            private val durationUnit: JsonField<DurationUnit> = JsonMissing.of(),
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             fun duration(): Long = duration.getRequired("duration")
@@ -21972,15 +21955,11 @@ private constructor(
 
                 fun duration(duration: Long) = duration(JsonField.of(duration))
 
-                @JsonProperty("duration")
-                @ExcludeMissing
                 fun duration(duration: JsonField<Long>) = apply { this.duration = duration }
 
                 fun durationUnit(durationUnit: DurationUnit) =
                     durationUnit(JsonField.of(durationUnit))
 
-                @JsonProperty("duration_unit")
-                @ExcludeMissing
                 fun durationUnit(durationUnit: JsonField<DurationUnit>) = apply {
                     this.durationUnit = durationUnit
                 }
@@ -21990,7 +21969,6 @@ private constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -22172,13 +22150,18 @@ private constructor(
             override fun toString() = value.toString()
         }
 
-        @JsonDeserialize(builder = CreditAllocation.Builder::class)
         @NoAutoDetect
         class CreditAllocation
+        @JsonCreator
         private constructor(
-            private val currency: JsonField<String>,
-            private val allowsRollover: JsonField<Boolean>,
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonProperty("currency")
+            @ExcludeMissing
+            private val currency: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("allows_rollover")
+            @ExcludeMissing
+            private val allowsRollover: JsonField<Boolean> = JsonMissing.of(),
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             fun currency(): String = currency.getRequired("currency")
@@ -22224,15 +22207,11 @@ private constructor(
 
                 fun currency(currency: String) = currency(JsonField.of(currency))
 
-                @JsonProperty("currency")
-                @ExcludeMissing
                 fun currency(currency: JsonField<String>) = apply { this.currency = currency }
 
                 fun allowsRollover(allowsRollover: Boolean) =
                     allowsRollover(JsonField.of(allowsRollover))
 
-                @JsonProperty("allows_rollover")
-                @ExcludeMissing
                 fun allowsRollover(allowsRollover: JsonField<Boolean>) = apply {
                     this.allowsRollover = allowsRollover
                 }
@@ -22242,7 +22221,6 @@ private constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -22286,13 +22264,18 @@ private constructor(
                 "CreditAllocation{currency=$currency, allowsRollover=$allowsRollover, additionalProperties=$additionalProperties}"
         }
 
-        @JsonDeserialize(builder = InvoicingCycleConfiguration.Builder::class)
         @NoAutoDetect
         class InvoicingCycleConfiguration
+        @JsonCreator
         private constructor(
-            private val duration: JsonField<Long>,
-            private val durationUnit: JsonField<DurationUnit>,
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonProperty("duration")
+            @ExcludeMissing
+            private val duration: JsonField<Long> = JsonMissing.of(),
+            @JsonProperty("duration_unit")
+            @ExcludeMissing
+            private val durationUnit: JsonField<DurationUnit> = JsonMissing.of(),
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             fun duration(): Long = duration.getRequired("duration")
@@ -22340,15 +22323,11 @@ private constructor(
 
                 fun duration(duration: Long) = duration(JsonField.of(duration))
 
-                @JsonProperty("duration")
-                @ExcludeMissing
                 fun duration(duration: JsonField<Long>) = apply { this.duration = duration }
 
                 fun durationUnit(durationUnit: DurationUnit) =
                     durationUnit(JsonField.of(durationUnit))
 
-                @JsonProperty("duration_unit")
-                @ExcludeMissing
                 fun durationUnit(durationUnit: JsonField<DurationUnit>) = apply {
                     this.durationUnit = durationUnit
                 }
@@ -22358,7 +22337,6 @@ private constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -22459,13 +22437,18 @@ private constructor(
                 "InvoicingCycleConfiguration{duration=$duration, durationUnit=$durationUnit, additionalProperties=$additionalProperties}"
         }
 
-        @JsonDeserialize(builder = Item.Builder::class)
         @NoAutoDetect
         class Item
+        @JsonCreator
         private constructor(
-            private val id: JsonField<String>,
-            private val name: JsonField<String>,
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonProperty("id")
+            @ExcludeMissing
+            private val id: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("name")
+            @ExcludeMissing
+            private val name: JsonField<String> = JsonMissing.of(),
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             fun id(): String = id.getRequired("id")
@@ -22511,14 +22494,10 @@ private constructor(
 
                 fun id(id: String) = id(JsonField.of(id))
 
-                @JsonProperty("id")
-                @ExcludeMissing
                 fun id(id: JsonField<String>) = apply { this.id = id }
 
                 fun name(name: String) = name(JsonField.of(name))
 
-                @JsonProperty("name")
-                @ExcludeMissing
                 fun name(name: JsonField<String>) = apply { this.name = name }
 
                 fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
@@ -22526,7 +22505,6 @@ private constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -22570,13 +22548,18 @@ private constructor(
                 "Item{id=$id, name=$name, additionalProperties=$additionalProperties}"
         }
 
-        @JsonDeserialize(builder = Maximum.Builder::class)
         @NoAutoDetect
         class Maximum
+        @JsonCreator
         private constructor(
-            private val maximumAmount: JsonField<String>,
-            private val appliesToPriceIds: JsonField<List<String>>,
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonProperty("maximum_amount")
+            @ExcludeMissing
+            private val maximumAmount: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("applies_to_price_ids")
+            @ExcludeMissing
+            private val appliesToPriceIds: JsonField<List<String>> = JsonMissing.of(),
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             /** Maximum amount applied */
@@ -22638,8 +22621,6 @@ private constructor(
                     maximumAmount(JsonField.of(maximumAmount))
 
                 /** Maximum amount applied */
-                @JsonProperty("maximum_amount")
-                @ExcludeMissing
                 fun maximumAmount(maximumAmount: JsonField<String>) = apply {
                     this.maximumAmount = maximumAmount
                 }
@@ -22655,8 +22636,6 @@ private constructor(
                  * List of price_ids that this maximum amount applies to. For plan/plan phase
                  * maximums, this can be a subset of prices.
                  */
-                @JsonProperty("applies_to_price_ids")
-                @ExcludeMissing
                 fun appliesToPriceIds(appliesToPriceIds: JsonField<List<String>>) = apply {
                     this.appliesToPriceIds = appliesToPriceIds
                 }
@@ -22666,7 +22645,6 @@ private constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -22715,11 +22693,12 @@ private constructor(
          * empty dictionary. Individual keys can be removed by setting the value to `null`, and the
          * entire metadata mapping can be cleared by setting `metadata` to `null`.
          */
-        @JsonDeserialize(builder = Metadata.Builder::class)
         @NoAutoDetect
         class Metadata
+        @JsonCreator
         private constructor(
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             @JsonAnyGetter
@@ -22754,7 +22733,6 @@ private constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -22792,13 +22770,18 @@ private constructor(
             override fun toString() = "Metadata{additionalProperties=$additionalProperties}"
         }
 
-        @JsonDeserialize(builder = Minimum.Builder::class)
         @NoAutoDetect
         class Minimum
+        @JsonCreator
         private constructor(
-            private val minimumAmount: JsonField<String>,
-            private val appliesToPriceIds: JsonField<List<String>>,
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonProperty("minimum_amount")
+            @ExcludeMissing
+            private val minimumAmount: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("applies_to_price_ids")
+            @ExcludeMissing
+            private val appliesToPriceIds: JsonField<List<String>> = JsonMissing.of(),
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             /** Minimum amount applied */
@@ -22860,8 +22843,6 @@ private constructor(
                     minimumAmount(JsonField.of(minimumAmount))
 
                 /** Minimum amount applied */
-                @JsonProperty("minimum_amount")
-                @ExcludeMissing
                 fun minimumAmount(minimumAmount: JsonField<String>) = apply {
                     this.minimumAmount = minimumAmount
                 }
@@ -22877,8 +22858,6 @@ private constructor(
                  * List of price_ids that this minimum amount applies to. For plan/plan phase
                  * minimums, this can be a subset of prices.
                  */
-                @JsonProperty("applies_to_price_ids")
-                @ExcludeMissing
                 fun appliesToPriceIds(appliesToPriceIds: JsonField<List<String>>) = apply {
                     this.appliesToPriceIds = appliesToPriceIds
                 }
@@ -22888,7 +22867,6 @@ private constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -23040,11 +23018,12 @@ private constructor(
             override fun toString() = value.toString()
         }
 
-        @JsonDeserialize(builder = TieredWithMinimumConfig.Builder::class)
         @NoAutoDetect
         class TieredWithMinimumConfig
+        @JsonCreator
         private constructor(
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             @JsonAnyGetter
@@ -23080,7 +23059,6 @@ private constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -23138,34 +23116,80 @@ private constructor(
             "TieredWithMinimumPrice{metadata=$metadata, id=$id, name=$name, externalPriceId=$externalPriceId, priceType=$priceType, modelType=$modelType, createdAt=$createdAt, cadence=$cadence, billingCycleConfiguration=$billingCycleConfiguration, invoicingCycleConfiguration=$invoicingCycleConfiguration, billableMetric=$billableMetric, fixedPriceQuantity=$fixedPriceQuantity, planPhaseOrder=$planPhaseOrder, currency=$currency, conversionRate=$conversionRate, item=$item, creditAllocation=$creditAllocation, discount=$discount, minimum=$minimum, minimumAmount=$minimumAmount, maximum=$maximum, maximumAmount=$maximumAmount, tieredWithMinimumConfig=$tieredWithMinimumConfig, additionalProperties=$additionalProperties}"
     }
 
-    @JsonDeserialize(builder = TieredPackageWithMinimumPrice.Builder::class)
     @NoAutoDetect
     class TieredPackageWithMinimumPrice
+    @JsonCreator
     private constructor(
-        private val metadata: JsonField<Metadata>,
-        private val id: JsonField<String>,
-        private val name: JsonField<String>,
-        private val externalPriceId: JsonField<String>,
-        private val priceType: JsonField<PriceType>,
-        private val modelType: JsonField<ModelType>,
-        private val createdAt: JsonField<OffsetDateTime>,
-        private val cadence: JsonField<Cadence>,
-        private val billingCycleConfiguration: JsonField<BillingCycleConfiguration>,
-        private val invoicingCycleConfiguration: JsonField<InvoicingCycleConfiguration>,
-        private val billableMetric: JsonField<BillableMetric>,
-        private val fixedPriceQuantity: JsonField<Double>,
-        private val planPhaseOrder: JsonField<Long>,
-        private val currency: JsonField<String>,
-        private val conversionRate: JsonField<Double>,
-        private val item: JsonField<Item>,
-        private val creditAllocation: JsonField<CreditAllocation>,
-        private val discount: JsonField<Discount>,
-        private val minimum: JsonField<Minimum>,
-        private val minimumAmount: JsonField<String>,
-        private val maximum: JsonField<Maximum>,
-        private val maximumAmount: JsonField<String>,
-        private val tieredPackageWithMinimumConfig: JsonField<TieredPackageWithMinimumConfig>,
-        private val additionalProperties: Map<String, JsonValue>,
+        @JsonProperty("metadata")
+        @ExcludeMissing
+        private val metadata: JsonField<Metadata> = JsonMissing.of(),
+        @JsonProperty("id") @ExcludeMissing private val id: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("name")
+        @ExcludeMissing
+        private val name: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("external_price_id")
+        @ExcludeMissing
+        private val externalPriceId: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("price_type")
+        @ExcludeMissing
+        private val priceType: JsonField<PriceType> = JsonMissing.of(),
+        @JsonProperty("model_type")
+        @ExcludeMissing
+        private val modelType: JsonField<ModelType> = JsonMissing.of(),
+        @JsonProperty("created_at")
+        @ExcludeMissing
+        private val createdAt: JsonField<OffsetDateTime> = JsonMissing.of(),
+        @JsonProperty("cadence")
+        @ExcludeMissing
+        private val cadence: JsonField<Cadence> = JsonMissing.of(),
+        @JsonProperty("billing_cycle_configuration")
+        @ExcludeMissing
+        private val billingCycleConfiguration: JsonField<BillingCycleConfiguration> =
+            JsonMissing.of(),
+        @JsonProperty("invoicing_cycle_configuration")
+        @ExcludeMissing
+        private val invoicingCycleConfiguration: JsonField<InvoicingCycleConfiguration> =
+            JsonMissing.of(),
+        @JsonProperty("billable_metric")
+        @ExcludeMissing
+        private val billableMetric: JsonField<BillableMetric> = JsonMissing.of(),
+        @JsonProperty("fixed_price_quantity")
+        @ExcludeMissing
+        private val fixedPriceQuantity: JsonField<Double> = JsonMissing.of(),
+        @JsonProperty("plan_phase_order")
+        @ExcludeMissing
+        private val planPhaseOrder: JsonField<Long> = JsonMissing.of(),
+        @JsonProperty("currency")
+        @ExcludeMissing
+        private val currency: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("conversion_rate")
+        @ExcludeMissing
+        private val conversionRate: JsonField<Double> = JsonMissing.of(),
+        @JsonProperty("item") @ExcludeMissing private val item: JsonField<Item> = JsonMissing.of(),
+        @JsonProperty("credit_allocation")
+        @ExcludeMissing
+        private val creditAllocation: JsonField<CreditAllocation> = JsonMissing.of(),
+        @JsonProperty("discount")
+        @ExcludeMissing
+        private val discount: JsonField<Discount> = JsonMissing.of(),
+        @JsonProperty("minimum")
+        @ExcludeMissing
+        private val minimum: JsonField<Minimum> = JsonMissing.of(),
+        @JsonProperty("minimum_amount")
+        @ExcludeMissing
+        private val minimumAmount: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("maximum")
+        @ExcludeMissing
+        private val maximum: JsonField<Maximum> = JsonMissing.of(),
+        @JsonProperty("maximum_amount")
+        @ExcludeMissing
+        private val maximumAmount: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("tiered_package_with_minimum_config")
+        @ExcludeMissing
+        private val tieredPackageWithMinimumConfig: JsonField<TieredPackageWithMinimumConfig> =
+            JsonMissing.of(),
+        @JsonAnySetter
+        private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
 
         /**
@@ -23400,62 +23424,44 @@ private constructor(
              * empty dictionary. Individual keys can be removed by setting the value to `null`, and
              * the entire metadata mapping can be cleared by setting `metadata` to `null`.
              */
-            @JsonProperty("metadata")
-            @ExcludeMissing
             fun metadata(metadata: JsonField<Metadata>) = apply { this.metadata = metadata }
 
             fun id(id: String) = id(JsonField.of(id))
 
-            @JsonProperty("id")
-            @ExcludeMissing
             fun id(id: JsonField<String>) = apply { this.id = id }
 
             fun name(name: String) = name(JsonField.of(name))
 
-            @JsonProperty("name")
-            @ExcludeMissing
             fun name(name: JsonField<String>) = apply { this.name = name }
 
             fun externalPriceId(externalPriceId: String) =
                 externalPriceId(JsonField.of(externalPriceId))
 
-            @JsonProperty("external_price_id")
-            @ExcludeMissing
             fun externalPriceId(externalPriceId: JsonField<String>) = apply {
                 this.externalPriceId = externalPriceId
             }
 
             fun priceType(priceType: PriceType) = priceType(JsonField.of(priceType))
 
-            @JsonProperty("price_type")
-            @ExcludeMissing
             fun priceType(priceType: JsonField<PriceType>) = apply { this.priceType = priceType }
 
             fun modelType(modelType: ModelType) = modelType(JsonField.of(modelType))
 
-            @JsonProperty("model_type")
-            @ExcludeMissing
             fun modelType(modelType: JsonField<ModelType>) = apply { this.modelType = modelType }
 
             fun createdAt(createdAt: OffsetDateTime) = createdAt(JsonField.of(createdAt))
 
-            @JsonProperty("created_at")
-            @ExcludeMissing
             fun createdAt(createdAt: JsonField<OffsetDateTime>) = apply {
                 this.createdAt = createdAt
             }
 
             fun cadence(cadence: Cadence) = cadence(JsonField.of(cadence))
 
-            @JsonProperty("cadence")
-            @ExcludeMissing
             fun cadence(cadence: JsonField<Cadence>) = apply { this.cadence = cadence }
 
             fun billingCycleConfiguration(billingCycleConfiguration: BillingCycleConfiguration) =
                 billingCycleConfiguration(JsonField.of(billingCycleConfiguration))
 
-            @JsonProperty("billing_cycle_configuration")
-            @ExcludeMissing
             fun billingCycleConfiguration(
                 billingCycleConfiguration: JsonField<BillingCycleConfiguration>
             ) = apply { this.billingCycleConfiguration = billingCycleConfiguration }
@@ -23464,8 +23470,6 @@ private constructor(
                 invoicingCycleConfiguration: InvoicingCycleConfiguration
             ) = invoicingCycleConfiguration(JsonField.of(invoicingCycleConfiguration))
 
-            @JsonProperty("invoicing_cycle_configuration")
-            @ExcludeMissing
             fun invoicingCycleConfiguration(
                 invoicingCycleConfiguration: JsonField<InvoicingCycleConfiguration>
             ) = apply { this.invoicingCycleConfiguration = invoicingCycleConfiguration }
@@ -23473,8 +23477,6 @@ private constructor(
             fun billableMetric(billableMetric: BillableMetric) =
                 billableMetric(JsonField.of(billableMetric))
 
-            @JsonProperty("billable_metric")
-            @ExcludeMissing
             fun billableMetric(billableMetric: JsonField<BillableMetric>) = apply {
                 this.billableMetric = billableMetric
             }
@@ -23482,80 +23484,58 @@ private constructor(
             fun fixedPriceQuantity(fixedPriceQuantity: Double) =
                 fixedPriceQuantity(JsonField.of(fixedPriceQuantity))
 
-            @JsonProperty("fixed_price_quantity")
-            @ExcludeMissing
             fun fixedPriceQuantity(fixedPriceQuantity: JsonField<Double>) = apply {
                 this.fixedPriceQuantity = fixedPriceQuantity
             }
 
             fun planPhaseOrder(planPhaseOrder: Long) = planPhaseOrder(JsonField.of(planPhaseOrder))
 
-            @JsonProperty("plan_phase_order")
-            @ExcludeMissing
             fun planPhaseOrder(planPhaseOrder: JsonField<Long>) = apply {
                 this.planPhaseOrder = planPhaseOrder
             }
 
             fun currency(currency: String) = currency(JsonField.of(currency))
 
-            @JsonProperty("currency")
-            @ExcludeMissing
             fun currency(currency: JsonField<String>) = apply { this.currency = currency }
 
             fun conversionRate(conversionRate: Double) =
                 conversionRate(JsonField.of(conversionRate))
 
-            @JsonProperty("conversion_rate")
-            @ExcludeMissing
             fun conversionRate(conversionRate: JsonField<Double>) = apply {
                 this.conversionRate = conversionRate
             }
 
             fun item(item: Item) = item(JsonField.of(item))
 
-            @JsonProperty("item")
-            @ExcludeMissing
             fun item(item: JsonField<Item>) = apply { this.item = item }
 
             fun creditAllocation(creditAllocation: CreditAllocation) =
                 creditAllocation(JsonField.of(creditAllocation))
 
-            @JsonProperty("credit_allocation")
-            @ExcludeMissing
             fun creditAllocation(creditAllocation: JsonField<CreditAllocation>) = apply {
                 this.creditAllocation = creditAllocation
             }
 
             fun discount(discount: Discount) = discount(JsonField.of(discount))
 
-            @JsonProperty("discount")
-            @ExcludeMissing
             fun discount(discount: JsonField<Discount>) = apply { this.discount = discount }
 
             fun minimum(minimum: Minimum) = minimum(JsonField.of(minimum))
 
-            @JsonProperty("minimum")
-            @ExcludeMissing
             fun minimum(minimum: JsonField<Minimum>) = apply { this.minimum = minimum }
 
             fun minimumAmount(minimumAmount: String) = minimumAmount(JsonField.of(minimumAmount))
 
-            @JsonProperty("minimum_amount")
-            @ExcludeMissing
             fun minimumAmount(minimumAmount: JsonField<String>) = apply {
                 this.minimumAmount = minimumAmount
             }
 
             fun maximum(maximum: Maximum) = maximum(JsonField.of(maximum))
 
-            @JsonProperty("maximum")
-            @ExcludeMissing
             fun maximum(maximum: JsonField<Maximum>) = apply { this.maximum = maximum }
 
             fun maximumAmount(maximumAmount: String) = maximumAmount(JsonField.of(maximumAmount))
 
-            @JsonProperty("maximum_amount")
-            @ExcludeMissing
             fun maximumAmount(maximumAmount: JsonField<String>) = apply {
                 this.maximumAmount = maximumAmount
             }
@@ -23564,8 +23544,6 @@ private constructor(
                 tieredPackageWithMinimumConfig: TieredPackageWithMinimumConfig
             ) = tieredPackageWithMinimumConfig(JsonField.of(tieredPackageWithMinimumConfig))
 
-            @JsonProperty("tiered_package_with_minimum_config")
-            @ExcludeMissing
             fun tieredPackageWithMinimumConfig(
                 tieredPackageWithMinimumConfig: JsonField<TieredPackageWithMinimumConfig>
             ) = apply { this.tieredPackageWithMinimumConfig = tieredPackageWithMinimumConfig }
@@ -23575,7 +23553,6 @@ private constructor(
                 putAllAdditionalProperties(additionalProperties)
             }
 
-            @JsonAnySetter
             fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                 additionalProperties.put(key, value)
             }
@@ -23619,12 +23596,15 @@ private constructor(
                 )
         }
 
-        @JsonDeserialize(builder = BillableMetric.Builder::class)
         @NoAutoDetect
         class BillableMetric
+        @JsonCreator
         private constructor(
-            private val id: JsonField<String>,
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonProperty("id")
+            @ExcludeMissing
+            private val id: JsonField<String> = JsonMissing.of(),
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             fun id(): String = id.getRequired("id")
@@ -23663,8 +23643,6 @@ private constructor(
 
                 fun id(id: String) = id(JsonField.of(id))
 
-                @JsonProperty("id")
-                @ExcludeMissing
                 fun id(id: JsonField<String>) = apply { this.id = id }
 
                 fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
@@ -23672,7 +23650,6 @@ private constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -23711,13 +23688,18 @@ private constructor(
                 "BillableMetric{id=$id, additionalProperties=$additionalProperties}"
         }
 
-        @JsonDeserialize(builder = BillingCycleConfiguration.Builder::class)
         @NoAutoDetect
         class BillingCycleConfiguration
+        @JsonCreator
         private constructor(
-            private val duration: JsonField<Long>,
-            private val durationUnit: JsonField<DurationUnit>,
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonProperty("duration")
+            @ExcludeMissing
+            private val duration: JsonField<Long> = JsonMissing.of(),
+            @JsonProperty("duration_unit")
+            @ExcludeMissing
+            private val durationUnit: JsonField<DurationUnit> = JsonMissing.of(),
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             fun duration(): Long = duration.getRequired("duration")
@@ -23764,15 +23746,11 @@ private constructor(
 
                 fun duration(duration: Long) = duration(JsonField.of(duration))
 
-                @JsonProperty("duration")
-                @ExcludeMissing
                 fun duration(duration: JsonField<Long>) = apply { this.duration = duration }
 
                 fun durationUnit(durationUnit: DurationUnit) =
                     durationUnit(JsonField.of(durationUnit))
 
-                @JsonProperty("duration_unit")
-                @ExcludeMissing
                 fun durationUnit(durationUnit: JsonField<DurationUnit>) = apply {
                     this.durationUnit = durationUnit
                 }
@@ -23782,7 +23760,6 @@ private constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -23964,13 +23941,18 @@ private constructor(
             override fun toString() = value.toString()
         }
 
-        @JsonDeserialize(builder = CreditAllocation.Builder::class)
         @NoAutoDetect
         class CreditAllocation
+        @JsonCreator
         private constructor(
-            private val currency: JsonField<String>,
-            private val allowsRollover: JsonField<Boolean>,
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonProperty("currency")
+            @ExcludeMissing
+            private val currency: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("allows_rollover")
+            @ExcludeMissing
+            private val allowsRollover: JsonField<Boolean> = JsonMissing.of(),
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             fun currency(): String = currency.getRequired("currency")
@@ -24016,15 +23998,11 @@ private constructor(
 
                 fun currency(currency: String) = currency(JsonField.of(currency))
 
-                @JsonProperty("currency")
-                @ExcludeMissing
                 fun currency(currency: JsonField<String>) = apply { this.currency = currency }
 
                 fun allowsRollover(allowsRollover: Boolean) =
                     allowsRollover(JsonField.of(allowsRollover))
 
-                @JsonProperty("allows_rollover")
-                @ExcludeMissing
                 fun allowsRollover(allowsRollover: JsonField<Boolean>) = apply {
                     this.allowsRollover = allowsRollover
                 }
@@ -24034,7 +24012,6 @@ private constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -24078,13 +24055,18 @@ private constructor(
                 "CreditAllocation{currency=$currency, allowsRollover=$allowsRollover, additionalProperties=$additionalProperties}"
         }
 
-        @JsonDeserialize(builder = InvoicingCycleConfiguration.Builder::class)
         @NoAutoDetect
         class InvoicingCycleConfiguration
+        @JsonCreator
         private constructor(
-            private val duration: JsonField<Long>,
-            private val durationUnit: JsonField<DurationUnit>,
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonProperty("duration")
+            @ExcludeMissing
+            private val duration: JsonField<Long> = JsonMissing.of(),
+            @JsonProperty("duration_unit")
+            @ExcludeMissing
+            private val durationUnit: JsonField<DurationUnit> = JsonMissing.of(),
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             fun duration(): Long = duration.getRequired("duration")
@@ -24132,15 +24114,11 @@ private constructor(
 
                 fun duration(duration: Long) = duration(JsonField.of(duration))
 
-                @JsonProperty("duration")
-                @ExcludeMissing
                 fun duration(duration: JsonField<Long>) = apply { this.duration = duration }
 
                 fun durationUnit(durationUnit: DurationUnit) =
                     durationUnit(JsonField.of(durationUnit))
 
-                @JsonProperty("duration_unit")
-                @ExcludeMissing
                 fun durationUnit(durationUnit: JsonField<DurationUnit>) = apply {
                     this.durationUnit = durationUnit
                 }
@@ -24150,7 +24128,6 @@ private constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -24251,13 +24228,18 @@ private constructor(
                 "InvoicingCycleConfiguration{duration=$duration, durationUnit=$durationUnit, additionalProperties=$additionalProperties}"
         }
 
-        @JsonDeserialize(builder = Item.Builder::class)
         @NoAutoDetect
         class Item
+        @JsonCreator
         private constructor(
-            private val id: JsonField<String>,
-            private val name: JsonField<String>,
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonProperty("id")
+            @ExcludeMissing
+            private val id: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("name")
+            @ExcludeMissing
+            private val name: JsonField<String> = JsonMissing.of(),
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             fun id(): String = id.getRequired("id")
@@ -24303,14 +24285,10 @@ private constructor(
 
                 fun id(id: String) = id(JsonField.of(id))
 
-                @JsonProperty("id")
-                @ExcludeMissing
                 fun id(id: JsonField<String>) = apply { this.id = id }
 
                 fun name(name: String) = name(JsonField.of(name))
 
-                @JsonProperty("name")
-                @ExcludeMissing
                 fun name(name: JsonField<String>) = apply { this.name = name }
 
                 fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
@@ -24318,7 +24296,6 @@ private constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -24362,13 +24339,18 @@ private constructor(
                 "Item{id=$id, name=$name, additionalProperties=$additionalProperties}"
         }
 
-        @JsonDeserialize(builder = Maximum.Builder::class)
         @NoAutoDetect
         class Maximum
+        @JsonCreator
         private constructor(
-            private val maximumAmount: JsonField<String>,
-            private val appliesToPriceIds: JsonField<List<String>>,
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonProperty("maximum_amount")
+            @ExcludeMissing
+            private val maximumAmount: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("applies_to_price_ids")
+            @ExcludeMissing
+            private val appliesToPriceIds: JsonField<List<String>> = JsonMissing.of(),
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             /** Maximum amount applied */
@@ -24430,8 +24412,6 @@ private constructor(
                     maximumAmount(JsonField.of(maximumAmount))
 
                 /** Maximum amount applied */
-                @JsonProperty("maximum_amount")
-                @ExcludeMissing
                 fun maximumAmount(maximumAmount: JsonField<String>) = apply {
                     this.maximumAmount = maximumAmount
                 }
@@ -24447,8 +24427,6 @@ private constructor(
                  * List of price_ids that this maximum amount applies to. For plan/plan phase
                  * maximums, this can be a subset of prices.
                  */
-                @JsonProperty("applies_to_price_ids")
-                @ExcludeMissing
                 fun appliesToPriceIds(appliesToPriceIds: JsonField<List<String>>) = apply {
                     this.appliesToPriceIds = appliesToPriceIds
                 }
@@ -24458,7 +24436,6 @@ private constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -24507,11 +24484,12 @@ private constructor(
          * empty dictionary. Individual keys can be removed by setting the value to `null`, and the
          * entire metadata mapping can be cleared by setting `metadata` to `null`.
          */
-        @JsonDeserialize(builder = Metadata.Builder::class)
         @NoAutoDetect
         class Metadata
+        @JsonCreator
         private constructor(
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             @JsonAnyGetter
@@ -24546,7 +24524,6 @@ private constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -24584,13 +24561,18 @@ private constructor(
             override fun toString() = "Metadata{additionalProperties=$additionalProperties}"
         }
 
-        @JsonDeserialize(builder = Minimum.Builder::class)
         @NoAutoDetect
         class Minimum
+        @JsonCreator
         private constructor(
-            private val minimumAmount: JsonField<String>,
-            private val appliesToPriceIds: JsonField<List<String>>,
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonProperty("minimum_amount")
+            @ExcludeMissing
+            private val minimumAmount: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("applies_to_price_ids")
+            @ExcludeMissing
+            private val appliesToPriceIds: JsonField<List<String>> = JsonMissing.of(),
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             /** Minimum amount applied */
@@ -24652,8 +24634,6 @@ private constructor(
                     minimumAmount(JsonField.of(minimumAmount))
 
                 /** Minimum amount applied */
-                @JsonProperty("minimum_amount")
-                @ExcludeMissing
                 fun minimumAmount(minimumAmount: JsonField<String>) = apply {
                     this.minimumAmount = minimumAmount
                 }
@@ -24669,8 +24649,6 @@ private constructor(
                  * List of price_ids that this minimum amount applies to. For plan/plan phase
                  * minimums, this can be a subset of prices.
                  */
-                @JsonProperty("applies_to_price_ids")
-                @ExcludeMissing
                 fun appliesToPriceIds(appliesToPriceIds: JsonField<List<String>>) = apply {
                     this.appliesToPriceIds = appliesToPriceIds
                 }
@@ -24680,7 +24658,6 @@ private constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -24832,11 +24809,12 @@ private constructor(
             override fun toString() = value.toString()
         }
 
-        @JsonDeserialize(builder = TieredPackageWithMinimumConfig.Builder::class)
         @NoAutoDetect
         class TieredPackageWithMinimumConfig
+        @JsonCreator
         private constructor(
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             @JsonAnyGetter
@@ -24873,7 +24851,6 @@ private constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -24931,34 +24908,80 @@ private constructor(
             "TieredPackageWithMinimumPrice{metadata=$metadata, id=$id, name=$name, externalPriceId=$externalPriceId, priceType=$priceType, modelType=$modelType, createdAt=$createdAt, cadence=$cadence, billingCycleConfiguration=$billingCycleConfiguration, invoicingCycleConfiguration=$invoicingCycleConfiguration, billableMetric=$billableMetric, fixedPriceQuantity=$fixedPriceQuantity, planPhaseOrder=$planPhaseOrder, currency=$currency, conversionRate=$conversionRate, item=$item, creditAllocation=$creditAllocation, discount=$discount, minimum=$minimum, minimumAmount=$minimumAmount, maximum=$maximum, maximumAmount=$maximumAmount, tieredPackageWithMinimumConfig=$tieredPackageWithMinimumConfig, additionalProperties=$additionalProperties}"
     }
 
-    @JsonDeserialize(builder = PackageWithAllocationPrice.Builder::class)
     @NoAutoDetect
     class PackageWithAllocationPrice
+    @JsonCreator
     private constructor(
-        private val metadata: JsonField<Metadata>,
-        private val id: JsonField<String>,
-        private val name: JsonField<String>,
-        private val externalPriceId: JsonField<String>,
-        private val priceType: JsonField<PriceType>,
-        private val modelType: JsonField<ModelType>,
-        private val createdAt: JsonField<OffsetDateTime>,
-        private val cadence: JsonField<Cadence>,
-        private val billingCycleConfiguration: JsonField<BillingCycleConfiguration>,
-        private val invoicingCycleConfiguration: JsonField<InvoicingCycleConfiguration>,
-        private val billableMetric: JsonField<BillableMetric>,
-        private val fixedPriceQuantity: JsonField<Double>,
-        private val planPhaseOrder: JsonField<Long>,
-        private val currency: JsonField<String>,
-        private val conversionRate: JsonField<Double>,
-        private val item: JsonField<Item>,
-        private val creditAllocation: JsonField<CreditAllocation>,
-        private val discount: JsonField<Discount>,
-        private val minimum: JsonField<Minimum>,
-        private val minimumAmount: JsonField<String>,
-        private val maximum: JsonField<Maximum>,
-        private val maximumAmount: JsonField<String>,
-        private val packageWithAllocationConfig: JsonField<PackageWithAllocationConfig>,
-        private val additionalProperties: Map<String, JsonValue>,
+        @JsonProperty("metadata")
+        @ExcludeMissing
+        private val metadata: JsonField<Metadata> = JsonMissing.of(),
+        @JsonProperty("id") @ExcludeMissing private val id: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("name")
+        @ExcludeMissing
+        private val name: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("external_price_id")
+        @ExcludeMissing
+        private val externalPriceId: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("price_type")
+        @ExcludeMissing
+        private val priceType: JsonField<PriceType> = JsonMissing.of(),
+        @JsonProperty("model_type")
+        @ExcludeMissing
+        private val modelType: JsonField<ModelType> = JsonMissing.of(),
+        @JsonProperty("created_at")
+        @ExcludeMissing
+        private val createdAt: JsonField<OffsetDateTime> = JsonMissing.of(),
+        @JsonProperty("cadence")
+        @ExcludeMissing
+        private val cadence: JsonField<Cadence> = JsonMissing.of(),
+        @JsonProperty("billing_cycle_configuration")
+        @ExcludeMissing
+        private val billingCycleConfiguration: JsonField<BillingCycleConfiguration> =
+            JsonMissing.of(),
+        @JsonProperty("invoicing_cycle_configuration")
+        @ExcludeMissing
+        private val invoicingCycleConfiguration: JsonField<InvoicingCycleConfiguration> =
+            JsonMissing.of(),
+        @JsonProperty("billable_metric")
+        @ExcludeMissing
+        private val billableMetric: JsonField<BillableMetric> = JsonMissing.of(),
+        @JsonProperty("fixed_price_quantity")
+        @ExcludeMissing
+        private val fixedPriceQuantity: JsonField<Double> = JsonMissing.of(),
+        @JsonProperty("plan_phase_order")
+        @ExcludeMissing
+        private val planPhaseOrder: JsonField<Long> = JsonMissing.of(),
+        @JsonProperty("currency")
+        @ExcludeMissing
+        private val currency: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("conversion_rate")
+        @ExcludeMissing
+        private val conversionRate: JsonField<Double> = JsonMissing.of(),
+        @JsonProperty("item") @ExcludeMissing private val item: JsonField<Item> = JsonMissing.of(),
+        @JsonProperty("credit_allocation")
+        @ExcludeMissing
+        private val creditAllocation: JsonField<CreditAllocation> = JsonMissing.of(),
+        @JsonProperty("discount")
+        @ExcludeMissing
+        private val discount: JsonField<Discount> = JsonMissing.of(),
+        @JsonProperty("minimum")
+        @ExcludeMissing
+        private val minimum: JsonField<Minimum> = JsonMissing.of(),
+        @JsonProperty("minimum_amount")
+        @ExcludeMissing
+        private val minimumAmount: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("maximum")
+        @ExcludeMissing
+        private val maximum: JsonField<Maximum> = JsonMissing.of(),
+        @JsonProperty("maximum_amount")
+        @ExcludeMissing
+        private val maximumAmount: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("package_with_allocation_config")
+        @ExcludeMissing
+        private val packageWithAllocationConfig: JsonField<PackageWithAllocationConfig> =
+            JsonMissing.of(),
+        @JsonAnySetter
+        private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
 
         /**
@@ -25189,62 +25212,44 @@ private constructor(
              * empty dictionary. Individual keys can be removed by setting the value to `null`, and
              * the entire metadata mapping can be cleared by setting `metadata` to `null`.
              */
-            @JsonProperty("metadata")
-            @ExcludeMissing
             fun metadata(metadata: JsonField<Metadata>) = apply { this.metadata = metadata }
 
             fun id(id: String) = id(JsonField.of(id))
 
-            @JsonProperty("id")
-            @ExcludeMissing
             fun id(id: JsonField<String>) = apply { this.id = id }
 
             fun name(name: String) = name(JsonField.of(name))
 
-            @JsonProperty("name")
-            @ExcludeMissing
             fun name(name: JsonField<String>) = apply { this.name = name }
 
             fun externalPriceId(externalPriceId: String) =
                 externalPriceId(JsonField.of(externalPriceId))
 
-            @JsonProperty("external_price_id")
-            @ExcludeMissing
             fun externalPriceId(externalPriceId: JsonField<String>) = apply {
                 this.externalPriceId = externalPriceId
             }
 
             fun priceType(priceType: PriceType) = priceType(JsonField.of(priceType))
 
-            @JsonProperty("price_type")
-            @ExcludeMissing
             fun priceType(priceType: JsonField<PriceType>) = apply { this.priceType = priceType }
 
             fun modelType(modelType: ModelType) = modelType(JsonField.of(modelType))
 
-            @JsonProperty("model_type")
-            @ExcludeMissing
             fun modelType(modelType: JsonField<ModelType>) = apply { this.modelType = modelType }
 
             fun createdAt(createdAt: OffsetDateTime) = createdAt(JsonField.of(createdAt))
 
-            @JsonProperty("created_at")
-            @ExcludeMissing
             fun createdAt(createdAt: JsonField<OffsetDateTime>) = apply {
                 this.createdAt = createdAt
             }
 
             fun cadence(cadence: Cadence) = cadence(JsonField.of(cadence))
 
-            @JsonProperty("cadence")
-            @ExcludeMissing
             fun cadence(cadence: JsonField<Cadence>) = apply { this.cadence = cadence }
 
             fun billingCycleConfiguration(billingCycleConfiguration: BillingCycleConfiguration) =
                 billingCycleConfiguration(JsonField.of(billingCycleConfiguration))
 
-            @JsonProperty("billing_cycle_configuration")
-            @ExcludeMissing
             fun billingCycleConfiguration(
                 billingCycleConfiguration: JsonField<BillingCycleConfiguration>
             ) = apply { this.billingCycleConfiguration = billingCycleConfiguration }
@@ -25253,8 +25258,6 @@ private constructor(
                 invoicingCycleConfiguration: InvoicingCycleConfiguration
             ) = invoicingCycleConfiguration(JsonField.of(invoicingCycleConfiguration))
 
-            @JsonProperty("invoicing_cycle_configuration")
-            @ExcludeMissing
             fun invoicingCycleConfiguration(
                 invoicingCycleConfiguration: JsonField<InvoicingCycleConfiguration>
             ) = apply { this.invoicingCycleConfiguration = invoicingCycleConfiguration }
@@ -25262,8 +25265,6 @@ private constructor(
             fun billableMetric(billableMetric: BillableMetric) =
                 billableMetric(JsonField.of(billableMetric))
 
-            @JsonProperty("billable_metric")
-            @ExcludeMissing
             fun billableMetric(billableMetric: JsonField<BillableMetric>) = apply {
                 this.billableMetric = billableMetric
             }
@@ -25271,80 +25272,58 @@ private constructor(
             fun fixedPriceQuantity(fixedPriceQuantity: Double) =
                 fixedPriceQuantity(JsonField.of(fixedPriceQuantity))
 
-            @JsonProperty("fixed_price_quantity")
-            @ExcludeMissing
             fun fixedPriceQuantity(fixedPriceQuantity: JsonField<Double>) = apply {
                 this.fixedPriceQuantity = fixedPriceQuantity
             }
 
             fun planPhaseOrder(planPhaseOrder: Long) = planPhaseOrder(JsonField.of(planPhaseOrder))
 
-            @JsonProperty("plan_phase_order")
-            @ExcludeMissing
             fun planPhaseOrder(planPhaseOrder: JsonField<Long>) = apply {
                 this.planPhaseOrder = planPhaseOrder
             }
 
             fun currency(currency: String) = currency(JsonField.of(currency))
 
-            @JsonProperty("currency")
-            @ExcludeMissing
             fun currency(currency: JsonField<String>) = apply { this.currency = currency }
 
             fun conversionRate(conversionRate: Double) =
                 conversionRate(JsonField.of(conversionRate))
 
-            @JsonProperty("conversion_rate")
-            @ExcludeMissing
             fun conversionRate(conversionRate: JsonField<Double>) = apply {
                 this.conversionRate = conversionRate
             }
 
             fun item(item: Item) = item(JsonField.of(item))
 
-            @JsonProperty("item")
-            @ExcludeMissing
             fun item(item: JsonField<Item>) = apply { this.item = item }
 
             fun creditAllocation(creditAllocation: CreditAllocation) =
                 creditAllocation(JsonField.of(creditAllocation))
 
-            @JsonProperty("credit_allocation")
-            @ExcludeMissing
             fun creditAllocation(creditAllocation: JsonField<CreditAllocation>) = apply {
                 this.creditAllocation = creditAllocation
             }
 
             fun discount(discount: Discount) = discount(JsonField.of(discount))
 
-            @JsonProperty("discount")
-            @ExcludeMissing
             fun discount(discount: JsonField<Discount>) = apply { this.discount = discount }
 
             fun minimum(minimum: Minimum) = minimum(JsonField.of(minimum))
 
-            @JsonProperty("minimum")
-            @ExcludeMissing
             fun minimum(minimum: JsonField<Minimum>) = apply { this.minimum = minimum }
 
             fun minimumAmount(minimumAmount: String) = minimumAmount(JsonField.of(minimumAmount))
 
-            @JsonProperty("minimum_amount")
-            @ExcludeMissing
             fun minimumAmount(minimumAmount: JsonField<String>) = apply {
                 this.minimumAmount = minimumAmount
             }
 
             fun maximum(maximum: Maximum) = maximum(JsonField.of(maximum))
 
-            @JsonProperty("maximum")
-            @ExcludeMissing
             fun maximum(maximum: JsonField<Maximum>) = apply { this.maximum = maximum }
 
             fun maximumAmount(maximumAmount: String) = maximumAmount(JsonField.of(maximumAmount))
 
-            @JsonProperty("maximum_amount")
-            @ExcludeMissing
             fun maximumAmount(maximumAmount: JsonField<String>) = apply {
                 this.maximumAmount = maximumAmount
             }
@@ -25353,8 +25332,6 @@ private constructor(
                 packageWithAllocationConfig: PackageWithAllocationConfig
             ) = packageWithAllocationConfig(JsonField.of(packageWithAllocationConfig))
 
-            @JsonProperty("package_with_allocation_config")
-            @ExcludeMissing
             fun packageWithAllocationConfig(
                 packageWithAllocationConfig: JsonField<PackageWithAllocationConfig>
             ) = apply { this.packageWithAllocationConfig = packageWithAllocationConfig }
@@ -25364,7 +25341,6 @@ private constructor(
                 putAllAdditionalProperties(additionalProperties)
             }
 
-            @JsonAnySetter
             fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                 additionalProperties.put(key, value)
             }
@@ -25408,12 +25384,15 @@ private constructor(
                 )
         }
 
-        @JsonDeserialize(builder = BillableMetric.Builder::class)
         @NoAutoDetect
         class BillableMetric
+        @JsonCreator
         private constructor(
-            private val id: JsonField<String>,
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonProperty("id")
+            @ExcludeMissing
+            private val id: JsonField<String> = JsonMissing.of(),
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             fun id(): String = id.getRequired("id")
@@ -25452,8 +25431,6 @@ private constructor(
 
                 fun id(id: String) = id(JsonField.of(id))
 
-                @JsonProperty("id")
-                @ExcludeMissing
                 fun id(id: JsonField<String>) = apply { this.id = id }
 
                 fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
@@ -25461,7 +25438,6 @@ private constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -25500,13 +25476,18 @@ private constructor(
                 "BillableMetric{id=$id, additionalProperties=$additionalProperties}"
         }
 
-        @JsonDeserialize(builder = BillingCycleConfiguration.Builder::class)
         @NoAutoDetect
         class BillingCycleConfiguration
+        @JsonCreator
         private constructor(
-            private val duration: JsonField<Long>,
-            private val durationUnit: JsonField<DurationUnit>,
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonProperty("duration")
+            @ExcludeMissing
+            private val duration: JsonField<Long> = JsonMissing.of(),
+            @JsonProperty("duration_unit")
+            @ExcludeMissing
+            private val durationUnit: JsonField<DurationUnit> = JsonMissing.of(),
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             fun duration(): Long = duration.getRequired("duration")
@@ -25553,15 +25534,11 @@ private constructor(
 
                 fun duration(duration: Long) = duration(JsonField.of(duration))
 
-                @JsonProperty("duration")
-                @ExcludeMissing
                 fun duration(duration: JsonField<Long>) = apply { this.duration = duration }
 
                 fun durationUnit(durationUnit: DurationUnit) =
                     durationUnit(JsonField.of(durationUnit))
 
-                @JsonProperty("duration_unit")
-                @ExcludeMissing
                 fun durationUnit(durationUnit: JsonField<DurationUnit>) = apply {
                     this.durationUnit = durationUnit
                 }
@@ -25571,7 +25548,6 @@ private constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -25753,13 +25729,18 @@ private constructor(
             override fun toString() = value.toString()
         }
 
-        @JsonDeserialize(builder = CreditAllocation.Builder::class)
         @NoAutoDetect
         class CreditAllocation
+        @JsonCreator
         private constructor(
-            private val currency: JsonField<String>,
-            private val allowsRollover: JsonField<Boolean>,
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonProperty("currency")
+            @ExcludeMissing
+            private val currency: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("allows_rollover")
+            @ExcludeMissing
+            private val allowsRollover: JsonField<Boolean> = JsonMissing.of(),
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             fun currency(): String = currency.getRequired("currency")
@@ -25805,15 +25786,11 @@ private constructor(
 
                 fun currency(currency: String) = currency(JsonField.of(currency))
 
-                @JsonProperty("currency")
-                @ExcludeMissing
                 fun currency(currency: JsonField<String>) = apply { this.currency = currency }
 
                 fun allowsRollover(allowsRollover: Boolean) =
                     allowsRollover(JsonField.of(allowsRollover))
 
-                @JsonProperty("allows_rollover")
-                @ExcludeMissing
                 fun allowsRollover(allowsRollover: JsonField<Boolean>) = apply {
                     this.allowsRollover = allowsRollover
                 }
@@ -25823,7 +25800,6 @@ private constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -25867,13 +25843,18 @@ private constructor(
                 "CreditAllocation{currency=$currency, allowsRollover=$allowsRollover, additionalProperties=$additionalProperties}"
         }
 
-        @JsonDeserialize(builder = InvoicingCycleConfiguration.Builder::class)
         @NoAutoDetect
         class InvoicingCycleConfiguration
+        @JsonCreator
         private constructor(
-            private val duration: JsonField<Long>,
-            private val durationUnit: JsonField<DurationUnit>,
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonProperty("duration")
+            @ExcludeMissing
+            private val duration: JsonField<Long> = JsonMissing.of(),
+            @JsonProperty("duration_unit")
+            @ExcludeMissing
+            private val durationUnit: JsonField<DurationUnit> = JsonMissing.of(),
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             fun duration(): Long = duration.getRequired("duration")
@@ -25921,15 +25902,11 @@ private constructor(
 
                 fun duration(duration: Long) = duration(JsonField.of(duration))
 
-                @JsonProperty("duration")
-                @ExcludeMissing
                 fun duration(duration: JsonField<Long>) = apply { this.duration = duration }
 
                 fun durationUnit(durationUnit: DurationUnit) =
                     durationUnit(JsonField.of(durationUnit))
 
-                @JsonProperty("duration_unit")
-                @ExcludeMissing
                 fun durationUnit(durationUnit: JsonField<DurationUnit>) = apply {
                     this.durationUnit = durationUnit
                 }
@@ -25939,7 +25916,6 @@ private constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -26040,13 +26016,18 @@ private constructor(
                 "InvoicingCycleConfiguration{duration=$duration, durationUnit=$durationUnit, additionalProperties=$additionalProperties}"
         }
 
-        @JsonDeserialize(builder = Item.Builder::class)
         @NoAutoDetect
         class Item
+        @JsonCreator
         private constructor(
-            private val id: JsonField<String>,
-            private val name: JsonField<String>,
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonProperty("id")
+            @ExcludeMissing
+            private val id: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("name")
+            @ExcludeMissing
+            private val name: JsonField<String> = JsonMissing.of(),
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             fun id(): String = id.getRequired("id")
@@ -26092,14 +26073,10 @@ private constructor(
 
                 fun id(id: String) = id(JsonField.of(id))
 
-                @JsonProperty("id")
-                @ExcludeMissing
                 fun id(id: JsonField<String>) = apply { this.id = id }
 
                 fun name(name: String) = name(JsonField.of(name))
 
-                @JsonProperty("name")
-                @ExcludeMissing
                 fun name(name: JsonField<String>) = apply { this.name = name }
 
                 fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
@@ -26107,7 +26084,6 @@ private constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -26151,13 +26127,18 @@ private constructor(
                 "Item{id=$id, name=$name, additionalProperties=$additionalProperties}"
         }
 
-        @JsonDeserialize(builder = Maximum.Builder::class)
         @NoAutoDetect
         class Maximum
+        @JsonCreator
         private constructor(
-            private val maximumAmount: JsonField<String>,
-            private val appliesToPriceIds: JsonField<List<String>>,
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonProperty("maximum_amount")
+            @ExcludeMissing
+            private val maximumAmount: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("applies_to_price_ids")
+            @ExcludeMissing
+            private val appliesToPriceIds: JsonField<List<String>> = JsonMissing.of(),
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             /** Maximum amount applied */
@@ -26219,8 +26200,6 @@ private constructor(
                     maximumAmount(JsonField.of(maximumAmount))
 
                 /** Maximum amount applied */
-                @JsonProperty("maximum_amount")
-                @ExcludeMissing
                 fun maximumAmount(maximumAmount: JsonField<String>) = apply {
                     this.maximumAmount = maximumAmount
                 }
@@ -26236,8 +26215,6 @@ private constructor(
                  * List of price_ids that this maximum amount applies to. For plan/plan phase
                  * maximums, this can be a subset of prices.
                  */
-                @JsonProperty("applies_to_price_ids")
-                @ExcludeMissing
                 fun appliesToPriceIds(appliesToPriceIds: JsonField<List<String>>) = apply {
                     this.appliesToPriceIds = appliesToPriceIds
                 }
@@ -26247,7 +26224,6 @@ private constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -26296,11 +26272,12 @@ private constructor(
          * empty dictionary. Individual keys can be removed by setting the value to `null`, and the
          * entire metadata mapping can be cleared by setting `metadata` to `null`.
          */
-        @JsonDeserialize(builder = Metadata.Builder::class)
         @NoAutoDetect
         class Metadata
+        @JsonCreator
         private constructor(
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             @JsonAnyGetter
@@ -26335,7 +26312,6 @@ private constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -26373,13 +26349,18 @@ private constructor(
             override fun toString() = "Metadata{additionalProperties=$additionalProperties}"
         }
 
-        @JsonDeserialize(builder = Minimum.Builder::class)
         @NoAutoDetect
         class Minimum
+        @JsonCreator
         private constructor(
-            private val minimumAmount: JsonField<String>,
-            private val appliesToPriceIds: JsonField<List<String>>,
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonProperty("minimum_amount")
+            @ExcludeMissing
+            private val minimumAmount: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("applies_to_price_ids")
+            @ExcludeMissing
+            private val appliesToPriceIds: JsonField<List<String>> = JsonMissing.of(),
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             /** Minimum amount applied */
@@ -26441,8 +26422,6 @@ private constructor(
                     minimumAmount(JsonField.of(minimumAmount))
 
                 /** Minimum amount applied */
-                @JsonProperty("minimum_amount")
-                @ExcludeMissing
                 fun minimumAmount(minimumAmount: JsonField<String>) = apply {
                     this.minimumAmount = minimumAmount
                 }
@@ -26458,8 +26437,6 @@ private constructor(
                  * List of price_ids that this minimum amount applies to. For plan/plan phase
                  * minimums, this can be a subset of prices.
                  */
-                @JsonProperty("applies_to_price_ids")
-                @ExcludeMissing
                 fun appliesToPriceIds(appliesToPriceIds: JsonField<List<String>>) = apply {
                     this.appliesToPriceIds = appliesToPriceIds
                 }
@@ -26469,7 +26446,6 @@ private constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -26564,11 +26540,12 @@ private constructor(
             override fun toString() = value.toString()
         }
 
-        @JsonDeserialize(builder = PackageWithAllocationConfig.Builder::class)
         @NoAutoDetect
         class PackageWithAllocationConfig
+        @JsonCreator
         private constructor(
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             @JsonAnyGetter
@@ -26605,7 +26582,6 @@ private constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -26720,34 +26696,79 @@ private constructor(
             "PackageWithAllocationPrice{metadata=$metadata, id=$id, name=$name, externalPriceId=$externalPriceId, priceType=$priceType, modelType=$modelType, createdAt=$createdAt, cadence=$cadence, billingCycleConfiguration=$billingCycleConfiguration, invoicingCycleConfiguration=$invoicingCycleConfiguration, billableMetric=$billableMetric, fixedPriceQuantity=$fixedPriceQuantity, planPhaseOrder=$planPhaseOrder, currency=$currency, conversionRate=$conversionRate, item=$item, creditAllocation=$creditAllocation, discount=$discount, minimum=$minimum, minimumAmount=$minimumAmount, maximum=$maximum, maximumAmount=$maximumAmount, packageWithAllocationConfig=$packageWithAllocationConfig, additionalProperties=$additionalProperties}"
     }
 
-    @JsonDeserialize(builder = UnitWithPercentPrice.Builder::class)
     @NoAutoDetect
     class UnitWithPercentPrice
+    @JsonCreator
     private constructor(
-        private val metadata: JsonField<Metadata>,
-        private val id: JsonField<String>,
-        private val name: JsonField<String>,
-        private val externalPriceId: JsonField<String>,
-        private val priceType: JsonField<PriceType>,
-        private val modelType: JsonField<ModelType>,
-        private val createdAt: JsonField<OffsetDateTime>,
-        private val cadence: JsonField<Cadence>,
-        private val billingCycleConfiguration: JsonField<BillingCycleConfiguration>,
-        private val invoicingCycleConfiguration: JsonField<InvoicingCycleConfiguration>,
-        private val billableMetric: JsonField<BillableMetric>,
-        private val fixedPriceQuantity: JsonField<Double>,
-        private val planPhaseOrder: JsonField<Long>,
-        private val currency: JsonField<String>,
-        private val conversionRate: JsonField<Double>,
-        private val item: JsonField<Item>,
-        private val creditAllocation: JsonField<CreditAllocation>,
-        private val discount: JsonField<Discount>,
-        private val minimum: JsonField<Minimum>,
-        private val minimumAmount: JsonField<String>,
-        private val maximum: JsonField<Maximum>,
-        private val maximumAmount: JsonField<String>,
-        private val unitWithPercentConfig: JsonField<UnitWithPercentConfig>,
-        private val additionalProperties: Map<String, JsonValue>,
+        @JsonProperty("metadata")
+        @ExcludeMissing
+        private val metadata: JsonField<Metadata> = JsonMissing.of(),
+        @JsonProperty("id") @ExcludeMissing private val id: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("name")
+        @ExcludeMissing
+        private val name: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("external_price_id")
+        @ExcludeMissing
+        private val externalPriceId: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("price_type")
+        @ExcludeMissing
+        private val priceType: JsonField<PriceType> = JsonMissing.of(),
+        @JsonProperty("model_type")
+        @ExcludeMissing
+        private val modelType: JsonField<ModelType> = JsonMissing.of(),
+        @JsonProperty("created_at")
+        @ExcludeMissing
+        private val createdAt: JsonField<OffsetDateTime> = JsonMissing.of(),
+        @JsonProperty("cadence")
+        @ExcludeMissing
+        private val cadence: JsonField<Cadence> = JsonMissing.of(),
+        @JsonProperty("billing_cycle_configuration")
+        @ExcludeMissing
+        private val billingCycleConfiguration: JsonField<BillingCycleConfiguration> =
+            JsonMissing.of(),
+        @JsonProperty("invoicing_cycle_configuration")
+        @ExcludeMissing
+        private val invoicingCycleConfiguration: JsonField<InvoicingCycleConfiguration> =
+            JsonMissing.of(),
+        @JsonProperty("billable_metric")
+        @ExcludeMissing
+        private val billableMetric: JsonField<BillableMetric> = JsonMissing.of(),
+        @JsonProperty("fixed_price_quantity")
+        @ExcludeMissing
+        private val fixedPriceQuantity: JsonField<Double> = JsonMissing.of(),
+        @JsonProperty("plan_phase_order")
+        @ExcludeMissing
+        private val planPhaseOrder: JsonField<Long> = JsonMissing.of(),
+        @JsonProperty("currency")
+        @ExcludeMissing
+        private val currency: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("conversion_rate")
+        @ExcludeMissing
+        private val conversionRate: JsonField<Double> = JsonMissing.of(),
+        @JsonProperty("item") @ExcludeMissing private val item: JsonField<Item> = JsonMissing.of(),
+        @JsonProperty("credit_allocation")
+        @ExcludeMissing
+        private val creditAllocation: JsonField<CreditAllocation> = JsonMissing.of(),
+        @JsonProperty("discount")
+        @ExcludeMissing
+        private val discount: JsonField<Discount> = JsonMissing.of(),
+        @JsonProperty("minimum")
+        @ExcludeMissing
+        private val minimum: JsonField<Minimum> = JsonMissing.of(),
+        @JsonProperty("minimum_amount")
+        @ExcludeMissing
+        private val minimumAmount: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("maximum")
+        @ExcludeMissing
+        private val maximum: JsonField<Maximum> = JsonMissing.of(),
+        @JsonProperty("maximum_amount")
+        @ExcludeMissing
+        private val maximumAmount: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("unit_with_percent_config")
+        @ExcludeMissing
+        private val unitWithPercentConfig: JsonField<UnitWithPercentConfig> = JsonMissing.of(),
+        @JsonAnySetter
+        private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
 
         /**
@@ -26976,62 +26997,44 @@ private constructor(
              * empty dictionary. Individual keys can be removed by setting the value to `null`, and
              * the entire metadata mapping can be cleared by setting `metadata` to `null`.
              */
-            @JsonProperty("metadata")
-            @ExcludeMissing
             fun metadata(metadata: JsonField<Metadata>) = apply { this.metadata = metadata }
 
             fun id(id: String) = id(JsonField.of(id))
 
-            @JsonProperty("id")
-            @ExcludeMissing
             fun id(id: JsonField<String>) = apply { this.id = id }
 
             fun name(name: String) = name(JsonField.of(name))
 
-            @JsonProperty("name")
-            @ExcludeMissing
             fun name(name: JsonField<String>) = apply { this.name = name }
 
             fun externalPriceId(externalPriceId: String) =
                 externalPriceId(JsonField.of(externalPriceId))
 
-            @JsonProperty("external_price_id")
-            @ExcludeMissing
             fun externalPriceId(externalPriceId: JsonField<String>) = apply {
                 this.externalPriceId = externalPriceId
             }
 
             fun priceType(priceType: PriceType) = priceType(JsonField.of(priceType))
 
-            @JsonProperty("price_type")
-            @ExcludeMissing
             fun priceType(priceType: JsonField<PriceType>) = apply { this.priceType = priceType }
 
             fun modelType(modelType: ModelType) = modelType(JsonField.of(modelType))
 
-            @JsonProperty("model_type")
-            @ExcludeMissing
             fun modelType(modelType: JsonField<ModelType>) = apply { this.modelType = modelType }
 
             fun createdAt(createdAt: OffsetDateTime) = createdAt(JsonField.of(createdAt))
 
-            @JsonProperty("created_at")
-            @ExcludeMissing
             fun createdAt(createdAt: JsonField<OffsetDateTime>) = apply {
                 this.createdAt = createdAt
             }
 
             fun cadence(cadence: Cadence) = cadence(JsonField.of(cadence))
 
-            @JsonProperty("cadence")
-            @ExcludeMissing
             fun cadence(cadence: JsonField<Cadence>) = apply { this.cadence = cadence }
 
             fun billingCycleConfiguration(billingCycleConfiguration: BillingCycleConfiguration) =
                 billingCycleConfiguration(JsonField.of(billingCycleConfiguration))
 
-            @JsonProperty("billing_cycle_configuration")
-            @ExcludeMissing
             fun billingCycleConfiguration(
                 billingCycleConfiguration: JsonField<BillingCycleConfiguration>
             ) = apply { this.billingCycleConfiguration = billingCycleConfiguration }
@@ -27040,8 +27043,6 @@ private constructor(
                 invoicingCycleConfiguration: InvoicingCycleConfiguration
             ) = invoicingCycleConfiguration(JsonField.of(invoicingCycleConfiguration))
 
-            @JsonProperty("invoicing_cycle_configuration")
-            @ExcludeMissing
             fun invoicingCycleConfiguration(
                 invoicingCycleConfiguration: JsonField<InvoicingCycleConfiguration>
             ) = apply { this.invoicingCycleConfiguration = invoicingCycleConfiguration }
@@ -27049,8 +27050,6 @@ private constructor(
             fun billableMetric(billableMetric: BillableMetric) =
                 billableMetric(JsonField.of(billableMetric))
 
-            @JsonProperty("billable_metric")
-            @ExcludeMissing
             fun billableMetric(billableMetric: JsonField<BillableMetric>) = apply {
                 this.billableMetric = billableMetric
             }
@@ -27058,80 +27057,58 @@ private constructor(
             fun fixedPriceQuantity(fixedPriceQuantity: Double) =
                 fixedPriceQuantity(JsonField.of(fixedPriceQuantity))
 
-            @JsonProperty("fixed_price_quantity")
-            @ExcludeMissing
             fun fixedPriceQuantity(fixedPriceQuantity: JsonField<Double>) = apply {
                 this.fixedPriceQuantity = fixedPriceQuantity
             }
 
             fun planPhaseOrder(planPhaseOrder: Long) = planPhaseOrder(JsonField.of(planPhaseOrder))
 
-            @JsonProperty("plan_phase_order")
-            @ExcludeMissing
             fun planPhaseOrder(planPhaseOrder: JsonField<Long>) = apply {
                 this.planPhaseOrder = planPhaseOrder
             }
 
             fun currency(currency: String) = currency(JsonField.of(currency))
 
-            @JsonProperty("currency")
-            @ExcludeMissing
             fun currency(currency: JsonField<String>) = apply { this.currency = currency }
 
             fun conversionRate(conversionRate: Double) =
                 conversionRate(JsonField.of(conversionRate))
 
-            @JsonProperty("conversion_rate")
-            @ExcludeMissing
             fun conversionRate(conversionRate: JsonField<Double>) = apply {
                 this.conversionRate = conversionRate
             }
 
             fun item(item: Item) = item(JsonField.of(item))
 
-            @JsonProperty("item")
-            @ExcludeMissing
             fun item(item: JsonField<Item>) = apply { this.item = item }
 
             fun creditAllocation(creditAllocation: CreditAllocation) =
                 creditAllocation(JsonField.of(creditAllocation))
 
-            @JsonProperty("credit_allocation")
-            @ExcludeMissing
             fun creditAllocation(creditAllocation: JsonField<CreditAllocation>) = apply {
                 this.creditAllocation = creditAllocation
             }
 
             fun discount(discount: Discount) = discount(JsonField.of(discount))
 
-            @JsonProperty("discount")
-            @ExcludeMissing
             fun discount(discount: JsonField<Discount>) = apply { this.discount = discount }
 
             fun minimum(minimum: Minimum) = minimum(JsonField.of(minimum))
 
-            @JsonProperty("minimum")
-            @ExcludeMissing
             fun minimum(minimum: JsonField<Minimum>) = apply { this.minimum = minimum }
 
             fun minimumAmount(minimumAmount: String) = minimumAmount(JsonField.of(minimumAmount))
 
-            @JsonProperty("minimum_amount")
-            @ExcludeMissing
             fun minimumAmount(minimumAmount: JsonField<String>) = apply {
                 this.minimumAmount = minimumAmount
             }
 
             fun maximum(maximum: Maximum) = maximum(JsonField.of(maximum))
 
-            @JsonProperty("maximum")
-            @ExcludeMissing
             fun maximum(maximum: JsonField<Maximum>) = apply { this.maximum = maximum }
 
             fun maximumAmount(maximumAmount: String) = maximumAmount(JsonField.of(maximumAmount))
 
-            @JsonProperty("maximum_amount")
-            @ExcludeMissing
             fun maximumAmount(maximumAmount: JsonField<String>) = apply {
                 this.maximumAmount = maximumAmount
             }
@@ -27139,8 +27116,6 @@ private constructor(
             fun unitWithPercentConfig(unitWithPercentConfig: UnitWithPercentConfig) =
                 unitWithPercentConfig(JsonField.of(unitWithPercentConfig))
 
-            @JsonProperty("unit_with_percent_config")
-            @ExcludeMissing
             fun unitWithPercentConfig(unitWithPercentConfig: JsonField<UnitWithPercentConfig>) =
                 apply {
                     this.unitWithPercentConfig = unitWithPercentConfig
@@ -27151,7 +27126,6 @@ private constructor(
                 putAllAdditionalProperties(additionalProperties)
             }
 
-            @JsonAnySetter
             fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                 additionalProperties.put(key, value)
             }
@@ -27195,12 +27169,15 @@ private constructor(
                 )
         }
 
-        @JsonDeserialize(builder = BillableMetric.Builder::class)
         @NoAutoDetect
         class BillableMetric
+        @JsonCreator
         private constructor(
-            private val id: JsonField<String>,
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonProperty("id")
+            @ExcludeMissing
+            private val id: JsonField<String> = JsonMissing.of(),
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             fun id(): String = id.getRequired("id")
@@ -27239,8 +27216,6 @@ private constructor(
 
                 fun id(id: String) = id(JsonField.of(id))
 
-                @JsonProperty("id")
-                @ExcludeMissing
                 fun id(id: JsonField<String>) = apply { this.id = id }
 
                 fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
@@ -27248,7 +27223,6 @@ private constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -27287,13 +27261,18 @@ private constructor(
                 "BillableMetric{id=$id, additionalProperties=$additionalProperties}"
         }
 
-        @JsonDeserialize(builder = BillingCycleConfiguration.Builder::class)
         @NoAutoDetect
         class BillingCycleConfiguration
+        @JsonCreator
         private constructor(
-            private val duration: JsonField<Long>,
-            private val durationUnit: JsonField<DurationUnit>,
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonProperty("duration")
+            @ExcludeMissing
+            private val duration: JsonField<Long> = JsonMissing.of(),
+            @JsonProperty("duration_unit")
+            @ExcludeMissing
+            private val durationUnit: JsonField<DurationUnit> = JsonMissing.of(),
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             fun duration(): Long = duration.getRequired("duration")
@@ -27340,15 +27319,11 @@ private constructor(
 
                 fun duration(duration: Long) = duration(JsonField.of(duration))
 
-                @JsonProperty("duration")
-                @ExcludeMissing
                 fun duration(duration: JsonField<Long>) = apply { this.duration = duration }
 
                 fun durationUnit(durationUnit: DurationUnit) =
                     durationUnit(JsonField.of(durationUnit))
 
-                @JsonProperty("duration_unit")
-                @ExcludeMissing
                 fun durationUnit(durationUnit: JsonField<DurationUnit>) = apply {
                     this.durationUnit = durationUnit
                 }
@@ -27358,7 +27333,6 @@ private constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -27540,13 +27514,18 @@ private constructor(
             override fun toString() = value.toString()
         }
 
-        @JsonDeserialize(builder = CreditAllocation.Builder::class)
         @NoAutoDetect
         class CreditAllocation
+        @JsonCreator
         private constructor(
-            private val currency: JsonField<String>,
-            private val allowsRollover: JsonField<Boolean>,
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonProperty("currency")
+            @ExcludeMissing
+            private val currency: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("allows_rollover")
+            @ExcludeMissing
+            private val allowsRollover: JsonField<Boolean> = JsonMissing.of(),
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             fun currency(): String = currency.getRequired("currency")
@@ -27592,15 +27571,11 @@ private constructor(
 
                 fun currency(currency: String) = currency(JsonField.of(currency))
 
-                @JsonProperty("currency")
-                @ExcludeMissing
                 fun currency(currency: JsonField<String>) = apply { this.currency = currency }
 
                 fun allowsRollover(allowsRollover: Boolean) =
                     allowsRollover(JsonField.of(allowsRollover))
 
-                @JsonProperty("allows_rollover")
-                @ExcludeMissing
                 fun allowsRollover(allowsRollover: JsonField<Boolean>) = apply {
                     this.allowsRollover = allowsRollover
                 }
@@ -27610,7 +27585,6 @@ private constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -27654,13 +27628,18 @@ private constructor(
                 "CreditAllocation{currency=$currency, allowsRollover=$allowsRollover, additionalProperties=$additionalProperties}"
         }
 
-        @JsonDeserialize(builder = InvoicingCycleConfiguration.Builder::class)
         @NoAutoDetect
         class InvoicingCycleConfiguration
+        @JsonCreator
         private constructor(
-            private val duration: JsonField<Long>,
-            private val durationUnit: JsonField<DurationUnit>,
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonProperty("duration")
+            @ExcludeMissing
+            private val duration: JsonField<Long> = JsonMissing.of(),
+            @JsonProperty("duration_unit")
+            @ExcludeMissing
+            private val durationUnit: JsonField<DurationUnit> = JsonMissing.of(),
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             fun duration(): Long = duration.getRequired("duration")
@@ -27708,15 +27687,11 @@ private constructor(
 
                 fun duration(duration: Long) = duration(JsonField.of(duration))
 
-                @JsonProperty("duration")
-                @ExcludeMissing
                 fun duration(duration: JsonField<Long>) = apply { this.duration = duration }
 
                 fun durationUnit(durationUnit: DurationUnit) =
                     durationUnit(JsonField.of(durationUnit))
 
-                @JsonProperty("duration_unit")
-                @ExcludeMissing
                 fun durationUnit(durationUnit: JsonField<DurationUnit>) = apply {
                     this.durationUnit = durationUnit
                 }
@@ -27726,7 +27701,6 @@ private constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -27827,13 +27801,18 @@ private constructor(
                 "InvoicingCycleConfiguration{duration=$duration, durationUnit=$durationUnit, additionalProperties=$additionalProperties}"
         }
 
-        @JsonDeserialize(builder = Item.Builder::class)
         @NoAutoDetect
         class Item
+        @JsonCreator
         private constructor(
-            private val id: JsonField<String>,
-            private val name: JsonField<String>,
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonProperty("id")
+            @ExcludeMissing
+            private val id: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("name")
+            @ExcludeMissing
+            private val name: JsonField<String> = JsonMissing.of(),
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             fun id(): String = id.getRequired("id")
@@ -27879,14 +27858,10 @@ private constructor(
 
                 fun id(id: String) = id(JsonField.of(id))
 
-                @JsonProperty("id")
-                @ExcludeMissing
                 fun id(id: JsonField<String>) = apply { this.id = id }
 
                 fun name(name: String) = name(JsonField.of(name))
 
-                @JsonProperty("name")
-                @ExcludeMissing
                 fun name(name: JsonField<String>) = apply { this.name = name }
 
                 fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
@@ -27894,7 +27869,6 @@ private constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -27938,13 +27912,18 @@ private constructor(
                 "Item{id=$id, name=$name, additionalProperties=$additionalProperties}"
         }
 
-        @JsonDeserialize(builder = Maximum.Builder::class)
         @NoAutoDetect
         class Maximum
+        @JsonCreator
         private constructor(
-            private val maximumAmount: JsonField<String>,
-            private val appliesToPriceIds: JsonField<List<String>>,
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonProperty("maximum_amount")
+            @ExcludeMissing
+            private val maximumAmount: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("applies_to_price_ids")
+            @ExcludeMissing
+            private val appliesToPriceIds: JsonField<List<String>> = JsonMissing.of(),
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             /** Maximum amount applied */
@@ -28006,8 +27985,6 @@ private constructor(
                     maximumAmount(JsonField.of(maximumAmount))
 
                 /** Maximum amount applied */
-                @JsonProperty("maximum_amount")
-                @ExcludeMissing
                 fun maximumAmount(maximumAmount: JsonField<String>) = apply {
                     this.maximumAmount = maximumAmount
                 }
@@ -28023,8 +28000,6 @@ private constructor(
                  * List of price_ids that this maximum amount applies to. For plan/plan phase
                  * maximums, this can be a subset of prices.
                  */
-                @JsonProperty("applies_to_price_ids")
-                @ExcludeMissing
                 fun appliesToPriceIds(appliesToPriceIds: JsonField<List<String>>) = apply {
                     this.appliesToPriceIds = appliesToPriceIds
                 }
@@ -28034,7 +28009,6 @@ private constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -28083,11 +28057,12 @@ private constructor(
          * empty dictionary. Individual keys can be removed by setting the value to `null`, and the
          * entire metadata mapping can be cleared by setting `metadata` to `null`.
          */
-        @JsonDeserialize(builder = Metadata.Builder::class)
         @NoAutoDetect
         class Metadata
+        @JsonCreator
         private constructor(
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             @JsonAnyGetter
@@ -28122,7 +28097,6 @@ private constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -28160,13 +28134,18 @@ private constructor(
             override fun toString() = "Metadata{additionalProperties=$additionalProperties}"
         }
 
-        @JsonDeserialize(builder = Minimum.Builder::class)
         @NoAutoDetect
         class Minimum
+        @JsonCreator
         private constructor(
-            private val minimumAmount: JsonField<String>,
-            private val appliesToPriceIds: JsonField<List<String>>,
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonProperty("minimum_amount")
+            @ExcludeMissing
+            private val minimumAmount: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("applies_to_price_ids")
+            @ExcludeMissing
+            private val appliesToPriceIds: JsonField<List<String>> = JsonMissing.of(),
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             /** Minimum amount applied */
@@ -28228,8 +28207,6 @@ private constructor(
                     minimumAmount(JsonField.of(minimumAmount))
 
                 /** Minimum amount applied */
-                @JsonProperty("minimum_amount")
-                @ExcludeMissing
                 fun minimumAmount(minimumAmount: JsonField<String>) = apply {
                     this.minimumAmount = minimumAmount
                 }
@@ -28245,8 +28222,6 @@ private constructor(
                  * List of price_ids that this minimum amount applies to. For plan/plan phase
                  * minimums, this can be a subset of prices.
                  */
-                @JsonProperty("applies_to_price_ids")
-                @ExcludeMissing
                 fun appliesToPriceIds(appliesToPriceIds: JsonField<List<String>>) = apply {
                     this.appliesToPriceIds = appliesToPriceIds
                 }
@@ -28256,7 +28231,6 @@ private constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -28408,11 +28382,12 @@ private constructor(
             override fun toString() = value.toString()
         }
 
-        @JsonDeserialize(builder = UnitWithPercentConfig.Builder::class)
         @NoAutoDetect
         class UnitWithPercentConfig
+        @JsonCreator
         private constructor(
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             @JsonAnyGetter
@@ -28447,7 +28422,6 @@ private constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -28505,34 +28479,80 @@ private constructor(
             "UnitWithPercentPrice{metadata=$metadata, id=$id, name=$name, externalPriceId=$externalPriceId, priceType=$priceType, modelType=$modelType, createdAt=$createdAt, cadence=$cadence, billingCycleConfiguration=$billingCycleConfiguration, invoicingCycleConfiguration=$invoicingCycleConfiguration, billableMetric=$billableMetric, fixedPriceQuantity=$fixedPriceQuantity, planPhaseOrder=$planPhaseOrder, currency=$currency, conversionRate=$conversionRate, item=$item, creditAllocation=$creditAllocation, discount=$discount, minimum=$minimum, minimumAmount=$minimumAmount, maximum=$maximum, maximumAmount=$maximumAmount, unitWithPercentConfig=$unitWithPercentConfig, additionalProperties=$additionalProperties}"
     }
 
-    @JsonDeserialize(builder = MatrixWithAllocationPrice.Builder::class)
     @NoAutoDetect
     class MatrixWithAllocationPrice
+    @JsonCreator
     private constructor(
-        private val metadata: JsonField<Metadata>,
-        private val id: JsonField<String>,
-        private val name: JsonField<String>,
-        private val externalPriceId: JsonField<String>,
-        private val priceType: JsonField<PriceType>,
-        private val modelType: JsonField<ModelType>,
-        private val createdAt: JsonField<OffsetDateTime>,
-        private val cadence: JsonField<Cadence>,
-        private val billingCycleConfiguration: JsonField<BillingCycleConfiguration>,
-        private val invoicingCycleConfiguration: JsonField<InvoicingCycleConfiguration>,
-        private val billableMetric: JsonField<BillableMetric>,
-        private val fixedPriceQuantity: JsonField<Double>,
-        private val planPhaseOrder: JsonField<Long>,
-        private val currency: JsonField<String>,
-        private val conversionRate: JsonField<Double>,
-        private val item: JsonField<Item>,
-        private val creditAllocation: JsonField<CreditAllocation>,
-        private val discount: JsonField<Discount>,
-        private val minimum: JsonField<Minimum>,
-        private val minimumAmount: JsonField<String>,
-        private val maximum: JsonField<Maximum>,
-        private val maximumAmount: JsonField<String>,
-        private val matrixWithAllocationConfig: JsonField<MatrixWithAllocationConfig>,
-        private val additionalProperties: Map<String, JsonValue>,
+        @JsonProperty("metadata")
+        @ExcludeMissing
+        private val metadata: JsonField<Metadata> = JsonMissing.of(),
+        @JsonProperty("id") @ExcludeMissing private val id: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("name")
+        @ExcludeMissing
+        private val name: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("external_price_id")
+        @ExcludeMissing
+        private val externalPriceId: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("price_type")
+        @ExcludeMissing
+        private val priceType: JsonField<PriceType> = JsonMissing.of(),
+        @JsonProperty("model_type")
+        @ExcludeMissing
+        private val modelType: JsonField<ModelType> = JsonMissing.of(),
+        @JsonProperty("created_at")
+        @ExcludeMissing
+        private val createdAt: JsonField<OffsetDateTime> = JsonMissing.of(),
+        @JsonProperty("cadence")
+        @ExcludeMissing
+        private val cadence: JsonField<Cadence> = JsonMissing.of(),
+        @JsonProperty("billing_cycle_configuration")
+        @ExcludeMissing
+        private val billingCycleConfiguration: JsonField<BillingCycleConfiguration> =
+            JsonMissing.of(),
+        @JsonProperty("invoicing_cycle_configuration")
+        @ExcludeMissing
+        private val invoicingCycleConfiguration: JsonField<InvoicingCycleConfiguration> =
+            JsonMissing.of(),
+        @JsonProperty("billable_metric")
+        @ExcludeMissing
+        private val billableMetric: JsonField<BillableMetric> = JsonMissing.of(),
+        @JsonProperty("fixed_price_quantity")
+        @ExcludeMissing
+        private val fixedPriceQuantity: JsonField<Double> = JsonMissing.of(),
+        @JsonProperty("plan_phase_order")
+        @ExcludeMissing
+        private val planPhaseOrder: JsonField<Long> = JsonMissing.of(),
+        @JsonProperty("currency")
+        @ExcludeMissing
+        private val currency: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("conversion_rate")
+        @ExcludeMissing
+        private val conversionRate: JsonField<Double> = JsonMissing.of(),
+        @JsonProperty("item") @ExcludeMissing private val item: JsonField<Item> = JsonMissing.of(),
+        @JsonProperty("credit_allocation")
+        @ExcludeMissing
+        private val creditAllocation: JsonField<CreditAllocation> = JsonMissing.of(),
+        @JsonProperty("discount")
+        @ExcludeMissing
+        private val discount: JsonField<Discount> = JsonMissing.of(),
+        @JsonProperty("minimum")
+        @ExcludeMissing
+        private val minimum: JsonField<Minimum> = JsonMissing.of(),
+        @JsonProperty("minimum_amount")
+        @ExcludeMissing
+        private val minimumAmount: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("maximum")
+        @ExcludeMissing
+        private val maximum: JsonField<Maximum> = JsonMissing.of(),
+        @JsonProperty("maximum_amount")
+        @ExcludeMissing
+        private val maximumAmount: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("matrix_with_allocation_config")
+        @ExcludeMissing
+        private val matrixWithAllocationConfig: JsonField<MatrixWithAllocationConfig> =
+            JsonMissing.of(),
+        @JsonAnySetter
+        private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
 
         /**
@@ -28762,62 +28782,44 @@ private constructor(
              * empty dictionary. Individual keys can be removed by setting the value to `null`, and
              * the entire metadata mapping can be cleared by setting `metadata` to `null`.
              */
-            @JsonProperty("metadata")
-            @ExcludeMissing
             fun metadata(metadata: JsonField<Metadata>) = apply { this.metadata = metadata }
 
             fun id(id: String) = id(JsonField.of(id))
 
-            @JsonProperty("id")
-            @ExcludeMissing
             fun id(id: JsonField<String>) = apply { this.id = id }
 
             fun name(name: String) = name(JsonField.of(name))
 
-            @JsonProperty("name")
-            @ExcludeMissing
             fun name(name: JsonField<String>) = apply { this.name = name }
 
             fun externalPriceId(externalPriceId: String) =
                 externalPriceId(JsonField.of(externalPriceId))
 
-            @JsonProperty("external_price_id")
-            @ExcludeMissing
             fun externalPriceId(externalPriceId: JsonField<String>) = apply {
                 this.externalPriceId = externalPriceId
             }
 
             fun priceType(priceType: PriceType) = priceType(JsonField.of(priceType))
 
-            @JsonProperty("price_type")
-            @ExcludeMissing
             fun priceType(priceType: JsonField<PriceType>) = apply { this.priceType = priceType }
 
             fun modelType(modelType: ModelType) = modelType(JsonField.of(modelType))
 
-            @JsonProperty("model_type")
-            @ExcludeMissing
             fun modelType(modelType: JsonField<ModelType>) = apply { this.modelType = modelType }
 
             fun createdAt(createdAt: OffsetDateTime) = createdAt(JsonField.of(createdAt))
 
-            @JsonProperty("created_at")
-            @ExcludeMissing
             fun createdAt(createdAt: JsonField<OffsetDateTime>) = apply {
                 this.createdAt = createdAt
             }
 
             fun cadence(cadence: Cadence) = cadence(JsonField.of(cadence))
 
-            @JsonProperty("cadence")
-            @ExcludeMissing
             fun cadence(cadence: JsonField<Cadence>) = apply { this.cadence = cadence }
 
             fun billingCycleConfiguration(billingCycleConfiguration: BillingCycleConfiguration) =
                 billingCycleConfiguration(JsonField.of(billingCycleConfiguration))
 
-            @JsonProperty("billing_cycle_configuration")
-            @ExcludeMissing
             fun billingCycleConfiguration(
                 billingCycleConfiguration: JsonField<BillingCycleConfiguration>
             ) = apply { this.billingCycleConfiguration = billingCycleConfiguration }
@@ -28826,8 +28828,6 @@ private constructor(
                 invoicingCycleConfiguration: InvoicingCycleConfiguration
             ) = invoicingCycleConfiguration(JsonField.of(invoicingCycleConfiguration))
 
-            @JsonProperty("invoicing_cycle_configuration")
-            @ExcludeMissing
             fun invoicingCycleConfiguration(
                 invoicingCycleConfiguration: JsonField<InvoicingCycleConfiguration>
             ) = apply { this.invoicingCycleConfiguration = invoicingCycleConfiguration }
@@ -28835,8 +28835,6 @@ private constructor(
             fun billableMetric(billableMetric: BillableMetric) =
                 billableMetric(JsonField.of(billableMetric))
 
-            @JsonProperty("billable_metric")
-            @ExcludeMissing
             fun billableMetric(billableMetric: JsonField<BillableMetric>) = apply {
                 this.billableMetric = billableMetric
             }
@@ -28844,80 +28842,58 @@ private constructor(
             fun fixedPriceQuantity(fixedPriceQuantity: Double) =
                 fixedPriceQuantity(JsonField.of(fixedPriceQuantity))
 
-            @JsonProperty("fixed_price_quantity")
-            @ExcludeMissing
             fun fixedPriceQuantity(fixedPriceQuantity: JsonField<Double>) = apply {
                 this.fixedPriceQuantity = fixedPriceQuantity
             }
 
             fun planPhaseOrder(planPhaseOrder: Long) = planPhaseOrder(JsonField.of(planPhaseOrder))
 
-            @JsonProperty("plan_phase_order")
-            @ExcludeMissing
             fun planPhaseOrder(planPhaseOrder: JsonField<Long>) = apply {
                 this.planPhaseOrder = planPhaseOrder
             }
 
             fun currency(currency: String) = currency(JsonField.of(currency))
 
-            @JsonProperty("currency")
-            @ExcludeMissing
             fun currency(currency: JsonField<String>) = apply { this.currency = currency }
 
             fun conversionRate(conversionRate: Double) =
                 conversionRate(JsonField.of(conversionRate))
 
-            @JsonProperty("conversion_rate")
-            @ExcludeMissing
             fun conversionRate(conversionRate: JsonField<Double>) = apply {
                 this.conversionRate = conversionRate
             }
 
             fun item(item: Item) = item(JsonField.of(item))
 
-            @JsonProperty("item")
-            @ExcludeMissing
             fun item(item: JsonField<Item>) = apply { this.item = item }
 
             fun creditAllocation(creditAllocation: CreditAllocation) =
                 creditAllocation(JsonField.of(creditAllocation))
 
-            @JsonProperty("credit_allocation")
-            @ExcludeMissing
             fun creditAllocation(creditAllocation: JsonField<CreditAllocation>) = apply {
                 this.creditAllocation = creditAllocation
             }
 
             fun discount(discount: Discount) = discount(JsonField.of(discount))
 
-            @JsonProperty("discount")
-            @ExcludeMissing
             fun discount(discount: JsonField<Discount>) = apply { this.discount = discount }
 
             fun minimum(minimum: Minimum) = minimum(JsonField.of(minimum))
 
-            @JsonProperty("minimum")
-            @ExcludeMissing
             fun minimum(minimum: JsonField<Minimum>) = apply { this.minimum = minimum }
 
             fun minimumAmount(minimumAmount: String) = minimumAmount(JsonField.of(minimumAmount))
 
-            @JsonProperty("minimum_amount")
-            @ExcludeMissing
             fun minimumAmount(minimumAmount: JsonField<String>) = apply {
                 this.minimumAmount = minimumAmount
             }
 
             fun maximum(maximum: Maximum) = maximum(JsonField.of(maximum))
 
-            @JsonProperty("maximum")
-            @ExcludeMissing
             fun maximum(maximum: JsonField<Maximum>) = apply { this.maximum = maximum }
 
             fun maximumAmount(maximumAmount: String) = maximumAmount(JsonField.of(maximumAmount))
 
-            @JsonProperty("maximum_amount")
-            @ExcludeMissing
             fun maximumAmount(maximumAmount: JsonField<String>) = apply {
                 this.maximumAmount = maximumAmount
             }
@@ -28925,8 +28901,6 @@ private constructor(
             fun matrixWithAllocationConfig(matrixWithAllocationConfig: MatrixWithAllocationConfig) =
                 matrixWithAllocationConfig(JsonField.of(matrixWithAllocationConfig))
 
-            @JsonProperty("matrix_with_allocation_config")
-            @ExcludeMissing
             fun matrixWithAllocationConfig(
                 matrixWithAllocationConfig: JsonField<MatrixWithAllocationConfig>
             ) = apply { this.matrixWithAllocationConfig = matrixWithAllocationConfig }
@@ -28936,7 +28910,6 @@ private constructor(
                 putAllAdditionalProperties(additionalProperties)
             }
 
-            @JsonAnySetter
             fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                 additionalProperties.put(key, value)
             }
@@ -28980,12 +28953,15 @@ private constructor(
                 )
         }
 
-        @JsonDeserialize(builder = BillableMetric.Builder::class)
         @NoAutoDetect
         class BillableMetric
+        @JsonCreator
         private constructor(
-            private val id: JsonField<String>,
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonProperty("id")
+            @ExcludeMissing
+            private val id: JsonField<String> = JsonMissing.of(),
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             fun id(): String = id.getRequired("id")
@@ -29024,8 +29000,6 @@ private constructor(
 
                 fun id(id: String) = id(JsonField.of(id))
 
-                @JsonProperty("id")
-                @ExcludeMissing
                 fun id(id: JsonField<String>) = apply { this.id = id }
 
                 fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
@@ -29033,7 +29007,6 @@ private constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -29072,13 +29045,18 @@ private constructor(
                 "BillableMetric{id=$id, additionalProperties=$additionalProperties}"
         }
 
-        @JsonDeserialize(builder = BillingCycleConfiguration.Builder::class)
         @NoAutoDetect
         class BillingCycleConfiguration
+        @JsonCreator
         private constructor(
-            private val duration: JsonField<Long>,
-            private val durationUnit: JsonField<DurationUnit>,
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonProperty("duration")
+            @ExcludeMissing
+            private val duration: JsonField<Long> = JsonMissing.of(),
+            @JsonProperty("duration_unit")
+            @ExcludeMissing
+            private val durationUnit: JsonField<DurationUnit> = JsonMissing.of(),
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             fun duration(): Long = duration.getRequired("duration")
@@ -29125,15 +29103,11 @@ private constructor(
 
                 fun duration(duration: Long) = duration(JsonField.of(duration))
 
-                @JsonProperty("duration")
-                @ExcludeMissing
                 fun duration(duration: JsonField<Long>) = apply { this.duration = duration }
 
                 fun durationUnit(durationUnit: DurationUnit) =
                     durationUnit(JsonField.of(durationUnit))
 
-                @JsonProperty("duration_unit")
-                @ExcludeMissing
                 fun durationUnit(durationUnit: JsonField<DurationUnit>) = apply {
                     this.durationUnit = durationUnit
                 }
@@ -29143,7 +29117,6 @@ private constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -29325,13 +29298,18 @@ private constructor(
             override fun toString() = value.toString()
         }
 
-        @JsonDeserialize(builder = CreditAllocation.Builder::class)
         @NoAutoDetect
         class CreditAllocation
+        @JsonCreator
         private constructor(
-            private val currency: JsonField<String>,
-            private val allowsRollover: JsonField<Boolean>,
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonProperty("currency")
+            @ExcludeMissing
+            private val currency: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("allows_rollover")
+            @ExcludeMissing
+            private val allowsRollover: JsonField<Boolean> = JsonMissing.of(),
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             fun currency(): String = currency.getRequired("currency")
@@ -29377,15 +29355,11 @@ private constructor(
 
                 fun currency(currency: String) = currency(JsonField.of(currency))
 
-                @JsonProperty("currency")
-                @ExcludeMissing
                 fun currency(currency: JsonField<String>) = apply { this.currency = currency }
 
                 fun allowsRollover(allowsRollover: Boolean) =
                     allowsRollover(JsonField.of(allowsRollover))
 
-                @JsonProperty("allows_rollover")
-                @ExcludeMissing
                 fun allowsRollover(allowsRollover: JsonField<Boolean>) = apply {
                     this.allowsRollover = allowsRollover
                 }
@@ -29395,7 +29369,6 @@ private constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -29439,13 +29412,18 @@ private constructor(
                 "CreditAllocation{currency=$currency, allowsRollover=$allowsRollover, additionalProperties=$additionalProperties}"
         }
 
-        @JsonDeserialize(builder = InvoicingCycleConfiguration.Builder::class)
         @NoAutoDetect
         class InvoicingCycleConfiguration
+        @JsonCreator
         private constructor(
-            private val duration: JsonField<Long>,
-            private val durationUnit: JsonField<DurationUnit>,
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonProperty("duration")
+            @ExcludeMissing
+            private val duration: JsonField<Long> = JsonMissing.of(),
+            @JsonProperty("duration_unit")
+            @ExcludeMissing
+            private val durationUnit: JsonField<DurationUnit> = JsonMissing.of(),
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             fun duration(): Long = duration.getRequired("duration")
@@ -29493,15 +29471,11 @@ private constructor(
 
                 fun duration(duration: Long) = duration(JsonField.of(duration))
 
-                @JsonProperty("duration")
-                @ExcludeMissing
                 fun duration(duration: JsonField<Long>) = apply { this.duration = duration }
 
                 fun durationUnit(durationUnit: DurationUnit) =
                     durationUnit(JsonField.of(durationUnit))
 
-                @JsonProperty("duration_unit")
-                @ExcludeMissing
                 fun durationUnit(durationUnit: JsonField<DurationUnit>) = apply {
                     this.durationUnit = durationUnit
                 }
@@ -29511,7 +29485,6 @@ private constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -29612,13 +29585,18 @@ private constructor(
                 "InvoicingCycleConfiguration{duration=$duration, durationUnit=$durationUnit, additionalProperties=$additionalProperties}"
         }
 
-        @JsonDeserialize(builder = Item.Builder::class)
         @NoAutoDetect
         class Item
+        @JsonCreator
         private constructor(
-            private val id: JsonField<String>,
-            private val name: JsonField<String>,
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonProperty("id")
+            @ExcludeMissing
+            private val id: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("name")
+            @ExcludeMissing
+            private val name: JsonField<String> = JsonMissing.of(),
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             fun id(): String = id.getRequired("id")
@@ -29664,14 +29642,10 @@ private constructor(
 
                 fun id(id: String) = id(JsonField.of(id))
 
-                @JsonProperty("id")
-                @ExcludeMissing
                 fun id(id: JsonField<String>) = apply { this.id = id }
 
                 fun name(name: String) = name(JsonField.of(name))
 
-                @JsonProperty("name")
-                @ExcludeMissing
                 fun name(name: JsonField<String>) = apply { this.name = name }
 
                 fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
@@ -29679,7 +29653,6 @@ private constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -29723,15 +29696,24 @@ private constructor(
                 "Item{id=$id, name=$name, additionalProperties=$additionalProperties}"
         }
 
-        @JsonDeserialize(builder = MatrixWithAllocationConfig.Builder::class)
         @NoAutoDetect
         class MatrixWithAllocationConfig
+        @JsonCreator
         private constructor(
-            private val dimensions: JsonField<List<String?>>,
-            private val defaultUnitAmount: JsonField<String>,
-            private val matrixValues: JsonField<List<MatrixValue>>,
-            private val allocation: JsonField<Double>,
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonProperty("dimensions")
+            @ExcludeMissing
+            private val dimensions: JsonField<List<String?>> = JsonMissing.of(),
+            @JsonProperty("default_unit_amount")
+            @ExcludeMissing
+            private val defaultUnitAmount: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("matrix_values")
+            @ExcludeMissing
+            private val matrixValues: JsonField<List<MatrixValue>> = JsonMissing.of(),
+            @JsonProperty("allocation")
+            @ExcludeMissing
+            private val allocation: JsonField<Double> = JsonMissing.of(),
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             /** One or two event property values to evaluate matrix groups by */
@@ -29804,8 +29786,6 @@ private constructor(
                 fun dimensions(dimensions: List<String?>) = dimensions(JsonField.of(dimensions))
 
                 /** One or two event property values to evaluate matrix groups by */
-                @JsonProperty("dimensions")
-                @ExcludeMissing
                 fun dimensions(dimensions: JsonField<List<String?>>) = apply {
                     this.dimensions = dimensions
                 }
@@ -29819,8 +29799,6 @@ private constructor(
                 /**
                  * Default per unit rate for any usage not bucketed into a specified matrix_value
                  */
-                @JsonProperty("default_unit_amount")
-                @ExcludeMissing
                 fun defaultUnitAmount(defaultUnitAmount: JsonField<String>) = apply {
                     this.defaultUnitAmount = defaultUnitAmount
                 }
@@ -29830,8 +29808,6 @@ private constructor(
                     matrixValues(JsonField.of(matrixValues))
 
                 /** Matrix values for specified matrix grouping keys */
-                @JsonProperty("matrix_values")
-                @ExcludeMissing
                 fun matrixValues(matrixValues: JsonField<List<MatrixValue>>) = apply {
                     this.matrixValues = matrixValues
                 }
@@ -29840,8 +29816,6 @@ private constructor(
                 fun allocation(allocation: Double) = allocation(JsonField.of(allocation))
 
                 /** Allocation to be used to calculate the price */
-                @JsonProperty("allocation")
-                @ExcludeMissing
                 fun allocation(allocation: JsonField<Double>) = apply {
                     this.allocation = allocation
                 }
@@ -29851,7 +29825,6 @@ private constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -29879,13 +29852,18 @@ private constructor(
                     )
             }
 
-            @JsonDeserialize(builder = MatrixValue.Builder::class)
             @NoAutoDetect
             class MatrixValue
+            @JsonCreator
             private constructor(
-                private val unitAmount: JsonField<String>,
-                private val dimensionValues: JsonField<List<String?>>,
-                private val additionalProperties: Map<String, JsonValue>,
+                @JsonProperty("unit_amount")
+                @ExcludeMissing
+                private val unitAmount: JsonField<String> = JsonMissing.of(),
+                @JsonProperty("dimension_values")
+                @ExcludeMissing
+                private val dimensionValues: JsonField<List<String?>> = JsonMissing.of(),
+                @JsonAnySetter
+                private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
             ) {
 
                 /** Unit price for the specified dimension_values */
@@ -29948,8 +29926,6 @@ private constructor(
                     fun unitAmount(unitAmount: String) = unitAmount(JsonField.of(unitAmount))
 
                     /** Unit price for the specified dimension_values */
-                    @JsonProperty("unit_amount")
-                    @ExcludeMissing
                     fun unitAmount(unitAmount: JsonField<String>) = apply {
                         this.unitAmount = unitAmount
                     }
@@ -29967,8 +29943,6 @@ private constructor(
                      * ["region", "tier"] could be used to filter cloud usage by a cloud region and
                      * an instance tier.
                      */
-                    @JsonProperty("dimension_values")
-                    @ExcludeMissing
                     fun dimensionValues(dimensionValues: JsonField<List<String?>>) = apply {
                         this.dimensionValues = dimensionValues
                     }
@@ -29978,7 +29952,6 @@ private constructor(
                         putAllAdditionalProperties(additionalProperties)
                     }
 
-                    @JsonAnySetter
                     fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                         additionalProperties.put(key, value)
                     }
@@ -30040,13 +30013,18 @@ private constructor(
                 "MatrixWithAllocationConfig{dimensions=$dimensions, defaultUnitAmount=$defaultUnitAmount, matrixValues=$matrixValues, allocation=$allocation, additionalProperties=$additionalProperties}"
         }
 
-        @JsonDeserialize(builder = Maximum.Builder::class)
         @NoAutoDetect
         class Maximum
+        @JsonCreator
         private constructor(
-            private val maximumAmount: JsonField<String>,
-            private val appliesToPriceIds: JsonField<List<String>>,
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonProperty("maximum_amount")
+            @ExcludeMissing
+            private val maximumAmount: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("applies_to_price_ids")
+            @ExcludeMissing
+            private val appliesToPriceIds: JsonField<List<String>> = JsonMissing.of(),
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             /** Maximum amount applied */
@@ -30108,8 +30086,6 @@ private constructor(
                     maximumAmount(JsonField.of(maximumAmount))
 
                 /** Maximum amount applied */
-                @JsonProperty("maximum_amount")
-                @ExcludeMissing
                 fun maximumAmount(maximumAmount: JsonField<String>) = apply {
                     this.maximumAmount = maximumAmount
                 }
@@ -30125,8 +30101,6 @@ private constructor(
                  * List of price_ids that this maximum amount applies to. For plan/plan phase
                  * maximums, this can be a subset of prices.
                  */
-                @JsonProperty("applies_to_price_ids")
-                @ExcludeMissing
                 fun appliesToPriceIds(appliesToPriceIds: JsonField<List<String>>) = apply {
                     this.appliesToPriceIds = appliesToPriceIds
                 }
@@ -30136,7 +30110,6 @@ private constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -30185,11 +30158,12 @@ private constructor(
          * empty dictionary. Individual keys can be removed by setting the value to `null`, and the
          * entire metadata mapping can be cleared by setting `metadata` to `null`.
          */
-        @JsonDeserialize(builder = Metadata.Builder::class)
         @NoAutoDetect
         class Metadata
+        @JsonCreator
         private constructor(
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             @JsonAnyGetter
@@ -30224,7 +30198,6 @@ private constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -30262,13 +30235,18 @@ private constructor(
             override fun toString() = "Metadata{additionalProperties=$additionalProperties}"
         }
 
-        @JsonDeserialize(builder = Minimum.Builder::class)
         @NoAutoDetect
         class Minimum
+        @JsonCreator
         private constructor(
-            private val minimumAmount: JsonField<String>,
-            private val appliesToPriceIds: JsonField<List<String>>,
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonProperty("minimum_amount")
+            @ExcludeMissing
+            private val minimumAmount: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("applies_to_price_ids")
+            @ExcludeMissing
+            private val appliesToPriceIds: JsonField<List<String>> = JsonMissing.of(),
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             /** Minimum amount applied */
@@ -30330,8 +30308,6 @@ private constructor(
                     minimumAmount(JsonField.of(minimumAmount))
 
                 /** Minimum amount applied */
-                @JsonProperty("minimum_amount")
-                @ExcludeMissing
                 fun minimumAmount(minimumAmount: JsonField<String>) = apply {
                     this.minimumAmount = minimumAmount
                 }
@@ -30347,8 +30323,6 @@ private constructor(
                  * List of price_ids that this minimum amount applies to. For plan/plan phase
                  * minimums, this can be a subset of prices.
                  */
-                @JsonProperty("applies_to_price_ids")
-                @ExcludeMissing
                 fun appliesToPriceIds(appliesToPriceIds: JsonField<List<String>>) = apply {
                     this.appliesToPriceIds = appliesToPriceIds
                 }
@@ -30358,7 +30332,6 @@ private constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -30528,34 +30501,80 @@ private constructor(
             "MatrixWithAllocationPrice{metadata=$metadata, id=$id, name=$name, externalPriceId=$externalPriceId, priceType=$priceType, modelType=$modelType, createdAt=$createdAt, cadence=$cadence, billingCycleConfiguration=$billingCycleConfiguration, invoicingCycleConfiguration=$invoicingCycleConfiguration, billableMetric=$billableMetric, fixedPriceQuantity=$fixedPriceQuantity, planPhaseOrder=$planPhaseOrder, currency=$currency, conversionRate=$conversionRate, item=$item, creditAllocation=$creditAllocation, discount=$discount, minimum=$minimum, minimumAmount=$minimumAmount, maximum=$maximum, maximumAmount=$maximumAmount, matrixWithAllocationConfig=$matrixWithAllocationConfig, additionalProperties=$additionalProperties}"
     }
 
-    @JsonDeserialize(builder = TieredWithProrationPrice.Builder::class)
     @NoAutoDetect
     class TieredWithProrationPrice
+    @JsonCreator
     private constructor(
-        private val metadata: JsonField<Metadata>,
-        private val id: JsonField<String>,
-        private val name: JsonField<String>,
-        private val externalPriceId: JsonField<String>,
-        private val priceType: JsonField<PriceType>,
-        private val modelType: JsonField<ModelType>,
-        private val createdAt: JsonField<OffsetDateTime>,
-        private val cadence: JsonField<Cadence>,
-        private val billingCycleConfiguration: JsonField<BillingCycleConfiguration>,
-        private val invoicingCycleConfiguration: JsonField<InvoicingCycleConfiguration>,
-        private val billableMetric: JsonField<BillableMetric>,
-        private val fixedPriceQuantity: JsonField<Double>,
-        private val planPhaseOrder: JsonField<Long>,
-        private val currency: JsonField<String>,
-        private val conversionRate: JsonField<Double>,
-        private val item: JsonField<Item>,
-        private val creditAllocation: JsonField<CreditAllocation>,
-        private val discount: JsonField<Discount>,
-        private val minimum: JsonField<Minimum>,
-        private val minimumAmount: JsonField<String>,
-        private val maximum: JsonField<Maximum>,
-        private val maximumAmount: JsonField<String>,
-        private val tieredWithProrationConfig: JsonField<TieredWithProrationConfig>,
-        private val additionalProperties: Map<String, JsonValue>,
+        @JsonProperty("metadata")
+        @ExcludeMissing
+        private val metadata: JsonField<Metadata> = JsonMissing.of(),
+        @JsonProperty("id") @ExcludeMissing private val id: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("name")
+        @ExcludeMissing
+        private val name: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("external_price_id")
+        @ExcludeMissing
+        private val externalPriceId: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("price_type")
+        @ExcludeMissing
+        private val priceType: JsonField<PriceType> = JsonMissing.of(),
+        @JsonProperty("model_type")
+        @ExcludeMissing
+        private val modelType: JsonField<ModelType> = JsonMissing.of(),
+        @JsonProperty("created_at")
+        @ExcludeMissing
+        private val createdAt: JsonField<OffsetDateTime> = JsonMissing.of(),
+        @JsonProperty("cadence")
+        @ExcludeMissing
+        private val cadence: JsonField<Cadence> = JsonMissing.of(),
+        @JsonProperty("billing_cycle_configuration")
+        @ExcludeMissing
+        private val billingCycleConfiguration: JsonField<BillingCycleConfiguration> =
+            JsonMissing.of(),
+        @JsonProperty("invoicing_cycle_configuration")
+        @ExcludeMissing
+        private val invoicingCycleConfiguration: JsonField<InvoicingCycleConfiguration> =
+            JsonMissing.of(),
+        @JsonProperty("billable_metric")
+        @ExcludeMissing
+        private val billableMetric: JsonField<BillableMetric> = JsonMissing.of(),
+        @JsonProperty("fixed_price_quantity")
+        @ExcludeMissing
+        private val fixedPriceQuantity: JsonField<Double> = JsonMissing.of(),
+        @JsonProperty("plan_phase_order")
+        @ExcludeMissing
+        private val planPhaseOrder: JsonField<Long> = JsonMissing.of(),
+        @JsonProperty("currency")
+        @ExcludeMissing
+        private val currency: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("conversion_rate")
+        @ExcludeMissing
+        private val conversionRate: JsonField<Double> = JsonMissing.of(),
+        @JsonProperty("item") @ExcludeMissing private val item: JsonField<Item> = JsonMissing.of(),
+        @JsonProperty("credit_allocation")
+        @ExcludeMissing
+        private val creditAllocation: JsonField<CreditAllocation> = JsonMissing.of(),
+        @JsonProperty("discount")
+        @ExcludeMissing
+        private val discount: JsonField<Discount> = JsonMissing.of(),
+        @JsonProperty("minimum")
+        @ExcludeMissing
+        private val minimum: JsonField<Minimum> = JsonMissing.of(),
+        @JsonProperty("minimum_amount")
+        @ExcludeMissing
+        private val minimumAmount: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("maximum")
+        @ExcludeMissing
+        private val maximum: JsonField<Maximum> = JsonMissing.of(),
+        @JsonProperty("maximum_amount")
+        @ExcludeMissing
+        private val maximumAmount: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("tiered_with_proration_config")
+        @ExcludeMissing
+        private val tieredWithProrationConfig: JsonField<TieredWithProrationConfig> =
+            JsonMissing.of(),
+        @JsonAnySetter
+        private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
 
         /**
@@ -30785,62 +30804,44 @@ private constructor(
              * empty dictionary. Individual keys can be removed by setting the value to `null`, and
              * the entire metadata mapping can be cleared by setting `metadata` to `null`.
              */
-            @JsonProperty("metadata")
-            @ExcludeMissing
             fun metadata(metadata: JsonField<Metadata>) = apply { this.metadata = metadata }
 
             fun id(id: String) = id(JsonField.of(id))
 
-            @JsonProperty("id")
-            @ExcludeMissing
             fun id(id: JsonField<String>) = apply { this.id = id }
 
             fun name(name: String) = name(JsonField.of(name))
 
-            @JsonProperty("name")
-            @ExcludeMissing
             fun name(name: JsonField<String>) = apply { this.name = name }
 
             fun externalPriceId(externalPriceId: String) =
                 externalPriceId(JsonField.of(externalPriceId))
 
-            @JsonProperty("external_price_id")
-            @ExcludeMissing
             fun externalPriceId(externalPriceId: JsonField<String>) = apply {
                 this.externalPriceId = externalPriceId
             }
 
             fun priceType(priceType: PriceType) = priceType(JsonField.of(priceType))
 
-            @JsonProperty("price_type")
-            @ExcludeMissing
             fun priceType(priceType: JsonField<PriceType>) = apply { this.priceType = priceType }
 
             fun modelType(modelType: ModelType) = modelType(JsonField.of(modelType))
 
-            @JsonProperty("model_type")
-            @ExcludeMissing
             fun modelType(modelType: JsonField<ModelType>) = apply { this.modelType = modelType }
 
             fun createdAt(createdAt: OffsetDateTime) = createdAt(JsonField.of(createdAt))
 
-            @JsonProperty("created_at")
-            @ExcludeMissing
             fun createdAt(createdAt: JsonField<OffsetDateTime>) = apply {
                 this.createdAt = createdAt
             }
 
             fun cadence(cadence: Cadence) = cadence(JsonField.of(cadence))
 
-            @JsonProperty("cadence")
-            @ExcludeMissing
             fun cadence(cadence: JsonField<Cadence>) = apply { this.cadence = cadence }
 
             fun billingCycleConfiguration(billingCycleConfiguration: BillingCycleConfiguration) =
                 billingCycleConfiguration(JsonField.of(billingCycleConfiguration))
 
-            @JsonProperty("billing_cycle_configuration")
-            @ExcludeMissing
             fun billingCycleConfiguration(
                 billingCycleConfiguration: JsonField<BillingCycleConfiguration>
             ) = apply { this.billingCycleConfiguration = billingCycleConfiguration }
@@ -30849,8 +30850,6 @@ private constructor(
                 invoicingCycleConfiguration: InvoicingCycleConfiguration
             ) = invoicingCycleConfiguration(JsonField.of(invoicingCycleConfiguration))
 
-            @JsonProperty("invoicing_cycle_configuration")
-            @ExcludeMissing
             fun invoicingCycleConfiguration(
                 invoicingCycleConfiguration: JsonField<InvoicingCycleConfiguration>
             ) = apply { this.invoicingCycleConfiguration = invoicingCycleConfiguration }
@@ -30858,8 +30857,6 @@ private constructor(
             fun billableMetric(billableMetric: BillableMetric) =
                 billableMetric(JsonField.of(billableMetric))
 
-            @JsonProperty("billable_metric")
-            @ExcludeMissing
             fun billableMetric(billableMetric: JsonField<BillableMetric>) = apply {
                 this.billableMetric = billableMetric
             }
@@ -30867,80 +30864,58 @@ private constructor(
             fun fixedPriceQuantity(fixedPriceQuantity: Double) =
                 fixedPriceQuantity(JsonField.of(fixedPriceQuantity))
 
-            @JsonProperty("fixed_price_quantity")
-            @ExcludeMissing
             fun fixedPriceQuantity(fixedPriceQuantity: JsonField<Double>) = apply {
                 this.fixedPriceQuantity = fixedPriceQuantity
             }
 
             fun planPhaseOrder(planPhaseOrder: Long) = planPhaseOrder(JsonField.of(planPhaseOrder))
 
-            @JsonProperty("plan_phase_order")
-            @ExcludeMissing
             fun planPhaseOrder(planPhaseOrder: JsonField<Long>) = apply {
                 this.planPhaseOrder = planPhaseOrder
             }
 
             fun currency(currency: String) = currency(JsonField.of(currency))
 
-            @JsonProperty("currency")
-            @ExcludeMissing
             fun currency(currency: JsonField<String>) = apply { this.currency = currency }
 
             fun conversionRate(conversionRate: Double) =
                 conversionRate(JsonField.of(conversionRate))
 
-            @JsonProperty("conversion_rate")
-            @ExcludeMissing
             fun conversionRate(conversionRate: JsonField<Double>) = apply {
                 this.conversionRate = conversionRate
             }
 
             fun item(item: Item) = item(JsonField.of(item))
 
-            @JsonProperty("item")
-            @ExcludeMissing
             fun item(item: JsonField<Item>) = apply { this.item = item }
 
             fun creditAllocation(creditAllocation: CreditAllocation) =
                 creditAllocation(JsonField.of(creditAllocation))
 
-            @JsonProperty("credit_allocation")
-            @ExcludeMissing
             fun creditAllocation(creditAllocation: JsonField<CreditAllocation>) = apply {
                 this.creditAllocation = creditAllocation
             }
 
             fun discount(discount: Discount) = discount(JsonField.of(discount))
 
-            @JsonProperty("discount")
-            @ExcludeMissing
             fun discount(discount: JsonField<Discount>) = apply { this.discount = discount }
 
             fun minimum(minimum: Minimum) = minimum(JsonField.of(minimum))
 
-            @JsonProperty("minimum")
-            @ExcludeMissing
             fun minimum(minimum: JsonField<Minimum>) = apply { this.minimum = minimum }
 
             fun minimumAmount(minimumAmount: String) = minimumAmount(JsonField.of(minimumAmount))
 
-            @JsonProperty("minimum_amount")
-            @ExcludeMissing
             fun minimumAmount(minimumAmount: JsonField<String>) = apply {
                 this.minimumAmount = minimumAmount
             }
 
             fun maximum(maximum: Maximum) = maximum(JsonField.of(maximum))
 
-            @JsonProperty("maximum")
-            @ExcludeMissing
             fun maximum(maximum: JsonField<Maximum>) = apply { this.maximum = maximum }
 
             fun maximumAmount(maximumAmount: String) = maximumAmount(JsonField.of(maximumAmount))
 
-            @JsonProperty("maximum_amount")
-            @ExcludeMissing
             fun maximumAmount(maximumAmount: JsonField<String>) = apply {
                 this.maximumAmount = maximumAmount
             }
@@ -30948,8 +30923,6 @@ private constructor(
             fun tieredWithProrationConfig(tieredWithProrationConfig: TieredWithProrationConfig) =
                 tieredWithProrationConfig(JsonField.of(tieredWithProrationConfig))
 
-            @JsonProperty("tiered_with_proration_config")
-            @ExcludeMissing
             fun tieredWithProrationConfig(
                 tieredWithProrationConfig: JsonField<TieredWithProrationConfig>
             ) = apply { this.tieredWithProrationConfig = tieredWithProrationConfig }
@@ -30959,7 +30932,6 @@ private constructor(
                 putAllAdditionalProperties(additionalProperties)
             }
 
-            @JsonAnySetter
             fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                 additionalProperties.put(key, value)
             }
@@ -31003,12 +30975,15 @@ private constructor(
                 )
         }
 
-        @JsonDeserialize(builder = BillableMetric.Builder::class)
         @NoAutoDetect
         class BillableMetric
+        @JsonCreator
         private constructor(
-            private val id: JsonField<String>,
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonProperty("id")
+            @ExcludeMissing
+            private val id: JsonField<String> = JsonMissing.of(),
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             fun id(): String = id.getRequired("id")
@@ -31047,8 +31022,6 @@ private constructor(
 
                 fun id(id: String) = id(JsonField.of(id))
 
-                @JsonProperty("id")
-                @ExcludeMissing
                 fun id(id: JsonField<String>) = apply { this.id = id }
 
                 fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
@@ -31056,7 +31029,6 @@ private constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -31095,13 +31067,18 @@ private constructor(
                 "BillableMetric{id=$id, additionalProperties=$additionalProperties}"
         }
 
-        @JsonDeserialize(builder = BillingCycleConfiguration.Builder::class)
         @NoAutoDetect
         class BillingCycleConfiguration
+        @JsonCreator
         private constructor(
-            private val duration: JsonField<Long>,
-            private val durationUnit: JsonField<DurationUnit>,
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonProperty("duration")
+            @ExcludeMissing
+            private val duration: JsonField<Long> = JsonMissing.of(),
+            @JsonProperty("duration_unit")
+            @ExcludeMissing
+            private val durationUnit: JsonField<DurationUnit> = JsonMissing.of(),
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             fun duration(): Long = duration.getRequired("duration")
@@ -31148,15 +31125,11 @@ private constructor(
 
                 fun duration(duration: Long) = duration(JsonField.of(duration))
 
-                @JsonProperty("duration")
-                @ExcludeMissing
                 fun duration(duration: JsonField<Long>) = apply { this.duration = duration }
 
                 fun durationUnit(durationUnit: DurationUnit) =
                     durationUnit(JsonField.of(durationUnit))
 
-                @JsonProperty("duration_unit")
-                @ExcludeMissing
                 fun durationUnit(durationUnit: JsonField<DurationUnit>) = apply {
                     this.durationUnit = durationUnit
                 }
@@ -31166,7 +31139,6 @@ private constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -31348,13 +31320,18 @@ private constructor(
             override fun toString() = value.toString()
         }
 
-        @JsonDeserialize(builder = CreditAllocation.Builder::class)
         @NoAutoDetect
         class CreditAllocation
+        @JsonCreator
         private constructor(
-            private val currency: JsonField<String>,
-            private val allowsRollover: JsonField<Boolean>,
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonProperty("currency")
+            @ExcludeMissing
+            private val currency: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("allows_rollover")
+            @ExcludeMissing
+            private val allowsRollover: JsonField<Boolean> = JsonMissing.of(),
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             fun currency(): String = currency.getRequired("currency")
@@ -31400,15 +31377,11 @@ private constructor(
 
                 fun currency(currency: String) = currency(JsonField.of(currency))
 
-                @JsonProperty("currency")
-                @ExcludeMissing
                 fun currency(currency: JsonField<String>) = apply { this.currency = currency }
 
                 fun allowsRollover(allowsRollover: Boolean) =
                     allowsRollover(JsonField.of(allowsRollover))
 
-                @JsonProperty("allows_rollover")
-                @ExcludeMissing
                 fun allowsRollover(allowsRollover: JsonField<Boolean>) = apply {
                     this.allowsRollover = allowsRollover
                 }
@@ -31418,7 +31391,6 @@ private constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -31462,13 +31434,18 @@ private constructor(
                 "CreditAllocation{currency=$currency, allowsRollover=$allowsRollover, additionalProperties=$additionalProperties}"
         }
 
-        @JsonDeserialize(builder = InvoicingCycleConfiguration.Builder::class)
         @NoAutoDetect
         class InvoicingCycleConfiguration
+        @JsonCreator
         private constructor(
-            private val duration: JsonField<Long>,
-            private val durationUnit: JsonField<DurationUnit>,
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonProperty("duration")
+            @ExcludeMissing
+            private val duration: JsonField<Long> = JsonMissing.of(),
+            @JsonProperty("duration_unit")
+            @ExcludeMissing
+            private val durationUnit: JsonField<DurationUnit> = JsonMissing.of(),
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             fun duration(): Long = duration.getRequired("duration")
@@ -31516,15 +31493,11 @@ private constructor(
 
                 fun duration(duration: Long) = duration(JsonField.of(duration))
 
-                @JsonProperty("duration")
-                @ExcludeMissing
                 fun duration(duration: JsonField<Long>) = apply { this.duration = duration }
 
                 fun durationUnit(durationUnit: DurationUnit) =
                     durationUnit(JsonField.of(durationUnit))
 
-                @JsonProperty("duration_unit")
-                @ExcludeMissing
                 fun durationUnit(durationUnit: JsonField<DurationUnit>) = apply {
                     this.durationUnit = durationUnit
                 }
@@ -31534,7 +31507,6 @@ private constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -31635,13 +31607,18 @@ private constructor(
                 "InvoicingCycleConfiguration{duration=$duration, durationUnit=$durationUnit, additionalProperties=$additionalProperties}"
         }
 
-        @JsonDeserialize(builder = Item.Builder::class)
         @NoAutoDetect
         class Item
+        @JsonCreator
         private constructor(
-            private val id: JsonField<String>,
-            private val name: JsonField<String>,
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonProperty("id")
+            @ExcludeMissing
+            private val id: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("name")
+            @ExcludeMissing
+            private val name: JsonField<String> = JsonMissing.of(),
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             fun id(): String = id.getRequired("id")
@@ -31687,14 +31664,10 @@ private constructor(
 
                 fun id(id: String) = id(JsonField.of(id))
 
-                @JsonProperty("id")
-                @ExcludeMissing
                 fun id(id: JsonField<String>) = apply { this.id = id }
 
                 fun name(name: String) = name(JsonField.of(name))
 
-                @JsonProperty("name")
-                @ExcludeMissing
                 fun name(name: JsonField<String>) = apply { this.name = name }
 
                 fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
@@ -31702,7 +31675,6 @@ private constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -31746,13 +31718,18 @@ private constructor(
                 "Item{id=$id, name=$name, additionalProperties=$additionalProperties}"
         }
 
-        @JsonDeserialize(builder = Maximum.Builder::class)
         @NoAutoDetect
         class Maximum
+        @JsonCreator
         private constructor(
-            private val maximumAmount: JsonField<String>,
-            private val appliesToPriceIds: JsonField<List<String>>,
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonProperty("maximum_amount")
+            @ExcludeMissing
+            private val maximumAmount: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("applies_to_price_ids")
+            @ExcludeMissing
+            private val appliesToPriceIds: JsonField<List<String>> = JsonMissing.of(),
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             /** Maximum amount applied */
@@ -31814,8 +31791,6 @@ private constructor(
                     maximumAmount(JsonField.of(maximumAmount))
 
                 /** Maximum amount applied */
-                @JsonProperty("maximum_amount")
-                @ExcludeMissing
                 fun maximumAmount(maximumAmount: JsonField<String>) = apply {
                     this.maximumAmount = maximumAmount
                 }
@@ -31831,8 +31806,6 @@ private constructor(
                  * List of price_ids that this maximum amount applies to. For plan/plan phase
                  * maximums, this can be a subset of prices.
                  */
-                @JsonProperty("applies_to_price_ids")
-                @ExcludeMissing
                 fun appliesToPriceIds(appliesToPriceIds: JsonField<List<String>>) = apply {
                     this.appliesToPriceIds = appliesToPriceIds
                 }
@@ -31842,7 +31815,6 @@ private constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -31891,11 +31863,12 @@ private constructor(
          * empty dictionary. Individual keys can be removed by setting the value to `null`, and the
          * entire metadata mapping can be cleared by setting `metadata` to `null`.
          */
-        @JsonDeserialize(builder = Metadata.Builder::class)
         @NoAutoDetect
         class Metadata
+        @JsonCreator
         private constructor(
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             @JsonAnyGetter
@@ -31930,7 +31903,6 @@ private constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -31968,13 +31940,18 @@ private constructor(
             override fun toString() = "Metadata{additionalProperties=$additionalProperties}"
         }
 
-        @JsonDeserialize(builder = Minimum.Builder::class)
         @NoAutoDetect
         class Minimum
+        @JsonCreator
         private constructor(
-            private val minimumAmount: JsonField<String>,
-            private val appliesToPriceIds: JsonField<List<String>>,
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonProperty("minimum_amount")
+            @ExcludeMissing
+            private val minimumAmount: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("applies_to_price_ids")
+            @ExcludeMissing
+            private val appliesToPriceIds: JsonField<List<String>> = JsonMissing.of(),
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             /** Minimum amount applied */
@@ -32036,8 +32013,6 @@ private constructor(
                     minimumAmount(JsonField.of(minimumAmount))
 
                 /** Minimum amount applied */
-                @JsonProperty("minimum_amount")
-                @ExcludeMissing
                 fun minimumAmount(minimumAmount: JsonField<String>) = apply {
                     this.minimumAmount = minimumAmount
                 }
@@ -32053,8 +32028,6 @@ private constructor(
                  * List of price_ids that this minimum amount applies to. For plan/plan phase
                  * minimums, this can be a subset of prices.
                  */
-                @JsonProperty("applies_to_price_ids")
-                @ExcludeMissing
                 fun appliesToPriceIds(appliesToPriceIds: JsonField<List<String>>) = apply {
                     this.appliesToPriceIds = appliesToPriceIds
                 }
@@ -32064,7 +32037,6 @@ private constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -32216,11 +32188,12 @@ private constructor(
             override fun toString() = value.toString()
         }
 
-        @JsonDeserialize(builder = TieredWithProrationConfig.Builder::class)
         @NoAutoDetect
         class TieredWithProrationConfig
+        @JsonCreator
         private constructor(
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             @JsonAnyGetter
@@ -32256,7 +32229,6 @@ private constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -32314,34 +32286,79 @@ private constructor(
             "TieredWithProrationPrice{metadata=$metadata, id=$id, name=$name, externalPriceId=$externalPriceId, priceType=$priceType, modelType=$modelType, createdAt=$createdAt, cadence=$cadence, billingCycleConfiguration=$billingCycleConfiguration, invoicingCycleConfiguration=$invoicingCycleConfiguration, billableMetric=$billableMetric, fixedPriceQuantity=$fixedPriceQuantity, planPhaseOrder=$planPhaseOrder, currency=$currency, conversionRate=$conversionRate, item=$item, creditAllocation=$creditAllocation, discount=$discount, minimum=$minimum, minimumAmount=$minimumAmount, maximum=$maximum, maximumAmount=$maximumAmount, tieredWithProrationConfig=$tieredWithProrationConfig, additionalProperties=$additionalProperties}"
     }
 
-    @JsonDeserialize(builder = UnitWithProrationPrice.Builder::class)
     @NoAutoDetect
     class UnitWithProrationPrice
+    @JsonCreator
     private constructor(
-        private val metadata: JsonField<Metadata>,
-        private val id: JsonField<String>,
-        private val name: JsonField<String>,
-        private val externalPriceId: JsonField<String>,
-        private val priceType: JsonField<PriceType>,
-        private val modelType: JsonField<ModelType>,
-        private val createdAt: JsonField<OffsetDateTime>,
-        private val cadence: JsonField<Cadence>,
-        private val billingCycleConfiguration: JsonField<BillingCycleConfiguration>,
-        private val invoicingCycleConfiguration: JsonField<InvoicingCycleConfiguration>,
-        private val billableMetric: JsonField<BillableMetric>,
-        private val fixedPriceQuantity: JsonField<Double>,
-        private val planPhaseOrder: JsonField<Long>,
-        private val currency: JsonField<String>,
-        private val conversionRate: JsonField<Double>,
-        private val item: JsonField<Item>,
-        private val creditAllocation: JsonField<CreditAllocation>,
-        private val discount: JsonField<Discount>,
-        private val minimum: JsonField<Minimum>,
-        private val minimumAmount: JsonField<String>,
-        private val maximum: JsonField<Maximum>,
-        private val maximumAmount: JsonField<String>,
-        private val unitWithProrationConfig: JsonField<UnitWithProrationConfig>,
-        private val additionalProperties: Map<String, JsonValue>,
+        @JsonProperty("metadata")
+        @ExcludeMissing
+        private val metadata: JsonField<Metadata> = JsonMissing.of(),
+        @JsonProperty("id") @ExcludeMissing private val id: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("name")
+        @ExcludeMissing
+        private val name: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("external_price_id")
+        @ExcludeMissing
+        private val externalPriceId: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("price_type")
+        @ExcludeMissing
+        private val priceType: JsonField<PriceType> = JsonMissing.of(),
+        @JsonProperty("model_type")
+        @ExcludeMissing
+        private val modelType: JsonField<ModelType> = JsonMissing.of(),
+        @JsonProperty("created_at")
+        @ExcludeMissing
+        private val createdAt: JsonField<OffsetDateTime> = JsonMissing.of(),
+        @JsonProperty("cadence")
+        @ExcludeMissing
+        private val cadence: JsonField<Cadence> = JsonMissing.of(),
+        @JsonProperty("billing_cycle_configuration")
+        @ExcludeMissing
+        private val billingCycleConfiguration: JsonField<BillingCycleConfiguration> =
+            JsonMissing.of(),
+        @JsonProperty("invoicing_cycle_configuration")
+        @ExcludeMissing
+        private val invoicingCycleConfiguration: JsonField<InvoicingCycleConfiguration> =
+            JsonMissing.of(),
+        @JsonProperty("billable_metric")
+        @ExcludeMissing
+        private val billableMetric: JsonField<BillableMetric> = JsonMissing.of(),
+        @JsonProperty("fixed_price_quantity")
+        @ExcludeMissing
+        private val fixedPriceQuantity: JsonField<Double> = JsonMissing.of(),
+        @JsonProperty("plan_phase_order")
+        @ExcludeMissing
+        private val planPhaseOrder: JsonField<Long> = JsonMissing.of(),
+        @JsonProperty("currency")
+        @ExcludeMissing
+        private val currency: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("conversion_rate")
+        @ExcludeMissing
+        private val conversionRate: JsonField<Double> = JsonMissing.of(),
+        @JsonProperty("item") @ExcludeMissing private val item: JsonField<Item> = JsonMissing.of(),
+        @JsonProperty("credit_allocation")
+        @ExcludeMissing
+        private val creditAllocation: JsonField<CreditAllocation> = JsonMissing.of(),
+        @JsonProperty("discount")
+        @ExcludeMissing
+        private val discount: JsonField<Discount> = JsonMissing.of(),
+        @JsonProperty("minimum")
+        @ExcludeMissing
+        private val minimum: JsonField<Minimum> = JsonMissing.of(),
+        @JsonProperty("minimum_amount")
+        @ExcludeMissing
+        private val minimumAmount: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("maximum")
+        @ExcludeMissing
+        private val maximum: JsonField<Maximum> = JsonMissing.of(),
+        @JsonProperty("maximum_amount")
+        @ExcludeMissing
+        private val maximumAmount: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("unit_with_proration_config")
+        @ExcludeMissing
+        private val unitWithProrationConfig: JsonField<UnitWithProrationConfig> = JsonMissing.of(),
+        @JsonAnySetter
+        private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
 
         /**
@@ -32571,62 +32588,44 @@ private constructor(
              * empty dictionary. Individual keys can be removed by setting the value to `null`, and
              * the entire metadata mapping can be cleared by setting `metadata` to `null`.
              */
-            @JsonProperty("metadata")
-            @ExcludeMissing
             fun metadata(metadata: JsonField<Metadata>) = apply { this.metadata = metadata }
 
             fun id(id: String) = id(JsonField.of(id))
 
-            @JsonProperty("id")
-            @ExcludeMissing
             fun id(id: JsonField<String>) = apply { this.id = id }
 
             fun name(name: String) = name(JsonField.of(name))
 
-            @JsonProperty("name")
-            @ExcludeMissing
             fun name(name: JsonField<String>) = apply { this.name = name }
 
             fun externalPriceId(externalPriceId: String) =
                 externalPriceId(JsonField.of(externalPriceId))
 
-            @JsonProperty("external_price_id")
-            @ExcludeMissing
             fun externalPriceId(externalPriceId: JsonField<String>) = apply {
                 this.externalPriceId = externalPriceId
             }
 
             fun priceType(priceType: PriceType) = priceType(JsonField.of(priceType))
 
-            @JsonProperty("price_type")
-            @ExcludeMissing
             fun priceType(priceType: JsonField<PriceType>) = apply { this.priceType = priceType }
 
             fun modelType(modelType: ModelType) = modelType(JsonField.of(modelType))
 
-            @JsonProperty("model_type")
-            @ExcludeMissing
             fun modelType(modelType: JsonField<ModelType>) = apply { this.modelType = modelType }
 
             fun createdAt(createdAt: OffsetDateTime) = createdAt(JsonField.of(createdAt))
 
-            @JsonProperty("created_at")
-            @ExcludeMissing
             fun createdAt(createdAt: JsonField<OffsetDateTime>) = apply {
                 this.createdAt = createdAt
             }
 
             fun cadence(cadence: Cadence) = cadence(JsonField.of(cadence))
 
-            @JsonProperty("cadence")
-            @ExcludeMissing
             fun cadence(cadence: JsonField<Cadence>) = apply { this.cadence = cadence }
 
             fun billingCycleConfiguration(billingCycleConfiguration: BillingCycleConfiguration) =
                 billingCycleConfiguration(JsonField.of(billingCycleConfiguration))
 
-            @JsonProperty("billing_cycle_configuration")
-            @ExcludeMissing
             fun billingCycleConfiguration(
                 billingCycleConfiguration: JsonField<BillingCycleConfiguration>
             ) = apply { this.billingCycleConfiguration = billingCycleConfiguration }
@@ -32635,8 +32634,6 @@ private constructor(
                 invoicingCycleConfiguration: InvoicingCycleConfiguration
             ) = invoicingCycleConfiguration(JsonField.of(invoicingCycleConfiguration))
 
-            @JsonProperty("invoicing_cycle_configuration")
-            @ExcludeMissing
             fun invoicingCycleConfiguration(
                 invoicingCycleConfiguration: JsonField<InvoicingCycleConfiguration>
             ) = apply { this.invoicingCycleConfiguration = invoicingCycleConfiguration }
@@ -32644,8 +32641,6 @@ private constructor(
             fun billableMetric(billableMetric: BillableMetric) =
                 billableMetric(JsonField.of(billableMetric))
 
-            @JsonProperty("billable_metric")
-            @ExcludeMissing
             fun billableMetric(billableMetric: JsonField<BillableMetric>) = apply {
                 this.billableMetric = billableMetric
             }
@@ -32653,80 +32648,58 @@ private constructor(
             fun fixedPriceQuantity(fixedPriceQuantity: Double) =
                 fixedPriceQuantity(JsonField.of(fixedPriceQuantity))
 
-            @JsonProperty("fixed_price_quantity")
-            @ExcludeMissing
             fun fixedPriceQuantity(fixedPriceQuantity: JsonField<Double>) = apply {
                 this.fixedPriceQuantity = fixedPriceQuantity
             }
 
             fun planPhaseOrder(planPhaseOrder: Long) = planPhaseOrder(JsonField.of(planPhaseOrder))
 
-            @JsonProperty("plan_phase_order")
-            @ExcludeMissing
             fun planPhaseOrder(planPhaseOrder: JsonField<Long>) = apply {
                 this.planPhaseOrder = planPhaseOrder
             }
 
             fun currency(currency: String) = currency(JsonField.of(currency))
 
-            @JsonProperty("currency")
-            @ExcludeMissing
             fun currency(currency: JsonField<String>) = apply { this.currency = currency }
 
             fun conversionRate(conversionRate: Double) =
                 conversionRate(JsonField.of(conversionRate))
 
-            @JsonProperty("conversion_rate")
-            @ExcludeMissing
             fun conversionRate(conversionRate: JsonField<Double>) = apply {
                 this.conversionRate = conversionRate
             }
 
             fun item(item: Item) = item(JsonField.of(item))
 
-            @JsonProperty("item")
-            @ExcludeMissing
             fun item(item: JsonField<Item>) = apply { this.item = item }
 
             fun creditAllocation(creditAllocation: CreditAllocation) =
                 creditAllocation(JsonField.of(creditAllocation))
 
-            @JsonProperty("credit_allocation")
-            @ExcludeMissing
             fun creditAllocation(creditAllocation: JsonField<CreditAllocation>) = apply {
                 this.creditAllocation = creditAllocation
             }
 
             fun discount(discount: Discount) = discount(JsonField.of(discount))
 
-            @JsonProperty("discount")
-            @ExcludeMissing
             fun discount(discount: JsonField<Discount>) = apply { this.discount = discount }
 
             fun minimum(minimum: Minimum) = minimum(JsonField.of(minimum))
 
-            @JsonProperty("minimum")
-            @ExcludeMissing
             fun minimum(minimum: JsonField<Minimum>) = apply { this.minimum = minimum }
 
             fun minimumAmount(minimumAmount: String) = minimumAmount(JsonField.of(minimumAmount))
 
-            @JsonProperty("minimum_amount")
-            @ExcludeMissing
             fun minimumAmount(minimumAmount: JsonField<String>) = apply {
                 this.minimumAmount = minimumAmount
             }
 
             fun maximum(maximum: Maximum) = maximum(JsonField.of(maximum))
 
-            @JsonProperty("maximum")
-            @ExcludeMissing
             fun maximum(maximum: JsonField<Maximum>) = apply { this.maximum = maximum }
 
             fun maximumAmount(maximumAmount: String) = maximumAmount(JsonField.of(maximumAmount))
 
-            @JsonProperty("maximum_amount")
-            @ExcludeMissing
             fun maximumAmount(maximumAmount: JsonField<String>) = apply {
                 this.maximumAmount = maximumAmount
             }
@@ -32734,8 +32707,6 @@ private constructor(
             fun unitWithProrationConfig(unitWithProrationConfig: UnitWithProrationConfig) =
                 unitWithProrationConfig(JsonField.of(unitWithProrationConfig))
 
-            @JsonProperty("unit_with_proration_config")
-            @ExcludeMissing
             fun unitWithProrationConfig(
                 unitWithProrationConfig: JsonField<UnitWithProrationConfig>
             ) = apply { this.unitWithProrationConfig = unitWithProrationConfig }
@@ -32745,7 +32716,6 @@ private constructor(
                 putAllAdditionalProperties(additionalProperties)
             }
 
-            @JsonAnySetter
             fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                 additionalProperties.put(key, value)
             }
@@ -32789,12 +32759,15 @@ private constructor(
                 )
         }
 
-        @JsonDeserialize(builder = BillableMetric.Builder::class)
         @NoAutoDetect
         class BillableMetric
+        @JsonCreator
         private constructor(
-            private val id: JsonField<String>,
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonProperty("id")
+            @ExcludeMissing
+            private val id: JsonField<String> = JsonMissing.of(),
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             fun id(): String = id.getRequired("id")
@@ -32833,8 +32806,6 @@ private constructor(
 
                 fun id(id: String) = id(JsonField.of(id))
 
-                @JsonProperty("id")
-                @ExcludeMissing
                 fun id(id: JsonField<String>) = apply { this.id = id }
 
                 fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
@@ -32842,7 +32813,6 @@ private constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -32881,13 +32851,18 @@ private constructor(
                 "BillableMetric{id=$id, additionalProperties=$additionalProperties}"
         }
 
-        @JsonDeserialize(builder = BillingCycleConfiguration.Builder::class)
         @NoAutoDetect
         class BillingCycleConfiguration
+        @JsonCreator
         private constructor(
-            private val duration: JsonField<Long>,
-            private val durationUnit: JsonField<DurationUnit>,
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonProperty("duration")
+            @ExcludeMissing
+            private val duration: JsonField<Long> = JsonMissing.of(),
+            @JsonProperty("duration_unit")
+            @ExcludeMissing
+            private val durationUnit: JsonField<DurationUnit> = JsonMissing.of(),
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             fun duration(): Long = duration.getRequired("duration")
@@ -32934,15 +32909,11 @@ private constructor(
 
                 fun duration(duration: Long) = duration(JsonField.of(duration))
 
-                @JsonProperty("duration")
-                @ExcludeMissing
                 fun duration(duration: JsonField<Long>) = apply { this.duration = duration }
 
                 fun durationUnit(durationUnit: DurationUnit) =
                     durationUnit(JsonField.of(durationUnit))
 
-                @JsonProperty("duration_unit")
-                @ExcludeMissing
                 fun durationUnit(durationUnit: JsonField<DurationUnit>) = apply {
                     this.durationUnit = durationUnit
                 }
@@ -32952,7 +32923,6 @@ private constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -33134,13 +33104,18 @@ private constructor(
             override fun toString() = value.toString()
         }
 
-        @JsonDeserialize(builder = CreditAllocation.Builder::class)
         @NoAutoDetect
         class CreditAllocation
+        @JsonCreator
         private constructor(
-            private val currency: JsonField<String>,
-            private val allowsRollover: JsonField<Boolean>,
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonProperty("currency")
+            @ExcludeMissing
+            private val currency: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("allows_rollover")
+            @ExcludeMissing
+            private val allowsRollover: JsonField<Boolean> = JsonMissing.of(),
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             fun currency(): String = currency.getRequired("currency")
@@ -33186,15 +33161,11 @@ private constructor(
 
                 fun currency(currency: String) = currency(JsonField.of(currency))
 
-                @JsonProperty("currency")
-                @ExcludeMissing
                 fun currency(currency: JsonField<String>) = apply { this.currency = currency }
 
                 fun allowsRollover(allowsRollover: Boolean) =
                     allowsRollover(JsonField.of(allowsRollover))
 
-                @JsonProperty("allows_rollover")
-                @ExcludeMissing
                 fun allowsRollover(allowsRollover: JsonField<Boolean>) = apply {
                     this.allowsRollover = allowsRollover
                 }
@@ -33204,7 +33175,6 @@ private constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -33248,13 +33218,18 @@ private constructor(
                 "CreditAllocation{currency=$currency, allowsRollover=$allowsRollover, additionalProperties=$additionalProperties}"
         }
 
-        @JsonDeserialize(builder = InvoicingCycleConfiguration.Builder::class)
         @NoAutoDetect
         class InvoicingCycleConfiguration
+        @JsonCreator
         private constructor(
-            private val duration: JsonField<Long>,
-            private val durationUnit: JsonField<DurationUnit>,
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonProperty("duration")
+            @ExcludeMissing
+            private val duration: JsonField<Long> = JsonMissing.of(),
+            @JsonProperty("duration_unit")
+            @ExcludeMissing
+            private val durationUnit: JsonField<DurationUnit> = JsonMissing.of(),
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             fun duration(): Long = duration.getRequired("duration")
@@ -33302,15 +33277,11 @@ private constructor(
 
                 fun duration(duration: Long) = duration(JsonField.of(duration))
 
-                @JsonProperty("duration")
-                @ExcludeMissing
                 fun duration(duration: JsonField<Long>) = apply { this.duration = duration }
 
                 fun durationUnit(durationUnit: DurationUnit) =
                     durationUnit(JsonField.of(durationUnit))
 
-                @JsonProperty("duration_unit")
-                @ExcludeMissing
                 fun durationUnit(durationUnit: JsonField<DurationUnit>) = apply {
                     this.durationUnit = durationUnit
                 }
@@ -33320,7 +33291,6 @@ private constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -33421,13 +33391,18 @@ private constructor(
                 "InvoicingCycleConfiguration{duration=$duration, durationUnit=$durationUnit, additionalProperties=$additionalProperties}"
         }
 
-        @JsonDeserialize(builder = Item.Builder::class)
         @NoAutoDetect
         class Item
+        @JsonCreator
         private constructor(
-            private val id: JsonField<String>,
-            private val name: JsonField<String>,
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonProperty("id")
+            @ExcludeMissing
+            private val id: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("name")
+            @ExcludeMissing
+            private val name: JsonField<String> = JsonMissing.of(),
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             fun id(): String = id.getRequired("id")
@@ -33473,14 +33448,10 @@ private constructor(
 
                 fun id(id: String) = id(JsonField.of(id))
 
-                @JsonProperty("id")
-                @ExcludeMissing
                 fun id(id: JsonField<String>) = apply { this.id = id }
 
                 fun name(name: String) = name(JsonField.of(name))
 
-                @JsonProperty("name")
-                @ExcludeMissing
                 fun name(name: JsonField<String>) = apply { this.name = name }
 
                 fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
@@ -33488,7 +33459,6 @@ private constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -33532,13 +33502,18 @@ private constructor(
                 "Item{id=$id, name=$name, additionalProperties=$additionalProperties}"
         }
 
-        @JsonDeserialize(builder = Maximum.Builder::class)
         @NoAutoDetect
         class Maximum
+        @JsonCreator
         private constructor(
-            private val maximumAmount: JsonField<String>,
-            private val appliesToPriceIds: JsonField<List<String>>,
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonProperty("maximum_amount")
+            @ExcludeMissing
+            private val maximumAmount: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("applies_to_price_ids")
+            @ExcludeMissing
+            private val appliesToPriceIds: JsonField<List<String>> = JsonMissing.of(),
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             /** Maximum amount applied */
@@ -33600,8 +33575,6 @@ private constructor(
                     maximumAmount(JsonField.of(maximumAmount))
 
                 /** Maximum amount applied */
-                @JsonProperty("maximum_amount")
-                @ExcludeMissing
                 fun maximumAmount(maximumAmount: JsonField<String>) = apply {
                     this.maximumAmount = maximumAmount
                 }
@@ -33617,8 +33590,6 @@ private constructor(
                  * List of price_ids that this maximum amount applies to. For plan/plan phase
                  * maximums, this can be a subset of prices.
                  */
-                @JsonProperty("applies_to_price_ids")
-                @ExcludeMissing
                 fun appliesToPriceIds(appliesToPriceIds: JsonField<List<String>>) = apply {
                     this.appliesToPriceIds = appliesToPriceIds
                 }
@@ -33628,7 +33599,6 @@ private constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -33677,11 +33647,12 @@ private constructor(
          * empty dictionary. Individual keys can be removed by setting the value to `null`, and the
          * entire metadata mapping can be cleared by setting `metadata` to `null`.
          */
-        @JsonDeserialize(builder = Metadata.Builder::class)
         @NoAutoDetect
         class Metadata
+        @JsonCreator
         private constructor(
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             @JsonAnyGetter
@@ -33716,7 +33687,6 @@ private constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -33754,13 +33724,18 @@ private constructor(
             override fun toString() = "Metadata{additionalProperties=$additionalProperties}"
         }
 
-        @JsonDeserialize(builder = Minimum.Builder::class)
         @NoAutoDetect
         class Minimum
+        @JsonCreator
         private constructor(
-            private val minimumAmount: JsonField<String>,
-            private val appliesToPriceIds: JsonField<List<String>>,
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonProperty("minimum_amount")
+            @ExcludeMissing
+            private val minimumAmount: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("applies_to_price_ids")
+            @ExcludeMissing
+            private val appliesToPriceIds: JsonField<List<String>> = JsonMissing.of(),
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             /** Minimum amount applied */
@@ -33822,8 +33797,6 @@ private constructor(
                     minimumAmount(JsonField.of(minimumAmount))
 
                 /** Minimum amount applied */
-                @JsonProperty("minimum_amount")
-                @ExcludeMissing
                 fun minimumAmount(minimumAmount: JsonField<String>) = apply {
                     this.minimumAmount = minimumAmount
                 }
@@ -33839,8 +33812,6 @@ private constructor(
                  * List of price_ids that this minimum amount applies to. For plan/plan phase
                  * minimums, this can be a subset of prices.
                  */
-                @JsonProperty("applies_to_price_ids")
-                @ExcludeMissing
                 fun appliesToPriceIds(appliesToPriceIds: JsonField<List<String>>) = apply {
                     this.appliesToPriceIds = appliesToPriceIds
                 }
@@ -33850,7 +33821,6 @@ private constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -34002,11 +33972,12 @@ private constructor(
             override fun toString() = value.toString()
         }
 
-        @JsonDeserialize(builder = UnitWithProrationConfig.Builder::class)
         @NoAutoDetect
         class UnitWithProrationConfig
+        @JsonCreator
         private constructor(
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             @JsonAnyGetter
@@ -34042,7 +34013,6 @@ private constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -34100,34 +34070,79 @@ private constructor(
             "UnitWithProrationPrice{metadata=$metadata, id=$id, name=$name, externalPriceId=$externalPriceId, priceType=$priceType, modelType=$modelType, createdAt=$createdAt, cadence=$cadence, billingCycleConfiguration=$billingCycleConfiguration, invoicingCycleConfiguration=$invoicingCycleConfiguration, billableMetric=$billableMetric, fixedPriceQuantity=$fixedPriceQuantity, planPhaseOrder=$planPhaseOrder, currency=$currency, conversionRate=$conversionRate, item=$item, creditAllocation=$creditAllocation, discount=$discount, minimum=$minimum, minimumAmount=$minimumAmount, maximum=$maximum, maximumAmount=$maximumAmount, unitWithProrationConfig=$unitWithProrationConfig, additionalProperties=$additionalProperties}"
     }
 
-    @JsonDeserialize(builder = GroupedAllocationPrice.Builder::class)
     @NoAutoDetect
     class GroupedAllocationPrice
+    @JsonCreator
     private constructor(
-        private val metadata: JsonField<Metadata>,
-        private val id: JsonField<String>,
-        private val name: JsonField<String>,
-        private val externalPriceId: JsonField<String>,
-        private val priceType: JsonField<PriceType>,
-        private val modelType: JsonField<ModelType>,
-        private val createdAt: JsonField<OffsetDateTime>,
-        private val cadence: JsonField<Cadence>,
-        private val billingCycleConfiguration: JsonField<BillingCycleConfiguration>,
-        private val invoicingCycleConfiguration: JsonField<InvoicingCycleConfiguration>,
-        private val billableMetric: JsonField<BillableMetric>,
-        private val fixedPriceQuantity: JsonField<Double>,
-        private val planPhaseOrder: JsonField<Long>,
-        private val currency: JsonField<String>,
-        private val conversionRate: JsonField<Double>,
-        private val item: JsonField<Item>,
-        private val creditAllocation: JsonField<CreditAllocation>,
-        private val discount: JsonField<Discount>,
-        private val minimum: JsonField<Minimum>,
-        private val minimumAmount: JsonField<String>,
-        private val maximum: JsonField<Maximum>,
-        private val maximumAmount: JsonField<String>,
-        private val groupedAllocationConfig: JsonField<GroupedAllocationConfig>,
-        private val additionalProperties: Map<String, JsonValue>,
+        @JsonProperty("metadata")
+        @ExcludeMissing
+        private val metadata: JsonField<Metadata> = JsonMissing.of(),
+        @JsonProperty("id") @ExcludeMissing private val id: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("name")
+        @ExcludeMissing
+        private val name: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("external_price_id")
+        @ExcludeMissing
+        private val externalPriceId: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("price_type")
+        @ExcludeMissing
+        private val priceType: JsonField<PriceType> = JsonMissing.of(),
+        @JsonProperty("model_type")
+        @ExcludeMissing
+        private val modelType: JsonField<ModelType> = JsonMissing.of(),
+        @JsonProperty("created_at")
+        @ExcludeMissing
+        private val createdAt: JsonField<OffsetDateTime> = JsonMissing.of(),
+        @JsonProperty("cadence")
+        @ExcludeMissing
+        private val cadence: JsonField<Cadence> = JsonMissing.of(),
+        @JsonProperty("billing_cycle_configuration")
+        @ExcludeMissing
+        private val billingCycleConfiguration: JsonField<BillingCycleConfiguration> =
+            JsonMissing.of(),
+        @JsonProperty("invoicing_cycle_configuration")
+        @ExcludeMissing
+        private val invoicingCycleConfiguration: JsonField<InvoicingCycleConfiguration> =
+            JsonMissing.of(),
+        @JsonProperty("billable_metric")
+        @ExcludeMissing
+        private val billableMetric: JsonField<BillableMetric> = JsonMissing.of(),
+        @JsonProperty("fixed_price_quantity")
+        @ExcludeMissing
+        private val fixedPriceQuantity: JsonField<Double> = JsonMissing.of(),
+        @JsonProperty("plan_phase_order")
+        @ExcludeMissing
+        private val planPhaseOrder: JsonField<Long> = JsonMissing.of(),
+        @JsonProperty("currency")
+        @ExcludeMissing
+        private val currency: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("conversion_rate")
+        @ExcludeMissing
+        private val conversionRate: JsonField<Double> = JsonMissing.of(),
+        @JsonProperty("item") @ExcludeMissing private val item: JsonField<Item> = JsonMissing.of(),
+        @JsonProperty("credit_allocation")
+        @ExcludeMissing
+        private val creditAllocation: JsonField<CreditAllocation> = JsonMissing.of(),
+        @JsonProperty("discount")
+        @ExcludeMissing
+        private val discount: JsonField<Discount> = JsonMissing.of(),
+        @JsonProperty("minimum")
+        @ExcludeMissing
+        private val minimum: JsonField<Minimum> = JsonMissing.of(),
+        @JsonProperty("minimum_amount")
+        @ExcludeMissing
+        private val minimumAmount: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("maximum")
+        @ExcludeMissing
+        private val maximum: JsonField<Maximum> = JsonMissing.of(),
+        @JsonProperty("maximum_amount")
+        @ExcludeMissing
+        private val maximumAmount: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("grouped_allocation_config")
+        @ExcludeMissing
+        private val groupedAllocationConfig: JsonField<GroupedAllocationConfig> = JsonMissing.of(),
+        @JsonAnySetter
+        private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
 
         /**
@@ -34357,62 +34372,44 @@ private constructor(
              * empty dictionary. Individual keys can be removed by setting the value to `null`, and
              * the entire metadata mapping can be cleared by setting `metadata` to `null`.
              */
-            @JsonProperty("metadata")
-            @ExcludeMissing
             fun metadata(metadata: JsonField<Metadata>) = apply { this.metadata = metadata }
 
             fun id(id: String) = id(JsonField.of(id))
 
-            @JsonProperty("id")
-            @ExcludeMissing
             fun id(id: JsonField<String>) = apply { this.id = id }
 
             fun name(name: String) = name(JsonField.of(name))
 
-            @JsonProperty("name")
-            @ExcludeMissing
             fun name(name: JsonField<String>) = apply { this.name = name }
 
             fun externalPriceId(externalPriceId: String) =
                 externalPriceId(JsonField.of(externalPriceId))
 
-            @JsonProperty("external_price_id")
-            @ExcludeMissing
             fun externalPriceId(externalPriceId: JsonField<String>) = apply {
                 this.externalPriceId = externalPriceId
             }
 
             fun priceType(priceType: PriceType) = priceType(JsonField.of(priceType))
 
-            @JsonProperty("price_type")
-            @ExcludeMissing
             fun priceType(priceType: JsonField<PriceType>) = apply { this.priceType = priceType }
 
             fun modelType(modelType: ModelType) = modelType(JsonField.of(modelType))
 
-            @JsonProperty("model_type")
-            @ExcludeMissing
             fun modelType(modelType: JsonField<ModelType>) = apply { this.modelType = modelType }
 
             fun createdAt(createdAt: OffsetDateTime) = createdAt(JsonField.of(createdAt))
 
-            @JsonProperty("created_at")
-            @ExcludeMissing
             fun createdAt(createdAt: JsonField<OffsetDateTime>) = apply {
                 this.createdAt = createdAt
             }
 
             fun cadence(cadence: Cadence) = cadence(JsonField.of(cadence))
 
-            @JsonProperty("cadence")
-            @ExcludeMissing
             fun cadence(cadence: JsonField<Cadence>) = apply { this.cadence = cadence }
 
             fun billingCycleConfiguration(billingCycleConfiguration: BillingCycleConfiguration) =
                 billingCycleConfiguration(JsonField.of(billingCycleConfiguration))
 
-            @JsonProperty("billing_cycle_configuration")
-            @ExcludeMissing
             fun billingCycleConfiguration(
                 billingCycleConfiguration: JsonField<BillingCycleConfiguration>
             ) = apply { this.billingCycleConfiguration = billingCycleConfiguration }
@@ -34421,8 +34418,6 @@ private constructor(
                 invoicingCycleConfiguration: InvoicingCycleConfiguration
             ) = invoicingCycleConfiguration(JsonField.of(invoicingCycleConfiguration))
 
-            @JsonProperty("invoicing_cycle_configuration")
-            @ExcludeMissing
             fun invoicingCycleConfiguration(
                 invoicingCycleConfiguration: JsonField<InvoicingCycleConfiguration>
             ) = apply { this.invoicingCycleConfiguration = invoicingCycleConfiguration }
@@ -34430,8 +34425,6 @@ private constructor(
             fun billableMetric(billableMetric: BillableMetric) =
                 billableMetric(JsonField.of(billableMetric))
 
-            @JsonProperty("billable_metric")
-            @ExcludeMissing
             fun billableMetric(billableMetric: JsonField<BillableMetric>) = apply {
                 this.billableMetric = billableMetric
             }
@@ -34439,80 +34432,58 @@ private constructor(
             fun fixedPriceQuantity(fixedPriceQuantity: Double) =
                 fixedPriceQuantity(JsonField.of(fixedPriceQuantity))
 
-            @JsonProperty("fixed_price_quantity")
-            @ExcludeMissing
             fun fixedPriceQuantity(fixedPriceQuantity: JsonField<Double>) = apply {
                 this.fixedPriceQuantity = fixedPriceQuantity
             }
 
             fun planPhaseOrder(planPhaseOrder: Long) = planPhaseOrder(JsonField.of(planPhaseOrder))
 
-            @JsonProperty("plan_phase_order")
-            @ExcludeMissing
             fun planPhaseOrder(planPhaseOrder: JsonField<Long>) = apply {
                 this.planPhaseOrder = planPhaseOrder
             }
 
             fun currency(currency: String) = currency(JsonField.of(currency))
 
-            @JsonProperty("currency")
-            @ExcludeMissing
             fun currency(currency: JsonField<String>) = apply { this.currency = currency }
 
             fun conversionRate(conversionRate: Double) =
                 conversionRate(JsonField.of(conversionRate))
 
-            @JsonProperty("conversion_rate")
-            @ExcludeMissing
             fun conversionRate(conversionRate: JsonField<Double>) = apply {
                 this.conversionRate = conversionRate
             }
 
             fun item(item: Item) = item(JsonField.of(item))
 
-            @JsonProperty("item")
-            @ExcludeMissing
             fun item(item: JsonField<Item>) = apply { this.item = item }
 
             fun creditAllocation(creditAllocation: CreditAllocation) =
                 creditAllocation(JsonField.of(creditAllocation))
 
-            @JsonProperty("credit_allocation")
-            @ExcludeMissing
             fun creditAllocation(creditAllocation: JsonField<CreditAllocation>) = apply {
                 this.creditAllocation = creditAllocation
             }
 
             fun discount(discount: Discount) = discount(JsonField.of(discount))
 
-            @JsonProperty("discount")
-            @ExcludeMissing
             fun discount(discount: JsonField<Discount>) = apply { this.discount = discount }
 
             fun minimum(minimum: Minimum) = minimum(JsonField.of(minimum))
 
-            @JsonProperty("minimum")
-            @ExcludeMissing
             fun minimum(minimum: JsonField<Minimum>) = apply { this.minimum = minimum }
 
             fun minimumAmount(minimumAmount: String) = minimumAmount(JsonField.of(minimumAmount))
 
-            @JsonProperty("minimum_amount")
-            @ExcludeMissing
             fun minimumAmount(minimumAmount: JsonField<String>) = apply {
                 this.minimumAmount = minimumAmount
             }
 
             fun maximum(maximum: Maximum) = maximum(JsonField.of(maximum))
 
-            @JsonProperty("maximum")
-            @ExcludeMissing
             fun maximum(maximum: JsonField<Maximum>) = apply { this.maximum = maximum }
 
             fun maximumAmount(maximumAmount: String) = maximumAmount(JsonField.of(maximumAmount))
 
-            @JsonProperty("maximum_amount")
-            @ExcludeMissing
             fun maximumAmount(maximumAmount: JsonField<String>) = apply {
                 this.maximumAmount = maximumAmount
             }
@@ -34520,8 +34491,6 @@ private constructor(
             fun groupedAllocationConfig(groupedAllocationConfig: GroupedAllocationConfig) =
                 groupedAllocationConfig(JsonField.of(groupedAllocationConfig))
 
-            @JsonProperty("grouped_allocation_config")
-            @ExcludeMissing
             fun groupedAllocationConfig(
                 groupedAllocationConfig: JsonField<GroupedAllocationConfig>
             ) = apply { this.groupedAllocationConfig = groupedAllocationConfig }
@@ -34531,7 +34500,6 @@ private constructor(
                 putAllAdditionalProperties(additionalProperties)
             }
 
-            @JsonAnySetter
             fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                 additionalProperties.put(key, value)
             }
@@ -34575,12 +34543,15 @@ private constructor(
                 )
         }
 
-        @JsonDeserialize(builder = BillableMetric.Builder::class)
         @NoAutoDetect
         class BillableMetric
+        @JsonCreator
         private constructor(
-            private val id: JsonField<String>,
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonProperty("id")
+            @ExcludeMissing
+            private val id: JsonField<String> = JsonMissing.of(),
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             fun id(): String = id.getRequired("id")
@@ -34619,8 +34590,6 @@ private constructor(
 
                 fun id(id: String) = id(JsonField.of(id))
 
-                @JsonProperty("id")
-                @ExcludeMissing
                 fun id(id: JsonField<String>) = apply { this.id = id }
 
                 fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
@@ -34628,7 +34597,6 @@ private constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -34667,13 +34635,18 @@ private constructor(
                 "BillableMetric{id=$id, additionalProperties=$additionalProperties}"
         }
 
-        @JsonDeserialize(builder = BillingCycleConfiguration.Builder::class)
         @NoAutoDetect
         class BillingCycleConfiguration
+        @JsonCreator
         private constructor(
-            private val duration: JsonField<Long>,
-            private val durationUnit: JsonField<DurationUnit>,
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonProperty("duration")
+            @ExcludeMissing
+            private val duration: JsonField<Long> = JsonMissing.of(),
+            @JsonProperty("duration_unit")
+            @ExcludeMissing
+            private val durationUnit: JsonField<DurationUnit> = JsonMissing.of(),
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             fun duration(): Long = duration.getRequired("duration")
@@ -34720,15 +34693,11 @@ private constructor(
 
                 fun duration(duration: Long) = duration(JsonField.of(duration))
 
-                @JsonProperty("duration")
-                @ExcludeMissing
                 fun duration(duration: JsonField<Long>) = apply { this.duration = duration }
 
                 fun durationUnit(durationUnit: DurationUnit) =
                     durationUnit(JsonField.of(durationUnit))
 
-                @JsonProperty("duration_unit")
-                @ExcludeMissing
                 fun durationUnit(durationUnit: JsonField<DurationUnit>) = apply {
                     this.durationUnit = durationUnit
                 }
@@ -34738,7 +34707,6 @@ private constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -34920,13 +34888,18 @@ private constructor(
             override fun toString() = value.toString()
         }
 
-        @JsonDeserialize(builder = CreditAllocation.Builder::class)
         @NoAutoDetect
         class CreditAllocation
+        @JsonCreator
         private constructor(
-            private val currency: JsonField<String>,
-            private val allowsRollover: JsonField<Boolean>,
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonProperty("currency")
+            @ExcludeMissing
+            private val currency: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("allows_rollover")
+            @ExcludeMissing
+            private val allowsRollover: JsonField<Boolean> = JsonMissing.of(),
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             fun currency(): String = currency.getRequired("currency")
@@ -34972,15 +34945,11 @@ private constructor(
 
                 fun currency(currency: String) = currency(JsonField.of(currency))
 
-                @JsonProperty("currency")
-                @ExcludeMissing
                 fun currency(currency: JsonField<String>) = apply { this.currency = currency }
 
                 fun allowsRollover(allowsRollover: Boolean) =
                     allowsRollover(JsonField.of(allowsRollover))
 
-                @JsonProperty("allows_rollover")
-                @ExcludeMissing
                 fun allowsRollover(allowsRollover: JsonField<Boolean>) = apply {
                     this.allowsRollover = allowsRollover
                 }
@@ -34990,7 +34959,6 @@ private constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -35034,11 +35002,12 @@ private constructor(
                 "CreditAllocation{currency=$currency, allowsRollover=$allowsRollover, additionalProperties=$additionalProperties}"
         }
 
-        @JsonDeserialize(builder = GroupedAllocationConfig.Builder::class)
         @NoAutoDetect
         class GroupedAllocationConfig
+        @JsonCreator
         private constructor(
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             @JsonAnyGetter
@@ -35074,7 +35043,6 @@ private constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -35114,13 +35082,18 @@ private constructor(
                 "GroupedAllocationConfig{additionalProperties=$additionalProperties}"
         }
 
-        @JsonDeserialize(builder = InvoicingCycleConfiguration.Builder::class)
         @NoAutoDetect
         class InvoicingCycleConfiguration
+        @JsonCreator
         private constructor(
-            private val duration: JsonField<Long>,
-            private val durationUnit: JsonField<DurationUnit>,
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonProperty("duration")
+            @ExcludeMissing
+            private val duration: JsonField<Long> = JsonMissing.of(),
+            @JsonProperty("duration_unit")
+            @ExcludeMissing
+            private val durationUnit: JsonField<DurationUnit> = JsonMissing.of(),
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             fun duration(): Long = duration.getRequired("duration")
@@ -35168,15 +35141,11 @@ private constructor(
 
                 fun duration(duration: Long) = duration(JsonField.of(duration))
 
-                @JsonProperty("duration")
-                @ExcludeMissing
                 fun duration(duration: JsonField<Long>) = apply { this.duration = duration }
 
                 fun durationUnit(durationUnit: DurationUnit) =
                     durationUnit(JsonField.of(durationUnit))
 
-                @JsonProperty("duration_unit")
-                @ExcludeMissing
                 fun durationUnit(durationUnit: JsonField<DurationUnit>) = apply {
                     this.durationUnit = durationUnit
                 }
@@ -35186,7 +35155,6 @@ private constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -35287,13 +35255,18 @@ private constructor(
                 "InvoicingCycleConfiguration{duration=$duration, durationUnit=$durationUnit, additionalProperties=$additionalProperties}"
         }
 
-        @JsonDeserialize(builder = Item.Builder::class)
         @NoAutoDetect
         class Item
+        @JsonCreator
         private constructor(
-            private val id: JsonField<String>,
-            private val name: JsonField<String>,
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonProperty("id")
+            @ExcludeMissing
+            private val id: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("name")
+            @ExcludeMissing
+            private val name: JsonField<String> = JsonMissing.of(),
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             fun id(): String = id.getRequired("id")
@@ -35339,14 +35312,10 @@ private constructor(
 
                 fun id(id: String) = id(JsonField.of(id))
 
-                @JsonProperty("id")
-                @ExcludeMissing
                 fun id(id: JsonField<String>) = apply { this.id = id }
 
                 fun name(name: String) = name(JsonField.of(name))
 
-                @JsonProperty("name")
-                @ExcludeMissing
                 fun name(name: JsonField<String>) = apply { this.name = name }
 
                 fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
@@ -35354,7 +35323,6 @@ private constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -35398,13 +35366,18 @@ private constructor(
                 "Item{id=$id, name=$name, additionalProperties=$additionalProperties}"
         }
 
-        @JsonDeserialize(builder = Maximum.Builder::class)
         @NoAutoDetect
         class Maximum
+        @JsonCreator
         private constructor(
-            private val maximumAmount: JsonField<String>,
-            private val appliesToPriceIds: JsonField<List<String>>,
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonProperty("maximum_amount")
+            @ExcludeMissing
+            private val maximumAmount: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("applies_to_price_ids")
+            @ExcludeMissing
+            private val appliesToPriceIds: JsonField<List<String>> = JsonMissing.of(),
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             /** Maximum amount applied */
@@ -35466,8 +35439,6 @@ private constructor(
                     maximumAmount(JsonField.of(maximumAmount))
 
                 /** Maximum amount applied */
-                @JsonProperty("maximum_amount")
-                @ExcludeMissing
                 fun maximumAmount(maximumAmount: JsonField<String>) = apply {
                     this.maximumAmount = maximumAmount
                 }
@@ -35483,8 +35454,6 @@ private constructor(
                  * List of price_ids that this maximum amount applies to. For plan/plan phase
                  * maximums, this can be a subset of prices.
                  */
-                @JsonProperty("applies_to_price_ids")
-                @ExcludeMissing
                 fun appliesToPriceIds(appliesToPriceIds: JsonField<List<String>>) = apply {
                     this.appliesToPriceIds = appliesToPriceIds
                 }
@@ -35494,7 +35463,6 @@ private constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -35543,11 +35511,12 @@ private constructor(
          * empty dictionary. Individual keys can be removed by setting the value to `null`, and the
          * entire metadata mapping can be cleared by setting `metadata` to `null`.
          */
-        @JsonDeserialize(builder = Metadata.Builder::class)
         @NoAutoDetect
         class Metadata
+        @JsonCreator
         private constructor(
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             @JsonAnyGetter
@@ -35582,7 +35551,6 @@ private constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -35620,13 +35588,18 @@ private constructor(
             override fun toString() = "Metadata{additionalProperties=$additionalProperties}"
         }
 
-        @JsonDeserialize(builder = Minimum.Builder::class)
         @NoAutoDetect
         class Minimum
+        @JsonCreator
         private constructor(
-            private val minimumAmount: JsonField<String>,
-            private val appliesToPriceIds: JsonField<List<String>>,
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonProperty("minimum_amount")
+            @ExcludeMissing
+            private val minimumAmount: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("applies_to_price_ids")
+            @ExcludeMissing
+            private val appliesToPriceIds: JsonField<List<String>> = JsonMissing.of(),
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             /** Minimum amount applied */
@@ -35688,8 +35661,6 @@ private constructor(
                     minimumAmount(JsonField.of(minimumAmount))
 
                 /** Minimum amount applied */
-                @JsonProperty("minimum_amount")
-                @ExcludeMissing
                 fun minimumAmount(minimumAmount: JsonField<String>) = apply {
                     this.minimumAmount = minimumAmount
                 }
@@ -35705,8 +35676,6 @@ private constructor(
                  * List of price_ids that this minimum amount applies to. For plan/plan phase
                  * minimums, this can be a subset of prices.
                  */
-                @JsonProperty("applies_to_price_ids")
-                @ExcludeMissing
                 fun appliesToPriceIds(appliesToPriceIds: JsonField<List<String>>) = apply {
                     this.appliesToPriceIds = appliesToPriceIds
                 }
@@ -35716,7 +35685,6 @@ private constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -35886,34 +35854,80 @@ private constructor(
             "GroupedAllocationPrice{metadata=$metadata, id=$id, name=$name, externalPriceId=$externalPriceId, priceType=$priceType, modelType=$modelType, createdAt=$createdAt, cadence=$cadence, billingCycleConfiguration=$billingCycleConfiguration, invoicingCycleConfiguration=$invoicingCycleConfiguration, billableMetric=$billableMetric, fixedPriceQuantity=$fixedPriceQuantity, planPhaseOrder=$planPhaseOrder, currency=$currency, conversionRate=$conversionRate, item=$item, creditAllocation=$creditAllocation, discount=$discount, minimum=$minimum, minimumAmount=$minimumAmount, maximum=$maximum, maximumAmount=$maximumAmount, groupedAllocationConfig=$groupedAllocationConfig, additionalProperties=$additionalProperties}"
     }
 
-    @JsonDeserialize(builder = GroupedWithProratedMinimumPrice.Builder::class)
     @NoAutoDetect
     class GroupedWithProratedMinimumPrice
+    @JsonCreator
     private constructor(
-        private val metadata: JsonField<Metadata>,
-        private val id: JsonField<String>,
-        private val name: JsonField<String>,
-        private val externalPriceId: JsonField<String>,
-        private val priceType: JsonField<PriceType>,
-        private val modelType: JsonField<ModelType>,
-        private val createdAt: JsonField<OffsetDateTime>,
-        private val cadence: JsonField<Cadence>,
-        private val billingCycleConfiguration: JsonField<BillingCycleConfiguration>,
-        private val invoicingCycleConfiguration: JsonField<InvoicingCycleConfiguration>,
-        private val billableMetric: JsonField<BillableMetric>,
-        private val fixedPriceQuantity: JsonField<Double>,
-        private val planPhaseOrder: JsonField<Long>,
-        private val currency: JsonField<String>,
-        private val conversionRate: JsonField<Double>,
-        private val item: JsonField<Item>,
-        private val creditAllocation: JsonField<CreditAllocation>,
-        private val discount: JsonField<Discount>,
-        private val minimum: JsonField<Minimum>,
-        private val minimumAmount: JsonField<String>,
-        private val maximum: JsonField<Maximum>,
-        private val maximumAmount: JsonField<String>,
-        private val groupedWithProratedMinimumConfig: JsonField<GroupedWithProratedMinimumConfig>,
-        private val additionalProperties: Map<String, JsonValue>,
+        @JsonProperty("metadata")
+        @ExcludeMissing
+        private val metadata: JsonField<Metadata> = JsonMissing.of(),
+        @JsonProperty("id") @ExcludeMissing private val id: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("name")
+        @ExcludeMissing
+        private val name: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("external_price_id")
+        @ExcludeMissing
+        private val externalPriceId: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("price_type")
+        @ExcludeMissing
+        private val priceType: JsonField<PriceType> = JsonMissing.of(),
+        @JsonProperty("model_type")
+        @ExcludeMissing
+        private val modelType: JsonField<ModelType> = JsonMissing.of(),
+        @JsonProperty("created_at")
+        @ExcludeMissing
+        private val createdAt: JsonField<OffsetDateTime> = JsonMissing.of(),
+        @JsonProperty("cadence")
+        @ExcludeMissing
+        private val cadence: JsonField<Cadence> = JsonMissing.of(),
+        @JsonProperty("billing_cycle_configuration")
+        @ExcludeMissing
+        private val billingCycleConfiguration: JsonField<BillingCycleConfiguration> =
+            JsonMissing.of(),
+        @JsonProperty("invoicing_cycle_configuration")
+        @ExcludeMissing
+        private val invoicingCycleConfiguration: JsonField<InvoicingCycleConfiguration> =
+            JsonMissing.of(),
+        @JsonProperty("billable_metric")
+        @ExcludeMissing
+        private val billableMetric: JsonField<BillableMetric> = JsonMissing.of(),
+        @JsonProperty("fixed_price_quantity")
+        @ExcludeMissing
+        private val fixedPriceQuantity: JsonField<Double> = JsonMissing.of(),
+        @JsonProperty("plan_phase_order")
+        @ExcludeMissing
+        private val planPhaseOrder: JsonField<Long> = JsonMissing.of(),
+        @JsonProperty("currency")
+        @ExcludeMissing
+        private val currency: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("conversion_rate")
+        @ExcludeMissing
+        private val conversionRate: JsonField<Double> = JsonMissing.of(),
+        @JsonProperty("item") @ExcludeMissing private val item: JsonField<Item> = JsonMissing.of(),
+        @JsonProperty("credit_allocation")
+        @ExcludeMissing
+        private val creditAllocation: JsonField<CreditAllocation> = JsonMissing.of(),
+        @JsonProperty("discount")
+        @ExcludeMissing
+        private val discount: JsonField<Discount> = JsonMissing.of(),
+        @JsonProperty("minimum")
+        @ExcludeMissing
+        private val minimum: JsonField<Minimum> = JsonMissing.of(),
+        @JsonProperty("minimum_amount")
+        @ExcludeMissing
+        private val minimumAmount: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("maximum")
+        @ExcludeMissing
+        private val maximum: JsonField<Maximum> = JsonMissing.of(),
+        @JsonProperty("maximum_amount")
+        @ExcludeMissing
+        private val maximumAmount: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("grouped_with_prorated_minimum_config")
+        @ExcludeMissing
+        private val groupedWithProratedMinimumConfig: JsonField<GroupedWithProratedMinimumConfig> =
+            JsonMissing.of(),
+        @JsonAnySetter
+        private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
 
         /**
@@ -36149,62 +36163,44 @@ private constructor(
              * empty dictionary. Individual keys can be removed by setting the value to `null`, and
              * the entire metadata mapping can be cleared by setting `metadata` to `null`.
              */
-            @JsonProperty("metadata")
-            @ExcludeMissing
             fun metadata(metadata: JsonField<Metadata>) = apply { this.metadata = metadata }
 
             fun id(id: String) = id(JsonField.of(id))
 
-            @JsonProperty("id")
-            @ExcludeMissing
             fun id(id: JsonField<String>) = apply { this.id = id }
 
             fun name(name: String) = name(JsonField.of(name))
 
-            @JsonProperty("name")
-            @ExcludeMissing
             fun name(name: JsonField<String>) = apply { this.name = name }
 
             fun externalPriceId(externalPriceId: String) =
                 externalPriceId(JsonField.of(externalPriceId))
 
-            @JsonProperty("external_price_id")
-            @ExcludeMissing
             fun externalPriceId(externalPriceId: JsonField<String>) = apply {
                 this.externalPriceId = externalPriceId
             }
 
             fun priceType(priceType: PriceType) = priceType(JsonField.of(priceType))
 
-            @JsonProperty("price_type")
-            @ExcludeMissing
             fun priceType(priceType: JsonField<PriceType>) = apply { this.priceType = priceType }
 
             fun modelType(modelType: ModelType) = modelType(JsonField.of(modelType))
 
-            @JsonProperty("model_type")
-            @ExcludeMissing
             fun modelType(modelType: JsonField<ModelType>) = apply { this.modelType = modelType }
 
             fun createdAt(createdAt: OffsetDateTime) = createdAt(JsonField.of(createdAt))
 
-            @JsonProperty("created_at")
-            @ExcludeMissing
             fun createdAt(createdAt: JsonField<OffsetDateTime>) = apply {
                 this.createdAt = createdAt
             }
 
             fun cadence(cadence: Cadence) = cadence(JsonField.of(cadence))
 
-            @JsonProperty("cadence")
-            @ExcludeMissing
             fun cadence(cadence: JsonField<Cadence>) = apply { this.cadence = cadence }
 
             fun billingCycleConfiguration(billingCycleConfiguration: BillingCycleConfiguration) =
                 billingCycleConfiguration(JsonField.of(billingCycleConfiguration))
 
-            @JsonProperty("billing_cycle_configuration")
-            @ExcludeMissing
             fun billingCycleConfiguration(
                 billingCycleConfiguration: JsonField<BillingCycleConfiguration>
             ) = apply { this.billingCycleConfiguration = billingCycleConfiguration }
@@ -36213,8 +36209,6 @@ private constructor(
                 invoicingCycleConfiguration: InvoicingCycleConfiguration
             ) = invoicingCycleConfiguration(JsonField.of(invoicingCycleConfiguration))
 
-            @JsonProperty("invoicing_cycle_configuration")
-            @ExcludeMissing
             fun invoicingCycleConfiguration(
                 invoicingCycleConfiguration: JsonField<InvoicingCycleConfiguration>
             ) = apply { this.invoicingCycleConfiguration = invoicingCycleConfiguration }
@@ -36222,8 +36216,6 @@ private constructor(
             fun billableMetric(billableMetric: BillableMetric) =
                 billableMetric(JsonField.of(billableMetric))
 
-            @JsonProperty("billable_metric")
-            @ExcludeMissing
             fun billableMetric(billableMetric: JsonField<BillableMetric>) = apply {
                 this.billableMetric = billableMetric
             }
@@ -36231,80 +36223,58 @@ private constructor(
             fun fixedPriceQuantity(fixedPriceQuantity: Double) =
                 fixedPriceQuantity(JsonField.of(fixedPriceQuantity))
 
-            @JsonProperty("fixed_price_quantity")
-            @ExcludeMissing
             fun fixedPriceQuantity(fixedPriceQuantity: JsonField<Double>) = apply {
                 this.fixedPriceQuantity = fixedPriceQuantity
             }
 
             fun planPhaseOrder(planPhaseOrder: Long) = planPhaseOrder(JsonField.of(planPhaseOrder))
 
-            @JsonProperty("plan_phase_order")
-            @ExcludeMissing
             fun planPhaseOrder(planPhaseOrder: JsonField<Long>) = apply {
                 this.planPhaseOrder = planPhaseOrder
             }
 
             fun currency(currency: String) = currency(JsonField.of(currency))
 
-            @JsonProperty("currency")
-            @ExcludeMissing
             fun currency(currency: JsonField<String>) = apply { this.currency = currency }
 
             fun conversionRate(conversionRate: Double) =
                 conversionRate(JsonField.of(conversionRate))
 
-            @JsonProperty("conversion_rate")
-            @ExcludeMissing
             fun conversionRate(conversionRate: JsonField<Double>) = apply {
                 this.conversionRate = conversionRate
             }
 
             fun item(item: Item) = item(JsonField.of(item))
 
-            @JsonProperty("item")
-            @ExcludeMissing
             fun item(item: JsonField<Item>) = apply { this.item = item }
 
             fun creditAllocation(creditAllocation: CreditAllocation) =
                 creditAllocation(JsonField.of(creditAllocation))
 
-            @JsonProperty("credit_allocation")
-            @ExcludeMissing
             fun creditAllocation(creditAllocation: JsonField<CreditAllocation>) = apply {
                 this.creditAllocation = creditAllocation
             }
 
             fun discount(discount: Discount) = discount(JsonField.of(discount))
 
-            @JsonProperty("discount")
-            @ExcludeMissing
             fun discount(discount: JsonField<Discount>) = apply { this.discount = discount }
 
             fun minimum(minimum: Minimum) = minimum(JsonField.of(minimum))
 
-            @JsonProperty("minimum")
-            @ExcludeMissing
             fun minimum(minimum: JsonField<Minimum>) = apply { this.minimum = minimum }
 
             fun minimumAmount(minimumAmount: String) = minimumAmount(JsonField.of(minimumAmount))
 
-            @JsonProperty("minimum_amount")
-            @ExcludeMissing
             fun minimumAmount(minimumAmount: JsonField<String>) = apply {
                 this.minimumAmount = minimumAmount
             }
 
             fun maximum(maximum: Maximum) = maximum(JsonField.of(maximum))
 
-            @JsonProperty("maximum")
-            @ExcludeMissing
             fun maximum(maximum: JsonField<Maximum>) = apply { this.maximum = maximum }
 
             fun maximumAmount(maximumAmount: String) = maximumAmount(JsonField.of(maximumAmount))
 
-            @JsonProperty("maximum_amount")
-            @ExcludeMissing
             fun maximumAmount(maximumAmount: JsonField<String>) = apply {
                 this.maximumAmount = maximumAmount
             }
@@ -36313,8 +36283,6 @@ private constructor(
                 groupedWithProratedMinimumConfig: GroupedWithProratedMinimumConfig
             ) = groupedWithProratedMinimumConfig(JsonField.of(groupedWithProratedMinimumConfig))
 
-            @JsonProperty("grouped_with_prorated_minimum_config")
-            @ExcludeMissing
             fun groupedWithProratedMinimumConfig(
                 groupedWithProratedMinimumConfig: JsonField<GroupedWithProratedMinimumConfig>
             ) = apply { this.groupedWithProratedMinimumConfig = groupedWithProratedMinimumConfig }
@@ -36324,7 +36292,6 @@ private constructor(
                 putAllAdditionalProperties(additionalProperties)
             }
 
-            @JsonAnySetter
             fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                 additionalProperties.put(key, value)
             }
@@ -36368,12 +36335,15 @@ private constructor(
                 )
         }
 
-        @JsonDeserialize(builder = BillableMetric.Builder::class)
         @NoAutoDetect
         class BillableMetric
+        @JsonCreator
         private constructor(
-            private val id: JsonField<String>,
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonProperty("id")
+            @ExcludeMissing
+            private val id: JsonField<String> = JsonMissing.of(),
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             fun id(): String = id.getRequired("id")
@@ -36412,8 +36382,6 @@ private constructor(
 
                 fun id(id: String) = id(JsonField.of(id))
 
-                @JsonProperty("id")
-                @ExcludeMissing
                 fun id(id: JsonField<String>) = apply { this.id = id }
 
                 fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
@@ -36421,7 +36389,6 @@ private constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -36460,13 +36427,18 @@ private constructor(
                 "BillableMetric{id=$id, additionalProperties=$additionalProperties}"
         }
 
-        @JsonDeserialize(builder = BillingCycleConfiguration.Builder::class)
         @NoAutoDetect
         class BillingCycleConfiguration
+        @JsonCreator
         private constructor(
-            private val duration: JsonField<Long>,
-            private val durationUnit: JsonField<DurationUnit>,
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonProperty("duration")
+            @ExcludeMissing
+            private val duration: JsonField<Long> = JsonMissing.of(),
+            @JsonProperty("duration_unit")
+            @ExcludeMissing
+            private val durationUnit: JsonField<DurationUnit> = JsonMissing.of(),
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             fun duration(): Long = duration.getRequired("duration")
@@ -36513,15 +36485,11 @@ private constructor(
 
                 fun duration(duration: Long) = duration(JsonField.of(duration))
 
-                @JsonProperty("duration")
-                @ExcludeMissing
                 fun duration(duration: JsonField<Long>) = apply { this.duration = duration }
 
                 fun durationUnit(durationUnit: DurationUnit) =
                     durationUnit(JsonField.of(durationUnit))
 
-                @JsonProperty("duration_unit")
-                @ExcludeMissing
                 fun durationUnit(durationUnit: JsonField<DurationUnit>) = apply {
                     this.durationUnit = durationUnit
                 }
@@ -36531,7 +36499,6 @@ private constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -36713,13 +36680,18 @@ private constructor(
             override fun toString() = value.toString()
         }
 
-        @JsonDeserialize(builder = CreditAllocation.Builder::class)
         @NoAutoDetect
         class CreditAllocation
+        @JsonCreator
         private constructor(
-            private val currency: JsonField<String>,
-            private val allowsRollover: JsonField<Boolean>,
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonProperty("currency")
+            @ExcludeMissing
+            private val currency: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("allows_rollover")
+            @ExcludeMissing
+            private val allowsRollover: JsonField<Boolean> = JsonMissing.of(),
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             fun currency(): String = currency.getRequired("currency")
@@ -36765,15 +36737,11 @@ private constructor(
 
                 fun currency(currency: String) = currency(JsonField.of(currency))
 
-                @JsonProperty("currency")
-                @ExcludeMissing
                 fun currency(currency: JsonField<String>) = apply { this.currency = currency }
 
                 fun allowsRollover(allowsRollover: Boolean) =
                     allowsRollover(JsonField.of(allowsRollover))
 
-                @JsonProperty("allows_rollover")
-                @ExcludeMissing
                 fun allowsRollover(allowsRollover: JsonField<Boolean>) = apply {
                     this.allowsRollover = allowsRollover
                 }
@@ -36783,7 +36751,6 @@ private constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -36827,11 +36794,12 @@ private constructor(
                 "CreditAllocation{currency=$currency, allowsRollover=$allowsRollover, additionalProperties=$additionalProperties}"
         }
 
-        @JsonDeserialize(builder = GroupedWithProratedMinimumConfig.Builder::class)
         @NoAutoDetect
         class GroupedWithProratedMinimumConfig
+        @JsonCreator
         private constructor(
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             @JsonAnyGetter
@@ -36869,7 +36837,6 @@ private constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -36909,13 +36876,18 @@ private constructor(
                 "GroupedWithProratedMinimumConfig{additionalProperties=$additionalProperties}"
         }
 
-        @JsonDeserialize(builder = InvoicingCycleConfiguration.Builder::class)
         @NoAutoDetect
         class InvoicingCycleConfiguration
+        @JsonCreator
         private constructor(
-            private val duration: JsonField<Long>,
-            private val durationUnit: JsonField<DurationUnit>,
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonProperty("duration")
+            @ExcludeMissing
+            private val duration: JsonField<Long> = JsonMissing.of(),
+            @JsonProperty("duration_unit")
+            @ExcludeMissing
+            private val durationUnit: JsonField<DurationUnit> = JsonMissing.of(),
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             fun duration(): Long = duration.getRequired("duration")
@@ -36963,15 +36935,11 @@ private constructor(
 
                 fun duration(duration: Long) = duration(JsonField.of(duration))
 
-                @JsonProperty("duration")
-                @ExcludeMissing
                 fun duration(duration: JsonField<Long>) = apply { this.duration = duration }
 
                 fun durationUnit(durationUnit: DurationUnit) =
                     durationUnit(JsonField.of(durationUnit))
 
-                @JsonProperty("duration_unit")
-                @ExcludeMissing
                 fun durationUnit(durationUnit: JsonField<DurationUnit>) = apply {
                     this.durationUnit = durationUnit
                 }
@@ -36981,7 +36949,6 @@ private constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -37082,13 +37049,18 @@ private constructor(
                 "InvoicingCycleConfiguration{duration=$duration, durationUnit=$durationUnit, additionalProperties=$additionalProperties}"
         }
 
-        @JsonDeserialize(builder = Item.Builder::class)
         @NoAutoDetect
         class Item
+        @JsonCreator
         private constructor(
-            private val id: JsonField<String>,
-            private val name: JsonField<String>,
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonProperty("id")
+            @ExcludeMissing
+            private val id: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("name")
+            @ExcludeMissing
+            private val name: JsonField<String> = JsonMissing.of(),
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             fun id(): String = id.getRequired("id")
@@ -37134,14 +37106,10 @@ private constructor(
 
                 fun id(id: String) = id(JsonField.of(id))
 
-                @JsonProperty("id")
-                @ExcludeMissing
                 fun id(id: JsonField<String>) = apply { this.id = id }
 
                 fun name(name: String) = name(JsonField.of(name))
 
-                @JsonProperty("name")
-                @ExcludeMissing
                 fun name(name: JsonField<String>) = apply { this.name = name }
 
                 fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
@@ -37149,7 +37117,6 @@ private constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -37193,13 +37160,18 @@ private constructor(
                 "Item{id=$id, name=$name, additionalProperties=$additionalProperties}"
         }
 
-        @JsonDeserialize(builder = Maximum.Builder::class)
         @NoAutoDetect
         class Maximum
+        @JsonCreator
         private constructor(
-            private val maximumAmount: JsonField<String>,
-            private val appliesToPriceIds: JsonField<List<String>>,
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonProperty("maximum_amount")
+            @ExcludeMissing
+            private val maximumAmount: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("applies_to_price_ids")
+            @ExcludeMissing
+            private val appliesToPriceIds: JsonField<List<String>> = JsonMissing.of(),
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             /** Maximum amount applied */
@@ -37261,8 +37233,6 @@ private constructor(
                     maximumAmount(JsonField.of(maximumAmount))
 
                 /** Maximum amount applied */
-                @JsonProperty("maximum_amount")
-                @ExcludeMissing
                 fun maximumAmount(maximumAmount: JsonField<String>) = apply {
                     this.maximumAmount = maximumAmount
                 }
@@ -37278,8 +37248,6 @@ private constructor(
                  * List of price_ids that this maximum amount applies to. For plan/plan phase
                  * maximums, this can be a subset of prices.
                  */
-                @JsonProperty("applies_to_price_ids")
-                @ExcludeMissing
                 fun appliesToPriceIds(appliesToPriceIds: JsonField<List<String>>) = apply {
                     this.appliesToPriceIds = appliesToPriceIds
                 }
@@ -37289,7 +37257,6 @@ private constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -37338,11 +37305,12 @@ private constructor(
          * empty dictionary. Individual keys can be removed by setting the value to `null`, and the
          * entire metadata mapping can be cleared by setting `metadata` to `null`.
          */
-        @JsonDeserialize(builder = Metadata.Builder::class)
         @NoAutoDetect
         class Metadata
+        @JsonCreator
         private constructor(
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             @JsonAnyGetter
@@ -37377,7 +37345,6 @@ private constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -37415,13 +37382,18 @@ private constructor(
             override fun toString() = "Metadata{additionalProperties=$additionalProperties}"
         }
 
-        @JsonDeserialize(builder = Minimum.Builder::class)
         @NoAutoDetect
         class Minimum
+        @JsonCreator
         private constructor(
-            private val minimumAmount: JsonField<String>,
-            private val appliesToPriceIds: JsonField<List<String>>,
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonProperty("minimum_amount")
+            @ExcludeMissing
+            private val minimumAmount: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("applies_to_price_ids")
+            @ExcludeMissing
+            private val appliesToPriceIds: JsonField<List<String>> = JsonMissing.of(),
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             /** Minimum amount applied */
@@ -37483,8 +37455,6 @@ private constructor(
                     minimumAmount(JsonField.of(minimumAmount))
 
                 /** Minimum amount applied */
-                @JsonProperty("minimum_amount")
-                @ExcludeMissing
                 fun minimumAmount(minimumAmount: JsonField<String>) = apply {
                     this.minimumAmount = minimumAmount
                 }
@@ -37500,8 +37470,6 @@ private constructor(
                  * List of price_ids that this minimum amount applies to. For plan/plan phase
                  * minimums, this can be a subset of prices.
                  */
-                @JsonProperty("applies_to_price_ids")
-                @ExcludeMissing
                 fun appliesToPriceIds(appliesToPriceIds: JsonField<List<String>>) = apply {
                     this.appliesToPriceIds = appliesToPriceIds
                 }
@@ -37511,7 +37479,6 @@ private constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -37681,34 +37648,80 @@ private constructor(
             "GroupedWithProratedMinimumPrice{metadata=$metadata, id=$id, name=$name, externalPriceId=$externalPriceId, priceType=$priceType, modelType=$modelType, createdAt=$createdAt, cadence=$cadence, billingCycleConfiguration=$billingCycleConfiguration, invoicingCycleConfiguration=$invoicingCycleConfiguration, billableMetric=$billableMetric, fixedPriceQuantity=$fixedPriceQuantity, planPhaseOrder=$planPhaseOrder, currency=$currency, conversionRate=$conversionRate, item=$item, creditAllocation=$creditAllocation, discount=$discount, minimum=$minimum, minimumAmount=$minimumAmount, maximum=$maximum, maximumAmount=$maximumAmount, groupedWithProratedMinimumConfig=$groupedWithProratedMinimumConfig, additionalProperties=$additionalProperties}"
     }
 
-    @JsonDeserialize(builder = GroupedWithMeteredMinimumPrice.Builder::class)
     @NoAutoDetect
     class GroupedWithMeteredMinimumPrice
+    @JsonCreator
     private constructor(
-        private val metadata: JsonField<Metadata>,
-        private val id: JsonField<String>,
-        private val name: JsonField<String>,
-        private val externalPriceId: JsonField<String>,
-        private val priceType: JsonField<PriceType>,
-        private val modelType: JsonField<ModelType>,
-        private val createdAt: JsonField<OffsetDateTime>,
-        private val cadence: JsonField<Cadence>,
-        private val billingCycleConfiguration: JsonField<BillingCycleConfiguration>,
-        private val invoicingCycleConfiguration: JsonField<InvoicingCycleConfiguration>,
-        private val billableMetric: JsonField<BillableMetric>,
-        private val fixedPriceQuantity: JsonField<Double>,
-        private val planPhaseOrder: JsonField<Long>,
-        private val currency: JsonField<String>,
-        private val conversionRate: JsonField<Double>,
-        private val item: JsonField<Item>,
-        private val creditAllocation: JsonField<CreditAllocation>,
-        private val discount: JsonField<Discount>,
-        private val minimum: JsonField<Minimum>,
-        private val minimumAmount: JsonField<String>,
-        private val maximum: JsonField<Maximum>,
-        private val maximumAmount: JsonField<String>,
-        private val groupedWithMeteredMinimumConfig: JsonField<GroupedWithMeteredMinimumConfig>,
-        private val additionalProperties: Map<String, JsonValue>,
+        @JsonProperty("metadata")
+        @ExcludeMissing
+        private val metadata: JsonField<Metadata> = JsonMissing.of(),
+        @JsonProperty("id") @ExcludeMissing private val id: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("name")
+        @ExcludeMissing
+        private val name: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("external_price_id")
+        @ExcludeMissing
+        private val externalPriceId: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("price_type")
+        @ExcludeMissing
+        private val priceType: JsonField<PriceType> = JsonMissing.of(),
+        @JsonProperty("model_type")
+        @ExcludeMissing
+        private val modelType: JsonField<ModelType> = JsonMissing.of(),
+        @JsonProperty("created_at")
+        @ExcludeMissing
+        private val createdAt: JsonField<OffsetDateTime> = JsonMissing.of(),
+        @JsonProperty("cadence")
+        @ExcludeMissing
+        private val cadence: JsonField<Cadence> = JsonMissing.of(),
+        @JsonProperty("billing_cycle_configuration")
+        @ExcludeMissing
+        private val billingCycleConfiguration: JsonField<BillingCycleConfiguration> =
+            JsonMissing.of(),
+        @JsonProperty("invoicing_cycle_configuration")
+        @ExcludeMissing
+        private val invoicingCycleConfiguration: JsonField<InvoicingCycleConfiguration> =
+            JsonMissing.of(),
+        @JsonProperty("billable_metric")
+        @ExcludeMissing
+        private val billableMetric: JsonField<BillableMetric> = JsonMissing.of(),
+        @JsonProperty("fixed_price_quantity")
+        @ExcludeMissing
+        private val fixedPriceQuantity: JsonField<Double> = JsonMissing.of(),
+        @JsonProperty("plan_phase_order")
+        @ExcludeMissing
+        private val planPhaseOrder: JsonField<Long> = JsonMissing.of(),
+        @JsonProperty("currency")
+        @ExcludeMissing
+        private val currency: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("conversion_rate")
+        @ExcludeMissing
+        private val conversionRate: JsonField<Double> = JsonMissing.of(),
+        @JsonProperty("item") @ExcludeMissing private val item: JsonField<Item> = JsonMissing.of(),
+        @JsonProperty("credit_allocation")
+        @ExcludeMissing
+        private val creditAllocation: JsonField<CreditAllocation> = JsonMissing.of(),
+        @JsonProperty("discount")
+        @ExcludeMissing
+        private val discount: JsonField<Discount> = JsonMissing.of(),
+        @JsonProperty("minimum")
+        @ExcludeMissing
+        private val minimum: JsonField<Minimum> = JsonMissing.of(),
+        @JsonProperty("minimum_amount")
+        @ExcludeMissing
+        private val minimumAmount: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("maximum")
+        @ExcludeMissing
+        private val maximum: JsonField<Maximum> = JsonMissing.of(),
+        @JsonProperty("maximum_amount")
+        @ExcludeMissing
+        private val maximumAmount: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("grouped_with_metered_minimum_config")
+        @ExcludeMissing
+        private val groupedWithMeteredMinimumConfig: JsonField<GroupedWithMeteredMinimumConfig> =
+            JsonMissing.of(),
+        @JsonAnySetter
+        private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
 
         /**
@@ -37944,62 +37957,44 @@ private constructor(
              * empty dictionary. Individual keys can be removed by setting the value to `null`, and
              * the entire metadata mapping can be cleared by setting `metadata` to `null`.
              */
-            @JsonProperty("metadata")
-            @ExcludeMissing
             fun metadata(metadata: JsonField<Metadata>) = apply { this.metadata = metadata }
 
             fun id(id: String) = id(JsonField.of(id))
 
-            @JsonProperty("id")
-            @ExcludeMissing
             fun id(id: JsonField<String>) = apply { this.id = id }
 
             fun name(name: String) = name(JsonField.of(name))
 
-            @JsonProperty("name")
-            @ExcludeMissing
             fun name(name: JsonField<String>) = apply { this.name = name }
 
             fun externalPriceId(externalPriceId: String) =
                 externalPriceId(JsonField.of(externalPriceId))
 
-            @JsonProperty("external_price_id")
-            @ExcludeMissing
             fun externalPriceId(externalPriceId: JsonField<String>) = apply {
                 this.externalPriceId = externalPriceId
             }
 
             fun priceType(priceType: PriceType) = priceType(JsonField.of(priceType))
 
-            @JsonProperty("price_type")
-            @ExcludeMissing
             fun priceType(priceType: JsonField<PriceType>) = apply { this.priceType = priceType }
 
             fun modelType(modelType: ModelType) = modelType(JsonField.of(modelType))
 
-            @JsonProperty("model_type")
-            @ExcludeMissing
             fun modelType(modelType: JsonField<ModelType>) = apply { this.modelType = modelType }
 
             fun createdAt(createdAt: OffsetDateTime) = createdAt(JsonField.of(createdAt))
 
-            @JsonProperty("created_at")
-            @ExcludeMissing
             fun createdAt(createdAt: JsonField<OffsetDateTime>) = apply {
                 this.createdAt = createdAt
             }
 
             fun cadence(cadence: Cadence) = cadence(JsonField.of(cadence))
 
-            @JsonProperty("cadence")
-            @ExcludeMissing
             fun cadence(cadence: JsonField<Cadence>) = apply { this.cadence = cadence }
 
             fun billingCycleConfiguration(billingCycleConfiguration: BillingCycleConfiguration) =
                 billingCycleConfiguration(JsonField.of(billingCycleConfiguration))
 
-            @JsonProperty("billing_cycle_configuration")
-            @ExcludeMissing
             fun billingCycleConfiguration(
                 billingCycleConfiguration: JsonField<BillingCycleConfiguration>
             ) = apply { this.billingCycleConfiguration = billingCycleConfiguration }
@@ -38008,8 +38003,6 @@ private constructor(
                 invoicingCycleConfiguration: InvoicingCycleConfiguration
             ) = invoicingCycleConfiguration(JsonField.of(invoicingCycleConfiguration))
 
-            @JsonProperty("invoicing_cycle_configuration")
-            @ExcludeMissing
             fun invoicingCycleConfiguration(
                 invoicingCycleConfiguration: JsonField<InvoicingCycleConfiguration>
             ) = apply { this.invoicingCycleConfiguration = invoicingCycleConfiguration }
@@ -38017,8 +38010,6 @@ private constructor(
             fun billableMetric(billableMetric: BillableMetric) =
                 billableMetric(JsonField.of(billableMetric))
 
-            @JsonProperty("billable_metric")
-            @ExcludeMissing
             fun billableMetric(billableMetric: JsonField<BillableMetric>) = apply {
                 this.billableMetric = billableMetric
             }
@@ -38026,80 +38017,58 @@ private constructor(
             fun fixedPriceQuantity(fixedPriceQuantity: Double) =
                 fixedPriceQuantity(JsonField.of(fixedPriceQuantity))
 
-            @JsonProperty("fixed_price_quantity")
-            @ExcludeMissing
             fun fixedPriceQuantity(fixedPriceQuantity: JsonField<Double>) = apply {
                 this.fixedPriceQuantity = fixedPriceQuantity
             }
 
             fun planPhaseOrder(planPhaseOrder: Long) = planPhaseOrder(JsonField.of(planPhaseOrder))
 
-            @JsonProperty("plan_phase_order")
-            @ExcludeMissing
             fun planPhaseOrder(planPhaseOrder: JsonField<Long>) = apply {
                 this.planPhaseOrder = planPhaseOrder
             }
 
             fun currency(currency: String) = currency(JsonField.of(currency))
 
-            @JsonProperty("currency")
-            @ExcludeMissing
             fun currency(currency: JsonField<String>) = apply { this.currency = currency }
 
             fun conversionRate(conversionRate: Double) =
                 conversionRate(JsonField.of(conversionRate))
 
-            @JsonProperty("conversion_rate")
-            @ExcludeMissing
             fun conversionRate(conversionRate: JsonField<Double>) = apply {
                 this.conversionRate = conversionRate
             }
 
             fun item(item: Item) = item(JsonField.of(item))
 
-            @JsonProperty("item")
-            @ExcludeMissing
             fun item(item: JsonField<Item>) = apply { this.item = item }
 
             fun creditAllocation(creditAllocation: CreditAllocation) =
                 creditAllocation(JsonField.of(creditAllocation))
 
-            @JsonProperty("credit_allocation")
-            @ExcludeMissing
             fun creditAllocation(creditAllocation: JsonField<CreditAllocation>) = apply {
                 this.creditAllocation = creditAllocation
             }
 
             fun discount(discount: Discount) = discount(JsonField.of(discount))
 
-            @JsonProperty("discount")
-            @ExcludeMissing
             fun discount(discount: JsonField<Discount>) = apply { this.discount = discount }
 
             fun minimum(minimum: Minimum) = minimum(JsonField.of(minimum))
 
-            @JsonProperty("minimum")
-            @ExcludeMissing
             fun minimum(minimum: JsonField<Minimum>) = apply { this.minimum = minimum }
 
             fun minimumAmount(minimumAmount: String) = minimumAmount(JsonField.of(minimumAmount))
 
-            @JsonProperty("minimum_amount")
-            @ExcludeMissing
             fun minimumAmount(minimumAmount: JsonField<String>) = apply {
                 this.minimumAmount = minimumAmount
             }
 
             fun maximum(maximum: Maximum) = maximum(JsonField.of(maximum))
 
-            @JsonProperty("maximum")
-            @ExcludeMissing
             fun maximum(maximum: JsonField<Maximum>) = apply { this.maximum = maximum }
 
             fun maximumAmount(maximumAmount: String) = maximumAmount(JsonField.of(maximumAmount))
 
-            @JsonProperty("maximum_amount")
-            @ExcludeMissing
             fun maximumAmount(maximumAmount: JsonField<String>) = apply {
                 this.maximumAmount = maximumAmount
             }
@@ -38108,8 +38077,6 @@ private constructor(
                 groupedWithMeteredMinimumConfig: GroupedWithMeteredMinimumConfig
             ) = groupedWithMeteredMinimumConfig(JsonField.of(groupedWithMeteredMinimumConfig))
 
-            @JsonProperty("grouped_with_metered_minimum_config")
-            @ExcludeMissing
             fun groupedWithMeteredMinimumConfig(
                 groupedWithMeteredMinimumConfig: JsonField<GroupedWithMeteredMinimumConfig>
             ) = apply { this.groupedWithMeteredMinimumConfig = groupedWithMeteredMinimumConfig }
@@ -38119,7 +38086,6 @@ private constructor(
                 putAllAdditionalProperties(additionalProperties)
             }
 
-            @JsonAnySetter
             fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                 additionalProperties.put(key, value)
             }
@@ -38163,12 +38129,15 @@ private constructor(
                 )
         }
 
-        @JsonDeserialize(builder = BillableMetric.Builder::class)
         @NoAutoDetect
         class BillableMetric
+        @JsonCreator
         private constructor(
-            private val id: JsonField<String>,
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonProperty("id")
+            @ExcludeMissing
+            private val id: JsonField<String> = JsonMissing.of(),
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             fun id(): String = id.getRequired("id")
@@ -38207,8 +38176,6 @@ private constructor(
 
                 fun id(id: String) = id(JsonField.of(id))
 
-                @JsonProperty("id")
-                @ExcludeMissing
                 fun id(id: JsonField<String>) = apply { this.id = id }
 
                 fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
@@ -38216,7 +38183,6 @@ private constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -38255,13 +38221,18 @@ private constructor(
                 "BillableMetric{id=$id, additionalProperties=$additionalProperties}"
         }
 
-        @JsonDeserialize(builder = BillingCycleConfiguration.Builder::class)
         @NoAutoDetect
         class BillingCycleConfiguration
+        @JsonCreator
         private constructor(
-            private val duration: JsonField<Long>,
-            private val durationUnit: JsonField<DurationUnit>,
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonProperty("duration")
+            @ExcludeMissing
+            private val duration: JsonField<Long> = JsonMissing.of(),
+            @JsonProperty("duration_unit")
+            @ExcludeMissing
+            private val durationUnit: JsonField<DurationUnit> = JsonMissing.of(),
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             fun duration(): Long = duration.getRequired("duration")
@@ -38308,15 +38279,11 @@ private constructor(
 
                 fun duration(duration: Long) = duration(JsonField.of(duration))
 
-                @JsonProperty("duration")
-                @ExcludeMissing
                 fun duration(duration: JsonField<Long>) = apply { this.duration = duration }
 
                 fun durationUnit(durationUnit: DurationUnit) =
                     durationUnit(JsonField.of(durationUnit))
 
-                @JsonProperty("duration_unit")
-                @ExcludeMissing
                 fun durationUnit(durationUnit: JsonField<DurationUnit>) = apply {
                     this.durationUnit = durationUnit
                 }
@@ -38326,7 +38293,6 @@ private constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -38508,13 +38474,18 @@ private constructor(
             override fun toString() = value.toString()
         }
 
-        @JsonDeserialize(builder = CreditAllocation.Builder::class)
         @NoAutoDetect
         class CreditAllocation
+        @JsonCreator
         private constructor(
-            private val currency: JsonField<String>,
-            private val allowsRollover: JsonField<Boolean>,
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonProperty("currency")
+            @ExcludeMissing
+            private val currency: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("allows_rollover")
+            @ExcludeMissing
+            private val allowsRollover: JsonField<Boolean> = JsonMissing.of(),
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             fun currency(): String = currency.getRequired("currency")
@@ -38560,15 +38531,11 @@ private constructor(
 
                 fun currency(currency: String) = currency(JsonField.of(currency))
 
-                @JsonProperty("currency")
-                @ExcludeMissing
                 fun currency(currency: JsonField<String>) = apply { this.currency = currency }
 
                 fun allowsRollover(allowsRollover: Boolean) =
                     allowsRollover(JsonField.of(allowsRollover))
 
-                @JsonProperty("allows_rollover")
-                @ExcludeMissing
                 fun allowsRollover(allowsRollover: JsonField<Boolean>) = apply {
                     this.allowsRollover = allowsRollover
                 }
@@ -38578,7 +38545,6 @@ private constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -38622,11 +38588,12 @@ private constructor(
                 "CreditAllocation{currency=$currency, allowsRollover=$allowsRollover, additionalProperties=$additionalProperties}"
         }
 
-        @JsonDeserialize(builder = GroupedWithMeteredMinimumConfig.Builder::class)
         @NoAutoDetect
         class GroupedWithMeteredMinimumConfig
+        @JsonCreator
         private constructor(
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             @JsonAnyGetter
@@ -38664,7 +38631,6 @@ private constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -38704,13 +38670,18 @@ private constructor(
                 "GroupedWithMeteredMinimumConfig{additionalProperties=$additionalProperties}"
         }
 
-        @JsonDeserialize(builder = InvoicingCycleConfiguration.Builder::class)
         @NoAutoDetect
         class InvoicingCycleConfiguration
+        @JsonCreator
         private constructor(
-            private val duration: JsonField<Long>,
-            private val durationUnit: JsonField<DurationUnit>,
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonProperty("duration")
+            @ExcludeMissing
+            private val duration: JsonField<Long> = JsonMissing.of(),
+            @JsonProperty("duration_unit")
+            @ExcludeMissing
+            private val durationUnit: JsonField<DurationUnit> = JsonMissing.of(),
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             fun duration(): Long = duration.getRequired("duration")
@@ -38758,15 +38729,11 @@ private constructor(
 
                 fun duration(duration: Long) = duration(JsonField.of(duration))
 
-                @JsonProperty("duration")
-                @ExcludeMissing
                 fun duration(duration: JsonField<Long>) = apply { this.duration = duration }
 
                 fun durationUnit(durationUnit: DurationUnit) =
                     durationUnit(JsonField.of(durationUnit))
 
-                @JsonProperty("duration_unit")
-                @ExcludeMissing
                 fun durationUnit(durationUnit: JsonField<DurationUnit>) = apply {
                     this.durationUnit = durationUnit
                 }
@@ -38776,7 +38743,6 @@ private constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -38877,13 +38843,18 @@ private constructor(
                 "InvoicingCycleConfiguration{duration=$duration, durationUnit=$durationUnit, additionalProperties=$additionalProperties}"
         }
 
-        @JsonDeserialize(builder = Item.Builder::class)
         @NoAutoDetect
         class Item
+        @JsonCreator
         private constructor(
-            private val id: JsonField<String>,
-            private val name: JsonField<String>,
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonProperty("id")
+            @ExcludeMissing
+            private val id: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("name")
+            @ExcludeMissing
+            private val name: JsonField<String> = JsonMissing.of(),
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             fun id(): String = id.getRequired("id")
@@ -38929,14 +38900,10 @@ private constructor(
 
                 fun id(id: String) = id(JsonField.of(id))
 
-                @JsonProperty("id")
-                @ExcludeMissing
                 fun id(id: JsonField<String>) = apply { this.id = id }
 
                 fun name(name: String) = name(JsonField.of(name))
 
-                @JsonProperty("name")
-                @ExcludeMissing
                 fun name(name: JsonField<String>) = apply { this.name = name }
 
                 fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
@@ -38944,7 +38911,6 @@ private constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -38988,13 +38954,18 @@ private constructor(
                 "Item{id=$id, name=$name, additionalProperties=$additionalProperties}"
         }
 
-        @JsonDeserialize(builder = Maximum.Builder::class)
         @NoAutoDetect
         class Maximum
+        @JsonCreator
         private constructor(
-            private val maximumAmount: JsonField<String>,
-            private val appliesToPriceIds: JsonField<List<String>>,
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonProperty("maximum_amount")
+            @ExcludeMissing
+            private val maximumAmount: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("applies_to_price_ids")
+            @ExcludeMissing
+            private val appliesToPriceIds: JsonField<List<String>> = JsonMissing.of(),
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             /** Maximum amount applied */
@@ -39056,8 +39027,6 @@ private constructor(
                     maximumAmount(JsonField.of(maximumAmount))
 
                 /** Maximum amount applied */
-                @JsonProperty("maximum_amount")
-                @ExcludeMissing
                 fun maximumAmount(maximumAmount: JsonField<String>) = apply {
                     this.maximumAmount = maximumAmount
                 }
@@ -39073,8 +39042,6 @@ private constructor(
                  * List of price_ids that this maximum amount applies to. For plan/plan phase
                  * maximums, this can be a subset of prices.
                  */
-                @JsonProperty("applies_to_price_ids")
-                @ExcludeMissing
                 fun appliesToPriceIds(appliesToPriceIds: JsonField<List<String>>) = apply {
                     this.appliesToPriceIds = appliesToPriceIds
                 }
@@ -39084,7 +39051,6 @@ private constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -39133,11 +39099,12 @@ private constructor(
          * empty dictionary. Individual keys can be removed by setting the value to `null`, and the
          * entire metadata mapping can be cleared by setting `metadata` to `null`.
          */
-        @JsonDeserialize(builder = Metadata.Builder::class)
         @NoAutoDetect
         class Metadata
+        @JsonCreator
         private constructor(
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             @JsonAnyGetter
@@ -39172,7 +39139,6 @@ private constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -39210,13 +39176,18 @@ private constructor(
             override fun toString() = "Metadata{additionalProperties=$additionalProperties}"
         }
 
-        @JsonDeserialize(builder = Minimum.Builder::class)
         @NoAutoDetect
         class Minimum
+        @JsonCreator
         private constructor(
-            private val minimumAmount: JsonField<String>,
-            private val appliesToPriceIds: JsonField<List<String>>,
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonProperty("minimum_amount")
+            @ExcludeMissing
+            private val minimumAmount: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("applies_to_price_ids")
+            @ExcludeMissing
+            private val appliesToPriceIds: JsonField<List<String>> = JsonMissing.of(),
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             /** Minimum amount applied */
@@ -39278,8 +39249,6 @@ private constructor(
                     minimumAmount(JsonField.of(minimumAmount))
 
                 /** Minimum amount applied */
-                @JsonProperty("minimum_amount")
-                @ExcludeMissing
                 fun minimumAmount(minimumAmount: JsonField<String>) = apply {
                     this.minimumAmount = minimumAmount
                 }
@@ -39295,8 +39264,6 @@ private constructor(
                  * List of price_ids that this minimum amount applies to. For plan/plan phase
                  * minimums, this can be a subset of prices.
                  */
-                @JsonProperty("applies_to_price_ids")
-                @ExcludeMissing
                 fun appliesToPriceIds(appliesToPriceIds: JsonField<List<String>>) = apply {
                     this.appliesToPriceIds = appliesToPriceIds
                 }
@@ -39306,7 +39273,6 @@ private constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -39476,34 +39442,80 @@ private constructor(
             "GroupedWithMeteredMinimumPrice{metadata=$metadata, id=$id, name=$name, externalPriceId=$externalPriceId, priceType=$priceType, modelType=$modelType, createdAt=$createdAt, cadence=$cadence, billingCycleConfiguration=$billingCycleConfiguration, invoicingCycleConfiguration=$invoicingCycleConfiguration, billableMetric=$billableMetric, fixedPriceQuantity=$fixedPriceQuantity, planPhaseOrder=$planPhaseOrder, currency=$currency, conversionRate=$conversionRate, item=$item, creditAllocation=$creditAllocation, discount=$discount, minimum=$minimum, minimumAmount=$minimumAmount, maximum=$maximum, maximumAmount=$maximumAmount, groupedWithMeteredMinimumConfig=$groupedWithMeteredMinimumConfig, additionalProperties=$additionalProperties}"
     }
 
-    @JsonDeserialize(builder = MatrixWithDisplayNamePrice.Builder::class)
     @NoAutoDetect
     class MatrixWithDisplayNamePrice
+    @JsonCreator
     private constructor(
-        private val metadata: JsonField<Metadata>,
-        private val id: JsonField<String>,
-        private val name: JsonField<String>,
-        private val externalPriceId: JsonField<String>,
-        private val priceType: JsonField<PriceType>,
-        private val modelType: JsonField<ModelType>,
-        private val createdAt: JsonField<OffsetDateTime>,
-        private val cadence: JsonField<Cadence>,
-        private val billingCycleConfiguration: JsonField<BillingCycleConfiguration>,
-        private val invoicingCycleConfiguration: JsonField<InvoicingCycleConfiguration>,
-        private val billableMetric: JsonField<BillableMetric>,
-        private val fixedPriceQuantity: JsonField<Double>,
-        private val planPhaseOrder: JsonField<Long>,
-        private val currency: JsonField<String>,
-        private val conversionRate: JsonField<Double>,
-        private val item: JsonField<Item>,
-        private val creditAllocation: JsonField<CreditAllocation>,
-        private val discount: JsonField<Discount>,
-        private val minimum: JsonField<Minimum>,
-        private val minimumAmount: JsonField<String>,
-        private val maximum: JsonField<Maximum>,
-        private val maximumAmount: JsonField<String>,
-        private val matrixWithDisplayNameConfig: JsonField<MatrixWithDisplayNameConfig>,
-        private val additionalProperties: Map<String, JsonValue>,
+        @JsonProperty("metadata")
+        @ExcludeMissing
+        private val metadata: JsonField<Metadata> = JsonMissing.of(),
+        @JsonProperty("id") @ExcludeMissing private val id: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("name")
+        @ExcludeMissing
+        private val name: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("external_price_id")
+        @ExcludeMissing
+        private val externalPriceId: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("price_type")
+        @ExcludeMissing
+        private val priceType: JsonField<PriceType> = JsonMissing.of(),
+        @JsonProperty("model_type")
+        @ExcludeMissing
+        private val modelType: JsonField<ModelType> = JsonMissing.of(),
+        @JsonProperty("created_at")
+        @ExcludeMissing
+        private val createdAt: JsonField<OffsetDateTime> = JsonMissing.of(),
+        @JsonProperty("cadence")
+        @ExcludeMissing
+        private val cadence: JsonField<Cadence> = JsonMissing.of(),
+        @JsonProperty("billing_cycle_configuration")
+        @ExcludeMissing
+        private val billingCycleConfiguration: JsonField<BillingCycleConfiguration> =
+            JsonMissing.of(),
+        @JsonProperty("invoicing_cycle_configuration")
+        @ExcludeMissing
+        private val invoicingCycleConfiguration: JsonField<InvoicingCycleConfiguration> =
+            JsonMissing.of(),
+        @JsonProperty("billable_metric")
+        @ExcludeMissing
+        private val billableMetric: JsonField<BillableMetric> = JsonMissing.of(),
+        @JsonProperty("fixed_price_quantity")
+        @ExcludeMissing
+        private val fixedPriceQuantity: JsonField<Double> = JsonMissing.of(),
+        @JsonProperty("plan_phase_order")
+        @ExcludeMissing
+        private val planPhaseOrder: JsonField<Long> = JsonMissing.of(),
+        @JsonProperty("currency")
+        @ExcludeMissing
+        private val currency: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("conversion_rate")
+        @ExcludeMissing
+        private val conversionRate: JsonField<Double> = JsonMissing.of(),
+        @JsonProperty("item") @ExcludeMissing private val item: JsonField<Item> = JsonMissing.of(),
+        @JsonProperty("credit_allocation")
+        @ExcludeMissing
+        private val creditAllocation: JsonField<CreditAllocation> = JsonMissing.of(),
+        @JsonProperty("discount")
+        @ExcludeMissing
+        private val discount: JsonField<Discount> = JsonMissing.of(),
+        @JsonProperty("minimum")
+        @ExcludeMissing
+        private val minimum: JsonField<Minimum> = JsonMissing.of(),
+        @JsonProperty("minimum_amount")
+        @ExcludeMissing
+        private val minimumAmount: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("maximum")
+        @ExcludeMissing
+        private val maximum: JsonField<Maximum> = JsonMissing.of(),
+        @JsonProperty("maximum_amount")
+        @ExcludeMissing
+        private val maximumAmount: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("matrix_with_display_name_config")
+        @ExcludeMissing
+        private val matrixWithDisplayNameConfig: JsonField<MatrixWithDisplayNameConfig> =
+            JsonMissing.of(),
+        @JsonAnySetter
+        private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
 
         /**
@@ -39734,62 +39746,44 @@ private constructor(
              * empty dictionary. Individual keys can be removed by setting the value to `null`, and
              * the entire metadata mapping can be cleared by setting `metadata` to `null`.
              */
-            @JsonProperty("metadata")
-            @ExcludeMissing
             fun metadata(metadata: JsonField<Metadata>) = apply { this.metadata = metadata }
 
             fun id(id: String) = id(JsonField.of(id))
 
-            @JsonProperty("id")
-            @ExcludeMissing
             fun id(id: JsonField<String>) = apply { this.id = id }
 
             fun name(name: String) = name(JsonField.of(name))
 
-            @JsonProperty("name")
-            @ExcludeMissing
             fun name(name: JsonField<String>) = apply { this.name = name }
 
             fun externalPriceId(externalPriceId: String) =
                 externalPriceId(JsonField.of(externalPriceId))
 
-            @JsonProperty("external_price_id")
-            @ExcludeMissing
             fun externalPriceId(externalPriceId: JsonField<String>) = apply {
                 this.externalPriceId = externalPriceId
             }
 
             fun priceType(priceType: PriceType) = priceType(JsonField.of(priceType))
 
-            @JsonProperty("price_type")
-            @ExcludeMissing
             fun priceType(priceType: JsonField<PriceType>) = apply { this.priceType = priceType }
 
             fun modelType(modelType: ModelType) = modelType(JsonField.of(modelType))
 
-            @JsonProperty("model_type")
-            @ExcludeMissing
             fun modelType(modelType: JsonField<ModelType>) = apply { this.modelType = modelType }
 
             fun createdAt(createdAt: OffsetDateTime) = createdAt(JsonField.of(createdAt))
 
-            @JsonProperty("created_at")
-            @ExcludeMissing
             fun createdAt(createdAt: JsonField<OffsetDateTime>) = apply {
                 this.createdAt = createdAt
             }
 
             fun cadence(cadence: Cadence) = cadence(JsonField.of(cadence))
 
-            @JsonProperty("cadence")
-            @ExcludeMissing
             fun cadence(cadence: JsonField<Cadence>) = apply { this.cadence = cadence }
 
             fun billingCycleConfiguration(billingCycleConfiguration: BillingCycleConfiguration) =
                 billingCycleConfiguration(JsonField.of(billingCycleConfiguration))
 
-            @JsonProperty("billing_cycle_configuration")
-            @ExcludeMissing
             fun billingCycleConfiguration(
                 billingCycleConfiguration: JsonField<BillingCycleConfiguration>
             ) = apply { this.billingCycleConfiguration = billingCycleConfiguration }
@@ -39798,8 +39792,6 @@ private constructor(
                 invoicingCycleConfiguration: InvoicingCycleConfiguration
             ) = invoicingCycleConfiguration(JsonField.of(invoicingCycleConfiguration))
 
-            @JsonProperty("invoicing_cycle_configuration")
-            @ExcludeMissing
             fun invoicingCycleConfiguration(
                 invoicingCycleConfiguration: JsonField<InvoicingCycleConfiguration>
             ) = apply { this.invoicingCycleConfiguration = invoicingCycleConfiguration }
@@ -39807,8 +39799,6 @@ private constructor(
             fun billableMetric(billableMetric: BillableMetric) =
                 billableMetric(JsonField.of(billableMetric))
 
-            @JsonProperty("billable_metric")
-            @ExcludeMissing
             fun billableMetric(billableMetric: JsonField<BillableMetric>) = apply {
                 this.billableMetric = billableMetric
             }
@@ -39816,80 +39806,58 @@ private constructor(
             fun fixedPriceQuantity(fixedPriceQuantity: Double) =
                 fixedPriceQuantity(JsonField.of(fixedPriceQuantity))
 
-            @JsonProperty("fixed_price_quantity")
-            @ExcludeMissing
             fun fixedPriceQuantity(fixedPriceQuantity: JsonField<Double>) = apply {
                 this.fixedPriceQuantity = fixedPriceQuantity
             }
 
             fun planPhaseOrder(planPhaseOrder: Long) = planPhaseOrder(JsonField.of(planPhaseOrder))
 
-            @JsonProperty("plan_phase_order")
-            @ExcludeMissing
             fun planPhaseOrder(planPhaseOrder: JsonField<Long>) = apply {
                 this.planPhaseOrder = planPhaseOrder
             }
 
             fun currency(currency: String) = currency(JsonField.of(currency))
 
-            @JsonProperty("currency")
-            @ExcludeMissing
             fun currency(currency: JsonField<String>) = apply { this.currency = currency }
 
             fun conversionRate(conversionRate: Double) =
                 conversionRate(JsonField.of(conversionRate))
 
-            @JsonProperty("conversion_rate")
-            @ExcludeMissing
             fun conversionRate(conversionRate: JsonField<Double>) = apply {
                 this.conversionRate = conversionRate
             }
 
             fun item(item: Item) = item(JsonField.of(item))
 
-            @JsonProperty("item")
-            @ExcludeMissing
             fun item(item: JsonField<Item>) = apply { this.item = item }
 
             fun creditAllocation(creditAllocation: CreditAllocation) =
                 creditAllocation(JsonField.of(creditAllocation))
 
-            @JsonProperty("credit_allocation")
-            @ExcludeMissing
             fun creditAllocation(creditAllocation: JsonField<CreditAllocation>) = apply {
                 this.creditAllocation = creditAllocation
             }
 
             fun discount(discount: Discount) = discount(JsonField.of(discount))
 
-            @JsonProperty("discount")
-            @ExcludeMissing
             fun discount(discount: JsonField<Discount>) = apply { this.discount = discount }
 
             fun minimum(minimum: Minimum) = minimum(JsonField.of(minimum))
 
-            @JsonProperty("minimum")
-            @ExcludeMissing
             fun minimum(minimum: JsonField<Minimum>) = apply { this.minimum = minimum }
 
             fun minimumAmount(minimumAmount: String) = minimumAmount(JsonField.of(minimumAmount))
 
-            @JsonProperty("minimum_amount")
-            @ExcludeMissing
             fun minimumAmount(minimumAmount: JsonField<String>) = apply {
                 this.minimumAmount = minimumAmount
             }
 
             fun maximum(maximum: Maximum) = maximum(JsonField.of(maximum))
 
-            @JsonProperty("maximum")
-            @ExcludeMissing
             fun maximum(maximum: JsonField<Maximum>) = apply { this.maximum = maximum }
 
             fun maximumAmount(maximumAmount: String) = maximumAmount(JsonField.of(maximumAmount))
 
-            @JsonProperty("maximum_amount")
-            @ExcludeMissing
             fun maximumAmount(maximumAmount: JsonField<String>) = apply {
                 this.maximumAmount = maximumAmount
             }
@@ -39898,8 +39866,6 @@ private constructor(
                 matrixWithDisplayNameConfig: MatrixWithDisplayNameConfig
             ) = matrixWithDisplayNameConfig(JsonField.of(matrixWithDisplayNameConfig))
 
-            @JsonProperty("matrix_with_display_name_config")
-            @ExcludeMissing
             fun matrixWithDisplayNameConfig(
                 matrixWithDisplayNameConfig: JsonField<MatrixWithDisplayNameConfig>
             ) = apply { this.matrixWithDisplayNameConfig = matrixWithDisplayNameConfig }
@@ -39909,7 +39875,6 @@ private constructor(
                 putAllAdditionalProperties(additionalProperties)
             }
 
-            @JsonAnySetter
             fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                 additionalProperties.put(key, value)
             }
@@ -39953,12 +39918,15 @@ private constructor(
                 )
         }
 
-        @JsonDeserialize(builder = BillableMetric.Builder::class)
         @NoAutoDetect
         class BillableMetric
+        @JsonCreator
         private constructor(
-            private val id: JsonField<String>,
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonProperty("id")
+            @ExcludeMissing
+            private val id: JsonField<String> = JsonMissing.of(),
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             fun id(): String = id.getRequired("id")
@@ -39997,8 +39965,6 @@ private constructor(
 
                 fun id(id: String) = id(JsonField.of(id))
 
-                @JsonProperty("id")
-                @ExcludeMissing
                 fun id(id: JsonField<String>) = apply { this.id = id }
 
                 fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
@@ -40006,7 +39972,6 @@ private constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -40045,13 +40010,18 @@ private constructor(
                 "BillableMetric{id=$id, additionalProperties=$additionalProperties}"
         }
 
-        @JsonDeserialize(builder = BillingCycleConfiguration.Builder::class)
         @NoAutoDetect
         class BillingCycleConfiguration
+        @JsonCreator
         private constructor(
-            private val duration: JsonField<Long>,
-            private val durationUnit: JsonField<DurationUnit>,
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonProperty("duration")
+            @ExcludeMissing
+            private val duration: JsonField<Long> = JsonMissing.of(),
+            @JsonProperty("duration_unit")
+            @ExcludeMissing
+            private val durationUnit: JsonField<DurationUnit> = JsonMissing.of(),
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             fun duration(): Long = duration.getRequired("duration")
@@ -40098,15 +40068,11 @@ private constructor(
 
                 fun duration(duration: Long) = duration(JsonField.of(duration))
 
-                @JsonProperty("duration")
-                @ExcludeMissing
                 fun duration(duration: JsonField<Long>) = apply { this.duration = duration }
 
                 fun durationUnit(durationUnit: DurationUnit) =
                     durationUnit(JsonField.of(durationUnit))
 
-                @JsonProperty("duration_unit")
-                @ExcludeMissing
                 fun durationUnit(durationUnit: JsonField<DurationUnit>) = apply {
                     this.durationUnit = durationUnit
                 }
@@ -40116,7 +40082,6 @@ private constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -40298,13 +40263,18 @@ private constructor(
             override fun toString() = value.toString()
         }
 
-        @JsonDeserialize(builder = CreditAllocation.Builder::class)
         @NoAutoDetect
         class CreditAllocation
+        @JsonCreator
         private constructor(
-            private val currency: JsonField<String>,
-            private val allowsRollover: JsonField<Boolean>,
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonProperty("currency")
+            @ExcludeMissing
+            private val currency: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("allows_rollover")
+            @ExcludeMissing
+            private val allowsRollover: JsonField<Boolean> = JsonMissing.of(),
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             fun currency(): String = currency.getRequired("currency")
@@ -40350,15 +40320,11 @@ private constructor(
 
                 fun currency(currency: String) = currency(JsonField.of(currency))
 
-                @JsonProperty("currency")
-                @ExcludeMissing
                 fun currency(currency: JsonField<String>) = apply { this.currency = currency }
 
                 fun allowsRollover(allowsRollover: Boolean) =
                     allowsRollover(JsonField.of(allowsRollover))
 
-                @JsonProperty("allows_rollover")
-                @ExcludeMissing
                 fun allowsRollover(allowsRollover: JsonField<Boolean>) = apply {
                     this.allowsRollover = allowsRollover
                 }
@@ -40368,7 +40334,6 @@ private constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -40412,13 +40377,18 @@ private constructor(
                 "CreditAllocation{currency=$currency, allowsRollover=$allowsRollover, additionalProperties=$additionalProperties}"
         }
 
-        @JsonDeserialize(builder = InvoicingCycleConfiguration.Builder::class)
         @NoAutoDetect
         class InvoicingCycleConfiguration
+        @JsonCreator
         private constructor(
-            private val duration: JsonField<Long>,
-            private val durationUnit: JsonField<DurationUnit>,
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonProperty("duration")
+            @ExcludeMissing
+            private val duration: JsonField<Long> = JsonMissing.of(),
+            @JsonProperty("duration_unit")
+            @ExcludeMissing
+            private val durationUnit: JsonField<DurationUnit> = JsonMissing.of(),
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             fun duration(): Long = duration.getRequired("duration")
@@ -40466,15 +40436,11 @@ private constructor(
 
                 fun duration(duration: Long) = duration(JsonField.of(duration))
 
-                @JsonProperty("duration")
-                @ExcludeMissing
                 fun duration(duration: JsonField<Long>) = apply { this.duration = duration }
 
                 fun durationUnit(durationUnit: DurationUnit) =
                     durationUnit(JsonField.of(durationUnit))
 
-                @JsonProperty("duration_unit")
-                @ExcludeMissing
                 fun durationUnit(durationUnit: JsonField<DurationUnit>) = apply {
                     this.durationUnit = durationUnit
                 }
@@ -40484,7 +40450,6 @@ private constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -40585,13 +40550,18 @@ private constructor(
                 "InvoicingCycleConfiguration{duration=$duration, durationUnit=$durationUnit, additionalProperties=$additionalProperties}"
         }
 
-        @JsonDeserialize(builder = Item.Builder::class)
         @NoAutoDetect
         class Item
+        @JsonCreator
         private constructor(
-            private val id: JsonField<String>,
-            private val name: JsonField<String>,
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonProperty("id")
+            @ExcludeMissing
+            private val id: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("name")
+            @ExcludeMissing
+            private val name: JsonField<String> = JsonMissing.of(),
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             fun id(): String = id.getRequired("id")
@@ -40637,14 +40607,10 @@ private constructor(
 
                 fun id(id: String) = id(JsonField.of(id))
 
-                @JsonProperty("id")
-                @ExcludeMissing
                 fun id(id: JsonField<String>) = apply { this.id = id }
 
                 fun name(name: String) = name(JsonField.of(name))
 
-                @JsonProperty("name")
-                @ExcludeMissing
                 fun name(name: JsonField<String>) = apply { this.name = name }
 
                 fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
@@ -40652,7 +40618,6 @@ private constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -40696,11 +40661,12 @@ private constructor(
                 "Item{id=$id, name=$name, additionalProperties=$additionalProperties}"
         }
 
-        @JsonDeserialize(builder = MatrixWithDisplayNameConfig.Builder::class)
         @NoAutoDetect
         class MatrixWithDisplayNameConfig
+        @JsonCreator
         private constructor(
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             @JsonAnyGetter
@@ -40737,7 +40703,6 @@ private constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -40777,13 +40742,18 @@ private constructor(
                 "MatrixWithDisplayNameConfig{additionalProperties=$additionalProperties}"
         }
 
-        @JsonDeserialize(builder = Maximum.Builder::class)
         @NoAutoDetect
         class Maximum
+        @JsonCreator
         private constructor(
-            private val maximumAmount: JsonField<String>,
-            private val appliesToPriceIds: JsonField<List<String>>,
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonProperty("maximum_amount")
+            @ExcludeMissing
+            private val maximumAmount: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("applies_to_price_ids")
+            @ExcludeMissing
+            private val appliesToPriceIds: JsonField<List<String>> = JsonMissing.of(),
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             /** Maximum amount applied */
@@ -40845,8 +40815,6 @@ private constructor(
                     maximumAmount(JsonField.of(maximumAmount))
 
                 /** Maximum amount applied */
-                @JsonProperty("maximum_amount")
-                @ExcludeMissing
                 fun maximumAmount(maximumAmount: JsonField<String>) = apply {
                     this.maximumAmount = maximumAmount
                 }
@@ -40862,8 +40830,6 @@ private constructor(
                  * List of price_ids that this maximum amount applies to. For plan/plan phase
                  * maximums, this can be a subset of prices.
                  */
-                @JsonProperty("applies_to_price_ids")
-                @ExcludeMissing
                 fun appliesToPriceIds(appliesToPriceIds: JsonField<List<String>>) = apply {
                     this.appliesToPriceIds = appliesToPriceIds
                 }
@@ -40873,7 +40839,6 @@ private constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -40922,11 +40887,12 @@ private constructor(
          * empty dictionary. Individual keys can be removed by setting the value to `null`, and the
          * entire metadata mapping can be cleared by setting `metadata` to `null`.
          */
-        @JsonDeserialize(builder = Metadata.Builder::class)
         @NoAutoDetect
         class Metadata
+        @JsonCreator
         private constructor(
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             @JsonAnyGetter
@@ -40961,7 +40927,6 @@ private constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -40999,13 +40964,18 @@ private constructor(
             override fun toString() = "Metadata{additionalProperties=$additionalProperties}"
         }
 
-        @JsonDeserialize(builder = Minimum.Builder::class)
         @NoAutoDetect
         class Minimum
+        @JsonCreator
         private constructor(
-            private val minimumAmount: JsonField<String>,
-            private val appliesToPriceIds: JsonField<List<String>>,
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonProperty("minimum_amount")
+            @ExcludeMissing
+            private val minimumAmount: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("applies_to_price_ids")
+            @ExcludeMissing
+            private val appliesToPriceIds: JsonField<List<String>> = JsonMissing.of(),
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             /** Minimum amount applied */
@@ -41067,8 +41037,6 @@ private constructor(
                     minimumAmount(JsonField.of(minimumAmount))
 
                 /** Minimum amount applied */
-                @JsonProperty("minimum_amount")
-                @ExcludeMissing
                 fun minimumAmount(minimumAmount: JsonField<String>) = apply {
                     this.minimumAmount = minimumAmount
                 }
@@ -41084,8 +41052,6 @@ private constructor(
                  * List of price_ids that this minimum amount applies to. For plan/plan phase
                  * minimums, this can be a subset of prices.
                  */
-                @JsonProperty("applies_to_price_ids")
-                @ExcludeMissing
                 fun appliesToPriceIds(appliesToPriceIds: JsonField<List<String>>) = apply {
                     this.appliesToPriceIds = appliesToPriceIds
                 }
@@ -41095,7 +41061,6 @@ private constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -41265,34 +41230,79 @@ private constructor(
             "MatrixWithDisplayNamePrice{metadata=$metadata, id=$id, name=$name, externalPriceId=$externalPriceId, priceType=$priceType, modelType=$modelType, createdAt=$createdAt, cadence=$cadence, billingCycleConfiguration=$billingCycleConfiguration, invoicingCycleConfiguration=$invoicingCycleConfiguration, billableMetric=$billableMetric, fixedPriceQuantity=$fixedPriceQuantity, planPhaseOrder=$planPhaseOrder, currency=$currency, conversionRate=$conversionRate, item=$item, creditAllocation=$creditAllocation, discount=$discount, minimum=$minimum, minimumAmount=$minimumAmount, maximum=$maximum, maximumAmount=$maximumAmount, matrixWithDisplayNameConfig=$matrixWithDisplayNameConfig, additionalProperties=$additionalProperties}"
     }
 
-    @JsonDeserialize(builder = BulkWithProrationPrice.Builder::class)
     @NoAutoDetect
     class BulkWithProrationPrice
+    @JsonCreator
     private constructor(
-        private val metadata: JsonField<Metadata>,
-        private val id: JsonField<String>,
-        private val name: JsonField<String>,
-        private val externalPriceId: JsonField<String>,
-        private val priceType: JsonField<PriceType>,
-        private val modelType: JsonField<ModelType>,
-        private val createdAt: JsonField<OffsetDateTime>,
-        private val cadence: JsonField<Cadence>,
-        private val billingCycleConfiguration: JsonField<BillingCycleConfiguration>,
-        private val invoicingCycleConfiguration: JsonField<InvoicingCycleConfiguration>,
-        private val billableMetric: JsonField<BillableMetric>,
-        private val fixedPriceQuantity: JsonField<Double>,
-        private val planPhaseOrder: JsonField<Long>,
-        private val currency: JsonField<String>,
-        private val conversionRate: JsonField<Double>,
-        private val item: JsonField<Item>,
-        private val creditAllocation: JsonField<CreditAllocation>,
-        private val discount: JsonField<Discount>,
-        private val minimum: JsonField<Minimum>,
-        private val minimumAmount: JsonField<String>,
-        private val maximum: JsonField<Maximum>,
-        private val maximumAmount: JsonField<String>,
-        private val bulkWithProrationConfig: JsonField<BulkWithProrationConfig>,
-        private val additionalProperties: Map<String, JsonValue>,
+        @JsonProperty("metadata")
+        @ExcludeMissing
+        private val metadata: JsonField<Metadata> = JsonMissing.of(),
+        @JsonProperty("id") @ExcludeMissing private val id: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("name")
+        @ExcludeMissing
+        private val name: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("external_price_id")
+        @ExcludeMissing
+        private val externalPriceId: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("price_type")
+        @ExcludeMissing
+        private val priceType: JsonField<PriceType> = JsonMissing.of(),
+        @JsonProperty("model_type")
+        @ExcludeMissing
+        private val modelType: JsonField<ModelType> = JsonMissing.of(),
+        @JsonProperty("created_at")
+        @ExcludeMissing
+        private val createdAt: JsonField<OffsetDateTime> = JsonMissing.of(),
+        @JsonProperty("cadence")
+        @ExcludeMissing
+        private val cadence: JsonField<Cadence> = JsonMissing.of(),
+        @JsonProperty("billing_cycle_configuration")
+        @ExcludeMissing
+        private val billingCycleConfiguration: JsonField<BillingCycleConfiguration> =
+            JsonMissing.of(),
+        @JsonProperty("invoicing_cycle_configuration")
+        @ExcludeMissing
+        private val invoicingCycleConfiguration: JsonField<InvoicingCycleConfiguration> =
+            JsonMissing.of(),
+        @JsonProperty("billable_metric")
+        @ExcludeMissing
+        private val billableMetric: JsonField<BillableMetric> = JsonMissing.of(),
+        @JsonProperty("fixed_price_quantity")
+        @ExcludeMissing
+        private val fixedPriceQuantity: JsonField<Double> = JsonMissing.of(),
+        @JsonProperty("plan_phase_order")
+        @ExcludeMissing
+        private val planPhaseOrder: JsonField<Long> = JsonMissing.of(),
+        @JsonProperty("currency")
+        @ExcludeMissing
+        private val currency: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("conversion_rate")
+        @ExcludeMissing
+        private val conversionRate: JsonField<Double> = JsonMissing.of(),
+        @JsonProperty("item") @ExcludeMissing private val item: JsonField<Item> = JsonMissing.of(),
+        @JsonProperty("credit_allocation")
+        @ExcludeMissing
+        private val creditAllocation: JsonField<CreditAllocation> = JsonMissing.of(),
+        @JsonProperty("discount")
+        @ExcludeMissing
+        private val discount: JsonField<Discount> = JsonMissing.of(),
+        @JsonProperty("minimum")
+        @ExcludeMissing
+        private val minimum: JsonField<Minimum> = JsonMissing.of(),
+        @JsonProperty("minimum_amount")
+        @ExcludeMissing
+        private val minimumAmount: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("maximum")
+        @ExcludeMissing
+        private val maximum: JsonField<Maximum> = JsonMissing.of(),
+        @JsonProperty("maximum_amount")
+        @ExcludeMissing
+        private val maximumAmount: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("bulk_with_proration_config")
+        @ExcludeMissing
+        private val bulkWithProrationConfig: JsonField<BulkWithProrationConfig> = JsonMissing.of(),
+        @JsonAnySetter
+        private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
 
         /**
@@ -41522,62 +41532,44 @@ private constructor(
              * empty dictionary. Individual keys can be removed by setting the value to `null`, and
              * the entire metadata mapping can be cleared by setting `metadata` to `null`.
              */
-            @JsonProperty("metadata")
-            @ExcludeMissing
             fun metadata(metadata: JsonField<Metadata>) = apply { this.metadata = metadata }
 
             fun id(id: String) = id(JsonField.of(id))
 
-            @JsonProperty("id")
-            @ExcludeMissing
             fun id(id: JsonField<String>) = apply { this.id = id }
 
             fun name(name: String) = name(JsonField.of(name))
 
-            @JsonProperty("name")
-            @ExcludeMissing
             fun name(name: JsonField<String>) = apply { this.name = name }
 
             fun externalPriceId(externalPriceId: String) =
                 externalPriceId(JsonField.of(externalPriceId))
 
-            @JsonProperty("external_price_id")
-            @ExcludeMissing
             fun externalPriceId(externalPriceId: JsonField<String>) = apply {
                 this.externalPriceId = externalPriceId
             }
 
             fun priceType(priceType: PriceType) = priceType(JsonField.of(priceType))
 
-            @JsonProperty("price_type")
-            @ExcludeMissing
             fun priceType(priceType: JsonField<PriceType>) = apply { this.priceType = priceType }
 
             fun modelType(modelType: ModelType) = modelType(JsonField.of(modelType))
 
-            @JsonProperty("model_type")
-            @ExcludeMissing
             fun modelType(modelType: JsonField<ModelType>) = apply { this.modelType = modelType }
 
             fun createdAt(createdAt: OffsetDateTime) = createdAt(JsonField.of(createdAt))
 
-            @JsonProperty("created_at")
-            @ExcludeMissing
             fun createdAt(createdAt: JsonField<OffsetDateTime>) = apply {
                 this.createdAt = createdAt
             }
 
             fun cadence(cadence: Cadence) = cadence(JsonField.of(cadence))
 
-            @JsonProperty("cadence")
-            @ExcludeMissing
             fun cadence(cadence: JsonField<Cadence>) = apply { this.cadence = cadence }
 
             fun billingCycleConfiguration(billingCycleConfiguration: BillingCycleConfiguration) =
                 billingCycleConfiguration(JsonField.of(billingCycleConfiguration))
 
-            @JsonProperty("billing_cycle_configuration")
-            @ExcludeMissing
             fun billingCycleConfiguration(
                 billingCycleConfiguration: JsonField<BillingCycleConfiguration>
             ) = apply { this.billingCycleConfiguration = billingCycleConfiguration }
@@ -41586,8 +41578,6 @@ private constructor(
                 invoicingCycleConfiguration: InvoicingCycleConfiguration
             ) = invoicingCycleConfiguration(JsonField.of(invoicingCycleConfiguration))
 
-            @JsonProperty("invoicing_cycle_configuration")
-            @ExcludeMissing
             fun invoicingCycleConfiguration(
                 invoicingCycleConfiguration: JsonField<InvoicingCycleConfiguration>
             ) = apply { this.invoicingCycleConfiguration = invoicingCycleConfiguration }
@@ -41595,8 +41585,6 @@ private constructor(
             fun billableMetric(billableMetric: BillableMetric) =
                 billableMetric(JsonField.of(billableMetric))
 
-            @JsonProperty("billable_metric")
-            @ExcludeMissing
             fun billableMetric(billableMetric: JsonField<BillableMetric>) = apply {
                 this.billableMetric = billableMetric
             }
@@ -41604,80 +41592,58 @@ private constructor(
             fun fixedPriceQuantity(fixedPriceQuantity: Double) =
                 fixedPriceQuantity(JsonField.of(fixedPriceQuantity))
 
-            @JsonProperty("fixed_price_quantity")
-            @ExcludeMissing
             fun fixedPriceQuantity(fixedPriceQuantity: JsonField<Double>) = apply {
                 this.fixedPriceQuantity = fixedPriceQuantity
             }
 
             fun planPhaseOrder(planPhaseOrder: Long) = planPhaseOrder(JsonField.of(planPhaseOrder))
 
-            @JsonProperty("plan_phase_order")
-            @ExcludeMissing
             fun planPhaseOrder(planPhaseOrder: JsonField<Long>) = apply {
                 this.planPhaseOrder = planPhaseOrder
             }
 
             fun currency(currency: String) = currency(JsonField.of(currency))
 
-            @JsonProperty("currency")
-            @ExcludeMissing
             fun currency(currency: JsonField<String>) = apply { this.currency = currency }
 
             fun conversionRate(conversionRate: Double) =
                 conversionRate(JsonField.of(conversionRate))
 
-            @JsonProperty("conversion_rate")
-            @ExcludeMissing
             fun conversionRate(conversionRate: JsonField<Double>) = apply {
                 this.conversionRate = conversionRate
             }
 
             fun item(item: Item) = item(JsonField.of(item))
 
-            @JsonProperty("item")
-            @ExcludeMissing
             fun item(item: JsonField<Item>) = apply { this.item = item }
 
             fun creditAllocation(creditAllocation: CreditAllocation) =
                 creditAllocation(JsonField.of(creditAllocation))
 
-            @JsonProperty("credit_allocation")
-            @ExcludeMissing
             fun creditAllocation(creditAllocation: JsonField<CreditAllocation>) = apply {
                 this.creditAllocation = creditAllocation
             }
 
             fun discount(discount: Discount) = discount(JsonField.of(discount))
 
-            @JsonProperty("discount")
-            @ExcludeMissing
             fun discount(discount: JsonField<Discount>) = apply { this.discount = discount }
 
             fun minimum(minimum: Minimum) = minimum(JsonField.of(minimum))
 
-            @JsonProperty("minimum")
-            @ExcludeMissing
             fun minimum(minimum: JsonField<Minimum>) = apply { this.minimum = minimum }
 
             fun minimumAmount(minimumAmount: String) = minimumAmount(JsonField.of(minimumAmount))
 
-            @JsonProperty("minimum_amount")
-            @ExcludeMissing
             fun minimumAmount(minimumAmount: JsonField<String>) = apply {
                 this.minimumAmount = minimumAmount
             }
 
             fun maximum(maximum: Maximum) = maximum(JsonField.of(maximum))
 
-            @JsonProperty("maximum")
-            @ExcludeMissing
             fun maximum(maximum: JsonField<Maximum>) = apply { this.maximum = maximum }
 
             fun maximumAmount(maximumAmount: String) = maximumAmount(JsonField.of(maximumAmount))
 
-            @JsonProperty("maximum_amount")
-            @ExcludeMissing
             fun maximumAmount(maximumAmount: JsonField<String>) = apply {
                 this.maximumAmount = maximumAmount
             }
@@ -41685,8 +41651,6 @@ private constructor(
             fun bulkWithProrationConfig(bulkWithProrationConfig: BulkWithProrationConfig) =
                 bulkWithProrationConfig(JsonField.of(bulkWithProrationConfig))
 
-            @JsonProperty("bulk_with_proration_config")
-            @ExcludeMissing
             fun bulkWithProrationConfig(
                 bulkWithProrationConfig: JsonField<BulkWithProrationConfig>
             ) = apply { this.bulkWithProrationConfig = bulkWithProrationConfig }
@@ -41696,7 +41660,6 @@ private constructor(
                 putAllAdditionalProperties(additionalProperties)
             }
 
-            @JsonAnySetter
             fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                 additionalProperties.put(key, value)
             }
@@ -41740,12 +41703,15 @@ private constructor(
                 )
         }
 
-        @JsonDeserialize(builder = BillableMetric.Builder::class)
         @NoAutoDetect
         class BillableMetric
+        @JsonCreator
         private constructor(
-            private val id: JsonField<String>,
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonProperty("id")
+            @ExcludeMissing
+            private val id: JsonField<String> = JsonMissing.of(),
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             fun id(): String = id.getRequired("id")
@@ -41784,8 +41750,6 @@ private constructor(
 
                 fun id(id: String) = id(JsonField.of(id))
 
-                @JsonProperty("id")
-                @ExcludeMissing
                 fun id(id: JsonField<String>) = apply { this.id = id }
 
                 fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
@@ -41793,7 +41757,6 @@ private constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -41832,13 +41795,18 @@ private constructor(
                 "BillableMetric{id=$id, additionalProperties=$additionalProperties}"
         }
 
-        @JsonDeserialize(builder = BillingCycleConfiguration.Builder::class)
         @NoAutoDetect
         class BillingCycleConfiguration
+        @JsonCreator
         private constructor(
-            private val duration: JsonField<Long>,
-            private val durationUnit: JsonField<DurationUnit>,
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonProperty("duration")
+            @ExcludeMissing
+            private val duration: JsonField<Long> = JsonMissing.of(),
+            @JsonProperty("duration_unit")
+            @ExcludeMissing
+            private val durationUnit: JsonField<DurationUnit> = JsonMissing.of(),
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             fun duration(): Long = duration.getRequired("duration")
@@ -41885,15 +41853,11 @@ private constructor(
 
                 fun duration(duration: Long) = duration(JsonField.of(duration))
 
-                @JsonProperty("duration")
-                @ExcludeMissing
                 fun duration(duration: JsonField<Long>) = apply { this.duration = duration }
 
                 fun durationUnit(durationUnit: DurationUnit) =
                     durationUnit(JsonField.of(durationUnit))
 
-                @JsonProperty("duration_unit")
-                @ExcludeMissing
                 fun durationUnit(durationUnit: JsonField<DurationUnit>) = apply {
                     this.durationUnit = durationUnit
                 }
@@ -41903,7 +41867,6 @@ private constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -42004,11 +41967,12 @@ private constructor(
                 "BillingCycleConfiguration{duration=$duration, durationUnit=$durationUnit, additionalProperties=$additionalProperties}"
         }
 
-        @JsonDeserialize(builder = BulkWithProrationConfig.Builder::class)
         @NoAutoDetect
         class BulkWithProrationConfig
+        @JsonCreator
         private constructor(
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             @JsonAnyGetter
@@ -42044,7 +42008,6 @@ private constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -42165,13 +42128,18 @@ private constructor(
             override fun toString() = value.toString()
         }
 
-        @JsonDeserialize(builder = CreditAllocation.Builder::class)
         @NoAutoDetect
         class CreditAllocation
+        @JsonCreator
         private constructor(
-            private val currency: JsonField<String>,
-            private val allowsRollover: JsonField<Boolean>,
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonProperty("currency")
+            @ExcludeMissing
+            private val currency: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("allows_rollover")
+            @ExcludeMissing
+            private val allowsRollover: JsonField<Boolean> = JsonMissing.of(),
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             fun currency(): String = currency.getRequired("currency")
@@ -42217,15 +42185,11 @@ private constructor(
 
                 fun currency(currency: String) = currency(JsonField.of(currency))
 
-                @JsonProperty("currency")
-                @ExcludeMissing
                 fun currency(currency: JsonField<String>) = apply { this.currency = currency }
 
                 fun allowsRollover(allowsRollover: Boolean) =
                     allowsRollover(JsonField.of(allowsRollover))
 
-                @JsonProperty("allows_rollover")
-                @ExcludeMissing
                 fun allowsRollover(allowsRollover: JsonField<Boolean>) = apply {
                     this.allowsRollover = allowsRollover
                 }
@@ -42235,7 +42199,6 @@ private constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -42279,13 +42242,18 @@ private constructor(
                 "CreditAllocation{currency=$currency, allowsRollover=$allowsRollover, additionalProperties=$additionalProperties}"
         }
 
-        @JsonDeserialize(builder = InvoicingCycleConfiguration.Builder::class)
         @NoAutoDetect
         class InvoicingCycleConfiguration
+        @JsonCreator
         private constructor(
-            private val duration: JsonField<Long>,
-            private val durationUnit: JsonField<DurationUnit>,
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonProperty("duration")
+            @ExcludeMissing
+            private val duration: JsonField<Long> = JsonMissing.of(),
+            @JsonProperty("duration_unit")
+            @ExcludeMissing
+            private val durationUnit: JsonField<DurationUnit> = JsonMissing.of(),
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             fun duration(): Long = duration.getRequired("duration")
@@ -42333,15 +42301,11 @@ private constructor(
 
                 fun duration(duration: Long) = duration(JsonField.of(duration))
 
-                @JsonProperty("duration")
-                @ExcludeMissing
                 fun duration(duration: JsonField<Long>) = apply { this.duration = duration }
 
                 fun durationUnit(durationUnit: DurationUnit) =
                     durationUnit(JsonField.of(durationUnit))
 
-                @JsonProperty("duration_unit")
-                @ExcludeMissing
                 fun durationUnit(durationUnit: JsonField<DurationUnit>) = apply {
                     this.durationUnit = durationUnit
                 }
@@ -42351,7 +42315,6 @@ private constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -42452,13 +42415,18 @@ private constructor(
                 "InvoicingCycleConfiguration{duration=$duration, durationUnit=$durationUnit, additionalProperties=$additionalProperties}"
         }
 
-        @JsonDeserialize(builder = Item.Builder::class)
         @NoAutoDetect
         class Item
+        @JsonCreator
         private constructor(
-            private val id: JsonField<String>,
-            private val name: JsonField<String>,
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonProperty("id")
+            @ExcludeMissing
+            private val id: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("name")
+            @ExcludeMissing
+            private val name: JsonField<String> = JsonMissing.of(),
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             fun id(): String = id.getRequired("id")
@@ -42504,14 +42472,10 @@ private constructor(
 
                 fun id(id: String) = id(JsonField.of(id))
 
-                @JsonProperty("id")
-                @ExcludeMissing
                 fun id(id: JsonField<String>) = apply { this.id = id }
 
                 fun name(name: String) = name(JsonField.of(name))
 
-                @JsonProperty("name")
-                @ExcludeMissing
                 fun name(name: JsonField<String>) = apply { this.name = name }
 
                 fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
@@ -42519,7 +42483,6 @@ private constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -42563,13 +42526,18 @@ private constructor(
                 "Item{id=$id, name=$name, additionalProperties=$additionalProperties}"
         }
 
-        @JsonDeserialize(builder = Maximum.Builder::class)
         @NoAutoDetect
         class Maximum
+        @JsonCreator
         private constructor(
-            private val maximumAmount: JsonField<String>,
-            private val appliesToPriceIds: JsonField<List<String>>,
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonProperty("maximum_amount")
+            @ExcludeMissing
+            private val maximumAmount: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("applies_to_price_ids")
+            @ExcludeMissing
+            private val appliesToPriceIds: JsonField<List<String>> = JsonMissing.of(),
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             /** Maximum amount applied */
@@ -42631,8 +42599,6 @@ private constructor(
                     maximumAmount(JsonField.of(maximumAmount))
 
                 /** Maximum amount applied */
-                @JsonProperty("maximum_amount")
-                @ExcludeMissing
                 fun maximumAmount(maximumAmount: JsonField<String>) = apply {
                     this.maximumAmount = maximumAmount
                 }
@@ -42648,8 +42614,6 @@ private constructor(
                  * List of price_ids that this maximum amount applies to. For plan/plan phase
                  * maximums, this can be a subset of prices.
                  */
-                @JsonProperty("applies_to_price_ids")
-                @ExcludeMissing
                 fun appliesToPriceIds(appliesToPriceIds: JsonField<List<String>>) = apply {
                     this.appliesToPriceIds = appliesToPriceIds
                 }
@@ -42659,7 +42623,6 @@ private constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -42708,11 +42671,12 @@ private constructor(
          * empty dictionary. Individual keys can be removed by setting the value to `null`, and the
          * entire metadata mapping can be cleared by setting `metadata` to `null`.
          */
-        @JsonDeserialize(builder = Metadata.Builder::class)
         @NoAutoDetect
         class Metadata
+        @JsonCreator
         private constructor(
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             @JsonAnyGetter
@@ -42747,7 +42711,6 @@ private constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -42785,13 +42748,18 @@ private constructor(
             override fun toString() = "Metadata{additionalProperties=$additionalProperties}"
         }
 
-        @JsonDeserialize(builder = Minimum.Builder::class)
         @NoAutoDetect
         class Minimum
+        @JsonCreator
         private constructor(
-            private val minimumAmount: JsonField<String>,
-            private val appliesToPriceIds: JsonField<List<String>>,
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonProperty("minimum_amount")
+            @ExcludeMissing
+            private val minimumAmount: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("applies_to_price_ids")
+            @ExcludeMissing
+            private val appliesToPriceIds: JsonField<List<String>> = JsonMissing.of(),
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             /** Minimum amount applied */
@@ -42853,8 +42821,6 @@ private constructor(
                     minimumAmount(JsonField.of(minimumAmount))
 
                 /** Minimum amount applied */
-                @JsonProperty("minimum_amount")
-                @ExcludeMissing
                 fun minimumAmount(minimumAmount: JsonField<String>) = apply {
                     this.minimumAmount = minimumAmount
                 }
@@ -42870,8 +42836,6 @@ private constructor(
                  * List of price_ids that this minimum amount applies to. For plan/plan phase
                  * minimums, this can be a subset of prices.
                  */
-                @JsonProperty("applies_to_price_ids")
-                @ExcludeMissing
                 fun appliesToPriceIds(appliesToPriceIds: JsonField<List<String>>) = apply {
                     this.appliesToPriceIds = appliesToPriceIds
                 }
@@ -42881,7 +42845,6 @@ private constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -43051,34 +43014,80 @@ private constructor(
             "BulkWithProrationPrice{metadata=$metadata, id=$id, name=$name, externalPriceId=$externalPriceId, priceType=$priceType, modelType=$modelType, createdAt=$createdAt, cadence=$cadence, billingCycleConfiguration=$billingCycleConfiguration, invoicingCycleConfiguration=$invoicingCycleConfiguration, billableMetric=$billableMetric, fixedPriceQuantity=$fixedPriceQuantity, planPhaseOrder=$planPhaseOrder, currency=$currency, conversionRate=$conversionRate, item=$item, creditAllocation=$creditAllocation, discount=$discount, minimum=$minimum, minimumAmount=$minimumAmount, maximum=$maximum, maximumAmount=$maximumAmount, bulkWithProrationConfig=$bulkWithProrationConfig, additionalProperties=$additionalProperties}"
     }
 
-    @JsonDeserialize(builder = GroupedTieredPackagePrice.Builder::class)
     @NoAutoDetect
     class GroupedTieredPackagePrice
+    @JsonCreator
     private constructor(
-        private val metadata: JsonField<Metadata>,
-        private val id: JsonField<String>,
-        private val name: JsonField<String>,
-        private val externalPriceId: JsonField<String>,
-        private val priceType: JsonField<PriceType>,
-        private val modelType: JsonField<ModelType>,
-        private val createdAt: JsonField<OffsetDateTime>,
-        private val cadence: JsonField<Cadence>,
-        private val billingCycleConfiguration: JsonField<BillingCycleConfiguration>,
-        private val invoicingCycleConfiguration: JsonField<InvoicingCycleConfiguration>,
-        private val billableMetric: JsonField<BillableMetric>,
-        private val fixedPriceQuantity: JsonField<Double>,
-        private val planPhaseOrder: JsonField<Long>,
-        private val currency: JsonField<String>,
-        private val conversionRate: JsonField<Double>,
-        private val item: JsonField<Item>,
-        private val creditAllocation: JsonField<CreditAllocation>,
-        private val discount: JsonField<Discount>,
-        private val minimum: JsonField<Minimum>,
-        private val minimumAmount: JsonField<String>,
-        private val maximum: JsonField<Maximum>,
-        private val maximumAmount: JsonField<String>,
-        private val groupedTieredPackageConfig: JsonField<GroupedTieredPackageConfig>,
-        private val additionalProperties: Map<String, JsonValue>,
+        @JsonProperty("metadata")
+        @ExcludeMissing
+        private val metadata: JsonField<Metadata> = JsonMissing.of(),
+        @JsonProperty("id") @ExcludeMissing private val id: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("name")
+        @ExcludeMissing
+        private val name: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("external_price_id")
+        @ExcludeMissing
+        private val externalPriceId: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("price_type")
+        @ExcludeMissing
+        private val priceType: JsonField<PriceType> = JsonMissing.of(),
+        @JsonProperty("model_type")
+        @ExcludeMissing
+        private val modelType: JsonField<ModelType> = JsonMissing.of(),
+        @JsonProperty("created_at")
+        @ExcludeMissing
+        private val createdAt: JsonField<OffsetDateTime> = JsonMissing.of(),
+        @JsonProperty("cadence")
+        @ExcludeMissing
+        private val cadence: JsonField<Cadence> = JsonMissing.of(),
+        @JsonProperty("billing_cycle_configuration")
+        @ExcludeMissing
+        private val billingCycleConfiguration: JsonField<BillingCycleConfiguration> =
+            JsonMissing.of(),
+        @JsonProperty("invoicing_cycle_configuration")
+        @ExcludeMissing
+        private val invoicingCycleConfiguration: JsonField<InvoicingCycleConfiguration> =
+            JsonMissing.of(),
+        @JsonProperty("billable_metric")
+        @ExcludeMissing
+        private val billableMetric: JsonField<BillableMetric> = JsonMissing.of(),
+        @JsonProperty("fixed_price_quantity")
+        @ExcludeMissing
+        private val fixedPriceQuantity: JsonField<Double> = JsonMissing.of(),
+        @JsonProperty("plan_phase_order")
+        @ExcludeMissing
+        private val planPhaseOrder: JsonField<Long> = JsonMissing.of(),
+        @JsonProperty("currency")
+        @ExcludeMissing
+        private val currency: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("conversion_rate")
+        @ExcludeMissing
+        private val conversionRate: JsonField<Double> = JsonMissing.of(),
+        @JsonProperty("item") @ExcludeMissing private val item: JsonField<Item> = JsonMissing.of(),
+        @JsonProperty("credit_allocation")
+        @ExcludeMissing
+        private val creditAllocation: JsonField<CreditAllocation> = JsonMissing.of(),
+        @JsonProperty("discount")
+        @ExcludeMissing
+        private val discount: JsonField<Discount> = JsonMissing.of(),
+        @JsonProperty("minimum")
+        @ExcludeMissing
+        private val minimum: JsonField<Minimum> = JsonMissing.of(),
+        @JsonProperty("minimum_amount")
+        @ExcludeMissing
+        private val minimumAmount: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("maximum")
+        @ExcludeMissing
+        private val maximum: JsonField<Maximum> = JsonMissing.of(),
+        @JsonProperty("maximum_amount")
+        @ExcludeMissing
+        private val maximumAmount: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("grouped_tiered_package_config")
+        @ExcludeMissing
+        private val groupedTieredPackageConfig: JsonField<GroupedTieredPackageConfig> =
+            JsonMissing.of(),
+        @JsonAnySetter
+        private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
 
         /**
@@ -43308,62 +43317,44 @@ private constructor(
              * empty dictionary. Individual keys can be removed by setting the value to `null`, and
              * the entire metadata mapping can be cleared by setting `metadata` to `null`.
              */
-            @JsonProperty("metadata")
-            @ExcludeMissing
             fun metadata(metadata: JsonField<Metadata>) = apply { this.metadata = metadata }
 
             fun id(id: String) = id(JsonField.of(id))
 
-            @JsonProperty("id")
-            @ExcludeMissing
             fun id(id: JsonField<String>) = apply { this.id = id }
 
             fun name(name: String) = name(JsonField.of(name))
 
-            @JsonProperty("name")
-            @ExcludeMissing
             fun name(name: JsonField<String>) = apply { this.name = name }
 
             fun externalPriceId(externalPriceId: String) =
                 externalPriceId(JsonField.of(externalPriceId))
 
-            @JsonProperty("external_price_id")
-            @ExcludeMissing
             fun externalPriceId(externalPriceId: JsonField<String>) = apply {
                 this.externalPriceId = externalPriceId
             }
 
             fun priceType(priceType: PriceType) = priceType(JsonField.of(priceType))
 
-            @JsonProperty("price_type")
-            @ExcludeMissing
             fun priceType(priceType: JsonField<PriceType>) = apply { this.priceType = priceType }
 
             fun modelType(modelType: ModelType) = modelType(JsonField.of(modelType))
 
-            @JsonProperty("model_type")
-            @ExcludeMissing
             fun modelType(modelType: JsonField<ModelType>) = apply { this.modelType = modelType }
 
             fun createdAt(createdAt: OffsetDateTime) = createdAt(JsonField.of(createdAt))
 
-            @JsonProperty("created_at")
-            @ExcludeMissing
             fun createdAt(createdAt: JsonField<OffsetDateTime>) = apply {
                 this.createdAt = createdAt
             }
 
             fun cadence(cadence: Cadence) = cadence(JsonField.of(cadence))
 
-            @JsonProperty("cadence")
-            @ExcludeMissing
             fun cadence(cadence: JsonField<Cadence>) = apply { this.cadence = cadence }
 
             fun billingCycleConfiguration(billingCycleConfiguration: BillingCycleConfiguration) =
                 billingCycleConfiguration(JsonField.of(billingCycleConfiguration))
 
-            @JsonProperty("billing_cycle_configuration")
-            @ExcludeMissing
             fun billingCycleConfiguration(
                 billingCycleConfiguration: JsonField<BillingCycleConfiguration>
             ) = apply { this.billingCycleConfiguration = billingCycleConfiguration }
@@ -43372,8 +43363,6 @@ private constructor(
                 invoicingCycleConfiguration: InvoicingCycleConfiguration
             ) = invoicingCycleConfiguration(JsonField.of(invoicingCycleConfiguration))
 
-            @JsonProperty("invoicing_cycle_configuration")
-            @ExcludeMissing
             fun invoicingCycleConfiguration(
                 invoicingCycleConfiguration: JsonField<InvoicingCycleConfiguration>
             ) = apply { this.invoicingCycleConfiguration = invoicingCycleConfiguration }
@@ -43381,8 +43370,6 @@ private constructor(
             fun billableMetric(billableMetric: BillableMetric) =
                 billableMetric(JsonField.of(billableMetric))
 
-            @JsonProperty("billable_metric")
-            @ExcludeMissing
             fun billableMetric(billableMetric: JsonField<BillableMetric>) = apply {
                 this.billableMetric = billableMetric
             }
@@ -43390,80 +43377,58 @@ private constructor(
             fun fixedPriceQuantity(fixedPriceQuantity: Double) =
                 fixedPriceQuantity(JsonField.of(fixedPriceQuantity))
 
-            @JsonProperty("fixed_price_quantity")
-            @ExcludeMissing
             fun fixedPriceQuantity(fixedPriceQuantity: JsonField<Double>) = apply {
                 this.fixedPriceQuantity = fixedPriceQuantity
             }
 
             fun planPhaseOrder(planPhaseOrder: Long) = planPhaseOrder(JsonField.of(planPhaseOrder))
 
-            @JsonProperty("plan_phase_order")
-            @ExcludeMissing
             fun planPhaseOrder(planPhaseOrder: JsonField<Long>) = apply {
                 this.planPhaseOrder = planPhaseOrder
             }
 
             fun currency(currency: String) = currency(JsonField.of(currency))
 
-            @JsonProperty("currency")
-            @ExcludeMissing
             fun currency(currency: JsonField<String>) = apply { this.currency = currency }
 
             fun conversionRate(conversionRate: Double) =
                 conversionRate(JsonField.of(conversionRate))
 
-            @JsonProperty("conversion_rate")
-            @ExcludeMissing
             fun conversionRate(conversionRate: JsonField<Double>) = apply {
                 this.conversionRate = conversionRate
             }
 
             fun item(item: Item) = item(JsonField.of(item))
 
-            @JsonProperty("item")
-            @ExcludeMissing
             fun item(item: JsonField<Item>) = apply { this.item = item }
 
             fun creditAllocation(creditAllocation: CreditAllocation) =
                 creditAllocation(JsonField.of(creditAllocation))
 
-            @JsonProperty("credit_allocation")
-            @ExcludeMissing
             fun creditAllocation(creditAllocation: JsonField<CreditAllocation>) = apply {
                 this.creditAllocation = creditAllocation
             }
 
             fun discount(discount: Discount) = discount(JsonField.of(discount))
 
-            @JsonProperty("discount")
-            @ExcludeMissing
             fun discount(discount: JsonField<Discount>) = apply { this.discount = discount }
 
             fun minimum(minimum: Minimum) = minimum(JsonField.of(minimum))
 
-            @JsonProperty("minimum")
-            @ExcludeMissing
             fun minimum(minimum: JsonField<Minimum>) = apply { this.minimum = minimum }
 
             fun minimumAmount(minimumAmount: String) = minimumAmount(JsonField.of(minimumAmount))
 
-            @JsonProperty("minimum_amount")
-            @ExcludeMissing
             fun minimumAmount(minimumAmount: JsonField<String>) = apply {
                 this.minimumAmount = minimumAmount
             }
 
             fun maximum(maximum: Maximum) = maximum(JsonField.of(maximum))
 
-            @JsonProperty("maximum")
-            @ExcludeMissing
             fun maximum(maximum: JsonField<Maximum>) = apply { this.maximum = maximum }
 
             fun maximumAmount(maximumAmount: String) = maximumAmount(JsonField.of(maximumAmount))
 
-            @JsonProperty("maximum_amount")
-            @ExcludeMissing
             fun maximumAmount(maximumAmount: JsonField<String>) = apply {
                 this.maximumAmount = maximumAmount
             }
@@ -43471,8 +43436,6 @@ private constructor(
             fun groupedTieredPackageConfig(groupedTieredPackageConfig: GroupedTieredPackageConfig) =
                 groupedTieredPackageConfig(JsonField.of(groupedTieredPackageConfig))
 
-            @JsonProperty("grouped_tiered_package_config")
-            @ExcludeMissing
             fun groupedTieredPackageConfig(
                 groupedTieredPackageConfig: JsonField<GroupedTieredPackageConfig>
             ) = apply { this.groupedTieredPackageConfig = groupedTieredPackageConfig }
@@ -43482,7 +43445,6 @@ private constructor(
                 putAllAdditionalProperties(additionalProperties)
             }
 
-            @JsonAnySetter
             fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                 additionalProperties.put(key, value)
             }
@@ -43526,12 +43488,15 @@ private constructor(
                 )
         }
 
-        @JsonDeserialize(builder = BillableMetric.Builder::class)
         @NoAutoDetect
         class BillableMetric
+        @JsonCreator
         private constructor(
-            private val id: JsonField<String>,
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonProperty("id")
+            @ExcludeMissing
+            private val id: JsonField<String> = JsonMissing.of(),
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             fun id(): String = id.getRequired("id")
@@ -43570,8 +43535,6 @@ private constructor(
 
                 fun id(id: String) = id(JsonField.of(id))
 
-                @JsonProperty("id")
-                @ExcludeMissing
                 fun id(id: JsonField<String>) = apply { this.id = id }
 
                 fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
@@ -43579,7 +43542,6 @@ private constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -43618,13 +43580,18 @@ private constructor(
                 "BillableMetric{id=$id, additionalProperties=$additionalProperties}"
         }
 
-        @JsonDeserialize(builder = BillingCycleConfiguration.Builder::class)
         @NoAutoDetect
         class BillingCycleConfiguration
+        @JsonCreator
         private constructor(
-            private val duration: JsonField<Long>,
-            private val durationUnit: JsonField<DurationUnit>,
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonProperty("duration")
+            @ExcludeMissing
+            private val duration: JsonField<Long> = JsonMissing.of(),
+            @JsonProperty("duration_unit")
+            @ExcludeMissing
+            private val durationUnit: JsonField<DurationUnit> = JsonMissing.of(),
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             fun duration(): Long = duration.getRequired("duration")
@@ -43671,15 +43638,11 @@ private constructor(
 
                 fun duration(duration: Long) = duration(JsonField.of(duration))
 
-                @JsonProperty("duration")
-                @ExcludeMissing
                 fun duration(duration: JsonField<Long>) = apply { this.duration = duration }
 
                 fun durationUnit(durationUnit: DurationUnit) =
                     durationUnit(JsonField.of(durationUnit))
 
-                @JsonProperty("duration_unit")
-                @ExcludeMissing
                 fun durationUnit(durationUnit: JsonField<DurationUnit>) = apply {
                     this.durationUnit = durationUnit
                 }
@@ -43689,7 +43652,6 @@ private constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -43871,13 +43833,18 @@ private constructor(
             override fun toString() = value.toString()
         }
 
-        @JsonDeserialize(builder = CreditAllocation.Builder::class)
         @NoAutoDetect
         class CreditAllocation
+        @JsonCreator
         private constructor(
-            private val currency: JsonField<String>,
-            private val allowsRollover: JsonField<Boolean>,
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonProperty("currency")
+            @ExcludeMissing
+            private val currency: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("allows_rollover")
+            @ExcludeMissing
+            private val allowsRollover: JsonField<Boolean> = JsonMissing.of(),
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             fun currency(): String = currency.getRequired("currency")
@@ -43923,15 +43890,11 @@ private constructor(
 
                 fun currency(currency: String) = currency(JsonField.of(currency))
 
-                @JsonProperty("currency")
-                @ExcludeMissing
                 fun currency(currency: JsonField<String>) = apply { this.currency = currency }
 
                 fun allowsRollover(allowsRollover: Boolean) =
                     allowsRollover(JsonField.of(allowsRollover))
 
-                @JsonProperty("allows_rollover")
-                @ExcludeMissing
                 fun allowsRollover(allowsRollover: JsonField<Boolean>) = apply {
                     this.allowsRollover = allowsRollover
                 }
@@ -43941,7 +43904,6 @@ private constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -43985,11 +43947,12 @@ private constructor(
                 "CreditAllocation{currency=$currency, allowsRollover=$allowsRollover, additionalProperties=$additionalProperties}"
         }
 
-        @JsonDeserialize(builder = GroupedTieredPackageConfig.Builder::class)
         @NoAutoDetect
         class GroupedTieredPackageConfig
+        @JsonCreator
         private constructor(
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             @JsonAnyGetter
@@ -44025,7 +43988,6 @@ private constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -44065,13 +44027,18 @@ private constructor(
                 "GroupedTieredPackageConfig{additionalProperties=$additionalProperties}"
         }
 
-        @JsonDeserialize(builder = InvoicingCycleConfiguration.Builder::class)
         @NoAutoDetect
         class InvoicingCycleConfiguration
+        @JsonCreator
         private constructor(
-            private val duration: JsonField<Long>,
-            private val durationUnit: JsonField<DurationUnit>,
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonProperty("duration")
+            @ExcludeMissing
+            private val duration: JsonField<Long> = JsonMissing.of(),
+            @JsonProperty("duration_unit")
+            @ExcludeMissing
+            private val durationUnit: JsonField<DurationUnit> = JsonMissing.of(),
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             fun duration(): Long = duration.getRequired("duration")
@@ -44119,15 +44086,11 @@ private constructor(
 
                 fun duration(duration: Long) = duration(JsonField.of(duration))
 
-                @JsonProperty("duration")
-                @ExcludeMissing
                 fun duration(duration: JsonField<Long>) = apply { this.duration = duration }
 
                 fun durationUnit(durationUnit: DurationUnit) =
                     durationUnit(JsonField.of(durationUnit))
 
-                @JsonProperty("duration_unit")
-                @ExcludeMissing
                 fun durationUnit(durationUnit: JsonField<DurationUnit>) = apply {
                     this.durationUnit = durationUnit
                 }
@@ -44137,7 +44100,6 @@ private constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -44238,13 +44200,18 @@ private constructor(
                 "InvoicingCycleConfiguration{duration=$duration, durationUnit=$durationUnit, additionalProperties=$additionalProperties}"
         }
 
-        @JsonDeserialize(builder = Item.Builder::class)
         @NoAutoDetect
         class Item
+        @JsonCreator
         private constructor(
-            private val id: JsonField<String>,
-            private val name: JsonField<String>,
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonProperty("id")
+            @ExcludeMissing
+            private val id: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("name")
+            @ExcludeMissing
+            private val name: JsonField<String> = JsonMissing.of(),
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             fun id(): String = id.getRequired("id")
@@ -44290,14 +44257,10 @@ private constructor(
 
                 fun id(id: String) = id(JsonField.of(id))
 
-                @JsonProperty("id")
-                @ExcludeMissing
                 fun id(id: JsonField<String>) = apply { this.id = id }
 
                 fun name(name: String) = name(JsonField.of(name))
 
-                @JsonProperty("name")
-                @ExcludeMissing
                 fun name(name: JsonField<String>) = apply { this.name = name }
 
                 fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
@@ -44305,7 +44268,6 @@ private constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -44349,13 +44311,18 @@ private constructor(
                 "Item{id=$id, name=$name, additionalProperties=$additionalProperties}"
         }
 
-        @JsonDeserialize(builder = Maximum.Builder::class)
         @NoAutoDetect
         class Maximum
+        @JsonCreator
         private constructor(
-            private val maximumAmount: JsonField<String>,
-            private val appliesToPriceIds: JsonField<List<String>>,
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonProperty("maximum_amount")
+            @ExcludeMissing
+            private val maximumAmount: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("applies_to_price_ids")
+            @ExcludeMissing
+            private val appliesToPriceIds: JsonField<List<String>> = JsonMissing.of(),
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             /** Maximum amount applied */
@@ -44417,8 +44384,6 @@ private constructor(
                     maximumAmount(JsonField.of(maximumAmount))
 
                 /** Maximum amount applied */
-                @JsonProperty("maximum_amount")
-                @ExcludeMissing
                 fun maximumAmount(maximumAmount: JsonField<String>) = apply {
                     this.maximumAmount = maximumAmount
                 }
@@ -44434,8 +44399,6 @@ private constructor(
                  * List of price_ids that this maximum amount applies to. For plan/plan phase
                  * maximums, this can be a subset of prices.
                  */
-                @JsonProperty("applies_to_price_ids")
-                @ExcludeMissing
                 fun appliesToPriceIds(appliesToPriceIds: JsonField<List<String>>) = apply {
                     this.appliesToPriceIds = appliesToPriceIds
                 }
@@ -44445,7 +44408,6 @@ private constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -44494,11 +44456,12 @@ private constructor(
          * empty dictionary. Individual keys can be removed by setting the value to `null`, and the
          * entire metadata mapping can be cleared by setting `metadata` to `null`.
          */
-        @JsonDeserialize(builder = Metadata.Builder::class)
         @NoAutoDetect
         class Metadata
+        @JsonCreator
         private constructor(
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             @JsonAnyGetter
@@ -44533,7 +44496,6 @@ private constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -44571,13 +44533,18 @@ private constructor(
             override fun toString() = "Metadata{additionalProperties=$additionalProperties}"
         }
 
-        @JsonDeserialize(builder = Minimum.Builder::class)
         @NoAutoDetect
         class Minimum
+        @JsonCreator
         private constructor(
-            private val minimumAmount: JsonField<String>,
-            private val appliesToPriceIds: JsonField<List<String>>,
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonProperty("minimum_amount")
+            @ExcludeMissing
+            private val minimumAmount: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("applies_to_price_ids")
+            @ExcludeMissing
+            private val appliesToPriceIds: JsonField<List<String>> = JsonMissing.of(),
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             /** Minimum amount applied */
@@ -44639,8 +44606,6 @@ private constructor(
                     minimumAmount(JsonField.of(minimumAmount))
 
                 /** Minimum amount applied */
-                @JsonProperty("minimum_amount")
-                @ExcludeMissing
                 fun minimumAmount(minimumAmount: JsonField<String>) = apply {
                     this.minimumAmount = minimumAmount
                 }
@@ -44656,8 +44621,6 @@ private constructor(
                  * List of price_ids that this minimum amount applies to. For plan/plan phase
                  * minimums, this can be a subset of prices.
                  */
-                @JsonProperty("applies_to_price_ids")
-                @ExcludeMissing
                 fun appliesToPriceIds(appliesToPriceIds: JsonField<List<String>>) = apply {
                     this.appliesToPriceIds = appliesToPriceIds
                 }
@@ -44667,7 +44630,6 @@ private constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }

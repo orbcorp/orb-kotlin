@@ -6,13 +6,13 @@ import com.fasterxml.jackson.annotation.JsonAnyGetter
 import com.fasterxml.jackson.annotation.JsonAnySetter
 import com.fasterxml.jackson.annotation.JsonCreator
 import com.fasterxml.jackson.annotation.JsonProperty
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize
 import com.withorb.api.core.Enum
 import com.withorb.api.core.ExcludeMissing
 import com.withorb.api.core.JsonField
 import com.withorb.api.core.JsonMissing
 import com.withorb.api.core.JsonValue
 import com.withorb.api.core.NoAutoDetect
+import com.withorb.api.core.immutableEmptyMap
 import com.withorb.api.core.toImmutable
 import com.withorb.api.errors.OrbInvalidDataException
 import java.time.OffsetDateTime
@@ -36,32 +36,67 @@ import java.util.Objects
  * timezone. See [Timezone localization](../guides/product-catalog/timezones.md) for information on
  * what this timezone parameter influences within Orb.
  */
-@JsonDeserialize(builder = Customer.Builder::class)
 @NoAutoDetect
 class Customer
+@JsonCreator
 private constructor(
-    private val metadata: JsonField<Metadata>,
-    private val id: JsonField<String>,
-    private val externalCustomerId: JsonField<String>,
-    private val name: JsonField<String>,
-    private val email: JsonField<String>,
-    private val timezone: JsonField<String>,
-    private val paymentProviderId: JsonField<String>,
-    private val paymentProvider: JsonField<PaymentProvider>,
-    private val createdAt: JsonField<OffsetDateTime>,
-    private val shippingAddress: JsonField<ShippingAddress>,
-    private val billingAddress: JsonField<BillingAddress>,
-    private val balance: JsonField<String>,
-    private val currency: JsonField<String>,
-    private val taxId: JsonField<TaxId>,
-    private val autoCollection: JsonField<Boolean>,
-    private val exemptFromAutomatedTax: JsonField<Boolean>,
-    private val emailDelivery: JsonField<Boolean>,
-    private val additionalEmails: JsonField<List<String>>,
-    private val portalUrl: JsonField<String>,
-    private val accountingSyncConfiguration: JsonField<AccountingSyncConfiguration>,
-    private val reportingConfiguration: JsonField<ReportingConfiguration>,
-    private val additionalProperties: Map<String, JsonValue>,
+    @JsonProperty("metadata")
+    @ExcludeMissing
+    private val metadata: JsonField<Metadata> = JsonMissing.of(),
+    @JsonProperty("id") @ExcludeMissing private val id: JsonField<String> = JsonMissing.of(),
+    @JsonProperty("external_customer_id")
+    @ExcludeMissing
+    private val externalCustomerId: JsonField<String> = JsonMissing.of(),
+    @JsonProperty("name") @ExcludeMissing private val name: JsonField<String> = JsonMissing.of(),
+    @JsonProperty("email") @ExcludeMissing private val email: JsonField<String> = JsonMissing.of(),
+    @JsonProperty("timezone")
+    @ExcludeMissing
+    private val timezone: JsonField<String> = JsonMissing.of(),
+    @JsonProperty("payment_provider_id")
+    @ExcludeMissing
+    private val paymentProviderId: JsonField<String> = JsonMissing.of(),
+    @JsonProperty("payment_provider")
+    @ExcludeMissing
+    private val paymentProvider: JsonField<PaymentProvider> = JsonMissing.of(),
+    @JsonProperty("created_at")
+    @ExcludeMissing
+    private val createdAt: JsonField<OffsetDateTime> = JsonMissing.of(),
+    @JsonProperty("shipping_address")
+    @ExcludeMissing
+    private val shippingAddress: JsonField<ShippingAddress> = JsonMissing.of(),
+    @JsonProperty("billing_address")
+    @ExcludeMissing
+    private val billingAddress: JsonField<BillingAddress> = JsonMissing.of(),
+    @JsonProperty("balance")
+    @ExcludeMissing
+    private val balance: JsonField<String> = JsonMissing.of(),
+    @JsonProperty("currency")
+    @ExcludeMissing
+    private val currency: JsonField<String> = JsonMissing.of(),
+    @JsonProperty("tax_id") @ExcludeMissing private val taxId: JsonField<TaxId> = JsonMissing.of(),
+    @JsonProperty("auto_collection")
+    @ExcludeMissing
+    private val autoCollection: JsonField<Boolean> = JsonMissing.of(),
+    @JsonProperty("exempt_from_automated_tax")
+    @ExcludeMissing
+    private val exemptFromAutomatedTax: JsonField<Boolean> = JsonMissing.of(),
+    @JsonProperty("email_delivery")
+    @ExcludeMissing
+    private val emailDelivery: JsonField<Boolean> = JsonMissing.of(),
+    @JsonProperty("additional_emails")
+    @ExcludeMissing
+    private val additionalEmails: JsonField<List<String>> = JsonMissing.of(),
+    @JsonProperty("portal_url")
+    @ExcludeMissing
+    private val portalUrl: JsonField<String> = JsonMissing.of(),
+    @JsonProperty("accounting_sync_configuration")
+    @ExcludeMissing
+    private val accountingSyncConfiguration: JsonField<AccountingSyncConfiguration> =
+        JsonMissing.of(),
+    @JsonProperty("reporting_configuration")
+    @ExcludeMissing
+    private val reportingConfiguration: JsonField<ReportingConfiguration> = JsonMissing.of(),
+    @JsonAnySetter private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
 ) {
 
     /**
@@ -534,13 +569,11 @@ private constructor(
          * empty dictionary. Individual keys can be removed by setting the value to `null`, and the
          * entire metadata mapping can be cleared by setting `metadata` to `null`.
          */
-        @JsonProperty("metadata")
-        @ExcludeMissing
         fun metadata(metadata: JsonField<Metadata>) = apply { this.metadata = metadata }
 
         fun id(id: String) = id(JsonField.of(id))
 
-        @JsonProperty("id") @ExcludeMissing fun id(id: JsonField<String>) = apply { this.id = id }
+        fun id(id: JsonField<String>) = apply { this.id = id }
 
         /**
          * An optional user-defined ID for this customer resource, used throughout the system as an
@@ -555,8 +588,6 @@ private constructor(
          * alias for this Customer. Use this field to identify a customer by an existing identifier
          * in your system.
          */
-        @JsonProperty("external_customer_id")
-        @ExcludeMissing
         fun externalCustomerId(externalCustomerId: JsonField<String>) = apply {
             this.externalCustomerId = externalCustomerId
         }
@@ -565,8 +596,6 @@ private constructor(
         fun name(name: String) = name(JsonField.of(name))
 
         /** The full name of the customer */
-        @JsonProperty("name")
-        @ExcludeMissing
         fun name(name: JsonField<String>) = apply { this.name = name }
 
         /**
@@ -579,8 +608,6 @@ private constructor(
          * A valid customer email, to be used for notifications. When Orb triggers payment through a
          * payment gateway, this email will be used for any automatically issued receipts.
          */
-        @JsonProperty("email")
-        @ExcludeMissing
         fun email(email: JsonField<String>) = apply { this.email = email }
 
         /**
@@ -595,8 +622,6 @@ private constructor(
          * This "defaults to your account's timezone if not set. This cannot be changed after
          * customer creation.
          */
-        @JsonProperty("timezone")
-        @ExcludeMissing
         fun timezone(timezone: JsonField<String>) = apply { this.timezone = timezone }
 
         /**
@@ -610,8 +635,6 @@ private constructor(
          * The ID of this customer in an external payments solution, such as Stripe. This is used
          * for creating charges or invoices in the external system via Orb.
          */
-        @JsonProperty("payment_provider_id")
-        @ExcludeMissing
         fun paymentProviderId(paymentProviderId: JsonField<String>) = apply {
             this.paymentProviderId = paymentProviderId
         }
@@ -627,23 +650,17 @@ private constructor(
          * This is used for creating charges or invoices in an external system via Orb. When not in
          * test mode, the connection must first be configured in the Orb webapp.
          */
-        @JsonProperty("payment_provider")
-        @ExcludeMissing
         fun paymentProvider(paymentProvider: JsonField<PaymentProvider>) = apply {
             this.paymentProvider = paymentProvider
         }
 
         fun createdAt(createdAt: OffsetDateTime) = createdAt(JsonField.of(createdAt))
 
-        @JsonProperty("created_at")
-        @ExcludeMissing
         fun createdAt(createdAt: JsonField<OffsetDateTime>) = apply { this.createdAt = createdAt }
 
         fun shippingAddress(shippingAddress: ShippingAddress) =
             shippingAddress(JsonField.of(shippingAddress))
 
-        @JsonProperty("shipping_address")
-        @ExcludeMissing
         fun shippingAddress(shippingAddress: JsonField<ShippingAddress>) = apply {
             this.shippingAddress = shippingAddress
         }
@@ -651,8 +668,6 @@ private constructor(
         fun billingAddress(billingAddress: BillingAddress) =
             billingAddress(JsonField.of(billingAddress))
 
-        @JsonProperty("billing_address")
-        @ExcludeMissing
         fun billingAddress(billingAddress: JsonField<BillingAddress>) = apply {
             this.billingAddress = billingAddress
         }
@@ -661,14 +676,10 @@ private constructor(
         fun balance(balance: String) = balance(JsonField.of(balance))
 
         /** The customer's current balance in their currency. */
-        @JsonProperty("balance")
-        @ExcludeMissing
         fun balance(balance: JsonField<String>) = apply { this.balance = balance }
 
         fun currency(currency: String) = currency(JsonField.of(currency))
 
-        @JsonProperty("currency")
-        @ExcludeMissing
         fun currency(currency: JsonField<String>) = apply { this.currency = currency }
 
         /**
@@ -885,14 +896,10 @@ private constructor(
          * |Venezuela           |`ve_rif`    |Venezuelan RIF Number                                                                                  |
          * |Vietnam             |`vn_tin`    |Vietnamese Tax ID Number                                                                               |
          */
-        @JsonProperty("tax_id")
-        @ExcludeMissing
         fun taxId(taxId: JsonField<TaxId>) = apply { this.taxId = taxId }
 
         fun autoCollection(autoCollection: Boolean) = autoCollection(JsonField.of(autoCollection))
 
-        @JsonProperty("auto_collection")
-        @ExcludeMissing
         fun autoCollection(autoCollection: JsonField<Boolean>) = apply {
             this.autoCollection = autoCollection
         }
@@ -900,16 +907,12 @@ private constructor(
         fun exemptFromAutomatedTax(exemptFromAutomatedTax: Boolean) =
             exemptFromAutomatedTax(JsonField.of(exemptFromAutomatedTax))
 
-        @JsonProperty("exempt_from_automated_tax")
-        @ExcludeMissing
         fun exemptFromAutomatedTax(exemptFromAutomatedTax: JsonField<Boolean>) = apply {
             this.exemptFromAutomatedTax = exemptFromAutomatedTax
         }
 
         fun emailDelivery(emailDelivery: Boolean) = emailDelivery(JsonField.of(emailDelivery))
 
-        @JsonProperty("email_delivery")
-        @ExcludeMissing
         fun emailDelivery(emailDelivery: JsonField<Boolean>) = apply {
             this.emailDelivery = emailDelivery
         }
@@ -917,23 +920,17 @@ private constructor(
         fun additionalEmails(additionalEmails: List<String>) =
             additionalEmails(JsonField.of(additionalEmails))
 
-        @JsonProperty("additional_emails")
-        @ExcludeMissing
         fun additionalEmails(additionalEmails: JsonField<List<String>>) = apply {
             this.additionalEmails = additionalEmails
         }
 
         fun portalUrl(portalUrl: String) = portalUrl(JsonField.of(portalUrl))
 
-        @JsonProperty("portal_url")
-        @ExcludeMissing
         fun portalUrl(portalUrl: JsonField<String>) = apply { this.portalUrl = portalUrl }
 
         fun accountingSyncConfiguration(accountingSyncConfiguration: AccountingSyncConfiguration) =
             accountingSyncConfiguration(JsonField.of(accountingSyncConfiguration))
 
-        @JsonProperty("accounting_sync_configuration")
-        @ExcludeMissing
         fun accountingSyncConfiguration(
             accountingSyncConfiguration: JsonField<AccountingSyncConfiguration>
         ) = apply { this.accountingSyncConfiguration = accountingSyncConfiguration }
@@ -941,8 +938,6 @@ private constructor(
         fun reportingConfiguration(reportingConfiguration: ReportingConfiguration) =
             reportingConfiguration(JsonField.of(reportingConfiguration))
 
-        @JsonProperty("reporting_configuration")
-        @ExcludeMissing
         fun reportingConfiguration(reportingConfiguration: JsonField<ReportingConfiguration>) =
             apply {
                 this.reportingConfiguration = reportingConfiguration
@@ -953,7 +948,6 @@ private constructor(
             putAllAdditionalProperties(additionalProperties)
         }
 
-        @JsonAnySetter
         fun putAdditionalProperty(key: String, value: JsonValue) = apply {
             additionalProperties.put(key, value)
         }
@@ -995,17 +989,30 @@ private constructor(
             )
     }
 
-    @JsonDeserialize(builder = BillingAddress.Builder::class)
     @NoAutoDetect
     class BillingAddress
+    @JsonCreator
     private constructor(
-        private val line1: JsonField<String>,
-        private val line2: JsonField<String>,
-        private val city: JsonField<String>,
-        private val state: JsonField<String>,
-        private val postalCode: JsonField<String>,
-        private val country: JsonField<String>,
-        private val additionalProperties: Map<String, JsonValue>,
+        @JsonProperty("line1")
+        @ExcludeMissing
+        private val line1: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("line2")
+        @ExcludeMissing
+        private val line2: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("city")
+        @ExcludeMissing
+        private val city: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("state")
+        @ExcludeMissing
+        private val state: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("postal_code")
+        @ExcludeMissing
+        private val postalCode: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("country")
+        @ExcludeMissing
+        private val country: JsonField<String> = JsonMissing.of(),
+        @JsonAnySetter
+        private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
 
         fun line1(): String? = line1.getNullable("line1")
@@ -1079,38 +1086,26 @@ private constructor(
 
             fun line1(line1: String) = line1(JsonField.of(line1))
 
-            @JsonProperty("line1")
-            @ExcludeMissing
             fun line1(line1: JsonField<String>) = apply { this.line1 = line1 }
 
             fun line2(line2: String) = line2(JsonField.of(line2))
 
-            @JsonProperty("line2")
-            @ExcludeMissing
             fun line2(line2: JsonField<String>) = apply { this.line2 = line2 }
 
             fun city(city: String) = city(JsonField.of(city))
 
-            @JsonProperty("city")
-            @ExcludeMissing
             fun city(city: JsonField<String>) = apply { this.city = city }
 
             fun state(state: String) = state(JsonField.of(state))
 
-            @JsonProperty("state")
-            @ExcludeMissing
             fun state(state: JsonField<String>) = apply { this.state = state }
 
             fun postalCode(postalCode: String) = postalCode(JsonField.of(postalCode))
 
-            @JsonProperty("postal_code")
-            @ExcludeMissing
             fun postalCode(postalCode: JsonField<String>) = apply { this.postalCode = postalCode }
 
             fun country(country: String) = country(JsonField.of(country))
 
-            @JsonProperty("country")
-            @ExcludeMissing
             fun country(country: JsonField<String>) = apply { this.country = country }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
@@ -1118,7 +1113,6 @@ private constructor(
                 putAllAdditionalProperties(additionalProperties)
             }
 
-            @JsonAnySetter
             fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                 additionalProperties.put(key, value)
             }
@@ -1168,11 +1162,12 @@ private constructor(
      * dictionary. Individual keys can be removed by setting the value to `null`, and the entire
      * metadata mapping can be cleared by setting `metadata` to `null`.
      */
-    @JsonDeserialize(builder = Metadata.Builder::class)
     @NoAutoDetect
     class Metadata
+    @JsonCreator
     private constructor(
-        private val additionalProperties: Map<String, JsonValue>,
+        @JsonAnySetter
+        private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
 
         @JsonAnyGetter
@@ -1207,7 +1202,6 @@ private constructor(
                 putAllAdditionalProperties(additionalProperties)
             }
 
-            @JsonAnySetter
             fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                 additionalProperties.put(key, value)
             }
@@ -1317,17 +1311,30 @@ private constructor(
         override fun toString() = value.toString()
     }
 
-    @JsonDeserialize(builder = ShippingAddress.Builder::class)
     @NoAutoDetect
     class ShippingAddress
+    @JsonCreator
     private constructor(
-        private val line1: JsonField<String>,
-        private val line2: JsonField<String>,
-        private val city: JsonField<String>,
-        private val state: JsonField<String>,
-        private val postalCode: JsonField<String>,
-        private val country: JsonField<String>,
-        private val additionalProperties: Map<String, JsonValue>,
+        @JsonProperty("line1")
+        @ExcludeMissing
+        private val line1: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("line2")
+        @ExcludeMissing
+        private val line2: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("city")
+        @ExcludeMissing
+        private val city: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("state")
+        @ExcludeMissing
+        private val state: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("postal_code")
+        @ExcludeMissing
+        private val postalCode: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("country")
+        @ExcludeMissing
+        private val country: JsonField<String> = JsonMissing.of(),
+        @JsonAnySetter
+        private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
 
         fun line1(): String? = line1.getNullable("line1")
@@ -1401,38 +1408,26 @@ private constructor(
 
             fun line1(line1: String) = line1(JsonField.of(line1))
 
-            @JsonProperty("line1")
-            @ExcludeMissing
             fun line1(line1: JsonField<String>) = apply { this.line1 = line1 }
 
             fun line2(line2: String) = line2(JsonField.of(line2))
 
-            @JsonProperty("line2")
-            @ExcludeMissing
             fun line2(line2: JsonField<String>) = apply { this.line2 = line2 }
 
             fun city(city: String) = city(JsonField.of(city))
 
-            @JsonProperty("city")
-            @ExcludeMissing
             fun city(city: JsonField<String>) = apply { this.city = city }
 
             fun state(state: String) = state(JsonField.of(state))
 
-            @JsonProperty("state")
-            @ExcludeMissing
             fun state(state: JsonField<String>) = apply { this.state = state }
 
             fun postalCode(postalCode: String) = postalCode(JsonField.of(postalCode))
 
-            @JsonProperty("postal_code")
-            @ExcludeMissing
             fun postalCode(postalCode: JsonField<String>) = apply { this.postalCode = postalCode }
 
             fun country(country: String) = country(JsonField.of(country))
 
-            @JsonProperty("country")
-            @ExcludeMissing
             fun country(country: JsonField<String>) = apply { this.country = country }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
@@ -1440,7 +1435,6 @@ private constructor(
                 putAllAdditionalProperties(additionalProperties)
             }
 
-            @JsonAnySetter
             fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                 additionalProperties.put(key, value)
             }
@@ -1591,14 +1585,19 @@ private constructor(
      * |Venezuela           |`ve_rif`    |Venezuelan RIF Number                                                                                  |
      * |Vietnam             |`vn_tin`    |Vietnamese Tax ID Number                                                                               |
      */
-    @JsonDeserialize(builder = TaxId.Builder::class)
     @NoAutoDetect
     class TaxId
+    @JsonCreator
     private constructor(
-        private val country: JsonField<Country>,
-        private val type: JsonField<Type>,
-        private val value: JsonField<String>,
-        private val additionalProperties: Map<String, JsonValue>,
+        @JsonProperty("country")
+        @ExcludeMissing
+        private val country: JsonField<Country> = JsonMissing.of(),
+        @JsonProperty("type") @ExcludeMissing private val type: JsonField<Type> = JsonMissing.of(),
+        @JsonProperty("value")
+        @ExcludeMissing
+        private val value: JsonField<String> = JsonMissing.of(),
+        @JsonAnySetter
+        private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
 
         fun country(): Country = country.getRequired("country")
@@ -1651,20 +1650,14 @@ private constructor(
 
             fun country(country: Country) = country(JsonField.of(country))
 
-            @JsonProperty("country")
-            @ExcludeMissing
             fun country(country: JsonField<Country>) = apply { this.country = country }
 
             fun type(type: Type) = type(JsonField.of(type))
 
-            @JsonProperty("type")
-            @ExcludeMissing
             fun type(type: JsonField<Type>) = apply { this.type = type }
 
             fun value(value: String) = value(JsonField.of(value))
 
-            @JsonProperty("value")
-            @ExcludeMissing
             fun value(value: JsonField<String>) = apply { this.value = value }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
@@ -1672,7 +1665,6 @@ private constructor(
                 putAllAdditionalProperties(additionalProperties)
             }
 
-            @JsonAnySetter
             fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                 additionalProperties.put(key, value)
             }
@@ -2698,13 +2690,18 @@ private constructor(
             "TaxId{country=$country, type=$type, value=$value, additionalProperties=$additionalProperties}"
     }
 
-    @JsonDeserialize(builder = AccountingSyncConfiguration.Builder::class)
     @NoAutoDetect
     class AccountingSyncConfiguration
+    @JsonCreator
     private constructor(
-        private val excluded: JsonField<Boolean>,
-        private val accountingProviders: JsonField<List<AccountingProvider>>,
-        private val additionalProperties: Map<String, JsonValue>,
+        @JsonProperty("excluded")
+        @ExcludeMissing
+        private val excluded: JsonField<Boolean> = JsonMissing.of(),
+        @JsonProperty("accounting_providers")
+        @ExcludeMissing
+        private val accountingProviders: JsonField<List<AccountingProvider>> = JsonMissing.of(),
+        @JsonAnySetter
+        private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
 
         fun excluded(): Boolean = excluded.getRequired("excluded")
@@ -2754,15 +2751,11 @@ private constructor(
 
             fun excluded(excluded: Boolean) = excluded(JsonField.of(excluded))
 
-            @JsonProperty("excluded")
-            @ExcludeMissing
             fun excluded(excluded: JsonField<Boolean>) = apply { this.excluded = excluded }
 
             fun accountingProviders(accountingProviders: List<AccountingProvider>) =
                 accountingProviders(JsonField.of(accountingProviders))
 
-            @JsonProperty("accounting_providers")
-            @ExcludeMissing
             fun accountingProviders(accountingProviders: JsonField<List<AccountingProvider>>) =
                 apply {
                     this.accountingProviders = accountingProviders
@@ -2773,7 +2766,6 @@ private constructor(
                 putAllAdditionalProperties(additionalProperties)
             }
 
-            @JsonAnySetter
             fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                 additionalProperties.put(key, value)
             }
@@ -2796,13 +2788,18 @@ private constructor(
                 )
         }
 
-        @JsonDeserialize(builder = AccountingProvider.Builder::class)
         @NoAutoDetect
         class AccountingProvider
+        @JsonCreator
         private constructor(
-            private val providerType: JsonField<ProviderType>,
-            private val externalProviderId: JsonField<String>,
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonProperty("provider_type")
+            @ExcludeMissing
+            private val providerType: JsonField<ProviderType> = JsonMissing.of(),
+            @JsonProperty("external_provider_id")
+            @ExcludeMissing
+            private val externalProviderId: JsonField<String> = JsonMissing.of(),
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             fun providerType(): ProviderType = providerType.getRequired("provider_type")
@@ -2852,8 +2849,6 @@ private constructor(
                 fun providerType(providerType: ProviderType) =
                     providerType(JsonField.of(providerType))
 
-                @JsonProperty("provider_type")
-                @ExcludeMissing
                 fun providerType(providerType: JsonField<ProviderType>) = apply {
                     this.providerType = providerType
                 }
@@ -2861,8 +2856,6 @@ private constructor(
                 fun externalProviderId(externalProviderId: String) =
                     externalProviderId(JsonField.of(externalProviderId))
 
-                @JsonProperty("external_provider_id")
-                @ExcludeMissing
                 fun externalProviderId(externalProviderId: JsonField<String>) = apply {
                     this.externalProviderId = externalProviderId
                 }
@@ -2872,7 +2865,6 @@ private constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
@@ -2991,12 +2983,15 @@ private constructor(
             "AccountingSyncConfiguration{excluded=$excluded, accountingProviders=$accountingProviders, additionalProperties=$additionalProperties}"
     }
 
-    @JsonDeserialize(builder = ReportingConfiguration.Builder::class)
     @NoAutoDetect
     class ReportingConfiguration
+    @JsonCreator
     private constructor(
-        private val exempt: JsonField<Boolean>,
-        private val additionalProperties: Map<String, JsonValue>,
+        @JsonProperty("exempt")
+        @ExcludeMissing
+        private val exempt: JsonField<Boolean> = JsonMissing.of(),
+        @JsonAnySetter
+        private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
 
         fun exempt(): Boolean = exempt.getRequired("exempt")
@@ -3035,8 +3030,6 @@ private constructor(
 
             fun exempt(exempt: Boolean) = exempt(JsonField.of(exempt))
 
-            @JsonProperty("exempt")
-            @ExcludeMissing
             fun exempt(exempt: JsonField<Boolean>) = apply { this.exempt = exempt }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
@@ -3044,7 +3037,6 @@ private constructor(
                 putAllAdditionalProperties(additionalProperties)
             }
 
-            @JsonAnySetter
             fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                 additionalProperties.put(key, value)
             }

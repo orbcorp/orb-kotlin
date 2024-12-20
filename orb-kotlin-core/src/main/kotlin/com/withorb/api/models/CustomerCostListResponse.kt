@@ -4,23 +4,26 @@ package com.withorb.api.models
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter
 import com.fasterxml.jackson.annotation.JsonAnySetter
+import com.fasterxml.jackson.annotation.JsonCreator
 import com.fasterxml.jackson.annotation.JsonProperty
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize
 import com.withorb.api.core.ExcludeMissing
 import com.withorb.api.core.JsonField
 import com.withorb.api.core.JsonMissing
 import com.withorb.api.core.JsonValue
 import com.withorb.api.core.NoAutoDetect
+import com.withorb.api.core.immutableEmptyMap
 import com.withorb.api.core.toImmutable
 import java.time.OffsetDateTime
 import java.util.Objects
 
-@JsonDeserialize(builder = CustomerCostListResponse.Builder::class)
 @NoAutoDetect
 class CustomerCostListResponse
+@JsonCreator
 private constructor(
-    private val data: JsonField<List<Data>>,
-    private val additionalProperties: Map<String, JsonValue>,
+    @JsonProperty("data")
+    @ExcludeMissing
+    private val data: JsonField<List<Data>> = JsonMissing.of(),
+    @JsonAnySetter private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
 ) {
 
     fun data(): List<Data> = data.getRequired("data")
@@ -59,8 +62,6 @@ private constructor(
 
         fun data(data: List<Data>) = data(JsonField.of(data))
 
-        @JsonProperty("data")
-        @ExcludeMissing
         fun data(data: JsonField<List<Data>>) = apply { this.data = data }
 
         fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
@@ -68,7 +69,6 @@ private constructor(
             putAllAdditionalProperties(additionalProperties)
         }
 
-        @JsonAnySetter
         fun putAdditionalProperty(key: String, value: JsonValue) = apply {
             additionalProperties.put(key, value)
         }
@@ -90,16 +90,27 @@ private constructor(
             )
     }
 
-    @JsonDeserialize(builder = Data.Builder::class)
     @NoAutoDetect
     class Data
+    @JsonCreator
     private constructor(
-        private val subtotal: JsonField<String>,
-        private val total: JsonField<String>,
-        private val timeframeStart: JsonField<OffsetDateTime>,
-        private val timeframeEnd: JsonField<OffsetDateTime>,
-        private val perPriceCosts: JsonField<List<PerPriceCost>>,
-        private val additionalProperties: Map<String, JsonValue>,
+        @JsonProperty("subtotal")
+        @ExcludeMissing
+        private val subtotal: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("total")
+        @ExcludeMissing
+        private val total: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("timeframe_start")
+        @ExcludeMissing
+        private val timeframeStart: JsonField<OffsetDateTime> = JsonMissing.of(),
+        @JsonProperty("timeframe_end")
+        @ExcludeMissing
+        private val timeframeEnd: JsonField<OffsetDateTime> = JsonMissing.of(),
+        @JsonProperty("per_price_costs")
+        @ExcludeMissing
+        private val perPriceCosts: JsonField<List<PerPriceCost>> = JsonMissing.of(),
+        @JsonAnySetter
+        private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
 
         /** Total costs for the timeframe, excluding any minimums and discounts. */
@@ -172,23 +183,17 @@ private constructor(
             fun subtotal(subtotal: String) = subtotal(JsonField.of(subtotal))
 
             /** Total costs for the timeframe, excluding any minimums and discounts. */
-            @JsonProperty("subtotal")
-            @ExcludeMissing
             fun subtotal(subtotal: JsonField<String>) = apply { this.subtotal = subtotal }
 
             /** Total costs for the timeframe, including any minimums and discounts. */
             fun total(total: String) = total(JsonField.of(total))
 
             /** Total costs for the timeframe, including any minimums and discounts. */
-            @JsonProperty("total")
-            @ExcludeMissing
             fun total(total: JsonField<String>) = apply { this.total = total }
 
             fun timeframeStart(timeframeStart: OffsetDateTime) =
                 timeframeStart(JsonField.of(timeframeStart))
 
-            @JsonProperty("timeframe_start")
-            @ExcludeMissing
             fun timeframeStart(timeframeStart: JsonField<OffsetDateTime>) = apply {
                 this.timeframeStart = timeframeStart
             }
@@ -196,8 +201,6 @@ private constructor(
             fun timeframeEnd(timeframeEnd: OffsetDateTime) =
                 timeframeEnd(JsonField.of(timeframeEnd))
 
-            @JsonProperty("timeframe_end")
-            @ExcludeMissing
             fun timeframeEnd(timeframeEnd: JsonField<OffsetDateTime>) = apply {
                 this.timeframeEnd = timeframeEnd
             }
@@ -205,8 +208,6 @@ private constructor(
             fun perPriceCosts(perPriceCosts: List<PerPriceCost>) =
                 perPriceCosts(JsonField.of(perPriceCosts))
 
-            @JsonProperty("per_price_costs")
-            @ExcludeMissing
             fun perPriceCosts(perPriceCosts: JsonField<List<PerPriceCost>>) = apply {
                 this.perPriceCosts = perPriceCosts
             }
@@ -216,7 +217,6 @@ private constructor(
                 putAllAdditionalProperties(additionalProperties)
             }
 
-            @JsonAnySetter
             fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                 additionalProperties.put(key, value)
             }
@@ -242,15 +242,24 @@ private constructor(
                 )
         }
 
-        @JsonDeserialize(builder = PerPriceCost.Builder::class)
         @NoAutoDetect
         class PerPriceCost
+        @JsonCreator
         private constructor(
-            private val quantity: JsonField<Double>,
-            private val subtotal: JsonField<String>,
-            private val total: JsonField<String>,
-            private val price: JsonField<Price>,
-            private val additionalProperties: Map<String, JsonValue>,
+            @JsonProperty("quantity")
+            @ExcludeMissing
+            private val quantity: JsonField<Double> = JsonMissing.of(),
+            @JsonProperty("subtotal")
+            @ExcludeMissing
+            private val subtotal: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("total")
+            @ExcludeMissing
+            private val total: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("price")
+            @ExcludeMissing
+            private val price: JsonField<Price> = JsonMissing.of(),
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             /** The price's quantity for the timeframe */
@@ -774,8 +783,6 @@ private constructor(
                 fun quantity(quantity: Double) = quantity(JsonField.of(quantity))
 
                 /** The price's quantity for the timeframe */
-                @JsonProperty("quantity")
-                @ExcludeMissing
                 fun quantity(quantity: JsonField<Double>) = apply { this.quantity = quantity }
 
                 /**
@@ -786,16 +793,12 @@ private constructor(
                 /**
                  * Price's contributions for the timeframe, excluding any minimums and discounts.
                  */
-                @JsonProperty("subtotal")
-                @ExcludeMissing
                 fun subtotal(subtotal: JsonField<String>) = apply { this.subtotal = subtotal }
 
                 /** Price's contributions for the timeframe, including minimums and discounts. */
                 fun total(total: String) = total(JsonField.of(total))
 
                 /** Price's contributions for the timeframe, including minimums and discounts. */
-                @JsonProperty("total")
-                @ExcludeMissing
                 fun total(total: JsonField<String>) = apply { this.total = total }
 
                 /**
@@ -1264,8 +1267,6 @@ private constructor(
                  * }
                  * ```
                  */
-                @JsonProperty("price")
-                @ExcludeMissing
                 fun price(price: JsonField<Price>) = apply { this.price = price }
 
                 fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
@@ -1273,7 +1274,6 @@ private constructor(
                     putAllAdditionalProperties(additionalProperties)
                 }
 
-                @JsonAnySetter
                 fun putAdditionalProperty(key: String, value: JsonValue) = apply {
                     additionalProperties.put(key, value)
                 }
