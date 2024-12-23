@@ -42,6 +42,9 @@ constructor(
     /**
      * Returns a paginated list of unexpired, non-zero credit blocks for a customer.
      *
+     * If `include_all_blocks` is set to `true`, all credit blocks (including expired and depleted
+     * blocks) will be included in the response.
+     *
      * Note that `currency` defaults to credits if not specified. To use a real world currency, set
      * `currency` to an ISO 4217 string.
      */
@@ -76,6 +79,9 @@ constructor(
 
     /**
      * Returns a paginated list of unexpired, non-zero credit blocks for a customer.
+     *
+     * If `include_all_blocks` is set to `true`, all credit blocks (including expired and depleted
+     * blocks) will be included in the response.
      *
      * Note that `currency` defaults to credits if not specified. To use a real world currency, set
      * `currency` to an ISO 4217 string.
