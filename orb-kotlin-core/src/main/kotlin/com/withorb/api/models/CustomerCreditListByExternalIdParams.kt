@@ -95,7 +95,10 @@ constructor(
          */
         fun cursor(cursor: String) = apply { this.cursor = cursor }
 
-        /** Include all blocks, not just active ones. */
+        /**
+         * If set to True, all expired and depleted blocks, as well as active block will be
+         * returned.
+         */
         fun includeAllBlocks(includeAllBlocks: Boolean) = apply {
             this.includeAllBlocks = includeAllBlocks
         }
