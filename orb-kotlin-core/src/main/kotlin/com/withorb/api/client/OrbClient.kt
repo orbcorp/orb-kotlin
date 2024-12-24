@@ -6,6 +6,7 @@ import com.withorb.api.services.blocking.AlertService
 import com.withorb.api.services.blocking.CouponService
 import com.withorb.api.services.blocking.CreditNoteService
 import com.withorb.api.services.blocking.CustomerService
+import com.withorb.api.services.blocking.DimensionalPriceGroupService
 import com.withorb.api.services.blocking.EventService
 import com.withorb.api.services.blocking.InvoiceLineItemService
 import com.withorb.api.services.blocking.InvoiceService
@@ -45,4 +46,6 @@ interface OrbClient {
     fun subscriptions(): SubscriptionService
 
     fun alerts(): AlertService
+
+    fun dimensionalPriceGroups(): DimensionalPriceGroupService
 }
