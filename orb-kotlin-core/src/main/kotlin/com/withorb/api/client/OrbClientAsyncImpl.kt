@@ -12,6 +12,8 @@ import com.withorb.api.services.async.CreditNoteServiceAsync
 import com.withorb.api.services.async.CreditNoteServiceAsyncImpl
 import com.withorb.api.services.async.CustomerServiceAsync
 import com.withorb.api.services.async.CustomerServiceAsyncImpl
+import com.withorb.api.services.async.DimensionalPriceGroupServiceAsync
+import com.withorb.api.services.async.DimensionalPriceGroupServiceAsyncImpl
 import com.withorb.api.services.async.EventServiceAsync
 import com.withorb.api.services.async.EventServiceAsyncImpl
 import com.withorb.api.services.async.InvoiceLineItemServiceAsync
@@ -95,6 +97,10 @@ constructor(
         AlertServiceAsyncImpl(clientOptionsWithUserAgent)
     }
 
+    private val dimensionalPriceGroups: DimensionalPriceGroupServiceAsync by lazy {
+        DimensionalPriceGroupServiceAsyncImpl(clientOptionsWithUserAgent)
+    }
+
     override fun sync(): OrbClient = sync
 
     override fun topLevel(): TopLevelServiceAsync = topLevel
@@ -122,4 +128,7 @@ constructor(
     override fun subscriptions(): SubscriptionServiceAsync = subscriptions
 
     override fun alerts(): AlertServiceAsync = alerts
+
+    override fun dimensionalPriceGroups(): DimensionalPriceGroupServiceAsync =
+        dimensionalPriceGroups
 }
