@@ -14,8 +14,6 @@ import com.withorb.api.services.blocking.CustomerService
 import com.withorb.api.services.blocking.CustomerServiceImpl
 import com.withorb.api.services.blocking.DimensionalPriceGroupService
 import com.withorb.api.services.blocking.DimensionalPriceGroupServiceImpl
-import com.withorb.api.services.blocking.WebhookService
-import com.withorb.api.services.blocking.WebhookServiceImpl
 import com.withorb.api.services.blocking.EventService
 import com.withorb.api.services.blocking.EventServiceImpl
 import com.withorb.api.services.blocking.InvoiceLineItemService
@@ -34,6 +32,8 @@ import com.withorb.api.services.blocking.SubscriptionService
 import com.withorb.api.services.blocking.SubscriptionServiceImpl
 import com.withorb.api.services.blocking.TopLevelService
 import com.withorb.api.services.blocking.TopLevelServiceImpl
+import com.withorb.api.services.blocking.WebhookService
+import com.withorb.api.services.blocking.WebhookServiceImpl
 
 class OrbClientImpl
 constructor(
