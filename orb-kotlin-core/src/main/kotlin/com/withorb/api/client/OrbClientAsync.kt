@@ -6,6 +6,7 @@ import com.withorb.api.services.async.AlertServiceAsync
 import com.withorb.api.services.async.CouponServiceAsync
 import com.withorb.api.services.async.CreditNoteServiceAsync
 import com.withorb.api.services.async.CustomerServiceAsync
+import com.withorb.api.services.async.DimensionalPriceGroupServiceAsync
 import com.withorb.api.services.async.EventServiceAsync
 import com.withorb.api.services.async.InvoiceLineItemServiceAsync
 import com.withorb.api.services.async.InvoiceServiceAsync
@@ -45,4 +46,6 @@ interface OrbClientAsync {
     fun subscriptions(): SubscriptionServiceAsync
 
     fun alerts(): AlertServiceAsync
+
+    fun dimensionalPriceGroups(): DimensionalPriceGroupServiceAsync
 }

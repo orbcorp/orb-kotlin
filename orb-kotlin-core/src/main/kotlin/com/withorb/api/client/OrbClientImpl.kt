@@ -12,6 +12,10 @@ import com.withorb.api.services.blocking.CreditNoteService
 import com.withorb.api.services.blocking.CreditNoteServiceImpl
 import com.withorb.api.services.blocking.CustomerService
 import com.withorb.api.services.blocking.CustomerServiceImpl
+import com.withorb.api.services.blocking.DimensionalPriceGroupService
+import com.withorb.api.services.blocking.DimensionalPriceGroupServiceImpl
+import com.withorb.api.services.blocking.WebhookService
+import com.withorb.api.services.blocking.WebhookServiceImpl
 import com.withorb.api.services.blocking.EventService
 import com.withorb.api.services.blocking.EventServiceImpl
 import com.withorb.api.services.blocking.InvoiceLineItemService
@@ -83,6 +87,10 @@ constructor(
 
     private val alerts: AlertService by lazy { AlertServiceImpl(clientOptionsWithUserAgent) }
 
+    private val dimensionalPriceGroups: DimensionalPriceGroupService by lazy {
+        DimensionalPriceGroupServiceImpl(clientOptionsWithUserAgent)
+    }
+
     private val webhooks: WebhookService by lazy { WebhookServiceImpl(clientOptions) }
 
     override fun async(): OrbClientAsync = async
@@ -112,6 +120,8 @@ constructor(
     override fun subscriptions(): SubscriptionService = subscriptions
 
     override fun alerts(): AlertService = alerts
+
+    override fun dimensionalPriceGroups(): DimensionalPriceGroupService = dimensionalPriceGroups
 
     override fun webhooks(): WebhookService = webhooks
 }

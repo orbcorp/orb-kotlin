@@ -6,6 +6,7 @@ import com.withorb.api.services.blocking.AlertService
 import com.withorb.api.services.blocking.CouponService
 import com.withorb.api.services.blocking.CreditNoteService
 import com.withorb.api.services.blocking.CustomerService
+import com.withorb.api.services.blocking.DimensionalPriceGroupService
 import com.withorb.api.services.blocking.EventService
 import com.withorb.api.services.blocking.InvoiceLineItemService
 import com.withorb.api.services.blocking.InvoiceService
@@ -15,6 +16,7 @@ import com.withorb.api.services.blocking.PlanService
 import com.withorb.api.services.blocking.PriceService
 import com.withorb.api.services.blocking.SubscriptionService
 import com.withorb.api.services.blocking.TopLevelService
+import com.withorb.api.services.blocking.WebhookService
 
 interface OrbClient {
 
@@ -45,6 +47,8 @@ interface OrbClient {
     fun subscriptions(): SubscriptionService
 
     fun alerts(): AlertService
+
+    fun dimensionalPriceGroups(): DimensionalPriceGroupService
 
     fun webhooks(): WebhookService
 }
