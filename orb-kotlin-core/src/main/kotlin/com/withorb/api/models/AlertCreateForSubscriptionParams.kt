@@ -21,36 +21,29 @@ import java.util.Objects
 class AlertCreateForSubscriptionParams
 constructor(
     private val subscriptionId: String,
-    private val thresholds: List<Threshold>,
-    private val type: Type,
-    private val metricId: String?,
+    private val body: AlertCreateForSubscriptionBody,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
-    private val additionalBodyProperties: Map<String, JsonValue>,
 ) {
 
     fun subscriptionId(): String = subscriptionId
 
-    fun thresholds(): List<Threshold> = thresholds
+    /** The thresholds that define the values at which the alert will be triggered. */
+    fun thresholds(): List<Threshold> = body.thresholds()
 
-    fun type(): Type = type
+    /** The type of alert to create. This must be a valid alert type. */
+    fun type(): Type = body.type()
 
-    fun metricId(): String? = metricId
+    /** The metric to track usage for. */
+    fun metricId(): String? = body.metricId()
 
     fun _additionalHeaders(): Headers = additionalHeaders
 
     fun _additionalQueryParams(): QueryParams = additionalQueryParams
 
-    fun _additionalBodyProperties(): Map<String, JsonValue> = additionalBodyProperties
+    fun _additionalBodyProperties(): Map<String, JsonValue> = body._additionalProperties()
 
-    internal fun getBody(): AlertCreateForSubscriptionBody {
-        return AlertCreateForSubscriptionBody(
-            thresholds,
-            type,
-            metricId,
-            additionalBodyProperties,
-        )
-    }
+    internal fun getBody(): AlertCreateForSubscriptionBody = body
 
     internal fun getHeaders(): Headers = additionalHeaders
 
@@ -96,7 +89,7 @@ constructor(
 
         class Builder {
 
-            private var thresholds: List<Threshold>? = null
+            private var thresholds: MutableList<Threshold>? = null
             private var type: Type? = null
             private var metricId: String? = null
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
@@ -111,13 +104,20 @@ constructor(
                 }
 
             /** The thresholds that define the values at which the alert will be triggered. */
-            fun thresholds(thresholds: List<Threshold>) = apply { this.thresholds = thresholds }
+            fun thresholds(thresholds: List<Threshold>) = apply {
+                this.thresholds = thresholds.toMutableList()
+            }
+
+            /** The thresholds that define the values at which the alert will be triggered. */
+            fun addThreshold(threshold: Threshold) = apply {
+                thresholds = (thresholds ?: mutableListOf()).apply { add(threshold) }
+            }
 
             /** The type of alert to create. This must be a valid alert type. */
             fun type(type: Type) = apply { this.type = type }
 
             /** The metric to track usage for. */
-            fun metricId(metricId: String?) = apply { this.metricId = metricId }
+            fun metricId(metricId: String) = apply { this.metricId = metricId }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
@@ -177,42 +177,33 @@ constructor(
     class Builder {
 
         private var subscriptionId: String? = null
-        private var thresholds: MutableList<Threshold> = mutableListOf()
-        private var type: Type? = null
-        private var metricId: String? = null
+        private var body: AlertCreateForSubscriptionBody.Builder =
+            AlertCreateForSubscriptionBody.builder()
         private var additionalHeaders: Headers.Builder = Headers.builder()
         private var additionalQueryParams: QueryParams.Builder = QueryParams.builder()
-        private var additionalBodyProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         internal fun from(alertCreateForSubscriptionParams: AlertCreateForSubscriptionParams) =
             apply {
                 subscriptionId = alertCreateForSubscriptionParams.subscriptionId
-                thresholds = alertCreateForSubscriptionParams.thresholds.toMutableList()
-                type = alertCreateForSubscriptionParams.type
-                metricId = alertCreateForSubscriptionParams.metricId
+                body = alertCreateForSubscriptionParams.body.toBuilder()
                 additionalHeaders = alertCreateForSubscriptionParams.additionalHeaders.toBuilder()
                 additionalQueryParams =
                     alertCreateForSubscriptionParams.additionalQueryParams.toBuilder()
-                additionalBodyProperties =
-                    alertCreateForSubscriptionParams.additionalBodyProperties.toMutableMap()
             }
 
         fun subscriptionId(subscriptionId: String) = apply { this.subscriptionId = subscriptionId }
 
         /** The thresholds that define the values at which the alert will be triggered. */
-        fun thresholds(thresholds: List<Threshold>) = apply {
-            this.thresholds.clear()
-            this.thresholds.addAll(thresholds)
-        }
+        fun thresholds(thresholds: List<Threshold>) = apply { body.thresholds(thresholds) }
 
         /** The thresholds that define the values at which the alert will be triggered. */
-        fun addThreshold(threshold: Threshold) = apply { this.thresholds.add(threshold) }
+        fun addThreshold(threshold: Threshold) = apply { body.addThreshold(threshold) }
 
         /** The type of alert to create. This must be a valid alert type. */
-        fun type(type: Type) = apply { this.type = type }
+        fun type(type: Type) = apply { body.type(type) }
 
         /** The metric to track usage for. */
-        fun metricId(metricId: String) = apply { this.metricId = metricId }
+        fun metricId(metricId: String) = apply { body.metricId(metricId) }
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {
             this.additionalHeaders.clear()
@@ -313,36 +304,30 @@ constructor(
         }
 
         fun additionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) = apply {
-            this.additionalBodyProperties.clear()
-            putAllAdditionalBodyProperties(additionalBodyProperties)
+            body.additionalProperties(additionalBodyProperties)
         }
 
         fun putAdditionalBodyProperty(key: String, value: JsonValue) = apply {
-            additionalBodyProperties.put(key, value)
+            body.putAdditionalProperty(key, value)
         }
 
         fun putAllAdditionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) =
             apply {
-                this.additionalBodyProperties.putAll(additionalBodyProperties)
+                body.putAllAdditionalProperties(additionalBodyProperties)
             }
 
-        fun removeAdditionalBodyProperty(key: String) = apply {
-            additionalBodyProperties.remove(key)
-        }
+        fun removeAdditionalBodyProperty(key: String) = apply { body.removeAdditionalProperty(key) }
 
         fun removeAllAdditionalBodyProperties(keys: Set<String>) = apply {
-            keys.forEach(::removeAdditionalBodyProperty)
+            body.removeAllAdditionalProperties(keys)
         }
 
         fun build(): AlertCreateForSubscriptionParams =
             AlertCreateForSubscriptionParams(
                 checkNotNull(subscriptionId) { "`subscriptionId` is required but was not set" },
-                thresholds.toImmutable(),
-                checkNotNull(type) { "`type` is required but was not set" },
-                metricId,
+                body.build(),
                 additionalHeaders.build(),
                 additionalQueryParams.build(),
-                additionalBodyProperties.toImmutable(),
             )
     }
 
@@ -515,11 +500,11 @@ constructor(
             return true
         }
 
-        return /* spotless:off */ other is AlertCreateForSubscriptionParams && subscriptionId == other.subscriptionId && thresholds == other.thresholds && type == other.type && metricId == other.metricId && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams && additionalBodyProperties == other.additionalBodyProperties /* spotless:on */
+        return /* spotless:off */ other is AlertCreateForSubscriptionParams && subscriptionId == other.subscriptionId && body == other.body && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
     }
 
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(subscriptionId, thresholds, type, metricId, additionalHeaders, additionalQueryParams, additionalBodyProperties) /* spotless:on */
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(subscriptionId, body, additionalHeaders, additionalQueryParams) /* spotless:on */
 
     override fun toString() =
-        "AlertCreateForSubscriptionParams{subscriptionId=$subscriptionId, thresholds=$thresholds, type=$type, metricId=$metricId, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams, additionalBodyProperties=$additionalBodyProperties}"
+        "AlertCreateForSubscriptionParams{subscriptionId=$subscriptionId, body=$body, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
 }

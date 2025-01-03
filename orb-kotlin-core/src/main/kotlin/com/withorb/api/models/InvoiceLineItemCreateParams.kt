@@ -18,46 +18,39 @@ import java.util.Objects
 
 class InvoiceLineItemCreateParams
 constructor(
-    private val amount: String,
-    private val endDate: LocalDate,
-    private val invoiceId: String,
-    private val name: String,
-    private val quantity: Double,
-    private val startDate: LocalDate,
+    private val body: InvoiceLineItemCreateBody,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
-    private val additionalBodyProperties: Map<String, JsonValue>,
 ) {
 
-    fun amount(): String = amount
+    /** The total amount in the invoice's currency to add to the line item. */
+    fun amount(): String = body.amount()
 
-    fun endDate(): LocalDate = endDate
+    /** A date string to specify the line item's end date in the customer's timezone. */
+    fun endDate(): LocalDate = body.endDate()
 
-    fun invoiceId(): String = invoiceId
+    /** The id of the Invoice to add this line item. */
+    fun invoiceId(): String = body.invoiceId()
 
-    fun name(): String = name
+    /**
+     * The item name associated with this line item. If an item with the same name exists in Orb,
+     * that item will be associated with the line item.
+     */
+    fun name(): String = body.name()
 
-    fun quantity(): Double = quantity
+    /** The number of units on the line item */
+    fun quantity(): Double = body.quantity()
 
-    fun startDate(): LocalDate = startDate
+    /** A date string to specify the line item's start date in the customer's timezone. */
+    fun startDate(): LocalDate = body.startDate()
 
     fun _additionalHeaders(): Headers = additionalHeaders
 
     fun _additionalQueryParams(): QueryParams = additionalQueryParams
 
-    fun _additionalBodyProperties(): Map<String, JsonValue> = additionalBodyProperties
+    fun _additionalBodyProperties(): Map<String, JsonValue> = body._additionalProperties()
 
-    internal fun getBody(): InvoiceLineItemCreateBody {
-        return InvoiceLineItemCreateBody(
-            amount,
-            endDate,
-            invoiceId,
-            name,
-            quantity,
-            startDate,
-            additionalBodyProperties,
-        )
-    }
+    internal fun getBody(): InvoiceLineItemCreateBody = body
 
     internal fun getHeaders(): Headers = additionalHeaders
 
@@ -209,49 +202,36 @@ constructor(
     @NoAutoDetect
     class Builder {
 
-        private var amount: String? = null
-        private var endDate: LocalDate? = null
-        private var invoiceId: String? = null
-        private var name: String? = null
-        private var quantity: Double? = null
-        private var startDate: LocalDate? = null
+        private var body: InvoiceLineItemCreateBody.Builder = InvoiceLineItemCreateBody.builder()
         private var additionalHeaders: Headers.Builder = Headers.builder()
         private var additionalQueryParams: QueryParams.Builder = QueryParams.builder()
-        private var additionalBodyProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         internal fun from(invoiceLineItemCreateParams: InvoiceLineItemCreateParams) = apply {
-            amount = invoiceLineItemCreateParams.amount
-            endDate = invoiceLineItemCreateParams.endDate
-            invoiceId = invoiceLineItemCreateParams.invoiceId
-            name = invoiceLineItemCreateParams.name
-            quantity = invoiceLineItemCreateParams.quantity
-            startDate = invoiceLineItemCreateParams.startDate
+            body = invoiceLineItemCreateParams.body.toBuilder()
             additionalHeaders = invoiceLineItemCreateParams.additionalHeaders.toBuilder()
             additionalQueryParams = invoiceLineItemCreateParams.additionalQueryParams.toBuilder()
-            additionalBodyProperties =
-                invoiceLineItemCreateParams.additionalBodyProperties.toMutableMap()
         }
 
         /** The total amount in the invoice's currency to add to the line item. */
-        fun amount(amount: String) = apply { this.amount = amount }
+        fun amount(amount: String) = apply { body.amount(amount) }
 
         /** A date string to specify the line item's end date in the customer's timezone. */
-        fun endDate(endDate: LocalDate) = apply { this.endDate = endDate }
+        fun endDate(endDate: LocalDate) = apply { body.endDate(endDate) }
 
         /** The id of the Invoice to add this line item. */
-        fun invoiceId(invoiceId: String) = apply { this.invoiceId = invoiceId }
+        fun invoiceId(invoiceId: String) = apply { body.invoiceId(invoiceId) }
 
         /**
          * The item name associated with this line item. If an item with the same name exists in
          * Orb, that item will be associated with the line item.
          */
-        fun name(name: String) = apply { this.name = name }
+        fun name(name: String) = apply { body.name(name) }
 
         /** The number of units on the line item */
-        fun quantity(quantity: Double) = apply { this.quantity = quantity }
+        fun quantity(quantity: Double) = apply { body.quantity(quantity) }
 
         /** A date string to specify the line item's start date in the customer's timezone. */
-        fun startDate(startDate: LocalDate) = apply { this.startDate = startDate }
+        fun startDate(startDate: LocalDate) = apply { body.startDate(startDate) }
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {
             this.additionalHeaders.clear()
@@ -352,38 +332,29 @@ constructor(
         }
 
         fun additionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) = apply {
-            this.additionalBodyProperties.clear()
-            putAllAdditionalBodyProperties(additionalBodyProperties)
+            body.additionalProperties(additionalBodyProperties)
         }
 
         fun putAdditionalBodyProperty(key: String, value: JsonValue) = apply {
-            additionalBodyProperties.put(key, value)
+            body.putAdditionalProperty(key, value)
         }
 
         fun putAllAdditionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) =
             apply {
-                this.additionalBodyProperties.putAll(additionalBodyProperties)
+                body.putAllAdditionalProperties(additionalBodyProperties)
             }
 
-        fun removeAdditionalBodyProperty(key: String) = apply {
-            additionalBodyProperties.remove(key)
-        }
+        fun removeAdditionalBodyProperty(key: String) = apply { body.removeAdditionalProperty(key) }
 
         fun removeAllAdditionalBodyProperties(keys: Set<String>) = apply {
-            keys.forEach(::removeAdditionalBodyProperty)
+            body.removeAllAdditionalProperties(keys)
         }
 
         fun build(): InvoiceLineItemCreateParams =
             InvoiceLineItemCreateParams(
-                checkNotNull(amount) { "`amount` is required but was not set" },
-                checkNotNull(endDate) { "`endDate` is required but was not set" },
-                checkNotNull(invoiceId) { "`invoiceId` is required but was not set" },
-                checkNotNull(name) { "`name` is required but was not set" },
-                checkNotNull(quantity) { "`quantity` is required but was not set" },
-                checkNotNull(startDate) { "`startDate` is required but was not set" },
+                body.build(),
                 additionalHeaders.build(),
                 additionalQueryParams.build(),
-                additionalBodyProperties.toImmutable(),
             )
     }
 
@@ -392,11 +363,11 @@ constructor(
             return true
         }
 
-        return /* spotless:off */ other is InvoiceLineItemCreateParams && amount == other.amount && endDate == other.endDate && invoiceId == other.invoiceId && name == other.name && quantity == other.quantity && startDate == other.startDate && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams && additionalBodyProperties == other.additionalBodyProperties /* spotless:on */
+        return /* spotless:off */ other is InvoiceLineItemCreateParams && body == other.body && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
     }
 
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(amount, endDate, invoiceId, name, quantity, startDate, additionalHeaders, additionalQueryParams, additionalBodyProperties) /* spotless:on */
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(body, additionalHeaders, additionalQueryParams) /* spotless:on */
 
     override fun toString() =
-        "InvoiceLineItemCreateParams{amount=$amount, endDate=$endDate, invoiceId=$invoiceId, name=$name, quantity=$quantity, startDate=$startDate, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams, additionalBodyProperties=$additionalBodyProperties}"
+        "InvoiceLineItemCreateParams{body=$body, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
 }

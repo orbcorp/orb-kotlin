@@ -18,25 +18,23 @@ import java.util.Objects
 class SubscriptionUnscheduleFixedFeeQuantityUpdatesParams
 constructor(
     private val subscriptionId: String,
-    private val priceId: String,
+    private val body: SubscriptionUnscheduleFixedFeeQuantityUpdatesBody,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
-    private val additionalBodyProperties: Map<String, JsonValue>,
 ) {
 
     fun subscriptionId(): String = subscriptionId
 
-    fun priceId(): String = priceId
+    /** Price for which the updates should be cleared. Must be a fixed fee. */
+    fun priceId(): String = body.priceId()
 
     fun _additionalHeaders(): Headers = additionalHeaders
 
     fun _additionalQueryParams(): QueryParams = additionalQueryParams
 
-    fun _additionalBodyProperties(): Map<String, JsonValue> = additionalBodyProperties
+    fun _additionalBodyProperties(): Map<String, JsonValue> = body._additionalProperties()
 
-    internal fun getBody(): SubscriptionUnscheduleFixedFeeQuantityUpdatesBody {
-        return SubscriptionUnscheduleFixedFeeQuantityUpdatesBody(priceId, additionalBodyProperties)
-    }
+    internal fun getBody(): SubscriptionUnscheduleFixedFeeQuantityUpdatesBody = body
 
     internal fun getHeaders(): Headers = additionalHeaders
 
@@ -145,31 +143,28 @@ constructor(
     class Builder {
 
         private var subscriptionId: String? = null
-        private var priceId: String? = null
+        private var body: SubscriptionUnscheduleFixedFeeQuantityUpdatesBody.Builder =
+            SubscriptionUnscheduleFixedFeeQuantityUpdatesBody.builder()
         private var additionalHeaders: Headers.Builder = Headers.builder()
         private var additionalQueryParams: QueryParams.Builder = QueryParams.builder()
-        private var additionalBodyProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         internal fun from(
             subscriptionUnscheduleFixedFeeQuantityUpdatesParams:
                 SubscriptionUnscheduleFixedFeeQuantityUpdatesParams
         ) = apply {
             subscriptionId = subscriptionUnscheduleFixedFeeQuantityUpdatesParams.subscriptionId
-            priceId = subscriptionUnscheduleFixedFeeQuantityUpdatesParams.priceId
+            body = subscriptionUnscheduleFixedFeeQuantityUpdatesParams.body.toBuilder()
             additionalHeaders =
                 subscriptionUnscheduleFixedFeeQuantityUpdatesParams.additionalHeaders.toBuilder()
             additionalQueryParams =
                 subscriptionUnscheduleFixedFeeQuantityUpdatesParams.additionalQueryParams
                     .toBuilder()
-            additionalBodyProperties =
-                subscriptionUnscheduleFixedFeeQuantityUpdatesParams.additionalBodyProperties
-                    .toMutableMap()
         }
 
         fun subscriptionId(subscriptionId: String) = apply { this.subscriptionId = subscriptionId }
 
         /** Price for which the updates should be cleared. Must be a fixed fee. */
-        fun priceId(priceId: String) = apply { this.priceId = priceId }
+        fun priceId(priceId: String) = apply { body.priceId(priceId) }
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {
             this.additionalHeaders.clear()
@@ -270,34 +265,30 @@ constructor(
         }
 
         fun additionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) = apply {
-            this.additionalBodyProperties.clear()
-            putAllAdditionalBodyProperties(additionalBodyProperties)
+            body.additionalProperties(additionalBodyProperties)
         }
 
         fun putAdditionalBodyProperty(key: String, value: JsonValue) = apply {
-            additionalBodyProperties.put(key, value)
+            body.putAdditionalProperty(key, value)
         }
 
         fun putAllAdditionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) =
             apply {
-                this.additionalBodyProperties.putAll(additionalBodyProperties)
+                body.putAllAdditionalProperties(additionalBodyProperties)
             }
 
-        fun removeAdditionalBodyProperty(key: String) = apply {
-            additionalBodyProperties.remove(key)
-        }
+        fun removeAdditionalBodyProperty(key: String) = apply { body.removeAdditionalProperty(key) }
 
         fun removeAllAdditionalBodyProperties(keys: Set<String>) = apply {
-            keys.forEach(::removeAdditionalBodyProperty)
+            body.removeAllAdditionalProperties(keys)
         }
 
         fun build(): SubscriptionUnscheduleFixedFeeQuantityUpdatesParams =
             SubscriptionUnscheduleFixedFeeQuantityUpdatesParams(
                 checkNotNull(subscriptionId) { "`subscriptionId` is required but was not set" },
-                checkNotNull(priceId) { "`priceId` is required but was not set" },
+                body.build(),
                 additionalHeaders.build(),
                 additionalQueryParams.build(),
-                additionalBodyProperties.toImmutable(),
             )
     }
 
@@ -306,11 +297,11 @@ constructor(
             return true
         }
 
-        return /* spotless:off */ other is SubscriptionUnscheduleFixedFeeQuantityUpdatesParams && subscriptionId == other.subscriptionId && priceId == other.priceId && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams && additionalBodyProperties == other.additionalBodyProperties /* spotless:on */
+        return /* spotless:off */ other is SubscriptionUnscheduleFixedFeeQuantityUpdatesParams && subscriptionId == other.subscriptionId && body == other.body && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
     }
 
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(subscriptionId, priceId, additionalHeaders, additionalQueryParams, additionalBodyProperties) /* spotless:on */
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(subscriptionId, body, additionalHeaders, additionalQueryParams) /* spotless:on */
 
     override fun toString() =
-        "SubscriptionUnscheduleFixedFeeQuantityUpdatesParams{subscriptionId=$subscriptionId, priceId=$priceId, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams, additionalBodyProperties=$additionalBodyProperties}"
+        "SubscriptionUnscheduleFixedFeeQuantityUpdatesParams{subscriptionId=$subscriptionId, body=$body, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
 }

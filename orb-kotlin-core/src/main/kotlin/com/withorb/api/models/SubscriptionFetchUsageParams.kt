@@ -32,24 +32,38 @@ constructor(
 
     fun subscriptionId(): String = subscriptionId
 
+    /**
+     * When specified in conjunction with `group_by`, this parameter filters usage to a single
+     * billable metric. Note that both `group_by` and `billable_metric_id` must be specified
+     * together.
+     */
     fun billableMetricId(): String? = billableMetricId
 
     fun firstDimensionKey(): String? = firstDimensionKey
 
     fun firstDimensionValue(): String? = firstDimensionValue
 
+    /** This determines the windowing of usage reporting. */
     fun granularity(): Granularity? = granularity
 
+    /** Groups per-price usage by the key provided. */
     fun groupBy(): String? = groupBy
 
     fun secondDimensionKey(): String? = secondDimensionKey
 
     fun secondDimensionValue(): String? = secondDimensionValue
 
+    /** Usage returned is exclusive of `timeframe_end`. */
     fun timeframeEnd(): OffsetDateTime? = timeframeEnd
 
+    /** Usage returned is inclusive of `timeframe_start`. */
     fun timeframeStart(): OffsetDateTime? = timeframeStart
 
+    /**
+     * Controls whether Orb returns cumulative usage since the start of the billing period, or
+     * incremental day-by-day usage. If your customer has minimums or discounts, it's strongly
+     * recommended that you use the default cumulative behavior.
+     */
     fun viewMode(): ViewMode? = viewMode
 
     fun _additionalHeaders(): Headers = additionalHeaders

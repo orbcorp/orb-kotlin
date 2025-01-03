@@ -30,38 +30,35 @@ import java.util.Objects
 
 class CouponCreateParams
 constructor(
-    private val discount: Discount,
-    private val redemptionCode: String,
-    private val durationInMonths: Long?,
-    private val maxRedemptions: Long?,
+    private val body: CouponCreateBody,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
-    private val additionalBodyProperties: Map<String, JsonValue>,
 ) {
 
-    fun discount(): Discount = discount
+    fun discount(): Discount = body.discount()
 
-    fun redemptionCode(): String = redemptionCode
+    /** This string can be used to redeem this coupon for a given subscription. */
+    fun redemptionCode(): String = body.redemptionCode()
 
-    fun durationInMonths(): Long? = durationInMonths
+    /**
+     * This allows for a coupon's discount to apply for a limited time (determined in months); a
+     * `null` value here means "unlimited time".
+     */
+    fun durationInMonths(): Long? = body.durationInMonths()
 
-    fun maxRedemptions(): Long? = maxRedemptions
+    /**
+     * The maximum number of redemptions allowed for this coupon before it is exhausted;`null` here
+     * means "unlimited".
+     */
+    fun maxRedemptions(): Long? = body.maxRedemptions()
 
     fun _additionalHeaders(): Headers = additionalHeaders
 
     fun _additionalQueryParams(): QueryParams = additionalQueryParams
 
-    fun _additionalBodyProperties(): Map<String, JsonValue> = additionalBodyProperties
+    fun _additionalBodyProperties(): Map<String, JsonValue> = body._additionalProperties()
 
-    internal fun getBody(): CouponCreateBody {
-        return CouponCreateBody(
-            discount,
-            redemptionCode,
-            durationInMonths,
-            maxRedemptions,
-            additionalBodyProperties,
-        )
-    }
+    internal fun getBody(): CouponCreateBody = body
 
     internal fun getHeaders(): Headers = additionalHeaders
 
@@ -125,6 +122,16 @@ constructor(
 
             fun discount(discount: Discount) = apply { this.discount = discount }
 
+            fun discount(newCouponPercentageDiscount: Discount.NewCouponPercentageDiscount) =
+                apply {
+                    this.discount =
+                        Discount.ofNewCouponPercentageDiscount(newCouponPercentageDiscount)
+                }
+
+            fun discount(newCouponAmountDiscount: Discount.NewCouponAmountDiscount) = apply {
+                this.discount = Discount.ofNewCouponAmountDiscount(newCouponAmountDiscount)
+            }
+
             /** This string can be used to redeem this coupon for a given subscription. */
             fun redemptionCode(redemptionCode: String) = apply {
                 this.redemptionCode = redemptionCode
@@ -134,7 +141,7 @@ constructor(
              * This allows for a coupon's discount to apply for a limited time (determined in
              * months); a `null` value here means "unlimited time".
              */
-            fun durationInMonths(durationInMonths: Long?) = apply {
+            fun durationInMonths(durationInMonths: Long) = apply {
                 this.durationInMonths = durationInMonths
             }
 
@@ -142,7 +149,7 @@ constructor(
              * The maximum number of redemptions allowed for this coupon before it is
              * exhausted;`null` here means "unlimited".
              */
-            fun maxRedemptions(maxRedemptions: Long?) = apply {
+            fun maxRedemptions(maxRedemptions: Long) = apply {
                 this.maxRedemptions = maxRedemptions
             }
 
@@ -203,50 +210,42 @@ constructor(
     @NoAutoDetect
     class Builder {
 
-        private var discount: Discount? = null
-        private var redemptionCode: String? = null
-        private var durationInMonths: Long? = null
-        private var maxRedemptions: Long? = null
+        private var body: CouponCreateBody.Builder = CouponCreateBody.builder()
         private var additionalHeaders: Headers.Builder = Headers.builder()
         private var additionalQueryParams: QueryParams.Builder = QueryParams.builder()
-        private var additionalBodyProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         internal fun from(couponCreateParams: CouponCreateParams) = apply {
-            discount = couponCreateParams.discount
-            redemptionCode = couponCreateParams.redemptionCode
-            durationInMonths = couponCreateParams.durationInMonths
-            maxRedemptions = couponCreateParams.maxRedemptions
+            body = couponCreateParams.body.toBuilder()
             additionalHeaders = couponCreateParams.additionalHeaders.toBuilder()
             additionalQueryParams = couponCreateParams.additionalQueryParams.toBuilder()
-            additionalBodyProperties = couponCreateParams.additionalBodyProperties.toMutableMap()
         }
 
-        fun discount(discount: Discount) = apply { this.discount = discount }
+        fun discount(discount: Discount) = apply { body.discount(discount) }
 
         fun discount(newCouponPercentageDiscount: Discount.NewCouponPercentageDiscount) = apply {
-            this.discount = Discount.ofNewCouponPercentageDiscount(newCouponPercentageDiscount)
+            body.discount(newCouponPercentageDiscount)
         }
 
         fun discount(newCouponAmountDiscount: Discount.NewCouponAmountDiscount) = apply {
-            this.discount = Discount.ofNewCouponAmountDiscount(newCouponAmountDiscount)
+            body.discount(newCouponAmountDiscount)
         }
 
         /** This string can be used to redeem this coupon for a given subscription. */
-        fun redemptionCode(redemptionCode: String) = apply { this.redemptionCode = redemptionCode }
+        fun redemptionCode(redemptionCode: String) = apply { body.redemptionCode(redemptionCode) }
 
         /**
          * This allows for a coupon's discount to apply for a limited time (determined in months); a
          * `null` value here means "unlimited time".
          */
         fun durationInMonths(durationInMonths: Long) = apply {
-            this.durationInMonths = durationInMonths
+            body.durationInMonths(durationInMonths)
         }
 
         /**
          * The maximum number of redemptions allowed for this coupon before it is exhausted;`null`
          * here means "unlimited".
          */
-        fun maxRedemptions(maxRedemptions: Long) = apply { this.maxRedemptions = maxRedemptions }
+        fun maxRedemptions(maxRedemptions: Long) = apply { body.maxRedemptions(maxRedemptions) }
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {
             this.additionalHeaders.clear()
@@ -347,36 +346,29 @@ constructor(
         }
 
         fun additionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) = apply {
-            this.additionalBodyProperties.clear()
-            putAllAdditionalBodyProperties(additionalBodyProperties)
+            body.additionalProperties(additionalBodyProperties)
         }
 
         fun putAdditionalBodyProperty(key: String, value: JsonValue) = apply {
-            additionalBodyProperties.put(key, value)
+            body.putAdditionalProperty(key, value)
         }
 
         fun putAllAdditionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) =
             apply {
-                this.additionalBodyProperties.putAll(additionalBodyProperties)
+                body.putAllAdditionalProperties(additionalBodyProperties)
             }
 
-        fun removeAdditionalBodyProperty(key: String) = apply {
-            additionalBodyProperties.remove(key)
-        }
+        fun removeAdditionalBodyProperty(key: String) = apply { body.removeAdditionalProperty(key) }
 
         fun removeAllAdditionalBodyProperties(keys: Set<String>) = apply {
-            keys.forEach(::removeAdditionalBodyProperty)
+            body.removeAllAdditionalProperties(keys)
         }
 
         fun build(): CouponCreateParams =
             CouponCreateParams(
-                checkNotNull(discount) { "`discount` is required but was not set" },
-                checkNotNull(redemptionCode) { "`redemptionCode` is required but was not set" },
-                durationInMonths,
-                maxRedemptions,
+                body.build(),
                 additionalHeaders.build(),
                 additionalQueryParams.build(),
-                additionalBodyProperties.toImmutable(),
             )
     }
 
@@ -802,11 +794,11 @@ constructor(
             return true
         }
 
-        return /* spotless:off */ other is CouponCreateParams && discount == other.discount && redemptionCode == other.redemptionCode && durationInMonths == other.durationInMonths && maxRedemptions == other.maxRedemptions && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams && additionalBodyProperties == other.additionalBodyProperties /* spotless:on */
+        return /* spotless:off */ other is CouponCreateParams && body == other.body && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
     }
 
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(discount, redemptionCode, durationInMonths, maxRedemptions, additionalHeaders, additionalQueryParams, additionalBodyProperties) /* spotless:on */
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(body, additionalHeaders, additionalQueryParams) /* spotless:on */
 
     override fun toString() =
-        "CouponCreateParams{discount=$discount, redemptionCode=$redemptionCode, durationInMonths=$durationInMonths, maxRedemptions=$maxRedemptions, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams, additionalBodyProperties=$additionalBodyProperties}"
+        "CouponCreateParams{body=$body, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
 }

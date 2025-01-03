@@ -40,14 +40,20 @@ constructor(
 
     fun createdAtLte(): OffsetDateTime? = createdAtLte
 
+    /** The ledger currency or custom pricing unit to use. */
     fun currency(): String? = currency
 
+    /**
+     * Cursor for pagination. This can be populated by the `next_cursor` value returned from the
+     * initial request.
+     */
     fun cursor(): String? = cursor
 
     fun entryStatus(): EntryStatus? = entryStatus
 
     fun entryType(): EntryType? = entryType
 
+    /** The number of items to fetch. Defaults to 20. */
     fun limit(): Long? = limit
 
     fun minimumAmount(): String? = minimumAmount

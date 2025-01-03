@@ -21,36 +21,29 @@ import java.util.Objects
 class AlertCreateForExternalCustomerParams
 constructor(
     private val externalCustomerId: String,
-    private val currency: String,
-    private val type: Type,
-    private val thresholds: List<Threshold>?,
+    private val body: AlertCreateForExternalCustomerBody,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
-    private val additionalBodyProperties: Map<String, JsonValue>,
 ) {
 
     fun externalCustomerId(): String = externalCustomerId
 
-    fun currency(): String = currency
+    /** The case sensitive currency or custom pricing unit to use for this alert. */
+    fun currency(): String = body.currency()
 
-    fun type(): Type = type
+    /** The type of alert to create. This must be a valid alert type. */
+    fun type(): Type = body.type()
 
-    fun thresholds(): List<Threshold>? = thresholds
+    /** The thresholds that define the values at which the alert will be triggered. */
+    fun thresholds(): List<Threshold>? = body.thresholds()
 
     fun _additionalHeaders(): Headers = additionalHeaders
 
     fun _additionalQueryParams(): QueryParams = additionalQueryParams
 
-    fun _additionalBodyProperties(): Map<String, JsonValue> = additionalBodyProperties
+    fun _additionalBodyProperties(): Map<String, JsonValue> = body._additionalProperties()
 
-    internal fun getBody(): AlertCreateForExternalCustomerBody {
-        return AlertCreateForExternalCustomerBody(
-            currency,
-            type,
-            thresholds,
-            additionalBodyProperties,
-        )
-    }
+    internal fun getBody(): AlertCreateForExternalCustomerBody = body
 
     internal fun getHeaders(): Headers = additionalHeaders
 
@@ -98,7 +91,7 @@ constructor(
 
             private var currency: String? = null
             private var type: Type? = null
-            private var thresholds: List<Threshold>? = null
+            private var thresholds: MutableList<Threshold>? = null
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             internal fun from(
@@ -118,7 +111,14 @@ constructor(
             fun type(type: Type) = apply { this.type = type }
 
             /** The thresholds that define the values at which the alert will be triggered. */
-            fun thresholds(thresholds: List<Threshold>?) = apply { this.thresholds = thresholds }
+            fun thresholds(thresholds: List<Threshold>) = apply {
+                this.thresholds = thresholds.toMutableList()
+            }
+
+            /** The thresholds that define the values at which the alert will be triggered. */
+            fun addThreshold(threshold: Threshold) = apply {
+                thresholds = (thresholds ?: mutableListOf()).apply { add(threshold) }
+            }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
@@ -177,26 +177,19 @@ constructor(
     class Builder {
 
         private var externalCustomerId: String? = null
-        private var currency: String? = null
-        private var type: Type? = null
-        private var thresholds: MutableList<Threshold> = mutableListOf()
+        private var body: AlertCreateForExternalCustomerBody.Builder =
+            AlertCreateForExternalCustomerBody.builder()
         private var additionalHeaders: Headers.Builder = Headers.builder()
         private var additionalQueryParams: QueryParams.Builder = QueryParams.builder()
-        private var additionalBodyProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         internal fun from(
             alertCreateForExternalCustomerParams: AlertCreateForExternalCustomerParams
         ) = apply {
             externalCustomerId = alertCreateForExternalCustomerParams.externalCustomerId
-            currency = alertCreateForExternalCustomerParams.currency
-            type = alertCreateForExternalCustomerParams.type
-            thresholds =
-                alertCreateForExternalCustomerParams.thresholds?.toMutableList() ?: mutableListOf()
+            body = alertCreateForExternalCustomerParams.body.toBuilder()
             additionalHeaders = alertCreateForExternalCustomerParams.additionalHeaders.toBuilder()
             additionalQueryParams =
                 alertCreateForExternalCustomerParams.additionalQueryParams.toBuilder()
-            additionalBodyProperties =
-                alertCreateForExternalCustomerParams.additionalBodyProperties.toMutableMap()
         }
 
         fun externalCustomerId(externalCustomerId: String) = apply {
@@ -204,19 +197,16 @@ constructor(
         }
 
         /** The case sensitive currency or custom pricing unit to use for this alert. */
-        fun currency(currency: String) = apply { this.currency = currency }
+        fun currency(currency: String) = apply { body.currency(currency) }
 
         /** The type of alert to create. This must be a valid alert type. */
-        fun type(type: Type) = apply { this.type = type }
+        fun type(type: Type) = apply { body.type(type) }
 
         /** The thresholds that define the values at which the alert will be triggered. */
-        fun thresholds(thresholds: List<Threshold>) = apply {
-            this.thresholds.clear()
-            this.thresholds.addAll(thresholds)
-        }
+        fun thresholds(thresholds: List<Threshold>) = apply { body.thresholds(thresholds) }
 
         /** The thresholds that define the values at which the alert will be triggered. */
-        fun addThreshold(threshold: Threshold) = apply { this.thresholds.add(threshold) }
+        fun addThreshold(threshold: Threshold) = apply { body.addThreshold(threshold) }
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {
             this.additionalHeaders.clear()
@@ -317,25 +307,22 @@ constructor(
         }
 
         fun additionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) = apply {
-            this.additionalBodyProperties.clear()
-            putAllAdditionalBodyProperties(additionalBodyProperties)
+            body.additionalProperties(additionalBodyProperties)
         }
 
         fun putAdditionalBodyProperty(key: String, value: JsonValue) = apply {
-            additionalBodyProperties.put(key, value)
+            body.putAdditionalProperty(key, value)
         }
 
         fun putAllAdditionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) =
             apply {
-                this.additionalBodyProperties.putAll(additionalBodyProperties)
+                body.putAllAdditionalProperties(additionalBodyProperties)
             }
 
-        fun removeAdditionalBodyProperty(key: String) = apply {
-            additionalBodyProperties.remove(key)
-        }
+        fun removeAdditionalBodyProperty(key: String) = apply { body.removeAdditionalProperty(key) }
 
         fun removeAllAdditionalBodyProperties(keys: Set<String>) = apply {
-            keys.forEach(::removeAdditionalBodyProperty)
+            body.removeAllAdditionalProperties(keys)
         }
 
         fun build(): AlertCreateForExternalCustomerParams =
@@ -343,12 +330,9 @@ constructor(
                 checkNotNull(externalCustomerId) {
                     "`externalCustomerId` is required but was not set"
                 },
-                checkNotNull(currency) { "`currency` is required but was not set" },
-                checkNotNull(type) { "`type` is required but was not set" },
-                thresholds.toImmutable().ifEmpty { null },
+                body.build(),
                 additionalHeaders.build(),
                 additionalQueryParams.build(),
-                additionalBodyProperties.toImmutable(),
             )
     }
 
@@ -521,11 +505,11 @@ constructor(
             return true
         }
 
-        return /* spotless:off */ other is AlertCreateForExternalCustomerParams && externalCustomerId == other.externalCustomerId && currency == other.currency && type == other.type && thresholds == other.thresholds && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams && additionalBodyProperties == other.additionalBodyProperties /* spotless:on */
+        return /* spotless:off */ other is AlertCreateForExternalCustomerParams && externalCustomerId == other.externalCustomerId && body == other.body && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
     }
 
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(externalCustomerId, currency, type, thresholds, additionalHeaders, additionalQueryParams, additionalBodyProperties) /* spotless:on */
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(externalCustomerId, body, additionalHeaders, additionalQueryParams) /* spotless:on */
 
     override fun toString() =
-        "AlertCreateForExternalCustomerParams{externalCustomerId=$externalCustomerId, currency=$currency, type=$type, thresholds=$thresholds, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams, additionalBodyProperties=$additionalBodyProperties}"
+        "AlertCreateForExternalCustomerParams{externalCustomerId=$externalCustomerId, body=$body, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
 }

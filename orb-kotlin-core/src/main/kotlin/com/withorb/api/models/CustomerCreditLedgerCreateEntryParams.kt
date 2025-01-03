@@ -33,15 +33,7 @@ import java.util.Objects
 class CustomerCreditLedgerCreateEntryParams
 constructor(
     private val customerId: String,
-    private val addIncrementCreditLedgerEntryRequestParams:
-        AddIncrementCreditLedgerEntryRequestParams?,
-    private val addDecrementCreditLedgerEntryRequestParams:
-        AddDecrementCreditLedgerEntryRequestParams?,
-    private val addExpirationChangeCreditLedgerEntryRequestParams:
-        AddExpirationChangeCreditLedgerEntryRequestParams?,
-    private val addVoidCreditLedgerEntryRequestParams: AddVoidCreditLedgerEntryRequestParams?,
-    private val addAmendmentCreditLedgerEntryRequestParams:
-        AddAmendmentCreditLedgerEntryRequestParams?,
+    private val body: CustomerCreditLedgerCreateEntryBody,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
 ) {
@@ -49,34 +41,26 @@ constructor(
     fun customerId(): String = customerId
 
     fun addIncrementCreditLedgerEntryRequestParams(): AddIncrementCreditLedgerEntryRequestParams? =
-        addIncrementCreditLedgerEntryRequestParams
+        body.addIncrementCreditLedgerEntryRequestParams()
 
     fun addDecrementCreditLedgerEntryRequestParams(): AddDecrementCreditLedgerEntryRequestParams? =
-        addDecrementCreditLedgerEntryRequestParams
+        body.addDecrementCreditLedgerEntryRequestParams()
 
     fun addExpirationChangeCreditLedgerEntryRequestParams():
         AddExpirationChangeCreditLedgerEntryRequestParams? =
-        addExpirationChangeCreditLedgerEntryRequestParams
+        body.addExpirationChangeCreditLedgerEntryRequestParams()
 
     fun addVoidCreditLedgerEntryRequestParams(): AddVoidCreditLedgerEntryRequestParams? =
-        addVoidCreditLedgerEntryRequestParams
+        body.addVoidCreditLedgerEntryRequestParams()
 
     fun addAmendmentCreditLedgerEntryRequestParams(): AddAmendmentCreditLedgerEntryRequestParams? =
-        addAmendmentCreditLedgerEntryRequestParams
+        body.addAmendmentCreditLedgerEntryRequestParams()
 
     fun _additionalHeaders(): Headers = additionalHeaders
 
     fun _additionalQueryParams(): QueryParams = additionalQueryParams
 
-    internal fun getBody(): CustomerCreditLedgerCreateEntryBody {
-        return CustomerCreditLedgerCreateEntryBody(
-            addIncrementCreditLedgerEntryRequestParams,
-            addDecrementCreditLedgerEntryRequestParams,
-            addExpirationChangeCreditLedgerEntryRequestParams,
-            addVoidCreditLedgerEntryRequestParams,
-            addAmendmentCreditLedgerEntryRequestParams,
-        )
-    }
+    internal fun getBody(): CustomerCreditLedgerCreateEntryBody = body
 
     internal fun getHeaders(): Headers = additionalHeaders
 
@@ -421,20 +405,7 @@ constructor(
     class Builder {
 
         private var customerId: String? = null
-        private var addIncrementCreditLedgerEntryRequestParams:
-            AddIncrementCreditLedgerEntryRequestParams? =
-            null
-        private var addDecrementCreditLedgerEntryRequestParams:
-            AddDecrementCreditLedgerEntryRequestParams? =
-            null
-        private var addExpirationChangeCreditLedgerEntryRequestParams:
-            AddExpirationChangeCreditLedgerEntryRequestParams? =
-            null
-        private var addVoidCreditLedgerEntryRequestParams: AddVoidCreditLedgerEntryRequestParams? =
-            null
-        private var addAmendmentCreditLedgerEntryRequestParams:
-            AddAmendmentCreditLedgerEntryRequestParams? =
-            null
+        private var body: CustomerCreditLedgerCreateEntryBody? = null
         private var additionalHeaders: Headers.Builder = Headers.builder()
         private var additionalQueryParams: QueryParams.Builder = QueryParams.builder()
 
@@ -442,17 +413,7 @@ constructor(
             customerCreditLedgerCreateEntryParams: CustomerCreditLedgerCreateEntryParams
         ) = apply {
             customerId = customerCreditLedgerCreateEntryParams.customerId
-            addIncrementCreditLedgerEntryRequestParams =
-                customerCreditLedgerCreateEntryParams.addIncrementCreditLedgerEntryRequestParams
-            addDecrementCreditLedgerEntryRequestParams =
-                customerCreditLedgerCreateEntryParams.addDecrementCreditLedgerEntryRequestParams
-            addExpirationChangeCreditLedgerEntryRequestParams =
-                customerCreditLedgerCreateEntryParams
-                    .addExpirationChangeCreditLedgerEntryRequestParams
-            addVoidCreditLedgerEntryRequestParams =
-                customerCreditLedgerCreateEntryParams.addVoidCreditLedgerEntryRequestParams
-            addAmendmentCreditLedgerEntryRequestParams =
-                customerCreditLedgerCreateEntryParams.addAmendmentCreditLedgerEntryRequestParams
+            body = customerCreditLedgerCreateEntryParams.body
             additionalHeaders = customerCreditLedgerCreateEntryParams.additionalHeaders.toBuilder()
             additionalQueryParams =
                 customerCreditLedgerCreateEntryParams.additionalQueryParams.toBuilder()
@@ -463,56 +424,48 @@ constructor(
         fun forAddIncrementCreditLedgerEntryRequestParams(
             addIncrementCreditLedgerEntryRequestParams: AddIncrementCreditLedgerEntryRequestParams
         ) = apply {
-            this.addIncrementCreditLedgerEntryRequestParams =
-                addIncrementCreditLedgerEntryRequestParams
-            this.addDecrementCreditLedgerEntryRequestParams = null
-            this.addExpirationChangeCreditLedgerEntryRequestParams = null
-            this.addVoidCreditLedgerEntryRequestParams = null
-            this.addAmendmentCreditLedgerEntryRequestParams = null
+            body =
+                CustomerCreditLedgerCreateEntryBody.ofAddIncrementCreditLedgerEntryRequestParams(
+                    addIncrementCreditLedgerEntryRequestParams
+                )
         }
 
         fun forAddDecrementCreditLedgerEntryRequestParams(
             addDecrementCreditLedgerEntryRequestParams: AddDecrementCreditLedgerEntryRequestParams
         ) = apply {
-            this.addIncrementCreditLedgerEntryRequestParams = null
-            this.addDecrementCreditLedgerEntryRequestParams =
-                addDecrementCreditLedgerEntryRequestParams
-            this.addExpirationChangeCreditLedgerEntryRequestParams = null
-            this.addVoidCreditLedgerEntryRequestParams = null
-            this.addAmendmentCreditLedgerEntryRequestParams = null
+            body =
+                CustomerCreditLedgerCreateEntryBody.ofAddDecrementCreditLedgerEntryRequestParams(
+                    addDecrementCreditLedgerEntryRequestParams
+                )
         }
 
         fun forAddExpirationChangeCreditLedgerEntryRequestParams(
             addExpirationChangeCreditLedgerEntryRequestParams:
                 AddExpirationChangeCreditLedgerEntryRequestParams
         ) = apply {
-            this.addIncrementCreditLedgerEntryRequestParams = null
-            this.addDecrementCreditLedgerEntryRequestParams = null
-            this.addExpirationChangeCreditLedgerEntryRequestParams =
-                addExpirationChangeCreditLedgerEntryRequestParams
-            this.addVoidCreditLedgerEntryRequestParams = null
-            this.addAmendmentCreditLedgerEntryRequestParams = null
+            body =
+                CustomerCreditLedgerCreateEntryBody
+                    .ofAddExpirationChangeCreditLedgerEntryRequestParams(
+                        addExpirationChangeCreditLedgerEntryRequestParams
+                    )
         }
 
         fun forAddVoidCreditLedgerEntryRequestParams(
             addVoidCreditLedgerEntryRequestParams: AddVoidCreditLedgerEntryRequestParams
         ) = apply {
-            this.addIncrementCreditLedgerEntryRequestParams = null
-            this.addDecrementCreditLedgerEntryRequestParams = null
-            this.addExpirationChangeCreditLedgerEntryRequestParams = null
-            this.addVoidCreditLedgerEntryRequestParams = addVoidCreditLedgerEntryRequestParams
-            this.addAmendmentCreditLedgerEntryRequestParams = null
+            body =
+                CustomerCreditLedgerCreateEntryBody.ofAddVoidCreditLedgerEntryRequestParams(
+                    addVoidCreditLedgerEntryRequestParams
+                )
         }
 
         fun forAddAmendmentCreditLedgerEntryRequestParams(
             addAmendmentCreditLedgerEntryRequestParams: AddAmendmentCreditLedgerEntryRequestParams
         ) = apply {
-            this.addIncrementCreditLedgerEntryRequestParams = null
-            this.addDecrementCreditLedgerEntryRequestParams = null
-            this.addExpirationChangeCreditLedgerEntryRequestParams = null
-            this.addVoidCreditLedgerEntryRequestParams = null
-            this.addAmendmentCreditLedgerEntryRequestParams =
-                addAmendmentCreditLedgerEntryRequestParams
+            body =
+                CustomerCreditLedgerCreateEntryBody.ofAddAmendmentCreditLedgerEntryRequestParams(
+                    addAmendmentCreditLedgerEntryRequestParams
+                )
         }
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {
@@ -616,11 +569,7 @@ constructor(
         fun build(): CustomerCreditLedgerCreateEntryParams =
             CustomerCreditLedgerCreateEntryParams(
                 checkNotNull(customerId) { "`customerId` is required but was not set" },
-                addIncrementCreditLedgerEntryRequestParams,
-                addDecrementCreditLedgerEntryRequestParams,
-                addExpirationChangeCreditLedgerEntryRequestParams,
-                addVoidCreditLedgerEntryRequestParams,
-                addAmendmentCreditLedgerEntryRequestParams,
+                body ?: CustomerCreditLedgerCreateEntryBody(),
                 additionalHeaders.build(),
                 additionalQueryParams.build(),
             )
@@ -739,20 +688,20 @@ constructor(
              * setting the value to `null`, and the entire metadata mapping can be cleared by
              * setting `metadata` to `null`.
              */
-            fun metadata(metadata: Metadata?) = apply { this.metadata = metadata }
+            fun metadata(metadata: Metadata) = apply { this.metadata = metadata }
 
             /**
              * The currency or custom pricing unit to use for this ledger entry. If this is a
              * real-world currency, it must match the customer's invoicing currency.
              */
-            fun currency(currency: String?) = apply { this.currency = currency }
+            fun currency(currency: String) = apply { this.currency = currency }
 
             /**
              * Optional metadata that can be specified when adding ledger results via the API. For
              * example, this can be used to note an increment refers to trial credits, or for noting
              * corrections as a result of an incident, etc.
              */
-            fun description(description: String?) = apply { this.description = description }
+            fun description(description: String) = apply { this.description = description }
 
             fun entryType(entryType: EntryType) = apply { this.entryType = entryType }
 
@@ -763,13 +712,13 @@ constructor(
             fun amount(amount: Double) = apply { this.amount = amount }
 
             /** An ISO 8601 format date that denotes when this credit balance should expire. */
-            fun expiryDate(expiryDate: OffsetDateTime?) = apply { this.expiryDate = expiryDate }
+            fun expiryDate(expiryDate: OffsetDateTime) = apply { this.expiryDate = expiryDate }
 
             /**
              * An ISO 8601 format date that denotes when this credit balance should become available
              * for use.
              */
-            fun effectiveDate(effectiveDate: OffsetDateTime?) = apply {
+            fun effectiveDate(effectiveDate: OffsetDateTime) = apply {
                 this.effectiveDate = effectiveDate
             }
 
@@ -777,7 +726,7 @@ constructor(
              * Can only be specified when entry_type=increment. How much, in the customer's
              * currency, a customer paid for a single credit in this block
              */
-            fun perUnitCostBasis(perUnitCostBasis: String?) = apply {
+            fun perUnitCostBasis(perUnitCostBasis: String) = apply {
                 this.perUnitCostBasis = perUnitCostBasis
             }
 
@@ -786,7 +735,7 @@ constructor(
              * credits. If `invoice_settings` is passed, you must specify per_unit_cost_basis, as
              * the calculation of the invoice total is done on that basis.
              */
-            fun invoiceSettings(invoiceSettings: InvoiceSettings?) = apply {
+            fun invoiceSettings(invoiceSettings: InvoiceSettings) = apply {
                 this.invoiceSettings = invoiceSettings
             }
 
@@ -958,13 +907,13 @@ constructor(
                 fun netTerms(netTerms: Long) = apply { this.netTerms = netTerms }
 
                 /** An optional memo to display on the invoice. */
-                fun memo(memo: String?) = apply { this.memo = memo }
+                fun memo(memo: String) = apply { this.memo = memo }
 
                 /**
                  * If true, the new credit block will require that the corresponding invoice is paid
                  * before it can be drawn down from.
                  */
-                fun requireSuccessfulPayment(requireSuccessfulPayment: Boolean?) = apply {
+                fun requireSuccessfulPayment(requireSuccessfulPayment: Boolean) = apply {
                     this.requireSuccessfulPayment = requireSuccessfulPayment
                 }
 
@@ -1191,20 +1140,20 @@ constructor(
              * setting the value to `null`, and the entire metadata mapping can be cleared by
              * setting `metadata` to `null`.
              */
-            fun metadata(metadata: Metadata?) = apply { this.metadata = metadata }
+            fun metadata(metadata: Metadata) = apply { this.metadata = metadata }
 
             /**
              * The currency or custom pricing unit to use for this ledger entry. If this is a
              * real-world currency, it must match the customer's invoicing currency.
              */
-            fun currency(currency: String?) = apply { this.currency = currency }
+            fun currency(currency: String) = apply { this.currency = currency }
 
             /**
              * Optional metadata that can be specified when adding ledger results via the API. For
              * example, this can be used to note an increment refers to trial credits, or for noting
              * corrections as a result of an incident, etc.
              */
-            fun description(description: String?) = apply { this.description = description }
+            fun description(description: String) = apply { this.description = description }
 
             fun entryType(entryType: EntryType) = apply { this.entryType = entryType }
 
@@ -1492,20 +1441,20 @@ constructor(
              * setting the value to `null`, and the entire metadata mapping can be cleared by
              * setting `metadata` to `null`.
              */
-            fun metadata(metadata: Metadata?) = apply { this.metadata = metadata }
+            fun metadata(metadata: Metadata) = apply { this.metadata = metadata }
 
             /**
              * The currency or custom pricing unit to use for this ledger entry. If this is a
              * real-world currency, it must match the customer's invoicing currency.
              */
-            fun currency(currency: String?) = apply { this.currency = currency }
+            fun currency(currency: String) = apply { this.currency = currency }
 
             /**
              * Optional metadata that can be specified when adding ledger results via the API. For
              * example, this can be used to note an increment refers to trial credits, or for noting
              * corrections as a result of an incident, etc.
              */
-            fun description(description: String?) = apply { this.description = description }
+            fun description(description: String) = apply { this.description = description }
 
             fun entryType(entryType: EntryType) = apply { this.entryType = entryType }
 
@@ -1513,16 +1462,16 @@ constructor(
              * The number of credits to effect. Note that this is required for increment, decrement,
              * void, or undo operations.
              */
-            fun amount(amount: Double?) = apply { this.amount = amount }
+            fun amount(amount: Double) = apply { this.amount = amount }
 
             /** An ISO 8601 format date that identifies the origination credit block to expire */
-            fun expiryDate(expiryDate: OffsetDateTime?) = apply { this.expiryDate = expiryDate }
+            fun expiryDate(expiryDate: OffsetDateTime) = apply { this.expiryDate = expiryDate }
 
             /**
              * The ID of the block affected by an expiration_change, used to differentiate between
              * multiple blocks with the same `expiry_date`.
              */
-            fun blockId(blockId: String?) = apply { this.blockId = blockId }
+            fun blockId(blockId: String) = apply { this.blockId = blockId }
 
             /**
              * A future date (specified in YYYY-MM-DD format) used for expiration change, denoting
@@ -1800,20 +1749,20 @@ constructor(
              * setting the value to `null`, and the entire metadata mapping can be cleared by
              * setting `metadata` to `null`.
              */
-            fun metadata(metadata: Metadata?) = apply { this.metadata = metadata }
+            fun metadata(metadata: Metadata) = apply { this.metadata = metadata }
 
             /**
              * The currency or custom pricing unit to use for this ledger entry. If this is a
              * real-world currency, it must match the customer's invoicing currency.
              */
-            fun currency(currency: String?) = apply { this.currency = currency }
+            fun currency(currency: String) = apply { this.currency = currency }
 
             /**
              * Optional metadata that can be specified when adding ledger results via the API. For
              * example, this can be used to note an increment refers to trial credits, or for noting
              * corrections as a result of an incident, etc.
              */
-            fun description(description: String?) = apply { this.description = description }
+            fun description(description: String) = apply { this.description = description }
 
             fun entryType(entryType: EntryType) = apply { this.entryType = entryType }
 
@@ -1821,7 +1770,7 @@ constructor(
             fun blockId(blockId: String) = apply { this.blockId = blockId }
 
             /** Can only be specified when `entry_type=void`. The reason for the void. */
-            fun voidReason(voidReason: VoidReason?) = apply { this.voidReason = voidReason }
+            fun voidReason(voidReason: VoidReason) = apply { this.voidReason = voidReason }
 
             /**
              * The number of credits to effect. Note that this is required for increment, decrement,
@@ -2140,20 +2089,20 @@ constructor(
              * setting the value to `null`, and the entire metadata mapping can be cleared by
              * setting `metadata` to `null`.
              */
-            fun metadata(metadata: Metadata?) = apply { this.metadata = metadata }
+            fun metadata(metadata: Metadata) = apply { this.metadata = metadata }
 
             /**
              * The currency or custom pricing unit to use for this ledger entry. If this is a
              * real-world currency, it must match the customer's invoicing currency.
              */
-            fun currency(currency: String?) = apply { this.currency = currency }
+            fun currency(currency: String) = apply { this.currency = currency }
 
             /**
              * Optional metadata that can be specified when adding ledger results via the API. For
              * example, this can be used to note an increment refers to trial credits, or for noting
              * corrections as a result of an incident, etc.
              */
-            fun description(description: String?) = apply { this.description = description }
+            fun description(description: String) = apply { this.description = description }
 
             fun entryType(entryType: EntryType) = apply { this.entryType = entryType }
 
@@ -2345,11 +2294,11 @@ constructor(
             return true
         }
 
-        return /* spotless:off */ other is CustomerCreditLedgerCreateEntryParams && customerId == other.customerId && addIncrementCreditLedgerEntryRequestParams == other.addIncrementCreditLedgerEntryRequestParams && addDecrementCreditLedgerEntryRequestParams == other.addDecrementCreditLedgerEntryRequestParams && addExpirationChangeCreditLedgerEntryRequestParams == other.addExpirationChangeCreditLedgerEntryRequestParams && addVoidCreditLedgerEntryRequestParams == other.addVoidCreditLedgerEntryRequestParams && addAmendmentCreditLedgerEntryRequestParams == other.addAmendmentCreditLedgerEntryRequestParams && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
+        return /* spotless:off */ other is CustomerCreditLedgerCreateEntryParams && customerId == other.customerId && body == other.body && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
     }
 
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(customerId, addIncrementCreditLedgerEntryRequestParams, addDecrementCreditLedgerEntryRequestParams, addExpirationChangeCreditLedgerEntryRequestParams, addVoidCreditLedgerEntryRequestParams, addAmendmentCreditLedgerEntryRequestParams, additionalHeaders, additionalQueryParams) /* spotless:on */
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(customerId, body, additionalHeaders, additionalQueryParams) /* spotless:on */
 
     override fun toString() =
-        "CustomerCreditLedgerCreateEntryParams{customerId=$customerId, addIncrementCreditLedgerEntryRequestParams=$addIncrementCreditLedgerEntryRequestParams, addDecrementCreditLedgerEntryRequestParams=$addDecrementCreditLedgerEntryRequestParams, addExpirationChangeCreditLedgerEntryRequestParams=$addExpirationChangeCreditLedgerEntryRequestParams, addVoidCreditLedgerEntryRequestParams=$addVoidCreditLedgerEntryRequestParams, addAmendmentCreditLedgerEntryRequestParams=$addAmendmentCreditLedgerEntryRequestParams, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
+        "CustomerCreditLedgerCreateEntryParams{customerId=$customerId, body=$body, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
 }

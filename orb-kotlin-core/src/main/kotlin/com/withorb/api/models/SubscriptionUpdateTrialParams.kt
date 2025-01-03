@@ -32,32 +32,32 @@ import java.util.Objects
 class SubscriptionUpdateTrialParams
 constructor(
     private val subscriptionId: String,
-    private val trialEndDate: TrialEndDate,
-    private val shift: Boolean?,
+    private val body: SubscriptionUpdateTrialBody,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
-    private val additionalBodyProperties: Map<String, JsonValue>,
 ) {
 
     fun subscriptionId(): String = subscriptionId
 
-    fun trialEndDate(): TrialEndDate = trialEndDate
+    /**
+     * The new date that the trial should end, or the literal string `immediate` to end the trial
+     * immediately.
+     */
+    fun trialEndDate(): TrialEndDate = body.trialEndDate()
 
-    fun shift(): Boolean? = shift
+    /**
+     * If true, shifts subsequent price and adjustment intervals (preserving their durations, but
+     * adjusting their absolute dates).
+     */
+    fun shift(): Boolean? = body.shift()
 
     fun _additionalHeaders(): Headers = additionalHeaders
 
     fun _additionalQueryParams(): QueryParams = additionalQueryParams
 
-    fun _additionalBodyProperties(): Map<String, JsonValue> = additionalBodyProperties
+    fun _additionalBodyProperties(): Map<String, JsonValue> = body._additionalProperties()
 
-    internal fun getBody(): SubscriptionUpdateTrialBody {
-        return SubscriptionUpdateTrialBody(
-            trialEndDate,
-            shift,
-            additionalBodyProperties,
-        )
-    }
+    internal fun getBody(): SubscriptionUpdateTrialBody = body
 
     internal fun getHeaders(): Headers = additionalHeaders
 
@@ -124,11 +124,19 @@ constructor(
                 this.trialEndDate = trialEndDate
             }
 
+            fun trialEndDate(offsetDateTime: OffsetDateTime) = apply {
+                this.trialEndDate = TrialEndDate.ofOffsetDateTime(offsetDateTime)
+            }
+
+            fun trialEndDate(unionMember1: TrialEndDate.UnionMember1) = apply {
+                this.trialEndDate = TrialEndDate.ofUnionMember1(unionMember1)
+            }
+
             /**
              * If true, shifts subsequent price and adjustment intervals (preserving their
              * durations, but adjusting their absolute dates).
              */
-            fun shift(shift: Boolean?) = apply { this.shift = shift }
+            fun shift(shift: Boolean) = apply { this.shift = shift }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
@@ -186,20 +194,16 @@ constructor(
     class Builder {
 
         private var subscriptionId: String? = null
-        private var trialEndDate: TrialEndDate? = null
-        private var shift: Boolean? = null
+        private var body: SubscriptionUpdateTrialBody.Builder =
+            SubscriptionUpdateTrialBody.builder()
         private var additionalHeaders: Headers.Builder = Headers.builder()
         private var additionalQueryParams: QueryParams.Builder = QueryParams.builder()
-        private var additionalBodyProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         internal fun from(subscriptionUpdateTrialParams: SubscriptionUpdateTrialParams) = apply {
             subscriptionId = subscriptionUpdateTrialParams.subscriptionId
-            trialEndDate = subscriptionUpdateTrialParams.trialEndDate
-            shift = subscriptionUpdateTrialParams.shift
+            body = subscriptionUpdateTrialParams.body.toBuilder()
             additionalHeaders = subscriptionUpdateTrialParams.additionalHeaders.toBuilder()
             additionalQueryParams = subscriptionUpdateTrialParams.additionalQueryParams.toBuilder()
-            additionalBodyProperties =
-                subscriptionUpdateTrialParams.additionalBodyProperties.toMutableMap()
         }
 
         fun subscriptionId(subscriptionId: String) = apply { this.subscriptionId = subscriptionId }
@@ -208,29 +212,21 @@ constructor(
          * The new date that the trial should end, or the literal string `immediate` to end the
          * trial immediately.
          */
-        fun trialEndDate(trialEndDate: TrialEndDate) = apply { this.trialEndDate = trialEndDate }
+        fun trialEndDate(trialEndDate: TrialEndDate) = apply { body.trialEndDate(trialEndDate) }
 
-        /**
-         * The new date that the trial should end, or the literal string `immediate` to end the
-         * trial immediately.
-         */
         fun trialEndDate(offsetDateTime: OffsetDateTime) = apply {
-            this.trialEndDate = TrialEndDate.ofOffsetDateTime(offsetDateTime)
+            body.trialEndDate(offsetDateTime)
         }
 
-        /**
-         * The new date that the trial should end, or the literal string `immediate` to end the
-         * trial immediately.
-         */
         fun trialEndDate(unionMember1: TrialEndDate.UnionMember1) = apply {
-            this.trialEndDate = TrialEndDate.ofUnionMember1(unionMember1)
+            body.trialEndDate(unionMember1)
         }
 
         /**
          * If true, shifts subsequent price and adjustment intervals (preserving their durations,
          * but adjusting their absolute dates).
          */
-        fun shift(shift: Boolean) = apply { this.shift = shift }
+        fun shift(shift: Boolean) = apply { body.shift(shift) }
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {
             this.additionalHeaders.clear()
@@ -331,35 +327,30 @@ constructor(
         }
 
         fun additionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) = apply {
-            this.additionalBodyProperties.clear()
-            putAllAdditionalBodyProperties(additionalBodyProperties)
+            body.additionalProperties(additionalBodyProperties)
         }
 
         fun putAdditionalBodyProperty(key: String, value: JsonValue) = apply {
-            additionalBodyProperties.put(key, value)
+            body.putAdditionalProperty(key, value)
         }
 
         fun putAllAdditionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) =
             apply {
-                this.additionalBodyProperties.putAll(additionalBodyProperties)
+                body.putAllAdditionalProperties(additionalBodyProperties)
             }
 
-        fun removeAdditionalBodyProperty(key: String) = apply {
-            additionalBodyProperties.remove(key)
-        }
+        fun removeAdditionalBodyProperty(key: String) = apply { body.removeAdditionalProperty(key) }
 
         fun removeAllAdditionalBodyProperties(keys: Set<String>) = apply {
-            keys.forEach(::removeAdditionalBodyProperty)
+            body.removeAllAdditionalProperties(keys)
         }
 
         fun build(): SubscriptionUpdateTrialParams =
             SubscriptionUpdateTrialParams(
                 checkNotNull(subscriptionId) { "`subscriptionId` is required but was not set" },
-                checkNotNull(trialEndDate) { "`trialEndDate` is required but was not set" },
-                shift,
+                body.build(),
                 additionalHeaders.build(),
                 additionalQueryParams.build(),
-                additionalBodyProperties.toImmutable(),
             )
     }
 
@@ -521,11 +512,11 @@ constructor(
             return true
         }
 
-        return /* spotless:off */ other is SubscriptionUpdateTrialParams && subscriptionId == other.subscriptionId && trialEndDate == other.trialEndDate && shift == other.shift && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams && additionalBodyProperties == other.additionalBodyProperties /* spotless:on */
+        return /* spotless:off */ other is SubscriptionUpdateTrialParams && subscriptionId == other.subscriptionId && body == other.body && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
     }
 
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(subscriptionId, trialEndDate, shift, additionalHeaders, additionalQueryParams, additionalBodyProperties) /* spotless:on */
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(subscriptionId, body, additionalHeaders, additionalQueryParams) /* spotless:on */
 
     override fun toString() =
-        "SubscriptionUpdateTrialParams{subscriptionId=$subscriptionId, trialEndDate=$trialEndDate, shift=$shift, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams, additionalBodyProperties=$additionalBodyProperties}"
+        "SubscriptionUpdateTrialParams{subscriptionId=$subscriptionId, body=$body, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
 }
