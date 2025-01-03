@@ -354,6 +354,10 @@ constructor(
             )
     }
 
+    /**
+     * The new date that the trial should end, or the literal string `immediate` to end the trial
+     * immediately.
+     */
     @JsonDeserialize(using = TrialEndDate.Deserializer::class)
     @JsonSerialize(using = TrialEndDate.Serializer::class)
     class TrialEndDate
