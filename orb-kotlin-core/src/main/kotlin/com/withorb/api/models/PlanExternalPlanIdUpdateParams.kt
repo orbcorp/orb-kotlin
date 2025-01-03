@@ -18,32 +18,33 @@ import java.util.Objects
 class PlanExternalPlanIdUpdateParams
 constructor(
     private val otherExternalPlanId: String,
-    private val externalPlanId: String?,
-    private val metadata: Metadata?,
+    private val body: PlanExternalPlanIdUpdateBody,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
-    private val additionalBodyProperties: Map<String, JsonValue>,
 ) {
 
     fun otherExternalPlanId(): String = otherExternalPlanId
 
-    fun externalPlanId(): String? = externalPlanId
+    /**
+     * An optional user-defined ID for this plan resource, used throughout the system as an alias
+     * for this Plan. Use this field to identify a plan by an existing identifier in your system.
+     */
+    fun externalPlanId(): String? = body.externalPlanId()
 
-    fun metadata(): Metadata? = metadata
+    /**
+     * User-specified key/value pairs for the resource. Individual keys can be removed by setting
+     * the value to `null`, and the entire metadata mapping can be cleared by setting `metadata` to
+     * `null`.
+     */
+    fun metadata(): Metadata? = body.metadata()
 
     fun _additionalHeaders(): Headers = additionalHeaders
 
     fun _additionalQueryParams(): QueryParams = additionalQueryParams
 
-    fun _additionalBodyProperties(): Map<String, JsonValue> = additionalBodyProperties
+    fun _additionalBodyProperties(): Map<String, JsonValue> = body._additionalProperties()
 
-    internal fun getBody(): PlanExternalPlanIdUpdateBody {
-        return PlanExternalPlanIdUpdateBody(
-            externalPlanId,
-            metadata,
-            additionalBodyProperties,
-        )
-    }
+    internal fun getBody(): PlanExternalPlanIdUpdateBody = body
 
     internal fun getHeaders(): Headers = additionalHeaders
 
@@ -109,7 +110,7 @@ constructor(
              * alias for this Plan. Use this field to identify a plan by an existing identifier in
              * your system.
              */
-            fun externalPlanId(externalPlanId: String?) = apply {
+            fun externalPlanId(externalPlanId: String) = apply {
                 this.externalPlanId = externalPlanId
             }
 
@@ -118,7 +119,7 @@ constructor(
              * setting the value to `null`, and the entire metadata mapping can be cleared by
              * setting `metadata` to `null`.
              */
-            fun metadata(metadata: Metadata?) = apply { this.metadata = metadata }
+            fun metadata(metadata: Metadata) = apply { this.metadata = metadata }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
@@ -176,20 +177,16 @@ constructor(
     class Builder {
 
         private var otherExternalPlanId: String? = null
-        private var externalPlanId: String? = null
-        private var metadata: Metadata? = null
+        private var body: PlanExternalPlanIdUpdateBody.Builder =
+            PlanExternalPlanIdUpdateBody.builder()
         private var additionalHeaders: Headers.Builder = Headers.builder()
         private var additionalQueryParams: QueryParams.Builder = QueryParams.builder()
-        private var additionalBodyProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         internal fun from(planExternalPlanIdUpdateParams: PlanExternalPlanIdUpdateParams) = apply {
             otherExternalPlanId = planExternalPlanIdUpdateParams.otherExternalPlanId
-            externalPlanId = planExternalPlanIdUpdateParams.externalPlanId
-            metadata = planExternalPlanIdUpdateParams.metadata
+            body = planExternalPlanIdUpdateParams.body.toBuilder()
             additionalHeaders = planExternalPlanIdUpdateParams.additionalHeaders.toBuilder()
             additionalQueryParams = planExternalPlanIdUpdateParams.additionalQueryParams.toBuilder()
-            additionalBodyProperties =
-                planExternalPlanIdUpdateParams.additionalBodyProperties.toMutableMap()
         }
 
         fun otherExternalPlanId(otherExternalPlanId: String) = apply {
@@ -201,14 +198,14 @@ constructor(
          * alias for this Plan. Use this field to identify a plan by an existing identifier in your
          * system.
          */
-        fun externalPlanId(externalPlanId: String) = apply { this.externalPlanId = externalPlanId }
+        fun externalPlanId(externalPlanId: String) = apply { body.externalPlanId(externalPlanId) }
 
         /**
          * User-specified key/value pairs for the resource. Individual keys can be removed by
          * setting the value to `null`, and the entire metadata mapping can be cleared by setting
          * `metadata` to `null`.
          */
-        fun metadata(metadata: Metadata) = apply { this.metadata = metadata }
+        fun metadata(metadata: Metadata) = apply { body.metadata(metadata) }
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {
             this.additionalHeaders.clear()
@@ -309,25 +306,22 @@ constructor(
         }
 
         fun additionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) = apply {
-            this.additionalBodyProperties.clear()
-            putAllAdditionalBodyProperties(additionalBodyProperties)
+            body.additionalProperties(additionalBodyProperties)
         }
 
         fun putAdditionalBodyProperty(key: String, value: JsonValue) = apply {
-            additionalBodyProperties.put(key, value)
+            body.putAdditionalProperty(key, value)
         }
 
         fun putAllAdditionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) =
             apply {
-                this.additionalBodyProperties.putAll(additionalBodyProperties)
+                body.putAllAdditionalProperties(additionalBodyProperties)
             }
 
-        fun removeAdditionalBodyProperty(key: String) = apply {
-            additionalBodyProperties.remove(key)
-        }
+        fun removeAdditionalBodyProperty(key: String) = apply { body.removeAdditionalProperty(key) }
 
         fun removeAllAdditionalBodyProperties(keys: Set<String>) = apply {
-            keys.forEach(::removeAdditionalBodyProperty)
+            body.removeAllAdditionalProperties(keys)
         }
 
         fun build(): PlanExternalPlanIdUpdateParams =
@@ -335,11 +329,9 @@ constructor(
                 checkNotNull(otherExternalPlanId) {
                     "`otherExternalPlanId` is required but was not set"
                 },
-                externalPlanId,
-                metadata,
+                body.build(),
                 additionalHeaders.build(),
                 additionalQueryParams.build(),
-                additionalBodyProperties.toImmutable(),
             )
     }
 
@@ -419,11 +411,11 @@ constructor(
             return true
         }
 
-        return /* spotless:off */ other is PlanExternalPlanIdUpdateParams && otherExternalPlanId == other.otherExternalPlanId && externalPlanId == other.externalPlanId && metadata == other.metadata && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams && additionalBodyProperties == other.additionalBodyProperties /* spotless:on */
+        return /* spotless:off */ other is PlanExternalPlanIdUpdateParams && otherExternalPlanId == other.otherExternalPlanId && body == other.body && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
     }
 
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(otherExternalPlanId, externalPlanId, metadata, additionalHeaders, additionalQueryParams, additionalBodyProperties) /* spotless:on */
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(otherExternalPlanId, body, additionalHeaders, additionalQueryParams) /* spotless:on */
 
     override fun toString() =
-        "PlanExternalPlanIdUpdateParams{otherExternalPlanId=$otherExternalPlanId, externalPlanId=$externalPlanId, metadata=$metadata, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams, additionalBodyProperties=$additionalBodyProperties}"
+        "PlanExternalPlanIdUpdateParams{otherExternalPlanId=$otherExternalPlanId, body=$body, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
 }

@@ -19,48 +19,45 @@ import java.util.Objects
 class PriceEvaluateParams
 constructor(
     private val priceId: String,
-    private val timeframeEnd: OffsetDateTime,
-    private val timeframeStart: OffsetDateTime,
-    private val customerId: String?,
-    private val externalCustomerId: String?,
-    private val filter: String?,
-    private val groupingKeys: List<String>?,
+    private val body: PriceEvaluateBody,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
-    private val additionalBodyProperties: Map<String, JsonValue>,
 ) {
 
     fun priceId(): String = priceId
 
-    fun timeframeEnd(): OffsetDateTime = timeframeEnd
+    /** The exclusive upper bound for event timestamps */
+    fun timeframeEnd(): OffsetDateTime = body.timeframeEnd()
 
-    fun timeframeStart(): OffsetDateTime = timeframeStart
+    /** The inclusive lower bound for event timestamps */
+    fun timeframeStart(): OffsetDateTime = body.timeframeStart()
 
-    fun customerId(): String? = customerId
+    /** The ID of the customer to which this evaluation is scoped. */
+    fun customerId(): String? = body.customerId()
 
-    fun externalCustomerId(): String? = externalCustomerId
+    /** The external customer ID of the customer to which this evaluation is scoped. */
+    fun externalCustomerId(): String? = body.externalCustomerId()
 
-    fun filter(): String? = filter
+    /**
+     * A boolean [computed property](../guides/extensibility/advanced-metrics#computed-properties)
+     * used to filter the underlying billable metric
+     */
+    fun filter(): String? = body.filter()
 
-    fun groupingKeys(): List<String>? = groupingKeys
+    /**
+     * Properties (or
+     * [computed properties](../guides/extensibility/advanced-metrics#computed-properties)) used to
+     * group the underlying billable metric
+     */
+    fun groupingKeys(): List<String>? = body.groupingKeys()
 
     fun _additionalHeaders(): Headers = additionalHeaders
 
     fun _additionalQueryParams(): QueryParams = additionalQueryParams
 
-    fun _additionalBodyProperties(): Map<String, JsonValue> = additionalBodyProperties
+    fun _additionalBodyProperties(): Map<String, JsonValue> = body._additionalProperties()
 
-    internal fun getBody(): PriceEvaluateBody {
-        return PriceEvaluateBody(
-            timeframeEnd,
-            timeframeStart,
-            customerId,
-            externalCustomerId,
-            filter,
-            groupingKeys,
-            additionalBodyProperties,
-        )
-    }
+    internal fun getBody(): PriceEvaluateBody = body
 
     internal fun getHeaders(): Headers = additionalHeaders
 
@@ -131,7 +128,7 @@ constructor(
             private var customerId: String? = null
             private var externalCustomerId: String? = null
             private var filter: String? = null
-            private var groupingKeys: List<String>? = null
+            private var groupingKeys: MutableList<String>? = null
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             internal fun from(priceEvaluateBody: PriceEvaluateBody) = apply {
@@ -155,10 +152,10 @@ constructor(
             }
 
             /** The ID of the customer to which this evaluation is scoped. */
-            fun customerId(customerId: String?) = apply { this.customerId = customerId }
+            fun customerId(customerId: String) = apply { this.customerId = customerId }
 
             /** The external customer ID of the customer to which this evaluation is scoped. */
-            fun externalCustomerId(externalCustomerId: String?) = apply {
+            fun externalCustomerId(externalCustomerId: String) = apply {
                 this.externalCustomerId = externalCustomerId
             }
 
@@ -167,15 +164,24 @@ constructor(
              * [computed property](../guides/extensibility/advanced-metrics#computed-properties)
              * used to filter the underlying billable metric
              */
-            fun filter(filter: String?) = apply { this.filter = filter }
+            fun filter(filter: String) = apply { this.filter = filter }
 
             /**
              * Properties (or
              * [computed properties](../guides/extensibility/advanced-metrics#computed-properties))
              * used to group the underlying billable metric
              */
-            fun groupingKeys(groupingKeys: List<String>?) = apply {
-                this.groupingKeys = groupingKeys
+            fun groupingKeys(groupingKeys: List<String>) = apply {
+                this.groupingKeys = groupingKeys.toMutableList()
+            }
+
+            /**
+             * Properties (or
+             * [computed properties](../guides/extensibility/advanced-metrics#computed-properties))
+             * used to group the underlying billable metric
+             */
+            fun addGroupingKey(groupingKey: String) = apply {
+                groupingKeys = (groupingKeys ?: mutableListOf()).apply { add(groupingKey) }
             }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
@@ -238,45 +244,33 @@ constructor(
     class Builder {
 
         private var priceId: String? = null
-        private var timeframeEnd: OffsetDateTime? = null
-        private var timeframeStart: OffsetDateTime? = null
-        private var customerId: String? = null
-        private var externalCustomerId: String? = null
-        private var filter: String? = null
-        private var groupingKeys: MutableList<String> = mutableListOf()
+        private var body: PriceEvaluateBody.Builder = PriceEvaluateBody.builder()
         private var additionalHeaders: Headers.Builder = Headers.builder()
         private var additionalQueryParams: QueryParams.Builder = QueryParams.builder()
-        private var additionalBodyProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         internal fun from(priceEvaluateParams: PriceEvaluateParams) = apply {
             priceId = priceEvaluateParams.priceId
-            timeframeEnd = priceEvaluateParams.timeframeEnd
-            timeframeStart = priceEvaluateParams.timeframeStart
-            customerId = priceEvaluateParams.customerId
-            externalCustomerId = priceEvaluateParams.externalCustomerId
-            filter = priceEvaluateParams.filter
-            groupingKeys = priceEvaluateParams.groupingKeys?.toMutableList() ?: mutableListOf()
+            body = priceEvaluateParams.body.toBuilder()
             additionalHeaders = priceEvaluateParams.additionalHeaders.toBuilder()
             additionalQueryParams = priceEvaluateParams.additionalQueryParams.toBuilder()
-            additionalBodyProperties = priceEvaluateParams.additionalBodyProperties.toMutableMap()
         }
 
         fun priceId(priceId: String) = apply { this.priceId = priceId }
 
         /** The exclusive upper bound for event timestamps */
-        fun timeframeEnd(timeframeEnd: OffsetDateTime) = apply { this.timeframeEnd = timeframeEnd }
+        fun timeframeEnd(timeframeEnd: OffsetDateTime) = apply { body.timeframeEnd(timeframeEnd) }
 
         /** The inclusive lower bound for event timestamps */
         fun timeframeStart(timeframeStart: OffsetDateTime) = apply {
-            this.timeframeStart = timeframeStart
+            body.timeframeStart(timeframeStart)
         }
 
         /** The ID of the customer to which this evaluation is scoped. */
-        fun customerId(customerId: String) = apply { this.customerId = customerId }
+        fun customerId(customerId: String) = apply { body.customerId(customerId) }
 
         /** The external customer ID of the customer to which this evaluation is scoped. */
         fun externalCustomerId(externalCustomerId: String) = apply {
-            this.externalCustomerId = externalCustomerId
+            body.externalCustomerId(externalCustomerId)
         }
 
         /**
@@ -284,24 +278,21 @@ constructor(
          * [computed property](../guides/extensibility/advanced-metrics#computed-properties) used to
          * filter the underlying billable metric
          */
-        fun filter(filter: String) = apply { this.filter = filter }
+        fun filter(filter: String) = apply { body.filter(filter) }
 
         /**
          * Properties (or
          * [computed properties](../guides/extensibility/advanced-metrics#computed-properties)) used
          * to group the underlying billable metric
          */
-        fun groupingKeys(groupingKeys: List<String>) = apply {
-            this.groupingKeys.clear()
-            this.groupingKeys.addAll(groupingKeys)
-        }
+        fun groupingKeys(groupingKeys: List<String>) = apply { body.groupingKeys(groupingKeys) }
 
         /**
          * Properties (or
          * [computed properties](../guides/extensibility/advanced-metrics#computed-properties)) used
          * to group the underlying billable metric
          */
-        fun addGroupingKey(groupingKey: String) = apply { this.groupingKeys.add(groupingKey) }
+        fun addGroupingKey(groupingKey: String) = apply { body.addGroupingKey(groupingKey) }
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {
             this.additionalHeaders.clear()
@@ -402,39 +393,30 @@ constructor(
         }
 
         fun additionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) = apply {
-            this.additionalBodyProperties.clear()
-            putAllAdditionalBodyProperties(additionalBodyProperties)
+            body.additionalProperties(additionalBodyProperties)
         }
 
         fun putAdditionalBodyProperty(key: String, value: JsonValue) = apply {
-            additionalBodyProperties.put(key, value)
+            body.putAdditionalProperty(key, value)
         }
 
         fun putAllAdditionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) =
             apply {
-                this.additionalBodyProperties.putAll(additionalBodyProperties)
+                body.putAllAdditionalProperties(additionalBodyProperties)
             }
 
-        fun removeAdditionalBodyProperty(key: String) = apply {
-            additionalBodyProperties.remove(key)
-        }
+        fun removeAdditionalBodyProperty(key: String) = apply { body.removeAdditionalProperty(key) }
 
         fun removeAllAdditionalBodyProperties(keys: Set<String>) = apply {
-            keys.forEach(::removeAdditionalBodyProperty)
+            body.removeAllAdditionalProperties(keys)
         }
 
         fun build(): PriceEvaluateParams =
             PriceEvaluateParams(
                 checkNotNull(priceId) { "`priceId` is required but was not set" },
-                checkNotNull(timeframeEnd) { "`timeframeEnd` is required but was not set" },
-                checkNotNull(timeframeStart) { "`timeframeStart` is required but was not set" },
-                customerId,
-                externalCustomerId,
-                filter,
-                groupingKeys.toImmutable().ifEmpty { null },
+                body.build(),
                 additionalHeaders.build(),
                 additionalQueryParams.build(),
-                additionalBodyProperties.toImmutable(),
             )
     }
 
@@ -443,11 +425,11 @@ constructor(
             return true
         }
 
-        return /* spotless:off */ other is PriceEvaluateParams && priceId == other.priceId && timeframeEnd == other.timeframeEnd && timeframeStart == other.timeframeStart && customerId == other.customerId && externalCustomerId == other.externalCustomerId && filter == other.filter && groupingKeys == other.groupingKeys && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams && additionalBodyProperties == other.additionalBodyProperties /* spotless:on */
+        return /* spotless:off */ other is PriceEvaluateParams && priceId == other.priceId && body == other.body && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
     }
 
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(priceId, timeframeEnd, timeframeStart, customerId, externalCustomerId, filter, groupingKeys, additionalHeaders, additionalQueryParams, additionalBodyProperties) /* spotless:on */
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(priceId, body, additionalHeaders, additionalQueryParams) /* spotless:on */
 
     override fun toString() =
-        "PriceEvaluateParams{priceId=$priceId, timeframeEnd=$timeframeEnd, timeframeStart=$timeframeStart, customerId=$customerId, externalCustomerId=$externalCustomerId, filter=$filter, groupingKeys=$groupingKeys, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams, additionalBodyProperties=$additionalBodyProperties}"
+        "PriceEvaluateParams{priceId=$priceId, body=$body, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
 }

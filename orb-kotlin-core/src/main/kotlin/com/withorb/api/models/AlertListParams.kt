@@ -32,14 +32,22 @@ constructor(
 
     fun createdAtLte(): OffsetDateTime? = createdAtLte
 
+    /**
+     * Cursor for pagination. This can be populated by the `next_cursor` value returned from the
+     * initial request.
+     */
     fun cursor(): String? = cursor
 
+    /** Fetch alerts scoped to this customer_id */
     fun customerId(): String? = customerId
 
+    /** Fetch alerts scoped to this external_customer_id */
     fun externalCustomerId(): String? = externalCustomerId
 
+    /** The number of items to fetch. Defaults to 20. */
     fun limit(): Long? = limit
 
+    /** Fetch alerts scoped to this subscription_id */
     fun subscriptionId(): String? = subscriptionId
 
     fun _additionalHeaders(): Headers = additionalHeaders

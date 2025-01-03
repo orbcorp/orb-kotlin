@@ -22,32 +22,29 @@ import java.util.Objects
 class SubscriptionCancelParams
 constructor(
     private val subscriptionId: String,
-    private val cancelOption: CancelOption,
-    private val cancellationDate: OffsetDateTime?,
+    private val body: SubscriptionCancelBody,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
-    private val additionalBodyProperties: Map<String, JsonValue>,
 ) {
 
     fun subscriptionId(): String = subscriptionId
 
-    fun cancelOption(): CancelOption = cancelOption
+    /** Determines the timing of subscription cancellation */
+    fun cancelOption(): CancelOption = body.cancelOption()
 
-    fun cancellationDate(): OffsetDateTime? = cancellationDate
+    /**
+     * The date that the cancellation should take effect. This parameter can only be passed if the
+     * `cancel_option` is `requested_date`.
+     */
+    fun cancellationDate(): OffsetDateTime? = body.cancellationDate()
 
     fun _additionalHeaders(): Headers = additionalHeaders
 
     fun _additionalQueryParams(): QueryParams = additionalQueryParams
 
-    fun _additionalBodyProperties(): Map<String, JsonValue> = additionalBodyProperties
+    fun _additionalBodyProperties(): Map<String, JsonValue> = body._additionalProperties()
 
-    internal fun getBody(): SubscriptionCancelBody {
-        return SubscriptionCancelBody(
-            cancelOption,
-            cancellationDate,
-            additionalBodyProperties,
-        )
-    }
+    internal fun getBody(): SubscriptionCancelBody = body
 
     internal fun getHeaders(): Headers = additionalHeaders
 
@@ -112,7 +109,7 @@ constructor(
              * The date that the cancellation should take effect. This parameter can only be passed
              * if the `cancel_option` is `requested_date`.
              */
-            fun cancellationDate(cancellationDate: OffsetDateTime?) = apply {
+            fun cancellationDate(cancellationDate: OffsetDateTime) = apply {
                 this.cancellationDate = cancellationDate
             }
 
@@ -172,33 +169,28 @@ constructor(
     class Builder {
 
         private var subscriptionId: String? = null
-        private var cancelOption: CancelOption? = null
-        private var cancellationDate: OffsetDateTime? = null
+        private var body: SubscriptionCancelBody.Builder = SubscriptionCancelBody.builder()
         private var additionalHeaders: Headers.Builder = Headers.builder()
         private var additionalQueryParams: QueryParams.Builder = QueryParams.builder()
-        private var additionalBodyProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         internal fun from(subscriptionCancelParams: SubscriptionCancelParams) = apply {
             subscriptionId = subscriptionCancelParams.subscriptionId
-            cancelOption = subscriptionCancelParams.cancelOption
-            cancellationDate = subscriptionCancelParams.cancellationDate
+            body = subscriptionCancelParams.body.toBuilder()
             additionalHeaders = subscriptionCancelParams.additionalHeaders.toBuilder()
             additionalQueryParams = subscriptionCancelParams.additionalQueryParams.toBuilder()
-            additionalBodyProperties =
-                subscriptionCancelParams.additionalBodyProperties.toMutableMap()
         }
 
         fun subscriptionId(subscriptionId: String) = apply { this.subscriptionId = subscriptionId }
 
         /** Determines the timing of subscription cancellation */
-        fun cancelOption(cancelOption: CancelOption) = apply { this.cancelOption = cancelOption }
+        fun cancelOption(cancelOption: CancelOption) = apply { body.cancelOption(cancelOption) }
 
         /**
          * The date that the cancellation should take effect. This parameter can only be passed if
          * the `cancel_option` is `requested_date`.
          */
         fun cancellationDate(cancellationDate: OffsetDateTime) = apply {
-            this.cancellationDate = cancellationDate
+            body.cancellationDate(cancellationDate)
         }
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {
@@ -300,35 +292,30 @@ constructor(
         }
 
         fun additionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) = apply {
-            this.additionalBodyProperties.clear()
-            putAllAdditionalBodyProperties(additionalBodyProperties)
+            body.additionalProperties(additionalBodyProperties)
         }
 
         fun putAdditionalBodyProperty(key: String, value: JsonValue) = apply {
-            additionalBodyProperties.put(key, value)
+            body.putAdditionalProperty(key, value)
         }
 
         fun putAllAdditionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) =
             apply {
-                this.additionalBodyProperties.putAll(additionalBodyProperties)
+                body.putAllAdditionalProperties(additionalBodyProperties)
             }
 
-        fun removeAdditionalBodyProperty(key: String) = apply {
-            additionalBodyProperties.remove(key)
-        }
+        fun removeAdditionalBodyProperty(key: String) = apply { body.removeAdditionalProperty(key) }
 
         fun removeAllAdditionalBodyProperties(keys: Set<String>) = apply {
-            keys.forEach(::removeAdditionalBodyProperty)
+            body.removeAllAdditionalProperties(keys)
         }
 
         fun build(): SubscriptionCancelParams =
             SubscriptionCancelParams(
                 checkNotNull(subscriptionId) { "`subscriptionId` is required but was not set" },
-                checkNotNull(cancelOption) { "`cancelOption` is required but was not set" },
-                cancellationDate,
+                body.build(),
                 additionalHeaders.build(),
                 additionalQueryParams.build(),
-                additionalBodyProperties.toImmutable(),
             )
     }
 
@@ -400,11 +387,11 @@ constructor(
             return true
         }
 
-        return /* spotless:off */ other is SubscriptionCancelParams && subscriptionId == other.subscriptionId && cancelOption == other.cancelOption && cancellationDate == other.cancellationDate && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams && additionalBodyProperties == other.additionalBodyProperties /* spotless:on */
+        return /* spotless:off */ other is SubscriptionCancelParams && subscriptionId == other.subscriptionId && body == other.body && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
     }
 
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(subscriptionId, cancelOption, cancellationDate, additionalHeaders, additionalQueryParams, additionalBodyProperties) /* spotless:on */
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(subscriptionId, body, additionalHeaders, additionalQueryParams) /* spotless:on */
 
     override fun toString() =
-        "SubscriptionCancelParams{subscriptionId=$subscriptionId, cancelOption=$cancelOption, cancellationDate=$cancellationDate, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams, additionalBodyProperties=$additionalBodyProperties}"
+        "SubscriptionCancelParams{subscriptionId=$subscriptionId, body=$body, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
 }

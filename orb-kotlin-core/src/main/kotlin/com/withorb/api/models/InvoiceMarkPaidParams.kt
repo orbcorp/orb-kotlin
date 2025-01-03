@@ -19,36 +19,29 @@ import java.util.Objects
 class InvoiceMarkPaidParams
 constructor(
     private val invoiceId: String,
-    private val paymentReceivedDate: LocalDate,
-    private val externalId: String?,
-    private val notes: String?,
+    private val body: InvoiceMarkPaidBody,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
-    private val additionalBodyProperties: Map<String, JsonValue>,
 ) {
 
     fun invoiceId(): String = invoiceId
 
-    fun paymentReceivedDate(): LocalDate = paymentReceivedDate
+    /** A date string to specify the date of the payment. */
+    fun paymentReceivedDate(): LocalDate = body.paymentReceivedDate()
 
-    fun externalId(): String? = externalId
+    /** An optional external ID to associate with the payment. */
+    fun externalId(): String? = body.externalId()
 
-    fun notes(): String? = notes
+    /** An optional note to associate with the payment. */
+    fun notes(): String? = body.notes()
 
     fun _additionalHeaders(): Headers = additionalHeaders
 
     fun _additionalQueryParams(): QueryParams = additionalQueryParams
 
-    fun _additionalBodyProperties(): Map<String, JsonValue> = additionalBodyProperties
+    fun _additionalBodyProperties(): Map<String, JsonValue> = body._additionalProperties()
 
-    internal fun getBody(): InvoiceMarkPaidBody {
-        return InvoiceMarkPaidBody(
-            paymentReceivedDate,
-            externalId,
-            notes,
-            additionalBodyProperties,
-        )
-    }
+    internal fun getBody(): InvoiceMarkPaidBody = body
 
     internal fun getHeaders(): Headers = additionalHeaders
 
@@ -113,10 +106,10 @@ constructor(
             }
 
             /** An optional external ID to associate with the payment. */
-            fun externalId(externalId: String?) = apply { this.externalId = externalId }
+            fun externalId(externalId: String) = apply { this.externalId = externalId }
 
             /** An optional note to associate with the payment. */
-            fun notes(notes: String?) = apply { this.notes = notes }
+            fun notes(notes: String) = apply { this.notes = notes }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
@@ -177,35 +170,29 @@ constructor(
     class Builder {
 
         private var invoiceId: String? = null
-        private var paymentReceivedDate: LocalDate? = null
-        private var externalId: String? = null
-        private var notes: String? = null
+        private var body: InvoiceMarkPaidBody.Builder = InvoiceMarkPaidBody.builder()
         private var additionalHeaders: Headers.Builder = Headers.builder()
         private var additionalQueryParams: QueryParams.Builder = QueryParams.builder()
-        private var additionalBodyProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         internal fun from(invoiceMarkPaidParams: InvoiceMarkPaidParams) = apply {
             invoiceId = invoiceMarkPaidParams.invoiceId
-            paymentReceivedDate = invoiceMarkPaidParams.paymentReceivedDate
-            externalId = invoiceMarkPaidParams.externalId
-            notes = invoiceMarkPaidParams.notes
+            body = invoiceMarkPaidParams.body.toBuilder()
             additionalHeaders = invoiceMarkPaidParams.additionalHeaders.toBuilder()
             additionalQueryParams = invoiceMarkPaidParams.additionalQueryParams.toBuilder()
-            additionalBodyProperties = invoiceMarkPaidParams.additionalBodyProperties.toMutableMap()
         }
 
         fun invoiceId(invoiceId: String) = apply { this.invoiceId = invoiceId }
 
         /** A date string to specify the date of the payment. */
         fun paymentReceivedDate(paymentReceivedDate: LocalDate) = apply {
-            this.paymentReceivedDate = paymentReceivedDate
+            body.paymentReceivedDate(paymentReceivedDate)
         }
 
         /** An optional external ID to associate with the payment. */
-        fun externalId(externalId: String) = apply { this.externalId = externalId }
+        fun externalId(externalId: String) = apply { body.externalId(externalId) }
 
         /** An optional note to associate with the payment. */
-        fun notes(notes: String) = apply { this.notes = notes }
+        fun notes(notes: String) = apply { body.notes(notes) }
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {
             this.additionalHeaders.clear()
@@ -306,38 +293,30 @@ constructor(
         }
 
         fun additionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) = apply {
-            this.additionalBodyProperties.clear()
-            putAllAdditionalBodyProperties(additionalBodyProperties)
+            body.additionalProperties(additionalBodyProperties)
         }
 
         fun putAdditionalBodyProperty(key: String, value: JsonValue) = apply {
-            additionalBodyProperties.put(key, value)
+            body.putAdditionalProperty(key, value)
         }
 
         fun putAllAdditionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) =
             apply {
-                this.additionalBodyProperties.putAll(additionalBodyProperties)
+                body.putAllAdditionalProperties(additionalBodyProperties)
             }
 
-        fun removeAdditionalBodyProperty(key: String) = apply {
-            additionalBodyProperties.remove(key)
-        }
+        fun removeAdditionalBodyProperty(key: String) = apply { body.removeAdditionalProperty(key) }
 
         fun removeAllAdditionalBodyProperties(keys: Set<String>) = apply {
-            keys.forEach(::removeAdditionalBodyProperty)
+            body.removeAllAdditionalProperties(keys)
         }
 
         fun build(): InvoiceMarkPaidParams =
             InvoiceMarkPaidParams(
                 checkNotNull(invoiceId) { "`invoiceId` is required but was not set" },
-                checkNotNull(paymentReceivedDate) {
-                    "`paymentReceivedDate` is required but was not set"
-                },
-                externalId,
-                notes,
+                body.build(),
                 additionalHeaders.build(),
                 additionalQueryParams.build(),
-                additionalBodyProperties.toImmutable(),
             )
     }
 
@@ -346,11 +325,11 @@ constructor(
             return true
         }
 
-        return /* spotless:off */ other is InvoiceMarkPaidParams && invoiceId == other.invoiceId && paymentReceivedDate == other.paymentReceivedDate && externalId == other.externalId && notes == other.notes && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams && additionalBodyProperties == other.additionalBodyProperties /* spotless:on */
+        return /* spotless:off */ other is InvoiceMarkPaidParams && invoiceId == other.invoiceId && body == other.body && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
     }
 
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(invoiceId, paymentReceivedDate, externalId, notes, additionalHeaders, additionalQueryParams, additionalBodyProperties) /* spotless:on */
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(invoiceId, body, additionalHeaders, additionalQueryParams) /* spotless:on */
 
     override fun toString() =
-        "InvoiceMarkPaidParams{invoiceId=$invoiceId, paymentReceivedDate=$paymentReceivedDate, externalId=$externalId, notes=$notes, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams, additionalBodyProperties=$additionalBodyProperties}"
+        "InvoiceMarkPaidParams{invoiceId=$invoiceId, body=$body, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
 }

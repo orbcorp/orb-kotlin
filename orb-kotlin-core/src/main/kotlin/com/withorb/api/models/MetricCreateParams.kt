@@ -17,42 +17,37 @@ import java.util.Objects
 
 class MetricCreateParams
 constructor(
-    private val description: String?,
-    private val itemId: String,
-    private val name: String,
-    private val sql: String,
-    private val metadata: Metadata?,
+    private val body: MetricCreateBody,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
-    private val additionalBodyProperties: Map<String, JsonValue>,
 ) {
 
-    fun description(): String? = description
+    /** A description of the metric. */
+    fun description(): String? = body.description()
 
-    fun itemId(): String = itemId
+    /** The id of the item */
+    fun itemId(): String = body.itemId()
 
-    fun name(): String = name
+    /** The name of the metric. */
+    fun name(): String = body.name()
 
-    fun sql(): String = sql
+    /** A sql string defining the metric. */
+    fun sql(): String = body.sql()
 
-    fun metadata(): Metadata? = metadata
+    /**
+     * User-specified key/value pairs for the resource. Individual keys can be removed by setting
+     * the value to `null`, and the entire metadata mapping can be cleared by setting `metadata` to
+     * `null`.
+     */
+    fun metadata(): Metadata? = body.metadata()
 
     fun _additionalHeaders(): Headers = additionalHeaders
 
     fun _additionalQueryParams(): QueryParams = additionalQueryParams
 
-    fun _additionalBodyProperties(): Map<String, JsonValue> = additionalBodyProperties
+    fun _additionalBodyProperties(): Map<String, JsonValue> = body._additionalProperties()
 
-    internal fun getBody(): MetricCreateBody {
-        return MetricCreateBody(
-            description,
-            itemId,
-            name,
-            sql,
-            metadata,
-            additionalBodyProperties,
-        )
-    }
+    internal fun getBody(): MetricCreateBody = body
 
     internal fun getHeaders(): Headers = additionalHeaders
 
@@ -120,7 +115,7 @@ constructor(
             }
 
             /** A description of the metric. */
-            fun description(description: String?) = apply { this.description = description }
+            fun description(description: String) = apply { this.description = description }
 
             /** The id of the item */
             fun itemId(itemId: String) = apply { this.itemId = itemId }
@@ -136,7 +131,7 @@ constructor(
              * setting the value to `null`, and the entire metadata mapping can be cleared by
              * setting `metadata` to `null`.
              */
-            fun metadata(metadata: Metadata?) = apply { this.metadata = metadata }
+            fun metadata(metadata: Metadata) = apply { this.metadata = metadata }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
@@ -196,44 +191,34 @@ constructor(
     @NoAutoDetect
     class Builder {
 
-        private var description: String? = null
-        private var itemId: String? = null
-        private var name: String? = null
-        private var sql: String? = null
-        private var metadata: Metadata? = null
+        private var body: MetricCreateBody.Builder = MetricCreateBody.builder()
         private var additionalHeaders: Headers.Builder = Headers.builder()
         private var additionalQueryParams: QueryParams.Builder = QueryParams.builder()
-        private var additionalBodyProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         internal fun from(metricCreateParams: MetricCreateParams) = apply {
-            description = metricCreateParams.description
-            itemId = metricCreateParams.itemId
-            name = metricCreateParams.name
-            sql = metricCreateParams.sql
-            metadata = metricCreateParams.metadata
+            body = metricCreateParams.body.toBuilder()
             additionalHeaders = metricCreateParams.additionalHeaders.toBuilder()
             additionalQueryParams = metricCreateParams.additionalQueryParams.toBuilder()
-            additionalBodyProperties = metricCreateParams.additionalBodyProperties.toMutableMap()
         }
 
         /** A description of the metric. */
-        fun description(description: String) = apply { this.description = description }
+        fun description(description: String) = apply { body.description(description) }
 
         /** The id of the item */
-        fun itemId(itemId: String) = apply { this.itemId = itemId }
+        fun itemId(itemId: String) = apply { body.itemId(itemId) }
 
         /** The name of the metric. */
-        fun name(name: String) = apply { this.name = name }
+        fun name(name: String) = apply { body.name(name) }
 
         /** A sql string defining the metric. */
-        fun sql(sql: String) = apply { this.sql = sql }
+        fun sql(sql: String) = apply { body.sql(sql) }
 
         /**
          * User-specified key/value pairs for the resource. Individual keys can be removed by
          * setting the value to `null`, and the entire metadata mapping can be cleared by setting
          * `metadata` to `null`.
          */
-        fun metadata(metadata: Metadata) = apply { this.metadata = metadata }
+        fun metadata(metadata: Metadata) = apply { body.metadata(metadata) }
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {
             this.additionalHeaders.clear()
@@ -334,37 +319,29 @@ constructor(
         }
 
         fun additionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) = apply {
-            this.additionalBodyProperties.clear()
-            putAllAdditionalBodyProperties(additionalBodyProperties)
+            body.additionalProperties(additionalBodyProperties)
         }
 
         fun putAdditionalBodyProperty(key: String, value: JsonValue) = apply {
-            additionalBodyProperties.put(key, value)
+            body.putAdditionalProperty(key, value)
         }
 
         fun putAllAdditionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) =
             apply {
-                this.additionalBodyProperties.putAll(additionalBodyProperties)
+                body.putAllAdditionalProperties(additionalBodyProperties)
             }
 
-        fun removeAdditionalBodyProperty(key: String) = apply {
-            additionalBodyProperties.remove(key)
-        }
+        fun removeAdditionalBodyProperty(key: String) = apply { body.removeAdditionalProperty(key) }
 
         fun removeAllAdditionalBodyProperties(keys: Set<String>) = apply {
-            keys.forEach(::removeAdditionalBodyProperty)
+            body.removeAllAdditionalProperties(keys)
         }
 
         fun build(): MetricCreateParams =
             MetricCreateParams(
-                description,
-                checkNotNull(itemId) { "`itemId` is required but was not set" },
-                checkNotNull(name) { "`name` is required but was not set" },
-                checkNotNull(sql) { "`sql` is required but was not set" },
-                metadata,
+                body.build(),
                 additionalHeaders.build(),
                 additionalQueryParams.build(),
-                additionalBodyProperties.toImmutable(),
             )
     }
 
@@ -444,11 +421,11 @@ constructor(
             return true
         }
 
-        return /* spotless:off */ other is MetricCreateParams && description == other.description && itemId == other.itemId && name == other.name && sql == other.sql && metadata == other.metadata && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams && additionalBodyProperties == other.additionalBodyProperties /* spotless:on */
+        return /* spotless:off */ other is MetricCreateParams && body == other.body && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
     }
 
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(description, itemId, name, sql, metadata, additionalHeaders, additionalQueryParams, additionalBodyProperties) /* spotless:on */
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(body, additionalHeaders, additionalQueryParams) /* spotless:on */
 
     override fun toString() =
-        "MetricCreateParams{description=$description, itemId=$itemId, name=$name, sql=$sql, metadata=$metadata, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams, additionalBodyProperties=$additionalBodyProperties}"
+        "MetricCreateParams{body=$body, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
 }

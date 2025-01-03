@@ -34,10 +34,16 @@ constructor(
 
     fun createdAtLte(): OffsetDateTime? = createdAtLte
 
+    /**
+     * Cursor for pagination. This can be populated by the `next_cursor` value returned from the
+     * initial request.
+     */
     fun cursor(): String? = cursor
 
+    /** The number of items to fetch. Defaults to 20. */
     fun limit(): Long? = limit
 
+    /** The plan status to filter to ('active', 'archived', or 'draft'). */
     fun status(): Status? = status
 
     fun _additionalHeaders(): Headers = additionalHeaders

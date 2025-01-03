@@ -22,40 +22,39 @@ import java.util.Objects
 class SubscriptionUpdateFixedFeeQuantityParams
 constructor(
     private val subscriptionId: String,
-    private val priceId: String,
-    private val quantity: Double,
-    private val changeOption: ChangeOption?,
-    private val effectiveDate: LocalDate?,
+    private val body: SubscriptionUpdateFixedFeeQuantityBody,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
-    private val additionalBodyProperties: Map<String, JsonValue>,
 ) {
 
     fun subscriptionId(): String = subscriptionId
 
-    fun priceId(): String = priceId
+    /** Price for which the quantity should be updated. Must be a fixed fee. */
+    fun priceId(): String = body.priceId()
 
-    fun quantity(): Double = quantity
+    fun quantity(): Double = body.quantity()
 
-    fun changeOption(): ChangeOption? = changeOption
+    /**
+     * Determines when the change takes effect. Note that if `effective_date` is specified, this
+     * defaults to `effective_date`. Otherwise, this defaults to `immediate` unless it's explicitly
+     * set to `upcoming_invoice.
+     */
+    fun changeOption(): ChangeOption? = body.changeOption()
 
-    fun effectiveDate(): LocalDate? = effectiveDate
+    /**
+     * The date that the quantity change should take effect, localized to the customer's timezone.
+     * Ifthis parameter is not passed in, the quantity change is effective according to
+     * `change_option`.
+     */
+    fun effectiveDate(): LocalDate? = body.effectiveDate()
 
     fun _additionalHeaders(): Headers = additionalHeaders
 
     fun _additionalQueryParams(): QueryParams = additionalQueryParams
 
-    fun _additionalBodyProperties(): Map<String, JsonValue> = additionalBodyProperties
+    fun _additionalBodyProperties(): Map<String, JsonValue> = body._additionalProperties()
 
-    internal fun getBody(): SubscriptionUpdateFixedFeeQuantityBody {
-        return SubscriptionUpdateFixedFeeQuantityBody(
-            priceId,
-            quantity,
-            changeOption,
-            effectiveDate,
-            additionalBodyProperties,
-        )
-    }
+    internal fun getBody(): SubscriptionUpdateFixedFeeQuantityBody = body
 
     internal fun getHeaders(): Headers = additionalHeaders
 
@@ -139,7 +138,7 @@ constructor(
              * this defaults to `effective_date`. Otherwise, this defaults to `immediate` unless
              * it's explicitly set to `upcoming_invoice.
              */
-            fun changeOption(changeOption: ChangeOption?) = apply {
+            fun changeOption(changeOption: ChangeOption) = apply {
                 this.changeOption = changeOption
             }
 
@@ -148,7 +147,7 @@ constructor(
              * timezone. Ifthis parameter is not passed in, the quantity change is effective
              * according to `change_option`.
              */
-            fun effectiveDate(effectiveDate: LocalDate?) = apply {
+            fun effectiveDate(effectiveDate: LocalDate) = apply {
                 this.effectiveDate = effectiveDate
             }
 
@@ -210,50 +209,42 @@ constructor(
     class Builder {
 
         private var subscriptionId: String? = null
-        private var priceId: String? = null
-        private var quantity: Double? = null
-        private var changeOption: ChangeOption? = null
-        private var effectiveDate: LocalDate? = null
+        private var body: SubscriptionUpdateFixedFeeQuantityBody.Builder =
+            SubscriptionUpdateFixedFeeQuantityBody.builder()
         private var additionalHeaders: Headers.Builder = Headers.builder()
         private var additionalQueryParams: QueryParams.Builder = QueryParams.builder()
-        private var additionalBodyProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         internal fun from(
             subscriptionUpdateFixedFeeQuantityParams: SubscriptionUpdateFixedFeeQuantityParams
         ) = apply {
             subscriptionId = subscriptionUpdateFixedFeeQuantityParams.subscriptionId
-            priceId = subscriptionUpdateFixedFeeQuantityParams.priceId
-            quantity = subscriptionUpdateFixedFeeQuantityParams.quantity
-            changeOption = subscriptionUpdateFixedFeeQuantityParams.changeOption
-            effectiveDate = subscriptionUpdateFixedFeeQuantityParams.effectiveDate
+            body = subscriptionUpdateFixedFeeQuantityParams.body.toBuilder()
             additionalHeaders =
                 subscriptionUpdateFixedFeeQuantityParams.additionalHeaders.toBuilder()
             additionalQueryParams =
                 subscriptionUpdateFixedFeeQuantityParams.additionalQueryParams.toBuilder()
-            additionalBodyProperties =
-                subscriptionUpdateFixedFeeQuantityParams.additionalBodyProperties.toMutableMap()
         }
 
         fun subscriptionId(subscriptionId: String) = apply { this.subscriptionId = subscriptionId }
 
         /** Price for which the quantity should be updated. Must be a fixed fee. */
-        fun priceId(priceId: String) = apply { this.priceId = priceId }
+        fun priceId(priceId: String) = apply { body.priceId(priceId) }
 
-        fun quantity(quantity: Double) = apply { this.quantity = quantity }
+        fun quantity(quantity: Double) = apply { body.quantity(quantity) }
 
         /**
          * Determines when the change takes effect. Note that if `effective_date` is specified, this
          * defaults to `effective_date`. Otherwise, this defaults to `immediate` unless it's
          * explicitly set to `upcoming_invoice.
          */
-        fun changeOption(changeOption: ChangeOption) = apply { this.changeOption = changeOption }
+        fun changeOption(changeOption: ChangeOption) = apply { body.changeOption(changeOption) }
 
         /**
          * The date that the quantity change should take effect, localized to the customer's
          * timezone. Ifthis parameter is not passed in, the quantity change is effective according
          * to `change_option`.
          */
-        fun effectiveDate(effectiveDate: LocalDate) = apply { this.effectiveDate = effectiveDate }
+        fun effectiveDate(effectiveDate: LocalDate) = apply { body.effectiveDate(effectiveDate) }
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {
             this.additionalHeaders.clear()
@@ -354,37 +345,30 @@ constructor(
         }
 
         fun additionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) = apply {
-            this.additionalBodyProperties.clear()
-            putAllAdditionalBodyProperties(additionalBodyProperties)
+            body.additionalProperties(additionalBodyProperties)
         }
 
         fun putAdditionalBodyProperty(key: String, value: JsonValue) = apply {
-            additionalBodyProperties.put(key, value)
+            body.putAdditionalProperty(key, value)
         }
 
         fun putAllAdditionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) =
             apply {
-                this.additionalBodyProperties.putAll(additionalBodyProperties)
+                body.putAllAdditionalProperties(additionalBodyProperties)
             }
 
-        fun removeAdditionalBodyProperty(key: String) = apply {
-            additionalBodyProperties.remove(key)
-        }
+        fun removeAdditionalBodyProperty(key: String) = apply { body.removeAdditionalProperty(key) }
 
         fun removeAllAdditionalBodyProperties(keys: Set<String>) = apply {
-            keys.forEach(::removeAdditionalBodyProperty)
+            body.removeAllAdditionalProperties(keys)
         }
 
         fun build(): SubscriptionUpdateFixedFeeQuantityParams =
             SubscriptionUpdateFixedFeeQuantityParams(
                 checkNotNull(subscriptionId) { "`subscriptionId` is required but was not set" },
-                checkNotNull(priceId) { "`priceId` is required but was not set" },
-                checkNotNull(quantity) { "`quantity` is required but was not set" },
-                changeOption,
-                effectiveDate,
+                body.build(),
                 additionalHeaders.build(),
                 additionalQueryParams.build(),
-                additionalBodyProperties.toImmutable(),
             )
     }
 
@@ -456,11 +440,11 @@ constructor(
             return true
         }
 
-        return /* spotless:off */ other is SubscriptionUpdateFixedFeeQuantityParams && subscriptionId == other.subscriptionId && priceId == other.priceId && quantity == other.quantity && changeOption == other.changeOption && effectiveDate == other.effectiveDate && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams && additionalBodyProperties == other.additionalBodyProperties /* spotless:on */
+        return /* spotless:off */ other is SubscriptionUpdateFixedFeeQuantityParams && subscriptionId == other.subscriptionId && body == other.body && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
     }
 
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(subscriptionId, priceId, quantity, changeOption, effectiveDate, additionalHeaders, additionalQueryParams, additionalBodyProperties) /* spotless:on */
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(subscriptionId, body, additionalHeaders, additionalQueryParams) /* spotless:on */
 
     override fun toString() =
-        "SubscriptionUpdateFixedFeeQuantityParams{subscriptionId=$subscriptionId, priceId=$priceId, quantity=$quantity, changeOption=$changeOption, effectiveDate=$effectiveDate, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams, additionalBodyProperties=$additionalBodyProperties}"
+        "SubscriptionUpdateFixedFeeQuantityParams{subscriptionId=$subscriptionId, body=$body, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
 }

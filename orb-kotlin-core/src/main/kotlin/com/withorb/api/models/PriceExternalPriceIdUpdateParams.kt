@@ -18,25 +18,27 @@ import java.util.Objects
 class PriceExternalPriceIdUpdateParams
 constructor(
     private val externalPriceId: String,
-    private val metadata: Metadata?,
+    private val body: PriceExternalPriceIdUpdateBody,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
-    private val additionalBodyProperties: Map<String, JsonValue>,
 ) {
 
     fun externalPriceId(): String = externalPriceId
 
-    fun metadata(): Metadata? = metadata
+    /**
+     * User-specified key/value pairs for the resource. Individual keys can be removed by setting
+     * the value to `null`, and the entire metadata mapping can be cleared by setting `metadata` to
+     * `null`.
+     */
+    fun metadata(): Metadata? = body.metadata()
 
     fun _additionalHeaders(): Headers = additionalHeaders
 
     fun _additionalQueryParams(): QueryParams = additionalQueryParams
 
-    fun _additionalBodyProperties(): Map<String, JsonValue> = additionalBodyProperties
+    fun _additionalBodyProperties(): Map<String, JsonValue> = body._additionalProperties()
 
-    internal fun getBody(): PriceExternalPriceIdUpdateBody {
-        return PriceExternalPriceIdUpdateBody(metadata, additionalBodyProperties)
-    }
+    internal fun getBody(): PriceExternalPriceIdUpdateBody = body
 
     internal fun getHeaders(): Headers = additionalHeaders
 
@@ -93,7 +95,7 @@ constructor(
              * setting the value to `null`, and the entire metadata mapping can be cleared by
              * setting `metadata` to `null`.
              */
-            fun metadata(metadata: Metadata?) = apply { this.metadata = metadata }
+            fun metadata(metadata: Metadata) = apply { this.metadata = metadata }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
@@ -147,20 +149,18 @@ constructor(
     class Builder {
 
         private var externalPriceId: String? = null
-        private var metadata: Metadata? = null
+        private var body: PriceExternalPriceIdUpdateBody.Builder =
+            PriceExternalPriceIdUpdateBody.builder()
         private var additionalHeaders: Headers.Builder = Headers.builder()
         private var additionalQueryParams: QueryParams.Builder = QueryParams.builder()
-        private var additionalBodyProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         internal fun from(priceExternalPriceIdUpdateParams: PriceExternalPriceIdUpdateParams) =
             apply {
                 externalPriceId = priceExternalPriceIdUpdateParams.externalPriceId
-                metadata = priceExternalPriceIdUpdateParams.metadata
+                body = priceExternalPriceIdUpdateParams.body.toBuilder()
                 additionalHeaders = priceExternalPriceIdUpdateParams.additionalHeaders.toBuilder()
                 additionalQueryParams =
                     priceExternalPriceIdUpdateParams.additionalQueryParams.toBuilder()
-                additionalBodyProperties =
-                    priceExternalPriceIdUpdateParams.additionalBodyProperties.toMutableMap()
             }
 
         fun externalPriceId(externalPriceId: String) = apply {
@@ -172,7 +172,7 @@ constructor(
          * setting the value to `null`, and the entire metadata mapping can be cleared by setting
          * `metadata` to `null`.
          */
-        fun metadata(metadata: Metadata) = apply { this.metadata = metadata }
+        fun metadata(metadata: Metadata) = apply { body.metadata(metadata) }
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {
             this.additionalHeaders.clear()
@@ -273,34 +273,30 @@ constructor(
         }
 
         fun additionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) = apply {
-            this.additionalBodyProperties.clear()
-            putAllAdditionalBodyProperties(additionalBodyProperties)
+            body.additionalProperties(additionalBodyProperties)
         }
 
         fun putAdditionalBodyProperty(key: String, value: JsonValue) = apply {
-            additionalBodyProperties.put(key, value)
+            body.putAdditionalProperty(key, value)
         }
 
         fun putAllAdditionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) =
             apply {
-                this.additionalBodyProperties.putAll(additionalBodyProperties)
+                body.putAllAdditionalProperties(additionalBodyProperties)
             }
 
-        fun removeAdditionalBodyProperty(key: String) = apply {
-            additionalBodyProperties.remove(key)
-        }
+        fun removeAdditionalBodyProperty(key: String) = apply { body.removeAdditionalProperty(key) }
 
         fun removeAllAdditionalBodyProperties(keys: Set<String>) = apply {
-            keys.forEach(::removeAdditionalBodyProperty)
+            body.removeAllAdditionalProperties(keys)
         }
 
         fun build(): PriceExternalPriceIdUpdateParams =
             PriceExternalPriceIdUpdateParams(
                 checkNotNull(externalPriceId) { "`externalPriceId` is required but was not set" },
-                metadata,
+                body.build(),
                 additionalHeaders.build(),
                 additionalQueryParams.build(),
-                additionalBodyProperties.toImmutable(),
             )
     }
 
@@ -380,11 +376,11 @@ constructor(
             return true
         }
 
-        return /* spotless:off */ other is PriceExternalPriceIdUpdateParams && externalPriceId == other.externalPriceId && metadata == other.metadata && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams && additionalBodyProperties == other.additionalBodyProperties /* spotless:on */
+        return /* spotless:off */ other is PriceExternalPriceIdUpdateParams && externalPriceId == other.externalPriceId && body == other.body && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
     }
 
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(externalPriceId, metadata, additionalHeaders, additionalQueryParams, additionalBodyProperties) /* spotless:on */
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(externalPriceId, body, additionalHeaders, additionalQueryParams) /* spotless:on */
 
     override fun toString() =
-        "PriceExternalPriceIdUpdateParams{externalPriceId=$externalPriceId, metadata=$metadata, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams, additionalBodyProperties=$additionalBodyProperties}"
+        "PriceExternalPriceIdUpdateParams{externalPriceId=$externalPriceId, body=$body, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
 }

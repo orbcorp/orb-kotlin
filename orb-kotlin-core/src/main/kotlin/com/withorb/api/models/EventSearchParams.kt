@@ -18,34 +18,37 @@ import java.util.Objects
 
 class EventSearchParams
 constructor(
-    private val eventIds: List<String>,
-    private val timeframeEnd: OffsetDateTime?,
-    private val timeframeStart: OffsetDateTime?,
+    private val body: EventSearchBody,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
-    private val additionalBodyProperties: Map<String, JsonValue>,
 ) {
 
-    fun eventIds(): List<String> = eventIds
+    /**
+     * This is an explicit array of IDs to filter by. Note that an event's ID is the idempotency_key
+     * that was originally used for ingestion, and this only supports events that have not been
+     * amended. Values in this array will be treated case sensitively.
+     */
+    fun eventIds(): List<String> = body.eventIds()
 
-    fun timeframeEnd(): OffsetDateTime? = timeframeEnd
+    /**
+     * The end of the timeframe, exclusive, in which to search events. If not specified, the current
+     * time is used.
+     */
+    fun timeframeEnd(): OffsetDateTime? = body.timeframeEnd()
 
-    fun timeframeStart(): OffsetDateTime? = timeframeStart
+    /**
+     * The start of the timeframe, inclusive, in which to search events. If not specified, the one
+     * week ago is used.
+     */
+    fun timeframeStart(): OffsetDateTime? = body.timeframeStart()
 
     fun _additionalHeaders(): Headers = additionalHeaders
 
     fun _additionalQueryParams(): QueryParams = additionalQueryParams
 
-    fun _additionalBodyProperties(): Map<String, JsonValue> = additionalBodyProperties
+    fun _additionalBodyProperties(): Map<String, JsonValue> = body._additionalProperties()
 
-    internal fun getBody(): EventSearchBody {
-        return EventSearchBody(
-            eventIds,
-            timeframeEnd,
-            timeframeStart,
-            additionalBodyProperties,
-        )
-    }
+    internal fun getBody(): EventSearchBody = body
 
     internal fun getHeaders(): Headers = additionalHeaders
 
@@ -94,7 +97,7 @@ constructor(
 
         class Builder {
 
-            private var eventIds: List<String>? = null
+            private var eventIds: MutableList<String>? = null
             private var timeframeEnd: OffsetDateTime? = null
             private var timeframeStart: OffsetDateTime? = null
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
@@ -111,13 +114,24 @@ constructor(
              * idempotency_key that was originally used for ingestion, and this only supports events
              * that have not been amended. Values in this array will be treated case sensitively.
              */
-            fun eventIds(eventIds: List<String>) = apply { this.eventIds = eventIds }
+            fun eventIds(eventIds: List<String>) = apply {
+                this.eventIds = eventIds.toMutableList()
+            }
+
+            /**
+             * This is an explicit array of IDs to filter by. Note that an event's ID is the
+             * idempotency_key that was originally used for ingestion, and this only supports events
+             * that have not been amended. Values in this array will be treated case sensitively.
+             */
+            fun addEventId(eventId: String) = apply {
+                eventIds = (eventIds ?: mutableListOf()).apply { add(eventId) }
+            }
 
             /**
              * The end of the timeframe, exclusive, in which to search events. If not specified, the
              * current time is used.
              */
-            fun timeframeEnd(timeframeEnd: OffsetDateTime?) = apply {
+            fun timeframeEnd(timeframeEnd: OffsetDateTime) = apply {
                 this.timeframeEnd = timeframeEnd
             }
 
@@ -125,7 +139,7 @@ constructor(
              * The start of the timeframe, inclusive, in which to search events. If not specified,
              * the one week ago is used.
              */
-            fun timeframeStart(timeframeStart: OffsetDateTime?) = apply {
+            fun timeframeStart(timeframeStart: OffsetDateTime) = apply {
                 this.timeframeStart = timeframeStart
             }
 
@@ -186,20 +200,14 @@ constructor(
     @NoAutoDetect
     class Builder {
 
-        private var eventIds: MutableList<String> = mutableListOf()
-        private var timeframeEnd: OffsetDateTime? = null
-        private var timeframeStart: OffsetDateTime? = null
+        private var body: EventSearchBody.Builder = EventSearchBody.builder()
         private var additionalHeaders: Headers.Builder = Headers.builder()
         private var additionalQueryParams: QueryParams.Builder = QueryParams.builder()
-        private var additionalBodyProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         internal fun from(eventSearchParams: EventSearchParams) = apply {
-            eventIds = eventSearchParams.eventIds.toMutableList()
-            timeframeEnd = eventSearchParams.timeframeEnd
-            timeframeStart = eventSearchParams.timeframeStart
+            body = eventSearchParams.body.toBuilder()
             additionalHeaders = eventSearchParams.additionalHeaders.toBuilder()
             additionalQueryParams = eventSearchParams.additionalQueryParams.toBuilder()
-            additionalBodyProperties = eventSearchParams.additionalBodyProperties.toMutableMap()
         }
 
         /**
@@ -207,30 +215,27 @@ constructor(
          * idempotency_key that was originally used for ingestion, and this only supports events
          * that have not been amended. Values in this array will be treated case sensitively.
          */
-        fun eventIds(eventIds: List<String>) = apply {
-            this.eventIds.clear()
-            this.eventIds.addAll(eventIds)
-        }
+        fun eventIds(eventIds: List<String>) = apply { body.eventIds(eventIds) }
 
         /**
          * This is an explicit array of IDs to filter by. Note that an event's ID is the
          * idempotency_key that was originally used for ingestion, and this only supports events
          * that have not been amended. Values in this array will be treated case sensitively.
          */
-        fun addEventId(eventId: String) = apply { this.eventIds.add(eventId) }
+        fun addEventId(eventId: String) = apply { body.addEventId(eventId) }
 
         /**
          * The end of the timeframe, exclusive, in which to search events. If not specified, the
          * current time is used.
          */
-        fun timeframeEnd(timeframeEnd: OffsetDateTime) = apply { this.timeframeEnd = timeframeEnd }
+        fun timeframeEnd(timeframeEnd: OffsetDateTime) = apply { body.timeframeEnd(timeframeEnd) }
 
         /**
          * The start of the timeframe, inclusive, in which to search events. If not specified, the
          * one week ago is used.
          */
         fun timeframeStart(timeframeStart: OffsetDateTime) = apply {
-            this.timeframeStart = timeframeStart
+            body.timeframeStart(timeframeStart)
         }
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {
@@ -332,35 +337,29 @@ constructor(
         }
 
         fun additionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) = apply {
-            this.additionalBodyProperties.clear()
-            putAllAdditionalBodyProperties(additionalBodyProperties)
+            body.additionalProperties(additionalBodyProperties)
         }
 
         fun putAdditionalBodyProperty(key: String, value: JsonValue) = apply {
-            additionalBodyProperties.put(key, value)
+            body.putAdditionalProperty(key, value)
         }
 
         fun putAllAdditionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) =
             apply {
-                this.additionalBodyProperties.putAll(additionalBodyProperties)
+                body.putAllAdditionalProperties(additionalBodyProperties)
             }
 
-        fun removeAdditionalBodyProperty(key: String) = apply {
-            additionalBodyProperties.remove(key)
-        }
+        fun removeAdditionalBodyProperty(key: String) = apply { body.removeAdditionalProperty(key) }
 
         fun removeAllAdditionalBodyProperties(keys: Set<String>) = apply {
-            keys.forEach(::removeAdditionalBodyProperty)
+            body.removeAllAdditionalProperties(keys)
         }
 
         fun build(): EventSearchParams =
             EventSearchParams(
-                eventIds.toImmutable(),
-                timeframeEnd,
-                timeframeStart,
+                body.build(),
                 additionalHeaders.build(),
                 additionalQueryParams.build(),
-                additionalBodyProperties.toImmutable(),
             )
     }
 
@@ -369,11 +368,11 @@ constructor(
             return true
         }
 
-        return /* spotless:off */ other is EventSearchParams && eventIds == other.eventIds && timeframeEnd == other.timeframeEnd && timeframeStart == other.timeframeStart && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams && additionalBodyProperties == other.additionalBodyProperties /* spotless:on */
+        return /* spotless:off */ other is EventSearchParams && body == other.body && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
     }
 
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(eventIds, timeframeEnd, timeframeStart, additionalHeaders, additionalQueryParams, additionalBodyProperties) /* spotless:on */
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(body, additionalHeaders, additionalQueryParams) /* spotless:on */
 
     override fun toString() =
-        "EventSearchParams{eventIds=$eventIds, timeframeEnd=$timeframeEnd, timeframeStart=$timeframeStart, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams, additionalBodyProperties=$additionalBodyProperties}"
+        "EventSearchParams{body=$body, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
 }
