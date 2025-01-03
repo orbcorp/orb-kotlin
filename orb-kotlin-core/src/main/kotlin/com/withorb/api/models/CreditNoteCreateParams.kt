@@ -20,34 +20,26 @@ import java.util.Objects
 
 class CreditNoteCreateParams
 constructor(
-    private val lineItems: List<LineItem>,
-    private val memo: String?,
-    private val reason: Reason?,
+    private val body: CreditNoteCreateBody,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
-    private val additionalBodyProperties: Map<String, JsonValue>,
 ) {
 
-    fun lineItems(): List<LineItem> = lineItems
+    fun lineItems(): List<LineItem> = body.lineItems()
 
-    fun memo(): String? = memo
+    /** An optional memo to attach to the credit note. */
+    fun memo(): String? = body.memo()
 
-    fun reason(): Reason? = reason
+    /** An optional reason for the credit note. */
+    fun reason(): Reason? = body.reason()
 
     fun _additionalHeaders(): Headers = additionalHeaders
 
     fun _additionalQueryParams(): QueryParams = additionalQueryParams
 
-    fun _additionalBodyProperties(): Map<String, JsonValue> = additionalBodyProperties
+    fun _additionalBodyProperties(): Map<String, JsonValue> = body._additionalProperties()
 
-    internal fun getBody(): CreditNoteCreateBody {
-        return CreditNoteCreateBody(
-            lineItems,
-            memo,
-            reason,
-            additionalBodyProperties,
-        )
-    }
+    internal fun getBody(): CreditNoteCreateBody = body
 
     internal fun getHeaders(): Headers = additionalHeaders
 
@@ -85,7 +77,7 @@ constructor(
 
         class Builder {
 
-            private var lineItems: List<LineItem>? = null
+            private var lineItems: MutableList<LineItem>? = null
             private var memo: String? = null
             private var reason: Reason? = null
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
@@ -97,13 +89,19 @@ constructor(
                 additionalProperties = creditNoteCreateBody.additionalProperties.toMutableMap()
             }
 
-            fun lineItems(lineItems: List<LineItem>) = apply { this.lineItems = lineItems }
+            fun lineItems(lineItems: List<LineItem>) = apply {
+                this.lineItems = lineItems.toMutableList()
+            }
+
+            fun addLineItem(lineItem: LineItem) = apply {
+                lineItems = (lineItems ?: mutableListOf()).apply { add(lineItem) }
+            }
 
             /** An optional memo to attach to the credit note. */
-            fun memo(memo: String?) = apply { this.memo = memo }
+            fun memo(memo: String) = apply { this.memo = memo }
 
             /** An optional reason for the credit note. */
-            fun reason(reason: Reason?) = apply { this.reason = reason }
+            fun reason(reason: Reason) = apply { this.reason = reason }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
@@ -162,35 +160,25 @@ constructor(
     @NoAutoDetect
     class Builder {
 
-        private var lineItems: MutableList<LineItem> = mutableListOf()
-        private var memo: String? = null
-        private var reason: Reason? = null
+        private var body: CreditNoteCreateBody.Builder = CreditNoteCreateBody.builder()
         private var additionalHeaders: Headers.Builder = Headers.builder()
         private var additionalQueryParams: QueryParams.Builder = QueryParams.builder()
-        private var additionalBodyProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         internal fun from(creditNoteCreateParams: CreditNoteCreateParams) = apply {
-            lineItems = creditNoteCreateParams.lineItems.toMutableList()
-            memo = creditNoteCreateParams.memo
-            reason = creditNoteCreateParams.reason
+            body = creditNoteCreateParams.body.toBuilder()
             additionalHeaders = creditNoteCreateParams.additionalHeaders.toBuilder()
             additionalQueryParams = creditNoteCreateParams.additionalQueryParams.toBuilder()
-            additionalBodyProperties =
-                creditNoteCreateParams.additionalBodyProperties.toMutableMap()
         }
 
-        fun lineItems(lineItems: List<LineItem>) = apply {
-            this.lineItems.clear()
-            this.lineItems.addAll(lineItems)
-        }
+        fun lineItems(lineItems: List<LineItem>) = apply { body.lineItems(lineItems) }
 
-        fun addLineItem(lineItem: LineItem) = apply { this.lineItems.add(lineItem) }
+        fun addLineItem(lineItem: LineItem) = apply { body.addLineItem(lineItem) }
 
         /** An optional memo to attach to the credit note. */
-        fun memo(memo: String) = apply { this.memo = memo }
+        fun memo(memo: String) = apply { body.memo(memo) }
 
         /** An optional reason for the credit note. */
-        fun reason(reason: Reason) = apply { this.reason = reason }
+        fun reason(reason: Reason) = apply { body.reason(reason) }
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {
             this.additionalHeaders.clear()
@@ -291,35 +279,29 @@ constructor(
         }
 
         fun additionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) = apply {
-            this.additionalBodyProperties.clear()
-            putAllAdditionalBodyProperties(additionalBodyProperties)
+            body.additionalProperties(additionalBodyProperties)
         }
 
         fun putAdditionalBodyProperty(key: String, value: JsonValue) = apply {
-            additionalBodyProperties.put(key, value)
+            body.putAdditionalProperty(key, value)
         }
 
         fun putAllAdditionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) =
             apply {
-                this.additionalBodyProperties.putAll(additionalBodyProperties)
+                body.putAllAdditionalProperties(additionalBodyProperties)
             }
 
-        fun removeAdditionalBodyProperty(key: String) = apply {
-            additionalBodyProperties.remove(key)
-        }
+        fun removeAdditionalBodyProperty(key: String) = apply { body.removeAdditionalProperty(key) }
 
         fun removeAllAdditionalBodyProperties(keys: Set<String>) = apply {
-            keys.forEach(::removeAdditionalBodyProperty)
+            body.removeAllAdditionalProperties(keys)
         }
 
         fun build(): CreditNoteCreateParams =
             CreditNoteCreateParams(
-                lineItems.toImmutable(),
-                memo,
-                reason,
+                body.build(),
                 additionalHeaders.build(),
                 additionalQueryParams.build(),
-                additionalBodyProperties.toImmutable(),
             )
     }
 
@@ -491,11 +473,11 @@ constructor(
             return true
         }
 
-        return /* spotless:off */ other is CreditNoteCreateParams && lineItems == other.lineItems && memo == other.memo && reason == other.reason && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams && additionalBodyProperties == other.additionalBodyProperties /* spotless:on */
+        return /* spotless:off */ other is CreditNoteCreateParams && body == other.body && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
     }
 
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(lineItems, memo, reason, additionalHeaders, additionalQueryParams, additionalBodyProperties) /* spotless:on */
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(body, additionalHeaders, additionalQueryParams) /* spotless:on */
 
     override fun toString() =
-        "CreditNoteCreateParams{lineItems=$lineItems, memo=$memo, reason=$reason, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams, additionalBodyProperties=$additionalBodyProperties}"
+        "CreditNoteCreateParams{body=$body, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
 }

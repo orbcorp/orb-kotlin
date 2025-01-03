@@ -19,44 +19,42 @@ import java.util.Objects
 class EventUpdateParams
 constructor(
     private val eventId: String,
-    private val eventName: String,
-    private val properties: JsonValue,
-    private val timestamp: OffsetDateTime,
-    private val customerId: String?,
-    private val externalCustomerId: String?,
+    private val body: EventUpdateBody,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
-    private val additionalBodyProperties: Map<String, JsonValue>,
 ) {
 
     fun eventId(): String = eventId
 
-    fun eventName(): String = eventName
+    /** A name to meaningfully identify the action or event type. */
+    fun eventName(): String = body.eventName()
 
-    fun properties(): JsonValue = properties
+    /**
+     * A dictionary of custom properties. Values in this dictionary must be numeric, boolean, or
+     * strings. Nested dictionaries are disallowed.
+     */
+    fun properties(): JsonValue = body.properties()
 
-    fun timestamp(): OffsetDateTime = timestamp
+    /**
+     * An ISO 8601 format date with no timezone offset (i.e. UTC). This should represent the time
+     * that usage was recorded, and is particularly important to attribute usage to a given billing
+     * period.
+     */
+    fun timestamp(): OffsetDateTime = body.timestamp()
 
-    fun customerId(): String? = customerId
+    /** The Orb Customer identifier */
+    fun customerId(): String? = body.customerId()
 
-    fun externalCustomerId(): String? = externalCustomerId
+    /** An alias for the Orb customer, whose mapping is specified when creating the customer */
+    fun externalCustomerId(): String? = body.externalCustomerId()
 
     fun _additionalHeaders(): Headers = additionalHeaders
 
     fun _additionalQueryParams(): QueryParams = additionalQueryParams
 
-    fun _additionalBodyProperties(): Map<String, JsonValue> = additionalBodyProperties
+    fun _additionalBodyProperties(): Map<String, JsonValue> = body._additionalProperties()
 
-    internal fun getBody(): EventUpdateBody {
-        return EventUpdateBody(
-            eventName,
-            properties,
-            timestamp,
-            customerId,
-            externalCustomerId,
-            additionalBodyProperties,
-        )
-    }
+    internal fun getBody(): EventUpdateBody = body
 
     internal fun getHeaders(): Headers = additionalHeaders
 
@@ -150,12 +148,12 @@ constructor(
             fun timestamp(timestamp: OffsetDateTime) = apply { this.timestamp = timestamp }
 
             /** The Orb Customer identifier */
-            fun customerId(customerId: String?) = apply { this.customerId = customerId }
+            fun customerId(customerId: String) = apply { this.customerId = customerId }
 
             /**
              * An alias for the Orb customer, whose mapping is specified when creating the customer
              */
-            fun externalCustomerId(externalCustomerId: String?) = apply {
+            fun externalCustomerId(externalCustomerId: String) = apply {
                 this.externalCustomerId = externalCustomerId
             }
 
@@ -218,51 +216,41 @@ constructor(
     class Builder {
 
         private var eventId: String? = null
-        private var eventName: String? = null
-        private var properties: JsonValue? = null
-        private var timestamp: OffsetDateTime? = null
-        private var customerId: String? = null
-        private var externalCustomerId: String? = null
+        private var body: EventUpdateBody.Builder = EventUpdateBody.builder()
         private var additionalHeaders: Headers.Builder = Headers.builder()
         private var additionalQueryParams: QueryParams.Builder = QueryParams.builder()
-        private var additionalBodyProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         internal fun from(eventUpdateParams: EventUpdateParams) = apply {
             eventId = eventUpdateParams.eventId
-            eventName = eventUpdateParams.eventName
-            properties = eventUpdateParams.properties
-            timestamp = eventUpdateParams.timestamp
-            customerId = eventUpdateParams.customerId
-            externalCustomerId = eventUpdateParams.externalCustomerId
+            body = eventUpdateParams.body.toBuilder()
             additionalHeaders = eventUpdateParams.additionalHeaders.toBuilder()
             additionalQueryParams = eventUpdateParams.additionalQueryParams.toBuilder()
-            additionalBodyProperties = eventUpdateParams.additionalBodyProperties.toMutableMap()
         }
 
         fun eventId(eventId: String) = apply { this.eventId = eventId }
 
         /** A name to meaningfully identify the action or event type. */
-        fun eventName(eventName: String) = apply { this.eventName = eventName }
+        fun eventName(eventName: String) = apply { body.eventName(eventName) }
 
         /**
          * A dictionary of custom properties. Values in this dictionary must be numeric, boolean, or
          * strings. Nested dictionaries are disallowed.
          */
-        fun properties(properties: JsonValue) = apply { this.properties = properties }
+        fun properties(properties: JsonValue) = apply { body.properties(properties) }
 
         /**
          * An ISO 8601 format date with no timezone offset (i.e. UTC). This should represent the
          * time that usage was recorded, and is particularly important to attribute usage to a given
          * billing period.
          */
-        fun timestamp(timestamp: OffsetDateTime) = apply { this.timestamp = timestamp }
+        fun timestamp(timestamp: OffsetDateTime) = apply { body.timestamp(timestamp) }
 
         /** The Orb Customer identifier */
-        fun customerId(customerId: String) = apply { this.customerId = customerId }
+        fun customerId(customerId: String) = apply { body.customerId(customerId) }
 
         /** An alias for the Orb customer, whose mapping is specified when creating the customer */
         fun externalCustomerId(externalCustomerId: String) = apply {
-            this.externalCustomerId = externalCustomerId
+            body.externalCustomerId(externalCustomerId)
         }
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {
@@ -364,38 +352,30 @@ constructor(
         }
 
         fun additionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) = apply {
-            this.additionalBodyProperties.clear()
-            putAllAdditionalBodyProperties(additionalBodyProperties)
+            body.additionalProperties(additionalBodyProperties)
         }
 
         fun putAdditionalBodyProperty(key: String, value: JsonValue) = apply {
-            additionalBodyProperties.put(key, value)
+            body.putAdditionalProperty(key, value)
         }
 
         fun putAllAdditionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) =
             apply {
-                this.additionalBodyProperties.putAll(additionalBodyProperties)
+                body.putAllAdditionalProperties(additionalBodyProperties)
             }
 
-        fun removeAdditionalBodyProperty(key: String) = apply {
-            additionalBodyProperties.remove(key)
-        }
+        fun removeAdditionalBodyProperty(key: String) = apply { body.removeAdditionalProperty(key) }
 
         fun removeAllAdditionalBodyProperties(keys: Set<String>) = apply {
-            keys.forEach(::removeAdditionalBodyProperty)
+            body.removeAllAdditionalProperties(keys)
         }
 
         fun build(): EventUpdateParams =
             EventUpdateParams(
                 checkNotNull(eventId) { "`eventId` is required but was not set" },
-                checkNotNull(eventName) { "`eventName` is required but was not set" },
-                checkNotNull(properties) { "`properties` is required but was not set" },
-                checkNotNull(timestamp) { "`timestamp` is required but was not set" },
-                customerId,
-                externalCustomerId,
+                body.build(),
                 additionalHeaders.build(),
                 additionalQueryParams.build(),
-                additionalBodyProperties.toImmutable(),
             )
     }
 
@@ -404,11 +384,11 @@ constructor(
             return true
         }
 
-        return /* spotless:off */ other is EventUpdateParams && eventId == other.eventId && eventName == other.eventName && properties == other.properties && timestamp == other.timestamp && customerId == other.customerId && externalCustomerId == other.externalCustomerId && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams && additionalBodyProperties == other.additionalBodyProperties /* spotless:on */
+        return /* spotless:off */ other is EventUpdateParams && eventId == other.eventId && body == other.body && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
     }
 
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(eventId, eventName, properties, timestamp, customerId, externalCustomerId, additionalHeaders, additionalQueryParams, additionalBodyProperties) /* spotless:on */
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(eventId, body, additionalHeaders, additionalQueryParams) /* spotless:on */
 
     override fun toString() =
-        "EventUpdateParams{eventId=$eventId, eventName=$eventName, properties=$properties, timestamp=$timestamp, customerId=$customerId, externalCustomerId=$externalCustomerId, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams, additionalBodyProperties=$additionalBodyProperties}"
+        "EventUpdateParams{eventId=$eventId, body=$body, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
 }

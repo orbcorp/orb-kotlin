@@ -20,12 +20,21 @@ constructor(
 
     fun externalCustomerId(): String = externalCustomerId
 
+    /** The ledger currency or custom pricing unit to use. */
     fun currency(): String? = currency
 
+    /**
+     * Cursor for pagination. This can be populated by the `next_cursor` value returned from the
+     * initial request.
+     */
     fun cursor(): String? = cursor
 
+    /**
+     * If set to True, all expired and depleted blocks, as well as active block will be returned.
+     */
     fun includeAllBlocks(): Boolean? = includeAllBlocks
 
+    /** The number of items to fetch. Defaults to 20. */
     fun limit(): Long? = limit
 
     fun _additionalHeaders(): Headers = additionalHeaders

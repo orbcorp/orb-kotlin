@@ -22,62 +22,67 @@ import java.util.Objects
 
 class InvoiceCreateParams
 constructor(
-    private val currency: String,
-    private val invoiceDate: OffsetDateTime,
-    private val lineItems: List<LineItem>,
-    private val netTerms: Long,
-    private val customerId: String?,
-    private val discount: Discount?,
-    private val externalCustomerId: String?,
-    private val memo: String?,
-    private val metadata: Metadata?,
-    private val willAutoIssue: Boolean?,
+    private val body: InvoiceCreateBody,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
-    private val additionalBodyProperties: Map<String, JsonValue>,
 ) {
 
-    fun currency(): String = currency
+    /** An ISO 4217 currency string. Must be the same as the customer's currency if it is set. */
+    fun currency(): String = body.currency()
 
-    fun invoiceDate(): OffsetDateTime = invoiceDate
+    /**
+     * Optional invoice date to set. Must be in the past, if not set, `invoice_date` is set to the
+     * current time in the customer's timezone.
+     */
+    fun invoiceDate(): OffsetDateTime = body.invoiceDate()
 
-    fun lineItems(): List<LineItem> = lineItems
+    fun lineItems(): List<LineItem> = body.lineItems()
 
-    fun netTerms(): Long = netTerms
+    /**
+     * Determines the difference between the invoice issue date for subscription invoices as the
+     * date that they are due. A value of '0' here represents that the invoice is due on issue,
+     * whereas a value of 30 represents that the customer has 30 days to pay the invoice.
+     */
+    fun netTerms(): Long = body.netTerms()
 
-    fun customerId(): String? = customerId
+    /**
+     * The id of the `Customer` to create this invoice for. One of `customer_id` and
+     * `external_customer_id` are required.
+     */
+    fun customerId(): String? = body.customerId()
 
-    fun discount(): Discount? = discount
+    /** An optional discount to attach to the invoice. */
+    fun discount(): Discount? = body.discount()
 
-    fun externalCustomerId(): String? = externalCustomerId
+    /**
+     * The `external_customer_id` of the `Customer` to create this invoice for. One of `customer_id`
+     * and `external_customer_id` are required.
+     */
+    fun externalCustomerId(): String? = body.externalCustomerId()
 
-    fun memo(): String? = memo
+    /** An optional memo to attach to the invoice. */
+    fun memo(): String? = body.memo()
 
-    fun metadata(): Metadata? = metadata
+    /**
+     * User-specified key/value pairs for the resource. Individual keys can be removed by setting
+     * the value to `null`, and the entire metadata mapping can be cleared by setting `metadata` to
+     * `null`.
+     */
+    fun metadata(): Metadata? = body.metadata()
 
-    fun willAutoIssue(): Boolean? = willAutoIssue
+    /**
+     * When true, this invoice will automatically be issued upon creation. When false, the resulting
+     * invoice will require manual review to issue. Defaulted to false.
+     */
+    fun willAutoIssue(): Boolean? = body.willAutoIssue()
 
     fun _additionalHeaders(): Headers = additionalHeaders
 
     fun _additionalQueryParams(): QueryParams = additionalQueryParams
 
-    fun _additionalBodyProperties(): Map<String, JsonValue> = additionalBodyProperties
+    fun _additionalBodyProperties(): Map<String, JsonValue> = body._additionalProperties()
 
-    internal fun getBody(): InvoiceCreateBody {
-        return InvoiceCreateBody(
-            currency,
-            invoiceDate,
-            lineItems,
-            netTerms,
-            customerId,
-            discount,
-            externalCustomerId,
-            memo,
-            metadata,
-            willAutoIssue,
-            additionalBodyProperties,
-        )
-    }
+    internal fun getBody(): InvoiceCreateBody = body
 
     internal fun getHeaders(): Headers = additionalHeaders
 
@@ -167,7 +172,7 @@ constructor(
 
             private var currency: String? = null
             private var invoiceDate: OffsetDateTime? = null
-            private var lineItems: List<LineItem>? = null
+            private var lineItems: MutableList<LineItem>? = null
             private var netTerms: Long? = null
             private var customerId: String? = null
             private var discount: Discount? = null
@@ -203,7 +208,13 @@ constructor(
              */
             fun invoiceDate(invoiceDate: OffsetDateTime) = apply { this.invoiceDate = invoiceDate }
 
-            fun lineItems(lineItems: List<LineItem>) = apply { this.lineItems = lineItems }
+            fun lineItems(lineItems: List<LineItem>) = apply {
+                this.lineItems = lineItems.toMutableList()
+            }
+
+            fun addLineItem(lineItem: LineItem) = apply {
+                lineItems = (lineItems ?: mutableListOf()).apply { add(lineItem) }
+            }
 
             /**
              * Determines the difference between the invoice issue date for subscription invoices as
@@ -217,36 +228,50 @@ constructor(
              * The id of the `Customer` to create this invoice for. One of `customer_id` and
              * `external_customer_id` are required.
              */
-            fun customerId(customerId: String?) = apply { this.customerId = customerId }
+            fun customerId(customerId: String) = apply { this.customerId = customerId }
 
             /** An optional discount to attach to the invoice. */
-            fun discount(discount: Discount?) = apply { this.discount = discount }
+            fun discount(discount: Discount) = apply { this.discount = discount }
+
+            fun discount(percentageDiscount: PercentageDiscount) = apply {
+                this.discount = Discount.ofPercentageDiscount(percentageDiscount)
+            }
+
+            fun discount(trialDiscount: TrialDiscount) = apply {
+                this.discount = Discount.ofTrialDiscount(trialDiscount)
+            }
+
+            fun discount(usageDiscount: Discount.UsageDiscount) = apply {
+                this.discount = Discount.ofUsageDiscount(usageDiscount)
+            }
+
+            fun discount(amountDiscount: AmountDiscount) = apply {
+                this.discount = Discount.ofAmountDiscount(amountDiscount)
+            }
 
             /**
              * The `external_customer_id` of the `Customer` to create this invoice for. One of
              * `customer_id` and `external_customer_id` are required.
              */
-            fun externalCustomerId(externalCustomerId: String?) = apply {
+            fun externalCustomerId(externalCustomerId: String) = apply {
                 this.externalCustomerId = externalCustomerId
             }
 
             /** An optional memo to attach to the invoice. */
-            fun memo(memo: String?) = apply { this.memo = memo }
+            fun memo(memo: String) = apply { this.memo = memo }
 
             /**
              * User-specified key/value pairs for the resource. Individual keys can be removed by
              * setting the value to `null`, and the entire metadata mapping can be cleared by
              * setting `metadata` to `null`.
              */
-            fun metadata(metadata: Metadata?) = apply { this.metadata = metadata }
+            fun metadata(metadata: Metadata) = apply { this.metadata = metadata }
 
             /**
              * When true, this invoice will automatically be issued upon creation. When false, the
              * resulting invoice will require manual review to issue. Defaulted to false.
              */
-            fun willAutoIssue(willAutoIssue: Boolean?) = apply {
-                this.willAutoIssue = willAutoIssue
-            }
+            fun willAutoIssue(willAutoIssue: Boolean) = apply { this.willAutoIssue = willAutoIssue }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
@@ -312,113 +337,80 @@ constructor(
     @NoAutoDetect
     class Builder {
 
-        private var currency: String? = null
-        private var invoiceDate: OffsetDateTime? = null
-        private var lineItems: MutableList<LineItem> = mutableListOf()
-        private var netTerms: Long? = null
-        private var customerId: String? = null
-        private var discount: Discount? = null
-        private var externalCustomerId: String? = null
-        private var memo: String? = null
-        private var metadata: Metadata? = null
-        private var willAutoIssue: Boolean? = null
+        private var body: InvoiceCreateBody.Builder = InvoiceCreateBody.builder()
         private var additionalHeaders: Headers.Builder = Headers.builder()
         private var additionalQueryParams: QueryParams.Builder = QueryParams.builder()
-        private var additionalBodyProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         internal fun from(invoiceCreateParams: InvoiceCreateParams) = apply {
-            currency = invoiceCreateParams.currency
-            invoiceDate = invoiceCreateParams.invoiceDate
-            lineItems = invoiceCreateParams.lineItems.toMutableList()
-            netTerms = invoiceCreateParams.netTerms
-            customerId = invoiceCreateParams.customerId
-            discount = invoiceCreateParams.discount
-            externalCustomerId = invoiceCreateParams.externalCustomerId
-            memo = invoiceCreateParams.memo
-            metadata = invoiceCreateParams.metadata
-            willAutoIssue = invoiceCreateParams.willAutoIssue
+            body = invoiceCreateParams.body.toBuilder()
             additionalHeaders = invoiceCreateParams.additionalHeaders.toBuilder()
             additionalQueryParams = invoiceCreateParams.additionalQueryParams.toBuilder()
-            additionalBodyProperties = invoiceCreateParams.additionalBodyProperties.toMutableMap()
         }
 
         /**
          * An ISO 4217 currency string. Must be the same as the customer's currency if it is set.
          */
-        fun currency(currency: String) = apply { this.currency = currency }
+        fun currency(currency: String) = apply { body.currency(currency) }
 
         /**
          * Optional invoice date to set. Must be in the past, if not set, `invoice_date` is set to
          * the current time in the customer's timezone.
          */
-        fun invoiceDate(invoiceDate: OffsetDateTime) = apply { this.invoiceDate = invoiceDate }
+        fun invoiceDate(invoiceDate: OffsetDateTime) = apply { body.invoiceDate(invoiceDate) }
 
-        fun lineItems(lineItems: List<LineItem>) = apply {
-            this.lineItems.clear()
-            this.lineItems.addAll(lineItems)
-        }
+        fun lineItems(lineItems: List<LineItem>) = apply { body.lineItems(lineItems) }
 
-        fun addLineItem(lineItem: LineItem) = apply { this.lineItems.add(lineItem) }
+        fun addLineItem(lineItem: LineItem) = apply { body.addLineItem(lineItem) }
 
         /**
          * Determines the difference between the invoice issue date for subscription invoices as the
          * date that they are due. A value of '0' here represents that the invoice is due on issue,
          * whereas a value of 30 represents that the customer has 30 days to pay the invoice.
          */
-        fun netTerms(netTerms: Long) = apply { this.netTerms = netTerms }
+        fun netTerms(netTerms: Long) = apply { body.netTerms(netTerms) }
 
         /**
          * The id of the `Customer` to create this invoice for. One of `customer_id` and
          * `external_customer_id` are required.
          */
-        fun customerId(customerId: String) = apply { this.customerId = customerId }
+        fun customerId(customerId: String) = apply { body.customerId(customerId) }
 
         /** An optional discount to attach to the invoice. */
-        fun discount(discount: Discount) = apply { this.discount = discount }
+        fun discount(discount: Discount) = apply { body.discount(discount) }
 
-        /** An optional discount to attach to the invoice. */
         fun discount(percentageDiscount: PercentageDiscount) = apply {
-            this.discount = Discount.ofPercentageDiscount(percentageDiscount)
+            body.discount(percentageDiscount)
         }
 
-        /** An optional discount to attach to the invoice. */
-        fun discount(trialDiscount: TrialDiscount) = apply {
-            this.discount = Discount.ofTrialDiscount(trialDiscount)
-        }
+        fun discount(trialDiscount: TrialDiscount) = apply { body.discount(trialDiscount) }
 
-        /** An optional discount to attach to the invoice. */
-        fun discount(usageDiscount: Discount.UsageDiscount) = apply {
-            this.discount = Discount.ofUsageDiscount(usageDiscount)
-        }
+        fun discount(usageDiscount: Discount.UsageDiscount) = apply { body.discount(usageDiscount) }
 
-        /** An optional discount to attach to the invoice. */
-        fun discount(amountDiscount: AmountDiscount) = apply {
-            this.discount = Discount.ofAmountDiscount(amountDiscount)
-        }
+        fun discount(amountDiscount: AmountDiscount) = apply { body.discount(amountDiscount) }
 
         /**
          * The `external_customer_id` of the `Customer` to create this invoice for. One of
          * `customer_id` and `external_customer_id` are required.
          */
         fun externalCustomerId(externalCustomerId: String) = apply {
-            this.externalCustomerId = externalCustomerId
+            body.externalCustomerId(externalCustomerId)
         }
 
         /** An optional memo to attach to the invoice. */
-        fun memo(memo: String) = apply { this.memo = memo }
+        fun memo(memo: String) = apply { body.memo(memo) }
 
         /**
          * User-specified key/value pairs for the resource. Individual keys can be removed by
          * setting the value to `null`, and the entire metadata mapping can be cleared by setting
          * `metadata` to `null`.
          */
-        fun metadata(metadata: Metadata) = apply { this.metadata = metadata }
+        fun metadata(metadata: Metadata) = apply { body.metadata(metadata) }
 
         /**
          * When true, this invoice will automatically be issued upon creation. When false, the
          * resulting invoice will require manual review to issue. Defaulted to false.
          */
-        fun willAutoIssue(willAutoIssue: Boolean) = apply { this.willAutoIssue = willAutoIssue }
+        fun willAutoIssue(willAutoIssue: Boolean) = apply { body.willAutoIssue(willAutoIssue) }
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {
             this.additionalHeaders.clear()
@@ -519,42 +511,29 @@ constructor(
         }
 
         fun additionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) = apply {
-            this.additionalBodyProperties.clear()
-            putAllAdditionalBodyProperties(additionalBodyProperties)
+            body.additionalProperties(additionalBodyProperties)
         }
 
         fun putAdditionalBodyProperty(key: String, value: JsonValue) = apply {
-            additionalBodyProperties.put(key, value)
+            body.putAdditionalProperty(key, value)
         }
 
         fun putAllAdditionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) =
             apply {
-                this.additionalBodyProperties.putAll(additionalBodyProperties)
+                body.putAllAdditionalProperties(additionalBodyProperties)
             }
 
-        fun removeAdditionalBodyProperty(key: String) = apply {
-            additionalBodyProperties.remove(key)
-        }
+        fun removeAdditionalBodyProperty(key: String) = apply { body.removeAdditionalProperty(key) }
 
         fun removeAllAdditionalBodyProperties(keys: Set<String>) = apply {
-            keys.forEach(::removeAdditionalBodyProperty)
+            body.removeAllAdditionalProperties(keys)
         }
 
         fun build(): InvoiceCreateParams =
             InvoiceCreateParams(
-                checkNotNull(currency) { "`currency` is required but was not set" },
-                checkNotNull(invoiceDate) { "`invoiceDate` is required but was not set" },
-                lineItems.toImmutable(),
-                checkNotNull(netTerms) { "`netTerms` is required but was not set" },
-                customerId,
-                discount,
-                externalCustomerId,
-                memo,
-                metadata,
-                willAutoIssue,
+                body.build(),
                 additionalHeaders.build(),
                 additionalQueryParams.build(),
-                additionalBodyProperties.toImmutable(),
             )
     }
 
@@ -902,11 +881,11 @@ constructor(
             return true
         }
 
-        return /* spotless:off */ other is InvoiceCreateParams && currency == other.currency && invoiceDate == other.invoiceDate && lineItems == other.lineItems && netTerms == other.netTerms && customerId == other.customerId && discount == other.discount && externalCustomerId == other.externalCustomerId && memo == other.memo && metadata == other.metadata && willAutoIssue == other.willAutoIssue && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams && additionalBodyProperties == other.additionalBodyProperties /* spotless:on */
+        return /* spotless:off */ other is InvoiceCreateParams && body == other.body && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
     }
 
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(currency, invoiceDate, lineItems, netTerms, customerId, discount, externalCustomerId, memo, metadata, willAutoIssue, additionalHeaders, additionalQueryParams, additionalBodyProperties) /* spotless:on */
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(body, additionalHeaders, additionalQueryParams) /* spotless:on */
 
     override fun toString() =
-        "InvoiceCreateParams{currency=$currency, invoiceDate=$invoiceDate, lineItems=$lineItems, netTerms=$netTerms, customerId=$customerId, discount=$discount, externalCustomerId=$externalCustomerId, memo=$memo, metadata=$metadata, willAutoIssue=$willAutoIssue, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams, additionalBodyProperties=$additionalBodyProperties}"
+        "InvoiceCreateParams{body=$body, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
 }
