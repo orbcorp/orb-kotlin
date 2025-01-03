@@ -2,7 +2,6 @@
 
 package com.withorb.api.models
 
-import com.withorb.api.core.JsonValue
 import java.time.OffsetDateTime
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
@@ -18,25 +17,21 @@ class AlertTest {
                 .currency("currency")
                 .customer(
                     Alert.Customer.builder()
-                        .putAdditionalProperty("foo", JsonValue.from("string"))
+                        .id("id")
+                        .externalCustomerId("external_customer_id")
                         .build()
                 )
                 .enabled(true)
-                .metric(
-                    Alert.Metric.builder()
-                        .putAdditionalProperty("foo", JsonValue.from("string"))
-                        .build()
-                )
+                .metric(Alert.Metric.builder().id("id").build())
                 .plan(
                     Alert.Plan.builder()
-                        .putAdditionalProperty("foo", JsonValue.from("string"))
+                        .id("m2t5akQeh2obwxeU")
+                        .externalPlanId("m2t5akQeh2obwxeU")
+                        .name("Example plan")
+                        .planVersion("plan_version")
                         .build()
                 )
-                .subscription(
-                    Alert.Subscription.builder()
-                        .putAdditionalProperty("foo", JsonValue.from("string"))
-                        .build()
-                )
+                .subscription(Alert.Subscription.builder().id("VDGsT23osdLb84KD").build())
                 .thresholds(listOf(Alert.Threshold.builder().value(0.0).build()))
                 .type(Alert.Type.USAGE_EXCEEDED)
                 .build()
@@ -46,27 +41,21 @@ class AlertTest {
         assertThat(alert.currency()).isEqualTo("currency")
         assertThat(alert.customer())
             .isEqualTo(
-                Alert.Customer.builder()
-                    .putAdditionalProperty("foo", JsonValue.from("string"))
-                    .build()
+                Alert.Customer.builder().id("id").externalCustomerId("external_customer_id").build()
             )
         assertThat(alert.enabled()).isEqualTo(true)
-        assertThat(alert.metric())
-            .isEqualTo(
-                Alert.Metric.builder()
-                    .putAdditionalProperty("foo", JsonValue.from("string"))
-                    .build()
-            )
+        assertThat(alert.metric()).isEqualTo(Alert.Metric.builder().id("id").build())
         assertThat(alert.plan())
             .isEqualTo(
-                Alert.Plan.builder().putAdditionalProperty("foo", JsonValue.from("string")).build()
-            )
-        assertThat(alert.subscription())
-            .isEqualTo(
-                Alert.Subscription.builder()
-                    .putAdditionalProperty("foo", JsonValue.from("string"))
+                Alert.Plan.builder()
+                    .id("m2t5akQeh2obwxeU")
+                    .externalPlanId("m2t5akQeh2obwxeU")
+                    .name("Example plan")
+                    .planVersion("plan_version")
                     .build()
             )
+        assertThat(alert.subscription())
+            .isEqualTo(Alert.Subscription.builder().id("VDGsT23osdLb84KD").build())
         assertThat(alert.thresholds()).containsExactly(Alert.Threshold.builder().value(0.0).build())
         assertThat(alert.type()).isEqualTo(Alert.Type.USAGE_EXCEEDED)
     }
