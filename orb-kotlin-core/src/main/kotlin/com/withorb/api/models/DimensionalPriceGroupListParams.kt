@@ -15,8 +15,13 @@ constructor(
     private val additionalQueryParams: QueryParams,
 ) {
 
+    /**
+     * Cursor for pagination. This can be populated by the `next_cursor` value returned from the
+     * initial request.
+     */
     fun cursor(): String? = cursor
 
+    /** The number of items to fetch. Defaults to 20. */
     fun limit(): Long? = limit
 
     fun _additionalHeaders(): Headers = additionalHeaders

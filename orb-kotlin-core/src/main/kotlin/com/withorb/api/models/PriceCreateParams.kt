@@ -30,132 +30,80 @@ import java.util.Objects
 
 class PriceCreateParams
 constructor(
-    private val newFloatingUnitPrice: NewFloatingUnitPrice?,
-    private val newFloatingPackagePrice: NewFloatingPackagePrice?,
-    private val newFloatingMatrixPrice: NewFloatingMatrixPrice?,
-    private val newFloatingMatrixWithAllocationPrice: NewFloatingMatrixWithAllocationPrice?,
-    private val newFloatingTieredPrice: NewFloatingTieredPrice?,
-    private val newFloatingTieredBpsPrice: NewFloatingTieredBpsPrice?,
-    private val newFloatingBpsPrice: NewFloatingBpsPrice?,
-    private val newFloatingBulkBpsPrice: NewFloatingBulkBpsPrice?,
-    private val newFloatingBulkPrice: NewFloatingBulkPrice?,
-    private val newFloatingThresholdTotalAmountPrice: NewFloatingThresholdTotalAmountPrice?,
-    private val newFloatingTieredPackagePrice: NewFloatingTieredPackagePrice?,
-    private val newFloatingGroupedTieredPrice: NewFloatingGroupedTieredPrice?,
-    private val newFloatingTieredWithMinimumPrice: NewFloatingTieredWithMinimumPrice?,
-    private val newFloatingPackageWithAllocationPrice: NewFloatingPackageWithAllocationPrice?,
-    private val newFloatingTieredPackageWithMinimumPrice: NewFloatingTieredPackageWithMinimumPrice?,
-    private val newFloatingUnitWithPercentPrice: NewFloatingUnitWithPercentPrice?,
-    private val newFloatingTieredWithProrationPrice: NewFloatingTieredWithProrationPrice?,
-    private val newFloatingUnitWithProrationPrice: NewFloatingUnitWithProrationPrice?,
-    private val newFloatingGroupedAllocationPrice: NewFloatingGroupedAllocationPrice?,
-    private val newFloatingGroupedWithProratedMinimumPrice:
-        NewFloatingGroupedWithProratedMinimumPrice?,
-    private val newFloatingGroupedWithMeteredMinimumPrice:
-        NewFloatingGroupedWithMeteredMinimumPrice?,
-    private val newFloatingMatrixWithDisplayNamePrice: NewFloatingMatrixWithDisplayNamePrice?,
-    private val newFloatingBulkWithProrationPrice: NewFloatingBulkWithProrationPrice?,
-    private val newFloatingGroupedTieredPackagePrice: NewFloatingGroupedTieredPackagePrice?,
+    private val body: PriceCreateBody,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
 ) {
 
-    fun newFloatingUnitPrice(): NewFloatingUnitPrice? = newFloatingUnitPrice
+    fun newFloatingUnitPrice(): NewFloatingUnitPrice? = body.newFloatingUnitPrice()
 
-    fun newFloatingPackagePrice(): NewFloatingPackagePrice? = newFloatingPackagePrice
+    fun newFloatingPackagePrice(): NewFloatingPackagePrice? = body.newFloatingPackagePrice()
 
-    fun newFloatingMatrixPrice(): NewFloatingMatrixPrice? = newFloatingMatrixPrice
+    fun newFloatingMatrixPrice(): NewFloatingMatrixPrice? = body.newFloatingMatrixPrice()
 
     fun newFloatingMatrixWithAllocationPrice(): NewFloatingMatrixWithAllocationPrice? =
-        newFloatingMatrixWithAllocationPrice
+        body.newFloatingMatrixWithAllocationPrice()
 
-    fun newFloatingTieredPrice(): NewFloatingTieredPrice? = newFloatingTieredPrice
+    fun newFloatingTieredPrice(): NewFloatingTieredPrice? = body.newFloatingTieredPrice()
 
-    fun newFloatingTieredBpsPrice(): NewFloatingTieredBpsPrice? = newFloatingTieredBpsPrice
+    fun newFloatingTieredBpsPrice(): NewFloatingTieredBpsPrice? = body.newFloatingTieredBpsPrice()
 
-    fun newFloatingBpsPrice(): NewFloatingBpsPrice? = newFloatingBpsPrice
+    fun newFloatingBpsPrice(): NewFloatingBpsPrice? = body.newFloatingBpsPrice()
 
-    fun newFloatingBulkBpsPrice(): NewFloatingBulkBpsPrice? = newFloatingBulkBpsPrice
+    fun newFloatingBulkBpsPrice(): NewFloatingBulkBpsPrice? = body.newFloatingBulkBpsPrice()
 
-    fun newFloatingBulkPrice(): NewFloatingBulkPrice? = newFloatingBulkPrice
+    fun newFloatingBulkPrice(): NewFloatingBulkPrice? = body.newFloatingBulkPrice()
 
     fun newFloatingThresholdTotalAmountPrice(): NewFloatingThresholdTotalAmountPrice? =
-        newFloatingThresholdTotalAmountPrice
+        body.newFloatingThresholdTotalAmountPrice()
 
     fun newFloatingTieredPackagePrice(): NewFloatingTieredPackagePrice? =
-        newFloatingTieredPackagePrice
+        body.newFloatingTieredPackagePrice()
 
     fun newFloatingGroupedTieredPrice(): NewFloatingGroupedTieredPrice? =
-        newFloatingGroupedTieredPrice
+        body.newFloatingGroupedTieredPrice()
 
     fun newFloatingTieredWithMinimumPrice(): NewFloatingTieredWithMinimumPrice? =
-        newFloatingTieredWithMinimumPrice
+        body.newFloatingTieredWithMinimumPrice()
 
     fun newFloatingPackageWithAllocationPrice(): NewFloatingPackageWithAllocationPrice? =
-        newFloatingPackageWithAllocationPrice
+        body.newFloatingPackageWithAllocationPrice()
 
     fun newFloatingTieredPackageWithMinimumPrice(): NewFloatingTieredPackageWithMinimumPrice? =
-        newFloatingTieredPackageWithMinimumPrice
+        body.newFloatingTieredPackageWithMinimumPrice()
 
     fun newFloatingUnitWithPercentPrice(): NewFloatingUnitWithPercentPrice? =
-        newFloatingUnitWithPercentPrice
+        body.newFloatingUnitWithPercentPrice()
 
     fun newFloatingTieredWithProrationPrice(): NewFloatingTieredWithProrationPrice? =
-        newFloatingTieredWithProrationPrice
+        body.newFloatingTieredWithProrationPrice()
 
     fun newFloatingUnitWithProrationPrice(): NewFloatingUnitWithProrationPrice? =
-        newFloatingUnitWithProrationPrice
+        body.newFloatingUnitWithProrationPrice()
 
     fun newFloatingGroupedAllocationPrice(): NewFloatingGroupedAllocationPrice? =
-        newFloatingGroupedAllocationPrice
+        body.newFloatingGroupedAllocationPrice()
 
     fun newFloatingGroupedWithProratedMinimumPrice(): NewFloatingGroupedWithProratedMinimumPrice? =
-        newFloatingGroupedWithProratedMinimumPrice
+        body.newFloatingGroupedWithProratedMinimumPrice()
 
     fun newFloatingGroupedWithMeteredMinimumPrice(): NewFloatingGroupedWithMeteredMinimumPrice? =
-        newFloatingGroupedWithMeteredMinimumPrice
+        body.newFloatingGroupedWithMeteredMinimumPrice()
 
     fun newFloatingMatrixWithDisplayNamePrice(): NewFloatingMatrixWithDisplayNamePrice? =
-        newFloatingMatrixWithDisplayNamePrice
+        body.newFloatingMatrixWithDisplayNamePrice()
 
     fun newFloatingBulkWithProrationPrice(): NewFloatingBulkWithProrationPrice? =
-        newFloatingBulkWithProrationPrice
+        body.newFloatingBulkWithProrationPrice()
 
     fun newFloatingGroupedTieredPackagePrice(): NewFloatingGroupedTieredPackagePrice? =
-        newFloatingGroupedTieredPackagePrice
+        body.newFloatingGroupedTieredPackagePrice()
 
     fun _additionalHeaders(): Headers = additionalHeaders
 
     fun _additionalQueryParams(): QueryParams = additionalQueryParams
 
-    internal fun getBody(): PriceCreateBody {
-        return PriceCreateBody(
-            newFloatingUnitPrice,
-            newFloatingPackagePrice,
-            newFloatingMatrixPrice,
-            newFloatingMatrixWithAllocationPrice,
-            newFloatingTieredPrice,
-            newFloatingTieredBpsPrice,
-            newFloatingBpsPrice,
-            newFloatingBulkBpsPrice,
-            newFloatingBulkPrice,
-            newFloatingThresholdTotalAmountPrice,
-            newFloatingTieredPackagePrice,
-            newFloatingGroupedTieredPrice,
-            newFloatingTieredWithMinimumPrice,
-            newFloatingPackageWithAllocationPrice,
-            newFloatingTieredPackageWithMinimumPrice,
-            newFloatingUnitWithPercentPrice,
-            newFloatingTieredWithProrationPrice,
-            newFloatingUnitWithProrationPrice,
-            newFloatingGroupedAllocationPrice,
-            newFloatingGroupedWithProratedMinimumPrice,
-            newFloatingGroupedWithMeteredMinimumPrice,
-            newFloatingMatrixWithDisplayNamePrice,
-            newFloatingBulkWithProrationPrice,
-            newFloatingGroupedTieredPackagePrice,
-        )
-    }
+    internal fun getBody(): PriceCreateBody = body
 
     internal fun getHeaders(): Headers = additionalHeaders
 
@@ -1059,763 +1007,183 @@ constructor(
     @NoAutoDetect
     class Builder {
 
-        private var newFloatingUnitPrice: NewFloatingUnitPrice? = null
-        private var newFloatingPackagePrice: NewFloatingPackagePrice? = null
-        private var newFloatingMatrixPrice: NewFloatingMatrixPrice? = null
-        private var newFloatingMatrixWithAllocationPrice: NewFloatingMatrixWithAllocationPrice? =
-            null
-        private var newFloatingTieredPrice: NewFloatingTieredPrice? = null
-        private var newFloatingTieredBpsPrice: NewFloatingTieredBpsPrice? = null
-        private var newFloatingBpsPrice: NewFloatingBpsPrice? = null
-        private var newFloatingBulkBpsPrice: NewFloatingBulkBpsPrice? = null
-        private var newFloatingBulkPrice: NewFloatingBulkPrice? = null
-        private var newFloatingThresholdTotalAmountPrice: NewFloatingThresholdTotalAmountPrice? =
-            null
-        private var newFloatingTieredPackagePrice: NewFloatingTieredPackagePrice? = null
-        private var newFloatingGroupedTieredPrice: NewFloatingGroupedTieredPrice? = null
-        private var newFloatingTieredWithMinimumPrice: NewFloatingTieredWithMinimumPrice? = null
-        private var newFloatingPackageWithAllocationPrice: NewFloatingPackageWithAllocationPrice? =
-            null
-        private var newFloatingTieredPackageWithMinimumPrice:
-            NewFloatingTieredPackageWithMinimumPrice? =
-            null
-        private var newFloatingUnitWithPercentPrice: NewFloatingUnitWithPercentPrice? = null
-        private var newFloatingTieredWithProrationPrice: NewFloatingTieredWithProrationPrice? = null
-        private var newFloatingUnitWithProrationPrice: NewFloatingUnitWithProrationPrice? = null
-        private var newFloatingGroupedAllocationPrice: NewFloatingGroupedAllocationPrice? = null
-        private var newFloatingGroupedWithProratedMinimumPrice:
-            NewFloatingGroupedWithProratedMinimumPrice? =
-            null
-        private var newFloatingGroupedWithMeteredMinimumPrice:
-            NewFloatingGroupedWithMeteredMinimumPrice? =
-            null
-        private var newFloatingMatrixWithDisplayNamePrice: NewFloatingMatrixWithDisplayNamePrice? =
-            null
-        private var newFloatingBulkWithProrationPrice: NewFloatingBulkWithProrationPrice? = null
-        private var newFloatingGroupedTieredPackagePrice: NewFloatingGroupedTieredPackagePrice? =
-            null
+        private var body: PriceCreateBody? = null
         private var additionalHeaders: Headers.Builder = Headers.builder()
         private var additionalQueryParams: QueryParams.Builder = QueryParams.builder()
 
         internal fun from(priceCreateParams: PriceCreateParams) = apply {
-            newFloatingUnitPrice = priceCreateParams.newFloatingUnitPrice
-            newFloatingPackagePrice = priceCreateParams.newFloatingPackagePrice
-            newFloatingMatrixPrice = priceCreateParams.newFloatingMatrixPrice
-            newFloatingMatrixWithAllocationPrice =
-                priceCreateParams.newFloatingMatrixWithAllocationPrice
-            newFloatingTieredPrice = priceCreateParams.newFloatingTieredPrice
-            newFloatingTieredBpsPrice = priceCreateParams.newFloatingTieredBpsPrice
-            newFloatingBpsPrice = priceCreateParams.newFloatingBpsPrice
-            newFloatingBulkBpsPrice = priceCreateParams.newFloatingBulkBpsPrice
-            newFloatingBulkPrice = priceCreateParams.newFloatingBulkPrice
-            newFloatingThresholdTotalAmountPrice =
-                priceCreateParams.newFloatingThresholdTotalAmountPrice
-            newFloatingTieredPackagePrice = priceCreateParams.newFloatingTieredPackagePrice
-            newFloatingGroupedTieredPrice = priceCreateParams.newFloatingGroupedTieredPrice
-            newFloatingTieredWithMinimumPrice = priceCreateParams.newFloatingTieredWithMinimumPrice
-            newFloatingPackageWithAllocationPrice =
-                priceCreateParams.newFloatingPackageWithAllocationPrice
-            newFloatingTieredPackageWithMinimumPrice =
-                priceCreateParams.newFloatingTieredPackageWithMinimumPrice
-            newFloatingUnitWithPercentPrice = priceCreateParams.newFloatingUnitWithPercentPrice
-            newFloatingTieredWithProrationPrice =
-                priceCreateParams.newFloatingTieredWithProrationPrice
-            newFloatingUnitWithProrationPrice = priceCreateParams.newFloatingUnitWithProrationPrice
-            newFloatingGroupedAllocationPrice = priceCreateParams.newFloatingGroupedAllocationPrice
-            newFloatingGroupedWithProratedMinimumPrice =
-                priceCreateParams.newFloatingGroupedWithProratedMinimumPrice
-            newFloatingGroupedWithMeteredMinimumPrice =
-                priceCreateParams.newFloatingGroupedWithMeteredMinimumPrice
-            newFloatingMatrixWithDisplayNamePrice =
-                priceCreateParams.newFloatingMatrixWithDisplayNamePrice
-            newFloatingBulkWithProrationPrice = priceCreateParams.newFloatingBulkWithProrationPrice
-            newFloatingGroupedTieredPackagePrice =
-                priceCreateParams.newFloatingGroupedTieredPackagePrice
+            body = priceCreateParams.body
             additionalHeaders = priceCreateParams.additionalHeaders.toBuilder()
             additionalQueryParams = priceCreateParams.additionalQueryParams.toBuilder()
         }
 
         fun forNewFloatingUnitPrice(newFloatingUnitPrice: NewFloatingUnitPrice) = apply {
-            this.newFloatingUnitPrice = newFloatingUnitPrice
-            this.newFloatingPackagePrice = null
-            this.newFloatingMatrixPrice = null
-            this.newFloatingMatrixWithAllocationPrice = null
-            this.newFloatingTieredPrice = null
-            this.newFloatingTieredBpsPrice = null
-            this.newFloatingBpsPrice = null
-            this.newFloatingBulkBpsPrice = null
-            this.newFloatingBulkPrice = null
-            this.newFloatingThresholdTotalAmountPrice = null
-            this.newFloatingTieredPackagePrice = null
-            this.newFloatingGroupedTieredPrice = null
-            this.newFloatingTieredWithMinimumPrice = null
-            this.newFloatingPackageWithAllocationPrice = null
-            this.newFloatingTieredPackageWithMinimumPrice = null
-            this.newFloatingUnitWithPercentPrice = null
-            this.newFloatingTieredWithProrationPrice = null
-            this.newFloatingUnitWithProrationPrice = null
-            this.newFloatingGroupedAllocationPrice = null
-            this.newFloatingGroupedWithProratedMinimumPrice = null
-            this.newFloatingGroupedWithMeteredMinimumPrice = null
-            this.newFloatingMatrixWithDisplayNamePrice = null
-            this.newFloatingBulkWithProrationPrice = null
-            this.newFloatingGroupedTieredPackagePrice = null
+            body = PriceCreateBody.ofNewFloatingUnitPrice(newFloatingUnitPrice)
         }
 
         fun forNewFloatingPackagePrice(newFloatingPackagePrice: NewFloatingPackagePrice) = apply {
-            this.newFloatingUnitPrice = null
-            this.newFloatingPackagePrice = newFloatingPackagePrice
-            this.newFloatingMatrixPrice = null
-            this.newFloatingMatrixWithAllocationPrice = null
-            this.newFloatingTieredPrice = null
-            this.newFloatingTieredBpsPrice = null
-            this.newFloatingBpsPrice = null
-            this.newFloatingBulkBpsPrice = null
-            this.newFloatingBulkPrice = null
-            this.newFloatingThresholdTotalAmountPrice = null
-            this.newFloatingTieredPackagePrice = null
-            this.newFloatingGroupedTieredPrice = null
-            this.newFloatingTieredWithMinimumPrice = null
-            this.newFloatingPackageWithAllocationPrice = null
-            this.newFloatingTieredPackageWithMinimumPrice = null
-            this.newFloatingUnitWithPercentPrice = null
-            this.newFloatingTieredWithProrationPrice = null
-            this.newFloatingUnitWithProrationPrice = null
-            this.newFloatingGroupedAllocationPrice = null
-            this.newFloatingGroupedWithProratedMinimumPrice = null
-            this.newFloatingGroupedWithMeteredMinimumPrice = null
-            this.newFloatingMatrixWithDisplayNamePrice = null
-            this.newFloatingBulkWithProrationPrice = null
-            this.newFloatingGroupedTieredPackagePrice = null
+            body = PriceCreateBody.ofNewFloatingPackagePrice(newFloatingPackagePrice)
         }
 
         fun forNewFloatingMatrixPrice(newFloatingMatrixPrice: NewFloatingMatrixPrice) = apply {
-            this.newFloatingUnitPrice = null
-            this.newFloatingPackagePrice = null
-            this.newFloatingMatrixPrice = newFloatingMatrixPrice
-            this.newFloatingMatrixWithAllocationPrice = null
-            this.newFloatingTieredPrice = null
-            this.newFloatingTieredBpsPrice = null
-            this.newFloatingBpsPrice = null
-            this.newFloatingBulkBpsPrice = null
-            this.newFloatingBulkPrice = null
-            this.newFloatingThresholdTotalAmountPrice = null
-            this.newFloatingTieredPackagePrice = null
-            this.newFloatingGroupedTieredPrice = null
-            this.newFloatingTieredWithMinimumPrice = null
-            this.newFloatingPackageWithAllocationPrice = null
-            this.newFloatingTieredPackageWithMinimumPrice = null
-            this.newFloatingUnitWithPercentPrice = null
-            this.newFloatingTieredWithProrationPrice = null
-            this.newFloatingUnitWithProrationPrice = null
-            this.newFloatingGroupedAllocationPrice = null
-            this.newFloatingGroupedWithProratedMinimumPrice = null
-            this.newFloatingGroupedWithMeteredMinimumPrice = null
-            this.newFloatingMatrixWithDisplayNamePrice = null
-            this.newFloatingBulkWithProrationPrice = null
-            this.newFloatingGroupedTieredPackagePrice = null
+            body = PriceCreateBody.ofNewFloatingMatrixPrice(newFloatingMatrixPrice)
         }
 
         fun forNewFloatingMatrixWithAllocationPrice(
             newFloatingMatrixWithAllocationPrice: NewFloatingMatrixWithAllocationPrice
         ) = apply {
-            this.newFloatingUnitPrice = null
-            this.newFloatingPackagePrice = null
-            this.newFloatingMatrixPrice = null
-            this.newFloatingMatrixWithAllocationPrice = newFloatingMatrixWithAllocationPrice
-            this.newFloatingTieredPrice = null
-            this.newFloatingTieredBpsPrice = null
-            this.newFloatingBpsPrice = null
-            this.newFloatingBulkBpsPrice = null
-            this.newFloatingBulkPrice = null
-            this.newFloatingThresholdTotalAmountPrice = null
-            this.newFloatingTieredPackagePrice = null
-            this.newFloatingGroupedTieredPrice = null
-            this.newFloatingTieredWithMinimumPrice = null
-            this.newFloatingPackageWithAllocationPrice = null
-            this.newFloatingTieredPackageWithMinimumPrice = null
-            this.newFloatingUnitWithPercentPrice = null
-            this.newFloatingTieredWithProrationPrice = null
-            this.newFloatingUnitWithProrationPrice = null
-            this.newFloatingGroupedAllocationPrice = null
-            this.newFloatingGroupedWithProratedMinimumPrice = null
-            this.newFloatingGroupedWithMeteredMinimumPrice = null
-            this.newFloatingMatrixWithDisplayNamePrice = null
-            this.newFloatingBulkWithProrationPrice = null
-            this.newFloatingGroupedTieredPackagePrice = null
+            body =
+                PriceCreateBody.ofNewFloatingMatrixWithAllocationPrice(
+                    newFloatingMatrixWithAllocationPrice
+                )
         }
 
         fun forNewFloatingTieredPrice(newFloatingTieredPrice: NewFloatingTieredPrice) = apply {
-            this.newFloatingUnitPrice = null
-            this.newFloatingPackagePrice = null
-            this.newFloatingMatrixPrice = null
-            this.newFloatingMatrixWithAllocationPrice = null
-            this.newFloatingTieredPrice = newFloatingTieredPrice
-            this.newFloatingTieredBpsPrice = null
-            this.newFloatingBpsPrice = null
-            this.newFloatingBulkBpsPrice = null
-            this.newFloatingBulkPrice = null
-            this.newFloatingThresholdTotalAmountPrice = null
-            this.newFloatingTieredPackagePrice = null
-            this.newFloatingGroupedTieredPrice = null
-            this.newFloatingTieredWithMinimumPrice = null
-            this.newFloatingPackageWithAllocationPrice = null
-            this.newFloatingTieredPackageWithMinimumPrice = null
-            this.newFloatingUnitWithPercentPrice = null
-            this.newFloatingTieredWithProrationPrice = null
-            this.newFloatingUnitWithProrationPrice = null
-            this.newFloatingGroupedAllocationPrice = null
-            this.newFloatingGroupedWithProratedMinimumPrice = null
-            this.newFloatingGroupedWithMeteredMinimumPrice = null
-            this.newFloatingMatrixWithDisplayNamePrice = null
-            this.newFloatingBulkWithProrationPrice = null
-            this.newFloatingGroupedTieredPackagePrice = null
+            body = PriceCreateBody.ofNewFloatingTieredPrice(newFloatingTieredPrice)
         }
 
         fun forNewFloatingTieredBpsPrice(newFloatingTieredBpsPrice: NewFloatingTieredBpsPrice) =
             apply {
-                this.newFloatingUnitPrice = null
-                this.newFloatingPackagePrice = null
-                this.newFloatingMatrixPrice = null
-                this.newFloatingMatrixWithAllocationPrice = null
-                this.newFloatingTieredPrice = null
-                this.newFloatingTieredBpsPrice = newFloatingTieredBpsPrice
-                this.newFloatingBpsPrice = null
-                this.newFloatingBulkBpsPrice = null
-                this.newFloatingBulkPrice = null
-                this.newFloatingThresholdTotalAmountPrice = null
-                this.newFloatingTieredPackagePrice = null
-                this.newFloatingGroupedTieredPrice = null
-                this.newFloatingTieredWithMinimumPrice = null
-                this.newFloatingPackageWithAllocationPrice = null
-                this.newFloatingTieredPackageWithMinimumPrice = null
-                this.newFloatingUnitWithPercentPrice = null
-                this.newFloatingTieredWithProrationPrice = null
-                this.newFloatingUnitWithProrationPrice = null
-                this.newFloatingGroupedAllocationPrice = null
-                this.newFloatingGroupedWithProratedMinimumPrice = null
-                this.newFloatingGroupedWithMeteredMinimumPrice = null
-                this.newFloatingMatrixWithDisplayNamePrice = null
-                this.newFloatingBulkWithProrationPrice = null
-                this.newFloatingGroupedTieredPackagePrice = null
+                body = PriceCreateBody.ofNewFloatingTieredBpsPrice(newFloatingTieredBpsPrice)
             }
 
         fun forNewFloatingBpsPrice(newFloatingBpsPrice: NewFloatingBpsPrice) = apply {
-            this.newFloatingUnitPrice = null
-            this.newFloatingPackagePrice = null
-            this.newFloatingMatrixPrice = null
-            this.newFloatingMatrixWithAllocationPrice = null
-            this.newFloatingTieredPrice = null
-            this.newFloatingTieredBpsPrice = null
-            this.newFloatingBpsPrice = newFloatingBpsPrice
-            this.newFloatingBulkBpsPrice = null
-            this.newFloatingBulkPrice = null
-            this.newFloatingThresholdTotalAmountPrice = null
-            this.newFloatingTieredPackagePrice = null
-            this.newFloatingGroupedTieredPrice = null
-            this.newFloatingTieredWithMinimumPrice = null
-            this.newFloatingPackageWithAllocationPrice = null
-            this.newFloatingTieredPackageWithMinimumPrice = null
-            this.newFloatingUnitWithPercentPrice = null
-            this.newFloatingTieredWithProrationPrice = null
-            this.newFloatingUnitWithProrationPrice = null
-            this.newFloatingGroupedAllocationPrice = null
-            this.newFloatingGroupedWithProratedMinimumPrice = null
-            this.newFloatingGroupedWithMeteredMinimumPrice = null
-            this.newFloatingMatrixWithDisplayNamePrice = null
-            this.newFloatingBulkWithProrationPrice = null
-            this.newFloatingGroupedTieredPackagePrice = null
+            body = PriceCreateBody.ofNewFloatingBpsPrice(newFloatingBpsPrice)
         }
 
         fun forNewFloatingBulkBpsPrice(newFloatingBulkBpsPrice: NewFloatingBulkBpsPrice) = apply {
-            this.newFloatingUnitPrice = null
-            this.newFloatingPackagePrice = null
-            this.newFloatingMatrixPrice = null
-            this.newFloatingMatrixWithAllocationPrice = null
-            this.newFloatingTieredPrice = null
-            this.newFloatingTieredBpsPrice = null
-            this.newFloatingBpsPrice = null
-            this.newFloatingBulkBpsPrice = newFloatingBulkBpsPrice
-            this.newFloatingBulkPrice = null
-            this.newFloatingThresholdTotalAmountPrice = null
-            this.newFloatingTieredPackagePrice = null
-            this.newFloatingGroupedTieredPrice = null
-            this.newFloatingTieredWithMinimumPrice = null
-            this.newFloatingPackageWithAllocationPrice = null
-            this.newFloatingTieredPackageWithMinimumPrice = null
-            this.newFloatingUnitWithPercentPrice = null
-            this.newFloatingTieredWithProrationPrice = null
-            this.newFloatingUnitWithProrationPrice = null
-            this.newFloatingGroupedAllocationPrice = null
-            this.newFloatingGroupedWithProratedMinimumPrice = null
-            this.newFloatingGroupedWithMeteredMinimumPrice = null
-            this.newFloatingMatrixWithDisplayNamePrice = null
-            this.newFloatingBulkWithProrationPrice = null
-            this.newFloatingGroupedTieredPackagePrice = null
+            body = PriceCreateBody.ofNewFloatingBulkBpsPrice(newFloatingBulkBpsPrice)
         }
 
         fun forNewFloatingBulkPrice(newFloatingBulkPrice: NewFloatingBulkPrice) = apply {
-            this.newFloatingUnitPrice = null
-            this.newFloatingPackagePrice = null
-            this.newFloatingMatrixPrice = null
-            this.newFloatingMatrixWithAllocationPrice = null
-            this.newFloatingTieredPrice = null
-            this.newFloatingTieredBpsPrice = null
-            this.newFloatingBpsPrice = null
-            this.newFloatingBulkBpsPrice = null
-            this.newFloatingBulkPrice = newFloatingBulkPrice
-            this.newFloatingThresholdTotalAmountPrice = null
-            this.newFloatingTieredPackagePrice = null
-            this.newFloatingGroupedTieredPrice = null
-            this.newFloatingTieredWithMinimumPrice = null
-            this.newFloatingPackageWithAllocationPrice = null
-            this.newFloatingTieredPackageWithMinimumPrice = null
-            this.newFloatingUnitWithPercentPrice = null
-            this.newFloatingTieredWithProrationPrice = null
-            this.newFloatingUnitWithProrationPrice = null
-            this.newFloatingGroupedAllocationPrice = null
-            this.newFloatingGroupedWithProratedMinimumPrice = null
-            this.newFloatingGroupedWithMeteredMinimumPrice = null
-            this.newFloatingMatrixWithDisplayNamePrice = null
-            this.newFloatingBulkWithProrationPrice = null
-            this.newFloatingGroupedTieredPackagePrice = null
+            body = PriceCreateBody.ofNewFloatingBulkPrice(newFloatingBulkPrice)
         }
 
         fun forNewFloatingThresholdTotalAmountPrice(
             newFloatingThresholdTotalAmountPrice: NewFloatingThresholdTotalAmountPrice
         ) = apply {
-            this.newFloatingUnitPrice = null
-            this.newFloatingPackagePrice = null
-            this.newFloatingMatrixPrice = null
-            this.newFloatingMatrixWithAllocationPrice = null
-            this.newFloatingTieredPrice = null
-            this.newFloatingTieredBpsPrice = null
-            this.newFloatingBpsPrice = null
-            this.newFloatingBulkBpsPrice = null
-            this.newFloatingBulkPrice = null
-            this.newFloatingThresholdTotalAmountPrice = newFloatingThresholdTotalAmountPrice
-            this.newFloatingTieredPackagePrice = null
-            this.newFloatingGroupedTieredPrice = null
-            this.newFloatingTieredWithMinimumPrice = null
-            this.newFloatingPackageWithAllocationPrice = null
-            this.newFloatingTieredPackageWithMinimumPrice = null
-            this.newFloatingUnitWithPercentPrice = null
-            this.newFloatingTieredWithProrationPrice = null
-            this.newFloatingUnitWithProrationPrice = null
-            this.newFloatingGroupedAllocationPrice = null
-            this.newFloatingGroupedWithProratedMinimumPrice = null
-            this.newFloatingGroupedWithMeteredMinimumPrice = null
-            this.newFloatingMatrixWithDisplayNamePrice = null
-            this.newFloatingBulkWithProrationPrice = null
-            this.newFloatingGroupedTieredPackagePrice = null
+            body =
+                PriceCreateBody.ofNewFloatingThresholdTotalAmountPrice(
+                    newFloatingThresholdTotalAmountPrice
+                )
         }
 
         fun forNewFloatingTieredPackagePrice(
             newFloatingTieredPackagePrice: NewFloatingTieredPackagePrice
         ) = apply {
-            this.newFloatingUnitPrice = null
-            this.newFloatingPackagePrice = null
-            this.newFloatingMatrixPrice = null
-            this.newFloatingMatrixWithAllocationPrice = null
-            this.newFloatingTieredPrice = null
-            this.newFloatingTieredBpsPrice = null
-            this.newFloatingBpsPrice = null
-            this.newFloatingBulkBpsPrice = null
-            this.newFloatingBulkPrice = null
-            this.newFloatingThresholdTotalAmountPrice = null
-            this.newFloatingTieredPackagePrice = newFloatingTieredPackagePrice
-            this.newFloatingGroupedTieredPrice = null
-            this.newFloatingTieredWithMinimumPrice = null
-            this.newFloatingPackageWithAllocationPrice = null
-            this.newFloatingTieredPackageWithMinimumPrice = null
-            this.newFloatingUnitWithPercentPrice = null
-            this.newFloatingTieredWithProrationPrice = null
-            this.newFloatingUnitWithProrationPrice = null
-            this.newFloatingGroupedAllocationPrice = null
-            this.newFloatingGroupedWithProratedMinimumPrice = null
-            this.newFloatingGroupedWithMeteredMinimumPrice = null
-            this.newFloatingMatrixWithDisplayNamePrice = null
-            this.newFloatingBulkWithProrationPrice = null
-            this.newFloatingGroupedTieredPackagePrice = null
+            body = PriceCreateBody.ofNewFloatingTieredPackagePrice(newFloatingTieredPackagePrice)
         }
 
         fun forNewFloatingGroupedTieredPrice(
             newFloatingGroupedTieredPrice: NewFloatingGroupedTieredPrice
         ) = apply {
-            this.newFloatingUnitPrice = null
-            this.newFloatingPackagePrice = null
-            this.newFloatingMatrixPrice = null
-            this.newFloatingMatrixWithAllocationPrice = null
-            this.newFloatingTieredPrice = null
-            this.newFloatingTieredBpsPrice = null
-            this.newFloatingBpsPrice = null
-            this.newFloatingBulkBpsPrice = null
-            this.newFloatingBulkPrice = null
-            this.newFloatingThresholdTotalAmountPrice = null
-            this.newFloatingTieredPackagePrice = null
-            this.newFloatingGroupedTieredPrice = newFloatingGroupedTieredPrice
-            this.newFloatingTieredWithMinimumPrice = null
-            this.newFloatingPackageWithAllocationPrice = null
-            this.newFloatingTieredPackageWithMinimumPrice = null
-            this.newFloatingUnitWithPercentPrice = null
-            this.newFloatingTieredWithProrationPrice = null
-            this.newFloatingUnitWithProrationPrice = null
-            this.newFloatingGroupedAllocationPrice = null
-            this.newFloatingGroupedWithProratedMinimumPrice = null
-            this.newFloatingGroupedWithMeteredMinimumPrice = null
-            this.newFloatingMatrixWithDisplayNamePrice = null
-            this.newFloatingBulkWithProrationPrice = null
-            this.newFloatingGroupedTieredPackagePrice = null
+            body = PriceCreateBody.ofNewFloatingGroupedTieredPrice(newFloatingGroupedTieredPrice)
         }
 
         fun forNewFloatingTieredWithMinimumPrice(
             newFloatingTieredWithMinimumPrice: NewFloatingTieredWithMinimumPrice
         ) = apply {
-            this.newFloatingUnitPrice = null
-            this.newFloatingPackagePrice = null
-            this.newFloatingMatrixPrice = null
-            this.newFloatingMatrixWithAllocationPrice = null
-            this.newFloatingTieredPrice = null
-            this.newFloatingTieredBpsPrice = null
-            this.newFloatingBpsPrice = null
-            this.newFloatingBulkBpsPrice = null
-            this.newFloatingBulkPrice = null
-            this.newFloatingThresholdTotalAmountPrice = null
-            this.newFloatingTieredPackagePrice = null
-            this.newFloatingGroupedTieredPrice = null
-            this.newFloatingTieredWithMinimumPrice = newFloatingTieredWithMinimumPrice
-            this.newFloatingPackageWithAllocationPrice = null
-            this.newFloatingTieredPackageWithMinimumPrice = null
-            this.newFloatingUnitWithPercentPrice = null
-            this.newFloatingTieredWithProrationPrice = null
-            this.newFloatingUnitWithProrationPrice = null
-            this.newFloatingGroupedAllocationPrice = null
-            this.newFloatingGroupedWithProratedMinimumPrice = null
-            this.newFloatingGroupedWithMeteredMinimumPrice = null
-            this.newFloatingMatrixWithDisplayNamePrice = null
-            this.newFloatingBulkWithProrationPrice = null
-            this.newFloatingGroupedTieredPackagePrice = null
+            body =
+                PriceCreateBody.ofNewFloatingTieredWithMinimumPrice(
+                    newFloatingTieredWithMinimumPrice
+                )
         }
 
         fun forNewFloatingPackageWithAllocationPrice(
             newFloatingPackageWithAllocationPrice: NewFloatingPackageWithAllocationPrice
         ) = apply {
-            this.newFloatingUnitPrice = null
-            this.newFloatingPackagePrice = null
-            this.newFloatingMatrixPrice = null
-            this.newFloatingMatrixWithAllocationPrice = null
-            this.newFloatingTieredPrice = null
-            this.newFloatingTieredBpsPrice = null
-            this.newFloatingBpsPrice = null
-            this.newFloatingBulkBpsPrice = null
-            this.newFloatingBulkPrice = null
-            this.newFloatingThresholdTotalAmountPrice = null
-            this.newFloatingTieredPackagePrice = null
-            this.newFloatingGroupedTieredPrice = null
-            this.newFloatingTieredWithMinimumPrice = null
-            this.newFloatingPackageWithAllocationPrice = newFloatingPackageWithAllocationPrice
-            this.newFloatingTieredPackageWithMinimumPrice = null
-            this.newFloatingUnitWithPercentPrice = null
-            this.newFloatingTieredWithProrationPrice = null
-            this.newFloatingUnitWithProrationPrice = null
-            this.newFloatingGroupedAllocationPrice = null
-            this.newFloatingGroupedWithProratedMinimumPrice = null
-            this.newFloatingGroupedWithMeteredMinimumPrice = null
-            this.newFloatingMatrixWithDisplayNamePrice = null
-            this.newFloatingBulkWithProrationPrice = null
-            this.newFloatingGroupedTieredPackagePrice = null
+            body =
+                PriceCreateBody.ofNewFloatingPackageWithAllocationPrice(
+                    newFloatingPackageWithAllocationPrice
+                )
         }
 
         fun forNewFloatingTieredPackageWithMinimumPrice(
             newFloatingTieredPackageWithMinimumPrice: NewFloatingTieredPackageWithMinimumPrice
         ) = apply {
-            this.newFloatingUnitPrice = null
-            this.newFloatingPackagePrice = null
-            this.newFloatingMatrixPrice = null
-            this.newFloatingMatrixWithAllocationPrice = null
-            this.newFloatingTieredPrice = null
-            this.newFloatingTieredBpsPrice = null
-            this.newFloatingBpsPrice = null
-            this.newFloatingBulkBpsPrice = null
-            this.newFloatingBulkPrice = null
-            this.newFloatingThresholdTotalAmountPrice = null
-            this.newFloatingTieredPackagePrice = null
-            this.newFloatingGroupedTieredPrice = null
-            this.newFloatingTieredWithMinimumPrice = null
-            this.newFloatingPackageWithAllocationPrice = null
-            this.newFloatingTieredPackageWithMinimumPrice = newFloatingTieredPackageWithMinimumPrice
-            this.newFloatingUnitWithPercentPrice = null
-            this.newFloatingTieredWithProrationPrice = null
-            this.newFloatingUnitWithProrationPrice = null
-            this.newFloatingGroupedAllocationPrice = null
-            this.newFloatingGroupedWithProratedMinimumPrice = null
-            this.newFloatingGroupedWithMeteredMinimumPrice = null
-            this.newFloatingMatrixWithDisplayNamePrice = null
-            this.newFloatingBulkWithProrationPrice = null
-            this.newFloatingGroupedTieredPackagePrice = null
+            body =
+                PriceCreateBody.ofNewFloatingTieredPackageWithMinimumPrice(
+                    newFloatingTieredPackageWithMinimumPrice
+                )
         }
 
         fun forNewFloatingUnitWithPercentPrice(
             newFloatingUnitWithPercentPrice: NewFloatingUnitWithPercentPrice
         ) = apply {
-            this.newFloatingUnitPrice = null
-            this.newFloatingPackagePrice = null
-            this.newFloatingMatrixPrice = null
-            this.newFloatingMatrixWithAllocationPrice = null
-            this.newFloatingTieredPrice = null
-            this.newFloatingTieredBpsPrice = null
-            this.newFloatingBpsPrice = null
-            this.newFloatingBulkBpsPrice = null
-            this.newFloatingBulkPrice = null
-            this.newFloatingThresholdTotalAmountPrice = null
-            this.newFloatingTieredPackagePrice = null
-            this.newFloatingGroupedTieredPrice = null
-            this.newFloatingTieredWithMinimumPrice = null
-            this.newFloatingPackageWithAllocationPrice = null
-            this.newFloatingTieredPackageWithMinimumPrice = null
-            this.newFloatingUnitWithPercentPrice = newFloatingUnitWithPercentPrice
-            this.newFloatingTieredWithProrationPrice = null
-            this.newFloatingUnitWithProrationPrice = null
-            this.newFloatingGroupedAllocationPrice = null
-            this.newFloatingGroupedWithProratedMinimumPrice = null
-            this.newFloatingGroupedWithMeteredMinimumPrice = null
-            this.newFloatingMatrixWithDisplayNamePrice = null
-            this.newFloatingBulkWithProrationPrice = null
-            this.newFloatingGroupedTieredPackagePrice = null
+            body =
+                PriceCreateBody.ofNewFloatingUnitWithPercentPrice(newFloatingUnitWithPercentPrice)
         }
 
         fun forNewFloatingTieredWithProrationPrice(
             newFloatingTieredWithProrationPrice: NewFloatingTieredWithProrationPrice
         ) = apply {
-            this.newFloatingUnitPrice = null
-            this.newFloatingPackagePrice = null
-            this.newFloatingMatrixPrice = null
-            this.newFloatingMatrixWithAllocationPrice = null
-            this.newFloatingTieredPrice = null
-            this.newFloatingTieredBpsPrice = null
-            this.newFloatingBpsPrice = null
-            this.newFloatingBulkBpsPrice = null
-            this.newFloatingBulkPrice = null
-            this.newFloatingThresholdTotalAmountPrice = null
-            this.newFloatingTieredPackagePrice = null
-            this.newFloatingGroupedTieredPrice = null
-            this.newFloatingTieredWithMinimumPrice = null
-            this.newFloatingPackageWithAllocationPrice = null
-            this.newFloatingTieredPackageWithMinimumPrice = null
-            this.newFloatingUnitWithPercentPrice = null
-            this.newFloatingTieredWithProrationPrice = newFloatingTieredWithProrationPrice
-            this.newFloatingUnitWithProrationPrice = null
-            this.newFloatingGroupedAllocationPrice = null
-            this.newFloatingGroupedWithProratedMinimumPrice = null
-            this.newFloatingGroupedWithMeteredMinimumPrice = null
-            this.newFloatingMatrixWithDisplayNamePrice = null
-            this.newFloatingBulkWithProrationPrice = null
-            this.newFloatingGroupedTieredPackagePrice = null
+            body =
+                PriceCreateBody.ofNewFloatingTieredWithProrationPrice(
+                    newFloatingTieredWithProrationPrice
+                )
         }
 
         fun forNewFloatingUnitWithProrationPrice(
             newFloatingUnitWithProrationPrice: NewFloatingUnitWithProrationPrice
         ) = apply {
-            this.newFloatingUnitPrice = null
-            this.newFloatingPackagePrice = null
-            this.newFloatingMatrixPrice = null
-            this.newFloatingMatrixWithAllocationPrice = null
-            this.newFloatingTieredPrice = null
-            this.newFloatingTieredBpsPrice = null
-            this.newFloatingBpsPrice = null
-            this.newFloatingBulkBpsPrice = null
-            this.newFloatingBulkPrice = null
-            this.newFloatingThresholdTotalAmountPrice = null
-            this.newFloatingTieredPackagePrice = null
-            this.newFloatingGroupedTieredPrice = null
-            this.newFloatingTieredWithMinimumPrice = null
-            this.newFloatingPackageWithAllocationPrice = null
-            this.newFloatingTieredPackageWithMinimumPrice = null
-            this.newFloatingUnitWithPercentPrice = null
-            this.newFloatingTieredWithProrationPrice = null
-            this.newFloatingUnitWithProrationPrice = newFloatingUnitWithProrationPrice
-            this.newFloatingGroupedAllocationPrice = null
-            this.newFloatingGroupedWithProratedMinimumPrice = null
-            this.newFloatingGroupedWithMeteredMinimumPrice = null
-            this.newFloatingMatrixWithDisplayNamePrice = null
-            this.newFloatingBulkWithProrationPrice = null
-            this.newFloatingGroupedTieredPackagePrice = null
+            body =
+                PriceCreateBody.ofNewFloatingUnitWithProrationPrice(
+                    newFloatingUnitWithProrationPrice
+                )
         }
 
         fun forNewFloatingGroupedAllocationPrice(
             newFloatingGroupedAllocationPrice: NewFloatingGroupedAllocationPrice
         ) = apply {
-            this.newFloatingUnitPrice = null
-            this.newFloatingPackagePrice = null
-            this.newFloatingMatrixPrice = null
-            this.newFloatingMatrixWithAllocationPrice = null
-            this.newFloatingTieredPrice = null
-            this.newFloatingTieredBpsPrice = null
-            this.newFloatingBpsPrice = null
-            this.newFloatingBulkBpsPrice = null
-            this.newFloatingBulkPrice = null
-            this.newFloatingThresholdTotalAmountPrice = null
-            this.newFloatingTieredPackagePrice = null
-            this.newFloatingGroupedTieredPrice = null
-            this.newFloatingTieredWithMinimumPrice = null
-            this.newFloatingPackageWithAllocationPrice = null
-            this.newFloatingTieredPackageWithMinimumPrice = null
-            this.newFloatingUnitWithPercentPrice = null
-            this.newFloatingTieredWithProrationPrice = null
-            this.newFloatingUnitWithProrationPrice = null
-            this.newFloatingGroupedAllocationPrice = newFloatingGroupedAllocationPrice
-            this.newFloatingGroupedWithProratedMinimumPrice = null
-            this.newFloatingGroupedWithMeteredMinimumPrice = null
-            this.newFloatingMatrixWithDisplayNamePrice = null
-            this.newFloatingBulkWithProrationPrice = null
-            this.newFloatingGroupedTieredPackagePrice = null
+            body =
+                PriceCreateBody.ofNewFloatingGroupedAllocationPrice(
+                    newFloatingGroupedAllocationPrice
+                )
         }
 
         fun forNewFloatingGroupedWithProratedMinimumPrice(
             newFloatingGroupedWithProratedMinimumPrice: NewFloatingGroupedWithProratedMinimumPrice
         ) = apply {
-            this.newFloatingUnitPrice = null
-            this.newFloatingPackagePrice = null
-            this.newFloatingMatrixPrice = null
-            this.newFloatingMatrixWithAllocationPrice = null
-            this.newFloatingTieredPrice = null
-            this.newFloatingTieredBpsPrice = null
-            this.newFloatingBpsPrice = null
-            this.newFloatingBulkBpsPrice = null
-            this.newFloatingBulkPrice = null
-            this.newFloatingThresholdTotalAmountPrice = null
-            this.newFloatingTieredPackagePrice = null
-            this.newFloatingGroupedTieredPrice = null
-            this.newFloatingTieredWithMinimumPrice = null
-            this.newFloatingPackageWithAllocationPrice = null
-            this.newFloatingTieredPackageWithMinimumPrice = null
-            this.newFloatingUnitWithPercentPrice = null
-            this.newFloatingTieredWithProrationPrice = null
-            this.newFloatingUnitWithProrationPrice = null
-            this.newFloatingGroupedAllocationPrice = null
-            this.newFloatingGroupedWithProratedMinimumPrice =
-                newFloatingGroupedWithProratedMinimumPrice
-            this.newFloatingGroupedWithMeteredMinimumPrice = null
-            this.newFloatingMatrixWithDisplayNamePrice = null
-            this.newFloatingBulkWithProrationPrice = null
-            this.newFloatingGroupedTieredPackagePrice = null
+            body =
+                PriceCreateBody.ofNewFloatingGroupedWithProratedMinimumPrice(
+                    newFloatingGroupedWithProratedMinimumPrice
+                )
         }
 
         fun forNewFloatingGroupedWithMeteredMinimumPrice(
             newFloatingGroupedWithMeteredMinimumPrice: NewFloatingGroupedWithMeteredMinimumPrice
         ) = apply {
-            this.newFloatingUnitPrice = null
-            this.newFloatingPackagePrice = null
-            this.newFloatingMatrixPrice = null
-            this.newFloatingMatrixWithAllocationPrice = null
-            this.newFloatingTieredPrice = null
-            this.newFloatingTieredBpsPrice = null
-            this.newFloatingBpsPrice = null
-            this.newFloatingBulkBpsPrice = null
-            this.newFloatingBulkPrice = null
-            this.newFloatingThresholdTotalAmountPrice = null
-            this.newFloatingTieredPackagePrice = null
-            this.newFloatingGroupedTieredPrice = null
-            this.newFloatingTieredWithMinimumPrice = null
-            this.newFloatingPackageWithAllocationPrice = null
-            this.newFloatingTieredPackageWithMinimumPrice = null
-            this.newFloatingUnitWithPercentPrice = null
-            this.newFloatingTieredWithProrationPrice = null
-            this.newFloatingUnitWithProrationPrice = null
-            this.newFloatingGroupedAllocationPrice = null
-            this.newFloatingGroupedWithProratedMinimumPrice = null
-            this.newFloatingGroupedWithMeteredMinimumPrice =
-                newFloatingGroupedWithMeteredMinimumPrice
-            this.newFloatingMatrixWithDisplayNamePrice = null
-            this.newFloatingBulkWithProrationPrice = null
-            this.newFloatingGroupedTieredPackagePrice = null
+            body =
+                PriceCreateBody.ofNewFloatingGroupedWithMeteredMinimumPrice(
+                    newFloatingGroupedWithMeteredMinimumPrice
+                )
         }
 
         fun forNewFloatingMatrixWithDisplayNamePrice(
             newFloatingMatrixWithDisplayNamePrice: NewFloatingMatrixWithDisplayNamePrice
         ) = apply {
-            this.newFloatingUnitPrice = null
-            this.newFloatingPackagePrice = null
-            this.newFloatingMatrixPrice = null
-            this.newFloatingMatrixWithAllocationPrice = null
-            this.newFloatingTieredPrice = null
-            this.newFloatingTieredBpsPrice = null
-            this.newFloatingBpsPrice = null
-            this.newFloatingBulkBpsPrice = null
-            this.newFloatingBulkPrice = null
-            this.newFloatingThresholdTotalAmountPrice = null
-            this.newFloatingTieredPackagePrice = null
-            this.newFloatingGroupedTieredPrice = null
-            this.newFloatingTieredWithMinimumPrice = null
-            this.newFloatingPackageWithAllocationPrice = null
-            this.newFloatingTieredPackageWithMinimumPrice = null
-            this.newFloatingUnitWithPercentPrice = null
-            this.newFloatingTieredWithProrationPrice = null
-            this.newFloatingUnitWithProrationPrice = null
-            this.newFloatingGroupedAllocationPrice = null
-            this.newFloatingGroupedWithProratedMinimumPrice = null
-            this.newFloatingGroupedWithMeteredMinimumPrice = null
-            this.newFloatingMatrixWithDisplayNamePrice = newFloatingMatrixWithDisplayNamePrice
-            this.newFloatingBulkWithProrationPrice = null
-            this.newFloatingGroupedTieredPackagePrice = null
+            body =
+                PriceCreateBody.ofNewFloatingMatrixWithDisplayNamePrice(
+                    newFloatingMatrixWithDisplayNamePrice
+                )
         }
 
         fun forNewFloatingBulkWithProrationPrice(
             newFloatingBulkWithProrationPrice: NewFloatingBulkWithProrationPrice
         ) = apply {
-            this.newFloatingUnitPrice = null
-            this.newFloatingPackagePrice = null
-            this.newFloatingMatrixPrice = null
-            this.newFloatingMatrixWithAllocationPrice = null
-            this.newFloatingTieredPrice = null
-            this.newFloatingTieredBpsPrice = null
-            this.newFloatingBpsPrice = null
-            this.newFloatingBulkBpsPrice = null
-            this.newFloatingBulkPrice = null
-            this.newFloatingThresholdTotalAmountPrice = null
-            this.newFloatingTieredPackagePrice = null
-            this.newFloatingGroupedTieredPrice = null
-            this.newFloatingTieredWithMinimumPrice = null
-            this.newFloatingPackageWithAllocationPrice = null
-            this.newFloatingTieredPackageWithMinimumPrice = null
-            this.newFloatingUnitWithPercentPrice = null
-            this.newFloatingTieredWithProrationPrice = null
-            this.newFloatingUnitWithProrationPrice = null
-            this.newFloatingGroupedAllocationPrice = null
-            this.newFloatingGroupedWithProratedMinimumPrice = null
-            this.newFloatingGroupedWithMeteredMinimumPrice = null
-            this.newFloatingMatrixWithDisplayNamePrice = null
-            this.newFloatingBulkWithProrationPrice = newFloatingBulkWithProrationPrice
-            this.newFloatingGroupedTieredPackagePrice = null
+            body =
+                PriceCreateBody.ofNewFloatingBulkWithProrationPrice(
+                    newFloatingBulkWithProrationPrice
+                )
         }
 
         fun forNewFloatingGroupedTieredPackagePrice(
             newFloatingGroupedTieredPackagePrice: NewFloatingGroupedTieredPackagePrice
         ) = apply {
-            this.newFloatingUnitPrice = null
-            this.newFloatingPackagePrice = null
-            this.newFloatingMatrixPrice = null
-            this.newFloatingMatrixWithAllocationPrice = null
-            this.newFloatingTieredPrice = null
-            this.newFloatingTieredBpsPrice = null
-            this.newFloatingBpsPrice = null
-            this.newFloatingBulkBpsPrice = null
-            this.newFloatingBulkPrice = null
-            this.newFloatingThresholdTotalAmountPrice = null
-            this.newFloatingTieredPackagePrice = null
-            this.newFloatingGroupedTieredPrice = null
-            this.newFloatingTieredWithMinimumPrice = null
-            this.newFloatingPackageWithAllocationPrice = null
-            this.newFloatingTieredPackageWithMinimumPrice = null
-            this.newFloatingUnitWithPercentPrice = null
-            this.newFloatingTieredWithProrationPrice = null
-            this.newFloatingUnitWithProrationPrice = null
-            this.newFloatingGroupedAllocationPrice = null
-            this.newFloatingGroupedWithProratedMinimumPrice = null
-            this.newFloatingGroupedWithMeteredMinimumPrice = null
-            this.newFloatingMatrixWithDisplayNamePrice = null
-            this.newFloatingBulkWithProrationPrice = null
-            this.newFloatingGroupedTieredPackagePrice = newFloatingGroupedTieredPackagePrice
+            body =
+                PriceCreateBody.ofNewFloatingGroupedTieredPackagePrice(
+                    newFloatingGroupedTieredPackagePrice
+                )
         }
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {
@@ -1918,30 +1286,7 @@ constructor(
 
         fun build(): PriceCreateParams =
             PriceCreateParams(
-                newFloatingUnitPrice,
-                newFloatingPackagePrice,
-                newFloatingMatrixPrice,
-                newFloatingMatrixWithAllocationPrice,
-                newFloatingTieredPrice,
-                newFloatingTieredBpsPrice,
-                newFloatingBpsPrice,
-                newFloatingBulkBpsPrice,
-                newFloatingBulkPrice,
-                newFloatingThresholdTotalAmountPrice,
-                newFloatingTieredPackagePrice,
-                newFloatingGroupedTieredPrice,
-                newFloatingTieredWithMinimumPrice,
-                newFloatingPackageWithAllocationPrice,
-                newFloatingTieredPackageWithMinimumPrice,
-                newFloatingUnitWithPercentPrice,
-                newFloatingTieredWithProrationPrice,
-                newFloatingUnitWithProrationPrice,
-                newFloatingGroupedAllocationPrice,
-                newFloatingGroupedWithProratedMinimumPrice,
-                newFloatingGroupedWithMeteredMinimumPrice,
-                newFloatingMatrixWithDisplayNamePrice,
-                newFloatingBulkWithProrationPrice,
-                newFloatingGroupedTieredPackagePrice,
+                body ?: PriceCreateBody(),
                 additionalHeaders.build(),
                 additionalQueryParams.build(),
             )
@@ -2082,10 +1427,10 @@ constructor(
              * setting the value to `null`, and the entire metadata mapping can be cleared by
              * setting `metadata` to `null`.
              */
-            fun metadata(metadata: Metadata?) = apply { this.metadata = metadata }
+            fun metadata(metadata: Metadata) = apply { this.metadata = metadata }
 
             /** An alias for the price. */
-            fun externalPriceId(externalPriceId: String?) = apply {
+            fun externalPriceId(externalPriceId: String) = apply {
                 this.externalPriceId = externalPriceId
             }
 
@@ -2095,7 +1440,7 @@ constructor(
             /**
              * The id of the billable metric for the price. Only needed if the price is usage-based.
              */
-            fun billableMetricId(billableMetricId: String?) = apply {
+            fun billableMetricId(billableMetricId: String) = apply {
                 this.billableMetricId = billableMetricId
             }
 
@@ -2106,19 +1451,19 @@ constructor(
              * If the Price represents a fixed cost, the price will be billed in-advance if this is
              * true, and in-arrears if this is false.
              */
-            fun billedInAdvance(billedInAdvance: Boolean?) = apply {
+            fun billedInAdvance(billedInAdvance: Boolean) = apply {
                 this.billedInAdvance = billedInAdvance
             }
 
             /**
              * If the Price represents a fixed cost, this represents the quantity of units applied.
              */
-            fun fixedPriceQuantity(fixedPriceQuantity: Double?) = apply {
+            fun fixedPriceQuantity(fixedPriceQuantity: Double) = apply {
                 this.fixedPriceQuantity = fixedPriceQuantity
             }
 
             /** The property used to group this price on an invoice */
-            fun invoiceGroupingKey(invoiceGroupingKey: String?) = apply {
+            fun invoiceGroupingKey(invoiceGroupingKey: String) = apply {
                 this.invoiceGroupingKey = invoiceGroupingKey
             }
 
@@ -2128,7 +1473,7 @@ constructor(
             /**
              * For custom cadence: specifies the duration of the billing period in days or months.
              */
-            fun billingCycleConfiguration(billingCycleConfiguration: BillingCycleConfiguration?) =
+            fun billingCycleConfiguration(billingCycleConfiguration: BillingCycleConfiguration) =
                 apply {
                     this.billingCycleConfiguration = billingCycleConfiguration
                 }
@@ -2138,11 +1483,11 @@ constructor(
              * unspecified, a single invoice is produced per billing cycle.
              */
             fun invoicingCycleConfiguration(
-                invoicingCycleConfiguration: InvoicingCycleConfiguration?
+                invoicingCycleConfiguration: InvoicingCycleConfiguration
             ) = apply { this.invoicingCycleConfiguration = invoicingCycleConfiguration }
 
             /** The per unit conversion rate of the price currency to the invoicing currency. */
-            fun conversionRate(conversionRate: Double?) = apply {
+            fun conversionRate(conversionRate: Double) = apply {
                 this.conversionRate = conversionRate
             }
 
@@ -2947,10 +2292,10 @@ constructor(
              * setting the value to `null`, and the entire metadata mapping can be cleared by
              * setting `metadata` to `null`.
              */
-            fun metadata(metadata: Metadata?) = apply { this.metadata = metadata }
+            fun metadata(metadata: Metadata) = apply { this.metadata = metadata }
 
             /** An alias for the price. */
-            fun externalPriceId(externalPriceId: String?) = apply {
+            fun externalPriceId(externalPriceId: String) = apply {
                 this.externalPriceId = externalPriceId
             }
 
@@ -2960,7 +2305,7 @@ constructor(
             /**
              * The id of the billable metric for the price. Only needed if the price is usage-based.
              */
-            fun billableMetricId(billableMetricId: String?) = apply {
+            fun billableMetricId(billableMetricId: String) = apply {
                 this.billableMetricId = billableMetricId
             }
 
@@ -2971,19 +2316,19 @@ constructor(
              * If the Price represents a fixed cost, the price will be billed in-advance if this is
              * true, and in-arrears if this is false.
              */
-            fun billedInAdvance(billedInAdvance: Boolean?) = apply {
+            fun billedInAdvance(billedInAdvance: Boolean) = apply {
                 this.billedInAdvance = billedInAdvance
             }
 
             /**
              * If the Price represents a fixed cost, this represents the quantity of units applied.
              */
-            fun fixedPriceQuantity(fixedPriceQuantity: Double?) = apply {
+            fun fixedPriceQuantity(fixedPriceQuantity: Double) = apply {
                 this.fixedPriceQuantity = fixedPriceQuantity
             }
 
             /** The property used to group this price on an invoice */
-            fun invoiceGroupingKey(invoiceGroupingKey: String?) = apply {
+            fun invoiceGroupingKey(invoiceGroupingKey: String) = apply {
                 this.invoiceGroupingKey = invoiceGroupingKey
             }
 
@@ -2993,7 +2338,7 @@ constructor(
             /**
              * For custom cadence: specifies the duration of the billing period in days or months.
              */
-            fun billingCycleConfiguration(billingCycleConfiguration: BillingCycleConfiguration?) =
+            fun billingCycleConfiguration(billingCycleConfiguration: BillingCycleConfiguration) =
                 apply {
                     this.billingCycleConfiguration = billingCycleConfiguration
                 }
@@ -3003,11 +2348,11 @@ constructor(
              * unspecified, a single invoice is produced per billing cycle.
              */
             fun invoicingCycleConfiguration(
-                invoicingCycleConfiguration: InvoicingCycleConfiguration?
+                invoicingCycleConfiguration: InvoicingCycleConfiguration
             ) = apply { this.invoicingCycleConfiguration = invoicingCycleConfiguration }
 
             /** The per unit conversion rate of the price currency to the invoicing currency. */
-            fun conversionRate(conversionRate: Double?) = apply {
+            fun conversionRate(conversionRate: Double) = apply {
                 this.conversionRate = conversionRate
             }
 
@@ -3834,10 +3179,10 @@ constructor(
              * setting the value to `null`, and the entire metadata mapping can be cleared by
              * setting `metadata` to `null`.
              */
-            fun metadata(metadata: Metadata?) = apply { this.metadata = metadata }
+            fun metadata(metadata: Metadata) = apply { this.metadata = metadata }
 
             /** An alias for the price. */
-            fun externalPriceId(externalPriceId: String?) = apply {
+            fun externalPriceId(externalPriceId: String) = apply {
                 this.externalPriceId = externalPriceId
             }
 
@@ -3847,7 +3192,7 @@ constructor(
             /**
              * The id of the billable metric for the price. Only needed if the price is usage-based.
              */
-            fun billableMetricId(billableMetricId: String?) = apply {
+            fun billableMetricId(billableMetricId: String) = apply {
                 this.billableMetricId = billableMetricId
             }
 
@@ -3858,19 +3203,19 @@ constructor(
              * If the Price represents a fixed cost, the price will be billed in-advance if this is
              * true, and in-arrears if this is false.
              */
-            fun billedInAdvance(billedInAdvance: Boolean?) = apply {
+            fun billedInAdvance(billedInAdvance: Boolean) = apply {
                 this.billedInAdvance = billedInAdvance
             }
 
             /**
              * If the Price represents a fixed cost, this represents the quantity of units applied.
              */
-            fun fixedPriceQuantity(fixedPriceQuantity: Double?) = apply {
+            fun fixedPriceQuantity(fixedPriceQuantity: Double) = apply {
                 this.fixedPriceQuantity = fixedPriceQuantity
             }
 
             /** The property used to group this price on an invoice */
-            fun invoiceGroupingKey(invoiceGroupingKey: String?) = apply {
+            fun invoiceGroupingKey(invoiceGroupingKey: String) = apply {
                 this.invoiceGroupingKey = invoiceGroupingKey
             }
 
@@ -3880,7 +3225,7 @@ constructor(
             /**
              * For custom cadence: specifies the duration of the billing period in days or months.
              */
-            fun billingCycleConfiguration(billingCycleConfiguration: BillingCycleConfiguration?) =
+            fun billingCycleConfiguration(billingCycleConfiguration: BillingCycleConfiguration) =
                 apply {
                     this.billingCycleConfiguration = billingCycleConfiguration
                 }
@@ -3890,11 +3235,11 @@ constructor(
              * unspecified, a single invoice is produced per billing cycle.
              */
             fun invoicingCycleConfiguration(
-                invoicingCycleConfiguration: InvoicingCycleConfiguration?
+                invoicingCycleConfiguration: InvoicingCycleConfiguration
             ) = apply { this.invoicingCycleConfiguration = invoicingCycleConfiguration }
 
             /** The per unit conversion rate of the price currency to the invoicing currency. */
-            fun conversionRate(conversionRate: Double?) = apply {
+            fun conversionRate(conversionRate: Double) = apply {
                 this.conversionRate = conversionRate
             }
 
@@ -4061,9 +3406,9 @@ constructor(
 
             class Builder {
 
-                private var dimensions: List<String?>? = null
+                private var dimensions: MutableList<String?>? = null
                 private var defaultUnitAmount: String? = null
-                private var matrixValues: List<MatrixValue>? = null
+                private var matrixValues: MutableList<MatrixValue>? = null
                 private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
                 internal fun from(matrixConfig: MatrixConfig) = apply {
@@ -4074,7 +3419,14 @@ constructor(
                 }
 
                 /** One or two event property values to evaluate matrix groups by */
-                fun dimensions(dimensions: List<String?>) = apply { this.dimensions = dimensions }
+                fun dimensions(dimensions: List<String?>) = apply {
+                    this.dimensions = dimensions.toMutableList()
+                }
+
+                /** One or two event property values to evaluate matrix groups by */
+                fun addDimension(dimension: String) = apply {
+                    dimensions = (dimensions ?: mutableListOf()).apply { add(dimension) }
+                }
 
                 /**
                  * Default per unit rate for any usage not bucketed into a specified matrix_value
@@ -4085,7 +3437,12 @@ constructor(
 
                 /** Matrix values for specified matrix grouping keys */
                 fun matrixValues(matrixValues: List<MatrixValue>) = apply {
-                    this.matrixValues = matrixValues
+                    this.matrixValues = matrixValues.toMutableList()
+                }
+
+                /** Matrix values for specified matrix grouping keys */
+                fun addMatrixValue(matrixValue: MatrixValue) = apply {
+                    matrixValues = (matrixValues ?: mutableListOf()).apply { add(matrixValue) }
                 }
 
                 fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
@@ -4158,7 +3515,7 @@ constructor(
                 class Builder {
 
                     private var unitAmount: String? = null
-                    private var dimensionValues: List<String?>? = null
+                    private var dimensionValues: MutableList<String?>? = null
                     private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
                     internal fun from(matrixValue: MatrixValue) = apply {
@@ -4176,7 +3533,17 @@ constructor(
                      * an instance tier.
                      */
                     fun dimensionValues(dimensionValues: List<String?>) = apply {
-                        this.dimensionValues = dimensionValues
+                        this.dimensionValues = dimensionValues.toMutableList()
+                    }
+
+                    /**
+                     * One or two matrix keys to filter usage to this Matrix value by. For example,
+                     * ["region", "tier"] could be used to filter cloud usage by a cloud region and
+                     * an instance tier.
+                     */
+                    fun addDimensionValue(dimensionValue: String) = apply {
+                        dimensionValues =
+                            (dimensionValues ?: mutableListOf()).apply { add(dimensionValue) }
                     }
 
                     fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
@@ -4846,10 +4213,10 @@ constructor(
              * setting the value to `null`, and the entire metadata mapping can be cleared by
              * setting `metadata` to `null`.
              */
-            fun metadata(metadata: Metadata?) = apply { this.metadata = metadata }
+            fun metadata(metadata: Metadata) = apply { this.metadata = metadata }
 
             /** An alias for the price. */
-            fun externalPriceId(externalPriceId: String?) = apply {
+            fun externalPriceId(externalPriceId: String) = apply {
                 this.externalPriceId = externalPriceId
             }
 
@@ -4859,7 +4226,7 @@ constructor(
             /**
              * The id of the billable metric for the price. Only needed if the price is usage-based.
              */
-            fun billableMetricId(billableMetricId: String?) = apply {
+            fun billableMetricId(billableMetricId: String) = apply {
                 this.billableMetricId = billableMetricId
             }
 
@@ -4870,19 +4237,19 @@ constructor(
              * If the Price represents a fixed cost, the price will be billed in-advance if this is
              * true, and in-arrears if this is false.
              */
-            fun billedInAdvance(billedInAdvance: Boolean?) = apply {
+            fun billedInAdvance(billedInAdvance: Boolean) = apply {
                 this.billedInAdvance = billedInAdvance
             }
 
             /**
              * If the Price represents a fixed cost, this represents the quantity of units applied.
              */
-            fun fixedPriceQuantity(fixedPriceQuantity: Double?) = apply {
+            fun fixedPriceQuantity(fixedPriceQuantity: Double) = apply {
                 this.fixedPriceQuantity = fixedPriceQuantity
             }
 
             /** The property used to group this price on an invoice */
-            fun invoiceGroupingKey(invoiceGroupingKey: String?) = apply {
+            fun invoiceGroupingKey(invoiceGroupingKey: String) = apply {
                 this.invoiceGroupingKey = invoiceGroupingKey
             }
 
@@ -4892,7 +4259,7 @@ constructor(
             /**
              * For custom cadence: specifies the duration of the billing period in days or months.
              */
-            fun billingCycleConfiguration(billingCycleConfiguration: BillingCycleConfiguration?) =
+            fun billingCycleConfiguration(billingCycleConfiguration: BillingCycleConfiguration) =
                 apply {
                     this.billingCycleConfiguration = billingCycleConfiguration
                 }
@@ -4902,11 +4269,11 @@ constructor(
              * unspecified, a single invoice is produced per billing cycle.
              */
             fun invoicingCycleConfiguration(
-                invoicingCycleConfiguration: InvoicingCycleConfiguration?
+                invoicingCycleConfiguration: InvoicingCycleConfiguration
             ) = apply { this.invoicingCycleConfiguration = invoicingCycleConfiguration }
 
             /** The per unit conversion rate of the price currency to the invoicing currency. */
-            fun conversionRate(conversionRate: Double?) = apply {
+            fun conversionRate(conversionRate: Double) = apply {
                 this.conversionRate = conversionRate
             }
 
@@ -5080,9 +4447,9 @@ constructor(
 
             class Builder {
 
-                private var dimensions: List<String?>? = null
+                private var dimensions: MutableList<String?>? = null
                 private var defaultUnitAmount: String? = null
-                private var matrixValues: List<MatrixValue>? = null
+                private var matrixValues: MutableList<MatrixValue>? = null
                 private var allocation: Double? = null
                 private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
@@ -5096,7 +4463,14 @@ constructor(
                 }
 
                 /** One or two event property values to evaluate matrix groups by */
-                fun dimensions(dimensions: List<String?>) = apply { this.dimensions = dimensions }
+                fun dimensions(dimensions: List<String?>) = apply {
+                    this.dimensions = dimensions.toMutableList()
+                }
+
+                /** One or two event property values to evaluate matrix groups by */
+                fun addDimension(dimension: String) = apply {
+                    dimensions = (dimensions ?: mutableListOf()).apply { add(dimension) }
+                }
 
                 /**
                  * Default per unit rate for any usage not bucketed into a specified matrix_value
@@ -5107,7 +4481,12 @@ constructor(
 
                 /** Matrix values for specified matrix grouping keys */
                 fun matrixValues(matrixValues: List<MatrixValue>) = apply {
-                    this.matrixValues = matrixValues
+                    this.matrixValues = matrixValues.toMutableList()
+                }
+
+                /** Matrix values for specified matrix grouping keys */
+                fun addMatrixValue(matrixValue: MatrixValue) = apply {
+                    matrixValues = (matrixValues ?: mutableListOf()).apply { add(matrixValue) }
                 }
 
                 /** Allocation to be used to calculate the price */
@@ -5184,7 +4563,7 @@ constructor(
                 class Builder {
 
                     private var unitAmount: String? = null
-                    private var dimensionValues: List<String?>? = null
+                    private var dimensionValues: MutableList<String?>? = null
                     private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
                     internal fun from(matrixValue: MatrixValue) = apply {
@@ -5202,7 +4581,17 @@ constructor(
                      * an instance tier.
                      */
                     fun dimensionValues(dimensionValues: List<String?>) = apply {
-                        this.dimensionValues = dimensionValues
+                        this.dimensionValues = dimensionValues.toMutableList()
+                    }
+
+                    /**
+                     * One or two matrix keys to filter usage to this Matrix value by. For example,
+                     * ["region", "tier"] could be used to filter cloud usage by a cloud region and
+                     * an instance tier.
+                     */
+                    fun addDimensionValue(dimensionValue: String) = apply {
+                        dimensionValues =
+                            (dimensionValues ?: mutableListOf()).apply { add(dimensionValue) }
                     }
 
                     fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
@@ -5864,10 +5253,10 @@ constructor(
              * setting the value to `null`, and the entire metadata mapping can be cleared by
              * setting `metadata` to `null`.
              */
-            fun metadata(metadata: Metadata?) = apply { this.metadata = metadata }
+            fun metadata(metadata: Metadata) = apply { this.metadata = metadata }
 
             /** An alias for the price. */
-            fun externalPriceId(externalPriceId: String?) = apply {
+            fun externalPriceId(externalPriceId: String) = apply {
                 this.externalPriceId = externalPriceId
             }
 
@@ -5877,7 +5266,7 @@ constructor(
             /**
              * The id of the billable metric for the price. Only needed if the price is usage-based.
              */
-            fun billableMetricId(billableMetricId: String?) = apply {
+            fun billableMetricId(billableMetricId: String) = apply {
                 this.billableMetricId = billableMetricId
             }
 
@@ -5888,19 +5277,19 @@ constructor(
              * If the Price represents a fixed cost, the price will be billed in-advance if this is
              * true, and in-arrears if this is false.
              */
-            fun billedInAdvance(billedInAdvance: Boolean?) = apply {
+            fun billedInAdvance(billedInAdvance: Boolean) = apply {
                 this.billedInAdvance = billedInAdvance
             }
 
             /**
              * If the Price represents a fixed cost, this represents the quantity of units applied.
              */
-            fun fixedPriceQuantity(fixedPriceQuantity: Double?) = apply {
+            fun fixedPriceQuantity(fixedPriceQuantity: Double) = apply {
                 this.fixedPriceQuantity = fixedPriceQuantity
             }
 
             /** The property used to group this price on an invoice */
-            fun invoiceGroupingKey(invoiceGroupingKey: String?) = apply {
+            fun invoiceGroupingKey(invoiceGroupingKey: String) = apply {
                 this.invoiceGroupingKey = invoiceGroupingKey
             }
 
@@ -5910,7 +5299,7 @@ constructor(
             /**
              * For custom cadence: specifies the duration of the billing period in days or months.
              */
-            fun billingCycleConfiguration(billingCycleConfiguration: BillingCycleConfiguration?) =
+            fun billingCycleConfiguration(billingCycleConfiguration: BillingCycleConfiguration) =
                 apply {
                     this.billingCycleConfiguration = billingCycleConfiguration
                 }
@@ -5920,11 +5309,11 @@ constructor(
              * unspecified, a single invoice is produced per billing cycle.
              */
             fun invoicingCycleConfiguration(
-                invoicingCycleConfiguration: InvoicingCycleConfiguration?
+                invoicingCycleConfiguration: InvoicingCycleConfiguration
             ) = apply { this.invoicingCycleConfiguration = invoicingCycleConfiguration }
 
             /** The per unit conversion rate of the price currency to the invoicing currency. */
-            fun conversionRate(conversionRate: Double?) = apply {
+            fun conversionRate(conversionRate: Double) = apply {
                 this.conversionRate = conversionRate
             }
 
@@ -6134,7 +5523,7 @@ constructor(
 
             class Builder {
 
-                private var tiers: List<Tier>? = null
+                private var tiers: MutableList<Tier>? = null
                 private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
                 internal fun from(tieredConfig: TieredConfig) = apply {
@@ -6143,7 +5532,12 @@ constructor(
                 }
 
                 /** Tiers for rating based on total usage quantities into the specified tier */
-                fun tiers(tiers: List<Tier>) = apply { this.tiers = tiers }
+                fun tiers(tiers: List<Tier>) = apply { this.tiers = tiers.toMutableList() }
+
+                /** Tiers for rating based on total usage quantities into the specified tier */
+                fun addTier(tier: Tier) = apply {
+                    tiers = (tiers ?: mutableListOf()).apply { add(tier) }
+                }
 
                 fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                     this.additionalProperties.clear()
@@ -6223,7 +5617,7 @@ constructor(
                     fun firstUnit(firstUnit: Double) = apply { this.firstUnit = firstUnit }
 
                     /** Exclusive tier ending value. If null, this is treated as the last tier */
-                    fun lastUnit(lastUnit: Double?) = apply { this.lastUnit = lastUnit }
+                    fun lastUnit(lastUnit: Double) = apply { this.lastUnit = lastUnit }
 
                     /** Amount per unit */
                     fun unitAmount(unitAmount: String) = apply { this.unitAmount = unitAmount }
@@ -6834,10 +6228,10 @@ constructor(
              * setting the value to `null`, and the entire metadata mapping can be cleared by
              * setting `metadata` to `null`.
              */
-            fun metadata(metadata: Metadata?) = apply { this.metadata = metadata }
+            fun metadata(metadata: Metadata) = apply { this.metadata = metadata }
 
             /** An alias for the price. */
-            fun externalPriceId(externalPriceId: String?) = apply {
+            fun externalPriceId(externalPriceId: String) = apply {
                 this.externalPriceId = externalPriceId
             }
 
@@ -6847,7 +6241,7 @@ constructor(
             /**
              * The id of the billable metric for the price. Only needed if the price is usage-based.
              */
-            fun billableMetricId(billableMetricId: String?) = apply {
+            fun billableMetricId(billableMetricId: String) = apply {
                 this.billableMetricId = billableMetricId
             }
 
@@ -6858,19 +6252,19 @@ constructor(
              * If the Price represents a fixed cost, the price will be billed in-advance if this is
              * true, and in-arrears if this is false.
              */
-            fun billedInAdvance(billedInAdvance: Boolean?) = apply {
+            fun billedInAdvance(billedInAdvance: Boolean) = apply {
                 this.billedInAdvance = billedInAdvance
             }
 
             /**
              * If the Price represents a fixed cost, this represents the quantity of units applied.
              */
-            fun fixedPriceQuantity(fixedPriceQuantity: Double?) = apply {
+            fun fixedPriceQuantity(fixedPriceQuantity: Double) = apply {
                 this.fixedPriceQuantity = fixedPriceQuantity
             }
 
             /** The property used to group this price on an invoice */
-            fun invoiceGroupingKey(invoiceGroupingKey: String?) = apply {
+            fun invoiceGroupingKey(invoiceGroupingKey: String) = apply {
                 this.invoiceGroupingKey = invoiceGroupingKey
             }
 
@@ -6880,7 +6274,7 @@ constructor(
             /**
              * For custom cadence: specifies the duration of the billing period in days or months.
              */
-            fun billingCycleConfiguration(billingCycleConfiguration: BillingCycleConfiguration?) =
+            fun billingCycleConfiguration(billingCycleConfiguration: BillingCycleConfiguration) =
                 apply {
                     this.billingCycleConfiguration = billingCycleConfiguration
                 }
@@ -6890,11 +6284,11 @@ constructor(
              * unspecified, a single invoice is produced per billing cycle.
              */
             fun invoicingCycleConfiguration(
-                invoicingCycleConfiguration: InvoicingCycleConfiguration?
+                invoicingCycleConfiguration: InvoicingCycleConfiguration
             ) = apply { this.invoicingCycleConfiguration = invoicingCycleConfiguration }
 
             /** The per unit conversion rate of the price currency to the invoicing currency. */
-            fun conversionRate(conversionRate: Double?) = apply {
+            fun conversionRate(conversionRate: Double) = apply {
                 this.conversionRate = conversionRate
             }
 
@@ -7108,7 +6502,7 @@ constructor(
 
             class Builder {
 
-                private var tiers: List<Tier>? = null
+                private var tiers: MutableList<Tier>? = null
                 private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
                 internal fun from(tieredBpsConfig: TieredBpsConfig) = apply {
@@ -7120,7 +6514,15 @@ constructor(
                  * Tiers for a Graduated BPS pricing model, where usage is bucketed into specified
                  * tiers
                  */
-                fun tiers(tiers: List<Tier>) = apply { this.tiers = tiers }
+                fun tiers(tiers: List<Tier>) = apply { this.tiers = tiers.toMutableList() }
+
+                /**
+                 * Tiers for a Graduated BPS pricing model, where usage is bucketed into specified
+                 * tiers
+                 */
+                fun addTier(tier: Tier) = apply {
+                    tiers = (tiers ?: mutableListOf()).apply { add(tier) }
+                }
 
                 fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                     this.additionalProperties.clear()
@@ -7208,7 +6610,7 @@ constructor(
                     }
 
                     /** Exclusive tier ending value */
-                    fun maximumAmount(maximumAmount: String?) = apply {
+                    fun maximumAmount(maximumAmount: String) = apply {
                         this.maximumAmount = maximumAmount
                     }
 
@@ -7216,7 +6618,7 @@ constructor(
                     fun bps(bps: Double) = apply { this.bps = bps }
 
                     /** Per unit maximum to charge */
-                    fun perUnitMaximum(perUnitMaximum: String?) = apply {
+                    fun perUnitMaximum(perUnitMaximum: String) = apply {
                         this.perUnitMaximum = perUnitMaximum
                     }
 
@@ -7829,10 +7231,10 @@ constructor(
              * setting the value to `null`, and the entire metadata mapping can be cleared by
              * setting `metadata` to `null`.
              */
-            fun metadata(metadata: Metadata?) = apply { this.metadata = metadata }
+            fun metadata(metadata: Metadata) = apply { this.metadata = metadata }
 
             /** An alias for the price. */
-            fun externalPriceId(externalPriceId: String?) = apply {
+            fun externalPriceId(externalPriceId: String) = apply {
                 this.externalPriceId = externalPriceId
             }
 
@@ -7842,7 +7244,7 @@ constructor(
             /**
              * The id of the billable metric for the price. Only needed if the price is usage-based.
              */
-            fun billableMetricId(billableMetricId: String?) = apply {
+            fun billableMetricId(billableMetricId: String) = apply {
                 this.billableMetricId = billableMetricId
             }
 
@@ -7853,19 +7255,19 @@ constructor(
              * If the Price represents a fixed cost, the price will be billed in-advance if this is
              * true, and in-arrears if this is false.
              */
-            fun billedInAdvance(billedInAdvance: Boolean?) = apply {
+            fun billedInAdvance(billedInAdvance: Boolean) = apply {
                 this.billedInAdvance = billedInAdvance
             }
 
             /**
              * If the Price represents a fixed cost, this represents the quantity of units applied.
              */
-            fun fixedPriceQuantity(fixedPriceQuantity: Double?) = apply {
+            fun fixedPriceQuantity(fixedPriceQuantity: Double) = apply {
                 this.fixedPriceQuantity = fixedPriceQuantity
             }
 
             /** The property used to group this price on an invoice */
-            fun invoiceGroupingKey(invoiceGroupingKey: String?) = apply {
+            fun invoiceGroupingKey(invoiceGroupingKey: String) = apply {
                 this.invoiceGroupingKey = invoiceGroupingKey
             }
 
@@ -7875,7 +7277,7 @@ constructor(
             /**
              * For custom cadence: specifies the duration of the billing period in days or months.
              */
-            fun billingCycleConfiguration(billingCycleConfiguration: BillingCycleConfiguration?) =
+            fun billingCycleConfiguration(billingCycleConfiguration: BillingCycleConfiguration) =
                 apply {
                     this.billingCycleConfiguration = billingCycleConfiguration
                 }
@@ -7885,11 +7287,11 @@ constructor(
              * unspecified, a single invoice is produced per billing cycle.
              */
             fun invoicingCycleConfiguration(
-                invoicingCycleConfiguration: InvoicingCycleConfiguration?
+                invoicingCycleConfiguration: InvoicingCycleConfiguration
             ) = apply { this.invoicingCycleConfiguration = invoicingCycleConfiguration }
 
             /** The per unit conversion rate of the price currency to the invoicing currency. */
-            fun conversionRate(conversionRate: Double?) = apply {
+            fun conversionRate(conversionRate: Double) = apply {
                 this.conversionRate = conversionRate
             }
 
@@ -7983,7 +7385,7 @@ constructor(
                 fun bps(bps: Double) = apply { this.bps = bps }
 
                 /** Optional currency amount maximum to cap spend per event */
-                fun perUnitMaximum(perUnitMaximum: String?) = apply {
+                fun perUnitMaximum(perUnitMaximum: String) = apply {
                     this.perUnitMaximum = perUnitMaximum
                 }
 
@@ -8706,10 +8108,10 @@ constructor(
              * setting the value to `null`, and the entire metadata mapping can be cleared by
              * setting `metadata` to `null`.
              */
-            fun metadata(metadata: Metadata?) = apply { this.metadata = metadata }
+            fun metadata(metadata: Metadata) = apply { this.metadata = metadata }
 
             /** An alias for the price. */
-            fun externalPriceId(externalPriceId: String?) = apply {
+            fun externalPriceId(externalPriceId: String) = apply {
                 this.externalPriceId = externalPriceId
             }
 
@@ -8719,7 +8121,7 @@ constructor(
             /**
              * The id of the billable metric for the price. Only needed if the price is usage-based.
              */
-            fun billableMetricId(billableMetricId: String?) = apply {
+            fun billableMetricId(billableMetricId: String) = apply {
                 this.billableMetricId = billableMetricId
             }
 
@@ -8730,19 +8132,19 @@ constructor(
              * If the Price represents a fixed cost, the price will be billed in-advance if this is
              * true, and in-arrears if this is false.
              */
-            fun billedInAdvance(billedInAdvance: Boolean?) = apply {
+            fun billedInAdvance(billedInAdvance: Boolean) = apply {
                 this.billedInAdvance = billedInAdvance
             }
 
             /**
              * If the Price represents a fixed cost, this represents the quantity of units applied.
              */
-            fun fixedPriceQuantity(fixedPriceQuantity: Double?) = apply {
+            fun fixedPriceQuantity(fixedPriceQuantity: Double) = apply {
                 this.fixedPriceQuantity = fixedPriceQuantity
             }
 
             /** The property used to group this price on an invoice */
-            fun invoiceGroupingKey(invoiceGroupingKey: String?) = apply {
+            fun invoiceGroupingKey(invoiceGroupingKey: String) = apply {
                 this.invoiceGroupingKey = invoiceGroupingKey
             }
 
@@ -8752,7 +8154,7 @@ constructor(
             /**
              * For custom cadence: specifies the duration of the billing period in days or months.
              */
-            fun billingCycleConfiguration(billingCycleConfiguration: BillingCycleConfiguration?) =
+            fun billingCycleConfiguration(billingCycleConfiguration: BillingCycleConfiguration) =
                 apply {
                     this.billingCycleConfiguration = billingCycleConfiguration
                 }
@@ -8762,11 +8164,11 @@ constructor(
              * unspecified, a single invoice is produced per billing cycle.
              */
             fun invoicingCycleConfiguration(
-                invoicingCycleConfiguration: InvoicingCycleConfiguration?
+                invoicingCycleConfiguration: InvoicingCycleConfiguration
             ) = apply { this.invoicingCycleConfiguration = invoicingCycleConfiguration }
 
             /** The per unit conversion rate of the price currency to the invoicing currency. */
-            fun conversionRate(conversionRate: Double?) = apply {
+            fun conversionRate(conversionRate: Double) = apply {
                 this.conversionRate = conversionRate
             }
 
@@ -8847,7 +8249,7 @@ constructor(
 
             class Builder {
 
-                private var tiers: List<Tier>? = null
+                private var tiers: MutableList<Tier>? = null
                 private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
                 internal fun from(bulkBpsConfig: BulkBpsConfig) = apply {
@@ -8859,7 +8261,15 @@ constructor(
                  * Tiers for a bulk BPS pricing model where all usage is aggregated to a single tier
                  * based on total volume
                  */
-                fun tiers(tiers: List<Tier>) = apply { this.tiers = tiers }
+                fun tiers(tiers: List<Tier>) = apply { this.tiers = tiers.toMutableList() }
+
+                /**
+                 * Tiers for a bulk BPS pricing model where all usage is aggregated to a single tier
+                 * based on total volume
+                 */
+                fun addTier(tier: Tier) = apply {
+                    tiers = (tiers ?: mutableListOf()).apply { add(tier) }
+                }
 
                 fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                     this.additionalProperties.clear()
@@ -8936,7 +8346,7 @@ constructor(
                     }
 
                     /** Upper bound for tier */
-                    fun maximumAmount(maximumAmount: String?) = apply {
+                    fun maximumAmount(maximumAmount: String) = apply {
                         this.maximumAmount = maximumAmount
                     }
 
@@ -8944,7 +8354,7 @@ constructor(
                     fun bps(bps: Double) = apply { this.bps = bps }
 
                     /** The maximum amount to charge for any one event */
-                    fun perUnitMaximum(perUnitMaximum: String?) = apply {
+                    fun perUnitMaximum(perUnitMaximum: String) = apply {
                         this.perUnitMaximum = perUnitMaximum
                     }
 
@@ -9686,10 +9096,10 @@ constructor(
              * setting the value to `null`, and the entire metadata mapping can be cleared by
              * setting `metadata` to `null`.
              */
-            fun metadata(metadata: Metadata?) = apply { this.metadata = metadata }
+            fun metadata(metadata: Metadata) = apply { this.metadata = metadata }
 
             /** An alias for the price. */
-            fun externalPriceId(externalPriceId: String?) = apply {
+            fun externalPriceId(externalPriceId: String) = apply {
                 this.externalPriceId = externalPriceId
             }
 
@@ -9699,7 +9109,7 @@ constructor(
             /**
              * The id of the billable metric for the price. Only needed if the price is usage-based.
              */
-            fun billableMetricId(billableMetricId: String?) = apply {
+            fun billableMetricId(billableMetricId: String) = apply {
                 this.billableMetricId = billableMetricId
             }
 
@@ -9710,19 +9120,19 @@ constructor(
              * If the Price represents a fixed cost, the price will be billed in-advance if this is
              * true, and in-arrears if this is false.
              */
-            fun billedInAdvance(billedInAdvance: Boolean?) = apply {
+            fun billedInAdvance(billedInAdvance: Boolean) = apply {
                 this.billedInAdvance = billedInAdvance
             }
 
             /**
              * If the Price represents a fixed cost, this represents the quantity of units applied.
              */
-            fun fixedPriceQuantity(fixedPriceQuantity: Double?) = apply {
+            fun fixedPriceQuantity(fixedPriceQuantity: Double) = apply {
                 this.fixedPriceQuantity = fixedPriceQuantity
             }
 
             /** The property used to group this price on an invoice */
-            fun invoiceGroupingKey(invoiceGroupingKey: String?) = apply {
+            fun invoiceGroupingKey(invoiceGroupingKey: String) = apply {
                 this.invoiceGroupingKey = invoiceGroupingKey
             }
 
@@ -9732,7 +9142,7 @@ constructor(
             /**
              * For custom cadence: specifies the duration of the billing period in days or months.
              */
-            fun billingCycleConfiguration(billingCycleConfiguration: BillingCycleConfiguration?) =
+            fun billingCycleConfiguration(billingCycleConfiguration: BillingCycleConfiguration) =
                 apply {
                     this.billingCycleConfiguration = billingCycleConfiguration
                 }
@@ -9742,11 +9152,11 @@ constructor(
              * unspecified, a single invoice is produced per billing cycle.
              */
             fun invoicingCycleConfiguration(
-                invoicingCycleConfiguration: InvoicingCycleConfiguration?
+                invoicingCycleConfiguration: InvoicingCycleConfiguration
             ) = apply { this.invoicingCycleConfiguration = invoicingCycleConfiguration }
 
             /** The per unit conversion rate of the price currency to the invoicing currency. */
-            fun conversionRate(conversionRate: Double?) = apply {
+            fun conversionRate(conversionRate: Double) = apply {
                 this.conversionRate = conversionRate
             }
 
@@ -9822,7 +9232,7 @@ constructor(
 
             class Builder {
 
-                private var tiers: List<Tier>? = null
+                private var tiers: MutableList<Tier>? = null
                 private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
                 internal fun from(bulkConfig: BulkConfig) = apply {
@@ -9831,7 +9241,12 @@ constructor(
                 }
 
                 /** Bulk tiers for rating based on total usage volume */
-                fun tiers(tiers: List<Tier>) = apply { this.tiers = tiers }
+                fun tiers(tiers: List<Tier>) = apply { this.tiers = tiers.toMutableList() }
+
+                /** Bulk tiers for rating based on total usage volume */
+                fun addTier(tier: Tier) = apply {
+                    tiers = (tiers ?: mutableListOf()).apply { add(tier) }
+                }
 
                 fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                     this.additionalProperties.clear()
@@ -9902,7 +9317,7 @@ constructor(
                     }
 
                     /** Upper bound for this tier */
-                    fun maximumUnits(maximumUnits: Double?) = apply {
+                    fun maximumUnits(maximumUnits: Double) = apply {
                         this.maximumUnits = maximumUnits
                     }
 
@@ -10654,10 +10069,10 @@ constructor(
              * setting the value to `null`, and the entire metadata mapping can be cleared by
              * setting `metadata` to `null`.
              */
-            fun metadata(metadata: Metadata?) = apply { this.metadata = metadata }
+            fun metadata(metadata: Metadata) = apply { this.metadata = metadata }
 
             /** An alias for the price. */
-            fun externalPriceId(externalPriceId: String?) = apply {
+            fun externalPriceId(externalPriceId: String) = apply {
                 this.externalPriceId = externalPriceId
             }
 
@@ -10667,7 +10082,7 @@ constructor(
             /**
              * The id of the billable metric for the price. Only needed if the price is usage-based.
              */
-            fun billableMetricId(billableMetricId: String?) = apply {
+            fun billableMetricId(billableMetricId: String) = apply {
                 this.billableMetricId = billableMetricId
             }
 
@@ -10678,19 +10093,19 @@ constructor(
              * If the Price represents a fixed cost, the price will be billed in-advance if this is
              * true, and in-arrears if this is false.
              */
-            fun billedInAdvance(billedInAdvance: Boolean?) = apply {
+            fun billedInAdvance(billedInAdvance: Boolean) = apply {
                 this.billedInAdvance = billedInAdvance
             }
 
             /**
              * If the Price represents a fixed cost, this represents the quantity of units applied.
              */
-            fun fixedPriceQuantity(fixedPriceQuantity: Double?) = apply {
+            fun fixedPriceQuantity(fixedPriceQuantity: Double) = apply {
                 this.fixedPriceQuantity = fixedPriceQuantity
             }
 
             /** The property used to group this price on an invoice */
-            fun invoiceGroupingKey(invoiceGroupingKey: String?) = apply {
+            fun invoiceGroupingKey(invoiceGroupingKey: String) = apply {
                 this.invoiceGroupingKey = invoiceGroupingKey
             }
 
@@ -10700,7 +10115,7 @@ constructor(
             /**
              * For custom cadence: specifies the duration of the billing period in days or months.
              */
-            fun billingCycleConfiguration(billingCycleConfiguration: BillingCycleConfiguration?) =
+            fun billingCycleConfiguration(billingCycleConfiguration: BillingCycleConfiguration) =
                 apply {
                     this.billingCycleConfiguration = billingCycleConfiguration
                 }
@@ -10710,11 +10125,11 @@ constructor(
              * unspecified, a single invoice is produced per billing cycle.
              */
             fun invoicingCycleConfiguration(
-                invoicingCycleConfiguration: InvoicingCycleConfiguration?
+                invoicingCycleConfiguration: InvoicingCycleConfiguration
             ) = apply { this.invoicingCycleConfiguration = invoicingCycleConfiguration }
 
             /** The per unit conversion rate of the price currency to the invoicing currency. */
-            fun conversionRate(conversionRate: Double?) = apply {
+            fun conversionRate(conversionRate: Double) = apply {
                 this.conversionRate = conversionRate
             }
 
@@ -11518,10 +10933,10 @@ constructor(
              * setting the value to `null`, and the entire metadata mapping can be cleared by
              * setting `metadata` to `null`.
              */
-            fun metadata(metadata: Metadata?) = apply { this.metadata = metadata }
+            fun metadata(metadata: Metadata) = apply { this.metadata = metadata }
 
             /** An alias for the price. */
-            fun externalPriceId(externalPriceId: String?) = apply {
+            fun externalPriceId(externalPriceId: String) = apply {
                 this.externalPriceId = externalPriceId
             }
 
@@ -11531,7 +10946,7 @@ constructor(
             /**
              * The id of the billable metric for the price. Only needed if the price is usage-based.
              */
-            fun billableMetricId(billableMetricId: String?) = apply {
+            fun billableMetricId(billableMetricId: String) = apply {
                 this.billableMetricId = billableMetricId
             }
 
@@ -11542,19 +10957,19 @@ constructor(
              * If the Price represents a fixed cost, the price will be billed in-advance if this is
              * true, and in-arrears if this is false.
              */
-            fun billedInAdvance(billedInAdvance: Boolean?) = apply {
+            fun billedInAdvance(billedInAdvance: Boolean) = apply {
                 this.billedInAdvance = billedInAdvance
             }
 
             /**
              * If the Price represents a fixed cost, this represents the quantity of units applied.
              */
-            fun fixedPriceQuantity(fixedPriceQuantity: Double?) = apply {
+            fun fixedPriceQuantity(fixedPriceQuantity: Double) = apply {
                 this.fixedPriceQuantity = fixedPriceQuantity
             }
 
             /** The property used to group this price on an invoice */
-            fun invoiceGroupingKey(invoiceGroupingKey: String?) = apply {
+            fun invoiceGroupingKey(invoiceGroupingKey: String) = apply {
                 this.invoiceGroupingKey = invoiceGroupingKey
             }
 
@@ -11564,7 +10979,7 @@ constructor(
             /**
              * For custom cadence: specifies the duration of the billing period in days or months.
              */
-            fun billingCycleConfiguration(billingCycleConfiguration: BillingCycleConfiguration?) =
+            fun billingCycleConfiguration(billingCycleConfiguration: BillingCycleConfiguration) =
                 apply {
                     this.billingCycleConfiguration = billingCycleConfiguration
                 }
@@ -11574,11 +10989,11 @@ constructor(
              * unspecified, a single invoice is produced per billing cycle.
              */
             fun invoicingCycleConfiguration(
-                invoicingCycleConfiguration: InvoicingCycleConfiguration?
+                invoicingCycleConfiguration: InvoicingCycleConfiguration
             ) = apply { this.invoicingCycleConfiguration = invoicingCycleConfiguration }
 
             /** The per unit conversion rate of the price currency to the invoicing currency. */
-            fun conversionRate(conversionRate: Double?) = apply {
+            fun conversionRate(conversionRate: Double) = apply {
                 this.conversionRate = conversionRate
             }
 
@@ -12380,10 +11795,10 @@ constructor(
              * setting the value to `null`, and the entire metadata mapping can be cleared by
              * setting `metadata` to `null`.
              */
-            fun metadata(metadata: Metadata?) = apply { this.metadata = metadata }
+            fun metadata(metadata: Metadata) = apply { this.metadata = metadata }
 
             /** An alias for the price. */
-            fun externalPriceId(externalPriceId: String?) = apply {
+            fun externalPriceId(externalPriceId: String) = apply {
                 this.externalPriceId = externalPriceId
             }
 
@@ -12393,7 +11808,7 @@ constructor(
             /**
              * The id of the billable metric for the price. Only needed if the price is usage-based.
              */
-            fun billableMetricId(billableMetricId: String?) = apply {
+            fun billableMetricId(billableMetricId: String) = apply {
                 this.billableMetricId = billableMetricId
             }
 
@@ -12404,19 +11819,19 @@ constructor(
              * If the Price represents a fixed cost, the price will be billed in-advance if this is
              * true, and in-arrears if this is false.
              */
-            fun billedInAdvance(billedInAdvance: Boolean?) = apply {
+            fun billedInAdvance(billedInAdvance: Boolean) = apply {
                 this.billedInAdvance = billedInAdvance
             }
 
             /**
              * If the Price represents a fixed cost, this represents the quantity of units applied.
              */
-            fun fixedPriceQuantity(fixedPriceQuantity: Double?) = apply {
+            fun fixedPriceQuantity(fixedPriceQuantity: Double) = apply {
                 this.fixedPriceQuantity = fixedPriceQuantity
             }
 
             /** The property used to group this price on an invoice */
-            fun invoiceGroupingKey(invoiceGroupingKey: String?) = apply {
+            fun invoiceGroupingKey(invoiceGroupingKey: String) = apply {
                 this.invoiceGroupingKey = invoiceGroupingKey
             }
 
@@ -12426,7 +11841,7 @@ constructor(
             /**
              * For custom cadence: specifies the duration of the billing period in days or months.
              */
-            fun billingCycleConfiguration(billingCycleConfiguration: BillingCycleConfiguration?) =
+            fun billingCycleConfiguration(billingCycleConfiguration: BillingCycleConfiguration) =
                 apply {
                     this.billingCycleConfiguration = billingCycleConfiguration
                 }
@@ -12436,11 +11851,11 @@ constructor(
              * unspecified, a single invoice is produced per billing cycle.
              */
             fun invoicingCycleConfiguration(
-                invoicingCycleConfiguration: InvoicingCycleConfiguration?
+                invoicingCycleConfiguration: InvoicingCycleConfiguration
             ) = apply { this.invoicingCycleConfiguration = invoicingCycleConfiguration }
 
             /** The per unit conversion rate of the price currency to the invoicing currency. */
-            fun conversionRate(conversionRate: Double?) = apply {
+            fun conversionRate(conversionRate: Double) = apply {
                 this.conversionRate = conversionRate
             }
 
@@ -13244,10 +12659,10 @@ constructor(
              * setting the value to `null`, and the entire metadata mapping can be cleared by
              * setting `metadata` to `null`.
              */
-            fun metadata(metadata: Metadata?) = apply { this.metadata = metadata }
+            fun metadata(metadata: Metadata) = apply { this.metadata = metadata }
 
             /** An alias for the price. */
-            fun externalPriceId(externalPriceId: String?) = apply {
+            fun externalPriceId(externalPriceId: String) = apply {
                 this.externalPriceId = externalPriceId
             }
 
@@ -13257,7 +12672,7 @@ constructor(
             /**
              * The id of the billable metric for the price. Only needed if the price is usage-based.
              */
-            fun billableMetricId(billableMetricId: String?) = apply {
+            fun billableMetricId(billableMetricId: String) = apply {
                 this.billableMetricId = billableMetricId
             }
 
@@ -13268,19 +12683,19 @@ constructor(
              * If the Price represents a fixed cost, the price will be billed in-advance if this is
              * true, and in-arrears if this is false.
              */
-            fun billedInAdvance(billedInAdvance: Boolean?) = apply {
+            fun billedInAdvance(billedInAdvance: Boolean) = apply {
                 this.billedInAdvance = billedInAdvance
             }
 
             /**
              * If the Price represents a fixed cost, this represents the quantity of units applied.
              */
-            fun fixedPriceQuantity(fixedPriceQuantity: Double?) = apply {
+            fun fixedPriceQuantity(fixedPriceQuantity: Double) = apply {
                 this.fixedPriceQuantity = fixedPriceQuantity
             }
 
             /** The property used to group this price on an invoice */
-            fun invoiceGroupingKey(invoiceGroupingKey: String?) = apply {
+            fun invoiceGroupingKey(invoiceGroupingKey: String) = apply {
                 this.invoiceGroupingKey = invoiceGroupingKey
             }
 
@@ -13290,7 +12705,7 @@ constructor(
             /**
              * For custom cadence: specifies the duration of the billing period in days or months.
              */
-            fun billingCycleConfiguration(billingCycleConfiguration: BillingCycleConfiguration?) =
+            fun billingCycleConfiguration(billingCycleConfiguration: BillingCycleConfiguration) =
                 apply {
                     this.billingCycleConfiguration = billingCycleConfiguration
                 }
@@ -13300,11 +12715,11 @@ constructor(
              * unspecified, a single invoice is produced per billing cycle.
              */
             fun invoicingCycleConfiguration(
-                invoicingCycleConfiguration: InvoicingCycleConfiguration?
+                invoicingCycleConfiguration: InvoicingCycleConfiguration
             ) = apply { this.invoicingCycleConfiguration = invoicingCycleConfiguration }
 
             /** The per unit conversion rate of the price currency to the invoicing currency. */
-            fun conversionRate(conversionRate: Double?) = apply {
+            fun conversionRate(conversionRate: Double) = apply {
                 this.conversionRate = conversionRate
             }
 
@@ -14110,10 +13525,10 @@ constructor(
              * setting the value to `null`, and the entire metadata mapping can be cleared by
              * setting `metadata` to `null`.
              */
-            fun metadata(metadata: Metadata?) = apply { this.metadata = metadata }
+            fun metadata(metadata: Metadata) = apply { this.metadata = metadata }
 
             /** An alias for the price. */
-            fun externalPriceId(externalPriceId: String?) = apply {
+            fun externalPriceId(externalPriceId: String) = apply {
                 this.externalPriceId = externalPriceId
             }
 
@@ -14123,7 +13538,7 @@ constructor(
             /**
              * The id of the billable metric for the price. Only needed if the price is usage-based.
              */
-            fun billableMetricId(billableMetricId: String?) = apply {
+            fun billableMetricId(billableMetricId: String) = apply {
                 this.billableMetricId = billableMetricId
             }
 
@@ -14134,19 +13549,19 @@ constructor(
              * If the Price represents a fixed cost, the price will be billed in-advance if this is
              * true, and in-arrears if this is false.
              */
-            fun billedInAdvance(billedInAdvance: Boolean?) = apply {
+            fun billedInAdvance(billedInAdvance: Boolean) = apply {
                 this.billedInAdvance = billedInAdvance
             }
 
             /**
              * If the Price represents a fixed cost, this represents the quantity of units applied.
              */
-            fun fixedPriceQuantity(fixedPriceQuantity: Double?) = apply {
+            fun fixedPriceQuantity(fixedPriceQuantity: Double) = apply {
                 this.fixedPriceQuantity = fixedPriceQuantity
             }
 
             /** The property used to group this price on an invoice */
-            fun invoiceGroupingKey(invoiceGroupingKey: String?) = apply {
+            fun invoiceGroupingKey(invoiceGroupingKey: String) = apply {
                 this.invoiceGroupingKey = invoiceGroupingKey
             }
 
@@ -14156,7 +13571,7 @@ constructor(
             /**
              * For custom cadence: specifies the duration of the billing period in days or months.
              */
-            fun billingCycleConfiguration(billingCycleConfiguration: BillingCycleConfiguration?) =
+            fun billingCycleConfiguration(billingCycleConfiguration: BillingCycleConfiguration) =
                 apply {
                     this.billingCycleConfiguration = billingCycleConfiguration
                 }
@@ -14166,11 +13581,11 @@ constructor(
              * unspecified, a single invoice is produced per billing cycle.
              */
             fun invoicingCycleConfiguration(
-                invoicingCycleConfiguration: InvoicingCycleConfiguration?
+                invoicingCycleConfiguration: InvoicingCycleConfiguration
             ) = apply { this.invoicingCycleConfiguration = invoicingCycleConfiguration }
 
             /** The per unit conversion rate of the price currency to the invoicing currency. */
-            fun conversionRate(conversionRate: Double?) = apply {
+            fun conversionRate(conversionRate: Double) = apply {
                 this.conversionRate = conversionRate
             }
 
@@ -14978,10 +14393,10 @@ constructor(
              * setting the value to `null`, and the entire metadata mapping can be cleared by
              * setting `metadata` to `null`.
              */
-            fun metadata(metadata: Metadata?) = apply { this.metadata = metadata }
+            fun metadata(metadata: Metadata) = apply { this.metadata = metadata }
 
             /** An alias for the price. */
-            fun externalPriceId(externalPriceId: String?) = apply {
+            fun externalPriceId(externalPriceId: String) = apply {
                 this.externalPriceId = externalPriceId
             }
 
@@ -14991,7 +14406,7 @@ constructor(
             /**
              * The id of the billable metric for the price. Only needed if the price is usage-based.
              */
-            fun billableMetricId(billableMetricId: String?) = apply {
+            fun billableMetricId(billableMetricId: String) = apply {
                 this.billableMetricId = billableMetricId
             }
 
@@ -15002,19 +14417,19 @@ constructor(
              * If the Price represents a fixed cost, the price will be billed in-advance if this is
              * true, and in-arrears if this is false.
              */
-            fun billedInAdvance(billedInAdvance: Boolean?) = apply {
+            fun billedInAdvance(billedInAdvance: Boolean) = apply {
                 this.billedInAdvance = billedInAdvance
             }
 
             /**
              * If the Price represents a fixed cost, this represents the quantity of units applied.
              */
-            fun fixedPriceQuantity(fixedPriceQuantity: Double?) = apply {
+            fun fixedPriceQuantity(fixedPriceQuantity: Double) = apply {
                 this.fixedPriceQuantity = fixedPriceQuantity
             }
 
             /** The property used to group this price on an invoice */
-            fun invoiceGroupingKey(invoiceGroupingKey: String?) = apply {
+            fun invoiceGroupingKey(invoiceGroupingKey: String) = apply {
                 this.invoiceGroupingKey = invoiceGroupingKey
             }
 
@@ -15024,7 +14439,7 @@ constructor(
             /**
              * For custom cadence: specifies the duration of the billing period in days or months.
              */
-            fun billingCycleConfiguration(billingCycleConfiguration: BillingCycleConfiguration?) =
+            fun billingCycleConfiguration(billingCycleConfiguration: BillingCycleConfiguration) =
                 apply {
                     this.billingCycleConfiguration = billingCycleConfiguration
                 }
@@ -15034,11 +14449,11 @@ constructor(
              * unspecified, a single invoice is produced per billing cycle.
              */
             fun invoicingCycleConfiguration(
-                invoicingCycleConfiguration: InvoicingCycleConfiguration?
+                invoicingCycleConfiguration: InvoicingCycleConfiguration
             ) = apply { this.invoicingCycleConfiguration = invoicingCycleConfiguration }
 
             /** The per unit conversion rate of the price currency to the invoicing currency. */
-            fun conversionRate(conversionRate: Double?) = apply {
+            fun conversionRate(conversionRate: Double) = apply {
                 this.conversionRate = conversionRate
             }
 
@@ -15843,10 +15258,10 @@ constructor(
              * setting the value to `null`, and the entire metadata mapping can be cleared by
              * setting `metadata` to `null`.
              */
-            fun metadata(metadata: Metadata?) = apply { this.metadata = metadata }
+            fun metadata(metadata: Metadata) = apply { this.metadata = metadata }
 
             /** An alias for the price. */
-            fun externalPriceId(externalPriceId: String?) = apply {
+            fun externalPriceId(externalPriceId: String) = apply {
                 this.externalPriceId = externalPriceId
             }
 
@@ -15856,7 +15271,7 @@ constructor(
             /**
              * The id of the billable metric for the price. Only needed if the price is usage-based.
              */
-            fun billableMetricId(billableMetricId: String?) = apply {
+            fun billableMetricId(billableMetricId: String) = apply {
                 this.billableMetricId = billableMetricId
             }
 
@@ -15867,19 +15282,19 @@ constructor(
              * If the Price represents a fixed cost, the price will be billed in-advance if this is
              * true, and in-arrears if this is false.
              */
-            fun billedInAdvance(billedInAdvance: Boolean?) = apply {
+            fun billedInAdvance(billedInAdvance: Boolean) = apply {
                 this.billedInAdvance = billedInAdvance
             }
 
             /**
              * If the Price represents a fixed cost, this represents the quantity of units applied.
              */
-            fun fixedPriceQuantity(fixedPriceQuantity: Double?) = apply {
+            fun fixedPriceQuantity(fixedPriceQuantity: Double) = apply {
                 this.fixedPriceQuantity = fixedPriceQuantity
             }
 
             /** The property used to group this price on an invoice */
-            fun invoiceGroupingKey(invoiceGroupingKey: String?) = apply {
+            fun invoiceGroupingKey(invoiceGroupingKey: String) = apply {
                 this.invoiceGroupingKey = invoiceGroupingKey
             }
 
@@ -15889,7 +15304,7 @@ constructor(
             /**
              * For custom cadence: specifies the duration of the billing period in days or months.
              */
-            fun billingCycleConfiguration(billingCycleConfiguration: BillingCycleConfiguration?) =
+            fun billingCycleConfiguration(billingCycleConfiguration: BillingCycleConfiguration) =
                 apply {
                     this.billingCycleConfiguration = billingCycleConfiguration
                 }
@@ -15899,11 +15314,11 @@ constructor(
              * unspecified, a single invoice is produced per billing cycle.
              */
             fun invoicingCycleConfiguration(
-                invoicingCycleConfiguration: InvoicingCycleConfiguration?
+                invoicingCycleConfiguration: InvoicingCycleConfiguration
             ) = apply { this.invoicingCycleConfiguration = invoicingCycleConfiguration }
 
             /** The per unit conversion rate of the price currency to the invoicing currency. */
-            fun conversionRate(conversionRate: Double?) = apply {
+            fun conversionRate(conversionRate: Double) = apply {
                 this.conversionRate = conversionRate
             }
 
@@ -16708,10 +16123,10 @@ constructor(
              * setting the value to `null`, and the entire metadata mapping can be cleared by
              * setting `metadata` to `null`.
              */
-            fun metadata(metadata: Metadata?) = apply { this.metadata = metadata }
+            fun metadata(metadata: Metadata) = apply { this.metadata = metadata }
 
             /** An alias for the price. */
-            fun externalPriceId(externalPriceId: String?) = apply {
+            fun externalPriceId(externalPriceId: String) = apply {
                 this.externalPriceId = externalPriceId
             }
 
@@ -16721,7 +16136,7 @@ constructor(
             /**
              * The id of the billable metric for the price. Only needed if the price is usage-based.
              */
-            fun billableMetricId(billableMetricId: String?) = apply {
+            fun billableMetricId(billableMetricId: String) = apply {
                 this.billableMetricId = billableMetricId
             }
 
@@ -16732,19 +16147,19 @@ constructor(
              * If the Price represents a fixed cost, the price will be billed in-advance if this is
              * true, and in-arrears if this is false.
              */
-            fun billedInAdvance(billedInAdvance: Boolean?) = apply {
+            fun billedInAdvance(billedInAdvance: Boolean) = apply {
                 this.billedInAdvance = billedInAdvance
             }
 
             /**
              * If the Price represents a fixed cost, this represents the quantity of units applied.
              */
-            fun fixedPriceQuantity(fixedPriceQuantity: Double?) = apply {
+            fun fixedPriceQuantity(fixedPriceQuantity: Double) = apply {
                 this.fixedPriceQuantity = fixedPriceQuantity
             }
 
             /** The property used to group this price on an invoice */
-            fun invoiceGroupingKey(invoiceGroupingKey: String?) = apply {
+            fun invoiceGroupingKey(invoiceGroupingKey: String) = apply {
                 this.invoiceGroupingKey = invoiceGroupingKey
             }
 
@@ -16754,7 +16169,7 @@ constructor(
             /**
              * For custom cadence: specifies the duration of the billing period in days or months.
              */
-            fun billingCycleConfiguration(billingCycleConfiguration: BillingCycleConfiguration?) =
+            fun billingCycleConfiguration(billingCycleConfiguration: BillingCycleConfiguration) =
                 apply {
                     this.billingCycleConfiguration = billingCycleConfiguration
                 }
@@ -16764,11 +16179,11 @@ constructor(
              * unspecified, a single invoice is produced per billing cycle.
              */
             fun invoicingCycleConfiguration(
-                invoicingCycleConfiguration: InvoicingCycleConfiguration?
+                invoicingCycleConfiguration: InvoicingCycleConfiguration
             ) = apply { this.invoicingCycleConfiguration = invoicingCycleConfiguration }
 
             /** The per unit conversion rate of the price currency to the invoicing currency. */
-            fun conversionRate(conversionRate: Double?) = apply {
+            fun conversionRate(conversionRate: Double) = apply {
                 this.conversionRate = conversionRate
             }
 
@@ -17574,10 +16989,10 @@ constructor(
              * setting the value to `null`, and the entire metadata mapping can be cleared by
              * setting `metadata` to `null`.
              */
-            fun metadata(metadata: Metadata?) = apply { this.metadata = metadata }
+            fun metadata(metadata: Metadata) = apply { this.metadata = metadata }
 
             /** An alias for the price. */
-            fun externalPriceId(externalPriceId: String?) = apply {
+            fun externalPriceId(externalPriceId: String) = apply {
                 this.externalPriceId = externalPriceId
             }
 
@@ -17587,7 +17002,7 @@ constructor(
             /**
              * The id of the billable metric for the price. Only needed if the price is usage-based.
              */
-            fun billableMetricId(billableMetricId: String?) = apply {
+            fun billableMetricId(billableMetricId: String) = apply {
                 this.billableMetricId = billableMetricId
             }
 
@@ -17598,19 +17013,19 @@ constructor(
              * If the Price represents a fixed cost, the price will be billed in-advance if this is
              * true, and in-arrears if this is false.
              */
-            fun billedInAdvance(billedInAdvance: Boolean?) = apply {
+            fun billedInAdvance(billedInAdvance: Boolean) = apply {
                 this.billedInAdvance = billedInAdvance
             }
 
             /**
              * If the Price represents a fixed cost, this represents the quantity of units applied.
              */
-            fun fixedPriceQuantity(fixedPriceQuantity: Double?) = apply {
+            fun fixedPriceQuantity(fixedPriceQuantity: Double) = apply {
                 this.fixedPriceQuantity = fixedPriceQuantity
             }
 
             /** The property used to group this price on an invoice */
-            fun invoiceGroupingKey(invoiceGroupingKey: String?) = apply {
+            fun invoiceGroupingKey(invoiceGroupingKey: String) = apply {
                 this.invoiceGroupingKey = invoiceGroupingKey
             }
 
@@ -17620,7 +17035,7 @@ constructor(
             /**
              * For custom cadence: specifies the duration of the billing period in days or months.
              */
-            fun billingCycleConfiguration(billingCycleConfiguration: BillingCycleConfiguration?) =
+            fun billingCycleConfiguration(billingCycleConfiguration: BillingCycleConfiguration) =
                 apply {
                     this.billingCycleConfiguration = billingCycleConfiguration
                 }
@@ -17630,11 +17045,11 @@ constructor(
              * unspecified, a single invoice is produced per billing cycle.
              */
             fun invoicingCycleConfiguration(
-                invoicingCycleConfiguration: InvoicingCycleConfiguration?
+                invoicingCycleConfiguration: InvoicingCycleConfiguration
             ) = apply { this.invoicingCycleConfiguration = invoicingCycleConfiguration }
 
             /** The per unit conversion rate of the price currency to the invoicing currency. */
-            fun conversionRate(conversionRate: Double?) = apply {
+            fun conversionRate(conversionRate: Double) = apply {
                 this.conversionRate = conversionRate
             }
 
@@ -18439,10 +17854,10 @@ constructor(
              * setting the value to `null`, and the entire metadata mapping can be cleared by
              * setting `metadata` to `null`.
              */
-            fun metadata(metadata: Metadata?) = apply { this.metadata = metadata }
+            fun metadata(metadata: Metadata) = apply { this.metadata = metadata }
 
             /** An alias for the price. */
-            fun externalPriceId(externalPriceId: String?) = apply {
+            fun externalPriceId(externalPriceId: String) = apply {
                 this.externalPriceId = externalPriceId
             }
 
@@ -18452,7 +17867,7 @@ constructor(
             /**
              * The id of the billable metric for the price. Only needed if the price is usage-based.
              */
-            fun billableMetricId(billableMetricId: String?) = apply {
+            fun billableMetricId(billableMetricId: String) = apply {
                 this.billableMetricId = billableMetricId
             }
 
@@ -18463,19 +17878,19 @@ constructor(
              * If the Price represents a fixed cost, the price will be billed in-advance if this is
              * true, and in-arrears if this is false.
              */
-            fun billedInAdvance(billedInAdvance: Boolean?) = apply {
+            fun billedInAdvance(billedInAdvance: Boolean) = apply {
                 this.billedInAdvance = billedInAdvance
             }
 
             /**
              * If the Price represents a fixed cost, this represents the quantity of units applied.
              */
-            fun fixedPriceQuantity(fixedPriceQuantity: Double?) = apply {
+            fun fixedPriceQuantity(fixedPriceQuantity: Double) = apply {
                 this.fixedPriceQuantity = fixedPriceQuantity
             }
 
             /** The property used to group this price on an invoice */
-            fun invoiceGroupingKey(invoiceGroupingKey: String?) = apply {
+            fun invoiceGroupingKey(invoiceGroupingKey: String) = apply {
                 this.invoiceGroupingKey = invoiceGroupingKey
             }
 
@@ -18485,7 +17900,7 @@ constructor(
             /**
              * For custom cadence: specifies the duration of the billing period in days or months.
              */
-            fun billingCycleConfiguration(billingCycleConfiguration: BillingCycleConfiguration?) =
+            fun billingCycleConfiguration(billingCycleConfiguration: BillingCycleConfiguration) =
                 apply {
                     this.billingCycleConfiguration = billingCycleConfiguration
                 }
@@ -18495,11 +17910,11 @@ constructor(
              * unspecified, a single invoice is produced per billing cycle.
              */
             fun invoicingCycleConfiguration(
-                invoicingCycleConfiguration: InvoicingCycleConfiguration?
+                invoicingCycleConfiguration: InvoicingCycleConfiguration
             ) = apply { this.invoicingCycleConfiguration = invoicingCycleConfiguration }
 
             /** The per unit conversion rate of the price currency to the invoicing currency. */
-            fun conversionRate(conversionRate: Double?) = apply {
+            fun conversionRate(conversionRate: Double) = apply {
                 this.conversionRate = conversionRate
             }
 
@@ -19307,10 +18722,10 @@ constructor(
              * setting the value to `null`, and the entire metadata mapping can be cleared by
              * setting `metadata` to `null`.
              */
-            fun metadata(metadata: Metadata?) = apply { this.metadata = metadata }
+            fun metadata(metadata: Metadata) = apply { this.metadata = metadata }
 
             /** An alias for the price. */
-            fun externalPriceId(externalPriceId: String?) = apply {
+            fun externalPriceId(externalPriceId: String) = apply {
                 this.externalPriceId = externalPriceId
             }
 
@@ -19320,7 +18735,7 @@ constructor(
             /**
              * The id of the billable metric for the price. Only needed if the price is usage-based.
              */
-            fun billableMetricId(billableMetricId: String?) = apply {
+            fun billableMetricId(billableMetricId: String) = apply {
                 this.billableMetricId = billableMetricId
             }
 
@@ -19331,19 +18746,19 @@ constructor(
              * If the Price represents a fixed cost, the price will be billed in-advance if this is
              * true, and in-arrears if this is false.
              */
-            fun billedInAdvance(billedInAdvance: Boolean?) = apply {
+            fun billedInAdvance(billedInAdvance: Boolean) = apply {
                 this.billedInAdvance = billedInAdvance
             }
 
             /**
              * If the Price represents a fixed cost, this represents the quantity of units applied.
              */
-            fun fixedPriceQuantity(fixedPriceQuantity: Double?) = apply {
+            fun fixedPriceQuantity(fixedPriceQuantity: Double) = apply {
                 this.fixedPriceQuantity = fixedPriceQuantity
             }
 
             /** The property used to group this price on an invoice */
-            fun invoiceGroupingKey(invoiceGroupingKey: String?) = apply {
+            fun invoiceGroupingKey(invoiceGroupingKey: String) = apply {
                 this.invoiceGroupingKey = invoiceGroupingKey
             }
 
@@ -19353,7 +18768,7 @@ constructor(
             /**
              * For custom cadence: specifies the duration of the billing period in days or months.
              */
-            fun billingCycleConfiguration(billingCycleConfiguration: BillingCycleConfiguration?) =
+            fun billingCycleConfiguration(billingCycleConfiguration: BillingCycleConfiguration) =
                 apply {
                     this.billingCycleConfiguration = billingCycleConfiguration
                 }
@@ -19363,11 +18778,11 @@ constructor(
              * unspecified, a single invoice is produced per billing cycle.
              */
             fun invoicingCycleConfiguration(
-                invoicingCycleConfiguration: InvoicingCycleConfiguration?
+                invoicingCycleConfiguration: InvoicingCycleConfiguration
             ) = apply { this.invoicingCycleConfiguration = invoicingCycleConfiguration }
 
             /** The per unit conversion rate of the price currency to the invoicing currency. */
-            fun conversionRate(conversionRate: Double?) = apply {
+            fun conversionRate(conversionRate: Double) = apply {
                 this.conversionRate = conversionRate
             }
 
@@ -20176,10 +19591,10 @@ constructor(
              * setting the value to `null`, and the entire metadata mapping can be cleared by
              * setting `metadata` to `null`.
              */
-            fun metadata(metadata: Metadata?) = apply { this.metadata = metadata }
+            fun metadata(metadata: Metadata) = apply { this.metadata = metadata }
 
             /** An alias for the price. */
-            fun externalPriceId(externalPriceId: String?) = apply {
+            fun externalPriceId(externalPriceId: String) = apply {
                 this.externalPriceId = externalPriceId
             }
 
@@ -20189,7 +19604,7 @@ constructor(
             /**
              * The id of the billable metric for the price. Only needed if the price is usage-based.
              */
-            fun billableMetricId(billableMetricId: String?) = apply {
+            fun billableMetricId(billableMetricId: String) = apply {
                 this.billableMetricId = billableMetricId
             }
 
@@ -20200,19 +19615,19 @@ constructor(
              * If the Price represents a fixed cost, the price will be billed in-advance if this is
              * true, and in-arrears if this is false.
              */
-            fun billedInAdvance(billedInAdvance: Boolean?) = apply {
+            fun billedInAdvance(billedInAdvance: Boolean) = apply {
                 this.billedInAdvance = billedInAdvance
             }
 
             /**
              * If the Price represents a fixed cost, this represents the quantity of units applied.
              */
-            fun fixedPriceQuantity(fixedPriceQuantity: Double?) = apply {
+            fun fixedPriceQuantity(fixedPriceQuantity: Double) = apply {
                 this.fixedPriceQuantity = fixedPriceQuantity
             }
 
             /** The property used to group this price on an invoice */
-            fun invoiceGroupingKey(invoiceGroupingKey: String?) = apply {
+            fun invoiceGroupingKey(invoiceGroupingKey: String) = apply {
                 this.invoiceGroupingKey = invoiceGroupingKey
             }
 
@@ -20222,7 +19637,7 @@ constructor(
             /**
              * For custom cadence: specifies the duration of the billing period in days or months.
              */
-            fun billingCycleConfiguration(billingCycleConfiguration: BillingCycleConfiguration?) =
+            fun billingCycleConfiguration(billingCycleConfiguration: BillingCycleConfiguration) =
                 apply {
                     this.billingCycleConfiguration = billingCycleConfiguration
                 }
@@ -20232,11 +19647,11 @@ constructor(
              * unspecified, a single invoice is produced per billing cycle.
              */
             fun invoicingCycleConfiguration(
-                invoicingCycleConfiguration: InvoicingCycleConfiguration?
+                invoicingCycleConfiguration: InvoicingCycleConfiguration
             ) = apply { this.invoicingCycleConfiguration = invoicingCycleConfiguration }
 
             /** The per unit conversion rate of the price currency to the invoicing currency. */
-            fun conversionRate(conversionRate: Double?) = apply {
+            fun conversionRate(conversionRate: Double) = apply {
                 this.conversionRate = conversionRate
             }
 
@@ -21044,10 +20459,10 @@ constructor(
              * setting the value to `null`, and the entire metadata mapping can be cleared by
              * setting `metadata` to `null`.
              */
-            fun metadata(metadata: Metadata?) = apply { this.metadata = metadata }
+            fun metadata(metadata: Metadata) = apply { this.metadata = metadata }
 
             /** An alias for the price. */
-            fun externalPriceId(externalPriceId: String?) = apply {
+            fun externalPriceId(externalPriceId: String) = apply {
                 this.externalPriceId = externalPriceId
             }
 
@@ -21057,7 +20472,7 @@ constructor(
             /**
              * The id of the billable metric for the price. Only needed if the price is usage-based.
              */
-            fun billableMetricId(billableMetricId: String?) = apply {
+            fun billableMetricId(billableMetricId: String) = apply {
                 this.billableMetricId = billableMetricId
             }
 
@@ -21068,19 +20483,19 @@ constructor(
              * If the Price represents a fixed cost, the price will be billed in-advance if this is
              * true, and in-arrears if this is false.
              */
-            fun billedInAdvance(billedInAdvance: Boolean?) = apply {
+            fun billedInAdvance(billedInAdvance: Boolean) = apply {
                 this.billedInAdvance = billedInAdvance
             }
 
             /**
              * If the Price represents a fixed cost, this represents the quantity of units applied.
              */
-            fun fixedPriceQuantity(fixedPriceQuantity: Double?) = apply {
+            fun fixedPriceQuantity(fixedPriceQuantity: Double) = apply {
                 this.fixedPriceQuantity = fixedPriceQuantity
             }
 
             /** The property used to group this price on an invoice */
-            fun invoiceGroupingKey(invoiceGroupingKey: String?) = apply {
+            fun invoiceGroupingKey(invoiceGroupingKey: String) = apply {
                 this.invoiceGroupingKey = invoiceGroupingKey
             }
 
@@ -21090,7 +20505,7 @@ constructor(
             /**
              * For custom cadence: specifies the duration of the billing period in days or months.
              */
-            fun billingCycleConfiguration(billingCycleConfiguration: BillingCycleConfiguration?) =
+            fun billingCycleConfiguration(billingCycleConfiguration: BillingCycleConfiguration) =
                 apply {
                     this.billingCycleConfiguration = billingCycleConfiguration
                 }
@@ -21100,11 +20515,11 @@ constructor(
              * unspecified, a single invoice is produced per billing cycle.
              */
             fun invoicingCycleConfiguration(
-                invoicingCycleConfiguration: InvoicingCycleConfiguration?
+                invoicingCycleConfiguration: InvoicingCycleConfiguration
             ) = apply { this.invoicingCycleConfiguration = invoicingCycleConfiguration }
 
             /** The per unit conversion rate of the price currency to the invoicing currency. */
-            fun conversionRate(conversionRate: Double?) = apply {
+            fun conversionRate(conversionRate: Double) = apply {
                 this.conversionRate = conversionRate
             }
 
@@ -21910,10 +21325,10 @@ constructor(
              * setting the value to `null`, and the entire metadata mapping can be cleared by
              * setting `metadata` to `null`.
              */
-            fun metadata(metadata: Metadata?) = apply { this.metadata = metadata }
+            fun metadata(metadata: Metadata) = apply { this.metadata = metadata }
 
             /** An alias for the price. */
-            fun externalPriceId(externalPriceId: String?) = apply {
+            fun externalPriceId(externalPriceId: String) = apply {
                 this.externalPriceId = externalPriceId
             }
 
@@ -21923,7 +21338,7 @@ constructor(
             /**
              * The id of the billable metric for the price. Only needed if the price is usage-based.
              */
-            fun billableMetricId(billableMetricId: String?) = apply {
+            fun billableMetricId(billableMetricId: String) = apply {
                 this.billableMetricId = billableMetricId
             }
 
@@ -21934,19 +21349,19 @@ constructor(
              * If the Price represents a fixed cost, the price will be billed in-advance if this is
              * true, and in-arrears if this is false.
              */
-            fun billedInAdvance(billedInAdvance: Boolean?) = apply {
+            fun billedInAdvance(billedInAdvance: Boolean) = apply {
                 this.billedInAdvance = billedInAdvance
             }
 
             /**
              * If the Price represents a fixed cost, this represents the quantity of units applied.
              */
-            fun fixedPriceQuantity(fixedPriceQuantity: Double?) = apply {
+            fun fixedPriceQuantity(fixedPriceQuantity: Double) = apply {
                 this.fixedPriceQuantity = fixedPriceQuantity
             }
 
             /** The property used to group this price on an invoice */
-            fun invoiceGroupingKey(invoiceGroupingKey: String?) = apply {
+            fun invoiceGroupingKey(invoiceGroupingKey: String) = apply {
                 this.invoiceGroupingKey = invoiceGroupingKey
             }
 
@@ -21956,7 +21371,7 @@ constructor(
             /**
              * For custom cadence: specifies the duration of the billing period in days or months.
              */
-            fun billingCycleConfiguration(billingCycleConfiguration: BillingCycleConfiguration?) =
+            fun billingCycleConfiguration(billingCycleConfiguration: BillingCycleConfiguration) =
                 apply {
                     this.billingCycleConfiguration = billingCycleConfiguration
                 }
@@ -21966,11 +21381,11 @@ constructor(
              * unspecified, a single invoice is produced per billing cycle.
              */
             fun invoicingCycleConfiguration(
-                invoicingCycleConfiguration: InvoicingCycleConfiguration?
+                invoicingCycleConfiguration: InvoicingCycleConfiguration
             ) = apply { this.invoicingCycleConfiguration = invoicingCycleConfiguration }
 
             /** The per unit conversion rate of the price currency to the invoicing currency. */
-            fun conversionRate(conversionRate: Double?) = apply {
+            fun conversionRate(conversionRate: Double) = apply {
                 this.conversionRate = conversionRate
             }
 
@@ -22776,10 +22191,10 @@ constructor(
              * setting the value to `null`, and the entire metadata mapping can be cleared by
              * setting `metadata` to `null`.
              */
-            fun metadata(metadata: Metadata?) = apply { this.metadata = metadata }
+            fun metadata(metadata: Metadata) = apply { this.metadata = metadata }
 
             /** An alias for the price. */
-            fun externalPriceId(externalPriceId: String?) = apply {
+            fun externalPriceId(externalPriceId: String) = apply {
                 this.externalPriceId = externalPriceId
             }
 
@@ -22789,7 +22204,7 @@ constructor(
             /**
              * The id of the billable metric for the price. Only needed if the price is usage-based.
              */
-            fun billableMetricId(billableMetricId: String?) = apply {
+            fun billableMetricId(billableMetricId: String) = apply {
                 this.billableMetricId = billableMetricId
             }
 
@@ -22800,19 +22215,19 @@ constructor(
              * If the Price represents a fixed cost, the price will be billed in-advance if this is
              * true, and in-arrears if this is false.
              */
-            fun billedInAdvance(billedInAdvance: Boolean?) = apply {
+            fun billedInAdvance(billedInAdvance: Boolean) = apply {
                 this.billedInAdvance = billedInAdvance
             }
 
             /**
              * If the Price represents a fixed cost, this represents the quantity of units applied.
              */
-            fun fixedPriceQuantity(fixedPriceQuantity: Double?) = apply {
+            fun fixedPriceQuantity(fixedPriceQuantity: Double) = apply {
                 this.fixedPriceQuantity = fixedPriceQuantity
             }
 
             /** The property used to group this price on an invoice */
-            fun invoiceGroupingKey(invoiceGroupingKey: String?) = apply {
+            fun invoiceGroupingKey(invoiceGroupingKey: String) = apply {
                 this.invoiceGroupingKey = invoiceGroupingKey
             }
 
@@ -22822,7 +22237,7 @@ constructor(
             /**
              * For custom cadence: specifies the duration of the billing period in days or months.
              */
-            fun billingCycleConfiguration(billingCycleConfiguration: BillingCycleConfiguration?) =
+            fun billingCycleConfiguration(billingCycleConfiguration: BillingCycleConfiguration) =
                 apply {
                     this.billingCycleConfiguration = billingCycleConfiguration
                 }
@@ -22832,11 +22247,11 @@ constructor(
              * unspecified, a single invoice is produced per billing cycle.
              */
             fun invoicingCycleConfiguration(
-                invoicingCycleConfiguration: InvoicingCycleConfiguration?
+                invoicingCycleConfiguration: InvoicingCycleConfiguration
             ) = apply { this.invoicingCycleConfiguration = invoicingCycleConfiguration }
 
             /** The per unit conversion rate of the price currency to the invoicing currency. */
-            fun conversionRate(conversionRate: Double?) = apply {
+            fun conversionRate(conversionRate: Double) = apply {
                 this.conversionRate = conversionRate
             }
 
@@ -23505,11 +22920,11 @@ constructor(
             return true
         }
 
-        return /* spotless:off */ other is PriceCreateParams && newFloatingUnitPrice == other.newFloatingUnitPrice && newFloatingPackagePrice == other.newFloatingPackagePrice && newFloatingMatrixPrice == other.newFloatingMatrixPrice && newFloatingMatrixWithAllocationPrice == other.newFloatingMatrixWithAllocationPrice && newFloatingTieredPrice == other.newFloatingTieredPrice && newFloatingTieredBpsPrice == other.newFloatingTieredBpsPrice && newFloatingBpsPrice == other.newFloatingBpsPrice && newFloatingBulkBpsPrice == other.newFloatingBulkBpsPrice && newFloatingBulkPrice == other.newFloatingBulkPrice && newFloatingThresholdTotalAmountPrice == other.newFloatingThresholdTotalAmountPrice && newFloatingTieredPackagePrice == other.newFloatingTieredPackagePrice && newFloatingGroupedTieredPrice == other.newFloatingGroupedTieredPrice && newFloatingTieredWithMinimumPrice == other.newFloatingTieredWithMinimumPrice && newFloatingPackageWithAllocationPrice == other.newFloatingPackageWithAllocationPrice && newFloatingTieredPackageWithMinimumPrice == other.newFloatingTieredPackageWithMinimumPrice && newFloatingUnitWithPercentPrice == other.newFloatingUnitWithPercentPrice && newFloatingTieredWithProrationPrice == other.newFloatingTieredWithProrationPrice && newFloatingUnitWithProrationPrice == other.newFloatingUnitWithProrationPrice && newFloatingGroupedAllocationPrice == other.newFloatingGroupedAllocationPrice && newFloatingGroupedWithProratedMinimumPrice == other.newFloatingGroupedWithProratedMinimumPrice && newFloatingGroupedWithMeteredMinimumPrice == other.newFloatingGroupedWithMeteredMinimumPrice && newFloatingMatrixWithDisplayNamePrice == other.newFloatingMatrixWithDisplayNamePrice && newFloatingBulkWithProrationPrice == other.newFloatingBulkWithProrationPrice && newFloatingGroupedTieredPackagePrice == other.newFloatingGroupedTieredPackagePrice && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
+        return /* spotless:off */ other is PriceCreateParams && body == other.body && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
     }
 
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(newFloatingUnitPrice, newFloatingPackagePrice, newFloatingMatrixPrice, newFloatingMatrixWithAllocationPrice, newFloatingTieredPrice, newFloatingTieredBpsPrice, newFloatingBpsPrice, newFloatingBulkBpsPrice, newFloatingBulkPrice, newFloatingThresholdTotalAmountPrice, newFloatingTieredPackagePrice, newFloatingGroupedTieredPrice, newFloatingTieredWithMinimumPrice, newFloatingPackageWithAllocationPrice, newFloatingTieredPackageWithMinimumPrice, newFloatingUnitWithPercentPrice, newFloatingTieredWithProrationPrice, newFloatingUnitWithProrationPrice, newFloatingGroupedAllocationPrice, newFloatingGroupedWithProratedMinimumPrice, newFloatingGroupedWithMeteredMinimumPrice, newFloatingMatrixWithDisplayNamePrice, newFloatingBulkWithProrationPrice, newFloatingGroupedTieredPackagePrice, additionalHeaders, additionalQueryParams) /* spotless:on */
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(body, additionalHeaders, additionalQueryParams) /* spotless:on */
 
     override fun toString() =
-        "PriceCreateParams{newFloatingUnitPrice=$newFloatingUnitPrice, newFloatingPackagePrice=$newFloatingPackagePrice, newFloatingMatrixPrice=$newFloatingMatrixPrice, newFloatingMatrixWithAllocationPrice=$newFloatingMatrixWithAllocationPrice, newFloatingTieredPrice=$newFloatingTieredPrice, newFloatingTieredBpsPrice=$newFloatingTieredBpsPrice, newFloatingBpsPrice=$newFloatingBpsPrice, newFloatingBulkBpsPrice=$newFloatingBulkBpsPrice, newFloatingBulkPrice=$newFloatingBulkPrice, newFloatingThresholdTotalAmountPrice=$newFloatingThresholdTotalAmountPrice, newFloatingTieredPackagePrice=$newFloatingTieredPackagePrice, newFloatingGroupedTieredPrice=$newFloatingGroupedTieredPrice, newFloatingTieredWithMinimumPrice=$newFloatingTieredWithMinimumPrice, newFloatingPackageWithAllocationPrice=$newFloatingPackageWithAllocationPrice, newFloatingTieredPackageWithMinimumPrice=$newFloatingTieredPackageWithMinimumPrice, newFloatingUnitWithPercentPrice=$newFloatingUnitWithPercentPrice, newFloatingTieredWithProrationPrice=$newFloatingTieredWithProrationPrice, newFloatingUnitWithProrationPrice=$newFloatingUnitWithProrationPrice, newFloatingGroupedAllocationPrice=$newFloatingGroupedAllocationPrice, newFloatingGroupedWithProratedMinimumPrice=$newFloatingGroupedWithProratedMinimumPrice, newFloatingGroupedWithMeteredMinimumPrice=$newFloatingGroupedWithMeteredMinimumPrice, newFloatingMatrixWithDisplayNamePrice=$newFloatingMatrixWithDisplayNamePrice, newFloatingBulkWithProrationPrice=$newFloatingBulkWithProrationPrice, newFloatingGroupedTieredPackagePrice=$newFloatingGroupedTieredPackagePrice, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
+        "PriceCreateParams{body=$body, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
 }

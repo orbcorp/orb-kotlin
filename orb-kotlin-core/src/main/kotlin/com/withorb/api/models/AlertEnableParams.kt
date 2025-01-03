@@ -20,6 +20,7 @@ constructor(
 
     fun alertConfigurationId(): String = alertConfigurationId
 
+    /** Used to update the status of a plan alert scoped to this subscription_id */
     fun subscriptionId(): String? = subscriptionId
 
     fun _additionalHeaders(): Headers = additionalHeaders
@@ -28,9 +29,7 @@ constructor(
 
     fun _additionalBodyProperties(): Map<String, JsonValue> = additionalBodyProperties
 
-    internal fun getBody(): Map<String, JsonValue>? {
-        return additionalBodyProperties.ifEmpty { null }
-    }
+    internal fun getBody(): Map<String, JsonValue>? = additionalBodyProperties.ifEmpty { null }
 
     internal fun getHeaders(): Headers = additionalHeaders
 

@@ -18,50 +18,55 @@ import java.util.Objects
 
 class EventBackfillCreateParams
 constructor(
-    private val timeframeEnd: OffsetDateTime,
-    private val timeframeStart: OffsetDateTime,
-    private val closeTime: OffsetDateTime?,
-    private val customerId: String?,
-    private val deprecationFilter: String?,
-    private val externalCustomerId: String?,
-    private val replaceExistingEvents: Boolean?,
+    private val body: EventBackfillCreateBody,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
-    private val additionalBodyProperties: Map<String, JsonValue>,
 ) {
 
-    fun timeframeEnd(): OffsetDateTime = timeframeEnd
+    /** The (exclusive) end of the usage timeframe affected by this backfill. */
+    fun timeframeEnd(): OffsetDateTime = body.timeframeEnd()
 
-    fun timeframeStart(): OffsetDateTime = timeframeStart
+    /** The (inclusive) start of the usage timeframe affected by this backfill. */
+    fun timeframeStart(): OffsetDateTime = body.timeframeStart()
 
-    fun closeTime(): OffsetDateTime? = closeTime
+    /**
+     * The time at which no more events will be accepted for this backfill. The backfill will
+     * automatically begin reflecting throughout Orb at the close time. If not specified, it will
+     * default to 1 day after the creation of the backfill.
+     */
+    fun closeTime(): OffsetDateTime? = body.closeTime()
 
-    fun customerId(): String? = customerId
+    /**
+     * The Orb-generated ID of the customer to which this backfill is scoped. Omitting this field
+     * will scope the backfill to all customers.
+     */
+    fun customerId(): String? = body.customerId()
 
-    fun deprecationFilter(): String? = deprecationFilter
+    /**
+     * A boolean [computed property](../guides/extensibility/advanced-metrics#computed-properties)
+     * used to filter the set of events to deprecate
+     */
+    fun deprecationFilter(): String? = body.deprecationFilter()
 
-    fun externalCustomerId(): String? = externalCustomerId
+    /**
+     * The external customer ID of the customer to which this backfill is scoped. Omitting this
+     * field will scope the backfill to all customers.
+     */
+    fun externalCustomerId(): String? = body.externalCustomerId()
 
-    fun replaceExistingEvents(): Boolean? = replaceExistingEvents
+    /**
+     * If true, replaces all existing events in the timeframe with the newly ingested events. If
+     * false, adds the newly ingested events to the existing events.
+     */
+    fun replaceExistingEvents(): Boolean? = body.replaceExistingEvents()
 
     fun _additionalHeaders(): Headers = additionalHeaders
 
     fun _additionalQueryParams(): QueryParams = additionalQueryParams
 
-    fun _additionalBodyProperties(): Map<String, JsonValue> = additionalBodyProperties
+    fun _additionalBodyProperties(): Map<String, JsonValue> = body._additionalProperties()
 
-    internal fun getBody(): EventBackfillCreateBody {
-        return EventBackfillCreateBody(
-            timeframeEnd,
-            timeframeStart,
-            closeTime,
-            customerId,
-            deprecationFilter,
-            externalCustomerId,
-            replaceExistingEvents,
-            additionalBodyProperties,
-        )
-    }
+    internal fun getBody(): EventBackfillCreateBody = body
 
     internal fun getHeaders(): Headers = additionalHeaders
 
@@ -169,20 +174,20 @@ constructor(
              * will automatically begin reflecting throughout Orb at the close time. If not
              * specified, it will default to 1 day after the creation of the backfill.
              */
-            fun closeTime(closeTime: OffsetDateTime?) = apply { this.closeTime = closeTime }
+            fun closeTime(closeTime: OffsetDateTime) = apply { this.closeTime = closeTime }
 
             /**
              * The Orb-generated ID of the customer to which this backfill is scoped. Omitting this
              * field will scope the backfill to all customers.
              */
-            fun customerId(customerId: String?) = apply { this.customerId = customerId }
+            fun customerId(customerId: String) = apply { this.customerId = customerId }
 
             /**
              * A boolean
              * [computed property](../guides/extensibility/advanced-metrics#computed-properties)
              * used to filter the set of events to deprecate
              */
-            fun deprecationFilter(deprecationFilter: String?) = apply {
+            fun deprecationFilter(deprecationFilter: String) = apply {
                 this.deprecationFilter = deprecationFilter
             }
 
@@ -190,7 +195,7 @@ constructor(
              * The external customer ID of the customer to which this backfill is scoped. Omitting
              * this field will scope the backfill to all customers.
              */
-            fun externalCustomerId(externalCustomerId: String?) = apply {
+            fun externalCustomerId(externalCustomerId: String) = apply {
                 this.externalCustomerId = externalCustomerId
             }
 
@@ -198,7 +203,7 @@ constructor(
              * If true, replaces all existing events in the timeframe with the newly ingested
              * events. If false, adds the newly ingested events to the existing events.
              */
-            fun replaceExistingEvents(replaceExistingEvents: Boolean?) = apply {
+            fun replaceExistingEvents(replaceExistingEvents: Boolean) = apply {
                 this.replaceExistingEvents = replaceExistingEvents
             }
 
@@ -262,37 +267,22 @@ constructor(
     @NoAutoDetect
     class Builder {
 
-        private var timeframeEnd: OffsetDateTime? = null
-        private var timeframeStart: OffsetDateTime? = null
-        private var closeTime: OffsetDateTime? = null
-        private var customerId: String? = null
-        private var deprecationFilter: String? = null
-        private var externalCustomerId: String? = null
-        private var replaceExistingEvents: Boolean? = null
+        private var body: EventBackfillCreateBody.Builder = EventBackfillCreateBody.builder()
         private var additionalHeaders: Headers.Builder = Headers.builder()
         private var additionalQueryParams: QueryParams.Builder = QueryParams.builder()
-        private var additionalBodyProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         internal fun from(eventBackfillCreateParams: EventBackfillCreateParams) = apply {
-            timeframeEnd = eventBackfillCreateParams.timeframeEnd
-            timeframeStart = eventBackfillCreateParams.timeframeStart
-            closeTime = eventBackfillCreateParams.closeTime
-            customerId = eventBackfillCreateParams.customerId
-            deprecationFilter = eventBackfillCreateParams.deprecationFilter
-            externalCustomerId = eventBackfillCreateParams.externalCustomerId
-            replaceExistingEvents = eventBackfillCreateParams.replaceExistingEvents
+            body = eventBackfillCreateParams.body.toBuilder()
             additionalHeaders = eventBackfillCreateParams.additionalHeaders.toBuilder()
             additionalQueryParams = eventBackfillCreateParams.additionalQueryParams.toBuilder()
-            additionalBodyProperties =
-                eventBackfillCreateParams.additionalBodyProperties.toMutableMap()
         }
 
         /** The (exclusive) end of the usage timeframe affected by this backfill. */
-        fun timeframeEnd(timeframeEnd: OffsetDateTime) = apply { this.timeframeEnd = timeframeEnd }
+        fun timeframeEnd(timeframeEnd: OffsetDateTime) = apply { body.timeframeEnd(timeframeEnd) }
 
         /** The (inclusive) start of the usage timeframe affected by this backfill. */
         fun timeframeStart(timeframeStart: OffsetDateTime) = apply {
-            this.timeframeStart = timeframeStart
+            body.timeframeStart(timeframeStart)
         }
 
         /**
@@ -300,13 +290,13 @@ constructor(
          * automatically begin reflecting throughout Orb at the close time. If not specified, it
          * will default to 1 day after the creation of the backfill.
          */
-        fun closeTime(closeTime: OffsetDateTime) = apply { this.closeTime = closeTime }
+        fun closeTime(closeTime: OffsetDateTime) = apply { body.closeTime(closeTime) }
 
         /**
          * The Orb-generated ID of the customer to which this backfill is scoped. Omitting this
          * field will scope the backfill to all customers.
          */
-        fun customerId(customerId: String) = apply { this.customerId = customerId }
+        fun customerId(customerId: String) = apply { body.customerId(customerId) }
 
         /**
          * A boolean
@@ -314,7 +304,7 @@ constructor(
          * filter the set of events to deprecate
          */
         fun deprecationFilter(deprecationFilter: String) = apply {
-            this.deprecationFilter = deprecationFilter
+            body.deprecationFilter(deprecationFilter)
         }
 
         /**
@@ -322,7 +312,7 @@ constructor(
          * field will scope the backfill to all customers.
          */
         fun externalCustomerId(externalCustomerId: String) = apply {
-            this.externalCustomerId = externalCustomerId
+            body.externalCustomerId(externalCustomerId)
         }
 
         /**
@@ -330,7 +320,7 @@ constructor(
          * false, adds the newly ingested events to the existing events.
          */
         fun replaceExistingEvents(replaceExistingEvents: Boolean) = apply {
-            this.replaceExistingEvents = replaceExistingEvents
+            body.replaceExistingEvents(replaceExistingEvents)
         }
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {
@@ -432,39 +422,29 @@ constructor(
         }
 
         fun additionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) = apply {
-            this.additionalBodyProperties.clear()
-            putAllAdditionalBodyProperties(additionalBodyProperties)
+            body.additionalProperties(additionalBodyProperties)
         }
 
         fun putAdditionalBodyProperty(key: String, value: JsonValue) = apply {
-            additionalBodyProperties.put(key, value)
+            body.putAdditionalProperty(key, value)
         }
 
         fun putAllAdditionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) =
             apply {
-                this.additionalBodyProperties.putAll(additionalBodyProperties)
+                body.putAllAdditionalProperties(additionalBodyProperties)
             }
 
-        fun removeAdditionalBodyProperty(key: String) = apply {
-            additionalBodyProperties.remove(key)
-        }
+        fun removeAdditionalBodyProperty(key: String) = apply { body.removeAdditionalProperty(key) }
 
         fun removeAllAdditionalBodyProperties(keys: Set<String>) = apply {
-            keys.forEach(::removeAdditionalBodyProperty)
+            body.removeAllAdditionalProperties(keys)
         }
 
         fun build(): EventBackfillCreateParams =
             EventBackfillCreateParams(
-                checkNotNull(timeframeEnd) { "`timeframeEnd` is required but was not set" },
-                checkNotNull(timeframeStart) { "`timeframeStart` is required but was not set" },
-                closeTime,
-                customerId,
-                deprecationFilter,
-                externalCustomerId,
-                replaceExistingEvents,
+                body.build(),
                 additionalHeaders.build(),
                 additionalQueryParams.build(),
-                additionalBodyProperties.toImmutable(),
             )
     }
 
@@ -473,11 +453,11 @@ constructor(
             return true
         }
 
-        return /* spotless:off */ other is EventBackfillCreateParams && timeframeEnd == other.timeframeEnd && timeframeStart == other.timeframeStart && closeTime == other.closeTime && customerId == other.customerId && deprecationFilter == other.deprecationFilter && externalCustomerId == other.externalCustomerId && replaceExistingEvents == other.replaceExistingEvents && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams && additionalBodyProperties == other.additionalBodyProperties /* spotless:on */
+        return /* spotless:off */ other is EventBackfillCreateParams && body == other.body && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
     }
 
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(timeframeEnd, timeframeStart, closeTime, customerId, deprecationFilter, externalCustomerId, replaceExistingEvents, additionalHeaders, additionalQueryParams, additionalBodyProperties) /* spotless:on */
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(body, additionalHeaders, additionalQueryParams) /* spotless:on */
 
     override fun toString() =
-        "EventBackfillCreateParams{timeframeEnd=$timeframeEnd, timeframeStart=$timeframeStart, closeTime=$closeTime, customerId=$customerId, deprecationFilter=$deprecationFilter, externalCustomerId=$externalCustomerId, replaceExistingEvents=$replaceExistingEvents, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams, additionalBodyProperties=$additionalBodyProperties}"
+        "EventBackfillCreateParams{body=$body, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
 }

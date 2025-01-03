@@ -19,25 +19,26 @@ import java.util.Objects
 class SubscriptionTriggerPhaseParams
 constructor(
     private val subscriptionId: String,
-    private val effectiveDate: LocalDate?,
+    private val body: SubscriptionTriggerPhaseBody,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
-    private val additionalBodyProperties: Map<String, JsonValue>,
 ) {
 
     fun subscriptionId(): String = subscriptionId
 
-    fun effectiveDate(): LocalDate? = effectiveDate
+    /**
+     * The date on which the phase change should take effect. If not provided, defaults to today in
+     * the customer's timezone.
+     */
+    fun effectiveDate(): LocalDate? = body.effectiveDate()
 
     fun _additionalHeaders(): Headers = additionalHeaders
 
     fun _additionalQueryParams(): QueryParams = additionalQueryParams
 
-    fun _additionalBodyProperties(): Map<String, JsonValue> = additionalBodyProperties
+    fun _additionalBodyProperties(): Map<String, JsonValue> = body._additionalProperties()
 
-    internal fun getBody(): SubscriptionTriggerPhaseBody {
-        return SubscriptionTriggerPhaseBody(effectiveDate, additionalBodyProperties)
-    }
+    internal fun getBody(): SubscriptionTriggerPhaseBody = body
 
     internal fun getHeaders(): Headers = additionalHeaders
 
@@ -91,7 +92,7 @@ constructor(
              * The date on which the phase change should take effect. If not provided, defaults to
              * today in the customer's timezone.
              */
-            fun effectiveDate(effectiveDate: LocalDate?) = apply {
+            fun effectiveDate(effectiveDate: LocalDate) = apply {
                 this.effectiveDate = effectiveDate
             }
 
@@ -147,18 +148,16 @@ constructor(
     class Builder {
 
         private var subscriptionId: String? = null
-        private var effectiveDate: LocalDate? = null
+        private var body: SubscriptionTriggerPhaseBody.Builder =
+            SubscriptionTriggerPhaseBody.builder()
         private var additionalHeaders: Headers.Builder = Headers.builder()
         private var additionalQueryParams: QueryParams.Builder = QueryParams.builder()
-        private var additionalBodyProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         internal fun from(subscriptionTriggerPhaseParams: SubscriptionTriggerPhaseParams) = apply {
             subscriptionId = subscriptionTriggerPhaseParams.subscriptionId
-            effectiveDate = subscriptionTriggerPhaseParams.effectiveDate
+            body = subscriptionTriggerPhaseParams.body.toBuilder()
             additionalHeaders = subscriptionTriggerPhaseParams.additionalHeaders.toBuilder()
             additionalQueryParams = subscriptionTriggerPhaseParams.additionalQueryParams.toBuilder()
-            additionalBodyProperties =
-                subscriptionTriggerPhaseParams.additionalBodyProperties.toMutableMap()
         }
 
         fun subscriptionId(subscriptionId: String) = apply { this.subscriptionId = subscriptionId }
@@ -167,7 +166,7 @@ constructor(
          * The date on which the phase change should take effect. If not provided, defaults to today
          * in the customer's timezone.
          */
-        fun effectiveDate(effectiveDate: LocalDate) = apply { this.effectiveDate = effectiveDate }
+        fun effectiveDate(effectiveDate: LocalDate) = apply { body.effectiveDate(effectiveDate) }
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {
             this.additionalHeaders.clear()
@@ -268,34 +267,30 @@ constructor(
         }
 
         fun additionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) = apply {
-            this.additionalBodyProperties.clear()
-            putAllAdditionalBodyProperties(additionalBodyProperties)
+            body.additionalProperties(additionalBodyProperties)
         }
 
         fun putAdditionalBodyProperty(key: String, value: JsonValue) = apply {
-            additionalBodyProperties.put(key, value)
+            body.putAdditionalProperty(key, value)
         }
 
         fun putAllAdditionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) =
             apply {
-                this.additionalBodyProperties.putAll(additionalBodyProperties)
+                body.putAllAdditionalProperties(additionalBodyProperties)
             }
 
-        fun removeAdditionalBodyProperty(key: String) = apply {
-            additionalBodyProperties.remove(key)
-        }
+        fun removeAdditionalBodyProperty(key: String) = apply { body.removeAdditionalProperty(key) }
 
         fun removeAllAdditionalBodyProperties(keys: Set<String>) = apply {
-            keys.forEach(::removeAdditionalBodyProperty)
+            body.removeAllAdditionalProperties(keys)
         }
 
         fun build(): SubscriptionTriggerPhaseParams =
             SubscriptionTriggerPhaseParams(
                 checkNotNull(subscriptionId) { "`subscriptionId` is required but was not set" },
-                effectiveDate,
+                body.build(),
                 additionalHeaders.build(),
                 additionalQueryParams.build(),
-                additionalBodyProperties.toImmutable(),
             )
     }
 
@@ -304,11 +299,11 @@ constructor(
             return true
         }
 
-        return /* spotless:off */ other is SubscriptionTriggerPhaseParams && subscriptionId == other.subscriptionId && effectiveDate == other.effectiveDate && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams && additionalBodyProperties == other.additionalBodyProperties /* spotless:on */
+        return /* spotless:off */ other is SubscriptionTriggerPhaseParams && subscriptionId == other.subscriptionId && body == other.body && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
     }
 
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(subscriptionId, effectiveDate, additionalHeaders, additionalQueryParams, additionalBodyProperties) /* spotless:on */
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(subscriptionId, body, additionalHeaders, additionalQueryParams) /* spotless:on */
 
     override fun toString() =
-        "SubscriptionTriggerPhaseParams{subscriptionId=$subscriptionId, effectiveDate=$effectiveDate, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams, additionalBodyProperties=$additionalBodyProperties}"
+        "SubscriptionTriggerPhaseParams{subscriptionId=$subscriptionId, body=$body, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
 }

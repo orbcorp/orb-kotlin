@@ -31,88 +31,194 @@ import java.util.Objects
 class CustomerUpdateParams
 constructor(
     private val customerId: String,
-    private val accountingSyncConfiguration: AccountingSyncConfiguration?,
-    private val additionalEmails: List<String>?,
-    private val autoCollection: Boolean?,
-    private val billingAddress: BillingAddress?,
-    private val currency: String?,
-    private val email: String?,
-    private val emailDelivery: Boolean?,
-    private val externalCustomerId: String?,
-    private val metadata: Metadata?,
-    private val name: String?,
-    private val paymentProvider: PaymentProvider?,
-    private val paymentProviderId: String?,
-    private val reportingConfiguration: ReportingConfiguration?,
-    private val shippingAddress: ShippingAddress?,
-    private val taxConfiguration: TaxConfiguration?,
-    private val taxId: TaxId?,
+    private val body: CustomerUpdateBody,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
-    private val additionalBodyProperties: Map<String, JsonValue>,
 ) {
 
     fun customerId(): String = customerId
 
-    fun accountingSyncConfiguration(): AccountingSyncConfiguration? = accountingSyncConfiguration
+    fun accountingSyncConfiguration(): AccountingSyncConfiguration? =
+        body.accountingSyncConfiguration()
 
-    fun additionalEmails(): List<String>? = additionalEmails
+    /**
+     * Additional email addresses for this customer. If populated, these email addresses will be
+     * CC'd for customer communications.
+     */
+    fun additionalEmails(): List<String>? = body.additionalEmails()
 
-    fun autoCollection(): Boolean? = autoCollection
+    /**
+     * Used to determine if invoices for this customer will automatically attempt to charge a saved
+     * payment method, if available. This parameter defaults to `True` when a payment provider is
+     * provided on customer creation.
+     */
+    fun autoCollection(): Boolean? = body.autoCollection()
 
-    fun billingAddress(): BillingAddress? = billingAddress
+    fun billingAddress(): BillingAddress? = body.billingAddress()
 
-    fun currency(): String? = currency
+    /**
+     * An ISO 4217 currency string used for the customer's invoices and balance. If not set at
+     * creation time, will be set at subscription creation time.
+     */
+    fun currency(): String? = body.currency()
 
-    fun email(): String? = email
+    /** A valid customer email, to be used for invoicing and notifications. */
+    fun email(): String? = body.email()
 
-    fun emailDelivery(): Boolean? = emailDelivery
+    fun emailDelivery(): Boolean? = body.emailDelivery()
 
-    fun externalCustomerId(): String? = externalCustomerId
+    /**
+     * The external customer ID. This can only be set if empty and the customer has no past or
+     * current subscriptions.
+     */
+    fun externalCustomerId(): String? = body.externalCustomerId()
 
-    fun metadata(): Metadata? = metadata
+    /**
+     * User-specified key/value pairs for the resource. Individual keys can be removed by setting
+     * the value to `null`, and the entire metadata mapping can be cleared by setting `metadata` to
+     * `null`.
+     */
+    fun metadata(): Metadata? = body.metadata()
 
-    fun name(): String? = name
+    /** The full name of the customer */
+    fun name(): String? = body.name()
 
-    fun paymentProvider(): PaymentProvider? = paymentProvider
+    /**
+     * This is used for creating charges or invoices in an external system via Orb. When not in test
+     * mode:
+     * - the connection must first be configured in the Orb webapp.
+     * - if the provider is an invoicing provider (`stripe_invoice`, `quickbooks`, `bill.com`,
+     *   `netsuite`), any product mappings must first be configured with the Orb team.
+     */
+    fun paymentProvider(): PaymentProvider? = body.paymentProvider()
 
-    fun paymentProviderId(): String? = paymentProviderId
+    /**
+     * The ID of this customer in an external payments solution, such as Stripe. This is used for
+     * creating charges or invoices in the external system via Orb.
+     */
+    fun paymentProviderId(): String? = body.paymentProviderId()
 
-    fun reportingConfiguration(): ReportingConfiguration? = reportingConfiguration
+    fun reportingConfiguration(): ReportingConfiguration? = body.reportingConfiguration()
 
-    fun shippingAddress(): ShippingAddress? = shippingAddress
+    fun shippingAddress(): ShippingAddress? = body.shippingAddress()
 
-    fun taxConfiguration(): TaxConfiguration? = taxConfiguration
+    fun taxConfiguration(): TaxConfiguration? = body.taxConfiguration()
 
-    fun taxId(): TaxId? = taxId
+    /**
+     * Tax IDs are commonly required to be displayed on customer invoices, which are added to the
+     * headers of invoices.
+     *
+     * ### Supported Tax ID Countries and Types
+     * |Country             |Type        |Description                                                                                            |
+     * |--------------------|------------|-------------------------------------------------------------------------------------------------------|
+     * |Andorra             |`ad_nrt`    |Andorran NRT Number                                                                                    |
+     * |Argentina           |`ar_cuit`   |Argentinian Tax ID Number                                                                              |
+     * |Australia           |`au_abn`    |Australian Business Number (AU ABN)                                                                    |
+     * |Australia           |`au_arn`    |Australian Taxation Office Reference Number                                                            |
+     * |Austria             |`eu_vat`    |European VAT Number                                                                                    |
+     * |Bahrain             |`bh_vat`    |Bahraini VAT Number                                                                                    |
+     * |Belgium             |`eu_vat`    |European VAT Number                                                                                    |
+     * |Bolivia             |`bo_tin`    |Bolivian Tax ID                                                                                        |
+     * |Brazil              |`br_cnpj`   |Brazilian CNPJ Number                                                                                  |
+     * |Brazil              |`br_cpf`    |Brazilian CPF Number                                                                                   |
+     * |Bulgaria            |`bg_uic`    |Bulgaria Unified Identification Code                                                                   |
+     * |Bulgaria            |`eu_vat`    |European VAT Number                                                                                    |
+     * |Canada              |`ca_bn`     |Canadian BN                                                                                            |
+     * |Canada              |`ca_gst_hst`|Canadian GST/HST Number                                                                                |
+     * |Canada              |`ca_pst_bc` |Canadian PST Number (British Columbia)                                                                 |
+     * |Canada              |`ca_pst_mb` |Canadian PST Number (Manitoba)                                                                         |
+     * |Canada              |`ca_pst_sk` |Canadian PST Number (Saskatchewan)                                                                     |
+     * |Canada              |`ca_qst`    |Canadian QST Number (Québec)                                                                           |
+     * |Chile               |`cl_tin`    |Chilean TIN                                                                                            |
+     * |China               |`cn_tin`    |Chinese Tax ID                                                                                         |
+     * |Colombia            |`co_nit`    |Colombian NIT Number                                                                                   |
+     * |Costa Rica          |`cr_tin`    |Costa Rican Tax ID                                                                                     |
+     * |Croatia             |`eu_vat`    |European VAT Number                                                                                    |
+     * |Cyprus              |`eu_vat`    |European VAT Number                                                                                    |
+     * |Czech Republic      |`eu_vat`    |European VAT Number                                                                                    |
+     * |Denmark             |`eu_vat`    |European VAT Number                                                                                    |
+     * |Dominican Republic  |`do_rcn`    |Dominican RCN Number                                                                                   |
+     * |Ecuador             |`ec_ruc`    |Ecuadorian RUC Number                                                                                  |
+     * |Egypt               |`eg_tin`    |Egyptian Tax Identification Number                                                                     |
+     * |El Salvador         |`sv_nit`    |El Salvadorian NIT Number                                                                              |
+     * |Estonia             |`eu_vat`    |European VAT Number                                                                                    |
+     * |EU                  |`eu_oss_vat`|European One Stop Shop VAT Number for non-Union scheme                                                 |
+     * |Finland             |`eu_vat`    |European VAT Number                                                                                    |
+     * |France              |`eu_vat`    |European VAT Number                                                                                    |
+     * |Georgia             |`ge_vat`    |Georgian VAT                                                                                           |
+     * |Germany             |`eu_vat`    |European VAT Number                                                                                    |
+     * |Greece              |`eu_vat`    |European VAT Number                                                                                    |
+     * |Hong Kong           |`hk_br`     |Hong Kong BR Number                                                                                    |
+     * |Hungary             |`eu_vat`    |European VAT Number                                                                                    |
+     * |Hungary             |`hu_tin`    |Hungary Tax Number (adószám)                                                                           |
+     * |Iceland             |`is_vat`    |Icelandic VAT                                                                                          |
+     * |India               |`in_gst`    |Indian GST Number                                                                                      |
+     * |Indonesia           |`id_npwp`   |Indonesian NPWP Number                                                                                 |
+     * |Ireland             |`eu_vat`    |European VAT Number                                                                                    |
+     * |Israel              |`il_vat`    |Israel VAT                                                                                             |
+     * |Italy               |`eu_vat`    |European VAT Number                                                                                    |
+     * |Japan               |`jp_cn`     |Japanese Corporate Number (_Hōjin Bangō_)                                                              |
+     * |Japan               |`jp_rn`     |Japanese Registered Foreign Businesses' Registration Number (_Tōroku Kokugai Jigyōsha no Tōroku Bangō_)|
+     * |Japan               |`jp_trn`    |Japanese Tax Registration Number (_Tōroku Bangō_)                                                      |
+     * |Kazakhstan          |`kz_bin`    |Kazakhstani Business Identification Number                                                             |
+     * |Kenya               |`ke_pin`    |Kenya Revenue Authority Personal Identification Number                                                 |
+     * |Latvia              |`eu_vat`    |European VAT Number                                                                                    |
+     * |Liechtenstein       |`li_uid`    |Liechtensteinian UID Number                                                                            |
+     * |Lithuania           |`eu_vat`    |European VAT Number                                                                                    |
+     * |Luxembourg          |`eu_vat`    |European VAT Number                                                                                    |
+     * |Malaysia            |`my_frp`    |Malaysian FRP Number                                                                                   |
+     * |Malaysia            |`my_itn`    |Malaysian ITN                                                                                          |
+     * |Malaysia            |`my_sst`    |Malaysian SST Number                                                                                   |
+     * |Malta               |`eu_vat `   |European VAT Number                                                                                    |
+     * |Mexico              |`mx_rfc`    |Mexican RFC Number                                                                                     |
+     * |Netherlands         |`eu_vat`    |European VAT Number                                                                                    |
+     * |New Zealand         |`nz_gst`    |New Zealand GST Number                                                                                 |
+     * |Nigeria             |`ng_tin`    |Nigerian Tax Identification Number                                                                     |
+     * |Norway              |`no_vat`    |Norwegian VAT Number                                                                                   |
+     * |Norway              |`no_voec`   |Norwegian VAT on e-commerce Number                                                                     |
+     * |Oman                |`om_vat`    |Omani VAT Number                                                                                       |
+     * |Peru                |`pe_ruc`    |Peruvian RUC Number                                                                                    |
+     * |Philippines         |`ph_tin `   |Philippines Tax Identification Number                                                                  |
+     * |Poland              |`eu_vat`    |European VAT Number                                                                                    |
+     * |Portugal            |`eu_vat`    |European VAT Number                                                                                    |
+     * |Romania             |`eu_vat`    |European VAT Number                                                                                    |
+     * |Romania             |`ro_tin`    |Romanian Tax ID Number                                                                                 |
+     * |Russia              |`ru_inn`    |Russian INN                                                                                            |
+     * |Russia              |`ru_kpp`    |Russian KPP                                                                                            |
+     * |Saudi Arabia        |`sa_vat`    |Saudi Arabia VAT                                                                                       |
+     * |Serbia              |`rs_pib`    |Serbian PIB Number                                                                                     |
+     * |Singapore           |`sg_gst`    |Singaporean GST                                                                                        |
+     * |Singapore           |`sg_uen`    |Singaporean UEN                                                                                        |
+     * |Slovakia            |`eu_vat`    |European VAT Number                                                                                    |
+     * |Slovenia            |`eu_vat`    |European VAT Number                                                                                    |
+     * |Slovenia            |`si_tin`    |Slovenia Tax Number (davčna številka)                                                                  |
+     * |South Africa        |`za_vat`    |South African VAT Number                                                                               |
+     * |South Korea         |`kr_brn`    |Korean BRN                                                                                             |
+     * |Spain               |`es_cif`    |Spanish NIF Number (previously Spanish CIF Number)                                                     |
+     * |Spain               |`eu_vat`    |European VAT Number                                                                                    |
+     * |Sweden              |`eu_vat`    |European VAT Number                                                                                    |
+     * |Switzerland         |`ch_vat`    |Switzerland VAT Number                                                                                 |
+     * |Taiwan              |`tw_vat`    |Taiwanese VAT                                                                                          |
+     * |Thailand            |`th_vat`    |Thai VAT                                                                                               |
+     * |Turkey              |`tr_tin`    |Turkish Tax Identification Number                                                                      |
+     * |Ukraine             |`ua_vat`    |Ukrainian VAT                                                                                          |
+     * |United Arab Emirates|`ae_trn`    |United Arab Emirates TRN                                                                               |
+     * |United Kingdom      |`eu_vat`    |Northern Ireland VAT Number                                                                            |
+     * |United Kingdom      |`gb_vat`    |United Kingdom VAT Number                                                                              |
+     * |United States       |`us_ein`    |United States EIN                                                                                      |
+     * |Uruguay             |`uy_ruc`    |Uruguayan RUC Number                                                                                   |
+     * |Venezuela           |`ve_rif`    |Venezuelan RIF Number                                                                                  |
+     * |Vietnam             |`vn_tin`    |Vietnamese Tax ID Number                                                                               |
+     */
+    fun taxId(): TaxId? = body.taxId()
 
     fun _additionalHeaders(): Headers = additionalHeaders
 
     fun _additionalQueryParams(): QueryParams = additionalQueryParams
 
-    fun _additionalBodyProperties(): Map<String, JsonValue> = additionalBodyProperties
+    fun _additionalBodyProperties(): Map<String, JsonValue> = body._additionalProperties()
 
-    internal fun getBody(): CustomerUpdateBody {
-        return CustomerUpdateBody(
-            accountingSyncConfiguration,
-            additionalEmails,
-            autoCollection,
-            billingAddress,
-            currency,
-            email,
-            emailDelivery,
-            externalCustomerId,
-            metadata,
-            name,
-            paymentProvider,
-            paymentProviderId,
-            reportingConfiguration,
-            shippingAddress,
-            taxConfiguration,
-            taxId,
-            additionalBodyProperties,
-        )
-    }
+    internal fun getBody(): CustomerUpdateBody = body
 
     internal fun getHeaders(): Headers = additionalHeaders
 
@@ -342,7 +448,7 @@ constructor(
         class Builder {
 
             private var accountingSyncConfiguration: AccountingSyncConfiguration? = null
-            private var additionalEmails: List<String>? = null
+            private var additionalEmails: MutableList<String>? = null
             private var autoCollection: Boolean? = null
             private var billingAddress: BillingAddress? = null
             private var currency: String? = null
@@ -380,15 +486,24 @@ constructor(
             }
 
             fun accountingSyncConfiguration(
-                accountingSyncConfiguration: AccountingSyncConfiguration?
+                accountingSyncConfiguration: AccountingSyncConfiguration
             ) = apply { this.accountingSyncConfiguration = accountingSyncConfiguration }
 
             /**
              * Additional email addresses for this customer. If populated, these email addresses
              * will be CC'd for customer communications.
              */
-            fun additionalEmails(additionalEmails: List<String>?) = apply {
-                this.additionalEmails = additionalEmails
+            fun additionalEmails(additionalEmails: List<String>) = apply {
+                this.additionalEmails = additionalEmails.toMutableList()
+            }
+
+            /**
+             * Additional email addresses for this customer. If populated, these email addresses
+             * will be CC'd for customer communications.
+             */
+            fun addAdditionalEmail(additionalEmail: String) = apply {
+                additionalEmails =
+                    (additionalEmails ?: mutableListOf()).apply { add(additionalEmail) }
             }
 
             /**
@@ -396,11 +511,11 @@ constructor(
              * a saved payment method, if available. This parameter defaults to `True` when a
              * payment provider is provided on customer creation.
              */
-            fun autoCollection(autoCollection: Boolean?) = apply {
+            fun autoCollection(autoCollection: Boolean) = apply {
                 this.autoCollection = autoCollection
             }
 
-            fun billingAddress(billingAddress: BillingAddress?) = apply {
+            fun billingAddress(billingAddress: BillingAddress) = apply {
                 this.billingAddress = billingAddress
             }
 
@@ -408,20 +523,18 @@ constructor(
              * An ISO 4217 currency string used for the customer's invoices and balance. If not set
              * at creation time, will be set at subscription creation time.
              */
-            fun currency(currency: String?) = apply { this.currency = currency }
+            fun currency(currency: String) = apply { this.currency = currency }
 
             /** A valid customer email, to be used for invoicing and notifications. */
-            fun email(email: String?) = apply { this.email = email }
+            fun email(email: String) = apply { this.email = email }
 
-            fun emailDelivery(emailDelivery: Boolean?) = apply {
-                this.emailDelivery = emailDelivery
-            }
+            fun emailDelivery(emailDelivery: Boolean) = apply { this.emailDelivery = emailDelivery }
 
             /**
              * The external customer ID. This can only be set if empty and the customer has no past
              * or current subscriptions.
              */
-            fun externalCustomerId(externalCustomerId: String?) = apply {
+            fun externalCustomerId(externalCustomerId: String) = apply {
                 this.externalCustomerId = externalCustomerId
             }
 
@@ -430,10 +543,10 @@ constructor(
              * setting the value to `null`, and the entire metadata mapping can be cleared by
              * setting `metadata` to `null`.
              */
-            fun metadata(metadata: Metadata?) = apply { this.metadata = metadata }
+            fun metadata(metadata: Metadata) = apply { this.metadata = metadata }
 
             /** The full name of the customer */
-            fun name(name: String?) = apply { this.name = name }
+            fun name(name: String) = apply { this.name = name }
 
             /**
              * This is used for creating charges or invoices in an external system via Orb. When not
@@ -443,7 +556,7 @@ constructor(
              *   `bill.com`, `netsuite`), any product mappings must first be configured with the Orb
              *   team.
              */
-            fun paymentProvider(paymentProvider: PaymentProvider?) = apply {
+            fun paymentProvider(paymentProvider: PaymentProvider) = apply {
                 this.paymentProvider = paymentProvider
             }
 
@@ -451,21 +564,34 @@ constructor(
              * The ID of this customer in an external payments solution, such as Stripe. This is
              * used for creating charges or invoices in the external system via Orb.
              */
-            fun paymentProviderId(paymentProviderId: String?) = apply {
+            fun paymentProviderId(paymentProviderId: String) = apply {
                 this.paymentProviderId = paymentProviderId
             }
 
-            fun reportingConfiguration(reportingConfiguration: ReportingConfiguration?) = apply {
+            fun reportingConfiguration(reportingConfiguration: ReportingConfiguration) = apply {
                 this.reportingConfiguration = reportingConfiguration
             }
 
-            fun shippingAddress(shippingAddress: ShippingAddress?) = apply {
+            fun shippingAddress(shippingAddress: ShippingAddress) = apply {
                 this.shippingAddress = shippingAddress
             }
 
-            fun taxConfiguration(taxConfiguration: TaxConfiguration?) = apply {
+            fun taxConfiguration(taxConfiguration: TaxConfiguration) = apply {
                 this.taxConfiguration = taxConfiguration
             }
+
+            fun taxConfiguration(
+                newAvalaraTaxConfiguration: TaxConfiguration.NewAvalaraTaxConfiguration
+            ) = apply {
+                this.taxConfiguration =
+                    TaxConfiguration.ofNewAvalaraTaxConfiguration(newAvalaraTaxConfiguration)
+            }
+
+            fun taxConfiguration(newTaxJarConfiguration: TaxConfiguration.NewTaxJarConfiguration) =
+                apply {
+                    this.taxConfiguration =
+                        TaxConfiguration.ofNewTaxJarConfiguration(newTaxJarConfiguration)
+                }
 
             /**
              * Tax IDs are commonly required to be displayed on customer invoices, which are added
@@ -573,7 +699,7 @@ constructor(
              * |Venezuela           |`ve_rif`    |Venezuelan RIF Number                                                                                  |
              * |Vietnam             |`vn_tin`    |Vietnamese Tax ID Number                                                                               |
              */
-            fun taxId(taxId: TaxId?) = apply { this.taxId = taxId }
+            fun taxId(taxId: TaxId) = apply { this.taxId = taxId }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
@@ -645,55 +771,22 @@ constructor(
     class Builder {
 
         private var customerId: String? = null
-        private var accountingSyncConfiguration: AccountingSyncConfiguration? = null
-        private var additionalEmails: MutableList<String> = mutableListOf()
-        private var autoCollection: Boolean? = null
-        private var billingAddress: BillingAddress? = null
-        private var currency: String? = null
-        private var email: String? = null
-        private var emailDelivery: Boolean? = null
-        private var externalCustomerId: String? = null
-        private var metadata: Metadata? = null
-        private var name: String? = null
-        private var paymentProvider: PaymentProvider? = null
-        private var paymentProviderId: String? = null
-        private var reportingConfiguration: ReportingConfiguration? = null
-        private var shippingAddress: ShippingAddress? = null
-        private var taxConfiguration: TaxConfiguration? = null
-        private var taxId: TaxId? = null
+        private var body: CustomerUpdateBody.Builder = CustomerUpdateBody.builder()
         private var additionalHeaders: Headers.Builder = Headers.builder()
         private var additionalQueryParams: QueryParams.Builder = QueryParams.builder()
-        private var additionalBodyProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         internal fun from(customerUpdateParams: CustomerUpdateParams) = apply {
             customerId = customerUpdateParams.customerId
-            accountingSyncConfiguration = customerUpdateParams.accountingSyncConfiguration
-            additionalEmails =
-                customerUpdateParams.additionalEmails?.toMutableList() ?: mutableListOf()
-            autoCollection = customerUpdateParams.autoCollection
-            billingAddress = customerUpdateParams.billingAddress
-            currency = customerUpdateParams.currency
-            email = customerUpdateParams.email
-            emailDelivery = customerUpdateParams.emailDelivery
-            externalCustomerId = customerUpdateParams.externalCustomerId
-            metadata = customerUpdateParams.metadata
-            name = customerUpdateParams.name
-            paymentProvider = customerUpdateParams.paymentProvider
-            paymentProviderId = customerUpdateParams.paymentProviderId
-            reportingConfiguration = customerUpdateParams.reportingConfiguration
-            shippingAddress = customerUpdateParams.shippingAddress
-            taxConfiguration = customerUpdateParams.taxConfiguration
-            taxId = customerUpdateParams.taxId
+            body = customerUpdateParams.body.toBuilder()
             additionalHeaders = customerUpdateParams.additionalHeaders.toBuilder()
             additionalQueryParams = customerUpdateParams.additionalQueryParams.toBuilder()
-            additionalBodyProperties = customerUpdateParams.additionalBodyProperties.toMutableMap()
         }
 
         fun customerId(customerId: String) = apply { this.customerId = customerId }
 
         fun accountingSyncConfiguration(accountingSyncConfiguration: AccountingSyncConfiguration) =
             apply {
-                this.accountingSyncConfiguration = accountingSyncConfiguration
+                body.accountingSyncConfiguration(accountingSyncConfiguration)
             }
 
         /**
@@ -701,8 +794,7 @@ constructor(
          * CC'd for customer communications.
          */
         fun additionalEmails(additionalEmails: List<String>) = apply {
-            this.additionalEmails.clear()
-            this.additionalEmails.addAll(additionalEmails)
+            body.additionalEmails(additionalEmails)
         }
 
         /**
@@ -710,7 +802,7 @@ constructor(
          * CC'd for customer communications.
          */
         fun addAdditionalEmail(additionalEmail: String) = apply {
-            this.additionalEmails.add(additionalEmail)
+            body.addAdditionalEmail(additionalEmail)
         }
 
         /**
@@ -718,29 +810,29 @@ constructor(
          * saved payment method, if available. This parameter defaults to `True` when a payment
          * provider is provided on customer creation.
          */
-        fun autoCollection(autoCollection: Boolean) = apply { this.autoCollection = autoCollection }
+        fun autoCollection(autoCollection: Boolean) = apply { body.autoCollection(autoCollection) }
 
         fun billingAddress(billingAddress: BillingAddress) = apply {
-            this.billingAddress = billingAddress
+            body.billingAddress(billingAddress)
         }
 
         /**
          * An ISO 4217 currency string used for the customer's invoices and balance. If not set at
          * creation time, will be set at subscription creation time.
          */
-        fun currency(currency: String) = apply { this.currency = currency }
+        fun currency(currency: String) = apply { body.currency(currency) }
 
         /** A valid customer email, to be used for invoicing and notifications. */
-        fun email(email: String) = apply { this.email = email }
+        fun email(email: String) = apply { body.email(email) }
 
-        fun emailDelivery(emailDelivery: Boolean) = apply { this.emailDelivery = emailDelivery }
+        fun emailDelivery(emailDelivery: Boolean) = apply { body.emailDelivery(emailDelivery) }
 
         /**
          * The external customer ID. This can only be set if empty and the customer has no past or
          * current subscriptions.
          */
         fun externalCustomerId(externalCustomerId: String) = apply {
-            this.externalCustomerId = externalCustomerId
+            body.externalCustomerId(externalCustomerId)
         }
 
         /**
@@ -748,10 +840,10 @@ constructor(
          * setting the value to `null`, and the entire metadata mapping can be cleared by setting
          * `metadata` to `null`.
          */
-        fun metadata(metadata: Metadata) = apply { this.metadata = metadata }
+        fun metadata(metadata: Metadata) = apply { body.metadata(metadata) }
 
         /** The full name of the customer */
-        fun name(name: String) = apply { this.name = name }
+        fun name(name: String) = apply { body.name(name) }
 
         /**
          * This is used for creating charges or invoices in an external system via Orb. When not in
@@ -761,7 +853,7 @@ constructor(
          *   `netsuite`), any product mappings must first be configured with the Orb team.
          */
         fun paymentProvider(paymentProvider: PaymentProvider) = apply {
-            this.paymentProvider = paymentProvider
+            body.paymentProvider(paymentProvider)
         }
 
         /**
@@ -769,32 +861,28 @@ constructor(
          * for creating charges or invoices in the external system via Orb.
          */
         fun paymentProviderId(paymentProviderId: String) = apply {
-            this.paymentProviderId = paymentProviderId
+            body.paymentProviderId(paymentProviderId)
         }
 
         fun reportingConfiguration(reportingConfiguration: ReportingConfiguration) = apply {
-            this.reportingConfiguration = reportingConfiguration
+            body.reportingConfiguration(reportingConfiguration)
         }
 
         fun shippingAddress(shippingAddress: ShippingAddress) = apply {
-            this.shippingAddress = shippingAddress
+            body.shippingAddress(shippingAddress)
         }
 
         fun taxConfiguration(taxConfiguration: TaxConfiguration) = apply {
-            this.taxConfiguration = taxConfiguration
+            body.taxConfiguration(taxConfiguration)
         }
 
         fun taxConfiguration(
             newAvalaraTaxConfiguration: TaxConfiguration.NewAvalaraTaxConfiguration
-        ) = apply {
-            this.taxConfiguration =
-                TaxConfiguration.ofNewAvalaraTaxConfiguration(newAvalaraTaxConfiguration)
-        }
+        ) = apply { body.taxConfiguration(newAvalaraTaxConfiguration) }
 
         fun taxConfiguration(newTaxJarConfiguration: TaxConfiguration.NewTaxJarConfiguration) =
             apply {
-                this.taxConfiguration =
-                    TaxConfiguration.ofNewTaxJarConfiguration(newTaxJarConfiguration)
+                body.taxConfiguration(newTaxJarConfiguration)
             }
 
         /**
@@ -903,7 +991,7 @@ constructor(
          * |Venezuela           |`ve_rif`    |Venezuelan RIF Number                                                                                  |
          * |Vietnam             |`vn_tin`    |Vietnamese Tax ID Number                                                                               |
          */
-        fun taxId(taxId: TaxId) = apply { this.taxId = taxId }
+        fun taxId(taxId: TaxId) = apply { body.taxId(taxId) }
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {
             this.additionalHeaders.clear()
@@ -1004,49 +1092,30 @@ constructor(
         }
 
         fun additionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) = apply {
-            this.additionalBodyProperties.clear()
-            putAllAdditionalBodyProperties(additionalBodyProperties)
+            body.additionalProperties(additionalBodyProperties)
         }
 
         fun putAdditionalBodyProperty(key: String, value: JsonValue) = apply {
-            additionalBodyProperties.put(key, value)
+            body.putAdditionalProperty(key, value)
         }
 
         fun putAllAdditionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) =
             apply {
-                this.additionalBodyProperties.putAll(additionalBodyProperties)
+                body.putAllAdditionalProperties(additionalBodyProperties)
             }
 
-        fun removeAdditionalBodyProperty(key: String) = apply {
-            additionalBodyProperties.remove(key)
-        }
+        fun removeAdditionalBodyProperty(key: String) = apply { body.removeAdditionalProperty(key) }
 
         fun removeAllAdditionalBodyProperties(keys: Set<String>) = apply {
-            keys.forEach(::removeAdditionalBodyProperty)
+            body.removeAllAdditionalProperties(keys)
         }
 
         fun build(): CustomerUpdateParams =
             CustomerUpdateParams(
                 checkNotNull(customerId) { "`customerId` is required but was not set" },
-                accountingSyncConfiguration,
-                additionalEmails.toImmutable().ifEmpty { null },
-                autoCollection,
-                billingAddress,
-                currency,
-                email,
-                emailDelivery,
-                externalCustomerId,
-                metadata,
-                name,
-                paymentProvider,
-                paymentProviderId,
-                reportingConfiguration,
-                shippingAddress,
-                taxConfiguration,
-                taxId,
+                body.build(),
                 additionalHeaders.build(),
                 additionalQueryParams.build(),
-                additionalBodyProperties.toImmutable(),
             )
     }
 
@@ -1080,7 +1149,7 @@ constructor(
         class Builder {
 
             private var excluded: Boolean? = null
-            private var accountingProviders: List<AccountingProvider>? = null
+            private var accountingProviders: MutableList<AccountingProvider>? = null
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             internal fun from(accountingSyncConfiguration: AccountingSyncConfiguration) = apply {
@@ -1091,10 +1160,15 @@ constructor(
                     accountingSyncConfiguration.additionalProperties.toMutableMap()
             }
 
-            fun excluded(excluded: Boolean?) = apply { this.excluded = excluded }
+            fun excluded(excluded: Boolean) = apply { this.excluded = excluded }
 
-            fun accountingProviders(accountingProviders: List<AccountingProvider>?) = apply {
-                this.accountingProviders = accountingProviders
+            fun accountingProviders(accountingProviders: List<AccountingProvider>) = apply {
+                this.accountingProviders = accountingProviders.toMutableList()
+            }
+
+            fun addAccountingProvider(accountingProvider: AccountingProvider) = apply {
+                accountingProviders =
+                    (accountingProviders ?: mutableListOf()).apply { add(accountingProvider) }
             }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
@@ -1293,17 +1367,17 @@ constructor(
                 additionalProperties = billingAddress.additionalProperties.toMutableMap()
             }
 
-            fun line1(line1: String?) = apply { this.line1 = line1 }
+            fun line1(line1: String) = apply { this.line1 = line1 }
 
-            fun line2(line2: String?) = apply { this.line2 = line2 }
+            fun line2(line2: String) = apply { this.line2 = line2 }
 
-            fun city(city: String?) = apply { this.city = city }
+            fun city(city: String) = apply { this.city = city }
 
-            fun state(state: String?) = apply { this.state = state }
+            fun state(state: String) = apply { this.state = state }
 
-            fun postalCode(postalCode: String?) = apply { this.postalCode = postalCode }
+            fun postalCode(postalCode: String) = apply { this.postalCode = postalCode }
 
-            fun country(country: String?) = apply { this.country = country }
+            fun country(country: String) = apply { this.country = country }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
@@ -1635,17 +1709,17 @@ constructor(
                 additionalProperties = shippingAddress.additionalProperties.toMutableMap()
             }
 
-            fun line1(line1: String?) = apply { this.line1 = line1 }
+            fun line1(line1: String) = apply { this.line1 = line1 }
 
-            fun line2(line2: String?) = apply { this.line2 = line2 }
+            fun line2(line2: String) = apply { this.line2 = line2 }
 
-            fun city(city: String?) = apply { this.city = city }
+            fun city(city: String) = apply { this.city = city }
 
-            fun state(state: String?) = apply { this.state = state }
+            fun state(state: String) = apply { this.state = state }
 
-            fun postalCode(postalCode: String?) = apply { this.postalCode = postalCode }
+            fun postalCode(postalCode: String) = apply { this.postalCode = postalCode }
 
-            fun country(country: String?) = apply { this.country = country }
+            fun country(country: String) = apply { this.country = country }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
@@ -1862,7 +1936,7 @@ constructor(
 
                 fun taxProvider(taxProvider: TaxProvider) = apply { this.taxProvider = taxProvider }
 
-                fun taxExemptionCode(taxExemptionCode: String?) = apply {
+                fun taxExemptionCode(taxExemptionCode: String) = apply {
                     this.taxExemptionCode = taxExemptionCode
                 }
 
@@ -3297,11 +3371,11 @@ constructor(
             return true
         }
 
-        return /* spotless:off */ other is CustomerUpdateParams && customerId == other.customerId && accountingSyncConfiguration == other.accountingSyncConfiguration && additionalEmails == other.additionalEmails && autoCollection == other.autoCollection && billingAddress == other.billingAddress && currency == other.currency && email == other.email && emailDelivery == other.emailDelivery && externalCustomerId == other.externalCustomerId && metadata == other.metadata && name == other.name && paymentProvider == other.paymentProvider && paymentProviderId == other.paymentProviderId && reportingConfiguration == other.reportingConfiguration && shippingAddress == other.shippingAddress && taxConfiguration == other.taxConfiguration && taxId == other.taxId && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams && additionalBodyProperties == other.additionalBodyProperties /* spotless:on */
+        return /* spotless:off */ other is CustomerUpdateParams && customerId == other.customerId && body == other.body && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
     }
 
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(customerId, accountingSyncConfiguration, additionalEmails, autoCollection, billingAddress, currency, email, emailDelivery, externalCustomerId, metadata, name, paymentProvider, paymentProviderId, reportingConfiguration, shippingAddress, taxConfiguration, taxId, additionalHeaders, additionalQueryParams, additionalBodyProperties) /* spotless:on */
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(customerId, body, additionalHeaders, additionalQueryParams) /* spotless:on */
 
     override fun toString() =
-        "CustomerUpdateParams{customerId=$customerId, accountingSyncConfiguration=$accountingSyncConfiguration, additionalEmails=$additionalEmails, autoCollection=$autoCollection, billingAddress=$billingAddress, currency=$currency, email=$email, emailDelivery=$emailDelivery, externalCustomerId=$externalCustomerId, metadata=$metadata, name=$name, paymentProvider=$paymentProvider, paymentProviderId=$paymentProviderId, reportingConfiguration=$reportingConfiguration, shippingAddress=$shippingAddress, taxConfiguration=$taxConfiguration, taxId=$taxId, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams, additionalBodyProperties=$additionalBodyProperties}"
+        "CustomerUpdateParams{customerId=$customerId, body=$body, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
 }

@@ -18,29 +18,31 @@ import java.util.Objects
 
 class EventIngestParams
 constructor(
-    private val events: List<Event>,
     private val backfillId: String?,
     private val debug: Boolean?,
+    private val body: EventIngestBody,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
-    private val additionalBodyProperties: Map<String, JsonValue>,
 ) {
 
-    fun events(): List<Event> = events
-
+    /**
+     * If this ingestion request is part of a backfill, this parameter ties the ingested events to
+     * the backfill
+     */
     fun backfillId(): String? = backfillId
 
+    /** Flag to enable additional debug information in the endpoint response */
     fun debug(): Boolean? = debug
+
+    fun events(): List<Event> = body.events()
 
     fun _additionalHeaders(): Headers = additionalHeaders
 
     fun _additionalQueryParams(): QueryParams = additionalQueryParams
 
-    fun _additionalBodyProperties(): Map<String, JsonValue> = additionalBodyProperties
+    fun _additionalBodyProperties(): Map<String, JsonValue> = body._additionalProperties()
 
-    internal fun getBody(): EventIngestBody {
-        return EventIngestBody(events, additionalBodyProperties)
-    }
+    internal fun getBody(): EventIngestBody = body
 
     internal fun getHeaders(): Headers = additionalHeaders
 
@@ -76,7 +78,7 @@ constructor(
 
         class Builder {
 
-            private var events: List<Event>? = null
+            private var events: MutableList<Event>? = null
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             internal fun from(eventIngestBody: EventIngestBody) = apply {
@@ -84,7 +86,11 @@ constructor(
                 additionalProperties = eventIngestBody.additionalProperties.toMutableMap()
             }
 
-            fun events(events: List<Event>) = apply { this.events = events }
+            fun events(events: List<Event>) = apply { this.events = events.toMutableList() }
+
+            fun addEvent(event: Event) = apply {
+                events = (events ?: mutableListOf()).apply { add(event) }
+            }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
@@ -140,28 +146,19 @@ constructor(
     @NoAutoDetect
     class Builder {
 
-        private var events: MutableList<Event> = mutableListOf()
         private var backfillId: String? = null
         private var debug: Boolean? = null
+        private var body: EventIngestBody.Builder = EventIngestBody.builder()
         private var additionalHeaders: Headers.Builder = Headers.builder()
         private var additionalQueryParams: QueryParams.Builder = QueryParams.builder()
-        private var additionalBodyProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         internal fun from(eventIngestParams: EventIngestParams) = apply {
-            events = eventIngestParams.events.toMutableList()
             backfillId = eventIngestParams.backfillId
             debug = eventIngestParams.debug
+            body = eventIngestParams.body.toBuilder()
             additionalHeaders = eventIngestParams.additionalHeaders.toBuilder()
             additionalQueryParams = eventIngestParams.additionalQueryParams.toBuilder()
-            additionalBodyProperties = eventIngestParams.additionalBodyProperties.toMutableMap()
         }
-
-        fun events(events: List<Event>) = apply {
-            this.events.clear()
-            this.events.addAll(events)
-        }
-
-        fun addEvent(event: Event) = apply { this.events.add(event) }
 
         /**
          * If this ingestion request is part of a backfill, this parameter ties the ingested events
@@ -171,6 +168,10 @@ constructor(
 
         /** Flag to enable additional debug information in the endpoint response */
         fun debug(debug: Boolean) = apply { this.debug = debug }
+
+        fun events(events: List<Event>) = apply { body.events(events) }
+
+        fun addEvent(event: Event) = apply { body.addEvent(event) }
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {
             this.additionalHeaders.clear()
@@ -271,35 +272,31 @@ constructor(
         }
 
         fun additionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) = apply {
-            this.additionalBodyProperties.clear()
-            putAllAdditionalBodyProperties(additionalBodyProperties)
+            body.additionalProperties(additionalBodyProperties)
         }
 
         fun putAdditionalBodyProperty(key: String, value: JsonValue) = apply {
-            additionalBodyProperties.put(key, value)
+            body.putAdditionalProperty(key, value)
         }
 
         fun putAllAdditionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) =
             apply {
-                this.additionalBodyProperties.putAll(additionalBodyProperties)
+                body.putAllAdditionalProperties(additionalBodyProperties)
             }
 
-        fun removeAdditionalBodyProperty(key: String) = apply {
-            additionalBodyProperties.remove(key)
-        }
+        fun removeAdditionalBodyProperty(key: String) = apply { body.removeAdditionalProperty(key) }
 
         fun removeAllAdditionalBodyProperties(keys: Set<String>) = apply {
-            keys.forEach(::removeAdditionalBodyProperty)
+            body.removeAllAdditionalProperties(keys)
         }
 
         fun build(): EventIngestParams =
             EventIngestParams(
-                events.toImmutable(),
                 backfillId,
                 debug,
+                body.build(),
                 additionalHeaders.build(),
                 additionalQueryParams.build(),
-                additionalBodyProperties.toImmutable(),
             )
     }
 
@@ -378,12 +375,12 @@ constructor(
             }
 
             /** The Orb Customer identifier */
-            fun customerId(customerId: String?) = apply { this.customerId = customerId }
+            fun customerId(customerId: String) = apply { this.customerId = customerId }
 
             /**
              * An alias for the Orb customer, whose mapping is specified when creating the customer
              */
-            fun externalCustomerId(externalCustomerId: String?) = apply {
+            fun externalCustomerId(externalCustomerId: String) = apply {
                 this.externalCustomerId = externalCustomerId
             }
 
@@ -466,11 +463,11 @@ constructor(
             return true
         }
 
-        return /* spotless:off */ other is EventIngestParams && events == other.events && backfillId == other.backfillId && debug == other.debug && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams && additionalBodyProperties == other.additionalBodyProperties /* spotless:on */
+        return /* spotless:off */ other is EventIngestParams && backfillId == other.backfillId && debug == other.debug && body == other.body && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
     }
 
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(events, backfillId, debug, additionalHeaders, additionalQueryParams, additionalBodyProperties) /* spotless:on */
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(backfillId, debug, body, additionalHeaders, additionalQueryParams) /* spotless:on */
 
     override fun toString() =
-        "EventIngestParams{events=$events, backfillId=$backfillId, debug=$debug, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams, additionalBodyProperties=$additionalBodyProperties}"
+        "EventIngestParams{backfillId=$backfillId, debug=$debug, body=$body, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
 }

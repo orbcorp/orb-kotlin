@@ -21,32 +21,24 @@ import java.util.Objects
 class ItemUpdateParams
 constructor(
     private val itemId: String,
-    private val externalConnections: List<ExternalConnection>?,
-    private val name: String?,
+    private val body: ItemUpdateBody,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
-    private val additionalBodyProperties: Map<String, JsonValue>,
 ) {
 
     fun itemId(): String = itemId
 
-    fun externalConnections(): List<ExternalConnection>? = externalConnections
+    fun externalConnections(): List<ExternalConnection>? = body.externalConnections()
 
-    fun name(): String? = name
+    fun name(): String? = body.name()
 
     fun _additionalHeaders(): Headers = additionalHeaders
 
     fun _additionalQueryParams(): QueryParams = additionalQueryParams
 
-    fun _additionalBodyProperties(): Map<String, JsonValue> = additionalBodyProperties
+    fun _additionalBodyProperties(): Map<String, JsonValue> = body._additionalProperties()
 
-    internal fun getBody(): ItemUpdateBody {
-        return ItemUpdateBody(
-            externalConnections,
-            name,
-            additionalBodyProperties,
-        )
-    }
+    internal fun getBody(): ItemUpdateBody = body
 
     internal fun getHeaders(): Headers = additionalHeaders
 
@@ -93,7 +85,7 @@ constructor(
 
         class Builder {
 
-            private var externalConnections: List<ExternalConnection>? = null
+            private var externalConnections: MutableList<ExternalConnection>? = null
             private var name: String? = null
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
@@ -103,11 +95,16 @@ constructor(
                 additionalProperties = itemUpdateBody.additionalProperties.toMutableMap()
             }
 
-            fun externalConnections(externalConnections: List<ExternalConnection>?) = apply {
-                this.externalConnections = externalConnections
+            fun externalConnections(externalConnections: List<ExternalConnection>) = apply {
+                this.externalConnections = externalConnections.toMutableList()
             }
 
-            fun name(name: String?) = apply { this.name = name }
+            fun addExternalConnection(externalConnection: ExternalConnection) = apply {
+                externalConnections =
+                    (externalConnections ?: mutableListOf()).apply { add(externalConnection) }
+            }
+
+            fun name(name: String) = apply { this.name = name }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
@@ -165,34 +162,28 @@ constructor(
     class Builder {
 
         private var itemId: String? = null
-        private var externalConnections: MutableList<ExternalConnection> = mutableListOf()
-        private var name: String? = null
+        private var body: ItemUpdateBody.Builder = ItemUpdateBody.builder()
         private var additionalHeaders: Headers.Builder = Headers.builder()
         private var additionalQueryParams: QueryParams.Builder = QueryParams.builder()
-        private var additionalBodyProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         internal fun from(itemUpdateParams: ItemUpdateParams) = apply {
             itemId = itemUpdateParams.itemId
-            externalConnections =
-                itemUpdateParams.externalConnections?.toMutableList() ?: mutableListOf()
-            name = itemUpdateParams.name
+            body = itemUpdateParams.body.toBuilder()
             additionalHeaders = itemUpdateParams.additionalHeaders.toBuilder()
             additionalQueryParams = itemUpdateParams.additionalQueryParams.toBuilder()
-            additionalBodyProperties = itemUpdateParams.additionalBodyProperties.toMutableMap()
         }
 
         fun itemId(itemId: String) = apply { this.itemId = itemId }
 
         fun externalConnections(externalConnections: List<ExternalConnection>) = apply {
-            this.externalConnections.clear()
-            this.externalConnections.addAll(externalConnections)
+            body.externalConnections(externalConnections)
         }
 
         fun addExternalConnection(externalConnection: ExternalConnection) = apply {
-            this.externalConnections.add(externalConnection)
+            body.addExternalConnection(externalConnection)
         }
 
-        fun name(name: String) = apply { this.name = name }
+        fun name(name: String) = apply { body.name(name) }
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {
             this.additionalHeaders.clear()
@@ -293,35 +284,30 @@ constructor(
         }
 
         fun additionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) = apply {
-            this.additionalBodyProperties.clear()
-            putAllAdditionalBodyProperties(additionalBodyProperties)
+            body.additionalProperties(additionalBodyProperties)
         }
 
         fun putAdditionalBodyProperty(key: String, value: JsonValue) = apply {
-            additionalBodyProperties.put(key, value)
+            body.putAdditionalProperty(key, value)
         }
 
         fun putAllAdditionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) =
             apply {
-                this.additionalBodyProperties.putAll(additionalBodyProperties)
+                body.putAllAdditionalProperties(additionalBodyProperties)
             }
 
-        fun removeAdditionalBodyProperty(key: String) = apply {
-            additionalBodyProperties.remove(key)
-        }
+        fun removeAdditionalBodyProperty(key: String) = apply { body.removeAdditionalProperty(key) }
 
         fun removeAllAdditionalBodyProperties(keys: Set<String>) = apply {
-            keys.forEach(::removeAdditionalBodyProperty)
+            body.removeAllAdditionalProperties(keys)
         }
 
         fun build(): ItemUpdateParams =
             ItemUpdateParams(
                 checkNotNull(itemId) { "`itemId` is required but was not set" },
-                externalConnections.toImmutable().ifEmpty { null },
-                name,
+                body.build(),
                 additionalHeaders.build(),
                 additionalQueryParams.build(),
-                additionalBodyProperties.toImmutable(),
             )
     }
 
@@ -513,11 +499,11 @@ constructor(
             return true
         }
 
-        return /* spotless:off */ other is ItemUpdateParams && itemId == other.itemId && externalConnections == other.externalConnections && name == other.name && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams && additionalBodyProperties == other.additionalBodyProperties /* spotless:on */
+        return /* spotless:off */ other is ItemUpdateParams && itemId == other.itemId && body == other.body && additionalHeaders == other.additionalHeaders && additionalQueryParams == other.additionalQueryParams /* spotless:on */
     }
 
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(itemId, externalConnections, name, additionalHeaders, additionalQueryParams, additionalBodyProperties) /* spotless:on */
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(itemId, body, additionalHeaders, additionalQueryParams) /* spotless:on */
 
     override fun toString() =
-        "ItemUpdateParams{itemId=$itemId, externalConnections=$externalConnections, name=$name, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams, additionalBodyProperties=$additionalBodyProperties}"
+        "ItemUpdateParams{itemId=$itemId, body=$body, additionalHeaders=$additionalHeaders, additionalQueryParams=$additionalQueryParams}"
 }
