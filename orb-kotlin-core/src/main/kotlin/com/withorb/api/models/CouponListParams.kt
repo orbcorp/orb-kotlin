@@ -78,18 +78,26 @@ constructor(
          * Cursor for pagination. This can be populated by the `next_cursor` value returned from the
          * initial request.
          */
-        fun cursor(cursor: String) = apply { this.cursor = cursor }
+        fun cursor(cursor: String?) = apply { this.cursor = cursor }
 
         /** The number of items to fetch. Defaults to 20. */
-        fun limit(limit: Long) = apply { this.limit = limit }
+        fun limit(limit: Long?) = apply { this.limit = limit }
+
+        /** The number of items to fetch. Defaults to 20. */
+        fun limit(limit: Long) = limit(limit as Long?)
 
         /** Filter to coupons matching this redemption code. */
-        fun redemptionCode(redemptionCode: String) = apply { this.redemptionCode = redemptionCode }
+        fun redemptionCode(redemptionCode: String?) = apply { this.redemptionCode = redemptionCode }
 
         /**
          * Show archived coupons as well (by default, this endpoint only returns active coupons).
          */
-        fun showArchived(showArchived: Boolean) = apply { this.showArchived = showArchived }
+        fun showArchived(showArchived: Boolean?) = apply { this.showArchived = showArchived }
+
+        /**
+         * Show archived coupons as well (by default, this endpoint only returns active coupons).
+         */
+        fun showArchived(showArchived: Boolean) = showArchived(showArchived as Boolean?)
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {
             this.additionalHeaders.clear()

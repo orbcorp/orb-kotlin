@@ -158,15 +158,22 @@ constructor(
              * charged with the saved payment method on the due date. This property defaults to the
              * plan's behavior.
              */
-            fun autoCollection(autoCollection: Boolean) = apply {
+            fun autoCollection(autoCollection: Boolean?) = apply {
                 this.autoCollection = autoCollection
             }
+
+            /**
+             * Determines whether issued invoices for this subscription will automatically be
+             * charged with the saved payment method on the due date. This property defaults to the
+             * plan's behavior.
+             */
+            fun autoCollection(autoCollection: Boolean) = autoCollection(autoCollection as Boolean?)
 
             /**
              * Determines the default memo on this subscription's invoices. Note that if this is not
              * provided, it is determined by the plan configuration.
              */
-            fun defaultInvoiceMemo(defaultInvoiceMemo: String) = apply {
+            fun defaultInvoiceMemo(defaultInvoiceMemo: String?) = apply {
                 this.defaultInvoiceMemo = defaultInvoiceMemo
             }
 
@@ -175,7 +182,7 @@ constructor(
              * issued for the subscription. If not specified, invoices will only be issued at the
              * end of the billing period.
              */
-            fun invoicingThreshold(invoicingThreshold: String) = apply {
+            fun invoicingThreshold(invoicingThreshold: String?) = apply {
                 this.invoicingThreshold = invoicingThreshold
             }
 
@@ -184,7 +191,7 @@ constructor(
              * setting the value to `null`, and the entire metadata mapping can be cleared by
              * setting `metadata` to `null`.
              */
-            fun metadata(metadata: Metadata) = apply { this.metadata = metadata }
+            fun metadata(metadata: Metadata?) = apply { this.metadata = metadata }
 
             /**
              * Determines the difference between the invoice issue date for subscription invoices as
@@ -192,7 +199,15 @@ constructor(
              * issue, whereas a value of `30` represents that the customer has a month to pay the
              * invoice.
              */
-            fun netTerms(netTerms: Long) = apply { this.netTerms = netTerms }
+            fun netTerms(netTerms: Long?) = apply { this.netTerms = netTerms }
+
+            /**
+             * Determines the difference between the invoice issue date for subscription invoices as
+             * the date that they are due. A value of `0` here represents that the invoice is due on
+             * issue, whereas a value of `30` represents that the customer has a month to pay the
+             * invoice.
+             */
+            fun netTerms(netTerms: Long) = netTerms(netTerms as Long?)
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
@@ -271,13 +286,20 @@ constructor(
          * with the saved payment method on the due date. This property defaults to the plan's
          * behavior.
          */
-        fun autoCollection(autoCollection: Boolean) = apply { body.autoCollection(autoCollection) }
+        fun autoCollection(autoCollection: Boolean?) = apply { body.autoCollection(autoCollection) }
+
+        /**
+         * Determines whether issued invoices for this subscription will automatically be charged
+         * with the saved payment method on the due date. This property defaults to the plan's
+         * behavior.
+         */
+        fun autoCollection(autoCollection: Boolean) = autoCollection(autoCollection as Boolean?)
 
         /**
          * Determines the default memo on this subscription's invoices. Note that if this is not
          * provided, it is determined by the plan configuration.
          */
-        fun defaultInvoiceMemo(defaultInvoiceMemo: String) = apply {
+        fun defaultInvoiceMemo(defaultInvoiceMemo: String?) = apply {
             body.defaultInvoiceMemo(defaultInvoiceMemo)
         }
 
@@ -286,7 +308,7 @@ constructor(
          * for the subscription. If not specified, invoices will only be issued at the end of the
          * billing period.
          */
-        fun invoicingThreshold(invoicingThreshold: String) = apply {
+        fun invoicingThreshold(invoicingThreshold: String?) = apply {
             body.invoicingThreshold(invoicingThreshold)
         }
 
@@ -295,14 +317,21 @@ constructor(
          * setting the value to `null`, and the entire metadata mapping can be cleared by setting
          * `metadata` to `null`.
          */
-        fun metadata(metadata: Metadata) = apply { body.metadata(metadata) }
+        fun metadata(metadata: Metadata?) = apply { body.metadata(metadata) }
 
         /**
          * Determines the difference between the invoice issue date for subscription invoices as the
          * date that they are due. A value of `0` here represents that the invoice is due on issue,
          * whereas a value of `30` represents that the customer has a month to pay the invoice.
          */
-        fun netTerms(netTerms: Long) = apply { body.netTerms(netTerms) }
+        fun netTerms(netTerms: Long?) = apply { body.netTerms(netTerms) }
+
+        /**
+         * Determines the difference between the invoice issue date for subscription invoices as the
+         * date that they are due. A value of `0` here represents that the invoice is due on issue,
+         * whereas a value of `30` represents that the customer has a month to pay the invoice.
+         */
+        fun netTerms(netTerms: Long) = netTerms(netTerms as Long?)
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {
             this.additionalHeaders.clear()

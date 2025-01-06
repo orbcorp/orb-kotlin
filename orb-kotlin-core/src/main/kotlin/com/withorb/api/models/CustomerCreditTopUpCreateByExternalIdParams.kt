@@ -188,10 +188,16 @@ constructor(
              * The number of days or months after which the top-up expires. If unspecified, it does
              * not expire.
              */
-            fun expiresAfter(expiresAfter: Long) = apply { this.expiresAfter = expiresAfter }
+            fun expiresAfter(expiresAfter: Long?) = apply { this.expiresAfter = expiresAfter }
+
+            /**
+             * The number of days or months after which the top-up expires. If unspecified, it does
+             * not expire.
+             */
+            fun expiresAfter(expiresAfter: Long) = expiresAfter(expiresAfter as Long?)
 
             /** The unit of expires_after. */
-            fun expiresAfterUnit(expiresAfterUnit: ExpiresAfterUnit) = apply {
+            fun expiresAfterUnit(expiresAfterUnit: ExpiresAfterUnit?) = apply {
                 this.expiresAfterUnit = expiresAfterUnit
             }
 
@@ -309,10 +315,16 @@ constructor(
          * The number of days or months after which the top-up expires. If unspecified, it does not
          * expire.
          */
-        fun expiresAfter(expiresAfter: Long) = apply { body.expiresAfter(expiresAfter) }
+        fun expiresAfter(expiresAfter: Long?) = apply { body.expiresAfter(expiresAfter) }
+
+        /**
+         * The number of days or months after which the top-up expires. If unspecified, it does not
+         * expire.
+         */
+        fun expiresAfter(expiresAfter: Long) = expiresAfter(expiresAfter as Long?)
 
         /** The unit of expires_after. */
-        fun expiresAfterUnit(expiresAfterUnit: ExpiresAfterUnit) = apply {
+        fun expiresAfterUnit(expiresAfterUnit: ExpiresAfterUnit?) = apply {
             body.expiresAfterUnit(expiresAfterUnit)
         }
 
@@ -521,15 +533,22 @@ constructor(
             fun netTerms(netTerms: Long) = apply { this.netTerms = netTerms }
 
             /** An optional memo to display on the invoice. */
-            fun memo(memo: String) = apply { this.memo = memo }
+            fun memo(memo: String?) = apply { this.memo = memo }
 
             /**
              * If true, new credit blocks created by this top-up will require that the corresponding
              * invoice is paid before they can be drawn down from.
              */
-            fun requireSuccessfulPayment(requireSuccessfulPayment: Boolean) = apply {
+            fun requireSuccessfulPayment(requireSuccessfulPayment: Boolean?) = apply {
                 this.requireSuccessfulPayment = requireSuccessfulPayment
             }
+
+            /**
+             * If true, new credit blocks created by this top-up will require that the corresponding
+             * invoice is paid before they can be drawn down from.
+             */
+            fun requireSuccessfulPayment(requireSuccessfulPayment: Boolean) =
+                requireSuccessfulPayment(requireSuccessfulPayment as Boolean?)
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()

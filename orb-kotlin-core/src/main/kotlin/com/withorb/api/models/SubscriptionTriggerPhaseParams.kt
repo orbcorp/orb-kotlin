@@ -92,7 +92,7 @@ constructor(
              * The date on which the phase change should take effect. If not provided, defaults to
              * today in the customer's timezone.
              */
-            fun effectiveDate(effectiveDate: LocalDate) = apply {
+            fun effectiveDate(effectiveDate: LocalDate?) = apply {
                 this.effectiveDate = effectiveDate
             }
 
@@ -166,7 +166,7 @@ constructor(
          * The date on which the phase change should take effect. If not provided, defaults to today
          * in the customer's timezone.
          */
-        fun effectiveDate(effectiveDate: LocalDate) = apply { body.effectiveDate(effectiveDate) }
+        fun effectiveDate(effectiveDate: LocalDate?) = apply { body.effectiveDate(effectiveDate) }
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {
             this.additionalHeaders.clear()

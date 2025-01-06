@@ -152,10 +152,10 @@ constructor(
             }
 
             /** The ID of the customer to which this evaluation is scoped. */
-            fun customerId(customerId: String) = apply { this.customerId = customerId }
+            fun customerId(customerId: String?) = apply { this.customerId = customerId }
 
             /** The external customer ID of the customer to which this evaluation is scoped. */
-            fun externalCustomerId(externalCustomerId: String) = apply {
+            fun externalCustomerId(externalCustomerId: String?) = apply {
                 this.externalCustomerId = externalCustomerId
             }
 
@@ -164,15 +164,15 @@ constructor(
              * [computed property](../guides/extensibility/advanced-metrics#computed-properties)
              * used to filter the underlying billable metric
              */
-            fun filter(filter: String) = apply { this.filter = filter }
+            fun filter(filter: String?) = apply { this.filter = filter }
 
             /**
              * Properties (or
              * [computed properties](../guides/extensibility/advanced-metrics#computed-properties))
              * used to group the underlying billable metric
              */
-            fun groupingKeys(groupingKeys: List<String>) = apply {
-                this.groupingKeys = groupingKeys.toMutableList()
+            fun groupingKeys(groupingKeys: List<String>?) = apply {
+                this.groupingKeys = groupingKeys?.toMutableList()
             }
 
             /**
@@ -266,10 +266,10 @@ constructor(
         }
 
         /** The ID of the customer to which this evaluation is scoped. */
-        fun customerId(customerId: String) = apply { body.customerId(customerId) }
+        fun customerId(customerId: String?) = apply { body.customerId(customerId) }
 
         /** The external customer ID of the customer to which this evaluation is scoped. */
-        fun externalCustomerId(externalCustomerId: String) = apply {
+        fun externalCustomerId(externalCustomerId: String?) = apply {
             body.externalCustomerId(externalCustomerId)
         }
 
@@ -278,14 +278,14 @@ constructor(
          * [computed property](../guides/extensibility/advanced-metrics#computed-properties) used to
          * filter the underlying billable metric
          */
-        fun filter(filter: String) = apply { body.filter(filter) }
+        fun filter(filter: String?) = apply { body.filter(filter) }
 
         /**
          * Properties (or
          * [computed properties](../guides/extensibility/advanced-metrics#computed-properties)) used
          * to group the underlying billable metric
          */
-        fun groupingKeys(groupingKeys: List<String>) = apply { body.groupingKeys(groupingKeys) }
+        fun groupingKeys(groupingKeys: List<String>?) = apply { body.groupingKeys(groupingKeys) }
 
         /**
          * Properties (or

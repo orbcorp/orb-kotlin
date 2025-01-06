@@ -106,13 +106,13 @@ constructor(
         fun customerId(customerId: String) = apply { this.customerId = customerId }
 
         /** The currency or custom pricing unit to use. */
-        fun currency(currency: String) = apply { this.currency = currency }
+        fun currency(currency: String?) = apply { this.currency = currency }
 
         /** Costs returned are exclusive of `timeframe_end`. */
-        fun timeframeEnd(timeframeEnd: OffsetDateTime) = apply { this.timeframeEnd = timeframeEnd }
+        fun timeframeEnd(timeframeEnd: OffsetDateTime?) = apply { this.timeframeEnd = timeframeEnd }
 
         /** Costs returned are inclusive of `timeframe_start`. */
-        fun timeframeStart(timeframeStart: OffsetDateTime) = apply {
+        fun timeframeStart(timeframeStart: OffsetDateTime?) = apply {
             this.timeframeStart = timeframeStart
         }
 
@@ -121,7 +121,7 @@ constructor(
          * incremental day-by-day costs. If your customer has minimums or discounts, it's strongly
          * recommended that you use the default cumulative behavior.
          */
-        fun viewMode(viewMode: ViewMode) = apply { this.viewMode = viewMode }
+        fun viewMode(viewMode: ViewMode?) = apply { this.viewMode = viewMode }
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {
             this.additionalHeaders.clear()
