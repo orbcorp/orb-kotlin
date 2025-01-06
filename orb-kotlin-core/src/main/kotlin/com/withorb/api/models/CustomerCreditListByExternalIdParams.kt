@@ -96,24 +96,34 @@ constructor(
         }
 
         /** The ledger currency or custom pricing unit to use. */
-        fun currency(currency: String) = apply { this.currency = currency }
+        fun currency(currency: String?) = apply { this.currency = currency }
 
         /**
          * Cursor for pagination. This can be populated by the `next_cursor` value returned from the
          * initial request.
          */
-        fun cursor(cursor: String) = apply { this.cursor = cursor }
+        fun cursor(cursor: String?) = apply { this.cursor = cursor }
 
         /**
          * If set to True, all expired and depleted blocks, as well as active block will be
          * returned.
          */
-        fun includeAllBlocks(includeAllBlocks: Boolean) = apply {
+        fun includeAllBlocks(includeAllBlocks: Boolean?) = apply {
             this.includeAllBlocks = includeAllBlocks
         }
 
+        /**
+         * If set to True, all expired and depleted blocks, as well as active block will be
+         * returned.
+         */
+        fun includeAllBlocks(includeAllBlocks: Boolean) =
+            includeAllBlocks(includeAllBlocks as Boolean?)
+
         /** The number of items to fetch. Defaults to 20. */
-        fun limit(limit: Long) = apply { this.limit = limit }
+        fun limit(limit: Long?) = apply { this.limit = limit }
+
+        /** The number of items to fetch. Defaults to 20. */
+        fun limit(limit: Long) = limit(limit as Long?)
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {
             this.additionalHeaders.clear()

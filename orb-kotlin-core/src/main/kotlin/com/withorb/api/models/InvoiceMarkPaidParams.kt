@@ -106,10 +106,10 @@ constructor(
             }
 
             /** An optional external ID to associate with the payment. */
-            fun externalId(externalId: String) = apply { this.externalId = externalId }
+            fun externalId(externalId: String?) = apply { this.externalId = externalId }
 
             /** An optional note to associate with the payment. */
-            fun notes(notes: String) = apply { this.notes = notes }
+            fun notes(notes: String?) = apply { this.notes = notes }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
@@ -189,10 +189,10 @@ constructor(
         }
 
         /** An optional external ID to associate with the payment. */
-        fun externalId(externalId: String) = apply { body.externalId(externalId) }
+        fun externalId(externalId: String?) = apply { body.externalId(externalId) }
 
         /** An optional note to associate with the payment. */
-        fun notes(notes: String) = apply { body.notes(notes) }
+        fun notes(notes: String?) = apply { body.notes(notes) }
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {
             this.additionalHeaders.clear()
