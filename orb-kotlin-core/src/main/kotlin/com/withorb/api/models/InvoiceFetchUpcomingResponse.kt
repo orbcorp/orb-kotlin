@@ -287,10 +287,8 @@ private constructor(
 
     fun discounts(): List<InvoiceLevelDiscount> = discounts.getRequired("discounts")
 
-    /**
-     * When the invoice payment is due. The due date is null if the invoice is not yet finalized.
-     */
-    fun dueDate(): OffsetDateTime? = dueDate.getNullable("due_date")
+    /** When the invoice payment is due. */
+    fun dueDate(): OffsetDateTime = dueDate.getRequired("due_date")
 
     /**
      * If the invoice has a status of `draft`, this will be the time that the invoice will be
@@ -548,9 +546,7 @@ private constructor(
 
     @JsonProperty("discounts") @ExcludeMissing fun _discounts() = discounts
 
-    /**
-     * When the invoice payment is due. The due date is null if the invoice is not yet finalized.
-     */
+    /** When the invoice payment is due. */
     @JsonProperty("due_date") @ExcludeMissing fun _dueDate() = dueDate
 
     /**
@@ -1111,16 +1107,10 @@ private constructor(
             this.discounts = discounts
         }
 
-        /**
-         * When the invoice payment is due. The due date is null if the invoice is not yet
-         * finalized.
-         */
+        /** When the invoice payment is due. */
         fun dueDate(dueDate: OffsetDateTime) = dueDate(JsonField.of(dueDate))
 
-        /**
-         * When the invoice payment is due. The due date is null if the invoice is not yet
-         * finalized.
-         */
+        /** When the invoice payment is due. */
         fun dueDate(dueDate: JsonField<OffsetDateTime>) = apply { this.dueDate = dueDate }
 
         /**
