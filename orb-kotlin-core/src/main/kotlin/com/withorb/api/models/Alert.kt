@@ -29,49 +29,49 @@ class Alert
 @JsonCreator
 private constructor(
     @JsonProperty("id") @ExcludeMissing private val id: JsonField<String> = JsonMissing.of(),
-    @JsonProperty("type") @ExcludeMissing private val type: JsonField<Type> = JsonMissing.of(),
     @JsonProperty("created_at")
     @ExcludeMissing
     private val createdAt: JsonField<OffsetDateTime> = JsonMissing.of(),
-    @JsonProperty("enabled")
+    @JsonProperty("currency")
     @ExcludeMissing
-    private val enabled: JsonField<Boolean> = JsonMissing.of(),
-    @JsonProperty("thresholds")
-    @ExcludeMissing
-    private val thresholds: JsonField<List<Threshold>> = JsonMissing.of(),
+    private val currency: JsonField<String> = JsonMissing.of(),
     @JsonProperty("customer")
     @ExcludeMissing
     private val customer: JsonField<Customer> = JsonMissing.of(),
+    @JsonProperty("enabled")
+    @ExcludeMissing
+    private val enabled: JsonField<Boolean> = JsonMissing.of(),
+    @JsonProperty("metric")
+    @ExcludeMissing
+    private val metric: JsonField<Metric> = JsonMissing.of(),
     @JsonProperty("plan") @ExcludeMissing private val plan: JsonField<Plan> = JsonMissing.of(),
     @JsonProperty("subscription")
     @ExcludeMissing
     private val subscription: JsonField<Subscription> = JsonMissing.of(),
-    @JsonProperty("metric")
+    @JsonProperty("thresholds")
     @ExcludeMissing
-    private val metric: JsonField<Metric> = JsonMissing.of(),
-    @JsonProperty("currency")
-    @ExcludeMissing
-    private val currency: JsonField<String> = JsonMissing.of(),
+    private val thresholds: JsonField<List<Threshold>> = JsonMissing.of(),
+    @JsonProperty("type") @ExcludeMissing private val type: JsonField<Type> = JsonMissing.of(),
     @JsonAnySetter private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
 ) {
 
     /** Also referred to as alert_id in this documentation. */
     fun id(): String = id.getRequired("id")
 
-    /** The type of alert. This must be a valid alert type. */
-    fun type(): Type = type.getRequired("type")
-
     /** The creation time of the resource in Orb. */
     fun createdAt(): OffsetDateTime = createdAt.getRequired("created_at")
+
+    /** The name of the currency the credit balance or invoice cost is denominated in. */
+    fun currency(): String? = currency.getNullable("currency")
+
+    /** The customer the alert applies to. */
+    fun customer(): Customer? = customer.getNullable("customer")
 
     /** Whether the alert is enabled or disabled. */
     fun enabled(): Boolean = enabled.getRequired("enabled")
 
-    /** The thresholds that define the conditions under which the alert will be triggered. */
-    fun thresholds(): List<Threshold>? = thresholds.getNullable("thresholds")
-
-    /** The customer the alert applies to. */
-    fun customer(): Customer? = customer.getNullable("customer")
+    /** The metric the alert applies to. */
+    fun metric(): Metric? = metric.getNullable("metric")
 
     /** The plan the alert applies to. */
     fun plan(): Plan? = plan.getNullable("plan")
@@ -79,29 +79,29 @@ private constructor(
     /** The subscription the alert applies to. */
     fun subscription(): Subscription? = subscription.getNullable("subscription")
 
-    /** The metric the alert applies to. */
-    fun metric(): Metric? = metric.getNullable("metric")
+    /** The thresholds that define the conditions under which the alert will be triggered. */
+    fun thresholds(): List<Threshold>? = thresholds.getNullable("thresholds")
 
-    /** The name of the currency the credit balance or invoice cost is denominated in. */
-    fun currency(): String? = currency.getNullable("currency")
+    /** The type of alert. This must be a valid alert type. */
+    fun type(): Type = type.getRequired("type")
 
     /** Also referred to as alert_id in this documentation. */
     @JsonProperty("id") @ExcludeMissing fun _id() = id
 
-    /** The type of alert. This must be a valid alert type. */
-    @JsonProperty("type") @ExcludeMissing fun _type() = type
-
     /** The creation time of the resource in Orb. */
     @JsonProperty("created_at") @ExcludeMissing fun _createdAt() = createdAt
+
+    /** The name of the currency the credit balance or invoice cost is denominated in. */
+    @JsonProperty("currency") @ExcludeMissing fun _currency() = currency
+
+    /** The customer the alert applies to. */
+    @JsonProperty("customer") @ExcludeMissing fun _customer() = customer
 
     /** Whether the alert is enabled or disabled. */
     @JsonProperty("enabled") @ExcludeMissing fun _enabled() = enabled
 
-    /** The thresholds that define the conditions under which the alert will be triggered. */
-    @JsonProperty("thresholds") @ExcludeMissing fun _thresholds() = thresholds
-
-    /** The customer the alert applies to. */
-    @JsonProperty("customer") @ExcludeMissing fun _customer() = customer
+    /** The metric the alert applies to. */
+    @JsonProperty("metric") @ExcludeMissing fun _metric() = metric
 
     /** The plan the alert applies to. */
     @JsonProperty("plan") @ExcludeMissing fun _plan() = plan
@@ -109,11 +109,11 @@ private constructor(
     /** The subscription the alert applies to. */
     @JsonProperty("subscription") @ExcludeMissing fun _subscription() = subscription
 
-    /** The metric the alert applies to. */
-    @JsonProperty("metric") @ExcludeMissing fun _metric() = metric
+    /** The thresholds that define the conditions under which the alert will be triggered. */
+    @JsonProperty("thresholds") @ExcludeMissing fun _thresholds() = thresholds
 
-    /** The name of the currency the credit balance or invoice cost is denominated in. */
-    @JsonProperty("currency") @ExcludeMissing fun _currency() = currency
+    /** The type of alert. This must be a valid alert type. */
+    @JsonProperty("type") @ExcludeMissing fun _type() = type
 
     @JsonAnyGetter
     @ExcludeMissing
@@ -124,15 +124,15 @@ private constructor(
     fun validate(): Alert = apply {
         if (!validated) {
             id()
-            type()
             createdAt()
-            enabled()
-            thresholds()?.forEach { it.validate() }
+            currency()
             customer()?.validate()
+            enabled()
+            metric()?.validate()
             plan()?.validate()
             subscription()?.validate()
-            metric()?.validate()
-            currency()
+            thresholds()?.forEach { it.validate() }
+            type()
             validated = true
         }
     }
@@ -147,28 +147,28 @@ private constructor(
     class Builder {
 
         private var id: JsonField<String> = JsonMissing.of()
-        private var type: JsonField<Type> = JsonMissing.of()
         private var createdAt: JsonField<OffsetDateTime> = JsonMissing.of()
-        private var enabled: JsonField<Boolean> = JsonMissing.of()
-        private var thresholds: JsonField<List<Threshold>> = JsonMissing.of()
+        private var currency: JsonField<String> = JsonMissing.of()
         private var customer: JsonField<Customer> = JsonMissing.of()
+        private var enabled: JsonField<Boolean> = JsonMissing.of()
+        private var metric: JsonField<Metric> = JsonMissing.of()
         private var plan: JsonField<Plan> = JsonMissing.of()
         private var subscription: JsonField<Subscription> = JsonMissing.of()
-        private var metric: JsonField<Metric> = JsonMissing.of()
-        private var currency: JsonField<String> = JsonMissing.of()
+        private var thresholds: JsonField<List<Threshold>> = JsonMissing.of()
+        private var type: JsonField<Type> = JsonMissing.of()
         private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         internal fun from(alert: Alert) = apply {
             id = alert.id
-            type = alert.type
             createdAt = alert.createdAt
-            enabled = alert.enabled
-            thresholds = alert.thresholds
+            currency = alert.currency
             customer = alert.customer
+            enabled = alert.enabled
+            metric = alert.metric
             plan = alert.plan
             subscription = alert.subscription
-            metric = alert.metric
-            currency = alert.currency
+            thresholds = alert.thresholds
+            type = alert.type
             additionalProperties = alert.additionalProperties.toMutableMap()
         }
 
@@ -178,17 +178,23 @@ private constructor(
         /** Also referred to as alert_id in this documentation. */
         fun id(id: JsonField<String>) = apply { this.id = id }
 
-        /** The type of alert. This must be a valid alert type. */
-        fun type(type: Type) = type(JsonField.of(type))
-
-        /** The type of alert. This must be a valid alert type. */
-        fun type(type: JsonField<Type>) = apply { this.type = type }
-
         /** The creation time of the resource in Orb. */
         fun createdAt(createdAt: OffsetDateTime) = createdAt(JsonField.of(createdAt))
 
         /** The creation time of the resource in Orb. */
         fun createdAt(createdAt: JsonField<OffsetDateTime>) = apply { this.createdAt = createdAt }
+
+        /** The name of the currency the credit balance or invoice cost is denominated in. */
+        fun currency(currency: String) = currency(JsonField.of(currency))
+
+        /** The name of the currency the credit balance or invoice cost is denominated in. */
+        fun currency(currency: JsonField<String>) = apply { this.currency = currency }
+
+        /** The customer the alert applies to. */
+        fun customer(customer: Customer) = customer(JsonField.of(customer))
+
+        /** The customer the alert applies to. */
+        fun customer(customer: JsonField<Customer>) = apply { this.customer = customer }
 
         /** Whether the alert is enabled or disabled. */
         fun enabled(enabled: Boolean) = enabled(JsonField.of(enabled))
@@ -196,19 +202,11 @@ private constructor(
         /** Whether the alert is enabled or disabled. */
         fun enabled(enabled: JsonField<Boolean>) = apply { this.enabled = enabled }
 
-        /** The thresholds that define the conditions under which the alert will be triggered. */
-        fun thresholds(thresholds: List<Threshold>) = thresholds(JsonField.of(thresholds))
+        /** The metric the alert applies to. */
+        fun metric(metric: Metric) = metric(JsonField.of(metric))
 
-        /** The thresholds that define the conditions under which the alert will be triggered. */
-        fun thresholds(thresholds: JsonField<List<Threshold>>) = apply {
-            this.thresholds = thresholds
-        }
-
-        /** The customer the alert applies to. */
-        fun customer(customer: Customer) = customer(JsonField.of(customer))
-
-        /** The customer the alert applies to. */
-        fun customer(customer: JsonField<Customer>) = apply { this.customer = customer }
+        /** The metric the alert applies to. */
+        fun metric(metric: JsonField<Metric>) = apply { this.metric = metric }
 
         /** The plan the alert applies to. */
         fun plan(plan: Plan) = plan(JsonField.of(plan))
@@ -224,17 +222,19 @@ private constructor(
             this.subscription = subscription
         }
 
-        /** The metric the alert applies to. */
-        fun metric(metric: Metric) = metric(JsonField.of(metric))
+        /** The thresholds that define the conditions under which the alert will be triggered. */
+        fun thresholds(thresholds: List<Threshold>) = thresholds(JsonField.of(thresholds))
 
-        /** The metric the alert applies to. */
-        fun metric(metric: JsonField<Metric>) = apply { this.metric = metric }
+        /** The thresholds that define the conditions under which the alert will be triggered. */
+        fun thresholds(thresholds: JsonField<List<Threshold>>) = apply {
+            this.thresholds = thresholds
+        }
 
-        /** The name of the currency the credit balance or invoice cost is denominated in. */
-        fun currency(currency: String) = currency(JsonField.of(currency))
+        /** The type of alert. This must be a valid alert type. */
+        fun type(type: Type) = type(JsonField.of(type))
 
-        /** The name of the currency the credit balance or invoice cost is denominated in. */
-        fun currency(currency: JsonField<String>) = apply { this.currency = currency }
+        /** The type of alert. This must be a valid alert type. */
+        fun type(type: JsonField<Type>) = apply { this.type = type }
 
         fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
             this.additionalProperties.clear()
@@ -258,15 +258,15 @@ private constructor(
         fun build(): Alert =
             Alert(
                 id,
-                type,
                 createdAt,
-                enabled,
-                thresholds.map { it.toImmutable() },
+                currency,
                 customer,
+                enabled,
+                metric,
                 plan,
                 subscription,
-                metric,
-                currency,
+                thresholds.map { it.toImmutable() },
+                type,
                 additionalProperties.toImmutable(),
             )
     }
@@ -909,15 +909,15 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is Alert && id == other.id && type == other.type && createdAt == other.createdAt && enabled == other.enabled && thresholds == other.thresholds && customer == other.customer && plan == other.plan && subscription == other.subscription && metric == other.metric && currency == other.currency && additionalProperties == other.additionalProperties /* spotless:on */
+        return /* spotless:off */ other is Alert && id == other.id && createdAt == other.createdAt && currency == other.currency && customer == other.customer && enabled == other.enabled && metric == other.metric && plan == other.plan && subscription == other.subscription && thresholds == other.thresholds && type == other.type && additionalProperties == other.additionalProperties /* spotless:on */
     }
 
     /* spotless:off */
-    private val hashCode: Int by lazy { Objects.hash(id, type, createdAt, enabled, thresholds, customer, plan, subscription, metric, currency, additionalProperties) }
+    private val hashCode: Int by lazy { Objects.hash(id, createdAt, currency, customer, enabled, metric, plan, subscription, thresholds, type, additionalProperties) }
     /* spotless:on */
 
     override fun hashCode(): Int = hashCode
 
     override fun toString() =
-        "Alert{id=$id, type=$type, createdAt=$createdAt, enabled=$enabled, thresholds=$thresholds, customer=$customer, plan=$plan, subscription=$subscription, metric=$metric, currency=$currency, additionalProperties=$additionalProperties}"
+        "Alert{id=$id, createdAt=$createdAt, currency=$currency, customer=$customer, enabled=$enabled, metric=$metric, plan=$plan, subscription=$subscription, thresholds=$thresholds, type=$type, additionalProperties=$additionalProperties}"
 }

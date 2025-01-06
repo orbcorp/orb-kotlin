@@ -95,32 +95,32 @@ private constructor(
     class Data
     @JsonCreator
     private constructor(
-        @JsonProperty("timeframe_start")
-        @ExcludeMissing
-        private val timeframeStart: JsonField<OffsetDateTime> = JsonMissing.of(),
-        @JsonProperty("timeframe_end")
-        @ExcludeMissing
-        private val timeframeEnd: JsonField<OffsetDateTime> = JsonMissing.of(),
         @JsonProperty("count")
         @ExcludeMissing
         private val count: JsonField<Long> = JsonMissing.of(),
+        @JsonProperty("timeframe_end")
+        @ExcludeMissing
+        private val timeframeEnd: JsonField<OffsetDateTime> = JsonMissing.of(),
+        @JsonProperty("timeframe_start")
+        @ExcludeMissing
+        private val timeframeStart: JsonField<OffsetDateTime> = JsonMissing.of(),
         @JsonAnySetter
         private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
 
-        fun timeframeStart(): OffsetDateTime = timeframeStart.getRequired("timeframe_start")
-
-        fun timeframeEnd(): OffsetDateTime = timeframeEnd.getRequired("timeframe_end")
-
         /** The number of events ingested with a timestamp between the timeframe */
         fun count(): Long = count.getRequired("count")
 
-        @JsonProperty("timeframe_start") @ExcludeMissing fun _timeframeStart() = timeframeStart
+        fun timeframeEnd(): OffsetDateTime = timeframeEnd.getRequired("timeframe_end")
 
-        @JsonProperty("timeframe_end") @ExcludeMissing fun _timeframeEnd() = timeframeEnd
+        fun timeframeStart(): OffsetDateTime = timeframeStart.getRequired("timeframe_start")
 
         /** The number of events ingested with a timestamp between the timeframe */
         @JsonProperty("count") @ExcludeMissing fun _count() = count
+
+        @JsonProperty("timeframe_end") @ExcludeMissing fun _timeframeEnd() = timeframeEnd
+
+        @JsonProperty("timeframe_start") @ExcludeMissing fun _timeframeStart() = timeframeStart
 
         @JsonAnyGetter
         @ExcludeMissing
@@ -130,9 +130,9 @@ private constructor(
 
         fun validate(): Data = apply {
             if (!validated) {
-                timeframeStart()
-                timeframeEnd()
                 count()
+                timeframeEnd()
+                timeframeStart()
                 validated = true
             }
         }
@@ -146,24 +146,23 @@ private constructor(
 
         class Builder {
 
-            private var timeframeStart: JsonField<OffsetDateTime> = JsonMissing.of()
-            private var timeframeEnd: JsonField<OffsetDateTime> = JsonMissing.of()
             private var count: JsonField<Long> = JsonMissing.of()
+            private var timeframeEnd: JsonField<OffsetDateTime> = JsonMissing.of()
+            private var timeframeStart: JsonField<OffsetDateTime> = JsonMissing.of()
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             internal fun from(data: Data) = apply {
-                timeframeStart = data.timeframeStart
-                timeframeEnd = data.timeframeEnd
                 count = data.count
+                timeframeEnd = data.timeframeEnd
+                timeframeStart = data.timeframeStart
                 additionalProperties = data.additionalProperties.toMutableMap()
             }
 
-            fun timeframeStart(timeframeStart: OffsetDateTime) =
-                timeframeStart(JsonField.of(timeframeStart))
+            /** The number of events ingested with a timestamp between the timeframe */
+            fun count(count: Long) = count(JsonField.of(count))
 
-            fun timeframeStart(timeframeStart: JsonField<OffsetDateTime>) = apply {
-                this.timeframeStart = timeframeStart
-            }
+            /** The number of events ingested with a timestamp between the timeframe */
+            fun count(count: JsonField<Long>) = apply { this.count = count }
 
             fun timeframeEnd(timeframeEnd: OffsetDateTime) =
                 timeframeEnd(JsonField.of(timeframeEnd))
@@ -172,11 +171,12 @@ private constructor(
                 this.timeframeEnd = timeframeEnd
             }
 
-            /** The number of events ingested with a timestamp between the timeframe */
-            fun count(count: Long) = count(JsonField.of(count))
+            fun timeframeStart(timeframeStart: OffsetDateTime) =
+                timeframeStart(JsonField.of(timeframeStart))
 
-            /** The number of events ingested with a timestamp between the timeframe */
-            fun count(count: JsonField<Long>) = apply { this.count = count }
+            fun timeframeStart(timeframeStart: JsonField<OffsetDateTime>) = apply {
+                this.timeframeStart = timeframeStart
+            }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
@@ -199,9 +199,9 @@ private constructor(
 
             fun build(): Data =
                 Data(
-                    timeframeStart,
-                    timeframeEnd,
                     count,
+                    timeframeEnd,
+                    timeframeStart,
                     additionalProperties.toImmutable(),
                 )
         }
@@ -211,17 +211,17 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is Data && timeframeStart == other.timeframeStart && timeframeEnd == other.timeframeEnd && count == other.count && additionalProperties == other.additionalProperties /* spotless:on */
+            return /* spotless:off */ other is Data && count == other.count && timeframeEnd == other.timeframeEnd && timeframeStart == other.timeframeStart && additionalProperties == other.additionalProperties /* spotless:on */
         }
 
         /* spotless:off */
-        private val hashCode: Int by lazy { Objects.hash(timeframeStart, timeframeEnd, count, additionalProperties) }
+        private val hashCode: Int by lazy { Objects.hash(count, timeframeEnd, timeframeStart, additionalProperties) }
         /* spotless:on */
 
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "Data{timeframeStart=$timeframeStart, timeframeEnd=$timeframeEnd, count=$count, additionalProperties=$additionalProperties}"
+            "Data{count=$count, timeframeEnd=$timeframeEnd, timeframeStart=$timeframeStart, additionalProperties=$additionalProperties}"
     }
 
     override fun equals(other: Any?): Boolean {

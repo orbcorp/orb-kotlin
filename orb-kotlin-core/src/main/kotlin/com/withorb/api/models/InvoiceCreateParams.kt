@@ -541,32 +541,32 @@ constructor(
     class LineItem
     @JsonCreator
     private constructor(
-        @JsonProperty("start_date") private val startDate: LocalDate,
         @JsonProperty("end_date") private val endDate: LocalDate,
-        @JsonProperty("quantity") private val quantity: Double,
-        @JsonProperty("name") private val name: String,
         @JsonProperty("item_id") private val itemId: String,
         @JsonProperty("model_type") private val modelType: ModelType,
+        @JsonProperty("name") private val name: String,
+        @JsonProperty("quantity") private val quantity: Double,
+        @JsonProperty("start_date") private val startDate: LocalDate,
         @JsonProperty("unit_config") private val unitConfig: UnitConfig,
         @JsonAnySetter
         private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
 
-        /** A date string to specify the line item's start date in the customer's timezone. */
-        @JsonProperty("start_date") fun startDate(): LocalDate = startDate
-
         /** A date string to specify the line item's end date in the customer's timezone. */
         @JsonProperty("end_date") fun endDate(): LocalDate = endDate
-
-        /** The number of units on the line item */
-        @JsonProperty("quantity") fun quantity(): Double = quantity
-
-        /** The name of the line item. */
-        @JsonProperty("name") fun name(): String = name
 
         @JsonProperty("item_id") fun itemId(): String = itemId
 
         @JsonProperty("model_type") fun modelType(): ModelType = modelType
+
+        /** The name of the line item. */
+        @JsonProperty("name") fun name(): String = name
+
+        /** The number of units on the line item */
+        @JsonProperty("quantity") fun quantity(): Double = quantity
+
+        /** A date string to specify the line item's start date in the customer's timezone. */
+        @JsonProperty("start_date") fun startDate(): LocalDate = startDate
 
         @JsonProperty("unit_config") fun unitConfig(): UnitConfig = unitConfig
 
@@ -583,41 +583,41 @@ constructor(
 
         class Builder {
 
-            private var startDate: LocalDate? = null
             private var endDate: LocalDate? = null
-            private var quantity: Double? = null
-            private var name: String? = null
             private var itemId: String? = null
             private var modelType: ModelType? = null
+            private var name: String? = null
+            private var quantity: Double? = null
+            private var startDate: LocalDate? = null
             private var unitConfig: UnitConfig? = null
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             internal fun from(lineItem: LineItem) = apply {
-                startDate = lineItem.startDate
                 endDate = lineItem.endDate
-                quantity = lineItem.quantity
-                name = lineItem.name
                 itemId = lineItem.itemId
                 modelType = lineItem.modelType
+                name = lineItem.name
+                quantity = lineItem.quantity
+                startDate = lineItem.startDate
                 unitConfig = lineItem.unitConfig
                 additionalProperties = lineItem.additionalProperties.toMutableMap()
             }
 
-            /** A date string to specify the line item's start date in the customer's timezone. */
-            fun startDate(startDate: LocalDate) = apply { this.startDate = startDate }
-
             /** A date string to specify the line item's end date in the customer's timezone. */
             fun endDate(endDate: LocalDate) = apply { this.endDate = endDate }
-
-            /** The number of units on the line item */
-            fun quantity(quantity: Double) = apply { this.quantity = quantity }
-
-            /** The name of the line item. */
-            fun name(name: String) = apply { this.name = name }
 
             fun itemId(itemId: String) = apply { this.itemId = itemId }
 
             fun modelType(modelType: ModelType) = apply { this.modelType = modelType }
+
+            /** The name of the line item. */
+            fun name(name: String) = apply { this.name = name }
+
+            /** The number of units on the line item */
+            fun quantity(quantity: Double) = apply { this.quantity = quantity }
+
+            /** A date string to specify the line item's start date in the customer's timezone. */
+            fun startDate(startDate: LocalDate) = apply { this.startDate = startDate }
 
             fun unitConfig(unitConfig: UnitConfig) = apply { this.unitConfig = unitConfig }
 
@@ -642,12 +642,12 @@ constructor(
 
             fun build(): LineItem =
                 LineItem(
-                    checkNotNull(startDate) { "`startDate` is required but was not set" },
                     checkNotNull(endDate) { "`endDate` is required but was not set" },
-                    checkNotNull(quantity) { "`quantity` is required but was not set" },
-                    checkNotNull(name) { "`name` is required but was not set" },
                     checkNotNull(itemId) { "`itemId` is required but was not set" },
                     checkNotNull(modelType) { "`modelType` is required but was not set" },
+                    checkNotNull(name) { "`name` is required but was not set" },
+                    checkNotNull(quantity) { "`quantity` is required but was not set" },
+                    checkNotNull(startDate) { "`startDate` is required but was not set" },
                     checkNotNull(unitConfig) { "`unitConfig` is required but was not set" },
                     additionalProperties.toImmutable(),
                 )
@@ -792,17 +792,17 @@ constructor(
                 return true
             }
 
-            return /* spotless:off */ other is LineItem && startDate == other.startDate && endDate == other.endDate && quantity == other.quantity && name == other.name && itemId == other.itemId && modelType == other.modelType && unitConfig == other.unitConfig && additionalProperties == other.additionalProperties /* spotless:on */
+            return /* spotless:off */ other is LineItem && endDate == other.endDate && itemId == other.itemId && modelType == other.modelType && name == other.name && quantity == other.quantity && startDate == other.startDate && unitConfig == other.unitConfig && additionalProperties == other.additionalProperties /* spotless:on */
         }
 
         /* spotless:off */
-        private val hashCode: Int by lazy { Objects.hash(startDate, endDate, quantity, name, itemId, modelType, unitConfig, additionalProperties) }
+        private val hashCode: Int by lazy { Objects.hash(endDate, itemId, modelType, name, quantity, startDate, unitConfig, additionalProperties) }
         /* spotless:on */
 
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "LineItem{startDate=$startDate, endDate=$endDate, quantity=$quantity, name=$name, itemId=$itemId, modelType=$modelType, unitConfig=$unitConfig, additionalProperties=$additionalProperties}"
+            "LineItem{endDate=$endDate, itemId=$itemId, modelType=$modelType, name=$name, quantity=$quantity, startDate=$startDate, unitConfig=$unitConfig, additionalProperties=$additionalProperties}"
     }
 
     /**

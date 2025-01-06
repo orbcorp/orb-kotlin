@@ -27,30 +27,30 @@ class EventBackfillCloseResponse
 @JsonCreator
 private constructor(
     @JsonProperty("id") @ExcludeMissing private val id: JsonField<String> = JsonMissing.of(),
-    @JsonProperty("status")
-    @ExcludeMissing
-    private val status: JsonField<Status> = JsonMissing.of(),
-    @JsonProperty("created_at")
-    @ExcludeMissing
-    private val createdAt: JsonField<OffsetDateTime> = JsonMissing.of(),
-    @JsonProperty("timeframe_start")
-    @ExcludeMissing
-    private val timeframeStart: JsonField<OffsetDateTime> = JsonMissing.of(),
-    @JsonProperty("timeframe_end")
-    @ExcludeMissing
-    private val timeframeEnd: JsonField<OffsetDateTime> = JsonMissing.of(),
-    @JsonProperty("events_ingested")
-    @ExcludeMissing
-    private val eventsIngested: JsonField<Long> = JsonMissing.of(),
     @JsonProperty("close_time")
     @ExcludeMissing
     private val closeTime: JsonField<OffsetDateTime> = JsonMissing.of(),
-    @JsonProperty("reverted_at")
+    @JsonProperty("created_at")
     @ExcludeMissing
-    private val revertedAt: JsonField<OffsetDateTime> = JsonMissing.of(),
+    private val createdAt: JsonField<OffsetDateTime> = JsonMissing.of(),
     @JsonProperty("customer_id")
     @ExcludeMissing
     private val customerId: JsonField<String> = JsonMissing.of(),
+    @JsonProperty("events_ingested")
+    @ExcludeMissing
+    private val eventsIngested: JsonField<Long> = JsonMissing.of(),
+    @JsonProperty("reverted_at")
+    @ExcludeMissing
+    private val revertedAt: JsonField<OffsetDateTime> = JsonMissing.of(),
+    @JsonProperty("status")
+    @ExcludeMissing
+    private val status: JsonField<Status> = JsonMissing.of(),
+    @JsonProperty("timeframe_end")
+    @ExcludeMissing
+    private val timeframeEnd: JsonField<OffsetDateTime> = JsonMissing.of(),
+    @JsonProperty("timeframe_start")
+    @ExcludeMissing
+    private val timeframeStart: JsonField<OffsetDateTime> = JsonMissing.of(),
     @JsonProperty("deprecation_filter")
     @ExcludeMissing
     private val deprecationFilter: JsonField<String> = JsonMissing.of(),
@@ -59,32 +59,32 @@ private constructor(
 
     fun id(): String = id.getRequired("id")
 
-    /** The status of the backfill. */
-    fun status(): Status = status.getRequired("status")
-
-    fun createdAt(): OffsetDateTime = createdAt.getRequired("created_at")
-
-    fun timeframeStart(): OffsetDateTime = timeframeStart.getRequired("timeframe_start")
-
-    fun timeframeEnd(): OffsetDateTime = timeframeEnd.getRequired("timeframe_end")
-
-    /** The number of events ingested in this backfill. */
-    fun eventsIngested(): Long = eventsIngested.getRequired("events_ingested")
-
     /**
      * If in the future, the time at which the backfill will automatically close. If in the past,
      * the time at which the backfill was closed.
      */
     fun closeTime(): OffsetDateTime? = closeTime.getNullable("close_time")
 
-    /** The time at which this backfill was reverted. */
-    fun revertedAt(): OffsetDateTime? = revertedAt.getNullable("reverted_at")
+    fun createdAt(): OffsetDateTime = createdAt.getRequired("created_at")
 
     /**
      * The Orb-generated ID of the customer to which this backfill is scoped. If `null`, this
      * backfill is scoped to all customers.
      */
     fun customerId(): String? = customerId.getNullable("customer_id")
+
+    /** The number of events ingested in this backfill. */
+    fun eventsIngested(): Long = eventsIngested.getRequired("events_ingested")
+
+    /** The time at which this backfill was reverted. */
+    fun revertedAt(): OffsetDateTime? = revertedAt.getNullable("reverted_at")
+
+    /** The status of the backfill. */
+    fun status(): Status = status.getRequired("status")
+
+    fun timeframeEnd(): OffsetDateTime = timeframeEnd.getRequired("timeframe_end")
+
+    fun timeframeStart(): OffsetDateTime = timeframeStart.getRequired("timeframe_start")
 
     /**
      * A boolean [computed property](../guides/extensibility/advanced-metrics#computed-properties)
@@ -94,32 +94,32 @@ private constructor(
 
     @JsonProperty("id") @ExcludeMissing fun _id() = id
 
-    /** The status of the backfill. */
-    @JsonProperty("status") @ExcludeMissing fun _status() = status
-
-    @JsonProperty("created_at") @ExcludeMissing fun _createdAt() = createdAt
-
-    @JsonProperty("timeframe_start") @ExcludeMissing fun _timeframeStart() = timeframeStart
-
-    @JsonProperty("timeframe_end") @ExcludeMissing fun _timeframeEnd() = timeframeEnd
-
-    /** The number of events ingested in this backfill. */
-    @JsonProperty("events_ingested") @ExcludeMissing fun _eventsIngested() = eventsIngested
-
     /**
      * If in the future, the time at which the backfill will automatically close. If in the past,
      * the time at which the backfill was closed.
      */
     @JsonProperty("close_time") @ExcludeMissing fun _closeTime() = closeTime
 
-    /** The time at which this backfill was reverted. */
-    @JsonProperty("reverted_at") @ExcludeMissing fun _revertedAt() = revertedAt
+    @JsonProperty("created_at") @ExcludeMissing fun _createdAt() = createdAt
 
     /**
      * The Orb-generated ID of the customer to which this backfill is scoped. If `null`, this
      * backfill is scoped to all customers.
      */
     @JsonProperty("customer_id") @ExcludeMissing fun _customerId() = customerId
+
+    /** The number of events ingested in this backfill. */
+    @JsonProperty("events_ingested") @ExcludeMissing fun _eventsIngested() = eventsIngested
+
+    /** The time at which this backfill was reverted. */
+    @JsonProperty("reverted_at") @ExcludeMissing fun _revertedAt() = revertedAt
+
+    /** The status of the backfill. */
+    @JsonProperty("status") @ExcludeMissing fun _status() = status
+
+    @JsonProperty("timeframe_end") @ExcludeMissing fun _timeframeEnd() = timeframeEnd
+
+    @JsonProperty("timeframe_start") @ExcludeMissing fun _timeframeStart() = timeframeStart
 
     /**
      * A boolean [computed property](../guides/extensibility/advanced-metrics#computed-properties)
@@ -136,14 +136,14 @@ private constructor(
     fun validate(): EventBackfillCloseResponse = apply {
         if (!validated) {
             id()
-            status()
-            createdAt()
-            timeframeStart()
-            timeframeEnd()
-            eventsIngested()
             closeTime()
-            revertedAt()
+            createdAt()
             customerId()
+            eventsIngested()
+            revertedAt()
+            status()
+            timeframeEnd()
+            timeframeStart()
             deprecationFilter()
             validated = true
         }
@@ -159,27 +159,27 @@ private constructor(
     class Builder {
 
         private var id: JsonField<String> = JsonMissing.of()
-        private var status: JsonField<Status> = JsonMissing.of()
-        private var createdAt: JsonField<OffsetDateTime> = JsonMissing.of()
-        private var timeframeStart: JsonField<OffsetDateTime> = JsonMissing.of()
-        private var timeframeEnd: JsonField<OffsetDateTime> = JsonMissing.of()
-        private var eventsIngested: JsonField<Long> = JsonMissing.of()
         private var closeTime: JsonField<OffsetDateTime> = JsonMissing.of()
-        private var revertedAt: JsonField<OffsetDateTime> = JsonMissing.of()
+        private var createdAt: JsonField<OffsetDateTime> = JsonMissing.of()
         private var customerId: JsonField<String> = JsonMissing.of()
+        private var eventsIngested: JsonField<Long> = JsonMissing.of()
+        private var revertedAt: JsonField<OffsetDateTime> = JsonMissing.of()
+        private var status: JsonField<Status> = JsonMissing.of()
+        private var timeframeEnd: JsonField<OffsetDateTime> = JsonMissing.of()
+        private var timeframeStart: JsonField<OffsetDateTime> = JsonMissing.of()
         private var deprecationFilter: JsonField<String> = JsonMissing.of()
         private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         internal fun from(eventBackfillCloseResponse: EventBackfillCloseResponse) = apply {
             id = eventBackfillCloseResponse.id
-            status = eventBackfillCloseResponse.status
-            createdAt = eventBackfillCloseResponse.createdAt
-            timeframeStart = eventBackfillCloseResponse.timeframeStart
-            timeframeEnd = eventBackfillCloseResponse.timeframeEnd
-            eventsIngested = eventBackfillCloseResponse.eventsIngested
             closeTime = eventBackfillCloseResponse.closeTime
-            revertedAt = eventBackfillCloseResponse.revertedAt
+            createdAt = eventBackfillCloseResponse.createdAt
             customerId = eventBackfillCloseResponse.customerId
+            eventsIngested = eventBackfillCloseResponse.eventsIngested
+            revertedAt = eventBackfillCloseResponse.revertedAt
+            status = eventBackfillCloseResponse.status
+            timeframeEnd = eventBackfillCloseResponse.timeframeEnd
+            timeframeStart = eventBackfillCloseResponse.timeframeStart
             deprecationFilter = eventBackfillCloseResponse.deprecationFilter
             additionalProperties = eventBackfillCloseResponse.additionalProperties.toMutableMap()
         }
@@ -187,37 +187,6 @@ private constructor(
         fun id(id: String) = id(JsonField.of(id))
 
         fun id(id: JsonField<String>) = apply { this.id = id }
-
-        /** The status of the backfill. */
-        fun status(status: Status) = status(JsonField.of(status))
-
-        /** The status of the backfill. */
-        fun status(status: JsonField<Status>) = apply { this.status = status }
-
-        fun createdAt(createdAt: OffsetDateTime) = createdAt(JsonField.of(createdAt))
-
-        fun createdAt(createdAt: JsonField<OffsetDateTime>) = apply { this.createdAt = createdAt }
-
-        fun timeframeStart(timeframeStart: OffsetDateTime) =
-            timeframeStart(JsonField.of(timeframeStart))
-
-        fun timeframeStart(timeframeStart: JsonField<OffsetDateTime>) = apply {
-            this.timeframeStart = timeframeStart
-        }
-
-        fun timeframeEnd(timeframeEnd: OffsetDateTime) = timeframeEnd(JsonField.of(timeframeEnd))
-
-        fun timeframeEnd(timeframeEnd: JsonField<OffsetDateTime>) = apply {
-            this.timeframeEnd = timeframeEnd
-        }
-
-        /** The number of events ingested in this backfill. */
-        fun eventsIngested(eventsIngested: Long) = eventsIngested(JsonField.of(eventsIngested))
-
-        /** The number of events ingested in this backfill. */
-        fun eventsIngested(eventsIngested: JsonField<Long>) = apply {
-            this.eventsIngested = eventsIngested
-        }
 
         /**
          * If in the future, the time at which the backfill will automatically close. If in the
@@ -231,13 +200,9 @@ private constructor(
          */
         fun closeTime(closeTime: JsonField<OffsetDateTime>) = apply { this.closeTime = closeTime }
 
-        /** The time at which this backfill was reverted. */
-        fun revertedAt(revertedAt: OffsetDateTime) = revertedAt(JsonField.of(revertedAt))
+        fun createdAt(createdAt: OffsetDateTime) = createdAt(JsonField.of(createdAt))
 
-        /** The time at which this backfill was reverted. */
-        fun revertedAt(revertedAt: JsonField<OffsetDateTime>) = apply {
-            this.revertedAt = revertedAt
-        }
+        fun createdAt(createdAt: JsonField<OffsetDateTime>) = apply { this.createdAt = createdAt }
 
         /**
          * The Orb-generated ID of the customer to which this backfill is scoped. If `null`, this
@@ -250,6 +215,41 @@ private constructor(
          * backfill is scoped to all customers.
          */
         fun customerId(customerId: JsonField<String>) = apply { this.customerId = customerId }
+
+        /** The number of events ingested in this backfill. */
+        fun eventsIngested(eventsIngested: Long) = eventsIngested(JsonField.of(eventsIngested))
+
+        /** The number of events ingested in this backfill. */
+        fun eventsIngested(eventsIngested: JsonField<Long>) = apply {
+            this.eventsIngested = eventsIngested
+        }
+
+        /** The time at which this backfill was reverted. */
+        fun revertedAt(revertedAt: OffsetDateTime) = revertedAt(JsonField.of(revertedAt))
+
+        /** The time at which this backfill was reverted. */
+        fun revertedAt(revertedAt: JsonField<OffsetDateTime>) = apply {
+            this.revertedAt = revertedAt
+        }
+
+        /** The status of the backfill. */
+        fun status(status: Status) = status(JsonField.of(status))
+
+        /** The status of the backfill. */
+        fun status(status: JsonField<Status>) = apply { this.status = status }
+
+        fun timeframeEnd(timeframeEnd: OffsetDateTime) = timeframeEnd(JsonField.of(timeframeEnd))
+
+        fun timeframeEnd(timeframeEnd: JsonField<OffsetDateTime>) = apply {
+            this.timeframeEnd = timeframeEnd
+        }
+
+        fun timeframeStart(timeframeStart: OffsetDateTime) =
+            timeframeStart(JsonField.of(timeframeStart))
+
+        fun timeframeStart(timeframeStart: JsonField<OffsetDateTime>) = apply {
+            this.timeframeStart = timeframeStart
+        }
 
         /**
          * A boolean
@@ -290,14 +290,14 @@ private constructor(
         fun build(): EventBackfillCloseResponse =
             EventBackfillCloseResponse(
                 id,
-                status,
-                createdAt,
-                timeframeStart,
-                timeframeEnd,
-                eventsIngested,
                 closeTime,
-                revertedAt,
+                createdAt,
                 customerId,
+                eventsIngested,
+                revertedAt,
+                status,
+                timeframeEnd,
+                timeframeStart,
                 deprecationFilter,
                 additionalProperties.toImmutable(),
             )
@@ -377,15 +377,15 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is EventBackfillCloseResponse && id == other.id && status == other.status && createdAt == other.createdAt && timeframeStart == other.timeframeStart && timeframeEnd == other.timeframeEnd && eventsIngested == other.eventsIngested && closeTime == other.closeTime && revertedAt == other.revertedAt && customerId == other.customerId && deprecationFilter == other.deprecationFilter && additionalProperties == other.additionalProperties /* spotless:on */
+        return /* spotless:off */ other is EventBackfillCloseResponse && id == other.id && closeTime == other.closeTime && createdAt == other.createdAt && customerId == other.customerId && eventsIngested == other.eventsIngested && revertedAt == other.revertedAt && status == other.status && timeframeEnd == other.timeframeEnd && timeframeStart == other.timeframeStart && deprecationFilter == other.deprecationFilter && additionalProperties == other.additionalProperties /* spotless:on */
     }
 
     /* spotless:off */
-    private val hashCode: Int by lazy { Objects.hash(id, status, createdAt, timeframeStart, timeframeEnd, eventsIngested, closeTime, revertedAt, customerId, deprecationFilter, additionalProperties) }
+    private val hashCode: Int by lazy { Objects.hash(id, closeTime, createdAt, customerId, eventsIngested, revertedAt, status, timeframeEnd, timeframeStart, deprecationFilter, additionalProperties) }
     /* spotless:on */
 
     override fun hashCode(): Int = hashCode
 
     override fun toString() =
-        "EventBackfillCloseResponse{id=$id, status=$status, createdAt=$createdAt, timeframeStart=$timeframeStart, timeframeEnd=$timeframeEnd, eventsIngested=$eventsIngested, closeTime=$closeTime, revertedAt=$revertedAt, customerId=$customerId, deprecationFilter=$deprecationFilter, additionalProperties=$additionalProperties}"
+        "EventBackfillCloseResponse{id=$id, closeTime=$closeTime, createdAt=$createdAt, customerId=$customerId, eventsIngested=$eventsIngested, revertedAt=$revertedAt, status=$status, timeframeEnd=$timeframeEnd, timeframeStart=$timeframeStart, deprecationFilter=$deprecationFilter, additionalProperties=$additionalProperties}"
 }

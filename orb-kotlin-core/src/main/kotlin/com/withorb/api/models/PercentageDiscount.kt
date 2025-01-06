@@ -21,22 +21,20 @@ import java.util.Objects
 class PercentageDiscount
 @JsonCreator
 private constructor(
-    @JsonProperty("discount_type")
-    @ExcludeMissing
-    private val discountType: JsonField<DiscountType> = JsonMissing.of(),
     @JsonProperty("applies_to_price_ids")
     @ExcludeMissing
     private val appliesToPriceIds: JsonField<List<String>> = JsonMissing.of(),
-    @JsonProperty("reason")
+    @JsonProperty("discount_type")
     @ExcludeMissing
-    private val reason: JsonField<String> = JsonMissing.of(),
+    private val discountType: JsonField<DiscountType> = JsonMissing.of(),
     @JsonProperty("percentage_discount")
     @ExcludeMissing
     private val percentageDiscount: JsonField<Double> = JsonMissing.of(),
+    @JsonProperty("reason")
+    @ExcludeMissing
+    private val reason: JsonField<String> = JsonMissing.of(),
     @JsonAnySetter private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
 ) {
-
-    fun discountType(): DiscountType = discountType.getRequired("discount_type")
 
     /**
      * List of price_ids that this discount applies to. For plan/plan phase discounts, this can be a
@@ -44,12 +42,12 @@ private constructor(
      */
     fun appliesToPriceIds(): List<String> = appliesToPriceIds.getRequired("applies_to_price_ids")
 
-    fun reason(): String? = reason.getNullable("reason")
+    fun discountType(): DiscountType = discountType.getRequired("discount_type")
 
     /** Only available if discount_type is `percentage`. This is a number between 0 and 1. */
     fun percentageDiscount(): Double = percentageDiscount.getRequired("percentage_discount")
 
-    @JsonProperty("discount_type") @ExcludeMissing fun _discountType() = discountType
+    fun reason(): String? = reason.getNullable("reason")
 
     /**
      * List of price_ids that this discount applies to. For plan/plan phase discounts, this can be a
@@ -59,12 +57,14 @@ private constructor(
     @ExcludeMissing
     fun _appliesToPriceIds() = appliesToPriceIds
 
-    @JsonProperty("reason") @ExcludeMissing fun _reason() = reason
+    @JsonProperty("discount_type") @ExcludeMissing fun _discountType() = discountType
 
     /** Only available if discount_type is `percentage`. This is a number between 0 and 1. */
     @JsonProperty("percentage_discount")
     @ExcludeMissing
     fun _percentageDiscount() = percentageDiscount
+
+    @JsonProperty("reason") @ExcludeMissing fun _reason() = reason
 
     @JsonAnyGetter
     @ExcludeMissing
@@ -74,10 +74,10 @@ private constructor(
 
     fun validate(): PercentageDiscount = apply {
         if (!validated) {
-            discountType()
             appliesToPriceIds()
-            reason()
+            discountType()
             percentageDiscount()
+            reason()
             validated = true
         }
     }
@@ -91,24 +91,18 @@ private constructor(
 
     class Builder {
 
-        private var discountType: JsonField<DiscountType> = JsonMissing.of()
         private var appliesToPriceIds: JsonField<List<String>> = JsonMissing.of()
-        private var reason: JsonField<String> = JsonMissing.of()
+        private var discountType: JsonField<DiscountType> = JsonMissing.of()
         private var percentageDiscount: JsonField<Double> = JsonMissing.of()
+        private var reason: JsonField<String> = JsonMissing.of()
         private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         internal fun from(percentageDiscount: PercentageDiscount) = apply {
-            discountType = percentageDiscount.discountType
             appliesToPriceIds = percentageDiscount.appliesToPriceIds
-            reason = percentageDiscount.reason
+            discountType = percentageDiscount.discountType
             this.percentageDiscount = percentageDiscount.percentageDiscount
+            reason = percentageDiscount.reason
             additionalProperties = percentageDiscount.additionalProperties.toMutableMap()
-        }
-
-        fun discountType(discountType: DiscountType) = discountType(JsonField.of(discountType))
-
-        fun discountType(discountType: JsonField<DiscountType>) = apply {
-            this.discountType = discountType
         }
 
         /**
@@ -126,9 +120,11 @@ private constructor(
             this.appliesToPriceIds = appliesToPriceIds
         }
 
-        fun reason(reason: String) = reason(JsonField.of(reason))
+        fun discountType(discountType: DiscountType) = discountType(JsonField.of(discountType))
 
-        fun reason(reason: JsonField<String>) = apply { this.reason = reason }
+        fun discountType(discountType: JsonField<DiscountType>) = apply {
+            this.discountType = discountType
+        }
 
         /** Only available if discount_type is `percentage`. This is a number between 0 and 1. */
         fun percentageDiscount(percentageDiscount: Double) =
@@ -138,6 +134,10 @@ private constructor(
         fun percentageDiscount(percentageDiscount: JsonField<Double>) = apply {
             this.percentageDiscount = percentageDiscount
         }
+
+        fun reason(reason: String) = reason(JsonField.of(reason))
+
+        fun reason(reason: JsonField<String>) = apply { this.reason = reason }
 
         fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
             this.additionalProperties.clear()
@@ -160,10 +160,10 @@ private constructor(
 
         fun build(): PercentageDiscount =
             PercentageDiscount(
-                discountType,
                 appliesToPriceIds.map { it.toImmutable() },
-                reason,
+                discountType,
                 percentageDiscount,
+                reason,
                 additionalProperties.toImmutable(),
             )
     }
@@ -224,15 +224,15 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is PercentageDiscount && discountType == other.discountType && appliesToPriceIds == other.appliesToPriceIds && reason == other.reason && percentageDiscount == other.percentageDiscount && additionalProperties == other.additionalProperties /* spotless:on */
+        return /* spotless:off */ other is PercentageDiscount && appliesToPriceIds == other.appliesToPriceIds && discountType == other.discountType && percentageDiscount == other.percentageDiscount && reason == other.reason && additionalProperties == other.additionalProperties /* spotless:on */
     }
 
     /* spotless:off */
-    private val hashCode: Int by lazy { Objects.hash(discountType, appliesToPriceIds, reason, percentageDiscount, additionalProperties) }
+    private val hashCode: Int by lazy { Objects.hash(appliesToPriceIds, discountType, percentageDiscount, reason, additionalProperties) }
     /* spotless:on */
 
     override fun hashCode(): Int = hashCode
 
     override fun toString() =
-        "PercentageDiscount{discountType=$discountType, appliesToPriceIds=$appliesToPriceIds, reason=$reason, percentageDiscount=$percentageDiscount, additionalProperties=$additionalProperties}"
+        "PercentageDiscount{appliesToPriceIds=$appliesToPriceIds, discountType=$discountType, percentageDiscount=$percentageDiscount, reason=$reason, additionalProperties=$additionalProperties}"
 }
