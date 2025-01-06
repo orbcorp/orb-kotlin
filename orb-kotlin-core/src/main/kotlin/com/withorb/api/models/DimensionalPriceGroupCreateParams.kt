@@ -129,7 +129,7 @@ constructor(
 
             fun name(name: String) = apply { this.name = name }
 
-            fun externalDimensionalPriceGroupId(externalDimensionalPriceGroupId: String) = apply {
+            fun externalDimensionalPriceGroupId(externalDimensionalPriceGroupId: String?) = apply {
                 this.externalDimensionalPriceGroupId = externalDimensionalPriceGroupId
             }
 
@@ -138,7 +138,7 @@ constructor(
              * setting the value to `null`, and the entire metadata mapping can be cleared by
              * setting `metadata` to `null`.
              */
-            fun metadata(metadata: Metadata) = apply { this.metadata = metadata }
+            fun metadata(metadata: Metadata?) = apply { this.metadata = metadata }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
@@ -226,7 +226,7 @@ constructor(
 
         fun name(name: String) = apply { body.name(name) }
 
-        fun externalDimensionalPriceGroupId(externalDimensionalPriceGroupId: String) = apply {
+        fun externalDimensionalPriceGroupId(externalDimensionalPriceGroupId: String?) = apply {
             body.externalDimensionalPriceGroupId(externalDimensionalPriceGroupId)
         }
 
@@ -235,7 +235,7 @@ constructor(
          * setting the value to `null`, and the entire metadata mapping can be cleared by setting
          * `metadata` to `null`.
          */
-        fun metadata(metadata: Metadata) = apply { body.metadata(metadata) }
+        fun metadata(metadata: Metadata?) = apply { body.metadata(metadata) }
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {
             this.additionalHeaders.clear()

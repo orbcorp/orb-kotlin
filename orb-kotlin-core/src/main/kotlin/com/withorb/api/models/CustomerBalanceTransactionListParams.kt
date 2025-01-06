@@ -127,24 +127,27 @@ constructor(
          * Cursor for pagination. This can be populated by the `next_cursor` value returned from the
          * initial request.
          */
-        fun cursor(cursor: String) = apply { this.cursor = cursor }
+        fun cursor(cursor: String?) = apply { this.cursor = cursor }
 
         /** The number of items to fetch. Defaults to 20. */
-        fun limit(limit: Long) = apply { this.limit = limit }
+        fun limit(limit: Long?) = apply { this.limit = limit }
 
-        fun operationTimeGt(operationTimeGt: OffsetDateTime) = apply {
+        /** The number of items to fetch. Defaults to 20. */
+        fun limit(limit: Long) = limit(limit as Long?)
+
+        fun operationTimeGt(operationTimeGt: OffsetDateTime?) = apply {
             this.operationTimeGt = operationTimeGt
         }
 
-        fun operationTimeGte(operationTimeGte: OffsetDateTime) = apply {
+        fun operationTimeGte(operationTimeGte: OffsetDateTime?) = apply {
             this.operationTimeGte = operationTimeGte
         }
 
-        fun operationTimeLt(operationTimeLt: OffsetDateTime) = apply {
+        fun operationTimeLt(operationTimeLt: OffsetDateTime?) = apply {
             this.operationTimeLt = operationTimeLt
         }
 
-        fun operationTimeLte(operationTimeLte: OffsetDateTime) = apply {
+        fun operationTimeLte(operationTimeLte: OffsetDateTime?) = apply {
             this.operationTimeLte = operationTimeLte
         }
 

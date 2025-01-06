@@ -108,10 +108,13 @@ constructor(
          * Cursor for pagination. This can be populated by the `next_cursor` value returned from the
          * initial request.
          */
-        fun cursor(cursor: String) = apply { this.cursor = cursor }
+        fun cursor(cursor: String?) = apply { this.cursor = cursor }
 
         /** The number of items to fetch. Defaults to 20. */
-        fun limit(limit: Long) = apply { this.limit = limit }
+        fun limit(limit: Long?) = apply { this.limit = limit }
+
+        /** The number of items to fetch. Defaults to 20. */
+        fun limit(limit: Long) = limit(limit as Long?)
 
         /**
          * The end of the timeframe, exclusive, in which to return event volume. If not specified,
@@ -119,7 +122,7 @@ constructor(
          * time isn't hour-aligned, the response includes the event volumecount for the hour the
          * time falls in.
          */
-        fun timeframeEnd(timeframeEnd: OffsetDateTime) = apply { this.timeframeEnd = timeframeEnd }
+        fun timeframeEnd(timeframeEnd: OffsetDateTime?) = apply { this.timeframeEnd = timeframeEnd }
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {
             this.additionalHeaders.clear()

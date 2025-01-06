@@ -174,20 +174,20 @@ constructor(
              * will automatically begin reflecting throughout Orb at the close time. If not
              * specified, it will default to 1 day after the creation of the backfill.
              */
-            fun closeTime(closeTime: OffsetDateTime) = apply { this.closeTime = closeTime }
+            fun closeTime(closeTime: OffsetDateTime?) = apply { this.closeTime = closeTime }
 
             /**
              * The Orb-generated ID of the customer to which this backfill is scoped. Omitting this
              * field will scope the backfill to all customers.
              */
-            fun customerId(customerId: String) = apply { this.customerId = customerId }
+            fun customerId(customerId: String?) = apply { this.customerId = customerId }
 
             /**
              * A boolean
              * [computed property](../guides/extensibility/advanced-metrics#computed-properties)
              * used to filter the set of events to deprecate
              */
-            fun deprecationFilter(deprecationFilter: String) = apply {
+            fun deprecationFilter(deprecationFilter: String?) = apply {
                 this.deprecationFilter = deprecationFilter
             }
 
@@ -195,7 +195,7 @@ constructor(
              * The external customer ID of the customer to which this backfill is scoped. Omitting
              * this field will scope the backfill to all customers.
              */
-            fun externalCustomerId(externalCustomerId: String) = apply {
+            fun externalCustomerId(externalCustomerId: String?) = apply {
                 this.externalCustomerId = externalCustomerId
             }
 
@@ -203,9 +203,16 @@ constructor(
              * If true, replaces all existing events in the timeframe with the newly ingested
              * events. If false, adds the newly ingested events to the existing events.
              */
-            fun replaceExistingEvents(replaceExistingEvents: Boolean) = apply {
+            fun replaceExistingEvents(replaceExistingEvents: Boolean?) = apply {
                 this.replaceExistingEvents = replaceExistingEvents
             }
+
+            /**
+             * If true, replaces all existing events in the timeframe with the newly ingested
+             * events. If false, adds the newly ingested events to the existing events.
+             */
+            fun replaceExistingEvents(replaceExistingEvents: Boolean) =
+                replaceExistingEvents(replaceExistingEvents as Boolean?)
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
@@ -290,20 +297,20 @@ constructor(
          * automatically begin reflecting throughout Orb at the close time. If not specified, it
          * will default to 1 day after the creation of the backfill.
          */
-        fun closeTime(closeTime: OffsetDateTime) = apply { body.closeTime(closeTime) }
+        fun closeTime(closeTime: OffsetDateTime?) = apply { body.closeTime(closeTime) }
 
         /**
          * The Orb-generated ID of the customer to which this backfill is scoped. Omitting this
          * field will scope the backfill to all customers.
          */
-        fun customerId(customerId: String) = apply { body.customerId(customerId) }
+        fun customerId(customerId: String?) = apply { body.customerId(customerId) }
 
         /**
          * A boolean
          * [computed property](../guides/extensibility/advanced-metrics#computed-properties) used to
          * filter the set of events to deprecate
          */
-        fun deprecationFilter(deprecationFilter: String) = apply {
+        fun deprecationFilter(deprecationFilter: String?) = apply {
             body.deprecationFilter(deprecationFilter)
         }
 
@@ -311,7 +318,7 @@ constructor(
          * The external customer ID of the customer to which this backfill is scoped. Omitting this
          * field will scope the backfill to all customers.
          */
-        fun externalCustomerId(externalCustomerId: String) = apply {
+        fun externalCustomerId(externalCustomerId: String?) = apply {
             body.externalCustomerId(externalCustomerId)
         }
 
@@ -319,9 +326,16 @@ constructor(
          * If true, replaces all existing events in the timeframe with the newly ingested events. If
          * false, adds the newly ingested events to the existing events.
          */
-        fun replaceExistingEvents(replaceExistingEvents: Boolean) = apply {
+        fun replaceExistingEvents(replaceExistingEvents: Boolean?) = apply {
             body.replaceExistingEvents(replaceExistingEvents)
         }
+
+        /**
+         * If true, replaces all existing events in the timeframe with the newly ingested events. If
+         * false, adds the newly ingested events to the existing events.
+         */
+        fun replaceExistingEvents(replaceExistingEvents: Boolean) =
+            replaceExistingEvents(replaceExistingEvents as Boolean?)
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {
             this.additionalHeaders.clear()
