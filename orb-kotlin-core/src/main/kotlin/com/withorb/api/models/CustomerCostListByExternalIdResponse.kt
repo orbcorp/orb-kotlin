@@ -97,48 +97,48 @@ private constructor(
     class Data
     @JsonCreator
     private constructor(
-        @JsonProperty("subtotal")
-        @ExcludeMissing
-        private val subtotal: JsonField<String> = JsonMissing.of(),
-        @JsonProperty("total")
-        @ExcludeMissing
-        private val total: JsonField<String> = JsonMissing.of(),
-        @JsonProperty("timeframe_start")
-        @ExcludeMissing
-        private val timeframeStart: JsonField<OffsetDateTime> = JsonMissing.of(),
-        @JsonProperty("timeframe_end")
-        @ExcludeMissing
-        private val timeframeEnd: JsonField<OffsetDateTime> = JsonMissing.of(),
         @JsonProperty("per_price_costs")
         @ExcludeMissing
         private val perPriceCosts: JsonField<List<PerPriceCost>> = JsonMissing.of(),
+        @JsonProperty("subtotal")
+        @ExcludeMissing
+        private val subtotal: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("timeframe_end")
+        @ExcludeMissing
+        private val timeframeEnd: JsonField<OffsetDateTime> = JsonMissing.of(),
+        @JsonProperty("timeframe_start")
+        @ExcludeMissing
+        private val timeframeStart: JsonField<OffsetDateTime> = JsonMissing.of(),
+        @JsonProperty("total")
+        @ExcludeMissing
+        private val total: JsonField<String> = JsonMissing.of(),
         @JsonAnySetter
         private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
 
+        fun perPriceCosts(): List<PerPriceCost> = perPriceCosts.getRequired("per_price_costs")
+
         /** Total costs for the timeframe, excluding any minimums and discounts. */
         fun subtotal(): String = subtotal.getRequired("subtotal")
+
+        fun timeframeEnd(): OffsetDateTime = timeframeEnd.getRequired("timeframe_end")
+
+        fun timeframeStart(): OffsetDateTime = timeframeStart.getRequired("timeframe_start")
 
         /** Total costs for the timeframe, including any minimums and discounts. */
         fun total(): String = total.getRequired("total")
 
-        fun timeframeStart(): OffsetDateTime = timeframeStart.getRequired("timeframe_start")
-
-        fun timeframeEnd(): OffsetDateTime = timeframeEnd.getRequired("timeframe_end")
-
-        fun perPriceCosts(): List<PerPriceCost> = perPriceCosts.getRequired("per_price_costs")
+        @JsonProperty("per_price_costs") @ExcludeMissing fun _perPriceCosts() = perPriceCosts
 
         /** Total costs for the timeframe, excluding any minimums and discounts. */
         @JsonProperty("subtotal") @ExcludeMissing fun _subtotal() = subtotal
 
-        /** Total costs for the timeframe, including any minimums and discounts. */
-        @JsonProperty("total") @ExcludeMissing fun _total() = total
+        @JsonProperty("timeframe_end") @ExcludeMissing fun _timeframeEnd() = timeframeEnd
 
         @JsonProperty("timeframe_start") @ExcludeMissing fun _timeframeStart() = timeframeStart
 
-        @JsonProperty("timeframe_end") @ExcludeMissing fun _timeframeEnd() = timeframeEnd
-
-        @JsonProperty("per_price_costs") @ExcludeMissing fun _perPriceCosts() = perPriceCosts
+        /** Total costs for the timeframe, including any minimums and discounts. */
+        @JsonProperty("total") @ExcludeMissing fun _total() = total
 
         @JsonAnyGetter
         @ExcludeMissing
@@ -148,11 +148,11 @@ private constructor(
 
         fun validate(): Data = apply {
             if (!validated) {
-                subtotal()
-                total()
-                timeframeStart()
-                timeframeEnd()
                 perPriceCosts().forEach { it.validate() }
+                subtotal()
+                timeframeEnd()
+                timeframeStart()
+                total()
                 validated = true
             }
         }
@@ -166,46 +166,20 @@ private constructor(
 
         class Builder {
 
-            private var subtotal: JsonField<String> = JsonMissing.of()
-            private var total: JsonField<String> = JsonMissing.of()
-            private var timeframeStart: JsonField<OffsetDateTime> = JsonMissing.of()
-            private var timeframeEnd: JsonField<OffsetDateTime> = JsonMissing.of()
             private var perPriceCosts: JsonField<List<PerPriceCost>> = JsonMissing.of()
+            private var subtotal: JsonField<String> = JsonMissing.of()
+            private var timeframeEnd: JsonField<OffsetDateTime> = JsonMissing.of()
+            private var timeframeStart: JsonField<OffsetDateTime> = JsonMissing.of()
+            private var total: JsonField<String> = JsonMissing.of()
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             internal fun from(data: Data) = apply {
-                subtotal = data.subtotal
-                total = data.total
-                timeframeStart = data.timeframeStart
-                timeframeEnd = data.timeframeEnd
                 perPriceCosts = data.perPriceCosts
+                subtotal = data.subtotal
+                timeframeEnd = data.timeframeEnd
+                timeframeStart = data.timeframeStart
+                total = data.total
                 additionalProperties = data.additionalProperties.toMutableMap()
-            }
-
-            /** Total costs for the timeframe, excluding any minimums and discounts. */
-            fun subtotal(subtotal: String) = subtotal(JsonField.of(subtotal))
-
-            /** Total costs for the timeframe, excluding any minimums and discounts. */
-            fun subtotal(subtotal: JsonField<String>) = apply { this.subtotal = subtotal }
-
-            /** Total costs for the timeframe, including any minimums and discounts. */
-            fun total(total: String) = total(JsonField.of(total))
-
-            /** Total costs for the timeframe, including any minimums and discounts. */
-            fun total(total: JsonField<String>) = apply { this.total = total }
-
-            fun timeframeStart(timeframeStart: OffsetDateTime) =
-                timeframeStart(JsonField.of(timeframeStart))
-
-            fun timeframeStart(timeframeStart: JsonField<OffsetDateTime>) = apply {
-                this.timeframeStart = timeframeStart
-            }
-
-            fun timeframeEnd(timeframeEnd: OffsetDateTime) =
-                timeframeEnd(JsonField.of(timeframeEnd))
-
-            fun timeframeEnd(timeframeEnd: JsonField<OffsetDateTime>) = apply {
-                this.timeframeEnd = timeframeEnd
             }
 
             fun perPriceCosts(perPriceCosts: List<PerPriceCost>) =
@@ -214,6 +188,32 @@ private constructor(
             fun perPriceCosts(perPriceCosts: JsonField<List<PerPriceCost>>) = apply {
                 this.perPriceCosts = perPriceCosts
             }
+
+            /** Total costs for the timeframe, excluding any minimums and discounts. */
+            fun subtotal(subtotal: String) = subtotal(JsonField.of(subtotal))
+
+            /** Total costs for the timeframe, excluding any minimums and discounts. */
+            fun subtotal(subtotal: JsonField<String>) = apply { this.subtotal = subtotal }
+
+            fun timeframeEnd(timeframeEnd: OffsetDateTime) =
+                timeframeEnd(JsonField.of(timeframeEnd))
+
+            fun timeframeEnd(timeframeEnd: JsonField<OffsetDateTime>) = apply {
+                this.timeframeEnd = timeframeEnd
+            }
+
+            fun timeframeStart(timeframeStart: OffsetDateTime) =
+                timeframeStart(JsonField.of(timeframeStart))
+
+            fun timeframeStart(timeframeStart: JsonField<OffsetDateTime>) = apply {
+                this.timeframeStart = timeframeStart
+            }
+
+            /** Total costs for the timeframe, including any minimums and discounts. */
+            fun total(total: String) = total(JsonField.of(total))
+
+            /** Total costs for the timeframe, including any minimums and discounts. */
+            fun total(total: JsonField<String>) = apply { this.total = total }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
@@ -236,11 +236,11 @@ private constructor(
 
             fun build(): Data =
                 Data(
-                    subtotal,
-                    total,
-                    timeframeStart,
-                    timeframeEnd,
                     perPriceCosts.map { it.toImmutable() },
+                    subtotal,
+                    timeframeEnd,
+                    timeframeStart,
+                    total,
                     additionalProperties.toImmutable(),
                 )
         }
@@ -249,30 +249,21 @@ private constructor(
         class PerPriceCost
         @JsonCreator
         private constructor(
-            @JsonProperty("quantity")
+            @JsonProperty("price")
             @ExcludeMissing
-            private val quantity: JsonField<Double> = JsonMissing.of(),
+            private val price: JsonField<Price> = JsonMissing.of(),
             @JsonProperty("subtotal")
             @ExcludeMissing
             private val subtotal: JsonField<String> = JsonMissing.of(),
             @JsonProperty("total")
             @ExcludeMissing
             private val total: JsonField<String> = JsonMissing.of(),
-            @JsonProperty("price")
+            @JsonProperty("quantity")
             @ExcludeMissing
-            private val price: JsonField<Price> = JsonMissing.of(),
+            private val quantity: JsonField<Double> = JsonMissing.of(),
             @JsonAnySetter
             private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
-
-            /** The price's quantity for the timeframe */
-            fun quantity(): Double? = quantity.getNullable("quantity")
-
-            /** Price's contributions for the timeframe, excluding any minimums and discounts. */
-            fun subtotal(): String = subtotal.getRequired("subtotal")
-
-            /** Price's contributions for the timeframe, including minimums and discounts. */
-            fun total(): String = total.getRequired("total")
 
             /**
              * The Price resource represents a price that can be billed on a subscription, resulting
@@ -504,14 +495,14 @@ private constructor(
              */
             fun price(): Price = price.getRequired("price")
 
-            /** The price's quantity for the timeframe */
-            @JsonProperty("quantity") @ExcludeMissing fun _quantity() = quantity
-
             /** Price's contributions for the timeframe, excluding any minimums and discounts. */
-            @JsonProperty("subtotal") @ExcludeMissing fun _subtotal() = subtotal
+            fun subtotal(): String = subtotal.getRequired("subtotal")
 
             /** Price's contributions for the timeframe, including minimums and discounts. */
-            @JsonProperty("total") @ExcludeMissing fun _total() = total
+            fun total(): String = total.getRequired("total")
+
+            /** The price's quantity for the timeframe */
+            fun quantity(): Double? = quantity.getNullable("quantity")
 
             /**
              * The Price resource represents a price that can be billed on a subscription, resulting
@@ -743,6 +734,15 @@ private constructor(
              */
             @JsonProperty("price") @ExcludeMissing fun _price() = price
 
+            /** Price's contributions for the timeframe, excluding any minimums and discounts. */
+            @JsonProperty("subtotal") @ExcludeMissing fun _subtotal() = subtotal
+
+            /** Price's contributions for the timeframe, including minimums and discounts. */
+            @JsonProperty("total") @ExcludeMissing fun _total() = total
+
+            /** The price's quantity for the timeframe */
+            @JsonProperty("quantity") @ExcludeMissing fun _quantity() = quantity
+
             @JsonAnyGetter
             @ExcludeMissing
             fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
@@ -751,10 +751,10 @@ private constructor(
 
             fun validate(): PerPriceCost = apply {
                 if (!validated) {
-                    quantity()
+                    price()
                     subtotal()
                     total()
-                    price()
+                    quantity()
                     validated = true
                 }
             }
@@ -768,41 +768,19 @@ private constructor(
 
             class Builder {
 
-                private var quantity: JsonField<Double> = JsonMissing.of()
+                private var price: JsonField<Price> = JsonMissing.of()
                 private var subtotal: JsonField<String> = JsonMissing.of()
                 private var total: JsonField<String> = JsonMissing.of()
-                private var price: JsonField<Price> = JsonMissing.of()
+                private var quantity: JsonField<Double> = JsonMissing.of()
                 private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
                 internal fun from(perPriceCost: PerPriceCost) = apply {
-                    quantity = perPriceCost.quantity
+                    price = perPriceCost.price
                     subtotal = perPriceCost.subtotal
                     total = perPriceCost.total
-                    price = perPriceCost.price
+                    quantity = perPriceCost.quantity
                     additionalProperties = perPriceCost.additionalProperties.toMutableMap()
                 }
-
-                /** The price's quantity for the timeframe */
-                fun quantity(quantity: Double) = quantity(JsonField.of(quantity))
-
-                /** The price's quantity for the timeframe */
-                fun quantity(quantity: JsonField<Double>) = apply { this.quantity = quantity }
-
-                /**
-                 * Price's contributions for the timeframe, excluding any minimums and discounts.
-                 */
-                fun subtotal(subtotal: String) = subtotal(JsonField.of(subtotal))
-
-                /**
-                 * Price's contributions for the timeframe, excluding any minimums and discounts.
-                 */
-                fun subtotal(subtotal: JsonField<String>) = apply { this.subtotal = subtotal }
-
-                /** Price's contributions for the timeframe, including minimums and discounts. */
-                fun total(total: String) = total(JsonField.of(total))
-
-                /** Price's contributions for the timeframe, including minimums and discounts. */
-                fun total(total: JsonField<String>) = apply { this.total = total }
 
                 /**
                  * The Price resource represents a price that can be billed on a subscription,
@@ -1272,6 +1250,28 @@ private constructor(
                  */
                 fun price(price: JsonField<Price>) = apply { this.price = price }
 
+                /**
+                 * Price's contributions for the timeframe, excluding any minimums and discounts.
+                 */
+                fun subtotal(subtotal: String) = subtotal(JsonField.of(subtotal))
+
+                /**
+                 * Price's contributions for the timeframe, excluding any minimums and discounts.
+                 */
+                fun subtotal(subtotal: JsonField<String>) = apply { this.subtotal = subtotal }
+
+                /** Price's contributions for the timeframe, including minimums and discounts. */
+                fun total(total: String) = total(JsonField.of(total))
+
+                /** Price's contributions for the timeframe, including minimums and discounts. */
+                fun total(total: JsonField<String>) = apply { this.total = total }
+
+                /** The price's quantity for the timeframe */
+                fun quantity(quantity: Double) = quantity(JsonField.of(quantity))
+
+                /** The price's quantity for the timeframe */
+                fun quantity(quantity: JsonField<Double>) = apply { this.quantity = quantity }
+
                 fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                     this.additionalProperties.clear()
                     putAllAdditionalProperties(additionalProperties)
@@ -1296,10 +1296,10 @@ private constructor(
 
                 fun build(): PerPriceCost =
                     PerPriceCost(
-                        quantity,
+                        price,
                         subtotal,
                         total,
-                        price,
+                        quantity,
                         additionalProperties.toImmutable(),
                     )
             }
@@ -1309,17 +1309,17 @@ private constructor(
                     return true
                 }
 
-                return /* spotless:off */ other is PerPriceCost && quantity == other.quantity && subtotal == other.subtotal && total == other.total && price == other.price && additionalProperties == other.additionalProperties /* spotless:on */
+                return /* spotless:off */ other is PerPriceCost && price == other.price && subtotal == other.subtotal && total == other.total && quantity == other.quantity && additionalProperties == other.additionalProperties /* spotless:on */
             }
 
             /* spotless:off */
-            private val hashCode: Int by lazy { Objects.hash(quantity, subtotal, total, price, additionalProperties) }
+            private val hashCode: Int by lazy { Objects.hash(price, subtotal, total, quantity, additionalProperties) }
             /* spotless:on */
 
             override fun hashCode(): Int = hashCode
 
             override fun toString() =
-                "PerPriceCost{quantity=$quantity, subtotal=$subtotal, total=$total, price=$price, additionalProperties=$additionalProperties}"
+                "PerPriceCost{price=$price, subtotal=$subtotal, total=$total, quantity=$quantity, additionalProperties=$additionalProperties}"
         }
 
         override fun equals(other: Any?): Boolean {
@@ -1327,17 +1327,17 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is Data && subtotal == other.subtotal && total == other.total && timeframeStart == other.timeframeStart && timeframeEnd == other.timeframeEnd && perPriceCosts == other.perPriceCosts && additionalProperties == other.additionalProperties /* spotless:on */
+            return /* spotless:off */ other is Data && perPriceCosts == other.perPriceCosts && subtotal == other.subtotal && timeframeEnd == other.timeframeEnd && timeframeStart == other.timeframeStart && total == other.total && additionalProperties == other.additionalProperties /* spotless:on */
         }
 
         /* spotless:off */
-        private val hashCode: Int by lazy { Objects.hash(subtotal, total, timeframeStart, timeframeEnd, perPriceCosts, additionalProperties) }
+        private val hashCode: Int by lazy { Objects.hash(perPriceCosts, subtotal, timeframeEnd, timeframeStart, total, additionalProperties) }
         /* spotless:on */
 
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "Data{subtotal=$subtotal, total=$total, timeframeStart=$timeframeStart, timeframeEnd=$timeframeEnd, perPriceCosts=$perPriceCosts, additionalProperties=$additionalProperties}"
+            "Data{perPriceCosts=$perPriceCosts, subtotal=$subtotal, timeframeEnd=$timeframeEnd, timeframeStart=$timeframeStart, total=$total, additionalProperties=$additionalProperties}"
     }
 
     override fun equals(other: Any?): Boolean {

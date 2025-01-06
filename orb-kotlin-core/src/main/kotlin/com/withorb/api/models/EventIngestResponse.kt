@@ -19,18 +19,12 @@ import java.util.Objects
 class EventIngestResponse
 @JsonCreator
 private constructor(
-    @JsonProperty("debug") @ExcludeMissing private val debug: JsonField<Debug> = JsonMissing.of(),
     @JsonProperty("validation_failed")
     @ExcludeMissing
     private val validationFailed: JsonField<List<ValidationFailed>> = JsonMissing.of(),
+    @JsonProperty("debug") @ExcludeMissing private val debug: JsonField<Debug> = JsonMissing.of(),
     @JsonAnySetter private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
 ) {
-
-    /**
-     * Optional debug information (only present when debug=true is passed to the endpoint). Contains
-     * ingested and duplicate event idempotency keys.
-     */
-    fun debug(): Debug? = debug.getNullable("debug")
 
     /**
      * Contains all failing validation events. In the case of a 200, this array will always be
@@ -43,13 +37,19 @@ private constructor(
      * Optional debug information (only present when debug=true is passed to the endpoint). Contains
      * ingested and duplicate event idempotency keys.
      */
-    @JsonProperty("debug") @ExcludeMissing fun _debug() = debug
+    fun debug(): Debug? = debug.getNullable("debug")
 
     /**
      * Contains all failing validation events. In the case of a 200, this array will always be
      * empty. This field will always be present.
      */
     @JsonProperty("validation_failed") @ExcludeMissing fun _validationFailed() = validationFailed
+
+    /**
+     * Optional debug information (only present when debug=true is passed to the endpoint). Contains
+     * ingested and duplicate event idempotency keys.
+     */
+    @JsonProperty("debug") @ExcludeMissing fun _debug() = debug
 
     @JsonAnyGetter
     @ExcludeMissing
@@ -59,8 +59,8 @@ private constructor(
 
     fun validate(): EventIngestResponse = apply {
         if (!validated) {
-            debug()?.validate()
             validationFailed().forEach { it.validate() }
+            debug()?.validate()
             validated = true
         }
     }
@@ -74,27 +74,15 @@ private constructor(
 
     class Builder {
 
-        private var debug: JsonField<Debug> = JsonMissing.of()
         private var validationFailed: JsonField<List<ValidationFailed>> = JsonMissing.of()
+        private var debug: JsonField<Debug> = JsonMissing.of()
         private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         internal fun from(eventIngestResponse: EventIngestResponse) = apply {
-            debug = eventIngestResponse.debug
             validationFailed = eventIngestResponse.validationFailed
+            debug = eventIngestResponse.debug
             additionalProperties = eventIngestResponse.additionalProperties.toMutableMap()
         }
-
-        /**
-         * Optional debug information (only present when debug=true is passed to the endpoint).
-         * Contains ingested and duplicate event idempotency keys.
-         */
-        fun debug(debug: Debug) = debug(JsonField.of(debug))
-
-        /**
-         * Optional debug information (only present when debug=true is passed to the endpoint).
-         * Contains ingested and duplicate event idempotency keys.
-         */
-        fun debug(debug: JsonField<Debug>) = apply { this.debug = debug }
 
         /**
          * Contains all failing validation events. In the case of a 200, this array will always be
@@ -110,6 +98,18 @@ private constructor(
         fun validationFailed(validationFailed: JsonField<List<ValidationFailed>>) = apply {
             this.validationFailed = validationFailed
         }
+
+        /**
+         * Optional debug information (only present when debug=true is passed to the endpoint).
+         * Contains ingested and duplicate event idempotency keys.
+         */
+        fun debug(debug: Debug) = debug(JsonField.of(debug))
+
+        /**
+         * Optional debug information (only present when debug=true is passed to the endpoint).
+         * Contains ingested and duplicate event idempotency keys.
+         */
+        fun debug(debug: JsonField<Debug>) = apply { this.debug = debug }
 
         fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
             this.additionalProperties.clear()
@@ -132,8 +132,8 @@ private constructor(
 
         fun build(): EventIngestResponse =
             EventIngestResponse(
-                debug,
                 validationFailed.map { it.toImmutable() },
+                debug,
                 additionalProperties.toImmutable(),
             )
     }
@@ -383,15 +383,15 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is EventIngestResponse && debug == other.debug && validationFailed == other.validationFailed && additionalProperties == other.additionalProperties /* spotless:on */
+        return /* spotless:off */ other is EventIngestResponse && validationFailed == other.validationFailed && debug == other.debug && additionalProperties == other.additionalProperties /* spotless:on */
     }
 
     /* spotless:off */
-    private val hashCode: Int by lazy { Objects.hash(debug, validationFailed, additionalProperties) }
+    private val hashCode: Int by lazy { Objects.hash(validationFailed, debug, additionalProperties) }
     /* spotless:on */
 
     override fun hashCode(): Int = hashCode
 
     override fun toString() =
-        "EventIngestResponse{debug=$debug, validationFailed=$validationFailed, additionalProperties=$additionalProperties}"
+        "EventIngestResponse{validationFailed=$validationFailed, debug=$debug, additionalProperties=$additionalProperties}"
 }

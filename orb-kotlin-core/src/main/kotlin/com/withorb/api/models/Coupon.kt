@@ -69,37 +69,37 @@ class Coupon
 @JsonCreator
 private constructor(
     @JsonProperty("id") @ExcludeMissing private val id: JsonField<String> = JsonMissing.of(),
-    @JsonProperty("redemption_code")
+    @JsonProperty("archived_at")
     @ExcludeMissing
-    private val redemptionCode: JsonField<String> = JsonMissing.of(),
+    private val archivedAt: JsonField<OffsetDateTime> = JsonMissing.of(),
     @JsonProperty("discount")
     @ExcludeMissing
     private val discount: JsonField<Discount> = JsonMissing.of(),
-    @JsonProperty("times_redeemed")
-    @ExcludeMissing
-    private val timesRedeemed: JsonField<Long> = JsonMissing.of(),
     @JsonProperty("duration_in_months")
     @ExcludeMissing
     private val durationInMonths: JsonField<Long> = JsonMissing.of(),
     @JsonProperty("max_redemptions")
     @ExcludeMissing
     private val maxRedemptions: JsonField<Long> = JsonMissing.of(),
-    @JsonProperty("archived_at")
+    @JsonProperty("redemption_code")
     @ExcludeMissing
-    private val archivedAt: JsonField<OffsetDateTime> = JsonMissing.of(),
+    private val redemptionCode: JsonField<String> = JsonMissing.of(),
+    @JsonProperty("times_redeemed")
+    @ExcludeMissing
+    private val timesRedeemed: JsonField<Long> = JsonMissing.of(),
     @JsonAnySetter private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
 ) {
 
     /** Also referred to as coupon_id in this documentation. */
     fun id(): String = id.getRequired("id")
 
-    /** This string can be used to redeem this coupon for a given subscription. */
-    fun redemptionCode(): String = redemptionCode.getRequired("redemption_code")
+    /**
+     * An archived coupon can no longer be redeemed. Active coupons will have a value of null for
+     * `archived_at`; this field will be non-null for archived coupons.
+     */
+    fun archivedAt(): OffsetDateTime? = archivedAt.getNullable("archived_at")
 
     fun discount(): Discount = discount.getRequired("discount")
-
-    /** The number of times this coupon has been redeemed. */
-    fun timesRedeemed(): Long = timesRedeemed.getRequired("times_redeemed")
 
     /**
      * This allows for a coupon's discount to apply for a limited time (determined in months); a
@@ -113,22 +113,22 @@ private constructor(
      */
     fun maxRedemptions(): Long? = maxRedemptions.getNullable("max_redemptions")
 
-    /**
-     * An archived coupon can no longer be redeemed. Active coupons will have a value of null for
-     * `archived_at`; this field will be non-null for archived coupons.
-     */
-    fun archivedAt(): OffsetDateTime? = archivedAt.getNullable("archived_at")
+    /** This string can be used to redeem this coupon for a given subscription. */
+    fun redemptionCode(): String = redemptionCode.getRequired("redemption_code")
+
+    /** The number of times this coupon has been redeemed. */
+    fun timesRedeemed(): Long = timesRedeemed.getRequired("times_redeemed")
 
     /** Also referred to as coupon_id in this documentation. */
     @JsonProperty("id") @ExcludeMissing fun _id() = id
 
-    /** This string can be used to redeem this coupon for a given subscription. */
-    @JsonProperty("redemption_code") @ExcludeMissing fun _redemptionCode() = redemptionCode
+    /**
+     * An archived coupon can no longer be redeemed. Active coupons will have a value of null for
+     * `archived_at`; this field will be non-null for archived coupons.
+     */
+    @JsonProperty("archived_at") @ExcludeMissing fun _archivedAt() = archivedAt
 
     @JsonProperty("discount") @ExcludeMissing fun _discount() = discount
-
-    /** The number of times this coupon has been redeemed. */
-    @JsonProperty("times_redeemed") @ExcludeMissing fun _timesRedeemed() = timesRedeemed
 
     /**
      * This allows for a coupon's discount to apply for a limited time (determined in months); a
@@ -142,11 +142,11 @@ private constructor(
      */
     @JsonProperty("max_redemptions") @ExcludeMissing fun _maxRedemptions() = maxRedemptions
 
-    /**
-     * An archived coupon can no longer be redeemed. Active coupons will have a value of null for
-     * `archived_at`; this field will be non-null for archived coupons.
-     */
-    @JsonProperty("archived_at") @ExcludeMissing fun _archivedAt() = archivedAt
+    /** This string can be used to redeem this coupon for a given subscription. */
+    @JsonProperty("redemption_code") @ExcludeMissing fun _redemptionCode() = redemptionCode
+
+    /** The number of times this coupon has been redeemed. */
+    @JsonProperty("times_redeemed") @ExcludeMissing fun _timesRedeemed() = timesRedeemed
 
     @JsonAnyGetter
     @ExcludeMissing
@@ -157,12 +157,12 @@ private constructor(
     fun validate(): Coupon = apply {
         if (!validated) {
             id()
-            redemptionCode()
+            archivedAt()
             discount()
-            timesRedeemed()
             durationInMonths()
             maxRedemptions()
-            archivedAt()
+            redemptionCode()
+            timesRedeemed()
             validated = true
         }
     }
@@ -177,22 +177,22 @@ private constructor(
     class Builder {
 
         private var id: JsonField<String> = JsonMissing.of()
-        private var redemptionCode: JsonField<String> = JsonMissing.of()
+        private var archivedAt: JsonField<OffsetDateTime> = JsonMissing.of()
         private var discount: JsonField<Discount> = JsonMissing.of()
-        private var timesRedeemed: JsonField<Long> = JsonMissing.of()
         private var durationInMonths: JsonField<Long> = JsonMissing.of()
         private var maxRedemptions: JsonField<Long> = JsonMissing.of()
-        private var archivedAt: JsonField<OffsetDateTime> = JsonMissing.of()
+        private var redemptionCode: JsonField<String> = JsonMissing.of()
+        private var timesRedeemed: JsonField<Long> = JsonMissing.of()
         private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         internal fun from(coupon: Coupon) = apply {
             id = coupon.id
-            redemptionCode = coupon.redemptionCode
+            archivedAt = coupon.archivedAt
             discount = coupon.discount
-            timesRedeemed = coupon.timesRedeemed
             durationInMonths = coupon.durationInMonths
             maxRedemptions = coupon.maxRedemptions
-            archivedAt = coupon.archivedAt
+            redemptionCode = coupon.redemptionCode
+            timesRedeemed = coupon.timesRedeemed
             additionalProperties = coupon.additionalProperties.toMutableMap()
         }
 
@@ -202,25 +202,23 @@ private constructor(
         /** Also referred to as coupon_id in this documentation. */
         fun id(id: JsonField<String>) = apply { this.id = id }
 
-        /** This string can be used to redeem this coupon for a given subscription. */
-        fun redemptionCode(redemptionCode: String) = redemptionCode(JsonField.of(redemptionCode))
+        /**
+         * An archived coupon can no longer be redeemed. Active coupons will have a value of null
+         * for `archived_at`; this field will be non-null for archived coupons.
+         */
+        fun archivedAt(archivedAt: OffsetDateTime) = archivedAt(JsonField.of(archivedAt))
 
-        /** This string can be used to redeem this coupon for a given subscription. */
-        fun redemptionCode(redemptionCode: JsonField<String>) = apply {
-            this.redemptionCode = redemptionCode
+        /**
+         * An archived coupon can no longer be redeemed. Active coupons will have a value of null
+         * for `archived_at`; this field will be non-null for archived coupons.
+         */
+        fun archivedAt(archivedAt: JsonField<OffsetDateTime>) = apply {
+            this.archivedAt = archivedAt
         }
 
         fun discount(discount: Discount) = discount(JsonField.of(discount))
 
         fun discount(discount: JsonField<Discount>) = apply { this.discount = discount }
-
-        /** The number of times this coupon has been redeemed. */
-        fun timesRedeemed(timesRedeemed: Long) = timesRedeemed(JsonField.of(timesRedeemed))
-
-        /** The number of times this coupon has been redeemed. */
-        fun timesRedeemed(timesRedeemed: JsonField<Long>) = apply {
-            this.timesRedeemed = timesRedeemed
-        }
 
         /**
          * This allows for a coupon's discount to apply for a limited time (determined in months); a
@@ -251,18 +249,20 @@ private constructor(
             this.maxRedemptions = maxRedemptions
         }
 
-        /**
-         * An archived coupon can no longer be redeemed. Active coupons will have a value of null
-         * for `archived_at`; this field will be non-null for archived coupons.
-         */
-        fun archivedAt(archivedAt: OffsetDateTime) = archivedAt(JsonField.of(archivedAt))
+        /** This string can be used to redeem this coupon for a given subscription. */
+        fun redemptionCode(redemptionCode: String) = redemptionCode(JsonField.of(redemptionCode))
 
-        /**
-         * An archived coupon can no longer be redeemed. Active coupons will have a value of null
-         * for `archived_at`; this field will be non-null for archived coupons.
-         */
-        fun archivedAt(archivedAt: JsonField<OffsetDateTime>) = apply {
-            this.archivedAt = archivedAt
+        /** This string can be used to redeem this coupon for a given subscription. */
+        fun redemptionCode(redemptionCode: JsonField<String>) = apply {
+            this.redemptionCode = redemptionCode
+        }
+
+        /** The number of times this coupon has been redeemed. */
+        fun timesRedeemed(timesRedeemed: Long) = timesRedeemed(JsonField.of(timesRedeemed))
+
+        /** The number of times this coupon has been redeemed. */
+        fun timesRedeemed(timesRedeemed: JsonField<Long>) = apply {
+            this.timesRedeemed = timesRedeemed
         }
 
         fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
@@ -287,12 +287,12 @@ private constructor(
         fun build(): Coupon =
             Coupon(
                 id,
-                redemptionCode,
+                archivedAt,
                 discount,
-                timesRedeemed,
                 durationInMonths,
                 maxRedemptions,
-                archivedAt,
+                redemptionCode,
+                timesRedeemed,
                 additionalProperties.toImmutable(),
             )
     }
@@ -428,15 +428,15 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is Coupon && id == other.id && redemptionCode == other.redemptionCode && discount == other.discount && timesRedeemed == other.timesRedeemed && durationInMonths == other.durationInMonths && maxRedemptions == other.maxRedemptions && archivedAt == other.archivedAt && additionalProperties == other.additionalProperties /* spotless:on */
+        return /* spotless:off */ other is Coupon && id == other.id && archivedAt == other.archivedAt && discount == other.discount && durationInMonths == other.durationInMonths && maxRedemptions == other.maxRedemptions && redemptionCode == other.redemptionCode && timesRedeemed == other.timesRedeemed && additionalProperties == other.additionalProperties /* spotless:on */
     }
 
     /* spotless:off */
-    private val hashCode: Int by lazy { Objects.hash(id, redemptionCode, discount, timesRedeemed, durationInMonths, maxRedemptions, archivedAt, additionalProperties) }
+    private val hashCode: Int by lazy { Objects.hash(id, archivedAt, discount, durationInMonths, maxRedemptions, redemptionCode, timesRedeemed, additionalProperties) }
     /* spotless:on */
 
     override fun hashCode(): Int = hashCode
 
     override fun toString() =
-        "Coupon{id=$id, redemptionCode=$redemptionCode, discount=$discount, timesRedeemed=$timesRedeemed, durationInMonths=$durationInMonths, maxRedemptions=$maxRedemptions, archivedAt=$archivedAt, additionalProperties=$additionalProperties}"
+        "Coupon{id=$id, archivedAt=$archivedAt, discount=$discount, durationInMonths=$durationInMonths, maxRedemptions=$maxRedemptions, redemptionCode=$redemptionCode, timesRedeemed=$timesRedeemed, additionalProperties=$additionalProperties}"
 }

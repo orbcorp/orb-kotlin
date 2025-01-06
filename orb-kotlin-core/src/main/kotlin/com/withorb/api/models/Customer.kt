@@ -40,55 +40,55 @@ import java.util.Objects
 class Customer
 @JsonCreator
 private constructor(
-    @JsonProperty("metadata")
-    @ExcludeMissing
-    private val metadata: JsonField<Metadata> = JsonMissing.of(),
     @JsonProperty("id") @ExcludeMissing private val id: JsonField<String> = JsonMissing.of(),
-    @JsonProperty("external_customer_id")
-    @ExcludeMissing
-    private val externalCustomerId: JsonField<String> = JsonMissing.of(),
-    @JsonProperty("name") @ExcludeMissing private val name: JsonField<String> = JsonMissing.of(),
-    @JsonProperty("email") @ExcludeMissing private val email: JsonField<String> = JsonMissing.of(),
-    @JsonProperty("timezone")
-    @ExcludeMissing
-    private val timezone: JsonField<String> = JsonMissing.of(),
-    @JsonProperty("payment_provider_id")
-    @ExcludeMissing
-    private val paymentProviderId: JsonField<String> = JsonMissing.of(),
-    @JsonProperty("payment_provider")
-    @ExcludeMissing
-    private val paymentProvider: JsonField<PaymentProvider> = JsonMissing.of(),
-    @JsonProperty("created_at")
-    @ExcludeMissing
-    private val createdAt: JsonField<OffsetDateTime> = JsonMissing.of(),
-    @JsonProperty("shipping_address")
-    @ExcludeMissing
-    private val shippingAddress: JsonField<ShippingAddress> = JsonMissing.of(),
-    @JsonProperty("billing_address")
-    @ExcludeMissing
-    private val billingAddress: JsonField<BillingAddress> = JsonMissing.of(),
-    @JsonProperty("balance")
-    @ExcludeMissing
-    private val balance: JsonField<String> = JsonMissing.of(),
-    @JsonProperty("currency")
-    @ExcludeMissing
-    private val currency: JsonField<String> = JsonMissing.of(),
-    @JsonProperty("tax_id") @ExcludeMissing private val taxId: JsonField<TaxId> = JsonMissing.of(),
-    @JsonProperty("auto_collection")
-    @ExcludeMissing
-    private val autoCollection: JsonField<Boolean> = JsonMissing.of(),
-    @JsonProperty("exempt_from_automated_tax")
-    @ExcludeMissing
-    private val exemptFromAutomatedTax: JsonField<Boolean> = JsonMissing.of(),
-    @JsonProperty("email_delivery")
-    @ExcludeMissing
-    private val emailDelivery: JsonField<Boolean> = JsonMissing.of(),
     @JsonProperty("additional_emails")
     @ExcludeMissing
     private val additionalEmails: JsonField<List<String>> = JsonMissing.of(),
+    @JsonProperty("auto_collection")
+    @ExcludeMissing
+    private val autoCollection: JsonField<Boolean> = JsonMissing.of(),
+    @JsonProperty("balance")
+    @ExcludeMissing
+    private val balance: JsonField<String> = JsonMissing.of(),
+    @JsonProperty("billing_address")
+    @ExcludeMissing
+    private val billingAddress: JsonField<BillingAddress> = JsonMissing.of(),
+    @JsonProperty("created_at")
+    @ExcludeMissing
+    private val createdAt: JsonField<OffsetDateTime> = JsonMissing.of(),
+    @JsonProperty("currency")
+    @ExcludeMissing
+    private val currency: JsonField<String> = JsonMissing.of(),
+    @JsonProperty("email") @ExcludeMissing private val email: JsonField<String> = JsonMissing.of(),
+    @JsonProperty("email_delivery")
+    @ExcludeMissing
+    private val emailDelivery: JsonField<Boolean> = JsonMissing.of(),
+    @JsonProperty("exempt_from_automated_tax")
+    @ExcludeMissing
+    private val exemptFromAutomatedTax: JsonField<Boolean> = JsonMissing.of(),
+    @JsonProperty("external_customer_id")
+    @ExcludeMissing
+    private val externalCustomerId: JsonField<String> = JsonMissing.of(),
+    @JsonProperty("metadata")
+    @ExcludeMissing
+    private val metadata: JsonField<Metadata> = JsonMissing.of(),
+    @JsonProperty("name") @ExcludeMissing private val name: JsonField<String> = JsonMissing.of(),
+    @JsonProperty("payment_provider")
+    @ExcludeMissing
+    private val paymentProvider: JsonField<PaymentProvider> = JsonMissing.of(),
+    @JsonProperty("payment_provider_id")
+    @ExcludeMissing
+    private val paymentProviderId: JsonField<String> = JsonMissing.of(),
     @JsonProperty("portal_url")
     @ExcludeMissing
     private val portalUrl: JsonField<String> = JsonMissing.of(),
+    @JsonProperty("shipping_address")
+    @ExcludeMissing
+    private val shippingAddress: JsonField<ShippingAddress> = JsonMissing.of(),
+    @JsonProperty("tax_id") @ExcludeMissing private val taxId: JsonField<TaxId> = JsonMissing.of(),
+    @JsonProperty("timezone")
+    @ExcludeMissing
+    private val timezone: JsonField<String> = JsonMissing.of(),
     @JsonProperty("accounting_sync_configuration")
     @ExcludeMissing
     private val accountingSyncConfiguration: JsonField<AccountingSyncConfiguration> =
@@ -99,14 +99,31 @@ private constructor(
     @JsonAnySetter private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
 ) {
 
-    /**
-     * User specified key-value pairs for the resource. If not present, this defaults to an empty
-     * dictionary. Individual keys can be removed by setting the value to `null`, and the entire
-     * metadata mapping can be cleared by setting `metadata` to `null`.
-     */
-    fun metadata(): Metadata = metadata.getRequired("metadata")
-
     fun id(): String = id.getRequired("id")
+
+    fun additionalEmails(): List<String> = additionalEmails.getRequired("additional_emails")
+
+    fun autoCollection(): Boolean = autoCollection.getRequired("auto_collection")
+
+    /** The customer's current balance in their currency. */
+    fun balance(): String = balance.getRequired("balance")
+
+    fun billingAddress(): BillingAddress? = billingAddress.getNullable("billing_address")
+
+    fun createdAt(): OffsetDateTime = createdAt.getRequired("created_at")
+
+    fun currency(): String? = currency.getNullable("currency")
+
+    /**
+     * A valid customer email, to be used for notifications. When Orb triggers payment through a
+     * payment gateway, this email will be used for any automatically issued receipts.
+     */
+    fun email(): String = email.getRequired("email")
+
+    fun emailDelivery(): Boolean = emailDelivery.getRequired("email_delivery")
+
+    fun exemptFromAutomatedTax(): Boolean? =
+        exemptFromAutomatedTax.getNullable("exempt_from_automated_tax")
 
     /**
      * An optional user-defined ID for this customer resource, used throughout the system as an
@@ -115,27 +132,15 @@ private constructor(
      */
     fun externalCustomerId(): String? = externalCustomerId.getNullable("external_customer_id")
 
+    /**
+     * User specified key-value pairs for the resource. If not present, this defaults to an empty
+     * dictionary. Individual keys can be removed by setting the value to `null`, and the entire
+     * metadata mapping can be cleared by setting `metadata` to `null`.
+     */
+    fun metadata(): Metadata = metadata.getRequired("metadata")
+
     /** The full name of the customer */
     fun name(): String = name.getRequired("name")
-
-    /**
-     * A valid customer email, to be used for notifications. When Orb triggers payment through a
-     * payment gateway, this email will be used for any automatically issued receipts.
-     */
-    fun email(): String = email.getRequired("email")
-
-    /**
-     * A timezone identifier from the IANA timezone database, such as "America/Los_Angeles". This
-     * "defaults to your account's timezone if not set. This cannot be changed after customer
-     * creation.
-     */
-    fun timezone(): String = timezone.getRequired("timezone")
-
-    /**
-     * The ID of this customer in an external payments solution, such as Stripe. This is used for
-     * creating charges or invoices in the external system via Orb.
-     */
-    fun paymentProviderId(): String? = paymentProviderId.getNullable("payment_provider_id")
 
     /**
      * This is used for creating charges or invoices in an external system via Orb. When not in test
@@ -143,16 +148,15 @@ private constructor(
      */
     fun paymentProvider(): PaymentProvider? = paymentProvider.getNullable("payment_provider")
 
-    fun createdAt(): OffsetDateTime = createdAt.getRequired("created_at")
+    /**
+     * The ID of this customer in an external payments solution, such as Stripe. This is used for
+     * creating charges or invoices in the external system via Orb.
+     */
+    fun paymentProviderId(): String? = paymentProviderId.getNullable("payment_provider_id")
+
+    fun portalUrl(): String? = portalUrl.getNullable("portal_url")
 
     fun shippingAddress(): ShippingAddress? = shippingAddress.getNullable("shipping_address")
-
-    fun billingAddress(): BillingAddress? = billingAddress.getNullable("billing_address")
-
-    /** The customer's current balance in their currency. */
-    fun balance(): String = balance.getRequired("balance")
-
-    fun currency(): String? = currency.getNullable("currency")
 
     /**
      * Tax IDs are commonly required to be displayed on customer invoices, which are added to the
@@ -262,16 +266,12 @@ private constructor(
      */
     fun taxId(): TaxId? = taxId.getNullable("tax_id")
 
-    fun autoCollection(): Boolean = autoCollection.getRequired("auto_collection")
-
-    fun exemptFromAutomatedTax(): Boolean? =
-        exemptFromAutomatedTax.getNullable("exempt_from_automated_tax")
-
-    fun emailDelivery(): Boolean = emailDelivery.getRequired("email_delivery")
-
-    fun additionalEmails(): List<String> = additionalEmails.getRequired("additional_emails")
-
-    fun portalUrl(): String? = portalUrl.getNullable("portal_url")
+    /**
+     * A timezone identifier from the IANA timezone database, such as "America/Los_Angeles". This
+     * "defaults to your account's timezone if not set. This cannot be changed after customer
+     * creation.
+     */
+    fun timezone(): String = timezone.getRequired("timezone")
 
     fun accountingSyncConfiguration(): AccountingSyncConfiguration? =
         accountingSyncConfiguration.getNullable("accounting_sync_configuration")
@@ -279,14 +279,32 @@ private constructor(
     fun reportingConfiguration(): ReportingConfiguration? =
         reportingConfiguration.getNullable("reporting_configuration")
 
-    /**
-     * User specified key-value pairs for the resource. If not present, this defaults to an empty
-     * dictionary. Individual keys can be removed by setting the value to `null`, and the entire
-     * metadata mapping can be cleared by setting `metadata` to `null`.
-     */
-    @JsonProperty("metadata") @ExcludeMissing fun _metadata() = metadata
-
     @JsonProperty("id") @ExcludeMissing fun _id() = id
+
+    @JsonProperty("additional_emails") @ExcludeMissing fun _additionalEmails() = additionalEmails
+
+    @JsonProperty("auto_collection") @ExcludeMissing fun _autoCollection() = autoCollection
+
+    /** The customer's current balance in their currency. */
+    @JsonProperty("balance") @ExcludeMissing fun _balance() = balance
+
+    @JsonProperty("billing_address") @ExcludeMissing fun _billingAddress() = billingAddress
+
+    @JsonProperty("created_at") @ExcludeMissing fun _createdAt() = createdAt
+
+    @JsonProperty("currency") @ExcludeMissing fun _currency() = currency
+
+    /**
+     * A valid customer email, to be used for notifications. When Orb triggers payment through a
+     * payment gateway, this email will be used for any automatically issued receipts.
+     */
+    @JsonProperty("email") @ExcludeMissing fun _email() = email
+
+    @JsonProperty("email_delivery") @ExcludeMissing fun _emailDelivery() = emailDelivery
+
+    @JsonProperty("exempt_from_automated_tax")
+    @ExcludeMissing
+    fun _exemptFromAutomatedTax() = exemptFromAutomatedTax
 
     /**
      * An optional user-defined ID for this customer resource, used throughout the system as an
@@ -297,21 +315,21 @@ private constructor(
     @ExcludeMissing
     fun _externalCustomerId() = externalCustomerId
 
+    /**
+     * User specified key-value pairs for the resource. If not present, this defaults to an empty
+     * dictionary. Individual keys can be removed by setting the value to `null`, and the entire
+     * metadata mapping can be cleared by setting `metadata` to `null`.
+     */
+    @JsonProperty("metadata") @ExcludeMissing fun _metadata() = metadata
+
     /** The full name of the customer */
     @JsonProperty("name") @ExcludeMissing fun _name() = name
 
     /**
-     * A valid customer email, to be used for notifications. When Orb triggers payment through a
-     * payment gateway, this email will be used for any automatically issued receipts.
+     * This is used for creating charges or invoices in an external system via Orb. When not in test
+     * mode, the connection must first be configured in the Orb webapp.
      */
-    @JsonProperty("email") @ExcludeMissing fun _email() = email
-
-    /**
-     * A timezone identifier from the IANA timezone database, such as "America/Los_Angeles". This
-     * "defaults to your account's timezone if not set. This cannot be changed after customer
-     * creation.
-     */
-    @JsonProperty("timezone") @ExcludeMissing fun _timezone() = timezone
+    @JsonProperty("payment_provider") @ExcludeMissing fun _paymentProvider() = paymentProvider
 
     /**
      * The ID of this customer in an external payments solution, such as Stripe. This is used for
@@ -321,22 +339,9 @@ private constructor(
     @ExcludeMissing
     fun _paymentProviderId() = paymentProviderId
 
-    /**
-     * This is used for creating charges or invoices in an external system via Orb. When not in test
-     * mode, the connection must first be configured in the Orb webapp.
-     */
-    @JsonProperty("payment_provider") @ExcludeMissing fun _paymentProvider() = paymentProvider
-
-    @JsonProperty("created_at") @ExcludeMissing fun _createdAt() = createdAt
+    @JsonProperty("portal_url") @ExcludeMissing fun _portalUrl() = portalUrl
 
     @JsonProperty("shipping_address") @ExcludeMissing fun _shippingAddress() = shippingAddress
-
-    @JsonProperty("billing_address") @ExcludeMissing fun _billingAddress() = billingAddress
-
-    /** The customer's current balance in their currency. */
-    @JsonProperty("balance") @ExcludeMissing fun _balance() = balance
-
-    @JsonProperty("currency") @ExcludeMissing fun _currency() = currency
 
     /**
      * Tax IDs are commonly required to be displayed on customer invoices, which are added to the
@@ -446,17 +451,12 @@ private constructor(
      */
     @JsonProperty("tax_id") @ExcludeMissing fun _taxId() = taxId
 
-    @JsonProperty("auto_collection") @ExcludeMissing fun _autoCollection() = autoCollection
-
-    @JsonProperty("exempt_from_automated_tax")
-    @ExcludeMissing
-    fun _exemptFromAutomatedTax() = exemptFromAutomatedTax
-
-    @JsonProperty("email_delivery") @ExcludeMissing fun _emailDelivery() = emailDelivery
-
-    @JsonProperty("additional_emails") @ExcludeMissing fun _additionalEmails() = additionalEmails
-
-    @JsonProperty("portal_url") @ExcludeMissing fun _portalUrl() = portalUrl
+    /**
+     * A timezone identifier from the IANA timezone database, such as "America/Los_Angeles". This
+     * "defaults to your account's timezone if not set. This cannot be changed after customer
+     * creation.
+     */
+    @JsonProperty("timezone") @ExcludeMissing fun _timezone() = timezone
 
     @JsonProperty("accounting_sync_configuration")
     @ExcludeMissing
@@ -474,25 +474,25 @@ private constructor(
 
     fun validate(): Customer = apply {
         if (!validated) {
-            metadata().validate()
             id()
-            externalCustomerId()
-            name()
-            email()
-            timezone()
-            paymentProviderId()
-            paymentProvider()
-            createdAt()
-            shippingAddress()?.validate()
-            billingAddress()?.validate()
-            balance()
-            currency()
-            taxId()?.validate()
-            autoCollection()
-            exemptFromAutomatedTax()
-            emailDelivery()
             additionalEmails()
+            autoCollection()
+            balance()
+            billingAddress()?.validate()
+            createdAt()
+            currency()
+            email()
+            emailDelivery()
+            exemptFromAutomatedTax()
+            externalCustomerId()
+            metadata().validate()
+            name()
+            paymentProvider()
+            paymentProviderId()
             portalUrl()
+            shippingAddress()?.validate()
+            taxId()?.validate()
+            timezone()
             accountingSyncConfiguration()?.validate()
             reportingConfiguration()?.validate()
             validated = true
@@ -508,72 +508,117 @@ private constructor(
 
     class Builder {
 
-        private var metadata: JsonField<Metadata> = JsonMissing.of()
         private var id: JsonField<String> = JsonMissing.of()
-        private var externalCustomerId: JsonField<String> = JsonMissing.of()
-        private var name: JsonField<String> = JsonMissing.of()
-        private var email: JsonField<String> = JsonMissing.of()
-        private var timezone: JsonField<String> = JsonMissing.of()
-        private var paymentProviderId: JsonField<String> = JsonMissing.of()
-        private var paymentProvider: JsonField<PaymentProvider> = JsonMissing.of()
-        private var createdAt: JsonField<OffsetDateTime> = JsonMissing.of()
-        private var shippingAddress: JsonField<ShippingAddress> = JsonMissing.of()
-        private var billingAddress: JsonField<BillingAddress> = JsonMissing.of()
-        private var balance: JsonField<String> = JsonMissing.of()
-        private var currency: JsonField<String> = JsonMissing.of()
-        private var taxId: JsonField<TaxId> = JsonMissing.of()
-        private var autoCollection: JsonField<Boolean> = JsonMissing.of()
-        private var exemptFromAutomatedTax: JsonField<Boolean> = JsonMissing.of()
-        private var emailDelivery: JsonField<Boolean> = JsonMissing.of()
         private var additionalEmails: JsonField<List<String>> = JsonMissing.of()
+        private var autoCollection: JsonField<Boolean> = JsonMissing.of()
+        private var balance: JsonField<String> = JsonMissing.of()
+        private var billingAddress: JsonField<BillingAddress> = JsonMissing.of()
+        private var createdAt: JsonField<OffsetDateTime> = JsonMissing.of()
+        private var currency: JsonField<String> = JsonMissing.of()
+        private var email: JsonField<String> = JsonMissing.of()
+        private var emailDelivery: JsonField<Boolean> = JsonMissing.of()
+        private var exemptFromAutomatedTax: JsonField<Boolean> = JsonMissing.of()
+        private var externalCustomerId: JsonField<String> = JsonMissing.of()
+        private var metadata: JsonField<Metadata> = JsonMissing.of()
+        private var name: JsonField<String> = JsonMissing.of()
+        private var paymentProvider: JsonField<PaymentProvider> = JsonMissing.of()
+        private var paymentProviderId: JsonField<String> = JsonMissing.of()
         private var portalUrl: JsonField<String> = JsonMissing.of()
+        private var shippingAddress: JsonField<ShippingAddress> = JsonMissing.of()
+        private var taxId: JsonField<TaxId> = JsonMissing.of()
+        private var timezone: JsonField<String> = JsonMissing.of()
         private var accountingSyncConfiguration: JsonField<AccountingSyncConfiguration> =
             JsonMissing.of()
         private var reportingConfiguration: JsonField<ReportingConfiguration> = JsonMissing.of()
         private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         internal fun from(customer: Customer) = apply {
-            metadata = customer.metadata
             id = customer.id
-            externalCustomerId = customer.externalCustomerId
-            name = customer.name
-            email = customer.email
-            timezone = customer.timezone
-            paymentProviderId = customer.paymentProviderId
-            paymentProvider = customer.paymentProvider
-            createdAt = customer.createdAt
-            shippingAddress = customer.shippingAddress
-            billingAddress = customer.billingAddress
-            balance = customer.balance
-            currency = customer.currency
-            taxId = customer.taxId
-            autoCollection = customer.autoCollection
-            exemptFromAutomatedTax = customer.exemptFromAutomatedTax
-            emailDelivery = customer.emailDelivery
             additionalEmails = customer.additionalEmails
+            autoCollection = customer.autoCollection
+            balance = customer.balance
+            billingAddress = customer.billingAddress
+            createdAt = customer.createdAt
+            currency = customer.currency
+            email = customer.email
+            emailDelivery = customer.emailDelivery
+            exemptFromAutomatedTax = customer.exemptFromAutomatedTax
+            externalCustomerId = customer.externalCustomerId
+            metadata = customer.metadata
+            name = customer.name
+            paymentProvider = customer.paymentProvider
+            paymentProviderId = customer.paymentProviderId
             portalUrl = customer.portalUrl
+            shippingAddress = customer.shippingAddress
+            taxId = customer.taxId
+            timezone = customer.timezone
             accountingSyncConfiguration = customer.accountingSyncConfiguration
             reportingConfiguration = customer.reportingConfiguration
             additionalProperties = customer.additionalProperties.toMutableMap()
         }
 
-        /**
-         * User specified key-value pairs for the resource. If not present, this defaults to an
-         * empty dictionary. Individual keys can be removed by setting the value to `null`, and the
-         * entire metadata mapping can be cleared by setting `metadata` to `null`.
-         */
-        fun metadata(metadata: Metadata) = metadata(JsonField.of(metadata))
-
-        /**
-         * User specified key-value pairs for the resource. If not present, this defaults to an
-         * empty dictionary. Individual keys can be removed by setting the value to `null`, and the
-         * entire metadata mapping can be cleared by setting `metadata` to `null`.
-         */
-        fun metadata(metadata: JsonField<Metadata>) = apply { this.metadata = metadata }
-
         fun id(id: String) = id(JsonField.of(id))
 
         fun id(id: JsonField<String>) = apply { this.id = id }
+
+        fun additionalEmails(additionalEmails: List<String>) =
+            additionalEmails(JsonField.of(additionalEmails))
+
+        fun additionalEmails(additionalEmails: JsonField<List<String>>) = apply {
+            this.additionalEmails = additionalEmails
+        }
+
+        fun autoCollection(autoCollection: Boolean) = autoCollection(JsonField.of(autoCollection))
+
+        fun autoCollection(autoCollection: JsonField<Boolean>) = apply {
+            this.autoCollection = autoCollection
+        }
+
+        /** The customer's current balance in their currency. */
+        fun balance(balance: String) = balance(JsonField.of(balance))
+
+        /** The customer's current balance in their currency. */
+        fun balance(balance: JsonField<String>) = apply { this.balance = balance }
+
+        fun billingAddress(billingAddress: BillingAddress) =
+            billingAddress(JsonField.of(billingAddress))
+
+        fun billingAddress(billingAddress: JsonField<BillingAddress>) = apply {
+            this.billingAddress = billingAddress
+        }
+
+        fun createdAt(createdAt: OffsetDateTime) = createdAt(JsonField.of(createdAt))
+
+        fun createdAt(createdAt: JsonField<OffsetDateTime>) = apply { this.createdAt = createdAt }
+
+        fun currency(currency: String) = currency(JsonField.of(currency))
+
+        fun currency(currency: JsonField<String>) = apply { this.currency = currency }
+
+        /**
+         * A valid customer email, to be used for notifications. When Orb triggers payment through a
+         * payment gateway, this email will be used for any automatically issued receipts.
+         */
+        fun email(email: String) = email(JsonField.of(email))
+
+        /**
+         * A valid customer email, to be used for notifications. When Orb triggers payment through a
+         * payment gateway, this email will be used for any automatically issued receipts.
+         */
+        fun email(email: JsonField<String>) = apply { this.email = email }
+
+        fun emailDelivery(emailDelivery: Boolean) = emailDelivery(JsonField.of(emailDelivery))
+
+        fun emailDelivery(emailDelivery: JsonField<Boolean>) = apply {
+            this.emailDelivery = emailDelivery
+        }
+
+        fun exemptFromAutomatedTax(exemptFromAutomatedTax: Boolean) =
+            exemptFromAutomatedTax(JsonField.of(exemptFromAutomatedTax))
+
+        fun exemptFromAutomatedTax(exemptFromAutomatedTax: JsonField<Boolean>) = apply {
+            this.exemptFromAutomatedTax = exemptFromAutomatedTax
+        }
 
         /**
          * An optional user-defined ID for this customer resource, used throughout the system as an
@@ -592,52 +637,25 @@ private constructor(
             this.externalCustomerId = externalCustomerId
         }
 
+        /**
+         * User specified key-value pairs for the resource. If not present, this defaults to an
+         * empty dictionary. Individual keys can be removed by setting the value to `null`, and the
+         * entire metadata mapping can be cleared by setting `metadata` to `null`.
+         */
+        fun metadata(metadata: Metadata) = metadata(JsonField.of(metadata))
+
+        /**
+         * User specified key-value pairs for the resource. If not present, this defaults to an
+         * empty dictionary. Individual keys can be removed by setting the value to `null`, and the
+         * entire metadata mapping can be cleared by setting `metadata` to `null`.
+         */
+        fun metadata(metadata: JsonField<Metadata>) = apply { this.metadata = metadata }
+
         /** The full name of the customer */
         fun name(name: String) = name(JsonField.of(name))
 
         /** The full name of the customer */
         fun name(name: JsonField<String>) = apply { this.name = name }
-
-        /**
-         * A valid customer email, to be used for notifications. When Orb triggers payment through a
-         * payment gateway, this email will be used for any automatically issued receipts.
-         */
-        fun email(email: String) = email(JsonField.of(email))
-
-        /**
-         * A valid customer email, to be used for notifications. When Orb triggers payment through a
-         * payment gateway, this email will be used for any automatically issued receipts.
-         */
-        fun email(email: JsonField<String>) = apply { this.email = email }
-
-        /**
-         * A timezone identifier from the IANA timezone database, such as "America/Los_Angeles".
-         * This "defaults to your account's timezone if not set. This cannot be changed after
-         * customer creation.
-         */
-        fun timezone(timezone: String) = timezone(JsonField.of(timezone))
-
-        /**
-         * A timezone identifier from the IANA timezone database, such as "America/Los_Angeles".
-         * This "defaults to your account's timezone if not set. This cannot be changed after
-         * customer creation.
-         */
-        fun timezone(timezone: JsonField<String>) = apply { this.timezone = timezone }
-
-        /**
-         * The ID of this customer in an external payments solution, such as Stripe. This is used
-         * for creating charges or invoices in the external system via Orb.
-         */
-        fun paymentProviderId(paymentProviderId: String) =
-            paymentProviderId(JsonField.of(paymentProviderId))
-
-        /**
-         * The ID of this customer in an external payments solution, such as Stripe. This is used
-         * for creating charges or invoices in the external system via Orb.
-         */
-        fun paymentProviderId(paymentProviderId: JsonField<String>) = apply {
-            this.paymentProviderId = paymentProviderId
-        }
 
         /**
          * This is used for creating charges or invoices in an external system via Orb. When not in
@@ -654,9 +672,24 @@ private constructor(
             this.paymentProvider = paymentProvider
         }
 
-        fun createdAt(createdAt: OffsetDateTime) = createdAt(JsonField.of(createdAt))
+        /**
+         * The ID of this customer in an external payments solution, such as Stripe. This is used
+         * for creating charges or invoices in the external system via Orb.
+         */
+        fun paymentProviderId(paymentProviderId: String) =
+            paymentProviderId(JsonField.of(paymentProviderId))
 
-        fun createdAt(createdAt: JsonField<OffsetDateTime>) = apply { this.createdAt = createdAt }
+        /**
+         * The ID of this customer in an external payments solution, such as Stripe. This is used
+         * for creating charges or invoices in the external system via Orb.
+         */
+        fun paymentProviderId(paymentProviderId: JsonField<String>) = apply {
+            this.paymentProviderId = paymentProviderId
+        }
+
+        fun portalUrl(portalUrl: String) = portalUrl(JsonField.of(portalUrl))
+
+        fun portalUrl(portalUrl: JsonField<String>) = apply { this.portalUrl = portalUrl }
 
         fun shippingAddress(shippingAddress: ShippingAddress) =
             shippingAddress(JsonField.of(shippingAddress))
@@ -664,23 +697,6 @@ private constructor(
         fun shippingAddress(shippingAddress: JsonField<ShippingAddress>) = apply {
             this.shippingAddress = shippingAddress
         }
-
-        fun billingAddress(billingAddress: BillingAddress) =
-            billingAddress(JsonField.of(billingAddress))
-
-        fun billingAddress(billingAddress: JsonField<BillingAddress>) = apply {
-            this.billingAddress = billingAddress
-        }
-
-        /** The customer's current balance in their currency. */
-        fun balance(balance: String) = balance(JsonField.of(balance))
-
-        /** The customer's current balance in their currency. */
-        fun balance(balance: JsonField<String>) = apply { this.balance = balance }
-
-        fun currency(currency: String) = currency(JsonField.of(currency))
-
-        fun currency(currency: JsonField<String>) = apply { this.currency = currency }
 
         /**
          * Tax IDs are commonly required to be displayed on customer invoices, which are added to
@@ -898,35 +914,19 @@ private constructor(
          */
         fun taxId(taxId: JsonField<TaxId>) = apply { this.taxId = taxId }
 
-        fun autoCollection(autoCollection: Boolean) = autoCollection(JsonField.of(autoCollection))
+        /**
+         * A timezone identifier from the IANA timezone database, such as "America/Los_Angeles".
+         * This "defaults to your account's timezone if not set. This cannot be changed after
+         * customer creation.
+         */
+        fun timezone(timezone: String) = timezone(JsonField.of(timezone))
 
-        fun autoCollection(autoCollection: JsonField<Boolean>) = apply {
-            this.autoCollection = autoCollection
-        }
-
-        fun exemptFromAutomatedTax(exemptFromAutomatedTax: Boolean) =
-            exemptFromAutomatedTax(JsonField.of(exemptFromAutomatedTax))
-
-        fun exemptFromAutomatedTax(exemptFromAutomatedTax: JsonField<Boolean>) = apply {
-            this.exemptFromAutomatedTax = exemptFromAutomatedTax
-        }
-
-        fun emailDelivery(emailDelivery: Boolean) = emailDelivery(JsonField.of(emailDelivery))
-
-        fun emailDelivery(emailDelivery: JsonField<Boolean>) = apply {
-            this.emailDelivery = emailDelivery
-        }
-
-        fun additionalEmails(additionalEmails: List<String>) =
-            additionalEmails(JsonField.of(additionalEmails))
-
-        fun additionalEmails(additionalEmails: JsonField<List<String>>) = apply {
-            this.additionalEmails = additionalEmails
-        }
-
-        fun portalUrl(portalUrl: String) = portalUrl(JsonField.of(portalUrl))
-
-        fun portalUrl(portalUrl: JsonField<String>) = apply { this.portalUrl = portalUrl }
+        /**
+         * A timezone identifier from the IANA timezone database, such as "America/Los_Angeles".
+         * This "defaults to your account's timezone if not set. This cannot be changed after
+         * customer creation.
+         */
+        fun timezone(timezone: JsonField<String>) = apply { this.timezone = timezone }
 
         fun accountingSyncConfiguration(accountingSyncConfiguration: AccountingSyncConfiguration) =
             accountingSyncConfiguration(JsonField.of(accountingSyncConfiguration))
@@ -964,25 +964,25 @@ private constructor(
 
         fun build(): Customer =
             Customer(
-                metadata,
                 id,
-                externalCustomerId,
-                name,
-                email,
-                timezone,
-                paymentProviderId,
-                paymentProvider,
-                createdAt,
-                shippingAddress,
-                billingAddress,
-                balance,
-                currency,
-                taxId,
-                autoCollection,
-                exemptFromAutomatedTax,
-                emailDelivery,
                 additionalEmails.map { it.toImmutable() },
+                autoCollection,
+                balance,
+                billingAddress,
+                createdAt,
+                currency,
+                email,
+                emailDelivery,
+                exemptFromAutomatedTax,
+                externalCustomerId,
+                metadata,
+                name,
+                paymentProvider,
+                paymentProviderId,
                 portalUrl,
+                shippingAddress,
+                taxId,
+                timezone,
                 accountingSyncConfiguration,
                 reportingConfiguration,
                 additionalProperties.toImmutable(),
@@ -993,51 +993,51 @@ private constructor(
     class BillingAddress
     @JsonCreator
     private constructor(
+        @JsonProperty("city")
+        @ExcludeMissing
+        private val city: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("country")
+        @ExcludeMissing
+        private val country: JsonField<String> = JsonMissing.of(),
         @JsonProperty("line1")
         @ExcludeMissing
         private val line1: JsonField<String> = JsonMissing.of(),
         @JsonProperty("line2")
         @ExcludeMissing
         private val line2: JsonField<String> = JsonMissing.of(),
-        @JsonProperty("city")
-        @ExcludeMissing
-        private val city: JsonField<String> = JsonMissing.of(),
-        @JsonProperty("state")
-        @ExcludeMissing
-        private val state: JsonField<String> = JsonMissing.of(),
         @JsonProperty("postal_code")
         @ExcludeMissing
         private val postalCode: JsonField<String> = JsonMissing.of(),
-        @JsonProperty("country")
+        @JsonProperty("state")
         @ExcludeMissing
-        private val country: JsonField<String> = JsonMissing.of(),
+        private val state: JsonField<String> = JsonMissing.of(),
         @JsonAnySetter
         private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
+
+        fun city(): String? = city.getNullable("city")
+
+        fun country(): String? = country.getNullable("country")
 
         fun line1(): String? = line1.getNullable("line1")
 
         fun line2(): String? = line2.getNullable("line2")
 
-        fun city(): String? = city.getNullable("city")
+        fun postalCode(): String? = postalCode.getNullable("postal_code")
 
         fun state(): String? = state.getNullable("state")
 
-        fun postalCode(): String? = postalCode.getNullable("postal_code")
+        @JsonProperty("city") @ExcludeMissing fun _city() = city
 
-        fun country(): String? = country.getNullable("country")
+        @JsonProperty("country") @ExcludeMissing fun _country() = country
 
         @JsonProperty("line1") @ExcludeMissing fun _line1() = line1
 
         @JsonProperty("line2") @ExcludeMissing fun _line2() = line2
 
-        @JsonProperty("city") @ExcludeMissing fun _city() = city
-
-        @JsonProperty("state") @ExcludeMissing fun _state() = state
-
         @JsonProperty("postal_code") @ExcludeMissing fun _postalCode() = postalCode
 
-        @JsonProperty("country") @ExcludeMissing fun _country() = country
+        @JsonProperty("state") @ExcludeMissing fun _state() = state
 
         @JsonAnyGetter
         @ExcludeMissing
@@ -1047,12 +1047,12 @@ private constructor(
 
         fun validate(): BillingAddress = apply {
             if (!validated) {
+                city()
+                country()
                 line1()
                 line2()
-                city()
-                state()
                 postalCode()
-                country()
+                state()
                 validated = true
             }
         }
@@ -1066,23 +1066,31 @@ private constructor(
 
         class Builder {
 
+            private var city: JsonField<String> = JsonMissing.of()
+            private var country: JsonField<String> = JsonMissing.of()
             private var line1: JsonField<String> = JsonMissing.of()
             private var line2: JsonField<String> = JsonMissing.of()
-            private var city: JsonField<String> = JsonMissing.of()
-            private var state: JsonField<String> = JsonMissing.of()
             private var postalCode: JsonField<String> = JsonMissing.of()
-            private var country: JsonField<String> = JsonMissing.of()
+            private var state: JsonField<String> = JsonMissing.of()
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             internal fun from(billingAddress: BillingAddress) = apply {
+                city = billingAddress.city
+                country = billingAddress.country
                 line1 = billingAddress.line1
                 line2 = billingAddress.line2
-                city = billingAddress.city
-                state = billingAddress.state
                 postalCode = billingAddress.postalCode
-                country = billingAddress.country
+                state = billingAddress.state
                 additionalProperties = billingAddress.additionalProperties.toMutableMap()
             }
+
+            fun city(city: String) = city(JsonField.of(city))
+
+            fun city(city: JsonField<String>) = apply { this.city = city }
+
+            fun country(country: String) = country(JsonField.of(country))
+
+            fun country(country: JsonField<String>) = apply { this.country = country }
 
             fun line1(line1: String) = line1(JsonField.of(line1))
 
@@ -1092,21 +1100,13 @@ private constructor(
 
             fun line2(line2: JsonField<String>) = apply { this.line2 = line2 }
 
-            fun city(city: String) = city(JsonField.of(city))
-
-            fun city(city: JsonField<String>) = apply { this.city = city }
-
-            fun state(state: String) = state(JsonField.of(state))
-
-            fun state(state: JsonField<String>) = apply { this.state = state }
-
             fun postalCode(postalCode: String) = postalCode(JsonField.of(postalCode))
 
             fun postalCode(postalCode: JsonField<String>) = apply { this.postalCode = postalCode }
 
-            fun country(country: String) = country(JsonField.of(country))
+            fun state(state: String) = state(JsonField.of(state))
 
-            fun country(country: JsonField<String>) = apply { this.country = country }
+            fun state(state: JsonField<String>) = apply { this.state = state }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
@@ -1129,12 +1129,12 @@ private constructor(
 
             fun build(): BillingAddress =
                 BillingAddress(
+                    city,
+                    country,
                     line1,
                     line2,
-                    city,
-                    state,
                     postalCode,
-                    country,
+                    state,
                     additionalProperties.toImmutable(),
                 )
         }
@@ -1144,17 +1144,17 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is BillingAddress && line1 == other.line1 && line2 == other.line2 && city == other.city && state == other.state && postalCode == other.postalCode && country == other.country && additionalProperties == other.additionalProperties /* spotless:on */
+            return /* spotless:off */ other is BillingAddress && city == other.city && country == other.country && line1 == other.line1 && line2 == other.line2 && postalCode == other.postalCode && state == other.state && additionalProperties == other.additionalProperties /* spotless:on */
         }
 
         /* spotless:off */
-        private val hashCode: Int by lazy { Objects.hash(line1, line2, city, state, postalCode, country, additionalProperties) }
+        private val hashCode: Int by lazy { Objects.hash(city, country, line1, line2, postalCode, state, additionalProperties) }
         /* spotless:on */
 
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "BillingAddress{line1=$line1, line2=$line2, city=$city, state=$state, postalCode=$postalCode, country=$country, additionalProperties=$additionalProperties}"
+            "BillingAddress{city=$city, country=$country, line1=$line1, line2=$line2, postalCode=$postalCode, state=$state, additionalProperties=$additionalProperties}"
     }
 
     /**
@@ -1315,51 +1315,51 @@ private constructor(
     class ShippingAddress
     @JsonCreator
     private constructor(
+        @JsonProperty("city")
+        @ExcludeMissing
+        private val city: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("country")
+        @ExcludeMissing
+        private val country: JsonField<String> = JsonMissing.of(),
         @JsonProperty("line1")
         @ExcludeMissing
         private val line1: JsonField<String> = JsonMissing.of(),
         @JsonProperty("line2")
         @ExcludeMissing
         private val line2: JsonField<String> = JsonMissing.of(),
-        @JsonProperty("city")
-        @ExcludeMissing
-        private val city: JsonField<String> = JsonMissing.of(),
-        @JsonProperty("state")
-        @ExcludeMissing
-        private val state: JsonField<String> = JsonMissing.of(),
         @JsonProperty("postal_code")
         @ExcludeMissing
         private val postalCode: JsonField<String> = JsonMissing.of(),
-        @JsonProperty("country")
+        @JsonProperty("state")
         @ExcludeMissing
-        private val country: JsonField<String> = JsonMissing.of(),
+        private val state: JsonField<String> = JsonMissing.of(),
         @JsonAnySetter
         private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
+
+        fun city(): String? = city.getNullable("city")
+
+        fun country(): String? = country.getNullable("country")
 
         fun line1(): String? = line1.getNullable("line1")
 
         fun line2(): String? = line2.getNullable("line2")
 
-        fun city(): String? = city.getNullable("city")
+        fun postalCode(): String? = postalCode.getNullable("postal_code")
 
         fun state(): String? = state.getNullable("state")
 
-        fun postalCode(): String? = postalCode.getNullable("postal_code")
+        @JsonProperty("city") @ExcludeMissing fun _city() = city
 
-        fun country(): String? = country.getNullable("country")
+        @JsonProperty("country") @ExcludeMissing fun _country() = country
 
         @JsonProperty("line1") @ExcludeMissing fun _line1() = line1
 
         @JsonProperty("line2") @ExcludeMissing fun _line2() = line2
 
-        @JsonProperty("city") @ExcludeMissing fun _city() = city
-
-        @JsonProperty("state") @ExcludeMissing fun _state() = state
-
         @JsonProperty("postal_code") @ExcludeMissing fun _postalCode() = postalCode
 
-        @JsonProperty("country") @ExcludeMissing fun _country() = country
+        @JsonProperty("state") @ExcludeMissing fun _state() = state
 
         @JsonAnyGetter
         @ExcludeMissing
@@ -1369,12 +1369,12 @@ private constructor(
 
         fun validate(): ShippingAddress = apply {
             if (!validated) {
+                city()
+                country()
                 line1()
                 line2()
-                city()
-                state()
                 postalCode()
-                country()
+                state()
                 validated = true
             }
         }
@@ -1388,23 +1388,31 @@ private constructor(
 
         class Builder {
 
+            private var city: JsonField<String> = JsonMissing.of()
+            private var country: JsonField<String> = JsonMissing.of()
             private var line1: JsonField<String> = JsonMissing.of()
             private var line2: JsonField<String> = JsonMissing.of()
-            private var city: JsonField<String> = JsonMissing.of()
-            private var state: JsonField<String> = JsonMissing.of()
             private var postalCode: JsonField<String> = JsonMissing.of()
-            private var country: JsonField<String> = JsonMissing.of()
+            private var state: JsonField<String> = JsonMissing.of()
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             internal fun from(shippingAddress: ShippingAddress) = apply {
+                city = shippingAddress.city
+                country = shippingAddress.country
                 line1 = shippingAddress.line1
                 line2 = shippingAddress.line2
-                city = shippingAddress.city
-                state = shippingAddress.state
                 postalCode = shippingAddress.postalCode
-                country = shippingAddress.country
+                state = shippingAddress.state
                 additionalProperties = shippingAddress.additionalProperties.toMutableMap()
             }
+
+            fun city(city: String) = city(JsonField.of(city))
+
+            fun city(city: JsonField<String>) = apply { this.city = city }
+
+            fun country(country: String) = country(JsonField.of(country))
+
+            fun country(country: JsonField<String>) = apply { this.country = country }
 
             fun line1(line1: String) = line1(JsonField.of(line1))
 
@@ -1414,21 +1422,13 @@ private constructor(
 
             fun line2(line2: JsonField<String>) = apply { this.line2 = line2 }
 
-            fun city(city: String) = city(JsonField.of(city))
-
-            fun city(city: JsonField<String>) = apply { this.city = city }
-
-            fun state(state: String) = state(JsonField.of(state))
-
-            fun state(state: JsonField<String>) = apply { this.state = state }
-
             fun postalCode(postalCode: String) = postalCode(JsonField.of(postalCode))
 
             fun postalCode(postalCode: JsonField<String>) = apply { this.postalCode = postalCode }
 
-            fun country(country: String) = country(JsonField.of(country))
+            fun state(state: String) = state(JsonField.of(state))
 
-            fun country(country: JsonField<String>) = apply { this.country = country }
+            fun state(state: JsonField<String>) = apply { this.state = state }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
@@ -1451,12 +1451,12 @@ private constructor(
 
             fun build(): ShippingAddress =
                 ShippingAddress(
+                    city,
+                    country,
                     line1,
                     line2,
-                    city,
-                    state,
                     postalCode,
-                    country,
+                    state,
                     additionalProperties.toImmutable(),
                 )
         }
@@ -1466,17 +1466,17 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is ShippingAddress && line1 == other.line1 && line2 == other.line2 && city == other.city && state == other.state && postalCode == other.postalCode && country == other.country && additionalProperties == other.additionalProperties /* spotless:on */
+            return /* spotless:off */ other is ShippingAddress && city == other.city && country == other.country && line1 == other.line1 && line2 == other.line2 && postalCode == other.postalCode && state == other.state && additionalProperties == other.additionalProperties /* spotless:on */
         }
 
         /* spotless:off */
-        private val hashCode: Int by lazy { Objects.hash(line1, line2, city, state, postalCode, country, additionalProperties) }
+        private val hashCode: Int by lazy { Objects.hash(city, country, line1, line2, postalCode, state, additionalProperties) }
         /* spotless:on */
 
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "ShippingAddress{line1=$line1, line2=$line2, city=$city, state=$state, postalCode=$postalCode, country=$country, additionalProperties=$additionalProperties}"
+            "ShippingAddress{city=$city, country=$country, line1=$line1, line2=$line2, postalCode=$postalCode, state=$state, additionalProperties=$additionalProperties}"
     }
 
     /**
@@ -2694,26 +2694,26 @@ private constructor(
     class AccountingSyncConfiguration
     @JsonCreator
     private constructor(
-        @JsonProperty("excluded")
-        @ExcludeMissing
-        private val excluded: JsonField<Boolean> = JsonMissing.of(),
         @JsonProperty("accounting_providers")
         @ExcludeMissing
         private val accountingProviders: JsonField<List<AccountingProvider>> = JsonMissing.of(),
+        @JsonProperty("excluded")
+        @ExcludeMissing
+        private val excluded: JsonField<Boolean> = JsonMissing.of(),
         @JsonAnySetter
         private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
 
-        fun excluded(): Boolean = excluded.getRequired("excluded")
-
         fun accountingProviders(): List<AccountingProvider> =
             accountingProviders.getRequired("accounting_providers")
 
-        @JsonProperty("excluded") @ExcludeMissing fun _excluded() = excluded
+        fun excluded(): Boolean = excluded.getRequired("excluded")
 
         @JsonProperty("accounting_providers")
         @ExcludeMissing
         fun _accountingProviders() = accountingProviders
+
+        @JsonProperty("excluded") @ExcludeMissing fun _excluded() = excluded
 
         @JsonAnyGetter
         @ExcludeMissing
@@ -2723,8 +2723,8 @@ private constructor(
 
         fun validate(): AccountingSyncConfiguration = apply {
             if (!validated) {
-                excluded()
                 accountingProviders().forEach { it.validate() }
+                excluded()
                 validated = true
             }
         }
@@ -2738,20 +2738,16 @@ private constructor(
 
         class Builder {
 
-            private var excluded: JsonField<Boolean> = JsonMissing.of()
             private var accountingProviders: JsonField<List<AccountingProvider>> = JsonMissing.of()
+            private var excluded: JsonField<Boolean> = JsonMissing.of()
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             internal fun from(accountingSyncConfiguration: AccountingSyncConfiguration) = apply {
-                excluded = accountingSyncConfiguration.excluded
                 accountingProviders = accountingSyncConfiguration.accountingProviders
+                excluded = accountingSyncConfiguration.excluded
                 additionalProperties =
                     accountingSyncConfiguration.additionalProperties.toMutableMap()
             }
-
-            fun excluded(excluded: Boolean) = excluded(JsonField.of(excluded))
-
-            fun excluded(excluded: JsonField<Boolean>) = apply { this.excluded = excluded }
 
             fun accountingProviders(accountingProviders: List<AccountingProvider>) =
                 accountingProviders(JsonField.of(accountingProviders))
@@ -2760,6 +2756,10 @@ private constructor(
                 apply {
                     this.accountingProviders = accountingProviders
                 }
+
+            fun excluded(excluded: Boolean) = excluded(JsonField.of(excluded))
+
+            fun excluded(excluded: JsonField<Boolean>) = apply { this.excluded = excluded }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
@@ -2782,8 +2782,8 @@ private constructor(
 
             fun build(): AccountingSyncConfiguration =
                 AccountingSyncConfiguration(
-                    excluded,
                     accountingProviders.map { it.toImmutable() },
+                    excluded,
                     additionalProperties.toImmutable(),
                 )
         }
@@ -2792,26 +2792,26 @@ private constructor(
         class AccountingProvider
         @JsonCreator
         private constructor(
-            @JsonProperty("provider_type")
-            @ExcludeMissing
-            private val providerType: JsonField<ProviderType> = JsonMissing.of(),
             @JsonProperty("external_provider_id")
             @ExcludeMissing
             private val externalProviderId: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("provider_type")
+            @ExcludeMissing
+            private val providerType: JsonField<ProviderType> = JsonMissing.of(),
             @JsonAnySetter
             private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
-            fun providerType(): ProviderType = providerType.getRequired("provider_type")
-
             fun externalProviderId(): String? =
                 externalProviderId.getNullable("external_provider_id")
 
-            @JsonProperty("provider_type") @ExcludeMissing fun _providerType() = providerType
+            fun providerType(): ProviderType = providerType.getRequired("provider_type")
 
             @JsonProperty("external_provider_id")
             @ExcludeMissing
             fun _externalProviderId() = externalProviderId
+
+            @JsonProperty("provider_type") @ExcludeMissing fun _providerType() = providerType
 
             @JsonAnyGetter
             @ExcludeMissing
@@ -2821,8 +2821,8 @@ private constructor(
 
             fun validate(): AccountingProvider = apply {
                 if (!validated) {
-                    providerType()
                     externalProviderId()
+                    providerType()
                     validated = true
                 }
             }
@@ -2836,21 +2836,14 @@ private constructor(
 
             class Builder {
 
-                private var providerType: JsonField<ProviderType> = JsonMissing.of()
                 private var externalProviderId: JsonField<String> = JsonMissing.of()
+                private var providerType: JsonField<ProviderType> = JsonMissing.of()
                 private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
                 internal fun from(accountingProvider: AccountingProvider) = apply {
-                    providerType = accountingProvider.providerType
                     externalProviderId = accountingProvider.externalProviderId
+                    providerType = accountingProvider.providerType
                     additionalProperties = accountingProvider.additionalProperties.toMutableMap()
-                }
-
-                fun providerType(providerType: ProviderType) =
-                    providerType(JsonField.of(providerType))
-
-                fun providerType(providerType: JsonField<ProviderType>) = apply {
-                    this.providerType = providerType
                 }
 
                 fun externalProviderId(externalProviderId: String) =
@@ -2858,6 +2851,13 @@ private constructor(
 
                 fun externalProviderId(externalProviderId: JsonField<String>) = apply {
                     this.externalProviderId = externalProviderId
+                }
+
+                fun providerType(providerType: ProviderType) =
+                    providerType(JsonField.of(providerType))
+
+                fun providerType(providerType: JsonField<ProviderType>) = apply {
+                    this.providerType = providerType
                 }
 
                 fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
@@ -2884,8 +2884,8 @@ private constructor(
 
                 fun build(): AccountingProvider =
                     AccountingProvider(
-                        providerType,
                         externalProviderId,
+                        providerType,
                         additionalProperties.toImmutable(),
                     )
             }
@@ -2952,17 +2952,17 @@ private constructor(
                     return true
                 }
 
-                return /* spotless:off */ other is AccountingProvider && providerType == other.providerType && externalProviderId == other.externalProviderId && additionalProperties == other.additionalProperties /* spotless:on */
+                return /* spotless:off */ other is AccountingProvider && externalProviderId == other.externalProviderId && providerType == other.providerType && additionalProperties == other.additionalProperties /* spotless:on */
             }
 
             /* spotless:off */
-            private val hashCode: Int by lazy { Objects.hash(providerType, externalProviderId, additionalProperties) }
+            private val hashCode: Int by lazy { Objects.hash(externalProviderId, providerType, additionalProperties) }
             /* spotless:on */
 
             override fun hashCode(): Int = hashCode
 
             override fun toString() =
-                "AccountingProvider{providerType=$providerType, externalProviderId=$externalProviderId, additionalProperties=$additionalProperties}"
+                "AccountingProvider{externalProviderId=$externalProviderId, providerType=$providerType, additionalProperties=$additionalProperties}"
         }
 
         override fun equals(other: Any?): Boolean {
@@ -2970,17 +2970,17 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is AccountingSyncConfiguration && excluded == other.excluded && accountingProviders == other.accountingProviders && additionalProperties == other.additionalProperties /* spotless:on */
+            return /* spotless:off */ other is AccountingSyncConfiguration && accountingProviders == other.accountingProviders && excluded == other.excluded && additionalProperties == other.additionalProperties /* spotless:on */
         }
 
         /* spotless:off */
-        private val hashCode: Int by lazy { Objects.hash(excluded, accountingProviders, additionalProperties) }
+        private val hashCode: Int by lazy { Objects.hash(accountingProviders, excluded, additionalProperties) }
         /* spotless:on */
 
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "AccountingSyncConfiguration{excluded=$excluded, accountingProviders=$accountingProviders, additionalProperties=$additionalProperties}"
+            "AccountingSyncConfiguration{accountingProviders=$accountingProviders, excluded=$excluded, additionalProperties=$additionalProperties}"
     }
 
     @NoAutoDetect
@@ -3078,15 +3078,15 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is Customer && metadata == other.metadata && id == other.id && externalCustomerId == other.externalCustomerId && name == other.name && email == other.email && timezone == other.timezone && paymentProviderId == other.paymentProviderId && paymentProvider == other.paymentProvider && createdAt == other.createdAt && shippingAddress == other.shippingAddress && billingAddress == other.billingAddress && balance == other.balance && currency == other.currency && taxId == other.taxId && autoCollection == other.autoCollection && exemptFromAutomatedTax == other.exemptFromAutomatedTax && emailDelivery == other.emailDelivery && additionalEmails == other.additionalEmails && portalUrl == other.portalUrl && accountingSyncConfiguration == other.accountingSyncConfiguration && reportingConfiguration == other.reportingConfiguration && additionalProperties == other.additionalProperties /* spotless:on */
+        return /* spotless:off */ other is Customer && id == other.id && additionalEmails == other.additionalEmails && autoCollection == other.autoCollection && balance == other.balance && billingAddress == other.billingAddress && createdAt == other.createdAt && currency == other.currency && email == other.email && emailDelivery == other.emailDelivery && exemptFromAutomatedTax == other.exemptFromAutomatedTax && externalCustomerId == other.externalCustomerId && metadata == other.metadata && name == other.name && paymentProvider == other.paymentProvider && paymentProviderId == other.paymentProviderId && portalUrl == other.portalUrl && shippingAddress == other.shippingAddress && taxId == other.taxId && timezone == other.timezone && accountingSyncConfiguration == other.accountingSyncConfiguration && reportingConfiguration == other.reportingConfiguration && additionalProperties == other.additionalProperties /* spotless:on */
     }
 
     /* spotless:off */
-    private val hashCode: Int by lazy { Objects.hash(metadata, id, externalCustomerId, name, email, timezone, paymentProviderId, paymentProvider, createdAt, shippingAddress, billingAddress, balance, currency, taxId, autoCollection, exemptFromAutomatedTax, emailDelivery, additionalEmails, portalUrl, accountingSyncConfiguration, reportingConfiguration, additionalProperties) }
+    private val hashCode: Int by lazy { Objects.hash(id, additionalEmails, autoCollection, balance, billingAddress, createdAt, currency, email, emailDelivery, exemptFromAutomatedTax, externalCustomerId, metadata, name, paymentProvider, paymentProviderId, portalUrl, shippingAddress, taxId, timezone, accountingSyncConfiguration, reportingConfiguration, additionalProperties) }
     /* spotless:on */
 
     override fun hashCode(): Int = hashCode
 
     override fun toString() =
-        "Customer{metadata=$metadata, id=$id, externalCustomerId=$externalCustomerId, name=$name, email=$email, timezone=$timezone, paymentProviderId=$paymentProviderId, paymentProvider=$paymentProvider, createdAt=$createdAt, shippingAddress=$shippingAddress, billingAddress=$billingAddress, balance=$balance, currency=$currency, taxId=$taxId, autoCollection=$autoCollection, exemptFromAutomatedTax=$exemptFromAutomatedTax, emailDelivery=$emailDelivery, additionalEmails=$additionalEmails, portalUrl=$portalUrl, accountingSyncConfiguration=$accountingSyncConfiguration, reportingConfiguration=$reportingConfiguration, additionalProperties=$additionalProperties}"
+        "Customer{id=$id, additionalEmails=$additionalEmails, autoCollection=$autoCollection, balance=$balance, billingAddress=$billingAddress, createdAt=$createdAt, currency=$currency, email=$email, emailDelivery=$emailDelivery, exemptFromAutomatedTax=$exemptFromAutomatedTax, externalCustomerId=$externalCustomerId, metadata=$metadata, name=$name, paymentProvider=$paymentProvider, paymentProviderId=$paymentProviderId, portalUrl=$portalUrl, shippingAddress=$shippingAddress, taxId=$taxId, timezone=$timezone, accountingSyncConfiguration=$accountingSyncConfiguration, reportingConfiguration=$reportingConfiguration, additionalProperties=$additionalProperties}"
 }

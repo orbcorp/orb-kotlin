@@ -20,34 +20,34 @@ import java.util.Objects
 class SubscriptionFetchScheduleResponse
 @JsonCreator
 private constructor(
-    @JsonProperty("start_date")
-    @ExcludeMissing
-    private val startDate: JsonField<OffsetDateTime> = JsonMissing.of(),
-    @JsonProperty("end_date")
-    @ExcludeMissing
-    private val endDate: JsonField<OffsetDateTime> = JsonMissing.of(),
     @JsonProperty("created_at")
     @ExcludeMissing
     private val createdAt: JsonField<OffsetDateTime> = JsonMissing.of(),
+    @JsonProperty("end_date")
+    @ExcludeMissing
+    private val endDate: JsonField<OffsetDateTime> = JsonMissing.of(),
     @JsonProperty("plan") @ExcludeMissing private val plan: JsonField<Plan> = JsonMissing.of(),
+    @JsonProperty("start_date")
+    @ExcludeMissing
+    private val startDate: JsonField<OffsetDateTime> = JsonMissing.of(),
     @JsonAnySetter private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
 ) {
 
-    fun startDate(): OffsetDateTime = startDate.getRequired("start_date")
+    fun createdAt(): OffsetDateTime = createdAt.getRequired("created_at")
 
     fun endDate(): OffsetDateTime? = endDate.getNullable("end_date")
 
-    fun createdAt(): OffsetDateTime = createdAt.getRequired("created_at")
-
     fun plan(): Plan = plan.getRequired("plan")
 
-    @JsonProperty("start_date") @ExcludeMissing fun _startDate() = startDate
-
-    @JsonProperty("end_date") @ExcludeMissing fun _endDate() = endDate
+    fun startDate(): OffsetDateTime = startDate.getRequired("start_date")
 
     @JsonProperty("created_at") @ExcludeMissing fun _createdAt() = createdAt
 
+    @JsonProperty("end_date") @ExcludeMissing fun _endDate() = endDate
+
     @JsonProperty("plan") @ExcludeMissing fun _plan() = plan
+
+    @JsonProperty("start_date") @ExcludeMissing fun _startDate() = startDate
 
     @JsonAnyGetter
     @ExcludeMissing
@@ -57,10 +57,10 @@ private constructor(
 
     fun validate(): SubscriptionFetchScheduleResponse = apply {
         if (!validated) {
-            startDate()
-            endDate()
             createdAt()
+            endDate()
             plan().validate()
+            startDate()
             validated = true
         }
     }
@@ -74,37 +74,37 @@ private constructor(
 
     class Builder {
 
-        private var startDate: JsonField<OffsetDateTime> = JsonMissing.of()
-        private var endDate: JsonField<OffsetDateTime> = JsonMissing.of()
         private var createdAt: JsonField<OffsetDateTime> = JsonMissing.of()
+        private var endDate: JsonField<OffsetDateTime> = JsonMissing.of()
         private var plan: JsonField<Plan> = JsonMissing.of()
+        private var startDate: JsonField<OffsetDateTime> = JsonMissing.of()
         private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         internal fun from(subscriptionFetchScheduleResponse: SubscriptionFetchScheduleResponse) =
             apply {
-                startDate = subscriptionFetchScheduleResponse.startDate
-                endDate = subscriptionFetchScheduleResponse.endDate
                 createdAt = subscriptionFetchScheduleResponse.createdAt
+                endDate = subscriptionFetchScheduleResponse.endDate
                 plan = subscriptionFetchScheduleResponse.plan
+                startDate = subscriptionFetchScheduleResponse.startDate
                 additionalProperties =
                     subscriptionFetchScheduleResponse.additionalProperties.toMutableMap()
             }
-
-        fun startDate(startDate: OffsetDateTime) = startDate(JsonField.of(startDate))
-
-        fun startDate(startDate: JsonField<OffsetDateTime>) = apply { this.startDate = startDate }
-
-        fun endDate(endDate: OffsetDateTime) = endDate(JsonField.of(endDate))
-
-        fun endDate(endDate: JsonField<OffsetDateTime>) = apply { this.endDate = endDate }
 
         fun createdAt(createdAt: OffsetDateTime) = createdAt(JsonField.of(createdAt))
 
         fun createdAt(createdAt: JsonField<OffsetDateTime>) = apply { this.createdAt = createdAt }
 
+        fun endDate(endDate: OffsetDateTime) = endDate(JsonField.of(endDate))
+
+        fun endDate(endDate: JsonField<OffsetDateTime>) = apply { this.endDate = endDate }
+
         fun plan(plan: Plan) = plan(JsonField.of(plan))
 
         fun plan(plan: JsonField<Plan>) = apply { this.plan = plan }
+
+        fun startDate(startDate: OffsetDateTime) = startDate(JsonField.of(startDate))
+
+        fun startDate(startDate: JsonField<OffsetDateTime>) = apply { this.startDate = startDate }
 
         fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
             this.additionalProperties.clear()
@@ -127,10 +127,10 @@ private constructor(
 
         fun build(): SubscriptionFetchScheduleResponse =
             SubscriptionFetchScheduleResponse(
-                startDate,
-                endDate,
                 createdAt,
+                endDate,
                 plan,
+                startDate,
                 additionalProperties.toImmutable(),
             )
     }
@@ -284,15 +284,15 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is SubscriptionFetchScheduleResponse && startDate == other.startDate && endDate == other.endDate && createdAt == other.createdAt && plan == other.plan && additionalProperties == other.additionalProperties /* spotless:on */
+        return /* spotless:off */ other is SubscriptionFetchScheduleResponse && createdAt == other.createdAt && endDate == other.endDate && plan == other.plan && startDate == other.startDate && additionalProperties == other.additionalProperties /* spotless:on */
     }
 
     /* spotless:off */
-    private val hashCode: Int by lazy { Objects.hash(startDate, endDate, createdAt, plan, additionalProperties) }
+    private val hashCode: Int by lazy { Objects.hash(createdAt, endDate, plan, startDate, additionalProperties) }
     /* spotless:on */
 
     override fun hashCode(): Int = hashCode
 
     override fun toString() =
-        "SubscriptionFetchScheduleResponse{startDate=$startDate, endDate=$endDate, createdAt=$createdAt, plan=$plan, additionalProperties=$additionalProperties}"
+        "SubscriptionFetchScheduleResponse{createdAt=$createdAt, endDate=$endDate, plan=$plan, startDate=$startDate, additionalProperties=$additionalProperties}"
 }

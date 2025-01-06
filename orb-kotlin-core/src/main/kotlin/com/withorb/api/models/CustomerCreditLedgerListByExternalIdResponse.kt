@@ -362,46 +362,69 @@ private constructor(
     class IncrementLedgerEntry
     @JsonCreator
     private constructor(
-        @JsonProperty("metadata")
-        @ExcludeMissing
-        private val metadata: JsonField<Metadata> = JsonMissing.of(),
         @JsonProperty("id") @ExcludeMissing private val id: JsonField<String> = JsonMissing.of(),
-        @JsonProperty("ledger_sequence_number")
-        @ExcludeMissing
-        private val ledgerSequenceNumber: JsonField<Long> = JsonMissing.of(),
-        @JsonProperty("entry_status")
-        @ExcludeMissing
-        private val entryStatus: JsonField<EntryStatus> = JsonMissing.of(),
-        @JsonProperty("customer")
-        @ExcludeMissing
-        private val customer: JsonField<Customer> = JsonMissing.of(),
-        @JsonProperty("starting_balance")
-        @ExcludeMissing
-        private val startingBalance: JsonField<Double> = JsonMissing.of(),
-        @JsonProperty("ending_balance")
-        @ExcludeMissing
-        private val endingBalance: JsonField<Double> = JsonMissing.of(),
         @JsonProperty("amount")
         @ExcludeMissing
         private val amount: JsonField<Double> = JsonMissing.of(),
-        @JsonProperty("currency")
-        @ExcludeMissing
-        private val currency: JsonField<String> = JsonMissing.of(),
         @JsonProperty("created_at")
         @ExcludeMissing
         private val createdAt: JsonField<OffsetDateTime> = JsonMissing.of(),
-        @JsonProperty("description")
-        @ExcludeMissing
-        private val description: JsonField<String> = JsonMissing.of(),
         @JsonProperty("credit_block")
         @ExcludeMissing
         private val creditBlock: JsonField<CreditBlock> = JsonMissing.of(),
+        @JsonProperty("currency")
+        @ExcludeMissing
+        private val currency: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("customer")
+        @ExcludeMissing
+        private val customer: JsonField<Customer> = JsonMissing.of(),
+        @JsonProperty("description")
+        @ExcludeMissing
+        private val description: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("ending_balance")
+        @ExcludeMissing
+        private val endingBalance: JsonField<Double> = JsonMissing.of(),
+        @JsonProperty("entry_status")
+        @ExcludeMissing
+        private val entryStatus: JsonField<EntryStatus> = JsonMissing.of(),
         @JsonProperty("entry_type")
         @ExcludeMissing
         private val entryType: JsonField<EntryType> = JsonMissing.of(),
+        @JsonProperty("ledger_sequence_number")
+        @ExcludeMissing
+        private val ledgerSequenceNumber: JsonField<Long> = JsonMissing.of(),
+        @JsonProperty("metadata")
+        @ExcludeMissing
+        private val metadata: JsonField<Metadata> = JsonMissing.of(),
+        @JsonProperty("starting_balance")
+        @ExcludeMissing
+        private val startingBalance: JsonField<Double> = JsonMissing.of(),
         @JsonAnySetter
         private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
+
+        fun id(): String = id.getRequired("id")
+
+        fun amount(): Double = amount.getRequired("amount")
+
+        fun createdAt(): OffsetDateTime = createdAt.getRequired("created_at")
+
+        fun creditBlock(): CreditBlock = creditBlock.getRequired("credit_block")
+
+        fun currency(): String = currency.getRequired("currency")
+
+        fun customer(): Customer = customer.getRequired("customer")
+
+        fun description(): String? = description.getNullable("description")
+
+        fun endingBalance(): Double = endingBalance.getRequired("ending_balance")
+
+        fun entryStatus(): EntryStatus = entryStatus.getRequired("entry_status")
+
+        fun entryType(): EntryType = entryType.getRequired("entry_type")
+
+        fun ledgerSequenceNumber(): Long =
+            ledgerSequenceNumber.getRequired("ledger_sequence_number")
 
         /**
          * User specified key-value pairs for the resource. If not present, this defaults to an
@@ -410,30 +433,31 @@ private constructor(
          */
         fun metadata(): Metadata = metadata.getRequired("metadata")
 
-        fun id(): String = id.getRequired("id")
-
-        fun ledgerSequenceNumber(): Long =
-            ledgerSequenceNumber.getRequired("ledger_sequence_number")
-
-        fun entryStatus(): EntryStatus = entryStatus.getRequired("entry_status")
-
-        fun customer(): Customer = customer.getRequired("customer")
-
         fun startingBalance(): Double = startingBalance.getRequired("starting_balance")
 
-        fun endingBalance(): Double = endingBalance.getRequired("ending_balance")
+        @JsonProperty("id") @ExcludeMissing fun _id() = id
 
-        fun amount(): Double = amount.getRequired("amount")
+        @JsonProperty("amount") @ExcludeMissing fun _amount() = amount
 
-        fun currency(): String = currency.getRequired("currency")
+        @JsonProperty("created_at") @ExcludeMissing fun _createdAt() = createdAt
 
-        fun createdAt(): OffsetDateTime = createdAt.getRequired("created_at")
+        @JsonProperty("credit_block") @ExcludeMissing fun _creditBlock() = creditBlock
 
-        fun description(): String? = description.getNullable("description")
+        @JsonProperty("currency") @ExcludeMissing fun _currency() = currency
 
-        fun creditBlock(): CreditBlock = creditBlock.getRequired("credit_block")
+        @JsonProperty("customer") @ExcludeMissing fun _customer() = customer
 
-        fun entryType(): EntryType = entryType.getRequired("entry_type")
+        @JsonProperty("description") @ExcludeMissing fun _description() = description
+
+        @JsonProperty("ending_balance") @ExcludeMissing fun _endingBalance() = endingBalance
+
+        @JsonProperty("entry_status") @ExcludeMissing fun _entryStatus() = entryStatus
+
+        @JsonProperty("entry_type") @ExcludeMissing fun _entryType() = entryType
+
+        @JsonProperty("ledger_sequence_number")
+        @ExcludeMissing
+        fun _ledgerSequenceNumber() = ledgerSequenceNumber
 
         /**
          * User specified key-value pairs for the resource. If not present, this defaults to an
@@ -442,31 +466,7 @@ private constructor(
          */
         @JsonProperty("metadata") @ExcludeMissing fun _metadata() = metadata
 
-        @JsonProperty("id") @ExcludeMissing fun _id() = id
-
-        @JsonProperty("ledger_sequence_number")
-        @ExcludeMissing
-        fun _ledgerSequenceNumber() = ledgerSequenceNumber
-
-        @JsonProperty("entry_status") @ExcludeMissing fun _entryStatus() = entryStatus
-
-        @JsonProperty("customer") @ExcludeMissing fun _customer() = customer
-
         @JsonProperty("starting_balance") @ExcludeMissing fun _startingBalance() = startingBalance
-
-        @JsonProperty("ending_balance") @ExcludeMissing fun _endingBalance() = endingBalance
-
-        @JsonProperty("amount") @ExcludeMissing fun _amount() = amount
-
-        @JsonProperty("currency") @ExcludeMissing fun _currency() = currency
-
-        @JsonProperty("created_at") @ExcludeMissing fun _createdAt() = createdAt
-
-        @JsonProperty("description") @ExcludeMissing fun _description() = description
-
-        @JsonProperty("credit_block") @ExcludeMissing fun _creditBlock() = creditBlock
-
-        @JsonProperty("entry_type") @ExcludeMissing fun _entryType() = entryType
 
         @JsonAnyGetter
         @ExcludeMissing
@@ -476,19 +476,19 @@ private constructor(
 
         fun validate(): IncrementLedgerEntry = apply {
             if (!validated) {
-                metadata().validate()
                 id()
-                ledgerSequenceNumber()
-                entryStatus()
-                customer().validate()
-                startingBalance()
-                endingBalance()
                 amount()
-                currency()
                 createdAt()
-                description()
                 creditBlock().validate()
+                currency()
+                customer().validate()
+                description()
+                endingBalance()
+                entryStatus()
                 entryType()
+                ledgerSequenceNumber()
+                metadata().validate()
+                startingBalance()
                 validated = true
             }
         }
@@ -502,36 +502,93 @@ private constructor(
 
         class Builder {
 
-            private var metadata: JsonField<Metadata> = JsonMissing.of()
             private var id: JsonField<String> = JsonMissing.of()
-            private var ledgerSequenceNumber: JsonField<Long> = JsonMissing.of()
-            private var entryStatus: JsonField<EntryStatus> = JsonMissing.of()
-            private var customer: JsonField<Customer> = JsonMissing.of()
-            private var startingBalance: JsonField<Double> = JsonMissing.of()
-            private var endingBalance: JsonField<Double> = JsonMissing.of()
             private var amount: JsonField<Double> = JsonMissing.of()
-            private var currency: JsonField<String> = JsonMissing.of()
             private var createdAt: JsonField<OffsetDateTime> = JsonMissing.of()
-            private var description: JsonField<String> = JsonMissing.of()
             private var creditBlock: JsonField<CreditBlock> = JsonMissing.of()
+            private var currency: JsonField<String> = JsonMissing.of()
+            private var customer: JsonField<Customer> = JsonMissing.of()
+            private var description: JsonField<String> = JsonMissing.of()
+            private var endingBalance: JsonField<Double> = JsonMissing.of()
+            private var entryStatus: JsonField<EntryStatus> = JsonMissing.of()
             private var entryType: JsonField<EntryType> = JsonMissing.of()
+            private var ledgerSequenceNumber: JsonField<Long> = JsonMissing.of()
+            private var metadata: JsonField<Metadata> = JsonMissing.of()
+            private var startingBalance: JsonField<Double> = JsonMissing.of()
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             internal fun from(incrementLedgerEntry: IncrementLedgerEntry) = apply {
-                metadata = incrementLedgerEntry.metadata
                 id = incrementLedgerEntry.id
-                ledgerSequenceNumber = incrementLedgerEntry.ledgerSequenceNumber
-                entryStatus = incrementLedgerEntry.entryStatus
-                customer = incrementLedgerEntry.customer
-                startingBalance = incrementLedgerEntry.startingBalance
-                endingBalance = incrementLedgerEntry.endingBalance
                 amount = incrementLedgerEntry.amount
-                currency = incrementLedgerEntry.currency
                 createdAt = incrementLedgerEntry.createdAt
-                description = incrementLedgerEntry.description
                 creditBlock = incrementLedgerEntry.creditBlock
+                currency = incrementLedgerEntry.currency
+                customer = incrementLedgerEntry.customer
+                description = incrementLedgerEntry.description
+                endingBalance = incrementLedgerEntry.endingBalance
+                entryStatus = incrementLedgerEntry.entryStatus
                 entryType = incrementLedgerEntry.entryType
+                ledgerSequenceNumber = incrementLedgerEntry.ledgerSequenceNumber
+                metadata = incrementLedgerEntry.metadata
+                startingBalance = incrementLedgerEntry.startingBalance
                 additionalProperties = incrementLedgerEntry.additionalProperties.toMutableMap()
+            }
+
+            fun id(id: String) = id(JsonField.of(id))
+
+            fun id(id: JsonField<String>) = apply { this.id = id }
+
+            fun amount(amount: Double) = amount(JsonField.of(amount))
+
+            fun amount(amount: JsonField<Double>) = apply { this.amount = amount }
+
+            fun createdAt(createdAt: OffsetDateTime) = createdAt(JsonField.of(createdAt))
+
+            fun createdAt(createdAt: JsonField<OffsetDateTime>) = apply {
+                this.createdAt = createdAt
+            }
+
+            fun creditBlock(creditBlock: CreditBlock) = creditBlock(JsonField.of(creditBlock))
+
+            fun creditBlock(creditBlock: JsonField<CreditBlock>) = apply {
+                this.creditBlock = creditBlock
+            }
+
+            fun currency(currency: String) = currency(JsonField.of(currency))
+
+            fun currency(currency: JsonField<String>) = apply { this.currency = currency }
+
+            fun customer(customer: Customer) = customer(JsonField.of(customer))
+
+            fun customer(customer: JsonField<Customer>) = apply { this.customer = customer }
+
+            fun description(description: String) = description(JsonField.of(description))
+
+            fun description(description: JsonField<String>) = apply {
+                this.description = description
+            }
+
+            fun endingBalance(endingBalance: Double) = endingBalance(JsonField.of(endingBalance))
+
+            fun endingBalance(endingBalance: JsonField<Double>) = apply {
+                this.endingBalance = endingBalance
+            }
+
+            fun entryStatus(entryStatus: EntryStatus) = entryStatus(JsonField.of(entryStatus))
+
+            fun entryStatus(entryStatus: JsonField<EntryStatus>) = apply {
+                this.entryStatus = entryStatus
+            }
+
+            fun entryType(entryType: EntryType) = entryType(JsonField.of(entryType))
+
+            fun entryType(entryType: JsonField<EntryType>) = apply { this.entryType = entryType }
+
+            fun ledgerSequenceNumber(ledgerSequenceNumber: Long) =
+                ledgerSequenceNumber(JsonField.of(ledgerSequenceNumber))
+
+            fun ledgerSequenceNumber(ledgerSequenceNumber: JsonField<Long>) = apply {
+                this.ledgerSequenceNumber = ledgerSequenceNumber
             }
 
             /**
@@ -548,69 +605,12 @@ private constructor(
              */
             fun metadata(metadata: JsonField<Metadata>) = apply { this.metadata = metadata }
 
-            fun id(id: String) = id(JsonField.of(id))
-
-            fun id(id: JsonField<String>) = apply { this.id = id }
-
-            fun ledgerSequenceNumber(ledgerSequenceNumber: Long) =
-                ledgerSequenceNumber(JsonField.of(ledgerSequenceNumber))
-
-            fun ledgerSequenceNumber(ledgerSequenceNumber: JsonField<Long>) = apply {
-                this.ledgerSequenceNumber = ledgerSequenceNumber
-            }
-
-            fun entryStatus(entryStatus: EntryStatus) = entryStatus(JsonField.of(entryStatus))
-
-            fun entryStatus(entryStatus: JsonField<EntryStatus>) = apply {
-                this.entryStatus = entryStatus
-            }
-
-            fun customer(customer: Customer) = customer(JsonField.of(customer))
-
-            fun customer(customer: JsonField<Customer>) = apply { this.customer = customer }
-
             fun startingBalance(startingBalance: Double) =
                 startingBalance(JsonField.of(startingBalance))
 
             fun startingBalance(startingBalance: JsonField<Double>) = apply {
                 this.startingBalance = startingBalance
             }
-
-            fun endingBalance(endingBalance: Double) = endingBalance(JsonField.of(endingBalance))
-
-            fun endingBalance(endingBalance: JsonField<Double>) = apply {
-                this.endingBalance = endingBalance
-            }
-
-            fun amount(amount: Double) = amount(JsonField.of(amount))
-
-            fun amount(amount: JsonField<Double>) = apply { this.amount = amount }
-
-            fun currency(currency: String) = currency(JsonField.of(currency))
-
-            fun currency(currency: JsonField<String>) = apply { this.currency = currency }
-
-            fun createdAt(createdAt: OffsetDateTime) = createdAt(JsonField.of(createdAt))
-
-            fun createdAt(createdAt: JsonField<OffsetDateTime>) = apply {
-                this.createdAt = createdAt
-            }
-
-            fun description(description: String) = description(JsonField.of(description))
-
-            fun description(description: JsonField<String>) = apply {
-                this.description = description
-            }
-
-            fun creditBlock(creditBlock: CreditBlock) = creditBlock(JsonField.of(creditBlock))
-
-            fun creditBlock(creditBlock: JsonField<CreditBlock>) = apply {
-                this.creditBlock = creditBlock
-            }
-
-            fun entryType(entryType: EntryType) = entryType(JsonField.of(entryType))
-
-            fun entryType(entryType: JsonField<EntryType>) = apply { this.entryType = entryType }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
@@ -633,19 +633,19 @@ private constructor(
 
             fun build(): IncrementLedgerEntry =
                 IncrementLedgerEntry(
-                    metadata,
                     id,
-                    ledgerSequenceNumber,
-                    entryStatus,
-                    customer,
-                    startingBalance,
-                    endingBalance,
                     amount,
-                    currency,
                     createdAt,
-                    description,
                     creditBlock,
+                    currency,
+                    customer,
+                    description,
+                    endingBalance,
+                    entryStatus,
                     entryType,
+                    ledgerSequenceNumber,
+                    metadata,
+                    startingBalance,
                     additionalProperties.toImmutable(),
                 )
         }
@@ -1095,72 +1095,95 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is IncrementLedgerEntry && metadata == other.metadata && id == other.id && ledgerSequenceNumber == other.ledgerSequenceNumber && entryStatus == other.entryStatus && customer == other.customer && startingBalance == other.startingBalance && endingBalance == other.endingBalance && amount == other.amount && currency == other.currency && createdAt == other.createdAt && description == other.description && creditBlock == other.creditBlock && entryType == other.entryType && additionalProperties == other.additionalProperties /* spotless:on */
+            return /* spotless:off */ other is IncrementLedgerEntry && id == other.id && amount == other.amount && createdAt == other.createdAt && creditBlock == other.creditBlock && currency == other.currency && customer == other.customer && description == other.description && endingBalance == other.endingBalance && entryStatus == other.entryStatus && entryType == other.entryType && ledgerSequenceNumber == other.ledgerSequenceNumber && metadata == other.metadata && startingBalance == other.startingBalance && additionalProperties == other.additionalProperties /* spotless:on */
         }
 
         /* spotless:off */
-        private val hashCode: Int by lazy { Objects.hash(metadata, id, ledgerSequenceNumber, entryStatus, customer, startingBalance, endingBalance, amount, currency, createdAt, description, creditBlock, entryType, additionalProperties) }
+        private val hashCode: Int by lazy { Objects.hash(id, amount, createdAt, creditBlock, currency, customer, description, endingBalance, entryStatus, entryType, ledgerSequenceNumber, metadata, startingBalance, additionalProperties) }
         /* spotless:on */
 
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "IncrementLedgerEntry{metadata=$metadata, id=$id, ledgerSequenceNumber=$ledgerSequenceNumber, entryStatus=$entryStatus, customer=$customer, startingBalance=$startingBalance, endingBalance=$endingBalance, amount=$amount, currency=$currency, createdAt=$createdAt, description=$description, creditBlock=$creditBlock, entryType=$entryType, additionalProperties=$additionalProperties}"
+            "IncrementLedgerEntry{id=$id, amount=$amount, createdAt=$createdAt, creditBlock=$creditBlock, currency=$currency, customer=$customer, description=$description, endingBalance=$endingBalance, entryStatus=$entryStatus, entryType=$entryType, ledgerSequenceNumber=$ledgerSequenceNumber, metadata=$metadata, startingBalance=$startingBalance, additionalProperties=$additionalProperties}"
     }
 
     @NoAutoDetect
     class DecrementLedgerEntry
     @JsonCreator
     private constructor(
-        @JsonProperty("metadata")
-        @ExcludeMissing
-        private val metadata: JsonField<Metadata> = JsonMissing.of(),
         @JsonProperty("id") @ExcludeMissing private val id: JsonField<String> = JsonMissing.of(),
-        @JsonProperty("ledger_sequence_number")
-        @ExcludeMissing
-        private val ledgerSequenceNumber: JsonField<Long> = JsonMissing.of(),
-        @JsonProperty("entry_status")
-        @ExcludeMissing
-        private val entryStatus: JsonField<EntryStatus> = JsonMissing.of(),
-        @JsonProperty("customer")
-        @ExcludeMissing
-        private val customer: JsonField<Customer> = JsonMissing.of(),
-        @JsonProperty("starting_balance")
-        @ExcludeMissing
-        private val startingBalance: JsonField<Double> = JsonMissing.of(),
-        @JsonProperty("ending_balance")
-        @ExcludeMissing
-        private val endingBalance: JsonField<Double> = JsonMissing.of(),
         @JsonProperty("amount")
         @ExcludeMissing
         private val amount: JsonField<Double> = JsonMissing.of(),
-        @JsonProperty("currency")
-        @ExcludeMissing
-        private val currency: JsonField<String> = JsonMissing.of(),
         @JsonProperty("created_at")
         @ExcludeMissing
         private val createdAt: JsonField<OffsetDateTime> = JsonMissing.of(),
-        @JsonProperty("description")
-        @ExcludeMissing
-        private val description: JsonField<String> = JsonMissing.of(),
         @JsonProperty("credit_block")
         @ExcludeMissing
         private val creditBlock: JsonField<CreditBlock> = JsonMissing.of(),
+        @JsonProperty("currency")
+        @ExcludeMissing
+        private val currency: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("customer")
+        @ExcludeMissing
+        private val customer: JsonField<Customer> = JsonMissing.of(),
+        @JsonProperty("description")
+        @ExcludeMissing
+        private val description: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("ending_balance")
+        @ExcludeMissing
+        private val endingBalance: JsonField<Double> = JsonMissing.of(),
+        @JsonProperty("entry_status")
+        @ExcludeMissing
+        private val entryStatus: JsonField<EntryStatus> = JsonMissing.of(),
         @JsonProperty("entry_type")
         @ExcludeMissing
         private val entryType: JsonField<EntryType> = JsonMissing.of(),
-        @JsonProperty("price_id")
+        @JsonProperty("ledger_sequence_number")
         @ExcludeMissing
-        private val priceId: JsonField<String> = JsonMissing.of(),
+        private val ledgerSequenceNumber: JsonField<Long> = JsonMissing.of(),
+        @JsonProperty("metadata")
+        @ExcludeMissing
+        private val metadata: JsonField<Metadata> = JsonMissing.of(),
+        @JsonProperty("starting_balance")
+        @ExcludeMissing
+        private val startingBalance: JsonField<Double> = JsonMissing.of(),
         @JsonProperty("event_id")
         @ExcludeMissing
         private val eventId: JsonField<String> = JsonMissing.of(),
         @JsonProperty("invoice_id")
         @ExcludeMissing
         private val invoiceId: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("price_id")
+        @ExcludeMissing
+        private val priceId: JsonField<String> = JsonMissing.of(),
         @JsonAnySetter
         private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
+
+        fun id(): String = id.getRequired("id")
+
+        fun amount(): Double = amount.getRequired("amount")
+
+        fun createdAt(): OffsetDateTime = createdAt.getRequired("created_at")
+
+        fun creditBlock(): CreditBlock = creditBlock.getRequired("credit_block")
+
+        fun currency(): String = currency.getRequired("currency")
+
+        fun customer(): Customer = customer.getRequired("customer")
+
+        fun description(): String? = description.getNullable("description")
+
+        fun endingBalance(): Double = endingBalance.getRequired("ending_balance")
+
+        fun entryStatus(): EntryStatus = entryStatus.getRequired("entry_status")
+
+        fun entryType(): EntryType = entryType.getRequired("entry_type")
+
+        fun ledgerSequenceNumber(): Long =
+            ledgerSequenceNumber.getRequired("ledger_sequence_number")
 
         /**
          * User specified key-value pairs for the resource. If not present, this defaults to an
@@ -1169,36 +1192,37 @@ private constructor(
          */
         fun metadata(): Metadata = metadata.getRequired("metadata")
 
-        fun id(): String = id.getRequired("id")
-
-        fun ledgerSequenceNumber(): Long =
-            ledgerSequenceNumber.getRequired("ledger_sequence_number")
-
-        fun entryStatus(): EntryStatus = entryStatus.getRequired("entry_status")
-
-        fun customer(): Customer = customer.getRequired("customer")
-
         fun startingBalance(): Double = startingBalance.getRequired("starting_balance")
-
-        fun endingBalance(): Double = endingBalance.getRequired("ending_balance")
-
-        fun amount(): Double = amount.getRequired("amount")
-
-        fun currency(): String = currency.getRequired("currency")
-
-        fun createdAt(): OffsetDateTime = createdAt.getRequired("created_at")
-
-        fun description(): String? = description.getNullable("description")
-
-        fun creditBlock(): CreditBlock = creditBlock.getRequired("credit_block")
-
-        fun entryType(): EntryType = entryType.getRequired("entry_type")
-
-        fun priceId(): String? = priceId.getNullable("price_id")
 
         fun eventId(): String? = eventId.getNullable("event_id")
 
         fun invoiceId(): String? = invoiceId.getNullable("invoice_id")
+
+        fun priceId(): String? = priceId.getNullable("price_id")
+
+        @JsonProperty("id") @ExcludeMissing fun _id() = id
+
+        @JsonProperty("amount") @ExcludeMissing fun _amount() = amount
+
+        @JsonProperty("created_at") @ExcludeMissing fun _createdAt() = createdAt
+
+        @JsonProperty("credit_block") @ExcludeMissing fun _creditBlock() = creditBlock
+
+        @JsonProperty("currency") @ExcludeMissing fun _currency() = currency
+
+        @JsonProperty("customer") @ExcludeMissing fun _customer() = customer
+
+        @JsonProperty("description") @ExcludeMissing fun _description() = description
+
+        @JsonProperty("ending_balance") @ExcludeMissing fun _endingBalance() = endingBalance
+
+        @JsonProperty("entry_status") @ExcludeMissing fun _entryStatus() = entryStatus
+
+        @JsonProperty("entry_type") @ExcludeMissing fun _entryType() = entryType
+
+        @JsonProperty("ledger_sequence_number")
+        @ExcludeMissing
+        fun _ledgerSequenceNumber() = ledgerSequenceNumber
 
         /**
          * User specified key-value pairs for the resource. If not present, this defaults to an
@@ -1207,37 +1231,13 @@ private constructor(
          */
         @JsonProperty("metadata") @ExcludeMissing fun _metadata() = metadata
 
-        @JsonProperty("id") @ExcludeMissing fun _id() = id
-
-        @JsonProperty("ledger_sequence_number")
-        @ExcludeMissing
-        fun _ledgerSequenceNumber() = ledgerSequenceNumber
-
-        @JsonProperty("entry_status") @ExcludeMissing fun _entryStatus() = entryStatus
-
-        @JsonProperty("customer") @ExcludeMissing fun _customer() = customer
-
         @JsonProperty("starting_balance") @ExcludeMissing fun _startingBalance() = startingBalance
-
-        @JsonProperty("ending_balance") @ExcludeMissing fun _endingBalance() = endingBalance
-
-        @JsonProperty("amount") @ExcludeMissing fun _amount() = amount
-
-        @JsonProperty("currency") @ExcludeMissing fun _currency() = currency
-
-        @JsonProperty("created_at") @ExcludeMissing fun _createdAt() = createdAt
-
-        @JsonProperty("description") @ExcludeMissing fun _description() = description
-
-        @JsonProperty("credit_block") @ExcludeMissing fun _creditBlock() = creditBlock
-
-        @JsonProperty("entry_type") @ExcludeMissing fun _entryType() = entryType
-
-        @JsonProperty("price_id") @ExcludeMissing fun _priceId() = priceId
 
         @JsonProperty("event_id") @ExcludeMissing fun _eventId() = eventId
 
         @JsonProperty("invoice_id") @ExcludeMissing fun _invoiceId() = invoiceId
+
+        @JsonProperty("price_id") @ExcludeMissing fun _priceId() = priceId
 
         @JsonAnyGetter
         @ExcludeMissing
@@ -1247,22 +1247,22 @@ private constructor(
 
         fun validate(): DecrementLedgerEntry = apply {
             if (!validated) {
-                metadata().validate()
                 id()
-                ledgerSequenceNumber()
-                entryStatus()
-                customer().validate()
-                startingBalance()
-                endingBalance()
                 amount()
-                currency()
                 createdAt()
-                description()
                 creditBlock().validate()
+                currency()
+                customer().validate()
+                description()
+                endingBalance()
+                entryStatus()
                 entryType()
-                priceId()
+                ledgerSequenceNumber()
+                metadata().validate()
+                startingBalance()
                 eventId()
                 invoiceId()
+                priceId()
                 validated = true
             }
         }
@@ -1276,42 +1276,99 @@ private constructor(
 
         class Builder {
 
-            private var metadata: JsonField<Metadata> = JsonMissing.of()
             private var id: JsonField<String> = JsonMissing.of()
-            private var ledgerSequenceNumber: JsonField<Long> = JsonMissing.of()
-            private var entryStatus: JsonField<EntryStatus> = JsonMissing.of()
-            private var customer: JsonField<Customer> = JsonMissing.of()
-            private var startingBalance: JsonField<Double> = JsonMissing.of()
-            private var endingBalance: JsonField<Double> = JsonMissing.of()
             private var amount: JsonField<Double> = JsonMissing.of()
-            private var currency: JsonField<String> = JsonMissing.of()
             private var createdAt: JsonField<OffsetDateTime> = JsonMissing.of()
-            private var description: JsonField<String> = JsonMissing.of()
             private var creditBlock: JsonField<CreditBlock> = JsonMissing.of()
+            private var currency: JsonField<String> = JsonMissing.of()
+            private var customer: JsonField<Customer> = JsonMissing.of()
+            private var description: JsonField<String> = JsonMissing.of()
+            private var endingBalance: JsonField<Double> = JsonMissing.of()
+            private var entryStatus: JsonField<EntryStatus> = JsonMissing.of()
             private var entryType: JsonField<EntryType> = JsonMissing.of()
-            private var priceId: JsonField<String> = JsonMissing.of()
+            private var ledgerSequenceNumber: JsonField<Long> = JsonMissing.of()
+            private var metadata: JsonField<Metadata> = JsonMissing.of()
+            private var startingBalance: JsonField<Double> = JsonMissing.of()
             private var eventId: JsonField<String> = JsonMissing.of()
             private var invoiceId: JsonField<String> = JsonMissing.of()
+            private var priceId: JsonField<String> = JsonMissing.of()
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             internal fun from(decrementLedgerEntry: DecrementLedgerEntry) = apply {
-                metadata = decrementLedgerEntry.metadata
                 id = decrementLedgerEntry.id
-                ledgerSequenceNumber = decrementLedgerEntry.ledgerSequenceNumber
-                entryStatus = decrementLedgerEntry.entryStatus
-                customer = decrementLedgerEntry.customer
-                startingBalance = decrementLedgerEntry.startingBalance
-                endingBalance = decrementLedgerEntry.endingBalance
                 amount = decrementLedgerEntry.amount
-                currency = decrementLedgerEntry.currency
                 createdAt = decrementLedgerEntry.createdAt
-                description = decrementLedgerEntry.description
                 creditBlock = decrementLedgerEntry.creditBlock
+                currency = decrementLedgerEntry.currency
+                customer = decrementLedgerEntry.customer
+                description = decrementLedgerEntry.description
+                endingBalance = decrementLedgerEntry.endingBalance
+                entryStatus = decrementLedgerEntry.entryStatus
                 entryType = decrementLedgerEntry.entryType
-                priceId = decrementLedgerEntry.priceId
+                ledgerSequenceNumber = decrementLedgerEntry.ledgerSequenceNumber
+                metadata = decrementLedgerEntry.metadata
+                startingBalance = decrementLedgerEntry.startingBalance
                 eventId = decrementLedgerEntry.eventId
                 invoiceId = decrementLedgerEntry.invoiceId
+                priceId = decrementLedgerEntry.priceId
                 additionalProperties = decrementLedgerEntry.additionalProperties.toMutableMap()
+            }
+
+            fun id(id: String) = id(JsonField.of(id))
+
+            fun id(id: JsonField<String>) = apply { this.id = id }
+
+            fun amount(amount: Double) = amount(JsonField.of(amount))
+
+            fun amount(amount: JsonField<Double>) = apply { this.amount = amount }
+
+            fun createdAt(createdAt: OffsetDateTime) = createdAt(JsonField.of(createdAt))
+
+            fun createdAt(createdAt: JsonField<OffsetDateTime>) = apply {
+                this.createdAt = createdAt
+            }
+
+            fun creditBlock(creditBlock: CreditBlock) = creditBlock(JsonField.of(creditBlock))
+
+            fun creditBlock(creditBlock: JsonField<CreditBlock>) = apply {
+                this.creditBlock = creditBlock
+            }
+
+            fun currency(currency: String) = currency(JsonField.of(currency))
+
+            fun currency(currency: JsonField<String>) = apply { this.currency = currency }
+
+            fun customer(customer: Customer) = customer(JsonField.of(customer))
+
+            fun customer(customer: JsonField<Customer>) = apply { this.customer = customer }
+
+            fun description(description: String) = description(JsonField.of(description))
+
+            fun description(description: JsonField<String>) = apply {
+                this.description = description
+            }
+
+            fun endingBalance(endingBalance: Double) = endingBalance(JsonField.of(endingBalance))
+
+            fun endingBalance(endingBalance: JsonField<Double>) = apply {
+                this.endingBalance = endingBalance
+            }
+
+            fun entryStatus(entryStatus: EntryStatus) = entryStatus(JsonField.of(entryStatus))
+
+            fun entryStatus(entryStatus: JsonField<EntryStatus>) = apply {
+                this.entryStatus = entryStatus
+            }
+
+            fun entryType(entryType: EntryType) = entryType(JsonField.of(entryType))
+
+            fun entryType(entryType: JsonField<EntryType>) = apply { this.entryType = entryType }
+
+            fun ledgerSequenceNumber(ledgerSequenceNumber: Long) =
+                ledgerSequenceNumber(JsonField.of(ledgerSequenceNumber))
+
+            fun ledgerSequenceNumber(ledgerSequenceNumber: JsonField<Long>) = apply {
+                this.ledgerSequenceNumber = ledgerSequenceNumber
             }
 
             /**
@@ -1328,73 +1385,12 @@ private constructor(
              */
             fun metadata(metadata: JsonField<Metadata>) = apply { this.metadata = metadata }
 
-            fun id(id: String) = id(JsonField.of(id))
-
-            fun id(id: JsonField<String>) = apply { this.id = id }
-
-            fun ledgerSequenceNumber(ledgerSequenceNumber: Long) =
-                ledgerSequenceNumber(JsonField.of(ledgerSequenceNumber))
-
-            fun ledgerSequenceNumber(ledgerSequenceNumber: JsonField<Long>) = apply {
-                this.ledgerSequenceNumber = ledgerSequenceNumber
-            }
-
-            fun entryStatus(entryStatus: EntryStatus) = entryStatus(JsonField.of(entryStatus))
-
-            fun entryStatus(entryStatus: JsonField<EntryStatus>) = apply {
-                this.entryStatus = entryStatus
-            }
-
-            fun customer(customer: Customer) = customer(JsonField.of(customer))
-
-            fun customer(customer: JsonField<Customer>) = apply { this.customer = customer }
-
             fun startingBalance(startingBalance: Double) =
                 startingBalance(JsonField.of(startingBalance))
 
             fun startingBalance(startingBalance: JsonField<Double>) = apply {
                 this.startingBalance = startingBalance
             }
-
-            fun endingBalance(endingBalance: Double) = endingBalance(JsonField.of(endingBalance))
-
-            fun endingBalance(endingBalance: JsonField<Double>) = apply {
-                this.endingBalance = endingBalance
-            }
-
-            fun amount(amount: Double) = amount(JsonField.of(amount))
-
-            fun amount(amount: JsonField<Double>) = apply { this.amount = amount }
-
-            fun currency(currency: String) = currency(JsonField.of(currency))
-
-            fun currency(currency: JsonField<String>) = apply { this.currency = currency }
-
-            fun createdAt(createdAt: OffsetDateTime) = createdAt(JsonField.of(createdAt))
-
-            fun createdAt(createdAt: JsonField<OffsetDateTime>) = apply {
-                this.createdAt = createdAt
-            }
-
-            fun description(description: String) = description(JsonField.of(description))
-
-            fun description(description: JsonField<String>) = apply {
-                this.description = description
-            }
-
-            fun creditBlock(creditBlock: CreditBlock) = creditBlock(JsonField.of(creditBlock))
-
-            fun creditBlock(creditBlock: JsonField<CreditBlock>) = apply {
-                this.creditBlock = creditBlock
-            }
-
-            fun entryType(entryType: EntryType) = entryType(JsonField.of(entryType))
-
-            fun entryType(entryType: JsonField<EntryType>) = apply { this.entryType = entryType }
-
-            fun priceId(priceId: String) = priceId(JsonField.of(priceId))
-
-            fun priceId(priceId: JsonField<String>) = apply { this.priceId = priceId }
 
             fun eventId(eventId: String) = eventId(JsonField.of(eventId))
 
@@ -1403,6 +1399,10 @@ private constructor(
             fun invoiceId(invoiceId: String) = invoiceId(JsonField.of(invoiceId))
 
             fun invoiceId(invoiceId: JsonField<String>) = apply { this.invoiceId = invoiceId }
+
+            fun priceId(priceId: String) = priceId(JsonField.of(priceId))
+
+            fun priceId(priceId: JsonField<String>) = apply { this.priceId = priceId }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
@@ -1425,22 +1425,22 @@ private constructor(
 
             fun build(): DecrementLedgerEntry =
                 DecrementLedgerEntry(
-                    metadata,
                     id,
-                    ledgerSequenceNumber,
-                    entryStatus,
-                    customer,
-                    startingBalance,
-                    endingBalance,
                     amount,
-                    currency,
                     createdAt,
-                    description,
                     creditBlock,
+                    currency,
+                    customer,
+                    description,
+                    endingBalance,
+                    entryStatus,
                     entryType,
-                    priceId,
+                    ledgerSequenceNumber,
+                    metadata,
+                    startingBalance,
                     eventId,
                     invoiceId,
+                    priceId,
                     additionalProperties.toImmutable(),
                 )
         }
@@ -1890,66 +1890,89 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is DecrementLedgerEntry && metadata == other.metadata && id == other.id && ledgerSequenceNumber == other.ledgerSequenceNumber && entryStatus == other.entryStatus && customer == other.customer && startingBalance == other.startingBalance && endingBalance == other.endingBalance && amount == other.amount && currency == other.currency && createdAt == other.createdAt && description == other.description && creditBlock == other.creditBlock && entryType == other.entryType && priceId == other.priceId && eventId == other.eventId && invoiceId == other.invoiceId && additionalProperties == other.additionalProperties /* spotless:on */
+            return /* spotless:off */ other is DecrementLedgerEntry && id == other.id && amount == other.amount && createdAt == other.createdAt && creditBlock == other.creditBlock && currency == other.currency && customer == other.customer && description == other.description && endingBalance == other.endingBalance && entryStatus == other.entryStatus && entryType == other.entryType && ledgerSequenceNumber == other.ledgerSequenceNumber && metadata == other.metadata && startingBalance == other.startingBalance && eventId == other.eventId && invoiceId == other.invoiceId && priceId == other.priceId && additionalProperties == other.additionalProperties /* spotless:on */
         }
 
         /* spotless:off */
-        private val hashCode: Int by lazy { Objects.hash(metadata, id, ledgerSequenceNumber, entryStatus, customer, startingBalance, endingBalance, amount, currency, createdAt, description, creditBlock, entryType, priceId, eventId, invoiceId, additionalProperties) }
+        private val hashCode: Int by lazy { Objects.hash(id, amount, createdAt, creditBlock, currency, customer, description, endingBalance, entryStatus, entryType, ledgerSequenceNumber, metadata, startingBalance, eventId, invoiceId, priceId, additionalProperties) }
         /* spotless:on */
 
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "DecrementLedgerEntry{metadata=$metadata, id=$id, ledgerSequenceNumber=$ledgerSequenceNumber, entryStatus=$entryStatus, customer=$customer, startingBalance=$startingBalance, endingBalance=$endingBalance, amount=$amount, currency=$currency, createdAt=$createdAt, description=$description, creditBlock=$creditBlock, entryType=$entryType, priceId=$priceId, eventId=$eventId, invoiceId=$invoiceId, additionalProperties=$additionalProperties}"
+            "DecrementLedgerEntry{id=$id, amount=$amount, createdAt=$createdAt, creditBlock=$creditBlock, currency=$currency, customer=$customer, description=$description, endingBalance=$endingBalance, entryStatus=$entryStatus, entryType=$entryType, ledgerSequenceNumber=$ledgerSequenceNumber, metadata=$metadata, startingBalance=$startingBalance, eventId=$eventId, invoiceId=$invoiceId, priceId=$priceId, additionalProperties=$additionalProperties}"
     }
 
     @NoAutoDetect
     class ExpirationChangeLedgerEntry
     @JsonCreator
     private constructor(
-        @JsonProperty("metadata")
-        @ExcludeMissing
-        private val metadata: JsonField<Metadata> = JsonMissing.of(),
         @JsonProperty("id") @ExcludeMissing private val id: JsonField<String> = JsonMissing.of(),
-        @JsonProperty("ledger_sequence_number")
-        @ExcludeMissing
-        private val ledgerSequenceNumber: JsonField<Long> = JsonMissing.of(),
-        @JsonProperty("entry_status")
-        @ExcludeMissing
-        private val entryStatus: JsonField<EntryStatus> = JsonMissing.of(),
-        @JsonProperty("customer")
-        @ExcludeMissing
-        private val customer: JsonField<Customer> = JsonMissing.of(),
-        @JsonProperty("starting_balance")
-        @ExcludeMissing
-        private val startingBalance: JsonField<Double> = JsonMissing.of(),
-        @JsonProperty("ending_balance")
-        @ExcludeMissing
-        private val endingBalance: JsonField<Double> = JsonMissing.of(),
         @JsonProperty("amount")
         @ExcludeMissing
         private val amount: JsonField<Double> = JsonMissing.of(),
-        @JsonProperty("currency")
-        @ExcludeMissing
-        private val currency: JsonField<String> = JsonMissing.of(),
         @JsonProperty("created_at")
         @ExcludeMissing
         private val createdAt: JsonField<OffsetDateTime> = JsonMissing.of(),
-        @JsonProperty("description")
-        @ExcludeMissing
-        private val description: JsonField<String> = JsonMissing.of(),
         @JsonProperty("credit_block")
         @ExcludeMissing
         private val creditBlock: JsonField<CreditBlock> = JsonMissing.of(),
+        @JsonProperty("currency")
+        @ExcludeMissing
+        private val currency: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("customer")
+        @ExcludeMissing
+        private val customer: JsonField<Customer> = JsonMissing.of(),
+        @JsonProperty("description")
+        @ExcludeMissing
+        private val description: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("ending_balance")
+        @ExcludeMissing
+        private val endingBalance: JsonField<Double> = JsonMissing.of(),
+        @JsonProperty("entry_status")
+        @ExcludeMissing
+        private val entryStatus: JsonField<EntryStatus> = JsonMissing.of(),
         @JsonProperty("entry_type")
         @ExcludeMissing
         private val entryType: JsonField<EntryType> = JsonMissing.of(),
+        @JsonProperty("ledger_sequence_number")
+        @ExcludeMissing
+        private val ledgerSequenceNumber: JsonField<Long> = JsonMissing.of(),
+        @JsonProperty("metadata")
+        @ExcludeMissing
+        private val metadata: JsonField<Metadata> = JsonMissing.of(),
         @JsonProperty("new_block_expiry_date")
         @ExcludeMissing
         private val newBlockExpiryDate: JsonField<OffsetDateTime> = JsonMissing.of(),
+        @JsonProperty("starting_balance")
+        @ExcludeMissing
+        private val startingBalance: JsonField<Double> = JsonMissing.of(),
         @JsonAnySetter
         private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
+
+        fun id(): String = id.getRequired("id")
+
+        fun amount(): Double = amount.getRequired("amount")
+
+        fun createdAt(): OffsetDateTime = createdAt.getRequired("created_at")
+
+        fun creditBlock(): CreditBlock = creditBlock.getRequired("credit_block")
+
+        fun currency(): String = currency.getRequired("currency")
+
+        fun customer(): Customer = customer.getRequired("customer")
+
+        fun description(): String? = description.getNullable("description")
+
+        fun endingBalance(): Double = endingBalance.getRequired("ending_balance")
+
+        fun entryStatus(): EntryStatus = entryStatus.getRequired("entry_status")
+
+        fun entryType(): EntryType = entryType.getRequired("entry_type")
+
+        fun ledgerSequenceNumber(): Long =
+            ledgerSequenceNumber.getRequired("ledger_sequence_number")
 
         /**
          * User specified key-value pairs for the resource. If not present, this defaults to an
@@ -1958,33 +1981,34 @@ private constructor(
          */
         fun metadata(): Metadata = metadata.getRequired("metadata")
 
-        fun id(): String = id.getRequired("id")
-
-        fun ledgerSequenceNumber(): Long =
-            ledgerSequenceNumber.getRequired("ledger_sequence_number")
-
-        fun entryStatus(): EntryStatus = entryStatus.getRequired("entry_status")
-
-        fun customer(): Customer = customer.getRequired("customer")
+        fun newBlockExpiryDate(): OffsetDateTime? =
+            newBlockExpiryDate.getNullable("new_block_expiry_date")
 
         fun startingBalance(): Double = startingBalance.getRequired("starting_balance")
 
-        fun endingBalance(): Double = endingBalance.getRequired("ending_balance")
+        @JsonProperty("id") @ExcludeMissing fun _id() = id
 
-        fun amount(): Double = amount.getRequired("amount")
+        @JsonProperty("amount") @ExcludeMissing fun _amount() = amount
 
-        fun currency(): String = currency.getRequired("currency")
+        @JsonProperty("created_at") @ExcludeMissing fun _createdAt() = createdAt
 
-        fun createdAt(): OffsetDateTime = createdAt.getRequired("created_at")
+        @JsonProperty("credit_block") @ExcludeMissing fun _creditBlock() = creditBlock
 
-        fun description(): String? = description.getNullable("description")
+        @JsonProperty("currency") @ExcludeMissing fun _currency() = currency
 
-        fun creditBlock(): CreditBlock = creditBlock.getRequired("credit_block")
+        @JsonProperty("customer") @ExcludeMissing fun _customer() = customer
 
-        fun entryType(): EntryType = entryType.getRequired("entry_type")
+        @JsonProperty("description") @ExcludeMissing fun _description() = description
 
-        fun newBlockExpiryDate(): OffsetDateTime? =
-            newBlockExpiryDate.getNullable("new_block_expiry_date")
+        @JsonProperty("ending_balance") @ExcludeMissing fun _endingBalance() = endingBalance
+
+        @JsonProperty("entry_status") @ExcludeMissing fun _entryStatus() = entryStatus
+
+        @JsonProperty("entry_type") @ExcludeMissing fun _entryType() = entryType
+
+        @JsonProperty("ledger_sequence_number")
+        @ExcludeMissing
+        fun _ledgerSequenceNumber() = ledgerSequenceNumber
 
         /**
          * User specified key-value pairs for the resource. If not present, this defaults to an
@@ -1993,35 +2017,11 @@ private constructor(
          */
         @JsonProperty("metadata") @ExcludeMissing fun _metadata() = metadata
 
-        @JsonProperty("id") @ExcludeMissing fun _id() = id
-
-        @JsonProperty("ledger_sequence_number")
-        @ExcludeMissing
-        fun _ledgerSequenceNumber() = ledgerSequenceNumber
-
-        @JsonProperty("entry_status") @ExcludeMissing fun _entryStatus() = entryStatus
-
-        @JsonProperty("customer") @ExcludeMissing fun _customer() = customer
-
-        @JsonProperty("starting_balance") @ExcludeMissing fun _startingBalance() = startingBalance
-
-        @JsonProperty("ending_balance") @ExcludeMissing fun _endingBalance() = endingBalance
-
-        @JsonProperty("amount") @ExcludeMissing fun _amount() = amount
-
-        @JsonProperty("currency") @ExcludeMissing fun _currency() = currency
-
-        @JsonProperty("created_at") @ExcludeMissing fun _createdAt() = createdAt
-
-        @JsonProperty("description") @ExcludeMissing fun _description() = description
-
-        @JsonProperty("credit_block") @ExcludeMissing fun _creditBlock() = creditBlock
-
-        @JsonProperty("entry_type") @ExcludeMissing fun _entryType() = entryType
-
         @JsonProperty("new_block_expiry_date")
         @ExcludeMissing
         fun _newBlockExpiryDate() = newBlockExpiryDate
+
+        @JsonProperty("starting_balance") @ExcludeMissing fun _startingBalance() = startingBalance
 
         @JsonAnyGetter
         @ExcludeMissing
@@ -2031,20 +2031,20 @@ private constructor(
 
         fun validate(): ExpirationChangeLedgerEntry = apply {
             if (!validated) {
-                metadata().validate()
                 id()
-                ledgerSequenceNumber()
-                entryStatus()
-                customer().validate()
-                startingBalance()
-                endingBalance()
                 amount()
-                currency()
                 createdAt()
-                description()
                 creditBlock().validate()
+                currency()
+                customer().validate()
+                description()
+                endingBalance()
+                entryStatus()
                 entryType()
+                ledgerSequenceNumber()
+                metadata().validate()
                 newBlockExpiryDate()
+                startingBalance()
                 validated = true
             }
         }
@@ -2058,39 +2058,96 @@ private constructor(
 
         class Builder {
 
-            private var metadata: JsonField<Metadata> = JsonMissing.of()
             private var id: JsonField<String> = JsonMissing.of()
-            private var ledgerSequenceNumber: JsonField<Long> = JsonMissing.of()
-            private var entryStatus: JsonField<EntryStatus> = JsonMissing.of()
-            private var customer: JsonField<Customer> = JsonMissing.of()
-            private var startingBalance: JsonField<Double> = JsonMissing.of()
-            private var endingBalance: JsonField<Double> = JsonMissing.of()
             private var amount: JsonField<Double> = JsonMissing.of()
-            private var currency: JsonField<String> = JsonMissing.of()
             private var createdAt: JsonField<OffsetDateTime> = JsonMissing.of()
-            private var description: JsonField<String> = JsonMissing.of()
             private var creditBlock: JsonField<CreditBlock> = JsonMissing.of()
+            private var currency: JsonField<String> = JsonMissing.of()
+            private var customer: JsonField<Customer> = JsonMissing.of()
+            private var description: JsonField<String> = JsonMissing.of()
+            private var endingBalance: JsonField<Double> = JsonMissing.of()
+            private var entryStatus: JsonField<EntryStatus> = JsonMissing.of()
             private var entryType: JsonField<EntryType> = JsonMissing.of()
+            private var ledgerSequenceNumber: JsonField<Long> = JsonMissing.of()
+            private var metadata: JsonField<Metadata> = JsonMissing.of()
             private var newBlockExpiryDate: JsonField<OffsetDateTime> = JsonMissing.of()
+            private var startingBalance: JsonField<Double> = JsonMissing.of()
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             internal fun from(expirationChangeLedgerEntry: ExpirationChangeLedgerEntry) = apply {
-                metadata = expirationChangeLedgerEntry.metadata
                 id = expirationChangeLedgerEntry.id
-                ledgerSequenceNumber = expirationChangeLedgerEntry.ledgerSequenceNumber
-                entryStatus = expirationChangeLedgerEntry.entryStatus
-                customer = expirationChangeLedgerEntry.customer
-                startingBalance = expirationChangeLedgerEntry.startingBalance
-                endingBalance = expirationChangeLedgerEntry.endingBalance
                 amount = expirationChangeLedgerEntry.amount
-                currency = expirationChangeLedgerEntry.currency
                 createdAt = expirationChangeLedgerEntry.createdAt
-                description = expirationChangeLedgerEntry.description
                 creditBlock = expirationChangeLedgerEntry.creditBlock
+                currency = expirationChangeLedgerEntry.currency
+                customer = expirationChangeLedgerEntry.customer
+                description = expirationChangeLedgerEntry.description
+                endingBalance = expirationChangeLedgerEntry.endingBalance
+                entryStatus = expirationChangeLedgerEntry.entryStatus
                 entryType = expirationChangeLedgerEntry.entryType
+                ledgerSequenceNumber = expirationChangeLedgerEntry.ledgerSequenceNumber
+                metadata = expirationChangeLedgerEntry.metadata
                 newBlockExpiryDate = expirationChangeLedgerEntry.newBlockExpiryDate
+                startingBalance = expirationChangeLedgerEntry.startingBalance
                 additionalProperties =
                     expirationChangeLedgerEntry.additionalProperties.toMutableMap()
+            }
+
+            fun id(id: String) = id(JsonField.of(id))
+
+            fun id(id: JsonField<String>) = apply { this.id = id }
+
+            fun amount(amount: Double) = amount(JsonField.of(amount))
+
+            fun amount(amount: JsonField<Double>) = apply { this.amount = amount }
+
+            fun createdAt(createdAt: OffsetDateTime) = createdAt(JsonField.of(createdAt))
+
+            fun createdAt(createdAt: JsonField<OffsetDateTime>) = apply {
+                this.createdAt = createdAt
+            }
+
+            fun creditBlock(creditBlock: CreditBlock) = creditBlock(JsonField.of(creditBlock))
+
+            fun creditBlock(creditBlock: JsonField<CreditBlock>) = apply {
+                this.creditBlock = creditBlock
+            }
+
+            fun currency(currency: String) = currency(JsonField.of(currency))
+
+            fun currency(currency: JsonField<String>) = apply { this.currency = currency }
+
+            fun customer(customer: Customer) = customer(JsonField.of(customer))
+
+            fun customer(customer: JsonField<Customer>) = apply { this.customer = customer }
+
+            fun description(description: String) = description(JsonField.of(description))
+
+            fun description(description: JsonField<String>) = apply {
+                this.description = description
+            }
+
+            fun endingBalance(endingBalance: Double) = endingBalance(JsonField.of(endingBalance))
+
+            fun endingBalance(endingBalance: JsonField<Double>) = apply {
+                this.endingBalance = endingBalance
+            }
+
+            fun entryStatus(entryStatus: EntryStatus) = entryStatus(JsonField.of(entryStatus))
+
+            fun entryStatus(entryStatus: JsonField<EntryStatus>) = apply {
+                this.entryStatus = entryStatus
+            }
+
+            fun entryType(entryType: EntryType) = entryType(JsonField.of(entryType))
+
+            fun entryType(entryType: JsonField<EntryType>) = apply { this.entryType = entryType }
+
+            fun ledgerSequenceNumber(ledgerSequenceNumber: Long) =
+                ledgerSequenceNumber(JsonField.of(ledgerSequenceNumber))
+
+            fun ledgerSequenceNumber(ledgerSequenceNumber: JsonField<Long>) = apply {
+                this.ledgerSequenceNumber = ledgerSequenceNumber
             }
 
             /**
@@ -2107,75 +2164,18 @@ private constructor(
              */
             fun metadata(metadata: JsonField<Metadata>) = apply { this.metadata = metadata }
 
-            fun id(id: String) = id(JsonField.of(id))
+            fun newBlockExpiryDate(newBlockExpiryDate: OffsetDateTime) =
+                newBlockExpiryDate(JsonField.of(newBlockExpiryDate))
 
-            fun id(id: JsonField<String>) = apply { this.id = id }
-
-            fun ledgerSequenceNumber(ledgerSequenceNumber: Long) =
-                ledgerSequenceNumber(JsonField.of(ledgerSequenceNumber))
-
-            fun ledgerSequenceNumber(ledgerSequenceNumber: JsonField<Long>) = apply {
-                this.ledgerSequenceNumber = ledgerSequenceNumber
+            fun newBlockExpiryDate(newBlockExpiryDate: JsonField<OffsetDateTime>) = apply {
+                this.newBlockExpiryDate = newBlockExpiryDate
             }
-
-            fun entryStatus(entryStatus: EntryStatus) = entryStatus(JsonField.of(entryStatus))
-
-            fun entryStatus(entryStatus: JsonField<EntryStatus>) = apply {
-                this.entryStatus = entryStatus
-            }
-
-            fun customer(customer: Customer) = customer(JsonField.of(customer))
-
-            fun customer(customer: JsonField<Customer>) = apply { this.customer = customer }
 
             fun startingBalance(startingBalance: Double) =
                 startingBalance(JsonField.of(startingBalance))
 
             fun startingBalance(startingBalance: JsonField<Double>) = apply {
                 this.startingBalance = startingBalance
-            }
-
-            fun endingBalance(endingBalance: Double) = endingBalance(JsonField.of(endingBalance))
-
-            fun endingBalance(endingBalance: JsonField<Double>) = apply {
-                this.endingBalance = endingBalance
-            }
-
-            fun amount(amount: Double) = amount(JsonField.of(amount))
-
-            fun amount(amount: JsonField<Double>) = apply { this.amount = amount }
-
-            fun currency(currency: String) = currency(JsonField.of(currency))
-
-            fun currency(currency: JsonField<String>) = apply { this.currency = currency }
-
-            fun createdAt(createdAt: OffsetDateTime) = createdAt(JsonField.of(createdAt))
-
-            fun createdAt(createdAt: JsonField<OffsetDateTime>) = apply {
-                this.createdAt = createdAt
-            }
-
-            fun description(description: String) = description(JsonField.of(description))
-
-            fun description(description: JsonField<String>) = apply {
-                this.description = description
-            }
-
-            fun creditBlock(creditBlock: CreditBlock) = creditBlock(JsonField.of(creditBlock))
-
-            fun creditBlock(creditBlock: JsonField<CreditBlock>) = apply {
-                this.creditBlock = creditBlock
-            }
-
-            fun entryType(entryType: EntryType) = entryType(JsonField.of(entryType))
-
-            fun entryType(entryType: JsonField<EntryType>) = apply { this.entryType = entryType }
-
-            fun newBlockExpiryDate(newBlockExpiryDate: OffsetDateTime) =
-                newBlockExpiryDate(JsonField.of(newBlockExpiryDate))
-
-            fun newBlockExpiryDate(newBlockExpiryDate: JsonField<OffsetDateTime>) = apply {
-                this.newBlockExpiryDate = newBlockExpiryDate
             }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
@@ -2199,20 +2199,20 @@ private constructor(
 
             fun build(): ExpirationChangeLedgerEntry =
                 ExpirationChangeLedgerEntry(
-                    metadata,
                     id,
-                    ledgerSequenceNumber,
-                    entryStatus,
-                    customer,
-                    startingBalance,
-                    endingBalance,
                     amount,
-                    currency,
                     createdAt,
-                    description,
                     creditBlock,
+                    currency,
+                    customer,
+                    description,
+                    endingBalance,
+                    entryStatus,
                     entryType,
+                    ledgerSequenceNumber,
+                    metadata,
                     newBlockExpiryDate,
+                    startingBalance,
                     additionalProperties.toImmutable(),
                 )
         }
@@ -2662,63 +2662,86 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is ExpirationChangeLedgerEntry && metadata == other.metadata && id == other.id && ledgerSequenceNumber == other.ledgerSequenceNumber && entryStatus == other.entryStatus && customer == other.customer && startingBalance == other.startingBalance && endingBalance == other.endingBalance && amount == other.amount && currency == other.currency && createdAt == other.createdAt && description == other.description && creditBlock == other.creditBlock && entryType == other.entryType && newBlockExpiryDate == other.newBlockExpiryDate && additionalProperties == other.additionalProperties /* spotless:on */
+            return /* spotless:off */ other is ExpirationChangeLedgerEntry && id == other.id && amount == other.amount && createdAt == other.createdAt && creditBlock == other.creditBlock && currency == other.currency && customer == other.customer && description == other.description && endingBalance == other.endingBalance && entryStatus == other.entryStatus && entryType == other.entryType && ledgerSequenceNumber == other.ledgerSequenceNumber && metadata == other.metadata && newBlockExpiryDate == other.newBlockExpiryDate && startingBalance == other.startingBalance && additionalProperties == other.additionalProperties /* spotless:on */
         }
 
         /* spotless:off */
-        private val hashCode: Int by lazy { Objects.hash(metadata, id, ledgerSequenceNumber, entryStatus, customer, startingBalance, endingBalance, amount, currency, createdAt, description, creditBlock, entryType, newBlockExpiryDate, additionalProperties) }
+        private val hashCode: Int by lazy { Objects.hash(id, amount, createdAt, creditBlock, currency, customer, description, endingBalance, entryStatus, entryType, ledgerSequenceNumber, metadata, newBlockExpiryDate, startingBalance, additionalProperties) }
         /* spotless:on */
 
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "ExpirationChangeLedgerEntry{metadata=$metadata, id=$id, ledgerSequenceNumber=$ledgerSequenceNumber, entryStatus=$entryStatus, customer=$customer, startingBalance=$startingBalance, endingBalance=$endingBalance, amount=$amount, currency=$currency, createdAt=$createdAt, description=$description, creditBlock=$creditBlock, entryType=$entryType, newBlockExpiryDate=$newBlockExpiryDate, additionalProperties=$additionalProperties}"
+            "ExpirationChangeLedgerEntry{id=$id, amount=$amount, createdAt=$createdAt, creditBlock=$creditBlock, currency=$currency, customer=$customer, description=$description, endingBalance=$endingBalance, entryStatus=$entryStatus, entryType=$entryType, ledgerSequenceNumber=$ledgerSequenceNumber, metadata=$metadata, newBlockExpiryDate=$newBlockExpiryDate, startingBalance=$startingBalance, additionalProperties=$additionalProperties}"
     }
 
     @NoAutoDetect
     class CreditBlockExpiryLedgerEntry
     @JsonCreator
     private constructor(
-        @JsonProperty("metadata")
-        @ExcludeMissing
-        private val metadata: JsonField<Metadata> = JsonMissing.of(),
         @JsonProperty("id") @ExcludeMissing private val id: JsonField<String> = JsonMissing.of(),
-        @JsonProperty("ledger_sequence_number")
-        @ExcludeMissing
-        private val ledgerSequenceNumber: JsonField<Long> = JsonMissing.of(),
-        @JsonProperty("entry_status")
-        @ExcludeMissing
-        private val entryStatus: JsonField<EntryStatus> = JsonMissing.of(),
-        @JsonProperty("customer")
-        @ExcludeMissing
-        private val customer: JsonField<Customer> = JsonMissing.of(),
-        @JsonProperty("starting_balance")
-        @ExcludeMissing
-        private val startingBalance: JsonField<Double> = JsonMissing.of(),
-        @JsonProperty("ending_balance")
-        @ExcludeMissing
-        private val endingBalance: JsonField<Double> = JsonMissing.of(),
         @JsonProperty("amount")
         @ExcludeMissing
         private val amount: JsonField<Double> = JsonMissing.of(),
-        @JsonProperty("currency")
-        @ExcludeMissing
-        private val currency: JsonField<String> = JsonMissing.of(),
         @JsonProperty("created_at")
         @ExcludeMissing
         private val createdAt: JsonField<OffsetDateTime> = JsonMissing.of(),
-        @JsonProperty("description")
-        @ExcludeMissing
-        private val description: JsonField<String> = JsonMissing.of(),
         @JsonProperty("credit_block")
         @ExcludeMissing
         private val creditBlock: JsonField<CreditBlock> = JsonMissing.of(),
+        @JsonProperty("currency")
+        @ExcludeMissing
+        private val currency: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("customer")
+        @ExcludeMissing
+        private val customer: JsonField<Customer> = JsonMissing.of(),
+        @JsonProperty("description")
+        @ExcludeMissing
+        private val description: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("ending_balance")
+        @ExcludeMissing
+        private val endingBalance: JsonField<Double> = JsonMissing.of(),
+        @JsonProperty("entry_status")
+        @ExcludeMissing
+        private val entryStatus: JsonField<EntryStatus> = JsonMissing.of(),
         @JsonProperty("entry_type")
         @ExcludeMissing
         private val entryType: JsonField<EntryType> = JsonMissing.of(),
+        @JsonProperty("ledger_sequence_number")
+        @ExcludeMissing
+        private val ledgerSequenceNumber: JsonField<Long> = JsonMissing.of(),
+        @JsonProperty("metadata")
+        @ExcludeMissing
+        private val metadata: JsonField<Metadata> = JsonMissing.of(),
+        @JsonProperty("starting_balance")
+        @ExcludeMissing
+        private val startingBalance: JsonField<Double> = JsonMissing.of(),
         @JsonAnySetter
         private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
+
+        fun id(): String = id.getRequired("id")
+
+        fun amount(): Double = amount.getRequired("amount")
+
+        fun createdAt(): OffsetDateTime = createdAt.getRequired("created_at")
+
+        fun creditBlock(): CreditBlock = creditBlock.getRequired("credit_block")
+
+        fun currency(): String = currency.getRequired("currency")
+
+        fun customer(): Customer = customer.getRequired("customer")
+
+        fun description(): String? = description.getNullable("description")
+
+        fun endingBalance(): Double = endingBalance.getRequired("ending_balance")
+
+        fun entryStatus(): EntryStatus = entryStatus.getRequired("entry_status")
+
+        fun entryType(): EntryType = entryType.getRequired("entry_type")
+
+        fun ledgerSequenceNumber(): Long =
+            ledgerSequenceNumber.getRequired("ledger_sequence_number")
 
         /**
          * User specified key-value pairs for the resource. If not present, this defaults to an
@@ -2727,30 +2750,31 @@ private constructor(
          */
         fun metadata(): Metadata = metadata.getRequired("metadata")
 
-        fun id(): String = id.getRequired("id")
-
-        fun ledgerSequenceNumber(): Long =
-            ledgerSequenceNumber.getRequired("ledger_sequence_number")
-
-        fun entryStatus(): EntryStatus = entryStatus.getRequired("entry_status")
-
-        fun customer(): Customer = customer.getRequired("customer")
-
         fun startingBalance(): Double = startingBalance.getRequired("starting_balance")
 
-        fun endingBalance(): Double = endingBalance.getRequired("ending_balance")
+        @JsonProperty("id") @ExcludeMissing fun _id() = id
 
-        fun amount(): Double = amount.getRequired("amount")
+        @JsonProperty("amount") @ExcludeMissing fun _amount() = amount
 
-        fun currency(): String = currency.getRequired("currency")
+        @JsonProperty("created_at") @ExcludeMissing fun _createdAt() = createdAt
 
-        fun createdAt(): OffsetDateTime = createdAt.getRequired("created_at")
+        @JsonProperty("credit_block") @ExcludeMissing fun _creditBlock() = creditBlock
 
-        fun description(): String? = description.getNullable("description")
+        @JsonProperty("currency") @ExcludeMissing fun _currency() = currency
 
-        fun creditBlock(): CreditBlock = creditBlock.getRequired("credit_block")
+        @JsonProperty("customer") @ExcludeMissing fun _customer() = customer
 
-        fun entryType(): EntryType = entryType.getRequired("entry_type")
+        @JsonProperty("description") @ExcludeMissing fun _description() = description
+
+        @JsonProperty("ending_balance") @ExcludeMissing fun _endingBalance() = endingBalance
+
+        @JsonProperty("entry_status") @ExcludeMissing fun _entryStatus() = entryStatus
+
+        @JsonProperty("entry_type") @ExcludeMissing fun _entryType() = entryType
+
+        @JsonProperty("ledger_sequence_number")
+        @ExcludeMissing
+        fun _ledgerSequenceNumber() = ledgerSequenceNumber
 
         /**
          * User specified key-value pairs for the resource. If not present, this defaults to an
@@ -2759,31 +2783,7 @@ private constructor(
          */
         @JsonProperty("metadata") @ExcludeMissing fun _metadata() = metadata
 
-        @JsonProperty("id") @ExcludeMissing fun _id() = id
-
-        @JsonProperty("ledger_sequence_number")
-        @ExcludeMissing
-        fun _ledgerSequenceNumber() = ledgerSequenceNumber
-
-        @JsonProperty("entry_status") @ExcludeMissing fun _entryStatus() = entryStatus
-
-        @JsonProperty("customer") @ExcludeMissing fun _customer() = customer
-
         @JsonProperty("starting_balance") @ExcludeMissing fun _startingBalance() = startingBalance
-
-        @JsonProperty("ending_balance") @ExcludeMissing fun _endingBalance() = endingBalance
-
-        @JsonProperty("amount") @ExcludeMissing fun _amount() = amount
-
-        @JsonProperty("currency") @ExcludeMissing fun _currency() = currency
-
-        @JsonProperty("created_at") @ExcludeMissing fun _createdAt() = createdAt
-
-        @JsonProperty("description") @ExcludeMissing fun _description() = description
-
-        @JsonProperty("credit_block") @ExcludeMissing fun _creditBlock() = creditBlock
-
-        @JsonProperty("entry_type") @ExcludeMissing fun _entryType() = entryType
 
         @JsonAnyGetter
         @ExcludeMissing
@@ -2793,19 +2793,19 @@ private constructor(
 
         fun validate(): CreditBlockExpiryLedgerEntry = apply {
             if (!validated) {
-                metadata().validate()
                 id()
-                ledgerSequenceNumber()
-                entryStatus()
-                customer().validate()
-                startingBalance()
-                endingBalance()
                 amount()
-                currency()
                 createdAt()
-                description()
                 creditBlock().validate()
+                currency()
+                customer().validate()
+                description()
+                endingBalance()
+                entryStatus()
                 entryType()
+                ledgerSequenceNumber()
+                metadata().validate()
+                startingBalance()
                 validated = true
             }
         }
@@ -2819,37 +2819,94 @@ private constructor(
 
         class Builder {
 
-            private var metadata: JsonField<Metadata> = JsonMissing.of()
             private var id: JsonField<String> = JsonMissing.of()
-            private var ledgerSequenceNumber: JsonField<Long> = JsonMissing.of()
-            private var entryStatus: JsonField<EntryStatus> = JsonMissing.of()
-            private var customer: JsonField<Customer> = JsonMissing.of()
-            private var startingBalance: JsonField<Double> = JsonMissing.of()
-            private var endingBalance: JsonField<Double> = JsonMissing.of()
             private var amount: JsonField<Double> = JsonMissing.of()
-            private var currency: JsonField<String> = JsonMissing.of()
             private var createdAt: JsonField<OffsetDateTime> = JsonMissing.of()
-            private var description: JsonField<String> = JsonMissing.of()
             private var creditBlock: JsonField<CreditBlock> = JsonMissing.of()
+            private var currency: JsonField<String> = JsonMissing.of()
+            private var customer: JsonField<Customer> = JsonMissing.of()
+            private var description: JsonField<String> = JsonMissing.of()
+            private var endingBalance: JsonField<Double> = JsonMissing.of()
+            private var entryStatus: JsonField<EntryStatus> = JsonMissing.of()
             private var entryType: JsonField<EntryType> = JsonMissing.of()
+            private var ledgerSequenceNumber: JsonField<Long> = JsonMissing.of()
+            private var metadata: JsonField<Metadata> = JsonMissing.of()
+            private var startingBalance: JsonField<Double> = JsonMissing.of()
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             internal fun from(creditBlockExpiryLedgerEntry: CreditBlockExpiryLedgerEntry) = apply {
-                metadata = creditBlockExpiryLedgerEntry.metadata
                 id = creditBlockExpiryLedgerEntry.id
-                ledgerSequenceNumber = creditBlockExpiryLedgerEntry.ledgerSequenceNumber
-                entryStatus = creditBlockExpiryLedgerEntry.entryStatus
-                customer = creditBlockExpiryLedgerEntry.customer
-                startingBalance = creditBlockExpiryLedgerEntry.startingBalance
-                endingBalance = creditBlockExpiryLedgerEntry.endingBalance
                 amount = creditBlockExpiryLedgerEntry.amount
-                currency = creditBlockExpiryLedgerEntry.currency
                 createdAt = creditBlockExpiryLedgerEntry.createdAt
-                description = creditBlockExpiryLedgerEntry.description
                 creditBlock = creditBlockExpiryLedgerEntry.creditBlock
+                currency = creditBlockExpiryLedgerEntry.currency
+                customer = creditBlockExpiryLedgerEntry.customer
+                description = creditBlockExpiryLedgerEntry.description
+                endingBalance = creditBlockExpiryLedgerEntry.endingBalance
+                entryStatus = creditBlockExpiryLedgerEntry.entryStatus
                 entryType = creditBlockExpiryLedgerEntry.entryType
+                ledgerSequenceNumber = creditBlockExpiryLedgerEntry.ledgerSequenceNumber
+                metadata = creditBlockExpiryLedgerEntry.metadata
+                startingBalance = creditBlockExpiryLedgerEntry.startingBalance
                 additionalProperties =
                     creditBlockExpiryLedgerEntry.additionalProperties.toMutableMap()
+            }
+
+            fun id(id: String) = id(JsonField.of(id))
+
+            fun id(id: JsonField<String>) = apply { this.id = id }
+
+            fun amount(amount: Double) = amount(JsonField.of(amount))
+
+            fun amount(amount: JsonField<Double>) = apply { this.amount = amount }
+
+            fun createdAt(createdAt: OffsetDateTime) = createdAt(JsonField.of(createdAt))
+
+            fun createdAt(createdAt: JsonField<OffsetDateTime>) = apply {
+                this.createdAt = createdAt
+            }
+
+            fun creditBlock(creditBlock: CreditBlock) = creditBlock(JsonField.of(creditBlock))
+
+            fun creditBlock(creditBlock: JsonField<CreditBlock>) = apply {
+                this.creditBlock = creditBlock
+            }
+
+            fun currency(currency: String) = currency(JsonField.of(currency))
+
+            fun currency(currency: JsonField<String>) = apply { this.currency = currency }
+
+            fun customer(customer: Customer) = customer(JsonField.of(customer))
+
+            fun customer(customer: JsonField<Customer>) = apply { this.customer = customer }
+
+            fun description(description: String) = description(JsonField.of(description))
+
+            fun description(description: JsonField<String>) = apply {
+                this.description = description
+            }
+
+            fun endingBalance(endingBalance: Double) = endingBalance(JsonField.of(endingBalance))
+
+            fun endingBalance(endingBalance: JsonField<Double>) = apply {
+                this.endingBalance = endingBalance
+            }
+
+            fun entryStatus(entryStatus: EntryStatus) = entryStatus(JsonField.of(entryStatus))
+
+            fun entryStatus(entryStatus: JsonField<EntryStatus>) = apply {
+                this.entryStatus = entryStatus
+            }
+
+            fun entryType(entryType: EntryType) = entryType(JsonField.of(entryType))
+
+            fun entryType(entryType: JsonField<EntryType>) = apply { this.entryType = entryType }
+
+            fun ledgerSequenceNumber(ledgerSequenceNumber: Long) =
+                ledgerSequenceNumber(JsonField.of(ledgerSequenceNumber))
+
+            fun ledgerSequenceNumber(ledgerSequenceNumber: JsonField<Long>) = apply {
+                this.ledgerSequenceNumber = ledgerSequenceNumber
             }
 
             /**
@@ -2866,69 +2923,12 @@ private constructor(
              */
             fun metadata(metadata: JsonField<Metadata>) = apply { this.metadata = metadata }
 
-            fun id(id: String) = id(JsonField.of(id))
-
-            fun id(id: JsonField<String>) = apply { this.id = id }
-
-            fun ledgerSequenceNumber(ledgerSequenceNumber: Long) =
-                ledgerSequenceNumber(JsonField.of(ledgerSequenceNumber))
-
-            fun ledgerSequenceNumber(ledgerSequenceNumber: JsonField<Long>) = apply {
-                this.ledgerSequenceNumber = ledgerSequenceNumber
-            }
-
-            fun entryStatus(entryStatus: EntryStatus) = entryStatus(JsonField.of(entryStatus))
-
-            fun entryStatus(entryStatus: JsonField<EntryStatus>) = apply {
-                this.entryStatus = entryStatus
-            }
-
-            fun customer(customer: Customer) = customer(JsonField.of(customer))
-
-            fun customer(customer: JsonField<Customer>) = apply { this.customer = customer }
-
             fun startingBalance(startingBalance: Double) =
                 startingBalance(JsonField.of(startingBalance))
 
             fun startingBalance(startingBalance: JsonField<Double>) = apply {
                 this.startingBalance = startingBalance
             }
-
-            fun endingBalance(endingBalance: Double) = endingBalance(JsonField.of(endingBalance))
-
-            fun endingBalance(endingBalance: JsonField<Double>) = apply {
-                this.endingBalance = endingBalance
-            }
-
-            fun amount(amount: Double) = amount(JsonField.of(amount))
-
-            fun amount(amount: JsonField<Double>) = apply { this.amount = amount }
-
-            fun currency(currency: String) = currency(JsonField.of(currency))
-
-            fun currency(currency: JsonField<String>) = apply { this.currency = currency }
-
-            fun createdAt(createdAt: OffsetDateTime) = createdAt(JsonField.of(createdAt))
-
-            fun createdAt(createdAt: JsonField<OffsetDateTime>) = apply {
-                this.createdAt = createdAt
-            }
-
-            fun description(description: String) = description(JsonField.of(description))
-
-            fun description(description: JsonField<String>) = apply {
-                this.description = description
-            }
-
-            fun creditBlock(creditBlock: CreditBlock) = creditBlock(JsonField.of(creditBlock))
-
-            fun creditBlock(creditBlock: JsonField<CreditBlock>) = apply {
-                this.creditBlock = creditBlock
-            }
-
-            fun entryType(entryType: EntryType) = entryType(JsonField.of(entryType))
-
-            fun entryType(entryType: JsonField<EntryType>) = apply { this.entryType = entryType }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
@@ -2951,19 +2951,19 @@ private constructor(
 
             fun build(): CreditBlockExpiryLedgerEntry =
                 CreditBlockExpiryLedgerEntry(
-                    metadata,
                     id,
-                    ledgerSequenceNumber,
-                    entryStatus,
-                    customer,
-                    startingBalance,
-                    endingBalance,
                     amount,
-                    currency,
                     createdAt,
-                    description,
                     creditBlock,
+                    currency,
+                    customer,
+                    description,
+                    endingBalance,
+                    entryStatus,
                     entryType,
+                    ledgerSequenceNumber,
+                    metadata,
+                    startingBalance,
                     additionalProperties.toImmutable(),
                 )
         }
@@ -3413,69 +3413,92 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is CreditBlockExpiryLedgerEntry && metadata == other.metadata && id == other.id && ledgerSequenceNumber == other.ledgerSequenceNumber && entryStatus == other.entryStatus && customer == other.customer && startingBalance == other.startingBalance && endingBalance == other.endingBalance && amount == other.amount && currency == other.currency && createdAt == other.createdAt && description == other.description && creditBlock == other.creditBlock && entryType == other.entryType && additionalProperties == other.additionalProperties /* spotless:on */
+            return /* spotless:off */ other is CreditBlockExpiryLedgerEntry && id == other.id && amount == other.amount && createdAt == other.createdAt && creditBlock == other.creditBlock && currency == other.currency && customer == other.customer && description == other.description && endingBalance == other.endingBalance && entryStatus == other.entryStatus && entryType == other.entryType && ledgerSequenceNumber == other.ledgerSequenceNumber && metadata == other.metadata && startingBalance == other.startingBalance && additionalProperties == other.additionalProperties /* spotless:on */
         }
 
         /* spotless:off */
-        private val hashCode: Int by lazy { Objects.hash(metadata, id, ledgerSequenceNumber, entryStatus, customer, startingBalance, endingBalance, amount, currency, createdAt, description, creditBlock, entryType, additionalProperties) }
+        private val hashCode: Int by lazy { Objects.hash(id, amount, createdAt, creditBlock, currency, customer, description, endingBalance, entryStatus, entryType, ledgerSequenceNumber, metadata, startingBalance, additionalProperties) }
         /* spotless:on */
 
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "CreditBlockExpiryLedgerEntry{metadata=$metadata, id=$id, ledgerSequenceNumber=$ledgerSequenceNumber, entryStatus=$entryStatus, customer=$customer, startingBalance=$startingBalance, endingBalance=$endingBalance, amount=$amount, currency=$currency, createdAt=$createdAt, description=$description, creditBlock=$creditBlock, entryType=$entryType, additionalProperties=$additionalProperties}"
+            "CreditBlockExpiryLedgerEntry{id=$id, amount=$amount, createdAt=$createdAt, creditBlock=$creditBlock, currency=$currency, customer=$customer, description=$description, endingBalance=$endingBalance, entryStatus=$entryStatus, entryType=$entryType, ledgerSequenceNumber=$ledgerSequenceNumber, metadata=$metadata, startingBalance=$startingBalance, additionalProperties=$additionalProperties}"
     }
 
     @NoAutoDetect
     class VoidLedgerEntry
     @JsonCreator
     private constructor(
-        @JsonProperty("metadata")
-        @ExcludeMissing
-        private val metadata: JsonField<Metadata> = JsonMissing.of(),
         @JsonProperty("id") @ExcludeMissing private val id: JsonField<String> = JsonMissing.of(),
-        @JsonProperty("ledger_sequence_number")
-        @ExcludeMissing
-        private val ledgerSequenceNumber: JsonField<Long> = JsonMissing.of(),
-        @JsonProperty("entry_status")
-        @ExcludeMissing
-        private val entryStatus: JsonField<EntryStatus> = JsonMissing.of(),
-        @JsonProperty("customer")
-        @ExcludeMissing
-        private val customer: JsonField<Customer> = JsonMissing.of(),
-        @JsonProperty("starting_balance")
-        @ExcludeMissing
-        private val startingBalance: JsonField<Double> = JsonMissing.of(),
-        @JsonProperty("ending_balance")
-        @ExcludeMissing
-        private val endingBalance: JsonField<Double> = JsonMissing.of(),
         @JsonProperty("amount")
         @ExcludeMissing
         private val amount: JsonField<Double> = JsonMissing.of(),
-        @JsonProperty("currency")
-        @ExcludeMissing
-        private val currency: JsonField<String> = JsonMissing.of(),
         @JsonProperty("created_at")
         @ExcludeMissing
         private val createdAt: JsonField<OffsetDateTime> = JsonMissing.of(),
-        @JsonProperty("description")
-        @ExcludeMissing
-        private val description: JsonField<String> = JsonMissing.of(),
         @JsonProperty("credit_block")
         @ExcludeMissing
         private val creditBlock: JsonField<CreditBlock> = JsonMissing.of(),
+        @JsonProperty("currency")
+        @ExcludeMissing
+        private val currency: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("customer")
+        @ExcludeMissing
+        private val customer: JsonField<Customer> = JsonMissing.of(),
+        @JsonProperty("description")
+        @ExcludeMissing
+        private val description: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("ending_balance")
+        @ExcludeMissing
+        private val endingBalance: JsonField<Double> = JsonMissing.of(),
+        @JsonProperty("entry_status")
+        @ExcludeMissing
+        private val entryStatus: JsonField<EntryStatus> = JsonMissing.of(),
         @JsonProperty("entry_type")
         @ExcludeMissing
         private val entryType: JsonField<EntryType> = JsonMissing.of(),
-        @JsonProperty("void_reason")
+        @JsonProperty("ledger_sequence_number")
         @ExcludeMissing
-        private val voidReason: JsonField<String> = JsonMissing.of(),
+        private val ledgerSequenceNumber: JsonField<Long> = JsonMissing.of(),
+        @JsonProperty("metadata")
+        @ExcludeMissing
+        private val metadata: JsonField<Metadata> = JsonMissing.of(),
+        @JsonProperty("starting_balance")
+        @ExcludeMissing
+        private val startingBalance: JsonField<Double> = JsonMissing.of(),
         @JsonProperty("void_amount")
         @ExcludeMissing
         private val voidAmount: JsonField<Double> = JsonMissing.of(),
+        @JsonProperty("void_reason")
+        @ExcludeMissing
+        private val voidReason: JsonField<String> = JsonMissing.of(),
         @JsonAnySetter
         private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
+
+        fun id(): String = id.getRequired("id")
+
+        fun amount(): Double = amount.getRequired("amount")
+
+        fun createdAt(): OffsetDateTime = createdAt.getRequired("created_at")
+
+        fun creditBlock(): CreditBlock = creditBlock.getRequired("credit_block")
+
+        fun currency(): String = currency.getRequired("currency")
+
+        fun customer(): Customer = customer.getRequired("customer")
+
+        fun description(): String? = description.getNullable("description")
+
+        fun endingBalance(): Double = endingBalance.getRequired("ending_balance")
+
+        fun entryStatus(): EntryStatus = entryStatus.getRequired("entry_status")
+
+        fun entryType(): EntryType = entryType.getRequired("entry_type")
+
+        fun ledgerSequenceNumber(): Long =
+            ledgerSequenceNumber.getRequired("ledger_sequence_number")
 
         /**
          * User specified key-value pairs for the resource. If not present, this defaults to an
@@ -3484,34 +3507,35 @@ private constructor(
          */
         fun metadata(): Metadata = metadata.getRequired("metadata")
 
-        fun id(): String = id.getRequired("id")
-
-        fun ledgerSequenceNumber(): Long =
-            ledgerSequenceNumber.getRequired("ledger_sequence_number")
-
-        fun entryStatus(): EntryStatus = entryStatus.getRequired("entry_status")
-
-        fun customer(): Customer = customer.getRequired("customer")
-
         fun startingBalance(): Double = startingBalance.getRequired("starting_balance")
 
-        fun endingBalance(): Double = endingBalance.getRequired("ending_balance")
-
-        fun amount(): Double = amount.getRequired("amount")
-
-        fun currency(): String = currency.getRequired("currency")
-
-        fun createdAt(): OffsetDateTime = createdAt.getRequired("created_at")
-
-        fun description(): String? = description.getNullable("description")
-
-        fun creditBlock(): CreditBlock = creditBlock.getRequired("credit_block")
-
-        fun entryType(): EntryType = entryType.getRequired("entry_type")
+        fun voidAmount(): Double = voidAmount.getRequired("void_amount")
 
         fun voidReason(): String? = voidReason.getNullable("void_reason")
 
-        fun voidAmount(): Double = voidAmount.getRequired("void_amount")
+        @JsonProperty("id") @ExcludeMissing fun _id() = id
+
+        @JsonProperty("amount") @ExcludeMissing fun _amount() = amount
+
+        @JsonProperty("created_at") @ExcludeMissing fun _createdAt() = createdAt
+
+        @JsonProperty("credit_block") @ExcludeMissing fun _creditBlock() = creditBlock
+
+        @JsonProperty("currency") @ExcludeMissing fun _currency() = currency
+
+        @JsonProperty("customer") @ExcludeMissing fun _customer() = customer
+
+        @JsonProperty("description") @ExcludeMissing fun _description() = description
+
+        @JsonProperty("ending_balance") @ExcludeMissing fun _endingBalance() = endingBalance
+
+        @JsonProperty("entry_status") @ExcludeMissing fun _entryStatus() = entryStatus
+
+        @JsonProperty("entry_type") @ExcludeMissing fun _entryType() = entryType
+
+        @JsonProperty("ledger_sequence_number")
+        @ExcludeMissing
+        fun _ledgerSequenceNumber() = ledgerSequenceNumber
 
         /**
          * User specified key-value pairs for the resource. If not present, this defaults to an
@@ -3520,35 +3544,11 @@ private constructor(
          */
         @JsonProperty("metadata") @ExcludeMissing fun _metadata() = metadata
 
-        @JsonProperty("id") @ExcludeMissing fun _id() = id
-
-        @JsonProperty("ledger_sequence_number")
-        @ExcludeMissing
-        fun _ledgerSequenceNumber() = ledgerSequenceNumber
-
-        @JsonProperty("entry_status") @ExcludeMissing fun _entryStatus() = entryStatus
-
-        @JsonProperty("customer") @ExcludeMissing fun _customer() = customer
-
         @JsonProperty("starting_balance") @ExcludeMissing fun _startingBalance() = startingBalance
 
-        @JsonProperty("ending_balance") @ExcludeMissing fun _endingBalance() = endingBalance
-
-        @JsonProperty("amount") @ExcludeMissing fun _amount() = amount
-
-        @JsonProperty("currency") @ExcludeMissing fun _currency() = currency
-
-        @JsonProperty("created_at") @ExcludeMissing fun _createdAt() = createdAt
-
-        @JsonProperty("description") @ExcludeMissing fun _description() = description
-
-        @JsonProperty("credit_block") @ExcludeMissing fun _creditBlock() = creditBlock
-
-        @JsonProperty("entry_type") @ExcludeMissing fun _entryType() = entryType
+        @JsonProperty("void_amount") @ExcludeMissing fun _voidAmount() = voidAmount
 
         @JsonProperty("void_reason") @ExcludeMissing fun _voidReason() = voidReason
-
-        @JsonProperty("void_amount") @ExcludeMissing fun _voidAmount() = voidAmount
 
         @JsonAnyGetter
         @ExcludeMissing
@@ -3558,21 +3558,21 @@ private constructor(
 
         fun validate(): VoidLedgerEntry = apply {
             if (!validated) {
-                metadata().validate()
                 id()
-                ledgerSequenceNumber()
-                entryStatus()
-                customer().validate()
-                startingBalance()
-                endingBalance()
                 amount()
-                currency()
                 createdAt()
-                description()
                 creditBlock().validate()
+                currency()
+                customer().validate()
+                description()
+                endingBalance()
+                entryStatus()
                 entryType()
-                voidReason()
+                ledgerSequenceNumber()
+                metadata().validate()
+                startingBalance()
                 voidAmount()
+                voidReason()
                 validated = true
             }
         }
@@ -3586,40 +3586,97 @@ private constructor(
 
         class Builder {
 
-            private var metadata: JsonField<Metadata> = JsonMissing.of()
             private var id: JsonField<String> = JsonMissing.of()
-            private var ledgerSequenceNumber: JsonField<Long> = JsonMissing.of()
-            private var entryStatus: JsonField<EntryStatus> = JsonMissing.of()
-            private var customer: JsonField<Customer> = JsonMissing.of()
-            private var startingBalance: JsonField<Double> = JsonMissing.of()
-            private var endingBalance: JsonField<Double> = JsonMissing.of()
             private var amount: JsonField<Double> = JsonMissing.of()
-            private var currency: JsonField<String> = JsonMissing.of()
             private var createdAt: JsonField<OffsetDateTime> = JsonMissing.of()
-            private var description: JsonField<String> = JsonMissing.of()
             private var creditBlock: JsonField<CreditBlock> = JsonMissing.of()
+            private var currency: JsonField<String> = JsonMissing.of()
+            private var customer: JsonField<Customer> = JsonMissing.of()
+            private var description: JsonField<String> = JsonMissing.of()
+            private var endingBalance: JsonField<Double> = JsonMissing.of()
+            private var entryStatus: JsonField<EntryStatus> = JsonMissing.of()
             private var entryType: JsonField<EntryType> = JsonMissing.of()
-            private var voidReason: JsonField<String> = JsonMissing.of()
+            private var ledgerSequenceNumber: JsonField<Long> = JsonMissing.of()
+            private var metadata: JsonField<Metadata> = JsonMissing.of()
+            private var startingBalance: JsonField<Double> = JsonMissing.of()
             private var voidAmount: JsonField<Double> = JsonMissing.of()
+            private var voidReason: JsonField<String> = JsonMissing.of()
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             internal fun from(voidLedgerEntry: VoidLedgerEntry) = apply {
-                metadata = voidLedgerEntry.metadata
                 id = voidLedgerEntry.id
-                ledgerSequenceNumber = voidLedgerEntry.ledgerSequenceNumber
-                entryStatus = voidLedgerEntry.entryStatus
-                customer = voidLedgerEntry.customer
-                startingBalance = voidLedgerEntry.startingBalance
-                endingBalance = voidLedgerEntry.endingBalance
                 amount = voidLedgerEntry.amount
-                currency = voidLedgerEntry.currency
                 createdAt = voidLedgerEntry.createdAt
-                description = voidLedgerEntry.description
                 creditBlock = voidLedgerEntry.creditBlock
+                currency = voidLedgerEntry.currency
+                customer = voidLedgerEntry.customer
+                description = voidLedgerEntry.description
+                endingBalance = voidLedgerEntry.endingBalance
+                entryStatus = voidLedgerEntry.entryStatus
                 entryType = voidLedgerEntry.entryType
-                voidReason = voidLedgerEntry.voidReason
+                ledgerSequenceNumber = voidLedgerEntry.ledgerSequenceNumber
+                metadata = voidLedgerEntry.metadata
+                startingBalance = voidLedgerEntry.startingBalance
                 voidAmount = voidLedgerEntry.voidAmount
+                voidReason = voidLedgerEntry.voidReason
                 additionalProperties = voidLedgerEntry.additionalProperties.toMutableMap()
+            }
+
+            fun id(id: String) = id(JsonField.of(id))
+
+            fun id(id: JsonField<String>) = apply { this.id = id }
+
+            fun amount(amount: Double) = amount(JsonField.of(amount))
+
+            fun amount(amount: JsonField<Double>) = apply { this.amount = amount }
+
+            fun createdAt(createdAt: OffsetDateTime) = createdAt(JsonField.of(createdAt))
+
+            fun createdAt(createdAt: JsonField<OffsetDateTime>) = apply {
+                this.createdAt = createdAt
+            }
+
+            fun creditBlock(creditBlock: CreditBlock) = creditBlock(JsonField.of(creditBlock))
+
+            fun creditBlock(creditBlock: JsonField<CreditBlock>) = apply {
+                this.creditBlock = creditBlock
+            }
+
+            fun currency(currency: String) = currency(JsonField.of(currency))
+
+            fun currency(currency: JsonField<String>) = apply { this.currency = currency }
+
+            fun customer(customer: Customer) = customer(JsonField.of(customer))
+
+            fun customer(customer: JsonField<Customer>) = apply { this.customer = customer }
+
+            fun description(description: String) = description(JsonField.of(description))
+
+            fun description(description: JsonField<String>) = apply {
+                this.description = description
+            }
+
+            fun endingBalance(endingBalance: Double) = endingBalance(JsonField.of(endingBalance))
+
+            fun endingBalance(endingBalance: JsonField<Double>) = apply {
+                this.endingBalance = endingBalance
+            }
+
+            fun entryStatus(entryStatus: EntryStatus) = entryStatus(JsonField.of(entryStatus))
+
+            fun entryStatus(entryStatus: JsonField<EntryStatus>) = apply {
+                this.entryStatus = entryStatus
+            }
+
+            fun entryType(entryType: EntryType) = entryType(JsonField.of(entryType))
+
+            fun entryType(entryType: JsonField<EntryType>) = apply { this.entryType = entryType }
+
+            fun ledgerSequenceNumber(ledgerSequenceNumber: Long) =
+                ledgerSequenceNumber(JsonField.of(ledgerSequenceNumber))
+
+            fun ledgerSequenceNumber(ledgerSequenceNumber: JsonField<Long>) = apply {
+                this.ledgerSequenceNumber = ledgerSequenceNumber
             }
 
             /**
@@ -3636,27 +3693,6 @@ private constructor(
              */
             fun metadata(metadata: JsonField<Metadata>) = apply { this.metadata = metadata }
 
-            fun id(id: String) = id(JsonField.of(id))
-
-            fun id(id: JsonField<String>) = apply { this.id = id }
-
-            fun ledgerSequenceNumber(ledgerSequenceNumber: Long) =
-                ledgerSequenceNumber(JsonField.of(ledgerSequenceNumber))
-
-            fun ledgerSequenceNumber(ledgerSequenceNumber: JsonField<Long>) = apply {
-                this.ledgerSequenceNumber = ledgerSequenceNumber
-            }
-
-            fun entryStatus(entryStatus: EntryStatus) = entryStatus(JsonField.of(entryStatus))
-
-            fun entryStatus(entryStatus: JsonField<EntryStatus>) = apply {
-                this.entryStatus = entryStatus
-            }
-
-            fun customer(customer: Customer) = customer(JsonField.of(customer))
-
-            fun customer(customer: JsonField<Customer>) = apply { this.customer = customer }
-
             fun startingBalance(startingBalance: Double) =
                 startingBalance(JsonField.of(startingBalance))
 
@@ -3664,49 +3700,13 @@ private constructor(
                 this.startingBalance = startingBalance
             }
 
-            fun endingBalance(endingBalance: Double) = endingBalance(JsonField.of(endingBalance))
+            fun voidAmount(voidAmount: Double) = voidAmount(JsonField.of(voidAmount))
 
-            fun endingBalance(endingBalance: JsonField<Double>) = apply {
-                this.endingBalance = endingBalance
-            }
-
-            fun amount(amount: Double) = amount(JsonField.of(amount))
-
-            fun amount(amount: JsonField<Double>) = apply { this.amount = amount }
-
-            fun currency(currency: String) = currency(JsonField.of(currency))
-
-            fun currency(currency: JsonField<String>) = apply { this.currency = currency }
-
-            fun createdAt(createdAt: OffsetDateTime) = createdAt(JsonField.of(createdAt))
-
-            fun createdAt(createdAt: JsonField<OffsetDateTime>) = apply {
-                this.createdAt = createdAt
-            }
-
-            fun description(description: String) = description(JsonField.of(description))
-
-            fun description(description: JsonField<String>) = apply {
-                this.description = description
-            }
-
-            fun creditBlock(creditBlock: CreditBlock) = creditBlock(JsonField.of(creditBlock))
-
-            fun creditBlock(creditBlock: JsonField<CreditBlock>) = apply {
-                this.creditBlock = creditBlock
-            }
-
-            fun entryType(entryType: EntryType) = entryType(JsonField.of(entryType))
-
-            fun entryType(entryType: JsonField<EntryType>) = apply { this.entryType = entryType }
+            fun voidAmount(voidAmount: JsonField<Double>) = apply { this.voidAmount = voidAmount }
 
             fun voidReason(voidReason: String) = voidReason(JsonField.of(voidReason))
 
             fun voidReason(voidReason: JsonField<String>) = apply { this.voidReason = voidReason }
-
-            fun voidAmount(voidAmount: Double) = voidAmount(JsonField.of(voidAmount))
-
-            fun voidAmount(voidAmount: JsonField<Double>) = apply { this.voidAmount = voidAmount }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
@@ -3729,21 +3729,21 @@ private constructor(
 
             fun build(): VoidLedgerEntry =
                 VoidLedgerEntry(
-                    metadata,
                     id,
-                    ledgerSequenceNumber,
-                    entryStatus,
-                    customer,
-                    startingBalance,
-                    endingBalance,
                     amount,
-                    currency,
                     createdAt,
-                    description,
                     creditBlock,
+                    currency,
+                    customer,
+                    description,
+                    endingBalance,
+                    entryStatus,
                     entryType,
-                    voidReason,
+                    ledgerSequenceNumber,
+                    metadata,
+                    startingBalance,
                     voidAmount,
+                    voidReason,
                     additionalProperties.toImmutable(),
                 )
         }
@@ -4193,72 +4193,95 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is VoidLedgerEntry && metadata == other.metadata && id == other.id && ledgerSequenceNumber == other.ledgerSequenceNumber && entryStatus == other.entryStatus && customer == other.customer && startingBalance == other.startingBalance && endingBalance == other.endingBalance && amount == other.amount && currency == other.currency && createdAt == other.createdAt && description == other.description && creditBlock == other.creditBlock && entryType == other.entryType && voidReason == other.voidReason && voidAmount == other.voidAmount && additionalProperties == other.additionalProperties /* spotless:on */
+            return /* spotless:off */ other is VoidLedgerEntry && id == other.id && amount == other.amount && createdAt == other.createdAt && creditBlock == other.creditBlock && currency == other.currency && customer == other.customer && description == other.description && endingBalance == other.endingBalance && entryStatus == other.entryStatus && entryType == other.entryType && ledgerSequenceNumber == other.ledgerSequenceNumber && metadata == other.metadata && startingBalance == other.startingBalance && voidAmount == other.voidAmount && voidReason == other.voidReason && additionalProperties == other.additionalProperties /* spotless:on */
         }
 
         /* spotless:off */
-        private val hashCode: Int by lazy { Objects.hash(metadata, id, ledgerSequenceNumber, entryStatus, customer, startingBalance, endingBalance, amount, currency, createdAt, description, creditBlock, entryType, voidReason, voidAmount, additionalProperties) }
+        private val hashCode: Int by lazy { Objects.hash(id, amount, createdAt, creditBlock, currency, customer, description, endingBalance, entryStatus, entryType, ledgerSequenceNumber, metadata, startingBalance, voidAmount, voidReason, additionalProperties) }
         /* spotless:on */
 
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "VoidLedgerEntry{metadata=$metadata, id=$id, ledgerSequenceNumber=$ledgerSequenceNumber, entryStatus=$entryStatus, customer=$customer, startingBalance=$startingBalance, endingBalance=$endingBalance, amount=$amount, currency=$currency, createdAt=$createdAt, description=$description, creditBlock=$creditBlock, entryType=$entryType, voidReason=$voidReason, voidAmount=$voidAmount, additionalProperties=$additionalProperties}"
+            "VoidLedgerEntry{id=$id, amount=$amount, createdAt=$createdAt, creditBlock=$creditBlock, currency=$currency, customer=$customer, description=$description, endingBalance=$endingBalance, entryStatus=$entryStatus, entryType=$entryType, ledgerSequenceNumber=$ledgerSequenceNumber, metadata=$metadata, startingBalance=$startingBalance, voidAmount=$voidAmount, voidReason=$voidReason, additionalProperties=$additionalProperties}"
     }
 
     @NoAutoDetect
     class VoidInitiatedLedgerEntry
     @JsonCreator
     private constructor(
-        @JsonProperty("metadata")
-        @ExcludeMissing
-        private val metadata: JsonField<Metadata> = JsonMissing.of(),
         @JsonProperty("id") @ExcludeMissing private val id: JsonField<String> = JsonMissing.of(),
-        @JsonProperty("ledger_sequence_number")
-        @ExcludeMissing
-        private val ledgerSequenceNumber: JsonField<Long> = JsonMissing.of(),
-        @JsonProperty("entry_status")
-        @ExcludeMissing
-        private val entryStatus: JsonField<EntryStatus> = JsonMissing.of(),
-        @JsonProperty("customer")
-        @ExcludeMissing
-        private val customer: JsonField<Customer> = JsonMissing.of(),
-        @JsonProperty("starting_balance")
-        @ExcludeMissing
-        private val startingBalance: JsonField<Double> = JsonMissing.of(),
-        @JsonProperty("ending_balance")
-        @ExcludeMissing
-        private val endingBalance: JsonField<Double> = JsonMissing.of(),
         @JsonProperty("amount")
         @ExcludeMissing
         private val amount: JsonField<Double> = JsonMissing.of(),
-        @JsonProperty("currency")
-        @ExcludeMissing
-        private val currency: JsonField<String> = JsonMissing.of(),
         @JsonProperty("created_at")
         @ExcludeMissing
         private val createdAt: JsonField<OffsetDateTime> = JsonMissing.of(),
-        @JsonProperty("description")
-        @ExcludeMissing
-        private val description: JsonField<String> = JsonMissing.of(),
         @JsonProperty("credit_block")
         @ExcludeMissing
         private val creditBlock: JsonField<CreditBlock> = JsonMissing.of(),
+        @JsonProperty("currency")
+        @ExcludeMissing
+        private val currency: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("customer")
+        @ExcludeMissing
+        private val customer: JsonField<Customer> = JsonMissing.of(),
+        @JsonProperty("description")
+        @ExcludeMissing
+        private val description: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("ending_balance")
+        @ExcludeMissing
+        private val endingBalance: JsonField<Double> = JsonMissing.of(),
+        @JsonProperty("entry_status")
+        @ExcludeMissing
+        private val entryStatus: JsonField<EntryStatus> = JsonMissing.of(),
         @JsonProperty("entry_type")
         @ExcludeMissing
         private val entryType: JsonField<EntryType> = JsonMissing.of(),
+        @JsonProperty("ledger_sequence_number")
+        @ExcludeMissing
+        private val ledgerSequenceNumber: JsonField<Long> = JsonMissing.of(),
+        @JsonProperty("metadata")
+        @ExcludeMissing
+        private val metadata: JsonField<Metadata> = JsonMissing.of(),
         @JsonProperty("new_block_expiry_date")
         @ExcludeMissing
         private val newBlockExpiryDate: JsonField<OffsetDateTime> = JsonMissing.of(),
-        @JsonProperty("void_reason")
+        @JsonProperty("starting_balance")
         @ExcludeMissing
-        private val voidReason: JsonField<String> = JsonMissing.of(),
+        private val startingBalance: JsonField<Double> = JsonMissing.of(),
         @JsonProperty("void_amount")
         @ExcludeMissing
         private val voidAmount: JsonField<Double> = JsonMissing.of(),
+        @JsonProperty("void_reason")
+        @ExcludeMissing
+        private val voidReason: JsonField<String> = JsonMissing.of(),
         @JsonAnySetter
         private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
+
+        fun id(): String = id.getRequired("id")
+
+        fun amount(): Double = amount.getRequired("amount")
+
+        fun createdAt(): OffsetDateTime = createdAt.getRequired("created_at")
+
+        fun creditBlock(): CreditBlock = creditBlock.getRequired("credit_block")
+
+        fun currency(): String = currency.getRequired("currency")
+
+        fun customer(): Customer = customer.getRequired("customer")
+
+        fun description(): String? = description.getNullable("description")
+
+        fun endingBalance(): Double = endingBalance.getRequired("ending_balance")
+
+        fun entryStatus(): EntryStatus = entryStatus.getRequired("entry_status")
+
+        fun entryType(): EntryType = entryType.getRequired("entry_type")
+
+        fun ledgerSequenceNumber(): Long =
+            ledgerSequenceNumber.getRequired("ledger_sequence_number")
 
         /**
          * User specified key-value pairs for the resource. If not present, this defaults to an
@@ -4267,37 +4290,38 @@ private constructor(
          */
         fun metadata(): Metadata = metadata.getRequired("metadata")
 
-        fun id(): String = id.getRequired("id")
-
-        fun ledgerSequenceNumber(): Long =
-            ledgerSequenceNumber.getRequired("ledger_sequence_number")
-
-        fun entryStatus(): EntryStatus = entryStatus.getRequired("entry_status")
-
-        fun customer(): Customer = customer.getRequired("customer")
-
-        fun startingBalance(): Double = startingBalance.getRequired("starting_balance")
-
-        fun endingBalance(): Double = endingBalance.getRequired("ending_balance")
-
-        fun amount(): Double = amount.getRequired("amount")
-
-        fun currency(): String = currency.getRequired("currency")
-
-        fun createdAt(): OffsetDateTime = createdAt.getRequired("created_at")
-
-        fun description(): String? = description.getNullable("description")
-
-        fun creditBlock(): CreditBlock = creditBlock.getRequired("credit_block")
-
-        fun entryType(): EntryType = entryType.getRequired("entry_type")
-
         fun newBlockExpiryDate(): OffsetDateTime =
             newBlockExpiryDate.getRequired("new_block_expiry_date")
 
-        fun voidReason(): String? = voidReason.getNullable("void_reason")
+        fun startingBalance(): Double = startingBalance.getRequired("starting_balance")
 
         fun voidAmount(): Double = voidAmount.getRequired("void_amount")
+
+        fun voidReason(): String? = voidReason.getNullable("void_reason")
+
+        @JsonProperty("id") @ExcludeMissing fun _id() = id
+
+        @JsonProperty("amount") @ExcludeMissing fun _amount() = amount
+
+        @JsonProperty("created_at") @ExcludeMissing fun _createdAt() = createdAt
+
+        @JsonProperty("credit_block") @ExcludeMissing fun _creditBlock() = creditBlock
+
+        @JsonProperty("currency") @ExcludeMissing fun _currency() = currency
+
+        @JsonProperty("customer") @ExcludeMissing fun _customer() = customer
+
+        @JsonProperty("description") @ExcludeMissing fun _description() = description
+
+        @JsonProperty("ending_balance") @ExcludeMissing fun _endingBalance() = endingBalance
+
+        @JsonProperty("entry_status") @ExcludeMissing fun _entryStatus() = entryStatus
+
+        @JsonProperty("entry_type") @ExcludeMissing fun _entryType() = entryType
+
+        @JsonProperty("ledger_sequence_number")
+        @ExcludeMissing
+        fun _ledgerSequenceNumber() = ledgerSequenceNumber
 
         /**
          * User specified key-value pairs for the resource. If not present, this defaults to an
@@ -4306,39 +4330,15 @@ private constructor(
          */
         @JsonProperty("metadata") @ExcludeMissing fun _metadata() = metadata
 
-        @JsonProperty("id") @ExcludeMissing fun _id() = id
-
-        @JsonProperty("ledger_sequence_number")
-        @ExcludeMissing
-        fun _ledgerSequenceNumber() = ledgerSequenceNumber
-
-        @JsonProperty("entry_status") @ExcludeMissing fun _entryStatus() = entryStatus
-
-        @JsonProperty("customer") @ExcludeMissing fun _customer() = customer
-
-        @JsonProperty("starting_balance") @ExcludeMissing fun _startingBalance() = startingBalance
-
-        @JsonProperty("ending_balance") @ExcludeMissing fun _endingBalance() = endingBalance
-
-        @JsonProperty("amount") @ExcludeMissing fun _amount() = amount
-
-        @JsonProperty("currency") @ExcludeMissing fun _currency() = currency
-
-        @JsonProperty("created_at") @ExcludeMissing fun _createdAt() = createdAt
-
-        @JsonProperty("description") @ExcludeMissing fun _description() = description
-
-        @JsonProperty("credit_block") @ExcludeMissing fun _creditBlock() = creditBlock
-
-        @JsonProperty("entry_type") @ExcludeMissing fun _entryType() = entryType
-
         @JsonProperty("new_block_expiry_date")
         @ExcludeMissing
         fun _newBlockExpiryDate() = newBlockExpiryDate
 
-        @JsonProperty("void_reason") @ExcludeMissing fun _voidReason() = voidReason
+        @JsonProperty("starting_balance") @ExcludeMissing fun _startingBalance() = startingBalance
 
         @JsonProperty("void_amount") @ExcludeMissing fun _voidAmount() = voidAmount
+
+        @JsonProperty("void_reason") @ExcludeMissing fun _voidReason() = voidReason
 
         @JsonAnyGetter
         @ExcludeMissing
@@ -4348,22 +4348,22 @@ private constructor(
 
         fun validate(): VoidInitiatedLedgerEntry = apply {
             if (!validated) {
-                metadata().validate()
                 id()
-                ledgerSequenceNumber()
-                entryStatus()
-                customer().validate()
-                startingBalance()
-                endingBalance()
                 amount()
-                currency()
                 createdAt()
-                description()
                 creditBlock().validate()
+                currency()
+                customer().validate()
+                description()
+                endingBalance()
+                entryStatus()
                 entryType()
+                ledgerSequenceNumber()
+                metadata().validate()
                 newBlockExpiryDate()
-                voidReason()
+                startingBalance()
                 voidAmount()
+                voidReason()
                 validated = true
             }
         }
@@ -4377,42 +4377,99 @@ private constructor(
 
         class Builder {
 
-            private var metadata: JsonField<Metadata> = JsonMissing.of()
             private var id: JsonField<String> = JsonMissing.of()
-            private var ledgerSequenceNumber: JsonField<Long> = JsonMissing.of()
-            private var entryStatus: JsonField<EntryStatus> = JsonMissing.of()
-            private var customer: JsonField<Customer> = JsonMissing.of()
-            private var startingBalance: JsonField<Double> = JsonMissing.of()
-            private var endingBalance: JsonField<Double> = JsonMissing.of()
             private var amount: JsonField<Double> = JsonMissing.of()
-            private var currency: JsonField<String> = JsonMissing.of()
             private var createdAt: JsonField<OffsetDateTime> = JsonMissing.of()
-            private var description: JsonField<String> = JsonMissing.of()
             private var creditBlock: JsonField<CreditBlock> = JsonMissing.of()
+            private var currency: JsonField<String> = JsonMissing.of()
+            private var customer: JsonField<Customer> = JsonMissing.of()
+            private var description: JsonField<String> = JsonMissing.of()
+            private var endingBalance: JsonField<Double> = JsonMissing.of()
+            private var entryStatus: JsonField<EntryStatus> = JsonMissing.of()
             private var entryType: JsonField<EntryType> = JsonMissing.of()
+            private var ledgerSequenceNumber: JsonField<Long> = JsonMissing.of()
+            private var metadata: JsonField<Metadata> = JsonMissing.of()
             private var newBlockExpiryDate: JsonField<OffsetDateTime> = JsonMissing.of()
-            private var voidReason: JsonField<String> = JsonMissing.of()
+            private var startingBalance: JsonField<Double> = JsonMissing.of()
             private var voidAmount: JsonField<Double> = JsonMissing.of()
+            private var voidReason: JsonField<String> = JsonMissing.of()
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             internal fun from(voidInitiatedLedgerEntry: VoidInitiatedLedgerEntry) = apply {
-                metadata = voidInitiatedLedgerEntry.metadata
                 id = voidInitiatedLedgerEntry.id
-                ledgerSequenceNumber = voidInitiatedLedgerEntry.ledgerSequenceNumber
-                entryStatus = voidInitiatedLedgerEntry.entryStatus
-                customer = voidInitiatedLedgerEntry.customer
-                startingBalance = voidInitiatedLedgerEntry.startingBalance
-                endingBalance = voidInitiatedLedgerEntry.endingBalance
                 amount = voidInitiatedLedgerEntry.amount
-                currency = voidInitiatedLedgerEntry.currency
                 createdAt = voidInitiatedLedgerEntry.createdAt
-                description = voidInitiatedLedgerEntry.description
                 creditBlock = voidInitiatedLedgerEntry.creditBlock
+                currency = voidInitiatedLedgerEntry.currency
+                customer = voidInitiatedLedgerEntry.customer
+                description = voidInitiatedLedgerEntry.description
+                endingBalance = voidInitiatedLedgerEntry.endingBalance
+                entryStatus = voidInitiatedLedgerEntry.entryStatus
                 entryType = voidInitiatedLedgerEntry.entryType
+                ledgerSequenceNumber = voidInitiatedLedgerEntry.ledgerSequenceNumber
+                metadata = voidInitiatedLedgerEntry.metadata
                 newBlockExpiryDate = voidInitiatedLedgerEntry.newBlockExpiryDate
-                voidReason = voidInitiatedLedgerEntry.voidReason
+                startingBalance = voidInitiatedLedgerEntry.startingBalance
                 voidAmount = voidInitiatedLedgerEntry.voidAmount
+                voidReason = voidInitiatedLedgerEntry.voidReason
                 additionalProperties = voidInitiatedLedgerEntry.additionalProperties.toMutableMap()
+            }
+
+            fun id(id: String) = id(JsonField.of(id))
+
+            fun id(id: JsonField<String>) = apply { this.id = id }
+
+            fun amount(amount: Double) = amount(JsonField.of(amount))
+
+            fun amount(amount: JsonField<Double>) = apply { this.amount = amount }
+
+            fun createdAt(createdAt: OffsetDateTime) = createdAt(JsonField.of(createdAt))
+
+            fun createdAt(createdAt: JsonField<OffsetDateTime>) = apply {
+                this.createdAt = createdAt
+            }
+
+            fun creditBlock(creditBlock: CreditBlock) = creditBlock(JsonField.of(creditBlock))
+
+            fun creditBlock(creditBlock: JsonField<CreditBlock>) = apply {
+                this.creditBlock = creditBlock
+            }
+
+            fun currency(currency: String) = currency(JsonField.of(currency))
+
+            fun currency(currency: JsonField<String>) = apply { this.currency = currency }
+
+            fun customer(customer: Customer) = customer(JsonField.of(customer))
+
+            fun customer(customer: JsonField<Customer>) = apply { this.customer = customer }
+
+            fun description(description: String) = description(JsonField.of(description))
+
+            fun description(description: JsonField<String>) = apply {
+                this.description = description
+            }
+
+            fun endingBalance(endingBalance: Double) = endingBalance(JsonField.of(endingBalance))
+
+            fun endingBalance(endingBalance: JsonField<Double>) = apply {
+                this.endingBalance = endingBalance
+            }
+
+            fun entryStatus(entryStatus: EntryStatus) = entryStatus(JsonField.of(entryStatus))
+
+            fun entryStatus(entryStatus: JsonField<EntryStatus>) = apply {
+                this.entryStatus = entryStatus
+            }
+
+            fun entryType(entryType: EntryType) = entryType(JsonField.of(entryType))
+
+            fun entryType(entryType: JsonField<EntryType>) = apply { this.entryType = entryType }
+
+            fun ledgerSequenceNumber(ledgerSequenceNumber: Long) =
+                ledgerSequenceNumber(JsonField.of(ledgerSequenceNumber))
+
+            fun ledgerSequenceNumber(ledgerSequenceNumber: JsonField<Long>) = apply {
+                this.ledgerSequenceNumber = ledgerSequenceNumber
             }
 
             /**
@@ -4429,26 +4486,12 @@ private constructor(
              */
             fun metadata(metadata: JsonField<Metadata>) = apply { this.metadata = metadata }
 
-            fun id(id: String) = id(JsonField.of(id))
+            fun newBlockExpiryDate(newBlockExpiryDate: OffsetDateTime) =
+                newBlockExpiryDate(JsonField.of(newBlockExpiryDate))
 
-            fun id(id: JsonField<String>) = apply { this.id = id }
-
-            fun ledgerSequenceNumber(ledgerSequenceNumber: Long) =
-                ledgerSequenceNumber(JsonField.of(ledgerSequenceNumber))
-
-            fun ledgerSequenceNumber(ledgerSequenceNumber: JsonField<Long>) = apply {
-                this.ledgerSequenceNumber = ledgerSequenceNumber
+            fun newBlockExpiryDate(newBlockExpiryDate: JsonField<OffsetDateTime>) = apply {
+                this.newBlockExpiryDate = newBlockExpiryDate
             }
-
-            fun entryStatus(entryStatus: EntryStatus) = entryStatus(JsonField.of(entryStatus))
-
-            fun entryStatus(entryStatus: JsonField<EntryStatus>) = apply {
-                this.entryStatus = entryStatus
-            }
-
-            fun customer(customer: Customer) = customer(JsonField.of(customer))
-
-            fun customer(customer: JsonField<Customer>) = apply { this.customer = customer }
 
             fun startingBalance(startingBalance: Double) =
                 startingBalance(JsonField.of(startingBalance))
@@ -4457,56 +4500,13 @@ private constructor(
                 this.startingBalance = startingBalance
             }
 
-            fun endingBalance(endingBalance: Double) = endingBalance(JsonField.of(endingBalance))
+            fun voidAmount(voidAmount: Double) = voidAmount(JsonField.of(voidAmount))
 
-            fun endingBalance(endingBalance: JsonField<Double>) = apply {
-                this.endingBalance = endingBalance
-            }
-
-            fun amount(amount: Double) = amount(JsonField.of(amount))
-
-            fun amount(amount: JsonField<Double>) = apply { this.amount = amount }
-
-            fun currency(currency: String) = currency(JsonField.of(currency))
-
-            fun currency(currency: JsonField<String>) = apply { this.currency = currency }
-
-            fun createdAt(createdAt: OffsetDateTime) = createdAt(JsonField.of(createdAt))
-
-            fun createdAt(createdAt: JsonField<OffsetDateTime>) = apply {
-                this.createdAt = createdAt
-            }
-
-            fun description(description: String) = description(JsonField.of(description))
-
-            fun description(description: JsonField<String>) = apply {
-                this.description = description
-            }
-
-            fun creditBlock(creditBlock: CreditBlock) = creditBlock(JsonField.of(creditBlock))
-
-            fun creditBlock(creditBlock: JsonField<CreditBlock>) = apply {
-                this.creditBlock = creditBlock
-            }
-
-            fun entryType(entryType: EntryType) = entryType(JsonField.of(entryType))
-
-            fun entryType(entryType: JsonField<EntryType>) = apply { this.entryType = entryType }
-
-            fun newBlockExpiryDate(newBlockExpiryDate: OffsetDateTime) =
-                newBlockExpiryDate(JsonField.of(newBlockExpiryDate))
-
-            fun newBlockExpiryDate(newBlockExpiryDate: JsonField<OffsetDateTime>) = apply {
-                this.newBlockExpiryDate = newBlockExpiryDate
-            }
+            fun voidAmount(voidAmount: JsonField<Double>) = apply { this.voidAmount = voidAmount }
 
             fun voidReason(voidReason: String) = voidReason(JsonField.of(voidReason))
 
             fun voidReason(voidReason: JsonField<String>) = apply { this.voidReason = voidReason }
-
-            fun voidAmount(voidAmount: Double) = voidAmount(JsonField.of(voidAmount))
-
-            fun voidAmount(voidAmount: JsonField<Double>) = apply { this.voidAmount = voidAmount }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
@@ -4529,22 +4529,22 @@ private constructor(
 
             fun build(): VoidInitiatedLedgerEntry =
                 VoidInitiatedLedgerEntry(
-                    metadata,
                     id,
-                    ledgerSequenceNumber,
-                    entryStatus,
-                    customer,
-                    startingBalance,
-                    endingBalance,
                     amount,
-                    currency,
                     createdAt,
-                    description,
                     creditBlock,
+                    currency,
+                    customer,
+                    description,
+                    endingBalance,
+                    entryStatus,
                     entryType,
+                    ledgerSequenceNumber,
+                    metadata,
                     newBlockExpiryDate,
-                    voidReason,
+                    startingBalance,
                     voidAmount,
+                    voidReason,
                     additionalProperties.toImmutable(),
                 )
         }
@@ -4994,63 +4994,86 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is VoidInitiatedLedgerEntry && metadata == other.metadata && id == other.id && ledgerSequenceNumber == other.ledgerSequenceNumber && entryStatus == other.entryStatus && customer == other.customer && startingBalance == other.startingBalance && endingBalance == other.endingBalance && amount == other.amount && currency == other.currency && createdAt == other.createdAt && description == other.description && creditBlock == other.creditBlock && entryType == other.entryType && newBlockExpiryDate == other.newBlockExpiryDate && voidReason == other.voidReason && voidAmount == other.voidAmount && additionalProperties == other.additionalProperties /* spotless:on */
+            return /* spotless:off */ other is VoidInitiatedLedgerEntry && id == other.id && amount == other.amount && createdAt == other.createdAt && creditBlock == other.creditBlock && currency == other.currency && customer == other.customer && description == other.description && endingBalance == other.endingBalance && entryStatus == other.entryStatus && entryType == other.entryType && ledgerSequenceNumber == other.ledgerSequenceNumber && metadata == other.metadata && newBlockExpiryDate == other.newBlockExpiryDate && startingBalance == other.startingBalance && voidAmount == other.voidAmount && voidReason == other.voidReason && additionalProperties == other.additionalProperties /* spotless:on */
         }
 
         /* spotless:off */
-        private val hashCode: Int by lazy { Objects.hash(metadata, id, ledgerSequenceNumber, entryStatus, customer, startingBalance, endingBalance, amount, currency, createdAt, description, creditBlock, entryType, newBlockExpiryDate, voidReason, voidAmount, additionalProperties) }
+        private val hashCode: Int by lazy { Objects.hash(id, amount, createdAt, creditBlock, currency, customer, description, endingBalance, entryStatus, entryType, ledgerSequenceNumber, metadata, newBlockExpiryDate, startingBalance, voidAmount, voidReason, additionalProperties) }
         /* spotless:on */
 
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "VoidInitiatedLedgerEntry{metadata=$metadata, id=$id, ledgerSequenceNumber=$ledgerSequenceNumber, entryStatus=$entryStatus, customer=$customer, startingBalance=$startingBalance, endingBalance=$endingBalance, amount=$amount, currency=$currency, createdAt=$createdAt, description=$description, creditBlock=$creditBlock, entryType=$entryType, newBlockExpiryDate=$newBlockExpiryDate, voidReason=$voidReason, voidAmount=$voidAmount, additionalProperties=$additionalProperties}"
+            "VoidInitiatedLedgerEntry{id=$id, amount=$amount, createdAt=$createdAt, creditBlock=$creditBlock, currency=$currency, customer=$customer, description=$description, endingBalance=$endingBalance, entryStatus=$entryStatus, entryType=$entryType, ledgerSequenceNumber=$ledgerSequenceNumber, metadata=$metadata, newBlockExpiryDate=$newBlockExpiryDate, startingBalance=$startingBalance, voidAmount=$voidAmount, voidReason=$voidReason, additionalProperties=$additionalProperties}"
     }
 
     @NoAutoDetect
     class AmendmentLedgerEntry
     @JsonCreator
     private constructor(
-        @JsonProperty("metadata")
-        @ExcludeMissing
-        private val metadata: JsonField<Metadata> = JsonMissing.of(),
         @JsonProperty("id") @ExcludeMissing private val id: JsonField<String> = JsonMissing.of(),
-        @JsonProperty("ledger_sequence_number")
-        @ExcludeMissing
-        private val ledgerSequenceNumber: JsonField<Long> = JsonMissing.of(),
-        @JsonProperty("entry_status")
-        @ExcludeMissing
-        private val entryStatus: JsonField<EntryStatus> = JsonMissing.of(),
-        @JsonProperty("customer")
-        @ExcludeMissing
-        private val customer: JsonField<Customer> = JsonMissing.of(),
-        @JsonProperty("starting_balance")
-        @ExcludeMissing
-        private val startingBalance: JsonField<Double> = JsonMissing.of(),
-        @JsonProperty("ending_balance")
-        @ExcludeMissing
-        private val endingBalance: JsonField<Double> = JsonMissing.of(),
         @JsonProperty("amount")
         @ExcludeMissing
         private val amount: JsonField<Double> = JsonMissing.of(),
-        @JsonProperty("currency")
-        @ExcludeMissing
-        private val currency: JsonField<String> = JsonMissing.of(),
         @JsonProperty("created_at")
         @ExcludeMissing
         private val createdAt: JsonField<OffsetDateTime> = JsonMissing.of(),
-        @JsonProperty("description")
-        @ExcludeMissing
-        private val description: JsonField<String> = JsonMissing.of(),
         @JsonProperty("credit_block")
         @ExcludeMissing
         private val creditBlock: JsonField<CreditBlock> = JsonMissing.of(),
+        @JsonProperty("currency")
+        @ExcludeMissing
+        private val currency: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("customer")
+        @ExcludeMissing
+        private val customer: JsonField<Customer> = JsonMissing.of(),
+        @JsonProperty("description")
+        @ExcludeMissing
+        private val description: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("ending_balance")
+        @ExcludeMissing
+        private val endingBalance: JsonField<Double> = JsonMissing.of(),
+        @JsonProperty("entry_status")
+        @ExcludeMissing
+        private val entryStatus: JsonField<EntryStatus> = JsonMissing.of(),
         @JsonProperty("entry_type")
         @ExcludeMissing
         private val entryType: JsonField<EntryType> = JsonMissing.of(),
+        @JsonProperty("ledger_sequence_number")
+        @ExcludeMissing
+        private val ledgerSequenceNumber: JsonField<Long> = JsonMissing.of(),
+        @JsonProperty("metadata")
+        @ExcludeMissing
+        private val metadata: JsonField<Metadata> = JsonMissing.of(),
+        @JsonProperty("starting_balance")
+        @ExcludeMissing
+        private val startingBalance: JsonField<Double> = JsonMissing.of(),
         @JsonAnySetter
         private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
+
+        fun id(): String = id.getRequired("id")
+
+        fun amount(): Double = amount.getRequired("amount")
+
+        fun createdAt(): OffsetDateTime = createdAt.getRequired("created_at")
+
+        fun creditBlock(): CreditBlock = creditBlock.getRequired("credit_block")
+
+        fun currency(): String = currency.getRequired("currency")
+
+        fun customer(): Customer = customer.getRequired("customer")
+
+        fun description(): String? = description.getNullable("description")
+
+        fun endingBalance(): Double = endingBalance.getRequired("ending_balance")
+
+        fun entryStatus(): EntryStatus = entryStatus.getRequired("entry_status")
+
+        fun entryType(): EntryType = entryType.getRequired("entry_type")
+
+        fun ledgerSequenceNumber(): Long =
+            ledgerSequenceNumber.getRequired("ledger_sequence_number")
 
         /**
          * User specified key-value pairs for the resource. If not present, this defaults to an
@@ -5059,30 +5082,31 @@ private constructor(
          */
         fun metadata(): Metadata = metadata.getRequired("metadata")
 
-        fun id(): String = id.getRequired("id")
-
-        fun ledgerSequenceNumber(): Long =
-            ledgerSequenceNumber.getRequired("ledger_sequence_number")
-
-        fun entryStatus(): EntryStatus = entryStatus.getRequired("entry_status")
-
-        fun customer(): Customer = customer.getRequired("customer")
-
         fun startingBalance(): Double = startingBalance.getRequired("starting_balance")
 
-        fun endingBalance(): Double = endingBalance.getRequired("ending_balance")
+        @JsonProperty("id") @ExcludeMissing fun _id() = id
 
-        fun amount(): Double = amount.getRequired("amount")
+        @JsonProperty("amount") @ExcludeMissing fun _amount() = amount
 
-        fun currency(): String = currency.getRequired("currency")
+        @JsonProperty("created_at") @ExcludeMissing fun _createdAt() = createdAt
 
-        fun createdAt(): OffsetDateTime = createdAt.getRequired("created_at")
+        @JsonProperty("credit_block") @ExcludeMissing fun _creditBlock() = creditBlock
 
-        fun description(): String? = description.getNullable("description")
+        @JsonProperty("currency") @ExcludeMissing fun _currency() = currency
 
-        fun creditBlock(): CreditBlock = creditBlock.getRequired("credit_block")
+        @JsonProperty("customer") @ExcludeMissing fun _customer() = customer
 
-        fun entryType(): EntryType = entryType.getRequired("entry_type")
+        @JsonProperty("description") @ExcludeMissing fun _description() = description
+
+        @JsonProperty("ending_balance") @ExcludeMissing fun _endingBalance() = endingBalance
+
+        @JsonProperty("entry_status") @ExcludeMissing fun _entryStatus() = entryStatus
+
+        @JsonProperty("entry_type") @ExcludeMissing fun _entryType() = entryType
+
+        @JsonProperty("ledger_sequence_number")
+        @ExcludeMissing
+        fun _ledgerSequenceNumber() = ledgerSequenceNumber
 
         /**
          * User specified key-value pairs for the resource. If not present, this defaults to an
@@ -5091,31 +5115,7 @@ private constructor(
          */
         @JsonProperty("metadata") @ExcludeMissing fun _metadata() = metadata
 
-        @JsonProperty("id") @ExcludeMissing fun _id() = id
-
-        @JsonProperty("ledger_sequence_number")
-        @ExcludeMissing
-        fun _ledgerSequenceNumber() = ledgerSequenceNumber
-
-        @JsonProperty("entry_status") @ExcludeMissing fun _entryStatus() = entryStatus
-
-        @JsonProperty("customer") @ExcludeMissing fun _customer() = customer
-
         @JsonProperty("starting_balance") @ExcludeMissing fun _startingBalance() = startingBalance
-
-        @JsonProperty("ending_balance") @ExcludeMissing fun _endingBalance() = endingBalance
-
-        @JsonProperty("amount") @ExcludeMissing fun _amount() = amount
-
-        @JsonProperty("currency") @ExcludeMissing fun _currency() = currency
-
-        @JsonProperty("created_at") @ExcludeMissing fun _createdAt() = createdAt
-
-        @JsonProperty("description") @ExcludeMissing fun _description() = description
-
-        @JsonProperty("credit_block") @ExcludeMissing fun _creditBlock() = creditBlock
-
-        @JsonProperty("entry_type") @ExcludeMissing fun _entryType() = entryType
 
         @JsonAnyGetter
         @ExcludeMissing
@@ -5125,19 +5125,19 @@ private constructor(
 
         fun validate(): AmendmentLedgerEntry = apply {
             if (!validated) {
-                metadata().validate()
                 id()
-                ledgerSequenceNumber()
-                entryStatus()
-                customer().validate()
-                startingBalance()
-                endingBalance()
                 amount()
-                currency()
                 createdAt()
-                description()
                 creditBlock().validate()
+                currency()
+                customer().validate()
+                description()
+                endingBalance()
+                entryStatus()
                 entryType()
+                ledgerSequenceNumber()
+                metadata().validate()
+                startingBalance()
                 validated = true
             }
         }
@@ -5151,36 +5151,93 @@ private constructor(
 
         class Builder {
 
-            private var metadata: JsonField<Metadata> = JsonMissing.of()
             private var id: JsonField<String> = JsonMissing.of()
-            private var ledgerSequenceNumber: JsonField<Long> = JsonMissing.of()
-            private var entryStatus: JsonField<EntryStatus> = JsonMissing.of()
-            private var customer: JsonField<Customer> = JsonMissing.of()
-            private var startingBalance: JsonField<Double> = JsonMissing.of()
-            private var endingBalance: JsonField<Double> = JsonMissing.of()
             private var amount: JsonField<Double> = JsonMissing.of()
-            private var currency: JsonField<String> = JsonMissing.of()
             private var createdAt: JsonField<OffsetDateTime> = JsonMissing.of()
-            private var description: JsonField<String> = JsonMissing.of()
             private var creditBlock: JsonField<CreditBlock> = JsonMissing.of()
+            private var currency: JsonField<String> = JsonMissing.of()
+            private var customer: JsonField<Customer> = JsonMissing.of()
+            private var description: JsonField<String> = JsonMissing.of()
+            private var endingBalance: JsonField<Double> = JsonMissing.of()
+            private var entryStatus: JsonField<EntryStatus> = JsonMissing.of()
             private var entryType: JsonField<EntryType> = JsonMissing.of()
+            private var ledgerSequenceNumber: JsonField<Long> = JsonMissing.of()
+            private var metadata: JsonField<Metadata> = JsonMissing.of()
+            private var startingBalance: JsonField<Double> = JsonMissing.of()
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             internal fun from(amendmentLedgerEntry: AmendmentLedgerEntry) = apply {
-                metadata = amendmentLedgerEntry.metadata
                 id = amendmentLedgerEntry.id
-                ledgerSequenceNumber = amendmentLedgerEntry.ledgerSequenceNumber
-                entryStatus = amendmentLedgerEntry.entryStatus
-                customer = amendmentLedgerEntry.customer
-                startingBalance = amendmentLedgerEntry.startingBalance
-                endingBalance = amendmentLedgerEntry.endingBalance
                 amount = amendmentLedgerEntry.amount
-                currency = amendmentLedgerEntry.currency
                 createdAt = amendmentLedgerEntry.createdAt
-                description = amendmentLedgerEntry.description
                 creditBlock = amendmentLedgerEntry.creditBlock
+                currency = amendmentLedgerEntry.currency
+                customer = amendmentLedgerEntry.customer
+                description = amendmentLedgerEntry.description
+                endingBalance = amendmentLedgerEntry.endingBalance
+                entryStatus = amendmentLedgerEntry.entryStatus
                 entryType = amendmentLedgerEntry.entryType
+                ledgerSequenceNumber = amendmentLedgerEntry.ledgerSequenceNumber
+                metadata = amendmentLedgerEntry.metadata
+                startingBalance = amendmentLedgerEntry.startingBalance
                 additionalProperties = amendmentLedgerEntry.additionalProperties.toMutableMap()
+            }
+
+            fun id(id: String) = id(JsonField.of(id))
+
+            fun id(id: JsonField<String>) = apply { this.id = id }
+
+            fun amount(amount: Double) = amount(JsonField.of(amount))
+
+            fun amount(amount: JsonField<Double>) = apply { this.amount = amount }
+
+            fun createdAt(createdAt: OffsetDateTime) = createdAt(JsonField.of(createdAt))
+
+            fun createdAt(createdAt: JsonField<OffsetDateTime>) = apply {
+                this.createdAt = createdAt
+            }
+
+            fun creditBlock(creditBlock: CreditBlock) = creditBlock(JsonField.of(creditBlock))
+
+            fun creditBlock(creditBlock: JsonField<CreditBlock>) = apply {
+                this.creditBlock = creditBlock
+            }
+
+            fun currency(currency: String) = currency(JsonField.of(currency))
+
+            fun currency(currency: JsonField<String>) = apply { this.currency = currency }
+
+            fun customer(customer: Customer) = customer(JsonField.of(customer))
+
+            fun customer(customer: JsonField<Customer>) = apply { this.customer = customer }
+
+            fun description(description: String) = description(JsonField.of(description))
+
+            fun description(description: JsonField<String>) = apply {
+                this.description = description
+            }
+
+            fun endingBalance(endingBalance: Double) = endingBalance(JsonField.of(endingBalance))
+
+            fun endingBalance(endingBalance: JsonField<Double>) = apply {
+                this.endingBalance = endingBalance
+            }
+
+            fun entryStatus(entryStatus: EntryStatus) = entryStatus(JsonField.of(entryStatus))
+
+            fun entryStatus(entryStatus: JsonField<EntryStatus>) = apply {
+                this.entryStatus = entryStatus
+            }
+
+            fun entryType(entryType: EntryType) = entryType(JsonField.of(entryType))
+
+            fun entryType(entryType: JsonField<EntryType>) = apply { this.entryType = entryType }
+
+            fun ledgerSequenceNumber(ledgerSequenceNumber: Long) =
+                ledgerSequenceNumber(JsonField.of(ledgerSequenceNumber))
+
+            fun ledgerSequenceNumber(ledgerSequenceNumber: JsonField<Long>) = apply {
+                this.ledgerSequenceNumber = ledgerSequenceNumber
             }
 
             /**
@@ -5197,69 +5254,12 @@ private constructor(
              */
             fun metadata(metadata: JsonField<Metadata>) = apply { this.metadata = metadata }
 
-            fun id(id: String) = id(JsonField.of(id))
-
-            fun id(id: JsonField<String>) = apply { this.id = id }
-
-            fun ledgerSequenceNumber(ledgerSequenceNumber: Long) =
-                ledgerSequenceNumber(JsonField.of(ledgerSequenceNumber))
-
-            fun ledgerSequenceNumber(ledgerSequenceNumber: JsonField<Long>) = apply {
-                this.ledgerSequenceNumber = ledgerSequenceNumber
-            }
-
-            fun entryStatus(entryStatus: EntryStatus) = entryStatus(JsonField.of(entryStatus))
-
-            fun entryStatus(entryStatus: JsonField<EntryStatus>) = apply {
-                this.entryStatus = entryStatus
-            }
-
-            fun customer(customer: Customer) = customer(JsonField.of(customer))
-
-            fun customer(customer: JsonField<Customer>) = apply { this.customer = customer }
-
             fun startingBalance(startingBalance: Double) =
                 startingBalance(JsonField.of(startingBalance))
 
             fun startingBalance(startingBalance: JsonField<Double>) = apply {
                 this.startingBalance = startingBalance
             }
-
-            fun endingBalance(endingBalance: Double) = endingBalance(JsonField.of(endingBalance))
-
-            fun endingBalance(endingBalance: JsonField<Double>) = apply {
-                this.endingBalance = endingBalance
-            }
-
-            fun amount(amount: Double) = amount(JsonField.of(amount))
-
-            fun amount(amount: JsonField<Double>) = apply { this.amount = amount }
-
-            fun currency(currency: String) = currency(JsonField.of(currency))
-
-            fun currency(currency: JsonField<String>) = apply { this.currency = currency }
-
-            fun createdAt(createdAt: OffsetDateTime) = createdAt(JsonField.of(createdAt))
-
-            fun createdAt(createdAt: JsonField<OffsetDateTime>) = apply {
-                this.createdAt = createdAt
-            }
-
-            fun description(description: String) = description(JsonField.of(description))
-
-            fun description(description: JsonField<String>) = apply {
-                this.description = description
-            }
-
-            fun creditBlock(creditBlock: CreditBlock) = creditBlock(JsonField.of(creditBlock))
-
-            fun creditBlock(creditBlock: JsonField<CreditBlock>) = apply {
-                this.creditBlock = creditBlock
-            }
-
-            fun entryType(entryType: EntryType) = entryType(JsonField.of(entryType))
-
-            fun entryType(entryType: JsonField<EntryType>) = apply { this.entryType = entryType }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
@@ -5282,19 +5282,19 @@ private constructor(
 
             fun build(): AmendmentLedgerEntry =
                 AmendmentLedgerEntry(
-                    metadata,
                     id,
-                    ledgerSequenceNumber,
-                    entryStatus,
-                    customer,
-                    startingBalance,
-                    endingBalance,
                     amount,
-                    currency,
                     createdAt,
-                    description,
                     creditBlock,
+                    currency,
+                    customer,
+                    description,
+                    endingBalance,
+                    entryStatus,
                     entryType,
+                    ledgerSequenceNumber,
+                    metadata,
+                    startingBalance,
                     additionalProperties.toImmutable(),
                 )
         }
@@ -5744,16 +5744,16 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is AmendmentLedgerEntry && metadata == other.metadata && id == other.id && ledgerSequenceNumber == other.ledgerSequenceNumber && entryStatus == other.entryStatus && customer == other.customer && startingBalance == other.startingBalance && endingBalance == other.endingBalance && amount == other.amount && currency == other.currency && createdAt == other.createdAt && description == other.description && creditBlock == other.creditBlock && entryType == other.entryType && additionalProperties == other.additionalProperties /* spotless:on */
+            return /* spotless:off */ other is AmendmentLedgerEntry && id == other.id && amount == other.amount && createdAt == other.createdAt && creditBlock == other.creditBlock && currency == other.currency && customer == other.customer && description == other.description && endingBalance == other.endingBalance && entryStatus == other.entryStatus && entryType == other.entryType && ledgerSequenceNumber == other.ledgerSequenceNumber && metadata == other.metadata && startingBalance == other.startingBalance && additionalProperties == other.additionalProperties /* spotless:on */
         }
 
         /* spotless:off */
-        private val hashCode: Int by lazy { Objects.hash(metadata, id, ledgerSequenceNumber, entryStatus, customer, startingBalance, endingBalance, amount, currency, createdAt, description, creditBlock, entryType, additionalProperties) }
+        private val hashCode: Int by lazy { Objects.hash(id, amount, createdAt, creditBlock, currency, customer, description, endingBalance, entryStatus, entryType, ledgerSequenceNumber, metadata, startingBalance, additionalProperties) }
         /* spotless:on */
 
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "AmendmentLedgerEntry{metadata=$metadata, id=$id, ledgerSequenceNumber=$ledgerSequenceNumber, entryStatus=$entryStatus, customer=$customer, startingBalance=$startingBalance, endingBalance=$endingBalance, amount=$amount, currency=$currency, createdAt=$createdAt, description=$description, creditBlock=$creditBlock, entryType=$entryType, additionalProperties=$additionalProperties}"
+            "AmendmentLedgerEntry{id=$id, amount=$amount, createdAt=$createdAt, creditBlock=$creditBlock, currency=$currency, customer=$customer, description=$description, endingBalance=$endingBalance, entryStatus=$entryStatus, entryType=$entryType, ledgerSequenceNumber=$ledgerSequenceNumber, metadata=$metadata, startingBalance=$startingBalance, additionalProperties=$additionalProperties}"
     }
 }

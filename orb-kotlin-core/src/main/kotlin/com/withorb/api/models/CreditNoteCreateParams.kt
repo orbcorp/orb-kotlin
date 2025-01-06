@@ -309,17 +309,17 @@ constructor(
     class LineItem
     @JsonCreator
     private constructor(
-        @JsonProperty("invoice_line_item_id") private val invoiceLineItemId: String,
         @JsonProperty("amount") private val amount: String,
+        @JsonProperty("invoice_line_item_id") private val invoiceLineItemId: String,
         @JsonAnySetter
         private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
 
-        /** The ID of the line item to credit. */
-        @JsonProperty("invoice_line_item_id") fun invoiceLineItemId(): String = invoiceLineItemId
-
         /** The total amount in the invoice's currency to credit this line item. */
         @JsonProperty("amount") fun amount(): String = amount
+
+        /** The ID of the line item to credit. */
+        @JsonProperty("invoice_line_item_id") fun invoiceLineItemId(): String = invoiceLineItemId
 
         @JsonAnyGetter
         @ExcludeMissing
@@ -334,23 +334,23 @@ constructor(
 
         class Builder {
 
-            private var invoiceLineItemId: String? = null
             private var amount: String? = null
+            private var invoiceLineItemId: String? = null
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             internal fun from(lineItem: LineItem) = apply {
-                invoiceLineItemId = lineItem.invoiceLineItemId
                 amount = lineItem.amount
+                invoiceLineItemId = lineItem.invoiceLineItemId
                 additionalProperties = lineItem.additionalProperties.toMutableMap()
             }
+
+            /** The total amount in the invoice's currency to credit this line item. */
+            fun amount(amount: String) = apply { this.amount = amount }
 
             /** The ID of the line item to credit. */
             fun invoiceLineItemId(invoiceLineItemId: String) = apply {
                 this.invoiceLineItemId = invoiceLineItemId
             }
-
-            /** The total amount in the invoice's currency to credit this line item. */
-            fun amount(amount: String) = apply { this.amount = amount }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
@@ -373,10 +373,10 @@ constructor(
 
             fun build(): LineItem =
                 LineItem(
+                    checkNotNull(amount) { "`amount` is required but was not set" },
                     checkNotNull(invoiceLineItemId) {
                         "`invoiceLineItemId` is required but was not set"
                     },
-                    checkNotNull(amount) { "`amount` is required but was not set" },
                     additionalProperties.toImmutable(),
                 )
         }
@@ -386,17 +386,17 @@ constructor(
                 return true
             }
 
-            return /* spotless:off */ other is LineItem && invoiceLineItemId == other.invoiceLineItemId && amount == other.amount && additionalProperties == other.additionalProperties /* spotless:on */
+            return /* spotless:off */ other is LineItem && amount == other.amount && invoiceLineItemId == other.invoiceLineItemId && additionalProperties == other.additionalProperties /* spotless:on */
         }
 
         /* spotless:off */
-        private val hashCode: Int by lazy { Objects.hash(invoiceLineItemId, amount, additionalProperties) }
+        private val hashCode: Int by lazy { Objects.hash(amount, invoiceLineItemId, additionalProperties) }
         /* spotless:on */
 
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "LineItem{invoiceLineItemId=$invoiceLineItemId, amount=$amount, additionalProperties=$additionalProperties}"
+            "LineItem{amount=$amount, invoiceLineItemId=$invoiceLineItemId, additionalProperties=$additionalProperties}"
     }
 
     class Reason
