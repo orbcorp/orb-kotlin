@@ -95,8 +95,8 @@ constructor(
                 additionalProperties = itemUpdateBody.additionalProperties.toMutableMap()
             }
 
-            fun externalConnections(externalConnections: List<ExternalConnection>) = apply {
-                this.externalConnections = externalConnections.toMutableList()
+            fun externalConnections(externalConnections: List<ExternalConnection>?) = apply {
+                this.externalConnections = externalConnections?.toMutableList()
             }
 
             fun addExternalConnection(externalConnection: ExternalConnection) = apply {
@@ -104,7 +104,7 @@ constructor(
                     (externalConnections ?: mutableListOf()).apply { add(externalConnection) }
             }
 
-            fun name(name: String) = apply { this.name = name }
+            fun name(name: String?) = apply { this.name = name }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
@@ -175,7 +175,7 @@ constructor(
 
         fun itemId(itemId: String) = apply { this.itemId = itemId }
 
-        fun externalConnections(externalConnections: List<ExternalConnection>) = apply {
+        fun externalConnections(externalConnections: List<ExternalConnection>?) = apply {
             body.externalConnections(externalConnections)
         }
 
@@ -183,7 +183,7 @@ constructor(
             body.addExternalConnection(externalConnection)
         }
 
-        fun name(name: String) = apply { body.name(name) }
+        fun name(name: String?) = apply { body.name(name) }
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {
             this.additionalHeaders.clear()

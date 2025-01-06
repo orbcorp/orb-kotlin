@@ -126,7 +126,7 @@ constructor(
                 }
 
             /** A list of price intervals to add to the subscription. */
-            fun add(add: List<Add>) = apply { this.add = add.toMutableList() }
+            fun add(add: List<Add>?) = apply { this.add = add?.toMutableList() }
 
             /** A list of price intervals to add to the subscription. */
             fun addAdd(add: Add) = apply {
@@ -134,8 +134,8 @@ constructor(
             }
 
             /** A list of adjustments to add to the subscription. */
-            fun addAdjustments(addAdjustments: List<AddAdjustment>) = apply {
-                this.addAdjustments = addAdjustments.toMutableList()
+            fun addAdjustments(addAdjustments: List<AddAdjustment>?) = apply {
+                this.addAdjustments = addAdjustments?.toMutableList()
             }
 
             /** A list of adjustments to add to the subscription. */
@@ -144,7 +144,7 @@ constructor(
             }
 
             /** A list of price intervals to edit on the subscription. */
-            fun edit(edit: List<Edit>) = apply { this.edit = edit.toMutableList() }
+            fun edit(edit: List<Edit>?) = apply { this.edit = edit?.toMutableList() }
 
             /** A list of price intervals to edit on the subscription. */
             fun addEdit(edit: Edit) = apply {
@@ -152,8 +152,8 @@ constructor(
             }
 
             /** A list of adjustments to edit on the subscription. */
-            fun editAdjustments(editAdjustments: List<EditAdjustment>) = apply {
-                this.editAdjustments = editAdjustments.toMutableList()
+            fun editAdjustments(editAdjustments: List<EditAdjustment>?) = apply {
+                this.editAdjustments = editAdjustments?.toMutableList()
             }
 
             /** A list of adjustments to edit on the subscription. */
@@ -236,13 +236,13 @@ constructor(
         fun subscriptionId(subscriptionId: String) = apply { this.subscriptionId = subscriptionId }
 
         /** A list of price intervals to add to the subscription. */
-        fun add(add: List<Add>) = apply { body.add(add) }
+        fun add(add: List<Add>?) = apply { body.add(add) }
 
         /** A list of price intervals to add to the subscription. */
         fun addAdd(add: Add) = apply { body.addAdd(add) }
 
         /** A list of adjustments to add to the subscription. */
-        fun addAdjustments(addAdjustments: List<AddAdjustment>) = apply {
+        fun addAdjustments(addAdjustments: List<AddAdjustment>?) = apply {
             body.addAdjustments(addAdjustments)
         }
 
@@ -252,13 +252,13 @@ constructor(
         }
 
         /** A list of price intervals to edit on the subscription. */
-        fun edit(edit: List<Edit>) = apply { body.edit(edit) }
+        fun edit(edit: List<Edit>?) = apply { body.edit(edit) }
 
         /** A list of price intervals to edit on the subscription. */
         fun addEdit(edit: Edit) = apply { body.addEdit(edit) }
 
         /** A list of adjustments to edit on the subscription. */
-        fun editAdjustments(editAdjustments: List<EditAdjustment>) = apply {
+        fun editAdjustments(editAdjustments: List<EditAdjustment>?) = apply {
             body.editAdjustments(editAdjustments)
         }
 
@@ -510,13 +510,13 @@ constructor(
             }
 
             /** The definition of a new allocation price to create and add to the subscription. */
-            fun allocationPrice(allocationPrice: AllocationPrice) = apply {
+            fun allocationPrice(allocationPrice: AllocationPrice?) = apply {
                 this.allocationPrice = allocationPrice
             }
 
             /** A list of discounts to initialize on the price interval. */
-            fun discounts(discounts: List<Discount>) = apply {
-                this.discounts = discounts.toMutableList()
+            fun discounts(discounts: List<Discount>?) = apply {
+                this.discounts = discounts?.toMutableList()
             }
 
             /** A list of discounts to initialize on the price interval. */
@@ -528,7 +528,7 @@ constructor(
              * The end date of the price interval. This is the date that the price will stop billing
              * on the subscription.
              */
-            fun endDate(endDate: EndDate) = apply { this.endDate = endDate }
+            fun endDate(endDate: EndDate?) = apply { this.endDate = endDate }
 
             fun endDate(dateTime: OffsetDateTime) = apply {
                 this.endDate = EndDate.ofDateTime(dateTime)
@@ -539,15 +539,15 @@ constructor(
             }
 
             /** The external price id of the price to add to the subscription. */
-            fun externalPriceId(externalPriceId: String) = apply {
+            fun externalPriceId(externalPriceId: String?) = apply {
                 this.externalPriceId = externalPriceId
             }
 
             /** A list of fixed fee quantity transitions to initialize on the price interval. */
             fun fixedFeeQuantityTransitions(
-                fixedFeeQuantityTransitions: List<FixedFeeQuantityTransition>
+                fixedFeeQuantityTransitions: List<FixedFeeQuantityTransition>?
             ) = apply {
-                this.fixedFeeQuantityTransitions = fixedFeeQuantityTransitions.toMutableList()
+                this.fixedFeeQuantityTransitions = fixedFeeQuantityTransitions?.toMutableList()
             }
 
             /** A list of fixed fee quantity transitions to initialize on the price interval. */
@@ -564,16 +564,28 @@ constructor(
              * The maximum amount that will be billed for this price interval for a given billing
              * period.
              */
-            fun maximumAmount(maximumAmount: Double) = apply { this.maximumAmount = maximumAmount }
+            fun maximumAmount(maximumAmount: Double?) = apply { this.maximumAmount = maximumAmount }
+
+            /**
+             * The maximum amount that will be billed for this price interval for a given billing
+             * period.
+             */
+            fun maximumAmount(maximumAmount: Double) = maximumAmount(maximumAmount as Double?)
 
             /**
              * The minimum amount that will be billed for this price interval for a given billing
              * period.
              */
-            fun minimumAmount(minimumAmount: Double) = apply { this.minimumAmount = minimumAmount }
+            fun minimumAmount(minimumAmount: Double?) = apply { this.minimumAmount = minimumAmount }
+
+            /**
+             * The minimum amount that will be billed for this price interval for a given billing
+             * period.
+             */
+            fun minimumAmount(minimumAmount: Double) = minimumAmount(minimumAmount as Double?)
 
             /** The definition of a new price to create and add to the subscription. */
-            fun price(price: Price) = apply { this.price = price }
+            fun price(price: Price?) = apply { this.price = price }
 
             fun price(newFloatingUnitPrice: Price.NewFloatingUnitPrice) = apply {
                 this.price = Price.ofNewFloatingUnitPrice(newFloatingUnitPrice)
@@ -728,7 +740,7 @@ constructor(
             }
 
             /** The id of the price to add to the subscription. */
-            fun priceId(priceId: String) = apply { this.priceId = priceId }
+            fun priceId(priceId: String?) = apply { this.priceId = priceId }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
@@ -3029,7 +3041,7 @@ constructor(
                      * The id of the billable metric for the price. Only needed if the price is
                      * usage-based.
                      */
-                    fun billableMetricId(billableMetricId: String) = apply {
+                    fun billableMetricId(billableMetricId: String?) = apply {
                         this.billableMetricId = billableMetricId
                     }
 
@@ -3037,27 +3049,40 @@ constructor(
                      * If the Price represents a fixed cost, the price will be billed in-advance if
                      * this is true, and in-arrears if this is false.
                      */
-                    fun billedInAdvance(billedInAdvance: Boolean) = apply {
+                    fun billedInAdvance(billedInAdvance: Boolean?) = apply {
                         this.billedInAdvance = billedInAdvance
                     }
+
+                    /**
+                     * If the Price represents a fixed cost, the price will be billed in-advance if
+                     * this is true, and in-arrears if this is false.
+                     */
+                    fun billedInAdvance(billedInAdvance: Boolean) =
+                        billedInAdvance(billedInAdvance as Boolean?)
 
                     /**
                      * For custom cadence: specifies the duration of the billing period in days or
                      * months.
                      */
                     fun billingCycleConfiguration(
-                        billingCycleConfiguration: BillingCycleConfiguration
+                        billingCycleConfiguration: BillingCycleConfiguration?
                     ) = apply { this.billingCycleConfiguration = billingCycleConfiguration }
 
                     /**
                      * The per unit conversion rate of the price currency to the invoicing currency.
                      */
-                    fun conversionRate(conversionRate: Double) = apply {
+                    fun conversionRate(conversionRate: Double?) = apply {
                         this.conversionRate = conversionRate
                     }
 
+                    /**
+                     * The per unit conversion rate of the price currency to the invoicing currency.
+                     */
+                    fun conversionRate(conversionRate: Double) =
+                        conversionRate(conversionRate as Double?)
+
                     /** An alias for the price. */
-                    fun externalPriceId(externalPriceId: String) = apply {
+                    fun externalPriceId(externalPriceId: String?) = apply {
                         this.externalPriceId = externalPriceId
                     }
 
@@ -3065,12 +3090,19 @@ constructor(
                      * If the Price represents a fixed cost, this represents the quantity of units
                      * applied.
                      */
-                    fun fixedPriceQuantity(fixedPriceQuantity: Double) = apply {
+                    fun fixedPriceQuantity(fixedPriceQuantity: Double?) = apply {
                         this.fixedPriceQuantity = fixedPriceQuantity
                     }
 
+                    /**
+                     * If the Price represents a fixed cost, this represents the quantity of units
+                     * applied.
+                     */
+                    fun fixedPriceQuantity(fixedPriceQuantity: Double) =
+                        fixedPriceQuantity(fixedPriceQuantity as Double?)
+
                     /** The property used to group this price on an invoice */
-                    fun invoiceGroupingKey(invoiceGroupingKey: String) = apply {
+                    fun invoiceGroupingKey(invoiceGroupingKey: String?) = apply {
                         this.invoiceGroupingKey = invoiceGroupingKey
                     }
 
@@ -3079,7 +3111,7 @@ constructor(
                      * produced. If unspecified, a single invoice is produced per billing cycle.
                      */
                     fun invoicingCycleConfiguration(
-                        invoicingCycleConfiguration: InvoicingCycleConfiguration
+                        invoicingCycleConfiguration: InvoicingCycleConfiguration?
                     ) = apply { this.invoicingCycleConfiguration = invoicingCycleConfiguration }
 
                     /**
@@ -3087,7 +3119,7 @@ constructor(
                      * removed by setting the value to `null`, and the entire metadata mapping can
                      * be cleared by setting `metadata` to `null`.
                      */
-                    fun metadata(metadata: Metadata) = apply { this.metadata = metadata }
+                    fun metadata(metadata: Metadata?) = apply { this.metadata = metadata }
 
                     fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                         this.additionalProperties.clear()
@@ -3940,7 +3972,7 @@ constructor(
                      * The id of the billable metric for the price. Only needed if the price is
                      * usage-based.
                      */
-                    fun billableMetricId(billableMetricId: String) = apply {
+                    fun billableMetricId(billableMetricId: String?) = apply {
                         this.billableMetricId = billableMetricId
                     }
 
@@ -3948,27 +3980,40 @@ constructor(
                      * If the Price represents a fixed cost, the price will be billed in-advance if
                      * this is true, and in-arrears if this is false.
                      */
-                    fun billedInAdvance(billedInAdvance: Boolean) = apply {
+                    fun billedInAdvance(billedInAdvance: Boolean?) = apply {
                         this.billedInAdvance = billedInAdvance
                     }
+
+                    /**
+                     * If the Price represents a fixed cost, the price will be billed in-advance if
+                     * this is true, and in-arrears if this is false.
+                     */
+                    fun billedInAdvance(billedInAdvance: Boolean) =
+                        billedInAdvance(billedInAdvance as Boolean?)
 
                     /**
                      * For custom cadence: specifies the duration of the billing period in days or
                      * months.
                      */
                     fun billingCycleConfiguration(
-                        billingCycleConfiguration: BillingCycleConfiguration
+                        billingCycleConfiguration: BillingCycleConfiguration?
                     ) = apply { this.billingCycleConfiguration = billingCycleConfiguration }
 
                     /**
                      * The per unit conversion rate of the price currency to the invoicing currency.
                      */
-                    fun conversionRate(conversionRate: Double) = apply {
+                    fun conversionRate(conversionRate: Double?) = apply {
                         this.conversionRate = conversionRate
                     }
 
+                    /**
+                     * The per unit conversion rate of the price currency to the invoicing currency.
+                     */
+                    fun conversionRate(conversionRate: Double) =
+                        conversionRate(conversionRate as Double?)
+
                     /** An alias for the price. */
-                    fun externalPriceId(externalPriceId: String) = apply {
+                    fun externalPriceId(externalPriceId: String?) = apply {
                         this.externalPriceId = externalPriceId
                     }
 
@@ -3976,12 +4021,19 @@ constructor(
                      * If the Price represents a fixed cost, this represents the quantity of units
                      * applied.
                      */
-                    fun fixedPriceQuantity(fixedPriceQuantity: Double) = apply {
+                    fun fixedPriceQuantity(fixedPriceQuantity: Double?) = apply {
                         this.fixedPriceQuantity = fixedPriceQuantity
                     }
 
+                    /**
+                     * If the Price represents a fixed cost, this represents the quantity of units
+                     * applied.
+                     */
+                    fun fixedPriceQuantity(fixedPriceQuantity: Double) =
+                        fixedPriceQuantity(fixedPriceQuantity as Double?)
+
                     /** The property used to group this price on an invoice */
-                    fun invoiceGroupingKey(invoiceGroupingKey: String) = apply {
+                    fun invoiceGroupingKey(invoiceGroupingKey: String?) = apply {
                         this.invoiceGroupingKey = invoiceGroupingKey
                     }
 
@@ -3990,7 +4042,7 @@ constructor(
                      * produced. If unspecified, a single invoice is produced per billing cycle.
                      */
                     fun invoicingCycleConfiguration(
-                        invoicingCycleConfiguration: InvoicingCycleConfiguration
+                        invoicingCycleConfiguration: InvoicingCycleConfiguration?
                     ) = apply { this.invoicingCycleConfiguration = invoicingCycleConfiguration }
 
                     /**
@@ -3998,7 +4050,7 @@ constructor(
                      * removed by setting the value to `null`, and the entire metadata mapping can
                      * be cleared by setting `metadata` to `null`.
                      */
-                    fun metadata(metadata: Metadata) = apply { this.metadata = metadata }
+                    fun metadata(metadata: Metadata?) = apply { this.metadata = metadata }
 
                     fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                         this.additionalProperties.clear()
@@ -4874,7 +4926,7 @@ constructor(
                      * The id of the billable metric for the price. Only needed if the price is
                      * usage-based.
                      */
-                    fun billableMetricId(billableMetricId: String) = apply {
+                    fun billableMetricId(billableMetricId: String?) = apply {
                         this.billableMetricId = billableMetricId
                     }
 
@@ -4882,27 +4934,40 @@ constructor(
                      * If the Price represents a fixed cost, the price will be billed in-advance if
                      * this is true, and in-arrears if this is false.
                      */
-                    fun billedInAdvance(billedInAdvance: Boolean) = apply {
+                    fun billedInAdvance(billedInAdvance: Boolean?) = apply {
                         this.billedInAdvance = billedInAdvance
                     }
+
+                    /**
+                     * If the Price represents a fixed cost, the price will be billed in-advance if
+                     * this is true, and in-arrears if this is false.
+                     */
+                    fun billedInAdvance(billedInAdvance: Boolean) =
+                        billedInAdvance(billedInAdvance as Boolean?)
 
                     /**
                      * For custom cadence: specifies the duration of the billing period in days or
                      * months.
                      */
                     fun billingCycleConfiguration(
-                        billingCycleConfiguration: BillingCycleConfiguration
+                        billingCycleConfiguration: BillingCycleConfiguration?
                     ) = apply { this.billingCycleConfiguration = billingCycleConfiguration }
 
                     /**
                      * The per unit conversion rate of the price currency to the invoicing currency.
                      */
-                    fun conversionRate(conversionRate: Double) = apply {
+                    fun conversionRate(conversionRate: Double?) = apply {
                         this.conversionRate = conversionRate
                     }
 
+                    /**
+                     * The per unit conversion rate of the price currency to the invoicing currency.
+                     */
+                    fun conversionRate(conversionRate: Double) =
+                        conversionRate(conversionRate as Double?)
+
                     /** An alias for the price. */
-                    fun externalPriceId(externalPriceId: String) = apply {
+                    fun externalPriceId(externalPriceId: String?) = apply {
                         this.externalPriceId = externalPriceId
                     }
 
@@ -4910,12 +4975,19 @@ constructor(
                      * If the Price represents a fixed cost, this represents the quantity of units
                      * applied.
                      */
-                    fun fixedPriceQuantity(fixedPriceQuantity: Double) = apply {
+                    fun fixedPriceQuantity(fixedPriceQuantity: Double?) = apply {
                         this.fixedPriceQuantity = fixedPriceQuantity
                     }
 
+                    /**
+                     * If the Price represents a fixed cost, this represents the quantity of units
+                     * applied.
+                     */
+                    fun fixedPriceQuantity(fixedPriceQuantity: Double) =
+                        fixedPriceQuantity(fixedPriceQuantity as Double?)
+
                     /** The property used to group this price on an invoice */
-                    fun invoiceGroupingKey(invoiceGroupingKey: String) = apply {
+                    fun invoiceGroupingKey(invoiceGroupingKey: String?) = apply {
                         this.invoiceGroupingKey = invoiceGroupingKey
                     }
 
@@ -4924,7 +4996,7 @@ constructor(
                      * produced. If unspecified, a single invoice is produced per billing cycle.
                      */
                     fun invoicingCycleConfiguration(
-                        invoicingCycleConfiguration: InvoicingCycleConfiguration
+                        invoicingCycleConfiguration: InvoicingCycleConfiguration?
                     ) = apply { this.invoicingCycleConfiguration = invoicingCycleConfiguration }
 
                     /**
@@ -4932,7 +5004,7 @@ constructor(
                      * removed by setting the value to `null`, and the entire metadata mapping can
                      * be cleared by setting `metadata` to `null`.
                      */
-                    fun metadata(metadata: Metadata) = apply { this.metadata = metadata }
+                    fun metadata(metadata: Metadata?) = apply { this.metadata = metadata }
 
                     fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                         this.additionalProperties.clear()
@@ -5971,7 +6043,7 @@ constructor(
                      * The id of the billable metric for the price. Only needed if the price is
                      * usage-based.
                      */
-                    fun billableMetricId(billableMetricId: String) = apply {
+                    fun billableMetricId(billableMetricId: String?) = apply {
                         this.billableMetricId = billableMetricId
                     }
 
@@ -5979,27 +6051,40 @@ constructor(
                      * If the Price represents a fixed cost, the price will be billed in-advance if
                      * this is true, and in-arrears if this is false.
                      */
-                    fun billedInAdvance(billedInAdvance: Boolean) = apply {
+                    fun billedInAdvance(billedInAdvance: Boolean?) = apply {
                         this.billedInAdvance = billedInAdvance
                     }
+
+                    /**
+                     * If the Price represents a fixed cost, the price will be billed in-advance if
+                     * this is true, and in-arrears if this is false.
+                     */
+                    fun billedInAdvance(billedInAdvance: Boolean) =
+                        billedInAdvance(billedInAdvance as Boolean?)
 
                     /**
                      * For custom cadence: specifies the duration of the billing period in days or
                      * months.
                      */
                     fun billingCycleConfiguration(
-                        billingCycleConfiguration: BillingCycleConfiguration
+                        billingCycleConfiguration: BillingCycleConfiguration?
                     ) = apply { this.billingCycleConfiguration = billingCycleConfiguration }
 
                     /**
                      * The per unit conversion rate of the price currency to the invoicing currency.
                      */
-                    fun conversionRate(conversionRate: Double) = apply {
+                    fun conversionRate(conversionRate: Double?) = apply {
                         this.conversionRate = conversionRate
                     }
 
+                    /**
+                     * The per unit conversion rate of the price currency to the invoicing currency.
+                     */
+                    fun conversionRate(conversionRate: Double) =
+                        conversionRate(conversionRate as Double?)
+
                     /** An alias for the price. */
-                    fun externalPriceId(externalPriceId: String) = apply {
+                    fun externalPriceId(externalPriceId: String?) = apply {
                         this.externalPriceId = externalPriceId
                     }
 
@@ -6007,12 +6092,19 @@ constructor(
                      * If the Price represents a fixed cost, this represents the quantity of units
                      * applied.
                      */
-                    fun fixedPriceQuantity(fixedPriceQuantity: Double) = apply {
+                    fun fixedPriceQuantity(fixedPriceQuantity: Double?) = apply {
                         this.fixedPriceQuantity = fixedPriceQuantity
                     }
 
+                    /**
+                     * If the Price represents a fixed cost, this represents the quantity of units
+                     * applied.
+                     */
+                    fun fixedPriceQuantity(fixedPriceQuantity: Double) =
+                        fixedPriceQuantity(fixedPriceQuantity as Double?)
+
                     /** The property used to group this price on an invoice */
-                    fun invoiceGroupingKey(invoiceGroupingKey: String) = apply {
+                    fun invoiceGroupingKey(invoiceGroupingKey: String?) = apply {
                         this.invoiceGroupingKey = invoiceGroupingKey
                     }
 
@@ -6021,7 +6113,7 @@ constructor(
                      * produced. If unspecified, a single invoice is produced per billing cycle.
                      */
                     fun invoicingCycleConfiguration(
-                        invoicingCycleConfiguration: InvoicingCycleConfiguration
+                        invoicingCycleConfiguration: InvoicingCycleConfiguration?
                     ) = apply { this.invoicingCycleConfiguration = invoicingCycleConfiguration }
 
                     /**
@@ -6029,7 +6121,7 @@ constructor(
                      * removed by setting the value to `null`, and the entire metadata mapping can
                      * be cleared by setting `metadata` to `null`.
                      */
-                    fun metadata(metadata: Metadata) = apply { this.metadata = metadata }
+                    fun metadata(metadata: Metadata?) = apply { this.metadata = metadata }
 
                     fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                         this.additionalProperties.clear()
@@ -7076,7 +7168,7 @@ constructor(
                      * The id of the billable metric for the price. Only needed if the price is
                      * usage-based.
                      */
-                    fun billableMetricId(billableMetricId: String) = apply {
+                    fun billableMetricId(billableMetricId: String?) = apply {
                         this.billableMetricId = billableMetricId
                     }
 
@@ -7084,27 +7176,40 @@ constructor(
                      * If the Price represents a fixed cost, the price will be billed in-advance if
                      * this is true, and in-arrears if this is false.
                      */
-                    fun billedInAdvance(billedInAdvance: Boolean) = apply {
+                    fun billedInAdvance(billedInAdvance: Boolean?) = apply {
                         this.billedInAdvance = billedInAdvance
                     }
+
+                    /**
+                     * If the Price represents a fixed cost, the price will be billed in-advance if
+                     * this is true, and in-arrears if this is false.
+                     */
+                    fun billedInAdvance(billedInAdvance: Boolean) =
+                        billedInAdvance(billedInAdvance as Boolean?)
 
                     /**
                      * For custom cadence: specifies the duration of the billing period in days or
                      * months.
                      */
                     fun billingCycleConfiguration(
-                        billingCycleConfiguration: BillingCycleConfiguration
+                        billingCycleConfiguration: BillingCycleConfiguration?
                     ) = apply { this.billingCycleConfiguration = billingCycleConfiguration }
 
                     /**
                      * The per unit conversion rate of the price currency to the invoicing currency.
                      */
-                    fun conversionRate(conversionRate: Double) = apply {
+                    fun conversionRate(conversionRate: Double?) = apply {
                         this.conversionRate = conversionRate
                     }
 
+                    /**
+                     * The per unit conversion rate of the price currency to the invoicing currency.
+                     */
+                    fun conversionRate(conversionRate: Double) =
+                        conversionRate(conversionRate as Double?)
+
                     /** An alias for the price. */
-                    fun externalPriceId(externalPriceId: String) = apply {
+                    fun externalPriceId(externalPriceId: String?) = apply {
                         this.externalPriceId = externalPriceId
                     }
 
@@ -7112,12 +7217,19 @@ constructor(
                      * If the Price represents a fixed cost, this represents the quantity of units
                      * applied.
                      */
-                    fun fixedPriceQuantity(fixedPriceQuantity: Double) = apply {
+                    fun fixedPriceQuantity(fixedPriceQuantity: Double?) = apply {
                         this.fixedPriceQuantity = fixedPriceQuantity
                     }
 
+                    /**
+                     * If the Price represents a fixed cost, this represents the quantity of units
+                     * applied.
+                     */
+                    fun fixedPriceQuantity(fixedPriceQuantity: Double) =
+                        fixedPriceQuantity(fixedPriceQuantity as Double?)
+
                     /** The property used to group this price on an invoice */
-                    fun invoiceGroupingKey(invoiceGroupingKey: String) = apply {
+                    fun invoiceGroupingKey(invoiceGroupingKey: String?) = apply {
                         this.invoiceGroupingKey = invoiceGroupingKey
                     }
 
@@ -7126,7 +7238,7 @@ constructor(
                      * produced. If unspecified, a single invoice is produced per billing cycle.
                      */
                     fun invoicingCycleConfiguration(
-                        invoicingCycleConfiguration: InvoicingCycleConfiguration
+                        invoicingCycleConfiguration: InvoicingCycleConfiguration?
                     ) = apply { this.invoicingCycleConfiguration = invoicingCycleConfiguration }
 
                     /**
@@ -7134,7 +7246,7 @@ constructor(
                      * removed by setting the value to `null`, and the entire metadata mapping can
                      * be cleared by setting `metadata` to `null`.
                      */
-                    fun metadata(metadata: Metadata) = apply { this.metadata = metadata }
+                    fun metadata(metadata: Metadata?) = apply { this.metadata = metadata }
 
                     fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                         this.additionalProperties.clear()
@@ -7452,7 +7564,13 @@ constructor(
                              * Exclusive tier ending value. If null, this is treated as the last
                              * tier
                              */
-                            fun lastUnit(lastUnit: Double) = apply { this.lastUnit = lastUnit }
+                            fun lastUnit(lastUnit: Double?) = apply { this.lastUnit = lastUnit }
+
+                            /**
+                             * Exclusive tier ending value. If null, this is treated as the last
+                             * tier
+                             */
+                            fun lastUnit(lastUnit: Double) = lastUnit(lastUnit as Double?)
 
                             fun additionalProperties(additionalProperties: Map<String, JsonValue>) =
                                 apply {
@@ -8115,7 +8233,7 @@ constructor(
                      * The id of the billable metric for the price. Only needed if the price is
                      * usage-based.
                      */
-                    fun billableMetricId(billableMetricId: String) = apply {
+                    fun billableMetricId(billableMetricId: String?) = apply {
                         this.billableMetricId = billableMetricId
                     }
 
@@ -8123,27 +8241,40 @@ constructor(
                      * If the Price represents a fixed cost, the price will be billed in-advance if
                      * this is true, and in-arrears if this is false.
                      */
-                    fun billedInAdvance(billedInAdvance: Boolean) = apply {
+                    fun billedInAdvance(billedInAdvance: Boolean?) = apply {
                         this.billedInAdvance = billedInAdvance
                     }
+
+                    /**
+                     * If the Price represents a fixed cost, the price will be billed in-advance if
+                     * this is true, and in-arrears if this is false.
+                     */
+                    fun billedInAdvance(billedInAdvance: Boolean) =
+                        billedInAdvance(billedInAdvance as Boolean?)
 
                     /**
                      * For custom cadence: specifies the duration of the billing period in days or
                      * months.
                      */
                     fun billingCycleConfiguration(
-                        billingCycleConfiguration: BillingCycleConfiguration
+                        billingCycleConfiguration: BillingCycleConfiguration?
                     ) = apply { this.billingCycleConfiguration = billingCycleConfiguration }
 
                     /**
                      * The per unit conversion rate of the price currency to the invoicing currency.
                      */
-                    fun conversionRate(conversionRate: Double) = apply {
+                    fun conversionRate(conversionRate: Double?) = apply {
                         this.conversionRate = conversionRate
                     }
 
+                    /**
+                     * The per unit conversion rate of the price currency to the invoicing currency.
+                     */
+                    fun conversionRate(conversionRate: Double) =
+                        conversionRate(conversionRate as Double?)
+
                     /** An alias for the price. */
-                    fun externalPriceId(externalPriceId: String) = apply {
+                    fun externalPriceId(externalPriceId: String?) = apply {
                         this.externalPriceId = externalPriceId
                     }
 
@@ -8151,12 +8282,19 @@ constructor(
                      * If the Price represents a fixed cost, this represents the quantity of units
                      * applied.
                      */
-                    fun fixedPriceQuantity(fixedPriceQuantity: Double) = apply {
+                    fun fixedPriceQuantity(fixedPriceQuantity: Double?) = apply {
                         this.fixedPriceQuantity = fixedPriceQuantity
                     }
 
+                    /**
+                     * If the Price represents a fixed cost, this represents the quantity of units
+                     * applied.
+                     */
+                    fun fixedPriceQuantity(fixedPriceQuantity: Double) =
+                        fixedPriceQuantity(fixedPriceQuantity as Double?)
+
                     /** The property used to group this price on an invoice */
-                    fun invoiceGroupingKey(invoiceGroupingKey: String) = apply {
+                    fun invoiceGroupingKey(invoiceGroupingKey: String?) = apply {
                         this.invoiceGroupingKey = invoiceGroupingKey
                     }
 
@@ -8165,7 +8303,7 @@ constructor(
                      * produced. If unspecified, a single invoice is produced per billing cycle.
                      */
                     fun invoicingCycleConfiguration(
-                        invoicingCycleConfiguration: InvoicingCycleConfiguration
+                        invoicingCycleConfiguration: InvoicingCycleConfiguration?
                     ) = apply { this.invoicingCycleConfiguration = invoicingCycleConfiguration }
 
                     /**
@@ -8173,7 +8311,7 @@ constructor(
                      * removed by setting the value to `null`, and the entire metadata mapping can
                      * be cleared by setting `metadata` to `null`.
                      */
-                    fun metadata(metadata: Metadata) = apply { this.metadata = metadata }
+                    fun metadata(metadata: Metadata?) = apply { this.metadata = metadata }
 
                     fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                         this.additionalProperties.clear()
@@ -8499,12 +8637,12 @@ constructor(
                             }
 
                             /** Exclusive tier ending value */
-                            fun maximumAmount(maximumAmount: String) = apply {
+                            fun maximumAmount(maximumAmount: String?) = apply {
                                 this.maximumAmount = maximumAmount
                             }
 
                             /** Per unit maximum to charge */
-                            fun perUnitMaximum(perUnitMaximum: String) = apply {
+                            fun perUnitMaximum(perUnitMaximum: String?) = apply {
                                 this.perUnitMaximum = perUnitMaximum
                             }
 
@@ -9163,7 +9301,7 @@ constructor(
                      * The id of the billable metric for the price. Only needed if the price is
                      * usage-based.
                      */
-                    fun billableMetricId(billableMetricId: String) = apply {
+                    fun billableMetricId(billableMetricId: String?) = apply {
                         this.billableMetricId = billableMetricId
                     }
 
@@ -9171,27 +9309,40 @@ constructor(
                      * If the Price represents a fixed cost, the price will be billed in-advance if
                      * this is true, and in-arrears if this is false.
                      */
-                    fun billedInAdvance(billedInAdvance: Boolean) = apply {
+                    fun billedInAdvance(billedInAdvance: Boolean?) = apply {
                         this.billedInAdvance = billedInAdvance
                     }
+
+                    /**
+                     * If the Price represents a fixed cost, the price will be billed in-advance if
+                     * this is true, and in-arrears if this is false.
+                     */
+                    fun billedInAdvance(billedInAdvance: Boolean) =
+                        billedInAdvance(billedInAdvance as Boolean?)
 
                     /**
                      * For custom cadence: specifies the duration of the billing period in days or
                      * months.
                      */
                     fun billingCycleConfiguration(
-                        billingCycleConfiguration: BillingCycleConfiguration
+                        billingCycleConfiguration: BillingCycleConfiguration?
                     ) = apply { this.billingCycleConfiguration = billingCycleConfiguration }
 
                     /**
                      * The per unit conversion rate of the price currency to the invoicing currency.
                      */
-                    fun conversionRate(conversionRate: Double) = apply {
+                    fun conversionRate(conversionRate: Double?) = apply {
                         this.conversionRate = conversionRate
                     }
 
+                    /**
+                     * The per unit conversion rate of the price currency to the invoicing currency.
+                     */
+                    fun conversionRate(conversionRate: Double) =
+                        conversionRate(conversionRate as Double?)
+
                     /** An alias for the price. */
-                    fun externalPriceId(externalPriceId: String) = apply {
+                    fun externalPriceId(externalPriceId: String?) = apply {
                         this.externalPriceId = externalPriceId
                     }
 
@@ -9199,12 +9350,19 @@ constructor(
                      * If the Price represents a fixed cost, this represents the quantity of units
                      * applied.
                      */
-                    fun fixedPriceQuantity(fixedPriceQuantity: Double) = apply {
+                    fun fixedPriceQuantity(fixedPriceQuantity: Double?) = apply {
                         this.fixedPriceQuantity = fixedPriceQuantity
                     }
 
+                    /**
+                     * If the Price represents a fixed cost, this represents the quantity of units
+                     * applied.
+                     */
+                    fun fixedPriceQuantity(fixedPriceQuantity: Double) =
+                        fixedPriceQuantity(fixedPriceQuantity as Double?)
+
                     /** The property used to group this price on an invoice */
-                    fun invoiceGroupingKey(invoiceGroupingKey: String) = apply {
+                    fun invoiceGroupingKey(invoiceGroupingKey: String?) = apply {
                         this.invoiceGroupingKey = invoiceGroupingKey
                     }
 
@@ -9213,7 +9371,7 @@ constructor(
                      * produced. If unspecified, a single invoice is produced per billing cycle.
                      */
                     fun invoicingCycleConfiguration(
-                        invoicingCycleConfiguration: InvoicingCycleConfiguration
+                        invoicingCycleConfiguration: InvoicingCycleConfiguration?
                     ) = apply { this.invoicingCycleConfiguration = invoicingCycleConfiguration }
 
                     /**
@@ -9221,7 +9379,7 @@ constructor(
                      * removed by setting the value to `null`, and the entire metadata mapping can
                      * be cleared by setting `metadata` to `null`.
                      */
-                    fun metadata(metadata: Metadata) = apply { this.metadata = metadata }
+                    fun metadata(metadata: Metadata?) = apply { this.metadata = metadata }
 
                     fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                         this.additionalProperties.clear()
@@ -9310,7 +9468,7 @@ constructor(
                         fun bps(bps: Double) = apply { this.bps = bps }
 
                         /** Optional currency amount maximum to cap spend per event */
-                        fun perUnitMaximum(perUnitMaximum: String) = apply {
+                        fun perUnitMaximum(perUnitMaximum: String?) = apply {
                             this.perUnitMaximum = perUnitMaximum
                         }
 
@@ -10084,7 +10242,7 @@ constructor(
                      * The id of the billable metric for the price. Only needed if the price is
                      * usage-based.
                      */
-                    fun billableMetricId(billableMetricId: String) = apply {
+                    fun billableMetricId(billableMetricId: String?) = apply {
                         this.billableMetricId = billableMetricId
                     }
 
@@ -10092,27 +10250,40 @@ constructor(
                      * If the Price represents a fixed cost, the price will be billed in-advance if
                      * this is true, and in-arrears if this is false.
                      */
-                    fun billedInAdvance(billedInAdvance: Boolean) = apply {
+                    fun billedInAdvance(billedInAdvance: Boolean?) = apply {
                         this.billedInAdvance = billedInAdvance
                     }
+
+                    /**
+                     * If the Price represents a fixed cost, the price will be billed in-advance if
+                     * this is true, and in-arrears if this is false.
+                     */
+                    fun billedInAdvance(billedInAdvance: Boolean) =
+                        billedInAdvance(billedInAdvance as Boolean?)
 
                     /**
                      * For custom cadence: specifies the duration of the billing period in days or
                      * months.
                      */
                     fun billingCycleConfiguration(
-                        billingCycleConfiguration: BillingCycleConfiguration
+                        billingCycleConfiguration: BillingCycleConfiguration?
                     ) = apply { this.billingCycleConfiguration = billingCycleConfiguration }
 
                     /**
                      * The per unit conversion rate of the price currency to the invoicing currency.
                      */
-                    fun conversionRate(conversionRate: Double) = apply {
+                    fun conversionRate(conversionRate: Double?) = apply {
                         this.conversionRate = conversionRate
                     }
 
+                    /**
+                     * The per unit conversion rate of the price currency to the invoicing currency.
+                     */
+                    fun conversionRate(conversionRate: Double) =
+                        conversionRate(conversionRate as Double?)
+
                     /** An alias for the price. */
-                    fun externalPriceId(externalPriceId: String) = apply {
+                    fun externalPriceId(externalPriceId: String?) = apply {
                         this.externalPriceId = externalPriceId
                     }
 
@@ -10120,12 +10291,19 @@ constructor(
                      * If the Price represents a fixed cost, this represents the quantity of units
                      * applied.
                      */
-                    fun fixedPriceQuantity(fixedPriceQuantity: Double) = apply {
+                    fun fixedPriceQuantity(fixedPriceQuantity: Double?) = apply {
                         this.fixedPriceQuantity = fixedPriceQuantity
                     }
 
+                    /**
+                     * If the Price represents a fixed cost, this represents the quantity of units
+                     * applied.
+                     */
+                    fun fixedPriceQuantity(fixedPriceQuantity: Double) =
+                        fixedPriceQuantity(fixedPriceQuantity as Double?)
+
                     /** The property used to group this price on an invoice */
-                    fun invoiceGroupingKey(invoiceGroupingKey: String) = apply {
+                    fun invoiceGroupingKey(invoiceGroupingKey: String?) = apply {
                         this.invoiceGroupingKey = invoiceGroupingKey
                     }
 
@@ -10134,7 +10312,7 @@ constructor(
                      * produced. If unspecified, a single invoice is produced per billing cycle.
                      */
                     fun invoicingCycleConfiguration(
-                        invoicingCycleConfiguration: InvoicingCycleConfiguration
+                        invoicingCycleConfiguration: InvoicingCycleConfiguration?
                     ) = apply { this.invoicingCycleConfiguration = invoicingCycleConfiguration }
 
                     /**
@@ -10142,7 +10320,7 @@ constructor(
                      * removed by setting the value to `null`, and the entire metadata mapping can
                      * be cleared by setting `metadata` to `null`.
                      */
-                    fun metadata(metadata: Metadata) = apply { this.metadata = metadata }
+                    fun metadata(metadata: Metadata?) = apply { this.metadata = metadata }
 
                     fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                         this.additionalProperties.clear()
@@ -10322,12 +10500,12 @@ constructor(
                             fun bps(bps: Double) = apply { this.bps = bps }
 
                             /** Upper bound for tier */
-                            fun maximumAmount(maximumAmount: String) = apply {
+                            fun maximumAmount(maximumAmount: String?) = apply {
                                 this.maximumAmount = maximumAmount
                             }
 
                             /** The maximum amount to charge for any one event */
-                            fun perUnitMaximum(perUnitMaximum: String) = apply {
+                            fun perUnitMaximum(perUnitMaximum: String?) = apply {
                                 this.perUnitMaximum = perUnitMaximum
                             }
 
@@ -11117,7 +11295,7 @@ constructor(
                      * The id of the billable metric for the price. Only needed if the price is
                      * usage-based.
                      */
-                    fun billableMetricId(billableMetricId: String) = apply {
+                    fun billableMetricId(billableMetricId: String?) = apply {
                         this.billableMetricId = billableMetricId
                     }
 
@@ -11125,27 +11303,40 @@ constructor(
                      * If the Price represents a fixed cost, the price will be billed in-advance if
                      * this is true, and in-arrears if this is false.
                      */
-                    fun billedInAdvance(billedInAdvance: Boolean) = apply {
+                    fun billedInAdvance(billedInAdvance: Boolean?) = apply {
                         this.billedInAdvance = billedInAdvance
                     }
+
+                    /**
+                     * If the Price represents a fixed cost, the price will be billed in-advance if
+                     * this is true, and in-arrears if this is false.
+                     */
+                    fun billedInAdvance(billedInAdvance: Boolean) =
+                        billedInAdvance(billedInAdvance as Boolean?)
 
                     /**
                      * For custom cadence: specifies the duration of the billing period in days or
                      * months.
                      */
                     fun billingCycleConfiguration(
-                        billingCycleConfiguration: BillingCycleConfiguration
+                        billingCycleConfiguration: BillingCycleConfiguration?
                     ) = apply { this.billingCycleConfiguration = billingCycleConfiguration }
 
                     /**
                      * The per unit conversion rate of the price currency to the invoicing currency.
                      */
-                    fun conversionRate(conversionRate: Double) = apply {
+                    fun conversionRate(conversionRate: Double?) = apply {
                         this.conversionRate = conversionRate
                     }
 
+                    /**
+                     * The per unit conversion rate of the price currency to the invoicing currency.
+                     */
+                    fun conversionRate(conversionRate: Double) =
+                        conversionRate(conversionRate as Double?)
+
                     /** An alias for the price. */
-                    fun externalPriceId(externalPriceId: String) = apply {
+                    fun externalPriceId(externalPriceId: String?) = apply {
                         this.externalPriceId = externalPriceId
                     }
 
@@ -11153,12 +11344,19 @@ constructor(
                      * If the Price represents a fixed cost, this represents the quantity of units
                      * applied.
                      */
-                    fun fixedPriceQuantity(fixedPriceQuantity: Double) = apply {
+                    fun fixedPriceQuantity(fixedPriceQuantity: Double?) = apply {
                         this.fixedPriceQuantity = fixedPriceQuantity
                     }
 
+                    /**
+                     * If the Price represents a fixed cost, this represents the quantity of units
+                     * applied.
+                     */
+                    fun fixedPriceQuantity(fixedPriceQuantity: Double) =
+                        fixedPriceQuantity(fixedPriceQuantity as Double?)
+
                     /** The property used to group this price on an invoice */
-                    fun invoiceGroupingKey(invoiceGroupingKey: String) = apply {
+                    fun invoiceGroupingKey(invoiceGroupingKey: String?) = apply {
                         this.invoiceGroupingKey = invoiceGroupingKey
                     }
 
@@ -11167,7 +11365,7 @@ constructor(
                      * produced. If unspecified, a single invoice is produced per billing cycle.
                      */
                     fun invoicingCycleConfiguration(
-                        invoicingCycleConfiguration: InvoicingCycleConfiguration
+                        invoicingCycleConfiguration: InvoicingCycleConfiguration?
                     ) = apply { this.invoicingCycleConfiguration = invoicingCycleConfiguration }
 
                     /**
@@ -11175,7 +11373,7 @@ constructor(
                      * removed by setting the value to `null`, and the entire metadata mapping can
                      * be cleared by setting `metadata` to `null`.
                      */
-                    fun metadata(metadata: Metadata) = apply { this.metadata = metadata }
+                    fun metadata(metadata: Metadata?) = apply { this.metadata = metadata }
 
                     fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                         this.additionalProperties.clear()
@@ -11339,9 +11537,13 @@ constructor(
                             }
 
                             /** Upper bound for this tier */
-                            fun maximumUnits(maximumUnits: Double) = apply {
+                            fun maximumUnits(maximumUnits: Double?) = apply {
                                 this.maximumUnits = maximumUnits
                             }
+
+                            /** Upper bound for this tier */
+                            fun maximumUnits(maximumUnits: Double) =
+                                maximumUnits(maximumUnits as Double?)
 
                             fun additionalProperties(additionalProperties: Map<String, JsonValue>) =
                                 apply {
@@ -12139,7 +12341,7 @@ constructor(
                      * The id of the billable metric for the price. Only needed if the price is
                      * usage-based.
                      */
-                    fun billableMetricId(billableMetricId: String) = apply {
+                    fun billableMetricId(billableMetricId: String?) = apply {
                         this.billableMetricId = billableMetricId
                     }
 
@@ -12147,27 +12349,40 @@ constructor(
                      * If the Price represents a fixed cost, the price will be billed in-advance if
                      * this is true, and in-arrears if this is false.
                      */
-                    fun billedInAdvance(billedInAdvance: Boolean) = apply {
+                    fun billedInAdvance(billedInAdvance: Boolean?) = apply {
                         this.billedInAdvance = billedInAdvance
                     }
+
+                    /**
+                     * If the Price represents a fixed cost, the price will be billed in-advance if
+                     * this is true, and in-arrears if this is false.
+                     */
+                    fun billedInAdvance(billedInAdvance: Boolean) =
+                        billedInAdvance(billedInAdvance as Boolean?)
 
                     /**
                      * For custom cadence: specifies the duration of the billing period in days or
                      * months.
                      */
                     fun billingCycleConfiguration(
-                        billingCycleConfiguration: BillingCycleConfiguration
+                        billingCycleConfiguration: BillingCycleConfiguration?
                     ) = apply { this.billingCycleConfiguration = billingCycleConfiguration }
 
                     /**
                      * The per unit conversion rate of the price currency to the invoicing currency.
                      */
-                    fun conversionRate(conversionRate: Double) = apply {
+                    fun conversionRate(conversionRate: Double?) = apply {
                         this.conversionRate = conversionRate
                     }
 
+                    /**
+                     * The per unit conversion rate of the price currency to the invoicing currency.
+                     */
+                    fun conversionRate(conversionRate: Double) =
+                        conversionRate(conversionRate as Double?)
+
                     /** An alias for the price. */
-                    fun externalPriceId(externalPriceId: String) = apply {
+                    fun externalPriceId(externalPriceId: String?) = apply {
                         this.externalPriceId = externalPriceId
                     }
 
@@ -12175,12 +12390,19 @@ constructor(
                      * If the Price represents a fixed cost, this represents the quantity of units
                      * applied.
                      */
-                    fun fixedPriceQuantity(fixedPriceQuantity: Double) = apply {
+                    fun fixedPriceQuantity(fixedPriceQuantity: Double?) = apply {
                         this.fixedPriceQuantity = fixedPriceQuantity
                     }
 
+                    /**
+                     * If the Price represents a fixed cost, this represents the quantity of units
+                     * applied.
+                     */
+                    fun fixedPriceQuantity(fixedPriceQuantity: Double) =
+                        fixedPriceQuantity(fixedPriceQuantity as Double?)
+
                     /** The property used to group this price on an invoice */
-                    fun invoiceGroupingKey(invoiceGroupingKey: String) = apply {
+                    fun invoiceGroupingKey(invoiceGroupingKey: String?) = apply {
                         this.invoiceGroupingKey = invoiceGroupingKey
                     }
 
@@ -12189,7 +12411,7 @@ constructor(
                      * produced. If unspecified, a single invoice is produced per billing cycle.
                      */
                     fun invoicingCycleConfiguration(
-                        invoicingCycleConfiguration: InvoicingCycleConfiguration
+                        invoicingCycleConfiguration: InvoicingCycleConfiguration?
                     ) = apply { this.invoicingCycleConfiguration = invoicingCycleConfiguration }
 
                     /**
@@ -12197,7 +12419,7 @@ constructor(
                      * removed by setting the value to `null`, and the entire metadata mapping can
                      * be cleared by setting `metadata` to `null`.
                      */
-                    fun metadata(metadata: Metadata) = apply { this.metadata = metadata }
+                    fun metadata(metadata: Metadata?) = apply { this.metadata = metadata }
 
                     fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                         this.additionalProperties.clear()
@@ -13044,7 +13266,7 @@ constructor(
                      * The id of the billable metric for the price. Only needed if the price is
                      * usage-based.
                      */
-                    fun billableMetricId(billableMetricId: String) = apply {
+                    fun billableMetricId(billableMetricId: String?) = apply {
                         this.billableMetricId = billableMetricId
                     }
 
@@ -13052,27 +13274,40 @@ constructor(
                      * If the Price represents a fixed cost, the price will be billed in-advance if
                      * this is true, and in-arrears if this is false.
                      */
-                    fun billedInAdvance(billedInAdvance: Boolean) = apply {
+                    fun billedInAdvance(billedInAdvance: Boolean?) = apply {
                         this.billedInAdvance = billedInAdvance
                     }
+
+                    /**
+                     * If the Price represents a fixed cost, the price will be billed in-advance if
+                     * this is true, and in-arrears if this is false.
+                     */
+                    fun billedInAdvance(billedInAdvance: Boolean) =
+                        billedInAdvance(billedInAdvance as Boolean?)
 
                     /**
                      * For custom cadence: specifies the duration of the billing period in days or
                      * months.
                      */
                     fun billingCycleConfiguration(
-                        billingCycleConfiguration: BillingCycleConfiguration
+                        billingCycleConfiguration: BillingCycleConfiguration?
                     ) = apply { this.billingCycleConfiguration = billingCycleConfiguration }
 
                     /**
                      * The per unit conversion rate of the price currency to the invoicing currency.
                      */
-                    fun conversionRate(conversionRate: Double) = apply {
+                    fun conversionRate(conversionRate: Double?) = apply {
                         this.conversionRate = conversionRate
                     }
 
+                    /**
+                     * The per unit conversion rate of the price currency to the invoicing currency.
+                     */
+                    fun conversionRate(conversionRate: Double) =
+                        conversionRate(conversionRate as Double?)
+
                     /** An alias for the price. */
-                    fun externalPriceId(externalPriceId: String) = apply {
+                    fun externalPriceId(externalPriceId: String?) = apply {
                         this.externalPriceId = externalPriceId
                     }
 
@@ -13080,12 +13315,19 @@ constructor(
                      * If the Price represents a fixed cost, this represents the quantity of units
                      * applied.
                      */
-                    fun fixedPriceQuantity(fixedPriceQuantity: Double) = apply {
+                    fun fixedPriceQuantity(fixedPriceQuantity: Double?) = apply {
                         this.fixedPriceQuantity = fixedPriceQuantity
                     }
 
+                    /**
+                     * If the Price represents a fixed cost, this represents the quantity of units
+                     * applied.
+                     */
+                    fun fixedPriceQuantity(fixedPriceQuantity: Double) =
+                        fixedPriceQuantity(fixedPriceQuantity as Double?)
+
                     /** The property used to group this price on an invoice */
-                    fun invoiceGroupingKey(invoiceGroupingKey: String) = apply {
+                    fun invoiceGroupingKey(invoiceGroupingKey: String?) = apply {
                         this.invoiceGroupingKey = invoiceGroupingKey
                     }
 
@@ -13094,7 +13336,7 @@ constructor(
                      * produced. If unspecified, a single invoice is produced per billing cycle.
                      */
                     fun invoicingCycleConfiguration(
-                        invoicingCycleConfiguration: InvoicingCycleConfiguration
+                        invoicingCycleConfiguration: InvoicingCycleConfiguration?
                     ) = apply { this.invoicingCycleConfiguration = invoicingCycleConfiguration }
 
                     /**
@@ -13102,7 +13344,7 @@ constructor(
                      * removed by setting the value to `null`, and the entire metadata mapping can
                      * be cleared by setting `metadata` to `null`.
                      */
-                    fun metadata(metadata: Metadata) = apply { this.metadata = metadata }
+                    fun metadata(metadata: Metadata?) = apply { this.metadata = metadata }
 
                     fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                         this.additionalProperties.clear()
@@ -13948,7 +14190,7 @@ constructor(
                      * The id of the billable metric for the price. Only needed if the price is
                      * usage-based.
                      */
-                    fun billableMetricId(billableMetricId: String) = apply {
+                    fun billableMetricId(billableMetricId: String?) = apply {
                         this.billableMetricId = billableMetricId
                     }
 
@@ -13956,27 +14198,40 @@ constructor(
                      * If the Price represents a fixed cost, the price will be billed in-advance if
                      * this is true, and in-arrears if this is false.
                      */
-                    fun billedInAdvance(billedInAdvance: Boolean) = apply {
+                    fun billedInAdvance(billedInAdvance: Boolean?) = apply {
                         this.billedInAdvance = billedInAdvance
                     }
+
+                    /**
+                     * If the Price represents a fixed cost, the price will be billed in-advance if
+                     * this is true, and in-arrears if this is false.
+                     */
+                    fun billedInAdvance(billedInAdvance: Boolean) =
+                        billedInAdvance(billedInAdvance as Boolean?)
 
                     /**
                      * For custom cadence: specifies the duration of the billing period in days or
                      * months.
                      */
                     fun billingCycleConfiguration(
-                        billingCycleConfiguration: BillingCycleConfiguration
+                        billingCycleConfiguration: BillingCycleConfiguration?
                     ) = apply { this.billingCycleConfiguration = billingCycleConfiguration }
 
                     /**
                      * The per unit conversion rate of the price currency to the invoicing currency.
                      */
-                    fun conversionRate(conversionRate: Double) = apply {
+                    fun conversionRate(conversionRate: Double?) = apply {
                         this.conversionRate = conversionRate
                     }
 
+                    /**
+                     * The per unit conversion rate of the price currency to the invoicing currency.
+                     */
+                    fun conversionRate(conversionRate: Double) =
+                        conversionRate(conversionRate as Double?)
+
                     /** An alias for the price. */
-                    fun externalPriceId(externalPriceId: String) = apply {
+                    fun externalPriceId(externalPriceId: String?) = apply {
                         this.externalPriceId = externalPriceId
                     }
 
@@ -13984,12 +14239,19 @@ constructor(
                      * If the Price represents a fixed cost, this represents the quantity of units
                      * applied.
                      */
-                    fun fixedPriceQuantity(fixedPriceQuantity: Double) = apply {
+                    fun fixedPriceQuantity(fixedPriceQuantity: Double?) = apply {
                         this.fixedPriceQuantity = fixedPriceQuantity
                     }
 
+                    /**
+                     * If the Price represents a fixed cost, this represents the quantity of units
+                     * applied.
+                     */
+                    fun fixedPriceQuantity(fixedPriceQuantity: Double) =
+                        fixedPriceQuantity(fixedPriceQuantity as Double?)
+
                     /** The property used to group this price on an invoice */
-                    fun invoiceGroupingKey(invoiceGroupingKey: String) = apply {
+                    fun invoiceGroupingKey(invoiceGroupingKey: String?) = apply {
                         this.invoiceGroupingKey = invoiceGroupingKey
                     }
 
@@ -13998,7 +14260,7 @@ constructor(
                      * produced. If unspecified, a single invoice is produced per billing cycle.
                      */
                     fun invoicingCycleConfiguration(
-                        invoicingCycleConfiguration: InvoicingCycleConfiguration
+                        invoicingCycleConfiguration: InvoicingCycleConfiguration?
                     ) = apply { this.invoicingCycleConfiguration = invoicingCycleConfiguration }
 
                     /**
@@ -14006,7 +14268,7 @@ constructor(
                      * removed by setting the value to `null`, and the entire metadata mapping can
                      * be cleared by setting `metadata` to `null`.
                      */
-                    fun metadata(metadata: Metadata) = apply { this.metadata = metadata }
+                    fun metadata(metadata: Metadata?) = apply { this.metadata = metadata }
 
                     fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                         this.additionalProperties.clear()
@@ -14854,7 +15116,7 @@ constructor(
                      * The id of the billable metric for the price. Only needed if the price is
                      * usage-based.
                      */
-                    fun billableMetricId(billableMetricId: String) = apply {
+                    fun billableMetricId(billableMetricId: String?) = apply {
                         this.billableMetricId = billableMetricId
                     }
 
@@ -14862,27 +15124,40 @@ constructor(
                      * If the Price represents a fixed cost, the price will be billed in-advance if
                      * this is true, and in-arrears if this is false.
                      */
-                    fun billedInAdvance(billedInAdvance: Boolean) = apply {
+                    fun billedInAdvance(billedInAdvance: Boolean?) = apply {
                         this.billedInAdvance = billedInAdvance
                     }
+
+                    /**
+                     * If the Price represents a fixed cost, the price will be billed in-advance if
+                     * this is true, and in-arrears if this is false.
+                     */
+                    fun billedInAdvance(billedInAdvance: Boolean) =
+                        billedInAdvance(billedInAdvance as Boolean?)
 
                     /**
                      * For custom cadence: specifies the duration of the billing period in days or
                      * months.
                      */
                     fun billingCycleConfiguration(
-                        billingCycleConfiguration: BillingCycleConfiguration
+                        billingCycleConfiguration: BillingCycleConfiguration?
                     ) = apply { this.billingCycleConfiguration = billingCycleConfiguration }
 
                     /**
                      * The per unit conversion rate of the price currency to the invoicing currency.
                      */
-                    fun conversionRate(conversionRate: Double) = apply {
+                    fun conversionRate(conversionRate: Double?) = apply {
                         this.conversionRate = conversionRate
                     }
 
+                    /**
+                     * The per unit conversion rate of the price currency to the invoicing currency.
+                     */
+                    fun conversionRate(conversionRate: Double) =
+                        conversionRate(conversionRate as Double?)
+
                     /** An alias for the price. */
-                    fun externalPriceId(externalPriceId: String) = apply {
+                    fun externalPriceId(externalPriceId: String?) = apply {
                         this.externalPriceId = externalPriceId
                     }
 
@@ -14890,12 +15165,19 @@ constructor(
                      * If the Price represents a fixed cost, this represents the quantity of units
                      * applied.
                      */
-                    fun fixedPriceQuantity(fixedPriceQuantity: Double) = apply {
+                    fun fixedPriceQuantity(fixedPriceQuantity: Double?) = apply {
                         this.fixedPriceQuantity = fixedPriceQuantity
                     }
 
+                    /**
+                     * If the Price represents a fixed cost, this represents the quantity of units
+                     * applied.
+                     */
+                    fun fixedPriceQuantity(fixedPriceQuantity: Double) =
+                        fixedPriceQuantity(fixedPriceQuantity as Double?)
+
                     /** The property used to group this price on an invoice */
-                    fun invoiceGroupingKey(invoiceGroupingKey: String) = apply {
+                    fun invoiceGroupingKey(invoiceGroupingKey: String?) = apply {
                         this.invoiceGroupingKey = invoiceGroupingKey
                     }
 
@@ -14904,7 +15186,7 @@ constructor(
                      * produced. If unspecified, a single invoice is produced per billing cycle.
                      */
                     fun invoicingCycleConfiguration(
-                        invoicingCycleConfiguration: InvoicingCycleConfiguration
+                        invoicingCycleConfiguration: InvoicingCycleConfiguration?
                     ) = apply { this.invoicingCycleConfiguration = invoicingCycleConfiguration }
 
                     /**
@@ -14912,7 +15194,7 @@ constructor(
                      * removed by setting the value to `null`, and the entire metadata mapping can
                      * be cleared by setting `metadata` to `null`.
                      */
-                    fun metadata(metadata: Metadata) = apply { this.metadata = metadata }
+                    fun metadata(metadata: Metadata?) = apply { this.metadata = metadata }
 
                     fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                         this.additionalProperties.clear()
@@ -15764,7 +16046,7 @@ constructor(
                      * The id of the billable metric for the price. Only needed if the price is
                      * usage-based.
                      */
-                    fun billableMetricId(billableMetricId: String) = apply {
+                    fun billableMetricId(billableMetricId: String?) = apply {
                         this.billableMetricId = billableMetricId
                     }
 
@@ -15772,27 +16054,40 @@ constructor(
                      * If the Price represents a fixed cost, the price will be billed in-advance if
                      * this is true, and in-arrears if this is false.
                      */
-                    fun billedInAdvance(billedInAdvance: Boolean) = apply {
+                    fun billedInAdvance(billedInAdvance: Boolean?) = apply {
                         this.billedInAdvance = billedInAdvance
                     }
+
+                    /**
+                     * If the Price represents a fixed cost, the price will be billed in-advance if
+                     * this is true, and in-arrears if this is false.
+                     */
+                    fun billedInAdvance(billedInAdvance: Boolean) =
+                        billedInAdvance(billedInAdvance as Boolean?)
 
                     /**
                      * For custom cadence: specifies the duration of the billing period in days or
                      * months.
                      */
                     fun billingCycleConfiguration(
-                        billingCycleConfiguration: BillingCycleConfiguration
+                        billingCycleConfiguration: BillingCycleConfiguration?
                     ) = apply { this.billingCycleConfiguration = billingCycleConfiguration }
 
                     /**
                      * The per unit conversion rate of the price currency to the invoicing currency.
                      */
-                    fun conversionRate(conversionRate: Double) = apply {
+                    fun conversionRate(conversionRate: Double?) = apply {
                         this.conversionRate = conversionRate
                     }
 
+                    /**
+                     * The per unit conversion rate of the price currency to the invoicing currency.
+                     */
+                    fun conversionRate(conversionRate: Double) =
+                        conversionRate(conversionRate as Double?)
+
                     /** An alias for the price. */
-                    fun externalPriceId(externalPriceId: String) = apply {
+                    fun externalPriceId(externalPriceId: String?) = apply {
                         this.externalPriceId = externalPriceId
                     }
 
@@ -15800,12 +16095,19 @@ constructor(
                      * If the Price represents a fixed cost, this represents the quantity of units
                      * applied.
                      */
-                    fun fixedPriceQuantity(fixedPriceQuantity: Double) = apply {
+                    fun fixedPriceQuantity(fixedPriceQuantity: Double?) = apply {
                         this.fixedPriceQuantity = fixedPriceQuantity
                     }
 
+                    /**
+                     * If the Price represents a fixed cost, this represents the quantity of units
+                     * applied.
+                     */
+                    fun fixedPriceQuantity(fixedPriceQuantity: Double) =
+                        fixedPriceQuantity(fixedPriceQuantity as Double?)
+
                     /** The property used to group this price on an invoice */
-                    fun invoiceGroupingKey(invoiceGroupingKey: String) = apply {
+                    fun invoiceGroupingKey(invoiceGroupingKey: String?) = apply {
                         this.invoiceGroupingKey = invoiceGroupingKey
                     }
 
@@ -15814,7 +16116,7 @@ constructor(
                      * produced. If unspecified, a single invoice is produced per billing cycle.
                      */
                     fun invoicingCycleConfiguration(
-                        invoicingCycleConfiguration: InvoicingCycleConfiguration
+                        invoicingCycleConfiguration: InvoicingCycleConfiguration?
                     ) = apply { this.invoicingCycleConfiguration = invoicingCycleConfiguration }
 
                     /**
@@ -15822,7 +16124,7 @@ constructor(
                      * removed by setting the value to `null`, and the entire metadata mapping can
                      * be cleared by setting `metadata` to `null`.
                      */
-                    fun metadata(metadata: Metadata) = apply { this.metadata = metadata }
+                    fun metadata(metadata: Metadata?) = apply { this.metadata = metadata }
 
                     fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                         this.additionalProperties.clear()
@@ -16679,7 +16981,7 @@ constructor(
                      * The id of the billable metric for the price. Only needed if the price is
                      * usage-based.
                      */
-                    fun billableMetricId(billableMetricId: String) = apply {
+                    fun billableMetricId(billableMetricId: String?) = apply {
                         this.billableMetricId = billableMetricId
                     }
 
@@ -16687,27 +16989,40 @@ constructor(
                      * If the Price represents a fixed cost, the price will be billed in-advance if
                      * this is true, and in-arrears if this is false.
                      */
-                    fun billedInAdvance(billedInAdvance: Boolean) = apply {
+                    fun billedInAdvance(billedInAdvance: Boolean?) = apply {
                         this.billedInAdvance = billedInAdvance
                     }
+
+                    /**
+                     * If the Price represents a fixed cost, the price will be billed in-advance if
+                     * this is true, and in-arrears if this is false.
+                     */
+                    fun billedInAdvance(billedInAdvance: Boolean) =
+                        billedInAdvance(billedInAdvance as Boolean?)
 
                     /**
                      * For custom cadence: specifies the duration of the billing period in days or
                      * months.
                      */
                     fun billingCycleConfiguration(
-                        billingCycleConfiguration: BillingCycleConfiguration
+                        billingCycleConfiguration: BillingCycleConfiguration?
                     ) = apply { this.billingCycleConfiguration = billingCycleConfiguration }
 
                     /**
                      * The per unit conversion rate of the price currency to the invoicing currency.
                      */
-                    fun conversionRate(conversionRate: Double) = apply {
+                    fun conversionRate(conversionRate: Double?) = apply {
                         this.conversionRate = conversionRate
                     }
 
+                    /**
+                     * The per unit conversion rate of the price currency to the invoicing currency.
+                     */
+                    fun conversionRate(conversionRate: Double) =
+                        conversionRate(conversionRate as Double?)
+
                     /** An alias for the price. */
-                    fun externalPriceId(externalPriceId: String) = apply {
+                    fun externalPriceId(externalPriceId: String?) = apply {
                         this.externalPriceId = externalPriceId
                     }
 
@@ -16715,12 +17030,19 @@ constructor(
                      * If the Price represents a fixed cost, this represents the quantity of units
                      * applied.
                      */
-                    fun fixedPriceQuantity(fixedPriceQuantity: Double) = apply {
+                    fun fixedPriceQuantity(fixedPriceQuantity: Double?) = apply {
                         this.fixedPriceQuantity = fixedPriceQuantity
                     }
 
+                    /**
+                     * If the Price represents a fixed cost, this represents the quantity of units
+                     * applied.
+                     */
+                    fun fixedPriceQuantity(fixedPriceQuantity: Double) =
+                        fixedPriceQuantity(fixedPriceQuantity as Double?)
+
                     /** The property used to group this price on an invoice */
-                    fun invoiceGroupingKey(invoiceGroupingKey: String) = apply {
+                    fun invoiceGroupingKey(invoiceGroupingKey: String?) = apply {
                         this.invoiceGroupingKey = invoiceGroupingKey
                     }
 
@@ -16729,7 +17051,7 @@ constructor(
                      * produced. If unspecified, a single invoice is produced per billing cycle.
                      */
                     fun invoicingCycleConfiguration(
-                        invoicingCycleConfiguration: InvoicingCycleConfiguration
+                        invoicingCycleConfiguration: InvoicingCycleConfiguration?
                     ) = apply { this.invoicingCycleConfiguration = invoicingCycleConfiguration }
 
                     /**
@@ -16737,7 +17059,7 @@ constructor(
                      * removed by setting the value to `null`, and the entire metadata mapping can
                      * be cleared by setting `metadata` to `null`.
                      */
-                    fun metadata(metadata: Metadata) = apply { this.metadata = metadata }
+                    fun metadata(metadata: Metadata?) = apply { this.metadata = metadata }
 
                     fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                         this.additionalProperties.clear()
@@ -17587,7 +17909,7 @@ constructor(
                      * The id of the billable metric for the price. Only needed if the price is
                      * usage-based.
                      */
-                    fun billableMetricId(billableMetricId: String) = apply {
+                    fun billableMetricId(billableMetricId: String?) = apply {
                         this.billableMetricId = billableMetricId
                     }
 
@@ -17595,27 +17917,40 @@ constructor(
                      * If the Price represents a fixed cost, the price will be billed in-advance if
                      * this is true, and in-arrears if this is false.
                      */
-                    fun billedInAdvance(billedInAdvance: Boolean) = apply {
+                    fun billedInAdvance(billedInAdvance: Boolean?) = apply {
                         this.billedInAdvance = billedInAdvance
                     }
+
+                    /**
+                     * If the Price represents a fixed cost, the price will be billed in-advance if
+                     * this is true, and in-arrears if this is false.
+                     */
+                    fun billedInAdvance(billedInAdvance: Boolean) =
+                        billedInAdvance(billedInAdvance as Boolean?)
 
                     /**
                      * For custom cadence: specifies the duration of the billing period in days or
                      * months.
                      */
                     fun billingCycleConfiguration(
-                        billingCycleConfiguration: BillingCycleConfiguration
+                        billingCycleConfiguration: BillingCycleConfiguration?
                     ) = apply { this.billingCycleConfiguration = billingCycleConfiguration }
 
                     /**
                      * The per unit conversion rate of the price currency to the invoicing currency.
                      */
-                    fun conversionRate(conversionRate: Double) = apply {
+                    fun conversionRate(conversionRate: Double?) = apply {
                         this.conversionRate = conversionRate
                     }
 
+                    /**
+                     * The per unit conversion rate of the price currency to the invoicing currency.
+                     */
+                    fun conversionRate(conversionRate: Double) =
+                        conversionRate(conversionRate as Double?)
+
                     /** An alias for the price. */
-                    fun externalPriceId(externalPriceId: String) = apply {
+                    fun externalPriceId(externalPriceId: String?) = apply {
                         this.externalPriceId = externalPriceId
                     }
 
@@ -17623,12 +17958,19 @@ constructor(
                      * If the Price represents a fixed cost, this represents the quantity of units
                      * applied.
                      */
-                    fun fixedPriceQuantity(fixedPriceQuantity: Double) = apply {
+                    fun fixedPriceQuantity(fixedPriceQuantity: Double?) = apply {
                         this.fixedPriceQuantity = fixedPriceQuantity
                     }
 
+                    /**
+                     * If the Price represents a fixed cost, this represents the quantity of units
+                     * applied.
+                     */
+                    fun fixedPriceQuantity(fixedPriceQuantity: Double) =
+                        fixedPriceQuantity(fixedPriceQuantity as Double?)
+
                     /** The property used to group this price on an invoice */
-                    fun invoiceGroupingKey(invoiceGroupingKey: String) = apply {
+                    fun invoiceGroupingKey(invoiceGroupingKey: String?) = apply {
                         this.invoiceGroupingKey = invoiceGroupingKey
                     }
 
@@ -17637,7 +17979,7 @@ constructor(
                      * produced. If unspecified, a single invoice is produced per billing cycle.
                      */
                     fun invoicingCycleConfiguration(
-                        invoicingCycleConfiguration: InvoicingCycleConfiguration
+                        invoicingCycleConfiguration: InvoicingCycleConfiguration?
                     ) = apply { this.invoicingCycleConfiguration = invoicingCycleConfiguration }
 
                     /**
@@ -17645,7 +17987,7 @@ constructor(
                      * removed by setting the value to `null`, and the entire metadata mapping can
                      * be cleared by setting `metadata` to `null`.
                      */
-                    fun metadata(metadata: Metadata) = apply { this.metadata = metadata }
+                    fun metadata(metadata: Metadata?) = apply { this.metadata = metadata }
 
                     fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                         this.additionalProperties.clear()
@@ -18493,7 +18835,7 @@ constructor(
                      * The id of the billable metric for the price. Only needed if the price is
                      * usage-based.
                      */
-                    fun billableMetricId(billableMetricId: String) = apply {
+                    fun billableMetricId(billableMetricId: String?) = apply {
                         this.billableMetricId = billableMetricId
                     }
 
@@ -18501,27 +18843,40 @@ constructor(
                      * If the Price represents a fixed cost, the price will be billed in-advance if
                      * this is true, and in-arrears if this is false.
                      */
-                    fun billedInAdvance(billedInAdvance: Boolean) = apply {
+                    fun billedInAdvance(billedInAdvance: Boolean?) = apply {
                         this.billedInAdvance = billedInAdvance
                     }
+
+                    /**
+                     * If the Price represents a fixed cost, the price will be billed in-advance if
+                     * this is true, and in-arrears if this is false.
+                     */
+                    fun billedInAdvance(billedInAdvance: Boolean) =
+                        billedInAdvance(billedInAdvance as Boolean?)
 
                     /**
                      * For custom cadence: specifies the duration of the billing period in days or
                      * months.
                      */
                     fun billingCycleConfiguration(
-                        billingCycleConfiguration: BillingCycleConfiguration
+                        billingCycleConfiguration: BillingCycleConfiguration?
                     ) = apply { this.billingCycleConfiguration = billingCycleConfiguration }
 
                     /**
                      * The per unit conversion rate of the price currency to the invoicing currency.
                      */
-                    fun conversionRate(conversionRate: Double) = apply {
+                    fun conversionRate(conversionRate: Double?) = apply {
                         this.conversionRate = conversionRate
                     }
 
+                    /**
+                     * The per unit conversion rate of the price currency to the invoicing currency.
+                     */
+                    fun conversionRate(conversionRate: Double) =
+                        conversionRate(conversionRate as Double?)
+
                     /** An alias for the price. */
-                    fun externalPriceId(externalPriceId: String) = apply {
+                    fun externalPriceId(externalPriceId: String?) = apply {
                         this.externalPriceId = externalPriceId
                     }
 
@@ -18529,12 +18884,19 @@ constructor(
                      * If the Price represents a fixed cost, this represents the quantity of units
                      * applied.
                      */
-                    fun fixedPriceQuantity(fixedPriceQuantity: Double) = apply {
+                    fun fixedPriceQuantity(fixedPriceQuantity: Double?) = apply {
                         this.fixedPriceQuantity = fixedPriceQuantity
                     }
 
+                    /**
+                     * If the Price represents a fixed cost, this represents the quantity of units
+                     * applied.
+                     */
+                    fun fixedPriceQuantity(fixedPriceQuantity: Double) =
+                        fixedPriceQuantity(fixedPriceQuantity as Double?)
+
                     /** The property used to group this price on an invoice */
-                    fun invoiceGroupingKey(invoiceGroupingKey: String) = apply {
+                    fun invoiceGroupingKey(invoiceGroupingKey: String?) = apply {
                         this.invoiceGroupingKey = invoiceGroupingKey
                     }
 
@@ -18543,7 +18905,7 @@ constructor(
                      * produced. If unspecified, a single invoice is produced per billing cycle.
                      */
                     fun invoicingCycleConfiguration(
-                        invoicingCycleConfiguration: InvoicingCycleConfiguration
+                        invoicingCycleConfiguration: InvoicingCycleConfiguration?
                     ) = apply { this.invoicingCycleConfiguration = invoicingCycleConfiguration }
 
                     /**
@@ -18551,7 +18913,7 @@ constructor(
                      * removed by setting the value to `null`, and the entire metadata mapping can
                      * be cleared by setting `metadata` to `null`.
                      */
-                    fun metadata(metadata: Metadata) = apply { this.metadata = metadata }
+                    fun metadata(metadata: Metadata?) = apply { this.metadata = metadata }
 
                     fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                         this.additionalProperties.clear()
@@ -19400,7 +19762,7 @@ constructor(
                      * The id of the billable metric for the price. Only needed if the price is
                      * usage-based.
                      */
-                    fun billableMetricId(billableMetricId: String) = apply {
+                    fun billableMetricId(billableMetricId: String?) = apply {
                         this.billableMetricId = billableMetricId
                     }
 
@@ -19408,27 +19770,40 @@ constructor(
                      * If the Price represents a fixed cost, the price will be billed in-advance if
                      * this is true, and in-arrears if this is false.
                      */
-                    fun billedInAdvance(billedInAdvance: Boolean) = apply {
+                    fun billedInAdvance(billedInAdvance: Boolean?) = apply {
                         this.billedInAdvance = billedInAdvance
                     }
+
+                    /**
+                     * If the Price represents a fixed cost, the price will be billed in-advance if
+                     * this is true, and in-arrears if this is false.
+                     */
+                    fun billedInAdvance(billedInAdvance: Boolean) =
+                        billedInAdvance(billedInAdvance as Boolean?)
 
                     /**
                      * For custom cadence: specifies the duration of the billing period in days or
                      * months.
                      */
                     fun billingCycleConfiguration(
-                        billingCycleConfiguration: BillingCycleConfiguration
+                        billingCycleConfiguration: BillingCycleConfiguration?
                     ) = apply { this.billingCycleConfiguration = billingCycleConfiguration }
 
                     /**
                      * The per unit conversion rate of the price currency to the invoicing currency.
                      */
-                    fun conversionRate(conversionRate: Double) = apply {
+                    fun conversionRate(conversionRate: Double?) = apply {
                         this.conversionRate = conversionRate
                     }
 
+                    /**
+                     * The per unit conversion rate of the price currency to the invoicing currency.
+                     */
+                    fun conversionRate(conversionRate: Double) =
+                        conversionRate(conversionRate as Double?)
+
                     /** An alias for the price. */
-                    fun externalPriceId(externalPriceId: String) = apply {
+                    fun externalPriceId(externalPriceId: String?) = apply {
                         this.externalPriceId = externalPriceId
                     }
 
@@ -19436,12 +19811,19 @@ constructor(
                      * If the Price represents a fixed cost, this represents the quantity of units
                      * applied.
                      */
-                    fun fixedPriceQuantity(fixedPriceQuantity: Double) = apply {
+                    fun fixedPriceQuantity(fixedPriceQuantity: Double?) = apply {
                         this.fixedPriceQuantity = fixedPriceQuantity
                     }
 
+                    /**
+                     * If the Price represents a fixed cost, this represents the quantity of units
+                     * applied.
+                     */
+                    fun fixedPriceQuantity(fixedPriceQuantity: Double) =
+                        fixedPriceQuantity(fixedPriceQuantity as Double?)
+
                     /** The property used to group this price on an invoice */
-                    fun invoiceGroupingKey(invoiceGroupingKey: String) = apply {
+                    fun invoiceGroupingKey(invoiceGroupingKey: String?) = apply {
                         this.invoiceGroupingKey = invoiceGroupingKey
                     }
 
@@ -19450,7 +19832,7 @@ constructor(
                      * produced. If unspecified, a single invoice is produced per billing cycle.
                      */
                     fun invoicingCycleConfiguration(
-                        invoicingCycleConfiguration: InvoicingCycleConfiguration
+                        invoicingCycleConfiguration: InvoicingCycleConfiguration?
                     ) = apply { this.invoicingCycleConfiguration = invoicingCycleConfiguration }
 
                     /**
@@ -19458,7 +19840,7 @@ constructor(
                      * removed by setting the value to `null`, and the entire metadata mapping can
                      * be cleared by setting `metadata` to `null`.
                      */
-                    fun metadata(metadata: Metadata) = apply { this.metadata = metadata }
+                    fun metadata(metadata: Metadata?) = apply { this.metadata = metadata }
 
                     fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                         this.additionalProperties.clear()
@@ -20307,7 +20689,7 @@ constructor(
                      * The id of the billable metric for the price. Only needed if the price is
                      * usage-based.
                      */
-                    fun billableMetricId(billableMetricId: String) = apply {
+                    fun billableMetricId(billableMetricId: String?) = apply {
                         this.billableMetricId = billableMetricId
                     }
 
@@ -20315,27 +20697,40 @@ constructor(
                      * If the Price represents a fixed cost, the price will be billed in-advance if
                      * this is true, and in-arrears if this is false.
                      */
-                    fun billedInAdvance(billedInAdvance: Boolean) = apply {
+                    fun billedInAdvance(billedInAdvance: Boolean?) = apply {
                         this.billedInAdvance = billedInAdvance
                     }
+
+                    /**
+                     * If the Price represents a fixed cost, the price will be billed in-advance if
+                     * this is true, and in-arrears if this is false.
+                     */
+                    fun billedInAdvance(billedInAdvance: Boolean) =
+                        billedInAdvance(billedInAdvance as Boolean?)
 
                     /**
                      * For custom cadence: specifies the duration of the billing period in days or
                      * months.
                      */
                     fun billingCycleConfiguration(
-                        billingCycleConfiguration: BillingCycleConfiguration
+                        billingCycleConfiguration: BillingCycleConfiguration?
                     ) = apply { this.billingCycleConfiguration = billingCycleConfiguration }
 
                     /**
                      * The per unit conversion rate of the price currency to the invoicing currency.
                      */
-                    fun conversionRate(conversionRate: Double) = apply {
+                    fun conversionRate(conversionRate: Double?) = apply {
                         this.conversionRate = conversionRate
                     }
 
+                    /**
+                     * The per unit conversion rate of the price currency to the invoicing currency.
+                     */
+                    fun conversionRate(conversionRate: Double) =
+                        conversionRate(conversionRate as Double?)
+
                     /** An alias for the price. */
-                    fun externalPriceId(externalPriceId: String) = apply {
+                    fun externalPriceId(externalPriceId: String?) = apply {
                         this.externalPriceId = externalPriceId
                     }
 
@@ -20343,12 +20738,19 @@ constructor(
                      * If the Price represents a fixed cost, this represents the quantity of units
                      * applied.
                      */
-                    fun fixedPriceQuantity(fixedPriceQuantity: Double) = apply {
+                    fun fixedPriceQuantity(fixedPriceQuantity: Double?) = apply {
                         this.fixedPriceQuantity = fixedPriceQuantity
                     }
 
+                    /**
+                     * If the Price represents a fixed cost, this represents the quantity of units
+                     * applied.
+                     */
+                    fun fixedPriceQuantity(fixedPriceQuantity: Double) =
+                        fixedPriceQuantity(fixedPriceQuantity as Double?)
+
                     /** The property used to group this price on an invoice */
-                    fun invoiceGroupingKey(invoiceGroupingKey: String) = apply {
+                    fun invoiceGroupingKey(invoiceGroupingKey: String?) = apply {
                         this.invoiceGroupingKey = invoiceGroupingKey
                     }
 
@@ -20357,7 +20759,7 @@ constructor(
                      * produced. If unspecified, a single invoice is produced per billing cycle.
                      */
                     fun invoicingCycleConfiguration(
-                        invoicingCycleConfiguration: InvoicingCycleConfiguration
+                        invoicingCycleConfiguration: InvoicingCycleConfiguration?
                     ) = apply { this.invoicingCycleConfiguration = invoicingCycleConfiguration }
 
                     /**
@@ -20365,7 +20767,7 @@ constructor(
                      * removed by setting the value to `null`, and the entire metadata mapping can
                      * be cleared by setting `metadata` to `null`.
                      */
-                    fun metadata(metadata: Metadata) = apply { this.metadata = metadata }
+                    fun metadata(metadata: Metadata?) = apply { this.metadata = metadata }
 
                     fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                         this.additionalProperties.clear()
@@ -21224,7 +21626,7 @@ constructor(
                      * The id of the billable metric for the price. Only needed if the price is
                      * usage-based.
                      */
-                    fun billableMetricId(billableMetricId: String) = apply {
+                    fun billableMetricId(billableMetricId: String?) = apply {
                         this.billableMetricId = billableMetricId
                     }
 
@@ -21232,27 +21634,40 @@ constructor(
                      * If the Price represents a fixed cost, the price will be billed in-advance if
                      * this is true, and in-arrears if this is false.
                      */
-                    fun billedInAdvance(billedInAdvance: Boolean) = apply {
+                    fun billedInAdvance(billedInAdvance: Boolean?) = apply {
                         this.billedInAdvance = billedInAdvance
                     }
+
+                    /**
+                     * If the Price represents a fixed cost, the price will be billed in-advance if
+                     * this is true, and in-arrears if this is false.
+                     */
+                    fun billedInAdvance(billedInAdvance: Boolean) =
+                        billedInAdvance(billedInAdvance as Boolean?)
 
                     /**
                      * For custom cadence: specifies the duration of the billing period in days or
                      * months.
                      */
                     fun billingCycleConfiguration(
-                        billingCycleConfiguration: BillingCycleConfiguration
+                        billingCycleConfiguration: BillingCycleConfiguration?
                     ) = apply { this.billingCycleConfiguration = billingCycleConfiguration }
 
                     /**
                      * The per unit conversion rate of the price currency to the invoicing currency.
                      */
-                    fun conversionRate(conversionRate: Double) = apply {
+                    fun conversionRate(conversionRate: Double?) = apply {
                         this.conversionRate = conversionRate
                     }
 
+                    /**
+                     * The per unit conversion rate of the price currency to the invoicing currency.
+                     */
+                    fun conversionRate(conversionRate: Double) =
+                        conversionRate(conversionRate as Double?)
+
                     /** An alias for the price. */
-                    fun externalPriceId(externalPriceId: String) = apply {
+                    fun externalPriceId(externalPriceId: String?) = apply {
                         this.externalPriceId = externalPriceId
                     }
 
@@ -21260,12 +21675,19 @@ constructor(
                      * If the Price represents a fixed cost, this represents the quantity of units
                      * applied.
                      */
-                    fun fixedPriceQuantity(fixedPriceQuantity: Double) = apply {
+                    fun fixedPriceQuantity(fixedPriceQuantity: Double?) = apply {
                         this.fixedPriceQuantity = fixedPriceQuantity
                     }
 
+                    /**
+                     * If the Price represents a fixed cost, this represents the quantity of units
+                     * applied.
+                     */
+                    fun fixedPriceQuantity(fixedPriceQuantity: Double) =
+                        fixedPriceQuantity(fixedPriceQuantity as Double?)
+
                     /** The property used to group this price on an invoice */
-                    fun invoiceGroupingKey(invoiceGroupingKey: String) = apply {
+                    fun invoiceGroupingKey(invoiceGroupingKey: String?) = apply {
                         this.invoiceGroupingKey = invoiceGroupingKey
                     }
 
@@ -21274,7 +21696,7 @@ constructor(
                      * produced. If unspecified, a single invoice is produced per billing cycle.
                      */
                     fun invoicingCycleConfiguration(
-                        invoicingCycleConfiguration: InvoicingCycleConfiguration
+                        invoicingCycleConfiguration: InvoicingCycleConfiguration?
                     ) = apply { this.invoicingCycleConfiguration = invoicingCycleConfiguration }
 
                     /**
@@ -21282,7 +21704,7 @@ constructor(
                      * removed by setting the value to `null`, and the entire metadata mapping can
                      * be cleared by setting `metadata` to `null`.
                      */
-                    fun metadata(metadata: Metadata) = apply { this.metadata = metadata }
+                    fun metadata(metadata: Metadata?) = apply { this.metadata = metadata }
 
                     fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                         this.additionalProperties.clear()
@@ -22141,7 +22563,7 @@ constructor(
                      * The id of the billable metric for the price. Only needed if the price is
                      * usage-based.
                      */
-                    fun billableMetricId(billableMetricId: String) = apply {
+                    fun billableMetricId(billableMetricId: String?) = apply {
                         this.billableMetricId = billableMetricId
                     }
 
@@ -22149,27 +22571,40 @@ constructor(
                      * If the Price represents a fixed cost, the price will be billed in-advance if
                      * this is true, and in-arrears if this is false.
                      */
-                    fun billedInAdvance(billedInAdvance: Boolean) = apply {
+                    fun billedInAdvance(billedInAdvance: Boolean?) = apply {
                         this.billedInAdvance = billedInAdvance
                     }
+
+                    /**
+                     * If the Price represents a fixed cost, the price will be billed in-advance if
+                     * this is true, and in-arrears if this is false.
+                     */
+                    fun billedInAdvance(billedInAdvance: Boolean) =
+                        billedInAdvance(billedInAdvance as Boolean?)
 
                     /**
                      * For custom cadence: specifies the duration of the billing period in days or
                      * months.
                      */
                     fun billingCycleConfiguration(
-                        billingCycleConfiguration: BillingCycleConfiguration
+                        billingCycleConfiguration: BillingCycleConfiguration?
                     ) = apply { this.billingCycleConfiguration = billingCycleConfiguration }
 
                     /**
                      * The per unit conversion rate of the price currency to the invoicing currency.
                      */
-                    fun conversionRate(conversionRate: Double) = apply {
+                    fun conversionRate(conversionRate: Double?) = apply {
                         this.conversionRate = conversionRate
                     }
 
+                    /**
+                     * The per unit conversion rate of the price currency to the invoicing currency.
+                     */
+                    fun conversionRate(conversionRate: Double) =
+                        conversionRate(conversionRate as Double?)
+
                     /** An alias for the price. */
-                    fun externalPriceId(externalPriceId: String) = apply {
+                    fun externalPriceId(externalPriceId: String?) = apply {
                         this.externalPriceId = externalPriceId
                     }
 
@@ -22177,12 +22612,19 @@ constructor(
                      * If the Price represents a fixed cost, this represents the quantity of units
                      * applied.
                      */
-                    fun fixedPriceQuantity(fixedPriceQuantity: Double) = apply {
+                    fun fixedPriceQuantity(fixedPriceQuantity: Double?) = apply {
                         this.fixedPriceQuantity = fixedPriceQuantity
                     }
 
+                    /**
+                     * If the Price represents a fixed cost, this represents the quantity of units
+                     * applied.
+                     */
+                    fun fixedPriceQuantity(fixedPriceQuantity: Double) =
+                        fixedPriceQuantity(fixedPriceQuantity as Double?)
+
                     /** The property used to group this price on an invoice */
-                    fun invoiceGroupingKey(invoiceGroupingKey: String) = apply {
+                    fun invoiceGroupingKey(invoiceGroupingKey: String?) = apply {
                         this.invoiceGroupingKey = invoiceGroupingKey
                     }
 
@@ -22191,7 +22633,7 @@ constructor(
                      * produced. If unspecified, a single invoice is produced per billing cycle.
                      */
                     fun invoicingCycleConfiguration(
-                        invoicingCycleConfiguration: InvoicingCycleConfiguration
+                        invoicingCycleConfiguration: InvoicingCycleConfiguration?
                     ) = apply { this.invoicingCycleConfiguration = invoicingCycleConfiguration }
 
                     /**
@@ -22199,7 +22641,7 @@ constructor(
                      * removed by setting the value to `null`, and the entire metadata mapping can
                      * be cleared by setting `metadata` to `null`.
                      */
-                    fun metadata(metadata: Metadata) = apply { this.metadata = metadata }
+                    fun metadata(metadata: Metadata?) = apply { this.metadata = metadata }
 
                     fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                         this.additionalProperties.clear()
@@ -23052,7 +23494,7 @@ constructor(
                      * The id of the billable metric for the price. Only needed if the price is
                      * usage-based.
                      */
-                    fun billableMetricId(billableMetricId: String) = apply {
+                    fun billableMetricId(billableMetricId: String?) = apply {
                         this.billableMetricId = billableMetricId
                     }
 
@@ -23060,27 +23502,40 @@ constructor(
                      * If the Price represents a fixed cost, the price will be billed in-advance if
                      * this is true, and in-arrears if this is false.
                      */
-                    fun billedInAdvance(billedInAdvance: Boolean) = apply {
+                    fun billedInAdvance(billedInAdvance: Boolean?) = apply {
                         this.billedInAdvance = billedInAdvance
                     }
+
+                    /**
+                     * If the Price represents a fixed cost, the price will be billed in-advance if
+                     * this is true, and in-arrears if this is false.
+                     */
+                    fun billedInAdvance(billedInAdvance: Boolean) =
+                        billedInAdvance(billedInAdvance as Boolean?)
 
                     /**
                      * For custom cadence: specifies the duration of the billing period in days or
                      * months.
                      */
                     fun billingCycleConfiguration(
-                        billingCycleConfiguration: BillingCycleConfiguration
+                        billingCycleConfiguration: BillingCycleConfiguration?
                     ) = apply { this.billingCycleConfiguration = billingCycleConfiguration }
 
                     /**
                      * The per unit conversion rate of the price currency to the invoicing currency.
                      */
-                    fun conversionRate(conversionRate: Double) = apply {
+                    fun conversionRate(conversionRate: Double?) = apply {
                         this.conversionRate = conversionRate
                     }
 
+                    /**
+                     * The per unit conversion rate of the price currency to the invoicing currency.
+                     */
+                    fun conversionRate(conversionRate: Double) =
+                        conversionRate(conversionRate as Double?)
+
                     /** An alias for the price. */
-                    fun externalPriceId(externalPriceId: String) = apply {
+                    fun externalPriceId(externalPriceId: String?) = apply {
                         this.externalPriceId = externalPriceId
                     }
 
@@ -23088,12 +23543,19 @@ constructor(
                      * If the Price represents a fixed cost, this represents the quantity of units
                      * applied.
                      */
-                    fun fixedPriceQuantity(fixedPriceQuantity: Double) = apply {
+                    fun fixedPriceQuantity(fixedPriceQuantity: Double?) = apply {
                         this.fixedPriceQuantity = fixedPriceQuantity
                     }
 
+                    /**
+                     * If the Price represents a fixed cost, this represents the quantity of units
+                     * applied.
+                     */
+                    fun fixedPriceQuantity(fixedPriceQuantity: Double) =
+                        fixedPriceQuantity(fixedPriceQuantity as Double?)
+
                     /** The property used to group this price on an invoice */
-                    fun invoiceGroupingKey(invoiceGroupingKey: String) = apply {
+                    fun invoiceGroupingKey(invoiceGroupingKey: String?) = apply {
                         this.invoiceGroupingKey = invoiceGroupingKey
                     }
 
@@ -23102,7 +23564,7 @@ constructor(
                      * produced. If unspecified, a single invoice is produced per billing cycle.
                      */
                     fun invoicingCycleConfiguration(
-                        invoicingCycleConfiguration: InvoicingCycleConfiguration
+                        invoicingCycleConfiguration: InvoicingCycleConfiguration?
                     ) = apply { this.invoicingCycleConfiguration = invoicingCycleConfiguration }
 
                     /**
@@ -23110,7 +23572,7 @@ constructor(
                      * removed by setting the value to `null`, and the entire metadata mapping can
                      * be cleared by setting `metadata` to `null`.
                      */
-                    fun metadata(metadata: Metadata) = apply { this.metadata = metadata }
+                    fun metadata(metadata: Metadata?) = apply { this.metadata = metadata }
 
                     fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                         this.additionalProperties.clear()
@@ -23960,7 +24422,7 @@ constructor(
                      * The id of the billable metric for the price. Only needed if the price is
                      * usage-based.
                      */
-                    fun billableMetricId(billableMetricId: String) = apply {
+                    fun billableMetricId(billableMetricId: String?) = apply {
                         this.billableMetricId = billableMetricId
                     }
 
@@ -23968,27 +24430,40 @@ constructor(
                      * If the Price represents a fixed cost, the price will be billed in-advance if
                      * this is true, and in-arrears if this is false.
                      */
-                    fun billedInAdvance(billedInAdvance: Boolean) = apply {
+                    fun billedInAdvance(billedInAdvance: Boolean?) = apply {
                         this.billedInAdvance = billedInAdvance
                     }
+
+                    /**
+                     * If the Price represents a fixed cost, the price will be billed in-advance if
+                     * this is true, and in-arrears if this is false.
+                     */
+                    fun billedInAdvance(billedInAdvance: Boolean) =
+                        billedInAdvance(billedInAdvance as Boolean?)
 
                     /**
                      * For custom cadence: specifies the duration of the billing period in days or
                      * months.
                      */
                     fun billingCycleConfiguration(
-                        billingCycleConfiguration: BillingCycleConfiguration
+                        billingCycleConfiguration: BillingCycleConfiguration?
                     ) = apply { this.billingCycleConfiguration = billingCycleConfiguration }
 
                     /**
                      * The per unit conversion rate of the price currency to the invoicing currency.
                      */
-                    fun conversionRate(conversionRate: Double) = apply {
+                    fun conversionRate(conversionRate: Double?) = apply {
                         this.conversionRate = conversionRate
                     }
 
+                    /**
+                     * The per unit conversion rate of the price currency to the invoicing currency.
+                     */
+                    fun conversionRate(conversionRate: Double) =
+                        conversionRate(conversionRate as Double?)
+
                     /** An alias for the price. */
-                    fun externalPriceId(externalPriceId: String) = apply {
+                    fun externalPriceId(externalPriceId: String?) = apply {
                         this.externalPriceId = externalPriceId
                     }
 
@@ -23996,12 +24471,19 @@ constructor(
                      * If the Price represents a fixed cost, this represents the quantity of units
                      * applied.
                      */
-                    fun fixedPriceQuantity(fixedPriceQuantity: Double) = apply {
+                    fun fixedPriceQuantity(fixedPriceQuantity: Double?) = apply {
                         this.fixedPriceQuantity = fixedPriceQuantity
                     }
 
+                    /**
+                     * If the Price represents a fixed cost, this represents the quantity of units
+                     * applied.
+                     */
+                    fun fixedPriceQuantity(fixedPriceQuantity: Double) =
+                        fixedPriceQuantity(fixedPriceQuantity as Double?)
+
                     /** The property used to group this price on an invoice */
-                    fun invoiceGroupingKey(invoiceGroupingKey: String) = apply {
+                    fun invoiceGroupingKey(invoiceGroupingKey: String?) = apply {
                         this.invoiceGroupingKey = invoiceGroupingKey
                     }
 
@@ -24010,7 +24492,7 @@ constructor(
                      * produced. If unspecified, a single invoice is produced per billing cycle.
                      */
                     fun invoicingCycleConfiguration(
-                        invoicingCycleConfiguration: InvoicingCycleConfiguration
+                        invoicingCycleConfiguration: InvoicingCycleConfiguration?
                     ) = apply { this.invoicingCycleConfiguration = invoicingCycleConfiguration }
 
                     /**
@@ -24018,7 +24500,7 @@ constructor(
                      * removed by setting the value to `null`, and the entire metadata mapping can
                      * be cleared by setting `metadata` to `null`.
                      */
-                    fun metadata(metadata: Metadata) = apply { this.metadata = metadata }
+                    fun metadata(metadata: Metadata?) = apply { this.metadata = metadata }
 
                     fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                         this.additionalProperties.clear()
@@ -24867,7 +25349,7 @@ constructor(
                      * The id of the billable metric for the price. Only needed if the price is
                      * usage-based.
                      */
-                    fun billableMetricId(billableMetricId: String) = apply {
+                    fun billableMetricId(billableMetricId: String?) = apply {
                         this.billableMetricId = billableMetricId
                     }
 
@@ -24875,27 +25357,40 @@ constructor(
                      * If the Price represents a fixed cost, the price will be billed in-advance if
                      * this is true, and in-arrears if this is false.
                      */
-                    fun billedInAdvance(billedInAdvance: Boolean) = apply {
+                    fun billedInAdvance(billedInAdvance: Boolean?) = apply {
                         this.billedInAdvance = billedInAdvance
                     }
+
+                    /**
+                     * If the Price represents a fixed cost, the price will be billed in-advance if
+                     * this is true, and in-arrears if this is false.
+                     */
+                    fun billedInAdvance(billedInAdvance: Boolean) =
+                        billedInAdvance(billedInAdvance as Boolean?)
 
                     /**
                      * For custom cadence: specifies the duration of the billing period in days or
                      * months.
                      */
                     fun billingCycleConfiguration(
-                        billingCycleConfiguration: BillingCycleConfiguration
+                        billingCycleConfiguration: BillingCycleConfiguration?
                     ) = apply { this.billingCycleConfiguration = billingCycleConfiguration }
 
                     /**
                      * The per unit conversion rate of the price currency to the invoicing currency.
                      */
-                    fun conversionRate(conversionRate: Double) = apply {
+                    fun conversionRate(conversionRate: Double?) = apply {
                         this.conversionRate = conversionRate
                     }
 
+                    /**
+                     * The per unit conversion rate of the price currency to the invoicing currency.
+                     */
+                    fun conversionRate(conversionRate: Double) =
+                        conversionRate(conversionRate as Double?)
+
                     /** An alias for the price. */
-                    fun externalPriceId(externalPriceId: String) = apply {
+                    fun externalPriceId(externalPriceId: String?) = apply {
                         this.externalPriceId = externalPriceId
                     }
 
@@ -24903,12 +25398,19 @@ constructor(
                      * If the Price represents a fixed cost, this represents the quantity of units
                      * applied.
                      */
-                    fun fixedPriceQuantity(fixedPriceQuantity: Double) = apply {
+                    fun fixedPriceQuantity(fixedPriceQuantity: Double?) = apply {
                         this.fixedPriceQuantity = fixedPriceQuantity
                     }
 
+                    /**
+                     * If the Price represents a fixed cost, this represents the quantity of units
+                     * applied.
+                     */
+                    fun fixedPriceQuantity(fixedPriceQuantity: Double) =
+                        fixedPriceQuantity(fixedPriceQuantity as Double?)
+
                     /** The property used to group this price on an invoice */
-                    fun invoiceGroupingKey(invoiceGroupingKey: String) = apply {
+                    fun invoiceGroupingKey(invoiceGroupingKey: String?) = apply {
                         this.invoiceGroupingKey = invoiceGroupingKey
                     }
 
@@ -24917,7 +25419,7 @@ constructor(
                      * produced. If unspecified, a single invoice is produced per billing cycle.
                      */
                     fun invoicingCycleConfiguration(
-                        invoicingCycleConfiguration: InvoicingCycleConfiguration
+                        invoicingCycleConfiguration: InvoicingCycleConfiguration?
                     ) = apply { this.invoicingCycleConfiguration = invoicingCycleConfiguration }
 
                     /**
@@ -24925,7 +25427,7 @@ constructor(
                      * removed by setting the value to `null`, and the entire metadata mapping can
                      * be cleared by setting `metadata` to `null`.
                      */
-                    fun metadata(metadata: Metadata) = apply { this.metadata = metadata }
+                    fun metadata(metadata: Metadata?) = apply { this.metadata = metadata }
 
                     fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                         this.additionalProperties.clear()
@@ -25711,7 +26213,7 @@ constructor(
              * The end date of the adjustment interval. This is the date that the adjustment will
              * stop affecting prices on the subscription.
              */
-            fun endDate(endDate: EndDate) = apply { this.endDate = endDate }
+            fun endDate(endDate: EndDate?) = apply { this.endDate = endDate }
 
             fun endDate(dateTime: OffsetDateTime) = apply {
                 this.endDate = EndDate.ofDateTime(dateTime)
@@ -26003,9 +26505,16 @@ constructor(
                      * When false, this adjustment will be applied to a single price. Otherwise, it
                      * will be applied at the invoice level, possibly to multiple prices.
                      */
-                    fun isInvoiceLevel(isInvoiceLevel: Boolean) = apply {
+                    fun isInvoiceLevel(isInvoiceLevel: Boolean?) = apply {
                         this.isInvoiceLevel = isInvoiceLevel
                     }
+
+                    /**
+                     * When false, this adjustment will be applied to a single price. Otherwise, it
+                     * will be applied at the invoice level, possibly to multiple prices.
+                     */
+                    fun isInvoiceLevel(isInvoiceLevel: Boolean) =
+                        isInvoiceLevel(isInvoiceLevel as Boolean?)
 
                     fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                         this.additionalProperties.clear()
@@ -26193,9 +26702,16 @@ constructor(
                      * When false, this adjustment will be applied to a single price. Otherwise, it
                      * will be applied at the invoice level, possibly to multiple prices.
                      */
-                    fun isInvoiceLevel(isInvoiceLevel: Boolean) = apply {
+                    fun isInvoiceLevel(isInvoiceLevel: Boolean?) = apply {
                         this.isInvoiceLevel = isInvoiceLevel
                     }
+
+                    /**
+                     * When false, this adjustment will be applied to a single price. Otherwise, it
+                     * will be applied at the invoice level, possibly to multiple prices.
+                     */
+                    fun isInvoiceLevel(isInvoiceLevel: Boolean) =
+                        isInvoiceLevel(isInvoiceLevel as Boolean?)
 
                     fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                         this.additionalProperties.clear()
@@ -26383,9 +26899,16 @@ constructor(
                      * When false, this adjustment will be applied to a single price. Otherwise, it
                      * will be applied at the invoice level, possibly to multiple prices.
                      */
-                    fun isInvoiceLevel(isInvoiceLevel: Boolean) = apply {
+                    fun isInvoiceLevel(isInvoiceLevel: Boolean?) = apply {
                         this.isInvoiceLevel = isInvoiceLevel
                     }
+
+                    /**
+                     * When false, this adjustment will be applied to a single price. Otherwise, it
+                     * will be applied at the invoice level, possibly to multiple prices.
+                     */
+                    fun isInvoiceLevel(isInvoiceLevel: Boolean) =
+                        isInvoiceLevel(isInvoiceLevel as Boolean?)
 
                     fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                         this.additionalProperties.clear()
@@ -26582,9 +27105,16 @@ constructor(
                      * When false, this adjustment will be applied to a single price. Otherwise, it
                      * will be applied at the invoice level, possibly to multiple prices.
                      */
-                    fun isInvoiceLevel(isInvoiceLevel: Boolean) = apply {
+                    fun isInvoiceLevel(isInvoiceLevel: Boolean?) = apply {
                         this.isInvoiceLevel = isInvoiceLevel
                     }
+
+                    /**
+                     * When false, this adjustment will be applied to a single price. Otherwise, it
+                     * will be applied at the invoice level, possibly to multiple prices.
+                     */
+                    fun isInvoiceLevel(isInvoiceLevel: Boolean) =
+                        isInvoiceLevel(isInvoiceLevel as Boolean?)
 
                     fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                         this.additionalProperties.clear()
@@ -26773,9 +27303,16 @@ constructor(
                      * When false, this adjustment will be applied to a single price. Otherwise, it
                      * will be applied at the invoice level, possibly to multiple prices.
                      */
-                    fun isInvoiceLevel(isInvoiceLevel: Boolean) = apply {
+                    fun isInvoiceLevel(isInvoiceLevel: Boolean?) = apply {
                         this.isInvoiceLevel = isInvoiceLevel
                     }
+
+                    /**
+                     * When false, this adjustment will be applied to a single price. Otherwise, it
+                     * will be applied at the invoice level, possibly to multiple prices.
+                     */
+                    fun isInvoiceLevel(isInvoiceLevel: Boolean) =
+                        isInvoiceLevel(isInvoiceLevel as Boolean?)
 
                     fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                         this.additionalProperties.clear()
@@ -27210,15 +27747,22 @@ constructor(
              * cycle day will not be updated. Note that overlapping price intervals must have the
              * same billing cycle day.
              */
-            fun billingCycleDay(billingCycleDay: Long) = apply {
+            fun billingCycleDay(billingCycleDay: Long?) = apply {
                 this.billingCycleDay = billingCycleDay
             }
+
+            /**
+             * The updated billing cycle day for this price interval. If not specified, the billing
+             * cycle day will not be updated. Note that overlapping price intervals must have the
+             * same billing cycle day.
+             */
+            fun billingCycleDay(billingCycleDay: Long) = billingCycleDay(billingCycleDay as Long?)
 
             /**
              * The updated end date of this price interval. If not specified, the start date will
              * not be updated.
              */
-            fun endDate(endDate: EndDate) = apply { this.endDate = endDate }
+            fun endDate(endDate: EndDate?) = apply { this.endDate = endDate }
 
             fun endDate(dateTime: OffsetDateTime) = apply {
                 this.endDate = EndDate.ofDateTime(dateTime)
@@ -27234,9 +27778,9 @@ constructor(
              * interval.
              */
             fun fixedFeeQuantityTransitions(
-                fixedFeeQuantityTransitions: List<FixedFeeQuantityTransition>
+                fixedFeeQuantityTransitions: List<FixedFeeQuantityTransition>?
             ) = apply {
-                this.fixedFeeQuantityTransitions = fixedFeeQuantityTransitions.toMutableList()
+                this.fixedFeeQuantityTransitions = fixedFeeQuantityTransitions?.toMutableList()
             }
 
             /**
@@ -27257,7 +27801,7 @@ constructor(
              * The updated start date of this price interval. If not specified, the start date will
              * not be updated.
              */
-            fun startDate(startDate: StartDate) = apply { this.startDate = startDate }
+            fun startDate(startDate: StartDate?) = apply { this.startDate = startDate }
 
             fun startDate(dateTime: OffsetDateTime) = apply {
                 this.startDate = StartDate.ofDateTime(dateTime)
@@ -27698,7 +28242,7 @@ constructor(
              * The updated end date of this adjustment interval. If not specified, the start date
              * will not be updated.
              */
-            fun endDate(endDate: EndDate) = apply { this.endDate = endDate }
+            fun endDate(endDate: EndDate?) = apply { this.endDate = endDate }
 
             fun endDate(dateTime: OffsetDateTime) = apply {
                 this.endDate = EndDate.ofDateTime(dateTime)
@@ -27712,7 +28256,7 @@ constructor(
              * The updated start date of this adjustment interval. If not specified, the start date
              * will not be updated.
              */
-            fun startDate(startDate: StartDate) = apply { this.startDate = startDate }
+            fun startDate(startDate: StartDate?) = apply { this.startDate = startDate }
 
             fun startDate(dateTime: OffsetDateTime) = apply {
                 this.startDate = StartDate.ofDateTime(dateTime)

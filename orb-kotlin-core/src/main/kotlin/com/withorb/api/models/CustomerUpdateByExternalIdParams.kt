@@ -490,15 +490,15 @@ constructor(
                 }
 
             fun accountingSyncConfiguration(
-                accountingSyncConfiguration: AccountingSyncConfiguration
+                accountingSyncConfiguration: AccountingSyncConfiguration?
             ) = apply { this.accountingSyncConfiguration = accountingSyncConfiguration }
 
             /**
              * Additional email addresses for this customer. If populated, these email addresses
              * will be CC'd for customer communications.
              */
-            fun additionalEmails(additionalEmails: List<String>) = apply {
-                this.additionalEmails = additionalEmails.toMutableList()
+            fun additionalEmails(additionalEmails: List<String>?) = apply {
+                this.additionalEmails = additionalEmails?.toMutableList()
             }
 
             /**
@@ -515,11 +515,18 @@ constructor(
              * a saved payment method, if available. This parameter defaults to `True` when a
              * payment provider is provided on customer creation.
              */
-            fun autoCollection(autoCollection: Boolean) = apply {
+            fun autoCollection(autoCollection: Boolean?) = apply {
                 this.autoCollection = autoCollection
             }
 
-            fun billingAddress(billingAddress: BillingAddress) = apply {
+            /**
+             * Used to determine if invoices for this customer will automatically attempt to charge
+             * a saved payment method, if available. This parameter defaults to `True` when a
+             * payment provider is provided on customer creation.
+             */
+            fun autoCollection(autoCollection: Boolean) = autoCollection(autoCollection as Boolean?)
+
+            fun billingAddress(billingAddress: BillingAddress?) = apply {
                 this.billingAddress = billingAddress
             }
 
@@ -527,18 +534,22 @@ constructor(
              * An ISO 4217 currency string used for the customer's invoices and balance. If not set
              * at creation time, will be set at subscription creation time.
              */
-            fun currency(currency: String) = apply { this.currency = currency }
+            fun currency(currency: String?) = apply { this.currency = currency }
 
             /** A valid customer email, to be used for invoicing and notifications. */
-            fun email(email: String) = apply { this.email = email }
+            fun email(email: String?) = apply { this.email = email }
 
-            fun emailDelivery(emailDelivery: Boolean) = apply { this.emailDelivery = emailDelivery }
+            fun emailDelivery(emailDelivery: Boolean?) = apply {
+                this.emailDelivery = emailDelivery
+            }
+
+            fun emailDelivery(emailDelivery: Boolean) = emailDelivery(emailDelivery as Boolean?)
 
             /**
              * The external customer ID. This can only be set if empty and the customer has no past
              * or current subscriptions.
              */
-            fun externalCustomerId(externalCustomerId: String) = apply {
+            fun externalCustomerId(externalCustomerId: String?) = apply {
                 this.externalCustomerId = externalCustomerId
             }
 
@@ -547,10 +558,10 @@ constructor(
              * setting the value to `null`, and the entire metadata mapping can be cleared by
              * setting `metadata` to `null`.
              */
-            fun metadata(metadata: Metadata) = apply { this.metadata = metadata }
+            fun metadata(metadata: Metadata?) = apply { this.metadata = metadata }
 
             /** The full name of the customer */
-            fun name(name: String) = apply { this.name = name }
+            fun name(name: String?) = apply { this.name = name }
 
             /**
              * This is used for creating charges or invoices in an external system via Orb. When not
@@ -560,7 +571,7 @@ constructor(
              *   `bill.com`, `netsuite`), any product mappings must first be configured with the Orb
              *   team.
              */
-            fun paymentProvider(paymentProvider: PaymentProvider) = apply {
+            fun paymentProvider(paymentProvider: PaymentProvider?) = apply {
                 this.paymentProvider = paymentProvider
             }
 
@@ -568,19 +579,19 @@ constructor(
              * The ID of this customer in an external payments solution, such as Stripe. This is
              * used for creating charges or invoices in the external system via Orb.
              */
-            fun paymentProviderId(paymentProviderId: String) = apply {
+            fun paymentProviderId(paymentProviderId: String?) = apply {
                 this.paymentProviderId = paymentProviderId
             }
 
-            fun reportingConfiguration(reportingConfiguration: ReportingConfiguration) = apply {
+            fun reportingConfiguration(reportingConfiguration: ReportingConfiguration?) = apply {
                 this.reportingConfiguration = reportingConfiguration
             }
 
-            fun shippingAddress(shippingAddress: ShippingAddress) = apply {
+            fun shippingAddress(shippingAddress: ShippingAddress?) = apply {
                 this.shippingAddress = shippingAddress
             }
 
-            fun taxConfiguration(taxConfiguration: TaxConfiguration) = apply {
+            fun taxConfiguration(taxConfiguration: TaxConfiguration?) = apply {
                 this.taxConfiguration = taxConfiguration
             }
 
@@ -703,7 +714,7 @@ constructor(
              * |Venezuela           |`ve_rif`    |Venezuelan RIF Number                                                                                  |
              * |Vietnam             |`vn_tin`    |Vietnamese Tax ID Number                                                                               |
              */
-            fun taxId(taxId: TaxId) = apply { this.taxId = taxId }
+            fun taxId(taxId: TaxId?) = apply { this.taxId = taxId }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
@@ -791,7 +802,7 @@ constructor(
 
         fun id(id: String) = apply { this.id = id }
 
-        fun accountingSyncConfiguration(accountingSyncConfiguration: AccountingSyncConfiguration) =
+        fun accountingSyncConfiguration(accountingSyncConfiguration: AccountingSyncConfiguration?) =
             apply {
                 body.accountingSyncConfiguration(accountingSyncConfiguration)
             }
@@ -800,7 +811,7 @@ constructor(
          * Additional email addresses for this customer. If populated, these email addresses will be
          * CC'd for customer communications.
          */
-        fun additionalEmails(additionalEmails: List<String>) = apply {
+        fun additionalEmails(additionalEmails: List<String>?) = apply {
             body.additionalEmails(additionalEmails)
         }
 
@@ -817,9 +828,16 @@ constructor(
          * saved payment method, if available. This parameter defaults to `True` when a payment
          * provider is provided on customer creation.
          */
-        fun autoCollection(autoCollection: Boolean) = apply { body.autoCollection(autoCollection) }
+        fun autoCollection(autoCollection: Boolean?) = apply { body.autoCollection(autoCollection) }
 
-        fun billingAddress(billingAddress: BillingAddress) = apply {
+        /**
+         * Used to determine if invoices for this customer will automatically attempt to charge a
+         * saved payment method, if available. This parameter defaults to `True` when a payment
+         * provider is provided on customer creation.
+         */
+        fun autoCollection(autoCollection: Boolean) = autoCollection(autoCollection as Boolean?)
+
+        fun billingAddress(billingAddress: BillingAddress?) = apply {
             body.billingAddress(billingAddress)
         }
 
@@ -827,18 +845,20 @@ constructor(
          * An ISO 4217 currency string used for the customer's invoices and balance. If not set at
          * creation time, will be set at subscription creation time.
          */
-        fun currency(currency: String) = apply { body.currency(currency) }
+        fun currency(currency: String?) = apply { body.currency(currency) }
 
         /** A valid customer email, to be used for invoicing and notifications. */
-        fun email(email: String) = apply { body.email(email) }
+        fun email(email: String?) = apply { body.email(email) }
 
-        fun emailDelivery(emailDelivery: Boolean) = apply { body.emailDelivery(emailDelivery) }
+        fun emailDelivery(emailDelivery: Boolean?) = apply { body.emailDelivery(emailDelivery) }
+
+        fun emailDelivery(emailDelivery: Boolean) = emailDelivery(emailDelivery as Boolean?)
 
         /**
          * The external customer ID. This can only be set if empty and the customer has no past or
          * current subscriptions.
          */
-        fun externalCustomerId(externalCustomerId: String) = apply {
+        fun externalCustomerId(externalCustomerId: String?) = apply {
             body.externalCustomerId(externalCustomerId)
         }
 
@@ -847,10 +867,10 @@ constructor(
          * setting the value to `null`, and the entire metadata mapping can be cleared by setting
          * `metadata` to `null`.
          */
-        fun metadata(metadata: Metadata) = apply { body.metadata(metadata) }
+        fun metadata(metadata: Metadata?) = apply { body.metadata(metadata) }
 
         /** The full name of the customer */
-        fun name(name: String) = apply { body.name(name) }
+        fun name(name: String?) = apply { body.name(name) }
 
         /**
          * This is used for creating charges or invoices in an external system via Orb. When not in
@@ -859,7 +879,7 @@ constructor(
          * - if the provider is an invoicing provider (`stripe_invoice`, `quickbooks`, `bill.com`,
          *   `netsuite`), any product mappings must first be configured with the Orb team.
          */
-        fun paymentProvider(paymentProvider: PaymentProvider) = apply {
+        fun paymentProvider(paymentProvider: PaymentProvider?) = apply {
             body.paymentProvider(paymentProvider)
         }
 
@@ -867,19 +887,19 @@ constructor(
          * The ID of this customer in an external payments solution, such as Stripe. This is used
          * for creating charges or invoices in the external system via Orb.
          */
-        fun paymentProviderId(paymentProviderId: String) = apply {
+        fun paymentProviderId(paymentProviderId: String?) = apply {
             body.paymentProviderId(paymentProviderId)
         }
 
-        fun reportingConfiguration(reportingConfiguration: ReportingConfiguration) = apply {
+        fun reportingConfiguration(reportingConfiguration: ReportingConfiguration?) = apply {
             body.reportingConfiguration(reportingConfiguration)
         }
 
-        fun shippingAddress(shippingAddress: ShippingAddress) = apply {
+        fun shippingAddress(shippingAddress: ShippingAddress?) = apply {
             body.shippingAddress(shippingAddress)
         }
 
-        fun taxConfiguration(taxConfiguration: TaxConfiguration) = apply {
+        fun taxConfiguration(taxConfiguration: TaxConfiguration?) = apply {
             body.taxConfiguration(taxConfiguration)
         }
 
@@ -998,7 +1018,7 @@ constructor(
          * |Venezuela           |`ve_rif`    |Venezuelan RIF Number                                                                                  |
          * |Vietnam             |`vn_tin`    |Vietnamese Tax ID Number                                                                               |
          */
-        fun taxId(taxId: TaxId) = apply { body.taxId(taxId) }
+        fun taxId(taxId: TaxId?) = apply { body.taxId(taxId) }
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {
             this.additionalHeaders.clear()
@@ -1167,8 +1187,8 @@ constructor(
                     accountingSyncConfiguration.additionalProperties.toMutableMap()
             }
 
-            fun accountingProviders(accountingProviders: List<AccountingProvider>) = apply {
-                this.accountingProviders = accountingProviders.toMutableList()
+            fun accountingProviders(accountingProviders: List<AccountingProvider>?) = apply {
+                this.accountingProviders = accountingProviders?.toMutableList()
             }
 
             fun addAccountingProvider(accountingProvider: AccountingProvider) = apply {
@@ -1176,7 +1196,9 @@ constructor(
                     (accountingProviders ?: mutableListOf()).apply { add(accountingProvider) }
             }
 
-            fun excluded(excluded: Boolean) = apply { this.excluded = excluded }
+            fun excluded(excluded: Boolean?) = apply { this.excluded = excluded }
+
+            fun excluded(excluded: Boolean) = excluded(excluded as Boolean?)
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
@@ -1374,17 +1396,17 @@ constructor(
                 additionalProperties = billingAddress.additionalProperties.toMutableMap()
             }
 
-            fun city(city: String) = apply { this.city = city }
+            fun city(city: String?) = apply { this.city = city }
 
-            fun country(country: String) = apply { this.country = country }
+            fun country(country: String?) = apply { this.country = country }
 
-            fun line1(line1: String) = apply { this.line1 = line1 }
+            fun line1(line1: String?) = apply { this.line1 = line1 }
 
-            fun line2(line2: String) = apply { this.line2 = line2 }
+            fun line2(line2: String?) = apply { this.line2 = line2 }
 
-            fun postalCode(postalCode: String) = apply { this.postalCode = postalCode }
+            fun postalCode(postalCode: String?) = apply { this.postalCode = postalCode }
 
-            fun state(state: String) = apply { this.state = state }
+            fun state(state: String?) = apply { this.state = state }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
@@ -1716,17 +1738,17 @@ constructor(
                 additionalProperties = shippingAddress.additionalProperties.toMutableMap()
             }
 
-            fun city(city: String) = apply { this.city = city }
+            fun city(city: String?) = apply { this.city = city }
 
-            fun country(country: String) = apply { this.country = country }
+            fun country(country: String?) = apply { this.country = country }
 
-            fun line1(line1: String) = apply { this.line1 = line1 }
+            fun line1(line1: String?) = apply { this.line1 = line1 }
 
-            fun line2(line2: String) = apply { this.line2 = line2 }
+            fun line2(line2: String?) = apply { this.line2 = line2 }
 
-            fun postalCode(postalCode: String) = apply { this.postalCode = postalCode }
+            fun postalCode(postalCode: String?) = apply { this.postalCode = postalCode }
 
-            fun state(state: String) = apply { this.state = state }
+            fun state(state: String?) = apply { this.state = state }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
@@ -1943,7 +1965,7 @@ constructor(
 
                 fun taxProvider(taxProvider: TaxProvider) = apply { this.taxProvider = taxProvider }
 
-                fun taxExemptionCode(taxExemptionCode: String) = apply {
+                fun taxExemptionCode(taxExemptionCode: String?) = apply {
                     this.taxExemptionCode = taxExemptionCode
                 }
 

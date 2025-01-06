@@ -695,32 +695,32 @@ constructor(
              * The currency or custom pricing unit to use for this ledger entry. If this is a
              * real-world currency, it must match the customer's invoicing currency.
              */
-            fun currency(currency: String) = apply { this.currency = currency }
+            fun currency(currency: String?) = apply { this.currency = currency }
 
             /**
              * Optional metadata that can be specified when adding ledger results via the API. For
              * example, this can be used to note an increment refers to trial credits, or for noting
              * corrections as a result of an incident, etc.
              */
-            fun description(description: String) = apply { this.description = description }
+            fun description(description: String?) = apply { this.description = description }
 
             /**
              * An ISO 8601 format date that denotes when this credit balance should become available
              * for use.
              */
-            fun effectiveDate(effectiveDate: OffsetDateTime) = apply {
+            fun effectiveDate(effectiveDate: OffsetDateTime?) = apply {
                 this.effectiveDate = effectiveDate
             }
 
             /** An ISO 8601 format date that denotes when this credit balance should expire. */
-            fun expiryDate(expiryDate: OffsetDateTime) = apply { this.expiryDate = expiryDate }
+            fun expiryDate(expiryDate: OffsetDateTime?) = apply { this.expiryDate = expiryDate }
 
             /**
              * Passing `invoice_settings` automatically generates an invoice for the newly added
              * credits. If `invoice_settings` is passed, you must specify per_unit_cost_basis, as
              * the calculation of the invoice total is done on that basis.
              */
-            fun invoiceSettings(invoiceSettings: InvoiceSettings) = apply {
+            fun invoiceSettings(invoiceSettings: InvoiceSettings?) = apply {
                 this.invoiceSettings = invoiceSettings
             }
 
@@ -729,13 +729,13 @@ constructor(
              * setting the value to `null`, and the entire metadata mapping can be cleared by
              * setting `metadata` to `null`.
              */
-            fun metadata(metadata: Metadata) = apply { this.metadata = metadata }
+            fun metadata(metadata: Metadata?) = apply { this.metadata = metadata }
 
             /**
              * Can only be specified when entry_type=increment. How much, in the customer's
              * currency, a customer paid for a single credit in this block
              */
-            fun perUnitCostBasis(perUnitCostBasis: String) = apply {
+            fun perUnitCostBasis(perUnitCostBasis: String?) = apply {
                 this.perUnitCostBasis = perUnitCostBasis
             }
 
@@ -907,15 +907,22 @@ constructor(
                 fun netTerms(netTerms: Long) = apply { this.netTerms = netTerms }
 
                 /** An optional memo to display on the invoice. */
-                fun memo(memo: String) = apply { this.memo = memo }
+                fun memo(memo: String?) = apply { this.memo = memo }
 
                 /**
                  * If true, the new credit block will require that the corresponding invoice is paid
                  * before it can be drawn down from.
                  */
-                fun requireSuccessfulPayment(requireSuccessfulPayment: Boolean) = apply {
+                fun requireSuccessfulPayment(requireSuccessfulPayment: Boolean?) = apply {
                     this.requireSuccessfulPayment = requireSuccessfulPayment
                 }
+
+                /**
+                 * If true, the new credit block will require that the corresponding invoice is paid
+                 * before it can be drawn down from.
+                 */
+                fun requireSuccessfulPayment(requireSuccessfulPayment: Boolean) =
+                    requireSuccessfulPayment(requireSuccessfulPayment as Boolean?)
 
                 fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                     this.additionalProperties.clear()
@@ -1147,21 +1154,21 @@ constructor(
              * The currency or custom pricing unit to use for this ledger entry. If this is a
              * real-world currency, it must match the customer's invoicing currency.
              */
-            fun currency(currency: String) = apply { this.currency = currency }
+            fun currency(currency: String?) = apply { this.currency = currency }
 
             /**
              * Optional metadata that can be specified when adding ledger results via the API. For
              * example, this can be used to note an increment refers to trial credits, or for noting
              * corrections as a result of an incident, etc.
              */
-            fun description(description: String) = apply { this.description = description }
+            fun description(description: String?) = apply { this.description = description }
 
             /**
              * User-specified key/value pairs for the resource. Individual keys can be removed by
              * setting the value to `null`, and the entire metadata mapping can be cleared by
              * setting `metadata` to `null`.
              */
-            fun metadata(metadata: Metadata) = apply { this.metadata = metadata }
+            fun metadata(metadata: Metadata?) = apply { this.metadata = metadata }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
@@ -1439,7 +1446,7 @@ constructor(
             fun entryType(entryType: EntryType) = apply { this.entryType = entryType }
 
             /** An ISO 8601 format date that identifies the origination credit block to expire */
-            fun expiryDate(expiryDate: OffsetDateTime) = apply { this.expiryDate = expiryDate }
+            fun expiryDate(expiryDate: OffsetDateTime?) = apply { this.expiryDate = expiryDate }
 
             /**
              * A future date (specified in YYYY-MM-DD format) used for expiration change, denoting
@@ -1453,33 +1460,39 @@ constructor(
              * The number of credits to effect. Note that this is required for increment, decrement,
              * void, or undo operations.
              */
-            fun amount(amount: Double) = apply { this.amount = amount }
+            fun amount(amount: Double?) = apply { this.amount = amount }
+
+            /**
+             * The number of credits to effect. Note that this is required for increment, decrement,
+             * void, or undo operations.
+             */
+            fun amount(amount: Double) = amount(amount as Double?)
 
             /**
              * The ID of the block affected by an expiration_change, used to differentiate between
              * multiple blocks with the same `expiry_date`.
              */
-            fun blockId(blockId: String) = apply { this.blockId = blockId }
+            fun blockId(blockId: String?) = apply { this.blockId = blockId }
 
             /**
              * The currency or custom pricing unit to use for this ledger entry. If this is a
              * real-world currency, it must match the customer's invoicing currency.
              */
-            fun currency(currency: String) = apply { this.currency = currency }
+            fun currency(currency: String?) = apply { this.currency = currency }
 
             /**
              * Optional metadata that can be specified when adding ledger results via the API. For
              * example, this can be used to note an increment refers to trial credits, or for noting
              * corrections as a result of an incident, etc.
              */
-            fun description(description: String) = apply { this.description = description }
+            fun description(description: String?) = apply { this.description = description }
 
             /**
              * User-specified key/value pairs for the resource. Individual keys can be removed by
              * setting the value to `null`, and the entire metadata mapping can be cleared by
              * setting `metadata` to `null`.
              */
-            fun metadata(metadata: Metadata) = apply { this.metadata = metadata }
+            fun metadata(metadata: Metadata?) = apply { this.metadata = metadata }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
@@ -1759,24 +1772,24 @@ constructor(
              * The currency or custom pricing unit to use for this ledger entry. If this is a
              * real-world currency, it must match the customer's invoicing currency.
              */
-            fun currency(currency: String) = apply { this.currency = currency }
+            fun currency(currency: String?) = apply { this.currency = currency }
 
             /**
              * Optional metadata that can be specified when adding ledger results via the API. For
              * example, this can be used to note an increment refers to trial credits, or for noting
              * corrections as a result of an incident, etc.
              */
-            fun description(description: String) = apply { this.description = description }
+            fun description(description: String?) = apply { this.description = description }
 
             /**
              * User-specified key/value pairs for the resource. Individual keys can be removed by
              * setting the value to `null`, and the entire metadata mapping can be cleared by
              * setting `metadata` to `null`.
              */
-            fun metadata(metadata: Metadata) = apply { this.metadata = metadata }
+            fun metadata(metadata: Metadata?) = apply { this.metadata = metadata }
 
             /** Can only be specified when `entry_type=void`. The reason for the void. */
-            fun voidReason(voidReason: VoidReason) = apply { this.voidReason = voidReason }
+            fun voidReason(voidReason: VoidReason?) = apply { this.voidReason = voidReason }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
@@ -2099,21 +2112,21 @@ constructor(
              * The currency or custom pricing unit to use for this ledger entry. If this is a
              * real-world currency, it must match the customer's invoicing currency.
              */
-            fun currency(currency: String) = apply { this.currency = currency }
+            fun currency(currency: String?) = apply { this.currency = currency }
 
             /**
              * Optional metadata that can be specified when adding ledger results via the API. For
              * example, this can be used to note an increment refers to trial credits, or for noting
              * corrections as a result of an incident, etc.
              */
-            fun description(description: String) = apply { this.description = description }
+            fun description(description: String?) = apply { this.description = description }
 
             /**
              * User-specified key/value pairs for the resource. Individual keys can be removed by
              * setting the value to `null`, and the entire metadata mapping can be cleared by
              * setting `metadata` to `null`.
              */
-            fun metadata(metadata: Metadata) = apply { this.metadata = metadata }
+            fun metadata(metadata: Metadata?) = apply { this.metadata = metadata }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()

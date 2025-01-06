@@ -197,67 +197,72 @@ constructor(
             additionalQueryParams = invoiceListParams.additionalQueryParams.toBuilder()
         }
 
-        fun amount(amount: String) = apply { this.amount = amount }
+        fun amount(amount: String?) = apply { this.amount = amount }
 
-        fun amountGt(amountGt: String) = apply { this.amountGt = amountGt }
+        fun amountGt(amountGt: String?) = apply { this.amountGt = amountGt }
 
-        fun amountLt(amountLt: String) = apply { this.amountLt = amountLt }
+        fun amountLt(amountLt: String?) = apply { this.amountLt = amountLt }
 
         /**
          * Cursor for pagination. This can be populated by the `next_cursor` value returned from the
          * initial request.
          */
-        fun cursor(cursor: String) = apply { this.cursor = cursor }
+        fun cursor(cursor: String?) = apply { this.cursor = cursor }
 
-        fun customerId(customerId: String) = apply { this.customerId = customerId }
+        fun customerId(customerId: String?) = apply { this.customerId = customerId }
 
-        fun dateType(dateType: DateType) = apply { this.dateType = dateType }
+        fun dateType(dateType: DateType?) = apply { this.dateType = dateType }
 
-        fun dueDate(dueDate: LocalDate) = apply { this.dueDate = dueDate }
+        fun dueDate(dueDate: LocalDate?) = apply { this.dueDate = dueDate }
 
         /**
          * Filters invoices by their due dates within a specific time range in the past. Specify the
          * range as a number followed by 'd' (days) or 'm' (months). For example, '7d' filters
          * invoices due in the last 7 days, and '2m' filters those due in the last 2 months.
          */
-        fun dueDateWindow(dueDateWindow: String) = apply { this.dueDateWindow = dueDateWindow }
+        fun dueDateWindow(dueDateWindow: String?) = apply { this.dueDateWindow = dueDateWindow }
 
-        fun dueDateGt(dueDateGt: LocalDate) = apply { this.dueDateGt = dueDateGt }
+        fun dueDateGt(dueDateGt: LocalDate?) = apply { this.dueDateGt = dueDateGt }
 
-        fun dueDateLt(dueDateLt: LocalDate) = apply { this.dueDateLt = dueDateLt }
+        fun dueDateLt(dueDateLt: LocalDate?) = apply { this.dueDateLt = dueDateLt }
 
-        fun externalCustomerId(externalCustomerId: String) = apply {
+        fun externalCustomerId(externalCustomerId: String?) = apply {
             this.externalCustomerId = externalCustomerId
         }
 
-        fun invoiceDateGt(invoiceDateGt: OffsetDateTime) = apply {
+        fun invoiceDateGt(invoiceDateGt: OffsetDateTime?) = apply {
             this.invoiceDateGt = invoiceDateGt
         }
 
-        fun invoiceDateGte(invoiceDateGte: OffsetDateTime) = apply {
+        fun invoiceDateGte(invoiceDateGte: OffsetDateTime?) = apply {
             this.invoiceDateGte = invoiceDateGte
         }
 
-        fun invoiceDateLt(invoiceDateLt: OffsetDateTime) = apply {
+        fun invoiceDateLt(invoiceDateLt: OffsetDateTime?) = apply {
             this.invoiceDateLt = invoiceDateLt
         }
 
-        fun invoiceDateLte(invoiceDateLte: OffsetDateTime) = apply {
+        fun invoiceDateLte(invoiceDateLte: OffsetDateTime?) = apply {
             this.invoiceDateLte = invoiceDateLte
         }
 
-        fun isRecurring(isRecurring: Boolean) = apply { this.isRecurring = isRecurring }
+        fun isRecurring(isRecurring: Boolean?) = apply { this.isRecurring = isRecurring }
+
+        fun isRecurring(isRecurring: Boolean) = isRecurring(isRecurring as Boolean?)
 
         /** The number of items to fetch. Defaults to 20. */
-        fun limit(limit: Long) = apply { this.limit = limit }
+        fun limit(limit: Long?) = apply { this.limit = limit }
 
-        fun status(status: List<Status>) = apply { this.status = status.toMutableList() }
+        /** The number of items to fetch. Defaults to 20. */
+        fun limit(limit: Long) = limit(limit as Long?)
+
+        fun status(status: List<Status>?) = apply { this.status = status?.toMutableList() }
 
         fun addStatus(status: Status) = apply {
             this.status = (this.status ?: mutableListOf()).apply { add(status) }
         }
 
-        fun subscriptionId(subscriptionId: String) = apply { this.subscriptionId = subscriptionId }
+        fun subscriptionId(subscriptionId: String?) = apply { this.subscriptionId = subscriptionId }
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {
             this.additionalHeaders.clear()

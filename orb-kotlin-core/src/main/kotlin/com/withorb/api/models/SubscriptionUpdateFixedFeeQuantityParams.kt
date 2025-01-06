@@ -138,7 +138,7 @@ constructor(
              * this defaults to `effective_date`. Otherwise, this defaults to `immediate` unless
              * it's explicitly set to `upcoming_invoice.
              */
-            fun changeOption(changeOption: ChangeOption) = apply {
+            fun changeOption(changeOption: ChangeOption?) = apply {
                 this.changeOption = changeOption
             }
 
@@ -147,7 +147,7 @@ constructor(
              * timezone. Ifthis parameter is not passed in, the quantity change is effective
              * according to `change_option`.
              */
-            fun effectiveDate(effectiveDate: LocalDate) = apply {
+            fun effectiveDate(effectiveDate: LocalDate?) = apply {
                 this.effectiveDate = effectiveDate
             }
 
@@ -237,14 +237,14 @@ constructor(
          * defaults to `effective_date`. Otherwise, this defaults to `immediate` unless it's
          * explicitly set to `upcoming_invoice.
          */
-        fun changeOption(changeOption: ChangeOption) = apply { body.changeOption(changeOption) }
+        fun changeOption(changeOption: ChangeOption?) = apply { body.changeOption(changeOption) }
 
         /**
          * The date that the quantity change should take effect, localized to the customer's
          * timezone. Ifthis parameter is not passed in, the quantity change is effective according
          * to `change_option`.
          */
-        fun effectiveDate(effectiveDate: LocalDate) = apply { body.effectiveDate(effectiveDate) }
+        fun effectiveDate(effectiveDate: LocalDate?) = apply { body.effectiveDate(effectiveDate) }
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {
             this.additionalHeaders.clear()

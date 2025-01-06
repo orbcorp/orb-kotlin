@@ -160,37 +160,37 @@ constructor(
          * billable metric. Note that both `group_by` and `billable_metric_id` must be specified
          * together.
          */
-        fun billableMetricId(billableMetricId: String) = apply {
+        fun billableMetricId(billableMetricId: String?) = apply {
             this.billableMetricId = billableMetricId
         }
 
-        fun firstDimensionKey(firstDimensionKey: String) = apply {
+        fun firstDimensionKey(firstDimensionKey: String?) = apply {
             this.firstDimensionKey = firstDimensionKey
         }
 
-        fun firstDimensionValue(firstDimensionValue: String) = apply {
+        fun firstDimensionValue(firstDimensionValue: String?) = apply {
             this.firstDimensionValue = firstDimensionValue
         }
 
         /** This determines the windowing of usage reporting. */
-        fun granularity(granularity: Granularity) = apply { this.granularity = granularity }
+        fun granularity(granularity: Granularity?) = apply { this.granularity = granularity }
 
         /** Groups per-price usage by the key provided. */
-        fun groupBy(groupBy: String) = apply { this.groupBy = groupBy }
+        fun groupBy(groupBy: String?) = apply { this.groupBy = groupBy }
 
-        fun secondDimensionKey(secondDimensionKey: String) = apply {
+        fun secondDimensionKey(secondDimensionKey: String?) = apply {
             this.secondDimensionKey = secondDimensionKey
         }
 
-        fun secondDimensionValue(secondDimensionValue: String) = apply {
+        fun secondDimensionValue(secondDimensionValue: String?) = apply {
             this.secondDimensionValue = secondDimensionValue
         }
 
         /** Usage returned is exclusive of `timeframe_end`. */
-        fun timeframeEnd(timeframeEnd: OffsetDateTime) = apply { this.timeframeEnd = timeframeEnd }
+        fun timeframeEnd(timeframeEnd: OffsetDateTime?) = apply { this.timeframeEnd = timeframeEnd }
 
         /** Usage returned is inclusive of `timeframe_start`. */
-        fun timeframeStart(timeframeStart: OffsetDateTime) = apply {
+        fun timeframeStart(timeframeStart: OffsetDateTime?) = apply {
             this.timeframeStart = timeframeStart
         }
 
@@ -199,7 +199,7 @@ constructor(
          * incremental day-by-day usage. If your customer has minimums or discounts, it's strongly
          * recommended that you use the default cumulative behavior.
          */
-        fun viewMode(viewMode: ViewMode) = apply { this.viewMode = viewMode }
+        fun viewMode(viewMode: ViewMode?) = apply { this.viewMode = viewMode }
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {
             this.additionalHeaders.clear()
