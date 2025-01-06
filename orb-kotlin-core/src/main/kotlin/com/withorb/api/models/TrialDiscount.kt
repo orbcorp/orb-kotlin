@@ -21,12 +21,12 @@ import java.util.Objects
 class TrialDiscount
 @JsonCreator
 private constructor(
-    @JsonProperty("discount_type")
-    @ExcludeMissing
-    private val discountType: JsonField<DiscountType> = JsonMissing.of(),
     @JsonProperty("applies_to_price_ids")
     @ExcludeMissing
     private val appliesToPriceIds: JsonField<List<String>> = JsonMissing.of(),
+    @JsonProperty("discount_type")
+    @ExcludeMissing
+    private val discountType: JsonField<DiscountType> = JsonMissing.of(),
     @JsonProperty("reason")
     @ExcludeMissing
     private val reason: JsonField<String> = JsonMissing.of(),
@@ -39,13 +39,13 @@ private constructor(
     @JsonAnySetter private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
 ) {
 
-    fun discountType(): DiscountType = discountType.getRequired("discount_type")
-
     /**
      * List of price_ids that this discount applies to. For plan/plan phase discounts, this can be a
      * subset of prices.
      */
     fun appliesToPriceIds(): List<String> = appliesToPriceIds.getRequired("applies_to_price_ids")
+
+    fun discountType(): DiscountType = discountType.getRequired("discount_type")
 
     fun reason(): String? = reason.getNullable("reason")
 
@@ -56,8 +56,6 @@ private constructor(
     fun trialPercentageDiscount(): Double? =
         trialPercentageDiscount.getNullable("trial_percentage_discount")
 
-    @JsonProperty("discount_type") @ExcludeMissing fun _discountType() = discountType
-
     /**
      * List of price_ids that this discount applies to. For plan/plan phase discounts, this can be a
      * subset of prices.
@@ -65,6 +63,8 @@ private constructor(
     @JsonProperty("applies_to_price_ids")
     @ExcludeMissing
     fun _appliesToPriceIds() = appliesToPriceIds
+
+    @JsonProperty("discount_type") @ExcludeMissing fun _discountType() = discountType
 
     @JsonProperty("reason") @ExcludeMissing fun _reason() = reason
 
@@ -86,8 +86,8 @@ private constructor(
 
     fun validate(): TrialDiscount = apply {
         if (!validated) {
-            discountType()
             appliesToPriceIds()
+            discountType()
             reason()
             trialAmountDiscount()
             trialPercentageDiscount()
@@ -104,26 +104,20 @@ private constructor(
 
     class Builder {
 
-        private var discountType: JsonField<DiscountType> = JsonMissing.of()
         private var appliesToPriceIds: JsonField<List<String>> = JsonMissing.of()
+        private var discountType: JsonField<DiscountType> = JsonMissing.of()
         private var reason: JsonField<String> = JsonMissing.of()
         private var trialAmountDiscount: JsonField<String> = JsonMissing.of()
         private var trialPercentageDiscount: JsonField<Double> = JsonMissing.of()
         private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         internal fun from(trialDiscount: TrialDiscount) = apply {
-            discountType = trialDiscount.discountType
             appliesToPriceIds = trialDiscount.appliesToPriceIds
+            discountType = trialDiscount.discountType
             reason = trialDiscount.reason
             trialAmountDiscount = trialDiscount.trialAmountDiscount
             trialPercentageDiscount = trialDiscount.trialPercentageDiscount
             additionalProperties = trialDiscount.additionalProperties.toMutableMap()
-        }
-
-        fun discountType(discountType: DiscountType) = discountType(JsonField.of(discountType))
-
-        fun discountType(discountType: JsonField<DiscountType>) = apply {
-            this.discountType = discountType
         }
 
         /**
@@ -139,6 +133,12 @@ private constructor(
          */
         fun appliesToPriceIds(appliesToPriceIds: JsonField<List<String>>) = apply {
             this.appliesToPriceIds = appliesToPriceIds
+        }
+
+        fun discountType(discountType: DiscountType) = discountType(JsonField.of(discountType))
+
+        fun discountType(discountType: JsonField<DiscountType>) = apply {
+            this.discountType = discountType
         }
 
         fun reason(reason: String) = reason(JsonField.of(reason))
@@ -184,8 +184,8 @@ private constructor(
 
         fun build(): TrialDiscount =
             TrialDiscount(
-                discountType,
                 appliesToPriceIds.map { it.toImmutable() },
+                discountType,
                 reason,
                 trialAmountDiscount,
                 trialPercentageDiscount,
@@ -249,15 +249,15 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is TrialDiscount && discountType == other.discountType && appliesToPriceIds == other.appliesToPriceIds && reason == other.reason && trialAmountDiscount == other.trialAmountDiscount && trialPercentageDiscount == other.trialPercentageDiscount && additionalProperties == other.additionalProperties /* spotless:on */
+        return /* spotless:off */ other is TrialDiscount && appliesToPriceIds == other.appliesToPriceIds && discountType == other.discountType && reason == other.reason && trialAmountDiscount == other.trialAmountDiscount && trialPercentageDiscount == other.trialPercentageDiscount && additionalProperties == other.additionalProperties /* spotless:on */
     }
 
     /* spotless:off */
-    private val hashCode: Int by lazy { Objects.hash(discountType, appliesToPriceIds, reason, trialAmountDiscount, trialPercentageDiscount, additionalProperties) }
+    private val hashCode: Int by lazy { Objects.hash(appliesToPriceIds, discountType, reason, trialAmountDiscount, trialPercentageDiscount, additionalProperties) }
     /* spotless:on */
 
     override fun hashCode(): Int = hashCode
 
     override fun toString() =
-        "TrialDiscount{discountType=$discountType, appliesToPriceIds=$appliesToPriceIds, reason=$reason, trialAmountDiscount=$trialAmountDiscount, trialPercentageDiscount=$trialPercentageDiscount, additionalProperties=$additionalProperties}"
+        "TrialDiscount{appliesToPriceIds=$appliesToPriceIds, discountType=$discountType, reason=$reason, trialAmountDiscount=$trialAmountDiscount, trialPercentageDiscount=$trialPercentageDiscount, additionalProperties=$additionalProperties}"
 }

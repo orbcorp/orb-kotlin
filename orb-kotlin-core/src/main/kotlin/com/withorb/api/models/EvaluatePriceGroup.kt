@@ -30,17 +30,20 @@ import java.util.Objects
 class EvaluatePriceGroup
 @JsonCreator
 private constructor(
+    @JsonProperty("amount")
+    @ExcludeMissing
+    private val amount: JsonField<String> = JsonMissing.of(),
     @JsonProperty("grouping_values")
     @ExcludeMissing
     private val groupingValues: JsonField<List<GroupingValue>> = JsonMissing.of(),
     @JsonProperty("quantity")
     @ExcludeMissing
     private val quantity: JsonField<Double> = JsonMissing.of(),
-    @JsonProperty("amount")
-    @ExcludeMissing
-    private val amount: JsonField<String> = JsonMissing.of(),
     @JsonAnySetter private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
 ) {
+
+    /** The price's output for the group */
+    fun amount(): String = amount.getRequired("amount")
 
     /** The values for the group in the order specified by `grouping_keys` */
     fun groupingValues(): List<GroupingValue> = groupingValues.getRequired("grouping_values")
@@ -49,16 +52,13 @@ private constructor(
     fun quantity(): Double = quantity.getRequired("quantity")
 
     /** The price's output for the group */
-    fun amount(): String = amount.getRequired("amount")
+    @JsonProperty("amount") @ExcludeMissing fun _amount() = amount
 
     /** The values for the group in the order specified by `grouping_keys` */
     @JsonProperty("grouping_values") @ExcludeMissing fun _groupingValues() = groupingValues
 
     /** The price's usage quantity for the group */
     @JsonProperty("quantity") @ExcludeMissing fun _quantity() = quantity
-
-    /** The price's output for the group */
-    @JsonProperty("amount") @ExcludeMissing fun _amount() = amount
 
     @JsonAnyGetter
     @ExcludeMissing
@@ -68,9 +68,9 @@ private constructor(
 
     fun validate(): EvaluatePriceGroup = apply {
         if (!validated) {
+            amount()
             groupingValues()
             quantity()
-            amount()
             validated = true
         }
     }
@@ -84,17 +84,23 @@ private constructor(
 
     class Builder {
 
+        private var amount: JsonField<String> = JsonMissing.of()
         private var groupingValues: JsonField<List<GroupingValue>> = JsonMissing.of()
         private var quantity: JsonField<Double> = JsonMissing.of()
-        private var amount: JsonField<String> = JsonMissing.of()
         private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         internal fun from(evaluatePriceGroup: EvaluatePriceGroup) = apply {
+            amount = evaluatePriceGroup.amount
             groupingValues = evaluatePriceGroup.groupingValues
             quantity = evaluatePriceGroup.quantity
-            amount = evaluatePriceGroup.amount
             additionalProperties = evaluatePriceGroup.additionalProperties.toMutableMap()
         }
+
+        /** The price's output for the group */
+        fun amount(amount: String) = amount(JsonField.of(amount))
+
+        /** The price's output for the group */
+        fun amount(amount: JsonField<String>) = apply { this.amount = amount }
 
         /** The values for the group in the order specified by `grouping_keys` */
         fun groupingValues(groupingValues: List<GroupingValue>) =
@@ -110,12 +116,6 @@ private constructor(
 
         /** The price's usage quantity for the group */
         fun quantity(quantity: JsonField<Double>) = apply { this.quantity = quantity }
-
-        /** The price's output for the group */
-        fun amount(amount: String) = amount(JsonField.of(amount))
-
-        /** The price's output for the group */
-        fun amount(amount: JsonField<String>) = apply { this.amount = amount }
 
         fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
             this.additionalProperties.clear()
@@ -138,9 +138,9 @@ private constructor(
 
         fun build(): EvaluatePriceGroup =
             EvaluatePriceGroup(
+                amount,
                 groupingValues.map { it.toImmutable() },
                 quantity,
-                amount,
                 additionalProperties.toImmutable(),
             )
     }
@@ -278,15 +278,15 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is EvaluatePriceGroup && groupingValues == other.groupingValues && quantity == other.quantity && amount == other.amount && additionalProperties == other.additionalProperties /* spotless:on */
+        return /* spotless:off */ other is EvaluatePriceGroup && amount == other.amount && groupingValues == other.groupingValues && quantity == other.quantity && additionalProperties == other.additionalProperties /* spotless:on */
     }
 
     /* spotless:off */
-    private val hashCode: Int by lazy { Objects.hash(groupingValues, quantity, amount, additionalProperties) }
+    private val hashCode: Int by lazy { Objects.hash(amount, groupingValues, quantity, additionalProperties) }
     /* spotless:on */
 
     override fun hashCode(): Int = hashCode
 
     override fun toString() =
-        "EvaluatePriceGroup{groupingValues=$groupingValues, quantity=$quantity, amount=$amount, additionalProperties=$additionalProperties}"
+        "EvaluatePriceGroup{amount=$amount, groupingValues=$groupingValues, quantity=$quantity, additionalProperties=$additionalProperties}"
 }

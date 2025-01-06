@@ -30,42 +30,42 @@ private constructor(
     @JsonProperty("created_at")
     @ExcludeMissing
     private val createdAt: JsonField<OffsetDateTime> = JsonMissing.of(),
-    @JsonProperty("voided_at")
-    @ExcludeMissing
-    private val voidedAt: JsonField<OffsetDateTime> = JsonMissing.of(),
     @JsonProperty("credit_note_number")
     @ExcludeMissing
     private val creditNoteNumber: JsonField<String> = JsonMissing.of(),
+    @JsonProperty("credit_note_pdf")
+    @ExcludeMissing
+    private val creditNotePdf: JsonField<String> = JsonMissing.of(),
+    @JsonProperty("customer")
+    @ExcludeMissing
+    private val customer: JsonField<Customer> = JsonMissing.of(),
     @JsonProperty("invoice_id")
     @ExcludeMissing
     private val invoiceId: JsonField<String> = JsonMissing.of(),
+    @JsonProperty("line_items")
+    @ExcludeMissing
+    private val lineItems: JsonField<List<LineItem>> = JsonMissing.of(),
+    @JsonProperty("maximum_amount_adjustment")
+    @ExcludeMissing
+    private val maximumAmountAdjustment: JsonField<MaximumAmountAdjustment> = JsonMissing.of(),
     @JsonProperty("memo") @ExcludeMissing private val memo: JsonField<String> = JsonMissing.of(),
+    @JsonProperty("minimum_amount_refunded")
+    @ExcludeMissing
+    private val minimumAmountRefunded: JsonField<String> = JsonMissing.of(),
     @JsonProperty("reason")
     @ExcludeMissing
     private val reason: JsonField<Reason> = JsonMissing.of(),
-    @JsonProperty("type") @ExcludeMissing private val type: JsonField<Type> = JsonMissing.of(),
     @JsonProperty("subtotal")
     @ExcludeMissing
     private val subtotal: JsonField<String> = JsonMissing.of(),
     @JsonProperty("total") @ExcludeMissing private val total: JsonField<String> = JsonMissing.of(),
-    @JsonProperty("customer")
+    @JsonProperty("type") @ExcludeMissing private val type: JsonField<Type> = JsonMissing.of(),
+    @JsonProperty("voided_at")
     @ExcludeMissing
-    private val customer: JsonField<Customer> = JsonMissing.of(),
-    @JsonProperty("credit_note_pdf")
-    @ExcludeMissing
-    private val creditNotePdf: JsonField<String> = JsonMissing.of(),
-    @JsonProperty("minimum_amount_refunded")
-    @ExcludeMissing
-    private val minimumAmountRefunded: JsonField<String> = JsonMissing.of(),
+    private val voidedAt: JsonField<OffsetDateTime> = JsonMissing.of(),
     @JsonProperty("discounts")
     @ExcludeMissing
     private val discounts: JsonField<List<Discount>> = JsonMissing.of(),
-    @JsonProperty("maximum_amount_adjustment")
-    @ExcludeMissing
-    private val maximumAmountAdjustment: JsonField<MaximumAmountAdjustment> = JsonMissing.of(),
-    @JsonProperty("line_items")
-    @ExcludeMissing
-    private val lineItems: JsonField<List<LineItem>> = JsonMissing.of(),
     @JsonAnySetter private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
 ) {
 
@@ -75,21 +75,32 @@ private constructor(
     /** The creation time of the resource in Orb. */
     fun createdAt(): OffsetDateTime = createdAt.getRequired("created_at")
 
-    /** The time at which the credit note was voided in Orb, if applicable. */
-    fun voidedAt(): OffsetDateTime? = voidedAt.getNullable("voided_at")
-
     /** The unique identifier for credit notes. */
     fun creditNoteNumber(): String = creditNoteNumber.getRequired("credit_note_number")
+
+    /** A URL to a PDF of the credit note. */
+    fun creditNotePdf(): String? = creditNotePdf.getNullable("credit_note_pdf")
+
+    fun customer(): Customer = customer.getRequired("customer")
 
     /** The id of the invoice resource that this credit note is applied to. */
     fun invoiceId(): String = invoiceId.getRequired("invoice_id")
 
+    /** All of the line items associated with this credit note. */
+    fun lineItems(): List<LineItem> = lineItems.getRequired("line_items")
+
+    /** The maximum amount applied on the original invoice */
+    fun maximumAmountAdjustment(): MaximumAmountAdjustment? =
+        maximumAmountAdjustment.getNullable("maximum_amount_adjustment")
+
     /** An optional memo supplied on the credit note. */
     fun memo(): String? = memo.getNullable("memo")
 
-    fun reason(): Reason? = reason.getNullable("reason")
+    /** Any credited amount from the applied minimum on the invoice. */
+    fun minimumAmountRefunded(): String? =
+        minimumAmountRefunded.getNullable("minimum_amount_refunded")
 
-    fun type(): Type = type.getRequired("type")
+    fun reason(): Reason? = reason.getNullable("reason")
 
     /** The total prior to any creditable invoice-level discounts or minimums. */
     fun subtotal(): String = subtotal.getRequired("subtotal")
@@ -97,24 +108,13 @@ private constructor(
     /** The total including creditable invoice-level discounts or minimums, and tax. */
     fun total(): String = total.getRequired("total")
 
-    fun customer(): Customer = customer.getRequired("customer")
+    fun type(): Type = type.getRequired("type")
 
-    /** A URL to a PDF of the credit note. */
-    fun creditNotePdf(): String? = creditNotePdf.getNullable("credit_note_pdf")
-
-    /** Any credited amount from the applied minimum on the invoice. */
-    fun minimumAmountRefunded(): String? =
-        minimumAmountRefunded.getNullable("minimum_amount_refunded")
+    /** The time at which the credit note was voided in Orb, if applicable. */
+    fun voidedAt(): OffsetDateTime? = voidedAt.getNullable("voided_at")
 
     /** Any discounts applied on the original invoice. */
     fun discounts(): List<Discount>? = discounts.getNullable("discounts")
-
-    /** The maximum amount applied on the original invoice */
-    fun maximumAmountAdjustment(): MaximumAmountAdjustment? =
-        maximumAmountAdjustment.getNullable("maximum_amount_adjustment")
-
-    /** All of the line items associated with this credit note. */
-    fun lineItems(): List<LineItem> = lineItems.getRequired("line_items")
 
     /** The Orb id of this credit note. */
     @JsonProperty("id") @ExcludeMissing fun _id() = id
@@ -122,21 +122,34 @@ private constructor(
     /** The creation time of the resource in Orb. */
     @JsonProperty("created_at") @ExcludeMissing fun _createdAt() = createdAt
 
-    /** The time at which the credit note was voided in Orb, if applicable. */
-    @JsonProperty("voided_at") @ExcludeMissing fun _voidedAt() = voidedAt
-
     /** The unique identifier for credit notes. */
     @JsonProperty("credit_note_number") @ExcludeMissing fun _creditNoteNumber() = creditNoteNumber
+
+    /** A URL to a PDF of the credit note. */
+    @JsonProperty("credit_note_pdf") @ExcludeMissing fun _creditNotePdf() = creditNotePdf
+
+    @JsonProperty("customer") @ExcludeMissing fun _customer() = customer
 
     /** The id of the invoice resource that this credit note is applied to. */
     @JsonProperty("invoice_id") @ExcludeMissing fun _invoiceId() = invoiceId
 
+    /** All of the line items associated with this credit note. */
+    @JsonProperty("line_items") @ExcludeMissing fun _lineItems() = lineItems
+
+    /** The maximum amount applied on the original invoice */
+    @JsonProperty("maximum_amount_adjustment")
+    @ExcludeMissing
+    fun _maximumAmountAdjustment() = maximumAmountAdjustment
+
     /** An optional memo supplied on the credit note. */
     @JsonProperty("memo") @ExcludeMissing fun _memo() = memo
 
-    @JsonProperty("reason") @ExcludeMissing fun _reason() = reason
+    /** Any credited amount from the applied minimum on the invoice. */
+    @JsonProperty("minimum_amount_refunded")
+    @ExcludeMissing
+    fun _minimumAmountRefunded() = minimumAmountRefunded
 
-    @JsonProperty("type") @ExcludeMissing fun _type() = type
+    @JsonProperty("reason") @ExcludeMissing fun _reason() = reason
 
     /** The total prior to any creditable invoice-level discounts or minimums. */
     @JsonProperty("subtotal") @ExcludeMissing fun _subtotal() = subtotal
@@ -144,26 +157,13 @@ private constructor(
     /** The total including creditable invoice-level discounts or minimums, and tax. */
     @JsonProperty("total") @ExcludeMissing fun _total() = total
 
-    @JsonProperty("customer") @ExcludeMissing fun _customer() = customer
+    @JsonProperty("type") @ExcludeMissing fun _type() = type
 
-    /** A URL to a PDF of the credit note. */
-    @JsonProperty("credit_note_pdf") @ExcludeMissing fun _creditNotePdf() = creditNotePdf
-
-    /** Any credited amount from the applied minimum on the invoice. */
-    @JsonProperty("minimum_amount_refunded")
-    @ExcludeMissing
-    fun _minimumAmountRefunded() = minimumAmountRefunded
+    /** The time at which the credit note was voided in Orb, if applicable. */
+    @JsonProperty("voided_at") @ExcludeMissing fun _voidedAt() = voidedAt
 
     /** Any discounts applied on the original invoice. */
     @JsonProperty("discounts") @ExcludeMissing fun _discounts() = discounts
-
-    /** The maximum amount applied on the original invoice */
-    @JsonProperty("maximum_amount_adjustment")
-    @ExcludeMissing
-    fun _maximumAmountAdjustment() = maximumAmountAdjustment
-
-    /** All of the line items associated with this credit note. */
-    @JsonProperty("line_items") @ExcludeMissing fun _lineItems() = lineItems
 
     @JsonAnyGetter
     @ExcludeMissing
@@ -175,20 +175,20 @@ private constructor(
         if (!validated) {
             id()
             createdAt()
-            voidedAt()
             creditNoteNumber()
+            creditNotePdf()
+            customer().validate()
             invoiceId()
+            lineItems().forEach { it.validate() }
+            maximumAmountAdjustment()?.validate()
             memo()
+            minimumAmountRefunded()
             reason()
-            type()
             subtotal()
             total()
-            customer().validate()
-            creditNotePdf()
-            minimumAmountRefunded()
+            type()
+            voidedAt()
             discounts()?.forEach { it.validate() }
-            maximumAmountAdjustment()?.validate()
-            lineItems().forEach { it.validate() }
             validated = true
         }
     }
@@ -204,39 +204,39 @@ private constructor(
 
         private var id: JsonField<String> = JsonMissing.of()
         private var createdAt: JsonField<OffsetDateTime> = JsonMissing.of()
-        private var voidedAt: JsonField<OffsetDateTime> = JsonMissing.of()
         private var creditNoteNumber: JsonField<String> = JsonMissing.of()
+        private var creditNotePdf: JsonField<String> = JsonMissing.of()
+        private var customer: JsonField<Customer> = JsonMissing.of()
         private var invoiceId: JsonField<String> = JsonMissing.of()
+        private var lineItems: JsonField<List<LineItem>> = JsonMissing.of()
+        private var maximumAmountAdjustment: JsonField<MaximumAmountAdjustment> = JsonMissing.of()
         private var memo: JsonField<String> = JsonMissing.of()
+        private var minimumAmountRefunded: JsonField<String> = JsonMissing.of()
         private var reason: JsonField<Reason> = JsonMissing.of()
-        private var type: JsonField<Type> = JsonMissing.of()
         private var subtotal: JsonField<String> = JsonMissing.of()
         private var total: JsonField<String> = JsonMissing.of()
-        private var customer: JsonField<Customer> = JsonMissing.of()
-        private var creditNotePdf: JsonField<String> = JsonMissing.of()
-        private var minimumAmountRefunded: JsonField<String> = JsonMissing.of()
+        private var type: JsonField<Type> = JsonMissing.of()
+        private var voidedAt: JsonField<OffsetDateTime> = JsonMissing.of()
         private var discounts: JsonField<List<Discount>> = JsonMissing.of()
-        private var maximumAmountAdjustment: JsonField<MaximumAmountAdjustment> = JsonMissing.of()
-        private var lineItems: JsonField<List<LineItem>> = JsonMissing.of()
         private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         internal fun from(creditNote: CreditNote) = apply {
             id = creditNote.id
             createdAt = creditNote.createdAt
-            voidedAt = creditNote.voidedAt
             creditNoteNumber = creditNote.creditNoteNumber
+            creditNotePdf = creditNote.creditNotePdf
+            customer = creditNote.customer
             invoiceId = creditNote.invoiceId
+            lineItems = creditNote.lineItems
+            maximumAmountAdjustment = creditNote.maximumAmountAdjustment
             memo = creditNote.memo
+            minimumAmountRefunded = creditNote.minimumAmountRefunded
             reason = creditNote.reason
-            type = creditNote.type
             subtotal = creditNote.subtotal
             total = creditNote.total
-            customer = creditNote.customer
-            creditNotePdf = creditNote.creditNotePdf
-            minimumAmountRefunded = creditNote.minimumAmountRefunded
+            type = creditNote.type
+            voidedAt = creditNote.voidedAt
             discounts = creditNote.discounts
-            maximumAmountAdjustment = creditNote.maximumAmountAdjustment
-            lineItems = creditNote.lineItems
             additionalProperties = creditNote.additionalProperties.toMutableMap()
         }
 
@@ -252,12 +252,6 @@ private constructor(
         /** The creation time of the resource in Orb. */
         fun createdAt(createdAt: JsonField<OffsetDateTime>) = apply { this.createdAt = createdAt }
 
-        /** The time at which the credit note was voided in Orb, if applicable. */
-        fun voidedAt(voidedAt: OffsetDateTime) = voidedAt(JsonField.of(voidedAt))
-
-        /** The time at which the credit note was voided in Orb, if applicable. */
-        fun voidedAt(voidedAt: JsonField<OffsetDateTime>) = apply { this.voidedAt = voidedAt }
-
         /** The unique identifier for credit notes. */
         fun creditNoteNumber(creditNoteNumber: String) =
             creditNoteNumber(JsonField.of(creditNoteNumber))
@@ -267,11 +261,39 @@ private constructor(
             this.creditNoteNumber = creditNoteNumber
         }
 
+        /** A URL to a PDF of the credit note. */
+        fun creditNotePdf(creditNotePdf: String) = creditNotePdf(JsonField.of(creditNotePdf))
+
+        /** A URL to a PDF of the credit note. */
+        fun creditNotePdf(creditNotePdf: JsonField<String>) = apply {
+            this.creditNotePdf = creditNotePdf
+        }
+
+        fun customer(customer: Customer) = customer(JsonField.of(customer))
+
+        fun customer(customer: JsonField<Customer>) = apply { this.customer = customer }
+
         /** The id of the invoice resource that this credit note is applied to. */
         fun invoiceId(invoiceId: String) = invoiceId(JsonField.of(invoiceId))
 
         /** The id of the invoice resource that this credit note is applied to. */
         fun invoiceId(invoiceId: JsonField<String>) = apply { this.invoiceId = invoiceId }
+
+        /** All of the line items associated with this credit note. */
+        fun lineItems(lineItems: List<LineItem>) = lineItems(JsonField.of(lineItems))
+
+        /** All of the line items associated with this credit note. */
+        fun lineItems(lineItems: JsonField<List<LineItem>>) = apply { this.lineItems = lineItems }
+
+        /** The maximum amount applied on the original invoice */
+        fun maximumAmountAdjustment(maximumAmountAdjustment: MaximumAmountAdjustment) =
+            maximumAmountAdjustment(JsonField.of(maximumAmountAdjustment))
+
+        /** The maximum amount applied on the original invoice */
+        fun maximumAmountAdjustment(maximumAmountAdjustment: JsonField<MaximumAmountAdjustment>) =
+            apply {
+                this.maximumAmountAdjustment = maximumAmountAdjustment
+            }
 
         /** An optional memo supplied on the credit note. */
         fun memo(memo: String) = memo(JsonField.of(memo))
@@ -279,13 +301,18 @@ private constructor(
         /** An optional memo supplied on the credit note. */
         fun memo(memo: JsonField<String>) = apply { this.memo = memo }
 
+        /** Any credited amount from the applied minimum on the invoice. */
+        fun minimumAmountRefunded(minimumAmountRefunded: String) =
+            minimumAmountRefunded(JsonField.of(minimumAmountRefunded))
+
+        /** Any credited amount from the applied minimum on the invoice. */
+        fun minimumAmountRefunded(minimumAmountRefunded: JsonField<String>) = apply {
+            this.minimumAmountRefunded = minimumAmountRefunded
+        }
+
         fun reason(reason: Reason) = reason(JsonField.of(reason))
 
         fun reason(reason: JsonField<Reason>) = apply { this.reason = reason }
-
-        fun type(type: Type) = type(JsonField.of(type))
-
-        fun type(type: JsonField<Type>) = apply { this.type = type }
 
         /** The total prior to any creditable invoice-level discounts or minimums. */
         fun subtotal(subtotal: String) = subtotal(JsonField.of(subtotal))
@@ -299,48 +326,21 @@ private constructor(
         /** The total including creditable invoice-level discounts or minimums, and tax. */
         fun total(total: JsonField<String>) = apply { this.total = total }
 
-        fun customer(customer: Customer) = customer(JsonField.of(customer))
+        fun type(type: Type) = type(JsonField.of(type))
 
-        fun customer(customer: JsonField<Customer>) = apply { this.customer = customer }
+        fun type(type: JsonField<Type>) = apply { this.type = type }
 
-        /** A URL to a PDF of the credit note. */
-        fun creditNotePdf(creditNotePdf: String) = creditNotePdf(JsonField.of(creditNotePdf))
+        /** The time at which the credit note was voided in Orb, if applicable. */
+        fun voidedAt(voidedAt: OffsetDateTime) = voidedAt(JsonField.of(voidedAt))
 
-        /** A URL to a PDF of the credit note. */
-        fun creditNotePdf(creditNotePdf: JsonField<String>) = apply {
-            this.creditNotePdf = creditNotePdf
-        }
-
-        /** Any credited amount from the applied minimum on the invoice. */
-        fun minimumAmountRefunded(minimumAmountRefunded: String) =
-            minimumAmountRefunded(JsonField.of(minimumAmountRefunded))
-
-        /** Any credited amount from the applied minimum on the invoice. */
-        fun minimumAmountRefunded(minimumAmountRefunded: JsonField<String>) = apply {
-            this.minimumAmountRefunded = minimumAmountRefunded
-        }
+        /** The time at which the credit note was voided in Orb, if applicable. */
+        fun voidedAt(voidedAt: JsonField<OffsetDateTime>) = apply { this.voidedAt = voidedAt }
 
         /** Any discounts applied on the original invoice. */
         fun discounts(discounts: List<Discount>) = discounts(JsonField.of(discounts))
 
         /** Any discounts applied on the original invoice. */
         fun discounts(discounts: JsonField<List<Discount>>) = apply { this.discounts = discounts }
-
-        /** The maximum amount applied on the original invoice */
-        fun maximumAmountAdjustment(maximumAmountAdjustment: MaximumAmountAdjustment) =
-            maximumAmountAdjustment(JsonField.of(maximumAmountAdjustment))
-
-        /** The maximum amount applied on the original invoice */
-        fun maximumAmountAdjustment(maximumAmountAdjustment: JsonField<MaximumAmountAdjustment>) =
-            apply {
-                this.maximumAmountAdjustment = maximumAmountAdjustment
-            }
-
-        /** All of the line items associated with this credit note. */
-        fun lineItems(lineItems: List<LineItem>) = lineItems(JsonField.of(lineItems))
-
-        /** All of the line items associated with this credit note. */
-        fun lineItems(lineItems: JsonField<List<LineItem>>) = apply { this.lineItems = lineItems }
 
         fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
             this.additionalProperties.clear()
@@ -365,20 +365,20 @@ private constructor(
             CreditNote(
                 id,
                 createdAt,
-                voidedAt,
                 creditNoteNumber,
+                creditNotePdf,
+                customer,
                 invoiceId,
+                lineItems.map { it.toImmutable() },
+                maximumAmountAdjustment,
                 memo,
+                minimumAmountRefunded,
                 reason,
-                type,
                 subtotal,
                 total,
-                customer,
-                creditNotePdf,
-                minimumAmountRefunded,
+                type,
+                voidedAt,
                 discounts.map { it.toImmutable() },
-                maximumAmountAdjustment,
-                lineItems.map { it.toImmutable() },
                 additionalProperties.toImmutable(),
             )
     }
@@ -499,24 +499,24 @@ private constructor(
     @JsonCreator
     private constructor(
         @JsonProperty("id") @ExcludeMissing private val id: JsonField<String> = JsonMissing.of(),
-        @JsonProperty("name")
-        @ExcludeMissing
-        private val name: JsonField<String> = JsonMissing.of(),
-        @JsonProperty("subtotal")
-        @ExcludeMissing
-        private val subtotal: JsonField<String> = JsonMissing.of(),
         @JsonProperty("amount")
         @ExcludeMissing
         private val amount: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("name")
+        @ExcludeMissing
+        private val name: JsonField<String> = JsonMissing.of(),
         @JsonProperty("quantity")
         @ExcludeMissing
         private val quantity: JsonField<Double> = JsonMissing.of(),
-        @JsonProperty("discounts")
+        @JsonProperty("subtotal")
         @ExcludeMissing
-        private val discounts: JsonField<List<Discount>> = JsonMissing.of(),
+        private val subtotal: JsonField<String> = JsonMissing.of(),
         @JsonProperty("tax_amounts")
         @ExcludeMissing
         private val taxAmounts: JsonField<List<TaxAmount>> = JsonMissing.of(),
+        @JsonProperty("discounts")
+        @ExcludeMissing
+        private val discounts: JsonField<List<Discount>> = JsonMissing.of(),
         @JsonAnySetter
         private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
@@ -524,44 +524,44 @@ private constructor(
         /** The Orb id of this resource. */
         fun id(): String = id.getRequired("id")
 
-        /** The name of the corresponding invoice line item. */
-        fun name(): String = name.getRequired("name")
-
-        /** The amount of the line item, excluding any line item minimums and discounts. */
-        fun subtotal(): String = subtotal.getRequired("subtotal")
-
         /** The amount of the line item, including any line item minimums and discounts. */
         fun amount(): String = amount.getRequired("amount")
+
+        /** The name of the corresponding invoice line item. */
+        fun name(): String = name.getRequired("name")
 
         /** An optional quantity credited. */
         fun quantity(): Double? = quantity.getNullable("quantity")
 
-        /** Any line item discounts from the invoice's line item. */
-        fun discounts(): List<Discount>? = discounts.getNullable("discounts")
+        /** The amount of the line item, excluding any line item minimums and discounts. */
+        fun subtotal(): String = subtotal.getRequired("subtotal")
 
         /** Any tax amounts applied onto the line item. */
         fun taxAmounts(): List<TaxAmount> = taxAmounts.getRequired("tax_amounts")
 
+        /** Any line item discounts from the invoice's line item. */
+        fun discounts(): List<Discount>? = discounts.getNullable("discounts")
+
         /** The Orb id of this resource. */
         @JsonProperty("id") @ExcludeMissing fun _id() = id
-
-        /** The name of the corresponding invoice line item. */
-        @JsonProperty("name") @ExcludeMissing fun _name() = name
-
-        /** The amount of the line item, excluding any line item minimums and discounts. */
-        @JsonProperty("subtotal") @ExcludeMissing fun _subtotal() = subtotal
 
         /** The amount of the line item, including any line item minimums and discounts. */
         @JsonProperty("amount") @ExcludeMissing fun _amount() = amount
 
+        /** The name of the corresponding invoice line item. */
+        @JsonProperty("name") @ExcludeMissing fun _name() = name
+
         /** An optional quantity credited. */
         @JsonProperty("quantity") @ExcludeMissing fun _quantity() = quantity
 
-        /** Any line item discounts from the invoice's line item. */
-        @JsonProperty("discounts") @ExcludeMissing fun _discounts() = discounts
+        /** The amount of the line item, excluding any line item minimums and discounts. */
+        @JsonProperty("subtotal") @ExcludeMissing fun _subtotal() = subtotal
 
         /** Any tax amounts applied onto the line item. */
         @JsonProperty("tax_amounts") @ExcludeMissing fun _taxAmounts() = taxAmounts
+
+        /** Any line item discounts from the invoice's line item. */
+        @JsonProperty("discounts") @ExcludeMissing fun _discounts() = discounts
 
         @JsonAnyGetter
         @ExcludeMissing
@@ -572,12 +572,12 @@ private constructor(
         fun validate(): LineItem = apply {
             if (!validated) {
                 id()
-                name()
-                subtotal()
                 amount()
+                name()
                 quantity()
-                discounts()?.forEach { it.validate() }
+                subtotal()
                 taxAmounts().forEach { it.validate() }
+                discounts()?.forEach { it.validate() }
                 validated = true
             }
         }
@@ -592,22 +592,22 @@ private constructor(
         class Builder {
 
             private var id: JsonField<String> = JsonMissing.of()
-            private var name: JsonField<String> = JsonMissing.of()
-            private var subtotal: JsonField<String> = JsonMissing.of()
             private var amount: JsonField<String> = JsonMissing.of()
+            private var name: JsonField<String> = JsonMissing.of()
             private var quantity: JsonField<Double> = JsonMissing.of()
-            private var discounts: JsonField<List<Discount>> = JsonMissing.of()
+            private var subtotal: JsonField<String> = JsonMissing.of()
             private var taxAmounts: JsonField<List<TaxAmount>> = JsonMissing.of()
+            private var discounts: JsonField<List<Discount>> = JsonMissing.of()
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             internal fun from(lineItem: LineItem) = apply {
                 id = lineItem.id
-                name = lineItem.name
-                subtotal = lineItem.subtotal
                 amount = lineItem.amount
+                name = lineItem.name
                 quantity = lineItem.quantity
-                discounts = lineItem.discounts
+                subtotal = lineItem.subtotal
                 taxAmounts = lineItem.taxAmounts
+                discounts = lineItem.discounts
                 additionalProperties = lineItem.additionalProperties.toMutableMap()
             }
 
@@ -617,23 +617,17 @@ private constructor(
             /** The Orb id of this resource. */
             fun id(id: JsonField<String>) = apply { this.id = id }
 
-            /** The name of the corresponding invoice line item. */
-            fun name(name: String) = name(JsonField.of(name))
-
-            /** The name of the corresponding invoice line item. */
-            fun name(name: JsonField<String>) = apply { this.name = name }
-
-            /** The amount of the line item, excluding any line item minimums and discounts. */
-            fun subtotal(subtotal: String) = subtotal(JsonField.of(subtotal))
-
-            /** The amount of the line item, excluding any line item minimums and discounts. */
-            fun subtotal(subtotal: JsonField<String>) = apply { this.subtotal = subtotal }
-
             /** The amount of the line item, including any line item minimums and discounts. */
             fun amount(amount: String) = amount(JsonField.of(amount))
 
             /** The amount of the line item, including any line item minimums and discounts. */
             fun amount(amount: JsonField<String>) = apply { this.amount = amount }
+
+            /** The name of the corresponding invoice line item. */
+            fun name(name: String) = name(JsonField.of(name))
+
+            /** The name of the corresponding invoice line item. */
+            fun name(name: JsonField<String>) = apply { this.name = name }
 
             /** An optional quantity credited. */
             fun quantity(quantity: Double) = quantity(JsonField.of(quantity))
@@ -641,13 +635,11 @@ private constructor(
             /** An optional quantity credited. */
             fun quantity(quantity: JsonField<Double>) = apply { this.quantity = quantity }
 
-            /** Any line item discounts from the invoice's line item. */
-            fun discounts(discounts: List<Discount>) = discounts(JsonField.of(discounts))
+            /** The amount of the line item, excluding any line item minimums and discounts. */
+            fun subtotal(subtotal: String) = subtotal(JsonField.of(subtotal))
 
-            /** Any line item discounts from the invoice's line item. */
-            fun discounts(discounts: JsonField<List<Discount>>) = apply {
-                this.discounts = discounts
-            }
+            /** The amount of the line item, excluding any line item minimums and discounts. */
+            fun subtotal(subtotal: JsonField<String>) = apply { this.subtotal = subtotal }
 
             /** Any tax amounts applied onto the line item. */
             fun taxAmounts(taxAmounts: List<TaxAmount>) = taxAmounts(JsonField.of(taxAmounts))
@@ -655,6 +647,14 @@ private constructor(
             /** Any tax amounts applied onto the line item. */
             fun taxAmounts(taxAmounts: JsonField<List<TaxAmount>>) = apply {
                 this.taxAmounts = taxAmounts
+            }
+
+            /** Any line item discounts from the invoice's line item. */
+            fun discounts(discounts: List<Discount>) = discounts(JsonField.of(discounts))
+
+            /** Any line item discounts from the invoice's line item. */
+            fun discounts(discounts: JsonField<List<Discount>>) = apply {
+                this.discounts = discounts
             }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
@@ -679,12 +679,12 @@ private constructor(
             fun build(): LineItem =
                 LineItem(
                     id,
-                    name,
-                    subtotal,
                     amount,
+                    name,
                     quantity,
-                    discounts.map { it.toImmutable() },
+                    subtotal,
                     taxAmounts.map { it.toImmutable() },
+                    discounts.map { it.toImmutable() },
                     additionalProperties.toImmutable(),
                 )
         }
@@ -693,18 +693,21 @@ private constructor(
         class TaxAmount
         @JsonCreator
         private constructor(
+            @JsonProperty("amount")
+            @ExcludeMissing
+            private val amount: JsonField<String> = JsonMissing.of(),
             @JsonProperty("tax_rate_description")
             @ExcludeMissing
             private val taxRateDescription: JsonField<String> = JsonMissing.of(),
             @JsonProperty("tax_rate_percentage")
             @ExcludeMissing
             private val taxRatePercentage: JsonField<String> = JsonMissing.of(),
-            @JsonProperty("amount")
-            @ExcludeMissing
-            private val amount: JsonField<String> = JsonMissing.of(),
             @JsonAnySetter
             private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
+
+            /** The amount of additional tax incurred by this tax rate. */
+            fun amount(): String = amount.getRequired("amount")
 
             /** The human-readable description of the applied tax rate. */
             fun taxRateDescription(): String =
@@ -714,7 +717,7 @@ private constructor(
             fun taxRatePercentage(): String? = taxRatePercentage.getNullable("tax_rate_percentage")
 
             /** The amount of additional tax incurred by this tax rate. */
-            fun amount(): String = amount.getRequired("amount")
+            @JsonProperty("amount") @ExcludeMissing fun _amount() = amount
 
             /** The human-readable description of the applied tax rate. */
             @JsonProperty("tax_rate_description")
@@ -726,9 +729,6 @@ private constructor(
             @ExcludeMissing
             fun _taxRatePercentage() = taxRatePercentage
 
-            /** The amount of additional tax incurred by this tax rate. */
-            @JsonProperty("amount") @ExcludeMissing fun _amount() = amount
-
             @JsonAnyGetter
             @ExcludeMissing
             fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
@@ -737,9 +737,9 @@ private constructor(
 
             fun validate(): TaxAmount = apply {
                 if (!validated) {
+                    amount()
                     taxRateDescription()
                     taxRatePercentage()
-                    amount()
                     validated = true
                 }
             }
@@ -753,17 +753,23 @@ private constructor(
 
             class Builder {
 
+                private var amount: JsonField<String> = JsonMissing.of()
                 private var taxRateDescription: JsonField<String> = JsonMissing.of()
                 private var taxRatePercentage: JsonField<String> = JsonMissing.of()
-                private var amount: JsonField<String> = JsonMissing.of()
                 private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
                 internal fun from(taxAmount: TaxAmount) = apply {
+                    amount = taxAmount.amount
                     taxRateDescription = taxAmount.taxRateDescription
                     taxRatePercentage = taxAmount.taxRatePercentage
-                    amount = taxAmount.amount
                     additionalProperties = taxAmount.additionalProperties.toMutableMap()
                 }
+
+                /** The amount of additional tax incurred by this tax rate. */
+                fun amount(amount: String) = amount(JsonField.of(amount))
+
+                /** The amount of additional tax incurred by this tax rate. */
+                fun amount(amount: JsonField<String>) = apply { this.amount = amount }
 
                 /** The human-readable description of the applied tax rate. */
                 fun taxRateDescription(taxRateDescription: String) =
@@ -782,12 +788,6 @@ private constructor(
                 fun taxRatePercentage(taxRatePercentage: JsonField<String>) = apply {
                     this.taxRatePercentage = taxRatePercentage
                 }
-
-                /** The amount of additional tax incurred by this tax rate. */
-                fun amount(amount: String) = amount(JsonField.of(amount))
-
-                /** The amount of additional tax incurred by this tax rate. */
-                fun amount(amount: JsonField<String>) = apply { this.amount = amount }
 
                 fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                     this.additionalProperties.clear()
@@ -813,9 +813,9 @@ private constructor(
 
                 fun build(): TaxAmount =
                     TaxAmount(
+                        amount,
                         taxRateDescription,
                         taxRatePercentage,
-                        amount,
                         additionalProperties.toImmutable(),
                     )
             }
@@ -825,17 +825,17 @@ private constructor(
                     return true
                 }
 
-                return /* spotless:off */ other is TaxAmount && taxRateDescription == other.taxRateDescription && taxRatePercentage == other.taxRatePercentage && amount == other.amount && additionalProperties == other.additionalProperties /* spotless:on */
+                return /* spotless:off */ other is TaxAmount && amount == other.amount && taxRateDescription == other.taxRateDescription && taxRatePercentage == other.taxRatePercentage && additionalProperties == other.additionalProperties /* spotless:on */
             }
 
             /* spotless:off */
-            private val hashCode: Int by lazy { Objects.hash(taxRateDescription, taxRatePercentage, amount, additionalProperties) }
+            private val hashCode: Int by lazy { Objects.hash(amount, taxRateDescription, taxRatePercentage, additionalProperties) }
             /* spotless:on */
 
             override fun hashCode(): Int = hashCode
 
             override fun toString() =
-                "TaxAmount{taxRateDescription=$taxRateDescription, taxRatePercentage=$taxRatePercentage, amount=$amount, additionalProperties=$additionalProperties}"
+                "TaxAmount{amount=$amount, taxRateDescription=$taxRateDescription, taxRatePercentage=$taxRatePercentage, additionalProperties=$additionalProperties}"
         }
 
         @NoAutoDetect
@@ -845,6 +845,12 @@ private constructor(
             @JsonProperty("id")
             @ExcludeMissing
             private val id: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("amount_applied")
+            @ExcludeMissing
+            private val amountApplied: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("applies_to_price_ids")
+            @ExcludeMissing
+            private val appliesToPriceIds: JsonField<List<String>> = JsonMissing.of(),
             @JsonProperty("discount_type")
             @ExcludeMissing
             private val discountType: JsonField<DiscountType> = JsonMissing.of(),
@@ -854,20 +860,19 @@ private constructor(
             @JsonProperty("amount_discount")
             @ExcludeMissing
             private val amountDiscount: JsonField<String> = JsonMissing.of(),
-            @JsonProperty("amount_applied")
-            @ExcludeMissing
-            private val amountApplied: JsonField<String> = JsonMissing.of(),
             @JsonProperty("reason")
             @ExcludeMissing
             private val reason: JsonField<String> = JsonMissing.of(),
-            @JsonProperty("applies_to_price_ids")
-            @ExcludeMissing
-            private val appliesToPriceIds: JsonField<List<String>> = JsonMissing.of(),
             @JsonAnySetter
             private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
             fun id(): String = id.getRequired("id")
+
+            fun amountApplied(): String = amountApplied.getRequired("amount_applied")
+
+            fun appliesToPriceIds(): List<String> =
+                appliesToPriceIds.getRequired("applies_to_price_ids")
 
             fun discountType(): DiscountType = discountType.getRequired("discount_type")
 
@@ -875,14 +880,15 @@ private constructor(
 
             fun amountDiscount(): String? = amountDiscount.getNullable("amount_discount")
 
-            fun amountApplied(): String = amountApplied.getRequired("amount_applied")
-
             fun reason(): String? = reason.getNullable("reason")
 
-            fun appliesToPriceIds(): List<String> =
-                appliesToPriceIds.getRequired("applies_to_price_ids")
-
             @JsonProperty("id") @ExcludeMissing fun _id() = id
+
+            @JsonProperty("amount_applied") @ExcludeMissing fun _amountApplied() = amountApplied
+
+            @JsonProperty("applies_to_price_ids")
+            @ExcludeMissing
+            fun _appliesToPriceIds() = appliesToPriceIds
 
             @JsonProperty("discount_type") @ExcludeMissing fun _discountType() = discountType
 
@@ -892,13 +898,7 @@ private constructor(
 
             @JsonProperty("amount_discount") @ExcludeMissing fun _amountDiscount() = amountDiscount
 
-            @JsonProperty("amount_applied") @ExcludeMissing fun _amountApplied() = amountApplied
-
             @JsonProperty("reason") @ExcludeMissing fun _reason() = reason
-
-            @JsonProperty("applies_to_price_ids")
-            @ExcludeMissing
-            fun _appliesToPriceIds() = appliesToPriceIds
 
             @JsonAnyGetter
             @ExcludeMissing
@@ -909,12 +909,12 @@ private constructor(
             fun validate(): Discount = apply {
                 if (!validated) {
                     id()
+                    amountApplied()
+                    appliesToPriceIds()
                     discountType()
                     percentageDiscount()
                     amountDiscount()
-                    amountApplied()
                     reason()
-                    appliesToPriceIds()
                     validated = true
                 }
             }
@@ -929,28 +929,42 @@ private constructor(
             class Builder {
 
                 private var id: JsonField<String> = JsonMissing.of()
+                private var amountApplied: JsonField<String> = JsonMissing.of()
+                private var appliesToPriceIds: JsonField<List<String>> = JsonMissing.of()
                 private var discountType: JsonField<DiscountType> = JsonMissing.of()
                 private var percentageDiscount: JsonField<Double> = JsonMissing.of()
                 private var amountDiscount: JsonField<String> = JsonMissing.of()
-                private var amountApplied: JsonField<String> = JsonMissing.of()
                 private var reason: JsonField<String> = JsonMissing.of()
-                private var appliesToPriceIds: JsonField<List<String>> = JsonMissing.of()
                 private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
                 internal fun from(discount: Discount) = apply {
                     id = discount.id
+                    amountApplied = discount.amountApplied
+                    appliesToPriceIds = discount.appliesToPriceIds
                     discountType = discount.discountType
                     percentageDiscount = discount.percentageDiscount
                     amountDiscount = discount.amountDiscount
-                    amountApplied = discount.amountApplied
                     reason = discount.reason
-                    appliesToPriceIds = discount.appliesToPriceIds
                     additionalProperties = discount.additionalProperties.toMutableMap()
                 }
 
                 fun id(id: String) = id(JsonField.of(id))
 
                 fun id(id: JsonField<String>) = apply { this.id = id }
+
+                fun amountApplied(amountApplied: String) =
+                    amountApplied(JsonField.of(amountApplied))
+
+                fun amountApplied(amountApplied: JsonField<String>) = apply {
+                    this.amountApplied = amountApplied
+                }
+
+                fun appliesToPriceIds(appliesToPriceIds: List<String>) =
+                    appliesToPriceIds(JsonField.of(appliesToPriceIds))
+
+                fun appliesToPriceIds(appliesToPriceIds: JsonField<List<String>>) = apply {
+                    this.appliesToPriceIds = appliesToPriceIds
+                }
 
                 fun discountType(discountType: DiscountType) =
                     discountType(JsonField.of(discountType))
@@ -973,23 +987,9 @@ private constructor(
                     this.amountDiscount = amountDiscount
                 }
 
-                fun amountApplied(amountApplied: String) =
-                    amountApplied(JsonField.of(amountApplied))
-
-                fun amountApplied(amountApplied: JsonField<String>) = apply {
-                    this.amountApplied = amountApplied
-                }
-
                 fun reason(reason: String) = reason(JsonField.of(reason))
 
                 fun reason(reason: JsonField<String>) = apply { this.reason = reason }
-
-                fun appliesToPriceIds(appliesToPriceIds: List<String>) =
-                    appliesToPriceIds(JsonField.of(appliesToPriceIds))
-
-                fun appliesToPriceIds(appliesToPriceIds: JsonField<List<String>>) = apply {
-                    this.appliesToPriceIds = appliesToPriceIds
-                }
 
                 fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                     this.additionalProperties.clear()
@@ -1016,12 +1016,12 @@ private constructor(
                 fun build(): Discount =
                     Discount(
                         id,
+                        amountApplied,
+                        appliesToPriceIds.map { it.toImmutable() },
                         discountType,
                         percentageDiscount,
                         amountDiscount,
-                        amountApplied,
                         reason,
-                        appliesToPriceIds.map { it.toImmutable() },
                         additionalProperties.toImmutable(),
                     )
             }
@@ -1088,17 +1088,17 @@ private constructor(
                     return true
                 }
 
-                return /* spotless:off */ other is Discount && id == other.id && discountType == other.discountType && percentageDiscount == other.percentageDiscount && amountDiscount == other.amountDiscount && amountApplied == other.amountApplied && reason == other.reason && appliesToPriceIds == other.appliesToPriceIds && additionalProperties == other.additionalProperties /* spotless:on */
+                return /* spotless:off */ other is Discount && id == other.id && amountApplied == other.amountApplied && appliesToPriceIds == other.appliesToPriceIds && discountType == other.discountType && percentageDiscount == other.percentageDiscount && amountDiscount == other.amountDiscount && reason == other.reason && additionalProperties == other.additionalProperties /* spotless:on */
             }
 
             /* spotless:off */
-            private val hashCode: Int by lazy { Objects.hash(id, discountType, percentageDiscount, amountDiscount, amountApplied, reason, appliesToPriceIds, additionalProperties) }
+            private val hashCode: Int by lazy { Objects.hash(id, amountApplied, appliesToPriceIds, discountType, percentageDiscount, amountDiscount, reason, additionalProperties) }
             /* spotless:on */
 
             override fun hashCode(): Int = hashCode
 
             override fun toString() =
-                "Discount{id=$id, discountType=$discountType, percentageDiscount=$percentageDiscount, amountDiscount=$amountDiscount, amountApplied=$amountApplied, reason=$reason, appliesToPriceIds=$appliesToPriceIds, additionalProperties=$additionalProperties}"
+                "Discount{id=$id, amountApplied=$amountApplied, appliesToPriceIds=$appliesToPriceIds, discountType=$discountType, percentageDiscount=$percentageDiscount, amountDiscount=$amountDiscount, reason=$reason, additionalProperties=$additionalProperties}"
         }
 
         override fun equals(other: Any?): Boolean {
@@ -1106,17 +1106,17 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is LineItem && id == other.id && name == other.name && subtotal == other.subtotal && amount == other.amount && quantity == other.quantity && discounts == other.discounts && taxAmounts == other.taxAmounts && additionalProperties == other.additionalProperties /* spotless:on */
+            return /* spotless:off */ other is LineItem && id == other.id && amount == other.amount && name == other.name && quantity == other.quantity && subtotal == other.subtotal && taxAmounts == other.taxAmounts && discounts == other.discounts && additionalProperties == other.additionalProperties /* spotless:on */
         }
 
         /* spotless:off */
-        private val hashCode: Int by lazy { Objects.hash(id, name, subtotal, amount, quantity, discounts, taxAmounts, additionalProperties) }
+        private val hashCode: Int by lazy { Objects.hash(id, amount, name, quantity, subtotal, taxAmounts, discounts, additionalProperties) }
         /* spotless:on */
 
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "LineItem{id=$id, name=$name, subtotal=$subtotal, amount=$amount, quantity=$quantity, discounts=$discounts, taxAmounts=$taxAmounts, additionalProperties=$additionalProperties}"
+            "LineItem{id=$id, amount=$amount, name=$name, quantity=$quantity, subtotal=$subtotal, taxAmounts=$taxAmounts, discounts=$discounts, additionalProperties=$additionalProperties}"
     }
 
     /** The maximum amount applied on the original invoice */
@@ -1124,35 +1124,37 @@ private constructor(
     class MaximumAmountAdjustment
     @JsonCreator
     private constructor(
+        @JsonProperty("amount_applied")
+        @ExcludeMissing
+        private val amountApplied: JsonField<String> = JsonMissing.of(),
         @JsonProperty("discount_type")
         @ExcludeMissing
         private val discountType: JsonField<DiscountType> = JsonMissing.of(),
         @JsonProperty("percentage_discount")
         @ExcludeMissing
         private val percentageDiscount: JsonField<Double> = JsonMissing.of(),
-        @JsonProperty("amount_applied")
-        @ExcludeMissing
-        private val amountApplied: JsonField<String> = JsonMissing.of(),
-        @JsonProperty("reason")
-        @ExcludeMissing
-        private val reason: JsonField<String> = JsonMissing.of(),
         @JsonProperty("applies_to_prices")
         @ExcludeMissing
         private val appliesToPrices: JsonField<List<AppliesToPrice>> = JsonMissing.of(),
+        @JsonProperty("reason")
+        @ExcludeMissing
+        private val reason: JsonField<String> = JsonMissing.of(),
         @JsonAnySetter
         private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
+
+        fun amountApplied(): String = amountApplied.getRequired("amount_applied")
 
         fun discountType(): DiscountType = discountType.getRequired("discount_type")
 
         fun percentageDiscount(): Double = percentageDiscount.getRequired("percentage_discount")
 
-        fun amountApplied(): String = amountApplied.getRequired("amount_applied")
+        fun appliesToPrices(): List<AppliesToPrice>? =
+            appliesToPrices.getNullable("applies_to_prices")
 
         fun reason(): String? = reason.getNullable("reason")
 
-        fun appliesToPrices(): List<AppliesToPrice>? =
-            appliesToPrices.getNullable("applies_to_prices")
+        @JsonProperty("amount_applied") @ExcludeMissing fun _amountApplied() = amountApplied
 
         @JsonProperty("discount_type") @ExcludeMissing fun _discountType() = discountType
 
@@ -1160,11 +1162,9 @@ private constructor(
         @ExcludeMissing
         fun _percentageDiscount() = percentageDiscount
 
-        @JsonProperty("amount_applied") @ExcludeMissing fun _amountApplied() = amountApplied
+        @JsonProperty("applies_to_prices") @ExcludeMissing fun _appliesToPrices() = appliesToPrices
 
         @JsonProperty("reason") @ExcludeMissing fun _reason() = reason
-
-        @JsonProperty("applies_to_prices") @ExcludeMissing fun _appliesToPrices() = appliesToPrices
 
         @JsonAnyGetter
         @ExcludeMissing
@@ -1174,11 +1174,11 @@ private constructor(
 
         fun validate(): MaximumAmountAdjustment = apply {
             if (!validated) {
+                amountApplied()
                 discountType()
                 percentageDiscount()
-                amountApplied()
-                reason()
                 appliesToPrices()?.forEach { it.validate() }
+                reason()
                 validated = true
             }
         }
@@ -1192,20 +1192,26 @@ private constructor(
 
         class Builder {
 
+            private var amountApplied: JsonField<String> = JsonMissing.of()
             private var discountType: JsonField<DiscountType> = JsonMissing.of()
             private var percentageDiscount: JsonField<Double> = JsonMissing.of()
-            private var amountApplied: JsonField<String> = JsonMissing.of()
-            private var reason: JsonField<String> = JsonMissing.of()
             private var appliesToPrices: JsonField<List<AppliesToPrice>> = JsonMissing.of()
+            private var reason: JsonField<String> = JsonMissing.of()
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             internal fun from(maximumAmountAdjustment: MaximumAmountAdjustment) = apply {
+                amountApplied = maximumAmountAdjustment.amountApplied
                 discountType = maximumAmountAdjustment.discountType
                 percentageDiscount = maximumAmountAdjustment.percentageDiscount
-                amountApplied = maximumAmountAdjustment.amountApplied
-                reason = maximumAmountAdjustment.reason
                 appliesToPrices = maximumAmountAdjustment.appliesToPrices
+                reason = maximumAmountAdjustment.reason
                 additionalProperties = maximumAmountAdjustment.additionalProperties.toMutableMap()
+            }
+
+            fun amountApplied(amountApplied: String) = amountApplied(JsonField.of(amountApplied))
+
+            fun amountApplied(amountApplied: JsonField<String>) = apply {
+                this.amountApplied = amountApplied
             }
 
             fun discountType(discountType: DiscountType) = discountType(JsonField.of(discountType))
@@ -1221,22 +1227,16 @@ private constructor(
                 this.percentageDiscount = percentageDiscount
             }
 
-            fun amountApplied(amountApplied: String) = amountApplied(JsonField.of(amountApplied))
-
-            fun amountApplied(amountApplied: JsonField<String>) = apply {
-                this.amountApplied = amountApplied
-            }
-
-            fun reason(reason: String) = reason(JsonField.of(reason))
-
-            fun reason(reason: JsonField<String>) = apply { this.reason = reason }
-
             fun appliesToPrices(appliesToPrices: List<AppliesToPrice>) =
                 appliesToPrices(JsonField.of(appliesToPrices))
 
             fun appliesToPrices(appliesToPrices: JsonField<List<AppliesToPrice>>) = apply {
                 this.appliesToPrices = appliesToPrices
             }
+
+            fun reason(reason: String) = reason(JsonField.of(reason))
+
+            fun reason(reason: JsonField<String>) = apply { this.reason = reason }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
@@ -1259,11 +1259,11 @@ private constructor(
 
             fun build(): MaximumAmountAdjustment =
                 MaximumAmountAdjustment(
+                    amountApplied,
                     discountType,
                     percentageDiscount,
-                    amountApplied,
-                    reason,
                     appliesToPrices.map { it.toImmutable() },
+                    reason,
                     additionalProperties.toImmutable(),
                 )
         }
@@ -1435,17 +1435,17 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is MaximumAmountAdjustment && discountType == other.discountType && percentageDiscount == other.percentageDiscount && amountApplied == other.amountApplied && reason == other.reason && appliesToPrices == other.appliesToPrices && additionalProperties == other.additionalProperties /* spotless:on */
+            return /* spotless:off */ other is MaximumAmountAdjustment && amountApplied == other.amountApplied && discountType == other.discountType && percentageDiscount == other.percentageDiscount && appliesToPrices == other.appliesToPrices && reason == other.reason && additionalProperties == other.additionalProperties /* spotless:on */
         }
 
         /* spotless:off */
-        private val hashCode: Int by lazy { Objects.hash(discountType, percentageDiscount, amountApplied, reason, appliesToPrices, additionalProperties) }
+        private val hashCode: Int by lazy { Objects.hash(amountApplied, discountType, percentageDiscount, appliesToPrices, reason, additionalProperties) }
         /* spotless:on */
 
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "MaximumAmountAdjustment{discountType=$discountType, percentageDiscount=$percentageDiscount, amountApplied=$amountApplied, reason=$reason, appliesToPrices=$appliesToPrices, additionalProperties=$additionalProperties}"
+            "MaximumAmountAdjustment{amountApplied=$amountApplied, discountType=$discountType, percentageDiscount=$percentageDiscount, appliesToPrices=$appliesToPrices, reason=$reason, additionalProperties=$additionalProperties}"
     }
 
     class Reason
@@ -1578,35 +1578,37 @@ private constructor(
     class Discount
     @JsonCreator
     private constructor(
+        @JsonProperty("amount_applied")
+        @ExcludeMissing
+        private val amountApplied: JsonField<String> = JsonMissing.of(),
         @JsonProperty("discount_type")
         @ExcludeMissing
         private val discountType: JsonField<DiscountType> = JsonMissing.of(),
         @JsonProperty("percentage_discount")
         @ExcludeMissing
         private val percentageDiscount: JsonField<Double> = JsonMissing.of(),
-        @JsonProperty("amount_applied")
-        @ExcludeMissing
-        private val amountApplied: JsonField<String> = JsonMissing.of(),
-        @JsonProperty("reason")
-        @ExcludeMissing
-        private val reason: JsonField<String> = JsonMissing.of(),
         @JsonProperty("applies_to_prices")
         @ExcludeMissing
         private val appliesToPrices: JsonField<List<AppliesToPrice>> = JsonMissing.of(),
+        @JsonProperty("reason")
+        @ExcludeMissing
+        private val reason: JsonField<String> = JsonMissing.of(),
         @JsonAnySetter
         private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
+
+        fun amountApplied(): String = amountApplied.getRequired("amount_applied")
 
         fun discountType(): DiscountType = discountType.getRequired("discount_type")
 
         fun percentageDiscount(): Double = percentageDiscount.getRequired("percentage_discount")
 
-        fun amountApplied(): String = amountApplied.getRequired("amount_applied")
+        fun appliesToPrices(): List<AppliesToPrice>? =
+            appliesToPrices.getNullable("applies_to_prices")
 
         fun reason(): String? = reason.getNullable("reason")
 
-        fun appliesToPrices(): List<AppliesToPrice>? =
-            appliesToPrices.getNullable("applies_to_prices")
+        @JsonProperty("amount_applied") @ExcludeMissing fun _amountApplied() = amountApplied
 
         @JsonProperty("discount_type") @ExcludeMissing fun _discountType() = discountType
 
@@ -1614,11 +1616,9 @@ private constructor(
         @ExcludeMissing
         fun _percentageDiscount() = percentageDiscount
 
-        @JsonProperty("amount_applied") @ExcludeMissing fun _amountApplied() = amountApplied
+        @JsonProperty("applies_to_prices") @ExcludeMissing fun _appliesToPrices() = appliesToPrices
 
         @JsonProperty("reason") @ExcludeMissing fun _reason() = reason
-
-        @JsonProperty("applies_to_prices") @ExcludeMissing fun _appliesToPrices() = appliesToPrices
 
         @JsonAnyGetter
         @ExcludeMissing
@@ -1628,11 +1628,11 @@ private constructor(
 
         fun validate(): Discount = apply {
             if (!validated) {
+                amountApplied()
                 discountType()
                 percentageDiscount()
-                amountApplied()
-                reason()
                 appliesToPrices()?.forEach { it.validate() }
+                reason()
                 validated = true
             }
         }
@@ -1646,20 +1646,26 @@ private constructor(
 
         class Builder {
 
+            private var amountApplied: JsonField<String> = JsonMissing.of()
             private var discountType: JsonField<DiscountType> = JsonMissing.of()
             private var percentageDiscount: JsonField<Double> = JsonMissing.of()
-            private var amountApplied: JsonField<String> = JsonMissing.of()
-            private var reason: JsonField<String> = JsonMissing.of()
             private var appliesToPrices: JsonField<List<AppliesToPrice>> = JsonMissing.of()
+            private var reason: JsonField<String> = JsonMissing.of()
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             internal fun from(discount: Discount) = apply {
+                amountApplied = discount.amountApplied
                 discountType = discount.discountType
                 percentageDiscount = discount.percentageDiscount
-                amountApplied = discount.amountApplied
-                reason = discount.reason
                 appliesToPrices = discount.appliesToPrices
+                reason = discount.reason
                 additionalProperties = discount.additionalProperties.toMutableMap()
+            }
+
+            fun amountApplied(amountApplied: String) = amountApplied(JsonField.of(amountApplied))
+
+            fun amountApplied(amountApplied: JsonField<String>) = apply {
+                this.amountApplied = amountApplied
             }
 
             fun discountType(discountType: DiscountType) = discountType(JsonField.of(discountType))
@@ -1675,22 +1681,16 @@ private constructor(
                 this.percentageDiscount = percentageDiscount
             }
 
-            fun amountApplied(amountApplied: String) = amountApplied(JsonField.of(amountApplied))
-
-            fun amountApplied(amountApplied: JsonField<String>) = apply {
-                this.amountApplied = amountApplied
-            }
-
-            fun reason(reason: String) = reason(JsonField.of(reason))
-
-            fun reason(reason: JsonField<String>) = apply { this.reason = reason }
-
             fun appliesToPrices(appliesToPrices: List<AppliesToPrice>) =
                 appliesToPrices(JsonField.of(appliesToPrices))
 
             fun appliesToPrices(appliesToPrices: JsonField<List<AppliesToPrice>>) = apply {
                 this.appliesToPrices = appliesToPrices
             }
+
+            fun reason(reason: String) = reason(JsonField.of(reason))
+
+            fun reason(reason: JsonField<String>) = apply { this.reason = reason }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
@@ -1713,11 +1713,11 @@ private constructor(
 
             fun build(): Discount =
                 Discount(
+                    amountApplied,
                     discountType,
                     percentageDiscount,
-                    amountApplied,
-                    reason,
                     appliesToPrices.map { it.toImmutable() },
+                    reason,
                     additionalProperties.toImmutable(),
                 )
         }
@@ -1889,17 +1889,17 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is Discount && discountType == other.discountType && percentageDiscount == other.percentageDiscount && amountApplied == other.amountApplied && reason == other.reason && appliesToPrices == other.appliesToPrices && additionalProperties == other.additionalProperties /* spotless:on */
+            return /* spotless:off */ other is Discount && amountApplied == other.amountApplied && discountType == other.discountType && percentageDiscount == other.percentageDiscount && appliesToPrices == other.appliesToPrices && reason == other.reason && additionalProperties == other.additionalProperties /* spotless:on */
         }
 
         /* spotless:off */
-        private val hashCode: Int by lazy { Objects.hash(discountType, percentageDiscount, amountApplied, reason, appliesToPrices, additionalProperties) }
+        private val hashCode: Int by lazy { Objects.hash(amountApplied, discountType, percentageDiscount, appliesToPrices, reason, additionalProperties) }
         /* spotless:on */
 
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "Discount{discountType=$discountType, percentageDiscount=$percentageDiscount, amountApplied=$amountApplied, reason=$reason, appliesToPrices=$appliesToPrices, additionalProperties=$additionalProperties}"
+            "Discount{amountApplied=$amountApplied, discountType=$discountType, percentageDiscount=$percentageDiscount, appliesToPrices=$appliesToPrices, reason=$reason, additionalProperties=$additionalProperties}"
     }
 
     override fun equals(other: Any?): Boolean {
@@ -1907,15 +1907,15 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is CreditNote && id == other.id && createdAt == other.createdAt && voidedAt == other.voidedAt && creditNoteNumber == other.creditNoteNumber && invoiceId == other.invoiceId && memo == other.memo && reason == other.reason && type == other.type && subtotal == other.subtotal && total == other.total && customer == other.customer && creditNotePdf == other.creditNotePdf && minimumAmountRefunded == other.minimumAmountRefunded && discounts == other.discounts && maximumAmountAdjustment == other.maximumAmountAdjustment && lineItems == other.lineItems && additionalProperties == other.additionalProperties /* spotless:on */
+        return /* spotless:off */ other is CreditNote && id == other.id && createdAt == other.createdAt && creditNoteNumber == other.creditNoteNumber && creditNotePdf == other.creditNotePdf && customer == other.customer && invoiceId == other.invoiceId && lineItems == other.lineItems && maximumAmountAdjustment == other.maximumAmountAdjustment && memo == other.memo && minimumAmountRefunded == other.minimumAmountRefunded && reason == other.reason && subtotal == other.subtotal && total == other.total && type == other.type && voidedAt == other.voidedAt && discounts == other.discounts && additionalProperties == other.additionalProperties /* spotless:on */
     }
 
     /* spotless:off */
-    private val hashCode: Int by lazy { Objects.hash(id, createdAt, voidedAt, creditNoteNumber, invoiceId, memo, reason, type, subtotal, total, customer, creditNotePdf, minimumAmountRefunded, discounts, maximumAmountAdjustment, lineItems, additionalProperties) }
+    private val hashCode: Int by lazy { Objects.hash(id, createdAt, creditNoteNumber, creditNotePdf, customer, invoiceId, lineItems, maximumAmountAdjustment, memo, minimumAmountRefunded, reason, subtotal, total, type, voidedAt, discounts, additionalProperties) }
     /* spotless:on */
 
     override fun hashCode(): Int = hashCode
 
     override fun toString() =
-        "CreditNote{id=$id, createdAt=$createdAt, voidedAt=$voidedAt, creditNoteNumber=$creditNoteNumber, invoiceId=$invoiceId, memo=$memo, reason=$reason, type=$type, subtotal=$subtotal, total=$total, customer=$customer, creditNotePdf=$creditNotePdf, minimumAmountRefunded=$minimumAmountRefunded, discounts=$discounts, maximumAmountAdjustment=$maximumAmountAdjustment, lineItems=$lineItems, additionalProperties=$additionalProperties}"
+        "CreditNote{id=$id, createdAt=$createdAt, creditNoteNumber=$creditNoteNumber, creditNotePdf=$creditNotePdf, customer=$customer, invoiceId=$invoiceId, lineItems=$lineItems, maximumAmountAdjustment=$maximumAmountAdjustment, memo=$memo, minimumAmountRefunded=$minimumAmountRefunded, reason=$reason, subtotal=$subtotal, total=$total, type=$type, voidedAt=$voidedAt, discounts=$discounts, additionalProperties=$additionalProperties}"
 }
