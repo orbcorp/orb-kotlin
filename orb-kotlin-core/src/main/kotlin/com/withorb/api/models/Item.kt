@@ -28,34 +28,34 @@ class Item
 @JsonCreator
 private constructor(
     @JsonProperty("id") @ExcludeMissing private val id: JsonField<String> = JsonMissing.of(),
-    @JsonProperty("name") @ExcludeMissing private val name: JsonField<String> = JsonMissing.of(),
     @JsonProperty("created_at")
     @ExcludeMissing
     private val createdAt: JsonField<OffsetDateTime> = JsonMissing.of(),
     @JsonProperty("external_connections")
     @ExcludeMissing
     private val externalConnections: JsonField<List<ExternalConnection>> = JsonMissing.of(),
+    @JsonProperty("name") @ExcludeMissing private val name: JsonField<String> = JsonMissing.of(),
     @JsonAnySetter private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
 ) {
 
     fun id(): String = id.getRequired("id")
-
-    fun name(): String = name.getRequired("name")
 
     fun createdAt(): OffsetDateTime = createdAt.getRequired("created_at")
 
     fun externalConnections(): List<ExternalConnection> =
         externalConnections.getRequired("external_connections")
 
-    @JsonProperty("id") @ExcludeMissing fun _id() = id
+    fun name(): String = name.getRequired("name")
 
-    @JsonProperty("name") @ExcludeMissing fun _name() = name
+    @JsonProperty("id") @ExcludeMissing fun _id() = id
 
     @JsonProperty("created_at") @ExcludeMissing fun _createdAt() = createdAt
 
     @JsonProperty("external_connections")
     @ExcludeMissing
     fun _externalConnections() = externalConnections
+
+    @JsonProperty("name") @ExcludeMissing fun _name() = name
 
     @JsonAnyGetter
     @ExcludeMissing
@@ -66,9 +66,9 @@ private constructor(
     fun validate(): Item = apply {
         if (!validated) {
             id()
-            name()
             createdAt()
             externalConnections().forEach { it.validate() }
+            name()
             validated = true
         }
     }
@@ -83,26 +83,22 @@ private constructor(
     class Builder {
 
         private var id: JsonField<String> = JsonMissing.of()
-        private var name: JsonField<String> = JsonMissing.of()
         private var createdAt: JsonField<OffsetDateTime> = JsonMissing.of()
         private var externalConnections: JsonField<List<ExternalConnection>> = JsonMissing.of()
+        private var name: JsonField<String> = JsonMissing.of()
         private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         internal fun from(item: Item) = apply {
             id = item.id
-            name = item.name
             createdAt = item.createdAt
             externalConnections = item.externalConnections
+            name = item.name
             additionalProperties = item.additionalProperties.toMutableMap()
         }
 
         fun id(id: String) = id(JsonField.of(id))
 
         fun id(id: JsonField<String>) = apply { this.id = id }
-
-        fun name(name: String) = name(JsonField.of(name))
-
-        fun name(name: JsonField<String>) = apply { this.name = name }
 
         fun createdAt(createdAt: OffsetDateTime) = createdAt(JsonField.of(createdAt))
 
@@ -114,6 +110,10 @@ private constructor(
         fun externalConnections(externalConnections: JsonField<List<ExternalConnection>>) = apply {
             this.externalConnections = externalConnections
         }
+
+        fun name(name: String) = name(JsonField.of(name))
+
+        fun name(name: JsonField<String>) = apply { this.name = name }
 
         fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
             this.additionalProperties.clear()
@@ -137,9 +137,9 @@ private constructor(
         fun build(): Item =
             Item(
                 id,
-                name,
                 createdAt,
                 externalConnections.map { it.toImmutable() },
+                name,
                 additionalProperties.toImmutable(),
             )
     }
@@ -356,15 +356,15 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is Item && id == other.id && name == other.name && createdAt == other.createdAt && externalConnections == other.externalConnections && additionalProperties == other.additionalProperties /* spotless:on */
+        return /* spotless:off */ other is Item && id == other.id && createdAt == other.createdAt && externalConnections == other.externalConnections && name == other.name && additionalProperties == other.additionalProperties /* spotless:on */
     }
 
     /* spotless:off */
-    private val hashCode: Int by lazy { Objects.hash(id, name, createdAt, externalConnections, additionalProperties) }
+    private val hashCode: Int by lazy { Objects.hash(id, createdAt, externalConnections, name, additionalProperties) }
     /* spotless:on */
 
     override fun hashCode(): Int = hashCode
 
     override fun toString() =
-        "Item{id=$id, name=$name, createdAt=$createdAt, externalConnections=$externalConnections, additionalProperties=$additionalProperties}"
+        "Item{id=$id, createdAt=$createdAt, externalConnections=$externalConnections, name=$name, additionalProperties=$additionalProperties}"
 }

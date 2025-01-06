@@ -23,39 +23,56 @@ class CustomerBalanceTransactionCreateResponse
 @JsonCreator
 private constructor(
     @JsonProperty("id") @ExcludeMissing private val id: JsonField<String> = JsonMissing.of(),
-    @JsonProperty("created_at")
-    @ExcludeMissing
-    private val createdAt: JsonField<OffsetDateTime> = JsonMissing.of(),
-    @JsonProperty("starting_balance")
-    @ExcludeMissing
-    private val startingBalance: JsonField<String> = JsonMissing.of(),
-    @JsonProperty("ending_balance")
-    @ExcludeMissing
-    private val endingBalance: JsonField<String> = JsonMissing.of(),
-    @JsonProperty("amount")
-    @ExcludeMissing
-    private val amount: JsonField<String> = JsonMissing.of(),
     @JsonProperty("action")
     @ExcludeMissing
     private val action: JsonField<Action> = JsonMissing.of(),
-    @JsonProperty("description")
+    @JsonProperty("amount")
     @ExcludeMissing
-    private val description: JsonField<String> = JsonMissing.of(),
-    @JsonProperty("invoice")
+    private val amount: JsonField<String> = JsonMissing.of(),
+    @JsonProperty("created_at")
     @ExcludeMissing
-    private val invoice: JsonField<Invoice> = JsonMissing.of(),
-    @JsonProperty("type") @ExcludeMissing private val type: JsonField<Type> = JsonMissing.of(),
+    private val createdAt: JsonField<OffsetDateTime> = JsonMissing.of(),
     @JsonProperty("credit_note")
     @ExcludeMissing
     private val creditNote: JsonField<CreditNote> = JsonMissing.of(),
+    @JsonProperty("description")
+    @ExcludeMissing
+    private val description: JsonField<String> = JsonMissing.of(),
+    @JsonProperty("ending_balance")
+    @ExcludeMissing
+    private val endingBalance: JsonField<String> = JsonMissing.of(),
+    @JsonProperty("invoice")
+    @ExcludeMissing
+    private val invoice: JsonField<Invoice> = JsonMissing.of(),
+    @JsonProperty("starting_balance")
+    @ExcludeMissing
+    private val startingBalance: JsonField<String> = JsonMissing.of(),
+    @JsonProperty("type") @ExcludeMissing private val type: JsonField<Type> = JsonMissing.of(),
     @JsonAnySetter private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
 ) {
 
     /** A unique id for this transaction. */
     fun id(): String = id.getRequired("id")
 
+    fun action(): Action = action.getRequired("action")
+
+    /** The value of the amount changed in the transaction. */
+    fun amount(): String = amount.getRequired("amount")
+
     /** The creation time of this transaction. */
     fun createdAt(): OffsetDateTime = createdAt.getRequired("created_at")
+
+    fun creditNote(): CreditNote? = creditNote.getNullable("credit_note")
+
+    /** An optional description provided for manual customer balance adjustments. */
+    fun description(): String? = description.getNullable("description")
+
+    /**
+     * The new value of the customer's balance prior to the transaction, in the customer's currency.
+     */
+    fun endingBalance(): String = endingBalance.getRequired("ending_balance")
+
+    fun invoice(): Invoice? = invoice.getNullable("invoice")
 
     /**
      * The original value of the customer's balance prior to the transaction, in the customer's
@@ -63,30 +80,30 @@ private constructor(
      */
     fun startingBalance(): String = startingBalance.getRequired("starting_balance")
 
-    /**
-     * The new value of the customer's balance prior to the transaction, in the customer's currency.
-     */
-    fun endingBalance(): String = endingBalance.getRequired("ending_balance")
-
-    /** The value of the amount changed in the transaction. */
-    fun amount(): String = amount.getRequired("amount")
-
-    fun action(): Action = action.getRequired("action")
-
-    /** An optional description provided for manual customer balance adjustments. */
-    fun description(): String? = description.getNullable("description")
-
-    fun invoice(): Invoice? = invoice.getNullable("invoice")
-
     fun type(): Type = type.getRequired("type")
-
-    fun creditNote(): CreditNote? = creditNote.getNullable("credit_note")
 
     /** A unique id for this transaction. */
     @JsonProperty("id") @ExcludeMissing fun _id() = id
 
+    @JsonProperty("action") @ExcludeMissing fun _action() = action
+
+    /** The value of the amount changed in the transaction. */
+    @JsonProperty("amount") @ExcludeMissing fun _amount() = amount
+
     /** The creation time of this transaction. */
     @JsonProperty("created_at") @ExcludeMissing fun _createdAt() = createdAt
+
+    @JsonProperty("credit_note") @ExcludeMissing fun _creditNote() = creditNote
+
+    /** An optional description provided for manual customer balance adjustments. */
+    @JsonProperty("description") @ExcludeMissing fun _description() = description
+
+    /**
+     * The new value of the customer's balance prior to the transaction, in the customer's currency.
+     */
+    @JsonProperty("ending_balance") @ExcludeMissing fun _endingBalance() = endingBalance
+
+    @JsonProperty("invoice") @ExcludeMissing fun _invoice() = invoice
 
     /**
      * The original value of the customer's balance prior to the transaction, in the customer's
@@ -94,24 +111,7 @@ private constructor(
      */
     @JsonProperty("starting_balance") @ExcludeMissing fun _startingBalance() = startingBalance
 
-    /**
-     * The new value of the customer's balance prior to the transaction, in the customer's currency.
-     */
-    @JsonProperty("ending_balance") @ExcludeMissing fun _endingBalance() = endingBalance
-
-    /** The value of the amount changed in the transaction. */
-    @JsonProperty("amount") @ExcludeMissing fun _amount() = amount
-
-    @JsonProperty("action") @ExcludeMissing fun _action() = action
-
-    /** An optional description provided for manual customer balance adjustments. */
-    @JsonProperty("description") @ExcludeMissing fun _description() = description
-
-    @JsonProperty("invoice") @ExcludeMissing fun _invoice() = invoice
-
     @JsonProperty("type") @ExcludeMissing fun _type() = type
-
-    @JsonProperty("credit_note") @ExcludeMissing fun _creditNote() = creditNote
 
     @JsonAnyGetter
     @ExcludeMissing
@@ -122,15 +122,15 @@ private constructor(
     fun validate(): CustomerBalanceTransactionCreateResponse = apply {
         if (!validated) {
             id()
-            createdAt()
-            startingBalance()
-            endingBalance()
-            amount()
             action()
-            description()
-            invoice()?.validate()
-            type()
+            amount()
+            createdAt()
             creditNote()?.validate()
+            description()
+            endingBalance()
+            invoice()?.validate()
+            startingBalance()
+            type()
             validated = true
         }
     }
@@ -145,30 +145,30 @@ private constructor(
     class Builder {
 
         private var id: JsonField<String> = JsonMissing.of()
-        private var createdAt: JsonField<OffsetDateTime> = JsonMissing.of()
-        private var startingBalance: JsonField<String> = JsonMissing.of()
-        private var endingBalance: JsonField<String> = JsonMissing.of()
-        private var amount: JsonField<String> = JsonMissing.of()
         private var action: JsonField<Action> = JsonMissing.of()
-        private var description: JsonField<String> = JsonMissing.of()
-        private var invoice: JsonField<Invoice> = JsonMissing.of()
-        private var type: JsonField<Type> = JsonMissing.of()
+        private var amount: JsonField<String> = JsonMissing.of()
+        private var createdAt: JsonField<OffsetDateTime> = JsonMissing.of()
         private var creditNote: JsonField<CreditNote> = JsonMissing.of()
+        private var description: JsonField<String> = JsonMissing.of()
+        private var endingBalance: JsonField<String> = JsonMissing.of()
+        private var invoice: JsonField<Invoice> = JsonMissing.of()
+        private var startingBalance: JsonField<String> = JsonMissing.of()
+        private var type: JsonField<Type> = JsonMissing.of()
         private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         internal fun from(
             customerBalanceTransactionCreateResponse: CustomerBalanceTransactionCreateResponse
         ) = apply {
             id = customerBalanceTransactionCreateResponse.id
-            createdAt = customerBalanceTransactionCreateResponse.createdAt
-            startingBalance = customerBalanceTransactionCreateResponse.startingBalance
-            endingBalance = customerBalanceTransactionCreateResponse.endingBalance
-            amount = customerBalanceTransactionCreateResponse.amount
             action = customerBalanceTransactionCreateResponse.action
-            description = customerBalanceTransactionCreateResponse.description
-            invoice = customerBalanceTransactionCreateResponse.invoice
-            type = customerBalanceTransactionCreateResponse.type
+            amount = customerBalanceTransactionCreateResponse.amount
+            createdAt = customerBalanceTransactionCreateResponse.createdAt
             creditNote = customerBalanceTransactionCreateResponse.creditNote
+            description = customerBalanceTransactionCreateResponse.description
+            endingBalance = customerBalanceTransactionCreateResponse.endingBalance
+            invoice = customerBalanceTransactionCreateResponse.invoice
+            startingBalance = customerBalanceTransactionCreateResponse.startingBalance
+            type = customerBalanceTransactionCreateResponse.type
             additionalProperties =
                 customerBalanceTransactionCreateResponse.additionalProperties.toMutableMap()
         }
@@ -179,11 +179,49 @@ private constructor(
         /** A unique id for this transaction. */
         fun id(id: JsonField<String>) = apply { this.id = id }
 
+        fun action(action: Action) = action(JsonField.of(action))
+
+        fun action(action: JsonField<Action>) = apply { this.action = action }
+
+        /** The value of the amount changed in the transaction. */
+        fun amount(amount: String) = amount(JsonField.of(amount))
+
+        /** The value of the amount changed in the transaction. */
+        fun amount(amount: JsonField<String>) = apply { this.amount = amount }
+
         /** The creation time of this transaction. */
         fun createdAt(createdAt: OffsetDateTime) = createdAt(JsonField.of(createdAt))
 
         /** The creation time of this transaction. */
         fun createdAt(createdAt: JsonField<OffsetDateTime>) = apply { this.createdAt = createdAt }
+
+        fun creditNote(creditNote: CreditNote) = creditNote(JsonField.of(creditNote))
+
+        fun creditNote(creditNote: JsonField<CreditNote>) = apply { this.creditNote = creditNote }
+
+        /** An optional description provided for manual customer balance adjustments. */
+        fun description(description: String) = description(JsonField.of(description))
+
+        /** An optional description provided for manual customer balance adjustments. */
+        fun description(description: JsonField<String>) = apply { this.description = description }
+
+        /**
+         * The new value of the customer's balance prior to the transaction, in the customer's
+         * currency.
+         */
+        fun endingBalance(endingBalance: String) = endingBalance(JsonField.of(endingBalance))
+
+        /**
+         * The new value of the customer's balance prior to the transaction, in the customer's
+         * currency.
+         */
+        fun endingBalance(endingBalance: JsonField<String>) = apply {
+            this.endingBalance = endingBalance
+        }
+
+        fun invoice(invoice: Invoice) = invoice(JsonField.of(invoice))
+
+        fun invoice(invoice: JsonField<Invoice>) = apply { this.invoice = invoice }
 
         /**
          * The original value of the customer's balance prior to the transaction, in the customer's
@@ -200,47 +238,9 @@ private constructor(
             this.startingBalance = startingBalance
         }
 
-        /**
-         * The new value of the customer's balance prior to the transaction, in the customer's
-         * currency.
-         */
-        fun endingBalance(endingBalance: String) = endingBalance(JsonField.of(endingBalance))
-
-        /**
-         * The new value of the customer's balance prior to the transaction, in the customer's
-         * currency.
-         */
-        fun endingBalance(endingBalance: JsonField<String>) = apply {
-            this.endingBalance = endingBalance
-        }
-
-        /** The value of the amount changed in the transaction. */
-        fun amount(amount: String) = amount(JsonField.of(amount))
-
-        /** The value of the amount changed in the transaction. */
-        fun amount(amount: JsonField<String>) = apply { this.amount = amount }
-
-        fun action(action: Action) = action(JsonField.of(action))
-
-        fun action(action: JsonField<Action>) = apply { this.action = action }
-
-        /** An optional description provided for manual customer balance adjustments. */
-        fun description(description: String) = description(JsonField.of(description))
-
-        /** An optional description provided for manual customer balance adjustments. */
-        fun description(description: JsonField<String>) = apply { this.description = description }
-
-        fun invoice(invoice: Invoice) = invoice(JsonField.of(invoice))
-
-        fun invoice(invoice: JsonField<Invoice>) = apply { this.invoice = invoice }
-
         fun type(type: Type) = type(JsonField.of(type))
 
         fun type(type: JsonField<Type>) = apply { this.type = type }
-
-        fun creditNote(creditNote: CreditNote) = creditNote(JsonField.of(creditNote))
-
-        fun creditNote(creditNote: JsonField<CreditNote>) = apply { this.creditNote = creditNote }
 
         fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
             this.additionalProperties.clear()
@@ -264,15 +264,15 @@ private constructor(
         fun build(): CustomerBalanceTransactionCreateResponse =
             CustomerBalanceTransactionCreateResponse(
                 id,
-                createdAt,
-                startingBalance,
-                endingBalance,
-                amount,
                 action,
-                description,
-                invoice,
-                type,
+                amount,
+                createdAt,
                 creditNote,
+                description,
+                endingBalance,
+                invoice,
+                startingBalance,
+                type,
                 additionalProperties.toImmutable(),
             )
     }
@@ -612,15 +612,15 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is CustomerBalanceTransactionCreateResponse && id == other.id && createdAt == other.createdAt && startingBalance == other.startingBalance && endingBalance == other.endingBalance && amount == other.amount && action == other.action && description == other.description && invoice == other.invoice && type == other.type && creditNote == other.creditNote && additionalProperties == other.additionalProperties /* spotless:on */
+        return /* spotless:off */ other is CustomerBalanceTransactionCreateResponse && id == other.id && action == other.action && amount == other.amount && createdAt == other.createdAt && creditNote == other.creditNote && description == other.description && endingBalance == other.endingBalance && invoice == other.invoice && startingBalance == other.startingBalance && type == other.type && additionalProperties == other.additionalProperties /* spotless:on */
     }
 
     /* spotless:off */
-    private val hashCode: Int by lazy { Objects.hash(id, createdAt, startingBalance, endingBalance, amount, action, description, invoice, type, creditNote, additionalProperties) }
+    private val hashCode: Int by lazy { Objects.hash(id, action, amount, createdAt, creditNote, description, endingBalance, invoice, startingBalance, type, additionalProperties) }
     /* spotless:on */
 
     override fun hashCode(): Int = hashCode
 
     override fun toString() =
-        "CustomerBalanceTransactionCreateResponse{id=$id, createdAt=$createdAt, startingBalance=$startingBalance, endingBalance=$endingBalance, amount=$amount, action=$action, description=$description, invoice=$invoice, type=$type, creditNote=$creditNote, additionalProperties=$additionalProperties}"
+        "CustomerBalanceTransactionCreateResponse{id=$id, action=$action, amount=$amount, createdAt=$createdAt, creditNote=$creditNote, description=$description, endingBalance=$endingBalance, invoice=$invoice, startingBalance=$startingBalance, type=$type, additionalProperties=$additionalProperties}"
 }

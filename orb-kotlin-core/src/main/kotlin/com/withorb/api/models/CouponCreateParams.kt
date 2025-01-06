@@ -645,15 +645,15 @@ constructor(
         class NewCouponAmountDiscount
         @JsonCreator
         private constructor(
-            @JsonProperty("discount_type") private val discountType: DiscountType,
             @JsonProperty("amount_discount") private val amountDiscount: String,
+            @JsonProperty("discount_type") private val discountType: DiscountType,
             @JsonAnySetter
             private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
-            @JsonProperty("discount_type") fun discountType(): DiscountType = discountType
-
             @JsonProperty("amount_discount") fun amountDiscount(): String = amountDiscount
+
+            @JsonProperty("discount_type") fun discountType(): DiscountType = discountType
 
             @JsonAnyGetter
             @ExcludeMissing
@@ -668,23 +668,23 @@ constructor(
 
             class Builder {
 
-                private var discountType: DiscountType? = null
                 private var amountDiscount: String? = null
+                private var discountType: DiscountType? = null
                 private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
                 internal fun from(newCouponAmountDiscount: NewCouponAmountDiscount) = apply {
-                    discountType = newCouponAmountDiscount.discountType
                     amountDiscount = newCouponAmountDiscount.amountDiscount
+                    discountType = newCouponAmountDiscount.discountType
                     additionalProperties =
                         newCouponAmountDiscount.additionalProperties.toMutableMap()
                 }
 
-                fun discountType(discountType: DiscountType) = apply {
-                    this.discountType = discountType
-                }
-
                 fun amountDiscount(amountDiscount: String) = apply {
                     this.amountDiscount = amountDiscount
+                }
+
+                fun discountType(discountType: DiscountType) = apply {
+                    this.discountType = discountType
                 }
 
                 fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
@@ -711,10 +711,10 @@ constructor(
 
                 fun build(): NewCouponAmountDiscount =
                     NewCouponAmountDiscount(
-                        checkNotNull(discountType) { "`discountType` is required but was not set" },
                         checkNotNull(amountDiscount) {
                             "`amountDiscount` is required but was not set"
                         },
+                        checkNotNull(discountType) { "`discountType` is required but was not set" },
                         additionalProperties.toImmutable(),
                     )
             }
@@ -775,17 +775,17 @@ constructor(
                     return true
                 }
 
-                return /* spotless:off */ other is NewCouponAmountDiscount && discountType == other.discountType && amountDiscount == other.amountDiscount && additionalProperties == other.additionalProperties /* spotless:on */
+                return /* spotless:off */ other is NewCouponAmountDiscount && amountDiscount == other.amountDiscount && discountType == other.discountType && additionalProperties == other.additionalProperties /* spotless:on */
             }
 
             /* spotless:off */
-            private val hashCode: Int by lazy { Objects.hash(discountType, amountDiscount, additionalProperties) }
+            private val hashCode: Int by lazy { Objects.hash(amountDiscount, discountType, additionalProperties) }
             /* spotless:on */
 
             override fun hashCode(): Int = hashCode
 
             override fun toString() =
-                "NewCouponAmountDiscount{discountType=$discountType, amountDiscount=$amountDiscount, additionalProperties=$additionalProperties}"
+                "NewCouponAmountDiscount{amountDiscount=$amountDiscount, discountType=$discountType, additionalProperties=$additionalProperties}"
         }
     }
 

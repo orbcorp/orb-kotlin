@@ -25,35 +25,24 @@ import java.util.Objects
 class BillableMetric
 @JsonCreator
 private constructor(
-    @JsonProperty("metadata")
-    @ExcludeMissing
-    private val metadata: JsonField<Metadata> = JsonMissing.of(),
     @JsonProperty("id") @ExcludeMissing private val id: JsonField<String> = JsonMissing.of(),
-    @JsonProperty("name") @ExcludeMissing private val name: JsonField<String> = JsonMissing.of(),
     @JsonProperty("description")
     @ExcludeMissing
     private val description: JsonField<String> = JsonMissing.of(),
+    @JsonProperty("item") @ExcludeMissing private val item: JsonField<Item> = JsonMissing.of(),
+    @JsonProperty("metadata")
+    @ExcludeMissing
+    private val metadata: JsonField<Metadata> = JsonMissing.of(),
+    @JsonProperty("name") @ExcludeMissing private val name: JsonField<String> = JsonMissing.of(),
     @JsonProperty("status")
     @ExcludeMissing
     private val status: JsonField<Status> = JsonMissing.of(),
-    @JsonProperty("item") @ExcludeMissing private val item: JsonField<Item> = JsonMissing.of(),
     @JsonAnySetter private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
 ) {
 
-    /**
-     * User specified key-value pairs for the resource. If not present, this defaults to an empty
-     * dictionary. Individual keys can be removed by setting the value to `null`, and the entire
-     * metadata mapping can be cleared by setting `metadata` to `null`.
-     */
-    fun metadata(): Metadata = metadata.getRequired("metadata")
-
     fun id(): String = id.getRequired("id")
 
-    fun name(): String = name.getRequired("name")
-
     fun description(): String? = description.getNullable("description")
-
-    fun status(): Status = status.getRequired("status")
 
     /**
      * The Item resource represents a sellable product or good. Items are associated with all line
@@ -67,15 +56,15 @@ private constructor(
      * dictionary. Individual keys can be removed by setting the value to `null`, and the entire
      * metadata mapping can be cleared by setting `metadata` to `null`.
      */
-    @JsonProperty("metadata") @ExcludeMissing fun _metadata() = metadata
+    fun metadata(): Metadata = metadata.getRequired("metadata")
+
+    fun name(): String = name.getRequired("name")
+
+    fun status(): Status = status.getRequired("status")
 
     @JsonProperty("id") @ExcludeMissing fun _id() = id
 
-    @JsonProperty("name") @ExcludeMissing fun _name() = name
-
     @JsonProperty("description") @ExcludeMissing fun _description() = description
-
-    @JsonProperty("status") @ExcludeMissing fun _status() = status
 
     /**
      * The Item resource represents a sellable product or good. Items are associated with all line
@@ -83,6 +72,17 @@ private constructor(
      * invoices and tax calculation purposes.
      */
     @JsonProperty("item") @ExcludeMissing fun _item() = item
+
+    /**
+     * User specified key-value pairs for the resource. If not present, this defaults to an empty
+     * dictionary. Individual keys can be removed by setting the value to `null`, and the entire
+     * metadata mapping can be cleared by setting `metadata` to `null`.
+     */
+    @JsonProperty("metadata") @ExcludeMissing fun _metadata() = metadata
+
+    @JsonProperty("name") @ExcludeMissing fun _name() = name
+
+    @JsonProperty("status") @ExcludeMissing fun _status() = status
 
     @JsonAnyGetter
     @ExcludeMissing
@@ -92,12 +92,12 @@ private constructor(
 
     fun validate(): BillableMetric = apply {
         if (!validated) {
-            metadata().validate()
             id()
-            name()
             description()
-            status()
             item().validate()
+            metadata().validate()
+            name()
+            status()
             validated = true
         }
     }
@@ -111,23 +111,45 @@ private constructor(
 
     class Builder {
 
-        private var metadata: JsonField<Metadata> = JsonMissing.of()
         private var id: JsonField<String> = JsonMissing.of()
-        private var name: JsonField<String> = JsonMissing.of()
         private var description: JsonField<String> = JsonMissing.of()
-        private var status: JsonField<Status> = JsonMissing.of()
         private var item: JsonField<Item> = JsonMissing.of()
+        private var metadata: JsonField<Metadata> = JsonMissing.of()
+        private var name: JsonField<String> = JsonMissing.of()
+        private var status: JsonField<Status> = JsonMissing.of()
         private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         internal fun from(billableMetric: BillableMetric) = apply {
-            metadata = billableMetric.metadata
             id = billableMetric.id
-            name = billableMetric.name
             description = billableMetric.description
-            status = billableMetric.status
             item = billableMetric.item
+            metadata = billableMetric.metadata
+            name = billableMetric.name
+            status = billableMetric.status
             additionalProperties = billableMetric.additionalProperties.toMutableMap()
         }
+
+        fun id(id: String) = id(JsonField.of(id))
+
+        fun id(id: JsonField<String>) = apply { this.id = id }
+
+        fun description(description: String) = description(JsonField.of(description))
+
+        fun description(description: JsonField<String>) = apply { this.description = description }
+
+        /**
+         * The Item resource represents a sellable product or good. Items are associated with all
+         * line items, billable metrics, and prices and are used for defining external sync behavior
+         * for invoices and tax calculation purposes.
+         */
+        fun item(item: Item) = item(JsonField.of(item))
+
+        /**
+         * The Item resource represents a sellable product or good. Items are associated with all
+         * line items, billable metrics, and prices and are used for defining external sync behavior
+         * for invoices and tax calculation purposes.
+         */
+        fun item(item: JsonField<Item>) = apply { this.item = item }
 
         /**
          * User specified key-value pairs for the resource. If not present, this defaults to an
@@ -143,35 +165,13 @@ private constructor(
          */
         fun metadata(metadata: JsonField<Metadata>) = apply { this.metadata = metadata }
 
-        fun id(id: String) = id(JsonField.of(id))
-
-        fun id(id: JsonField<String>) = apply { this.id = id }
-
         fun name(name: String) = name(JsonField.of(name))
 
         fun name(name: JsonField<String>) = apply { this.name = name }
 
-        fun description(description: String) = description(JsonField.of(description))
-
-        fun description(description: JsonField<String>) = apply { this.description = description }
-
         fun status(status: Status) = status(JsonField.of(status))
 
         fun status(status: JsonField<Status>) = apply { this.status = status }
-
-        /**
-         * The Item resource represents a sellable product or good. Items are associated with all
-         * line items, billable metrics, and prices and are used for defining external sync behavior
-         * for invoices and tax calculation purposes.
-         */
-        fun item(item: Item) = item(JsonField.of(item))
-
-        /**
-         * The Item resource represents a sellable product or good. Items are associated with all
-         * line items, billable metrics, and prices and are used for defining external sync behavior
-         * for invoices and tax calculation purposes.
-         */
-        fun item(item: JsonField<Item>) = apply { this.item = item }
 
         fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
             this.additionalProperties.clear()
@@ -194,12 +194,12 @@ private constructor(
 
         fun build(): BillableMetric =
             BillableMetric(
-                metadata,
                 id,
-                name,
                 description,
-                status,
                 item,
+                metadata,
+                name,
+                status,
                 additionalProperties.toImmutable(),
             )
     }
@@ -351,15 +351,15 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is BillableMetric && metadata == other.metadata && id == other.id && name == other.name && description == other.description && status == other.status && item == other.item && additionalProperties == other.additionalProperties /* spotless:on */
+        return /* spotless:off */ other is BillableMetric && id == other.id && description == other.description && item == other.item && metadata == other.metadata && name == other.name && status == other.status && additionalProperties == other.additionalProperties /* spotless:on */
     }
 
     /* spotless:off */
-    private val hashCode: Int by lazy { Objects.hash(metadata, id, name, description, status, item, additionalProperties) }
+    private val hashCode: Int by lazy { Objects.hash(id, description, item, metadata, name, status, additionalProperties) }
     /* spotless:on */
 
     override fun hashCode(): Int = hashCode
 
     override fun toString() =
-        "BillableMetric{metadata=$metadata, id=$id, name=$name, description=$description, status=$status, item=$item, additionalProperties=$additionalProperties}"
+        "BillableMetric{id=$id, description=$description, item=$item, metadata=$metadata, name=$name, status=$status, additionalProperties=$additionalProperties}"
 }

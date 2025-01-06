@@ -32,90 +32,125 @@ import java.util.Objects
 class SubscriptionCancelResponse
 @JsonCreator
 private constructor(
-    @JsonProperty("metadata")
-    @ExcludeMissing
-    private val metadata: JsonField<Metadata> = JsonMissing.of(),
     @JsonProperty("id") @ExcludeMissing private val id: JsonField<String> = JsonMissing.of(),
-    @JsonProperty("customer")
+    @JsonProperty("active_plan_phase_order")
     @ExcludeMissing
-    private val customer: JsonField<Customer> = JsonMissing.of(),
-    @JsonProperty("plan") @ExcludeMissing private val plan: JsonField<Plan> = JsonMissing.of(),
-    @JsonProperty("start_date")
+    private val activePlanPhaseOrder: JsonField<Long> = JsonMissing.of(),
+    @JsonProperty("adjustment_intervals")
     @ExcludeMissing
-    private val startDate: JsonField<OffsetDateTime> = JsonMissing.of(),
-    @JsonProperty("end_date")
+    private val adjustmentIntervals: JsonField<List<AdjustmentInterval>> = JsonMissing.of(),
+    @JsonProperty("auto_collection")
     @ExcludeMissing
-    private val endDate: JsonField<OffsetDateTime> = JsonMissing.of(),
+    private val autoCollection: JsonField<Boolean> = JsonMissing.of(),
+    @JsonProperty("billing_cycle_anchor_configuration")
+    @ExcludeMissing
+    private val billingCycleAnchorConfiguration: JsonField<BillingCycleAnchorConfiguration> =
+        JsonMissing.of(),
+    @JsonProperty("billing_cycle_day")
+    @ExcludeMissing
+    private val billingCycleDay: JsonField<Long> = JsonMissing.of(),
     @JsonProperty("created_at")
     @ExcludeMissing
     private val createdAt: JsonField<OffsetDateTime> = JsonMissing.of(),
-    @JsonProperty("current_billing_period_start_date")
-    @ExcludeMissing
-    private val currentBillingPeriodStartDate: JsonField<OffsetDateTime> = JsonMissing.of(),
     @JsonProperty("current_billing_period_end_date")
     @ExcludeMissing
     private val currentBillingPeriodEndDate: JsonField<OffsetDateTime> = JsonMissing.of(),
+    @JsonProperty("current_billing_period_start_date")
+    @ExcludeMissing
+    private val currentBillingPeriodStartDate: JsonField<OffsetDateTime> = JsonMissing.of(),
+    @JsonProperty("customer")
+    @ExcludeMissing
+    private val customer: JsonField<Customer> = JsonMissing.of(),
+    @JsonProperty("default_invoice_memo")
+    @ExcludeMissing
+    private val defaultInvoiceMemo: JsonField<String> = JsonMissing.of(),
+    @JsonProperty("discount_intervals")
+    @ExcludeMissing
+    private val discountIntervals: JsonField<List<DiscountInterval>> = JsonMissing.of(),
+    @JsonProperty("end_date")
+    @ExcludeMissing
+    private val endDate: JsonField<OffsetDateTime> = JsonMissing.of(),
+    @JsonProperty("fixed_fee_quantity_schedule")
+    @ExcludeMissing
+    private val fixedFeeQuantitySchedule: JsonField<List<FixedFeeQuantitySchedule>> =
+        JsonMissing.of(),
+    @JsonProperty("invoicing_threshold")
+    @ExcludeMissing
+    private val invoicingThreshold: JsonField<String> = JsonMissing.of(),
+    @JsonProperty("maximum_intervals")
+    @ExcludeMissing
+    private val maximumIntervals: JsonField<List<MaximumInterval>> = JsonMissing.of(),
+    @JsonProperty("metadata")
+    @ExcludeMissing
+    private val metadata: JsonField<Metadata> = JsonMissing.of(),
+    @JsonProperty("minimum_intervals")
+    @ExcludeMissing
+    private val minimumIntervals: JsonField<List<MinimumInterval>> = JsonMissing.of(),
+    @JsonProperty("net_terms")
+    @ExcludeMissing
+    private val netTerms: JsonField<Long> = JsonMissing.of(),
+    @JsonProperty("plan") @ExcludeMissing private val plan: JsonField<Plan> = JsonMissing.of(),
+    @JsonProperty("price_intervals")
+    @ExcludeMissing
+    private val priceIntervals: JsonField<List<PriceInterval>> = JsonMissing.of(),
+    @JsonProperty("redeemed_coupon")
+    @ExcludeMissing
+    private val redeemedCoupon: JsonField<RedeemedCoupon> = JsonMissing.of(),
+    @JsonProperty("start_date")
+    @ExcludeMissing
+    private val startDate: JsonField<OffsetDateTime> = JsonMissing.of(),
     @JsonProperty("status")
     @ExcludeMissing
     private val status: JsonField<Status> = JsonMissing.of(),
     @JsonProperty("trial_info")
     @ExcludeMissing
     private val trialInfo: JsonField<TrialInfo> = JsonMissing.of(),
-    @JsonProperty("active_plan_phase_order")
-    @ExcludeMissing
-    private val activePlanPhaseOrder: JsonField<Long> = JsonMissing.of(),
-    @JsonProperty("fixed_fee_quantity_schedule")
-    @ExcludeMissing
-    private val fixedFeeQuantitySchedule: JsonField<List<FixedFeeQuantitySchedule>> =
-        JsonMissing.of(),
-    @JsonProperty("default_invoice_memo")
-    @ExcludeMissing
-    private val defaultInvoiceMemo: JsonField<String> = JsonMissing.of(),
-    @JsonProperty("auto_collection")
-    @ExcludeMissing
-    private val autoCollection: JsonField<Boolean> = JsonMissing.of(),
-    @JsonProperty("net_terms")
-    @ExcludeMissing
-    private val netTerms: JsonField<Long> = JsonMissing.of(),
-    @JsonProperty("redeemed_coupon")
-    @ExcludeMissing
-    private val redeemedCoupon: JsonField<RedeemedCoupon> = JsonMissing.of(),
-    @JsonProperty("billing_cycle_day")
-    @ExcludeMissing
-    private val billingCycleDay: JsonField<Long> = JsonMissing.of(),
-    @JsonProperty("billing_cycle_anchor_configuration")
-    @ExcludeMissing
-    private val billingCycleAnchorConfiguration: JsonField<BillingCycleAnchorConfiguration> =
-        JsonMissing.of(),
-    @JsonProperty("invoicing_threshold")
-    @ExcludeMissing
-    private val invoicingThreshold: JsonField<String> = JsonMissing.of(),
-    @JsonProperty("price_intervals")
-    @ExcludeMissing
-    private val priceIntervals: JsonField<List<PriceInterval>> = JsonMissing.of(),
-    @JsonProperty("adjustment_intervals")
-    @ExcludeMissing
-    private val adjustmentIntervals: JsonField<List<AdjustmentInterval>> = JsonMissing.of(),
-    @JsonProperty("discount_intervals")
-    @ExcludeMissing
-    private val discountIntervals: JsonField<List<DiscountInterval>> = JsonMissing.of(),
-    @JsonProperty("minimum_intervals")
-    @ExcludeMissing
-    private val minimumIntervals: JsonField<List<MinimumInterval>> = JsonMissing.of(),
-    @JsonProperty("maximum_intervals")
-    @ExcludeMissing
-    private val maximumIntervals: JsonField<List<MaximumInterval>> = JsonMissing.of(),
     @JsonAnySetter private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
 ) {
 
-    /**
-     * User specified key-value pairs for the resource. If not present, this defaults to an empty
-     * dictionary. Individual keys can be removed by setting the value to `null`, and the entire
-     * metadata mapping can be cleared by setting `metadata` to `null`.
-     */
-    fun metadata(): Metadata = metadata.getRequired("metadata")
-
     fun id(): String = id.getRequired("id")
+
+    /** The current plan phase that is active, only if the subscription's plan has phases. */
+    fun activePlanPhaseOrder(): Long? = activePlanPhaseOrder.getNullable("active_plan_phase_order")
+
+    /** The adjustment intervals for this subscription. */
+    fun adjustmentIntervals(): List<AdjustmentInterval> =
+        adjustmentIntervals.getRequired("adjustment_intervals")
+
+    /**
+     * Determines whether issued invoices for this subscription will automatically be charged with
+     * the saved payment method on the due date. This property defaults to the plan's behavior. If
+     * null, defaults to the customer's setting.
+     */
+    fun autoCollection(): Boolean? = autoCollection.getNullable("auto_collection")
+
+    fun billingCycleAnchorConfiguration(): BillingCycleAnchorConfiguration =
+        billingCycleAnchorConfiguration.getRequired("billing_cycle_anchor_configuration")
+
+    /**
+     * The day of the month on which the billing cycle is anchored. If the maximum number of days in
+     * a month is greater than this value, the last day of the month is the billing cycle day (e.g.
+     * billing_cycle_day=31 for April means the billing period begins on the 30th.
+     */
+    fun billingCycleDay(): Long = billingCycleDay.getRequired("billing_cycle_day")
+
+    fun createdAt(): OffsetDateTime = createdAt.getRequired("created_at")
+
+    /**
+     * The end of the current billing period. This is an exclusive timestamp, such that the instant
+     * returned is not part of the billing period. Set to null for subscriptions that are not
+     * currently active.
+     */
+    fun currentBillingPeriodEndDate(): OffsetDateTime? =
+        currentBillingPeriodEndDate.getNullable("current_billing_period_end_date")
+
+    /**
+     * The start date of the current billing period. This is an inclusive timestamp; the instant
+     * returned is exactly the beginning of the billing period. Set to null if the subscription is
+     * not currently active.
+     */
+    fun currentBillingPeriodStartDate(): OffsetDateTime? =
+        currentBillingPeriodStartDate.getNullable("current_billing_period_start_date")
 
     /**
      * A customer is a buyer of your products, and the other party to the billing relationship.
@@ -138,94 +173,22 @@ private constructor(
     fun customer(): Customer = customer.getRequired("customer")
 
     /**
-     * The [Plan](../guides/core-concepts.mdx#plan-and-price) resource represents a plan that can be
-     * subscribed to by a customer. Plans define the billing behavior of the subscription. You can
-     * see more about how to configure prices in the [Price resource](/reference/price).
-     */
-    fun plan(): Plan = plan.getRequired("plan")
-
-    /** The date Orb starts billing for this subscription. */
-    fun startDate(): OffsetDateTime = startDate.getRequired("start_date")
-
-    /** The date Orb stops billing for this subscription. */
-    fun endDate(): OffsetDateTime? = endDate.getNullable("end_date")
-
-    fun createdAt(): OffsetDateTime = createdAt.getRequired("created_at")
-
-    /**
-     * The start date of the current billing period. This is an inclusive timestamp; the instant
-     * returned is exactly the beginning of the billing period. Set to null if the subscription is
-     * not currently active.
-     */
-    fun currentBillingPeriodStartDate(): OffsetDateTime? =
-        currentBillingPeriodStartDate.getNullable("current_billing_period_start_date")
-
-    /**
-     * The end of the current billing period. This is an exclusive timestamp, such that the instant
-     * returned is not part of the billing period. Set to null for subscriptions that are not
-     * currently active.
-     */
-    fun currentBillingPeriodEndDate(): OffsetDateTime? =
-        currentBillingPeriodEndDate.getNullable("current_billing_period_end_date")
-
-    fun status(): Status = status.getRequired("status")
-
-    fun trialInfo(): TrialInfo = trialInfo.getRequired("trial_info")
-
-    /** The current plan phase that is active, only if the subscription's plan has phases. */
-    fun activePlanPhaseOrder(): Long? = activePlanPhaseOrder.getNullable("active_plan_phase_order")
-
-    fun fixedFeeQuantitySchedule(): List<FixedFeeQuantitySchedule> =
-        fixedFeeQuantitySchedule.getRequired("fixed_fee_quantity_schedule")
-
-    /**
      * Determines the default memo on this subscriptions' invoices. Note that if this is not
      * provided, it is determined by the plan configuration.
      */
     fun defaultInvoiceMemo(): String? = defaultInvoiceMemo.getNullable("default_invoice_memo")
 
-    /**
-     * Determines whether issued invoices for this subscription will automatically be charged with
-     * the saved payment method on the due date. This property defaults to the plan's behavior. If
-     * null, defaults to the customer's setting.
-     */
-    fun autoCollection(): Boolean? = autoCollection.getNullable("auto_collection")
-
-    /**
-     * Determines the difference between the invoice issue date for subscription invoices as the
-     * date that they are due. A value of `0` here represents that the invoice is due on issue,
-     * whereas a value of `30` represents that the customer has a month to pay the invoice.
-     */
-    fun netTerms(): Long = netTerms.getRequired("net_terms")
-
-    fun redeemedCoupon(): RedeemedCoupon? = redeemedCoupon.getNullable("redeemed_coupon")
-
-    /**
-     * The day of the month on which the billing cycle is anchored. If the maximum number of days in
-     * a month is greater than this value, the last day of the month is the billing cycle day (e.g.
-     * billing_cycle_day=31 for April means the billing period begins on the 30th.
-     */
-    fun billingCycleDay(): Long = billingCycleDay.getRequired("billing_cycle_day")
-
-    fun billingCycleAnchorConfiguration(): BillingCycleAnchorConfiguration =
-        billingCycleAnchorConfiguration.getRequired("billing_cycle_anchor_configuration")
-
-    fun invoicingThreshold(): String? = invoicingThreshold.getNullable("invoicing_threshold")
-
-    /** The price intervals for this subscription. */
-    fun priceIntervals(): List<PriceInterval> = priceIntervals.getRequired("price_intervals")
-
-    /** The adjustment intervals for this subscription. */
-    fun adjustmentIntervals(): List<AdjustmentInterval> =
-        adjustmentIntervals.getRequired("adjustment_intervals")
-
     /** The discount intervals for this subscription. */
     fun discountIntervals(): List<DiscountInterval> =
         discountIntervals.getRequired("discount_intervals")
 
-    /** The minimum intervals for this subscription. */
-    fun minimumIntervals(): List<MinimumInterval> =
-        minimumIntervals.getRequired("minimum_intervals")
+    /** The date Orb stops billing for this subscription. */
+    fun endDate(): OffsetDateTime? = endDate.getNullable("end_date")
+
+    fun fixedFeeQuantitySchedule(): List<FixedFeeQuantitySchedule> =
+        fixedFeeQuantitySchedule.getRequired("fixed_fee_quantity_schedule")
+
+    fun invoicingThreshold(): String? = invoicingThreshold.getNullable("invoicing_threshold")
 
     /** The maximum intervals for this subscription. */
     fun maximumIntervals(): List<MaximumInterval> =
@@ -236,9 +199,87 @@ private constructor(
      * dictionary. Individual keys can be removed by setting the value to `null`, and the entire
      * metadata mapping can be cleared by setting `metadata` to `null`.
      */
-    @JsonProperty("metadata") @ExcludeMissing fun _metadata() = metadata
+    fun metadata(): Metadata = metadata.getRequired("metadata")
+
+    /** The minimum intervals for this subscription. */
+    fun minimumIntervals(): List<MinimumInterval> =
+        minimumIntervals.getRequired("minimum_intervals")
+
+    /**
+     * Determines the difference between the invoice issue date for subscription invoices as the
+     * date that they are due. A value of `0` here represents that the invoice is due on issue,
+     * whereas a value of `30` represents that the customer has a month to pay the invoice.
+     */
+    fun netTerms(): Long = netTerms.getRequired("net_terms")
+
+    /**
+     * The [Plan](../guides/core-concepts.mdx#plan-and-price) resource represents a plan that can be
+     * subscribed to by a customer. Plans define the billing behavior of the subscription. You can
+     * see more about how to configure prices in the [Price resource](/reference/price).
+     */
+    fun plan(): Plan = plan.getRequired("plan")
+
+    /** The price intervals for this subscription. */
+    fun priceIntervals(): List<PriceInterval> = priceIntervals.getRequired("price_intervals")
+
+    fun redeemedCoupon(): RedeemedCoupon? = redeemedCoupon.getNullable("redeemed_coupon")
+
+    /** The date Orb starts billing for this subscription. */
+    fun startDate(): OffsetDateTime = startDate.getRequired("start_date")
+
+    fun status(): Status = status.getRequired("status")
+
+    fun trialInfo(): TrialInfo = trialInfo.getRequired("trial_info")
 
     @JsonProperty("id") @ExcludeMissing fun _id() = id
+
+    /** The current plan phase that is active, only if the subscription's plan has phases. */
+    @JsonProperty("active_plan_phase_order")
+    @ExcludeMissing
+    fun _activePlanPhaseOrder() = activePlanPhaseOrder
+
+    /** The adjustment intervals for this subscription. */
+    @JsonProperty("adjustment_intervals")
+    @ExcludeMissing
+    fun _adjustmentIntervals() = adjustmentIntervals
+
+    /**
+     * Determines whether issued invoices for this subscription will automatically be charged with
+     * the saved payment method on the due date. This property defaults to the plan's behavior. If
+     * null, defaults to the customer's setting.
+     */
+    @JsonProperty("auto_collection") @ExcludeMissing fun _autoCollection() = autoCollection
+
+    @JsonProperty("billing_cycle_anchor_configuration")
+    @ExcludeMissing
+    fun _billingCycleAnchorConfiguration() = billingCycleAnchorConfiguration
+
+    /**
+     * The day of the month on which the billing cycle is anchored. If the maximum number of days in
+     * a month is greater than this value, the last day of the month is the billing cycle day (e.g.
+     * billing_cycle_day=31 for April means the billing period begins on the 30th.
+     */
+    @JsonProperty("billing_cycle_day") @ExcludeMissing fun _billingCycleDay() = billingCycleDay
+
+    @JsonProperty("created_at") @ExcludeMissing fun _createdAt() = createdAt
+
+    /**
+     * The end of the current billing period. This is an exclusive timestamp, such that the instant
+     * returned is not part of the billing period. Set to null for subscriptions that are not
+     * currently active.
+     */
+    @JsonProperty("current_billing_period_end_date")
+    @ExcludeMissing
+    fun _currentBillingPeriodEndDate() = currentBillingPeriodEndDate
+
+    /**
+     * The start date of the current billing period. This is an inclusive timestamp; the instant
+     * returned is exactly the beginning of the billing period. Set to null if the subscription is
+     * not currently active.
+     */
+    @JsonProperty("current_billing_period_start_date")
+    @ExcludeMissing
+    fun _currentBillingPeriodStartDate() = currentBillingPeriodStartDate
 
     /**
      * A customer is a buyer of your products, and the other party to the billing relationship.
@@ -261,52 +302,6 @@ private constructor(
     @JsonProperty("customer") @ExcludeMissing fun _customer() = customer
 
     /**
-     * The [Plan](../guides/core-concepts.mdx#plan-and-price) resource represents a plan that can be
-     * subscribed to by a customer. Plans define the billing behavior of the subscription. You can
-     * see more about how to configure prices in the [Price resource](/reference/price).
-     */
-    @JsonProperty("plan") @ExcludeMissing fun _plan() = plan
-
-    /** The date Orb starts billing for this subscription. */
-    @JsonProperty("start_date") @ExcludeMissing fun _startDate() = startDate
-
-    /** The date Orb stops billing for this subscription. */
-    @JsonProperty("end_date") @ExcludeMissing fun _endDate() = endDate
-
-    @JsonProperty("created_at") @ExcludeMissing fun _createdAt() = createdAt
-
-    /**
-     * The start date of the current billing period. This is an inclusive timestamp; the instant
-     * returned is exactly the beginning of the billing period. Set to null if the subscription is
-     * not currently active.
-     */
-    @JsonProperty("current_billing_period_start_date")
-    @ExcludeMissing
-    fun _currentBillingPeriodStartDate() = currentBillingPeriodStartDate
-
-    /**
-     * The end of the current billing period. This is an exclusive timestamp, such that the instant
-     * returned is not part of the billing period. Set to null for subscriptions that are not
-     * currently active.
-     */
-    @JsonProperty("current_billing_period_end_date")
-    @ExcludeMissing
-    fun _currentBillingPeriodEndDate() = currentBillingPeriodEndDate
-
-    @JsonProperty("status") @ExcludeMissing fun _status() = status
-
-    @JsonProperty("trial_info") @ExcludeMissing fun _trialInfo() = trialInfo
-
-    /** The current plan phase that is active, only if the subscription's plan has phases. */
-    @JsonProperty("active_plan_phase_order")
-    @ExcludeMissing
-    fun _activePlanPhaseOrder() = activePlanPhaseOrder
-
-    @JsonProperty("fixed_fee_quantity_schedule")
-    @ExcludeMissing
-    fun _fixedFeeQuantitySchedule() = fixedFeeQuantitySchedule
-
-    /**
      * Determines the default memo on this subscriptions' invoices. Note that if this is not
      * provided, it is determined by the plan configuration.
      */
@@ -314,12 +309,32 @@ private constructor(
     @ExcludeMissing
     fun _defaultInvoiceMemo() = defaultInvoiceMemo
 
+    /** The discount intervals for this subscription. */
+    @JsonProperty("discount_intervals") @ExcludeMissing fun _discountIntervals() = discountIntervals
+
+    /** The date Orb stops billing for this subscription. */
+    @JsonProperty("end_date") @ExcludeMissing fun _endDate() = endDate
+
+    @JsonProperty("fixed_fee_quantity_schedule")
+    @ExcludeMissing
+    fun _fixedFeeQuantitySchedule() = fixedFeeQuantitySchedule
+
+    @JsonProperty("invoicing_threshold")
+    @ExcludeMissing
+    fun _invoicingThreshold() = invoicingThreshold
+
+    /** The maximum intervals for this subscription. */
+    @JsonProperty("maximum_intervals") @ExcludeMissing fun _maximumIntervals() = maximumIntervals
+
     /**
-     * Determines whether issued invoices for this subscription will automatically be charged with
-     * the saved payment method on the due date. This property defaults to the plan's behavior. If
-     * null, defaults to the customer's setting.
+     * User specified key-value pairs for the resource. If not present, this defaults to an empty
+     * dictionary. Individual keys can be removed by setting the value to `null`, and the entire
+     * metadata mapping can be cleared by setting `metadata` to `null`.
      */
-    @JsonProperty("auto_collection") @ExcludeMissing fun _autoCollection() = autoCollection
+    @JsonProperty("metadata") @ExcludeMissing fun _metadata() = metadata
+
+    /** The minimum intervals for this subscription. */
+    @JsonProperty("minimum_intervals") @ExcludeMissing fun _minimumIntervals() = minimumIntervals
 
     /**
      * Determines the difference between the invoice issue date for subscription invoices as the
@@ -328,39 +343,24 @@ private constructor(
      */
     @JsonProperty("net_terms") @ExcludeMissing fun _netTerms() = netTerms
 
-    @JsonProperty("redeemed_coupon") @ExcludeMissing fun _redeemedCoupon() = redeemedCoupon
-
     /**
-     * The day of the month on which the billing cycle is anchored. If the maximum number of days in
-     * a month is greater than this value, the last day of the month is the billing cycle day (e.g.
-     * billing_cycle_day=31 for April means the billing period begins on the 30th.
+     * The [Plan](../guides/core-concepts.mdx#plan-and-price) resource represents a plan that can be
+     * subscribed to by a customer. Plans define the billing behavior of the subscription. You can
+     * see more about how to configure prices in the [Price resource](/reference/price).
      */
-    @JsonProperty("billing_cycle_day") @ExcludeMissing fun _billingCycleDay() = billingCycleDay
-
-    @JsonProperty("billing_cycle_anchor_configuration")
-    @ExcludeMissing
-    fun _billingCycleAnchorConfiguration() = billingCycleAnchorConfiguration
-
-    @JsonProperty("invoicing_threshold")
-    @ExcludeMissing
-    fun _invoicingThreshold() = invoicingThreshold
+    @JsonProperty("plan") @ExcludeMissing fun _plan() = plan
 
     /** The price intervals for this subscription. */
     @JsonProperty("price_intervals") @ExcludeMissing fun _priceIntervals() = priceIntervals
 
-    /** The adjustment intervals for this subscription. */
-    @JsonProperty("adjustment_intervals")
-    @ExcludeMissing
-    fun _adjustmentIntervals() = adjustmentIntervals
+    @JsonProperty("redeemed_coupon") @ExcludeMissing fun _redeemedCoupon() = redeemedCoupon
 
-    /** The discount intervals for this subscription. */
-    @JsonProperty("discount_intervals") @ExcludeMissing fun _discountIntervals() = discountIntervals
+    /** The date Orb starts billing for this subscription. */
+    @JsonProperty("start_date") @ExcludeMissing fun _startDate() = startDate
 
-    /** The minimum intervals for this subscription. */
-    @JsonProperty("minimum_intervals") @ExcludeMissing fun _minimumIntervals() = minimumIntervals
+    @JsonProperty("status") @ExcludeMissing fun _status() = status
 
-    /** The maximum intervals for this subscription. */
-    @JsonProperty("maximum_intervals") @ExcludeMissing fun _maximumIntervals() = maximumIntervals
+    @JsonProperty("trial_info") @ExcludeMissing fun _trialInfo() = trialInfo
 
     @JsonAnyGetter
     @ExcludeMissing
@@ -370,31 +370,31 @@ private constructor(
 
     fun validate(): SubscriptionCancelResponse = apply {
         if (!validated) {
-            metadata().validate()
             id()
-            customer().validate()
-            plan().validate()
-            startDate()
-            endDate()
+            activePlanPhaseOrder()
+            adjustmentIntervals().forEach { it.validate() }
+            autoCollection()
+            billingCycleAnchorConfiguration().validate()
+            billingCycleDay()
             createdAt()
-            currentBillingPeriodStartDate()
             currentBillingPeriodEndDate()
+            currentBillingPeriodStartDate()
+            customer().validate()
+            defaultInvoiceMemo()
+            discountIntervals()
+            endDate()
+            fixedFeeQuantitySchedule().forEach { it.validate() }
+            invoicingThreshold()
+            maximumIntervals().forEach { it.validate() }
+            metadata().validate()
+            minimumIntervals().forEach { it.validate() }
+            netTerms()
+            plan().validate()
+            priceIntervals().forEach { it.validate() }
+            redeemedCoupon()?.validate()
+            startDate()
             status()
             trialInfo().validate()
-            activePlanPhaseOrder()
-            fixedFeeQuantitySchedule().forEach { it.validate() }
-            defaultInvoiceMemo()
-            autoCollection()
-            netTerms()
-            redeemedCoupon()?.validate()
-            billingCycleDay()
-            billingCycleAnchorConfiguration().validate()
-            invoicingThreshold()
-            priceIntervals().forEach { it.validate() }
-            adjustmentIntervals().forEach { it.validate() }
-            discountIntervals()
-            minimumIntervals().forEach { it.validate() }
-            maximumIntervals().forEach { it.validate() }
             validated = true
         }
     }
@@ -408,82 +408,167 @@ private constructor(
 
     class Builder {
 
-        private var metadata: JsonField<Metadata> = JsonMissing.of()
         private var id: JsonField<String> = JsonMissing.of()
-        private var customer: JsonField<Customer> = JsonMissing.of()
-        private var plan: JsonField<Plan> = JsonMissing.of()
-        private var startDate: JsonField<OffsetDateTime> = JsonMissing.of()
-        private var endDate: JsonField<OffsetDateTime> = JsonMissing.of()
-        private var createdAt: JsonField<OffsetDateTime> = JsonMissing.of()
-        private var currentBillingPeriodStartDate: JsonField<OffsetDateTime> = JsonMissing.of()
-        private var currentBillingPeriodEndDate: JsonField<OffsetDateTime> = JsonMissing.of()
-        private var status: JsonField<Status> = JsonMissing.of()
-        private var trialInfo: JsonField<TrialInfo> = JsonMissing.of()
         private var activePlanPhaseOrder: JsonField<Long> = JsonMissing.of()
-        private var fixedFeeQuantitySchedule: JsonField<List<FixedFeeQuantitySchedule>> =
-            JsonMissing.of()
-        private var defaultInvoiceMemo: JsonField<String> = JsonMissing.of()
+        private var adjustmentIntervals: JsonField<List<AdjustmentInterval>> = JsonMissing.of()
         private var autoCollection: JsonField<Boolean> = JsonMissing.of()
-        private var netTerms: JsonField<Long> = JsonMissing.of()
-        private var redeemedCoupon: JsonField<RedeemedCoupon> = JsonMissing.of()
-        private var billingCycleDay: JsonField<Long> = JsonMissing.of()
         private var billingCycleAnchorConfiguration: JsonField<BillingCycleAnchorConfiguration> =
             JsonMissing.of()
-        private var invoicingThreshold: JsonField<String> = JsonMissing.of()
-        private var priceIntervals: JsonField<List<PriceInterval>> = JsonMissing.of()
-        private var adjustmentIntervals: JsonField<List<AdjustmentInterval>> = JsonMissing.of()
+        private var billingCycleDay: JsonField<Long> = JsonMissing.of()
+        private var createdAt: JsonField<OffsetDateTime> = JsonMissing.of()
+        private var currentBillingPeriodEndDate: JsonField<OffsetDateTime> = JsonMissing.of()
+        private var currentBillingPeriodStartDate: JsonField<OffsetDateTime> = JsonMissing.of()
+        private var customer: JsonField<Customer> = JsonMissing.of()
+        private var defaultInvoiceMemo: JsonField<String> = JsonMissing.of()
         private var discountIntervals: JsonField<List<DiscountInterval>> = JsonMissing.of()
-        private var minimumIntervals: JsonField<List<MinimumInterval>> = JsonMissing.of()
+        private var endDate: JsonField<OffsetDateTime> = JsonMissing.of()
+        private var fixedFeeQuantitySchedule: JsonField<List<FixedFeeQuantitySchedule>> =
+            JsonMissing.of()
+        private var invoicingThreshold: JsonField<String> = JsonMissing.of()
         private var maximumIntervals: JsonField<List<MaximumInterval>> = JsonMissing.of()
+        private var metadata: JsonField<Metadata> = JsonMissing.of()
+        private var minimumIntervals: JsonField<List<MinimumInterval>> = JsonMissing.of()
+        private var netTerms: JsonField<Long> = JsonMissing.of()
+        private var plan: JsonField<Plan> = JsonMissing.of()
+        private var priceIntervals: JsonField<List<PriceInterval>> = JsonMissing.of()
+        private var redeemedCoupon: JsonField<RedeemedCoupon> = JsonMissing.of()
+        private var startDate: JsonField<OffsetDateTime> = JsonMissing.of()
+        private var status: JsonField<Status> = JsonMissing.of()
+        private var trialInfo: JsonField<TrialInfo> = JsonMissing.of()
         private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         internal fun from(subscriptionCancelResponse: SubscriptionCancelResponse) = apply {
-            metadata = subscriptionCancelResponse.metadata
             id = subscriptionCancelResponse.id
-            customer = subscriptionCancelResponse.customer
-            plan = subscriptionCancelResponse.plan
-            startDate = subscriptionCancelResponse.startDate
-            endDate = subscriptionCancelResponse.endDate
-            createdAt = subscriptionCancelResponse.createdAt
-            currentBillingPeriodStartDate = subscriptionCancelResponse.currentBillingPeriodStartDate
-            currentBillingPeriodEndDate = subscriptionCancelResponse.currentBillingPeriodEndDate
-            status = subscriptionCancelResponse.status
-            trialInfo = subscriptionCancelResponse.trialInfo
             activePlanPhaseOrder = subscriptionCancelResponse.activePlanPhaseOrder
-            fixedFeeQuantitySchedule = subscriptionCancelResponse.fixedFeeQuantitySchedule
-            defaultInvoiceMemo = subscriptionCancelResponse.defaultInvoiceMemo
+            adjustmentIntervals = subscriptionCancelResponse.adjustmentIntervals
             autoCollection = subscriptionCancelResponse.autoCollection
-            netTerms = subscriptionCancelResponse.netTerms
-            redeemedCoupon = subscriptionCancelResponse.redeemedCoupon
-            billingCycleDay = subscriptionCancelResponse.billingCycleDay
             billingCycleAnchorConfiguration =
                 subscriptionCancelResponse.billingCycleAnchorConfiguration
-            invoicingThreshold = subscriptionCancelResponse.invoicingThreshold
-            priceIntervals = subscriptionCancelResponse.priceIntervals
-            adjustmentIntervals = subscriptionCancelResponse.adjustmentIntervals
+            billingCycleDay = subscriptionCancelResponse.billingCycleDay
+            createdAt = subscriptionCancelResponse.createdAt
+            currentBillingPeriodEndDate = subscriptionCancelResponse.currentBillingPeriodEndDate
+            currentBillingPeriodStartDate = subscriptionCancelResponse.currentBillingPeriodStartDate
+            customer = subscriptionCancelResponse.customer
+            defaultInvoiceMemo = subscriptionCancelResponse.defaultInvoiceMemo
             discountIntervals = subscriptionCancelResponse.discountIntervals
-            minimumIntervals = subscriptionCancelResponse.minimumIntervals
+            endDate = subscriptionCancelResponse.endDate
+            fixedFeeQuantitySchedule = subscriptionCancelResponse.fixedFeeQuantitySchedule
+            invoicingThreshold = subscriptionCancelResponse.invoicingThreshold
             maximumIntervals = subscriptionCancelResponse.maximumIntervals
+            metadata = subscriptionCancelResponse.metadata
+            minimumIntervals = subscriptionCancelResponse.minimumIntervals
+            netTerms = subscriptionCancelResponse.netTerms
+            plan = subscriptionCancelResponse.plan
+            priceIntervals = subscriptionCancelResponse.priceIntervals
+            redeemedCoupon = subscriptionCancelResponse.redeemedCoupon
+            startDate = subscriptionCancelResponse.startDate
+            status = subscriptionCancelResponse.status
+            trialInfo = subscriptionCancelResponse.trialInfo
             additionalProperties = subscriptionCancelResponse.additionalProperties.toMutableMap()
         }
-
-        /**
-         * User specified key-value pairs for the resource. If not present, this defaults to an
-         * empty dictionary. Individual keys can be removed by setting the value to `null`, and the
-         * entire metadata mapping can be cleared by setting `metadata` to `null`.
-         */
-        fun metadata(metadata: Metadata) = metadata(JsonField.of(metadata))
-
-        /**
-         * User specified key-value pairs for the resource. If not present, this defaults to an
-         * empty dictionary. Individual keys can be removed by setting the value to `null`, and the
-         * entire metadata mapping can be cleared by setting `metadata` to `null`.
-         */
-        fun metadata(metadata: JsonField<Metadata>) = apply { this.metadata = metadata }
 
         fun id(id: String) = id(JsonField.of(id))
 
         fun id(id: JsonField<String>) = apply { this.id = id }
+
+        /** The current plan phase that is active, only if the subscription's plan has phases. */
+        fun activePlanPhaseOrder(activePlanPhaseOrder: Long) =
+            activePlanPhaseOrder(JsonField.of(activePlanPhaseOrder))
+
+        /** The current plan phase that is active, only if the subscription's plan has phases. */
+        fun activePlanPhaseOrder(activePlanPhaseOrder: JsonField<Long>) = apply {
+            this.activePlanPhaseOrder = activePlanPhaseOrder
+        }
+
+        /** The adjustment intervals for this subscription. */
+        fun adjustmentIntervals(adjustmentIntervals: List<AdjustmentInterval>) =
+            adjustmentIntervals(JsonField.of(adjustmentIntervals))
+
+        /** The adjustment intervals for this subscription. */
+        fun adjustmentIntervals(adjustmentIntervals: JsonField<List<AdjustmentInterval>>) = apply {
+            this.adjustmentIntervals = adjustmentIntervals
+        }
+
+        /**
+         * Determines whether issued invoices for this subscription will automatically be charged
+         * with the saved payment method on the due date. This property defaults to the plan's
+         * behavior. If null, defaults to the customer's setting.
+         */
+        fun autoCollection(autoCollection: Boolean) = autoCollection(JsonField.of(autoCollection))
+
+        /**
+         * Determines whether issued invoices for this subscription will automatically be charged
+         * with the saved payment method on the due date. This property defaults to the plan's
+         * behavior. If null, defaults to the customer's setting.
+         */
+        fun autoCollection(autoCollection: JsonField<Boolean>) = apply {
+            this.autoCollection = autoCollection
+        }
+
+        fun billingCycleAnchorConfiguration(
+            billingCycleAnchorConfiguration: BillingCycleAnchorConfiguration
+        ) = billingCycleAnchorConfiguration(JsonField.of(billingCycleAnchorConfiguration))
+
+        fun billingCycleAnchorConfiguration(
+            billingCycleAnchorConfiguration: JsonField<BillingCycleAnchorConfiguration>
+        ) = apply { this.billingCycleAnchorConfiguration = billingCycleAnchorConfiguration }
+
+        /**
+         * The day of the month on which the billing cycle is anchored. If the maximum number of
+         * days in a month is greater than this value, the last day of the month is the billing
+         * cycle day (e.g. billing_cycle_day=31 for April means the billing period begins on the
+         * 30th.
+         */
+        fun billingCycleDay(billingCycleDay: Long) = billingCycleDay(JsonField.of(billingCycleDay))
+
+        /**
+         * The day of the month on which the billing cycle is anchored. If the maximum number of
+         * days in a month is greater than this value, the last day of the month is the billing
+         * cycle day (e.g. billing_cycle_day=31 for April means the billing period begins on the
+         * 30th.
+         */
+        fun billingCycleDay(billingCycleDay: JsonField<Long>) = apply {
+            this.billingCycleDay = billingCycleDay
+        }
+
+        fun createdAt(createdAt: OffsetDateTime) = createdAt(JsonField.of(createdAt))
+
+        fun createdAt(createdAt: JsonField<OffsetDateTime>) = apply { this.createdAt = createdAt }
+
+        /**
+         * The end of the current billing period. This is an exclusive timestamp, such that the
+         * instant returned is not part of the billing period. Set to null for subscriptions that
+         * are not currently active.
+         */
+        fun currentBillingPeriodEndDate(currentBillingPeriodEndDate: OffsetDateTime) =
+            currentBillingPeriodEndDate(JsonField.of(currentBillingPeriodEndDate))
+
+        /**
+         * The end of the current billing period. This is an exclusive timestamp, such that the
+         * instant returned is not part of the billing period. Set to null for subscriptions that
+         * are not currently active.
+         */
+        fun currentBillingPeriodEndDate(currentBillingPeriodEndDate: JsonField<OffsetDateTime>) =
+            apply {
+                this.currentBillingPeriodEndDate = currentBillingPeriodEndDate
+            }
+
+        /**
+         * The start date of the current billing period. This is an inclusive timestamp; the instant
+         * returned is exactly the beginning of the billing period. Set to null if the subscription
+         * is not currently active.
+         */
+        fun currentBillingPeriodStartDate(currentBillingPeriodStartDate: OffsetDateTime) =
+            currentBillingPeriodStartDate(JsonField.of(currentBillingPeriodStartDate))
+
+        /**
+         * The start date of the current billing period. This is an inclusive timestamp; the instant
+         * returned is exactly the beginning of the billing period. Set to null if the subscription
+         * is not currently active.
+         */
+        fun currentBillingPeriodStartDate(
+            currentBillingPeriodStartDate: JsonField<OffsetDateTime>
+        ) = apply { this.currentBillingPeriodStartDate = currentBillingPeriodStartDate }
 
         /**
          * A customer is a buyer of your products, and the other party to the billing relationship.
@@ -526,97 +611,6 @@ private constructor(
         fun customer(customer: JsonField<Customer>) = apply { this.customer = customer }
 
         /**
-         * The [Plan](../guides/core-concepts.mdx#plan-and-price) resource represents a plan that
-         * can be subscribed to by a customer. Plans define the billing behavior of the
-         * subscription. You can see more about how to configure prices in the
-         * [Price resource](/reference/price).
-         */
-        fun plan(plan: Plan) = plan(JsonField.of(plan))
-
-        /**
-         * The [Plan](../guides/core-concepts.mdx#plan-and-price) resource represents a plan that
-         * can be subscribed to by a customer. Plans define the billing behavior of the
-         * subscription. You can see more about how to configure prices in the
-         * [Price resource](/reference/price).
-         */
-        fun plan(plan: JsonField<Plan>) = apply { this.plan = plan }
-
-        /** The date Orb starts billing for this subscription. */
-        fun startDate(startDate: OffsetDateTime) = startDate(JsonField.of(startDate))
-
-        /** The date Orb starts billing for this subscription. */
-        fun startDate(startDate: JsonField<OffsetDateTime>) = apply { this.startDate = startDate }
-
-        /** The date Orb stops billing for this subscription. */
-        fun endDate(endDate: OffsetDateTime) = endDate(JsonField.of(endDate))
-
-        /** The date Orb stops billing for this subscription. */
-        fun endDate(endDate: JsonField<OffsetDateTime>) = apply { this.endDate = endDate }
-
-        fun createdAt(createdAt: OffsetDateTime) = createdAt(JsonField.of(createdAt))
-
-        fun createdAt(createdAt: JsonField<OffsetDateTime>) = apply { this.createdAt = createdAt }
-
-        /**
-         * The start date of the current billing period. This is an inclusive timestamp; the instant
-         * returned is exactly the beginning of the billing period. Set to null if the subscription
-         * is not currently active.
-         */
-        fun currentBillingPeriodStartDate(currentBillingPeriodStartDate: OffsetDateTime) =
-            currentBillingPeriodStartDate(JsonField.of(currentBillingPeriodStartDate))
-
-        /**
-         * The start date of the current billing period. This is an inclusive timestamp; the instant
-         * returned is exactly the beginning of the billing period. Set to null if the subscription
-         * is not currently active.
-         */
-        fun currentBillingPeriodStartDate(
-            currentBillingPeriodStartDate: JsonField<OffsetDateTime>
-        ) = apply { this.currentBillingPeriodStartDate = currentBillingPeriodStartDate }
-
-        /**
-         * The end of the current billing period. This is an exclusive timestamp, such that the
-         * instant returned is not part of the billing period. Set to null for subscriptions that
-         * are not currently active.
-         */
-        fun currentBillingPeriodEndDate(currentBillingPeriodEndDate: OffsetDateTime) =
-            currentBillingPeriodEndDate(JsonField.of(currentBillingPeriodEndDate))
-
-        /**
-         * The end of the current billing period. This is an exclusive timestamp, such that the
-         * instant returned is not part of the billing period. Set to null for subscriptions that
-         * are not currently active.
-         */
-        fun currentBillingPeriodEndDate(currentBillingPeriodEndDate: JsonField<OffsetDateTime>) =
-            apply {
-                this.currentBillingPeriodEndDate = currentBillingPeriodEndDate
-            }
-
-        fun status(status: Status) = status(JsonField.of(status))
-
-        fun status(status: JsonField<Status>) = apply { this.status = status }
-
-        fun trialInfo(trialInfo: TrialInfo) = trialInfo(JsonField.of(trialInfo))
-
-        fun trialInfo(trialInfo: JsonField<TrialInfo>) = apply { this.trialInfo = trialInfo }
-
-        /** The current plan phase that is active, only if the subscription's plan has phases. */
-        fun activePlanPhaseOrder(activePlanPhaseOrder: Long) =
-            activePlanPhaseOrder(JsonField.of(activePlanPhaseOrder))
-
-        /** The current plan phase that is active, only if the subscription's plan has phases. */
-        fun activePlanPhaseOrder(activePlanPhaseOrder: JsonField<Long>) = apply {
-            this.activePlanPhaseOrder = activePlanPhaseOrder
-        }
-
-        fun fixedFeeQuantitySchedule(fixedFeeQuantitySchedule: List<FixedFeeQuantitySchedule>) =
-            fixedFeeQuantitySchedule(JsonField.of(fixedFeeQuantitySchedule))
-
-        fun fixedFeeQuantitySchedule(
-            fixedFeeQuantitySchedule: JsonField<List<FixedFeeQuantitySchedule>>
-        ) = apply { this.fixedFeeQuantitySchedule = fixedFeeQuantitySchedule }
-
-        /**
          * Determines the default memo on this subscriptions' invoices. Note that if this is not
          * provided, it is determined by the plan configuration.
          */
@@ -631,20 +625,65 @@ private constructor(
             this.defaultInvoiceMemo = defaultInvoiceMemo
         }
 
-        /**
-         * Determines whether issued invoices for this subscription will automatically be charged
-         * with the saved payment method on the due date. This property defaults to the plan's
-         * behavior. If null, defaults to the customer's setting.
-         */
-        fun autoCollection(autoCollection: Boolean) = autoCollection(JsonField.of(autoCollection))
+        /** The discount intervals for this subscription. */
+        fun discountIntervals(discountIntervals: List<DiscountInterval>) =
+            discountIntervals(JsonField.of(discountIntervals))
+
+        /** The discount intervals for this subscription. */
+        fun discountIntervals(discountIntervals: JsonField<List<DiscountInterval>>) = apply {
+            this.discountIntervals = discountIntervals
+        }
+
+        /** The date Orb stops billing for this subscription. */
+        fun endDate(endDate: OffsetDateTime) = endDate(JsonField.of(endDate))
+
+        /** The date Orb stops billing for this subscription. */
+        fun endDate(endDate: JsonField<OffsetDateTime>) = apply { this.endDate = endDate }
+
+        fun fixedFeeQuantitySchedule(fixedFeeQuantitySchedule: List<FixedFeeQuantitySchedule>) =
+            fixedFeeQuantitySchedule(JsonField.of(fixedFeeQuantitySchedule))
+
+        fun fixedFeeQuantitySchedule(
+            fixedFeeQuantitySchedule: JsonField<List<FixedFeeQuantitySchedule>>
+        ) = apply { this.fixedFeeQuantitySchedule = fixedFeeQuantitySchedule }
+
+        fun invoicingThreshold(invoicingThreshold: String) =
+            invoicingThreshold(JsonField.of(invoicingThreshold))
+
+        fun invoicingThreshold(invoicingThreshold: JsonField<String>) = apply {
+            this.invoicingThreshold = invoicingThreshold
+        }
+
+        /** The maximum intervals for this subscription. */
+        fun maximumIntervals(maximumIntervals: List<MaximumInterval>) =
+            maximumIntervals(JsonField.of(maximumIntervals))
+
+        /** The maximum intervals for this subscription. */
+        fun maximumIntervals(maximumIntervals: JsonField<List<MaximumInterval>>) = apply {
+            this.maximumIntervals = maximumIntervals
+        }
 
         /**
-         * Determines whether issued invoices for this subscription will automatically be charged
-         * with the saved payment method on the due date. This property defaults to the plan's
-         * behavior. If null, defaults to the customer's setting.
+         * User specified key-value pairs for the resource. If not present, this defaults to an
+         * empty dictionary. Individual keys can be removed by setting the value to `null`, and the
+         * entire metadata mapping can be cleared by setting `metadata` to `null`.
          */
-        fun autoCollection(autoCollection: JsonField<Boolean>) = apply {
-            this.autoCollection = autoCollection
+        fun metadata(metadata: Metadata) = metadata(JsonField.of(metadata))
+
+        /**
+         * User specified key-value pairs for the resource. If not present, this defaults to an
+         * empty dictionary. Individual keys can be removed by setting the value to `null`, and the
+         * entire metadata mapping can be cleared by setting `metadata` to `null`.
+         */
+        fun metadata(metadata: JsonField<Metadata>) = apply { this.metadata = metadata }
+
+        /** The minimum intervals for this subscription. */
+        fun minimumIntervals(minimumIntervals: List<MinimumInterval>) =
+            minimumIntervals(JsonField.of(minimumIntervals))
+
+        /** The minimum intervals for this subscription. */
+        fun minimumIntervals(minimumIntervals: JsonField<List<MinimumInterval>>) = apply {
+            this.minimumIntervals = minimumIntervals
         }
 
         /**
@@ -661,45 +700,21 @@ private constructor(
          */
         fun netTerms(netTerms: JsonField<Long>) = apply { this.netTerms = netTerms }
 
-        fun redeemedCoupon(redeemedCoupon: RedeemedCoupon) =
-            redeemedCoupon(JsonField.of(redeemedCoupon))
-
-        fun redeemedCoupon(redeemedCoupon: JsonField<RedeemedCoupon>) = apply {
-            this.redeemedCoupon = redeemedCoupon
-        }
+        /**
+         * The [Plan](../guides/core-concepts.mdx#plan-and-price) resource represents a plan that
+         * can be subscribed to by a customer. Plans define the billing behavior of the
+         * subscription. You can see more about how to configure prices in the
+         * [Price resource](/reference/price).
+         */
+        fun plan(plan: Plan) = plan(JsonField.of(plan))
 
         /**
-         * The day of the month on which the billing cycle is anchored. If the maximum number of
-         * days in a month is greater than this value, the last day of the month is the billing
-         * cycle day (e.g. billing_cycle_day=31 for April means the billing period begins on the
-         * 30th.
+         * The [Plan](../guides/core-concepts.mdx#plan-and-price) resource represents a plan that
+         * can be subscribed to by a customer. Plans define the billing behavior of the
+         * subscription. You can see more about how to configure prices in the
+         * [Price resource](/reference/price).
          */
-        fun billingCycleDay(billingCycleDay: Long) = billingCycleDay(JsonField.of(billingCycleDay))
-
-        /**
-         * The day of the month on which the billing cycle is anchored. If the maximum number of
-         * days in a month is greater than this value, the last day of the month is the billing
-         * cycle day (e.g. billing_cycle_day=31 for April means the billing period begins on the
-         * 30th.
-         */
-        fun billingCycleDay(billingCycleDay: JsonField<Long>) = apply {
-            this.billingCycleDay = billingCycleDay
-        }
-
-        fun billingCycleAnchorConfiguration(
-            billingCycleAnchorConfiguration: BillingCycleAnchorConfiguration
-        ) = billingCycleAnchorConfiguration(JsonField.of(billingCycleAnchorConfiguration))
-
-        fun billingCycleAnchorConfiguration(
-            billingCycleAnchorConfiguration: JsonField<BillingCycleAnchorConfiguration>
-        ) = apply { this.billingCycleAnchorConfiguration = billingCycleAnchorConfiguration }
-
-        fun invoicingThreshold(invoicingThreshold: String) =
-            invoicingThreshold(JsonField.of(invoicingThreshold))
-
-        fun invoicingThreshold(invoicingThreshold: JsonField<String>) = apply {
-            this.invoicingThreshold = invoicingThreshold
-        }
+        fun plan(plan: JsonField<Plan>) = apply { this.plan = plan }
 
         /** The price intervals for this subscription. */
         fun priceIntervals(priceIntervals: List<PriceInterval>) =
@@ -710,41 +725,26 @@ private constructor(
             this.priceIntervals = priceIntervals
         }
 
-        /** The adjustment intervals for this subscription. */
-        fun adjustmentIntervals(adjustmentIntervals: List<AdjustmentInterval>) =
-            adjustmentIntervals(JsonField.of(adjustmentIntervals))
+        fun redeemedCoupon(redeemedCoupon: RedeemedCoupon) =
+            redeemedCoupon(JsonField.of(redeemedCoupon))
 
-        /** The adjustment intervals for this subscription. */
-        fun adjustmentIntervals(adjustmentIntervals: JsonField<List<AdjustmentInterval>>) = apply {
-            this.adjustmentIntervals = adjustmentIntervals
+        fun redeemedCoupon(redeemedCoupon: JsonField<RedeemedCoupon>) = apply {
+            this.redeemedCoupon = redeemedCoupon
         }
 
-        /** The discount intervals for this subscription. */
-        fun discountIntervals(discountIntervals: List<DiscountInterval>) =
-            discountIntervals(JsonField.of(discountIntervals))
+        /** The date Orb starts billing for this subscription. */
+        fun startDate(startDate: OffsetDateTime) = startDate(JsonField.of(startDate))
 
-        /** The discount intervals for this subscription. */
-        fun discountIntervals(discountIntervals: JsonField<List<DiscountInterval>>) = apply {
-            this.discountIntervals = discountIntervals
-        }
+        /** The date Orb starts billing for this subscription. */
+        fun startDate(startDate: JsonField<OffsetDateTime>) = apply { this.startDate = startDate }
 
-        /** The minimum intervals for this subscription. */
-        fun minimumIntervals(minimumIntervals: List<MinimumInterval>) =
-            minimumIntervals(JsonField.of(minimumIntervals))
+        fun status(status: Status) = status(JsonField.of(status))
 
-        /** The minimum intervals for this subscription. */
-        fun minimumIntervals(minimumIntervals: JsonField<List<MinimumInterval>>) = apply {
-            this.minimumIntervals = minimumIntervals
-        }
+        fun status(status: JsonField<Status>) = apply { this.status = status }
 
-        /** The maximum intervals for this subscription. */
-        fun maximumIntervals(maximumIntervals: List<MaximumInterval>) =
-            maximumIntervals(JsonField.of(maximumIntervals))
+        fun trialInfo(trialInfo: TrialInfo) = trialInfo(JsonField.of(trialInfo))
 
-        /** The maximum intervals for this subscription. */
-        fun maximumIntervals(maximumIntervals: JsonField<List<MaximumInterval>>) = apply {
-            this.maximumIntervals = maximumIntervals
-        }
+        fun trialInfo(trialInfo: JsonField<TrialInfo>) = apply { this.trialInfo = trialInfo }
 
         fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
             this.additionalProperties.clear()
@@ -767,31 +767,31 @@ private constructor(
 
         fun build(): SubscriptionCancelResponse =
             SubscriptionCancelResponse(
-                metadata,
                 id,
-                customer,
-                plan,
-                startDate,
-                endDate,
+                activePlanPhaseOrder,
+                adjustmentIntervals.map { it.toImmutable() },
+                autoCollection,
+                billingCycleAnchorConfiguration,
+                billingCycleDay,
                 createdAt,
-                currentBillingPeriodStartDate,
                 currentBillingPeriodEndDate,
+                currentBillingPeriodStartDate,
+                customer,
+                defaultInvoiceMemo,
+                discountIntervals.map { it.toImmutable() },
+                endDate,
+                fixedFeeQuantitySchedule.map { it.toImmutable() },
+                invoicingThreshold,
+                maximumIntervals.map { it.toImmutable() },
+                metadata,
+                minimumIntervals.map { it.toImmutable() },
+                netTerms,
+                plan,
+                priceIntervals.map { it.toImmutable() },
+                redeemedCoupon,
+                startDate,
                 status,
                 trialInfo,
-                activePlanPhaseOrder,
-                fixedFeeQuantitySchedule.map { it.toImmutable() },
-                defaultInvoiceMemo,
-                autoCollection,
-                netTerms,
-                redeemedCoupon,
-                billingCycleDay,
-                billingCycleAnchorConfiguration,
-                invoicingThreshold,
-                priceIntervals.map { it.toImmutable() },
-                adjustmentIntervals.map { it.toImmutable() },
-                discountIntervals.map { it.toImmutable() },
-                minimumIntervals.map { it.toImmutable() },
-                maximumIntervals.map { it.toImmutable() },
                 additionalProperties.toImmutable(),
             )
     }
@@ -804,15 +804,15 @@ private constructor(
         @JsonProperty("adjustment")
         @ExcludeMissing
         private val adjustment: JsonField<Adjustment> = JsonMissing.of(),
-        @JsonProperty("start_date")
-        @ExcludeMissing
-        private val startDate: JsonField<OffsetDateTime> = JsonMissing.of(),
-        @JsonProperty("end_date")
-        @ExcludeMissing
-        private val endDate: JsonField<OffsetDateTime> = JsonMissing.of(),
         @JsonProperty("applies_to_price_interval_ids")
         @ExcludeMissing
         private val appliesToPriceIntervalIds: JsonField<List<String>> = JsonMissing.of(),
+        @JsonProperty("end_date")
+        @ExcludeMissing
+        private val endDate: JsonField<OffsetDateTime> = JsonMissing.of(),
+        @JsonProperty("start_date")
+        @ExcludeMissing
+        private val startDate: JsonField<OffsetDateTime> = JsonMissing.of(),
         @JsonAnySetter
         private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
@@ -821,30 +821,30 @@ private constructor(
 
         fun adjustment(): Adjustment = adjustment.getRequired("adjustment")
 
-        /** The start date of the adjustment interval. */
-        fun startDate(): OffsetDateTime = startDate.getRequired("start_date")
+        /** The price interval IDs that this adjustment applies to. */
+        fun appliesToPriceIntervalIds(): List<String> =
+            appliesToPriceIntervalIds.getRequired("applies_to_price_interval_ids")
 
         /** The end date of the adjustment interval. */
         fun endDate(): OffsetDateTime? = endDate.getNullable("end_date")
 
-        /** The price interval IDs that this adjustment applies to. */
-        fun appliesToPriceIntervalIds(): List<String> =
-            appliesToPriceIntervalIds.getRequired("applies_to_price_interval_ids")
+        /** The start date of the adjustment interval. */
+        fun startDate(): OffsetDateTime = startDate.getRequired("start_date")
 
         @JsonProperty("id") @ExcludeMissing fun _id() = id
 
         @JsonProperty("adjustment") @ExcludeMissing fun _adjustment() = adjustment
 
-        /** The start date of the adjustment interval. */
-        @JsonProperty("start_date") @ExcludeMissing fun _startDate() = startDate
-
-        /** The end date of the adjustment interval. */
-        @JsonProperty("end_date") @ExcludeMissing fun _endDate() = endDate
-
         /** The price interval IDs that this adjustment applies to. */
         @JsonProperty("applies_to_price_interval_ids")
         @ExcludeMissing
         fun _appliesToPriceIntervalIds() = appliesToPriceIntervalIds
+
+        /** The end date of the adjustment interval. */
+        @JsonProperty("end_date") @ExcludeMissing fun _endDate() = endDate
+
+        /** The start date of the adjustment interval. */
+        @JsonProperty("start_date") @ExcludeMissing fun _startDate() = startDate
 
         @JsonAnyGetter
         @ExcludeMissing
@@ -856,9 +856,9 @@ private constructor(
             if (!validated) {
                 id()
                 adjustment()
-                startDate()
-                endDate()
                 appliesToPriceIntervalIds()
+                endDate()
+                startDate()
                 validated = true
             }
         }
@@ -874,17 +874,17 @@ private constructor(
 
             private var id: JsonField<String> = JsonMissing.of()
             private var adjustment: JsonField<Adjustment> = JsonMissing.of()
-            private var startDate: JsonField<OffsetDateTime> = JsonMissing.of()
-            private var endDate: JsonField<OffsetDateTime> = JsonMissing.of()
             private var appliesToPriceIntervalIds: JsonField<List<String>> = JsonMissing.of()
+            private var endDate: JsonField<OffsetDateTime> = JsonMissing.of()
+            private var startDate: JsonField<OffsetDateTime> = JsonMissing.of()
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             internal fun from(adjustmentInterval: AdjustmentInterval) = apply {
                 id = adjustmentInterval.id
                 adjustment = adjustmentInterval.adjustment
-                startDate = adjustmentInterval.startDate
-                endDate = adjustmentInterval.endDate
                 appliesToPriceIntervalIds = adjustmentInterval.appliesToPriceIntervalIds
+                endDate = adjustmentInterval.endDate
+                startDate = adjustmentInterval.startDate
                 additionalProperties = adjustmentInterval.additionalProperties.toMutableMap()
             }
 
@@ -898,20 +898,6 @@ private constructor(
                 this.adjustment = adjustment
             }
 
-            /** The start date of the adjustment interval. */
-            fun startDate(startDate: OffsetDateTime) = startDate(JsonField.of(startDate))
-
-            /** The start date of the adjustment interval. */
-            fun startDate(startDate: JsonField<OffsetDateTime>) = apply {
-                this.startDate = startDate
-            }
-
-            /** The end date of the adjustment interval. */
-            fun endDate(endDate: OffsetDateTime) = endDate(JsonField.of(endDate))
-
-            /** The end date of the adjustment interval. */
-            fun endDate(endDate: JsonField<OffsetDateTime>) = apply { this.endDate = endDate }
-
             /** The price interval IDs that this adjustment applies to. */
             fun appliesToPriceIntervalIds(appliesToPriceIntervalIds: List<String>) =
                 appliesToPriceIntervalIds(JsonField.of(appliesToPriceIntervalIds))
@@ -921,6 +907,20 @@ private constructor(
                 apply {
                     this.appliesToPriceIntervalIds = appliesToPriceIntervalIds
                 }
+
+            /** The end date of the adjustment interval. */
+            fun endDate(endDate: OffsetDateTime) = endDate(JsonField.of(endDate))
+
+            /** The end date of the adjustment interval. */
+            fun endDate(endDate: JsonField<OffsetDateTime>) = apply { this.endDate = endDate }
+
+            /** The start date of the adjustment interval. */
+            fun startDate(startDate: OffsetDateTime) = startDate(JsonField.of(startDate))
+
+            /** The start date of the adjustment interval. */
+            fun startDate(startDate: JsonField<OffsetDateTime>) = apply {
+                this.startDate = startDate
+            }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
@@ -945,9 +945,9 @@ private constructor(
                 AdjustmentInterval(
                     id,
                     adjustment,
-                    startDate,
-                    endDate,
                     appliesToPriceIntervalIds.map { it.toImmutable() },
+                    endDate,
+                    startDate,
                     additionalProperties.toImmutable(),
                 )
         }
@@ -1191,29 +1191,41 @@ private constructor(
                 @JsonProperty("id")
                 @ExcludeMissing
                 private val id: JsonField<String> = JsonMissing.of(),
-                @JsonProperty("is_invoice_level")
-                @ExcludeMissing
-                private val isInvoiceLevel: JsonField<Boolean> = JsonMissing.of(),
-                @JsonProperty("plan_phase_order")
-                @ExcludeMissing
-                private val planPhaseOrder: JsonField<Long> = JsonMissing.of(),
-                @JsonProperty("applies_to_price_ids")
-                @ExcludeMissing
-                private val appliesToPriceIds: JsonField<List<String>> = JsonMissing.of(),
-                @JsonProperty("reason")
-                @ExcludeMissing
-                private val reason: JsonField<String> = JsonMissing.of(),
                 @JsonProperty("adjustment_type")
                 @ExcludeMissing
                 private val adjustmentType: JsonField<AdjustmentType> = JsonMissing.of(),
                 @JsonProperty("amount_discount")
                 @ExcludeMissing
                 private val amountDiscount: JsonField<String> = JsonMissing.of(),
+                @JsonProperty("applies_to_price_ids")
+                @ExcludeMissing
+                private val appliesToPriceIds: JsonField<List<String>> = JsonMissing.of(),
+                @JsonProperty("is_invoice_level")
+                @ExcludeMissing
+                private val isInvoiceLevel: JsonField<Boolean> = JsonMissing.of(),
+                @JsonProperty("plan_phase_order")
+                @ExcludeMissing
+                private val planPhaseOrder: JsonField<Long> = JsonMissing.of(),
+                @JsonProperty("reason")
+                @ExcludeMissing
+                private val reason: JsonField<String> = JsonMissing.of(),
                 @JsonAnySetter
                 private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
             ) {
 
                 fun id(): String = id.getRequired("id")
+
+                fun adjustmentType(): AdjustmentType = adjustmentType.getRequired("adjustment_type")
+
+                /**
+                 * The amount by which to discount the prices this adjustment applies to in a given
+                 * billing period.
+                 */
+                fun amountDiscount(): String = amountDiscount.getRequired("amount_discount")
+
+                /** The price IDs that this adjustment applies to. */
+                fun appliesToPriceIds(): List<String> =
+                    appliesToPriceIds.getRequired("applies_to_price_ids")
 
                 /**
                  * True for adjustments that apply to an entire invocice, false for adjustments that
@@ -1224,22 +1236,27 @@ private constructor(
                 /** The plan phase in which this adjustment is active. */
                 fun planPhaseOrder(): Long? = planPhaseOrder.getNullable("plan_phase_order")
 
-                /** The price IDs that this adjustment applies to. */
-                fun appliesToPriceIds(): List<String> =
-                    appliesToPriceIds.getRequired("applies_to_price_ids")
-
                 /** The reason for the adjustment. */
                 fun reason(): String? = reason.getNullable("reason")
 
-                fun adjustmentType(): AdjustmentType = adjustmentType.getRequired("adjustment_type")
+                @JsonProperty("id") @ExcludeMissing fun _id() = id
+
+                @JsonProperty("adjustment_type")
+                @ExcludeMissing
+                fun _adjustmentType() = adjustmentType
 
                 /**
                  * The amount by which to discount the prices this adjustment applies to in a given
                  * billing period.
                  */
-                fun amountDiscount(): String = amountDiscount.getRequired("amount_discount")
+                @JsonProperty("amount_discount")
+                @ExcludeMissing
+                fun _amountDiscount() = amountDiscount
 
-                @JsonProperty("id") @ExcludeMissing fun _id() = id
+                /** The price IDs that this adjustment applies to. */
+                @JsonProperty("applies_to_price_ids")
+                @ExcludeMissing
+                fun _appliesToPriceIds() = appliesToPriceIds
 
                 /**
                  * True for adjustments that apply to an entire invocice, false for adjustments that
@@ -1254,25 +1271,8 @@ private constructor(
                 @ExcludeMissing
                 fun _planPhaseOrder() = planPhaseOrder
 
-                /** The price IDs that this adjustment applies to. */
-                @JsonProperty("applies_to_price_ids")
-                @ExcludeMissing
-                fun _appliesToPriceIds() = appliesToPriceIds
-
                 /** The reason for the adjustment. */
                 @JsonProperty("reason") @ExcludeMissing fun _reason() = reason
-
-                @JsonProperty("adjustment_type")
-                @ExcludeMissing
-                fun _adjustmentType() = adjustmentType
-
-                /**
-                 * The amount by which to discount the prices this adjustment applies to in a given
-                 * billing period.
-                 */
-                @JsonProperty("amount_discount")
-                @ExcludeMissing
-                fun _amountDiscount() = amountDiscount
 
                 @JsonAnyGetter
                 @ExcludeMissing
@@ -1283,12 +1283,12 @@ private constructor(
                 fun validate(): AmountDiscountAdjustment = apply {
                     if (!validated) {
                         id()
-                        isInvoiceLevel()
-                        planPhaseOrder()
-                        appliesToPriceIds()
-                        reason()
                         adjustmentType()
                         amountDiscount()
+                        appliesToPriceIds()
+                        isInvoiceLevel()
+                        planPhaseOrder()
+                        reason()
                         validated = true
                     }
                 }
@@ -1303,22 +1303,22 @@ private constructor(
                 class Builder {
 
                     private var id: JsonField<String> = JsonMissing.of()
-                    private var isInvoiceLevel: JsonField<Boolean> = JsonMissing.of()
-                    private var planPhaseOrder: JsonField<Long> = JsonMissing.of()
-                    private var appliesToPriceIds: JsonField<List<String>> = JsonMissing.of()
-                    private var reason: JsonField<String> = JsonMissing.of()
                     private var adjustmentType: JsonField<AdjustmentType> = JsonMissing.of()
                     private var amountDiscount: JsonField<String> = JsonMissing.of()
+                    private var appliesToPriceIds: JsonField<List<String>> = JsonMissing.of()
+                    private var isInvoiceLevel: JsonField<Boolean> = JsonMissing.of()
+                    private var planPhaseOrder: JsonField<Long> = JsonMissing.of()
+                    private var reason: JsonField<String> = JsonMissing.of()
                     private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
                     internal fun from(amountDiscountAdjustment: AmountDiscountAdjustment) = apply {
                         id = amountDiscountAdjustment.id
-                        isInvoiceLevel = amountDiscountAdjustment.isInvoiceLevel
-                        planPhaseOrder = amountDiscountAdjustment.planPhaseOrder
-                        appliesToPriceIds = amountDiscountAdjustment.appliesToPriceIds
-                        reason = amountDiscountAdjustment.reason
                         adjustmentType = amountDiscountAdjustment.adjustmentType
                         amountDiscount = amountDiscountAdjustment.amountDiscount
+                        appliesToPriceIds = amountDiscountAdjustment.appliesToPriceIds
+                        isInvoiceLevel = amountDiscountAdjustment.isInvoiceLevel
+                        planPhaseOrder = amountDiscountAdjustment.planPhaseOrder
+                        reason = amountDiscountAdjustment.reason
                         additionalProperties =
                             amountDiscountAdjustment.additionalProperties.toMutableMap()
                     }
@@ -1326,6 +1326,37 @@ private constructor(
                     fun id(id: String) = id(JsonField.of(id))
 
                     fun id(id: JsonField<String>) = apply { this.id = id }
+
+                    fun adjustmentType(adjustmentType: AdjustmentType) =
+                        adjustmentType(JsonField.of(adjustmentType))
+
+                    fun adjustmentType(adjustmentType: JsonField<AdjustmentType>) = apply {
+                        this.adjustmentType = adjustmentType
+                    }
+
+                    /**
+                     * The amount by which to discount the prices this adjustment applies to in a
+                     * given billing period.
+                     */
+                    fun amountDiscount(amountDiscount: String) =
+                        amountDiscount(JsonField.of(amountDiscount))
+
+                    /**
+                     * The amount by which to discount the prices this adjustment applies to in a
+                     * given billing period.
+                     */
+                    fun amountDiscount(amountDiscount: JsonField<String>) = apply {
+                        this.amountDiscount = amountDiscount
+                    }
+
+                    /** The price IDs that this adjustment applies to. */
+                    fun appliesToPriceIds(appliesToPriceIds: List<String>) =
+                        appliesToPriceIds(JsonField.of(appliesToPriceIds))
+
+                    /** The price IDs that this adjustment applies to. */
+                    fun appliesToPriceIds(appliesToPriceIds: JsonField<List<String>>) = apply {
+                        this.appliesToPriceIds = appliesToPriceIds
+                    }
 
                     /**
                      * True for adjustments that apply to an entire invocice, false for adjustments
@@ -1351,42 +1382,11 @@ private constructor(
                         this.planPhaseOrder = planPhaseOrder
                     }
 
-                    /** The price IDs that this adjustment applies to. */
-                    fun appliesToPriceIds(appliesToPriceIds: List<String>) =
-                        appliesToPriceIds(JsonField.of(appliesToPriceIds))
-
-                    /** The price IDs that this adjustment applies to. */
-                    fun appliesToPriceIds(appliesToPriceIds: JsonField<List<String>>) = apply {
-                        this.appliesToPriceIds = appliesToPriceIds
-                    }
-
                     /** The reason for the adjustment. */
                     fun reason(reason: String) = reason(JsonField.of(reason))
 
                     /** The reason for the adjustment. */
                     fun reason(reason: JsonField<String>) = apply { this.reason = reason }
-
-                    fun adjustmentType(adjustmentType: AdjustmentType) =
-                        adjustmentType(JsonField.of(adjustmentType))
-
-                    fun adjustmentType(adjustmentType: JsonField<AdjustmentType>) = apply {
-                        this.adjustmentType = adjustmentType
-                    }
-
-                    /**
-                     * The amount by which to discount the prices this adjustment applies to in a
-                     * given billing period.
-                     */
-                    fun amountDiscount(amountDiscount: String) =
-                        amountDiscount(JsonField.of(amountDiscount))
-
-                    /**
-                     * The amount by which to discount the prices this adjustment applies to in a
-                     * given billing period.
-                     */
-                    fun amountDiscount(amountDiscount: JsonField<String>) = apply {
-                        this.amountDiscount = amountDiscount
-                    }
 
                     fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                         this.additionalProperties.clear()
@@ -1413,12 +1413,12 @@ private constructor(
                     fun build(): AmountDiscountAdjustment =
                         AmountDiscountAdjustment(
                             id,
-                            isInvoiceLevel,
-                            planPhaseOrder,
-                            appliesToPriceIds.map { it.toImmutable() },
-                            reason,
                             adjustmentType,
                             amountDiscount,
+                            appliesToPriceIds.map { it.toImmutable() },
+                            isInvoiceLevel,
+                            planPhaseOrder,
+                            reason,
                             additionalProperties.toImmutable(),
                         )
                 }
@@ -1480,17 +1480,17 @@ private constructor(
                         return true
                     }
 
-                    return /* spotless:off */ other is AmountDiscountAdjustment && id == other.id && isInvoiceLevel == other.isInvoiceLevel && planPhaseOrder == other.planPhaseOrder && appliesToPriceIds == other.appliesToPriceIds && reason == other.reason && adjustmentType == other.adjustmentType && amountDiscount == other.amountDiscount && additionalProperties == other.additionalProperties /* spotless:on */
+                    return /* spotless:off */ other is AmountDiscountAdjustment && id == other.id && adjustmentType == other.adjustmentType && amountDiscount == other.amountDiscount && appliesToPriceIds == other.appliesToPriceIds && isInvoiceLevel == other.isInvoiceLevel && planPhaseOrder == other.planPhaseOrder && reason == other.reason && additionalProperties == other.additionalProperties /* spotless:on */
                 }
 
                 /* spotless:off */
-                private val hashCode: Int by lazy { Objects.hash(id, isInvoiceLevel, planPhaseOrder, appliesToPriceIds, reason, adjustmentType, amountDiscount, additionalProperties) }
+                private val hashCode: Int by lazy { Objects.hash(id, adjustmentType, amountDiscount, appliesToPriceIds, isInvoiceLevel, planPhaseOrder, reason, additionalProperties) }
                 /* spotless:on */
 
                 override fun hashCode(): Int = hashCode
 
                 override fun toString() =
-                    "AmountDiscountAdjustment{id=$id, isInvoiceLevel=$isInvoiceLevel, planPhaseOrder=$planPhaseOrder, appliesToPriceIds=$appliesToPriceIds, reason=$reason, adjustmentType=$adjustmentType, amountDiscount=$amountDiscount, additionalProperties=$additionalProperties}"
+                    "AmountDiscountAdjustment{id=$id, adjustmentType=$adjustmentType, amountDiscount=$amountDiscount, appliesToPriceIds=$appliesToPriceIds, isInvoiceLevel=$isInvoiceLevel, planPhaseOrder=$planPhaseOrder, reason=$reason, additionalProperties=$additionalProperties}"
             }
 
             @NoAutoDetect
@@ -1500,47 +1500,41 @@ private constructor(
                 @JsonProperty("id")
                 @ExcludeMissing
                 private val id: JsonField<String> = JsonMissing.of(),
-                @JsonProperty("is_invoice_level")
-                @ExcludeMissing
-                private val isInvoiceLevel: JsonField<Boolean> = JsonMissing.of(),
-                @JsonProperty("plan_phase_order")
-                @ExcludeMissing
-                private val planPhaseOrder: JsonField<Long> = JsonMissing.of(),
-                @JsonProperty("applies_to_price_ids")
-                @ExcludeMissing
-                private val appliesToPriceIds: JsonField<List<String>> = JsonMissing.of(),
-                @JsonProperty("reason")
-                @ExcludeMissing
-                private val reason: JsonField<String> = JsonMissing.of(),
                 @JsonProperty("adjustment_type")
                 @ExcludeMissing
                 private val adjustmentType: JsonField<AdjustmentType> = JsonMissing.of(),
+                @JsonProperty("applies_to_price_ids")
+                @ExcludeMissing
+                private val appliesToPriceIds: JsonField<List<String>> = JsonMissing.of(),
+                @JsonProperty("is_invoice_level")
+                @ExcludeMissing
+                private val isInvoiceLevel: JsonField<Boolean> = JsonMissing.of(),
                 @JsonProperty("percentage_discount")
                 @ExcludeMissing
                 private val percentageDiscount: JsonField<Double> = JsonMissing.of(),
+                @JsonProperty("plan_phase_order")
+                @ExcludeMissing
+                private val planPhaseOrder: JsonField<Long> = JsonMissing.of(),
+                @JsonProperty("reason")
+                @ExcludeMissing
+                private val reason: JsonField<String> = JsonMissing.of(),
                 @JsonAnySetter
                 private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
             ) {
 
                 fun id(): String = id.getRequired("id")
 
-                /**
-                 * True for adjustments that apply to an entire invocice, false for adjustments that
-                 * apply to only one price.
-                 */
-                fun isInvoiceLevel(): Boolean = isInvoiceLevel.getRequired("is_invoice_level")
-
-                /** The plan phase in which this adjustment is active. */
-                fun planPhaseOrder(): Long? = planPhaseOrder.getNullable("plan_phase_order")
+                fun adjustmentType(): AdjustmentType = adjustmentType.getRequired("adjustment_type")
 
                 /** The price IDs that this adjustment applies to. */
                 fun appliesToPriceIds(): List<String> =
                     appliesToPriceIds.getRequired("applies_to_price_ids")
 
-                /** The reason for the adjustment. */
-                fun reason(): String? = reason.getNullable("reason")
-
-                fun adjustmentType(): AdjustmentType = adjustmentType.getRequired("adjustment_type")
+                /**
+                 * True for adjustments that apply to an entire invocice, false for adjustments that
+                 * apply to only one price.
+                 */
+                fun isInvoiceLevel(): Boolean = isInvoiceLevel.getRequired("is_invoice_level")
 
                 /**
                  * The percentage (as a value between 0 and 1) by which to discount the price
@@ -1549,7 +1543,22 @@ private constructor(
                 fun percentageDiscount(): Double =
                     percentageDiscount.getRequired("percentage_discount")
 
+                /** The plan phase in which this adjustment is active. */
+                fun planPhaseOrder(): Long? = planPhaseOrder.getNullable("plan_phase_order")
+
+                /** The reason for the adjustment. */
+                fun reason(): String? = reason.getNullable("reason")
+
                 @JsonProperty("id") @ExcludeMissing fun _id() = id
+
+                @JsonProperty("adjustment_type")
+                @ExcludeMissing
+                fun _adjustmentType() = adjustmentType
+
+                /** The price IDs that this adjustment applies to. */
+                @JsonProperty("applies_to_price_ids")
+                @ExcludeMissing
+                fun _appliesToPriceIds() = appliesToPriceIds
 
                 /**
                  * True for adjustments that apply to an entire invocice, false for adjustments that
@@ -1559,23 +1568,6 @@ private constructor(
                 @ExcludeMissing
                 fun _isInvoiceLevel() = isInvoiceLevel
 
-                /** The plan phase in which this adjustment is active. */
-                @JsonProperty("plan_phase_order")
-                @ExcludeMissing
-                fun _planPhaseOrder() = planPhaseOrder
-
-                /** The price IDs that this adjustment applies to. */
-                @JsonProperty("applies_to_price_ids")
-                @ExcludeMissing
-                fun _appliesToPriceIds() = appliesToPriceIds
-
-                /** The reason for the adjustment. */
-                @JsonProperty("reason") @ExcludeMissing fun _reason() = reason
-
-                @JsonProperty("adjustment_type")
-                @ExcludeMissing
-                fun _adjustmentType() = adjustmentType
-
                 /**
                  * The percentage (as a value between 0 and 1) by which to discount the price
                  * intervals this adjustment applies to in a given billing period.
@@ -1583,6 +1575,14 @@ private constructor(
                 @JsonProperty("percentage_discount")
                 @ExcludeMissing
                 fun _percentageDiscount() = percentageDiscount
+
+                /** The plan phase in which this adjustment is active. */
+                @JsonProperty("plan_phase_order")
+                @ExcludeMissing
+                fun _planPhaseOrder() = planPhaseOrder
+
+                /** The reason for the adjustment. */
+                @JsonProperty("reason") @ExcludeMissing fun _reason() = reason
 
                 @JsonAnyGetter
                 @ExcludeMissing
@@ -1593,12 +1593,12 @@ private constructor(
                 fun validate(): PercentageDiscountAdjustment = apply {
                     if (!validated) {
                         id()
-                        isInvoiceLevel()
-                        planPhaseOrder()
-                        appliesToPriceIds()
-                        reason()
                         adjustmentType()
+                        appliesToPriceIds()
+                        isInvoiceLevel()
                         percentageDiscount()
+                        planPhaseOrder()
+                        reason()
                         validated = true
                     }
                 }
@@ -1613,23 +1613,23 @@ private constructor(
                 class Builder {
 
                     private var id: JsonField<String> = JsonMissing.of()
-                    private var isInvoiceLevel: JsonField<Boolean> = JsonMissing.of()
-                    private var planPhaseOrder: JsonField<Long> = JsonMissing.of()
-                    private var appliesToPriceIds: JsonField<List<String>> = JsonMissing.of()
-                    private var reason: JsonField<String> = JsonMissing.of()
                     private var adjustmentType: JsonField<AdjustmentType> = JsonMissing.of()
+                    private var appliesToPriceIds: JsonField<List<String>> = JsonMissing.of()
+                    private var isInvoiceLevel: JsonField<Boolean> = JsonMissing.of()
                     private var percentageDiscount: JsonField<Double> = JsonMissing.of()
+                    private var planPhaseOrder: JsonField<Long> = JsonMissing.of()
+                    private var reason: JsonField<String> = JsonMissing.of()
                     private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
                     internal fun from(percentageDiscountAdjustment: PercentageDiscountAdjustment) =
                         apply {
                             id = percentageDiscountAdjustment.id
-                            isInvoiceLevel = percentageDiscountAdjustment.isInvoiceLevel
-                            planPhaseOrder = percentageDiscountAdjustment.planPhaseOrder
-                            appliesToPriceIds = percentageDiscountAdjustment.appliesToPriceIds
-                            reason = percentageDiscountAdjustment.reason
                             adjustmentType = percentageDiscountAdjustment.adjustmentType
+                            appliesToPriceIds = percentageDiscountAdjustment.appliesToPriceIds
+                            isInvoiceLevel = percentageDiscountAdjustment.isInvoiceLevel
                             percentageDiscount = percentageDiscountAdjustment.percentageDiscount
+                            planPhaseOrder = percentageDiscountAdjustment.planPhaseOrder
+                            reason = percentageDiscountAdjustment.reason
                             additionalProperties =
                                 percentageDiscountAdjustment.additionalProperties.toMutableMap()
                         }
@@ -1637,6 +1637,22 @@ private constructor(
                     fun id(id: String) = id(JsonField.of(id))
 
                     fun id(id: JsonField<String>) = apply { this.id = id }
+
+                    fun adjustmentType(adjustmentType: AdjustmentType) =
+                        adjustmentType(JsonField.of(adjustmentType))
+
+                    fun adjustmentType(adjustmentType: JsonField<AdjustmentType>) = apply {
+                        this.adjustmentType = adjustmentType
+                    }
+
+                    /** The price IDs that this adjustment applies to. */
+                    fun appliesToPriceIds(appliesToPriceIds: List<String>) =
+                        appliesToPriceIds(JsonField.of(appliesToPriceIds))
+
+                    /** The price IDs that this adjustment applies to. */
+                    fun appliesToPriceIds(appliesToPriceIds: JsonField<List<String>>) = apply {
+                        this.appliesToPriceIds = appliesToPriceIds
+                    }
 
                     /**
                      * True for adjustments that apply to an entire invocice, false for adjustments
@@ -1653,37 +1669,6 @@ private constructor(
                         this.isInvoiceLevel = isInvoiceLevel
                     }
 
-                    /** The plan phase in which this adjustment is active. */
-                    fun planPhaseOrder(planPhaseOrder: Long) =
-                        planPhaseOrder(JsonField.of(planPhaseOrder))
-
-                    /** The plan phase in which this adjustment is active. */
-                    fun planPhaseOrder(planPhaseOrder: JsonField<Long>) = apply {
-                        this.planPhaseOrder = planPhaseOrder
-                    }
-
-                    /** The price IDs that this adjustment applies to. */
-                    fun appliesToPriceIds(appliesToPriceIds: List<String>) =
-                        appliesToPriceIds(JsonField.of(appliesToPriceIds))
-
-                    /** The price IDs that this adjustment applies to. */
-                    fun appliesToPriceIds(appliesToPriceIds: JsonField<List<String>>) = apply {
-                        this.appliesToPriceIds = appliesToPriceIds
-                    }
-
-                    /** The reason for the adjustment. */
-                    fun reason(reason: String) = reason(JsonField.of(reason))
-
-                    /** The reason for the adjustment. */
-                    fun reason(reason: JsonField<String>) = apply { this.reason = reason }
-
-                    fun adjustmentType(adjustmentType: AdjustmentType) =
-                        adjustmentType(JsonField.of(adjustmentType))
-
-                    fun adjustmentType(adjustmentType: JsonField<AdjustmentType>) = apply {
-                        this.adjustmentType = adjustmentType
-                    }
-
                     /**
                      * The percentage (as a value between 0 and 1) by which to discount the price
                      * intervals this adjustment applies to in a given billing period.
@@ -1698,6 +1683,21 @@ private constructor(
                     fun percentageDiscount(percentageDiscount: JsonField<Double>) = apply {
                         this.percentageDiscount = percentageDiscount
                     }
+
+                    /** The plan phase in which this adjustment is active. */
+                    fun planPhaseOrder(planPhaseOrder: Long) =
+                        planPhaseOrder(JsonField.of(planPhaseOrder))
+
+                    /** The plan phase in which this adjustment is active. */
+                    fun planPhaseOrder(planPhaseOrder: JsonField<Long>) = apply {
+                        this.planPhaseOrder = planPhaseOrder
+                    }
+
+                    /** The reason for the adjustment. */
+                    fun reason(reason: String) = reason(JsonField.of(reason))
+
+                    /** The reason for the adjustment. */
+                    fun reason(reason: JsonField<String>) = apply { this.reason = reason }
 
                     fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                         this.additionalProperties.clear()
@@ -1724,12 +1724,12 @@ private constructor(
                     fun build(): PercentageDiscountAdjustment =
                         PercentageDiscountAdjustment(
                             id,
-                            isInvoiceLevel,
-                            planPhaseOrder,
-                            appliesToPriceIds.map { it.toImmutable() },
-                            reason,
                             adjustmentType,
+                            appliesToPriceIds.map { it.toImmutable() },
+                            isInvoiceLevel,
                             percentageDiscount,
+                            planPhaseOrder,
+                            reason,
                             additionalProperties.toImmutable(),
                         )
                 }
@@ -1791,17 +1791,17 @@ private constructor(
                         return true
                     }
 
-                    return /* spotless:off */ other is PercentageDiscountAdjustment && id == other.id && isInvoiceLevel == other.isInvoiceLevel && planPhaseOrder == other.planPhaseOrder && appliesToPriceIds == other.appliesToPriceIds && reason == other.reason && adjustmentType == other.adjustmentType && percentageDiscount == other.percentageDiscount && additionalProperties == other.additionalProperties /* spotless:on */
+                    return /* spotless:off */ other is PercentageDiscountAdjustment && id == other.id && adjustmentType == other.adjustmentType && appliesToPriceIds == other.appliesToPriceIds && isInvoiceLevel == other.isInvoiceLevel && percentageDiscount == other.percentageDiscount && planPhaseOrder == other.planPhaseOrder && reason == other.reason && additionalProperties == other.additionalProperties /* spotless:on */
                 }
 
                 /* spotless:off */
-                private val hashCode: Int by lazy { Objects.hash(id, isInvoiceLevel, planPhaseOrder, appliesToPriceIds, reason, adjustmentType, percentageDiscount, additionalProperties) }
+                private val hashCode: Int by lazy { Objects.hash(id, adjustmentType, appliesToPriceIds, isInvoiceLevel, percentageDiscount, planPhaseOrder, reason, additionalProperties) }
                 /* spotless:on */
 
                 override fun hashCode(): Int = hashCode
 
                 override fun toString() =
-                    "PercentageDiscountAdjustment{id=$id, isInvoiceLevel=$isInvoiceLevel, planPhaseOrder=$planPhaseOrder, appliesToPriceIds=$appliesToPriceIds, reason=$reason, adjustmentType=$adjustmentType, percentageDiscount=$percentageDiscount, additionalProperties=$additionalProperties}"
+                    "PercentageDiscountAdjustment{id=$id, adjustmentType=$adjustmentType, appliesToPriceIds=$appliesToPriceIds, isInvoiceLevel=$isInvoiceLevel, percentageDiscount=$percentageDiscount, planPhaseOrder=$planPhaseOrder, reason=$reason, additionalProperties=$additionalProperties}"
             }
 
             @NoAutoDetect
@@ -1811,21 +1811,21 @@ private constructor(
                 @JsonProperty("id")
                 @ExcludeMissing
                 private val id: JsonField<String> = JsonMissing.of(),
+                @JsonProperty("adjustment_type")
+                @ExcludeMissing
+                private val adjustmentType: JsonField<AdjustmentType> = JsonMissing.of(),
+                @JsonProperty("applies_to_price_ids")
+                @ExcludeMissing
+                private val appliesToPriceIds: JsonField<List<String>> = JsonMissing.of(),
                 @JsonProperty("is_invoice_level")
                 @ExcludeMissing
                 private val isInvoiceLevel: JsonField<Boolean> = JsonMissing.of(),
                 @JsonProperty("plan_phase_order")
                 @ExcludeMissing
                 private val planPhaseOrder: JsonField<Long> = JsonMissing.of(),
-                @JsonProperty("applies_to_price_ids")
-                @ExcludeMissing
-                private val appliesToPriceIds: JsonField<List<String>> = JsonMissing.of(),
                 @JsonProperty("reason")
                 @ExcludeMissing
                 private val reason: JsonField<String> = JsonMissing.of(),
-                @JsonProperty("adjustment_type")
-                @ExcludeMissing
-                private val adjustmentType: JsonField<AdjustmentType> = JsonMissing.of(),
                 @JsonProperty("usage_discount")
                 @ExcludeMissing
                 private val usageDiscount: JsonField<Double> = JsonMissing.of(),
@@ -1834,6 +1834,12 @@ private constructor(
             ) {
 
                 fun id(): String = id.getRequired("id")
+
+                fun adjustmentType(): AdjustmentType = adjustmentType.getRequired("adjustment_type")
+
+                /** The price IDs that this adjustment applies to. */
+                fun appliesToPriceIds(): List<String> =
+                    appliesToPriceIds.getRequired("applies_to_price_ids")
 
                 /**
                  * True for adjustments that apply to an entire invocice, false for adjustments that
@@ -1844,14 +1850,8 @@ private constructor(
                 /** The plan phase in which this adjustment is active. */
                 fun planPhaseOrder(): Long? = planPhaseOrder.getNullable("plan_phase_order")
 
-                /** The price IDs that this adjustment applies to. */
-                fun appliesToPriceIds(): List<String> =
-                    appliesToPriceIds.getRequired("applies_to_price_ids")
-
                 /** The reason for the adjustment. */
                 fun reason(): String? = reason.getNullable("reason")
-
-                fun adjustmentType(): AdjustmentType = adjustmentType.getRequired("adjustment_type")
 
                 /**
                  * The number of usage units by which to discount the price this adjustment applies
@@ -1860,6 +1860,15 @@ private constructor(
                 fun usageDiscount(): Double = usageDiscount.getRequired("usage_discount")
 
                 @JsonProperty("id") @ExcludeMissing fun _id() = id
+
+                @JsonProperty("adjustment_type")
+                @ExcludeMissing
+                fun _adjustmentType() = adjustmentType
+
+                /** The price IDs that this adjustment applies to. */
+                @JsonProperty("applies_to_price_ids")
+                @ExcludeMissing
+                fun _appliesToPriceIds() = appliesToPriceIds
 
                 /**
                  * True for adjustments that apply to an entire invocice, false for adjustments that
@@ -1874,17 +1883,8 @@ private constructor(
                 @ExcludeMissing
                 fun _planPhaseOrder() = planPhaseOrder
 
-                /** The price IDs that this adjustment applies to. */
-                @JsonProperty("applies_to_price_ids")
-                @ExcludeMissing
-                fun _appliesToPriceIds() = appliesToPriceIds
-
                 /** The reason for the adjustment. */
                 @JsonProperty("reason") @ExcludeMissing fun _reason() = reason
-
-                @JsonProperty("adjustment_type")
-                @ExcludeMissing
-                fun _adjustmentType() = adjustmentType
 
                 /**
                  * The number of usage units by which to discount the price this adjustment applies
@@ -1901,11 +1901,11 @@ private constructor(
                 fun validate(): UsageDiscountAdjustment = apply {
                     if (!validated) {
                         id()
+                        adjustmentType()
+                        appliesToPriceIds()
                         isInvoiceLevel()
                         planPhaseOrder()
-                        appliesToPriceIds()
                         reason()
-                        adjustmentType()
                         usageDiscount()
                         validated = true
                     }
@@ -1921,21 +1921,21 @@ private constructor(
                 class Builder {
 
                     private var id: JsonField<String> = JsonMissing.of()
+                    private var adjustmentType: JsonField<AdjustmentType> = JsonMissing.of()
+                    private var appliesToPriceIds: JsonField<List<String>> = JsonMissing.of()
                     private var isInvoiceLevel: JsonField<Boolean> = JsonMissing.of()
                     private var planPhaseOrder: JsonField<Long> = JsonMissing.of()
-                    private var appliesToPriceIds: JsonField<List<String>> = JsonMissing.of()
                     private var reason: JsonField<String> = JsonMissing.of()
-                    private var adjustmentType: JsonField<AdjustmentType> = JsonMissing.of()
                     private var usageDiscount: JsonField<Double> = JsonMissing.of()
                     private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
                     internal fun from(usageDiscountAdjustment: UsageDiscountAdjustment) = apply {
                         id = usageDiscountAdjustment.id
+                        adjustmentType = usageDiscountAdjustment.adjustmentType
+                        appliesToPriceIds = usageDiscountAdjustment.appliesToPriceIds
                         isInvoiceLevel = usageDiscountAdjustment.isInvoiceLevel
                         planPhaseOrder = usageDiscountAdjustment.planPhaseOrder
-                        appliesToPriceIds = usageDiscountAdjustment.appliesToPriceIds
                         reason = usageDiscountAdjustment.reason
-                        adjustmentType = usageDiscountAdjustment.adjustmentType
                         usageDiscount = usageDiscountAdjustment.usageDiscount
                         additionalProperties =
                             usageDiscountAdjustment.additionalProperties.toMutableMap()
@@ -1944,6 +1944,22 @@ private constructor(
                     fun id(id: String) = id(JsonField.of(id))
 
                     fun id(id: JsonField<String>) = apply { this.id = id }
+
+                    fun adjustmentType(adjustmentType: AdjustmentType) =
+                        adjustmentType(JsonField.of(adjustmentType))
+
+                    fun adjustmentType(adjustmentType: JsonField<AdjustmentType>) = apply {
+                        this.adjustmentType = adjustmentType
+                    }
+
+                    /** The price IDs that this adjustment applies to. */
+                    fun appliesToPriceIds(appliesToPriceIds: List<String>) =
+                        appliesToPriceIds(JsonField.of(appliesToPriceIds))
+
+                    /** The price IDs that this adjustment applies to. */
+                    fun appliesToPriceIds(appliesToPriceIds: JsonField<List<String>>) = apply {
+                        this.appliesToPriceIds = appliesToPriceIds
+                    }
 
                     /**
                      * True for adjustments that apply to an entire invocice, false for adjustments
@@ -1969,27 +1985,11 @@ private constructor(
                         this.planPhaseOrder = planPhaseOrder
                     }
 
-                    /** The price IDs that this adjustment applies to. */
-                    fun appliesToPriceIds(appliesToPriceIds: List<String>) =
-                        appliesToPriceIds(JsonField.of(appliesToPriceIds))
-
-                    /** The price IDs that this adjustment applies to. */
-                    fun appliesToPriceIds(appliesToPriceIds: JsonField<List<String>>) = apply {
-                        this.appliesToPriceIds = appliesToPriceIds
-                    }
-
                     /** The reason for the adjustment. */
                     fun reason(reason: String) = reason(JsonField.of(reason))
 
                     /** The reason for the adjustment. */
                     fun reason(reason: JsonField<String>) = apply { this.reason = reason }
-
-                    fun adjustmentType(adjustmentType: AdjustmentType) =
-                        adjustmentType(JsonField.of(adjustmentType))
-
-                    fun adjustmentType(adjustmentType: JsonField<AdjustmentType>) = apply {
-                        this.adjustmentType = adjustmentType
-                    }
 
                     /**
                      * The number of usage units by which to discount the price this adjustment
@@ -2031,11 +2031,11 @@ private constructor(
                     fun build(): UsageDiscountAdjustment =
                         UsageDiscountAdjustment(
                             id,
+                            adjustmentType,
+                            appliesToPriceIds.map { it.toImmutable() },
                             isInvoiceLevel,
                             planPhaseOrder,
-                            appliesToPriceIds.map { it.toImmutable() },
                             reason,
-                            adjustmentType,
                             usageDiscount,
                             additionalProperties.toImmutable(),
                         )
@@ -2098,17 +2098,17 @@ private constructor(
                         return true
                     }
 
-                    return /* spotless:off */ other is UsageDiscountAdjustment && id == other.id && isInvoiceLevel == other.isInvoiceLevel && planPhaseOrder == other.planPhaseOrder && appliesToPriceIds == other.appliesToPriceIds && reason == other.reason && adjustmentType == other.adjustmentType && usageDiscount == other.usageDiscount && additionalProperties == other.additionalProperties /* spotless:on */
+                    return /* spotless:off */ other is UsageDiscountAdjustment && id == other.id && adjustmentType == other.adjustmentType && appliesToPriceIds == other.appliesToPriceIds && isInvoiceLevel == other.isInvoiceLevel && planPhaseOrder == other.planPhaseOrder && reason == other.reason && usageDiscount == other.usageDiscount && additionalProperties == other.additionalProperties /* spotless:on */
                 }
 
                 /* spotless:off */
-                private val hashCode: Int by lazy { Objects.hash(id, isInvoiceLevel, planPhaseOrder, appliesToPriceIds, reason, adjustmentType, usageDiscount, additionalProperties) }
+                private val hashCode: Int by lazy { Objects.hash(id, adjustmentType, appliesToPriceIds, isInvoiceLevel, planPhaseOrder, reason, usageDiscount, additionalProperties) }
                 /* spotless:on */
 
                 override fun hashCode(): Int = hashCode
 
                 override fun toString() =
-                    "UsageDiscountAdjustment{id=$id, isInvoiceLevel=$isInvoiceLevel, planPhaseOrder=$planPhaseOrder, appliesToPriceIds=$appliesToPriceIds, reason=$reason, adjustmentType=$adjustmentType, usageDiscount=$usageDiscount, additionalProperties=$additionalProperties}"
+                    "UsageDiscountAdjustment{id=$id, adjustmentType=$adjustmentType, appliesToPriceIds=$appliesToPriceIds, isInvoiceLevel=$isInvoiceLevel, planPhaseOrder=$planPhaseOrder, reason=$reason, usageDiscount=$usageDiscount, additionalProperties=$additionalProperties}"
             }
 
             @NoAutoDetect
@@ -2118,32 +2118,38 @@ private constructor(
                 @JsonProperty("id")
                 @ExcludeMissing
                 private val id: JsonField<String> = JsonMissing.of(),
-                @JsonProperty("is_invoice_level")
-                @ExcludeMissing
-                private val isInvoiceLevel: JsonField<Boolean> = JsonMissing.of(),
-                @JsonProperty("plan_phase_order")
-                @ExcludeMissing
-                private val planPhaseOrder: JsonField<Long> = JsonMissing.of(),
-                @JsonProperty("applies_to_price_ids")
-                @ExcludeMissing
-                private val appliesToPriceIds: JsonField<List<String>> = JsonMissing.of(),
-                @JsonProperty("reason")
-                @ExcludeMissing
-                private val reason: JsonField<String> = JsonMissing.of(),
                 @JsonProperty("adjustment_type")
                 @ExcludeMissing
                 private val adjustmentType: JsonField<AdjustmentType> = JsonMissing.of(),
-                @JsonProperty("minimum_amount")
+                @JsonProperty("applies_to_price_ids")
                 @ExcludeMissing
-                private val minimumAmount: JsonField<String> = JsonMissing.of(),
+                private val appliesToPriceIds: JsonField<List<String>> = JsonMissing.of(),
+                @JsonProperty("is_invoice_level")
+                @ExcludeMissing
+                private val isInvoiceLevel: JsonField<Boolean> = JsonMissing.of(),
                 @JsonProperty("item_id")
                 @ExcludeMissing
                 private val itemId: JsonField<String> = JsonMissing.of(),
+                @JsonProperty("minimum_amount")
+                @ExcludeMissing
+                private val minimumAmount: JsonField<String> = JsonMissing.of(),
+                @JsonProperty("plan_phase_order")
+                @ExcludeMissing
+                private val planPhaseOrder: JsonField<Long> = JsonMissing.of(),
+                @JsonProperty("reason")
+                @ExcludeMissing
+                private val reason: JsonField<String> = JsonMissing.of(),
                 @JsonAnySetter
                 private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
             ) {
 
                 fun id(): String = id.getRequired("id")
+
+                fun adjustmentType(): AdjustmentType = adjustmentType.getRequired("adjustment_type")
+
+                /** The price IDs that this adjustment applies to. */
+                fun appliesToPriceIds(): List<String> =
+                    appliesToPriceIds.getRequired("applies_to_price_ids")
 
                 /**
                  * True for adjustments that apply to an entire invocice, false for adjustments that
@@ -2151,17 +2157,8 @@ private constructor(
                  */
                 fun isInvoiceLevel(): Boolean = isInvoiceLevel.getRequired("is_invoice_level")
 
-                /** The plan phase in which this adjustment is active. */
-                fun planPhaseOrder(): Long? = planPhaseOrder.getNullable("plan_phase_order")
-
-                /** The price IDs that this adjustment applies to. */
-                fun appliesToPriceIds(): List<String> =
-                    appliesToPriceIds.getRequired("applies_to_price_ids")
-
-                /** The reason for the adjustment. */
-                fun reason(): String? = reason.getNullable("reason")
-
-                fun adjustmentType(): AdjustmentType = adjustmentType.getRequired("adjustment_type")
+                /** The item ID that revenue from this minimum will be attributed to. */
+                fun itemId(): String = itemId.getRequired("item_id")
 
                 /**
                  * The minimum amount to charge in a given billing period for the prices this
@@ -2169,10 +2166,22 @@ private constructor(
                  */
                 fun minimumAmount(): String = minimumAmount.getRequired("minimum_amount")
 
-                /** The item ID that revenue from this minimum will be attributed to. */
-                fun itemId(): String = itemId.getRequired("item_id")
+                /** The plan phase in which this adjustment is active. */
+                fun planPhaseOrder(): Long? = planPhaseOrder.getNullable("plan_phase_order")
+
+                /** The reason for the adjustment. */
+                fun reason(): String? = reason.getNullable("reason")
 
                 @JsonProperty("id") @ExcludeMissing fun _id() = id
+
+                @JsonProperty("adjustment_type")
+                @ExcludeMissing
+                fun _adjustmentType() = adjustmentType
+
+                /** The price IDs that this adjustment applies to. */
+                @JsonProperty("applies_to_price_ids")
+                @ExcludeMissing
+                fun _appliesToPriceIds() = appliesToPriceIds
 
                 /**
                  * True for adjustments that apply to an entire invocice, false for adjustments that
@@ -2182,22 +2191,8 @@ private constructor(
                 @ExcludeMissing
                 fun _isInvoiceLevel() = isInvoiceLevel
 
-                /** The plan phase in which this adjustment is active. */
-                @JsonProperty("plan_phase_order")
-                @ExcludeMissing
-                fun _planPhaseOrder() = planPhaseOrder
-
-                /** The price IDs that this adjustment applies to. */
-                @JsonProperty("applies_to_price_ids")
-                @ExcludeMissing
-                fun _appliesToPriceIds() = appliesToPriceIds
-
-                /** The reason for the adjustment. */
-                @JsonProperty("reason") @ExcludeMissing fun _reason() = reason
-
-                @JsonProperty("adjustment_type")
-                @ExcludeMissing
-                fun _adjustmentType() = adjustmentType
+                /** The item ID that revenue from this minimum will be attributed to. */
+                @JsonProperty("item_id") @ExcludeMissing fun _itemId() = itemId
 
                 /**
                  * The minimum amount to charge in a given billing period for the prices this
@@ -2205,8 +2200,13 @@ private constructor(
                  */
                 @JsonProperty("minimum_amount") @ExcludeMissing fun _minimumAmount() = minimumAmount
 
-                /** The item ID that revenue from this minimum will be attributed to. */
-                @JsonProperty("item_id") @ExcludeMissing fun _itemId() = itemId
+                /** The plan phase in which this adjustment is active. */
+                @JsonProperty("plan_phase_order")
+                @ExcludeMissing
+                fun _planPhaseOrder() = planPhaseOrder
+
+                /** The reason for the adjustment. */
+                @JsonProperty("reason") @ExcludeMissing fun _reason() = reason
 
                 @JsonAnyGetter
                 @ExcludeMissing
@@ -2217,13 +2217,13 @@ private constructor(
                 fun validate(): MinimumAdjustment = apply {
                     if (!validated) {
                         id()
-                        isInvoiceLevel()
-                        planPhaseOrder()
-                        appliesToPriceIds()
-                        reason()
                         adjustmentType()
-                        minimumAmount()
+                        appliesToPriceIds()
+                        isInvoiceLevel()
                         itemId()
+                        minimumAmount()
+                        planPhaseOrder()
+                        reason()
                         validated = true
                     }
                 }
@@ -2238,30 +2238,46 @@ private constructor(
                 class Builder {
 
                     private var id: JsonField<String> = JsonMissing.of()
-                    private var isInvoiceLevel: JsonField<Boolean> = JsonMissing.of()
-                    private var planPhaseOrder: JsonField<Long> = JsonMissing.of()
-                    private var appliesToPriceIds: JsonField<List<String>> = JsonMissing.of()
-                    private var reason: JsonField<String> = JsonMissing.of()
                     private var adjustmentType: JsonField<AdjustmentType> = JsonMissing.of()
-                    private var minimumAmount: JsonField<String> = JsonMissing.of()
+                    private var appliesToPriceIds: JsonField<List<String>> = JsonMissing.of()
+                    private var isInvoiceLevel: JsonField<Boolean> = JsonMissing.of()
                     private var itemId: JsonField<String> = JsonMissing.of()
+                    private var minimumAmount: JsonField<String> = JsonMissing.of()
+                    private var planPhaseOrder: JsonField<Long> = JsonMissing.of()
+                    private var reason: JsonField<String> = JsonMissing.of()
                     private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
                     internal fun from(minimumAdjustment: MinimumAdjustment) = apply {
                         id = minimumAdjustment.id
-                        isInvoiceLevel = minimumAdjustment.isInvoiceLevel
-                        planPhaseOrder = minimumAdjustment.planPhaseOrder
-                        appliesToPriceIds = minimumAdjustment.appliesToPriceIds
-                        reason = minimumAdjustment.reason
                         adjustmentType = minimumAdjustment.adjustmentType
-                        minimumAmount = minimumAdjustment.minimumAmount
+                        appliesToPriceIds = minimumAdjustment.appliesToPriceIds
+                        isInvoiceLevel = minimumAdjustment.isInvoiceLevel
                         itemId = minimumAdjustment.itemId
+                        minimumAmount = minimumAdjustment.minimumAmount
+                        planPhaseOrder = minimumAdjustment.planPhaseOrder
+                        reason = minimumAdjustment.reason
                         additionalProperties = minimumAdjustment.additionalProperties.toMutableMap()
                     }
 
                     fun id(id: String) = id(JsonField.of(id))
 
                     fun id(id: JsonField<String>) = apply { this.id = id }
+
+                    fun adjustmentType(adjustmentType: AdjustmentType) =
+                        adjustmentType(JsonField.of(adjustmentType))
+
+                    fun adjustmentType(adjustmentType: JsonField<AdjustmentType>) = apply {
+                        this.adjustmentType = adjustmentType
+                    }
+
+                    /** The price IDs that this adjustment applies to. */
+                    fun appliesToPriceIds(appliesToPriceIds: List<String>) =
+                        appliesToPriceIds(JsonField.of(appliesToPriceIds))
+
+                    /** The price IDs that this adjustment applies to. */
+                    fun appliesToPriceIds(appliesToPriceIds: JsonField<List<String>>) = apply {
+                        this.appliesToPriceIds = appliesToPriceIds
+                    }
 
                     /**
                      * True for adjustments that apply to an entire invocice, false for adjustments
@@ -2278,36 +2294,11 @@ private constructor(
                         this.isInvoiceLevel = isInvoiceLevel
                     }
 
-                    /** The plan phase in which this adjustment is active. */
-                    fun planPhaseOrder(planPhaseOrder: Long) =
-                        planPhaseOrder(JsonField.of(planPhaseOrder))
+                    /** The item ID that revenue from this minimum will be attributed to. */
+                    fun itemId(itemId: String) = itemId(JsonField.of(itemId))
 
-                    /** The plan phase in which this adjustment is active. */
-                    fun planPhaseOrder(planPhaseOrder: JsonField<Long>) = apply {
-                        this.planPhaseOrder = planPhaseOrder
-                    }
-
-                    /** The price IDs that this adjustment applies to. */
-                    fun appliesToPriceIds(appliesToPriceIds: List<String>) =
-                        appliesToPriceIds(JsonField.of(appliesToPriceIds))
-
-                    /** The price IDs that this adjustment applies to. */
-                    fun appliesToPriceIds(appliesToPriceIds: JsonField<List<String>>) = apply {
-                        this.appliesToPriceIds = appliesToPriceIds
-                    }
-
-                    /** The reason for the adjustment. */
-                    fun reason(reason: String) = reason(JsonField.of(reason))
-
-                    /** The reason for the adjustment. */
-                    fun reason(reason: JsonField<String>) = apply { this.reason = reason }
-
-                    fun adjustmentType(adjustmentType: AdjustmentType) =
-                        adjustmentType(JsonField.of(adjustmentType))
-
-                    fun adjustmentType(adjustmentType: JsonField<AdjustmentType>) = apply {
-                        this.adjustmentType = adjustmentType
-                    }
+                    /** The item ID that revenue from this minimum will be attributed to. */
+                    fun itemId(itemId: JsonField<String>) = apply { this.itemId = itemId }
 
                     /**
                      * The minimum amount to charge in a given billing period for the prices this
@@ -2324,11 +2315,20 @@ private constructor(
                         this.minimumAmount = minimumAmount
                     }
 
-                    /** The item ID that revenue from this minimum will be attributed to. */
-                    fun itemId(itemId: String) = itemId(JsonField.of(itemId))
+                    /** The plan phase in which this adjustment is active. */
+                    fun planPhaseOrder(planPhaseOrder: Long) =
+                        planPhaseOrder(JsonField.of(planPhaseOrder))
 
-                    /** The item ID that revenue from this minimum will be attributed to. */
-                    fun itemId(itemId: JsonField<String>) = apply { this.itemId = itemId }
+                    /** The plan phase in which this adjustment is active. */
+                    fun planPhaseOrder(planPhaseOrder: JsonField<Long>) = apply {
+                        this.planPhaseOrder = planPhaseOrder
+                    }
+
+                    /** The reason for the adjustment. */
+                    fun reason(reason: String) = reason(JsonField.of(reason))
+
+                    /** The reason for the adjustment. */
+                    fun reason(reason: JsonField<String>) = apply { this.reason = reason }
 
                     fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                         this.additionalProperties.clear()
@@ -2355,13 +2355,13 @@ private constructor(
                     fun build(): MinimumAdjustment =
                         MinimumAdjustment(
                             id,
-                            isInvoiceLevel,
-                            planPhaseOrder,
-                            appliesToPriceIds.map { it.toImmutable() },
-                            reason,
                             adjustmentType,
-                            minimumAmount,
+                            appliesToPriceIds.map { it.toImmutable() },
+                            isInvoiceLevel,
                             itemId,
+                            minimumAmount,
+                            planPhaseOrder,
+                            reason,
                             additionalProperties.toImmutable(),
                         )
                 }
@@ -2423,17 +2423,17 @@ private constructor(
                         return true
                     }
 
-                    return /* spotless:off */ other is MinimumAdjustment && id == other.id && isInvoiceLevel == other.isInvoiceLevel && planPhaseOrder == other.planPhaseOrder && appliesToPriceIds == other.appliesToPriceIds && reason == other.reason && adjustmentType == other.adjustmentType && minimumAmount == other.minimumAmount && itemId == other.itemId && additionalProperties == other.additionalProperties /* spotless:on */
+                    return /* spotless:off */ other is MinimumAdjustment && id == other.id && adjustmentType == other.adjustmentType && appliesToPriceIds == other.appliesToPriceIds && isInvoiceLevel == other.isInvoiceLevel && itemId == other.itemId && minimumAmount == other.minimumAmount && planPhaseOrder == other.planPhaseOrder && reason == other.reason && additionalProperties == other.additionalProperties /* spotless:on */
                 }
 
                 /* spotless:off */
-                private val hashCode: Int by lazy { Objects.hash(id, isInvoiceLevel, planPhaseOrder, appliesToPriceIds, reason, adjustmentType, minimumAmount, itemId, additionalProperties) }
+                private val hashCode: Int by lazy { Objects.hash(id, adjustmentType, appliesToPriceIds, isInvoiceLevel, itemId, minimumAmount, planPhaseOrder, reason, additionalProperties) }
                 /* spotless:on */
 
                 override fun hashCode(): Int = hashCode
 
                 override fun toString() =
-                    "MinimumAdjustment{id=$id, isInvoiceLevel=$isInvoiceLevel, planPhaseOrder=$planPhaseOrder, appliesToPriceIds=$appliesToPriceIds, reason=$reason, adjustmentType=$adjustmentType, minimumAmount=$minimumAmount, itemId=$itemId, additionalProperties=$additionalProperties}"
+                    "MinimumAdjustment{id=$id, adjustmentType=$adjustmentType, appliesToPriceIds=$appliesToPriceIds, isInvoiceLevel=$isInvoiceLevel, itemId=$itemId, minimumAmount=$minimumAmount, planPhaseOrder=$planPhaseOrder, reason=$reason, additionalProperties=$additionalProperties}"
             }
 
             @NoAutoDetect
@@ -2443,29 +2443,35 @@ private constructor(
                 @JsonProperty("id")
                 @ExcludeMissing
                 private val id: JsonField<String> = JsonMissing.of(),
-                @JsonProperty("is_invoice_level")
-                @ExcludeMissing
-                private val isInvoiceLevel: JsonField<Boolean> = JsonMissing.of(),
-                @JsonProperty("plan_phase_order")
-                @ExcludeMissing
-                private val planPhaseOrder: JsonField<Long> = JsonMissing.of(),
-                @JsonProperty("applies_to_price_ids")
-                @ExcludeMissing
-                private val appliesToPriceIds: JsonField<List<String>> = JsonMissing.of(),
-                @JsonProperty("reason")
-                @ExcludeMissing
-                private val reason: JsonField<String> = JsonMissing.of(),
                 @JsonProperty("adjustment_type")
                 @ExcludeMissing
                 private val adjustmentType: JsonField<AdjustmentType> = JsonMissing.of(),
+                @JsonProperty("applies_to_price_ids")
+                @ExcludeMissing
+                private val appliesToPriceIds: JsonField<List<String>> = JsonMissing.of(),
+                @JsonProperty("is_invoice_level")
+                @ExcludeMissing
+                private val isInvoiceLevel: JsonField<Boolean> = JsonMissing.of(),
                 @JsonProperty("maximum_amount")
                 @ExcludeMissing
                 private val maximumAmount: JsonField<String> = JsonMissing.of(),
+                @JsonProperty("plan_phase_order")
+                @ExcludeMissing
+                private val planPhaseOrder: JsonField<Long> = JsonMissing.of(),
+                @JsonProperty("reason")
+                @ExcludeMissing
+                private val reason: JsonField<String> = JsonMissing.of(),
                 @JsonAnySetter
                 private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
             ) {
 
                 fun id(): String = id.getRequired("id")
+
+                fun adjustmentType(): AdjustmentType = adjustmentType.getRequired("adjustment_type")
+
+                /** The price IDs that this adjustment applies to. */
+                fun appliesToPriceIds(): List<String> =
+                    appliesToPriceIds.getRequired("applies_to_price_ids")
 
                 /**
                  * True for adjustments that apply to an entire invocice, false for adjustments that
@@ -2473,25 +2479,28 @@ private constructor(
                  */
                 fun isInvoiceLevel(): Boolean = isInvoiceLevel.getRequired("is_invoice_level")
 
-                /** The plan phase in which this adjustment is active. */
-                fun planPhaseOrder(): Long? = planPhaseOrder.getNullable("plan_phase_order")
-
-                /** The price IDs that this adjustment applies to. */
-                fun appliesToPriceIds(): List<String> =
-                    appliesToPriceIds.getRequired("applies_to_price_ids")
-
-                /** The reason for the adjustment. */
-                fun reason(): String? = reason.getNullable("reason")
-
-                fun adjustmentType(): AdjustmentType = adjustmentType.getRequired("adjustment_type")
-
                 /**
                  * The maximum amount to charge in a given billing period for the prices this
                  * adjustment applies to.
                  */
                 fun maximumAmount(): String = maximumAmount.getRequired("maximum_amount")
 
+                /** The plan phase in which this adjustment is active. */
+                fun planPhaseOrder(): Long? = planPhaseOrder.getNullable("plan_phase_order")
+
+                /** The reason for the adjustment. */
+                fun reason(): String? = reason.getNullable("reason")
+
                 @JsonProperty("id") @ExcludeMissing fun _id() = id
+
+                @JsonProperty("adjustment_type")
+                @ExcludeMissing
+                fun _adjustmentType() = adjustmentType
+
+                /** The price IDs that this adjustment applies to. */
+                @JsonProperty("applies_to_price_ids")
+                @ExcludeMissing
+                fun _appliesToPriceIds() = appliesToPriceIds
 
                 /**
                  * True for adjustments that apply to an entire invocice, false for adjustments that
@@ -2501,28 +2510,19 @@ private constructor(
                 @ExcludeMissing
                 fun _isInvoiceLevel() = isInvoiceLevel
 
-                /** The plan phase in which this adjustment is active. */
-                @JsonProperty("plan_phase_order")
-                @ExcludeMissing
-                fun _planPhaseOrder() = planPhaseOrder
-
-                /** The price IDs that this adjustment applies to. */
-                @JsonProperty("applies_to_price_ids")
-                @ExcludeMissing
-                fun _appliesToPriceIds() = appliesToPriceIds
-
-                /** The reason for the adjustment. */
-                @JsonProperty("reason") @ExcludeMissing fun _reason() = reason
-
-                @JsonProperty("adjustment_type")
-                @ExcludeMissing
-                fun _adjustmentType() = adjustmentType
-
                 /**
                  * The maximum amount to charge in a given billing period for the prices this
                  * adjustment applies to.
                  */
                 @JsonProperty("maximum_amount") @ExcludeMissing fun _maximumAmount() = maximumAmount
+
+                /** The plan phase in which this adjustment is active. */
+                @JsonProperty("plan_phase_order")
+                @ExcludeMissing
+                fun _planPhaseOrder() = planPhaseOrder
+
+                /** The reason for the adjustment. */
+                @JsonProperty("reason") @ExcludeMissing fun _reason() = reason
 
                 @JsonAnyGetter
                 @ExcludeMissing
@@ -2533,12 +2533,12 @@ private constructor(
                 fun validate(): MaximumAdjustment = apply {
                     if (!validated) {
                         id()
-                        isInvoiceLevel()
-                        planPhaseOrder()
-                        appliesToPriceIds()
-                        reason()
                         adjustmentType()
+                        appliesToPriceIds()
+                        isInvoiceLevel()
                         maximumAmount()
+                        planPhaseOrder()
+                        reason()
                         validated = true
                     }
                 }
@@ -2553,28 +2553,44 @@ private constructor(
                 class Builder {
 
                     private var id: JsonField<String> = JsonMissing.of()
-                    private var isInvoiceLevel: JsonField<Boolean> = JsonMissing.of()
-                    private var planPhaseOrder: JsonField<Long> = JsonMissing.of()
-                    private var appliesToPriceIds: JsonField<List<String>> = JsonMissing.of()
-                    private var reason: JsonField<String> = JsonMissing.of()
                     private var adjustmentType: JsonField<AdjustmentType> = JsonMissing.of()
+                    private var appliesToPriceIds: JsonField<List<String>> = JsonMissing.of()
+                    private var isInvoiceLevel: JsonField<Boolean> = JsonMissing.of()
                     private var maximumAmount: JsonField<String> = JsonMissing.of()
+                    private var planPhaseOrder: JsonField<Long> = JsonMissing.of()
+                    private var reason: JsonField<String> = JsonMissing.of()
                     private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
                     internal fun from(maximumAdjustment: MaximumAdjustment) = apply {
                         id = maximumAdjustment.id
-                        isInvoiceLevel = maximumAdjustment.isInvoiceLevel
-                        planPhaseOrder = maximumAdjustment.planPhaseOrder
-                        appliesToPriceIds = maximumAdjustment.appliesToPriceIds
-                        reason = maximumAdjustment.reason
                         adjustmentType = maximumAdjustment.adjustmentType
+                        appliesToPriceIds = maximumAdjustment.appliesToPriceIds
+                        isInvoiceLevel = maximumAdjustment.isInvoiceLevel
                         maximumAmount = maximumAdjustment.maximumAmount
+                        planPhaseOrder = maximumAdjustment.planPhaseOrder
+                        reason = maximumAdjustment.reason
                         additionalProperties = maximumAdjustment.additionalProperties.toMutableMap()
                     }
 
                     fun id(id: String) = id(JsonField.of(id))
 
                     fun id(id: JsonField<String>) = apply { this.id = id }
+
+                    fun adjustmentType(adjustmentType: AdjustmentType) =
+                        adjustmentType(JsonField.of(adjustmentType))
+
+                    fun adjustmentType(adjustmentType: JsonField<AdjustmentType>) = apply {
+                        this.adjustmentType = adjustmentType
+                    }
+
+                    /** The price IDs that this adjustment applies to. */
+                    fun appliesToPriceIds(appliesToPriceIds: List<String>) =
+                        appliesToPriceIds(JsonField.of(appliesToPriceIds))
+
+                    /** The price IDs that this adjustment applies to. */
+                    fun appliesToPriceIds(appliesToPriceIds: JsonField<List<String>>) = apply {
+                        this.appliesToPriceIds = appliesToPriceIds
+                    }
 
                     /**
                      * True for adjustments that apply to an entire invocice, false for adjustments
@@ -2591,37 +2607,6 @@ private constructor(
                         this.isInvoiceLevel = isInvoiceLevel
                     }
 
-                    /** The plan phase in which this adjustment is active. */
-                    fun planPhaseOrder(planPhaseOrder: Long) =
-                        planPhaseOrder(JsonField.of(planPhaseOrder))
-
-                    /** The plan phase in which this adjustment is active. */
-                    fun planPhaseOrder(planPhaseOrder: JsonField<Long>) = apply {
-                        this.planPhaseOrder = planPhaseOrder
-                    }
-
-                    /** The price IDs that this adjustment applies to. */
-                    fun appliesToPriceIds(appliesToPriceIds: List<String>) =
-                        appliesToPriceIds(JsonField.of(appliesToPriceIds))
-
-                    /** The price IDs that this adjustment applies to. */
-                    fun appliesToPriceIds(appliesToPriceIds: JsonField<List<String>>) = apply {
-                        this.appliesToPriceIds = appliesToPriceIds
-                    }
-
-                    /** The reason for the adjustment. */
-                    fun reason(reason: String) = reason(JsonField.of(reason))
-
-                    /** The reason for the adjustment. */
-                    fun reason(reason: JsonField<String>) = apply { this.reason = reason }
-
-                    fun adjustmentType(adjustmentType: AdjustmentType) =
-                        adjustmentType(JsonField.of(adjustmentType))
-
-                    fun adjustmentType(adjustmentType: JsonField<AdjustmentType>) = apply {
-                        this.adjustmentType = adjustmentType
-                    }
-
                     /**
                      * The maximum amount to charge in a given billing period for the prices this
                      * adjustment applies to.
@@ -2636,6 +2621,21 @@ private constructor(
                     fun maximumAmount(maximumAmount: JsonField<String>) = apply {
                         this.maximumAmount = maximumAmount
                     }
+
+                    /** The plan phase in which this adjustment is active. */
+                    fun planPhaseOrder(planPhaseOrder: Long) =
+                        planPhaseOrder(JsonField.of(planPhaseOrder))
+
+                    /** The plan phase in which this adjustment is active. */
+                    fun planPhaseOrder(planPhaseOrder: JsonField<Long>) = apply {
+                        this.planPhaseOrder = planPhaseOrder
+                    }
+
+                    /** The reason for the adjustment. */
+                    fun reason(reason: String) = reason(JsonField.of(reason))
+
+                    /** The reason for the adjustment. */
+                    fun reason(reason: JsonField<String>) = apply { this.reason = reason }
 
                     fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                         this.additionalProperties.clear()
@@ -2662,12 +2662,12 @@ private constructor(
                     fun build(): MaximumAdjustment =
                         MaximumAdjustment(
                             id,
-                            isInvoiceLevel,
-                            planPhaseOrder,
-                            appliesToPriceIds.map { it.toImmutable() },
-                            reason,
                             adjustmentType,
+                            appliesToPriceIds.map { it.toImmutable() },
+                            isInvoiceLevel,
                             maximumAmount,
+                            planPhaseOrder,
+                            reason,
                             additionalProperties.toImmutable(),
                         )
                 }
@@ -2729,17 +2729,17 @@ private constructor(
                         return true
                     }
 
-                    return /* spotless:off */ other is MaximumAdjustment && id == other.id && isInvoiceLevel == other.isInvoiceLevel && planPhaseOrder == other.planPhaseOrder && appliesToPriceIds == other.appliesToPriceIds && reason == other.reason && adjustmentType == other.adjustmentType && maximumAmount == other.maximumAmount && additionalProperties == other.additionalProperties /* spotless:on */
+                    return /* spotless:off */ other is MaximumAdjustment && id == other.id && adjustmentType == other.adjustmentType && appliesToPriceIds == other.appliesToPriceIds && isInvoiceLevel == other.isInvoiceLevel && maximumAmount == other.maximumAmount && planPhaseOrder == other.planPhaseOrder && reason == other.reason && additionalProperties == other.additionalProperties /* spotless:on */
                 }
 
                 /* spotless:off */
-                private val hashCode: Int by lazy { Objects.hash(id, isInvoiceLevel, planPhaseOrder, appliesToPriceIds, reason, adjustmentType, maximumAmount, additionalProperties) }
+                private val hashCode: Int by lazy { Objects.hash(id, adjustmentType, appliesToPriceIds, isInvoiceLevel, maximumAmount, planPhaseOrder, reason, additionalProperties) }
                 /* spotless:on */
 
                 override fun hashCode(): Int = hashCode
 
                 override fun toString() =
-                    "MaximumAdjustment{id=$id, isInvoiceLevel=$isInvoiceLevel, planPhaseOrder=$planPhaseOrder, appliesToPriceIds=$appliesToPriceIds, reason=$reason, adjustmentType=$adjustmentType, maximumAmount=$maximumAmount, additionalProperties=$additionalProperties}"
+                    "MaximumAdjustment{id=$id, adjustmentType=$adjustmentType, appliesToPriceIds=$appliesToPriceIds, isInvoiceLevel=$isInvoiceLevel, maximumAmount=$maximumAmount, planPhaseOrder=$planPhaseOrder, reason=$reason, additionalProperties=$additionalProperties}"
             }
         }
 
@@ -2748,17 +2748,17 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is AdjustmentInterval && id == other.id && adjustment == other.adjustment && startDate == other.startDate && endDate == other.endDate && appliesToPriceIntervalIds == other.appliesToPriceIntervalIds && additionalProperties == other.additionalProperties /* spotless:on */
+            return /* spotless:off */ other is AdjustmentInterval && id == other.id && adjustment == other.adjustment && appliesToPriceIntervalIds == other.appliesToPriceIntervalIds && endDate == other.endDate && startDate == other.startDate && additionalProperties == other.additionalProperties /* spotless:on */
         }
 
         /* spotless:off */
-        private val hashCode: Int by lazy { Objects.hash(id, adjustment, startDate, endDate, appliesToPriceIntervalIds, additionalProperties) }
+        private val hashCode: Int by lazy { Objects.hash(id, adjustment, appliesToPriceIntervalIds, endDate, startDate, additionalProperties) }
         /* spotless:on */
 
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "AdjustmentInterval{id=$id, adjustment=$adjustment, startDate=$startDate, endDate=$endDate, appliesToPriceIntervalIds=$appliesToPriceIntervalIds, additionalProperties=$additionalProperties}"
+            "AdjustmentInterval{id=$id, adjustment=$adjustment, appliesToPriceIntervalIds=$appliesToPriceIntervalIds, endDate=$endDate, startDate=$startDate, additionalProperties=$additionalProperties}"
     }
 
     @NoAutoDetect
@@ -3115,38 +3115,30 @@ private constructor(
         class AmountDiscountInterval
         @JsonCreator
         private constructor(
-            @JsonProperty("discount_type")
-            @ExcludeMissing
-            private val discountType: JsonField<DiscountType> = JsonMissing.of(),
             @JsonProperty("amount_discount")
             @ExcludeMissing
             private val amountDiscount: JsonField<String> = JsonMissing.of(),
-            @JsonProperty("start_date")
-            @ExcludeMissing
-            private val startDate: JsonField<OffsetDateTime> = JsonMissing.of(),
-            @JsonProperty("end_date")
-            @ExcludeMissing
-            private val endDate: JsonField<OffsetDateTime> = JsonMissing.of(),
             @JsonProperty("applies_to_price_ids")
             @ExcludeMissing
             private val appliesToPriceIds: JsonField<List<String>> = JsonMissing.of(),
             @JsonProperty("applies_to_price_interval_ids")
             @ExcludeMissing
             private val appliesToPriceIntervalIds: JsonField<List<String>> = JsonMissing.of(),
+            @JsonProperty("discount_type")
+            @ExcludeMissing
+            private val discountType: JsonField<DiscountType> = JsonMissing.of(),
+            @JsonProperty("end_date")
+            @ExcludeMissing
+            private val endDate: JsonField<OffsetDateTime> = JsonMissing.of(),
+            @JsonProperty("start_date")
+            @ExcludeMissing
+            private val startDate: JsonField<OffsetDateTime> = JsonMissing.of(),
             @JsonAnySetter
             private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
-            fun discountType(): DiscountType = discountType.getRequired("discount_type")
-
             /** Only available if discount_type is `amount`. */
             fun amountDiscount(): String = amountDiscount.getRequired("amount_discount")
-
-            /** The start date of the discount interval. */
-            fun startDate(): OffsetDateTime = startDate.getRequired("start_date")
-
-            /** The end date of the discount interval. */
-            fun endDate(): OffsetDateTime? = endDate.getNullable("end_date")
 
             /** The price ids that this discount interval applies to. */
             fun appliesToPriceIds(): List<String> =
@@ -3156,16 +3148,16 @@ private constructor(
             fun appliesToPriceIntervalIds(): List<String> =
                 appliesToPriceIntervalIds.getRequired("applies_to_price_interval_ids")
 
-            @JsonProperty("discount_type") @ExcludeMissing fun _discountType() = discountType
+            fun discountType(): DiscountType = discountType.getRequired("discount_type")
+
+            /** The end date of the discount interval. */
+            fun endDate(): OffsetDateTime? = endDate.getNullable("end_date")
+
+            /** The start date of the discount interval. */
+            fun startDate(): OffsetDateTime = startDate.getRequired("start_date")
 
             /** Only available if discount_type is `amount`. */
             @JsonProperty("amount_discount") @ExcludeMissing fun _amountDiscount() = amountDiscount
-
-            /** The start date of the discount interval. */
-            @JsonProperty("start_date") @ExcludeMissing fun _startDate() = startDate
-
-            /** The end date of the discount interval. */
-            @JsonProperty("end_date") @ExcludeMissing fun _endDate() = endDate
 
             /** The price ids that this discount interval applies to. */
             @JsonProperty("applies_to_price_ids")
@@ -3177,6 +3169,14 @@ private constructor(
             @ExcludeMissing
             fun _appliesToPriceIntervalIds() = appliesToPriceIntervalIds
 
+            @JsonProperty("discount_type") @ExcludeMissing fun _discountType() = discountType
+
+            /** The end date of the discount interval. */
+            @JsonProperty("end_date") @ExcludeMissing fun _endDate() = endDate
+
+            /** The start date of the discount interval. */
+            @JsonProperty("start_date") @ExcludeMissing fun _startDate() = startDate
+
             @JsonAnyGetter
             @ExcludeMissing
             fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
@@ -3185,12 +3185,12 @@ private constructor(
 
             fun validate(): AmountDiscountInterval = apply {
                 if (!validated) {
-                    discountType()
                     amountDiscount()
-                    startDate()
-                    endDate()
                     appliesToPriceIds()
                     appliesToPriceIntervalIds()
+                    discountType()
+                    endDate()
+                    startDate()
                     validated = true
                 }
             }
@@ -3204,30 +3204,23 @@ private constructor(
 
             class Builder {
 
-                private var discountType: JsonField<DiscountType> = JsonMissing.of()
                 private var amountDiscount: JsonField<String> = JsonMissing.of()
-                private var startDate: JsonField<OffsetDateTime> = JsonMissing.of()
-                private var endDate: JsonField<OffsetDateTime> = JsonMissing.of()
                 private var appliesToPriceIds: JsonField<List<String>> = JsonMissing.of()
                 private var appliesToPriceIntervalIds: JsonField<List<String>> = JsonMissing.of()
+                private var discountType: JsonField<DiscountType> = JsonMissing.of()
+                private var endDate: JsonField<OffsetDateTime> = JsonMissing.of()
+                private var startDate: JsonField<OffsetDateTime> = JsonMissing.of()
                 private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
                 internal fun from(amountDiscountInterval: AmountDiscountInterval) = apply {
-                    discountType = amountDiscountInterval.discountType
                     amountDiscount = amountDiscountInterval.amountDiscount
-                    startDate = amountDiscountInterval.startDate
-                    endDate = amountDiscountInterval.endDate
                     appliesToPriceIds = amountDiscountInterval.appliesToPriceIds
                     appliesToPriceIntervalIds = amountDiscountInterval.appliesToPriceIntervalIds
+                    discountType = amountDiscountInterval.discountType
+                    endDate = amountDiscountInterval.endDate
+                    startDate = amountDiscountInterval.startDate
                     additionalProperties =
                         amountDiscountInterval.additionalProperties.toMutableMap()
-                }
-
-                fun discountType(discountType: DiscountType) =
-                    discountType(JsonField.of(discountType))
-
-                fun discountType(discountType: JsonField<DiscountType>) = apply {
-                    this.discountType = discountType
                 }
 
                 /** Only available if discount_type is `amount`. */
@@ -3238,20 +3231,6 @@ private constructor(
                 fun amountDiscount(amountDiscount: JsonField<String>) = apply {
                     this.amountDiscount = amountDiscount
                 }
-
-                /** The start date of the discount interval. */
-                fun startDate(startDate: OffsetDateTime) = startDate(JsonField.of(startDate))
-
-                /** The start date of the discount interval. */
-                fun startDate(startDate: JsonField<OffsetDateTime>) = apply {
-                    this.startDate = startDate
-                }
-
-                /** The end date of the discount interval. */
-                fun endDate(endDate: OffsetDateTime) = endDate(JsonField.of(endDate))
-
-                /** The end date of the discount interval. */
-                fun endDate(endDate: JsonField<OffsetDateTime>) = apply { this.endDate = endDate }
 
                 /** The price ids that this discount interval applies to. */
                 fun appliesToPriceIds(appliesToPriceIds: List<String>) =
@@ -3271,6 +3250,27 @@ private constructor(
                     apply {
                         this.appliesToPriceIntervalIds = appliesToPriceIntervalIds
                     }
+
+                fun discountType(discountType: DiscountType) =
+                    discountType(JsonField.of(discountType))
+
+                fun discountType(discountType: JsonField<DiscountType>) = apply {
+                    this.discountType = discountType
+                }
+
+                /** The end date of the discount interval. */
+                fun endDate(endDate: OffsetDateTime) = endDate(JsonField.of(endDate))
+
+                /** The end date of the discount interval. */
+                fun endDate(endDate: JsonField<OffsetDateTime>) = apply { this.endDate = endDate }
+
+                /** The start date of the discount interval. */
+                fun startDate(startDate: OffsetDateTime) = startDate(JsonField.of(startDate))
+
+                /** The start date of the discount interval. */
+                fun startDate(startDate: JsonField<OffsetDateTime>) = apply {
+                    this.startDate = startDate
+                }
 
                 fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                     this.additionalProperties.clear()
@@ -3296,12 +3296,12 @@ private constructor(
 
                 fun build(): AmountDiscountInterval =
                     AmountDiscountInterval(
-                        discountType,
                         amountDiscount,
-                        startDate,
-                        endDate,
                         appliesToPriceIds.map { it.toImmutable() },
                         appliesToPriceIntervalIds.map { it.toImmutable() },
+                        discountType,
+                        endDate,
+                        startDate,
                         additionalProperties.toImmutable(),
                     )
             }
@@ -3362,55 +3362,44 @@ private constructor(
                     return true
                 }
 
-                return /* spotless:off */ other is AmountDiscountInterval && discountType == other.discountType && amountDiscount == other.amountDiscount && startDate == other.startDate && endDate == other.endDate && appliesToPriceIds == other.appliesToPriceIds && appliesToPriceIntervalIds == other.appliesToPriceIntervalIds && additionalProperties == other.additionalProperties /* spotless:on */
+                return /* spotless:off */ other is AmountDiscountInterval && amountDiscount == other.amountDiscount && appliesToPriceIds == other.appliesToPriceIds && appliesToPriceIntervalIds == other.appliesToPriceIntervalIds && discountType == other.discountType && endDate == other.endDate && startDate == other.startDate && additionalProperties == other.additionalProperties /* spotless:on */
             }
 
             /* spotless:off */
-            private val hashCode: Int by lazy { Objects.hash(discountType, amountDiscount, startDate, endDate, appliesToPriceIds, appliesToPriceIntervalIds, additionalProperties) }
+            private val hashCode: Int by lazy { Objects.hash(amountDiscount, appliesToPriceIds, appliesToPriceIntervalIds, discountType, endDate, startDate, additionalProperties) }
             /* spotless:on */
 
             override fun hashCode(): Int = hashCode
 
             override fun toString() =
-                "AmountDiscountInterval{discountType=$discountType, amountDiscount=$amountDiscount, startDate=$startDate, endDate=$endDate, appliesToPriceIds=$appliesToPriceIds, appliesToPriceIntervalIds=$appliesToPriceIntervalIds, additionalProperties=$additionalProperties}"
+                "AmountDiscountInterval{amountDiscount=$amountDiscount, appliesToPriceIds=$appliesToPriceIds, appliesToPriceIntervalIds=$appliesToPriceIntervalIds, discountType=$discountType, endDate=$endDate, startDate=$startDate, additionalProperties=$additionalProperties}"
         }
 
         @NoAutoDetect
         class PercentageDiscountInterval
         @JsonCreator
         private constructor(
-            @JsonProperty("discount_type")
-            @ExcludeMissing
-            private val discountType: JsonField<DiscountType> = JsonMissing.of(),
-            @JsonProperty("percentage_discount")
-            @ExcludeMissing
-            private val percentageDiscount: JsonField<Double> = JsonMissing.of(),
-            @JsonProperty("start_date")
-            @ExcludeMissing
-            private val startDate: JsonField<OffsetDateTime> = JsonMissing.of(),
-            @JsonProperty("end_date")
-            @ExcludeMissing
-            private val endDate: JsonField<OffsetDateTime> = JsonMissing.of(),
             @JsonProperty("applies_to_price_ids")
             @ExcludeMissing
             private val appliesToPriceIds: JsonField<List<String>> = JsonMissing.of(),
             @JsonProperty("applies_to_price_interval_ids")
             @ExcludeMissing
             private val appliesToPriceIntervalIds: JsonField<List<String>> = JsonMissing.of(),
+            @JsonProperty("discount_type")
+            @ExcludeMissing
+            private val discountType: JsonField<DiscountType> = JsonMissing.of(),
+            @JsonProperty("end_date")
+            @ExcludeMissing
+            private val endDate: JsonField<OffsetDateTime> = JsonMissing.of(),
+            @JsonProperty("percentage_discount")
+            @ExcludeMissing
+            private val percentageDiscount: JsonField<Double> = JsonMissing.of(),
+            @JsonProperty("start_date")
+            @ExcludeMissing
+            private val startDate: JsonField<OffsetDateTime> = JsonMissing.of(),
             @JsonAnySetter
             private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
-
-            fun discountType(): DiscountType = discountType.getRequired("discount_type")
-
-            /** Only available if discount_type is `percentage`.This is a number between 0 and 1. */
-            fun percentageDiscount(): Double = percentageDiscount.getRequired("percentage_discount")
-
-            /** The start date of the discount interval. */
-            fun startDate(): OffsetDateTime = startDate.getRequired("start_date")
-
-            /** The end date of the discount interval. */
-            fun endDate(): OffsetDateTime? = endDate.getNullable("end_date")
 
             /** The price ids that this discount interval applies to. */
             fun appliesToPriceIds(): List<String> =
@@ -3420,18 +3409,16 @@ private constructor(
             fun appliesToPriceIntervalIds(): List<String> =
                 appliesToPriceIntervalIds.getRequired("applies_to_price_interval_ids")
 
-            @JsonProperty("discount_type") @ExcludeMissing fun _discountType() = discountType
-
-            /** Only available if discount_type is `percentage`.This is a number between 0 and 1. */
-            @JsonProperty("percentage_discount")
-            @ExcludeMissing
-            fun _percentageDiscount() = percentageDiscount
-
-            /** The start date of the discount interval. */
-            @JsonProperty("start_date") @ExcludeMissing fun _startDate() = startDate
+            fun discountType(): DiscountType = discountType.getRequired("discount_type")
 
             /** The end date of the discount interval. */
-            @JsonProperty("end_date") @ExcludeMissing fun _endDate() = endDate
+            fun endDate(): OffsetDateTime? = endDate.getNullable("end_date")
+
+            /** Only available if discount_type is `percentage`.This is a number between 0 and 1. */
+            fun percentageDiscount(): Double = percentageDiscount.getRequired("percentage_discount")
+
+            /** The start date of the discount interval. */
+            fun startDate(): OffsetDateTime = startDate.getRequired("start_date")
 
             /** The price ids that this discount interval applies to. */
             @JsonProperty("applies_to_price_ids")
@@ -3443,6 +3430,19 @@ private constructor(
             @ExcludeMissing
             fun _appliesToPriceIntervalIds() = appliesToPriceIntervalIds
 
+            @JsonProperty("discount_type") @ExcludeMissing fun _discountType() = discountType
+
+            /** The end date of the discount interval. */
+            @JsonProperty("end_date") @ExcludeMissing fun _endDate() = endDate
+
+            /** Only available if discount_type is `percentage`.This is a number between 0 and 1. */
+            @JsonProperty("percentage_discount")
+            @ExcludeMissing
+            fun _percentageDiscount() = percentageDiscount
+
+            /** The start date of the discount interval. */
+            @JsonProperty("start_date") @ExcludeMissing fun _startDate() = startDate
+
             @JsonAnyGetter
             @ExcludeMissing
             fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
@@ -3451,12 +3451,12 @@ private constructor(
 
             fun validate(): PercentageDiscountInterval = apply {
                 if (!validated) {
-                    discountType()
-                    percentageDiscount()
-                    startDate()
-                    endDate()
                     appliesToPriceIds()
                     appliesToPriceIntervalIds()
+                    discountType()
+                    endDate()
+                    percentageDiscount()
+                    startDate()
                     validated = true
                 }
             }
@@ -3470,24 +3470,43 @@ private constructor(
 
             class Builder {
 
-                private var discountType: JsonField<DiscountType> = JsonMissing.of()
-                private var percentageDiscount: JsonField<Double> = JsonMissing.of()
-                private var startDate: JsonField<OffsetDateTime> = JsonMissing.of()
-                private var endDate: JsonField<OffsetDateTime> = JsonMissing.of()
                 private var appliesToPriceIds: JsonField<List<String>> = JsonMissing.of()
                 private var appliesToPriceIntervalIds: JsonField<List<String>> = JsonMissing.of()
+                private var discountType: JsonField<DiscountType> = JsonMissing.of()
+                private var endDate: JsonField<OffsetDateTime> = JsonMissing.of()
+                private var percentageDiscount: JsonField<Double> = JsonMissing.of()
+                private var startDate: JsonField<OffsetDateTime> = JsonMissing.of()
                 private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
                 internal fun from(percentageDiscountInterval: PercentageDiscountInterval) = apply {
-                    discountType = percentageDiscountInterval.discountType
-                    percentageDiscount = percentageDiscountInterval.percentageDiscount
-                    startDate = percentageDiscountInterval.startDate
-                    endDate = percentageDiscountInterval.endDate
                     appliesToPriceIds = percentageDiscountInterval.appliesToPriceIds
                     appliesToPriceIntervalIds = percentageDiscountInterval.appliesToPriceIntervalIds
+                    discountType = percentageDiscountInterval.discountType
+                    endDate = percentageDiscountInterval.endDate
+                    percentageDiscount = percentageDiscountInterval.percentageDiscount
+                    startDate = percentageDiscountInterval.startDate
                     additionalProperties =
                         percentageDiscountInterval.additionalProperties.toMutableMap()
                 }
+
+                /** The price ids that this discount interval applies to. */
+                fun appliesToPriceIds(appliesToPriceIds: List<String>) =
+                    appliesToPriceIds(JsonField.of(appliesToPriceIds))
+
+                /** The price ids that this discount interval applies to. */
+                fun appliesToPriceIds(appliesToPriceIds: JsonField<List<String>>) = apply {
+                    this.appliesToPriceIds = appliesToPriceIds
+                }
+
+                /** The price interval ids that this discount interval applies to. */
+                fun appliesToPriceIntervalIds(appliesToPriceIntervalIds: List<String>) =
+                    appliesToPriceIntervalIds(JsonField.of(appliesToPriceIntervalIds))
+
+                /** The price interval ids that this discount interval applies to. */
+                fun appliesToPriceIntervalIds(appliesToPriceIntervalIds: JsonField<List<String>>) =
+                    apply {
+                        this.appliesToPriceIntervalIds = appliesToPriceIntervalIds
+                    }
 
                 fun discountType(discountType: DiscountType) =
                     discountType(JsonField.of(discountType))
@@ -3495,6 +3514,12 @@ private constructor(
                 fun discountType(discountType: JsonField<DiscountType>) = apply {
                     this.discountType = discountType
                 }
+
+                /** The end date of the discount interval. */
+                fun endDate(endDate: OffsetDateTime) = endDate(JsonField.of(endDate))
+
+                /** The end date of the discount interval. */
+                fun endDate(endDate: JsonField<OffsetDateTime>) = apply { this.endDate = endDate }
 
                 /**
                  * Only available if discount_type is `percentage`.This is a number between 0 and 1.
@@ -3516,31 +3541,6 @@ private constructor(
                 fun startDate(startDate: JsonField<OffsetDateTime>) = apply {
                     this.startDate = startDate
                 }
-
-                /** The end date of the discount interval. */
-                fun endDate(endDate: OffsetDateTime) = endDate(JsonField.of(endDate))
-
-                /** The end date of the discount interval. */
-                fun endDate(endDate: JsonField<OffsetDateTime>) = apply { this.endDate = endDate }
-
-                /** The price ids that this discount interval applies to. */
-                fun appliesToPriceIds(appliesToPriceIds: List<String>) =
-                    appliesToPriceIds(JsonField.of(appliesToPriceIds))
-
-                /** The price ids that this discount interval applies to. */
-                fun appliesToPriceIds(appliesToPriceIds: JsonField<List<String>>) = apply {
-                    this.appliesToPriceIds = appliesToPriceIds
-                }
-
-                /** The price interval ids that this discount interval applies to. */
-                fun appliesToPriceIntervalIds(appliesToPriceIntervalIds: List<String>) =
-                    appliesToPriceIntervalIds(JsonField.of(appliesToPriceIntervalIds))
-
-                /** The price interval ids that this discount interval applies to. */
-                fun appliesToPriceIntervalIds(appliesToPriceIntervalIds: JsonField<List<String>>) =
-                    apply {
-                        this.appliesToPriceIntervalIds = appliesToPriceIntervalIds
-                    }
 
                 fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                     this.additionalProperties.clear()
@@ -3566,12 +3566,12 @@ private constructor(
 
                 fun build(): PercentageDiscountInterval =
                     PercentageDiscountInterval(
-                        discountType,
-                        percentageDiscount,
-                        startDate,
-                        endDate,
                         appliesToPriceIds.map { it.toImmutable() },
                         appliesToPriceIntervalIds.map { it.toImmutable() },
+                        discountType,
+                        endDate,
+                        percentageDiscount,
+                        startDate,
                         additionalProperties.toImmutable(),
                     )
             }
@@ -3632,58 +3632,44 @@ private constructor(
                     return true
                 }
 
-                return /* spotless:off */ other is PercentageDiscountInterval && discountType == other.discountType && percentageDiscount == other.percentageDiscount && startDate == other.startDate && endDate == other.endDate && appliesToPriceIds == other.appliesToPriceIds && appliesToPriceIntervalIds == other.appliesToPriceIntervalIds && additionalProperties == other.additionalProperties /* spotless:on */
+                return /* spotless:off */ other is PercentageDiscountInterval && appliesToPriceIds == other.appliesToPriceIds && appliesToPriceIntervalIds == other.appliesToPriceIntervalIds && discountType == other.discountType && endDate == other.endDate && percentageDiscount == other.percentageDiscount && startDate == other.startDate && additionalProperties == other.additionalProperties /* spotless:on */
             }
 
             /* spotless:off */
-            private val hashCode: Int by lazy { Objects.hash(discountType, percentageDiscount, startDate, endDate, appliesToPriceIds, appliesToPriceIntervalIds, additionalProperties) }
+            private val hashCode: Int by lazy { Objects.hash(appliesToPriceIds, appliesToPriceIntervalIds, discountType, endDate, percentageDiscount, startDate, additionalProperties) }
             /* spotless:on */
 
             override fun hashCode(): Int = hashCode
 
             override fun toString() =
-                "PercentageDiscountInterval{discountType=$discountType, percentageDiscount=$percentageDiscount, startDate=$startDate, endDate=$endDate, appliesToPriceIds=$appliesToPriceIds, appliesToPriceIntervalIds=$appliesToPriceIntervalIds, additionalProperties=$additionalProperties}"
+                "PercentageDiscountInterval{appliesToPriceIds=$appliesToPriceIds, appliesToPriceIntervalIds=$appliesToPriceIntervalIds, discountType=$discountType, endDate=$endDate, percentageDiscount=$percentageDiscount, startDate=$startDate, additionalProperties=$additionalProperties}"
         }
 
         @NoAutoDetect
         class UsageDiscountInterval
         @JsonCreator
         private constructor(
-            @JsonProperty("discount_type")
-            @ExcludeMissing
-            private val discountType: JsonField<DiscountType> = JsonMissing.of(),
-            @JsonProperty("usage_discount")
-            @ExcludeMissing
-            private val usageDiscount: JsonField<Double> = JsonMissing.of(),
-            @JsonProperty("start_date")
-            @ExcludeMissing
-            private val startDate: JsonField<OffsetDateTime> = JsonMissing.of(),
-            @JsonProperty("end_date")
-            @ExcludeMissing
-            private val endDate: JsonField<OffsetDateTime> = JsonMissing.of(),
             @JsonProperty("applies_to_price_ids")
             @ExcludeMissing
             private val appliesToPriceIds: JsonField<List<String>> = JsonMissing.of(),
             @JsonProperty("applies_to_price_interval_ids")
             @ExcludeMissing
             private val appliesToPriceIntervalIds: JsonField<List<String>> = JsonMissing.of(),
+            @JsonProperty("discount_type")
+            @ExcludeMissing
+            private val discountType: JsonField<DiscountType> = JsonMissing.of(),
+            @JsonProperty("end_date")
+            @ExcludeMissing
+            private val endDate: JsonField<OffsetDateTime> = JsonMissing.of(),
+            @JsonProperty("start_date")
+            @ExcludeMissing
+            private val startDate: JsonField<OffsetDateTime> = JsonMissing.of(),
+            @JsonProperty("usage_discount")
+            @ExcludeMissing
+            private val usageDiscount: JsonField<Double> = JsonMissing.of(),
             @JsonAnySetter
             private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
-
-            fun discountType(): DiscountType = discountType.getRequired("discount_type")
-
-            /**
-             * Only available if discount_type is `usage`. Number of usage units that this discount
-             * is for
-             */
-            fun usageDiscount(): Double = usageDiscount.getRequired("usage_discount")
-
-            /** The start date of the discount interval. */
-            fun startDate(): OffsetDateTime = startDate.getRequired("start_date")
-
-            /** The end date of the discount interval. */
-            fun endDate(): OffsetDateTime? = endDate.getNullable("end_date")
 
             /** The price ids that this discount interval applies to. */
             fun appliesToPriceIds(): List<String> =
@@ -3693,19 +3679,19 @@ private constructor(
             fun appliesToPriceIntervalIds(): List<String> =
                 appliesToPriceIntervalIds.getRequired("applies_to_price_interval_ids")
 
-            @JsonProperty("discount_type") @ExcludeMissing fun _discountType() = discountType
+            fun discountType(): DiscountType = discountType.getRequired("discount_type")
+
+            /** The end date of the discount interval. */
+            fun endDate(): OffsetDateTime? = endDate.getNullable("end_date")
+
+            /** The start date of the discount interval. */
+            fun startDate(): OffsetDateTime = startDate.getRequired("start_date")
 
             /**
              * Only available if discount_type is `usage`. Number of usage units that this discount
              * is for
              */
-            @JsonProperty("usage_discount") @ExcludeMissing fun _usageDiscount() = usageDiscount
-
-            /** The start date of the discount interval. */
-            @JsonProperty("start_date") @ExcludeMissing fun _startDate() = startDate
-
-            /** The end date of the discount interval. */
-            @JsonProperty("end_date") @ExcludeMissing fun _endDate() = endDate
+            fun usageDiscount(): Double = usageDiscount.getRequired("usage_discount")
 
             /** The price ids that this discount interval applies to. */
             @JsonProperty("applies_to_price_ids")
@@ -3717,6 +3703,20 @@ private constructor(
             @ExcludeMissing
             fun _appliesToPriceIntervalIds() = appliesToPriceIntervalIds
 
+            @JsonProperty("discount_type") @ExcludeMissing fun _discountType() = discountType
+
+            /** The end date of the discount interval. */
+            @JsonProperty("end_date") @ExcludeMissing fun _endDate() = endDate
+
+            /** The start date of the discount interval. */
+            @JsonProperty("start_date") @ExcludeMissing fun _startDate() = startDate
+
+            /**
+             * Only available if discount_type is `usage`. Number of usage units that this discount
+             * is for
+             */
+            @JsonProperty("usage_discount") @ExcludeMissing fun _usageDiscount() = usageDiscount
+
             @JsonAnyGetter
             @ExcludeMissing
             fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
@@ -3725,12 +3725,12 @@ private constructor(
 
             fun validate(): UsageDiscountInterval = apply {
                 if (!validated) {
-                    discountType()
-                    usageDiscount()
-                    startDate()
-                    endDate()
                     appliesToPriceIds()
                     appliesToPriceIntervalIds()
+                    discountType()
+                    endDate()
+                    startDate()
+                    usageDiscount()
                     validated = true
                 }
             }
@@ -3744,59 +3744,23 @@ private constructor(
 
             class Builder {
 
-                private var discountType: JsonField<DiscountType> = JsonMissing.of()
-                private var usageDiscount: JsonField<Double> = JsonMissing.of()
-                private var startDate: JsonField<OffsetDateTime> = JsonMissing.of()
-                private var endDate: JsonField<OffsetDateTime> = JsonMissing.of()
                 private var appliesToPriceIds: JsonField<List<String>> = JsonMissing.of()
                 private var appliesToPriceIntervalIds: JsonField<List<String>> = JsonMissing.of()
+                private var discountType: JsonField<DiscountType> = JsonMissing.of()
+                private var endDate: JsonField<OffsetDateTime> = JsonMissing.of()
+                private var startDate: JsonField<OffsetDateTime> = JsonMissing.of()
+                private var usageDiscount: JsonField<Double> = JsonMissing.of()
                 private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
                 internal fun from(usageDiscountInterval: UsageDiscountInterval) = apply {
-                    discountType = usageDiscountInterval.discountType
-                    usageDiscount = usageDiscountInterval.usageDiscount
-                    startDate = usageDiscountInterval.startDate
-                    endDate = usageDiscountInterval.endDate
                     appliesToPriceIds = usageDiscountInterval.appliesToPriceIds
                     appliesToPriceIntervalIds = usageDiscountInterval.appliesToPriceIntervalIds
+                    discountType = usageDiscountInterval.discountType
+                    endDate = usageDiscountInterval.endDate
+                    startDate = usageDiscountInterval.startDate
+                    usageDiscount = usageDiscountInterval.usageDiscount
                     additionalProperties = usageDiscountInterval.additionalProperties.toMutableMap()
                 }
-
-                fun discountType(discountType: DiscountType) =
-                    discountType(JsonField.of(discountType))
-
-                fun discountType(discountType: JsonField<DiscountType>) = apply {
-                    this.discountType = discountType
-                }
-
-                /**
-                 * Only available if discount_type is `usage`. Number of usage units that this
-                 * discount is for
-                 */
-                fun usageDiscount(usageDiscount: Double) =
-                    usageDiscount(JsonField.of(usageDiscount))
-
-                /**
-                 * Only available if discount_type is `usage`. Number of usage units that this
-                 * discount is for
-                 */
-                fun usageDiscount(usageDiscount: JsonField<Double>) = apply {
-                    this.usageDiscount = usageDiscount
-                }
-
-                /** The start date of the discount interval. */
-                fun startDate(startDate: OffsetDateTime) = startDate(JsonField.of(startDate))
-
-                /** The start date of the discount interval. */
-                fun startDate(startDate: JsonField<OffsetDateTime>) = apply {
-                    this.startDate = startDate
-                }
-
-                /** The end date of the discount interval. */
-                fun endDate(endDate: OffsetDateTime) = endDate(JsonField.of(endDate))
-
-                /** The end date of the discount interval. */
-                fun endDate(endDate: JsonField<OffsetDateTime>) = apply { this.endDate = endDate }
 
                 /** The price ids that this discount interval applies to. */
                 fun appliesToPriceIds(appliesToPriceIds: List<String>) =
@@ -3816,6 +3780,42 @@ private constructor(
                     apply {
                         this.appliesToPriceIntervalIds = appliesToPriceIntervalIds
                     }
+
+                fun discountType(discountType: DiscountType) =
+                    discountType(JsonField.of(discountType))
+
+                fun discountType(discountType: JsonField<DiscountType>) = apply {
+                    this.discountType = discountType
+                }
+
+                /** The end date of the discount interval. */
+                fun endDate(endDate: OffsetDateTime) = endDate(JsonField.of(endDate))
+
+                /** The end date of the discount interval. */
+                fun endDate(endDate: JsonField<OffsetDateTime>) = apply { this.endDate = endDate }
+
+                /** The start date of the discount interval. */
+                fun startDate(startDate: OffsetDateTime) = startDate(JsonField.of(startDate))
+
+                /** The start date of the discount interval. */
+                fun startDate(startDate: JsonField<OffsetDateTime>) = apply {
+                    this.startDate = startDate
+                }
+
+                /**
+                 * Only available if discount_type is `usage`. Number of usage units that this
+                 * discount is for
+                 */
+                fun usageDiscount(usageDiscount: Double) =
+                    usageDiscount(JsonField.of(usageDiscount))
+
+                /**
+                 * Only available if discount_type is `usage`. Number of usage units that this
+                 * discount is for
+                 */
+                fun usageDiscount(usageDiscount: JsonField<Double>) = apply {
+                    this.usageDiscount = usageDiscount
+                }
 
                 fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                     this.additionalProperties.clear()
@@ -3841,12 +3841,12 @@ private constructor(
 
                 fun build(): UsageDiscountInterval =
                     UsageDiscountInterval(
-                        discountType,
-                        usageDiscount,
-                        startDate,
-                        endDate,
                         appliesToPriceIds.map { it.toImmutable() },
                         appliesToPriceIntervalIds.map { it.toImmutable() },
+                        discountType,
+                        endDate,
+                        startDate,
+                        usageDiscount,
                         additionalProperties.toImmutable(),
                     )
             }
@@ -3907,17 +3907,17 @@ private constructor(
                     return true
                 }
 
-                return /* spotless:off */ other is UsageDiscountInterval && discountType == other.discountType && usageDiscount == other.usageDiscount && startDate == other.startDate && endDate == other.endDate && appliesToPriceIds == other.appliesToPriceIds && appliesToPriceIntervalIds == other.appliesToPriceIntervalIds && additionalProperties == other.additionalProperties /* spotless:on */
+                return /* spotless:off */ other is UsageDiscountInterval && appliesToPriceIds == other.appliesToPriceIds && appliesToPriceIntervalIds == other.appliesToPriceIntervalIds && discountType == other.discountType && endDate == other.endDate && startDate == other.startDate && usageDiscount == other.usageDiscount && additionalProperties == other.additionalProperties /* spotless:on */
             }
 
             /* spotless:off */
-            private val hashCode: Int by lazy { Objects.hash(discountType, usageDiscount, startDate, endDate, appliesToPriceIds, appliesToPriceIntervalIds, additionalProperties) }
+            private val hashCode: Int by lazy { Objects.hash(appliesToPriceIds, appliesToPriceIntervalIds, discountType, endDate, startDate, usageDiscount, additionalProperties) }
             /* spotless:on */
 
             override fun hashCode(): Int = hashCode
 
             override fun toString() =
-                "UsageDiscountInterval{discountType=$discountType, usageDiscount=$usageDiscount, startDate=$startDate, endDate=$endDate, appliesToPriceIds=$appliesToPriceIds, appliesToPriceIntervalIds=$appliesToPriceIntervalIds, additionalProperties=$additionalProperties}"
+                "UsageDiscountInterval{appliesToPriceIds=$appliesToPriceIds, appliesToPriceIntervalIds=$appliesToPriceIntervalIds, discountType=$discountType, endDate=$endDate, startDate=$startDate, usageDiscount=$usageDiscount, additionalProperties=$additionalProperties}"
         }
     }
 
@@ -3925,37 +3925,37 @@ private constructor(
     class FixedFeeQuantitySchedule
     @JsonCreator
     private constructor(
-        @JsonProperty("price_id")
-        @ExcludeMissing
-        private val priceId: JsonField<String> = JsonMissing.of(),
-        @JsonProperty("start_date")
-        @ExcludeMissing
-        private val startDate: JsonField<OffsetDateTime> = JsonMissing.of(),
         @JsonProperty("end_date")
         @ExcludeMissing
         private val endDate: JsonField<OffsetDateTime> = JsonMissing.of(),
+        @JsonProperty("price_id")
+        @ExcludeMissing
+        private val priceId: JsonField<String> = JsonMissing.of(),
         @JsonProperty("quantity")
         @ExcludeMissing
         private val quantity: JsonField<Double> = JsonMissing.of(),
+        @JsonProperty("start_date")
+        @ExcludeMissing
+        private val startDate: JsonField<OffsetDateTime> = JsonMissing.of(),
         @JsonAnySetter
         private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
 
-        fun priceId(): String = priceId.getRequired("price_id")
-
-        fun startDate(): OffsetDateTime = startDate.getRequired("start_date")
-
         fun endDate(): OffsetDateTime? = endDate.getNullable("end_date")
+
+        fun priceId(): String = priceId.getRequired("price_id")
 
         fun quantity(): Double = quantity.getRequired("quantity")
 
-        @JsonProperty("price_id") @ExcludeMissing fun _priceId() = priceId
-
-        @JsonProperty("start_date") @ExcludeMissing fun _startDate() = startDate
+        fun startDate(): OffsetDateTime = startDate.getRequired("start_date")
 
         @JsonProperty("end_date") @ExcludeMissing fun _endDate() = endDate
 
+        @JsonProperty("price_id") @ExcludeMissing fun _priceId() = priceId
+
         @JsonProperty("quantity") @ExcludeMissing fun _quantity() = quantity
+
+        @JsonProperty("start_date") @ExcludeMissing fun _startDate() = startDate
 
         @JsonAnyGetter
         @ExcludeMissing
@@ -3965,10 +3965,10 @@ private constructor(
 
         fun validate(): FixedFeeQuantitySchedule = apply {
             if (!validated) {
-                priceId()
-                startDate()
                 endDate()
+                priceId()
                 quantity()
+                startDate()
                 validated = true
             }
         }
@@ -3982,37 +3982,37 @@ private constructor(
 
         class Builder {
 
-            private var priceId: JsonField<String> = JsonMissing.of()
-            private var startDate: JsonField<OffsetDateTime> = JsonMissing.of()
             private var endDate: JsonField<OffsetDateTime> = JsonMissing.of()
+            private var priceId: JsonField<String> = JsonMissing.of()
             private var quantity: JsonField<Double> = JsonMissing.of()
+            private var startDate: JsonField<OffsetDateTime> = JsonMissing.of()
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             internal fun from(fixedFeeQuantitySchedule: FixedFeeQuantitySchedule) = apply {
-                priceId = fixedFeeQuantitySchedule.priceId
-                startDate = fixedFeeQuantitySchedule.startDate
                 endDate = fixedFeeQuantitySchedule.endDate
+                priceId = fixedFeeQuantitySchedule.priceId
                 quantity = fixedFeeQuantitySchedule.quantity
+                startDate = fixedFeeQuantitySchedule.startDate
                 additionalProperties = fixedFeeQuantitySchedule.additionalProperties.toMutableMap()
-            }
-
-            fun priceId(priceId: String) = priceId(JsonField.of(priceId))
-
-            fun priceId(priceId: JsonField<String>) = apply { this.priceId = priceId }
-
-            fun startDate(startDate: OffsetDateTime) = startDate(JsonField.of(startDate))
-
-            fun startDate(startDate: JsonField<OffsetDateTime>) = apply {
-                this.startDate = startDate
             }
 
             fun endDate(endDate: OffsetDateTime) = endDate(JsonField.of(endDate))
 
             fun endDate(endDate: JsonField<OffsetDateTime>) = apply { this.endDate = endDate }
 
+            fun priceId(priceId: String) = priceId(JsonField.of(priceId))
+
+            fun priceId(priceId: JsonField<String>) = apply { this.priceId = priceId }
+
             fun quantity(quantity: Double) = quantity(JsonField.of(quantity))
 
             fun quantity(quantity: JsonField<Double>) = apply { this.quantity = quantity }
+
+            fun startDate(startDate: OffsetDateTime) = startDate(JsonField.of(startDate))
+
+            fun startDate(startDate: JsonField<OffsetDateTime>) = apply {
+                this.startDate = startDate
+            }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
@@ -4035,10 +4035,10 @@ private constructor(
 
             fun build(): FixedFeeQuantitySchedule =
                 FixedFeeQuantitySchedule(
-                    priceId,
-                    startDate,
                     endDate,
+                    priceId,
                     quantity,
+                    startDate,
                     additionalProperties.toImmutable(),
                 )
         }
@@ -4048,47 +4048,41 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is FixedFeeQuantitySchedule && priceId == other.priceId && startDate == other.startDate && endDate == other.endDate && quantity == other.quantity && additionalProperties == other.additionalProperties /* spotless:on */
+            return /* spotless:off */ other is FixedFeeQuantitySchedule && endDate == other.endDate && priceId == other.priceId && quantity == other.quantity && startDate == other.startDate && additionalProperties == other.additionalProperties /* spotless:on */
         }
 
         /* spotless:off */
-        private val hashCode: Int by lazy { Objects.hash(priceId, startDate, endDate, quantity, additionalProperties) }
+        private val hashCode: Int by lazy { Objects.hash(endDate, priceId, quantity, startDate, additionalProperties) }
         /* spotless:on */
 
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "FixedFeeQuantitySchedule{priceId=$priceId, startDate=$startDate, endDate=$endDate, quantity=$quantity, additionalProperties=$additionalProperties}"
+            "FixedFeeQuantitySchedule{endDate=$endDate, priceId=$priceId, quantity=$quantity, startDate=$startDate, additionalProperties=$additionalProperties}"
     }
 
     @NoAutoDetect
     class MaximumInterval
     @JsonCreator
     private constructor(
-        @JsonProperty("start_date")
-        @ExcludeMissing
-        private val startDate: JsonField<OffsetDateTime> = JsonMissing.of(),
-        @JsonProperty("end_date")
-        @ExcludeMissing
-        private val endDate: JsonField<OffsetDateTime> = JsonMissing.of(),
         @JsonProperty("applies_to_price_ids")
         @ExcludeMissing
         private val appliesToPriceIds: JsonField<List<String>> = JsonMissing.of(),
         @JsonProperty("applies_to_price_interval_ids")
         @ExcludeMissing
         private val appliesToPriceIntervalIds: JsonField<List<String>> = JsonMissing.of(),
+        @JsonProperty("end_date")
+        @ExcludeMissing
+        private val endDate: JsonField<OffsetDateTime> = JsonMissing.of(),
         @JsonProperty("maximum_amount")
         @ExcludeMissing
         private val maximumAmount: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("start_date")
+        @ExcludeMissing
+        private val startDate: JsonField<OffsetDateTime> = JsonMissing.of(),
         @JsonAnySetter
         private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
-
-        /** The start date of the maximum interval. */
-        fun startDate(): OffsetDateTime = startDate.getRequired("start_date")
-
-        /** The end date of the maximum interval. */
-        fun endDate(): OffsetDateTime? = endDate.getNullable("end_date")
 
         /** The price ids that this maximum interval applies to. */
         fun appliesToPriceIds(): List<String> =
@@ -4098,6 +4092,9 @@ private constructor(
         fun appliesToPriceIntervalIds(): List<String> =
             appliesToPriceIntervalIds.getRequired("applies_to_price_interval_ids")
 
+        /** The end date of the maximum interval. */
+        fun endDate(): OffsetDateTime? = endDate.getNullable("end_date")
+
         /**
          * The maximum amount to charge in a given billing period for the price intervals this
          * transform applies to.
@@ -4105,10 +4102,7 @@ private constructor(
         fun maximumAmount(): String = maximumAmount.getRequired("maximum_amount")
 
         /** The start date of the maximum interval. */
-        @JsonProperty("start_date") @ExcludeMissing fun _startDate() = startDate
-
-        /** The end date of the maximum interval. */
-        @JsonProperty("end_date") @ExcludeMissing fun _endDate() = endDate
+        fun startDate(): OffsetDateTime = startDate.getRequired("start_date")
 
         /** The price ids that this maximum interval applies to. */
         @JsonProperty("applies_to_price_ids")
@@ -4120,11 +4114,17 @@ private constructor(
         @ExcludeMissing
         fun _appliesToPriceIntervalIds() = appliesToPriceIntervalIds
 
+        /** The end date of the maximum interval. */
+        @JsonProperty("end_date") @ExcludeMissing fun _endDate() = endDate
+
         /**
          * The maximum amount to charge in a given billing period for the price intervals this
          * transform applies to.
          */
         @JsonProperty("maximum_amount") @ExcludeMissing fun _maximumAmount() = maximumAmount
+
+        /** The start date of the maximum interval. */
+        @JsonProperty("start_date") @ExcludeMissing fun _startDate() = startDate
 
         @JsonAnyGetter
         @ExcludeMissing
@@ -4134,11 +4134,11 @@ private constructor(
 
         fun validate(): MaximumInterval = apply {
             if (!validated) {
-                startDate()
-                endDate()
                 appliesToPriceIds()
                 appliesToPriceIntervalIds()
+                endDate()
                 maximumAmount()
+                startDate()
                 validated = true
             }
         }
@@ -4152,35 +4152,21 @@ private constructor(
 
         class Builder {
 
-            private var startDate: JsonField<OffsetDateTime> = JsonMissing.of()
-            private var endDate: JsonField<OffsetDateTime> = JsonMissing.of()
             private var appliesToPriceIds: JsonField<List<String>> = JsonMissing.of()
             private var appliesToPriceIntervalIds: JsonField<List<String>> = JsonMissing.of()
+            private var endDate: JsonField<OffsetDateTime> = JsonMissing.of()
             private var maximumAmount: JsonField<String> = JsonMissing.of()
+            private var startDate: JsonField<OffsetDateTime> = JsonMissing.of()
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             internal fun from(maximumInterval: MaximumInterval) = apply {
-                startDate = maximumInterval.startDate
-                endDate = maximumInterval.endDate
                 appliesToPriceIds = maximumInterval.appliesToPriceIds
                 appliesToPriceIntervalIds = maximumInterval.appliesToPriceIntervalIds
+                endDate = maximumInterval.endDate
                 maximumAmount = maximumInterval.maximumAmount
+                startDate = maximumInterval.startDate
                 additionalProperties = maximumInterval.additionalProperties.toMutableMap()
             }
-
-            /** The start date of the maximum interval. */
-            fun startDate(startDate: OffsetDateTime) = startDate(JsonField.of(startDate))
-
-            /** The start date of the maximum interval. */
-            fun startDate(startDate: JsonField<OffsetDateTime>) = apply {
-                this.startDate = startDate
-            }
-
-            /** The end date of the maximum interval. */
-            fun endDate(endDate: OffsetDateTime) = endDate(JsonField.of(endDate))
-
-            /** The end date of the maximum interval. */
-            fun endDate(endDate: JsonField<OffsetDateTime>) = apply { this.endDate = endDate }
 
             /** The price ids that this maximum interval applies to. */
             fun appliesToPriceIds(appliesToPriceIds: List<String>) =
@@ -4201,6 +4187,12 @@ private constructor(
                     this.appliesToPriceIntervalIds = appliesToPriceIntervalIds
                 }
 
+            /** The end date of the maximum interval. */
+            fun endDate(endDate: OffsetDateTime) = endDate(JsonField.of(endDate))
+
+            /** The end date of the maximum interval. */
+            fun endDate(endDate: JsonField<OffsetDateTime>) = apply { this.endDate = endDate }
+
             /**
              * The maximum amount to charge in a given billing period for the price intervals this
              * transform applies to.
@@ -4213,6 +4205,14 @@ private constructor(
              */
             fun maximumAmount(maximumAmount: JsonField<String>) = apply {
                 this.maximumAmount = maximumAmount
+            }
+
+            /** The start date of the maximum interval. */
+            fun startDate(startDate: OffsetDateTime) = startDate(JsonField.of(startDate))
+
+            /** The start date of the maximum interval. */
+            fun startDate(startDate: JsonField<OffsetDateTime>) = apply {
+                this.startDate = startDate
             }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
@@ -4236,11 +4236,11 @@ private constructor(
 
             fun build(): MaximumInterval =
                 MaximumInterval(
-                    startDate,
-                    endDate,
                     appliesToPriceIds.map { it.toImmutable() },
                     appliesToPriceIntervalIds.map { it.toImmutable() },
+                    endDate,
                     maximumAmount,
+                    startDate,
                     additionalProperties.toImmutable(),
                 )
         }
@@ -4250,17 +4250,17 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is MaximumInterval && startDate == other.startDate && endDate == other.endDate && appliesToPriceIds == other.appliesToPriceIds && appliesToPriceIntervalIds == other.appliesToPriceIntervalIds && maximumAmount == other.maximumAmount && additionalProperties == other.additionalProperties /* spotless:on */
+            return /* spotless:off */ other is MaximumInterval && appliesToPriceIds == other.appliesToPriceIds && appliesToPriceIntervalIds == other.appliesToPriceIntervalIds && endDate == other.endDate && maximumAmount == other.maximumAmount && startDate == other.startDate && additionalProperties == other.additionalProperties /* spotless:on */
         }
 
         /* spotless:off */
-        private val hashCode: Int by lazy { Objects.hash(startDate, endDate, appliesToPriceIds, appliesToPriceIntervalIds, maximumAmount, additionalProperties) }
+        private val hashCode: Int by lazy { Objects.hash(appliesToPriceIds, appliesToPriceIntervalIds, endDate, maximumAmount, startDate, additionalProperties) }
         /* spotless:on */
 
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "MaximumInterval{startDate=$startDate, endDate=$endDate, appliesToPriceIds=$appliesToPriceIds, appliesToPriceIntervalIds=$appliesToPriceIntervalIds, maximumAmount=$maximumAmount, additionalProperties=$additionalProperties}"
+            "MaximumInterval{appliesToPriceIds=$appliesToPriceIds, appliesToPriceIntervalIds=$appliesToPriceIntervalIds, endDate=$endDate, maximumAmount=$maximumAmount, startDate=$startDate, additionalProperties=$additionalProperties}"
     }
 
     /**
@@ -4346,30 +4346,24 @@ private constructor(
     class MinimumInterval
     @JsonCreator
     private constructor(
-        @JsonProperty("start_date")
-        @ExcludeMissing
-        private val startDate: JsonField<OffsetDateTime> = JsonMissing.of(),
-        @JsonProperty("end_date")
-        @ExcludeMissing
-        private val endDate: JsonField<OffsetDateTime> = JsonMissing.of(),
         @JsonProperty("applies_to_price_ids")
         @ExcludeMissing
         private val appliesToPriceIds: JsonField<List<String>> = JsonMissing.of(),
         @JsonProperty("applies_to_price_interval_ids")
         @ExcludeMissing
         private val appliesToPriceIntervalIds: JsonField<List<String>> = JsonMissing.of(),
+        @JsonProperty("end_date")
+        @ExcludeMissing
+        private val endDate: JsonField<OffsetDateTime> = JsonMissing.of(),
         @JsonProperty("minimum_amount")
         @ExcludeMissing
         private val minimumAmount: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("start_date")
+        @ExcludeMissing
+        private val startDate: JsonField<OffsetDateTime> = JsonMissing.of(),
         @JsonAnySetter
         private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
-
-        /** The start date of the minimum interval. */
-        fun startDate(): OffsetDateTime = startDate.getRequired("start_date")
-
-        /** The end date of the minimum interval. */
-        fun endDate(): OffsetDateTime? = endDate.getNullable("end_date")
 
         /** The price ids that this minimum interval applies to. */
         fun appliesToPriceIds(): List<String> =
@@ -4379,6 +4373,9 @@ private constructor(
         fun appliesToPriceIntervalIds(): List<String> =
             appliesToPriceIntervalIds.getRequired("applies_to_price_interval_ids")
 
+        /** The end date of the minimum interval. */
+        fun endDate(): OffsetDateTime? = endDate.getNullable("end_date")
+
         /**
          * The minimum amount to charge in a given billing period for the price intervals this
          * minimum applies to.
@@ -4386,10 +4383,7 @@ private constructor(
         fun minimumAmount(): String = minimumAmount.getRequired("minimum_amount")
 
         /** The start date of the minimum interval. */
-        @JsonProperty("start_date") @ExcludeMissing fun _startDate() = startDate
-
-        /** The end date of the minimum interval. */
-        @JsonProperty("end_date") @ExcludeMissing fun _endDate() = endDate
+        fun startDate(): OffsetDateTime = startDate.getRequired("start_date")
 
         /** The price ids that this minimum interval applies to. */
         @JsonProperty("applies_to_price_ids")
@@ -4401,11 +4395,17 @@ private constructor(
         @ExcludeMissing
         fun _appliesToPriceIntervalIds() = appliesToPriceIntervalIds
 
+        /** The end date of the minimum interval. */
+        @JsonProperty("end_date") @ExcludeMissing fun _endDate() = endDate
+
         /**
          * The minimum amount to charge in a given billing period for the price intervals this
          * minimum applies to.
          */
         @JsonProperty("minimum_amount") @ExcludeMissing fun _minimumAmount() = minimumAmount
+
+        /** The start date of the minimum interval. */
+        @JsonProperty("start_date") @ExcludeMissing fun _startDate() = startDate
 
         @JsonAnyGetter
         @ExcludeMissing
@@ -4415,11 +4415,11 @@ private constructor(
 
         fun validate(): MinimumInterval = apply {
             if (!validated) {
-                startDate()
-                endDate()
                 appliesToPriceIds()
                 appliesToPriceIntervalIds()
+                endDate()
                 minimumAmount()
+                startDate()
                 validated = true
             }
         }
@@ -4433,35 +4433,21 @@ private constructor(
 
         class Builder {
 
-            private var startDate: JsonField<OffsetDateTime> = JsonMissing.of()
-            private var endDate: JsonField<OffsetDateTime> = JsonMissing.of()
             private var appliesToPriceIds: JsonField<List<String>> = JsonMissing.of()
             private var appliesToPriceIntervalIds: JsonField<List<String>> = JsonMissing.of()
+            private var endDate: JsonField<OffsetDateTime> = JsonMissing.of()
             private var minimumAmount: JsonField<String> = JsonMissing.of()
+            private var startDate: JsonField<OffsetDateTime> = JsonMissing.of()
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             internal fun from(minimumInterval: MinimumInterval) = apply {
-                startDate = minimumInterval.startDate
-                endDate = minimumInterval.endDate
                 appliesToPriceIds = minimumInterval.appliesToPriceIds
                 appliesToPriceIntervalIds = minimumInterval.appliesToPriceIntervalIds
+                endDate = minimumInterval.endDate
                 minimumAmount = minimumInterval.minimumAmount
+                startDate = minimumInterval.startDate
                 additionalProperties = minimumInterval.additionalProperties.toMutableMap()
             }
-
-            /** The start date of the minimum interval. */
-            fun startDate(startDate: OffsetDateTime) = startDate(JsonField.of(startDate))
-
-            /** The start date of the minimum interval. */
-            fun startDate(startDate: JsonField<OffsetDateTime>) = apply {
-                this.startDate = startDate
-            }
-
-            /** The end date of the minimum interval. */
-            fun endDate(endDate: OffsetDateTime) = endDate(JsonField.of(endDate))
-
-            /** The end date of the minimum interval. */
-            fun endDate(endDate: JsonField<OffsetDateTime>) = apply { this.endDate = endDate }
 
             /** The price ids that this minimum interval applies to. */
             fun appliesToPriceIds(appliesToPriceIds: List<String>) =
@@ -4482,6 +4468,12 @@ private constructor(
                     this.appliesToPriceIntervalIds = appliesToPriceIntervalIds
                 }
 
+            /** The end date of the minimum interval. */
+            fun endDate(endDate: OffsetDateTime) = endDate(JsonField.of(endDate))
+
+            /** The end date of the minimum interval. */
+            fun endDate(endDate: JsonField<OffsetDateTime>) = apply { this.endDate = endDate }
+
             /**
              * The minimum amount to charge in a given billing period for the price intervals this
              * minimum applies to.
@@ -4494,6 +4486,14 @@ private constructor(
              */
             fun minimumAmount(minimumAmount: JsonField<String>) = apply {
                 this.minimumAmount = minimumAmount
+            }
+
+            /** The start date of the minimum interval. */
+            fun startDate(startDate: OffsetDateTime) = startDate(JsonField.of(startDate))
+
+            /** The start date of the minimum interval. */
+            fun startDate(startDate: JsonField<OffsetDateTime>) = apply {
+                this.startDate = startDate
             }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
@@ -4517,11 +4517,11 @@ private constructor(
 
             fun build(): MinimumInterval =
                 MinimumInterval(
-                    startDate,
-                    endDate,
                     appliesToPriceIds.map { it.toImmutable() },
                     appliesToPriceIntervalIds.map { it.toImmutable() },
+                    endDate,
                     minimumAmount,
+                    startDate,
                     additionalProperties.toImmutable(),
                 )
         }
@@ -4531,17 +4531,17 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is MinimumInterval && startDate == other.startDate && endDate == other.endDate && appliesToPriceIds == other.appliesToPriceIds && appliesToPriceIntervalIds == other.appliesToPriceIntervalIds && minimumAmount == other.minimumAmount && additionalProperties == other.additionalProperties /* spotless:on */
+            return /* spotless:off */ other is MinimumInterval && appliesToPriceIds == other.appliesToPriceIds && appliesToPriceIntervalIds == other.appliesToPriceIntervalIds && endDate == other.endDate && minimumAmount == other.minimumAmount && startDate == other.startDate && additionalProperties == other.additionalProperties /* spotless:on */
         }
 
         /* spotless:off */
-        private val hashCode: Int by lazy { Objects.hash(startDate, endDate, appliesToPriceIds, appliesToPriceIntervalIds, minimumAmount, additionalProperties) }
+        private val hashCode: Int by lazy { Objects.hash(appliesToPriceIds, appliesToPriceIntervalIds, endDate, minimumAmount, startDate, additionalProperties) }
         /* spotless:on */
 
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "MinimumInterval{startDate=$startDate, endDate=$endDate, appliesToPriceIds=$appliesToPriceIds, appliesToPriceIntervalIds=$appliesToPriceIntervalIds, minimumAmount=$minimumAmount, additionalProperties=$additionalProperties}"
+            "MinimumInterval{appliesToPriceIds=$appliesToPriceIds, appliesToPriceIntervalIds=$appliesToPriceIntervalIds, endDate=$endDate, minimumAmount=$minimumAmount, startDate=$startDate, additionalProperties=$additionalProperties}"
     }
 
     /**
@@ -4553,45 +4553,65 @@ private constructor(
     @JsonCreator
     private constructor(
         @JsonProperty("id") @ExcludeMissing private val id: JsonField<String> = JsonMissing.of(),
-        @JsonProperty("start_date")
-        @ExcludeMissing
-        private val startDate: JsonField<OffsetDateTime> = JsonMissing.of(),
-        @JsonProperty("end_date")
-        @ExcludeMissing
-        private val endDate: JsonField<OffsetDateTime> = JsonMissing.of(),
-        @JsonProperty("price")
-        @ExcludeMissing
-        private val price: JsonField<Price> = JsonMissing.of(),
         @JsonProperty("billing_cycle_day")
         @ExcludeMissing
         private val billingCycleDay: JsonField<Long> = JsonMissing.of(),
+        @JsonProperty("current_billing_period_end_date")
+        @ExcludeMissing
+        private val currentBillingPeriodEndDate: JsonField<OffsetDateTime> = JsonMissing.of(),
+        @JsonProperty("current_billing_period_start_date")
+        @ExcludeMissing
+        private val currentBillingPeriodStartDate: JsonField<OffsetDateTime> = JsonMissing.of(),
+        @JsonProperty("end_date")
+        @ExcludeMissing
+        private val endDate: JsonField<OffsetDateTime> = JsonMissing.of(),
         @JsonProperty("fixed_fee_quantity_transitions")
         @ExcludeMissing
         private val fixedFeeQuantityTransitions: JsonField<List<FixedFeeQuantityTransition>> =
             JsonMissing.of(),
-        @JsonProperty("current_billing_period_start_date")
+        @JsonProperty("price")
         @ExcludeMissing
-        private val currentBillingPeriodStartDate: JsonField<OffsetDateTime> = JsonMissing.of(),
-        @JsonProperty("current_billing_period_end_date")
+        private val price: JsonField<Price> = JsonMissing.of(),
+        @JsonProperty("start_date")
         @ExcludeMissing
-        private val currentBillingPeriodEndDate: JsonField<OffsetDateTime> = JsonMissing.of(),
+        private val startDate: JsonField<OffsetDateTime> = JsonMissing.of(),
         @JsonAnySetter
         private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
 
         fun id(): String = id.getRequired("id")
 
+        /** The day of the month that Orb bills for this price */
+        fun billingCycleDay(): Long = billingCycleDay.getRequired("billing_cycle_day")
+
         /**
-         * The start date of the price interval. This is the date that Orb starts billing for this
-         * price.
+         * The end of the current billing period. This is an exclusive timestamp, such that the
+         * instant returned is exactly the end of the billing period. Set to null if this price
+         * interval is not currently active.
          */
-        fun startDate(): OffsetDateTime = startDate.getRequired("start_date")
+        fun currentBillingPeriodEndDate(): OffsetDateTime? =
+            currentBillingPeriodEndDate.getNullable("current_billing_period_end_date")
+
+        /**
+         * The start date of the current billing period. This is an inclusive timestamp; the instant
+         * returned is exactly the beginning of the billing period. Set to null if this price
+         * interval is not currently active.
+         */
+        fun currentBillingPeriodStartDate(): OffsetDateTime? =
+            currentBillingPeriodStartDate.getNullable("current_billing_period_start_date")
 
         /**
          * The end date of the price interval. This is the date that Orb stops billing for this
          * price.
          */
         fun endDate(): OffsetDateTime? = endDate.getNullable("end_date")
+
+        /**
+         * The fixed fee quantity transitions for this price interval. This is only relevant for
+         * fixed fees.
+         */
+        fun fixedFeeQuantityTransitions(): List<FixedFeeQuantityTransition>? =
+            fixedFeeQuantityTransitions.getNullable("fixed_fee_quantity_transitions")
 
         /**
          * The Price resource represents a price that can be billed on a subscription, resulting in
@@ -4823,45 +4843,48 @@ private constructor(
          */
         fun price(): Price = price.getRequired("price")
 
+        /**
+         * The start date of the price interval. This is the date that Orb starts billing for this
+         * price.
+         */
+        fun startDate(): OffsetDateTime = startDate.getRequired("start_date")
+
+        @JsonProperty("id") @ExcludeMissing fun _id() = id
+
         /** The day of the month that Orb bills for this price */
-        fun billingCycleDay(): Long = billingCycleDay.getRequired("billing_cycle_day")
-
-        /**
-         * The fixed fee quantity transitions for this price interval. This is only relevant for
-         * fixed fees.
-         */
-        fun fixedFeeQuantityTransitions(): List<FixedFeeQuantityTransition>? =
-            fixedFeeQuantityTransitions.getNullable("fixed_fee_quantity_transitions")
-
-        /**
-         * The start date of the current billing period. This is an inclusive timestamp; the instant
-         * returned is exactly the beginning of the billing period. Set to null if this price
-         * interval is not currently active.
-         */
-        fun currentBillingPeriodStartDate(): OffsetDateTime? =
-            currentBillingPeriodStartDate.getNullable("current_billing_period_start_date")
+        @JsonProperty("billing_cycle_day") @ExcludeMissing fun _billingCycleDay() = billingCycleDay
 
         /**
          * The end of the current billing period. This is an exclusive timestamp, such that the
          * instant returned is exactly the end of the billing period. Set to null if this price
          * interval is not currently active.
          */
-        fun currentBillingPeriodEndDate(): OffsetDateTime? =
-            currentBillingPeriodEndDate.getNullable("current_billing_period_end_date")
-
-        @JsonProperty("id") @ExcludeMissing fun _id() = id
+        @JsonProperty("current_billing_period_end_date")
+        @ExcludeMissing
+        fun _currentBillingPeriodEndDate() = currentBillingPeriodEndDate
 
         /**
-         * The start date of the price interval. This is the date that Orb starts billing for this
-         * price.
+         * The start date of the current billing period. This is an inclusive timestamp; the instant
+         * returned is exactly the beginning of the billing period. Set to null if this price
+         * interval is not currently active.
          */
-        @JsonProperty("start_date") @ExcludeMissing fun _startDate() = startDate
+        @JsonProperty("current_billing_period_start_date")
+        @ExcludeMissing
+        fun _currentBillingPeriodStartDate() = currentBillingPeriodStartDate
 
         /**
          * The end date of the price interval. This is the date that Orb stops billing for this
          * price.
          */
         @JsonProperty("end_date") @ExcludeMissing fun _endDate() = endDate
+
+        /**
+         * The fixed fee quantity transitions for this price interval. This is only relevant for
+         * fixed fees.
+         */
+        @JsonProperty("fixed_fee_quantity_transitions")
+        @ExcludeMissing
+        fun _fixedFeeQuantityTransitions() = fixedFeeQuantityTransitions
 
         /**
          * The Price resource represents a price that can be billed on a subscription, resulting in
@@ -5093,34 +5116,11 @@ private constructor(
          */
         @JsonProperty("price") @ExcludeMissing fun _price() = price
 
-        /** The day of the month that Orb bills for this price */
-        @JsonProperty("billing_cycle_day") @ExcludeMissing fun _billingCycleDay() = billingCycleDay
-
         /**
-         * The fixed fee quantity transitions for this price interval. This is only relevant for
-         * fixed fees.
+         * The start date of the price interval. This is the date that Orb starts billing for this
+         * price.
          */
-        @JsonProperty("fixed_fee_quantity_transitions")
-        @ExcludeMissing
-        fun _fixedFeeQuantityTransitions() = fixedFeeQuantityTransitions
-
-        /**
-         * The start date of the current billing period. This is an inclusive timestamp; the instant
-         * returned is exactly the beginning of the billing period. Set to null if this price
-         * interval is not currently active.
-         */
-        @JsonProperty("current_billing_period_start_date")
-        @ExcludeMissing
-        fun _currentBillingPeriodStartDate() = currentBillingPeriodStartDate
-
-        /**
-         * The end of the current billing period. This is an exclusive timestamp, such that the
-         * instant returned is exactly the end of the billing period. Set to null if this price
-         * interval is not currently active.
-         */
-        @JsonProperty("current_billing_period_end_date")
-        @ExcludeMissing
-        fun _currentBillingPeriodEndDate() = currentBillingPeriodEndDate
+        @JsonProperty("start_date") @ExcludeMissing fun _startDate() = startDate
 
         @JsonAnyGetter
         @ExcludeMissing
@@ -5131,13 +5131,13 @@ private constructor(
         fun validate(): PriceInterval = apply {
             if (!validated) {
                 id()
-                startDate()
-                endDate()
-                price()
                 billingCycleDay()
-                fixedFeeQuantityTransitions()?.forEach { it.validate() }
-                currentBillingPeriodStartDate()
                 currentBillingPeriodEndDate()
+                currentBillingPeriodStartDate()
+                endDate()
+                fixedFeeQuantityTransitions()?.forEach { it.validate() }
+                price()
+                startDate()
                 validated = true
             }
         }
@@ -5152,25 +5152,25 @@ private constructor(
         class Builder {
 
             private var id: JsonField<String> = JsonMissing.of()
-            private var startDate: JsonField<OffsetDateTime> = JsonMissing.of()
-            private var endDate: JsonField<OffsetDateTime> = JsonMissing.of()
-            private var price: JsonField<Price> = JsonMissing.of()
             private var billingCycleDay: JsonField<Long> = JsonMissing.of()
+            private var currentBillingPeriodEndDate: JsonField<OffsetDateTime> = JsonMissing.of()
+            private var currentBillingPeriodStartDate: JsonField<OffsetDateTime> = JsonMissing.of()
+            private var endDate: JsonField<OffsetDateTime> = JsonMissing.of()
             private var fixedFeeQuantityTransitions: JsonField<List<FixedFeeQuantityTransition>> =
                 JsonMissing.of()
-            private var currentBillingPeriodStartDate: JsonField<OffsetDateTime> = JsonMissing.of()
-            private var currentBillingPeriodEndDate: JsonField<OffsetDateTime> = JsonMissing.of()
+            private var price: JsonField<Price> = JsonMissing.of()
+            private var startDate: JsonField<OffsetDateTime> = JsonMissing.of()
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             internal fun from(priceInterval: PriceInterval) = apply {
                 id = priceInterval.id
-                startDate = priceInterval.startDate
-                endDate = priceInterval.endDate
-                price = priceInterval.price
                 billingCycleDay = priceInterval.billingCycleDay
-                fixedFeeQuantityTransitions = priceInterval.fixedFeeQuantityTransitions
-                currentBillingPeriodStartDate = priceInterval.currentBillingPeriodStartDate
                 currentBillingPeriodEndDate = priceInterval.currentBillingPeriodEndDate
+                currentBillingPeriodStartDate = priceInterval.currentBillingPeriodStartDate
+                endDate = priceInterval.endDate
+                fixedFeeQuantityTransitions = priceInterval.fixedFeeQuantityTransitions
+                price = priceInterval.price
+                startDate = priceInterval.startDate
                 additionalProperties = priceInterval.additionalProperties.toMutableMap()
             }
 
@@ -5178,19 +5178,48 @@ private constructor(
 
             fun id(id: JsonField<String>) = apply { this.id = id }
 
-            /**
-             * The start date of the price interval. This is the date that Orb starts billing for
-             * this price.
-             */
-            fun startDate(startDate: OffsetDateTime) = startDate(JsonField.of(startDate))
+            /** The day of the month that Orb bills for this price */
+            fun billingCycleDay(billingCycleDay: Long) =
+                billingCycleDay(JsonField.of(billingCycleDay))
+
+            /** The day of the month that Orb bills for this price */
+            fun billingCycleDay(billingCycleDay: JsonField<Long>) = apply {
+                this.billingCycleDay = billingCycleDay
+            }
 
             /**
-             * The start date of the price interval. This is the date that Orb starts billing for
-             * this price.
+             * The end of the current billing period. This is an exclusive timestamp, such that the
+             * instant returned is exactly the end of the billing period. Set to null if this price
+             * interval is not currently active.
              */
-            fun startDate(startDate: JsonField<OffsetDateTime>) = apply {
-                this.startDate = startDate
-            }
+            fun currentBillingPeriodEndDate(currentBillingPeriodEndDate: OffsetDateTime) =
+                currentBillingPeriodEndDate(JsonField.of(currentBillingPeriodEndDate))
+
+            /**
+             * The end of the current billing period. This is an exclusive timestamp, such that the
+             * instant returned is exactly the end of the billing period. Set to null if this price
+             * interval is not currently active.
+             */
+            fun currentBillingPeriodEndDate(
+                currentBillingPeriodEndDate: JsonField<OffsetDateTime>
+            ) = apply { this.currentBillingPeriodEndDate = currentBillingPeriodEndDate }
+
+            /**
+             * The start date of the current billing period. This is an inclusive timestamp; the
+             * instant returned is exactly the beginning of the billing period. Set to null if this
+             * price interval is not currently active.
+             */
+            fun currentBillingPeriodStartDate(currentBillingPeriodStartDate: OffsetDateTime) =
+                currentBillingPeriodStartDate(JsonField.of(currentBillingPeriodStartDate))
+
+            /**
+             * The start date of the current billing period. This is an inclusive timestamp; the
+             * instant returned is exactly the beginning of the billing period. Set to null if this
+             * price interval is not currently active.
+             */
+            fun currentBillingPeriodStartDate(
+                currentBillingPeriodStartDate: JsonField<OffsetDateTime>
+            ) = apply { this.currentBillingPeriodStartDate = currentBillingPeriodStartDate }
 
             /**
              * The end date of the price interval. This is the date that Orb stops billing for this
@@ -5203,6 +5232,22 @@ private constructor(
              * price.
              */
             fun endDate(endDate: JsonField<OffsetDateTime>) = apply { this.endDate = endDate }
+
+            /**
+             * The fixed fee quantity transitions for this price interval. This is only relevant for
+             * fixed fees.
+             */
+            fun fixedFeeQuantityTransitions(
+                fixedFeeQuantityTransitions: List<FixedFeeQuantityTransition>
+            ) = fixedFeeQuantityTransitions(JsonField.of(fixedFeeQuantityTransitions))
+
+            /**
+             * The fixed fee quantity transitions for this price interval. This is only relevant for
+             * fixed fees.
+             */
+            fun fixedFeeQuantityTransitions(
+                fixedFeeQuantityTransitions: JsonField<List<FixedFeeQuantityTransition>>
+            ) = apply { this.fixedFeeQuantityTransitions = fixedFeeQuantityTransitions }
 
             /**
              * The Price resource represents a price that can be billed on a subscription, resulting
@@ -5664,64 +5709,19 @@ private constructor(
              */
             fun price(price: JsonField<Price>) = apply { this.price = price }
 
-            /** The day of the month that Orb bills for this price */
-            fun billingCycleDay(billingCycleDay: Long) =
-                billingCycleDay(JsonField.of(billingCycleDay))
+            /**
+             * The start date of the price interval. This is the date that Orb starts billing for
+             * this price.
+             */
+            fun startDate(startDate: OffsetDateTime) = startDate(JsonField.of(startDate))
 
-            /** The day of the month that Orb bills for this price */
-            fun billingCycleDay(billingCycleDay: JsonField<Long>) = apply {
-                this.billingCycleDay = billingCycleDay
+            /**
+             * The start date of the price interval. This is the date that Orb starts billing for
+             * this price.
+             */
+            fun startDate(startDate: JsonField<OffsetDateTime>) = apply {
+                this.startDate = startDate
             }
-
-            /**
-             * The fixed fee quantity transitions for this price interval. This is only relevant for
-             * fixed fees.
-             */
-            fun fixedFeeQuantityTransitions(
-                fixedFeeQuantityTransitions: List<FixedFeeQuantityTransition>
-            ) = fixedFeeQuantityTransitions(JsonField.of(fixedFeeQuantityTransitions))
-
-            /**
-             * The fixed fee quantity transitions for this price interval. This is only relevant for
-             * fixed fees.
-             */
-            fun fixedFeeQuantityTransitions(
-                fixedFeeQuantityTransitions: JsonField<List<FixedFeeQuantityTransition>>
-            ) = apply { this.fixedFeeQuantityTransitions = fixedFeeQuantityTransitions }
-
-            /**
-             * The start date of the current billing period. This is an inclusive timestamp; the
-             * instant returned is exactly the beginning of the billing period. Set to null if this
-             * price interval is not currently active.
-             */
-            fun currentBillingPeriodStartDate(currentBillingPeriodStartDate: OffsetDateTime) =
-                currentBillingPeriodStartDate(JsonField.of(currentBillingPeriodStartDate))
-
-            /**
-             * The start date of the current billing period. This is an inclusive timestamp; the
-             * instant returned is exactly the beginning of the billing period. Set to null if this
-             * price interval is not currently active.
-             */
-            fun currentBillingPeriodStartDate(
-                currentBillingPeriodStartDate: JsonField<OffsetDateTime>
-            ) = apply { this.currentBillingPeriodStartDate = currentBillingPeriodStartDate }
-
-            /**
-             * The end of the current billing period. This is an exclusive timestamp, such that the
-             * instant returned is exactly the end of the billing period. Set to null if this price
-             * interval is not currently active.
-             */
-            fun currentBillingPeriodEndDate(currentBillingPeriodEndDate: OffsetDateTime) =
-                currentBillingPeriodEndDate(JsonField.of(currentBillingPeriodEndDate))
-
-            /**
-             * The end of the current billing period. This is an exclusive timestamp, such that the
-             * instant returned is exactly the end of the billing period. Set to null if this price
-             * interval is not currently active.
-             */
-            fun currentBillingPeriodEndDate(
-                currentBillingPeriodEndDate: JsonField<OffsetDateTime>
-            ) = apply { this.currentBillingPeriodEndDate = currentBillingPeriodEndDate }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
@@ -5745,13 +5745,13 @@ private constructor(
             fun build(): PriceInterval =
                 PriceInterval(
                     id,
-                    startDate,
-                    endDate,
-                    price,
                     billingCycleDay,
-                    fixedFeeQuantityTransitions.map { it.toImmutable() },
-                    currentBillingPeriodStartDate,
                     currentBillingPeriodEndDate,
+                    currentBillingPeriodStartDate,
+                    endDate,
+                    fixedFeeQuantityTransitions.map { it.toImmutable() },
+                    price,
+                    startDate,
                     additionalProperties.toImmutable(),
                 )
         }
@@ -5760,12 +5760,12 @@ private constructor(
         class FixedFeeQuantityTransition
         @JsonCreator
         private constructor(
-            @JsonProperty("price_id")
-            @ExcludeMissing
-            private val priceId: JsonField<String> = JsonMissing.of(),
             @JsonProperty("effective_date")
             @ExcludeMissing
             private val effectiveDate: JsonField<OffsetDateTime> = JsonMissing.of(),
+            @JsonProperty("price_id")
+            @ExcludeMissing
+            private val priceId: JsonField<String> = JsonMissing.of(),
             @JsonProperty("quantity")
             @ExcludeMissing
             private val quantity: JsonField<Long> = JsonMissing.of(),
@@ -5773,15 +5773,15 @@ private constructor(
             private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
-            fun priceId(): String = priceId.getRequired("price_id")
-
             fun effectiveDate(): OffsetDateTime = effectiveDate.getRequired("effective_date")
+
+            fun priceId(): String = priceId.getRequired("price_id")
 
             fun quantity(): Long = quantity.getRequired("quantity")
 
-            @JsonProperty("price_id") @ExcludeMissing fun _priceId() = priceId
-
             @JsonProperty("effective_date") @ExcludeMissing fun _effectiveDate() = effectiveDate
+
+            @JsonProperty("price_id") @ExcludeMissing fun _priceId() = priceId
 
             @JsonProperty("quantity") @ExcludeMissing fun _quantity() = quantity
 
@@ -5793,8 +5793,8 @@ private constructor(
 
             fun validate(): FixedFeeQuantityTransition = apply {
                 if (!validated) {
-                    priceId()
                     effectiveDate()
+                    priceId()
                     quantity()
                     validated = true
                 }
@@ -5809,22 +5809,18 @@ private constructor(
 
             class Builder {
 
-                private var priceId: JsonField<String> = JsonMissing.of()
                 private var effectiveDate: JsonField<OffsetDateTime> = JsonMissing.of()
+                private var priceId: JsonField<String> = JsonMissing.of()
                 private var quantity: JsonField<Long> = JsonMissing.of()
                 private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
                 internal fun from(fixedFeeQuantityTransition: FixedFeeQuantityTransition) = apply {
-                    priceId = fixedFeeQuantityTransition.priceId
                     effectiveDate = fixedFeeQuantityTransition.effectiveDate
+                    priceId = fixedFeeQuantityTransition.priceId
                     quantity = fixedFeeQuantityTransition.quantity
                     additionalProperties =
                         fixedFeeQuantityTransition.additionalProperties.toMutableMap()
                 }
-
-                fun priceId(priceId: String) = priceId(JsonField.of(priceId))
-
-                fun priceId(priceId: JsonField<String>) = apply { this.priceId = priceId }
 
                 fun effectiveDate(effectiveDate: OffsetDateTime) =
                     effectiveDate(JsonField.of(effectiveDate))
@@ -5832,6 +5828,10 @@ private constructor(
                 fun effectiveDate(effectiveDate: JsonField<OffsetDateTime>) = apply {
                     this.effectiveDate = effectiveDate
                 }
+
+                fun priceId(priceId: String) = priceId(JsonField.of(priceId))
+
+                fun priceId(priceId: JsonField<String>) = apply { this.priceId = priceId }
 
                 fun quantity(quantity: Long) = quantity(JsonField.of(quantity))
 
@@ -5861,8 +5861,8 @@ private constructor(
 
                 fun build(): FixedFeeQuantityTransition =
                     FixedFeeQuantityTransition(
-                        priceId,
                         effectiveDate,
+                        priceId,
                         quantity,
                         additionalProperties.toImmutable(),
                     )
@@ -5873,17 +5873,17 @@ private constructor(
                     return true
                 }
 
-                return /* spotless:off */ other is FixedFeeQuantityTransition && priceId == other.priceId && effectiveDate == other.effectiveDate && quantity == other.quantity && additionalProperties == other.additionalProperties /* spotless:on */
+                return /* spotless:off */ other is FixedFeeQuantityTransition && effectiveDate == other.effectiveDate && priceId == other.priceId && quantity == other.quantity && additionalProperties == other.additionalProperties /* spotless:on */
             }
 
             /* spotless:off */
-            private val hashCode: Int by lazy { Objects.hash(priceId, effectiveDate, quantity, additionalProperties) }
+            private val hashCode: Int by lazy { Objects.hash(effectiveDate, priceId, quantity, additionalProperties) }
             /* spotless:on */
 
             override fun hashCode(): Int = hashCode
 
             override fun toString() =
-                "FixedFeeQuantityTransition{priceId=$priceId, effectiveDate=$effectiveDate, quantity=$quantity, additionalProperties=$additionalProperties}"
+                "FixedFeeQuantityTransition{effectiveDate=$effectiveDate, priceId=$priceId, quantity=$quantity, additionalProperties=$additionalProperties}"
         }
 
         override fun equals(other: Any?): Boolean {
@@ -5891,17 +5891,17 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is PriceInterval && id == other.id && startDate == other.startDate && endDate == other.endDate && price == other.price && billingCycleDay == other.billingCycleDay && fixedFeeQuantityTransitions == other.fixedFeeQuantityTransitions && currentBillingPeriodStartDate == other.currentBillingPeriodStartDate && currentBillingPeriodEndDate == other.currentBillingPeriodEndDate && additionalProperties == other.additionalProperties /* spotless:on */
+            return /* spotless:off */ other is PriceInterval && id == other.id && billingCycleDay == other.billingCycleDay && currentBillingPeriodEndDate == other.currentBillingPeriodEndDate && currentBillingPeriodStartDate == other.currentBillingPeriodStartDate && endDate == other.endDate && fixedFeeQuantityTransitions == other.fixedFeeQuantityTransitions && price == other.price && startDate == other.startDate && additionalProperties == other.additionalProperties /* spotless:on */
         }
 
         /* spotless:off */
-        private val hashCode: Int by lazy { Objects.hash(id, startDate, endDate, price, billingCycleDay, fixedFeeQuantityTransitions, currentBillingPeriodStartDate, currentBillingPeriodEndDate, additionalProperties) }
+        private val hashCode: Int by lazy { Objects.hash(id, billingCycleDay, currentBillingPeriodEndDate, currentBillingPeriodStartDate, endDate, fixedFeeQuantityTransitions, price, startDate, additionalProperties) }
         /* spotless:on */
 
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "PriceInterval{id=$id, startDate=$startDate, endDate=$endDate, price=$price, billingCycleDay=$billingCycleDay, fixedFeeQuantityTransitions=$fixedFeeQuantityTransitions, currentBillingPeriodStartDate=$currentBillingPeriodStartDate, currentBillingPeriodEndDate=$currentBillingPeriodEndDate, additionalProperties=$additionalProperties}"
+            "PriceInterval{id=$id, billingCycleDay=$billingCycleDay, currentBillingPeriodEndDate=$currentBillingPeriodEndDate, currentBillingPeriodStartDate=$currentBillingPeriodStartDate, endDate=$endDate, fixedFeeQuantityTransitions=$fixedFeeQuantityTransitions, price=$price, startDate=$startDate, additionalProperties=$additionalProperties}"
     }
 
     @NoAutoDetect
@@ -5911,27 +5911,27 @@ private constructor(
         @JsonProperty("coupon_id")
         @ExcludeMissing
         private val couponId: JsonField<String> = JsonMissing.of(),
-        @JsonProperty("start_date")
-        @ExcludeMissing
-        private val startDate: JsonField<OffsetDateTime> = JsonMissing.of(),
         @JsonProperty("end_date")
         @ExcludeMissing
         private val endDate: JsonField<OffsetDateTime> = JsonMissing.of(),
+        @JsonProperty("start_date")
+        @ExcludeMissing
+        private val startDate: JsonField<OffsetDateTime> = JsonMissing.of(),
         @JsonAnySetter
         private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
 
         fun couponId(): String = couponId.getRequired("coupon_id")
 
-        fun startDate(): OffsetDateTime = startDate.getRequired("start_date")
-
         fun endDate(): OffsetDateTime? = endDate.getNullable("end_date")
+
+        fun startDate(): OffsetDateTime = startDate.getRequired("start_date")
 
         @JsonProperty("coupon_id") @ExcludeMissing fun _couponId() = couponId
 
-        @JsonProperty("start_date") @ExcludeMissing fun _startDate() = startDate
-
         @JsonProperty("end_date") @ExcludeMissing fun _endDate() = endDate
+
+        @JsonProperty("start_date") @ExcludeMissing fun _startDate() = startDate
 
         @JsonAnyGetter
         @ExcludeMissing
@@ -5942,8 +5942,8 @@ private constructor(
         fun validate(): RedeemedCoupon = apply {
             if (!validated) {
                 couponId()
-                startDate()
                 endDate()
+                startDate()
                 validated = true
             }
         }
@@ -5958,14 +5958,14 @@ private constructor(
         class Builder {
 
             private var couponId: JsonField<String> = JsonMissing.of()
-            private var startDate: JsonField<OffsetDateTime> = JsonMissing.of()
             private var endDate: JsonField<OffsetDateTime> = JsonMissing.of()
+            private var startDate: JsonField<OffsetDateTime> = JsonMissing.of()
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             internal fun from(redeemedCoupon: RedeemedCoupon) = apply {
                 couponId = redeemedCoupon.couponId
-                startDate = redeemedCoupon.startDate
                 endDate = redeemedCoupon.endDate
+                startDate = redeemedCoupon.startDate
                 additionalProperties = redeemedCoupon.additionalProperties.toMutableMap()
             }
 
@@ -5973,15 +5973,15 @@ private constructor(
 
             fun couponId(couponId: JsonField<String>) = apply { this.couponId = couponId }
 
+            fun endDate(endDate: OffsetDateTime) = endDate(JsonField.of(endDate))
+
+            fun endDate(endDate: JsonField<OffsetDateTime>) = apply { this.endDate = endDate }
+
             fun startDate(startDate: OffsetDateTime) = startDate(JsonField.of(startDate))
 
             fun startDate(startDate: JsonField<OffsetDateTime>) = apply {
                 this.startDate = startDate
             }
-
-            fun endDate(endDate: OffsetDateTime) = endDate(JsonField.of(endDate))
-
-            fun endDate(endDate: JsonField<OffsetDateTime>) = apply { this.endDate = endDate }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
@@ -6005,8 +6005,8 @@ private constructor(
             fun build(): RedeemedCoupon =
                 RedeemedCoupon(
                     couponId,
-                    startDate,
                     endDate,
+                    startDate,
                     additionalProperties.toImmutable(),
                 )
         }
@@ -6016,17 +6016,17 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is RedeemedCoupon && couponId == other.couponId && startDate == other.startDate && endDate == other.endDate && additionalProperties == other.additionalProperties /* spotless:on */
+            return /* spotless:off */ other is RedeemedCoupon && couponId == other.couponId && endDate == other.endDate && startDate == other.startDate && additionalProperties == other.additionalProperties /* spotless:on */
         }
 
         /* spotless:off */
-        private val hashCode: Int by lazy { Objects.hash(couponId, startDate, endDate, additionalProperties) }
+        private val hashCode: Int by lazy { Objects.hash(couponId, endDate, startDate, additionalProperties) }
         /* spotless:on */
 
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "RedeemedCoupon{couponId=$couponId, startDate=$startDate, endDate=$endDate, additionalProperties=$additionalProperties}"
+            "RedeemedCoupon{couponId=$couponId, endDate=$endDate, startDate=$startDate, additionalProperties=$additionalProperties}"
     }
 
     class Status
@@ -6186,15 +6186,15 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is SubscriptionCancelResponse && metadata == other.metadata && id == other.id && customer == other.customer && plan == other.plan && startDate == other.startDate && endDate == other.endDate && createdAt == other.createdAt && currentBillingPeriodStartDate == other.currentBillingPeriodStartDate && currentBillingPeriodEndDate == other.currentBillingPeriodEndDate && status == other.status && trialInfo == other.trialInfo && activePlanPhaseOrder == other.activePlanPhaseOrder && fixedFeeQuantitySchedule == other.fixedFeeQuantitySchedule && defaultInvoiceMemo == other.defaultInvoiceMemo && autoCollection == other.autoCollection && netTerms == other.netTerms && redeemedCoupon == other.redeemedCoupon && billingCycleDay == other.billingCycleDay && billingCycleAnchorConfiguration == other.billingCycleAnchorConfiguration && invoicingThreshold == other.invoicingThreshold && priceIntervals == other.priceIntervals && adjustmentIntervals == other.adjustmentIntervals && discountIntervals == other.discountIntervals && minimumIntervals == other.minimumIntervals && maximumIntervals == other.maximumIntervals && additionalProperties == other.additionalProperties /* spotless:on */
+        return /* spotless:off */ other is SubscriptionCancelResponse && id == other.id && activePlanPhaseOrder == other.activePlanPhaseOrder && adjustmentIntervals == other.adjustmentIntervals && autoCollection == other.autoCollection && billingCycleAnchorConfiguration == other.billingCycleAnchorConfiguration && billingCycleDay == other.billingCycleDay && createdAt == other.createdAt && currentBillingPeriodEndDate == other.currentBillingPeriodEndDate && currentBillingPeriodStartDate == other.currentBillingPeriodStartDate && customer == other.customer && defaultInvoiceMemo == other.defaultInvoiceMemo && discountIntervals == other.discountIntervals && endDate == other.endDate && fixedFeeQuantitySchedule == other.fixedFeeQuantitySchedule && invoicingThreshold == other.invoicingThreshold && maximumIntervals == other.maximumIntervals && metadata == other.metadata && minimumIntervals == other.minimumIntervals && netTerms == other.netTerms && plan == other.plan && priceIntervals == other.priceIntervals && redeemedCoupon == other.redeemedCoupon && startDate == other.startDate && status == other.status && trialInfo == other.trialInfo && additionalProperties == other.additionalProperties /* spotless:on */
     }
 
     /* spotless:off */
-    private val hashCode: Int by lazy { Objects.hash(metadata, id, customer, plan, startDate, endDate, createdAt, currentBillingPeriodStartDate, currentBillingPeriodEndDate, status, trialInfo, activePlanPhaseOrder, fixedFeeQuantitySchedule, defaultInvoiceMemo, autoCollection, netTerms, redeemedCoupon, billingCycleDay, billingCycleAnchorConfiguration, invoicingThreshold, priceIntervals, adjustmentIntervals, discountIntervals, minimumIntervals, maximumIntervals, additionalProperties) }
+    private val hashCode: Int by lazy { Objects.hash(id, activePlanPhaseOrder, adjustmentIntervals, autoCollection, billingCycleAnchorConfiguration, billingCycleDay, createdAt, currentBillingPeriodEndDate, currentBillingPeriodStartDate, customer, defaultInvoiceMemo, discountIntervals, endDate, fixedFeeQuantitySchedule, invoicingThreshold, maximumIntervals, metadata, minimumIntervals, netTerms, plan, priceIntervals, redeemedCoupon, startDate, status, trialInfo, additionalProperties) }
     /* spotless:on */
 
     override fun hashCode(): Int = hashCode
 
     override fun toString() =
-        "SubscriptionCancelResponse{metadata=$metadata, id=$id, customer=$customer, plan=$plan, startDate=$startDate, endDate=$endDate, createdAt=$createdAt, currentBillingPeriodStartDate=$currentBillingPeriodStartDate, currentBillingPeriodEndDate=$currentBillingPeriodEndDate, status=$status, trialInfo=$trialInfo, activePlanPhaseOrder=$activePlanPhaseOrder, fixedFeeQuantitySchedule=$fixedFeeQuantitySchedule, defaultInvoiceMemo=$defaultInvoiceMemo, autoCollection=$autoCollection, netTerms=$netTerms, redeemedCoupon=$redeemedCoupon, billingCycleDay=$billingCycleDay, billingCycleAnchorConfiguration=$billingCycleAnchorConfiguration, invoicingThreshold=$invoicingThreshold, priceIntervals=$priceIntervals, adjustmentIntervals=$adjustmentIntervals, discountIntervals=$discountIntervals, minimumIntervals=$minimumIntervals, maximumIntervals=$maximumIntervals, additionalProperties=$additionalProperties}"
+        "SubscriptionCancelResponse{id=$id, activePlanPhaseOrder=$activePlanPhaseOrder, adjustmentIntervals=$adjustmentIntervals, autoCollection=$autoCollection, billingCycleAnchorConfiguration=$billingCycleAnchorConfiguration, billingCycleDay=$billingCycleDay, createdAt=$createdAt, currentBillingPeriodEndDate=$currentBillingPeriodEndDate, currentBillingPeriodStartDate=$currentBillingPeriodStartDate, customer=$customer, defaultInvoiceMemo=$defaultInvoiceMemo, discountIntervals=$discountIntervals, endDate=$endDate, fixedFeeQuantitySchedule=$fixedFeeQuantitySchedule, invoicingThreshold=$invoicingThreshold, maximumIntervals=$maximumIntervals, metadata=$metadata, minimumIntervals=$minimumIntervals, netTerms=$netTerms, plan=$plan, priceIntervals=$priceIntervals, redeemedCoupon=$redeemedCoupon, startDate=$startDate, status=$status, trialInfo=$trialInfo, additionalProperties=$additionalProperties}"
 }

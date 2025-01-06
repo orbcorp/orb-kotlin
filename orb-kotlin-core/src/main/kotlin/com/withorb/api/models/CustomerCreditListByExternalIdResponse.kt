@@ -32,15 +32,15 @@ private constructor(
     @JsonProperty("expiry_date")
     @ExcludeMissing
     private val expiryDate: JsonField<OffsetDateTime> = JsonMissing.of(),
+    @JsonProperty("maximum_initial_balance")
+    @ExcludeMissing
+    private val maximumInitialBalance: JsonField<Double> = JsonMissing.of(),
     @JsonProperty("per_unit_cost_basis")
     @ExcludeMissing
     private val perUnitCostBasis: JsonField<String> = JsonMissing.of(),
     @JsonProperty("status")
     @ExcludeMissing
     private val status: JsonField<Status> = JsonMissing.of(),
-    @JsonProperty("maximum_initial_balance")
-    @ExcludeMissing
-    private val maximumInitialBalance: JsonField<Double> = JsonMissing.of(),
     @JsonAnySetter private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
 ) {
 
@@ -52,12 +52,12 @@ private constructor(
 
     fun expiryDate(): OffsetDateTime? = expiryDate.getNullable("expiry_date")
 
+    fun maximumInitialBalance(): Double? =
+        maximumInitialBalance.getNullable("maximum_initial_balance")
+
     fun perUnitCostBasis(): String? = perUnitCostBasis.getNullable("per_unit_cost_basis")
 
     fun status(): Status = status.getRequired("status")
-
-    fun maximumInitialBalance(): Double? =
-        maximumInitialBalance.getNullable("maximum_initial_balance")
 
     @JsonProperty("id") @ExcludeMissing fun _id() = id
 
@@ -67,13 +67,13 @@ private constructor(
 
     @JsonProperty("expiry_date") @ExcludeMissing fun _expiryDate() = expiryDate
 
-    @JsonProperty("per_unit_cost_basis") @ExcludeMissing fun _perUnitCostBasis() = perUnitCostBasis
-
-    @JsonProperty("status") @ExcludeMissing fun _status() = status
-
     @JsonProperty("maximum_initial_balance")
     @ExcludeMissing
     fun _maximumInitialBalance() = maximumInitialBalance
+
+    @JsonProperty("per_unit_cost_basis") @ExcludeMissing fun _perUnitCostBasis() = perUnitCostBasis
+
+    @JsonProperty("status") @ExcludeMissing fun _status() = status
 
     @JsonAnyGetter
     @ExcludeMissing
@@ -87,9 +87,9 @@ private constructor(
             balance()
             effectiveDate()
             expiryDate()
+            maximumInitialBalance()
             perUnitCostBasis()
             status()
-            maximumInitialBalance()
             validated = true
         }
     }
@@ -107,9 +107,9 @@ private constructor(
         private var balance: JsonField<Double> = JsonMissing.of()
         private var effectiveDate: JsonField<OffsetDateTime> = JsonMissing.of()
         private var expiryDate: JsonField<OffsetDateTime> = JsonMissing.of()
+        private var maximumInitialBalance: JsonField<Double> = JsonMissing.of()
         private var perUnitCostBasis: JsonField<String> = JsonMissing.of()
         private var status: JsonField<Status> = JsonMissing.of()
-        private var maximumInitialBalance: JsonField<Double> = JsonMissing.of()
         private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         internal fun from(
@@ -119,9 +119,9 @@ private constructor(
             balance = customerCreditListByExternalIdResponse.balance
             effectiveDate = customerCreditListByExternalIdResponse.effectiveDate
             expiryDate = customerCreditListByExternalIdResponse.expiryDate
+            maximumInitialBalance = customerCreditListByExternalIdResponse.maximumInitialBalance
             perUnitCostBasis = customerCreditListByExternalIdResponse.perUnitCostBasis
             status = customerCreditListByExternalIdResponse.status
-            maximumInitialBalance = customerCreditListByExternalIdResponse.maximumInitialBalance
             additionalProperties =
                 customerCreditListByExternalIdResponse.additionalProperties.toMutableMap()
         }
@@ -147,6 +147,13 @@ private constructor(
             this.expiryDate = expiryDate
         }
 
+        fun maximumInitialBalance(maximumInitialBalance: Double) =
+            maximumInitialBalance(JsonField.of(maximumInitialBalance))
+
+        fun maximumInitialBalance(maximumInitialBalance: JsonField<Double>) = apply {
+            this.maximumInitialBalance = maximumInitialBalance
+        }
+
         fun perUnitCostBasis(perUnitCostBasis: String) =
             perUnitCostBasis(JsonField.of(perUnitCostBasis))
 
@@ -157,13 +164,6 @@ private constructor(
         fun status(status: Status) = status(JsonField.of(status))
 
         fun status(status: JsonField<Status>) = apply { this.status = status }
-
-        fun maximumInitialBalance(maximumInitialBalance: Double) =
-            maximumInitialBalance(JsonField.of(maximumInitialBalance))
-
-        fun maximumInitialBalance(maximumInitialBalance: JsonField<Double>) = apply {
-            this.maximumInitialBalance = maximumInitialBalance
-        }
 
         fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
             this.additionalProperties.clear()
@@ -190,9 +190,9 @@ private constructor(
                 balance,
                 effectiveDate,
                 expiryDate,
+                maximumInitialBalance,
                 perUnitCostBasis,
                 status,
-                maximumInitialBalance,
                 additionalProperties.toImmutable(),
             )
     }
@@ -259,15 +259,15 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is CustomerCreditListByExternalIdResponse && id == other.id && balance == other.balance && effectiveDate == other.effectiveDate && expiryDate == other.expiryDate && perUnitCostBasis == other.perUnitCostBasis && status == other.status && maximumInitialBalance == other.maximumInitialBalance && additionalProperties == other.additionalProperties /* spotless:on */
+        return /* spotless:off */ other is CustomerCreditListByExternalIdResponse && id == other.id && balance == other.balance && effectiveDate == other.effectiveDate && expiryDate == other.expiryDate && maximumInitialBalance == other.maximumInitialBalance && perUnitCostBasis == other.perUnitCostBasis && status == other.status && additionalProperties == other.additionalProperties /* spotless:on */
     }
 
     /* spotless:off */
-    private val hashCode: Int by lazy { Objects.hash(id, balance, effectiveDate, expiryDate, perUnitCostBasis, status, maximumInitialBalance, additionalProperties) }
+    private val hashCode: Int by lazy { Objects.hash(id, balance, effectiveDate, expiryDate, maximumInitialBalance, perUnitCostBasis, status, additionalProperties) }
     /* spotless:on */
 
     override fun hashCode(): Int = hashCode
 
     override fun toString() =
-        "CustomerCreditListByExternalIdResponse{id=$id, balance=$balance, effectiveDate=$effectiveDate, expiryDate=$expiryDate, perUnitCostBasis=$perUnitCostBasis, status=$status, maximumInitialBalance=$maximumInitialBalance, additionalProperties=$additionalProperties}"
+        "CustomerCreditListByExternalIdResponse{id=$id, balance=$balance, effectiveDate=$effectiveDate, expiryDate=$expiryDate, maximumInitialBalance=$maximumInitialBalance, perUnitCostBasis=$perUnitCostBasis, status=$status, additionalProperties=$additionalProperties}"
 }

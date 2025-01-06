@@ -1130,17 +1130,17 @@ constructor(
     class AccountingSyncConfiguration
     @JsonCreator
     private constructor(
-        @JsonProperty("excluded") private val excluded: Boolean?,
         @JsonProperty("accounting_providers")
         private val accountingProviders: List<AccountingProvider>?,
+        @JsonProperty("excluded") private val excluded: Boolean?,
         @JsonAnySetter
         private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
 
-        @JsonProperty("excluded") fun excluded(): Boolean? = excluded
-
         @JsonProperty("accounting_providers")
         fun accountingProviders(): List<AccountingProvider>? = accountingProviders
+
+        @JsonProperty("excluded") fun excluded(): Boolean? = excluded
 
         @JsonAnyGetter
         @ExcludeMissing
@@ -1155,19 +1155,17 @@ constructor(
 
         class Builder {
 
-            private var excluded: Boolean? = null
             private var accountingProviders: MutableList<AccountingProvider>? = null
+            private var excluded: Boolean? = null
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             internal fun from(accountingSyncConfiguration: AccountingSyncConfiguration) = apply {
-                excluded = accountingSyncConfiguration.excluded
                 accountingProviders =
                     accountingSyncConfiguration.accountingProviders?.toMutableList()
+                excluded = accountingSyncConfiguration.excluded
                 additionalProperties =
                     accountingSyncConfiguration.additionalProperties.toMutableMap()
             }
-
-            fun excluded(excluded: Boolean) = apply { this.excluded = excluded }
 
             fun accountingProviders(accountingProviders: List<AccountingProvider>) = apply {
                 this.accountingProviders = accountingProviders.toMutableList()
@@ -1177,6 +1175,8 @@ constructor(
                 accountingProviders =
                     (accountingProviders ?: mutableListOf()).apply { add(accountingProvider) }
             }
+
+            fun excluded(excluded: Boolean) = apply { this.excluded = excluded }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
@@ -1199,8 +1199,8 @@ constructor(
 
             fun build(): AccountingSyncConfiguration =
                 AccountingSyncConfiguration(
-                    excluded,
                     accountingProviders?.toImmutable(),
+                    excluded,
                     additionalProperties.toImmutable(),
                 )
         }
@@ -1209,16 +1209,16 @@ constructor(
         class AccountingProvider
         @JsonCreator
         private constructor(
-            @JsonProperty("provider_type") private val providerType: String,
             @JsonProperty("external_provider_id") private val externalProviderId: String,
+            @JsonProperty("provider_type") private val providerType: String,
             @JsonAnySetter
             private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
-            @JsonProperty("provider_type") fun providerType(): String = providerType
-
             @JsonProperty("external_provider_id")
             fun externalProviderId(): String = externalProviderId
+
+            @JsonProperty("provider_type") fun providerType(): String = providerType
 
             @JsonAnyGetter
             @ExcludeMissing
@@ -1233,21 +1233,21 @@ constructor(
 
             class Builder {
 
-                private var providerType: String? = null
                 private var externalProviderId: String? = null
+                private var providerType: String? = null
                 private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
                 internal fun from(accountingProvider: AccountingProvider) = apply {
-                    providerType = accountingProvider.providerType
                     externalProviderId = accountingProvider.externalProviderId
+                    providerType = accountingProvider.providerType
                     additionalProperties = accountingProvider.additionalProperties.toMutableMap()
                 }
-
-                fun providerType(providerType: String) = apply { this.providerType = providerType }
 
                 fun externalProviderId(externalProviderId: String) = apply {
                     this.externalProviderId = externalProviderId
                 }
+
+                fun providerType(providerType: String) = apply { this.providerType = providerType }
 
                 fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                     this.additionalProperties.clear()
@@ -1273,10 +1273,10 @@ constructor(
 
                 fun build(): AccountingProvider =
                     AccountingProvider(
-                        checkNotNull(providerType) { "`providerType` is required but was not set" },
                         checkNotNull(externalProviderId) {
                             "`externalProviderId` is required but was not set"
                         },
+                        checkNotNull(providerType) { "`providerType` is required but was not set" },
                         additionalProperties.toImmutable(),
                     )
             }
@@ -1286,17 +1286,17 @@ constructor(
                     return true
                 }
 
-                return /* spotless:off */ other is AccountingProvider && providerType == other.providerType && externalProviderId == other.externalProviderId && additionalProperties == other.additionalProperties /* spotless:on */
+                return /* spotless:off */ other is AccountingProvider && externalProviderId == other.externalProviderId && providerType == other.providerType && additionalProperties == other.additionalProperties /* spotless:on */
             }
 
             /* spotless:off */
-            private val hashCode: Int by lazy { Objects.hash(providerType, externalProviderId, additionalProperties) }
+            private val hashCode: Int by lazy { Objects.hash(externalProviderId, providerType, additionalProperties) }
             /* spotless:on */
 
             override fun hashCode(): Int = hashCode
 
             override fun toString() =
-                "AccountingProvider{providerType=$providerType, externalProviderId=$externalProviderId, additionalProperties=$additionalProperties}"
+                "AccountingProvider{externalProviderId=$externalProviderId, providerType=$providerType, additionalProperties=$additionalProperties}"
         }
 
         override fun equals(other: Any?): Boolean {
@@ -1304,44 +1304,44 @@ constructor(
                 return true
             }
 
-            return /* spotless:off */ other is AccountingSyncConfiguration && excluded == other.excluded && accountingProviders == other.accountingProviders && additionalProperties == other.additionalProperties /* spotless:on */
+            return /* spotless:off */ other is AccountingSyncConfiguration && accountingProviders == other.accountingProviders && excluded == other.excluded && additionalProperties == other.additionalProperties /* spotless:on */
         }
 
         /* spotless:off */
-        private val hashCode: Int by lazy { Objects.hash(excluded, accountingProviders, additionalProperties) }
+        private val hashCode: Int by lazy { Objects.hash(accountingProviders, excluded, additionalProperties) }
         /* spotless:on */
 
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "AccountingSyncConfiguration{excluded=$excluded, accountingProviders=$accountingProviders, additionalProperties=$additionalProperties}"
+            "AccountingSyncConfiguration{accountingProviders=$accountingProviders, excluded=$excluded, additionalProperties=$additionalProperties}"
     }
 
     @NoAutoDetect
     class BillingAddress
     @JsonCreator
     private constructor(
+        @JsonProperty("city") private val city: String?,
+        @JsonProperty("country") private val country: String?,
         @JsonProperty("line1") private val line1: String?,
         @JsonProperty("line2") private val line2: String?,
-        @JsonProperty("city") private val city: String?,
-        @JsonProperty("state") private val state: String?,
         @JsonProperty("postal_code") private val postalCode: String?,
-        @JsonProperty("country") private val country: String?,
+        @JsonProperty("state") private val state: String?,
         @JsonAnySetter
         private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
+
+        @JsonProperty("city") fun city(): String? = city
+
+        @JsonProperty("country") fun country(): String? = country
 
         @JsonProperty("line1") fun line1(): String? = line1
 
         @JsonProperty("line2") fun line2(): String? = line2
 
-        @JsonProperty("city") fun city(): String? = city
-
-        @JsonProperty("state") fun state(): String? = state
-
         @JsonProperty("postal_code") fun postalCode(): String? = postalCode
 
-        @JsonProperty("country") fun country(): String? = country
+        @JsonProperty("state") fun state(): String? = state
 
         @JsonAnyGetter
         @ExcludeMissing
@@ -1356,35 +1356,35 @@ constructor(
 
         class Builder {
 
+            private var city: String? = null
+            private var country: String? = null
             private var line1: String? = null
             private var line2: String? = null
-            private var city: String? = null
-            private var state: String? = null
             private var postalCode: String? = null
-            private var country: String? = null
+            private var state: String? = null
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             internal fun from(billingAddress: BillingAddress) = apply {
+                city = billingAddress.city
+                country = billingAddress.country
                 line1 = billingAddress.line1
                 line2 = billingAddress.line2
-                city = billingAddress.city
-                state = billingAddress.state
                 postalCode = billingAddress.postalCode
-                country = billingAddress.country
+                state = billingAddress.state
                 additionalProperties = billingAddress.additionalProperties.toMutableMap()
             }
+
+            fun city(city: String) = apply { this.city = city }
+
+            fun country(country: String) = apply { this.country = country }
 
             fun line1(line1: String) = apply { this.line1 = line1 }
 
             fun line2(line2: String) = apply { this.line2 = line2 }
 
-            fun city(city: String) = apply { this.city = city }
-
-            fun state(state: String) = apply { this.state = state }
-
             fun postalCode(postalCode: String) = apply { this.postalCode = postalCode }
 
-            fun country(country: String) = apply { this.country = country }
+            fun state(state: String) = apply { this.state = state }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
@@ -1407,12 +1407,12 @@ constructor(
 
             fun build(): BillingAddress =
                 BillingAddress(
+                    city,
+                    country,
                     line1,
                     line2,
-                    city,
-                    state,
                     postalCode,
-                    country,
+                    state,
                     additionalProperties.toImmutable(),
                 )
         }
@@ -1422,17 +1422,17 @@ constructor(
                 return true
             }
 
-            return /* spotless:off */ other is BillingAddress && line1 == other.line1 && line2 == other.line2 && city == other.city && state == other.state && postalCode == other.postalCode && country == other.country && additionalProperties == other.additionalProperties /* spotless:on */
+            return /* spotless:off */ other is BillingAddress && city == other.city && country == other.country && line1 == other.line1 && line2 == other.line2 && postalCode == other.postalCode && state == other.state && additionalProperties == other.additionalProperties /* spotless:on */
         }
 
         /* spotless:off */
-        private val hashCode: Int by lazy { Objects.hash(line1, line2, city, state, postalCode, country, additionalProperties) }
+        private val hashCode: Int by lazy { Objects.hash(city, country, line1, line2, postalCode, state, additionalProperties) }
         /* spotless:on */
 
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "BillingAddress{line1=$line1, line2=$line2, city=$city, state=$state, postalCode=$postalCode, country=$country, additionalProperties=$additionalProperties}"
+            "BillingAddress{city=$city, country=$country, line1=$line1, line2=$line2, postalCode=$postalCode, state=$state, additionalProperties=$additionalProperties}"
     }
 
     /**
@@ -1663,27 +1663,27 @@ constructor(
     class ShippingAddress
     @JsonCreator
     private constructor(
+        @JsonProperty("city") private val city: String?,
+        @JsonProperty("country") private val country: String?,
         @JsonProperty("line1") private val line1: String?,
         @JsonProperty("line2") private val line2: String?,
-        @JsonProperty("city") private val city: String?,
-        @JsonProperty("state") private val state: String?,
         @JsonProperty("postal_code") private val postalCode: String?,
-        @JsonProperty("country") private val country: String?,
+        @JsonProperty("state") private val state: String?,
         @JsonAnySetter
         private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
+
+        @JsonProperty("city") fun city(): String? = city
+
+        @JsonProperty("country") fun country(): String? = country
 
         @JsonProperty("line1") fun line1(): String? = line1
 
         @JsonProperty("line2") fun line2(): String? = line2
 
-        @JsonProperty("city") fun city(): String? = city
-
-        @JsonProperty("state") fun state(): String? = state
-
         @JsonProperty("postal_code") fun postalCode(): String? = postalCode
 
-        @JsonProperty("country") fun country(): String? = country
+        @JsonProperty("state") fun state(): String? = state
 
         @JsonAnyGetter
         @ExcludeMissing
@@ -1698,35 +1698,35 @@ constructor(
 
         class Builder {
 
+            private var city: String? = null
+            private var country: String? = null
             private var line1: String? = null
             private var line2: String? = null
-            private var city: String? = null
-            private var state: String? = null
             private var postalCode: String? = null
-            private var country: String? = null
+            private var state: String? = null
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             internal fun from(shippingAddress: ShippingAddress) = apply {
+                city = shippingAddress.city
+                country = shippingAddress.country
                 line1 = shippingAddress.line1
                 line2 = shippingAddress.line2
-                city = shippingAddress.city
-                state = shippingAddress.state
                 postalCode = shippingAddress.postalCode
-                country = shippingAddress.country
+                state = shippingAddress.state
                 additionalProperties = shippingAddress.additionalProperties.toMutableMap()
             }
+
+            fun city(city: String) = apply { this.city = city }
+
+            fun country(country: String) = apply { this.country = country }
 
             fun line1(line1: String) = apply { this.line1 = line1 }
 
             fun line2(line2: String) = apply { this.line2 = line2 }
 
-            fun city(city: String) = apply { this.city = city }
-
-            fun state(state: String) = apply { this.state = state }
-
             fun postalCode(postalCode: String) = apply { this.postalCode = postalCode }
 
-            fun country(country: String) = apply { this.country = country }
+            fun state(state: String) = apply { this.state = state }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
@@ -1749,12 +1749,12 @@ constructor(
 
             fun build(): ShippingAddress =
                 ShippingAddress(
+                    city,
+                    country,
                     line1,
                     line2,
-                    city,
-                    state,
                     postalCode,
-                    country,
+                    state,
                     additionalProperties.toImmutable(),
                 )
         }
@@ -1764,17 +1764,17 @@ constructor(
                 return true
             }
 
-            return /* spotless:off */ other is ShippingAddress && line1 == other.line1 && line2 == other.line2 && city == other.city && state == other.state && postalCode == other.postalCode && country == other.country && additionalProperties == other.additionalProperties /* spotless:on */
+            return /* spotless:off */ other is ShippingAddress && city == other.city && country == other.country && line1 == other.line1 && line2 == other.line2 && postalCode == other.postalCode && state == other.state && additionalProperties == other.additionalProperties /* spotless:on */
         }
 
         /* spotless:off */
-        private val hashCode: Int by lazy { Objects.hash(line1, line2, city, state, postalCode, country, additionalProperties) }
+        private val hashCode: Int by lazy { Objects.hash(city, country, line1, line2, postalCode, state, additionalProperties) }
         /* spotless:on */
 
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "ShippingAddress{line1=$line1, line2=$line2, city=$city, state=$state, postalCode=$postalCode, country=$country, additionalProperties=$additionalProperties}"
+            "ShippingAddress{city=$city, country=$country, line1=$line1, line2=$line2, postalCode=$postalCode, state=$state, additionalProperties=$additionalProperties}"
     }
 
     @JsonDeserialize(using = TaxConfiguration.Deserializer::class)
