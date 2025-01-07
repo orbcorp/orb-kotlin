@@ -7,6 +7,8 @@ import com.fasterxml.jackson.annotation.JsonAnySetter
 import com.fasterxml.jackson.annotation.JsonCreator
 import com.fasterxml.jackson.annotation.JsonProperty
 import com.withorb.api.core.ExcludeMissing
+import com.withorb.api.core.JsonField
+import com.withorb.api.core.JsonMissing
 import com.withorb.api.core.JsonValue
 import com.withorb.api.core.NoAutoDetect
 import com.withorb.api.core.http.Headers
@@ -40,11 +42,19 @@ constructor(
      */
     fun synchronous(): Boolean? = body.synchronous()
 
+    /**
+     * If true, the invoice will be issued synchronously. If false, the invoice will be issued
+     * asynchronously. The synchronous option is only available for invoices containin no usage
+     * fees. If the invoice is configured to sync to an external provider, a successful response
+     * from this endpoint guarantees the invoice is present in the provider.
+     */
+    fun _synchronous(): JsonField<Boolean> = body._synchronous()
+
+    fun _additionalBodyProperties(): Map<String, JsonValue> = body._additionalProperties()
+
     fun _additionalHeaders(): Headers = additionalHeaders
 
     fun _additionalQueryParams(): QueryParams = additionalQueryParams
-
-    fun _additionalBodyProperties(): Map<String, JsonValue> = body._additionalProperties()
 
     internal fun getBody(): InvoiceIssueBody = body
 
@@ -63,7 +73,9 @@ constructor(
     class InvoiceIssueBody
     @JsonCreator
     internal constructor(
-        @JsonProperty("synchronous") private val synchronous: Boolean?,
+        @JsonProperty("synchronous")
+        @ExcludeMissing
+        private val synchronous: JsonField<Boolean> = JsonMissing.of(),
         @JsonAnySetter
         private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
@@ -74,11 +86,30 @@ constructor(
          * fees. If the invoice is configured to sync to an external provider, a successful response
          * from this endpoint guarantees the invoice is present in the provider.
          */
-        @JsonProperty("synchronous") fun synchronous(): Boolean? = synchronous
+        fun synchronous(): Boolean? = synchronous.getNullable("synchronous")
+
+        /**
+         * If true, the invoice will be issued synchronously. If false, the invoice will be issued
+         * asynchronously. The synchronous option is only available for invoices containin no usage
+         * fees. If the invoice is configured to sync to an external provider, a successful response
+         * from this endpoint guarantees the invoice is present in the provider.
+         */
+        @JsonProperty("synchronous")
+        @ExcludeMissing
+        fun _synchronous(): JsonField<Boolean> = synchronous
 
         @JsonAnyGetter
         @ExcludeMissing
         fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
+
+        private var validated: Boolean = false
+
+        fun validate(): InvoiceIssueBody = apply {
+            if (!validated) {
+                synchronous()
+                validated = true
+            }
+        }
 
         fun toBuilder() = Builder().from(this)
 
@@ -89,7 +120,7 @@ constructor(
 
         class Builder {
 
-            private var synchronous: Boolean? = null
+            private var synchronous: JsonField<Boolean> = JsonMissing.of()
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             internal fun from(invoiceIssueBody: InvoiceIssueBody) = apply {
@@ -104,7 +135,7 @@ constructor(
              * provider, a successful response from this endpoint guarantees the invoice is present
              * in the provider.
              */
-            fun synchronous(synchronous: Boolean?) = apply { this.synchronous = synchronous }
+            fun synchronous(synchronous: Boolean) = synchronous(JsonField.of(synchronous))
 
             /**
              * If true, the invoice will be issued synchronously. If false, the invoice will be
@@ -113,7 +144,9 @@ constructor(
              * provider, a successful response from this endpoint guarantees the invoice is present
              * in the provider.
              */
-            fun synchronous(synchronous: Boolean) = synchronous(synchronous as Boolean?)
+            fun synchronous(synchronous: JsonField<Boolean>) = apply {
+                this.synchronous = synchronous
+            }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
@@ -186,7 +219,7 @@ constructor(
          * fees. If the invoice is configured to sync to an external provider, a successful response
          * from this endpoint guarantees the invoice is present in the provider.
          */
-        fun synchronous(synchronous: Boolean?) = apply { body.synchronous(synchronous) }
+        fun synchronous(synchronous: Boolean) = apply { body.synchronous(synchronous) }
 
         /**
          * If true, the invoice will be issued synchronously. If false, the invoice will be issued
@@ -194,7 +227,26 @@ constructor(
          * fees. If the invoice is configured to sync to an external provider, a successful response
          * from this endpoint guarantees the invoice is present in the provider.
          */
-        fun synchronous(synchronous: Boolean) = synchronous(synchronous as Boolean?)
+        fun synchronous(synchronous: JsonField<Boolean>) = apply { body.synchronous(synchronous) }
+
+        fun additionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) = apply {
+            body.additionalProperties(additionalBodyProperties)
+        }
+
+        fun putAdditionalBodyProperty(key: String, value: JsonValue) = apply {
+            body.putAdditionalProperty(key, value)
+        }
+
+        fun putAllAdditionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) =
+            apply {
+                body.putAllAdditionalProperties(additionalBodyProperties)
+            }
+
+        fun removeAdditionalBodyProperty(key: String) = apply { body.removeAdditionalProperty(key) }
+
+        fun removeAllAdditionalBodyProperties(keys: Set<String>) = apply {
+            body.removeAllAdditionalProperties(keys)
+        }
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {
             this.additionalHeaders.clear()
@@ -292,25 +344,6 @@ constructor(
 
         fun removeAllAdditionalQueryParams(keys: Set<String>) = apply {
             additionalQueryParams.removeAll(keys)
-        }
-
-        fun additionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) = apply {
-            body.additionalProperties(additionalBodyProperties)
-        }
-
-        fun putAdditionalBodyProperty(key: String, value: JsonValue) = apply {
-            body.putAdditionalProperty(key, value)
-        }
-
-        fun putAllAdditionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) =
-            apply {
-                body.putAllAdditionalProperties(additionalBodyProperties)
-            }
-
-        fun removeAdditionalBodyProperty(key: String) = apply { body.removeAdditionalProperty(key) }
-
-        fun removeAllAdditionalBodyProperties(keys: Set<String>) = apply {
-            body.removeAllAdditionalProperties(keys)
         }
 
         fun build(): InvoiceIssueParams =

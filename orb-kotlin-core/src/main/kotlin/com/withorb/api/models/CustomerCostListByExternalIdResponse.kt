@@ -28,7 +28,7 @@ private constructor(
 
     fun data(): List<Data> = data.getRequired("data")
 
-    @JsonProperty("data") @ExcludeMissing fun _data() = data
+    @JsonProperty("data") @ExcludeMissing fun _data(): JsonField<List<Data>> = data
 
     @JsonAnyGetter
     @ExcludeMissing
@@ -52,20 +52,33 @@ private constructor(
 
     class Builder {
 
-        private var data: JsonField<List<Data>> = JsonMissing.of()
+        private var data: JsonField<MutableList<Data>>? = null
         private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         internal fun from(
             customerCostListByExternalIdResponse: CustomerCostListByExternalIdResponse
         ) = apply {
-            data = customerCostListByExternalIdResponse.data
+            data = customerCostListByExternalIdResponse.data.map { it.toMutableList() }
             additionalProperties =
                 customerCostListByExternalIdResponse.additionalProperties.toMutableMap()
         }
 
         fun data(data: List<Data>) = data(JsonField.of(data))
 
-        fun data(data: JsonField<List<Data>>) = apply { this.data = data }
+        fun data(data: JsonField<List<Data>>) = apply {
+            this.data = data.map { it.toMutableList() }
+        }
+
+        fun addData(data: Data) = apply {
+            this.data =
+                (this.data ?: JsonField.of(mutableListOf())).apply {
+                    (asKnown()
+                            ?: throw IllegalStateException(
+                                "Field was set to non-list type: ${javaClass.simpleName}"
+                            ))
+                        .add(data)
+                }
+        }
 
         fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
             this.additionalProperties.clear()
@@ -88,7 +101,8 @@ private constructor(
 
         fun build(): CustomerCostListByExternalIdResponse =
             CustomerCostListByExternalIdResponse(
-                data.map { it.toImmutable() },
+                checkNotNull(data) { "`data` is required but was not set" }
+                    .map { it.toImmutable() },
                 additionalProperties.toImmutable()
             )
     }
@@ -128,17 +142,23 @@ private constructor(
         /** Total costs for the timeframe, including any minimums and discounts. */
         fun total(): String = total.getRequired("total")
 
-        @JsonProperty("per_price_costs") @ExcludeMissing fun _perPriceCosts() = perPriceCosts
+        @JsonProperty("per_price_costs")
+        @ExcludeMissing
+        fun _perPriceCosts(): JsonField<List<PerPriceCost>> = perPriceCosts
 
         /** Total costs for the timeframe, excluding any minimums and discounts. */
-        @JsonProperty("subtotal") @ExcludeMissing fun _subtotal() = subtotal
+        @JsonProperty("subtotal") @ExcludeMissing fun _subtotal(): JsonField<String> = subtotal
 
-        @JsonProperty("timeframe_end") @ExcludeMissing fun _timeframeEnd() = timeframeEnd
+        @JsonProperty("timeframe_end")
+        @ExcludeMissing
+        fun _timeframeEnd(): JsonField<OffsetDateTime> = timeframeEnd
 
-        @JsonProperty("timeframe_start") @ExcludeMissing fun _timeframeStart() = timeframeStart
+        @JsonProperty("timeframe_start")
+        @ExcludeMissing
+        fun _timeframeStart(): JsonField<OffsetDateTime> = timeframeStart
 
         /** Total costs for the timeframe, including any minimums and discounts. */
-        @JsonProperty("total") @ExcludeMissing fun _total() = total
+        @JsonProperty("total") @ExcludeMissing fun _total(): JsonField<String> = total
 
         @JsonAnyGetter
         @ExcludeMissing
@@ -166,15 +186,15 @@ private constructor(
 
         class Builder {
 
-            private var perPriceCosts: JsonField<List<PerPriceCost>> = JsonMissing.of()
-            private var subtotal: JsonField<String> = JsonMissing.of()
-            private var timeframeEnd: JsonField<OffsetDateTime> = JsonMissing.of()
-            private var timeframeStart: JsonField<OffsetDateTime> = JsonMissing.of()
-            private var total: JsonField<String> = JsonMissing.of()
+            private var perPriceCosts: JsonField<MutableList<PerPriceCost>>? = null
+            private var subtotal: JsonField<String>? = null
+            private var timeframeEnd: JsonField<OffsetDateTime>? = null
+            private var timeframeStart: JsonField<OffsetDateTime>? = null
+            private var total: JsonField<String>? = null
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             internal fun from(data: Data) = apply {
-                perPriceCosts = data.perPriceCosts
+                perPriceCosts = data.perPriceCosts.map { it.toMutableList() }
                 subtotal = data.subtotal
                 timeframeEnd = data.timeframeEnd
                 timeframeStart = data.timeframeStart
@@ -186,7 +206,18 @@ private constructor(
                 perPriceCosts(JsonField.of(perPriceCosts))
 
             fun perPriceCosts(perPriceCosts: JsonField<List<PerPriceCost>>) = apply {
-                this.perPriceCosts = perPriceCosts
+                this.perPriceCosts = perPriceCosts.map { it.toMutableList() }
+            }
+
+            fun addPerPriceCost(perPriceCost: PerPriceCost) = apply {
+                perPriceCosts =
+                    (perPriceCosts ?: JsonField.of(mutableListOf())).apply {
+                        (asKnown()
+                                ?: throw IllegalStateException(
+                                    "Field was set to non-list type: ${javaClass.simpleName}"
+                                ))
+                            .add(perPriceCost)
+                    }
             }
 
             /** Total costs for the timeframe, excluding any minimums and discounts. */
@@ -236,11 +267,12 @@ private constructor(
 
             fun build(): Data =
                 Data(
-                    perPriceCosts.map { it.toImmutable() },
-                    subtotal,
-                    timeframeEnd,
-                    timeframeStart,
-                    total,
+                    checkNotNull(perPriceCosts) { "`perPriceCosts` is required but was not set" }
+                        .map { it.toImmutable() },
+                    checkNotNull(subtotal) { "`subtotal` is required but was not set" },
+                    checkNotNull(timeframeEnd) { "`timeframeEnd` is required but was not set" },
+                    checkNotNull(timeframeStart) { "`timeframeStart` is required but was not set" },
+                    checkNotNull(total) { "`total` is required but was not set" },
                     additionalProperties.toImmutable(),
                 )
         }
@@ -732,16 +764,16 @@ private constructor(
              * }
              * ```
              */
-            @JsonProperty("price") @ExcludeMissing fun _price() = price
+            @JsonProperty("price") @ExcludeMissing fun _price(): JsonField<Price> = price
 
             /** Price's contributions for the timeframe, excluding any minimums and discounts. */
-            @JsonProperty("subtotal") @ExcludeMissing fun _subtotal() = subtotal
+            @JsonProperty("subtotal") @ExcludeMissing fun _subtotal(): JsonField<String> = subtotal
 
             /** Price's contributions for the timeframe, including minimums and discounts. */
-            @JsonProperty("total") @ExcludeMissing fun _total() = total
+            @JsonProperty("total") @ExcludeMissing fun _total(): JsonField<String> = total
 
             /** The price's quantity for the timeframe */
-            @JsonProperty("quantity") @ExcludeMissing fun _quantity() = quantity
+            @JsonProperty("quantity") @ExcludeMissing fun _quantity(): JsonField<Double> = quantity
 
             @JsonAnyGetter
             @ExcludeMissing
@@ -768,9 +800,9 @@ private constructor(
 
             class Builder {
 
-                private var price: JsonField<Price> = JsonMissing.of()
-                private var subtotal: JsonField<String> = JsonMissing.of()
-                private var total: JsonField<String> = JsonMissing.of()
+                private var price: JsonField<Price>? = null
+                private var subtotal: JsonField<String>? = null
+                private var total: JsonField<String>? = null
                 private var quantity: JsonField<Double> = JsonMissing.of()
                 private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
@@ -1250,6 +1282,73 @@ private constructor(
                  */
                 fun price(price: JsonField<Price>) = apply { this.price = price }
 
+                fun price(unitPrice: Price.UnitPrice) = price(Price.ofUnitPrice(unitPrice))
+
+                fun price(packagePrice: Price.PackagePrice) =
+                    price(Price.ofPackagePrice(packagePrice))
+
+                fun price(matrixPrice: Price.MatrixPrice) = price(Price.ofMatrixPrice(matrixPrice))
+
+                fun price(tieredPrice: Price.TieredPrice) = price(Price.ofTieredPrice(tieredPrice))
+
+                fun price(tieredBpsPrice: Price.TieredBpsPrice) =
+                    price(Price.ofTieredBpsPrice(tieredBpsPrice))
+
+                fun price(bpsPrice: Price.BpsPrice) = price(Price.ofBpsPrice(bpsPrice))
+
+                fun price(bulkBpsPrice: Price.BulkBpsPrice) =
+                    price(Price.ofBulkBpsPrice(bulkBpsPrice))
+
+                fun price(bulkPrice: Price.BulkPrice) = price(Price.ofBulkPrice(bulkPrice))
+
+                fun price(thresholdTotalAmountPrice: Price.ThresholdTotalAmountPrice) =
+                    price(Price.ofThresholdTotalAmountPrice(thresholdTotalAmountPrice))
+
+                fun price(tieredPackagePrice: Price.TieredPackagePrice) =
+                    price(Price.ofTieredPackagePrice(tieredPackagePrice))
+
+                fun price(groupedTieredPrice: Price.GroupedTieredPrice) =
+                    price(Price.ofGroupedTieredPrice(groupedTieredPrice))
+
+                fun price(tieredWithMinimumPrice: Price.TieredWithMinimumPrice) =
+                    price(Price.ofTieredWithMinimumPrice(tieredWithMinimumPrice))
+
+                fun price(tieredPackageWithMinimumPrice: Price.TieredPackageWithMinimumPrice) =
+                    price(Price.ofTieredPackageWithMinimumPrice(tieredPackageWithMinimumPrice))
+
+                fun price(packageWithAllocationPrice: Price.PackageWithAllocationPrice) =
+                    price(Price.ofPackageWithAllocationPrice(packageWithAllocationPrice))
+
+                fun price(unitWithPercentPrice: Price.UnitWithPercentPrice) =
+                    price(Price.ofUnitWithPercentPrice(unitWithPercentPrice))
+
+                fun price(matrixWithAllocationPrice: Price.MatrixWithAllocationPrice) =
+                    price(Price.ofMatrixWithAllocationPrice(matrixWithAllocationPrice))
+
+                fun price(tieredWithProrationPrice: Price.TieredWithProrationPrice) =
+                    price(Price.ofTieredWithProrationPrice(tieredWithProrationPrice))
+
+                fun price(unitWithProrationPrice: Price.UnitWithProrationPrice) =
+                    price(Price.ofUnitWithProrationPrice(unitWithProrationPrice))
+
+                fun price(groupedAllocationPrice: Price.GroupedAllocationPrice) =
+                    price(Price.ofGroupedAllocationPrice(groupedAllocationPrice))
+
+                fun price(groupedWithProratedMinimumPrice: Price.GroupedWithProratedMinimumPrice) =
+                    price(Price.ofGroupedWithProratedMinimumPrice(groupedWithProratedMinimumPrice))
+
+                fun price(groupedWithMeteredMinimumPrice: Price.GroupedWithMeteredMinimumPrice) =
+                    price(Price.ofGroupedWithMeteredMinimumPrice(groupedWithMeteredMinimumPrice))
+
+                fun price(matrixWithDisplayNamePrice: Price.MatrixWithDisplayNamePrice) =
+                    price(Price.ofMatrixWithDisplayNamePrice(matrixWithDisplayNamePrice))
+
+                fun price(bulkWithProrationPrice: Price.BulkWithProrationPrice) =
+                    price(Price.ofBulkWithProrationPrice(bulkWithProrationPrice))
+
+                fun price(groupedTieredPackagePrice: Price.GroupedTieredPackagePrice) =
+                    price(Price.ofGroupedTieredPackagePrice(groupedTieredPackagePrice))
+
                 /**
                  * Price's contributions for the timeframe, excluding any minimums and discounts.
                  */
@@ -1267,7 +1366,10 @@ private constructor(
                 fun total(total: JsonField<String>) = apply { this.total = total }
 
                 /** The price's quantity for the timeframe */
-                fun quantity(quantity: Double) = quantity(JsonField.of(quantity))
+                fun quantity(quantity: Double?) = quantity(JsonField.ofNullable(quantity))
+
+                /** The price's quantity for the timeframe */
+                fun quantity(quantity: Double) = quantity(quantity as Double?)
 
                 /** The price's quantity for the timeframe */
                 fun quantity(quantity: JsonField<Double>) = apply { this.quantity = quantity }
@@ -1296,9 +1398,9 @@ private constructor(
 
                 fun build(): PerPriceCost =
                     PerPriceCost(
-                        price,
-                        subtotal,
-                        total,
+                        checkNotNull(price) { "`price` is required but was not set" },
+                        checkNotNull(subtotal) { "`subtotal` is required but was not set" },
+                        checkNotNull(total) { "`total` is required but was not set" },
                         quantity,
                         additionalProperties.toImmutable(),
                     )

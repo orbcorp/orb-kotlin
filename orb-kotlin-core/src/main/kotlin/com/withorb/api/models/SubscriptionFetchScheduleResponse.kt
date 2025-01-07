@@ -41,13 +41,17 @@ private constructor(
 
     fun startDate(): OffsetDateTime = startDate.getRequired("start_date")
 
-    @JsonProperty("created_at") @ExcludeMissing fun _createdAt() = createdAt
+    @JsonProperty("created_at")
+    @ExcludeMissing
+    fun _createdAt(): JsonField<OffsetDateTime> = createdAt
 
-    @JsonProperty("end_date") @ExcludeMissing fun _endDate() = endDate
+    @JsonProperty("end_date") @ExcludeMissing fun _endDate(): JsonField<OffsetDateTime> = endDate
 
-    @JsonProperty("plan") @ExcludeMissing fun _plan() = plan
+    @JsonProperty("plan") @ExcludeMissing fun _plan(): JsonField<Plan> = plan
 
-    @JsonProperty("start_date") @ExcludeMissing fun _startDate() = startDate
+    @JsonProperty("start_date")
+    @ExcludeMissing
+    fun _startDate(): JsonField<OffsetDateTime> = startDate
 
     @JsonAnyGetter
     @ExcludeMissing
@@ -74,10 +78,10 @@ private constructor(
 
     class Builder {
 
-        private var createdAt: JsonField<OffsetDateTime> = JsonMissing.of()
-        private var endDate: JsonField<OffsetDateTime> = JsonMissing.of()
-        private var plan: JsonField<Plan> = JsonMissing.of()
-        private var startDate: JsonField<OffsetDateTime> = JsonMissing.of()
+        private var createdAt: JsonField<OffsetDateTime>? = null
+        private var endDate: JsonField<OffsetDateTime>? = null
+        private var plan: JsonField<Plan>? = null
+        private var startDate: JsonField<OffsetDateTime>? = null
         private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         internal fun from(subscriptionFetchScheduleResponse: SubscriptionFetchScheduleResponse) =
@@ -94,7 +98,7 @@ private constructor(
 
         fun createdAt(createdAt: JsonField<OffsetDateTime>) = apply { this.createdAt = createdAt }
 
-        fun endDate(endDate: OffsetDateTime) = endDate(JsonField.of(endDate))
+        fun endDate(endDate: OffsetDateTime?) = endDate(JsonField.ofNullable(endDate))
 
         fun endDate(endDate: JsonField<OffsetDateTime>) = apply { this.endDate = endDate }
 
@@ -127,10 +131,10 @@ private constructor(
 
         fun build(): SubscriptionFetchScheduleResponse =
             SubscriptionFetchScheduleResponse(
-                createdAt,
-                endDate,
-                plan,
-                startDate,
+                checkNotNull(createdAt) { "`createdAt` is required but was not set" },
+                checkNotNull(endDate) { "`endDate` is required but was not set" },
+                checkNotNull(plan) { "`plan` is required but was not set" },
+                checkNotNull(startDate) { "`startDate` is required but was not set" },
                 additionalProperties.toImmutable(),
             )
     }
@@ -161,16 +165,18 @@ private constructor(
 
         fun name(): String? = name.getNullable("name")
 
-        @JsonProperty("id") @ExcludeMissing fun _id() = id
+        @JsonProperty("id") @ExcludeMissing fun _id(): JsonField<String> = id
 
         /**
          * An optional user-defined ID for this plan resource, used throughout the system as an
          * alias for this Plan. Use this field to identify a plan by an existing identifier in your
          * system.
          */
-        @JsonProperty("external_plan_id") @ExcludeMissing fun _externalPlanId() = externalPlanId
+        @JsonProperty("external_plan_id")
+        @ExcludeMissing
+        fun _externalPlanId(): JsonField<String> = externalPlanId
 
-        @JsonProperty("name") @ExcludeMissing fun _name() = name
+        @JsonProperty("name") @ExcludeMissing fun _name(): JsonField<String> = name
 
         @JsonAnyGetter
         @ExcludeMissing
@@ -196,9 +202,9 @@ private constructor(
 
         class Builder {
 
-            private var id: JsonField<String> = JsonMissing.of()
-            private var externalPlanId: JsonField<String> = JsonMissing.of()
-            private var name: JsonField<String> = JsonMissing.of()
+            private var id: JsonField<String>? = null
+            private var externalPlanId: JsonField<String>? = null
+            private var name: JsonField<String>? = null
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             internal fun from(plan: Plan) = apply {
@@ -208,7 +214,7 @@ private constructor(
                 additionalProperties = plan.additionalProperties.toMutableMap()
             }
 
-            fun id(id: String) = id(JsonField.of(id))
+            fun id(id: String?) = id(JsonField.ofNullable(id))
 
             fun id(id: JsonField<String>) = apply { this.id = id }
 
@@ -217,8 +223,8 @@ private constructor(
              * alias for this Plan. Use this field to identify a plan by an existing identifier in
              * your system.
              */
-            fun externalPlanId(externalPlanId: String) =
-                externalPlanId(JsonField.of(externalPlanId))
+            fun externalPlanId(externalPlanId: String?) =
+                externalPlanId(JsonField.ofNullable(externalPlanId))
 
             /**
              * An optional user-defined ID for this plan resource, used throughout the system as an
@@ -229,7 +235,7 @@ private constructor(
                 this.externalPlanId = externalPlanId
             }
 
-            fun name(name: String) = name(JsonField.of(name))
+            fun name(name: String?) = name(JsonField.ofNullable(name))
 
             fun name(name: JsonField<String>) = apply { this.name = name }
 
@@ -254,9 +260,9 @@ private constructor(
 
             fun build(): Plan =
                 Plan(
-                    id,
-                    externalPlanId,
-                    name,
+                    checkNotNull(id) { "`id` is required but was not set" },
+                    checkNotNull(externalPlanId) { "`externalPlanId` is required but was not set" },
+                    checkNotNull(name) { "`name` is required but was not set" },
                     additionalProperties.toImmutable(),
                 )
         }

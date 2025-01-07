@@ -7,6 +7,8 @@ import com.fasterxml.jackson.annotation.JsonAnySetter
 import com.fasterxml.jackson.annotation.JsonCreator
 import com.fasterxml.jackson.annotation.JsonProperty
 import com.withorb.api.core.ExcludeMissing
+import com.withorb.api.core.JsonField
+import com.withorb.api.core.JsonMissing
 import com.withorb.api.core.JsonValue
 import com.withorb.api.core.NoAutoDetect
 import com.withorb.api.core.http.Headers
@@ -39,11 +41,20 @@ constructor(
     /** An optional note to associate with the payment. */
     fun notes(): String? = body.notes()
 
+    /** A date string to specify the date of the payment. */
+    fun _paymentReceivedDate(): JsonField<LocalDate> = body._paymentReceivedDate()
+
+    /** An optional external ID to associate with the payment. */
+    fun _externalId(): JsonField<String> = body._externalId()
+
+    /** An optional note to associate with the payment. */
+    fun _notes(): JsonField<String> = body._notes()
+
+    fun _additionalBodyProperties(): Map<String, JsonValue> = body._additionalProperties()
+
     fun _additionalHeaders(): Headers = additionalHeaders
 
     fun _additionalQueryParams(): QueryParams = additionalQueryParams
-
-    fun _additionalBodyProperties(): Map<String, JsonValue> = body._additionalProperties()
 
     internal fun getBody(): InvoiceMarkPaidBody = body
 
@@ -62,26 +73,56 @@ constructor(
     class InvoiceMarkPaidBody
     @JsonCreator
     internal constructor(
-        @JsonProperty("payment_received_date") private val paymentReceivedDate: LocalDate,
-        @JsonProperty("external_id") private val externalId: String?,
-        @JsonProperty("notes") private val notes: String?,
+        @JsonProperty("payment_received_date")
+        @ExcludeMissing
+        private val paymentReceivedDate: JsonField<LocalDate> = JsonMissing.of(),
+        @JsonProperty("external_id")
+        @ExcludeMissing
+        private val externalId: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("notes")
+        @ExcludeMissing
+        private val notes: JsonField<String> = JsonMissing.of(),
         @JsonAnySetter
         private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
 
         /** A date string to specify the date of the payment. */
-        @JsonProperty("payment_received_date")
-        fun paymentReceivedDate(): LocalDate = paymentReceivedDate
+        fun paymentReceivedDate(): LocalDate =
+            paymentReceivedDate.getRequired("payment_received_date")
 
         /** An optional external ID to associate with the payment. */
-        @JsonProperty("external_id") fun externalId(): String? = externalId
+        fun externalId(): String? = externalId.getNullable("external_id")
 
         /** An optional note to associate with the payment. */
-        @JsonProperty("notes") fun notes(): String? = notes
+        fun notes(): String? = notes.getNullable("notes")
+
+        /** A date string to specify the date of the payment. */
+        @JsonProperty("payment_received_date")
+        @ExcludeMissing
+        fun _paymentReceivedDate(): JsonField<LocalDate> = paymentReceivedDate
+
+        /** An optional external ID to associate with the payment. */
+        @JsonProperty("external_id")
+        @ExcludeMissing
+        fun _externalId(): JsonField<String> = externalId
+
+        /** An optional note to associate with the payment. */
+        @JsonProperty("notes") @ExcludeMissing fun _notes(): JsonField<String> = notes
 
         @JsonAnyGetter
         @ExcludeMissing
         fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
+
+        private var validated: Boolean = false
+
+        fun validate(): InvoiceMarkPaidBody = apply {
+            if (!validated) {
+                paymentReceivedDate()
+                externalId()
+                notes()
+                validated = true
+            }
+        }
 
         fun toBuilder() = Builder().from(this)
 
@@ -92,9 +133,9 @@ constructor(
 
         class Builder {
 
-            private var paymentReceivedDate: LocalDate? = null
-            private var externalId: String? = null
-            private var notes: String? = null
+            private var paymentReceivedDate: JsonField<LocalDate>? = null
+            private var externalId: JsonField<String> = JsonMissing.of()
+            private var notes: JsonField<String> = JsonMissing.of()
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             internal fun from(invoiceMarkPaidBody: InvoiceMarkPaidBody) = apply {
@@ -105,15 +146,25 @@ constructor(
             }
 
             /** A date string to specify the date of the payment. */
-            fun paymentReceivedDate(paymentReceivedDate: LocalDate) = apply {
+            fun paymentReceivedDate(paymentReceivedDate: LocalDate) =
+                paymentReceivedDate(JsonField.of(paymentReceivedDate))
+
+            /** A date string to specify the date of the payment. */
+            fun paymentReceivedDate(paymentReceivedDate: JsonField<LocalDate>) = apply {
                 this.paymentReceivedDate = paymentReceivedDate
             }
 
             /** An optional external ID to associate with the payment. */
-            fun externalId(externalId: String?) = apply { this.externalId = externalId }
+            fun externalId(externalId: String?) = externalId(JsonField.ofNullable(externalId))
+
+            /** An optional external ID to associate with the payment. */
+            fun externalId(externalId: JsonField<String>) = apply { this.externalId = externalId }
 
             /** An optional note to associate with the payment. */
-            fun notes(notes: String?) = apply { this.notes = notes }
+            fun notes(notes: String?) = notes(JsonField.ofNullable(notes))
+
+            /** An optional note to associate with the payment. */
+            fun notes(notes: JsonField<String>) = apply { this.notes = notes }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
@@ -192,11 +243,41 @@ constructor(
             body.paymentReceivedDate(paymentReceivedDate)
         }
 
+        /** A date string to specify the date of the payment. */
+        fun paymentReceivedDate(paymentReceivedDate: JsonField<LocalDate>) = apply {
+            body.paymentReceivedDate(paymentReceivedDate)
+        }
+
         /** An optional external ID to associate with the payment. */
         fun externalId(externalId: String?) = apply { body.externalId(externalId) }
 
+        /** An optional external ID to associate with the payment. */
+        fun externalId(externalId: JsonField<String>) = apply { body.externalId(externalId) }
+
         /** An optional note to associate with the payment. */
         fun notes(notes: String?) = apply { body.notes(notes) }
+
+        /** An optional note to associate with the payment. */
+        fun notes(notes: JsonField<String>) = apply { body.notes(notes) }
+
+        fun additionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) = apply {
+            body.additionalProperties(additionalBodyProperties)
+        }
+
+        fun putAdditionalBodyProperty(key: String, value: JsonValue) = apply {
+            body.putAdditionalProperty(key, value)
+        }
+
+        fun putAllAdditionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) =
+            apply {
+                body.putAllAdditionalProperties(additionalBodyProperties)
+            }
+
+        fun removeAdditionalBodyProperty(key: String) = apply { body.removeAdditionalProperty(key) }
+
+        fun removeAllAdditionalBodyProperties(keys: Set<String>) = apply {
+            body.removeAllAdditionalProperties(keys)
+        }
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {
             this.additionalHeaders.clear()
@@ -294,25 +375,6 @@ constructor(
 
         fun removeAllAdditionalQueryParams(keys: Set<String>) = apply {
             additionalQueryParams.removeAll(keys)
-        }
-
-        fun additionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) = apply {
-            body.additionalProperties(additionalBodyProperties)
-        }
-
-        fun putAdditionalBodyProperty(key: String, value: JsonValue) = apply {
-            body.putAdditionalProperty(key, value)
-        }
-
-        fun putAllAdditionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) =
-            apply {
-                body.putAllAdditionalProperties(additionalBodyProperties)
-            }
-
-        fun removeAdditionalBodyProperty(key: String) = apply { body.removeAdditionalProperty(key) }
-
-        fun removeAllAdditionalBodyProperties(keys: Set<String>) = apply {
-            body.removeAllAdditionalProperties(keys)
         }
 
         fun build(): InvoiceMarkPaidParams =

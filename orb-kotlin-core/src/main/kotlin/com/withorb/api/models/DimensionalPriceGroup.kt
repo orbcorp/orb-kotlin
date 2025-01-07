@@ -65,31 +65,35 @@ private constructor(
     /** The name of the dimensional price group */
     fun name(): String = name.getRequired("name")
 
-    @JsonProperty("id") @ExcludeMissing fun _id() = id
+    @JsonProperty("id") @ExcludeMissing fun _id(): JsonField<String> = id
 
     /**
      * The billable metric associated with this dimensional price group. All prices associated with
      * this dimensional price group will be computed using this billable metric.
      */
-    @JsonProperty("billable_metric_id") @ExcludeMissing fun _billableMetricId() = billableMetricId
+    @JsonProperty("billable_metric_id")
+    @ExcludeMissing
+    fun _billableMetricId(): JsonField<String> = billableMetricId
 
     /** The dimensions that this dimensional price group is defined over */
-    @JsonProperty("dimensions") @ExcludeMissing fun _dimensions() = dimensions
+    @JsonProperty("dimensions")
+    @ExcludeMissing
+    fun _dimensions(): JsonField<List<String>> = dimensions
 
     /** An alias for the dimensional price group */
     @JsonProperty("external_dimensional_price_group_id")
     @ExcludeMissing
-    fun _externalDimensionalPriceGroupId() = externalDimensionalPriceGroupId
+    fun _externalDimensionalPriceGroupId(): JsonField<String> = externalDimensionalPriceGroupId
 
     /**
      * User specified key-value pairs for the resource. If not present, this defaults to an empty
      * dictionary. Individual keys can be removed by setting the value to `null`, and the entire
      * metadata mapping can be cleared by setting `metadata` to `null`.
      */
-    @JsonProperty("metadata") @ExcludeMissing fun _metadata() = metadata
+    @JsonProperty("metadata") @ExcludeMissing fun _metadata(): JsonField<Metadata> = metadata
 
     /** The name of the dimensional price group */
-    @JsonProperty("name") @ExcludeMissing fun _name() = name
+    @JsonProperty("name") @ExcludeMissing fun _name(): JsonField<String> = name
 
     @JsonAnyGetter
     @ExcludeMissing
@@ -118,18 +122,18 @@ private constructor(
 
     class Builder {
 
-        private var id: JsonField<String> = JsonMissing.of()
-        private var billableMetricId: JsonField<String> = JsonMissing.of()
-        private var dimensions: JsonField<List<String>> = JsonMissing.of()
-        private var externalDimensionalPriceGroupId: JsonField<String> = JsonMissing.of()
-        private var metadata: JsonField<Metadata> = JsonMissing.of()
-        private var name: JsonField<String> = JsonMissing.of()
+        private var id: JsonField<String>? = null
+        private var billableMetricId: JsonField<String>? = null
+        private var dimensions: JsonField<MutableList<String>>? = null
+        private var externalDimensionalPriceGroupId: JsonField<String>? = null
+        private var metadata: JsonField<Metadata>? = null
+        private var name: JsonField<String>? = null
         private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         internal fun from(dimensionalPriceGroup: DimensionalPriceGroup) = apply {
             id = dimensionalPriceGroup.id
             billableMetricId = dimensionalPriceGroup.billableMetricId
-            dimensions = dimensionalPriceGroup.dimensions
+            dimensions = dimensionalPriceGroup.dimensions.map { it.toMutableList() }
             externalDimensionalPriceGroupId = dimensionalPriceGroup.externalDimensionalPriceGroupId
             metadata = dimensionalPriceGroup.metadata
             name = dimensionalPriceGroup.name
@@ -159,11 +163,25 @@ private constructor(
         fun dimensions(dimensions: List<String>) = dimensions(JsonField.of(dimensions))
 
         /** The dimensions that this dimensional price group is defined over */
-        fun dimensions(dimensions: JsonField<List<String>>) = apply { this.dimensions = dimensions }
+        fun dimensions(dimensions: JsonField<List<String>>) = apply {
+            this.dimensions = dimensions.map { it.toMutableList() }
+        }
+
+        /** The dimensions that this dimensional price group is defined over */
+        fun addDimension(dimension: String) = apply {
+            dimensions =
+                (dimensions ?: JsonField.of(mutableListOf())).apply {
+                    (asKnown()
+                            ?: throw IllegalStateException(
+                                "Field was set to non-list type: ${javaClass.simpleName}"
+                            ))
+                        .add(dimension)
+                }
+        }
 
         /** An alias for the dimensional price group */
-        fun externalDimensionalPriceGroupId(externalDimensionalPriceGroupId: String) =
-            externalDimensionalPriceGroupId(JsonField.of(externalDimensionalPriceGroupId))
+        fun externalDimensionalPriceGroupId(externalDimensionalPriceGroupId: String?) =
+            externalDimensionalPriceGroupId(JsonField.ofNullable(externalDimensionalPriceGroupId))
 
         /** An alias for the dimensional price group */
         fun externalDimensionalPriceGroupId(externalDimensionalPriceGroupId: JsonField<String>) =
@@ -212,12 +230,15 @@ private constructor(
 
         fun build(): DimensionalPriceGroup =
             DimensionalPriceGroup(
-                id,
-                billableMetricId,
-                dimensions.map { it.toImmutable() },
-                externalDimensionalPriceGroupId,
-                metadata,
-                name,
+                checkNotNull(id) { "`id` is required but was not set" },
+                checkNotNull(billableMetricId) { "`billableMetricId` is required but was not set" },
+                checkNotNull(dimensions) { "`dimensions` is required but was not set" }
+                    .map { it.toImmutable() },
+                checkNotNull(externalDimensionalPriceGroupId) {
+                    "`externalDimensionalPriceGroupId` is required but was not set"
+                },
+                checkNotNull(metadata) { "`metadata` is required but was not set" },
+                checkNotNull(name) { "`name` is required but was not set" },
                 additionalProperties.toImmutable(),
             )
     }

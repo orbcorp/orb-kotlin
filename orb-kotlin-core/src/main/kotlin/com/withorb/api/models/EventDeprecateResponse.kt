@@ -29,7 +29,7 @@ private constructor(
     fun deprecated(): String = deprecated.getRequired("deprecated")
 
     /** event_id of the deprecated event, if successfully updated */
-    @JsonProperty("deprecated") @ExcludeMissing fun _deprecated() = deprecated
+    @JsonProperty("deprecated") @ExcludeMissing fun _deprecated(): JsonField<String> = deprecated
 
     @JsonAnyGetter
     @ExcludeMissing
@@ -53,7 +53,7 @@ private constructor(
 
     class Builder {
 
-        private var deprecated: JsonField<String> = JsonMissing.of()
+        private var deprecated: JsonField<String>? = null
         private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         internal fun from(eventDeprecateResponse: EventDeprecateResponse) = apply {
@@ -87,7 +87,10 @@ private constructor(
         }
 
         fun build(): EventDeprecateResponse =
-            EventDeprecateResponse(deprecated, additionalProperties.toImmutable())
+            EventDeprecateResponse(
+                checkNotNull(deprecated) { "`deprecated` is required but was not set" },
+                additionalProperties.toImmutable()
+            )
     }
 
     override fun equals(other: Any?): Boolean {

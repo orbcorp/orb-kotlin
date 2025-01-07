@@ -7,6 +7,8 @@ import com.fasterxml.jackson.annotation.JsonAnySetter
 import com.fasterxml.jackson.annotation.JsonCreator
 import com.fasterxml.jackson.annotation.JsonProperty
 import com.withorb.api.core.ExcludeMissing
+import com.withorb.api.core.JsonField
+import com.withorb.api.core.JsonMissing
 import com.withorb.api.core.JsonValue
 import com.withorb.api.core.NoAutoDetect
 import com.withorb.api.core.http.Headers
@@ -48,11 +50,32 @@ constructor(
     /** A date string to specify the line item's start date in the customer's timezone. */
     fun startDate(): LocalDate = body.startDate()
 
+    /** The total amount in the invoice's currency to add to the line item. */
+    fun _amount(): JsonField<String> = body._amount()
+
+    /** A date string to specify the line item's end date in the customer's timezone. */
+    fun _endDate(): JsonField<LocalDate> = body._endDate()
+
+    /** The id of the Invoice to add this line item. */
+    fun _invoiceId(): JsonField<String> = body._invoiceId()
+
+    /**
+     * The item name associated with this line item. If an item with the same name exists in Orb,
+     * that item will be associated with the line item.
+     */
+    fun _name(): JsonField<String> = body._name()
+
+    /** The number of units on the line item */
+    fun _quantity(): JsonField<Double> = body._quantity()
+
+    /** A date string to specify the line item's start date in the customer's timezone. */
+    fun _startDate(): JsonField<LocalDate> = body._startDate()
+
+    fun _additionalBodyProperties(): Map<String, JsonValue> = body._additionalProperties()
+
     fun _additionalHeaders(): Headers = additionalHeaders
 
     fun _additionalQueryParams(): QueryParams = additionalQueryParams
-
-    fun _additionalBodyProperties(): Map<String, JsonValue> = body._additionalProperties()
 
     internal fun getBody(): InvoiceLineItemCreateBody = body
 
@@ -64,40 +87,89 @@ constructor(
     class InvoiceLineItemCreateBody
     @JsonCreator
     internal constructor(
-        @JsonProperty("amount") private val amount: String,
-        @JsonProperty("end_date") private val endDate: LocalDate,
-        @JsonProperty("invoice_id") private val invoiceId: String,
-        @JsonProperty("name") private val name: String,
-        @JsonProperty("quantity") private val quantity: Double,
-        @JsonProperty("start_date") private val startDate: LocalDate,
+        @JsonProperty("amount")
+        @ExcludeMissing
+        private val amount: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("end_date")
+        @ExcludeMissing
+        private val endDate: JsonField<LocalDate> = JsonMissing.of(),
+        @JsonProperty("invoice_id")
+        @ExcludeMissing
+        private val invoiceId: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("name")
+        @ExcludeMissing
+        private val name: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("quantity")
+        @ExcludeMissing
+        private val quantity: JsonField<Double> = JsonMissing.of(),
+        @JsonProperty("start_date")
+        @ExcludeMissing
+        private val startDate: JsonField<LocalDate> = JsonMissing.of(),
         @JsonAnySetter
         private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
 
         /** The total amount in the invoice's currency to add to the line item. */
-        @JsonProperty("amount") fun amount(): String = amount
+        fun amount(): String = amount.getRequired("amount")
 
         /** A date string to specify the line item's end date in the customer's timezone. */
-        @JsonProperty("end_date") fun endDate(): LocalDate = endDate
+        fun endDate(): LocalDate = endDate.getRequired("end_date")
 
         /** The id of the Invoice to add this line item. */
-        @JsonProperty("invoice_id") fun invoiceId(): String = invoiceId
+        fun invoiceId(): String = invoiceId.getRequired("invoice_id")
 
         /**
          * The item name associated with this line item. If an item with the same name exists in
          * Orb, that item will be associated with the line item.
          */
-        @JsonProperty("name") fun name(): String = name
+        fun name(): String = name.getRequired("name")
 
         /** The number of units on the line item */
-        @JsonProperty("quantity") fun quantity(): Double = quantity
+        fun quantity(): Double = quantity.getRequired("quantity")
 
         /** A date string to specify the line item's start date in the customer's timezone. */
-        @JsonProperty("start_date") fun startDate(): LocalDate = startDate
+        fun startDate(): LocalDate = startDate.getRequired("start_date")
+
+        /** The total amount in the invoice's currency to add to the line item. */
+        @JsonProperty("amount") @ExcludeMissing fun _amount(): JsonField<String> = amount
+
+        /** A date string to specify the line item's end date in the customer's timezone. */
+        @JsonProperty("end_date") @ExcludeMissing fun _endDate(): JsonField<LocalDate> = endDate
+
+        /** The id of the Invoice to add this line item. */
+        @JsonProperty("invoice_id") @ExcludeMissing fun _invoiceId(): JsonField<String> = invoiceId
+
+        /**
+         * The item name associated with this line item. If an item with the same name exists in
+         * Orb, that item will be associated with the line item.
+         */
+        @JsonProperty("name") @ExcludeMissing fun _name(): JsonField<String> = name
+
+        /** The number of units on the line item */
+        @JsonProperty("quantity") @ExcludeMissing fun _quantity(): JsonField<Double> = quantity
+
+        /** A date string to specify the line item's start date in the customer's timezone. */
+        @JsonProperty("start_date")
+        @ExcludeMissing
+        fun _startDate(): JsonField<LocalDate> = startDate
 
         @JsonAnyGetter
         @ExcludeMissing
         fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
+
+        private var validated: Boolean = false
+
+        fun validate(): InvoiceLineItemCreateBody = apply {
+            if (!validated) {
+                amount()
+                endDate()
+                invoiceId()
+                name()
+                quantity()
+                startDate()
+                validated = true
+            }
+        }
 
         fun toBuilder() = Builder().from(this)
 
@@ -108,12 +180,12 @@ constructor(
 
         class Builder {
 
-            private var amount: String? = null
-            private var endDate: LocalDate? = null
-            private var invoiceId: String? = null
-            private var name: String? = null
-            private var quantity: Double? = null
-            private var startDate: LocalDate? = null
+            private var amount: JsonField<String>? = null
+            private var endDate: JsonField<LocalDate>? = null
+            private var invoiceId: JsonField<String>? = null
+            private var name: JsonField<String>? = null
+            private var quantity: JsonField<Double>? = null
+            private var startDate: JsonField<LocalDate>? = null
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             internal fun from(invoiceLineItemCreateBody: InvoiceLineItemCreateBody) = apply {
@@ -127,25 +199,46 @@ constructor(
             }
 
             /** The total amount in the invoice's currency to add to the line item. */
-            fun amount(amount: String) = apply { this.amount = amount }
+            fun amount(amount: String) = amount(JsonField.of(amount))
+
+            /** The total amount in the invoice's currency to add to the line item. */
+            fun amount(amount: JsonField<String>) = apply { this.amount = amount }
 
             /** A date string to specify the line item's end date in the customer's timezone. */
-            fun endDate(endDate: LocalDate) = apply { this.endDate = endDate }
+            fun endDate(endDate: LocalDate) = endDate(JsonField.of(endDate))
+
+            /** A date string to specify the line item's end date in the customer's timezone. */
+            fun endDate(endDate: JsonField<LocalDate>) = apply { this.endDate = endDate }
 
             /** The id of the Invoice to add this line item. */
-            fun invoiceId(invoiceId: String) = apply { this.invoiceId = invoiceId }
+            fun invoiceId(invoiceId: String) = invoiceId(JsonField.of(invoiceId))
+
+            /** The id of the Invoice to add this line item. */
+            fun invoiceId(invoiceId: JsonField<String>) = apply { this.invoiceId = invoiceId }
 
             /**
              * The item name associated with this line item. If an item with the same name exists in
              * Orb, that item will be associated with the line item.
              */
-            fun name(name: String) = apply { this.name = name }
+            fun name(name: String) = name(JsonField.of(name))
+
+            /**
+             * The item name associated with this line item. If an item with the same name exists in
+             * Orb, that item will be associated with the line item.
+             */
+            fun name(name: JsonField<String>) = apply { this.name = name }
 
             /** The number of units on the line item */
-            fun quantity(quantity: Double) = apply { this.quantity = quantity }
+            fun quantity(quantity: Double) = quantity(JsonField.of(quantity))
+
+            /** The number of units on the line item */
+            fun quantity(quantity: JsonField<Double>) = apply { this.quantity = quantity }
 
             /** A date string to specify the line item's start date in the customer's timezone. */
-            fun startDate(startDate: LocalDate) = apply { this.startDate = startDate }
+            fun startDate(startDate: LocalDate) = startDate(JsonField.of(startDate))
+
+            /** A date string to specify the line item's start date in the customer's timezone. */
+            fun startDate(startDate: JsonField<LocalDate>) = apply { this.startDate = startDate }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
@@ -219,11 +312,20 @@ constructor(
         /** The total amount in the invoice's currency to add to the line item. */
         fun amount(amount: String) = apply { body.amount(amount) }
 
+        /** The total amount in the invoice's currency to add to the line item. */
+        fun amount(amount: JsonField<String>) = apply { body.amount(amount) }
+
         /** A date string to specify the line item's end date in the customer's timezone. */
         fun endDate(endDate: LocalDate) = apply { body.endDate(endDate) }
 
+        /** A date string to specify the line item's end date in the customer's timezone. */
+        fun endDate(endDate: JsonField<LocalDate>) = apply { body.endDate(endDate) }
+
         /** The id of the Invoice to add this line item. */
         fun invoiceId(invoiceId: String) = apply { body.invoiceId(invoiceId) }
+
+        /** The id of the Invoice to add this line item. */
+        fun invoiceId(invoiceId: JsonField<String>) = apply { body.invoiceId(invoiceId) }
 
         /**
          * The item name associated with this line item. If an item with the same name exists in
@@ -231,11 +333,42 @@ constructor(
          */
         fun name(name: String) = apply { body.name(name) }
 
+        /**
+         * The item name associated with this line item. If an item with the same name exists in
+         * Orb, that item will be associated with the line item.
+         */
+        fun name(name: JsonField<String>) = apply { body.name(name) }
+
         /** The number of units on the line item */
         fun quantity(quantity: Double) = apply { body.quantity(quantity) }
 
+        /** The number of units on the line item */
+        fun quantity(quantity: JsonField<Double>) = apply { body.quantity(quantity) }
+
         /** A date string to specify the line item's start date in the customer's timezone. */
         fun startDate(startDate: LocalDate) = apply { body.startDate(startDate) }
+
+        /** A date string to specify the line item's start date in the customer's timezone. */
+        fun startDate(startDate: JsonField<LocalDate>) = apply { body.startDate(startDate) }
+
+        fun additionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) = apply {
+            body.additionalProperties(additionalBodyProperties)
+        }
+
+        fun putAdditionalBodyProperty(key: String, value: JsonValue) = apply {
+            body.putAdditionalProperty(key, value)
+        }
+
+        fun putAllAdditionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) =
+            apply {
+                body.putAllAdditionalProperties(additionalBodyProperties)
+            }
+
+        fun removeAdditionalBodyProperty(key: String) = apply { body.removeAdditionalProperty(key) }
+
+        fun removeAllAdditionalBodyProperties(keys: Set<String>) = apply {
+            body.removeAllAdditionalProperties(keys)
+        }
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {
             this.additionalHeaders.clear()
@@ -333,25 +466,6 @@ constructor(
 
         fun removeAllAdditionalQueryParams(keys: Set<String>) = apply {
             additionalQueryParams.removeAll(keys)
-        }
-
-        fun additionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) = apply {
-            body.additionalProperties(additionalBodyProperties)
-        }
-
-        fun putAdditionalBodyProperty(key: String, value: JsonValue) = apply {
-            body.putAdditionalProperty(key, value)
-        }
-
-        fun putAllAdditionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) =
-            apply {
-                body.putAllAdditionalProperties(additionalBodyProperties)
-            }
-
-        fun removeAdditionalBodyProperty(key: String) = apply { body.removeAdditionalProperty(key) }
-
-        fun removeAllAdditionalBodyProperties(keys: Set<String>) = apply {
-            body.removeAllAdditionalProperties(keys)
         }
 
         fun build(): InvoiceLineItemCreateParams =

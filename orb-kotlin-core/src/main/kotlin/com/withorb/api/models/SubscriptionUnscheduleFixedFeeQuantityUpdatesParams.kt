@@ -7,6 +7,8 @@ import com.fasterxml.jackson.annotation.JsonAnySetter
 import com.fasterxml.jackson.annotation.JsonCreator
 import com.fasterxml.jackson.annotation.JsonProperty
 import com.withorb.api.core.ExcludeMissing
+import com.withorb.api.core.JsonField
+import com.withorb.api.core.JsonMissing
 import com.withorb.api.core.JsonValue
 import com.withorb.api.core.NoAutoDetect
 import com.withorb.api.core.http.Headers
@@ -34,11 +36,14 @@ constructor(
     /** Price for which the updates should be cleared. Must be a fixed fee. */
     fun priceId(): String = body.priceId()
 
+    /** Price for which the updates should be cleared. Must be a fixed fee. */
+    fun _priceId(): JsonField<String> = body._priceId()
+
+    fun _additionalBodyProperties(): Map<String, JsonValue> = body._additionalProperties()
+
     fun _additionalHeaders(): Headers = additionalHeaders
 
     fun _additionalQueryParams(): QueryParams = additionalQueryParams
-
-    fun _additionalBodyProperties(): Map<String, JsonValue> = body._additionalProperties()
 
     internal fun getBody(): SubscriptionUnscheduleFixedFeeQuantityUpdatesBody = body
 
@@ -57,17 +62,31 @@ constructor(
     class SubscriptionUnscheduleFixedFeeQuantityUpdatesBody
     @JsonCreator
     internal constructor(
-        @JsonProperty("price_id") private val priceId: String,
+        @JsonProperty("price_id")
+        @ExcludeMissing
+        private val priceId: JsonField<String> = JsonMissing.of(),
         @JsonAnySetter
         private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
 
         /** Price for which the updates should be cleared. Must be a fixed fee. */
-        @JsonProperty("price_id") fun priceId(): String = priceId
+        fun priceId(): String = priceId.getRequired("price_id")
+
+        /** Price for which the updates should be cleared. Must be a fixed fee. */
+        @JsonProperty("price_id") @ExcludeMissing fun _priceId(): JsonField<String> = priceId
 
         @JsonAnyGetter
         @ExcludeMissing
         fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
+
+        private var validated: Boolean = false
+
+        fun validate(): SubscriptionUnscheduleFixedFeeQuantityUpdatesBody = apply {
+            if (!validated) {
+                priceId()
+                validated = true
+            }
+        }
 
         fun toBuilder() = Builder().from(this)
 
@@ -78,7 +97,7 @@ constructor(
 
         class Builder {
 
-            private var priceId: String? = null
+            private var priceId: JsonField<String>? = null
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             internal fun from(
@@ -92,7 +111,10 @@ constructor(
             }
 
             /** Price for which the updates should be cleared. Must be a fixed fee. */
-            fun priceId(priceId: String) = apply { this.priceId = priceId }
+            fun priceId(priceId: String) = priceId(JsonField.of(priceId))
+
+            /** Price for which the updates should be cleared. Must be a fixed fee. */
+            fun priceId(priceId: JsonField<String>) = apply { this.priceId = priceId }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
@@ -171,6 +193,28 @@ constructor(
 
         /** Price for which the updates should be cleared. Must be a fixed fee. */
         fun priceId(priceId: String) = apply { body.priceId(priceId) }
+
+        /** Price for which the updates should be cleared. Must be a fixed fee. */
+        fun priceId(priceId: JsonField<String>) = apply { body.priceId(priceId) }
+
+        fun additionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) = apply {
+            body.additionalProperties(additionalBodyProperties)
+        }
+
+        fun putAdditionalBodyProperty(key: String, value: JsonValue) = apply {
+            body.putAdditionalProperty(key, value)
+        }
+
+        fun putAllAdditionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) =
+            apply {
+                body.putAllAdditionalProperties(additionalBodyProperties)
+            }
+
+        fun removeAdditionalBodyProperty(key: String) = apply { body.removeAdditionalProperty(key) }
+
+        fun removeAllAdditionalBodyProperties(keys: Set<String>) = apply {
+            body.removeAllAdditionalProperties(keys)
+        }
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {
             this.additionalHeaders.clear()
@@ -268,25 +312,6 @@ constructor(
 
         fun removeAllAdditionalQueryParams(keys: Set<String>) = apply {
             additionalQueryParams.removeAll(keys)
-        }
-
-        fun additionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) = apply {
-            body.additionalProperties(additionalBodyProperties)
-        }
-
-        fun putAdditionalBodyProperty(key: String, value: JsonValue) = apply {
-            body.putAdditionalProperty(key, value)
-        }
-
-        fun putAllAdditionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) =
-            apply {
-                body.putAllAdditionalProperties(additionalBodyProperties)
-            }
-
-        fun removeAdditionalBodyProperty(key: String) = apply { body.removeAdditionalProperty(key) }
-
-        fun removeAllAdditionalBodyProperties(keys: Set<String>) = apply {
-            body.removeAllAdditionalProperties(keys)
         }
 
         fun build(): SubscriptionUnscheduleFixedFeeQuantityUpdatesParams =

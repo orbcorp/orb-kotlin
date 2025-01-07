@@ -9,6 +9,7 @@ import com.fasterxml.jackson.annotation.JsonProperty
 import com.withorb.api.core.Enum
 import com.withorb.api.core.ExcludeMissing
 import com.withorb.api.core.JsonField
+import com.withorb.api.core.JsonMissing
 import com.withorb.api.core.JsonValue
 import com.withorb.api.core.NoAutoDetect
 import com.withorb.api.core.http.Headers
@@ -34,11 +35,19 @@ constructor(
     /** An optional reason for the credit note. */
     fun reason(): Reason? = body.reason()
 
+    fun _lineItems(): JsonField<List<LineItem>> = body._lineItems()
+
+    /** An optional memo to attach to the credit note. */
+    fun _memo(): JsonField<String> = body._memo()
+
+    /** An optional reason for the credit note. */
+    fun _reason(): JsonField<Reason> = body._reason()
+
+    fun _additionalBodyProperties(): Map<String, JsonValue> = body._additionalProperties()
+
     fun _additionalHeaders(): Headers = additionalHeaders
 
     fun _additionalQueryParams(): QueryParams = additionalQueryParams
-
-    fun _additionalBodyProperties(): Map<String, JsonValue> = body._additionalProperties()
 
     internal fun getBody(): CreditNoteCreateBody = body
 
@@ -50,24 +59,51 @@ constructor(
     class CreditNoteCreateBody
     @JsonCreator
     internal constructor(
-        @JsonProperty("line_items") private val lineItems: List<LineItem>,
-        @JsonProperty("memo") private val memo: String?,
-        @JsonProperty("reason") private val reason: Reason?,
+        @JsonProperty("line_items")
+        @ExcludeMissing
+        private val lineItems: JsonField<List<LineItem>> = JsonMissing.of(),
+        @JsonProperty("memo")
+        @ExcludeMissing
+        private val memo: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("reason")
+        @ExcludeMissing
+        private val reason: JsonField<Reason> = JsonMissing.of(),
         @JsonAnySetter
         private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
 
-        @JsonProperty("line_items") fun lineItems(): List<LineItem> = lineItems
+        fun lineItems(): List<LineItem> = lineItems.getRequired("line_items")
 
         /** An optional memo to attach to the credit note. */
-        @JsonProperty("memo") fun memo(): String? = memo
+        fun memo(): String? = memo.getNullable("memo")
 
         /** An optional reason for the credit note. */
-        @JsonProperty("reason") fun reason(): Reason? = reason
+        fun reason(): Reason? = reason.getNullable("reason")
+
+        @JsonProperty("line_items")
+        @ExcludeMissing
+        fun _lineItems(): JsonField<List<LineItem>> = lineItems
+
+        /** An optional memo to attach to the credit note. */
+        @JsonProperty("memo") @ExcludeMissing fun _memo(): JsonField<String> = memo
+
+        /** An optional reason for the credit note. */
+        @JsonProperty("reason") @ExcludeMissing fun _reason(): JsonField<Reason> = reason
 
         @JsonAnyGetter
         @ExcludeMissing
         fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
+
+        private var validated: Boolean = false
+
+        fun validate(): CreditNoteCreateBody = apply {
+            if (!validated) {
+                lineItems().forEach { it.validate() }
+                memo()
+                reason()
+                validated = true
+            }
+        }
 
         fun toBuilder() = Builder().from(this)
 
@@ -78,31 +114,46 @@ constructor(
 
         class Builder {
 
-            private var lineItems: MutableList<LineItem>? = null
-            private var memo: String? = null
-            private var reason: Reason? = null
+            private var lineItems: JsonField<MutableList<LineItem>>? = null
+            private var memo: JsonField<String> = JsonMissing.of()
+            private var reason: JsonField<Reason> = JsonMissing.of()
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             internal fun from(creditNoteCreateBody: CreditNoteCreateBody) = apply {
-                lineItems = creditNoteCreateBody.lineItems.toMutableList()
+                lineItems = creditNoteCreateBody.lineItems.map { it.toMutableList() }
                 memo = creditNoteCreateBody.memo
                 reason = creditNoteCreateBody.reason
                 additionalProperties = creditNoteCreateBody.additionalProperties.toMutableMap()
             }
 
-            fun lineItems(lineItems: List<LineItem>) = apply {
-                this.lineItems = lineItems.toMutableList()
+            fun lineItems(lineItems: List<LineItem>) = lineItems(JsonField.of(lineItems))
+
+            fun lineItems(lineItems: JsonField<List<LineItem>>) = apply {
+                this.lineItems = lineItems.map { it.toMutableList() }
             }
 
             fun addLineItem(lineItem: LineItem) = apply {
-                lineItems = (lineItems ?: mutableListOf()).apply { add(lineItem) }
+                lineItems =
+                    (lineItems ?: JsonField.of(mutableListOf())).apply {
+                        (asKnown()
+                                ?: throw IllegalStateException(
+                                    "Field was set to non-list type: ${javaClass.simpleName}"
+                                ))
+                            .add(lineItem)
+                    }
             }
 
             /** An optional memo to attach to the credit note. */
-            fun memo(memo: String?) = apply { this.memo = memo }
+            fun memo(memo: String?) = memo(JsonField.ofNullable(memo))
+
+            /** An optional memo to attach to the credit note. */
+            fun memo(memo: JsonField<String>) = apply { this.memo = memo }
 
             /** An optional reason for the credit note. */
-            fun reason(reason: Reason?) = apply { this.reason = reason }
+            fun reason(reason: Reason?) = reason(JsonField.ofNullable(reason))
+
+            /** An optional reason for the credit note. */
+            fun reason(reason: JsonField<Reason>) = apply { this.reason = reason }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
@@ -126,7 +177,7 @@ constructor(
             fun build(): CreditNoteCreateBody =
                 CreditNoteCreateBody(
                     checkNotNull(lineItems) { "`lineItems` is required but was not set" }
-                        .toImmutable(),
+                        .map { it.toImmutable() },
                     memo,
                     reason,
                     additionalProperties.toImmutable(),
@@ -173,13 +224,40 @@ constructor(
 
         fun lineItems(lineItems: List<LineItem>) = apply { body.lineItems(lineItems) }
 
+        fun lineItems(lineItems: JsonField<List<LineItem>>) = apply { body.lineItems(lineItems) }
+
         fun addLineItem(lineItem: LineItem) = apply { body.addLineItem(lineItem) }
 
         /** An optional memo to attach to the credit note. */
         fun memo(memo: String?) = apply { body.memo(memo) }
 
+        /** An optional memo to attach to the credit note. */
+        fun memo(memo: JsonField<String>) = apply { body.memo(memo) }
+
         /** An optional reason for the credit note. */
         fun reason(reason: Reason?) = apply { body.reason(reason) }
+
+        /** An optional reason for the credit note. */
+        fun reason(reason: JsonField<Reason>) = apply { body.reason(reason) }
+
+        fun additionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) = apply {
+            body.additionalProperties(additionalBodyProperties)
+        }
+
+        fun putAdditionalBodyProperty(key: String, value: JsonValue) = apply {
+            body.putAdditionalProperty(key, value)
+        }
+
+        fun putAllAdditionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) =
+            apply {
+                body.putAllAdditionalProperties(additionalBodyProperties)
+            }
+
+        fun removeAdditionalBodyProperty(key: String) = apply { body.removeAdditionalProperty(key) }
+
+        fun removeAllAdditionalBodyProperties(keys: Set<String>) = apply {
+            body.removeAllAdditionalProperties(keys)
+        }
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {
             this.additionalHeaders.clear()
@@ -279,25 +357,6 @@ constructor(
             additionalQueryParams.removeAll(keys)
         }
 
-        fun additionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) = apply {
-            body.additionalProperties(additionalBodyProperties)
-        }
-
-        fun putAdditionalBodyProperty(key: String, value: JsonValue) = apply {
-            body.putAdditionalProperty(key, value)
-        }
-
-        fun putAllAdditionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) =
-            apply {
-                body.putAllAdditionalProperties(additionalBodyProperties)
-            }
-
-        fun removeAdditionalBodyProperty(key: String) = apply { body.removeAdditionalProperty(key) }
-
-        fun removeAllAdditionalBodyProperties(keys: Set<String>) = apply {
-            body.removeAllAdditionalProperties(keys)
-        }
-
         fun build(): CreditNoteCreateParams =
             CreditNoteCreateParams(
                 body.build(),
@@ -310,21 +369,43 @@ constructor(
     class LineItem
     @JsonCreator
     private constructor(
-        @JsonProperty("amount") private val amount: String,
-        @JsonProperty("invoice_line_item_id") private val invoiceLineItemId: String,
+        @JsonProperty("amount")
+        @ExcludeMissing
+        private val amount: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("invoice_line_item_id")
+        @ExcludeMissing
+        private val invoiceLineItemId: JsonField<String> = JsonMissing.of(),
         @JsonAnySetter
         private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
 
         /** The total amount in the invoice's currency to credit this line item. */
-        @JsonProperty("amount") fun amount(): String = amount
+        fun amount(): String = amount.getRequired("amount")
 
         /** The ID of the line item to credit. */
-        @JsonProperty("invoice_line_item_id") fun invoiceLineItemId(): String = invoiceLineItemId
+        fun invoiceLineItemId(): String = invoiceLineItemId.getRequired("invoice_line_item_id")
+
+        /** The total amount in the invoice's currency to credit this line item. */
+        @JsonProperty("amount") @ExcludeMissing fun _amount(): JsonField<String> = amount
+
+        /** The ID of the line item to credit. */
+        @JsonProperty("invoice_line_item_id")
+        @ExcludeMissing
+        fun _invoiceLineItemId(): JsonField<String> = invoiceLineItemId
 
         @JsonAnyGetter
         @ExcludeMissing
         fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
+
+        private var validated: Boolean = false
+
+        fun validate(): LineItem = apply {
+            if (!validated) {
+                amount()
+                invoiceLineItemId()
+                validated = true
+            }
+        }
 
         fun toBuilder() = Builder().from(this)
 
@@ -335,8 +416,8 @@ constructor(
 
         class Builder {
 
-            private var amount: String? = null
-            private var invoiceLineItemId: String? = null
+            private var amount: JsonField<String>? = null
+            private var invoiceLineItemId: JsonField<String>? = null
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             internal fun from(lineItem: LineItem) = apply {
@@ -346,10 +427,17 @@ constructor(
             }
 
             /** The total amount in the invoice's currency to credit this line item. */
-            fun amount(amount: String) = apply { this.amount = amount }
+            fun amount(amount: String) = amount(JsonField.of(amount))
+
+            /** The total amount in the invoice's currency to credit this line item. */
+            fun amount(amount: JsonField<String>) = apply { this.amount = amount }
 
             /** The ID of the line item to credit. */
-            fun invoiceLineItemId(invoiceLineItemId: String) = apply {
+            fun invoiceLineItemId(invoiceLineItemId: String) =
+                invoiceLineItemId(JsonField.of(invoiceLineItemId))
+
+            /** The ID of the line item to credit. */
+            fun invoiceLineItemId(invoiceLineItemId: JsonField<String>) = apply {
                 this.invoiceLineItemId = invoiceLineItemId
             }
 

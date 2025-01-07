@@ -7,6 +7,8 @@ import com.fasterxml.jackson.annotation.JsonAnySetter
 import com.fasterxml.jackson.annotation.JsonCreator
 import com.fasterxml.jackson.annotation.JsonProperty
 import com.withorb.api.core.ExcludeMissing
+import com.withorb.api.core.JsonField
+import com.withorb.api.core.JsonMissing
 import com.withorb.api.core.JsonValue
 import com.withorb.api.core.NoAutoDetect
 import com.withorb.api.core.http.Headers
@@ -46,11 +48,30 @@ constructor(
      */
     fun metadata(): Metadata? = body.metadata()
 
+    /** A description of the metric. */
+    fun _description(): JsonField<String> = body._description()
+
+    /** The id of the item */
+    fun _itemId(): JsonField<String> = body._itemId()
+
+    /** The name of the metric. */
+    fun _name(): JsonField<String> = body._name()
+
+    /** A sql string defining the metric. */
+    fun _sql(): JsonField<String> = body._sql()
+
+    /**
+     * User-specified key/value pairs for the resource. Individual keys can be removed by setting
+     * the value to `null`, and the entire metadata mapping can be cleared by setting `metadata` to
+     * `null`.
+     */
+    fun _metadata(): JsonField<Metadata> = body._metadata()
+
+    fun _additionalBodyProperties(): Map<String, JsonValue> = body._additionalProperties()
+
     fun _additionalHeaders(): Headers = additionalHeaders
 
     fun _additionalQueryParams(): QueryParams = additionalQueryParams
-
-    fun _additionalBodyProperties(): Map<String, JsonValue> = body._additionalProperties()
 
     internal fun getBody(): MetricCreateBody = body
 
@@ -62,37 +83,79 @@ constructor(
     class MetricCreateBody
     @JsonCreator
     internal constructor(
-        @JsonProperty("description") private val description: String?,
-        @JsonProperty("item_id") private val itemId: String,
-        @JsonProperty("name") private val name: String,
-        @JsonProperty("sql") private val sql: String,
-        @JsonProperty("metadata") private val metadata: Metadata?,
+        @JsonProperty("description")
+        @ExcludeMissing
+        private val description: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("item_id")
+        @ExcludeMissing
+        private val itemId: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("name")
+        @ExcludeMissing
+        private val name: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("sql") @ExcludeMissing private val sql: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("metadata")
+        @ExcludeMissing
+        private val metadata: JsonField<Metadata> = JsonMissing.of(),
         @JsonAnySetter
         private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
 
         /** A description of the metric. */
-        @JsonProperty("description") fun description(): String? = description
+        fun description(): String? = description.getNullable("description")
 
         /** The id of the item */
-        @JsonProperty("item_id") fun itemId(): String = itemId
+        fun itemId(): String = itemId.getRequired("item_id")
 
         /** The name of the metric. */
-        @JsonProperty("name") fun name(): String = name
+        fun name(): String = name.getRequired("name")
 
         /** A sql string defining the metric. */
-        @JsonProperty("sql") fun sql(): String = sql
+        fun sql(): String = sql.getRequired("sql")
 
         /**
          * User-specified key/value pairs for the resource. Individual keys can be removed by
          * setting the value to `null`, and the entire metadata mapping can be cleared by setting
          * `metadata` to `null`.
          */
-        @JsonProperty("metadata") fun metadata(): Metadata? = metadata
+        fun metadata(): Metadata? = metadata.getNullable("metadata")
+
+        /** A description of the metric. */
+        @JsonProperty("description")
+        @ExcludeMissing
+        fun _description(): JsonField<String> = description
+
+        /** The id of the item */
+        @JsonProperty("item_id") @ExcludeMissing fun _itemId(): JsonField<String> = itemId
+
+        /** The name of the metric. */
+        @JsonProperty("name") @ExcludeMissing fun _name(): JsonField<String> = name
+
+        /** A sql string defining the metric. */
+        @JsonProperty("sql") @ExcludeMissing fun _sql(): JsonField<String> = sql
+
+        /**
+         * User-specified key/value pairs for the resource. Individual keys can be removed by
+         * setting the value to `null`, and the entire metadata mapping can be cleared by setting
+         * `metadata` to `null`.
+         */
+        @JsonProperty("metadata") @ExcludeMissing fun _metadata(): JsonField<Metadata> = metadata
 
         @JsonAnyGetter
         @ExcludeMissing
         fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
+
+        private var validated: Boolean = false
+
+        fun validate(): MetricCreateBody = apply {
+            if (!validated) {
+                description()
+                itemId()
+                name()
+                sql()
+                metadata()?.validate()
+                validated = true
+            }
+        }
 
         fun toBuilder() = Builder().from(this)
 
@@ -103,11 +166,11 @@ constructor(
 
         class Builder {
 
-            private var description: String? = null
-            private var itemId: String? = null
-            private var name: String? = null
-            private var sql: String? = null
-            private var metadata: Metadata? = null
+            private var description: JsonField<String>? = null
+            private var itemId: JsonField<String>? = null
+            private var name: JsonField<String>? = null
+            private var sql: JsonField<String>? = null
+            private var metadata: JsonField<Metadata> = JsonMissing.of()
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             internal fun from(metricCreateBody: MetricCreateBody) = apply {
@@ -120,23 +183,44 @@ constructor(
             }
 
             /** A description of the metric. */
-            fun description(description: String?) = apply { this.description = description }
+            fun description(description: String?) = description(JsonField.ofNullable(description))
+
+            /** A description of the metric. */
+            fun description(description: JsonField<String>) = apply {
+                this.description = description
+            }
 
             /** The id of the item */
-            fun itemId(itemId: String) = apply { this.itemId = itemId }
+            fun itemId(itemId: String) = itemId(JsonField.of(itemId))
+
+            /** The id of the item */
+            fun itemId(itemId: JsonField<String>) = apply { this.itemId = itemId }
 
             /** The name of the metric. */
-            fun name(name: String) = apply { this.name = name }
+            fun name(name: String) = name(JsonField.of(name))
+
+            /** The name of the metric. */
+            fun name(name: JsonField<String>) = apply { this.name = name }
 
             /** A sql string defining the metric. */
-            fun sql(sql: String) = apply { this.sql = sql }
+            fun sql(sql: String) = sql(JsonField.of(sql))
+
+            /** A sql string defining the metric. */
+            fun sql(sql: JsonField<String>) = apply { this.sql = sql }
 
             /**
              * User-specified key/value pairs for the resource. Individual keys can be removed by
              * setting the value to `null`, and the entire metadata mapping can be cleared by
              * setting `metadata` to `null`.
              */
-            fun metadata(metadata: Metadata?) = apply { this.metadata = metadata }
+            fun metadata(metadata: Metadata?) = metadata(JsonField.ofNullable(metadata))
+
+            /**
+             * User-specified key/value pairs for the resource. Individual keys can be removed by
+             * setting the value to `null`, and the entire metadata mapping can be cleared by
+             * setting `metadata` to `null`.
+             */
+            fun metadata(metadata: JsonField<Metadata>) = apply { this.metadata = metadata }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
@@ -159,7 +243,7 @@ constructor(
 
             fun build(): MetricCreateBody =
                 MetricCreateBody(
-                    description,
+                    checkNotNull(description) { "`description` is required but was not set" },
                     checkNotNull(itemId) { "`itemId` is required but was not set" },
                     checkNotNull(name) { "`name` is required but was not set" },
                     checkNotNull(sql) { "`sql` is required but was not set" },
@@ -209,14 +293,26 @@ constructor(
         /** A description of the metric. */
         fun description(description: String?) = apply { body.description(description) }
 
+        /** A description of the metric. */
+        fun description(description: JsonField<String>) = apply { body.description(description) }
+
         /** The id of the item */
         fun itemId(itemId: String) = apply { body.itemId(itemId) }
+
+        /** The id of the item */
+        fun itemId(itemId: JsonField<String>) = apply { body.itemId(itemId) }
 
         /** The name of the metric. */
         fun name(name: String) = apply { body.name(name) }
 
+        /** The name of the metric. */
+        fun name(name: JsonField<String>) = apply { body.name(name) }
+
         /** A sql string defining the metric. */
         fun sql(sql: String) = apply { body.sql(sql) }
+
+        /** A sql string defining the metric. */
+        fun sql(sql: JsonField<String>) = apply { body.sql(sql) }
 
         /**
          * User-specified key/value pairs for the resource. Individual keys can be removed by
@@ -224,6 +320,32 @@ constructor(
          * `metadata` to `null`.
          */
         fun metadata(metadata: Metadata?) = apply { body.metadata(metadata) }
+
+        /**
+         * User-specified key/value pairs for the resource. Individual keys can be removed by
+         * setting the value to `null`, and the entire metadata mapping can be cleared by setting
+         * `metadata` to `null`.
+         */
+        fun metadata(metadata: JsonField<Metadata>) = apply { body.metadata(metadata) }
+
+        fun additionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) = apply {
+            body.additionalProperties(additionalBodyProperties)
+        }
+
+        fun putAdditionalBodyProperty(key: String, value: JsonValue) = apply {
+            body.putAdditionalProperty(key, value)
+        }
+
+        fun putAllAdditionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) =
+            apply {
+                body.putAllAdditionalProperties(additionalBodyProperties)
+            }
+
+        fun removeAdditionalBodyProperty(key: String) = apply { body.removeAdditionalProperty(key) }
+
+        fun removeAllAdditionalBodyProperties(keys: Set<String>) = apply {
+            body.removeAllAdditionalProperties(keys)
+        }
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {
             this.additionalHeaders.clear()
@@ -323,25 +445,6 @@ constructor(
             additionalQueryParams.removeAll(keys)
         }
 
-        fun additionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) = apply {
-            body.additionalProperties(additionalBodyProperties)
-        }
-
-        fun putAdditionalBodyProperty(key: String, value: JsonValue) = apply {
-            body.putAdditionalProperty(key, value)
-        }
-
-        fun putAllAdditionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) =
-            apply {
-                body.putAllAdditionalProperties(additionalBodyProperties)
-            }
-
-        fun removeAdditionalBodyProperty(key: String) = apply { body.removeAdditionalProperty(key) }
-
-        fun removeAllAdditionalBodyProperties(keys: Set<String>) = apply {
-            body.removeAllAdditionalProperties(keys)
-        }
-
         fun build(): MetricCreateParams =
             MetricCreateParams(
                 body.build(),
@@ -366,6 +469,14 @@ constructor(
         @JsonAnyGetter
         @ExcludeMissing
         fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
+
+        private var validated: Boolean = false
+
+        fun validate(): Metadata = apply {
+            if (!validated) {
+                validated = true
+            }
+        }
 
         fun toBuilder() = Builder().from(this)
 
