@@ -56,12 +56,14 @@ class MetricCreateParamsTest {
     fun getBodyWithoutOptionalFields() {
         val params =
             MetricCreateParams.builder()
+                .description("Sum of bytes downloaded in fast mode")
                 .itemId("item_id")
                 .name("Bytes downloaded")
                 .sql("SELECT sum(bytes_downloaded) FROM events WHERE download_speed = 'fast'")
                 .build()
         val body = params.getBody()
         assertThat(body).isNotNull
+        assertThat(body.description()).isEqualTo("Sum of bytes downloaded in fast mode")
         assertThat(body.itemId()).isEqualTo("item_id")
         assertThat(body.name()).isEqualTo("Bytes downloaded")
         assertThat(body.sql())

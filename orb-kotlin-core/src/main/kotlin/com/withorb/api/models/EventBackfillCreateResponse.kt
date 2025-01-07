@@ -92,40 +92,54 @@ private constructor(
      */
     fun deprecationFilter(): String? = deprecationFilter.getNullable("deprecation_filter")
 
-    @JsonProperty("id") @ExcludeMissing fun _id() = id
+    @JsonProperty("id") @ExcludeMissing fun _id(): JsonField<String> = id
 
     /**
      * If in the future, the time at which the backfill will automatically close. If in the past,
      * the time at which the backfill was closed.
      */
-    @JsonProperty("close_time") @ExcludeMissing fun _closeTime() = closeTime
+    @JsonProperty("close_time")
+    @ExcludeMissing
+    fun _closeTime(): JsonField<OffsetDateTime> = closeTime
 
-    @JsonProperty("created_at") @ExcludeMissing fun _createdAt() = createdAt
+    @JsonProperty("created_at")
+    @ExcludeMissing
+    fun _createdAt(): JsonField<OffsetDateTime> = createdAt
 
     /**
      * The Orb-generated ID of the customer to which this backfill is scoped. If `null`, this
      * backfill is scoped to all customers.
      */
-    @JsonProperty("customer_id") @ExcludeMissing fun _customerId() = customerId
+    @JsonProperty("customer_id") @ExcludeMissing fun _customerId(): JsonField<String> = customerId
 
     /** The number of events ingested in this backfill. */
-    @JsonProperty("events_ingested") @ExcludeMissing fun _eventsIngested() = eventsIngested
+    @JsonProperty("events_ingested")
+    @ExcludeMissing
+    fun _eventsIngested(): JsonField<Long> = eventsIngested
 
     /** The time at which this backfill was reverted. */
-    @JsonProperty("reverted_at") @ExcludeMissing fun _revertedAt() = revertedAt
+    @JsonProperty("reverted_at")
+    @ExcludeMissing
+    fun _revertedAt(): JsonField<OffsetDateTime> = revertedAt
 
     /** The status of the backfill. */
-    @JsonProperty("status") @ExcludeMissing fun _status() = status
+    @JsonProperty("status") @ExcludeMissing fun _status(): JsonField<Status> = status
 
-    @JsonProperty("timeframe_end") @ExcludeMissing fun _timeframeEnd() = timeframeEnd
+    @JsonProperty("timeframe_end")
+    @ExcludeMissing
+    fun _timeframeEnd(): JsonField<OffsetDateTime> = timeframeEnd
 
-    @JsonProperty("timeframe_start") @ExcludeMissing fun _timeframeStart() = timeframeStart
+    @JsonProperty("timeframe_start")
+    @ExcludeMissing
+    fun _timeframeStart(): JsonField<OffsetDateTime> = timeframeStart
 
     /**
      * A boolean [computed property](../guides/extensibility/advanced-metrics#computed-properties)
      * used to filter the set of events to deprecate
      */
-    @JsonProperty("deprecation_filter") @ExcludeMissing fun _deprecationFilter() = deprecationFilter
+    @JsonProperty("deprecation_filter")
+    @ExcludeMissing
+    fun _deprecationFilter(): JsonField<String> = deprecationFilter
 
     @JsonAnyGetter
     @ExcludeMissing
@@ -158,15 +172,15 @@ private constructor(
 
     class Builder {
 
-        private var id: JsonField<String> = JsonMissing.of()
-        private var closeTime: JsonField<OffsetDateTime> = JsonMissing.of()
-        private var createdAt: JsonField<OffsetDateTime> = JsonMissing.of()
-        private var customerId: JsonField<String> = JsonMissing.of()
-        private var eventsIngested: JsonField<Long> = JsonMissing.of()
-        private var revertedAt: JsonField<OffsetDateTime> = JsonMissing.of()
-        private var status: JsonField<Status> = JsonMissing.of()
-        private var timeframeEnd: JsonField<OffsetDateTime> = JsonMissing.of()
-        private var timeframeStart: JsonField<OffsetDateTime> = JsonMissing.of()
+        private var id: JsonField<String>? = null
+        private var closeTime: JsonField<OffsetDateTime>? = null
+        private var createdAt: JsonField<OffsetDateTime>? = null
+        private var customerId: JsonField<String>? = null
+        private var eventsIngested: JsonField<Long>? = null
+        private var revertedAt: JsonField<OffsetDateTime>? = null
+        private var status: JsonField<Status>? = null
+        private var timeframeEnd: JsonField<OffsetDateTime>? = null
+        private var timeframeStart: JsonField<OffsetDateTime>? = null
         private var deprecationFilter: JsonField<String> = JsonMissing.of()
         private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
@@ -192,7 +206,7 @@ private constructor(
          * If in the future, the time at which the backfill will automatically close. If in the
          * past, the time at which the backfill was closed.
          */
-        fun closeTime(closeTime: OffsetDateTime) = closeTime(JsonField.of(closeTime))
+        fun closeTime(closeTime: OffsetDateTime?) = closeTime(JsonField.ofNullable(closeTime))
 
         /**
          * If in the future, the time at which the backfill will automatically close. If in the
@@ -208,7 +222,7 @@ private constructor(
          * The Orb-generated ID of the customer to which this backfill is scoped. If `null`, this
          * backfill is scoped to all customers.
          */
-        fun customerId(customerId: String) = customerId(JsonField.of(customerId))
+        fun customerId(customerId: String?) = customerId(JsonField.ofNullable(customerId))
 
         /**
          * The Orb-generated ID of the customer to which this backfill is scoped. If `null`, this
@@ -225,7 +239,7 @@ private constructor(
         }
 
         /** The time at which this backfill was reverted. */
-        fun revertedAt(revertedAt: OffsetDateTime) = revertedAt(JsonField.of(revertedAt))
+        fun revertedAt(revertedAt: OffsetDateTime?) = revertedAt(JsonField.ofNullable(revertedAt))
 
         /** The time at which this backfill was reverted. */
         fun revertedAt(revertedAt: JsonField<OffsetDateTime>) = apply {
@@ -256,8 +270,8 @@ private constructor(
          * [computed property](../guides/extensibility/advanced-metrics#computed-properties) used to
          * filter the set of events to deprecate
          */
-        fun deprecationFilter(deprecationFilter: String) =
-            deprecationFilter(JsonField.of(deprecationFilter))
+        fun deprecationFilter(deprecationFilter: String?) =
+            deprecationFilter(JsonField.ofNullable(deprecationFilter))
 
         /**
          * A boolean
@@ -289,15 +303,15 @@ private constructor(
 
         fun build(): EventBackfillCreateResponse =
             EventBackfillCreateResponse(
-                id,
-                closeTime,
-                createdAt,
-                customerId,
-                eventsIngested,
-                revertedAt,
-                status,
-                timeframeEnd,
-                timeframeStart,
+                checkNotNull(id) { "`id` is required but was not set" },
+                checkNotNull(closeTime) { "`closeTime` is required but was not set" },
+                checkNotNull(createdAt) { "`createdAt` is required but was not set" },
+                checkNotNull(customerId) { "`customerId` is required but was not set" },
+                checkNotNull(eventsIngested) { "`eventsIngested` is required but was not set" },
+                checkNotNull(revertedAt) { "`revertedAt` is required but was not set" },
+                checkNotNull(status) { "`status` is required but was not set" },
+                checkNotNull(timeframeEnd) { "`timeframeEnd` is required but was not set" },
+                checkNotNull(timeframeStart) { "`timeframeStart` is required but was not set" },
                 deprecationFilter,
                 additionalProperties.toImmutable(),
             )

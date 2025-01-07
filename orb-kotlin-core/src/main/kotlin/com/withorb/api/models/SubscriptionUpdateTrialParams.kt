@@ -18,6 +18,7 @@ import com.withorb.api.core.BaseSerializer
 import com.withorb.api.core.Enum
 import com.withorb.api.core.ExcludeMissing
 import com.withorb.api.core.JsonField
+import com.withorb.api.core.JsonMissing
 import com.withorb.api.core.JsonValue
 import com.withorb.api.core.NoAutoDetect
 import com.withorb.api.core.getOrThrow
@@ -69,11 +70,23 @@ constructor(
      */
     fun shift(): Boolean? = body.shift()
 
+    /**
+     * The new date that the trial should end, or the literal string `immediate` to end the trial
+     * immediately.
+     */
+    fun _trialEndDate(): JsonField<TrialEndDate> = body._trialEndDate()
+
+    /**
+     * If true, shifts subsequent price and adjustment intervals (preserving their durations, but
+     * adjusting their absolute dates).
+     */
+    fun _shift(): JsonField<Boolean> = body._shift()
+
+    fun _additionalBodyProperties(): Map<String, JsonValue> = body._additionalProperties()
+
     fun _additionalHeaders(): Headers = additionalHeaders
 
     fun _additionalQueryParams(): QueryParams = additionalQueryParams
-
-    fun _additionalBodyProperties(): Map<String, JsonValue> = body._additionalProperties()
 
     internal fun getBody(): SubscriptionUpdateTrialBody = body
 
@@ -92,8 +105,12 @@ constructor(
     class SubscriptionUpdateTrialBody
     @JsonCreator
     internal constructor(
-        @JsonProperty("trial_end_date") private val trialEndDate: TrialEndDate,
-        @JsonProperty("shift") private val shift: Boolean?,
+        @JsonProperty("trial_end_date")
+        @ExcludeMissing
+        private val trialEndDate: JsonField<TrialEndDate> = JsonMissing.of(),
+        @JsonProperty("shift")
+        @ExcludeMissing
+        private val shift: JsonField<Boolean> = JsonMissing.of(),
         @JsonAnySetter
         private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
@@ -102,17 +119,41 @@ constructor(
          * The new date that the trial should end, or the literal string `immediate` to end the
          * trial immediately.
          */
-        @JsonProperty("trial_end_date") fun trialEndDate(): TrialEndDate = trialEndDate
+        fun trialEndDate(): TrialEndDate = trialEndDate.getRequired("trial_end_date")
 
         /**
          * If true, shifts subsequent price and adjustment intervals (preserving their durations,
          * but adjusting their absolute dates).
          */
-        @JsonProperty("shift") fun shift(): Boolean? = shift
+        fun shift(): Boolean? = shift.getNullable("shift")
+
+        /**
+         * The new date that the trial should end, or the literal string `immediate` to end the
+         * trial immediately.
+         */
+        @JsonProperty("trial_end_date")
+        @ExcludeMissing
+        fun _trialEndDate(): JsonField<TrialEndDate> = trialEndDate
+
+        /**
+         * If true, shifts subsequent price and adjustment intervals (preserving their durations,
+         * but adjusting their absolute dates).
+         */
+        @JsonProperty("shift") @ExcludeMissing fun _shift(): JsonField<Boolean> = shift
 
         @JsonAnyGetter
         @ExcludeMissing
         fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
+
+        private var validated: Boolean = false
+
+        fun validate(): SubscriptionUpdateTrialBody = apply {
+            if (!validated) {
+                trialEndDate()
+                shift()
+                validated = true
+            }
+        }
 
         fun toBuilder() = Builder().from(this)
 
@@ -123,8 +164,8 @@ constructor(
 
         class Builder {
 
-            private var trialEndDate: TrialEndDate? = null
-            private var shift: Boolean? = null
+            private var trialEndDate: JsonField<TrialEndDate>? = null
+            private var shift: JsonField<Boolean> = JsonMissing.of()
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             internal fun from(subscriptionUpdateTrialBody: SubscriptionUpdateTrialBody) = apply {
@@ -138,29 +179,33 @@ constructor(
              * The new date that the trial should end, or the literal string `immediate` to end the
              * trial immediately.
              */
-            fun trialEndDate(trialEndDate: TrialEndDate) = apply {
+            fun trialEndDate(trialEndDate: TrialEndDate) = trialEndDate(JsonField.of(trialEndDate))
+
+            /**
+             * The new date that the trial should end, or the literal string `immediate` to end the
+             * trial immediately.
+             */
+            fun trialEndDate(trialEndDate: JsonField<TrialEndDate>) = apply {
                 this.trialEndDate = trialEndDate
             }
 
-            fun trialEndDate(offsetDateTime: OffsetDateTime) = apply {
-                this.trialEndDate = TrialEndDate.ofOffsetDateTime(offsetDateTime)
-            }
+            fun trialEndDate(offsetDateTime: OffsetDateTime) =
+                trialEndDate(TrialEndDate.ofOffsetDateTime(offsetDateTime))
 
-            fun trialEndDate(unionMember1: TrialEndDate.UnionMember1) = apply {
-                this.trialEndDate = TrialEndDate.ofUnionMember1(unionMember1)
-            }
+            fun trialEndDate(unionMember1: TrialEndDate.UnionMember1) =
+                trialEndDate(TrialEndDate.ofUnionMember1(unionMember1))
 
             /**
              * If true, shifts subsequent price and adjustment intervals (preserving their
              * durations, but adjusting their absolute dates).
              */
-            fun shift(shift: Boolean?) = apply { this.shift = shift }
+            fun shift(shift: Boolean) = shift(JsonField.of(shift))
 
             /**
              * If true, shifts subsequent price and adjustment intervals (preserving their
              * durations, but adjusting their absolute dates).
              */
-            fun shift(shift: Boolean) = shift(shift as Boolean?)
+            fun shift(shift: JsonField<Boolean>) = apply { this.shift = shift }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
@@ -238,6 +283,14 @@ constructor(
          */
         fun trialEndDate(trialEndDate: TrialEndDate) = apply { body.trialEndDate(trialEndDate) }
 
+        /**
+         * The new date that the trial should end, or the literal string `immediate` to end the
+         * trial immediately.
+         */
+        fun trialEndDate(trialEndDate: JsonField<TrialEndDate>) = apply {
+            body.trialEndDate(trialEndDate)
+        }
+
         fun trialEndDate(offsetDateTime: OffsetDateTime) = apply {
             body.trialEndDate(offsetDateTime)
         }
@@ -250,13 +303,32 @@ constructor(
          * If true, shifts subsequent price and adjustment intervals (preserving their durations,
          * but adjusting their absolute dates).
          */
-        fun shift(shift: Boolean?) = apply { body.shift(shift) }
+        fun shift(shift: Boolean) = apply { body.shift(shift) }
 
         /**
          * If true, shifts subsequent price and adjustment intervals (preserving their durations,
          * but adjusting their absolute dates).
          */
-        fun shift(shift: Boolean) = shift(shift as Boolean?)
+        fun shift(shift: JsonField<Boolean>) = apply { body.shift(shift) }
+
+        fun additionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) = apply {
+            body.additionalProperties(additionalBodyProperties)
+        }
+
+        fun putAdditionalBodyProperty(key: String, value: JsonValue) = apply {
+            body.putAdditionalProperty(key, value)
+        }
+
+        fun putAllAdditionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) =
+            apply {
+                body.putAllAdditionalProperties(additionalBodyProperties)
+            }
+
+        fun removeAdditionalBodyProperty(key: String) = apply { body.removeAdditionalProperty(key) }
+
+        fun removeAllAdditionalBodyProperties(keys: Set<String>) = apply {
+            body.removeAllAdditionalProperties(keys)
+        }
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {
             this.additionalHeaders.clear()
@@ -356,25 +428,6 @@ constructor(
             additionalQueryParams.removeAll(keys)
         }
 
-        fun additionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) = apply {
-            body.additionalProperties(additionalBodyProperties)
-        }
-
-        fun putAdditionalBodyProperty(key: String, value: JsonValue) = apply {
-            body.putAdditionalProperty(key, value)
-        }
-
-        fun putAllAdditionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) =
-            apply {
-                body.putAllAdditionalProperties(additionalBodyProperties)
-            }
-
-        fun removeAdditionalBodyProperty(key: String) = apply { body.removeAdditionalProperty(key) }
-
-        fun removeAllAdditionalBodyProperties(keys: Set<String>) = apply {
-            body.removeAllAdditionalProperties(keys)
-        }
-
         fun build(): SubscriptionUpdateTrialParams =
             SubscriptionUpdateTrialParams(
                 checkNotNull(subscriptionId) { "`subscriptionId` is required but was not set" },
@@ -397,6 +450,8 @@ constructor(
         private val _json: JsonValue? = null,
     ) {
 
+        private var validated: Boolean = false
+
         fun offsetDateTime(): OffsetDateTime? = offsetDateTime
 
         fun unionMember1(): UnionMember1? = unionMember1
@@ -416,6 +471,15 @@ constructor(
                 offsetDateTime != null -> visitor.visitOffsetDateTime(offsetDateTime)
                 unionMember1 != null -> visitor.visitUnionMember1(unionMember1)
                 else -> visitor.unknown(_json)
+            }
+        }
+
+        fun validate(): TrialEndDate = apply {
+            if (!validated) {
+                if (offsetDateTime == null && unionMember1 == null) {
+                    throw OrbInvalidDataException("Unknown TrialEndDate: $_json")
+                }
+                validated = true
             }
         }
 

@@ -9,6 +9,7 @@ import com.fasterxml.jackson.annotation.JsonProperty
 import com.withorb.api.core.Enum
 import com.withorb.api.core.ExcludeMissing
 import com.withorb.api.core.JsonField
+import com.withorb.api.core.JsonMissing
 import com.withorb.api.core.JsonValue
 import com.withorb.api.core.NoAutoDetect
 import com.withorb.api.core.http.Headers
@@ -62,11 +63,30 @@ constructor(
      */
     fun effectiveDate(): LocalDate? = body.effectiveDate()
 
+    /** Price for which the quantity should be updated. Must be a fixed fee. */
+    fun _priceId(): JsonField<String> = body._priceId()
+
+    fun _quantity(): JsonField<Double> = body._quantity()
+
+    /**
+     * Determines when the change takes effect. Note that if `effective_date` is specified, this
+     * defaults to `effective_date`. Otherwise, this defaults to `immediate` unless it's explicitly
+     * set to `upcoming_invoice.
+     */
+    fun _changeOption(): JsonField<ChangeOption> = body._changeOption()
+
+    /**
+     * The date that the quantity change should take effect, localized to the customer's timezone.
+     * Ifthis parameter is not passed in, the quantity change is effective according to
+     * `change_option`.
+     */
+    fun _effectiveDate(): JsonField<LocalDate> = body._effectiveDate()
+
+    fun _additionalBodyProperties(): Map<String, JsonValue> = body._additionalProperties()
+
     fun _additionalHeaders(): Headers = additionalHeaders
 
     fun _additionalQueryParams(): QueryParams = additionalQueryParams
-
-    fun _additionalBodyProperties(): Map<String, JsonValue> = body._additionalProperties()
 
     internal fun getBody(): SubscriptionUpdateFixedFeeQuantityBody = body
 
@@ -85,36 +105,79 @@ constructor(
     class SubscriptionUpdateFixedFeeQuantityBody
     @JsonCreator
     internal constructor(
-        @JsonProperty("price_id") private val priceId: String,
-        @JsonProperty("quantity") private val quantity: Double,
-        @JsonProperty("change_option") private val changeOption: ChangeOption?,
-        @JsonProperty("effective_date") private val effectiveDate: LocalDate?,
+        @JsonProperty("price_id")
+        @ExcludeMissing
+        private val priceId: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("quantity")
+        @ExcludeMissing
+        private val quantity: JsonField<Double> = JsonMissing.of(),
+        @JsonProperty("change_option")
+        @ExcludeMissing
+        private val changeOption: JsonField<ChangeOption> = JsonMissing.of(),
+        @JsonProperty("effective_date")
+        @ExcludeMissing
+        private val effectiveDate: JsonField<LocalDate> = JsonMissing.of(),
         @JsonAnySetter
         private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
 
         /** Price for which the quantity should be updated. Must be a fixed fee. */
-        @JsonProperty("price_id") fun priceId(): String = priceId
+        fun priceId(): String = priceId.getRequired("price_id")
 
-        @JsonProperty("quantity") fun quantity(): Double = quantity
+        fun quantity(): Double = quantity.getRequired("quantity")
 
         /**
          * Determines when the change takes effect. Note that if `effective_date` is specified, this
          * defaults to `effective_date`. Otherwise, this defaults to `immediate` unless it's
          * explicitly set to `upcoming_invoice.
          */
-        @JsonProperty("change_option") fun changeOption(): ChangeOption? = changeOption
+        fun changeOption(): ChangeOption? = changeOption.getNullable("change_option")
 
         /**
          * The date that the quantity change should take effect, localized to the customer's
          * timezone. Ifthis parameter is not passed in, the quantity change is effective according
          * to `change_option`.
          */
-        @JsonProperty("effective_date") fun effectiveDate(): LocalDate? = effectiveDate
+        fun effectiveDate(): LocalDate? = effectiveDate.getNullable("effective_date")
+
+        /** Price for which the quantity should be updated. Must be a fixed fee. */
+        @JsonProperty("price_id") @ExcludeMissing fun _priceId(): JsonField<String> = priceId
+
+        @JsonProperty("quantity") @ExcludeMissing fun _quantity(): JsonField<Double> = quantity
+
+        /**
+         * Determines when the change takes effect. Note that if `effective_date` is specified, this
+         * defaults to `effective_date`. Otherwise, this defaults to `immediate` unless it's
+         * explicitly set to `upcoming_invoice.
+         */
+        @JsonProperty("change_option")
+        @ExcludeMissing
+        fun _changeOption(): JsonField<ChangeOption> = changeOption
+
+        /**
+         * The date that the quantity change should take effect, localized to the customer's
+         * timezone. Ifthis parameter is not passed in, the quantity change is effective according
+         * to `change_option`.
+         */
+        @JsonProperty("effective_date")
+        @ExcludeMissing
+        fun _effectiveDate(): JsonField<LocalDate> = effectiveDate
 
         @JsonAnyGetter
         @ExcludeMissing
         fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
+
+        private var validated: Boolean = false
+
+        fun validate(): SubscriptionUpdateFixedFeeQuantityBody = apply {
+            if (!validated) {
+                priceId()
+                quantity()
+                changeOption()
+                effectiveDate()
+                validated = true
+            }
+        }
 
         fun toBuilder() = Builder().from(this)
 
@@ -125,10 +188,10 @@ constructor(
 
         class Builder {
 
-            private var priceId: String? = null
-            private var quantity: Double? = null
-            private var changeOption: ChangeOption? = null
-            private var effectiveDate: LocalDate? = null
+            private var priceId: JsonField<String>? = null
+            private var quantity: JsonField<Double>? = null
+            private var changeOption: JsonField<ChangeOption> = JsonMissing.of()
+            private var effectiveDate: JsonField<LocalDate> = JsonMissing.of()
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             internal fun from(
@@ -143,16 +206,28 @@ constructor(
             }
 
             /** Price for which the quantity should be updated. Must be a fixed fee. */
-            fun priceId(priceId: String) = apply { this.priceId = priceId }
+            fun priceId(priceId: String) = priceId(JsonField.of(priceId))
 
-            fun quantity(quantity: Double) = apply { this.quantity = quantity }
+            /** Price for which the quantity should be updated. Must be a fixed fee. */
+            fun priceId(priceId: JsonField<String>) = apply { this.priceId = priceId }
+
+            fun quantity(quantity: Double) = quantity(JsonField.of(quantity))
+
+            fun quantity(quantity: JsonField<Double>) = apply { this.quantity = quantity }
 
             /**
              * Determines when the change takes effect. Note that if `effective_date` is specified,
              * this defaults to `effective_date`. Otherwise, this defaults to `immediate` unless
              * it's explicitly set to `upcoming_invoice.
              */
-            fun changeOption(changeOption: ChangeOption?) = apply {
+            fun changeOption(changeOption: ChangeOption) = changeOption(JsonField.of(changeOption))
+
+            /**
+             * Determines when the change takes effect. Note that if `effective_date` is specified,
+             * this defaults to `effective_date`. Otherwise, this defaults to `immediate` unless
+             * it's explicitly set to `upcoming_invoice.
+             */
+            fun changeOption(changeOption: JsonField<ChangeOption>) = apply {
                 this.changeOption = changeOption
             }
 
@@ -161,7 +236,15 @@ constructor(
              * timezone. Ifthis parameter is not passed in, the quantity change is effective
              * according to `change_option`.
              */
-            fun effectiveDate(effectiveDate: LocalDate?) = apply {
+            fun effectiveDate(effectiveDate: LocalDate?) =
+                effectiveDate(JsonField.ofNullable(effectiveDate))
+
+            /**
+             * The date that the quantity change should take effect, localized to the customer's
+             * timezone. Ifthis parameter is not passed in, the quantity change is effective
+             * according to `change_option`.
+             */
+            fun effectiveDate(effectiveDate: JsonField<LocalDate>) = apply {
                 this.effectiveDate = effectiveDate
             }
 
@@ -244,14 +327,28 @@ constructor(
         /** Price for which the quantity should be updated. Must be a fixed fee. */
         fun priceId(priceId: String) = apply { body.priceId(priceId) }
 
+        /** Price for which the quantity should be updated. Must be a fixed fee. */
+        fun priceId(priceId: JsonField<String>) = apply { body.priceId(priceId) }
+
         fun quantity(quantity: Double) = apply { body.quantity(quantity) }
+
+        fun quantity(quantity: JsonField<Double>) = apply { body.quantity(quantity) }
 
         /**
          * Determines when the change takes effect. Note that if `effective_date` is specified, this
          * defaults to `effective_date`. Otherwise, this defaults to `immediate` unless it's
          * explicitly set to `upcoming_invoice.
          */
-        fun changeOption(changeOption: ChangeOption?) = apply { body.changeOption(changeOption) }
+        fun changeOption(changeOption: ChangeOption) = apply { body.changeOption(changeOption) }
+
+        /**
+         * Determines when the change takes effect. Note that if `effective_date` is specified, this
+         * defaults to `effective_date`. Otherwise, this defaults to `immediate` unless it's
+         * explicitly set to `upcoming_invoice.
+         */
+        fun changeOption(changeOption: JsonField<ChangeOption>) = apply {
+            body.changeOption(changeOption)
+        }
 
         /**
          * The date that the quantity change should take effect, localized to the customer's
@@ -259,6 +356,34 @@ constructor(
          * to `change_option`.
          */
         fun effectiveDate(effectiveDate: LocalDate?) = apply { body.effectiveDate(effectiveDate) }
+
+        /**
+         * The date that the quantity change should take effect, localized to the customer's
+         * timezone. Ifthis parameter is not passed in, the quantity change is effective according
+         * to `change_option`.
+         */
+        fun effectiveDate(effectiveDate: JsonField<LocalDate>) = apply {
+            body.effectiveDate(effectiveDate)
+        }
+
+        fun additionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) = apply {
+            body.additionalProperties(additionalBodyProperties)
+        }
+
+        fun putAdditionalBodyProperty(key: String, value: JsonValue) = apply {
+            body.putAdditionalProperty(key, value)
+        }
+
+        fun putAllAdditionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) =
+            apply {
+                body.putAllAdditionalProperties(additionalBodyProperties)
+            }
+
+        fun removeAdditionalBodyProperty(key: String) = apply { body.removeAdditionalProperty(key) }
+
+        fun removeAllAdditionalBodyProperties(keys: Set<String>) = apply {
+            body.removeAllAdditionalProperties(keys)
+        }
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {
             this.additionalHeaders.clear()
@@ -356,25 +481,6 @@ constructor(
 
         fun removeAllAdditionalQueryParams(keys: Set<String>) = apply {
             additionalQueryParams.removeAll(keys)
-        }
-
-        fun additionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) = apply {
-            body.additionalProperties(additionalBodyProperties)
-        }
-
-        fun putAdditionalBodyProperty(key: String, value: JsonValue) = apply {
-            body.putAdditionalProperty(key, value)
-        }
-
-        fun putAllAdditionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) =
-            apply {
-                body.putAllAdditionalProperties(additionalBodyProperties)
-            }
-
-        fun removeAdditionalBodyProperty(key: String) = apply { body.removeAdditionalProperty(key) }
-
-        fun removeAllAdditionalBodyProperties(keys: Set<String>) = apply {
-            body.removeAllAdditionalProperties(keys)
         }
 
         fun build(): SubscriptionUpdateFixedFeeQuantityParams =

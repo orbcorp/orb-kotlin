@@ -33,11 +33,11 @@ private constructor(
     fun paginationMetadata(): PaginationMetadata =
         paginationMetadata.getRequired("pagination_metadata")
 
-    @JsonProperty("data") @ExcludeMissing fun _data() = data
+    @JsonProperty("data") @ExcludeMissing fun _data(): JsonField<List<DimensionalPriceGroup>> = data
 
     @JsonProperty("pagination_metadata")
     @ExcludeMissing
-    fun _paginationMetadata() = paginationMetadata
+    fun _paginationMetadata(): JsonField<PaginationMetadata> = paginationMetadata
 
     @JsonAnyGetter
     @ExcludeMissing
@@ -62,19 +62,32 @@ private constructor(
 
     class Builder {
 
-        private var data: JsonField<List<DimensionalPriceGroup>> = JsonMissing.of()
-        private var paginationMetadata: JsonField<PaginationMetadata> = JsonMissing.of()
+        private var data: JsonField<MutableList<DimensionalPriceGroup>>? = null
+        private var paginationMetadata: JsonField<PaginationMetadata>? = null
         private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         internal fun from(dimensionalPriceGroups: DimensionalPriceGroups) = apply {
-            data = dimensionalPriceGroups.data
+            data = dimensionalPriceGroups.data.map { it.toMutableList() }
             paginationMetadata = dimensionalPriceGroups.paginationMetadata
             additionalProperties = dimensionalPriceGroups.additionalProperties.toMutableMap()
         }
 
         fun data(data: List<DimensionalPriceGroup>) = data(JsonField.of(data))
 
-        fun data(data: JsonField<List<DimensionalPriceGroup>>) = apply { this.data = data }
+        fun data(data: JsonField<List<DimensionalPriceGroup>>) = apply {
+            this.data = data.map { it.toMutableList() }
+        }
+
+        fun addData(data: DimensionalPriceGroup) = apply {
+            this.data =
+                (this.data ?: JsonField.of(mutableListOf())).apply {
+                    (asKnown()
+                            ?: throw IllegalStateException(
+                                "Field was set to non-list type: ${javaClass.simpleName}"
+                            ))
+                        .add(data)
+                }
+        }
 
         fun paginationMetadata(paginationMetadata: PaginationMetadata) =
             paginationMetadata(JsonField.of(paginationMetadata))
@@ -104,8 +117,11 @@ private constructor(
 
         fun build(): DimensionalPriceGroups =
             DimensionalPriceGroups(
-                data.map { it.toImmutable() },
-                paginationMetadata,
+                checkNotNull(data) { "`data` is required but was not set" }
+                    .map { it.toImmutable() },
+                checkNotNull(paginationMetadata) {
+                    "`paginationMetadata` is required but was not set"
+                },
                 additionalProperties.toImmutable(),
             )
     }

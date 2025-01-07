@@ -9,6 +9,7 @@ import com.fasterxml.jackson.annotation.JsonProperty
 import com.withorb.api.core.Enum
 import com.withorb.api.core.ExcludeMissing
 import com.withorb.api.core.JsonField
+import com.withorb.api.core.JsonMissing
 import com.withorb.api.core.JsonValue
 import com.withorb.api.core.NoAutoDetect
 import com.withorb.api.core.http.Headers
@@ -49,11 +50,20 @@ constructor(
     /** The metric to track usage for. */
     fun metricId(): String? = body.metricId()
 
+    /** The thresholds that define the values at which the alert will be triggered. */
+    fun _thresholds(): JsonField<List<Threshold>> = body._thresholds()
+
+    /** The type of alert to create. This must be a valid alert type. */
+    fun _type(): JsonField<Type> = body._type()
+
+    /** The metric to track usage for. */
+    fun _metricId(): JsonField<String> = body._metricId()
+
+    fun _additionalBodyProperties(): Map<String, JsonValue> = body._additionalProperties()
+
     fun _additionalHeaders(): Headers = additionalHeaders
 
     fun _additionalQueryParams(): QueryParams = additionalQueryParams
-
-    fun _additionalBodyProperties(): Map<String, JsonValue> = body._additionalProperties()
 
     internal fun getBody(): AlertCreateForSubscriptionBody = body
 
@@ -72,25 +82,51 @@ constructor(
     class AlertCreateForSubscriptionBody
     @JsonCreator
     internal constructor(
-        @JsonProperty("thresholds") private val thresholds: List<Threshold>,
-        @JsonProperty("type") private val type: Type,
-        @JsonProperty("metric_id") private val metricId: String?,
+        @JsonProperty("thresholds")
+        @ExcludeMissing
+        private val thresholds: JsonField<List<Threshold>> = JsonMissing.of(),
+        @JsonProperty("type") @ExcludeMissing private val type: JsonField<Type> = JsonMissing.of(),
+        @JsonProperty("metric_id")
+        @ExcludeMissing
+        private val metricId: JsonField<String> = JsonMissing.of(),
         @JsonAnySetter
         private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
 
         /** The thresholds that define the values at which the alert will be triggered. */
-        @JsonProperty("thresholds") fun thresholds(): List<Threshold> = thresholds
+        fun thresholds(): List<Threshold> = thresholds.getRequired("thresholds")
 
         /** The type of alert to create. This must be a valid alert type. */
-        @JsonProperty("type") fun type(): Type = type
+        fun type(): Type = type.getRequired("type")
 
         /** The metric to track usage for. */
-        @JsonProperty("metric_id") fun metricId(): String? = metricId
+        fun metricId(): String? = metricId.getNullable("metric_id")
+
+        /** The thresholds that define the values at which the alert will be triggered. */
+        @JsonProperty("thresholds")
+        @ExcludeMissing
+        fun _thresholds(): JsonField<List<Threshold>> = thresholds
+
+        /** The type of alert to create. This must be a valid alert type. */
+        @JsonProperty("type") @ExcludeMissing fun _type(): JsonField<Type> = type
+
+        /** The metric to track usage for. */
+        @JsonProperty("metric_id") @ExcludeMissing fun _metricId(): JsonField<String> = metricId
 
         @JsonAnyGetter
         @ExcludeMissing
         fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
+
+        private var validated: Boolean = false
+
+        fun validate(): AlertCreateForSubscriptionBody = apply {
+            if (!validated) {
+                thresholds().forEach { it.validate() }
+                type()
+                metricId()
+                validated = true
+            }
+        }
 
         fun toBuilder() = Builder().from(this)
 
@@ -101,14 +137,15 @@ constructor(
 
         class Builder {
 
-            private var thresholds: MutableList<Threshold>? = null
-            private var type: Type? = null
-            private var metricId: String? = null
+            private var thresholds: JsonField<MutableList<Threshold>>? = null
+            private var type: JsonField<Type>? = null
+            private var metricId: JsonField<String> = JsonMissing.of()
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             internal fun from(alertCreateForSubscriptionBody: AlertCreateForSubscriptionBody) =
                 apply {
-                    thresholds = alertCreateForSubscriptionBody.thresholds.toMutableList()
+                    thresholds =
+                        alertCreateForSubscriptionBody.thresholds.map { it.toMutableList() }
                     type = alertCreateForSubscriptionBody.type
                     metricId = alertCreateForSubscriptionBody.metricId
                     additionalProperties =
@@ -116,20 +153,36 @@ constructor(
                 }
 
             /** The thresholds that define the values at which the alert will be triggered. */
-            fun thresholds(thresholds: List<Threshold>) = apply {
-                this.thresholds = thresholds.toMutableList()
+            fun thresholds(thresholds: List<Threshold>) = thresholds(JsonField.of(thresholds))
+
+            /** The thresholds that define the values at which the alert will be triggered. */
+            fun thresholds(thresholds: JsonField<List<Threshold>>) = apply {
+                this.thresholds = thresholds.map { it.toMutableList() }
             }
 
             /** The thresholds that define the values at which the alert will be triggered. */
             fun addThreshold(threshold: Threshold) = apply {
-                thresholds = (thresholds ?: mutableListOf()).apply { add(threshold) }
+                thresholds =
+                    (thresholds ?: JsonField.of(mutableListOf())).apply {
+                        (asKnown()
+                                ?: throw IllegalStateException(
+                                    "Field was set to non-list type: ${javaClass.simpleName}"
+                                ))
+                            .add(threshold)
+                    }
             }
 
             /** The type of alert to create. This must be a valid alert type. */
-            fun type(type: Type) = apply { this.type = type }
+            fun type(type: Type) = type(JsonField.of(type))
+
+            /** The type of alert to create. This must be a valid alert type. */
+            fun type(type: JsonField<Type>) = apply { this.type = type }
 
             /** The metric to track usage for. */
-            fun metricId(metricId: String?) = apply { this.metricId = metricId }
+            fun metricId(metricId: String?) = metricId(JsonField.ofNullable(metricId))
+
+            /** The metric to track usage for. */
+            fun metricId(metricId: JsonField<String>) = apply { this.metricId = metricId }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
@@ -153,7 +206,7 @@ constructor(
             fun build(): AlertCreateForSubscriptionBody =
                 AlertCreateForSubscriptionBody(
                     checkNotNull(thresholds) { "`thresholds` is required but was not set" }
-                        .toImmutable(),
+                        .map { it.toImmutable() },
                     checkNotNull(type) { "`type` is required but was not set" },
                     metricId,
                     additionalProperties.toImmutable(),
@@ -209,13 +262,43 @@ constructor(
         fun thresholds(thresholds: List<Threshold>) = apply { body.thresholds(thresholds) }
 
         /** The thresholds that define the values at which the alert will be triggered. */
+        fun thresholds(thresholds: JsonField<List<Threshold>>) = apply {
+            body.thresholds(thresholds)
+        }
+
+        /** The thresholds that define the values at which the alert will be triggered. */
         fun addThreshold(threshold: Threshold) = apply { body.addThreshold(threshold) }
 
         /** The type of alert to create. This must be a valid alert type. */
         fun type(type: Type) = apply { body.type(type) }
 
+        /** The type of alert to create. This must be a valid alert type. */
+        fun type(type: JsonField<Type>) = apply { body.type(type) }
+
         /** The metric to track usage for. */
         fun metricId(metricId: String?) = apply { body.metricId(metricId) }
+
+        /** The metric to track usage for. */
+        fun metricId(metricId: JsonField<String>) = apply { body.metricId(metricId) }
+
+        fun additionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) = apply {
+            body.additionalProperties(additionalBodyProperties)
+        }
+
+        fun putAdditionalBodyProperty(key: String, value: JsonValue) = apply {
+            body.putAdditionalProperty(key, value)
+        }
+
+        fun putAllAdditionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) =
+            apply {
+                body.putAllAdditionalProperties(additionalBodyProperties)
+            }
+
+        fun removeAdditionalBodyProperty(key: String) = apply { body.removeAdditionalProperty(key) }
+
+        fun removeAllAdditionalBodyProperties(keys: Set<String>) = apply {
+            body.removeAllAdditionalProperties(keys)
+        }
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {
             this.additionalHeaders.clear()
@@ -315,25 +398,6 @@ constructor(
             additionalQueryParams.removeAll(keys)
         }
 
-        fun additionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) = apply {
-            body.additionalProperties(additionalBodyProperties)
-        }
-
-        fun putAdditionalBodyProperty(key: String, value: JsonValue) = apply {
-            body.putAdditionalProperty(key, value)
-        }
-
-        fun putAllAdditionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) =
-            apply {
-                body.putAllAdditionalProperties(additionalBodyProperties)
-            }
-
-        fun removeAdditionalBodyProperty(key: String) = apply { body.removeAdditionalProperty(key) }
-
-        fun removeAllAdditionalBodyProperties(keys: Set<String>) = apply {
-            body.removeAllAdditionalProperties(keys)
-        }
-
         fun build(): AlertCreateForSubscriptionParams =
             AlertCreateForSubscriptionParams(
                 checkNotNull(subscriptionId) { "`subscriptionId` is required but was not set" },
@@ -348,7 +412,9 @@ constructor(
     class Threshold
     @JsonCreator
     private constructor(
-        @JsonProperty("value") private val value: Double,
+        @JsonProperty("value")
+        @ExcludeMissing
+        private val value: JsonField<Double> = JsonMissing.of(),
         @JsonAnySetter
         private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
@@ -358,11 +424,27 @@ constructor(
          * or below this value. For usage and cost alerts, the alert will fire at or above this
          * value.
          */
-        @JsonProperty("value") fun value(): Double = value
+        fun value(): Double = value.getRequired("value")
+
+        /**
+         * The value at which an alert will fire. For credit balance alerts, the alert will fire at
+         * or below this value. For usage and cost alerts, the alert will fire at or above this
+         * value.
+         */
+        @JsonProperty("value") @ExcludeMissing fun _value(): JsonField<Double> = value
 
         @JsonAnyGetter
         @ExcludeMissing
         fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
+
+        private var validated: Boolean = false
+
+        fun validate(): Threshold = apply {
+            if (!validated) {
+                value()
+                validated = true
+            }
+        }
 
         fun toBuilder() = Builder().from(this)
 
@@ -373,7 +455,7 @@ constructor(
 
         class Builder {
 
-            private var value: Double? = null
+            private var value: JsonField<Double>? = null
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             internal fun from(threshold: Threshold) = apply {
@@ -386,7 +468,14 @@ constructor(
              * at or below this value. For usage and cost alerts, the alert will fire at or above
              * this value.
              */
-            fun value(value: Double) = apply { this.value = value }
+            fun value(value: Double) = value(JsonField.of(value))
+
+            /**
+             * The value at which an alert will fire. For credit balance alerts, the alert will fire
+             * at or below this value. For usage and cost alerts, the alert will fire at or above
+             * this value.
+             */
+            fun value(value: JsonField<Double>) = apply { this.value = value }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()

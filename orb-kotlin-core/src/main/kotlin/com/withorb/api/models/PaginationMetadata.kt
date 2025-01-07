@@ -32,9 +32,9 @@ private constructor(
 
     fun nextCursor(): String? = nextCursor.getNullable("next_cursor")
 
-    @JsonProperty("has_more") @ExcludeMissing fun _hasMore() = hasMore
+    @JsonProperty("has_more") @ExcludeMissing fun _hasMore(): JsonField<Boolean> = hasMore
 
-    @JsonProperty("next_cursor") @ExcludeMissing fun _nextCursor() = nextCursor
+    @JsonProperty("next_cursor") @ExcludeMissing fun _nextCursor(): JsonField<String> = nextCursor
 
     @JsonAnyGetter
     @ExcludeMissing
@@ -59,8 +59,8 @@ private constructor(
 
     class Builder {
 
-        private var hasMore: JsonField<Boolean> = JsonMissing.of()
-        private var nextCursor: JsonField<String> = JsonMissing.of()
+        private var hasMore: JsonField<Boolean>? = null
+        private var nextCursor: JsonField<String>? = null
         private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         internal fun from(paginationMetadata: PaginationMetadata) = apply {
@@ -73,7 +73,7 @@ private constructor(
 
         fun hasMore(hasMore: JsonField<Boolean>) = apply { this.hasMore = hasMore }
 
-        fun nextCursor(nextCursor: String) = nextCursor(JsonField.of(nextCursor))
+        fun nextCursor(nextCursor: String?) = nextCursor(JsonField.ofNullable(nextCursor))
 
         fun nextCursor(nextCursor: JsonField<String>) = apply { this.nextCursor = nextCursor }
 
@@ -98,8 +98,8 @@ private constructor(
 
         fun build(): PaginationMetadata =
             PaginationMetadata(
-                hasMore,
-                nextCursor,
+                checkNotNull(hasMore) { "`hasMore` is required but was not set" },
+                checkNotNull(nextCursor) { "`nextCursor` is required but was not set" },
                 additionalProperties.toImmutable(),
             )
     }
