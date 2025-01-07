@@ -7,6 +7,10 @@ import com.withorb.api.core.http.Headers
 import com.withorb.api.core.http.QueryParams
 import java.util.Objects
 
+/**
+ * This endpoint is used to fetch a single [`Credit Note`](../guides/invoicing/credit-notes) given
+ * an identifier.
+ */
 class CreditNoteFetchParams
 constructor(
     private val creditNoteId: String,

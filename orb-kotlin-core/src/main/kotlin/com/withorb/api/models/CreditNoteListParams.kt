@@ -7,6 +7,11 @@ import com.withorb.api.core.http.Headers
 import com.withorb.api.core.http.QueryParams
 import java.util.Objects
 
+/**
+ * Get a paginated list of CreditNotes. Users can also filter by customer_id, subscription_id, or
+ * external_customer_id. The credit notes will be returned in reverse chronological order by
+ * `creation_time`.
+ */
 class CreditNoteListParams
 constructor(
     private val cursor: String?,

@@ -7,6 +7,10 @@ import com.withorb.api.core.http.Headers
 import com.withorb.api.core.http.QueryParams
 import java.util.Objects
 
+/**
+ * This endpoint can be used to fetch the upcoming [invoice](../guides/concepts#invoice) for the
+ * current billing period given a subscription.
+ */
 class InvoiceFetchUpcomingParams
 constructor(
     private val subscriptionId: String,

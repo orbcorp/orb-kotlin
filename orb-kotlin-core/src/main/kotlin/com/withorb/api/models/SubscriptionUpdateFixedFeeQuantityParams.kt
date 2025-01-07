@@ -19,6 +19,20 @@ import com.withorb.api.errors.OrbInvalidDataException
 import java.time.LocalDate
 import java.util.Objects
 
+/**
+ * This endpoint can be used to update the quantity for a fixed fee.
+ *
+ * To be eligible, the subscription must currently be active and the price specified must be a fixed
+ * fee (not usage-based). This operation will immediately update the quantity for the fee, or if a
+ * `effective_date` is passed in, will update the quantity on the requested date at midnight in the
+ * customer's timezone.
+ *
+ * In order to change the fixed fee quantity as of the next draft invoice for this subscription,
+ * pass `change_option=upcoming_invoice` without an `effective_date` specified.
+ *
+ * If the fee is an in-advance fixed fee, it will also issue an immediate invoice for the difference
+ * for the remainder of the billing period.
+ */
 class SubscriptionUpdateFixedFeeQuantityParams
 constructor(
     private val subscriptionId: String,

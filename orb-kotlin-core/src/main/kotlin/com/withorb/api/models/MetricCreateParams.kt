@@ -15,6 +15,11 @@ import com.withorb.api.core.immutableEmptyMap
 import com.withorb.api.core.toImmutable
 import java.util.Objects
 
+/**
+ * This endpoint is used to create a [metric](../guides/concepts##metric) using a SQL string. See
+ * [SQL support](../guides/extensibility/advanced-metrics#sql-support) for a description of
+ * constructing SQL queries with examples.
+ */
 class MetricCreateParams
 constructor(
     private val body: MetricCreateBody,

@@ -9,6 +9,7 @@ import com.withorb.api.core.http.QueryParams
 import com.withorb.api.core.toImmutable
 import java.util.Objects
 
+/** Delete top-up by external ID */
 class CustomerCreditTopUpDeleteByExternalIdParams
 constructor(
     private val externalCustomerId: String,

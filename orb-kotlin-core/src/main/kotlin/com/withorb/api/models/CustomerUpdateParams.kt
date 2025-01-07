@@ -28,6 +28,12 @@ import com.withorb.api.core.toImmutable
 import com.withorb.api.errors.OrbInvalidDataException
 import java.util.Objects
 
+/**
+ * This endpoint can be used to update the `payment_provider`, `payment_provider_id`, `name`,
+ * `email`, `email_delivery`, `tax_id`, `auto_collection`, `metadata`, `shipping_address`,
+ * `billing_address`, and `additional_emails` of an existing customer. Other fields on a customer
+ * are currently immutable.
+ */
 class CustomerUpdateParams
 constructor(
     private val customerId: String,

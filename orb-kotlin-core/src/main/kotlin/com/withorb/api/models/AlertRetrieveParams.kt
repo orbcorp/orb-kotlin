@@ -7,6 +7,7 @@ import com.withorb.api.core.http.Headers
 import com.withorb.api.core.http.QueryParams
 import java.util.Objects
 
+/** This endpoint retrieves an alert by its ID. */
 class AlertRetrieveParams
 constructor(
     private val alertId: String,

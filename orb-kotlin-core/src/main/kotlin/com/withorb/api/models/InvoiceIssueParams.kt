@@ -15,6 +15,13 @@ import com.withorb.api.core.immutableEmptyMap
 import com.withorb.api.core.toImmutable
 import java.util.Objects
 
+/**
+ * This endpoint allows an eligible invoice to be issued manually. This is only possible with
+ * invoices where status is `draft`, `will_auto_issue` is false, and an `eligible_to_issue_at` is a
+ * time in the past. Issuing an invoice could possibly trigger side effects, some of which could be
+ * customer-visible (e.g. sending emails, auto-collecting payment, syncing the invoice to external
+ * providers, etc).
+ */
 class InvoiceIssueParams
 constructor(
     private val invoiceId: String,

@@ -18,6 +18,7 @@ import com.withorb.api.core.toImmutable
 import com.withorb.api.errors.OrbInvalidDataException
 import java.util.Objects
 
+/** This endpoint can be used to update properties on the Item. */
 class ItemUpdateParams
 constructor(
     private val itemId: String,

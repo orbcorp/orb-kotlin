@@ -9,6 +9,11 @@ import com.withorb.api.core.http.QueryParams
 import com.withorb.api.core.toImmutable
 import java.util.Objects
 
+/**
+ * This endpoint allows you to disable an alert. To disable a plan-level alert for a specific
+ * subscription, you must include the `subscription_id`. The `subscription_id` is not required for
+ * customer or subscription level alerts.
+ */
 class AlertDisableParams
 constructor(
     private val alertConfigurationId: String,
