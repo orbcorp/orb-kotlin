@@ -7,6 +7,7 @@ import com.withorb.api.core.http.Headers
 import com.withorb.api.core.http.QueryParams
 import java.util.Objects
 
+/** This endpoint returns an item identified by its item_id. */
 class ItemFetchParams
 constructor(
     private val itemId: String,

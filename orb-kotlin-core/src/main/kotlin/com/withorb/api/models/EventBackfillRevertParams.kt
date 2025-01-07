@@ -9,6 +9,14 @@ import com.withorb.api.core.http.QueryParams
 import com.withorb.api.core.toImmutable
 import java.util.Objects
 
+/**
+ * Reverting a backfill undoes all the effects of closing the backfill. If the backfill is
+ * reflected, the status will transition to `pending_revert` while the effects of the backfill are
+ * undone. Once all effects are undone, the backfill will transition to `reverted`.
+ *
+ * If a backfill is reverted before its closed, no usage will be updated as a result of the backfill
+ * and it will immediately transition to `reverted`.
+ */
 class EventBackfillRevertParams
 constructor(
     private val backfillId: String,

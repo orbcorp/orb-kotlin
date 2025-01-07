@@ -16,6 +16,10 @@ import com.withorb.api.core.toImmutable
 import java.time.LocalDate
 import java.util.Objects
 
+/**
+ * This creates a one-off fixed fee invoice line item on an Invoice. This can only be done for
+ * invoices that are in a `draft` status.
+ */
 class InvoiceLineItemCreateParams
 constructor(
     private val body: InvoiceLineItemCreateBody,

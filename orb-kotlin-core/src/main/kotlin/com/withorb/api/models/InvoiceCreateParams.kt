@@ -20,6 +20,7 @@ import java.time.LocalDate
 import java.time.OffsetDateTime
 import java.util.Objects
 
+/** This endpoint is used to create a one-off invoice for a customer. */
 class InvoiceCreateParams
 constructor(
     private val body: InvoiceCreateBody,

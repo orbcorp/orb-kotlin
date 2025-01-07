@@ -7,6 +7,7 @@ import com.withorb.api.core.http.Headers
 import com.withorb.api.core.http.QueryParams
 import java.util.Objects
 
+/** Fetch dimensional price group */
 class DimensionalPriceGroupRetrieveParams
 constructor(
     private val dimensionalPriceGroupId: String,

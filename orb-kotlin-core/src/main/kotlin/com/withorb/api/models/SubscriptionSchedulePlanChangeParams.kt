@@ -29,6 +29,164 @@ import com.withorb.api.errors.OrbInvalidDataException
 import java.time.OffsetDateTime
 import java.util.Objects
 
+/**
+ * This endpoint can be used to change an existing subscription's plan. It returns the serialized
+ * updated subscription object.
+ *
+ * The body parameter `change_option` determines when the plan change occurrs. Orb supports three
+ * options:
+ * - `end_of_subscription_term`: changes the plan at the end of the existing plan's term.
+ *     - Issuing this plan change request for a monthly subscription will keep the existing plan
+ *       active until the start of the subsequent month. Issuing this plan change request for a
+ *       yearly subscription will keep the existing plan active for the full year. Charges incurred
+ *       in the remaining period will be invoiced as normal.
+ *     - Example: The plan is billed monthly on the 1st of the month, the request is made on January
+ *       15th, so the plan will be changed on February 1st, and invoice will be issued on February
+ *       1st for the last month of the original plan.
+ * - `immediate`: changes the plan immediately.
+ *     - Subscriptions that have their plan changed with this option will move to the new plan
+ *       immediately, and be invoiced immediately.
+ *     - This invoice will include any usage fees incurred in the billing period up to the change,
+ *       along with any prorated recurring fees for the billing period, if applicable.
+ *     - Example: The plan is billed monthly on the 1st of the month, the request is made on January
+ *       15th, so the plan will be changed on January 15th, and an invoice will be issued for the
+ *       partial month, from January 1 to January 15, on the original plan.
+ * - `requested_date`: changes the plan on the requested date (`change_date`).
+ *     - If no timezone is provided, the customer's timezone is used. The `change_date` body
+ *       parameter is required if this option is chosen.
+ *     - Example: The plan is billed monthly on the 1st of the month, the request is made on January
+ *       15th, with a requested `change_date` of February 15th, so the plan will be changed on
+ *       February 15th, and invoices will be issued on February 1st and February 15th.
+ *
+ * Note that one of `plan_id` or `external_plan_id` is required in the request body for this
+ * operation.
+ *
+ * ## Customize your customer's subscriptions
+ *
+ * Prices and adjustments in a plan can be added, removed, or replaced on the subscription when you
+ * schedule the plan change. This is useful when a customer has prices that differ from the default
+ * prices for a specific plan.
+ *
+ * :::info This feature is only available for accounts that have migrated to Subscription Overrides
+ * Version 2. You can find your Subscription Overrides Version at the bottom of your
+ * [Plans page](https://app.withorb.com/plans) :::
+ *
+ * ### Adding Prices
+ *
+ * To add prices, provide a list of objects with the key `add_prices`. An object in the list must
+ * specify an existing add-on price with a `price_id` or `external_price_id` field, or create a new
+ * add-on price by including an object with the key `price`, identical to what would be used in the
+ * request body for the [create price endpoint](../reference/create-price). See the
+ * [Price resource](../reference/price) for the specification of different price model
+ * configurations possible in this object.
+ *
+ * If the plan has phases, each object in the list must include a number with `plan_phase_order` key
+ * to indicate which phase the price should be added to.
+ *
+ * An object in the list can specify an optional `start_date` and optional `end_date`. This is
+ * equivalent to creating a price interval with the
+ * [add/edit price intervals endpoint](../reference/add-edit-price-intervals). If unspecified, the
+ * start or end date of the phase or subscription will be used.
+ *
+ * An object in the list can specify an optional `minimum_amount`, `maximum_amount`, or `discounts`.
+ * This will create adjustments which apply only to this price.
+ *
+ * Additionally, an object in the list can specify an optional `reference_id`. This ID can be used
+ * to reference this price when [adding an adjustment](#adding-adjustments) in the same API call.
+ * However the ID is _transient_ and cannot be used to refer to the price in future API calls.
+ *
+ * ### Removing Prices
+ *
+ * To remove prices, provide a list of objects with the key `remove_prices`. An object in the list
+ * must specify a plan price with either a `price_id` or `external_price_id` field.
+ *
+ * ### Replacing Prices
+ *
+ * To replace prices, provide a list of objects with the key `replace_prices`. An object in the list
+ * must specify a plan price to replace with the `replaces_price_id` key, and it must specify a
+ * price to replace it with by either referencing an existing add-on price with a `price_id` or
+ * `external_price_id` field, or by creating a new add-on price by including an object with the key
+ * `price`, identical to what would be used in the request body for the
+ * [create price endpoint](../reference/create-price). See the [Price resource](../reference/price)
+ * for the specification of different price model configurations possible in this object.
+ *
+ * For fixed fees, an object in the list can supply a `fixed_price_quantity` instead of a `price`,
+ * `price_id`, or `external_price_id` field. This will update only the quantity for the price,
+ * similar to the [Update price quantity](../reference/update-fixed-fee-quantity) endpoint.
+ *
+ * The replacement price will have the same phase, if applicable, and the same start and end dates
+ * as the price it replaces.
+ *
+ * An object in the list can specify an optional `minimum_amount`, `maximum_amount`, or `discounts`.
+ * This will create adjustments which apply only to this price.
+ *
+ * Additionally, an object in the list can specify an optional `reference_id`. This ID can be used
+ * to reference the replacement price when [adding an adjustment](#adding-adjustments) in the same
+ * API call. However the ID is _transient_ and cannot be used to refer to the price in future API
+ * calls.
+ *
+ * ### Adding adjustments
+ *
+ * To add adjustments, provide a list of objects with the key `add_adjustments`. An object in the
+ * list must include an object with the key `adjustment`, identical to the adjustment object in the
+ * [add/edit price intervals endpoint](../reference/add-edit-price-intervals).
+ *
+ * If the plan has phases, each object in the list must include a number with `plan_phase_order` key
+ * to indicate which phase the adjustment should be added to.
+ *
+ * An object in the list can specify an optional `start_date` and optional `end_date`. If
+ * unspecified, the start or end date of the phase or subscription will be used.
+ *
+ * ### Removing adjustments
+ *
+ * To remove adjustments, provide a list of objects with the key `remove_adjustments`. An object in
+ * the list must include a key, `adjustment_id`, with the ID of the adjustment to be removed.
+ *
+ * ### Replacing adjustments
+ *
+ * To replace adjustments, provide a list of objects with the key `replace_adjustments`. An object
+ * in the list must specify a plan adjustment to replace with the `replaces_adjustment_id` key, and
+ * it must specify an adjustment to replace it with by including an object with the key
+ * `adjustment`, identical to the adjustment object in the
+ * [add/edit price intervals endpoint](../reference/add-edit-price-intervals).
+ *
+ * The replacement adjustment will have the same phase, if applicable, and the same start and end
+ * dates as the adjustment it replaces.
+ *
+ * ## Price overrides (DEPRECATED)
+ *
+ * :::info Price overrides are being phased out in favor adding/removing/replacing prices. (See
+ * [Customize your customer's subscriptions](../reference/schedule-plan-change#customize-your-customers-subscriptions))
+ * :::
+ *
+ * Price overrides are used to update some or all prices in a plan for the specific subscription
+ * being created. This is useful when a new customer has negotiated a rate that is unique to the
+ * customer.
+ *
+ * To override prices, provide a list of objects with the key `price_overrides`. The price object in
+ * the list of overrides is expected to contain the existing price id, the `model_type` and
+ * configuration. (See the [Price resource](../reference/price) for the specification of different
+ * price model configurations.) The numerical values can be updated, but the billable metric,
+ * cadence, type, and name of a price can not be overridden.
+ *
+ * ### Maximums, and minimums
+ *
+ * Price overrides are used to update some or all prices in the target plan. Minimums and maximums,
+ * much like price overrides, can be useful when a new customer has negotiated a new or different
+ * minimum or maximum spend cap than the default for the plan. The request format for maximums and
+ * minimums is the same as those in [subscription creation](create-subscription).
+ *
+ * ## Scheduling multiple plan changes
+ *
+ * When scheduling multiple plan changes with the same date, the latest plan change on that day
+ * takes effect.
+ *
+ * ## Prorations for in-advance fees
+ *
+ * By default, Orb calculates the prorated difference in any fixed fees when making a plan change,
+ * adjusting the customer balance as needed. For details on this behavior, see
+ * [Modifying subscriptions](../guides/product-catalog/modifying-subscriptions.md#prorations-for-in-advance-fees).
+ */
 class SubscriptionSchedulePlanChangeParams
 constructor(
     private val subscriptionId: String,

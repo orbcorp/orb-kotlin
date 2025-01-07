@@ -13,6 +13,17 @@ import java.time.OffsetDateTime
 import java.time.format.DateTimeFormatter
 import java.util.Objects
 
+/**
+ * This endpoint is used to fetch a day-by-day snapshot of a subscription's costs in Orb, calculated
+ * by applying pricing information to the underlying usage (see the
+ * [subscription usage endpoint](fetch-subscription-usage) to fetch usage per metric, in usage units
+ * rather than a currency).
+ *
+ * The semantics of this endpoint exactly mirror those of
+ * [fetching a customer's costs](fetch-customer-costs). Use this endpoint to limit your analysis of
+ * costs to a specific subscription for the customer (e.g. to de-aggregate costs when a customer's
+ * subscription has started and stopped on the same day).
+ */
 class SubscriptionFetchCostsParams
 constructor(
     private val subscriptionId: String,

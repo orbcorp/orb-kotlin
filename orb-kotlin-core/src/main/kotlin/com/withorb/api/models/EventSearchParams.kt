@@ -16,6 +16,20 @@ import com.withorb.api.core.toImmutable
 import java.time.OffsetDateTime
 import java.util.Objects
 
+/**
+ * This endpoint returns a filtered set of events for an account in a
+ * [paginated list format](../reference/pagination).
+ *
+ * Note that this is a `POST` endpoint rather than a `GET` endpoint because it employs a JSON body
+ * for search criteria rather than query parameters, allowing for a more flexible search syntax.
+ *
+ * Note that a search criteria _must_ be specified. Currently, Orb supports the following criteria:
+ * - `event_ids`: This is an explicit array of IDs to filter by. Note that an event's ID is the
+ *   `idempotency_key` that was originally used for ingestion.
+ *
+ * By default, Orb will not throw a `404` if no events matched, Orb will return an empty array for
+ * `data` instead.
+ */
 class EventSearchParams
 constructor(
     private val body: EventSearchBody,

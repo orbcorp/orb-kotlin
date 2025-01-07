@@ -7,6 +7,7 @@ import com.withorb.api.core.http.Headers
 import com.withorb.api.core.http.QueryParams
 import java.util.Objects
 
+/** This endpoint is used to fetch a backfill given an identifier. */
 class EventBackfillFetchParams
 constructor(
     private val backfillId: String,

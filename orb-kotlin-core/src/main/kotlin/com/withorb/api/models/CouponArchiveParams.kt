@@ -9,6 +9,11 @@ import com.withorb.api.core.http.QueryParams
 import com.withorb.api.core.toImmutable
 import java.util.Objects
 
+/**
+ * This endpoint allows a coupon to be archived. Archived coupons can no longer be redeemed, and
+ * will be hidden from lists of active coupons. Additionally, once a coupon is archived, its
+ * redemption code can be reused for a different coupon.
+ */
 class CouponArchiveParams
 constructor(
     private val couponId: String,

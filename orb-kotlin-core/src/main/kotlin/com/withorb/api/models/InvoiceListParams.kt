@@ -15,6 +15,20 @@ import java.time.OffsetDateTime
 import java.time.format.DateTimeFormatter
 import java.util.Objects
 
+/**
+ * This endpoint returns a list of all [`Invoice`](../guides/concepts#invoice)s for an account in a
+ * list format.
+ *
+ * The list of invoices is ordered starting from the most recently issued invoice date. The response
+ * also includes [`pagination_metadata`](../reference/pagination), which lets the caller retrieve
+ * the next page of results if they exist.
+ *
+ * By default, this only returns invoices that are `issued`, `paid`, or `synced`.
+ *
+ * When fetching any `draft` invoices, this returns the last-computed invoice values for each draft
+ * invoice, which may not always be up-to-date since Orb regularly refreshes invoices
+ * asynchronously.
+ */
 class InvoiceListParams
 constructor(
     private val amount: String?,
