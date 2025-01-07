@@ -27,7 +27,7 @@ private constructor(
 
     fun response(): String = response.getRequired("response")
 
-    @JsonProperty("response") @ExcludeMissing fun _response() = response
+    @JsonProperty("response") @ExcludeMissing fun _response(): JsonField<String> = response
 
     @JsonAnyGetter
     @ExcludeMissing
@@ -51,7 +51,7 @@ private constructor(
 
     class Builder {
 
-        private var response: JsonField<String> = JsonMissing.of()
+        private var response: JsonField<String>? = null
         private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         internal fun from(topLevelPingResponse: TopLevelPingResponse) = apply {
@@ -83,7 +83,10 @@ private constructor(
         }
 
         fun build(): TopLevelPingResponse =
-            TopLevelPingResponse(response, additionalProperties.toImmutable())
+            TopLevelPingResponse(
+                checkNotNull(response) { "`response` is required but was not set" },
+                additionalProperties.toImmutable()
+            )
     }
 
     override fun equals(other: Any?): Boolean {

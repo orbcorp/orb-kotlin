@@ -52,13 +52,15 @@ private constructor(
     fun quantity(): Double = quantity.getRequired("quantity")
 
     /** The price's output for the group */
-    @JsonProperty("amount") @ExcludeMissing fun _amount() = amount
+    @JsonProperty("amount") @ExcludeMissing fun _amount(): JsonField<String> = amount
 
     /** The values for the group in the order specified by `grouping_keys` */
-    @JsonProperty("grouping_values") @ExcludeMissing fun _groupingValues() = groupingValues
+    @JsonProperty("grouping_values")
+    @ExcludeMissing
+    fun _groupingValues(): JsonField<List<GroupingValue>> = groupingValues
 
     /** The price's usage quantity for the group */
-    @JsonProperty("quantity") @ExcludeMissing fun _quantity() = quantity
+    @JsonProperty("quantity") @ExcludeMissing fun _quantity(): JsonField<Double> = quantity
 
     @JsonAnyGetter
     @ExcludeMissing
@@ -84,14 +86,14 @@ private constructor(
 
     class Builder {
 
-        private var amount: JsonField<String> = JsonMissing.of()
-        private var groupingValues: JsonField<List<GroupingValue>> = JsonMissing.of()
-        private var quantity: JsonField<Double> = JsonMissing.of()
+        private var amount: JsonField<String>? = null
+        private var groupingValues: JsonField<MutableList<GroupingValue>>? = null
+        private var quantity: JsonField<Double>? = null
         private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         internal fun from(evaluatePriceGroup: EvaluatePriceGroup) = apply {
             amount = evaluatePriceGroup.amount
-            groupingValues = evaluatePriceGroup.groupingValues
+            groupingValues = evaluatePriceGroup.groupingValues.map { it.toMutableList() }
             quantity = evaluatePriceGroup.quantity
             additionalProperties = evaluatePriceGroup.additionalProperties.toMutableMap()
         }
@@ -108,7 +110,19 @@ private constructor(
 
         /** The values for the group in the order specified by `grouping_keys` */
         fun groupingValues(groupingValues: JsonField<List<GroupingValue>>) = apply {
-            this.groupingValues = groupingValues
+            this.groupingValues = groupingValues.map { it.toMutableList() }
+        }
+
+        /** The values for the group in the order specified by `grouping_keys` */
+        fun addGroupingValue(groupingValue: GroupingValue) = apply {
+            groupingValues =
+                (groupingValues ?: JsonField.of(mutableListOf())).apply {
+                    (asKnown()
+                            ?: throw IllegalStateException(
+                                "Field was set to non-list type: ${javaClass.simpleName}"
+                            ))
+                        .add(groupingValue)
+                }
         }
 
         /** The price's usage quantity for the group */
@@ -138,9 +152,10 @@ private constructor(
 
         fun build(): EvaluatePriceGroup =
             EvaluatePriceGroup(
-                amount,
-                groupingValues.map { it.toImmutable() },
-                quantity,
+                checkNotNull(amount) { "`amount` is required but was not set" },
+                checkNotNull(groupingValues) { "`groupingValues` is required but was not set" }
+                    .map { it.toImmutable() },
+                checkNotNull(quantity) { "`quantity` is required but was not set" },
                 additionalProperties.toImmutable(),
             )
     }

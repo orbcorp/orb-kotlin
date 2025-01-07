@@ -28,7 +28,7 @@ private constructor(
 
     fun data(): List<Data> = data.getRequired("data")
 
-    @JsonProperty("data") @ExcludeMissing fun _data() = data
+    @JsonProperty("data") @ExcludeMissing fun _data(): JsonField<List<Data>> = data
 
     @JsonAnyGetter
     @ExcludeMissing
@@ -52,17 +52,30 @@ private constructor(
 
     class Builder {
 
-        private var data: JsonField<List<Data>> = JsonMissing.of()
+        private var data: JsonField<MutableList<Data>>? = null
         private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         internal fun from(eventVolumes: EventVolumes) = apply {
-            data = eventVolumes.data
+            data = eventVolumes.data.map { it.toMutableList() }
             additionalProperties = eventVolumes.additionalProperties.toMutableMap()
         }
 
         fun data(data: List<Data>) = data(JsonField.of(data))
 
-        fun data(data: JsonField<List<Data>>) = apply { this.data = data }
+        fun data(data: JsonField<List<Data>>) = apply {
+            this.data = data.map { it.toMutableList() }
+        }
+
+        fun addData(data: Data) = apply {
+            this.data =
+                (this.data ?: JsonField.of(mutableListOf())).apply {
+                    (asKnown()
+                            ?: throw IllegalStateException(
+                                "Field was set to non-list type: ${javaClass.simpleName}"
+                            ))
+                        .add(data)
+                }
+        }
 
         fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
             this.additionalProperties.clear()
@@ -84,7 +97,11 @@ private constructor(
         }
 
         fun build(): EventVolumes =
-            EventVolumes(data.map { it.toImmutable() }, additionalProperties.toImmutable())
+            EventVolumes(
+                checkNotNull(data) { "`data` is required but was not set" }
+                    .map { it.toImmutable() },
+                additionalProperties.toImmutable()
+            )
     }
 
     /**
@@ -116,11 +133,15 @@ private constructor(
         fun timeframeStart(): OffsetDateTime = timeframeStart.getRequired("timeframe_start")
 
         /** The number of events ingested with a timestamp between the timeframe */
-        @JsonProperty("count") @ExcludeMissing fun _count() = count
+        @JsonProperty("count") @ExcludeMissing fun _count(): JsonField<Long> = count
 
-        @JsonProperty("timeframe_end") @ExcludeMissing fun _timeframeEnd() = timeframeEnd
+        @JsonProperty("timeframe_end")
+        @ExcludeMissing
+        fun _timeframeEnd(): JsonField<OffsetDateTime> = timeframeEnd
 
-        @JsonProperty("timeframe_start") @ExcludeMissing fun _timeframeStart() = timeframeStart
+        @JsonProperty("timeframe_start")
+        @ExcludeMissing
+        fun _timeframeStart(): JsonField<OffsetDateTime> = timeframeStart
 
         @JsonAnyGetter
         @ExcludeMissing
@@ -146,9 +167,9 @@ private constructor(
 
         class Builder {
 
-            private var count: JsonField<Long> = JsonMissing.of()
-            private var timeframeEnd: JsonField<OffsetDateTime> = JsonMissing.of()
-            private var timeframeStart: JsonField<OffsetDateTime> = JsonMissing.of()
+            private var count: JsonField<Long>? = null
+            private var timeframeEnd: JsonField<OffsetDateTime>? = null
+            private var timeframeStart: JsonField<OffsetDateTime>? = null
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             internal fun from(data: Data) = apply {
@@ -199,9 +220,9 @@ private constructor(
 
             fun build(): Data =
                 Data(
-                    count,
-                    timeframeEnd,
-                    timeframeStart,
+                    checkNotNull(count) { "`count` is required but was not set" },
+                    checkNotNull(timeframeEnd) { "`timeframeEnd` is required but was not set" },
+                    checkNotNull(timeframeStart) { "`timeframeStart` is required but was not set" },
                     additionalProperties.toImmutable(),
                 )
         }

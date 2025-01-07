@@ -9,6 +9,7 @@ import com.fasterxml.jackson.annotation.JsonProperty
 import com.withorb.api.core.Enum
 import com.withorb.api.core.ExcludeMissing
 import com.withorb.api.core.JsonField
+import com.withorb.api.core.JsonMissing
 import com.withorb.api.core.JsonValue
 import com.withorb.api.core.NoAutoDetect
 import com.withorb.api.core.http.Headers
@@ -33,11 +34,15 @@ constructor(
 
     fun name(): String? = body.name()
 
+    fun _externalConnections(): JsonField<List<ExternalConnection>> = body._externalConnections()
+
+    fun _name(): JsonField<String> = body._name()
+
+    fun _additionalBodyProperties(): Map<String, JsonValue> = body._additionalProperties()
+
     fun _additionalHeaders(): Headers = additionalHeaders
 
     fun _additionalQueryParams(): QueryParams = additionalQueryParams
-
-    fun _additionalBodyProperties(): Map<String, JsonValue> = body._additionalProperties()
 
     internal fun getBody(): ItemUpdateBody = body
 
@@ -62,20 +67,39 @@ constructor(
     @JsonCreator
     internal constructor(
         @JsonProperty("external_connections")
-        private val externalConnections: List<ExternalConnection>?,
-        @JsonProperty("name") private val name: String?,
+        @ExcludeMissing
+        private val externalConnections: JsonField<List<ExternalConnection>> = JsonMissing.of(),
+        @JsonProperty("name")
+        @ExcludeMissing
+        private val name: JsonField<String> = JsonMissing.of(),
         @JsonAnySetter
         private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
 
-        @JsonProperty("external_connections")
-        fun externalConnections(): List<ExternalConnection>? = externalConnections
+        fun externalConnections(): List<ExternalConnection>? =
+            externalConnections.getNullable("external_connections")
 
-        @JsonProperty("name") fun name(): String? = name
+        fun name(): String? = name.getNullable("name")
+
+        @JsonProperty("external_connections")
+        @ExcludeMissing
+        fun _externalConnections(): JsonField<List<ExternalConnection>> = externalConnections
+
+        @JsonProperty("name") @ExcludeMissing fun _name(): JsonField<String> = name
 
         @JsonAnyGetter
         @ExcludeMissing
         fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
+
+        private var validated: Boolean = false
+
+        fun validate(): ItemUpdateBody = apply {
+            if (!validated) {
+                externalConnections()?.forEach { it.validate() }
+                name()
+                validated = true
+            }
+        }
 
         fun toBuilder() = Builder().from(this)
 
@@ -86,26 +110,38 @@ constructor(
 
         class Builder {
 
-            private var externalConnections: MutableList<ExternalConnection>? = null
-            private var name: String? = null
+            private var externalConnections: JsonField<MutableList<ExternalConnection>>? = null
+            private var name: JsonField<String> = JsonMissing.of()
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             internal fun from(itemUpdateBody: ItemUpdateBody) = apply {
-                externalConnections = itemUpdateBody.externalConnections?.toMutableList()
+                externalConnections = itemUpdateBody.externalConnections.map { it.toMutableList() }
                 name = itemUpdateBody.name
                 additionalProperties = itemUpdateBody.additionalProperties.toMutableMap()
             }
 
-            fun externalConnections(externalConnections: List<ExternalConnection>?) = apply {
-                this.externalConnections = externalConnections?.toMutableList()
-            }
+            fun externalConnections(externalConnections: List<ExternalConnection>?) =
+                externalConnections(JsonField.ofNullable(externalConnections))
+
+            fun externalConnections(externalConnections: JsonField<List<ExternalConnection>>) =
+                apply {
+                    this.externalConnections = externalConnections.map { it.toMutableList() }
+                }
 
             fun addExternalConnection(externalConnection: ExternalConnection) = apply {
                 externalConnections =
-                    (externalConnections ?: mutableListOf()).apply { add(externalConnection) }
+                    (externalConnections ?: JsonField.of(mutableListOf())).apply {
+                        (asKnown()
+                                ?: throw IllegalStateException(
+                                    "Field was set to non-list type: ${javaClass.simpleName}"
+                                ))
+                            .add(externalConnection)
+                    }
             }
 
-            fun name(name: String?) = apply { this.name = name }
+            fun name(name: String?) = name(JsonField.ofNullable(name))
+
+            fun name(name: JsonField<String>) = apply { this.name = name }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
@@ -128,7 +164,7 @@ constructor(
 
             fun build(): ItemUpdateBody =
                 ItemUpdateBody(
-                    externalConnections?.toImmutable(),
+                    (externalConnections ?: JsonMissing.of()).map { it.toImmutable() },
                     name,
                     additionalProperties.toImmutable(),
                 )
@@ -180,11 +216,36 @@ constructor(
             body.externalConnections(externalConnections)
         }
 
+        fun externalConnections(externalConnections: JsonField<List<ExternalConnection>>) = apply {
+            body.externalConnections(externalConnections)
+        }
+
         fun addExternalConnection(externalConnection: ExternalConnection) = apply {
             body.addExternalConnection(externalConnection)
         }
 
         fun name(name: String?) = apply { body.name(name) }
+
+        fun name(name: JsonField<String>) = apply { body.name(name) }
+
+        fun additionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) = apply {
+            body.additionalProperties(additionalBodyProperties)
+        }
+
+        fun putAdditionalBodyProperty(key: String, value: JsonValue) = apply {
+            body.putAdditionalProperty(key, value)
+        }
+
+        fun putAllAdditionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) =
+            apply {
+                body.putAllAdditionalProperties(additionalBodyProperties)
+            }
+
+        fun removeAdditionalBodyProperty(key: String) = apply { body.removeAdditionalProperty(key) }
+
+        fun removeAllAdditionalBodyProperties(keys: Set<String>) = apply {
+            body.removeAllAdditionalProperties(keys)
+        }
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {
             this.additionalHeaders.clear()
@@ -284,25 +345,6 @@ constructor(
             additionalQueryParams.removeAll(keys)
         }
 
-        fun additionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) = apply {
-            body.additionalProperties(additionalBodyProperties)
-        }
-
-        fun putAdditionalBodyProperty(key: String, value: JsonValue) = apply {
-            body.putAdditionalProperty(key, value)
-        }
-
-        fun putAllAdditionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) =
-            apply {
-                body.putAllAdditionalProperties(additionalBodyProperties)
-            }
-
-        fun removeAdditionalBodyProperty(key: String) = apply { body.removeAdditionalProperty(key) }
-
-        fun removeAllAdditionalBodyProperties(keys: Set<String>) = apply {
-            body.removeAllAdditionalProperties(keys)
-        }
-
         fun build(): ItemUpdateParams =
             ItemUpdateParams(
                 checkNotNull(itemId) { "`itemId` is required but was not set" },
@@ -317,20 +359,41 @@ constructor(
     @JsonCreator
     private constructor(
         @JsonProperty("external_connection_name")
-        private val externalConnectionName: ExternalConnectionName,
-        @JsonProperty("external_entity_id") private val externalEntityId: String,
+        @ExcludeMissing
+        private val externalConnectionName: JsonField<ExternalConnectionName> = JsonMissing.of(),
+        @JsonProperty("external_entity_id")
+        @ExcludeMissing
+        private val externalEntityId: JsonField<String> = JsonMissing.of(),
         @JsonAnySetter
         private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
 
-        @JsonProperty("external_connection_name")
-        fun externalConnectionName(): ExternalConnectionName = externalConnectionName
+        fun externalConnectionName(): ExternalConnectionName =
+            externalConnectionName.getRequired("external_connection_name")
 
-        @JsonProperty("external_entity_id") fun externalEntityId(): String = externalEntityId
+        fun externalEntityId(): String = externalEntityId.getRequired("external_entity_id")
+
+        @JsonProperty("external_connection_name")
+        @ExcludeMissing
+        fun _externalConnectionName(): JsonField<ExternalConnectionName> = externalConnectionName
+
+        @JsonProperty("external_entity_id")
+        @ExcludeMissing
+        fun _externalEntityId(): JsonField<String> = externalEntityId
 
         @JsonAnyGetter
         @ExcludeMissing
         fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
+
+        private var validated: Boolean = false
+
+        fun validate(): ExternalConnection = apply {
+            if (!validated) {
+                externalConnectionName()
+                externalEntityId()
+                validated = true
+            }
+        }
 
         fun toBuilder() = Builder().from(this)
 
@@ -341,8 +404,8 @@ constructor(
 
         class Builder {
 
-            private var externalConnectionName: ExternalConnectionName? = null
-            private var externalEntityId: String? = null
+            private var externalConnectionName: JsonField<ExternalConnectionName>? = null
+            private var externalEntityId: JsonField<String>? = null
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             internal fun from(externalConnection: ExternalConnection) = apply {
@@ -351,11 +414,18 @@ constructor(
                 additionalProperties = externalConnection.additionalProperties.toMutableMap()
             }
 
-            fun externalConnectionName(externalConnectionName: ExternalConnectionName) = apply {
-                this.externalConnectionName = externalConnectionName
-            }
+            fun externalConnectionName(externalConnectionName: ExternalConnectionName) =
+                externalConnectionName(JsonField.of(externalConnectionName))
 
-            fun externalEntityId(externalEntityId: String) = apply {
+            fun externalConnectionName(externalConnectionName: JsonField<ExternalConnectionName>) =
+                apply {
+                    this.externalConnectionName = externalConnectionName
+                }
+
+            fun externalEntityId(externalEntityId: String) =
+                externalEntityId(JsonField.of(externalEntityId))
+
+            fun externalEntityId(externalEntityId: JsonField<String>) = apply {
                 this.externalEntityId = externalEntityId
             }
 

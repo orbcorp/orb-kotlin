@@ -62,27 +62,27 @@ private constructor(
 
     fun status(): Status = status.getRequired("status")
 
-    @JsonProperty("id") @ExcludeMissing fun _id() = id
+    @JsonProperty("id") @ExcludeMissing fun _id(): JsonField<String> = id
 
-    @JsonProperty("description") @ExcludeMissing fun _description() = description
+    @JsonProperty("description") @ExcludeMissing fun _description(): JsonField<String> = description
 
     /**
      * The Item resource represents a sellable product or good. Items are associated with all line
      * items, billable metrics, and prices and are used for defining external sync behavior for
      * invoices and tax calculation purposes.
      */
-    @JsonProperty("item") @ExcludeMissing fun _item() = item
+    @JsonProperty("item") @ExcludeMissing fun _item(): JsonField<Item> = item
 
     /**
      * User specified key-value pairs for the resource. If not present, this defaults to an empty
      * dictionary. Individual keys can be removed by setting the value to `null`, and the entire
      * metadata mapping can be cleared by setting `metadata` to `null`.
      */
-    @JsonProperty("metadata") @ExcludeMissing fun _metadata() = metadata
+    @JsonProperty("metadata") @ExcludeMissing fun _metadata(): JsonField<Metadata> = metadata
 
-    @JsonProperty("name") @ExcludeMissing fun _name() = name
+    @JsonProperty("name") @ExcludeMissing fun _name(): JsonField<String> = name
 
-    @JsonProperty("status") @ExcludeMissing fun _status() = status
+    @JsonProperty("status") @ExcludeMissing fun _status(): JsonField<Status> = status
 
     @JsonAnyGetter
     @ExcludeMissing
@@ -111,12 +111,12 @@ private constructor(
 
     class Builder {
 
-        private var id: JsonField<String> = JsonMissing.of()
-        private var description: JsonField<String> = JsonMissing.of()
-        private var item: JsonField<Item> = JsonMissing.of()
-        private var metadata: JsonField<Metadata> = JsonMissing.of()
-        private var name: JsonField<String> = JsonMissing.of()
-        private var status: JsonField<Status> = JsonMissing.of()
+        private var id: JsonField<String>? = null
+        private var description: JsonField<String>? = null
+        private var item: JsonField<Item>? = null
+        private var metadata: JsonField<Metadata>? = null
+        private var name: JsonField<String>? = null
+        private var status: JsonField<Status>? = null
         private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         internal fun from(billableMetric: BillableMetric) = apply {
@@ -133,7 +133,7 @@ private constructor(
 
         fun id(id: JsonField<String>) = apply { this.id = id }
 
-        fun description(description: String) = description(JsonField.of(description))
+        fun description(description: String?) = description(JsonField.ofNullable(description))
 
         fun description(description: JsonField<String>) = apply { this.description = description }
 
@@ -194,12 +194,12 @@ private constructor(
 
         fun build(): BillableMetric =
             BillableMetric(
-                id,
-                description,
-                item,
-                metadata,
-                name,
-                status,
+                checkNotNull(id) { "`id` is required but was not set" },
+                checkNotNull(description) { "`description` is required but was not set" },
+                checkNotNull(item) { "`item` is required but was not set" },
+                checkNotNull(metadata) { "`metadata` is required but was not set" },
+                checkNotNull(name) { "`name` is required but was not set" },
+                checkNotNull(status) { "`status` is required but was not set" },
                 additionalProperties.toImmutable(),
             )
     }

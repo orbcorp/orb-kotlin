@@ -7,6 +7,8 @@ import com.fasterxml.jackson.annotation.JsonAnySetter
 import com.fasterxml.jackson.annotation.JsonCreator
 import com.fasterxml.jackson.annotation.JsonProperty
 import com.withorb.api.core.ExcludeMissing
+import com.withorb.api.core.JsonField
+import com.withorb.api.core.JsonMissing
 import com.withorb.api.core.JsonValue
 import com.withorb.api.core.NoAutoDetect
 import com.withorb.api.core.http.Headers
@@ -70,11 +72,36 @@ constructor(
      */
     fun groupingKeys(): List<String>? = body.groupingKeys()
 
+    /** The exclusive upper bound for event timestamps */
+    fun _timeframeEnd(): JsonField<OffsetDateTime> = body._timeframeEnd()
+
+    /** The inclusive lower bound for event timestamps */
+    fun _timeframeStart(): JsonField<OffsetDateTime> = body._timeframeStart()
+
+    /** The ID of the customer to which this evaluation is scoped. */
+    fun _customerId(): JsonField<String> = body._customerId()
+
+    /** The external customer ID of the customer to which this evaluation is scoped. */
+    fun _externalCustomerId(): JsonField<String> = body._externalCustomerId()
+
+    /**
+     * A boolean [computed property](../guides/extensibility/advanced-metrics#computed-properties)
+     * used to filter the underlying billable metric
+     */
+    fun _filter(): JsonField<String> = body._filter()
+
+    /**
+     * Properties (or
+     * [computed properties](../guides/extensibility/advanced-metrics#computed-properties)) used to
+     * group the underlying billable metric
+     */
+    fun _groupingKeys(): JsonField<List<String>> = body._groupingKeys()
+
+    fun _additionalBodyProperties(): Map<String, JsonValue> = body._additionalProperties()
+
     fun _additionalHeaders(): Headers = additionalHeaders
 
     fun _additionalQueryParams(): QueryParams = additionalQueryParams
-
-    fun _additionalBodyProperties(): Map<String, JsonValue> = body._additionalProperties()
 
     internal fun getBody(): PriceEvaluateBody = body
 
@@ -93,45 +120,107 @@ constructor(
     class PriceEvaluateBody
     @JsonCreator
     internal constructor(
-        @JsonProperty("timeframe_end") private val timeframeEnd: OffsetDateTime,
-        @JsonProperty("timeframe_start") private val timeframeStart: OffsetDateTime,
-        @JsonProperty("customer_id") private val customerId: String?,
-        @JsonProperty("external_customer_id") private val externalCustomerId: String?,
-        @JsonProperty("filter") private val filter: String?,
-        @JsonProperty("grouping_keys") private val groupingKeys: List<String>?,
+        @JsonProperty("timeframe_end")
+        @ExcludeMissing
+        private val timeframeEnd: JsonField<OffsetDateTime> = JsonMissing.of(),
+        @JsonProperty("timeframe_start")
+        @ExcludeMissing
+        private val timeframeStart: JsonField<OffsetDateTime> = JsonMissing.of(),
+        @JsonProperty("customer_id")
+        @ExcludeMissing
+        private val customerId: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("external_customer_id")
+        @ExcludeMissing
+        private val externalCustomerId: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("filter")
+        @ExcludeMissing
+        private val filter: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("grouping_keys")
+        @ExcludeMissing
+        private val groupingKeys: JsonField<List<String>> = JsonMissing.of(),
         @JsonAnySetter
         private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
 
         /** The exclusive upper bound for event timestamps */
-        @JsonProperty("timeframe_end") fun timeframeEnd(): OffsetDateTime = timeframeEnd
+        fun timeframeEnd(): OffsetDateTime = timeframeEnd.getRequired("timeframe_end")
 
         /** The inclusive lower bound for event timestamps */
-        @JsonProperty("timeframe_start") fun timeframeStart(): OffsetDateTime = timeframeStart
+        fun timeframeStart(): OffsetDateTime = timeframeStart.getRequired("timeframe_start")
 
         /** The ID of the customer to which this evaluation is scoped. */
-        @JsonProperty("customer_id") fun customerId(): String? = customerId
+        fun customerId(): String? = customerId.getNullable("customer_id")
 
         /** The external customer ID of the customer to which this evaluation is scoped. */
-        @JsonProperty("external_customer_id") fun externalCustomerId(): String? = externalCustomerId
+        fun externalCustomerId(): String? = externalCustomerId.getNullable("external_customer_id")
 
         /**
          * A boolean
          * [computed property](../guides/extensibility/advanced-metrics#computed-properties) used to
          * filter the underlying billable metric
          */
-        @JsonProperty("filter") fun filter(): String? = filter
+        fun filter(): String? = filter.getNullable("filter")
 
         /**
          * Properties (or
          * [computed properties](../guides/extensibility/advanced-metrics#computed-properties)) used
          * to group the underlying billable metric
          */
-        @JsonProperty("grouping_keys") fun groupingKeys(): List<String>? = groupingKeys
+        fun groupingKeys(): List<String>? = groupingKeys.getNullable("grouping_keys")
+
+        /** The exclusive upper bound for event timestamps */
+        @JsonProperty("timeframe_end")
+        @ExcludeMissing
+        fun _timeframeEnd(): JsonField<OffsetDateTime> = timeframeEnd
+
+        /** The inclusive lower bound for event timestamps */
+        @JsonProperty("timeframe_start")
+        @ExcludeMissing
+        fun _timeframeStart(): JsonField<OffsetDateTime> = timeframeStart
+
+        /** The ID of the customer to which this evaluation is scoped. */
+        @JsonProperty("customer_id")
+        @ExcludeMissing
+        fun _customerId(): JsonField<String> = customerId
+
+        /** The external customer ID of the customer to which this evaluation is scoped. */
+        @JsonProperty("external_customer_id")
+        @ExcludeMissing
+        fun _externalCustomerId(): JsonField<String> = externalCustomerId
+
+        /**
+         * A boolean
+         * [computed property](../guides/extensibility/advanced-metrics#computed-properties) used to
+         * filter the underlying billable metric
+         */
+        @JsonProperty("filter") @ExcludeMissing fun _filter(): JsonField<String> = filter
+
+        /**
+         * Properties (or
+         * [computed properties](../guides/extensibility/advanced-metrics#computed-properties)) used
+         * to group the underlying billable metric
+         */
+        @JsonProperty("grouping_keys")
+        @ExcludeMissing
+        fun _groupingKeys(): JsonField<List<String>> = groupingKeys
 
         @JsonAnyGetter
         @ExcludeMissing
         fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
+
+        private var validated: Boolean = false
+
+        fun validate(): PriceEvaluateBody = apply {
+            if (!validated) {
+                timeframeEnd()
+                timeframeStart()
+                customerId()
+                externalCustomerId()
+                filter()
+                groupingKeys()
+                validated = true
+            }
+        }
 
         fun toBuilder() = Builder().from(this)
 
@@ -142,12 +231,12 @@ constructor(
 
         class Builder {
 
-            private var timeframeEnd: OffsetDateTime? = null
-            private var timeframeStart: OffsetDateTime? = null
-            private var customerId: String? = null
-            private var externalCustomerId: String? = null
-            private var filter: String? = null
-            private var groupingKeys: MutableList<String>? = null
+            private var timeframeEnd: JsonField<OffsetDateTime>? = null
+            private var timeframeStart: JsonField<OffsetDateTime>? = null
+            private var customerId: JsonField<String> = JsonMissing.of()
+            private var externalCustomerId: JsonField<String> = JsonMissing.of()
+            private var filter: JsonField<String> = JsonMissing.of()
+            private var groupingKeys: JsonField<MutableList<String>>? = null
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             internal fun from(priceEvaluateBody: PriceEvaluateBody) = apply {
@@ -156,25 +245,40 @@ constructor(
                 customerId = priceEvaluateBody.customerId
                 externalCustomerId = priceEvaluateBody.externalCustomerId
                 filter = priceEvaluateBody.filter
-                groupingKeys = priceEvaluateBody.groupingKeys?.toMutableList()
+                groupingKeys = priceEvaluateBody.groupingKeys.map { it.toMutableList() }
                 additionalProperties = priceEvaluateBody.additionalProperties.toMutableMap()
             }
 
             /** The exclusive upper bound for event timestamps */
-            fun timeframeEnd(timeframeEnd: OffsetDateTime) = apply {
+            fun timeframeEnd(timeframeEnd: OffsetDateTime) =
+                timeframeEnd(JsonField.of(timeframeEnd))
+
+            /** The exclusive upper bound for event timestamps */
+            fun timeframeEnd(timeframeEnd: JsonField<OffsetDateTime>) = apply {
                 this.timeframeEnd = timeframeEnd
             }
 
             /** The inclusive lower bound for event timestamps */
-            fun timeframeStart(timeframeStart: OffsetDateTime) = apply {
+            fun timeframeStart(timeframeStart: OffsetDateTime) =
+                timeframeStart(JsonField.of(timeframeStart))
+
+            /** The inclusive lower bound for event timestamps */
+            fun timeframeStart(timeframeStart: JsonField<OffsetDateTime>) = apply {
                 this.timeframeStart = timeframeStart
             }
 
             /** The ID of the customer to which this evaluation is scoped. */
-            fun customerId(customerId: String?) = apply { this.customerId = customerId }
+            fun customerId(customerId: String?) = customerId(JsonField.ofNullable(customerId))
+
+            /** The ID of the customer to which this evaluation is scoped. */
+            fun customerId(customerId: JsonField<String>) = apply { this.customerId = customerId }
 
             /** The external customer ID of the customer to which this evaluation is scoped. */
-            fun externalCustomerId(externalCustomerId: String?) = apply {
+            fun externalCustomerId(externalCustomerId: String?) =
+                externalCustomerId(JsonField.ofNullable(externalCustomerId))
+
+            /** The external customer ID of the customer to which this evaluation is scoped. */
+            fun externalCustomerId(externalCustomerId: JsonField<String>) = apply {
                 this.externalCustomerId = externalCustomerId
             }
 
@@ -183,15 +287,29 @@ constructor(
              * [computed property](../guides/extensibility/advanced-metrics#computed-properties)
              * used to filter the underlying billable metric
              */
-            fun filter(filter: String?) = apply { this.filter = filter }
+            fun filter(filter: String?) = filter(JsonField.ofNullable(filter))
+
+            /**
+             * A boolean
+             * [computed property](../guides/extensibility/advanced-metrics#computed-properties)
+             * used to filter the underlying billable metric
+             */
+            fun filter(filter: JsonField<String>) = apply { this.filter = filter }
 
             /**
              * Properties (or
              * [computed properties](../guides/extensibility/advanced-metrics#computed-properties))
              * used to group the underlying billable metric
              */
-            fun groupingKeys(groupingKeys: List<String>?) = apply {
-                this.groupingKeys = groupingKeys?.toMutableList()
+            fun groupingKeys(groupingKeys: List<String>) = groupingKeys(JsonField.of(groupingKeys))
+
+            /**
+             * Properties (or
+             * [computed properties](../guides/extensibility/advanced-metrics#computed-properties))
+             * used to group the underlying billable metric
+             */
+            fun groupingKeys(groupingKeys: JsonField<List<String>>) = apply {
+                this.groupingKeys = groupingKeys.map { it.toMutableList() }
             }
 
             /**
@@ -200,7 +318,14 @@ constructor(
              * used to group the underlying billable metric
              */
             fun addGroupingKey(groupingKey: String) = apply {
-                groupingKeys = (groupingKeys ?: mutableListOf()).apply { add(groupingKey) }
+                groupingKeys =
+                    (groupingKeys ?: JsonField.of(mutableListOf())).apply {
+                        (asKnown()
+                                ?: throw IllegalStateException(
+                                    "Field was set to non-list type: ${javaClass.simpleName}"
+                                ))
+                            .add(groupingKey)
+                    }
             }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
@@ -229,7 +354,7 @@ constructor(
                     customerId,
                     externalCustomerId,
                     filter,
-                    groupingKeys?.toImmutable(),
+                    (groupingKeys ?: JsonMissing.of()).map { it.toImmutable() },
                     additionalProperties.toImmutable(),
                 )
         }
@@ -279,16 +404,34 @@ constructor(
         /** The exclusive upper bound for event timestamps */
         fun timeframeEnd(timeframeEnd: OffsetDateTime) = apply { body.timeframeEnd(timeframeEnd) }
 
+        /** The exclusive upper bound for event timestamps */
+        fun timeframeEnd(timeframeEnd: JsonField<OffsetDateTime>) = apply {
+            body.timeframeEnd(timeframeEnd)
+        }
+
         /** The inclusive lower bound for event timestamps */
         fun timeframeStart(timeframeStart: OffsetDateTime) = apply {
+            body.timeframeStart(timeframeStart)
+        }
+
+        /** The inclusive lower bound for event timestamps */
+        fun timeframeStart(timeframeStart: JsonField<OffsetDateTime>) = apply {
             body.timeframeStart(timeframeStart)
         }
 
         /** The ID of the customer to which this evaluation is scoped. */
         fun customerId(customerId: String?) = apply { body.customerId(customerId) }
 
+        /** The ID of the customer to which this evaluation is scoped. */
+        fun customerId(customerId: JsonField<String>) = apply { body.customerId(customerId) }
+
         /** The external customer ID of the customer to which this evaluation is scoped. */
         fun externalCustomerId(externalCustomerId: String?) = apply {
+            body.externalCustomerId(externalCustomerId)
+        }
+
+        /** The external customer ID of the customer to which this evaluation is scoped. */
+        fun externalCustomerId(externalCustomerId: JsonField<String>) = apply {
             body.externalCustomerId(externalCustomerId)
         }
 
@@ -300,11 +443,27 @@ constructor(
         fun filter(filter: String?) = apply { body.filter(filter) }
 
         /**
+         * A boolean
+         * [computed property](../guides/extensibility/advanced-metrics#computed-properties) used to
+         * filter the underlying billable metric
+         */
+        fun filter(filter: JsonField<String>) = apply { body.filter(filter) }
+
+        /**
          * Properties (or
          * [computed properties](../guides/extensibility/advanced-metrics#computed-properties)) used
          * to group the underlying billable metric
          */
-        fun groupingKeys(groupingKeys: List<String>?) = apply { body.groupingKeys(groupingKeys) }
+        fun groupingKeys(groupingKeys: List<String>) = apply { body.groupingKeys(groupingKeys) }
+
+        /**
+         * Properties (or
+         * [computed properties](../guides/extensibility/advanced-metrics#computed-properties)) used
+         * to group the underlying billable metric
+         */
+        fun groupingKeys(groupingKeys: JsonField<List<String>>) = apply {
+            body.groupingKeys(groupingKeys)
+        }
 
         /**
          * Properties (or
@@ -312,6 +471,25 @@ constructor(
          * to group the underlying billable metric
          */
         fun addGroupingKey(groupingKey: String) = apply { body.addGroupingKey(groupingKey) }
+
+        fun additionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) = apply {
+            body.additionalProperties(additionalBodyProperties)
+        }
+
+        fun putAdditionalBodyProperty(key: String, value: JsonValue) = apply {
+            body.putAdditionalProperty(key, value)
+        }
+
+        fun putAllAdditionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) =
+            apply {
+                body.putAllAdditionalProperties(additionalBodyProperties)
+            }
+
+        fun removeAdditionalBodyProperty(key: String) = apply { body.removeAdditionalProperty(key) }
+
+        fun removeAllAdditionalBodyProperties(keys: Set<String>) = apply {
+            body.removeAllAdditionalProperties(keys)
+        }
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {
             this.additionalHeaders.clear()
@@ -409,25 +587,6 @@ constructor(
 
         fun removeAllAdditionalQueryParams(keys: Set<String>) = apply {
             additionalQueryParams.removeAll(keys)
-        }
-
-        fun additionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) = apply {
-            body.additionalProperties(additionalBodyProperties)
-        }
-
-        fun putAdditionalBodyProperty(key: String, value: JsonValue) = apply {
-            body.putAdditionalProperty(key, value)
-        }
-
-        fun putAllAdditionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) =
-            apply {
-                body.putAllAdditionalProperties(additionalBodyProperties)
-            }
-
-        fun removeAdditionalBodyProperty(key: String) = apply { body.removeAdditionalProperty(key) }
-
-        fun removeAllAdditionalBodyProperties(keys: Set<String>) = apply {
-            body.removeAllAdditionalProperties(keys)
         }
 
         fun build(): PriceEvaluateParams =

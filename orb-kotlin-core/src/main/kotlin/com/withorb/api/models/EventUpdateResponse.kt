@@ -29,7 +29,7 @@ private constructor(
     fun amended(): String = amended.getRequired("amended")
 
     /** event_id of the amended event, if successfully ingested */
-    @JsonProperty("amended") @ExcludeMissing fun _amended() = amended
+    @JsonProperty("amended") @ExcludeMissing fun _amended(): JsonField<String> = amended
 
     @JsonAnyGetter
     @ExcludeMissing
@@ -53,7 +53,7 @@ private constructor(
 
     class Builder {
 
-        private var amended: JsonField<String> = JsonMissing.of()
+        private var amended: JsonField<String>? = null
         private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         internal fun from(eventUpdateResponse: EventUpdateResponse) = apply {
@@ -87,7 +87,10 @@ private constructor(
         }
 
         fun build(): EventUpdateResponse =
-            EventUpdateResponse(amended, additionalProperties.toImmutable())
+            EventUpdateResponse(
+                checkNotNull(amended) { "`amended` is required but was not set" },
+                additionalProperties.toImmutable()
+            )
     }
 
     override fun equals(other: Any?): Boolean {

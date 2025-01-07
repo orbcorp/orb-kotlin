@@ -167,7 +167,7 @@ private constructor(
 
         fun data(): List<Data> = data.getRequired("data")
 
-        @JsonProperty("data") @ExcludeMissing fun _data() = data
+        @JsonProperty("data") @ExcludeMissing fun _data(): JsonField<List<Data>> = data
 
         @JsonAnyGetter
         @ExcludeMissing
@@ -191,18 +191,31 @@ private constructor(
 
         class Builder {
 
-            private var data: JsonField<List<Data>> = JsonMissing.of()
+            private var data: JsonField<MutableList<Data>>? = null
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             internal fun from(ungroupedSubscriptionUsage: UngroupedSubscriptionUsage) = apply {
-                data = ungroupedSubscriptionUsage.data
+                data = ungroupedSubscriptionUsage.data.map { it.toMutableList() }
                 additionalProperties =
                     ungroupedSubscriptionUsage.additionalProperties.toMutableMap()
             }
 
             fun data(data: List<Data>) = data(JsonField.of(data))
 
-            fun data(data: JsonField<List<Data>>) = apply { this.data = data }
+            fun data(data: JsonField<List<Data>>) = apply {
+                this.data = data.map { it.toMutableList() }
+            }
+
+            fun addData(data: Data) = apply {
+                this.data =
+                    (this.data ?: JsonField.of(mutableListOf())).apply {
+                        (asKnown()
+                                ?: throw IllegalStateException(
+                                    "Field was set to non-list type: ${javaClass.simpleName}"
+                                ))
+                            .add(data)
+                    }
+            }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
@@ -225,7 +238,8 @@ private constructor(
 
             fun build(): UngroupedSubscriptionUsage =
                 UngroupedSubscriptionUsage(
-                    data.map { it.toImmutable() },
+                    checkNotNull(data) { "`data` is required but was not set" }
+                        .map { it.toImmutable() },
                     additionalProperties.toImmutable()
                 )
         }
@@ -253,11 +267,15 @@ private constructor(
 
             fun viewMode(): ViewMode = viewMode.getRequired("view_mode")
 
-            @JsonProperty("billable_metric") @ExcludeMissing fun _billableMetric() = billableMetric
+            @JsonProperty("billable_metric")
+            @ExcludeMissing
+            fun _billableMetric(): JsonField<BillableMetric> = billableMetric
 
-            @JsonProperty("usage") @ExcludeMissing fun _usage() = usage
+            @JsonProperty("usage") @ExcludeMissing fun _usage(): JsonField<List<Usage>> = usage
 
-            @JsonProperty("view_mode") @ExcludeMissing fun _viewMode() = viewMode
+            @JsonProperty("view_mode")
+            @ExcludeMissing
+            fun _viewMode(): JsonField<ViewMode> = viewMode
 
             @JsonAnyGetter
             @ExcludeMissing
@@ -283,14 +301,14 @@ private constructor(
 
             class Builder {
 
-                private var billableMetric: JsonField<BillableMetric> = JsonMissing.of()
-                private var usage: JsonField<List<Usage>> = JsonMissing.of()
-                private var viewMode: JsonField<ViewMode> = JsonMissing.of()
+                private var billableMetric: JsonField<BillableMetric>? = null
+                private var usage: JsonField<MutableList<Usage>>? = null
+                private var viewMode: JsonField<ViewMode>? = null
                 private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
                 internal fun from(data: Data) = apply {
                     billableMetric = data.billableMetric
-                    usage = data.usage
+                    usage = data.usage.map { it.toMutableList() }
                     viewMode = data.viewMode
                     additionalProperties = data.additionalProperties.toMutableMap()
                 }
@@ -304,7 +322,20 @@ private constructor(
 
                 fun usage(usage: List<Usage>) = usage(JsonField.of(usage))
 
-                fun usage(usage: JsonField<List<Usage>>) = apply { this.usage = usage }
+                fun usage(usage: JsonField<List<Usage>>) = apply {
+                    this.usage = usage.map { it.toMutableList() }
+                }
+
+                fun addUsage(usage: Usage) = apply {
+                    this.usage =
+                        (this.usage ?: JsonField.of(mutableListOf())).apply {
+                            (asKnown()
+                                    ?: throw IllegalStateException(
+                                        "Field was set to non-list type: ${javaClass.simpleName}"
+                                    ))
+                                .add(usage)
+                        }
+                }
 
                 fun viewMode(viewMode: ViewMode) = viewMode(JsonField.of(viewMode))
 
@@ -334,9 +365,12 @@ private constructor(
 
                 fun build(): Data =
                     Data(
-                        billableMetric,
-                        usage.map { it.toImmutable() },
-                        viewMode,
+                        checkNotNull(billableMetric) {
+                            "`billableMetric` is required but was not set"
+                        },
+                        checkNotNull(usage) { "`usage` is required but was not set" }
+                            .map { it.toImmutable() },
+                        checkNotNull(viewMode) { "`viewMode` is required but was not set" },
                         additionalProperties.toImmutable(),
                     )
             }
@@ -359,9 +393,9 @@ private constructor(
 
                 fun name(): String = name.getRequired("name")
 
-                @JsonProperty("id") @ExcludeMissing fun _id() = id
+                @JsonProperty("id") @ExcludeMissing fun _id(): JsonField<String> = id
 
-                @JsonProperty("name") @ExcludeMissing fun _name() = name
+                @JsonProperty("name") @ExcludeMissing fun _name(): JsonField<String> = name
 
                 @JsonAnyGetter
                 @ExcludeMissing
@@ -386,8 +420,8 @@ private constructor(
 
                 class Builder {
 
-                    private var id: JsonField<String> = JsonMissing.of()
-                    private var name: JsonField<String> = JsonMissing.of()
+                    private var id: JsonField<String>? = null
+                    private var name: JsonField<String>? = null
                     private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
                     internal fun from(billableMetric: BillableMetric) = apply {
@@ -428,8 +462,8 @@ private constructor(
 
                     fun build(): BillableMetric =
                         BillableMetric(
-                            id,
-                            name,
+                            checkNotNull(id) { "`id` is required but was not set" },
+                            checkNotNull(name) { "`name` is required but was not set" },
                             additionalProperties.toImmutable(),
                         )
                 }
@@ -475,13 +509,17 @@ private constructor(
 
                 fun timeframeStart(): OffsetDateTime = timeframeStart.getRequired("timeframe_start")
 
-                @JsonProperty("quantity") @ExcludeMissing fun _quantity() = quantity
+                @JsonProperty("quantity")
+                @ExcludeMissing
+                fun _quantity(): JsonField<Double> = quantity
 
-                @JsonProperty("timeframe_end") @ExcludeMissing fun _timeframeEnd() = timeframeEnd
+                @JsonProperty("timeframe_end")
+                @ExcludeMissing
+                fun _timeframeEnd(): JsonField<OffsetDateTime> = timeframeEnd
 
                 @JsonProperty("timeframe_start")
                 @ExcludeMissing
-                fun _timeframeStart() = timeframeStart
+                fun _timeframeStart(): JsonField<OffsetDateTime> = timeframeStart
 
                 @JsonAnyGetter
                 @ExcludeMissing
@@ -507,9 +545,9 @@ private constructor(
 
                 class Builder {
 
-                    private var quantity: JsonField<Double> = JsonMissing.of()
-                    private var timeframeEnd: JsonField<OffsetDateTime> = JsonMissing.of()
-                    private var timeframeStart: JsonField<OffsetDateTime> = JsonMissing.of()
+                    private var quantity: JsonField<Double>? = null
+                    private var timeframeEnd: JsonField<OffsetDateTime>? = null
+                    private var timeframeStart: JsonField<OffsetDateTime>? = null
                     private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
                     internal fun from(usage: Usage) = apply {
@@ -561,9 +599,13 @@ private constructor(
 
                     fun build(): Usage =
                         Usage(
-                            quantity,
-                            timeframeEnd,
-                            timeframeStart,
+                            checkNotNull(quantity) { "`quantity` is required but was not set" },
+                            checkNotNull(timeframeEnd) {
+                                "`timeframeEnd` is required but was not set"
+                            },
+                            checkNotNull(timeframeStart) {
+                                "`timeframeStart` is required but was not set"
+                            },
                             additionalProperties.toImmutable(),
                         )
                 }
@@ -698,11 +740,11 @@ private constructor(
         fun paginationMetadata(): PaginationMetadata? =
             paginationMetadata.getNullable("pagination_metadata")
 
-        @JsonProperty("data") @ExcludeMissing fun _data() = data
+        @JsonProperty("data") @ExcludeMissing fun _data(): JsonField<List<Data>> = data
 
         @JsonProperty("pagination_metadata")
         @ExcludeMissing
-        fun _paginationMetadata() = paginationMetadata
+        fun _paginationMetadata(): JsonField<PaginationMetadata> = paginationMetadata
 
         @JsonAnyGetter
         @ExcludeMissing
@@ -727,22 +769,35 @@ private constructor(
 
         class Builder {
 
-            private var data: JsonField<List<Data>> = JsonMissing.of()
+            private var data: JsonField<MutableList<Data>>? = null
             private var paginationMetadata: JsonField<PaginationMetadata> = JsonMissing.of()
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             internal fun from(groupedSubscriptionUsage: GroupedSubscriptionUsage) = apply {
-                data = groupedSubscriptionUsage.data
+                data = groupedSubscriptionUsage.data.map { it.toMutableList() }
                 paginationMetadata = groupedSubscriptionUsage.paginationMetadata
                 additionalProperties = groupedSubscriptionUsage.additionalProperties.toMutableMap()
             }
 
             fun data(data: List<Data>) = data(JsonField.of(data))
 
-            fun data(data: JsonField<List<Data>>) = apply { this.data = data }
+            fun data(data: JsonField<List<Data>>) = apply {
+                this.data = data.map { it.toMutableList() }
+            }
 
-            fun paginationMetadata(paginationMetadata: PaginationMetadata) =
-                paginationMetadata(JsonField.of(paginationMetadata))
+            fun addData(data: Data) = apply {
+                this.data =
+                    (this.data ?: JsonField.of(mutableListOf())).apply {
+                        (asKnown()
+                                ?: throw IllegalStateException(
+                                    "Field was set to non-list type: ${javaClass.simpleName}"
+                                ))
+                            .add(data)
+                    }
+            }
+
+            fun paginationMetadata(paginationMetadata: PaginationMetadata?) =
+                paginationMetadata(JsonField.ofNullable(paginationMetadata))
 
             fun paginationMetadata(paginationMetadata: JsonField<PaginationMetadata>) = apply {
                 this.paginationMetadata = paginationMetadata
@@ -769,7 +824,8 @@ private constructor(
 
             fun build(): GroupedSubscriptionUsage =
                 GroupedSubscriptionUsage(
-                    data.map { it.toImmutable() },
+                    checkNotNull(data) { "`data` is required but was not set" }
+                        .map { it.toImmutable() },
                     paginationMetadata,
                     additionalProperties.toImmutable(),
                 )
@@ -803,13 +859,19 @@ private constructor(
 
             fun viewMode(): ViewMode = viewMode.getRequired("view_mode")
 
-            @JsonProperty("billable_metric") @ExcludeMissing fun _billableMetric() = billableMetric
+            @JsonProperty("billable_metric")
+            @ExcludeMissing
+            fun _billableMetric(): JsonField<BillableMetric> = billableMetric
 
-            @JsonProperty("metric_group") @ExcludeMissing fun _metricGroup() = metricGroup
+            @JsonProperty("metric_group")
+            @ExcludeMissing
+            fun _metricGroup(): JsonField<MetricGroup> = metricGroup
 
-            @JsonProperty("usage") @ExcludeMissing fun _usage() = usage
+            @JsonProperty("usage") @ExcludeMissing fun _usage(): JsonField<List<Usage>> = usage
 
-            @JsonProperty("view_mode") @ExcludeMissing fun _viewMode() = viewMode
+            @JsonProperty("view_mode")
+            @ExcludeMissing
+            fun _viewMode(): JsonField<ViewMode> = viewMode
 
             @JsonAnyGetter
             @ExcludeMissing
@@ -836,16 +898,16 @@ private constructor(
 
             class Builder {
 
-                private var billableMetric: JsonField<BillableMetric> = JsonMissing.of()
-                private var metricGroup: JsonField<MetricGroup> = JsonMissing.of()
-                private var usage: JsonField<List<Usage>> = JsonMissing.of()
-                private var viewMode: JsonField<ViewMode> = JsonMissing.of()
+                private var billableMetric: JsonField<BillableMetric>? = null
+                private var metricGroup: JsonField<MetricGroup>? = null
+                private var usage: JsonField<MutableList<Usage>>? = null
+                private var viewMode: JsonField<ViewMode>? = null
                 private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
                 internal fun from(data: Data) = apply {
                     billableMetric = data.billableMetric
                     metricGroup = data.metricGroup
-                    usage = data.usage
+                    usage = data.usage.map { it.toMutableList() }
                     viewMode = data.viewMode
                     additionalProperties = data.additionalProperties.toMutableMap()
                 }
@@ -865,7 +927,20 @@ private constructor(
 
                 fun usage(usage: List<Usage>) = usage(JsonField.of(usage))
 
-                fun usage(usage: JsonField<List<Usage>>) = apply { this.usage = usage }
+                fun usage(usage: JsonField<List<Usage>>) = apply {
+                    this.usage = usage.map { it.toMutableList() }
+                }
+
+                fun addUsage(usage: Usage) = apply {
+                    this.usage =
+                        (this.usage ?: JsonField.of(mutableListOf())).apply {
+                            (asKnown()
+                                    ?: throw IllegalStateException(
+                                        "Field was set to non-list type: ${javaClass.simpleName}"
+                                    ))
+                                .add(usage)
+                        }
+                }
 
                 fun viewMode(viewMode: ViewMode) = viewMode(JsonField.of(viewMode))
 
@@ -895,10 +970,13 @@ private constructor(
 
                 fun build(): Data =
                     Data(
-                        billableMetric,
-                        metricGroup,
-                        usage.map { it.toImmutable() },
-                        viewMode,
+                        checkNotNull(billableMetric) {
+                            "`billableMetric` is required but was not set"
+                        },
+                        checkNotNull(metricGroup) { "`metricGroup` is required but was not set" },
+                        checkNotNull(usage) { "`usage` is required but was not set" }
+                            .map { it.toImmutable() },
+                        checkNotNull(viewMode) { "`viewMode` is required but was not set" },
                         additionalProperties.toImmutable(),
                     )
             }
@@ -921,9 +999,9 @@ private constructor(
 
                 fun name(): String = name.getRequired("name")
 
-                @JsonProperty("id") @ExcludeMissing fun _id() = id
+                @JsonProperty("id") @ExcludeMissing fun _id(): JsonField<String> = id
 
-                @JsonProperty("name") @ExcludeMissing fun _name() = name
+                @JsonProperty("name") @ExcludeMissing fun _name(): JsonField<String> = name
 
                 @JsonAnyGetter
                 @ExcludeMissing
@@ -948,8 +1026,8 @@ private constructor(
 
                 class Builder {
 
-                    private var id: JsonField<String> = JsonMissing.of()
-                    private var name: JsonField<String> = JsonMissing.of()
+                    private var id: JsonField<String>? = null
+                    private var name: JsonField<String>? = null
                     private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
                     internal fun from(billableMetric: BillableMetric) = apply {
@@ -990,8 +1068,8 @@ private constructor(
 
                     fun build(): BillableMetric =
                         BillableMetric(
-                            id,
-                            name,
+                            checkNotNull(id) { "`id` is required but was not set" },
+                            checkNotNull(name) { "`name` is required but was not set" },
                             additionalProperties.toImmutable(),
                         )
                 }
@@ -1032,9 +1110,13 @@ private constructor(
 
                 fun propertyValue(): String = propertyValue.getRequired("property_value")
 
-                @JsonProperty("property_key") @ExcludeMissing fun _propertyKey() = propertyKey
+                @JsonProperty("property_key")
+                @ExcludeMissing
+                fun _propertyKey(): JsonField<String> = propertyKey
 
-                @JsonProperty("property_value") @ExcludeMissing fun _propertyValue() = propertyValue
+                @JsonProperty("property_value")
+                @ExcludeMissing
+                fun _propertyValue(): JsonField<String> = propertyValue
 
                 @JsonAnyGetter
                 @ExcludeMissing
@@ -1059,8 +1141,8 @@ private constructor(
 
                 class Builder {
 
-                    private var propertyKey: JsonField<String> = JsonMissing.of()
-                    private var propertyValue: JsonField<String> = JsonMissing.of()
+                    private var propertyKey: JsonField<String>? = null
+                    private var propertyValue: JsonField<String>? = null
                     private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
                     internal fun from(metricGroup: MetricGroup) = apply {
@@ -1106,8 +1188,12 @@ private constructor(
 
                     fun build(): MetricGroup =
                         MetricGroup(
-                            propertyKey,
-                            propertyValue,
+                            checkNotNull(propertyKey) {
+                                "`propertyKey` is required but was not set"
+                            },
+                            checkNotNull(propertyValue) {
+                                "`propertyValue` is required but was not set"
+                            },
                             additionalProperties.toImmutable(),
                         )
                 }
@@ -1153,13 +1239,17 @@ private constructor(
 
                 fun timeframeStart(): OffsetDateTime = timeframeStart.getRequired("timeframe_start")
 
-                @JsonProperty("quantity") @ExcludeMissing fun _quantity() = quantity
+                @JsonProperty("quantity")
+                @ExcludeMissing
+                fun _quantity(): JsonField<Double> = quantity
 
-                @JsonProperty("timeframe_end") @ExcludeMissing fun _timeframeEnd() = timeframeEnd
+                @JsonProperty("timeframe_end")
+                @ExcludeMissing
+                fun _timeframeEnd(): JsonField<OffsetDateTime> = timeframeEnd
 
                 @JsonProperty("timeframe_start")
                 @ExcludeMissing
-                fun _timeframeStart() = timeframeStart
+                fun _timeframeStart(): JsonField<OffsetDateTime> = timeframeStart
 
                 @JsonAnyGetter
                 @ExcludeMissing
@@ -1185,9 +1275,9 @@ private constructor(
 
                 class Builder {
 
-                    private var quantity: JsonField<Double> = JsonMissing.of()
-                    private var timeframeEnd: JsonField<OffsetDateTime> = JsonMissing.of()
-                    private var timeframeStart: JsonField<OffsetDateTime> = JsonMissing.of()
+                    private var quantity: JsonField<Double>? = null
+                    private var timeframeEnd: JsonField<OffsetDateTime>? = null
+                    private var timeframeStart: JsonField<OffsetDateTime>? = null
                     private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
                     internal fun from(usage: Usage) = apply {
@@ -1239,9 +1329,13 @@ private constructor(
 
                     fun build(): Usage =
                         Usage(
-                            quantity,
-                            timeframeEnd,
-                            timeframeStart,
+                            checkNotNull(quantity) { "`quantity` is required but was not set" },
+                            checkNotNull(timeframeEnd) {
+                                "`timeframeEnd` is required but was not set"
+                            },
+                            checkNotNull(timeframeStart) {
+                                "`timeframeStart` is required but was not set"
+                            },
                             additionalProperties.toImmutable(),
                         )
                 }

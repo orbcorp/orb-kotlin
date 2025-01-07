@@ -86,34 +86,40 @@ private constructor(
     fun type(): Type = type.getRequired("type")
 
     /** Also referred to as alert_id in this documentation. */
-    @JsonProperty("id") @ExcludeMissing fun _id() = id
+    @JsonProperty("id") @ExcludeMissing fun _id(): JsonField<String> = id
 
     /** The creation time of the resource in Orb. */
-    @JsonProperty("created_at") @ExcludeMissing fun _createdAt() = createdAt
+    @JsonProperty("created_at")
+    @ExcludeMissing
+    fun _createdAt(): JsonField<OffsetDateTime> = createdAt
 
     /** The name of the currency the credit balance or invoice cost is denominated in. */
-    @JsonProperty("currency") @ExcludeMissing fun _currency() = currency
+    @JsonProperty("currency") @ExcludeMissing fun _currency(): JsonField<String> = currency
 
     /** The customer the alert applies to. */
-    @JsonProperty("customer") @ExcludeMissing fun _customer() = customer
+    @JsonProperty("customer") @ExcludeMissing fun _customer(): JsonField<Customer> = customer
 
     /** Whether the alert is enabled or disabled. */
-    @JsonProperty("enabled") @ExcludeMissing fun _enabled() = enabled
+    @JsonProperty("enabled") @ExcludeMissing fun _enabled(): JsonField<Boolean> = enabled
 
     /** The metric the alert applies to. */
-    @JsonProperty("metric") @ExcludeMissing fun _metric() = metric
+    @JsonProperty("metric") @ExcludeMissing fun _metric(): JsonField<Metric> = metric
 
     /** The plan the alert applies to. */
-    @JsonProperty("plan") @ExcludeMissing fun _plan() = plan
+    @JsonProperty("plan") @ExcludeMissing fun _plan(): JsonField<Plan> = plan
 
     /** The subscription the alert applies to. */
-    @JsonProperty("subscription") @ExcludeMissing fun _subscription() = subscription
+    @JsonProperty("subscription")
+    @ExcludeMissing
+    fun _subscription(): JsonField<Subscription> = subscription
 
     /** The thresholds that define the conditions under which the alert will be triggered. */
-    @JsonProperty("thresholds") @ExcludeMissing fun _thresholds() = thresholds
+    @JsonProperty("thresholds")
+    @ExcludeMissing
+    fun _thresholds(): JsonField<List<Threshold>> = thresholds
 
     /** The type of alert. This must be a valid alert type. */
-    @JsonProperty("type") @ExcludeMissing fun _type() = type
+    @JsonProperty("type") @ExcludeMissing fun _type(): JsonField<Type> = type
 
     @JsonAnyGetter
     @ExcludeMissing
@@ -146,16 +152,16 @@ private constructor(
 
     class Builder {
 
-        private var id: JsonField<String> = JsonMissing.of()
-        private var createdAt: JsonField<OffsetDateTime> = JsonMissing.of()
-        private var currency: JsonField<String> = JsonMissing.of()
-        private var customer: JsonField<Customer> = JsonMissing.of()
-        private var enabled: JsonField<Boolean> = JsonMissing.of()
-        private var metric: JsonField<Metric> = JsonMissing.of()
-        private var plan: JsonField<Plan> = JsonMissing.of()
-        private var subscription: JsonField<Subscription> = JsonMissing.of()
-        private var thresholds: JsonField<List<Threshold>> = JsonMissing.of()
-        private var type: JsonField<Type> = JsonMissing.of()
+        private var id: JsonField<String>? = null
+        private var createdAt: JsonField<OffsetDateTime>? = null
+        private var currency: JsonField<String>? = null
+        private var customer: JsonField<Customer>? = null
+        private var enabled: JsonField<Boolean>? = null
+        private var metric: JsonField<Metric>? = null
+        private var plan: JsonField<Plan>? = null
+        private var subscription: JsonField<Subscription>? = null
+        private var thresholds: JsonField<MutableList<Threshold>>? = null
+        private var type: JsonField<Type>? = null
         private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         internal fun from(alert: Alert) = apply {
@@ -167,7 +173,7 @@ private constructor(
             metric = alert.metric
             plan = alert.plan
             subscription = alert.subscription
-            thresholds = alert.thresholds
+            thresholds = alert.thresholds.map { it.toMutableList() }
             type = alert.type
             additionalProperties = alert.additionalProperties.toMutableMap()
         }
@@ -185,13 +191,13 @@ private constructor(
         fun createdAt(createdAt: JsonField<OffsetDateTime>) = apply { this.createdAt = createdAt }
 
         /** The name of the currency the credit balance or invoice cost is denominated in. */
-        fun currency(currency: String) = currency(JsonField.of(currency))
+        fun currency(currency: String?) = currency(JsonField.ofNullable(currency))
 
         /** The name of the currency the credit balance or invoice cost is denominated in. */
         fun currency(currency: JsonField<String>) = apply { this.currency = currency }
 
         /** The customer the alert applies to. */
-        fun customer(customer: Customer) = customer(JsonField.of(customer))
+        fun customer(customer: Customer?) = customer(JsonField.ofNullable(customer))
 
         /** The customer the alert applies to. */
         fun customer(customer: JsonField<Customer>) = apply { this.customer = customer }
@@ -203,19 +209,20 @@ private constructor(
         fun enabled(enabled: JsonField<Boolean>) = apply { this.enabled = enabled }
 
         /** The metric the alert applies to. */
-        fun metric(metric: Metric) = metric(JsonField.of(metric))
+        fun metric(metric: Metric?) = metric(JsonField.ofNullable(metric))
 
         /** The metric the alert applies to. */
         fun metric(metric: JsonField<Metric>) = apply { this.metric = metric }
 
         /** The plan the alert applies to. */
-        fun plan(plan: Plan) = plan(JsonField.of(plan))
+        fun plan(plan: Plan?) = plan(JsonField.ofNullable(plan))
 
         /** The plan the alert applies to. */
         fun plan(plan: JsonField<Plan>) = apply { this.plan = plan }
 
         /** The subscription the alert applies to. */
-        fun subscription(subscription: Subscription) = subscription(JsonField.of(subscription))
+        fun subscription(subscription: Subscription?) =
+            subscription(JsonField.ofNullable(subscription))
 
         /** The subscription the alert applies to. */
         fun subscription(subscription: JsonField<Subscription>) = apply {
@@ -223,11 +230,23 @@ private constructor(
         }
 
         /** The thresholds that define the conditions under which the alert will be triggered. */
-        fun thresholds(thresholds: List<Threshold>) = thresholds(JsonField.of(thresholds))
+        fun thresholds(thresholds: List<Threshold>?) = thresholds(JsonField.ofNullable(thresholds))
 
         /** The thresholds that define the conditions under which the alert will be triggered. */
         fun thresholds(thresholds: JsonField<List<Threshold>>) = apply {
-            this.thresholds = thresholds
+            this.thresholds = thresholds.map { it.toMutableList() }
+        }
+
+        /** The thresholds that define the conditions under which the alert will be triggered. */
+        fun addThreshold(threshold: Threshold) = apply {
+            thresholds =
+                (thresholds ?: JsonField.of(mutableListOf())).apply {
+                    (asKnown()
+                            ?: throw IllegalStateException(
+                                "Field was set to non-list type: ${javaClass.simpleName}"
+                            ))
+                        .add(threshold)
+                }
         }
 
         /** The type of alert. This must be a valid alert type. */
@@ -257,16 +276,17 @@ private constructor(
 
         fun build(): Alert =
             Alert(
-                id,
-                createdAt,
-                currency,
-                customer,
-                enabled,
-                metric,
-                plan,
-                subscription,
-                thresholds.map { it.toImmutable() },
-                type,
+                checkNotNull(id) { "`id` is required but was not set" },
+                checkNotNull(createdAt) { "`createdAt` is required but was not set" },
+                checkNotNull(currency) { "`currency` is required but was not set" },
+                checkNotNull(customer) { "`customer` is required but was not set" },
+                checkNotNull(enabled) { "`enabled` is required but was not set" },
+                checkNotNull(metric) { "`metric` is required but was not set" },
+                checkNotNull(plan) { "`plan` is required but was not set" },
+                checkNotNull(subscription) { "`subscription` is required but was not set" },
+                checkNotNull(thresholds) { "`thresholds` is required but was not set" }
+                    .map { it.toImmutable() },
+                checkNotNull(type) { "`type` is required but was not set" },
                 additionalProperties.toImmutable(),
             )
     }
@@ -288,11 +308,11 @@ private constructor(
 
         fun externalCustomerId(): String? = externalCustomerId.getNullable("external_customer_id")
 
-        @JsonProperty("id") @ExcludeMissing fun _id() = id
+        @JsonProperty("id") @ExcludeMissing fun _id(): JsonField<String> = id
 
         @JsonProperty("external_customer_id")
         @ExcludeMissing
-        fun _externalCustomerId() = externalCustomerId
+        fun _externalCustomerId(): JsonField<String> = externalCustomerId
 
         @JsonAnyGetter
         @ExcludeMissing
@@ -317,8 +337,8 @@ private constructor(
 
         class Builder {
 
-            private var id: JsonField<String> = JsonMissing.of()
-            private var externalCustomerId: JsonField<String> = JsonMissing.of()
+            private var id: JsonField<String>? = null
+            private var externalCustomerId: JsonField<String>? = null
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             internal fun from(customer: Customer) = apply {
@@ -331,8 +351,8 @@ private constructor(
 
             fun id(id: JsonField<String>) = apply { this.id = id }
 
-            fun externalCustomerId(externalCustomerId: String) =
-                externalCustomerId(JsonField.of(externalCustomerId))
+            fun externalCustomerId(externalCustomerId: String?) =
+                externalCustomerId(JsonField.ofNullable(externalCustomerId))
 
             fun externalCustomerId(externalCustomerId: JsonField<String>) = apply {
                 this.externalCustomerId = externalCustomerId
@@ -359,8 +379,10 @@ private constructor(
 
             fun build(): Customer =
                 Customer(
-                    id,
-                    externalCustomerId,
+                    checkNotNull(id) { "`id` is required but was not set" },
+                    checkNotNull(externalCustomerId) {
+                        "`externalCustomerId` is required but was not set"
+                    },
                     additionalProperties.toImmutable(),
                 )
         }
@@ -395,7 +417,7 @@ private constructor(
 
         fun id(): String = id.getRequired("id")
 
-        @JsonProperty("id") @ExcludeMissing fun _id() = id
+        @JsonProperty("id") @ExcludeMissing fun _id(): JsonField<String> = id
 
         @JsonAnyGetter
         @ExcludeMissing
@@ -419,7 +441,7 @@ private constructor(
 
         class Builder {
 
-            private var id: JsonField<String> = JsonMissing.of()
+            private var id: JsonField<String>? = null
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             internal fun from(metric: Metric) = apply {
@@ -450,7 +472,11 @@ private constructor(
                 keys.forEach(::removeAdditionalProperty)
             }
 
-            fun build(): Metric = Metric(id, additionalProperties.toImmutable())
+            fun build(): Metric =
+                Metric(
+                    checkNotNull(id) { "`id` is required but was not set" },
+                    additionalProperties.toImmutable()
+                )
         }
 
         override fun equals(other: Any?): Boolean {
@@ -502,18 +528,22 @@ private constructor(
 
         fun planVersion(): String = planVersion.getRequired("plan_version")
 
-        @JsonProperty("id") @ExcludeMissing fun _id() = id
+        @JsonProperty("id") @ExcludeMissing fun _id(): JsonField<String> = id
 
         /**
          * An optional user-defined ID for this plan resource, used throughout the system as an
          * alias for this Plan. Use this field to identify a plan by an existing identifier in your
          * system.
          */
-        @JsonProperty("external_plan_id") @ExcludeMissing fun _externalPlanId() = externalPlanId
+        @JsonProperty("external_plan_id")
+        @ExcludeMissing
+        fun _externalPlanId(): JsonField<String> = externalPlanId
 
-        @JsonProperty("name") @ExcludeMissing fun _name() = name
+        @JsonProperty("name") @ExcludeMissing fun _name(): JsonField<String> = name
 
-        @JsonProperty("plan_version") @ExcludeMissing fun _planVersion() = planVersion
+        @JsonProperty("plan_version")
+        @ExcludeMissing
+        fun _planVersion(): JsonField<String> = planVersion
 
         @JsonAnyGetter
         @ExcludeMissing
@@ -540,10 +570,10 @@ private constructor(
 
         class Builder {
 
-            private var id: JsonField<String> = JsonMissing.of()
-            private var externalPlanId: JsonField<String> = JsonMissing.of()
-            private var name: JsonField<String> = JsonMissing.of()
-            private var planVersion: JsonField<String> = JsonMissing.of()
+            private var id: JsonField<String>? = null
+            private var externalPlanId: JsonField<String>? = null
+            private var name: JsonField<String>? = null
+            private var planVersion: JsonField<String>? = null
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             internal fun from(plan: Plan) = apply {
@@ -554,7 +584,7 @@ private constructor(
                 additionalProperties = plan.additionalProperties.toMutableMap()
             }
 
-            fun id(id: String) = id(JsonField.of(id))
+            fun id(id: String?) = id(JsonField.ofNullable(id))
 
             fun id(id: JsonField<String>) = apply { this.id = id }
 
@@ -563,8 +593,8 @@ private constructor(
              * alias for this Plan. Use this field to identify a plan by an existing identifier in
              * your system.
              */
-            fun externalPlanId(externalPlanId: String) =
-                externalPlanId(JsonField.of(externalPlanId))
+            fun externalPlanId(externalPlanId: String?) =
+                externalPlanId(JsonField.ofNullable(externalPlanId))
 
             /**
              * An optional user-defined ID for this plan resource, used throughout the system as an
@@ -575,7 +605,7 @@ private constructor(
                 this.externalPlanId = externalPlanId
             }
 
-            fun name(name: String) = name(JsonField.of(name))
+            fun name(name: String?) = name(JsonField.ofNullable(name))
 
             fun name(name: JsonField<String>) = apply { this.name = name }
 
@@ -606,10 +636,10 @@ private constructor(
 
             fun build(): Plan =
                 Plan(
-                    id,
-                    externalPlanId,
-                    name,
-                    planVersion,
+                    checkNotNull(id) { "`id` is required but was not set" },
+                    checkNotNull(externalPlanId) { "`externalPlanId` is required but was not set" },
+                    checkNotNull(name) { "`name` is required but was not set" },
+                    checkNotNull(planVersion) { "`planVersion` is required but was not set" },
                     additionalProperties.toImmutable(),
                 )
         }
@@ -644,7 +674,7 @@ private constructor(
 
         fun id(): String = id.getRequired("id")
 
-        @JsonProperty("id") @ExcludeMissing fun _id() = id
+        @JsonProperty("id") @ExcludeMissing fun _id(): JsonField<String> = id
 
         @JsonAnyGetter
         @ExcludeMissing
@@ -668,7 +698,7 @@ private constructor(
 
         class Builder {
 
-            private var id: JsonField<String> = JsonMissing.of()
+            private var id: JsonField<String>? = null
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             internal fun from(subscription: Subscription) = apply {
@@ -699,7 +729,11 @@ private constructor(
                 keys.forEach(::removeAdditionalProperty)
             }
 
-            fun build(): Subscription = Subscription(id, additionalProperties.toImmutable())
+            fun build(): Subscription =
+                Subscription(
+                    checkNotNull(id) { "`id` is required but was not set" },
+                    additionalProperties.toImmutable()
+                )
         }
 
         override fun equals(other: Any?): Boolean {
@@ -743,7 +777,7 @@ private constructor(
          * or below this value. For usage and cost alerts, the alert will fire at or above this
          * value.
          */
-        @JsonProperty("value") @ExcludeMissing fun _value() = value
+        @JsonProperty("value") @ExcludeMissing fun _value(): JsonField<Double> = value
 
         @JsonAnyGetter
         @ExcludeMissing
@@ -767,7 +801,7 @@ private constructor(
 
         class Builder {
 
-            private var value: JsonField<Double> = JsonMissing.of()
+            private var value: JsonField<Double>? = null
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             internal fun from(threshold: Threshold) = apply {
@@ -808,7 +842,11 @@ private constructor(
                 keys.forEach(::removeAdditionalProperty)
             }
 
-            fun build(): Threshold = Threshold(value, additionalProperties.toImmutable())
+            fun build(): Threshold =
+                Threshold(
+                    checkNotNull(value) { "`value` is required but was not set" },
+                    additionalProperties.toImmutable()
+                )
         }
 
         override fun equals(other: Any?): Boolean {

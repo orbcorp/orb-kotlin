@@ -9,6 +9,7 @@ import com.fasterxml.jackson.annotation.JsonProperty
 import com.withorb.api.core.Enum
 import com.withorb.api.core.ExcludeMissing
 import com.withorb.api.core.JsonField
+import com.withorb.api.core.JsonMissing
 import com.withorb.api.core.JsonValue
 import com.withorb.api.core.NoAutoDetect
 import com.withorb.api.core.http.Headers
@@ -39,11 +40,18 @@ constructor(
     /** An optional description that can be specified around this entry. */
     fun description(): String? = body.description()
 
+    fun _amount(): JsonField<String> = body._amount()
+
+    fun _type(): JsonField<Type> = body._type()
+
+    /** An optional description that can be specified around this entry. */
+    fun _description(): JsonField<String> = body._description()
+
+    fun _additionalBodyProperties(): Map<String, JsonValue> = body._additionalProperties()
+
     fun _additionalHeaders(): Headers = additionalHeaders
 
     fun _additionalQueryParams(): QueryParams = additionalQueryParams
-
-    fun _additionalBodyProperties(): Map<String, JsonValue> = body._additionalProperties()
 
     internal fun getBody(): CustomerBalanceTransactionCreateBody = body
 
@@ -62,23 +70,47 @@ constructor(
     class CustomerBalanceTransactionCreateBody
     @JsonCreator
     internal constructor(
-        @JsonProperty("amount") private val amount: String,
-        @JsonProperty("type") private val type: Type,
-        @JsonProperty("description") private val description: String?,
+        @JsonProperty("amount")
+        @ExcludeMissing
+        private val amount: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("type") @ExcludeMissing private val type: JsonField<Type> = JsonMissing.of(),
+        @JsonProperty("description")
+        @ExcludeMissing
+        private val description: JsonField<String> = JsonMissing.of(),
         @JsonAnySetter
         private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
 
-        @JsonProperty("amount") fun amount(): String = amount
+        fun amount(): String = amount.getRequired("amount")
 
-        @JsonProperty("type") fun type(): Type = type
+        fun type(): Type = type.getRequired("type")
 
         /** An optional description that can be specified around this entry. */
-        @JsonProperty("description") fun description(): String? = description
+        fun description(): String? = description.getNullable("description")
+
+        @JsonProperty("amount") @ExcludeMissing fun _amount(): JsonField<String> = amount
+
+        @JsonProperty("type") @ExcludeMissing fun _type(): JsonField<Type> = type
+
+        /** An optional description that can be specified around this entry. */
+        @JsonProperty("description")
+        @ExcludeMissing
+        fun _description(): JsonField<String> = description
 
         @JsonAnyGetter
         @ExcludeMissing
         fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
+
+        private var validated: Boolean = false
+
+        fun validate(): CustomerBalanceTransactionCreateBody = apply {
+            if (!validated) {
+                amount()
+                type()
+                description()
+                validated = true
+            }
+        }
 
         fun toBuilder() = Builder().from(this)
 
@@ -89,9 +121,9 @@ constructor(
 
         class Builder {
 
-            private var amount: String? = null
-            private var type: Type? = null
-            private var description: String? = null
+            private var amount: JsonField<String>? = null
+            private var type: JsonField<Type>? = null
+            private var description: JsonField<String> = JsonMissing.of()
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             internal fun from(
@@ -104,12 +136,21 @@ constructor(
                     customerBalanceTransactionCreateBody.additionalProperties.toMutableMap()
             }
 
-            fun amount(amount: String) = apply { this.amount = amount }
+            fun amount(amount: String) = amount(JsonField.of(amount))
 
-            fun type(type: Type) = apply { this.type = type }
+            fun amount(amount: JsonField<String>) = apply { this.amount = amount }
+
+            fun type(type: Type) = type(JsonField.of(type))
+
+            fun type(type: JsonField<Type>) = apply { this.type = type }
 
             /** An optional description that can be specified around this entry. */
-            fun description(description: String?) = apply { this.description = description }
+            fun description(description: String?) = description(JsonField.ofNullable(description))
+
+            /** An optional description that can be specified around this entry. */
+            fun description(description: JsonField<String>) = apply {
+                this.description = description
+            }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
@@ -187,10 +228,36 @@ constructor(
 
         fun amount(amount: String) = apply { body.amount(amount) }
 
+        fun amount(amount: JsonField<String>) = apply { body.amount(amount) }
+
         fun type(type: Type) = apply { body.type(type) }
+
+        fun type(type: JsonField<Type>) = apply { body.type(type) }
 
         /** An optional description that can be specified around this entry. */
         fun description(description: String?) = apply { body.description(description) }
+
+        /** An optional description that can be specified around this entry. */
+        fun description(description: JsonField<String>) = apply { body.description(description) }
+
+        fun additionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) = apply {
+            body.additionalProperties(additionalBodyProperties)
+        }
+
+        fun putAdditionalBodyProperty(key: String, value: JsonValue) = apply {
+            body.putAdditionalProperty(key, value)
+        }
+
+        fun putAllAdditionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) =
+            apply {
+                body.putAllAdditionalProperties(additionalBodyProperties)
+            }
+
+        fun removeAdditionalBodyProperty(key: String) = apply { body.removeAdditionalProperty(key) }
+
+        fun removeAllAdditionalBodyProperties(keys: Set<String>) = apply {
+            body.removeAllAdditionalProperties(keys)
+        }
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {
             this.additionalHeaders.clear()
@@ -288,25 +355,6 @@ constructor(
 
         fun removeAllAdditionalQueryParams(keys: Set<String>) = apply {
             additionalQueryParams.removeAll(keys)
-        }
-
-        fun additionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) = apply {
-            body.additionalProperties(additionalBodyProperties)
-        }
-
-        fun putAdditionalBodyProperty(key: String, value: JsonValue) = apply {
-            body.putAdditionalProperty(key, value)
-        }
-
-        fun putAllAdditionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) =
-            apply {
-                body.putAllAdditionalProperties(additionalBodyProperties)
-            }
-
-        fun removeAdditionalBodyProperty(key: String) = apply { body.removeAdditionalProperty(key) }
-
-        fun removeAllAdditionalBodyProperties(keys: Set<String>) = apply {
-            body.removeAllAdditionalProperties(keys)
         }
 
         fun build(): CustomerBalanceTransactionCreateParams =

@@ -356,33 +356,37 @@ private constructor(
     fun taxAmounts(): List<TaxAmount> = taxAmounts.getRequired("tax_amounts")
 
     /** A unique ID for this line item. */
-    @JsonProperty("id") @ExcludeMissing fun _id() = id
+    @JsonProperty("id") @ExcludeMissing fun _id(): JsonField<String> = id
 
     /** The final amount after any discounts or minimums. */
-    @JsonProperty("amount") @ExcludeMissing fun _amount() = amount
+    @JsonProperty("amount") @ExcludeMissing fun _amount(): JsonField<String> = amount
 
-    @JsonProperty("discount") @ExcludeMissing fun _discount() = discount
+    @JsonProperty("discount") @ExcludeMissing fun _discount(): JsonField<Discount> = discount
 
     /** The end date of the range of time applied for this line item's price. */
-    @JsonProperty("end_date") @ExcludeMissing fun _endDate() = endDate
+    @JsonProperty("end_date") @ExcludeMissing fun _endDate(): JsonField<OffsetDateTime> = endDate
 
     /**
      * [DEPRECATED] For configured prices that are split by a grouping key, this will be populated
      * with the key and a value. The `amount` and `subtotal` will be the values for this particular
      * grouping.
      */
-    @JsonProperty("grouping") @ExcludeMissing fun _grouping() = grouping
+    @JsonProperty("grouping") @ExcludeMissing fun _grouping(): JsonField<String> = grouping
 
-    @JsonProperty("maximum") @ExcludeMissing fun _maximum() = maximum
+    @JsonProperty("maximum") @ExcludeMissing fun _maximum(): JsonField<Maximum> = maximum
 
-    @JsonProperty("maximum_amount") @ExcludeMissing fun _maximumAmount() = maximumAmount
+    @JsonProperty("maximum_amount")
+    @ExcludeMissing
+    fun _maximumAmount(): JsonField<String> = maximumAmount
 
-    @JsonProperty("minimum") @ExcludeMissing fun _minimum() = minimum
+    @JsonProperty("minimum") @ExcludeMissing fun _minimum(): JsonField<Minimum> = minimum
 
-    @JsonProperty("minimum_amount") @ExcludeMissing fun _minimumAmount() = minimumAmount
+    @JsonProperty("minimum_amount")
+    @ExcludeMissing
+    fun _minimumAmount(): JsonField<String> = minimumAmount
 
     /** The name of the price associated with this line item. */
-    @JsonProperty("name") @ExcludeMissing fun _name() = name
+    @JsonProperty("name") @ExcludeMissing fun _name(): JsonField<String> = name
 
     /**
      * The Price resource represents a price that can be billed on a subscription, resulting in a
@@ -612,26 +616,32 @@ private constructor(
      * }
      * ```
      */
-    @JsonProperty("price") @ExcludeMissing fun _price() = price
+    @JsonProperty("price") @ExcludeMissing fun _price(): JsonField<Price> = price
 
-    @JsonProperty("quantity") @ExcludeMissing fun _quantity() = quantity
+    @JsonProperty("quantity") @ExcludeMissing fun _quantity(): JsonField<Double> = quantity
 
     /** The start date of the range of time applied for this line item's price. */
-    @JsonProperty("start_date") @ExcludeMissing fun _startDate() = startDate
+    @JsonProperty("start_date")
+    @ExcludeMissing
+    fun _startDate(): JsonField<OffsetDateTime> = startDate
 
     /**
      * For complex pricing structures, the line item can be broken down further in `sub_line_items`.
      */
-    @JsonProperty("sub_line_items") @ExcludeMissing fun _subLineItems() = subLineItems
+    @JsonProperty("sub_line_items")
+    @ExcludeMissing
+    fun _subLineItems(): JsonField<List<SubLineItem>> = subLineItems
 
     /** The line amount before any line item-specific discounts or minimums. */
-    @JsonProperty("subtotal") @ExcludeMissing fun _subtotal() = subtotal
+    @JsonProperty("subtotal") @ExcludeMissing fun _subtotal(): JsonField<String> = subtotal
 
     /**
      * An array of tax rates and their incurred tax amounts. Empty if no tax integration is
      * configured.
      */
-    @JsonProperty("tax_amounts") @ExcludeMissing fun _taxAmounts() = taxAmounts
+    @JsonProperty("tax_amounts")
+    @ExcludeMissing
+    fun _taxAmounts(): JsonField<List<TaxAmount>> = taxAmounts
 
     @JsonAnyGetter
     @ExcludeMissing
@@ -670,22 +680,22 @@ private constructor(
 
     class Builder {
 
-        private var id: JsonField<String> = JsonMissing.of()
-        private var amount: JsonField<String> = JsonMissing.of()
-        private var discount: JsonField<Discount> = JsonMissing.of()
-        private var endDate: JsonField<OffsetDateTime> = JsonMissing.of()
-        private var grouping: JsonField<String> = JsonMissing.of()
-        private var maximum: JsonField<Maximum> = JsonMissing.of()
-        private var maximumAmount: JsonField<String> = JsonMissing.of()
-        private var minimum: JsonField<Minimum> = JsonMissing.of()
-        private var minimumAmount: JsonField<String> = JsonMissing.of()
-        private var name: JsonField<String> = JsonMissing.of()
-        private var price: JsonField<Price> = JsonMissing.of()
-        private var quantity: JsonField<Double> = JsonMissing.of()
-        private var startDate: JsonField<OffsetDateTime> = JsonMissing.of()
-        private var subLineItems: JsonField<List<SubLineItem>> = JsonMissing.of()
-        private var subtotal: JsonField<String> = JsonMissing.of()
-        private var taxAmounts: JsonField<List<TaxAmount>> = JsonMissing.of()
+        private var id: JsonField<String>? = null
+        private var amount: JsonField<String>? = null
+        private var discount: JsonField<Discount>? = null
+        private var endDate: JsonField<OffsetDateTime>? = null
+        private var grouping: JsonField<String>? = null
+        private var maximum: JsonField<Maximum>? = null
+        private var maximumAmount: JsonField<String>? = null
+        private var minimum: JsonField<Minimum>? = null
+        private var minimumAmount: JsonField<String>? = null
+        private var name: JsonField<String>? = null
+        private var price: JsonField<Price>? = null
+        private var quantity: JsonField<Double>? = null
+        private var startDate: JsonField<OffsetDateTime>? = null
+        private var subLineItems: JsonField<MutableList<SubLineItem>>? = null
+        private var subtotal: JsonField<String>? = null
+        private var taxAmounts: JsonField<MutableList<TaxAmount>>? = null
         private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         internal fun from(invoiceLineItemCreateResponse: InvoiceLineItemCreateResponse) = apply {
@@ -702,9 +712,9 @@ private constructor(
             price = invoiceLineItemCreateResponse.price
             quantity = invoiceLineItemCreateResponse.quantity
             startDate = invoiceLineItemCreateResponse.startDate
-            subLineItems = invoiceLineItemCreateResponse.subLineItems
+            subLineItems = invoiceLineItemCreateResponse.subLineItems.map { it.toMutableList() }
             subtotal = invoiceLineItemCreateResponse.subtotal
-            taxAmounts = invoiceLineItemCreateResponse.taxAmounts
+            taxAmounts = invoiceLineItemCreateResponse.taxAmounts.map { it.toMutableList() }
             additionalProperties = invoiceLineItemCreateResponse.additionalProperties.toMutableMap()
         }
 
@@ -720,9 +730,21 @@ private constructor(
         /** The final amount after any discounts or minimums. */
         fun amount(amount: JsonField<String>) = apply { this.amount = amount }
 
-        fun discount(discount: Discount) = discount(JsonField.of(discount))
+        fun discount(discount: Discount?) = discount(JsonField.ofNullable(discount))
 
         fun discount(discount: JsonField<Discount>) = apply { this.discount = discount }
+
+        fun discount(percentageDiscount: PercentageDiscount) =
+            discount(Discount.ofPercentageDiscount(percentageDiscount))
+
+        fun discount(trialDiscount: TrialDiscount) =
+            discount(Discount.ofTrialDiscount(trialDiscount))
+
+        fun discount(usageDiscount: Discount.UsageDiscount) =
+            discount(Discount.ofUsageDiscount(usageDiscount))
+
+        fun discount(amountDiscount: AmountDiscount) =
+            discount(Discount.ofAmountDiscount(amountDiscount))
 
         /** The end date of the range of time applied for this line item's price. */
         fun endDate(endDate: OffsetDateTime) = endDate(JsonField.of(endDate))
@@ -735,7 +757,7 @@ private constructor(
          * populated with the key and a value. The `amount` and `subtotal` will be the values for
          * this particular grouping.
          */
-        fun grouping(grouping: String) = grouping(JsonField.of(grouping))
+        fun grouping(grouping: String?) = grouping(JsonField.ofNullable(grouping))
 
         /**
          * [DEPRECATED] For configured prices that are split by a grouping key, this will be
@@ -744,21 +766,23 @@ private constructor(
          */
         fun grouping(grouping: JsonField<String>) = apply { this.grouping = grouping }
 
-        fun maximum(maximum: Maximum) = maximum(JsonField.of(maximum))
+        fun maximum(maximum: Maximum?) = maximum(JsonField.ofNullable(maximum))
 
         fun maximum(maximum: JsonField<Maximum>) = apply { this.maximum = maximum }
 
-        fun maximumAmount(maximumAmount: String) = maximumAmount(JsonField.of(maximumAmount))
+        fun maximumAmount(maximumAmount: String?) =
+            maximumAmount(JsonField.ofNullable(maximumAmount))
 
         fun maximumAmount(maximumAmount: JsonField<String>) = apply {
             this.maximumAmount = maximumAmount
         }
 
-        fun minimum(minimum: Minimum) = minimum(JsonField.of(minimum))
+        fun minimum(minimum: Minimum?) = minimum(JsonField.ofNullable(minimum))
 
         fun minimum(minimum: JsonField<Minimum>) = apply { this.minimum = minimum }
 
-        fun minimumAmount(minimumAmount: String) = minimumAmount(JsonField.of(minimumAmount))
+        fun minimumAmount(minimumAmount: String?) =
+            minimumAmount(JsonField.ofNullable(minimumAmount))
 
         fun minimumAmount(minimumAmount: JsonField<String>) = apply {
             this.minimumAmount = minimumAmount
@@ -998,7 +1022,7 @@ private constructor(
          * }
          * ```
          */
-        fun price(price: Price) = price(JsonField.of(price))
+        fun price(price: Price?) = price(JsonField.ofNullable(price))
 
         /**
          * The Price resource represents a price that can be billed on a subscription, resulting in
@@ -1230,6 +1254,71 @@ private constructor(
          */
         fun price(price: JsonField<Price>) = apply { this.price = price }
 
+        fun price(unitPrice: Price.UnitPrice) = price(Price.ofUnitPrice(unitPrice))
+
+        fun price(packagePrice: Price.PackagePrice) = price(Price.ofPackagePrice(packagePrice))
+
+        fun price(matrixPrice: Price.MatrixPrice) = price(Price.ofMatrixPrice(matrixPrice))
+
+        fun price(tieredPrice: Price.TieredPrice) = price(Price.ofTieredPrice(tieredPrice))
+
+        fun price(tieredBpsPrice: Price.TieredBpsPrice) =
+            price(Price.ofTieredBpsPrice(tieredBpsPrice))
+
+        fun price(bpsPrice: Price.BpsPrice) = price(Price.ofBpsPrice(bpsPrice))
+
+        fun price(bulkBpsPrice: Price.BulkBpsPrice) = price(Price.ofBulkBpsPrice(bulkBpsPrice))
+
+        fun price(bulkPrice: Price.BulkPrice) = price(Price.ofBulkPrice(bulkPrice))
+
+        fun price(thresholdTotalAmountPrice: Price.ThresholdTotalAmountPrice) =
+            price(Price.ofThresholdTotalAmountPrice(thresholdTotalAmountPrice))
+
+        fun price(tieredPackagePrice: Price.TieredPackagePrice) =
+            price(Price.ofTieredPackagePrice(tieredPackagePrice))
+
+        fun price(groupedTieredPrice: Price.GroupedTieredPrice) =
+            price(Price.ofGroupedTieredPrice(groupedTieredPrice))
+
+        fun price(tieredWithMinimumPrice: Price.TieredWithMinimumPrice) =
+            price(Price.ofTieredWithMinimumPrice(tieredWithMinimumPrice))
+
+        fun price(tieredPackageWithMinimumPrice: Price.TieredPackageWithMinimumPrice) =
+            price(Price.ofTieredPackageWithMinimumPrice(tieredPackageWithMinimumPrice))
+
+        fun price(packageWithAllocationPrice: Price.PackageWithAllocationPrice) =
+            price(Price.ofPackageWithAllocationPrice(packageWithAllocationPrice))
+
+        fun price(unitWithPercentPrice: Price.UnitWithPercentPrice) =
+            price(Price.ofUnitWithPercentPrice(unitWithPercentPrice))
+
+        fun price(matrixWithAllocationPrice: Price.MatrixWithAllocationPrice) =
+            price(Price.ofMatrixWithAllocationPrice(matrixWithAllocationPrice))
+
+        fun price(tieredWithProrationPrice: Price.TieredWithProrationPrice) =
+            price(Price.ofTieredWithProrationPrice(tieredWithProrationPrice))
+
+        fun price(unitWithProrationPrice: Price.UnitWithProrationPrice) =
+            price(Price.ofUnitWithProrationPrice(unitWithProrationPrice))
+
+        fun price(groupedAllocationPrice: Price.GroupedAllocationPrice) =
+            price(Price.ofGroupedAllocationPrice(groupedAllocationPrice))
+
+        fun price(groupedWithProratedMinimumPrice: Price.GroupedWithProratedMinimumPrice) =
+            price(Price.ofGroupedWithProratedMinimumPrice(groupedWithProratedMinimumPrice))
+
+        fun price(groupedWithMeteredMinimumPrice: Price.GroupedWithMeteredMinimumPrice) =
+            price(Price.ofGroupedWithMeteredMinimumPrice(groupedWithMeteredMinimumPrice))
+
+        fun price(matrixWithDisplayNamePrice: Price.MatrixWithDisplayNamePrice) =
+            price(Price.ofMatrixWithDisplayNamePrice(matrixWithDisplayNamePrice))
+
+        fun price(bulkWithProrationPrice: Price.BulkWithProrationPrice) =
+            price(Price.ofBulkWithProrationPrice(bulkWithProrationPrice))
+
+        fun price(groupedTieredPackagePrice: Price.GroupedTieredPackagePrice) =
+            price(Price.ofGroupedTieredPackagePrice(groupedTieredPackagePrice))
+
         fun quantity(quantity: Double) = quantity(JsonField.of(quantity))
 
         fun quantity(quantity: JsonField<Double>) = apply { this.quantity = quantity }
@@ -1251,7 +1340,22 @@ private constructor(
          * `sub_line_items`.
          */
         fun subLineItems(subLineItems: JsonField<List<SubLineItem>>) = apply {
-            this.subLineItems = subLineItems
+            this.subLineItems = subLineItems.map { it.toMutableList() }
+        }
+
+        /**
+         * For complex pricing structures, the line item can be broken down further in
+         * `sub_line_items`.
+         */
+        fun addSubLineItem(subLineItem: SubLineItem) = apply {
+            subLineItems =
+                (subLineItems ?: JsonField.of(mutableListOf())).apply {
+                    (asKnown()
+                            ?: throw IllegalStateException(
+                                "Field was set to non-list type: ${javaClass.simpleName}"
+                            ))
+                        .add(subLineItem)
+                }
         }
 
         /** The line amount before any line item-specific discounts or minimums. */
@@ -1271,7 +1375,22 @@ private constructor(
          * configured.
          */
         fun taxAmounts(taxAmounts: JsonField<List<TaxAmount>>) = apply {
-            this.taxAmounts = taxAmounts
+            this.taxAmounts = taxAmounts.map { it.toMutableList() }
+        }
+
+        /**
+         * An array of tax rates and their incurred tax amounts. Empty if no tax integration is
+         * configured.
+         */
+        fun addTaxAmount(taxAmount: TaxAmount) = apply {
+            taxAmounts =
+                (taxAmounts ?: JsonField.of(mutableListOf())).apply {
+                    (asKnown()
+                            ?: throw IllegalStateException(
+                                "Field was set to non-list type: ${javaClass.simpleName}"
+                            ))
+                        .add(taxAmount)
+                }
         }
 
         fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
@@ -1295,22 +1414,24 @@ private constructor(
 
         fun build(): InvoiceLineItemCreateResponse =
             InvoiceLineItemCreateResponse(
-                id,
-                amount,
-                discount,
-                endDate,
-                grouping,
-                maximum,
-                maximumAmount,
-                minimum,
-                minimumAmount,
-                name,
-                price,
-                quantity,
-                startDate,
-                subLineItems.map { it.toImmutable() },
-                subtotal,
-                taxAmounts.map { it.toImmutable() },
+                checkNotNull(id) { "`id` is required but was not set" },
+                checkNotNull(amount) { "`amount` is required but was not set" },
+                checkNotNull(discount) { "`discount` is required but was not set" },
+                checkNotNull(endDate) { "`endDate` is required but was not set" },
+                checkNotNull(grouping) { "`grouping` is required but was not set" },
+                checkNotNull(maximum) { "`maximum` is required but was not set" },
+                checkNotNull(maximumAmount) { "`maximumAmount` is required but was not set" },
+                checkNotNull(minimum) { "`minimum` is required but was not set" },
+                checkNotNull(minimumAmount) { "`minimumAmount` is required but was not set" },
+                checkNotNull(name) { "`name` is required but was not set" },
+                checkNotNull(price) { "`price` is required but was not set" },
+                checkNotNull(quantity) { "`quantity` is required but was not set" },
+                checkNotNull(startDate) { "`startDate` is required but was not set" },
+                checkNotNull(subLineItems) { "`subLineItems` is required but was not set" }
+                    .map { it.toImmutable() },
+                checkNotNull(subtotal) { "`subtotal` is required but was not set" },
+                checkNotNull(taxAmounts) { "`taxAmounts` is required but was not set" }
+                    .map { it.toImmutable() },
                 additionalProperties.toImmutable(),
             )
     }
@@ -1345,10 +1466,12 @@ private constructor(
          */
         @JsonProperty("applies_to_price_ids")
         @ExcludeMissing
-        fun _appliesToPriceIds() = appliesToPriceIds
+        fun _appliesToPriceIds(): JsonField<List<String>> = appliesToPriceIds
 
         /** Maximum amount applied */
-        @JsonProperty("maximum_amount") @ExcludeMissing fun _maximumAmount() = maximumAmount
+        @JsonProperty("maximum_amount")
+        @ExcludeMissing
+        fun _maximumAmount(): JsonField<String> = maximumAmount
 
         @JsonAnyGetter
         @ExcludeMissing
@@ -1373,12 +1496,12 @@ private constructor(
 
         class Builder {
 
-            private var appliesToPriceIds: JsonField<List<String>> = JsonMissing.of()
-            private var maximumAmount: JsonField<String> = JsonMissing.of()
+            private var appliesToPriceIds: JsonField<MutableList<String>>? = null
+            private var maximumAmount: JsonField<String>? = null
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             internal fun from(maximum: Maximum) = apply {
-                appliesToPriceIds = maximum.appliesToPriceIds
+                appliesToPriceIds = maximum.appliesToPriceIds.map { it.toMutableList() }
                 maximumAmount = maximum.maximumAmount
                 additionalProperties = maximum.additionalProperties.toMutableMap()
             }
@@ -1395,7 +1518,22 @@ private constructor(
              * this can be a subset of prices.
              */
             fun appliesToPriceIds(appliesToPriceIds: JsonField<List<String>>) = apply {
-                this.appliesToPriceIds = appliesToPriceIds
+                this.appliesToPriceIds = appliesToPriceIds.map { it.toMutableList() }
+            }
+
+            /**
+             * List of price_ids that this maximum amount applies to. For plan/plan phase maximums,
+             * this can be a subset of prices.
+             */
+            fun addAppliesToPriceId(appliesToPriceId: String) = apply {
+                appliesToPriceIds =
+                    (appliesToPriceIds ?: JsonField.of(mutableListOf())).apply {
+                        (asKnown()
+                                ?: throw IllegalStateException(
+                                    "Field was set to non-list type: ${javaClass.simpleName}"
+                                ))
+                            .add(appliesToPriceId)
+                    }
             }
 
             /** Maximum amount applied */
@@ -1427,8 +1565,11 @@ private constructor(
 
             fun build(): Maximum =
                 Maximum(
-                    appliesToPriceIds.map { it.toImmutable() },
-                    maximumAmount,
+                    checkNotNull(appliesToPriceIds) {
+                            "`appliesToPriceIds` is required but was not set"
+                        }
+                        .map { it.toImmutable() },
+                    checkNotNull(maximumAmount) { "`maximumAmount` is required but was not set" },
                     additionalProperties.toImmutable(),
                 )
         }
@@ -1481,10 +1622,12 @@ private constructor(
          */
         @JsonProperty("applies_to_price_ids")
         @ExcludeMissing
-        fun _appliesToPriceIds() = appliesToPriceIds
+        fun _appliesToPriceIds(): JsonField<List<String>> = appliesToPriceIds
 
         /** Minimum amount applied */
-        @JsonProperty("minimum_amount") @ExcludeMissing fun _minimumAmount() = minimumAmount
+        @JsonProperty("minimum_amount")
+        @ExcludeMissing
+        fun _minimumAmount(): JsonField<String> = minimumAmount
 
         @JsonAnyGetter
         @ExcludeMissing
@@ -1509,12 +1652,12 @@ private constructor(
 
         class Builder {
 
-            private var appliesToPriceIds: JsonField<List<String>> = JsonMissing.of()
-            private var minimumAmount: JsonField<String> = JsonMissing.of()
+            private var appliesToPriceIds: JsonField<MutableList<String>>? = null
+            private var minimumAmount: JsonField<String>? = null
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             internal fun from(minimum: Minimum) = apply {
-                appliesToPriceIds = minimum.appliesToPriceIds
+                appliesToPriceIds = minimum.appliesToPriceIds.map { it.toMutableList() }
                 minimumAmount = minimum.minimumAmount
                 additionalProperties = minimum.additionalProperties.toMutableMap()
             }
@@ -1531,7 +1674,22 @@ private constructor(
              * this can be a subset of prices.
              */
             fun appliesToPriceIds(appliesToPriceIds: JsonField<List<String>>) = apply {
-                this.appliesToPriceIds = appliesToPriceIds
+                this.appliesToPriceIds = appliesToPriceIds.map { it.toMutableList() }
+            }
+
+            /**
+             * List of price_ids that this minimum amount applies to. For plan/plan phase minimums,
+             * this can be a subset of prices.
+             */
+            fun addAppliesToPriceId(appliesToPriceId: String) = apply {
+                appliesToPriceIds =
+                    (appliesToPriceIds ?: JsonField.of(mutableListOf())).apply {
+                        (asKnown()
+                                ?: throw IllegalStateException(
+                                    "Field was set to non-list type: ${javaClass.simpleName}"
+                                ))
+                            .add(appliesToPriceId)
+                    }
             }
 
             /** Minimum amount applied */
@@ -1563,8 +1721,11 @@ private constructor(
 
             fun build(): Minimum =
                 Minimum(
-                    appliesToPriceIds.map { it.toImmutable() },
-                    minimumAmount,
+                    checkNotNull(appliesToPriceIds) {
+                            "`appliesToPriceIds` is required but was not set"
+                        }
+                        .map { it.toImmutable() },
+                    checkNotNull(minimumAmount) { "`minimumAmount` is required but was not set" },
                     additionalProperties.toImmutable(),
                 )
         }
@@ -1776,17 +1937,21 @@ private constructor(
             fun type(): Type = type.getRequired("type")
 
             /** The total amount for this sub line item. */
-            @JsonProperty("amount") @ExcludeMissing fun _amount() = amount
+            @JsonProperty("amount") @ExcludeMissing fun _amount(): JsonField<String> = amount
 
-            @JsonProperty("grouping") @ExcludeMissing fun _grouping() = grouping
+            @JsonProperty("grouping")
+            @ExcludeMissing
+            fun _grouping(): JsonField<Grouping> = grouping
 
-            @JsonProperty("matrix_config") @ExcludeMissing fun _matrixConfig() = matrixConfig
+            @JsonProperty("matrix_config")
+            @ExcludeMissing
+            fun _matrixConfig(): JsonField<MatrixConfig> = matrixConfig
 
-            @JsonProperty("name") @ExcludeMissing fun _name() = name
+            @JsonProperty("name") @ExcludeMissing fun _name(): JsonField<String> = name
 
-            @JsonProperty("quantity") @ExcludeMissing fun _quantity() = quantity
+            @JsonProperty("quantity") @ExcludeMissing fun _quantity(): JsonField<Double> = quantity
 
-            @JsonProperty("type") @ExcludeMissing fun _type() = type
+            @JsonProperty("type") @ExcludeMissing fun _type(): JsonField<Type> = type
 
             @JsonAnyGetter
             @ExcludeMissing
@@ -1815,12 +1980,12 @@ private constructor(
 
             class Builder {
 
-                private var amount: JsonField<String> = JsonMissing.of()
-                private var grouping: JsonField<Grouping> = JsonMissing.of()
-                private var matrixConfig: JsonField<MatrixConfig> = JsonMissing.of()
-                private var name: JsonField<String> = JsonMissing.of()
-                private var quantity: JsonField<Double> = JsonMissing.of()
-                private var type: JsonField<Type> = JsonMissing.of()
+                private var amount: JsonField<String>? = null
+                private var grouping: JsonField<Grouping>? = null
+                private var matrixConfig: JsonField<MatrixConfig>? = null
+                private var name: JsonField<String>? = null
+                private var quantity: JsonField<Double>? = null
+                private var type: JsonField<Type>? = null
                 private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
                 internal fun from(matrixSubLineItem: MatrixSubLineItem) = apply {
@@ -1839,7 +2004,7 @@ private constructor(
                 /** The total amount for this sub line item. */
                 fun amount(amount: JsonField<String>) = apply { this.amount = amount }
 
-                fun grouping(grouping: Grouping) = grouping(JsonField.of(grouping))
+                fun grouping(grouping: Grouping?) = grouping(JsonField.ofNullable(grouping))
 
                 fun grouping(grouping: JsonField<Grouping>) = apply { this.grouping = grouping }
 
@@ -1886,12 +2051,12 @@ private constructor(
 
                 fun build(): MatrixSubLineItem =
                     MatrixSubLineItem(
-                        amount,
-                        grouping,
-                        matrixConfig,
-                        name,
-                        quantity,
-                        type,
+                        checkNotNull(amount) { "`amount` is required but was not set" },
+                        checkNotNull(grouping) { "`grouping` is required but was not set" },
+                        checkNotNull(matrixConfig) { "`matrixConfig` is required but was not set" },
+                        checkNotNull(name) { "`name` is required but was not set" },
+                        checkNotNull(quantity) { "`quantity` is required but was not set" },
+                        checkNotNull(type) { "`type` is required but was not set" },
                         additionalProperties.toImmutable(),
                     )
             }
@@ -1915,10 +2080,10 @@ private constructor(
                 /** No value indicates the default group */
                 fun value(): String? = value.getNullable("value")
 
-                @JsonProperty("key") @ExcludeMissing fun _key() = key
+                @JsonProperty("key") @ExcludeMissing fun _key(): JsonField<String> = key
 
                 /** No value indicates the default group */
-                @JsonProperty("value") @ExcludeMissing fun _value() = value
+                @JsonProperty("value") @ExcludeMissing fun _value(): JsonField<String> = value
 
                 @JsonAnyGetter
                 @ExcludeMissing
@@ -1943,8 +2108,8 @@ private constructor(
 
                 class Builder {
 
-                    private var key: JsonField<String> = JsonMissing.of()
-                    private var value: JsonField<String> = JsonMissing.of()
+                    private var key: JsonField<String>? = null
+                    private var value: JsonField<String>? = null
                     private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
                     internal fun from(grouping: Grouping) = apply {
@@ -1958,7 +2123,7 @@ private constructor(
                     fun key(key: JsonField<String>) = apply { this.key = key }
 
                     /** No value indicates the default group */
-                    fun value(value: String) = value(JsonField.of(value))
+                    fun value(value: String?) = value(JsonField.ofNullable(value))
 
                     /** No value indicates the default group */
                     fun value(value: JsonField<String>) = apply { this.value = value }
@@ -1987,8 +2152,8 @@ private constructor(
 
                     fun build(): Grouping =
                         Grouping(
-                            key,
-                            value,
+                            checkNotNull(key) { "`key` is required but was not set" },
+                            checkNotNull(value) { "`value` is required but was not set" },
                             additionalProperties.toImmutable(),
                         )
                 }
@@ -2029,7 +2194,7 @@ private constructor(
                 /** The ordered dimension values for this line item. */
                 @JsonProperty("dimension_values")
                 @ExcludeMissing
-                fun _dimensionValues() = dimensionValues
+                fun _dimensionValues(): JsonField<List<String?>> = dimensionValues
 
                 @JsonAnyGetter
                 @ExcludeMissing
@@ -2053,11 +2218,11 @@ private constructor(
 
                 class Builder {
 
-                    private var dimensionValues: JsonField<List<String?>> = JsonMissing.of()
+                    private var dimensionValues: JsonField<MutableList<String?>>? = null
                     private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
                     internal fun from(matrixConfig: MatrixConfig) = apply {
-                        dimensionValues = matrixConfig.dimensionValues
+                        dimensionValues = matrixConfig.dimensionValues.map { it.toMutableList() }
                         additionalProperties = matrixConfig.additionalProperties.toMutableMap()
                     }
 
@@ -2067,7 +2232,19 @@ private constructor(
 
                     /** The ordered dimension values for this line item. */
                     fun dimensionValues(dimensionValues: JsonField<List<String?>>) = apply {
-                        this.dimensionValues = dimensionValues
+                        this.dimensionValues = dimensionValues.map { it.toMutableList() }
+                    }
+
+                    /** The ordered dimension values for this line item. */
+                    fun addDimensionValue(dimensionValue: String) = apply {
+                        dimensionValues =
+                            (dimensionValues ?: JsonField.of(mutableListOf())).apply {
+                                (asKnown()
+                                        ?: throw IllegalStateException(
+                                            "Field was set to non-list type: ${javaClass.simpleName}"
+                                        ))
+                                    .add(dimensionValue)
+                            }
                     }
 
                     fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
@@ -2094,7 +2271,10 @@ private constructor(
 
                     fun build(): MatrixConfig =
                         MatrixConfig(
-                            dimensionValues.map { it.toImmutable() },
+                            checkNotNull(dimensionValues) {
+                                    "`dimensionValues` is required but was not set"
+                                }
+                                .map { it.toImmutable() },
                             additionalProperties.toImmutable()
                         )
                 }
@@ -2226,17 +2406,21 @@ private constructor(
             fun type(): Type = type.getRequired("type")
 
             /** The total amount for this sub line item. */
-            @JsonProperty("amount") @ExcludeMissing fun _amount() = amount
+            @JsonProperty("amount") @ExcludeMissing fun _amount(): JsonField<String> = amount
 
-            @JsonProperty("grouping") @ExcludeMissing fun _grouping() = grouping
+            @JsonProperty("grouping")
+            @ExcludeMissing
+            fun _grouping(): JsonField<Grouping> = grouping
 
-            @JsonProperty("name") @ExcludeMissing fun _name() = name
+            @JsonProperty("name") @ExcludeMissing fun _name(): JsonField<String> = name
 
-            @JsonProperty("quantity") @ExcludeMissing fun _quantity() = quantity
+            @JsonProperty("quantity") @ExcludeMissing fun _quantity(): JsonField<Double> = quantity
 
-            @JsonProperty("tier_config") @ExcludeMissing fun _tierConfig() = tierConfig
+            @JsonProperty("tier_config")
+            @ExcludeMissing
+            fun _tierConfig(): JsonField<TierConfig> = tierConfig
 
-            @JsonProperty("type") @ExcludeMissing fun _type() = type
+            @JsonProperty("type") @ExcludeMissing fun _type(): JsonField<Type> = type
 
             @JsonAnyGetter
             @ExcludeMissing
@@ -2265,12 +2449,12 @@ private constructor(
 
             class Builder {
 
-                private var amount: JsonField<String> = JsonMissing.of()
-                private var grouping: JsonField<Grouping> = JsonMissing.of()
-                private var name: JsonField<String> = JsonMissing.of()
-                private var quantity: JsonField<Double> = JsonMissing.of()
-                private var tierConfig: JsonField<TierConfig> = JsonMissing.of()
-                private var type: JsonField<Type> = JsonMissing.of()
+                private var amount: JsonField<String>? = null
+                private var grouping: JsonField<Grouping>? = null
+                private var name: JsonField<String>? = null
+                private var quantity: JsonField<Double>? = null
+                private var tierConfig: JsonField<TierConfig>? = null
+                private var type: JsonField<Type>? = null
                 private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
                 internal fun from(tierSubLineItem: TierSubLineItem) = apply {
@@ -2289,7 +2473,7 @@ private constructor(
                 /** The total amount for this sub line item. */
                 fun amount(amount: JsonField<String>) = apply { this.amount = amount }
 
-                fun grouping(grouping: Grouping) = grouping(JsonField.of(grouping))
+                fun grouping(grouping: Grouping?) = grouping(JsonField.ofNullable(grouping))
 
                 fun grouping(grouping: JsonField<Grouping>) = apply { this.grouping = grouping }
 
@@ -2335,12 +2519,12 @@ private constructor(
 
                 fun build(): TierSubLineItem =
                     TierSubLineItem(
-                        amount,
-                        grouping,
-                        name,
-                        quantity,
-                        tierConfig,
-                        type,
+                        checkNotNull(amount) { "`amount` is required but was not set" },
+                        checkNotNull(grouping) { "`grouping` is required but was not set" },
+                        checkNotNull(name) { "`name` is required but was not set" },
+                        checkNotNull(quantity) { "`quantity` is required but was not set" },
+                        checkNotNull(tierConfig) { "`tierConfig` is required but was not set" },
+                        checkNotNull(type) { "`type` is required but was not set" },
                         additionalProperties.toImmutable(),
                     )
             }
@@ -2364,10 +2548,10 @@ private constructor(
                 /** No value indicates the default group */
                 fun value(): String? = value.getNullable("value")
 
-                @JsonProperty("key") @ExcludeMissing fun _key() = key
+                @JsonProperty("key") @ExcludeMissing fun _key(): JsonField<String> = key
 
                 /** No value indicates the default group */
-                @JsonProperty("value") @ExcludeMissing fun _value() = value
+                @JsonProperty("value") @ExcludeMissing fun _value(): JsonField<String> = value
 
                 @JsonAnyGetter
                 @ExcludeMissing
@@ -2392,8 +2576,8 @@ private constructor(
 
                 class Builder {
 
-                    private var key: JsonField<String> = JsonMissing.of()
-                    private var value: JsonField<String> = JsonMissing.of()
+                    private var key: JsonField<String>? = null
+                    private var value: JsonField<String>? = null
                     private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
                     internal fun from(grouping: Grouping) = apply {
@@ -2407,7 +2591,7 @@ private constructor(
                     fun key(key: JsonField<String>) = apply { this.key = key }
 
                     /** No value indicates the default group */
-                    fun value(value: String) = value(JsonField.of(value))
+                    fun value(value: String?) = value(JsonField.ofNullable(value))
 
                     /** No value indicates the default group */
                     fun value(value: JsonField<String>) = apply { this.value = value }
@@ -2436,8 +2620,8 @@ private constructor(
 
                     fun build(): Grouping =
                         Grouping(
-                            key,
-                            value,
+                            checkNotNull(key) { "`key` is required but was not set" },
+                            checkNotNull(value) { "`value` is required but was not set" },
                             additionalProperties.toImmutable(),
                         )
                 }
@@ -2483,11 +2667,17 @@ private constructor(
 
                 fun unitAmount(): String = unitAmount.getRequired("unit_amount")
 
-                @JsonProperty("first_unit") @ExcludeMissing fun _firstUnit() = firstUnit
+                @JsonProperty("first_unit")
+                @ExcludeMissing
+                fun _firstUnit(): JsonField<Double> = firstUnit
 
-                @JsonProperty("last_unit") @ExcludeMissing fun _lastUnit() = lastUnit
+                @JsonProperty("last_unit")
+                @ExcludeMissing
+                fun _lastUnit(): JsonField<Double> = lastUnit
 
-                @JsonProperty("unit_amount") @ExcludeMissing fun _unitAmount() = unitAmount
+                @JsonProperty("unit_amount")
+                @ExcludeMissing
+                fun _unitAmount(): JsonField<String> = unitAmount
 
                 @JsonAnyGetter
                 @ExcludeMissing
@@ -2513,9 +2703,9 @@ private constructor(
 
                 class Builder {
 
-                    private var firstUnit: JsonField<Double> = JsonMissing.of()
-                    private var lastUnit: JsonField<Double> = JsonMissing.of()
-                    private var unitAmount: JsonField<String> = JsonMissing.of()
+                    private var firstUnit: JsonField<Double>? = null
+                    private var lastUnit: JsonField<Double>? = null
+                    private var unitAmount: JsonField<String>? = null
                     private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
                     internal fun from(tierConfig: TierConfig) = apply {
@@ -2531,7 +2721,9 @@ private constructor(
                         this.firstUnit = firstUnit
                     }
 
-                    fun lastUnit(lastUnit: Double) = lastUnit(JsonField.of(lastUnit))
+                    fun lastUnit(lastUnit: Double?) = lastUnit(JsonField.ofNullable(lastUnit))
+
+                    fun lastUnit(lastUnit: Double) = lastUnit(lastUnit as Double?)
 
                     fun lastUnit(lastUnit: JsonField<Double>) = apply { this.lastUnit = lastUnit }
 
@@ -2565,9 +2757,9 @@ private constructor(
 
                     fun build(): TierConfig =
                         TierConfig(
-                            firstUnit,
-                            lastUnit,
-                            unitAmount,
+                            checkNotNull(firstUnit) { "`firstUnit` is required but was not set" },
+                            checkNotNull(lastUnit) { "`lastUnit` is required but was not set" },
+                            checkNotNull(unitAmount) { "`unitAmount` is required but was not set" },
                             additionalProperties.toImmutable(),
                         )
                 }
@@ -2694,15 +2886,17 @@ private constructor(
             fun type(): Type = type.getRequired("type")
 
             /** The total amount for this sub line item. */
-            @JsonProperty("amount") @ExcludeMissing fun _amount() = amount
+            @JsonProperty("amount") @ExcludeMissing fun _amount(): JsonField<String> = amount
 
-            @JsonProperty("grouping") @ExcludeMissing fun _grouping() = grouping
+            @JsonProperty("grouping")
+            @ExcludeMissing
+            fun _grouping(): JsonField<Grouping> = grouping
 
-            @JsonProperty("name") @ExcludeMissing fun _name() = name
+            @JsonProperty("name") @ExcludeMissing fun _name(): JsonField<String> = name
 
-            @JsonProperty("quantity") @ExcludeMissing fun _quantity() = quantity
+            @JsonProperty("quantity") @ExcludeMissing fun _quantity(): JsonField<Double> = quantity
 
-            @JsonProperty("type") @ExcludeMissing fun _type() = type
+            @JsonProperty("type") @ExcludeMissing fun _type(): JsonField<Type> = type
 
             @JsonAnyGetter
             @ExcludeMissing
@@ -2730,11 +2924,11 @@ private constructor(
 
             class Builder {
 
-                private var amount: JsonField<String> = JsonMissing.of()
-                private var grouping: JsonField<Grouping> = JsonMissing.of()
-                private var name: JsonField<String> = JsonMissing.of()
-                private var quantity: JsonField<Double> = JsonMissing.of()
-                private var type: JsonField<Type> = JsonMissing.of()
+                private var amount: JsonField<String>? = null
+                private var grouping: JsonField<Grouping>? = null
+                private var name: JsonField<String>? = null
+                private var quantity: JsonField<Double>? = null
+                private var type: JsonField<Type>? = null
                 private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
                 internal fun from(otherSubLineItem: OtherSubLineItem) = apply {
@@ -2752,7 +2946,7 @@ private constructor(
                 /** The total amount for this sub line item. */
                 fun amount(amount: JsonField<String>) = apply { this.amount = amount }
 
-                fun grouping(grouping: Grouping) = grouping(JsonField.of(grouping))
+                fun grouping(grouping: Grouping?) = grouping(JsonField.ofNullable(grouping))
 
                 fun grouping(grouping: JsonField<Grouping>) = apply { this.grouping = grouping }
 
@@ -2792,11 +2986,11 @@ private constructor(
 
                 fun build(): OtherSubLineItem =
                     OtherSubLineItem(
-                        amount,
-                        grouping,
-                        name,
-                        quantity,
-                        type,
+                        checkNotNull(amount) { "`amount` is required but was not set" },
+                        checkNotNull(grouping) { "`grouping` is required but was not set" },
+                        checkNotNull(name) { "`name` is required but was not set" },
+                        checkNotNull(quantity) { "`quantity` is required but was not set" },
+                        checkNotNull(type) { "`type` is required but was not set" },
                         additionalProperties.toImmutable(),
                     )
             }
@@ -2820,10 +3014,10 @@ private constructor(
                 /** No value indicates the default group */
                 fun value(): String? = value.getNullable("value")
 
-                @JsonProperty("key") @ExcludeMissing fun _key() = key
+                @JsonProperty("key") @ExcludeMissing fun _key(): JsonField<String> = key
 
                 /** No value indicates the default group */
-                @JsonProperty("value") @ExcludeMissing fun _value() = value
+                @JsonProperty("value") @ExcludeMissing fun _value(): JsonField<String> = value
 
                 @JsonAnyGetter
                 @ExcludeMissing
@@ -2848,8 +3042,8 @@ private constructor(
 
                 class Builder {
 
-                    private var key: JsonField<String> = JsonMissing.of()
-                    private var value: JsonField<String> = JsonMissing.of()
+                    private var key: JsonField<String>? = null
+                    private var value: JsonField<String>? = null
                     private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
                     internal fun from(grouping: Grouping) = apply {
@@ -2863,7 +3057,7 @@ private constructor(
                     fun key(key: JsonField<String>) = apply { this.key = key }
 
                     /** No value indicates the default group */
-                    fun value(value: String) = value(JsonField.of(value))
+                    fun value(value: String?) = value(JsonField.ofNullable(value))
 
                     /** No value indicates the default group */
                     fun value(value: JsonField<String>) = apply { this.value = value }
@@ -2892,8 +3086,8 @@ private constructor(
 
                     fun build(): Grouping =
                         Grouping(
-                            key,
-                            value,
+                            checkNotNull(key) { "`key` is required but was not set" },
+                            checkNotNull(value) { "`value` is required but was not set" },
                             additionalProperties.toImmutable(),
                         )
                 }
@@ -3013,17 +3207,17 @@ private constructor(
         fun taxRatePercentage(): String? = taxRatePercentage.getNullable("tax_rate_percentage")
 
         /** The amount of additional tax incurred by this tax rate. */
-        @JsonProperty("amount") @ExcludeMissing fun _amount() = amount
+        @JsonProperty("amount") @ExcludeMissing fun _amount(): JsonField<String> = amount
 
         /** The human-readable description of the applied tax rate. */
         @JsonProperty("tax_rate_description")
         @ExcludeMissing
-        fun _taxRateDescription() = taxRateDescription
+        fun _taxRateDescription(): JsonField<String> = taxRateDescription
 
         /** The tax rate percentage, out of 100. */
         @JsonProperty("tax_rate_percentage")
         @ExcludeMissing
-        fun _taxRatePercentage() = taxRatePercentage
+        fun _taxRatePercentage(): JsonField<String> = taxRatePercentage
 
         @JsonAnyGetter
         @ExcludeMissing
@@ -3049,9 +3243,9 @@ private constructor(
 
         class Builder {
 
-            private var amount: JsonField<String> = JsonMissing.of()
-            private var taxRateDescription: JsonField<String> = JsonMissing.of()
-            private var taxRatePercentage: JsonField<String> = JsonMissing.of()
+            private var amount: JsonField<String>? = null
+            private var taxRateDescription: JsonField<String>? = null
+            private var taxRatePercentage: JsonField<String>? = null
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             internal fun from(taxAmount: TaxAmount) = apply {
@@ -3077,8 +3271,8 @@ private constructor(
             }
 
             /** The tax rate percentage, out of 100. */
-            fun taxRatePercentage(taxRatePercentage: String) =
-                taxRatePercentage(JsonField.of(taxRatePercentage))
+            fun taxRatePercentage(taxRatePercentage: String?) =
+                taxRatePercentage(JsonField.ofNullable(taxRatePercentage))
 
             /** The tax rate percentage, out of 100. */
             fun taxRatePercentage(taxRatePercentage: JsonField<String>) = apply {
@@ -3106,9 +3300,13 @@ private constructor(
 
             fun build(): TaxAmount =
                 TaxAmount(
-                    amount,
-                    taxRateDescription,
-                    taxRatePercentage,
+                    checkNotNull(amount) { "`amount` is required but was not set" },
+                    checkNotNull(taxRateDescription) {
+                        "`taxRateDescription` is required but was not set"
+                    },
+                    checkNotNull(taxRatePercentage) {
+                        "`taxRatePercentage` is required but was not set"
+                    },
                     additionalProperties.toImmutable(),
                 )
         }
