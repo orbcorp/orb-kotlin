@@ -18,6 +18,14 @@ import com.withorb.api.core.toImmutable
 import com.withorb.api.errors.OrbInvalidDataException
 import java.util.Objects
 
+/**
+ * This endpoint allows you to create a new top-up for a specified customer's balance. While this
+ * top-up is active, the customer's balance will added in increments of the specified amount
+ * whenever the balance reaches the specified threshold.
+ *
+ * If a top-up already exists for this customer in the same currency, the existing top-up will be
+ * replaced.
+ */
 class CustomerCreditTopUpCreateByExternalIdParams
 constructor(
     private val externalCustomerId: String,

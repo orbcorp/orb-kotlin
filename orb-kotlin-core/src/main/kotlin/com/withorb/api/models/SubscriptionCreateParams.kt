@@ -29,6 +29,236 @@ import com.withorb.api.errors.OrbInvalidDataException
 import java.time.OffsetDateTime
 import java.util.Objects
 
+/**
+ * A subscription represents the purchase of a plan by a customer. The customer is identified by
+ * either the `customer_id` or the `external_customer_id`, and exactly one of these fields must be
+ * provided.
+ *
+ * By default, subscriptions begin on the day that they're created and renew automatically for each
+ * billing cycle at the cadence that's configured in the plan definition.
+ *
+ * The default configuration for subscriptions in Orb is **In-advance billing** and **Beginning of
+ * month alignment** (see [Subscription](../guides/concepts#subscription) for more details).
+ *
+ * In order to change the alignment behavior, Orb also supports billing subscriptions on the day of
+ * the month they are created. If `align_billing_with_subscription_start_date = true` is specified,
+ * subscriptions have billing cycles that are aligned with their `start_date`. For example, a
+ * subscription that begins on January 15th will have a billing cycle from January 15th to February
+ * 15th. Every subsequent billing cycle will continue to start and invoice on the 15th.
+ *
+ * If the "day" value is greater than the number of days in the month, the next billing cycle will
+ * start at the end of the month. For example, if the start_date is January 31st, the next billing
+ * cycle will start on February 28th.
+ *
+ * If a customer was created with a currency, Orb only allows subscribing the customer to a plan
+ * with a matching `invoicing_currency`. If the customer does not have a currency set, on
+ * subscription creation, we set the customer's currency to be the `invoicing_currency` of the plan.
+ *
+ * ## Customize your customer's subscriptions
+ *
+ * Prices and adjustments in a plan can be added, removed, or replaced for the subscription being
+ * created. This is useful when a customer has prices that differ from the default prices for a
+ * specific plan.
+ *
+ * :::info This feature is only available for accounts that have migrated to Subscription Overrides
+ * Version 2. You can find your Subscription Overrides Version at the bottom of your
+ * [Plans page](https://app.withorb.com/plans) :::
+ *
+ * ### Adding Prices
+ *
+ * To add prices, provide a list of objects with the key `add_prices`. An object in the list must
+ * specify an existing add-on price with a `price_id` or `external_price_id` field, or create a new
+ * add-on price by including an object with the key `price`, identical to what would be used in the
+ * request body for the [create price endpoint](../reference/create-price). See the
+ * [Price resource](../reference/price) for the specification of different price model
+ * configurations possible in this object.
+ *
+ * If the plan has phases, each object in the list must include a number with `plan_phase_order` key
+ * to indicate which phase the price should be added to.
+ *
+ * An object in the list can specify an optional `start_date` and optional `end_date`. This is
+ * equivalent to creating a price interval with the
+ * [add/edit price intervals endpoint](../reference/add-edit-price-intervals). If unspecified, the
+ * start or end date of the phase or subscription will be used.
+ *
+ * An object in the list can specify an optional `minimum_amount`, `maximum_amount`, or `discounts`.
+ * This will create adjustments which apply only to this price.
+ *
+ * Additionally, an object in the list can specify an optional `reference_id`. This ID can be used
+ * to reference this price when [adding an adjustment](#adding-adjustments) in the same API call.
+ * However the ID is _transient_ and cannot be used to refer to the price in future API calls.
+ *
+ * ### Removing Prices
+ *
+ * To remove prices, provide a list of objects with the key `remove_prices`. An object in the list
+ * must specify a plan price with either a `price_id` or `external_price_id` field.
+ *
+ * ### Replacing Prices
+ *
+ * To replace prices, provide a list of objects with the key `replace_prices`. An object in the list
+ * must specify a plan price to replace with the `replaces_price_id` key, and it must specify a
+ * price to replace it with by either referencing an existing add-on price with a `price_id` or
+ * `external_price_id` field, or by creating a new add-on price by including an object with the key
+ * `price`, identical to what would be used in the request body for the
+ * [create price endpoint](../reference/create-price). See the [Price resource](../reference/price)
+ * for the specification of different price model configurations possible in this object.
+ *
+ * For fixed fees, an object in the list can supply a `fixed_price_quantity` instead of a `price`,
+ * `price_id`, or `external_price_id` field. This will update only the quantity for the price,
+ * similar to the [Update price quantity](../reference/update-fixed-fee-quantity) endpoint.
+ *
+ * The replacement price will have the same phase, if applicable, and the same start and end dates
+ * as the price it replaces.
+ *
+ * An object in the list can specify an optional `minimum_amount`, `maximum_amount`, or `discounts`.
+ * This will create adjustments which apply only to this price.
+ *
+ * Additionally, an object in the list can specify an optional `reference_id`. This ID can be used
+ * to reference the replacement price when [adding an adjustment](#adding-adjustments) in the same
+ * API call. However the ID is _transient_ and cannot be used to refer to the price in future API
+ * calls.
+ *
+ * ### Adding adjustments
+ *
+ * To add adjustments, provide a list of objects with the key `add_adjustments`. An object in the
+ * list must include an object with the key `adjustment`, identical to the adjustment object in the
+ * [add/edit price intervals endpoint](../reference/add-edit-price-intervals).
+ *
+ * If the plan has phases, each object in the list must include a number with `plan_phase_order` key
+ * to indicate which phase the adjustment should be added to.
+ *
+ * An object in the list can specify an optional `start_date` and optional `end_date`. If
+ * unspecified, the start or end date of the phase or subscription will be used.
+ *
+ * ### Removing adjustments
+ *
+ * To remove adjustments, provide a list of objects with the key `remove_adjustments`. An object in
+ * the list must include a key, `adjustment_id`, with the ID of the adjustment to be removed.
+ *
+ * ### Replacing adjustments
+ *
+ * To replace adjustments, provide a list of objects with the key `replace_adjustments`. An object
+ * in the list must specify a plan adjustment to replace with the `replaces_adjustment_id` key, and
+ * it must specify an adjustment to replace it with by including an object with the key
+ * `adjustment`, identical to the adjustment object in the
+ * [add/edit price intervals endpoint](../reference/add-edit-price-intervals).
+ *
+ * The replacement adjustment will have the same phase, if applicable, and the same start and end
+ * dates as the adjustment it replaces.
+ *
+ * ## Price overrides (DEPRECATED)
+ *
+ * :::info Price overrides are being phased out in favor adding/removing/replacing prices. (See
+ * [Customize your customer's subscriptions](../reference/create-subscription#customize-your-customers-subscriptions))
+ * :::
+ *
+ * Price overrides are used to update some or all prices in a plan for the specific subscription
+ * being created. This is useful when a new customer has negotiated a rate that is unique to the
+ * customer.
+ *
+ * To override prices, provide a list of objects with the key `price_overrides`. The price object in
+ * the list of overrides is expected to contain the existing price id, the `model_type` and
+ * configuration. (See the [Price resource](../reference/price) for the specification of different
+ * price model configurations.) The numerical values can be updated, but the billable metric,
+ * cadence, type, and name of a price can not be overridden.
+ *
+ * ### Maximums and Minimums
+ *
+ * Minimums and maximums, much like price overrides, can be useful when a new customer has
+ * negotiated a new or different minimum or maximum spend cap than the default for a given price. If
+ * one exists for a price and null is provided for the minimum/maximum override on creation, then
+ * there will be no minimum/maximum on the new subscription. If no value is provided, then the
+ * default price maximum or minimum is used.
+ *
+ * To add a minimum for a specific price, add `minimum_amount` to the specific price in the
+ * `price_overrides` object.
+ *
+ * To add a maximum for a specific price, add `maximum_amount` to the specific price in the
+ * `price_overrides` object.
+ *
+ * ### Minimum override example
+ *
+ * Price minimum override example:
+ * ```json
+ * {
+ *   ...
+ *   "id": "price_id",
+ *   "model_type": "unit",
+ *   "unit_config": {
+ *     "unit_amount": "0.50"
+ *   },
+ *   "minimum_amount": "100.00"
+ *   ...
+ * }
+ * ```
+ *
+ * Removing an existing minimum example
+ *
+ * ```json
+ * {
+ *   ...
+ *   "id": "price_id",
+ *   "model_type": "unit",
+ *   "unit_config": {
+ *     "unit_amount": "0.50"
+ *   },
+ *   "minimum_amount": null
+ *   ...
+ * }
+ * ```
+ *
+ * ### Discounts
+ *
+ * Discounts, like price overrides, can be useful when a new customer has negotiated a new or
+ * different discount than the default for a price. If a discount exists for a price and a null
+ * discount is provided on creation, then there will be no discount on the new subscription.
+ *
+ * To add a discount for a specific price, add `discount` to the price in the `price_overrides`
+ * object. Discount should be a dictionary of the format:
+ * ```ts
+ * {
+ *   "discount_type": "amount" | "percentage" | "usage",
+ *   "amount_discount": string,
+ *   "percentage_discount": string,
+ *   "usage_discount": string
+ * }
+ * ```
+ *
+ * where either `amount_discount`, `percentage_discount`, or `usage_discount` is provided.
+ *
+ * Price discount example
+ *
+ * ```json
+ * {
+ *   ...
+ *   "id": "price_id",
+ *   "model_type": "unit",
+ *   "unit_config": {
+ *     "unit_amount": "0.50"
+ *   },
+ *   "discount": {"discount_type": "amount", "amount_discount": "175"},
+ * }
+ * ```
+ *
+ * Removing an existing discount example
+ *
+ * ```json
+ * {
+ *   "customer_id": "customer_id",
+ *   "plan_id": "plan_id",
+ *   "discount": null,
+ *   "price_overrides": [ ... ]
+ *   ...
+ * }
+ * ```
+ *
+ * ## Threshold Billing
+ *
+ * Orb supports invoicing for a subscription when a preconfigured usage threshold is hit. To enable
+ * threshold billing, pass in an `invoicing_threshold`, which is specified in the subscription's
+ * invoicing currency, when creating a subscription. E.g. pass in `10.00` to issue an invoice when
+ * usage amounts hit $10.00 for a subscription that invoices in USD.
+ */
 class SubscriptionCreateParams
 constructor(
     private val body: SubscriptionCreateBody,

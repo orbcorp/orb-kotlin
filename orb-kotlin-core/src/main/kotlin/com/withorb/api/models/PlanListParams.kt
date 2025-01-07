@@ -13,6 +13,12 @@ import java.time.OffsetDateTime
 import java.time.format.DateTimeFormatter
 import java.util.Objects
 
+/**
+ * This endpoint returns a list of all [plans](../guides/concepts##plan-and-price) for an account in
+ * a list format. The list of plans is ordered starting from the most recently created plan. The
+ * response also includes [`pagination_metadata`](../reference/pagination), which lets the caller
+ * retrieve the next page of results if they exist.
+ */
 class PlanListParams
 constructor(
     private val createdAtGt: OffsetDateTime?,

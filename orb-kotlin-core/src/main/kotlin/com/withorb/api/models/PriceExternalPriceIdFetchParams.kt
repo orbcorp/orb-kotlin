@@ -7,6 +7,11 @@ import com.withorb.api.core.http.Headers
 import com.withorb.api.core.http.QueryParams
 import java.util.Objects
 
+/**
+ * This endpoint returns a price given an external price id. See the
+ * [price creation API](../reference/create-price) for more information about external price
+ * aliases.
+ */
 class PriceExternalPriceIdFetchParams
 constructor(
     private val externalPriceId: String,

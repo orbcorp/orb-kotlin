@@ -15,6 +15,11 @@ import com.withorb.api.core.immutableEmptyMap
 import com.withorb.api.core.toImmutable
 import java.util.Objects
 
+/**
+ * This endpoint can be used to update the `external_plan_id`, and `metadata` of an existing plan.
+ *
+ * Other fields on a customer are currently immutable.
+ */
 class PlanUpdateParams
 constructor(
     private val planId: String,

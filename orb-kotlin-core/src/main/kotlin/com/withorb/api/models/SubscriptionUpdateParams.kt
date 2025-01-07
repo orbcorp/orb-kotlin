@@ -15,6 +15,10 @@ import com.withorb.api.core.immutableEmptyMap
 import com.withorb.api.core.toImmutable
 import java.util.Objects
 
+/**
+ * This endpoint can be used to update the `metadata`, `net terms`, `auto_collection`,
+ * `invoicing_threshold`, and `default_invoice_memo` properties on a subscription.
+ */
 class SubscriptionUpdateParams
 constructor(
     private val subscriptionId: String,

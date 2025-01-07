@@ -28,6 +28,10 @@ import com.withorb.api.core.toImmutable
 import com.withorb.api.errors.OrbInvalidDataException
 import java.util.Objects
 
+/**
+ * This endpoint allows the creation of coupons, which can then be redeemed at subscription creation
+ * or plan change.
+ */
 class CouponCreateParams
 constructor(
     private val body: CouponCreateBody,

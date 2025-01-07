@@ -28,6 +28,7 @@ import com.withorb.api.core.toImmutable
 import com.withorb.api.errors.OrbInvalidDataException
 import java.util.Objects
 
+/** This endpoint allows creation of plans including their prices. */
 class PlanCreateParams
 constructor(
     private val body: PlanCreateBody,
