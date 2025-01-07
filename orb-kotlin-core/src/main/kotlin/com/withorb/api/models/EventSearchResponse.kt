@@ -28,7 +28,7 @@ private constructor(
 
     fun data(): List<Data> = data.getRequired("data")
 
-    @JsonProperty("data") @ExcludeMissing fun _data() = data
+    @JsonProperty("data") @ExcludeMissing fun _data(): JsonField<List<Data>> = data
 
     @JsonAnyGetter
     @ExcludeMissing
@@ -52,17 +52,30 @@ private constructor(
 
     class Builder {
 
-        private var data: JsonField<List<Data>> = JsonMissing.of()
+        private var data: JsonField<MutableList<Data>>? = null
         private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         internal fun from(eventSearchResponse: EventSearchResponse) = apply {
-            data = eventSearchResponse.data
+            data = eventSearchResponse.data.map { it.toMutableList() }
             additionalProperties = eventSearchResponse.additionalProperties.toMutableMap()
         }
 
         fun data(data: List<Data>) = data(JsonField.of(data))
 
-        fun data(data: JsonField<List<Data>>) = apply { this.data = data }
+        fun data(data: JsonField<List<Data>>) = apply {
+            this.data = data.map { it.toMutableList() }
+        }
+
+        fun addData(data: Data) = apply {
+            this.data =
+                (this.data ?: JsonField.of(mutableListOf())).apply {
+                    (asKnown()
+                            ?: throw IllegalStateException(
+                                "Field was set to non-list type: ${javaClass.simpleName}"
+                            ))
+                        .add(data)
+                }
+        }
 
         fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
             this.additionalProperties.clear()
@@ -84,7 +97,11 @@ private constructor(
         }
 
         fun build(): EventSearchResponse =
-            EventSearchResponse(data.map { it.toImmutable() }, additionalProperties.toImmutable())
+            EventSearchResponse(
+                checkNotNull(data) { "`data` is required but was not set" }
+                    .map { it.toImmutable() },
+                additionalProperties.toImmutable()
+            )
     }
 
     /**
@@ -139,6 +156,12 @@ private constructor(
         fun externalCustomerId(): String? = externalCustomerId.getNullable("external_customer_id")
 
         /**
+         * A dictionary of custom properties. Values in this dictionary must be numeric, boolean, or
+         * strings. Nested dictionaries are disallowed.
+         */
+        @JsonProperty("properties") @ExcludeMissing fun _properties(): JsonValue = properties
+
+        /**
          * An ISO 8601 format date with no timezone offset (i.e. UTC). This should represent the
          * time that usage was recorded, and is particularly important to attribute usage to a given
          * billing period.
@@ -150,34 +173,34 @@ private constructor(
          * event with a given idempotency key will be ingested, which allows for safe request
          * retries.
          */
-        @JsonProperty("id") @ExcludeMissing fun _id() = id
+        @JsonProperty("id") @ExcludeMissing fun _id(): JsonField<String> = id
 
         /** The Orb Customer identifier */
-        @JsonProperty("customer_id") @ExcludeMissing fun _customerId() = customerId
+        @JsonProperty("customer_id")
+        @ExcludeMissing
+        fun _customerId(): JsonField<String> = customerId
 
         /** A boolean indicating whether the event is currently deprecated. */
-        @JsonProperty("deprecated") @ExcludeMissing fun _deprecated() = deprecated
+        @JsonProperty("deprecated")
+        @ExcludeMissing
+        fun _deprecated(): JsonField<Boolean> = deprecated
 
         /** A name to meaningfully identify the action or event type. */
-        @JsonProperty("event_name") @ExcludeMissing fun _eventName() = eventName
+        @JsonProperty("event_name") @ExcludeMissing fun _eventName(): JsonField<String> = eventName
 
         /** An alias for the Orb customer, whose mapping is specified when creating the customer */
         @JsonProperty("external_customer_id")
         @ExcludeMissing
-        fun _externalCustomerId() = externalCustomerId
-
-        /**
-         * A dictionary of custom properties. Values in this dictionary must be numeric, boolean, or
-         * strings. Nested dictionaries are disallowed.
-         */
-        @JsonProperty("properties") @ExcludeMissing fun _properties() = properties
+        fun _externalCustomerId(): JsonField<String> = externalCustomerId
 
         /**
          * An ISO 8601 format date with no timezone offset (i.e. UTC). This should represent the
          * time that usage was recorded, and is particularly important to attribute usage to a given
          * billing period.
          */
-        @JsonProperty("timestamp") @ExcludeMissing fun _timestamp() = timestamp
+        @JsonProperty("timestamp")
+        @ExcludeMissing
+        fun _timestamp(): JsonField<OffsetDateTime> = timestamp
 
         @JsonAnyGetter
         @ExcludeMissing
@@ -206,13 +229,13 @@ private constructor(
 
         class Builder {
 
-            private var id: JsonField<String> = JsonMissing.of()
-            private var customerId: JsonField<String> = JsonMissing.of()
-            private var deprecated: JsonField<Boolean> = JsonMissing.of()
-            private var eventName: JsonField<String> = JsonMissing.of()
-            private var externalCustomerId: JsonField<String> = JsonMissing.of()
-            private var properties: JsonValue = JsonMissing.of()
-            private var timestamp: JsonField<OffsetDateTime> = JsonMissing.of()
+            private var id: JsonField<String>? = null
+            private var customerId: JsonField<String>? = null
+            private var deprecated: JsonField<Boolean>? = null
+            private var eventName: JsonField<String>? = null
+            private var externalCustomerId: JsonField<String>? = null
+            private var properties: JsonValue? = null
+            private var timestamp: JsonField<OffsetDateTime>? = null
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             internal fun from(data: Data) = apply {
@@ -241,7 +264,7 @@ private constructor(
             fun id(id: JsonField<String>) = apply { this.id = id }
 
             /** The Orb Customer identifier */
-            fun customerId(customerId: String) = customerId(JsonField.of(customerId))
+            fun customerId(customerId: String?) = customerId(JsonField.ofNullable(customerId))
 
             /** The Orb Customer identifier */
             fun customerId(customerId: JsonField<String>) = apply { this.customerId = customerId }
@@ -261,8 +284,8 @@ private constructor(
             /**
              * An alias for the Orb customer, whose mapping is specified when creating the customer
              */
-            fun externalCustomerId(externalCustomerId: String) =
-                externalCustomerId(JsonField.of(externalCustomerId))
+            fun externalCustomerId(externalCustomerId: String?) =
+                externalCustomerId(JsonField.ofNullable(externalCustomerId))
 
             /**
              * An alias for the Orb customer, whose mapping is specified when creating the customer
@@ -314,13 +337,15 @@ private constructor(
 
             fun build(): Data =
                 Data(
-                    id,
-                    customerId,
-                    deprecated,
-                    eventName,
-                    externalCustomerId,
-                    properties,
-                    timestamp,
+                    checkNotNull(id) { "`id` is required but was not set" },
+                    checkNotNull(customerId) { "`customerId` is required but was not set" },
+                    checkNotNull(deprecated) { "`deprecated` is required but was not set" },
+                    checkNotNull(eventName) { "`eventName` is required but was not set" },
+                    checkNotNull(externalCustomerId) {
+                        "`externalCustomerId` is required but was not set"
+                    },
+                    checkNotNull(properties) { "`properties` is required but was not set" },
+                    checkNotNull(timestamp) { "`timestamp` is required but was not set" },
                     additionalProperties.toImmutable(),
                 )
         }

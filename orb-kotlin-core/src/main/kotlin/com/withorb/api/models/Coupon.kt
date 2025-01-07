@@ -120,33 +120,43 @@ private constructor(
     fun timesRedeemed(): Long = timesRedeemed.getRequired("times_redeemed")
 
     /** Also referred to as coupon_id in this documentation. */
-    @JsonProperty("id") @ExcludeMissing fun _id() = id
+    @JsonProperty("id") @ExcludeMissing fun _id(): JsonField<String> = id
 
     /**
      * An archived coupon can no longer be redeemed. Active coupons will have a value of null for
      * `archived_at`; this field will be non-null for archived coupons.
      */
-    @JsonProperty("archived_at") @ExcludeMissing fun _archivedAt() = archivedAt
+    @JsonProperty("archived_at")
+    @ExcludeMissing
+    fun _archivedAt(): JsonField<OffsetDateTime> = archivedAt
 
-    @JsonProperty("discount") @ExcludeMissing fun _discount() = discount
+    @JsonProperty("discount") @ExcludeMissing fun _discount(): JsonField<Discount> = discount
 
     /**
      * This allows for a coupon's discount to apply for a limited time (determined in months); a
      * `null` value here means "unlimited time".
      */
-    @JsonProperty("duration_in_months") @ExcludeMissing fun _durationInMonths() = durationInMonths
+    @JsonProperty("duration_in_months")
+    @ExcludeMissing
+    fun _durationInMonths(): JsonField<Long> = durationInMonths
 
     /**
      * The maximum number of redemptions allowed for this coupon before it is exhausted; `null` here
      * means "unlimited".
      */
-    @JsonProperty("max_redemptions") @ExcludeMissing fun _maxRedemptions() = maxRedemptions
+    @JsonProperty("max_redemptions")
+    @ExcludeMissing
+    fun _maxRedemptions(): JsonField<Long> = maxRedemptions
 
     /** This string can be used to redeem this coupon for a given subscription. */
-    @JsonProperty("redemption_code") @ExcludeMissing fun _redemptionCode() = redemptionCode
+    @JsonProperty("redemption_code")
+    @ExcludeMissing
+    fun _redemptionCode(): JsonField<String> = redemptionCode
 
     /** The number of times this coupon has been redeemed. */
-    @JsonProperty("times_redeemed") @ExcludeMissing fun _timesRedeemed() = timesRedeemed
+    @JsonProperty("times_redeemed")
+    @ExcludeMissing
+    fun _timesRedeemed(): JsonField<Long> = timesRedeemed
 
     @JsonAnyGetter
     @ExcludeMissing
@@ -176,13 +186,13 @@ private constructor(
 
     class Builder {
 
-        private var id: JsonField<String> = JsonMissing.of()
-        private var archivedAt: JsonField<OffsetDateTime> = JsonMissing.of()
-        private var discount: JsonField<Discount> = JsonMissing.of()
-        private var durationInMonths: JsonField<Long> = JsonMissing.of()
-        private var maxRedemptions: JsonField<Long> = JsonMissing.of()
-        private var redemptionCode: JsonField<String> = JsonMissing.of()
-        private var timesRedeemed: JsonField<Long> = JsonMissing.of()
+        private var id: JsonField<String>? = null
+        private var archivedAt: JsonField<OffsetDateTime>? = null
+        private var discount: JsonField<Discount>? = null
+        private var durationInMonths: JsonField<Long>? = null
+        private var maxRedemptions: JsonField<Long>? = null
+        private var redemptionCode: JsonField<String>? = null
+        private var timesRedeemed: JsonField<Long>? = null
         private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         internal fun from(coupon: Coupon) = apply {
@@ -206,7 +216,7 @@ private constructor(
          * An archived coupon can no longer be redeemed. Active coupons will have a value of null
          * for `archived_at`; this field will be non-null for archived coupons.
          */
-        fun archivedAt(archivedAt: OffsetDateTime) = archivedAt(JsonField.of(archivedAt))
+        fun archivedAt(archivedAt: OffsetDateTime?) = archivedAt(JsonField.ofNullable(archivedAt))
 
         /**
          * An archived coupon can no longer be redeemed. Active coupons will have a value of null
@@ -220,12 +230,24 @@ private constructor(
 
         fun discount(discount: JsonField<Discount>) = apply { this.discount = discount }
 
+        fun discount(percentageDiscount: PercentageDiscount) =
+            discount(Discount.ofPercentageDiscount(percentageDiscount))
+
+        fun discount(amountDiscount: AmountDiscount) =
+            discount(Discount.ofAmountDiscount(amountDiscount))
+
         /**
          * This allows for a coupon's discount to apply for a limited time (determined in months); a
          * `null` value here means "unlimited time".
          */
-        fun durationInMonths(durationInMonths: Long) =
-            durationInMonths(JsonField.of(durationInMonths))
+        fun durationInMonths(durationInMonths: Long?) =
+            durationInMonths(JsonField.ofNullable(durationInMonths))
+
+        /**
+         * This allows for a coupon's discount to apply for a limited time (determined in months); a
+         * `null` value here means "unlimited time".
+         */
+        fun durationInMonths(durationInMonths: Long) = durationInMonths(durationInMonths as Long?)
 
         /**
          * This allows for a coupon's discount to apply for a limited time (determined in months); a
@@ -239,7 +261,14 @@ private constructor(
          * The maximum number of redemptions allowed for this coupon before it is exhausted; `null`
          * here means "unlimited".
          */
-        fun maxRedemptions(maxRedemptions: Long) = maxRedemptions(JsonField.of(maxRedemptions))
+        fun maxRedemptions(maxRedemptions: Long?) =
+            maxRedemptions(JsonField.ofNullable(maxRedemptions))
+
+        /**
+         * The maximum number of redemptions allowed for this coupon before it is exhausted; `null`
+         * here means "unlimited".
+         */
+        fun maxRedemptions(maxRedemptions: Long) = maxRedemptions(maxRedemptions as Long?)
 
         /**
          * The maximum number of redemptions allowed for this coupon before it is exhausted; `null`
@@ -286,13 +315,13 @@ private constructor(
 
         fun build(): Coupon =
             Coupon(
-                id,
-                archivedAt,
-                discount,
-                durationInMonths,
-                maxRedemptions,
-                redemptionCode,
-                timesRedeemed,
+                checkNotNull(id) { "`id` is required but was not set" },
+                checkNotNull(archivedAt) { "`archivedAt` is required but was not set" },
+                checkNotNull(discount) { "`discount` is required but was not set" },
+                checkNotNull(durationInMonths) { "`durationInMonths` is required but was not set" },
+                checkNotNull(maxRedemptions) { "`maxRedemptions` is required but was not set" },
+                checkNotNull(redemptionCode) { "`redemptionCode` is required but was not set" },
+                checkNotNull(timesRedeemed) { "`timesRedeemed` is required but was not set" },
                 additionalProperties.toImmutable(),
             )
     }

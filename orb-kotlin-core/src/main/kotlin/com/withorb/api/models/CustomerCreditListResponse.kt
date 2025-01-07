@@ -59,21 +59,27 @@ private constructor(
 
     fun status(): Status = status.getRequired("status")
 
-    @JsonProperty("id") @ExcludeMissing fun _id() = id
+    @JsonProperty("id") @ExcludeMissing fun _id(): JsonField<String> = id
 
-    @JsonProperty("balance") @ExcludeMissing fun _balance() = balance
+    @JsonProperty("balance") @ExcludeMissing fun _balance(): JsonField<Double> = balance
 
-    @JsonProperty("effective_date") @ExcludeMissing fun _effectiveDate() = effectiveDate
+    @JsonProperty("effective_date")
+    @ExcludeMissing
+    fun _effectiveDate(): JsonField<OffsetDateTime> = effectiveDate
 
-    @JsonProperty("expiry_date") @ExcludeMissing fun _expiryDate() = expiryDate
+    @JsonProperty("expiry_date")
+    @ExcludeMissing
+    fun _expiryDate(): JsonField<OffsetDateTime> = expiryDate
 
     @JsonProperty("maximum_initial_balance")
     @ExcludeMissing
-    fun _maximumInitialBalance() = maximumInitialBalance
+    fun _maximumInitialBalance(): JsonField<Double> = maximumInitialBalance
 
-    @JsonProperty("per_unit_cost_basis") @ExcludeMissing fun _perUnitCostBasis() = perUnitCostBasis
+    @JsonProperty("per_unit_cost_basis")
+    @ExcludeMissing
+    fun _perUnitCostBasis(): JsonField<String> = perUnitCostBasis
 
-    @JsonProperty("status") @ExcludeMissing fun _status() = status
+    @JsonProperty("status") @ExcludeMissing fun _status(): JsonField<Status> = status
 
     @JsonAnyGetter
     @ExcludeMissing
@@ -103,13 +109,13 @@ private constructor(
 
     class Builder {
 
-        private var id: JsonField<String> = JsonMissing.of()
-        private var balance: JsonField<Double> = JsonMissing.of()
-        private var effectiveDate: JsonField<OffsetDateTime> = JsonMissing.of()
-        private var expiryDate: JsonField<OffsetDateTime> = JsonMissing.of()
-        private var maximumInitialBalance: JsonField<Double> = JsonMissing.of()
-        private var perUnitCostBasis: JsonField<String> = JsonMissing.of()
-        private var status: JsonField<Status> = JsonMissing.of()
+        private var id: JsonField<String>? = null
+        private var balance: JsonField<Double>? = null
+        private var effectiveDate: JsonField<OffsetDateTime>? = null
+        private var expiryDate: JsonField<OffsetDateTime>? = null
+        private var maximumInitialBalance: JsonField<Double>? = null
+        private var perUnitCostBasis: JsonField<String>? = null
+        private var status: JsonField<Status>? = null
         private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         internal fun from(customerCreditListResponse: CustomerCreditListResponse) = apply {
@@ -131,28 +137,31 @@ private constructor(
 
         fun balance(balance: JsonField<Double>) = apply { this.balance = balance }
 
-        fun effectiveDate(effectiveDate: OffsetDateTime) =
-            effectiveDate(JsonField.of(effectiveDate))
+        fun effectiveDate(effectiveDate: OffsetDateTime?) =
+            effectiveDate(JsonField.ofNullable(effectiveDate))
 
         fun effectiveDate(effectiveDate: JsonField<OffsetDateTime>) = apply {
             this.effectiveDate = effectiveDate
         }
 
-        fun expiryDate(expiryDate: OffsetDateTime) = expiryDate(JsonField.of(expiryDate))
+        fun expiryDate(expiryDate: OffsetDateTime?) = expiryDate(JsonField.ofNullable(expiryDate))
 
         fun expiryDate(expiryDate: JsonField<OffsetDateTime>) = apply {
             this.expiryDate = expiryDate
         }
 
+        fun maximumInitialBalance(maximumInitialBalance: Double?) =
+            maximumInitialBalance(JsonField.ofNullable(maximumInitialBalance))
+
         fun maximumInitialBalance(maximumInitialBalance: Double) =
-            maximumInitialBalance(JsonField.of(maximumInitialBalance))
+            maximumInitialBalance(maximumInitialBalance as Double?)
 
         fun maximumInitialBalance(maximumInitialBalance: JsonField<Double>) = apply {
             this.maximumInitialBalance = maximumInitialBalance
         }
 
-        fun perUnitCostBasis(perUnitCostBasis: String) =
-            perUnitCostBasis(JsonField.of(perUnitCostBasis))
+        fun perUnitCostBasis(perUnitCostBasis: String?) =
+            perUnitCostBasis(JsonField.ofNullable(perUnitCostBasis))
 
         fun perUnitCostBasis(perUnitCostBasis: JsonField<String>) = apply {
             this.perUnitCostBasis = perUnitCostBasis
@@ -183,13 +192,15 @@ private constructor(
 
         fun build(): CustomerCreditListResponse =
             CustomerCreditListResponse(
-                id,
-                balance,
-                effectiveDate,
-                expiryDate,
-                maximumInitialBalance,
-                perUnitCostBasis,
-                status,
+                checkNotNull(id) { "`id` is required but was not set" },
+                checkNotNull(balance) { "`balance` is required but was not set" },
+                checkNotNull(effectiveDate) { "`effectiveDate` is required but was not set" },
+                checkNotNull(expiryDate) { "`expiryDate` is required but was not set" },
+                checkNotNull(maximumInitialBalance) {
+                    "`maximumInitialBalance` is required but was not set"
+                },
+                checkNotNull(perUnitCostBasis) { "`perUnitCostBasis` is required but was not set" },
+                checkNotNull(status) { "`status` is required but was not set" },
                 additionalProperties.toImmutable(),
             )
     }

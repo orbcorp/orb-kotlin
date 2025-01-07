@@ -7,6 +7,8 @@ import com.fasterxml.jackson.annotation.JsonAnySetter
 import com.fasterxml.jackson.annotation.JsonCreator
 import com.fasterxml.jackson.annotation.JsonProperty
 import com.withorb.api.core.ExcludeMissing
+import com.withorb.api.core.JsonField
+import com.withorb.api.core.JsonMissing
 import com.withorb.api.core.JsonValue
 import com.withorb.api.core.NoAutoDetect
 import com.withorb.api.core.http.Headers
@@ -56,11 +58,30 @@ constructor(
      */
     fun timeframeStart(): OffsetDateTime? = body.timeframeStart()
 
+    /**
+     * This is an explicit array of IDs to filter by. Note that an event's ID is the idempotency_key
+     * that was originally used for ingestion, and this only supports events that have not been
+     * amended. Values in this array will be treated case sensitively.
+     */
+    fun _eventIds(): JsonField<List<String>> = body._eventIds()
+
+    /**
+     * The end of the timeframe, exclusive, in which to search events. If not specified, the current
+     * time is used.
+     */
+    fun _timeframeEnd(): JsonField<OffsetDateTime> = body._timeframeEnd()
+
+    /**
+     * The start of the timeframe, inclusive, in which to search events. If not specified, the one
+     * week ago is used.
+     */
+    fun _timeframeStart(): JsonField<OffsetDateTime> = body._timeframeStart()
+
+    fun _additionalBodyProperties(): Map<String, JsonValue> = body._additionalProperties()
+
     fun _additionalHeaders(): Headers = additionalHeaders
 
     fun _additionalQueryParams(): QueryParams = additionalQueryParams
-
-    fun _additionalBodyProperties(): Map<String, JsonValue> = body._additionalProperties()
 
     internal fun getBody(): EventSearchBody = body
 
@@ -72,9 +93,15 @@ constructor(
     class EventSearchBody
     @JsonCreator
     internal constructor(
-        @JsonProperty("event_ids") private val eventIds: List<String>,
-        @JsonProperty("timeframe_end") private val timeframeEnd: OffsetDateTime?,
-        @JsonProperty("timeframe_start") private val timeframeStart: OffsetDateTime?,
+        @JsonProperty("event_ids")
+        @ExcludeMissing
+        private val eventIds: JsonField<List<String>> = JsonMissing.of(),
+        @JsonProperty("timeframe_end")
+        @ExcludeMissing
+        private val timeframeEnd: JsonField<OffsetDateTime> = JsonMissing.of(),
+        @JsonProperty("timeframe_start")
+        @ExcludeMissing
+        private val timeframeStart: JsonField<OffsetDateTime> = JsonMissing.of(),
         @JsonAnySetter
         private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
@@ -84,23 +111,59 @@ constructor(
          * idempotency_key that was originally used for ingestion, and this only supports events
          * that have not been amended. Values in this array will be treated case sensitively.
          */
-        @JsonProperty("event_ids") fun eventIds(): List<String> = eventIds
+        fun eventIds(): List<String> = eventIds.getRequired("event_ids")
 
         /**
          * The end of the timeframe, exclusive, in which to search events. If not specified, the
          * current time is used.
          */
-        @JsonProperty("timeframe_end") fun timeframeEnd(): OffsetDateTime? = timeframeEnd
+        fun timeframeEnd(): OffsetDateTime? = timeframeEnd.getNullable("timeframe_end")
 
         /**
          * The start of the timeframe, inclusive, in which to search events. If not specified, the
          * one week ago is used.
          */
-        @JsonProperty("timeframe_start") fun timeframeStart(): OffsetDateTime? = timeframeStart
+        fun timeframeStart(): OffsetDateTime? = timeframeStart.getNullable("timeframe_start")
+
+        /**
+         * This is an explicit array of IDs to filter by. Note that an event's ID is the
+         * idempotency_key that was originally used for ingestion, and this only supports events
+         * that have not been amended. Values in this array will be treated case sensitively.
+         */
+        @JsonProperty("event_ids")
+        @ExcludeMissing
+        fun _eventIds(): JsonField<List<String>> = eventIds
+
+        /**
+         * The end of the timeframe, exclusive, in which to search events. If not specified, the
+         * current time is used.
+         */
+        @JsonProperty("timeframe_end")
+        @ExcludeMissing
+        fun _timeframeEnd(): JsonField<OffsetDateTime> = timeframeEnd
+
+        /**
+         * The start of the timeframe, inclusive, in which to search events. If not specified, the
+         * one week ago is used.
+         */
+        @JsonProperty("timeframe_start")
+        @ExcludeMissing
+        fun _timeframeStart(): JsonField<OffsetDateTime> = timeframeStart
 
         @JsonAnyGetter
         @ExcludeMissing
         fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
+
+        private var validated: Boolean = false
+
+        fun validate(): EventSearchBody = apply {
+            if (!validated) {
+                eventIds()
+                timeframeEnd()
+                timeframeStart()
+                validated = true
+            }
+        }
 
         fun toBuilder() = Builder().from(this)
 
@@ -111,13 +174,13 @@ constructor(
 
         class Builder {
 
-            private var eventIds: MutableList<String>? = null
-            private var timeframeEnd: OffsetDateTime? = null
-            private var timeframeStart: OffsetDateTime? = null
+            private var eventIds: JsonField<MutableList<String>>? = null
+            private var timeframeEnd: JsonField<OffsetDateTime> = JsonMissing.of()
+            private var timeframeStart: JsonField<OffsetDateTime> = JsonMissing.of()
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             internal fun from(eventSearchBody: EventSearchBody) = apply {
-                eventIds = eventSearchBody.eventIds.toMutableList()
+                eventIds = eventSearchBody.eventIds.map { it.toMutableList() }
                 timeframeEnd = eventSearchBody.timeframeEnd
                 timeframeStart = eventSearchBody.timeframeStart
                 additionalProperties = eventSearchBody.additionalProperties.toMutableMap()
@@ -128,8 +191,15 @@ constructor(
              * idempotency_key that was originally used for ingestion, and this only supports events
              * that have not been amended. Values in this array will be treated case sensitively.
              */
-            fun eventIds(eventIds: List<String>) = apply {
-                this.eventIds = eventIds.toMutableList()
+            fun eventIds(eventIds: List<String>) = eventIds(JsonField.of(eventIds))
+
+            /**
+             * This is an explicit array of IDs to filter by. Note that an event's ID is the
+             * idempotency_key that was originally used for ingestion, and this only supports events
+             * that have not been amended. Values in this array will be treated case sensitively.
+             */
+            fun eventIds(eventIds: JsonField<List<String>>) = apply {
+                this.eventIds = eventIds.map { it.toMutableList() }
             }
 
             /**
@@ -138,14 +208,28 @@ constructor(
              * that have not been amended. Values in this array will be treated case sensitively.
              */
             fun addEventId(eventId: String) = apply {
-                eventIds = (eventIds ?: mutableListOf()).apply { add(eventId) }
+                eventIds =
+                    (eventIds ?: JsonField.of(mutableListOf())).apply {
+                        (asKnown()
+                                ?: throw IllegalStateException(
+                                    "Field was set to non-list type: ${javaClass.simpleName}"
+                                ))
+                            .add(eventId)
+                    }
             }
 
             /**
              * The end of the timeframe, exclusive, in which to search events. If not specified, the
              * current time is used.
              */
-            fun timeframeEnd(timeframeEnd: OffsetDateTime?) = apply {
+            fun timeframeEnd(timeframeEnd: OffsetDateTime?) =
+                timeframeEnd(JsonField.ofNullable(timeframeEnd))
+
+            /**
+             * The end of the timeframe, exclusive, in which to search events. If not specified, the
+             * current time is used.
+             */
+            fun timeframeEnd(timeframeEnd: JsonField<OffsetDateTime>) = apply {
                 this.timeframeEnd = timeframeEnd
             }
 
@@ -153,7 +237,14 @@ constructor(
              * The start of the timeframe, inclusive, in which to search events. If not specified,
              * the one week ago is used.
              */
-            fun timeframeStart(timeframeStart: OffsetDateTime?) = apply {
+            fun timeframeStart(timeframeStart: OffsetDateTime?) =
+                timeframeStart(JsonField.ofNullable(timeframeStart))
+
+            /**
+             * The start of the timeframe, inclusive, in which to search events. If not specified,
+             * the one week ago is used.
+             */
+            fun timeframeStart(timeframeStart: JsonField<OffsetDateTime>) = apply {
                 this.timeframeStart = timeframeStart
             }
 
@@ -179,7 +270,7 @@ constructor(
             fun build(): EventSearchBody =
                 EventSearchBody(
                     checkNotNull(eventIds) { "`eventIds` is required but was not set" }
-                        .toImmutable(),
+                        .map { it.toImmutable() },
                     timeframeEnd,
                     timeframeStart,
                     additionalProperties.toImmutable(),
@@ -236,6 +327,13 @@ constructor(
          * idempotency_key that was originally used for ingestion, and this only supports events
          * that have not been amended. Values in this array will be treated case sensitively.
          */
+        fun eventIds(eventIds: JsonField<List<String>>) = apply { body.eventIds(eventIds) }
+
+        /**
+         * This is an explicit array of IDs to filter by. Note that an event's ID is the
+         * idempotency_key that was originally used for ingestion, and this only supports events
+         * that have not been amended. Values in this array will be treated case sensitively.
+         */
         fun addEventId(eventId: String) = apply { body.addEventId(eventId) }
 
         /**
@@ -245,11 +343,46 @@ constructor(
         fun timeframeEnd(timeframeEnd: OffsetDateTime?) = apply { body.timeframeEnd(timeframeEnd) }
 
         /**
+         * The end of the timeframe, exclusive, in which to search events. If not specified, the
+         * current time is used.
+         */
+        fun timeframeEnd(timeframeEnd: JsonField<OffsetDateTime>) = apply {
+            body.timeframeEnd(timeframeEnd)
+        }
+
+        /**
          * The start of the timeframe, inclusive, in which to search events. If not specified, the
          * one week ago is used.
          */
         fun timeframeStart(timeframeStart: OffsetDateTime?) = apply {
             body.timeframeStart(timeframeStart)
+        }
+
+        /**
+         * The start of the timeframe, inclusive, in which to search events. If not specified, the
+         * one week ago is used.
+         */
+        fun timeframeStart(timeframeStart: JsonField<OffsetDateTime>) = apply {
+            body.timeframeStart(timeframeStart)
+        }
+
+        fun additionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) = apply {
+            body.additionalProperties(additionalBodyProperties)
+        }
+
+        fun putAdditionalBodyProperty(key: String, value: JsonValue) = apply {
+            body.putAdditionalProperty(key, value)
+        }
+
+        fun putAllAdditionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) =
+            apply {
+                body.putAllAdditionalProperties(additionalBodyProperties)
+            }
+
+        fun removeAdditionalBodyProperty(key: String) = apply { body.removeAdditionalProperty(key) }
+
+        fun removeAllAdditionalBodyProperties(keys: Set<String>) = apply {
+            body.removeAllAdditionalProperties(keys)
         }
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {
@@ -348,25 +481,6 @@ constructor(
 
         fun removeAllAdditionalQueryParams(keys: Set<String>) = apply {
             additionalQueryParams.removeAll(keys)
-        }
-
-        fun additionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) = apply {
-            body.additionalProperties(additionalBodyProperties)
-        }
-
-        fun putAdditionalBodyProperty(key: String, value: JsonValue) = apply {
-            body.putAdditionalProperty(key, value)
-        }
-
-        fun putAllAdditionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) =
-            apply {
-                body.putAllAdditionalProperties(additionalBodyProperties)
-            }
-
-        fun removeAdditionalBodyProperty(key: String) = apply { body.removeAdditionalProperty(key) }
-
-        fun removeAllAdditionalBodyProperties(keys: Set<String>) = apply {
-            body.removeAllAdditionalProperties(keys)
         }
 
         fun build(): EventSearchParams =

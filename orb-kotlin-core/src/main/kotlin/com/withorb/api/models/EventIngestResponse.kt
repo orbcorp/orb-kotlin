@@ -43,13 +43,15 @@ private constructor(
      * Contains all failing validation events. In the case of a 200, this array will always be
      * empty. This field will always be present.
      */
-    @JsonProperty("validation_failed") @ExcludeMissing fun _validationFailed() = validationFailed
+    @JsonProperty("validation_failed")
+    @ExcludeMissing
+    fun _validationFailed(): JsonField<List<ValidationFailed>> = validationFailed
 
     /**
      * Optional debug information (only present when debug=true is passed to the endpoint). Contains
      * ingested and duplicate event idempotency keys.
      */
-    @JsonProperty("debug") @ExcludeMissing fun _debug() = debug
+    @JsonProperty("debug") @ExcludeMissing fun _debug(): JsonField<Debug> = debug
 
     @JsonAnyGetter
     @ExcludeMissing
@@ -74,12 +76,12 @@ private constructor(
 
     class Builder {
 
-        private var validationFailed: JsonField<List<ValidationFailed>> = JsonMissing.of()
+        private var validationFailed: JsonField<MutableList<ValidationFailed>>? = null
         private var debug: JsonField<Debug> = JsonMissing.of()
         private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         internal fun from(eventIngestResponse: EventIngestResponse) = apply {
-            validationFailed = eventIngestResponse.validationFailed
+            validationFailed = eventIngestResponse.validationFailed.map { it.toMutableList() }
             debug = eventIngestResponse.debug
             additionalProperties = eventIngestResponse.additionalProperties.toMutableMap()
         }
@@ -96,14 +98,29 @@ private constructor(
          * empty. This field will always be present.
          */
         fun validationFailed(validationFailed: JsonField<List<ValidationFailed>>) = apply {
-            this.validationFailed = validationFailed
+            this.validationFailed = validationFailed.map { it.toMutableList() }
+        }
+
+        /**
+         * Contains all failing validation events. In the case of a 200, this array will always be
+         * empty. This field will always be present.
+         */
+        fun addValidationFailed(validationFailed: ValidationFailed) = apply {
+            this.validationFailed =
+                (this.validationFailed ?: JsonField.of(mutableListOf())).apply {
+                    (asKnown()
+                            ?: throw IllegalStateException(
+                                "Field was set to non-list type: ${javaClass.simpleName}"
+                            ))
+                        .add(validationFailed)
+                }
         }
 
         /**
          * Optional debug information (only present when debug=true is passed to the endpoint).
          * Contains ingested and duplicate event idempotency keys.
          */
-        fun debug(debug: Debug) = debug(JsonField.of(debug))
+        fun debug(debug: Debug?) = debug(JsonField.ofNullable(debug))
 
         /**
          * Optional debug information (only present when debug=true is passed to the endpoint).
@@ -132,7 +149,8 @@ private constructor(
 
         fun build(): EventIngestResponse =
             EventIngestResponse(
-                validationFailed.map { it.toImmutable() },
+                checkNotNull(validationFailed) { "`validationFailed` is required but was not set" }
+                    .map { it.toImmutable() },
                 debug,
                 additionalProperties.toImmutable(),
             )
@@ -159,12 +177,14 @@ private constructor(
         fun validationErrors(): List<String> = validationErrors.getRequired("validation_errors")
 
         /** The passed idempotency_key corresponding to the validation_errors */
-        @JsonProperty("idempotency_key") @ExcludeMissing fun _idempotencyKey() = idempotencyKey
+        @JsonProperty("idempotency_key")
+        @ExcludeMissing
+        fun _idempotencyKey(): JsonField<String> = idempotencyKey
 
         /** An array of strings corresponding to validation failures for this idempotency_key. */
         @JsonProperty("validation_errors")
         @ExcludeMissing
-        fun _validationErrors() = validationErrors
+        fun _validationErrors(): JsonField<List<String>> = validationErrors
 
         @JsonAnyGetter
         @ExcludeMissing
@@ -189,13 +209,13 @@ private constructor(
 
         class Builder {
 
-            private var idempotencyKey: JsonField<String> = JsonMissing.of()
-            private var validationErrors: JsonField<List<String>> = JsonMissing.of()
+            private var idempotencyKey: JsonField<String>? = null
+            private var validationErrors: JsonField<MutableList<String>>? = null
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             internal fun from(validationFailed: ValidationFailed) = apply {
                 idempotencyKey = validationFailed.idempotencyKey
-                validationErrors = validationFailed.validationErrors
+                validationErrors = validationFailed.validationErrors.map { it.toMutableList() }
                 additionalProperties = validationFailed.additionalProperties.toMutableMap()
             }
 
@@ -218,7 +238,21 @@ private constructor(
              * An array of strings corresponding to validation failures for this idempotency_key.
              */
             fun validationErrors(validationErrors: JsonField<List<String>>) = apply {
-                this.validationErrors = validationErrors
+                this.validationErrors = validationErrors.map { it.toMutableList() }
+            }
+
+            /**
+             * An array of strings corresponding to validation failures for this idempotency_key.
+             */
+            fun addValidationError(validationError: String) = apply {
+                validationErrors =
+                    (validationErrors ?: JsonField.of(mutableListOf())).apply {
+                        (asKnown()
+                                ?: throw IllegalStateException(
+                                    "Field was set to non-list type: ${javaClass.simpleName}"
+                                ))
+                            .add(validationError)
+                    }
             }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
@@ -242,8 +276,11 @@ private constructor(
 
             fun build(): ValidationFailed =
                 ValidationFailed(
-                    idempotencyKey,
-                    validationErrors.map { it.toImmutable() },
+                    checkNotNull(idempotencyKey) { "`idempotencyKey` is required but was not set" },
+                    checkNotNull(validationErrors) {
+                            "`validationErrors` is required but was not set"
+                        }
+                        .map { it.toImmutable() },
                     additionalProperties.toImmutable(),
                 )
         }
@@ -288,9 +325,13 @@ private constructor(
 
         fun ingested(): List<String> = ingested.getRequired("ingested")
 
-        @JsonProperty("duplicate") @ExcludeMissing fun _duplicate() = duplicate
+        @JsonProperty("duplicate")
+        @ExcludeMissing
+        fun _duplicate(): JsonField<List<String>> = duplicate
 
-        @JsonProperty("ingested") @ExcludeMissing fun _ingested() = ingested
+        @JsonProperty("ingested")
+        @ExcludeMissing
+        fun _ingested(): JsonField<List<String>> = ingested
 
         @JsonAnyGetter
         @ExcludeMissing
@@ -315,23 +356,49 @@ private constructor(
 
         class Builder {
 
-            private var duplicate: JsonField<List<String>> = JsonMissing.of()
-            private var ingested: JsonField<List<String>> = JsonMissing.of()
+            private var duplicate: JsonField<MutableList<String>>? = null
+            private var ingested: JsonField<MutableList<String>>? = null
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             internal fun from(debug: Debug) = apply {
-                duplicate = debug.duplicate
-                ingested = debug.ingested
+                duplicate = debug.duplicate.map { it.toMutableList() }
+                ingested = debug.ingested.map { it.toMutableList() }
                 additionalProperties = debug.additionalProperties.toMutableMap()
             }
 
             fun duplicate(duplicate: List<String>) = duplicate(JsonField.of(duplicate))
 
-            fun duplicate(duplicate: JsonField<List<String>>) = apply { this.duplicate = duplicate }
+            fun duplicate(duplicate: JsonField<List<String>>) = apply {
+                this.duplicate = duplicate.map { it.toMutableList() }
+            }
+
+            fun addDuplicate(duplicate: String) = apply {
+                this.duplicate =
+                    (this.duplicate ?: JsonField.of(mutableListOf())).apply {
+                        (asKnown()
+                                ?: throw IllegalStateException(
+                                    "Field was set to non-list type: ${javaClass.simpleName}"
+                                ))
+                            .add(duplicate)
+                    }
+            }
 
             fun ingested(ingested: List<String>) = ingested(JsonField.of(ingested))
 
-            fun ingested(ingested: JsonField<List<String>>) = apply { this.ingested = ingested }
+            fun ingested(ingested: JsonField<List<String>>) = apply {
+                this.ingested = ingested.map { it.toMutableList() }
+            }
+
+            fun addIngested(ingested: String) = apply {
+                this.ingested =
+                    (this.ingested ?: JsonField.of(mutableListOf())).apply {
+                        (asKnown()
+                                ?: throw IllegalStateException(
+                                    "Field was set to non-list type: ${javaClass.simpleName}"
+                                ))
+                            .add(ingested)
+                    }
+            }
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
@@ -354,8 +421,10 @@ private constructor(
 
             fun build(): Debug =
                 Debug(
-                    duplicate.map { it.toImmutable() },
-                    ingested.map { it.toImmutable() },
+                    checkNotNull(duplicate) { "`duplicate` is required but was not set" }
+                        .map { it.toImmutable() },
+                    checkNotNull(ingested) { "`ingested` is required but was not set" }
+                        .map { it.toImmutable() },
                     additionalProperties.toImmutable(),
                 )
         }

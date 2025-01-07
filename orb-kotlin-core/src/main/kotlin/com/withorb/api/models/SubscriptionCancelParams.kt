@@ -9,6 +9,7 @@ import com.fasterxml.jackson.annotation.JsonProperty
 import com.withorb.api.core.Enum
 import com.withorb.api.core.ExcludeMissing
 import com.withorb.api.core.JsonField
+import com.withorb.api.core.JsonMissing
 import com.withorb.api.core.JsonValue
 import com.withorb.api.core.NoAutoDetect
 import com.withorb.api.core.http.Headers
@@ -89,11 +90,20 @@ constructor(
      */
     fun cancellationDate(): OffsetDateTime? = body.cancellationDate()
 
+    /** Determines the timing of subscription cancellation */
+    fun _cancelOption(): JsonField<CancelOption> = body._cancelOption()
+
+    /**
+     * The date that the cancellation should take effect. This parameter can only be passed if the
+     * `cancel_option` is `requested_date`.
+     */
+    fun _cancellationDate(): JsonField<OffsetDateTime> = body._cancellationDate()
+
+    fun _additionalBodyProperties(): Map<String, JsonValue> = body._additionalProperties()
+
     fun _additionalHeaders(): Headers = additionalHeaders
 
     fun _additionalQueryParams(): QueryParams = additionalQueryParams
-
-    fun _additionalBodyProperties(): Map<String, JsonValue> = body._additionalProperties()
 
     internal fun getBody(): SubscriptionCancelBody = body
 
@@ -112,25 +122,51 @@ constructor(
     class SubscriptionCancelBody
     @JsonCreator
     internal constructor(
-        @JsonProperty("cancel_option") private val cancelOption: CancelOption,
-        @JsonProperty("cancellation_date") private val cancellationDate: OffsetDateTime?,
+        @JsonProperty("cancel_option")
+        @ExcludeMissing
+        private val cancelOption: JsonField<CancelOption> = JsonMissing.of(),
+        @JsonProperty("cancellation_date")
+        @ExcludeMissing
+        private val cancellationDate: JsonField<OffsetDateTime> = JsonMissing.of(),
         @JsonAnySetter
         private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
 
         /** Determines the timing of subscription cancellation */
-        @JsonProperty("cancel_option") fun cancelOption(): CancelOption = cancelOption
+        fun cancelOption(): CancelOption = cancelOption.getRequired("cancel_option")
+
+        /**
+         * The date that the cancellation should take effect. This parameter can only be passed if
+         * the `cancel_option` is `requested_date`.
+         */
+        fun cancellationDate(): OffsetDateTime? = cancellationDate.getNullable("cancellation_date")
+
+        /** Determines the timing of subscription cancellation */
+        @JsonProperty("cancel_option")
+        @ExcludeMissing
+        fun _cancelOption(): JsonField<CancelOption> = cancelOption
 
         /**
          * The date that the cancellation should take effect. This parameter can only be passed if
          * the `cancel_option` is `requested_date`.
          */
         @JsonProperty("cancellation_date")
-        fun cancellationDate(): OffsetDateTime? = cancellationDate
+        @ExcludeMissing
+        fun _cancellationDate(): JsonField<OffsetDateTime> = cancellationDate
 
         @JsonAnyGetter
         @ExcludeMissing
         fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
+
+        private var validated: Boolean = false
+
+        fun validate(): SubscriptionCancelBody = apply {
+            if (!validated) {
+                cancelOption()
+                cancellationDate()
+                validated = true
+            }
+        }
 
         fun toBuilder() = Builder().from(this)
 
@@ -141,8 +177,8 @@ constructor(
 
         class Builder {
 
-            private var cancelOption: CancelOption? = null
-            private var cancellationDate: OffsetDateTime? = null
+            private var cancelOption: JsonField<CancelOption>? = null
+            private var cancellationDate: JsonField<OffsetDateTime> = JsonMissing.of()
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             internal fun from(subscriptionCancelBody: SubscriptionCancelBody) = apply {
@@ -152,7 +188,10 @@ constructor(
             }
 
             /** Determines the timing of subscription cancellation */
-            fun cancelOption(cancelOption: CancelOption) = apply {
+            fun cancelOption(cancelOption: CancelOption) = cancelOption(JsonField.of(cancelOption))
+
+            /** Determines the timing of subscription cancellation */
+            fun cancelOption(cancelOption: JsonField<CancelOption>) = apply {
                 this.cancelOption = cancelOption
             }
 
@@ -160,7 +199,14 @@ constructor(
              * The date that the cancellation should take effect. This parameter can only be passed
              * if the `cancel_option` is `requested_date`.
              */
-            fun cancellationDate(cancellationDate: OffsetDateTime?) = apply {
+            fun cancellationDate(cancellationDate: OffsetDateTime?) =
+                cancellationDate(JsonField.ofNullable(cancellationDate))
+
+            /**
+             * The date that the cancellation should take effect. This parameter can only be passed
+             * if the `cancel_option` is `requested_date`.
+             */
+            fun cancellationDate(cancellationDate: JsonField<OffsetDateTime>) = apply {
                 this.cancellationDate = cancellationDate
             }
 
@@ -236,12 +282,44 @@ constructor(
         /** Determines the timing of subscription cancellation */
         fun cancelOption(cancelOption: CancelOption) = apply { body.cancelOption(cancelOption) }
 
+        /** Determines the timing of subscription cancellation */
+        fun cancelOption(cancelOption: JsonField<CancelOption>) = apply {
+            body.cancelOption(cancelOption)
+        }
+
         /**
          * The date that the cancellation should take effect. This parameter can only be passed if
          * the `cancel_option` is `requested_date`.
          */
         fun cancellationDate(cancellationDate: OffsetDateTime?) = apply {
             body.cancellationDate(cancellationDate)
+        }
+
+        /**
+         * The date that the cancellation should take effect. This parameter can only be passed if
+         * the `cancel_option` is `requested_date`.
+         */
+        fun cancellationDate(cancellationDate: JsonField<OffsetDateTime>) = apply {
+            body.cancellationDate(cancellationDate)
+        }
+
+        fun additionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) = apply {
+            body.additionalProperties(additionalBodyProperties)
+        }
+
+        fun putAdditionalBodyProperty(key: String, value: JsonValue) = apply {
+            body.putAdditionalProperty(key, value)
+        }
+
+        fun putAllAdditionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) =
+            apply {
+                body.putAllAdditionalProperties(additionalBodyProperties)
+            }
+
+        fun removeAdditionalBodyProperty(key: String) = apply { body.removeAdditionalProperty(key) }
+
+        fun removeAllAdditionalBodyProperties(keys: Set<String>) = apply {
+            body.removeAllAdditionalProperties(keys)
         }
 
         fun additionalHeaders(additionalHeaders: Headers) = apply {
@@ -340,25 +418,6 @@ constructor(
 
         fun removeAllAdditionalQueryParams(keys: Set<String>) = apply {
             additionalQueryParams.removeAll(keys)
-        }
-
-        fun additionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) = apply {
-            body.additionalProperties(additionalBodyProperties)
-        }
-
-        fun putAdditionalBodyProperty(key: String, value: JsonValue) = apply {
-            body.putAdditionalProperty(key, value)
-        }
-
-        fun putAllAdditionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) =
-            apply {
-                body.putAllAdditionalProperties(additionalBodyProperties)
-            }
-
-        fun removeAdditionalBodyProperty(key: String) = apply { body.removeAdditionalProperty(key) }
-
-        fun removeAllAdditionalBodyProperties(keys: Set<String>) = apply {
-            body.removeAllAdditionalProperties(keys)
         }
 
         fun build(): SubscriptionCancelParams =
