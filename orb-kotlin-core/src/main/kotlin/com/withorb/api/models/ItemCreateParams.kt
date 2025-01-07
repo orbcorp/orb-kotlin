@@ -15,6 +15,7 @@ import com.withorb.api.core.immutableEmptyMap
 import com.withorb.api.core.toImmutable
 import java.util.Objects
 
+/** This endpoint is used to create an [Item](../guides/concepts#item). */
 class ItemCreateParams
 constructor(
     private val body: ItemCreateBody,

@@ -7,6 +7,7 @@ import com.withorb.api.core.http.Headers
 import com.withorb.api.core.http.QueryParams
 import java.util.Objects
 
+/** This endpoint returns a price given an identifier. */
 class PriceFetchParams
 constructor(
     private val priceId: String,

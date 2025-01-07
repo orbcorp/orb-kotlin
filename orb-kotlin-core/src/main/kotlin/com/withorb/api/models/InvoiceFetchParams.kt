@@ -7,6 +7,9 @@ import com.withorb.api.core.http.Headers
 import com.withorb.api.core.http.QueryParams
 import java.util.Objects
 
+/**
+ * This endpoint is used to fetch an [`Invoice`](../guides/concepts#invoice) given an identifier.
+ */
 class InvoiceFetchParams
 constructor(
     private val invoiceId: String,

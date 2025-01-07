@@ -28,6 +28,11 @@ import com.withorb.api.core.toImmutable
 import com.withorb.api.errors.OrbInvalidDataException
 import java.util.Objects
 
+/**
+ * This endpoint is used to update customer details given an `external_customer_id` (see
+ * [Customer ID Aliases](../guides/events-and-metrics/customer-aliases)). Note that the resource and
+ * semantics of this endpoint exactly mirror [Update Customer](update-customer).
+ */
 class CustomerUpdateByExternalIdParams
 constructor(
     private val id: String,

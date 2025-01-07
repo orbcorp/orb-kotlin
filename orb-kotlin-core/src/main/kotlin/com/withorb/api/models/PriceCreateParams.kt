@@ -28,6 +28,17 @@ import com.withorb.api.core.toImmutable
 import com.withorb.api.errors.OrbInvalidDataException
 import java.util.Objects
 
+/**
+ * This endpoint is used to create a [price](../reference/price). A price created using this
+ * endpoint is always an add-on, meaning that it’s not associated with a specific plan and can
+ * instead be individually added to subscriptions, including subscriptions on different plans.
+ *
+ * An `external_price_id` can be optionally specified as an alias to allow ergonomic interaction
+ * with prices in the Orb API.
+ *
+ * See the [Price resource](../reference/price) for the specification of different price model
+ * configurations possible in this endpoint.
+ */
 class PriceCreateParams
 constructor(
     private val body: PriceCreateBody,

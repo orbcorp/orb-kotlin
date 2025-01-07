@@ -7,6 +7,13 @@ import com.withorb.api.core.http.Headers
 import com.withorb.api.core.http.QueryParams
 import java.util.Objects
 
+/**
+ * This endpoint is used to fetch customer details given an `external_customer_id` (see
+ * [Customer ID Aliases](../guides/events-and-metrics/customer-aliases)).
+ *
+ * Note that the resource and semantics of this endpoint exactly mirror
+ * [Get Customer](fetch-customer).
+ */
 class CustomerFetchByExternalIdParams
 constructor(
     private val externalCustomerId: String,

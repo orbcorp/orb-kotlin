@@ -9,6 +9,20 @@ import com.withorb.api.core.http.QueryParams
 import com.withorb.api.core.toImmutable
 import java.util.Objects
 
+/**
+ * This performs a deletion of this customer, its subscriptions, and its invoices, provided the
+ * customer does not have any issued invoices. Customers with issued invoices cannot be deleted.
+ * This operation is irreversible. Note that this is a _soft_ deletion, but the data will be
+ * inaccessible through the API and Orb dashboard. For a hard-deletion, please reach out to the Orb
+ * team directly.
+ *
+ * **Note**: This operation happens asynchronously and can be expected to take a few minutes to
+ * propagate to related resources. However, querying for the customer on subsequent GET requests
+ * while deletion is in process will reflect its deletion with a `deleted: true` property. Once the
+ * customer deletion has been fully processed, the customer will not be returned in the API.
+ *
+ * On successful processing, this returns an empty dictionary (`{}`) in the API.
+ */
 class CustomerDeleteParams
 constructor(
     private val customerId: String,

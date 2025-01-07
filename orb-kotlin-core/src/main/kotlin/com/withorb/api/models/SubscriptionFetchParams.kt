@@ -7,6 +7,10 @@ import com.withorb.api.core.http.Headers
 import com.withorb.api.core.http.QueryParams
 import java.util.Objects
 
+/**
+ * This endpoint is used to fetch a [Subscription](../guides/concepts#subscription) given an
+ * identifier.
+ */
 class SubscriptionFetchParams
 constructor(
     private val subscriptionId: String,

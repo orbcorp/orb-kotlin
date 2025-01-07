@@ -9,6 +9,10 @@ import com.withorb.api.core.http.QueryParams
 import com.withorb.api.core.toImmutable
 import java.util.Objects
 
+/**
+ * This endpoint collects payment for an invoice using the customer's default payment method. This
+ * action can only be taken on invoices with status "issued".
+ */
 class InvoicePayParams
 constructor(
     private val invoiceId: String,

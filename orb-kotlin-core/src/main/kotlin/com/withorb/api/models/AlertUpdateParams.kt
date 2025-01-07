@@ -15,6 +15,7 @@ import com.withorb.api.core.immutableEmptyMap
 import com.withorb.api.core.toImmutable
 import java.util.Objects
 
+/** This endpoint updates the thresholds of an alert. */
 class AlertUpdateParams
 constructor(
     private val alertConfigurationId: String,

@@ -7,6 +7,10 @@ import com.withorb.api.core.http.Headers
 import com.withorb.api.core.http.QueryParams
 import java.util.Objects
 
+/**
+ * This endpoint retrieves a coupon by its ID. To fetch coupons by their redemption code, use the
+ * [List coupons](list-coupons) endpoint with the redemption_code parameter.
+ */
 class CouponFetchParams
 constructor(
     private val couponId: String,

@@ -9,6 +9,11 @@ import com.withorb.api.core.http.QueryParams
 import com.withorb.api.core.toImmutable
 import java.util.Objects
 
+/**
+ * This endpoint allows you to enable an alert. To enable a plan-level alert for a specific
+ * subscription, you must include the `subscription_id`. The `subscription_id` is not required for
+ * customer or subscription level alerts.
+ */
 class AlertEnableParams
 constructor(
     private val alertConfigurationId: String,

@@ -7,6 +7,7 @@ import com.withorb.api.core.http.Headers
 import com.withorb.api.core.http.QueryParams
 import java.util.Objects
 
+/** This endpoint returns a list of all Items, ordered in descending order by creation time. */
 class ItemListParams
 constructor(
     private val cursor: String?,

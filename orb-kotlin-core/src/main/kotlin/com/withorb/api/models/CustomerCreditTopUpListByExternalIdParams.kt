@@ -7,6 +7,7 @@ import com.withorb.api.core.http.Headers
 import com.withorb.api.core.http.QueryParams
 import java.util.Objects
 
+/** List top-ups by external ID */
 class CustomerCreditTopUpListByExternalIdParams
 constructor(
     private val externalCustomerId: String,
