@@ -315,6 +315,173 @@ constructor(
                     }
             }
 
+            /**
+             * Prices for this plan. If the plan has phases, this includes prices across all phases
+             * of the plan.
+             */
+            fun addPrice(newPlanUnitPrice: Price.NewPlanUnitPrice) =
+                addPrice(Price.ofNewPlanUnitPrice(newPlanUnitPrice))
+
+            /**
+             * Prices for this plan. If the plan has phases, this includes prices across all phases
+             * of the plan.
+             */
+            fun addPrice(newPlanPackagePrice: Price.NewPlanPackagePrice) =
+                addPrice(Price.ofNewPlanPackagePrice(newPlanPackagePrice))
+
+            /**
+             * Prices for this plan. If the plan has phases, this includes prices across all phases
+             * of the plan.
+             */
+            fun addPrice(newPlanMatrixPrice: Price.NewPlanMatrixPrice) =
+                addPrice(Price.ofNewPlanMatrixPrice(newPlanMatrixPrice))
+
+            /**
+             * Prices for this plan. If the plan has phases, this includes prices across all phases
+             * of the plan.
+             */
+            fun addPrice(newPlanTieredPrice: Price.NewPlanTieredPrice) =
+                addPrice(Price.ofNewPlanTieredPrice(newPlanTieredPrice))
+
+            /**
+             * Prices for this plan. If the plan has phases, this includes prices across all phases
+             * of the plan.
+             */
+            fun addPrice(newPlanTieredBpsPrice: Price.NewPlanTieredBpsPrice) =
+                addPrice(Price.ofNewPlanTieredBpsPrice(newPlanTieredBpsPrice))
+
+            /**
+             * Prices for this plan. If the plan has phases, this includes prices across all phases
+             * of the plan.
+             */
+            fun addPrice(newPlanBpsPrice: Price.NewPlanBpsPrice) =
+                addPrice(Price.ofNewPlanBpsPrice(newPlanBpsPrice))
+
+            /**
+             * Prices for this plan. If the plan has phases, this includes prices across all phases
+             * of the plan.
+             */
+            fun addPrice(newPlanBulkBpsPrice: Price.NewPlanBulkBpsPrice) =
+                addPrice(Price.ofNewPlanBulkBpsPrice(newPlanBulkBpsPrice))
+
+            /**
+             * Prices for this plan. If the plan has phases, this includes prices across all phases
+             * of the plan.
+             */
+            fun addPrice(newPlanBulkPrice: Price.NewPlanBulkPrice) =
+                addPrice(Price.ofNewPlanBulkPrice(newPlanBulkPrice))
+
+            /**
+             * Prices for this plan. If the plan has phases, this includes prices across all phases
+             * of the plan.
+             */
+            fun addPrice(newPlanThresholdTotalAmountPrice: Price.NewPlanThresholdTotalAmountPrice) =
+                addPrice(Price.ofNewPlanThresholdTotalAmountPrice(newPlanThresholdTotalAmountPrice))
+
+            /**
+             * Prices for this plan. If the plan has phases, this includes prices across all phases
+             * of the plan.
+             */
+            fun addPrice(newPlanTieredPackagePrice: Price.NewPlanTieredPackagePrice) =
+                addPrice(Price.ofNewPlanTieredPackagePrice(newPlanTieredPackagePrice))
+
+            /**
+             * Prices for this plan. If the plan has phases, this includes prices across all phases
+             * of the plan.
+             */
+            fun addPrice(newPlanTieredWithMinimumPrice: Price.NewPlanTieredWithMinimumPrice) =
+                addPrice(Price.ofNewPlanTieredWithMinimumPrice(newPlanTieredWithMinimumPrice))
+
+            /**
+             * Prices for this plan. If the plan has phases, this includes prices across all phases
+             * of the plan.
+             */
+            fun addPrice(newPlanUnitWithPercentPrice: Price.NewPlanUnitWithPercentPrice) =
+                addPrice(Price.ofNewPlanUnitWithPercentPrice(newPlanUnitWithPercentPrice))
+
+            /**
+             * Prices for this plan. If the plan has phases, this includes prices across all phases
+             * of the plan.
+             */
+            fun addPrice(
+                newPlanPackageWithAllocationPrice: Price.NewPlanPackageWithAllocationPrice
+            ) =
+                addPrice(
+                    Price.ofNewPlanPackageWithAllocationPrice(newPlanPackageWithAllocationPrice)
+                )
+
+            /**
+             * Prices for this plan. If the plan has phases, this includes prices across all phases
+             * of the plan.
+             */
+            fun addPrice(newPlanTierWithProrationPrice: Price.NewPlanTierWithProrationPrice) =
+                addPrice(Price.ofNewPlanTierWithProrationPrice(newPlanTierWithProrationPrice))
+
+            /**
+             * Prices for this plan. If the plan has phases, this includes prices across all phases
+             * of the plan.
+             */
+            fun addPrice(newPlanUnitWithProrationPrice: Price.NewPlanUnitWithProrationPrice) =
+                addPrice(Price.ofNewPlanUnitWithProrationPrice(newPlanUnitWithProrationPrice))
+
+            /**
+             * Prices for this plan. If the plan has phases, this includes prices across all phases
+             * of the plan.
+             */
+            fun addPrice(newPlanGroupedAllocationPrice: Price.NewPlanGroupedAllocationPrice) =
+                addPrice(Price.ofNewPlanGroupedAllocationPrice(newPlanGroupedAllocationPrice))
+
+            /**
+             * Prices for this plan. If the plan has phases, this includes prices across all phases
+             * of the plan.
+             */
+            fun addPrice(
+                newPlanGroupedWithProratedMinimumPrice: Price.NewPlanGroupedWithProratedMinimumPrice
+            ) =
+                addPrice(
+                    Price.ofNewPlanGroupedWithProratedMinimumPrice(
+                        newPlanGroupedWithProratedMinimumPrice
+                    )
+                )
+
+            /**
+             * Prices for this plan. If the plan has phases, this includes prices across all phases
+             * of the plan.
+             */
+            fun addPrice(
+                newPlanGroupedWithMeteredMinimumPrice: Price.NewPlanGroupedWithMeteredMinimumPrice
+            ) =
+                addPrice(
+                    Price.ofNewPlanGroupedWithMeteredMinimumPrice(
+                        newPlanGroupedWithMeteredMinimumPrice
+                    )
+                )
+
+            /**
+             * Prices for this plan. If the plan has phases, this includes prices across all phases
+             * of the plan.
+             */
+            fun addPrice(
+                newPlanMatrixWithDisplayNamePrice: Price.NewPlanMatrixWithDisplayNamePrice
+            ) =
+                addPrice(
+                    Price.ofNewPlanMatrixWithDisplayNamePrice(newPlanMatrixWithDisplayNamePrice)
+                )
+
+            /**
+             * Prices for this plan. If the plan has phases, this includes prices across all phases
+             * of the plan.
+             */
+            fun addPrice(newPlanBulkWithProrationPrice: Price.NewPlanBulkWithProrationPrice) =
+                addPrice(Price.ofNewPlanBulkWithProrationPrice(newPlanBulkWithProrationPrice))
+
+            /**
+             * Prices for this plan. If the plan has phases, this includes prices across all phases
+             * of the plan.
+             */
+            fun addPrice(newPlanGroupedTieredPackagePrice: Price.NewPlanGroupedTieredPackagePrice) =
+                addPrice(Price.ofNewPlanGroupedTieredPackagePrice(newPlanGroupedTieredPackagePrice))
+
             /** Free-form text which is available on the invoice PDF and the Orb invoice portal. */
             fun defaultInvoiceMemo(defaultInvoiceMemo: String?) =
                 defaultInvoiceMemo(JsonField.ofNullable(defaultInvoiceMemo))
@@ -474,6 +641,178 @@ constructor(
          * the plan.
          */
         fun addPrice(price: Price) = apply { body.addPrice(price) }
+
+        /**
+         * Prices for this plan. If the plan has phases, this includes prices across all phases of
+         * the plan.
+         */
+        fun addPrice(newPlanUnitPrice: Price.NewPlanUnitPrice) = apply {
+            body.addPrice(newPlanUnitPrice)
+        }
+
+        /**
+         * Prices for this plan. If the plan has phases, this includes prices across all phases of
+         * the plan.
+         */
+        fun addPrice(newPlanPackagePrice: Price.NewPlanPackagePrice) = apply {
+            body.addPrice(newPlanPackagePrice)
+        }
+
+        /**
+         * Prices for this plan. If the plan has phases, this includes prices across all phases of
+         * the plan.
+         */
+        fun addPrice(newPlanMatrixPrice: Price.NewPlanMatrixPrice) = apply {
+            body.addPrice(newPlanMatrixPrice)
+        }
+
+        /**
+         * Prices for this plan. If the plan has phases, this includes prices across all phases of
+         * the plan.
+         */
+        fun addPrice(newPlanTieredPrice: Price.NewPlanTieredPrice) = apply {
+            body.addPrice(newPlanTieredPrice)
+        }
+
+        /**
+         * Prices for this plan. If the plan has phases, this includes prices across all phases of
+         * the plan.
+         */
+        fun addPrice(newPlanTieredBpsPrice: Price.NewPlanTieredBpsPrice) = apply {
+            body.addPrice(newPlanTieredBpsPrice)
+        }
+
+        /**
+         * Prices for this plan. If the plan has phases, this includes prices across all phases of
+         * the plan.
+         */
+        fun addPrice(newPlanBpsPrice: Price.NewPlanBpsPrice) = apply {
+            body.addPrice(newPlanBpsPrice)
+        }
+
+        /**
+         * Prices for this plan. If the plan has phases, this includes prices across all phases of
+         * the plan.
+         */
+        fun addPrice(newPlanBulkBpsPrice: Price.NewPlanBulkBpsPrice) = apply {
+            body.addPrice(newPlanBulkBpsPrice)
+        }
+
+        /**
+         * Prices for this plan. If the plan has phases, this includes prices across all phases of
+         * the plan.
+         */
+        fun addPrice(newPlanBulkPrice: Price.NewPlanBulkPrice) = apply {
+            body.addPrice(newPlanBulkPrice)
+        }
+
+        /**
+         * Prices for this plan. If the plan has phases, this includes prices across all phases of
+         * the plan.
+         */
+        fun addPrice(newPlanThresholdTotalAmountPrice: Price.NewPlanThresholdTotalAmountPrice) =
+            apply {
+                body.addPrice(newPlanThresholdTotalAmountPrice)
+            }
+
+        /**
+         * Prices for this plan. If the plan has phases, this includes prices across all phases of
+         * the plan.
+         */
+        fun addPrice(newPlanTieredPackagePrice: Price.NewPlanTieredPackagePrice) = apply {
+            body.addPrice(newPlanTieredPackagePrice)
+        }
+
+        /**
+         * Prices for this plan. If the plan has phases, this includes prices across all phases of
+         * the plan.
+         */
+        fun addPrice(newPlanTieredWithMinimumPrice: Price.NewPlanTieredWithMinimumPrice) = apply {
+            body.addPrice(newPlanTieredWithMinimumPrice)
+        }
+
+        /**
+         * Prices for this plan. If the plan has phases, this includes prices across all phases of
+         * the plan.
+         */
+        fun addPrice(newPlanUnitWithPercentPrice: Price.NewPlanUnitWithPercentPrice) = apply {
+            body.addPrice(newPlanUnitWithPercentPrice)
+        }
+
+        /**
+         * Prices for this plan. If the plan has phases, this includes prices across all phases of
+         * the plan.
+         */
+        fun addPrice(newPlanPackageWithAllocationPrice: Price.NewPlanPackageWithAllocationPrice) =
+            apply {
+                body.addPrice(newPlanPackageWithAllocationPrice)
+            }
+
+        /**
+         * Prices for this plan. If the plan has phases, this includes prices across all phases of
+         * the plan.
+         */
+        fun addPrice(newPlanTierWithProrationPrice: Price.NewPlanTierWithProrationPrice) = apply {
+            body.addPrice(newPlanTierWithProrationPrice)
+        }
+
+        /**
+         * Prices for this plan. If the plan has phases, this includes prices across all phases of
+         * the plan.
+         */
+        fun addPrice(newPlanUnitWithProrationPrice: Price.NewPlanUnitWithProrationPrice) = apply {
+            body.addPrice(newPlanUnitWithProrationPrice)
+        }
+
+        /**
+         * Prices for this plan. If the plan has phases, this includes prices across all phases of
+         * the plan.
+         */
+        fun addPrice(newPlanGroupedAllocationPrice: Price.NewPlanGroupedAllocationPrice) = apply {
+            body.addPrice(newPlanGroupedAllocationPrice)
+        }
+
+        /**
+         * Prices for this plan. If the plan has phases, this includes prices across all phases of
+         * the plan.
+         */
+        fun addPrice(
+            newPlanGroupedWithProratedMinimumPrice: Price.NewPlanGroupedWithProratedMinimumPrice
+        ) = apply { body.addPrice(newPlanGroupedWithProratedMinimumPrice) }
+
+        /**
+         * Prices for this plan. If the plan has phases, this includes prices across all phases of
+         * the plan.
+         */
+        fun addPrice(
+            newPlanGroupedWithMeteredMinimumPrice: Price.NewPlanGroupedWithMeteredMinimumPrice
+        ) = apply { body.addPrice(newPlanGroupedWithMeteredMinimumPrice) }
+
+        /**
+         * Prices for this plan. If the plan has phases, this includes prices across all phases of
+         * the plan.
+         */
+        fun addPrice(newPlanMatrixWithDisplayNamePrice: Price.NewPlanMatrixWithDisplayNamePrice) =
+            apply {
+                body.addPrice(newPlanMatrixWithDisplayNamePrice)
+            }
+
+        /**
+         * Prices for this plan. If the plan has phases, this includes prices across all phases of
+         * the plan.
+         */
+        fun addPrice(newPlanBulkWithProrationPrice: Price.NewPlanBulkWithProrationPrice) = apply {
+            body.addPrice(newPlanBulkWithProrationPrice)
+        }
+
+        /**
+         * Prices for this plan. If the plan has phases, this includes prices across all phases of
+         * the plan.
+         */
+        fun addPrice(newPlanGroupedTieredPackagePrice: Price.NewPlanGroupedTieredPackagePrice) =
+            apply {
+                body.addPrice(newPlanGroupedTieredPackagePrice)
+            }
 
         /** Free-form text which is available on the invoice PDF and the Orb invoice portal. */
         fun defaultInvoiceMemo(defaultInvoiceMemo: String?) = apply {

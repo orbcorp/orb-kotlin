@@ -1200,6 +1200,15 @@ private constructor(
                 }
         }
 
+        fun addDiscount(percentageDiscount: PercentageDiscount) =
+            addDiscount(InvoiceLevelDiscount.ofPercentageDiscount(percentageDiscount))
+
+        fun addDiscount(amountDiscount: AmountDiscount) =
+            addDiscount(InvoiceLevelDiscount.ofAmountDiscount(amountDiscount))
+
+        fun addDiscount(trialDiscount: TrialDiscount) =
+            addDiscount(InvoiceLevelDiscount.ofTrialDiscount(trialDiscount))
+
         /** When the invoice payment is due. */
         fun dueDate(dueDate: OffsetDateTime) = dueDate(JsonField.of(dueDate))
 
@@ -5557,6 +5566,27 @@ private constructor(
                             .add(subLineItem)
                     }
             }
+
+            /**
+             * For complex pricing structures, the line item can be broken down further in
+             * `sub_line_items`.
+             */
+            fun addSubLineItem(matrixSubLineItem: SubLineItem.MatrixSubLineItem) =
+                addSubLineItem(SubLineItem.ofMatrixSubLineItem(matrixSubLineItem))
+
+            /**
+             * For complex pricing structures, the line item can be broken down further in
+             * `sub_line_items`.
+             */
+            fun addSubLineItem(tierSubLineItem: SubLineItem.TierSubLineItem) =
+                addSubLineItem(SubLineItem.ofTierSubLineItem(tierSubLineItem))
+
+            /**
+             * For complex pricing structures, the line item can be broken down further in
+             * `sub_line_items`.
+             */
+            fun addSubLineItem(otherSubLineItem: SubLineItem.OtherSubLineItem) =
+                addSubLineItem(SubLineItem.ofOtherSubLineItem(otherSubLineItem))
 
             /** The line amount before any line item-specific discounts or minimums. */
             fun subtotal(subtotal: String) = subtotal(JsonField.of(subtotal))
