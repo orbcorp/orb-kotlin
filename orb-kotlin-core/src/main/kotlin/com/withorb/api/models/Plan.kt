@@ -426,6 +426,41 @@ private constructor(
                 }
         }
 
+        /**
+         * Adjustments for this plan. If the plan has phases, this includes adjustments across all
+         * phases of the plan.
+         */
+        fun addAdjustment(amountDiscountAdjustment: Adjustment.AmountDiscountAdjustment) =
+            addAdjustment(Adjustment.ofAmountDiscountAdjustment(amountDiscountAdjustment))
+
+        /**
+         * Adjustments for this plan. If the plan has phases, this includes adjustments across all
+         * phases of the plan.
+         */
+        fun addAdjustment(percentageDiscountAdjustment: Adjustment.PercentageDiscountAdjustment) =
+            addAdjustment(Adjustment.ofPercentageDiscountAdjustment(percentageDiscountAdjustment))
+
+        /**
+         * Adjustments for this plan. If the plan has phases, this includes adjustments across all
+         * phases of the plan.
+         */
+        fun addAdjustment(usageDiscountAdjustment: Adjustment.UsageDiscountAdjustment) =
+            addAdjustment(Adjustment.ofUsageDiscountAdjustment(usageDiscountAdjustment))
+
+        /**
+         * Adjustments for this plan. If the plan has phases, this includes adjustments across all
+         * phases of the plan.
+         */
+        fun addAdjustment(minimumAdjustment: Adjustment.MinimumAdjustment) =
+            addAdjustment(Adjustment.ofMinimumAdjustment(minimumAdjustment))
+
+        /**
+         * Adjustments for this plan. If the plan has phases, this includes adjustments across all
+         * phases of the plan.
+         */
+        fun addAdjustment(maximumAdjustment: Adjustment.MaximumAdjustment) =
+            addAdjustment(Adjustment.ofMaximumAdjustment(maximumAdjustment))
+
         fun basePlan(basePlan: BasePlan?) = basePlan(JsonField.ofNullable(basePlan))
 
         fun basePlan(basePlan: JsonField<BasePlan>) = apply { this.basePlan = basePlan }
@@ -632,6 +667,169 @@ private constructor(
                         .add(price)
                 }
         }
+
+        /**
+         * Prices for this plan. If the plan has phases, this includes prices across all phases of
+         * the plan.
+         */
+        fun addPrice(unitPrice: Price.UnitPrice) = addPrice(Price.ofUnitPrice(unitPrice))
+
+        /**
+         * Prices for this plan. If the plan has phases, this includes prices across all phases of
+         * the plan.
+         */
+        fun addPrice(packagePrice: Price.PackagePrice) =
+            addPrice(Price.ofPackagePrice(packagePrice))
+
+        /**
+         * Prices for this plan. If the plan has phases, this includes prices across all phases of
+         * the plan.
+         */
+        fun addPrice(matrixPrice: Price.MatrixPrice) = addPrice(Price.ofMatrixPrice(matrixPrice))
+
+        /**
+         * Prices for this plan. If the plan has phases, this includes prices across all phases of
+         * the plan.
+         */
+        fun addPrice(tieredPrice: Price.TieredPrice) = addPrice(Price.ofTieredPrice(tieredPrice))
+
+        /**
+         * Prices for this plan. If the plan has phases, this includes prices across all phases of
+         * the plan.
+         */
+        fun addPrice(tieredBpsPrice: Price.TieredBpsPrice) =
+            addPrice(Price.ofTieredBpsPrice(tieredBpsPrice))
+
+        /**
+         * Prices for this plan. If the plan has phases, this includes prices across all phases of
+         * the plan.
+         */
+        fun addPrice(bpsPrice: Price.BpsPrice) = addPrice(Price.ofBpsPrice(bpsPrice))
+
+        /**
+         * Prices for this plan. If the plan has phases, this includes prices across all phases of
+         * the plan.
+         */
+        fun addPrice(bulkBpsPrice: Price.BulkBpsPrice) =
+            addPrice(Price.ofBulkBpsPrice(bulkBpsPrice))
+
+        /**
+         * Prices for this plan. If the plan has phases, this includes prices across all phases of
+         * the plan.
+         */
+        fun addPrice(bulkPrice: Price.BulkPrice) = addPrice(Price.ofBulkPrice(bulkPrice))
+
+        /**
+         * Prices for this plan. If the plan has phases, this includes prices across all phases of
+         * the plan.
+         */
+        fun addPrice(thresholdTotalAmountPrice: Price.ThresholdTotalAmountPrice) =
+            addPrice(Price.ofThresholdTotalAmountPrice(thresholdTotalAmountPrice))
+
+        /**
+         * Prices for this plan. If the plan has phases, this includes prices across all phases of
+         * the plan.
+         */
+        fun addPrice(tieredPackagePrice: Price.TieredPackagePrice) =
+            addPrice(Price.ofTieredPackagePrice(tieredPackagePrice))
+
+        /**
+         * Prices for this plan. If the plan has phases, this includes prices across all phases of
+         * the plan.
+         */
+        fun addPrice(groupedTieredPrice: Price.GroupedTieredPrice) =
+            addPrice(Price.ofGroupedTieredPrice(groupedTieredPrice))
+
+        /**
+         * Prices for this plan. If the plan has phases, this includes prices across all phases of
+         * the plan.
+         */
+        fun addPrice(tieredWithMinimumPrice: Price.TieredWithMinimumPrice) =
+            addPrice(Price.ofTieredWithMinimumPrice(tieredWithMinimumPrice))
+
+        /**
+         * Prices for this plan. If the plan has phases, this includes prices across all phases of
+         * the plan.
+         */
+        fun addPrice(tieredPackageWithMinimumPrice: Price.TieredPackageWithMinimumPrice) =
+            addPrice(Price.ofTieredPackageWithMinimumPrice(tieredPackageWithMinimumPrice))
+
+        /**
+         * Prices for this plan. If the plan has phases, this includes prices across all phases of
+         * the plan.
+         */
+        fun addPrice(packageWithAllocationPrice: Price.PackageWithAllocationPrice) =
+            addPrice(Price.ofPackageWithAllocationPrice(packageWithAllocationPrice))
+
+        /**
+         * Prices for this plan. If the plan has phases, this includes prices across all phases of
+         * the plan.
+         */
+        fun addPrice(unitWithPercentPrice: Price.UnitWithPercentPrice) =
+            addPrice(Price.ofUnitWithPercentPrice(unitWithPercentPrice))
+
+        /**
+         * Prices for this plan. If the plan has phases, this includes prices across all phases of
+         * the plan.
+         */
+        fun addPrice(matrixWithAllocationPrice: Price.MatrixWithAllocationPrice) =
+            addPrice(Price.ofMatrixWithAllocationPrice(matrixWithAllocationPrice))
+
+        /**
+         * Prices for this plan. If the plan has phases, this includes prices across all phases of
+         * the plan.
+         */
+        fun addPrice(tieredWithProrationPrice: Price.TieredWithProrationPrice) =
+            addPrice(Price.ofTieredWithProrationPrice(tieredWithProrationPrice))
+
+        /**
+         * Prices for this plan. If the plan has phases, this includes prices across all phases of
+         * the plan.
+         */
+        fun addPrice(unitWithProrationPrice: Price.UnitWithProrationPrice) =
+            addPrice(Price.ofUnitWithProrationPrice(unitWithProrationPrice))
+
+        /**
+         * Prices for this plan. If the plan has phases, this includes prices across all phases of
+         * the plan.
+         */
+        fun addPrice(groupedAllocationPrice: Price.GroupedAllocationPrice) =
+            addPrice(Price.ofGroupedAllocationPrice(groupedAllocationPrice))
+
+        /**
+         * Prices for this plan. If the plan has phases, this includes prices across all phases of
+         * the plan.
+         */
+        fun addPrice(groupedWithProratedMinimumPrice: Price.GroupedWithProratedMinimumPrice) =
+            addPrice(Price.ofGroupedWithProratedMinimumPrice(groupedWithProratedMinimumPrice))
+
+        /**
+         * Prices for this plan. If the plan has phases, this includes prices across all phases of
+         * the plan.
+         */
+        fun addPrice(groupedWithMeteredMinimumPrice: Price.GroupedWithMeteredMinimumPrice) =
+            addPrice(Price.ofGroupedWithMeteredMinimumPrice(groupedWithMeteredMinimumPrice))
+
+        /**
+         * Prices for this plan. If the plan has phases, this includes prices across all phases of
+         * the plan.
+         */
+        fun addPrice(matrixWithDisplayNamePrice: Price.MatrixWithDisplayNamePrice) =
+            addPrice(Price.ofMatrixWithDisplayNamePrice(matrixWithDisplayNamePrice))
+
+        /**
+         * Prices for this plan. If the plan has phases, this includes prices across all phases of
+         * the plan.
+         */
+        fun addPrice(bulkWithProrationPrice: Price.BulkWithProrationPrice) =
+            addPrice(Price.ofBulkWithProrationPrice(bulkWithProrationPrice))
+
+        /**
+         * Prices for this plan. If the plan has phases, this includes prices across all phases of
+         * the plan.
+         */
+        fun addPrice(groupedTieredPackagePrice: Price.GroupedTieredPackagePrice) =
+            addPrice(Price.ofGroupedTieredPackagePrice(groupedTieredPackagePrice))
 
         fun product(product: Product) = product(JsonField.of(product))
 
