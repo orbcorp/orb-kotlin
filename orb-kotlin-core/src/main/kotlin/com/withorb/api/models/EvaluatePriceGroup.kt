@@ -125,6 +125,15 @@ private constructor(
                 }
         }
 
+        /** The values for the group in the order specified by `grouping_keys` */
+        fun addGroupingValue(string: String) = addGroupingValue(GroupingValue.ofString(string))
+
+        /** The values for the group in the order specified by `grouping_keys` */
+        fun addGroupingValue(double: Double) = addGroupingValue(GroupingValue.ofDouble(double))
+
+        /** The values for the group in the order specified by `grouping_keys` */
+        fun addGroupingValue(boolean: Boolean) = addGroupingValue(GroupingValue.ofBoolean(boolean))
+
         /** The price's usage quantity for the group */
         fun quantity(quantity: Double) = quantity(JsonField.of(quantity))
 
