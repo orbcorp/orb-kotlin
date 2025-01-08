@@ -719,6 +719,22 @@ private constructor(
                 }
         }
 
+        /** The discount intervals for this subscription. */
+        fun addDiscountInterval(amountDiscountInterval: DiscountInterval.AmountDiscountInterval) =
+            addDiscountInterval(DiscountInterval.ofAmountDiscountInterval(amountDiscountInterval))
+
+        /** The discount intervals for this subscription. */
+        fun addDiscountInterval(
+            percentageDiscountInterval: DiscountInterval.PercentageDiscountInterval
+        ) =
+            addDiscountInterval(
+                DiscountInterval.ofPercentageDiscountInterval(percentageDiscountInterval)
+            )
+
+        /** The discount intervals for this subscription. */
+        fun addDiscountInterval(usageDiscountInterval: DiscountInterval.UsageDiscountInterval) =
+            addDiscountInterval(DiscountInterval.ofUsageDiscountInterval(usageDiscountInterval))
+
         /** The date Orb stops billing for this subscription. */
         fun endDate(endDate: OffsetDateTime?) = endDate(JsonField.ofNullable(endDate))
 

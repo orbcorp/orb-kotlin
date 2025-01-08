@@ -813,6 +813,22 @@ constructor(
                     }
             }
 
+            /** A list of discounts to initialize on the price interval. */
+            fun addDiscount(amountDiscountCreationParams: Discount.AmountDiscountCreationParams) =
+                addDiscount(Discount.ofAmountDiscountCreationParams(amountDiscountCreationParams))
+
+            /** A list of discounts to initialize on the price interval. */
+            fun addDiscount(
+                percentageDiscountCreationParams: Discount.PercentageDiscountCreationParams
+            ) =
+                addDiscount(
+                    Discount.ofPercentageDiscountCreationParams(percentageDiscountCreationParams)
+                )
+
+            /** A list of discounts to initialize on the price interval. */
+            fun addDiscount(usageDiscountCreationParams: Discount.UsageDiscountCreationParams) =
+                addDiscount(Discount.ofUsageDiscountCreationParams(usageDiscountCreationParams))
+
             /**
              * The end date of the price interval. This is the date that the price will stop billing
              * on the subscription.
