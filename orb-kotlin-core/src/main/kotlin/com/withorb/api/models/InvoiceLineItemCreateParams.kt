@@ -160,15 +160,17 @@ constructor(
         private var validated: Boolean = false
 
         fun validate(): InvoiceLineItemCreateBody = apply {
-            if (!validated) {
-                amount()
-                endDate()
-                invoiceId()
-                name()
-                quantity()
-                startDate()
-                validated = true
+            if (validated) {
+                return@apply
             }
+
+            amount()
+            endDate()
+            invoiceId()
+            name()
+            quantity()
+            startDate()
+            validated = true
         }
 
         fun toBuilder() = Builder().from(this)

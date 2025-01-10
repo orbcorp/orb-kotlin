@@ -116,12 +116,14 @@ constructor(
         private var validated: Boolean = false
 
         fun validate(): AlertCreateForCustomerBody = apply {
-            if (!validated) {
-                currency()
-                type()
-                thresholds()?.forEach { it.validate() }
-                validated = true
+            if (validated) {
+                return@apply
             }
+
+            currency()
+            type()
+            thresholds()?.forEach { it.validate() }
+            validated = true
         }
 
         fun toBuilder() = Builder().from(this)
@@ -506,10 +508,12 @@ constructor(
         private var validated: Boolean = false
 
         fun validate(): Threshold = apply {
-            if (!validated) {
-                value()
-                validated = true
+            if (validated) {
+                return@apply
             }
+
+            value()
+            validated = true
         }
 
         fun toBuilder() = Builder().from(this)

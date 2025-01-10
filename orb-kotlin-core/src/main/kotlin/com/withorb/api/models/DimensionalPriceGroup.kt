@@ -102,15 +102,17 @@ private constructor(
     private var validated: Boolean = false
 
     fun validate(): DimensionalPriceGroup = apply {
-        if (!validated) {
-            id()
-            billableMetricId()
-            dimensions()
-            externalDimensionalPriceGroupId()
-            metadata().validate()
-            name()
-            validated = true
+        if (validated) {
+            return@apply
         }
+
+        id()
+        billableMetricId()
+        dimensions()
+        externalDimensionalPriceGroupId()
+        metadata().validate()
+        name()
+        validated = true
     }
 
     fun toBuilder() = Builder().from(this)
@@ -263,9 +265,11 @@ private constructor(
         private var validated: Boolean = false
 
         fun validate(): Metadata = apply {
-            if (!validated) {
-                validated = true
+            if (validated) {
+                return@apply
             }
+
+            validated = true
         }
 
         fun toBuilder() = Builder().from(this)

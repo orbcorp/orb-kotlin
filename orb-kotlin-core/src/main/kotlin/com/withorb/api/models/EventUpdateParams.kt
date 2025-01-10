@@ -198,13 +198,15 @@ constructor(
         private var validated: Boolean = false
 
         fun validate(): EventUpdateBody = apply {
-            if (!validated) {
-                eventName()
-                timestamp()
-                customerId()
-                externalCustomerId()
-                validated = true
+            if (validated) {
+                return@apply
             }
+
+            eventName()
+            timestamp()
+            customerId()
+            externalCustomerId()
+            validated = true
         }
 
         fun toBuilder() = Builder().from(this)

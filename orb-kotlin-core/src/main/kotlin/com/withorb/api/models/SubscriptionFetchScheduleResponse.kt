@@ -60,13 +60,15 @@ private constructor(
     private var validated: Boolean = false
 
     fun validate(): SubscriptionFetchScheduleResponse = apply {
-        if (!validated) {
-            createdAt()
-            endDate()
-            plan().validate()
-            startDate()
-            validated = true
+        if (validated) {
+            return@apply
         }
+
+        createdAt()
+        endDate()
+        plan().validate()
+        startDate()
+        validated = true
     }
 
     fun toBuilder() = Builder().from(this)
@@ -185,12 +187,14 @@ private constructor(
         private var validated: Boolean = false
 
         fun validate(): Plan = apply {
-            if (!validated) {
-                id()
-                externalPlanId()
-                name()
-                validated = true
+            if (validated) {
+                return@apply
             }
+
+            id()
+            externalPlanId()
+            name()
+            validated = true
         }
 
         fun toBuilder() = Builder().from(this)

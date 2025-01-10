@@ -848,25 +848,27 @@ constructor(
         private var validated: Boolean = false
 
         fun validate(): CustomerUpdateByExternalIdBody = apply {
-            if (!validated) {
-                accountingSyncConfiguration()?.validate()
-                additionalEmails()
-                autoCollection()
-                billingAddress()?.validate()
-                currency()
-                email()
-                emailDelivery()
-                externalCustomerId()
-                metadata()?.validate()
-                name()
-                paymentProvider()
-                paymentProviderId()
-                reportingConfiguration()?.validate()
-                shippingAddress()?.validate()
-                taxConfiguration()
-                taxId()?.validate()
-                validated = true
+            if (validated) {
+                return@apply
             }
+
+            accountingSyncConfiguration()?.validate()
+            additionalEmails()
+            autoCollection()
+            billingAddress()?.validate()
+            currency()
+            email()
+            emailDelivery()
+            externalCustomerId()
+            metadata()?.validate()
+            name()
+            paymentProvider()
+            paymentProviderId()
+            reportingConfiguration()?.validate()
+            shippingAddress()?.validate()
+            taxConfiguration()?.validate()
+            taxId()?.validate()
+            validated = true
         }
 
         fun toBuilder() = Builder().from(this)
@@ -1996,11 +1998,13 @@ constructor(
         private var validated: Boolean = false
 
         fun validate(): AccountingSyncConfiguration = apply {
-            if (!validated) {
-                accountingProviders()?.forEach { it.validate() }
-                excluded()
-                validated = true
+            if (validated) {
+                return@apply
             }
+
+            accountingProviders()?.forEach { it.validate() }
+            excluded()
+            validated = true
         }
 
         fun toBuilder() = Builder().from(this)
@@ -2110,11 +2114,13 @@ constructor(
             private var validated: Boolean = false
 
             fun validate(): AccountingProvider = apply {
-                if (!validated) {
-                    externalProviderId()
-                    providerType()
-                    validated = true
+                if (validated) {
+                    return@apply
                 }
+
+                externalProviderId()
+                providerType()
+                validated = true
             }
 
             fun toBuilder() = Builder().from(this)
@@ -2276,15 +2282,17 @@ constructor(
         private var validated: Boolean = false
 
         fun validate(): BillingAddress = apply {
-            if (!validated) {
-                city()
-                country()
-                line1()
-                line2()
-                postalCode()
-                state()
-                validated = true
+            if (validated) {
+                return@apply
             }
+
+            city()
+            country()
+            line1()
+            line2()
+            postalCode()
+            state()
+            validated = true
         }
 
         fun toBuilder() = Builder().from(this)
@@ -2407,9 +2415,11 @@ constructor(
         private var validated: Boolean = false
 
         fun validate(): Metadata = apply {
-            if (!validated) {
-                validated = true
+            if (validated) {
+                return@apply
             }
+
+            validated = true
         }
 
         fun toBuilder() = Builder().from(this)
@@ -2563,10 +2573,12 @@ constructor(
         private var validated: Boolean = false
 
         fun validate(): ReportingConfiguration = apply {
-            if (!validated) {
-                exempt()
-                validated = true
+            if (validated) {
+                return@apply
             }
+
+            exempt()
+            validated = true
         }
 
         fun toBuilder() = Builder().from(this)
@@ -2693,15 +2705,17 @@ constructor(
         private var validated: Boolean = false
 
         fun validate(): ShippingAddress = apply {
-            if (!validated) {
-                city()
-                country()
-                line1()
-                line2()
-                postalCode()
-                state()
-                validated = true
+            if (validated) {
+                return@apply
             }
+
+            city()
+            country()
+            line1()
+            line2()
+            postalCode()
+            state()
+            validated = true
         }
 
         fun toBuilder() = Builder().from(this)
@@ -2813,8 +2827,6 @@ constructor(
         private val _json: JsonValue? = null,
     ) {
 
-        private var validated: Boolean = false
-
         fun newAvalaraTaxConfiguration(): NewAvalaraTaxConfiguration? = newAvalaraTaxConfiguration
 
         fun newTaxJarConfiguration(): NewTaxJarConfiguration? = newTaxJarConfiguration
@@ -2841,15 +2853,29 @@ constructor(
             }
         }
 
+        private var validated: Boolean = false
+
         fun validate(): TaxConfiguration = apply {
-            if (!validated) {
-                if (newAvalaraTaxConfiguration == null && newTaxJarConfiguration == null) {
-                    throw OrbInvalidDataException("Unknown TaxConfiguration: $_json")
-                }
-                newAvalaraTaxConfiguration?.validate()
-                newTaxJarConfiguration?.validate()
-                validated = true
+            if (validated) {
+                return@apply
             }
+
+            accept(
+                object : Visitor<Unit> {
+                    override fun visitNewAvalaraTaxConfiguration(
+                        newAvalaraTaxConfiguration: NewAvalaraTaxConfiguration
+                    ) {
+                        newAvalaraTaxConfiguration.validate()
+                    }
+
+                    override fun visitNewTaxJarConfiguration(
+                        newTaxJarConfiguration: NewTaxJarConfiguration
+                    ) {
+                        newTaxJarConfiguration.validate()
+                    }
+                }
+            )
+            validated = true
         }
 
         override fun equals(other: Any?): Boolean {
@@ -2987,12 +3013,14 @@ constructor(
             private var validated: Boolean = false
 
             fun validate(): NewAvalaraTaxConfiguration = apply {
-                if (!validated) {
-                    taxExempt()
-                    taxProvider()
-                    taxExemptionCode()
-                    validated = true
+                if (validated) {
+                    return@apply
                 }
+
+                taxExempt()
+                taxProvider()
+                taxExemptionCode()
+                validated = true
             }
 
             fun toBuilder() = Builder().from(this)
@@ -3167,11 +3195,13 @@ constructor(
             private var validated: Boolean = false
 
             fun validate(): NewTaxJarConfiguration = apply {
-                if (!validated) {
-                    taxExempt()
-                    taxProvider()
-                    validated = true
+                if (validated) {
+                    return@apply
                 }
+
+                taxExempt()
+                taxProvider()
+                validated = true
             }
 
             fun toBuilder() = Builder().from(this)
@@ -3444,12 +3474,14 @@ constructor(
         private var validated: Boolean = false
 
         fun validate(): TaxId = apply {
-            if (!validated) {
-                country()
-                type()
-                value()
-                validated = true
+            if (validated) {
+                return@apply
             }
+
+            country()
+            type()
+            value()
+            validated = true
         }
 
         fun toBuilder() = Builder().from(this)
