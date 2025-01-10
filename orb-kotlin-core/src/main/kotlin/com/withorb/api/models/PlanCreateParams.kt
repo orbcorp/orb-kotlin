@@ -232,17 +232,19 @@ constructor(
         private var validated: Boolean = false
 
         fun validate(): PlanCreateBody = apply {
-            if (!validated) {
-                currency()
-                name()
-                prices()
-                defaultInvoiceMemo()
-                externalPlanId()
-                metadata()?.validate()
-                netTerms()
-                status()
-                validated = true
+            if (validated) {
+                return@apply
             }
+
+            currency()
+            name()
+            prices().forEach { it.validate() }
+            defaultInvoiceMemo()
+            externalPlanId()
+            metadata()?.validate()
+            netTerms()
+            status()
+            validated = true
         }
 
         fun toBuilder() = Builder().from(this)
@@ -1030,8 +1032,6 @@ constructor(
         private val _json: JsonValue? = null,
     ) {
 
-        private var validated: Boolean = false
-
         fun newPlanUnitPrice(): NewPlanUnitPrice? = newPlanUnitPrice
 
         fun newPlanPackagePrice(): NewPlanPackagePrice? = newPlanPackagePrice
@@ -1247,56 +1247,134 @@ constructor(
             }
         }
 
+        private var validated: Boolean = false
+
         fun validate(): Price = apply {
-            if (!validated) {
-                if (
-                    newPlanUnitPrice == null &&
-                        newPlanPackagePrice == null &&
-                        newPlanMatrixPrice == null &&
-                        newPlanTieredPrice == null &&
-                        newPlanTieredBpsPrice == null &&
-                        newPlanBpsPrice == null &&
-                        newPlanBulkBpsPrice == null &&
-                        newPlanBulkPrice == null &&
-                        newPlanThresholdTotalAmountPrice == null &&
-                        newPlanTieredPackagePrice == null &&
-                        newPlanTieredWithMinimumPrice == null &&
-                        newPlanUnitWithPercentPrice == null &&
-                        newPlanPackageWithAllocationPrice == null &&
-                        newPlanTierWithProrationPrice == null &&
-                        newPlanUnitWithProrationPrice == null &&
-                        newPlanGroupedAllocationPrice == null &&
-                        newPlanGroupedWithProratedMinimumPrice == null &&
-                        newPlanGroupedWithMeteredMinimumPrice == null &&
-                        newPlanMatrixWithDisplayNamePrice == null &&
-                        newPlanBulkWithProrationPrice == null &&
-                        newPlanGroupedTieredPackagePrice == null
-                ) {
-                    throw OrbInvalidDataException("Unknown Price: $_json")
-                }
-                newPlanUnitPrice?.validate()
-                newPlanPackagePrice?.validate()
-                newPlanMatrixPrice?.validate()
-                newPlanTieredPrice?.validate()
-                newPlanTieredBpsPrice?.validate()
-                newPlanBpsPrice?.validate()
-                newPlanBulkBpsPrice?.validate()
-                newPlanBulkPrice?.validate()
-                newPlanThresholdTotalAmountPrice?.validate()
-                newPlanTieredPackagePrice?.validate()
-                newPlanTieredWithMinimumPrice?.validate()
-                newPlanUnitWithPercentPrice?.validate()
-                newPlanPackageWithAllocationPrice?.validate()
-                newPlanTierWithProrationPrice?.validate()
-                newPlanUnitWithProrationPrice?.validate()
-                newPlanGroupedAllocationPrice?.validate()
-                newPlanGroupedWithProratedMinimumPrice?.validate()
-                newPlanGroupedWithMeteredMinimumPrice?.validate()
-                newPlanMatrixWithDisplayNamePrice?.validate()
-                newPlanBulkWithProrationPrice?.validate()
-                newPlanGroupedTieredPackagePrice?.validate()
-                validated = true
+            if (validated) {
+                return@apply
             }
+
+            accept(
+                object : Visitor<Unit> {
+                    override fun visitNewPlanUnitPrice(newPlanUnitPrice: NewPlanUnitPrice) {
+                        newPlanUnitPrice.validate()
+                    }
+
+                    override fun visitNewPlanPackagePrice(
+                        newPlanPackagePrice: NewPlanPackagePrice
+                    ) {
+                        newPlanPackagePrice.validate()
+                    }
+
+                    override fun visitNewPlanMatrixPrice(newPlanMatrixPrice: NewPlanMatrixPrice) {
+                        newPlanMatrixPrice.validate()
+                    }
+
+                    override fun visitNewPlanTieredPrice(newPlanTieredPrice: NewPlanTieredPrice) {
+                        newPlanTieredPrice.validate()
+                    }
+
+                    override fun visitNewPlanTieredBpsPrice(
+                        newPlanTieredBpsPrice: NewPlanTieredBpsPrice
+                    ) {
+                        newPlanTieredBpsPrice.validate()
+                    }
+
+                    override fun visitNewPlanBpsPrice(newPlanBpsPrice: NewPlanBpsPrice) {
+                        newPlanBpsPrice.validate()
+                    }
+
+                    override fun visitNewPlanBulkBpsPrice(
+                        newPlanBulkBpsPrice: NewPlanBulkBpsPrice
+                    ) {
+                        newPlanBulkBpsPrice.validate()
+                    }
+
+                    override fun visitNewPlanBulkPrice(newPlanBulkPrice: NewPlanBulkPrice) {
+                        newPlanBulkPrice.validate()
+                    }
+
+                    override fun visitNewPlanThresholdTotalAmountPrice(
+                        newPlanThresholdTotalAmountPrice: NewPlanThresholdTotalAmountPrice
+                    ) {
+                        newPlanThresholdTotalAmountPrice.validate()
+                    }
+
+                    override fun visitNewPlanTieredPackagePrice(
+                        newPlanTieredPackagePrice: NewPlanTieredPackagePrice
+                    ) {
+                        newPlanTieredPackagePrice.validate()
+                    }
+
+                    override fun visitNewPlanTieredWithMinimumPrice(
+                        newPlanTieredWithMinimumPrice: NewPlanTieredWithMinimumPrice
+                    ) {
+                        newPlanTieredWithMinimumPrice.validate()
+                    }
+
+                    override fun visitNewPlanUnitWithPercentPrice(
+                        newPlanUnitWithPercentPrice: NewPlanUnitWithPercentPrice
+                    ) {
+                        newPlanUnitWithPercentPrice.validate()
+                    }
+
+                    override fun visitNewPlanPackageWithAllocationPrice(
+                        newPlanPackageWithAllocationPrice: NewPlanPackageWithAllocationPrice
+                    ) {
+                        newPlanPackageWithAllocationPrice.validate()
+                    }
+
+                    override fun visitNewPlanTierWithProrationPrice(
+                        newPlanTierWithProrationPrice: NewPlanTierWithProrationPrice
+                    ) {
+                        newPlanTierWithProrationPrice.validate()
+                    }
+
+                    override fun visitNewPlanUnitWithProrationPrice(
+                        newPlanUnitWithProrationPrice: NewPlanUnitWithProrationPrice
+                    ) {
+                        newPlanUnitWithProrationPrice.validate()
+                    }
+
+                    override fun visitNewPlanGroupedAllocationPrice(
+                        newPlanGroupedAllocationPrice: NewPlanGroupedAllocationPrice
+                    ) {
+                        newPlanGroupedAllocationPrice.validate()
+                    }
+
+                    override fun visitNewPlanGroupedWithProratedMinimumPrice(
+                        newPlanGroupedWithProratedMinimumPrice:
+                            NewPlanGroupedWithProratedMinimumPrice
+                    ) {
+                        newPlanGroupedWithProratedMinimumPrice.validate()
+                    }
+
+                    override fun visitNewPlanGroupedWithMeteredMinimumPrice(
+                        newPlanGroupedWithMeteredMinimumPrice: NewPlanGroupedWithMeteredMinimumPrice
+                    ) {
+                        newPlanGroupedWithMeteredMinimumPrice.validate()
+                    }
+
+                    override fun visitNewPlanMatrixWithDisplayNamePrice(
+                        newPlanMatrixWithDisplayNamePrice: NewPlanMatrixWithDisplayNamePrice
+                    ) {
+                        newPlanMatrixWithDisplayNamePrice.validate()
+                    }
+
+                    override fun visitNewPlanBulkWithProrationPrice(
+                        newPlanBulkWithProrationPrice: NewPlanBulkWithProrationPrice
+                    ) {
+                        newPlanBulkWithProrationPrice.validate()
+                    }
+
+                    override fun visitNewPlanGroupedTieredPackagePrice(
+                        newPlanGroupedTieredPackagePrice: NewPlanGroupedTieredPackagePrice
+                    ) {
+                        newPlanGroupedTieredPackagePrice.validate()
+                    }
+                }
+            )
+            validated = true
         }
 
         override fun equals(other: Any?): Boolean {
@@ -1956,24 +2034,26 @@ constructor(
             private var validated: Boolean = false
 
             fun validate(): NewPlanUnitPrice = apply {
-                if (!validated) {
-                    cadence()
-                    itemId()
-                    modelType()
-                    name()
-                    unitConfig().validate()
-                    billableMetricId()
-                    billedInAdvance()
-                    billingCycleConfiguration()?.validate()
-                    conversionRate()
-                    currency()
-                    externalPriceId()
-                    fixedPriceQuantity()
-                    invoiceGroupingKey()
-                    invoicingCycleConfiguration()?.validate()
-                    metadata()?.validate()
-                    validated = true
+                if (validated) {
+                    return@apply
                 }
+
+                cadence()
+                itemId()
+                modelType()
+                name()
+                unitConfig().validate()
+                billableMetricId()
+                billedInAdvance()
+                billingCycleConfiguration()?.validate()
+                conversionRate()
+                currency()
+                externalPriceId()
+                fixedPriceQuantity()
+                invoiceGroupingKey()
+                invoicingCycleConfiguration()?.validate()
+                metadata()?.validate()
+                validated = true
             }
 
             fun toBuilder() = Builder().from(this)
@@ -2402,10 +2482,12 @@ constructor(
                 private var validated: Boolean = false
 
                 fun validate(): UnitConfig = apply {
-                    if (!validated) {
-                        unitAmount()
-                        validated = true
+                    if (validated) {
+                        return@apply
                     }
+
+                    unitAmount()
+                    validated = true
                 }
 
                 fun toBuilder() = Builder().from(this)
@@ -2520,11 +2602,13 @@ constructor(
                 private var validated: Boolean = false
 
                 fun validate(): BillingCycleConfiguration = apply {
-                    if (!validated) {
-                        duration()
-                        durationUnit()
-                        validated = true
+                    if (validated) {
+                        return@apply
                     }
+
+                    duration()
+                    durationUnit()
+                    validated = true
                 }
 
                 fun toBuilder() = Builder().from(this)
@@ -2712,11 +2796,13 @@ constructor(
                 private var validated: Boolean = false
 
                 fun validate(): InvoicingCycleConfiguration = apply {
-                    if (!validated) {
-                        duration()
-                        durationUnit()
-                        validated = true
+                    if (validated) {
+                        return@apply
                     }
+
+                    duration()
+                    durationUnit()
+                    validated = true
                 }
 
                 fun toBuilder() = Builder().from(this)
@@ -2883,9 +2969,11 @@ constructor(
                 private var validated: Boolean = false
 
                 fun validate(): Metadata = apply {
-                    if (!validated) {
-                        validated = true
+                    if (validated) {
+                        return@apply
                     }
+
+                    validated = true
                 }
 
                 fun toBuilder() = Builder().from(this)
@@ -3177,24 +3265,26 @@ constructor(
             private var validated: Boolean = false
 
             fun validate(): NewPlanPackagePrice = apply {
-                if (!validated) {
-                    cadence()
-                    itemId()
-                    modelType()
-                    name()
-                    packageConfig().validate()
-                    billableMetricId()
-                    billedInAdvance()
-                    billingCycleConfiguration()?.validate()
-                    conversionRate()
-                    currency()
-                    externalPriceId()
-                    fixedPriceQuantity()
-                    invoiceGroupingKey()
-                    invoicingCycleConfiguration()?.validate()
-                    metadata()?.validate()
-                    validated = true
+                if (validated) {
+                    return@apply
                 }
+
+                cadence()
+                itemId()
+                modelType()
+                name()
+                packageConfig().validate()
+                billableMetricId()
+                billedInAdvance()
+                billingCycleConfiguration()?.validate()
+                conversionRate()
+                currency()
+                externalPriceId()
+                fixedPriceQuantity()
+                invoiceGroupingKey()
+                invoicingCycleConfiguration()?.validate()
+                metadata()?.validate()
+                validated = true
             }
 
             fun toBuilder() = Builder().from(this)
@@ -3643,11 +3733,13 @@ constructor(
                 private var validated: Boolean = false
 
                 fun validate(): PackageConfig = apply {
-                    if (!validated) {
-                        packageAmount()
-                        packageSize()
-                        validated = true
+                    if (validated) {
+                        return@apply
                     }
+
+                    packageAmount()
+                    packageSize()
+                    validated = true
                 }
 
                 fun toBuilder() = Builder().from(this)
@@ -3784,11 +3876,13 @@ constructor(
                 private var validated: Boolean = false
 
                 fun validate(): BillingCycleConfiguration = apply {
-                    if (!validated) {
-                        duration()
-                        durationUnit()
-                        validated = true
+                    if (validated) {
+                        return@apply
                     }
+
+                    duration()
+                    durationUnit()
+                    validated = true
                 }
 
                 fun toBuilder() = Builder().from(this)
@@ -3976,11 +4070,13 @@ constructor(
                 private var validated: Boolean = false
 
                 fun validate(): InvoicingCycleConfiguration = apply {
-                    if (!validated) {
-                        duration()
-                        durationUnit()
-                        validated = true
+                    if (validated) {
+                        return@apply
                     }
+
+                    duration()
+                    durationUnit()
+                    validated = true
                 }
 
                 fun toBuilder() = Builder().from(this)
@@ -4147,9 +4243,11 @@ constructor(
                 private var validated: Boolean = false
 
                 fun validate(): Metadata = apply {
-                    if (!validated) {
-                        validated = true
+                    if (validated) {
+                        return@apply
                     }
+
+                    validated = true
                 }
 
                 fun toBuilder() = Builder().from(this)
@@ -4441,24 +4539,26 @@ constructor(
             private var validated: Boolean = false
 
             fun validate(): NewPlanMatrixPrice = apply {
-                if (!validated) {
-                    cadence()
-                    itemId()
-                    matrixConfig().validate()
-                    modelType()
-                    name()
-                    billableMetricId()
-                    billedInAdvance()
-                    billingCycleConfiguration()?.validate()
-                    conversionRate()
-                    currency()
-                    externalPriceId()
-                    fixedPriceQuantity()
-                    invoiceGroupingKey()
-                    invoicingCycleConfiguration()?.validate()
-                    metadata()?.validate()
-                    validated = true
+                if (validated) {
+                    return@apply
                 }
+
+                cadence()
+                itemId()
+                matrixConfig().validate()
+                modelType()
+                name()
+                billableMetricId()
+                billedInAdvance()
+                billingCycleConfiguration()?.validate()
+                conversionRate()
+                currency()
+                externalPriceId()
+                fixedPriceQuantity()
+                invoiceGroupingKey()
+                invoicingCycleConfiguration()?.validate()
+                metadata()?.validate()
+                validated = true
             }
 
             fun toBuilder() = Builder().from(this)
@@ -4864,12 +4964,14 @@ constructor(
                 private var validated: Boolean = false
 
                 fun validate(): MatrixConfig = apply {
-                    if (!validated) {
-                        defaultUnitAmount()
-                        dimensions()
-                        matrixValues().forEach { it.validate() }
-                        validated = true
+                    if (validated) {
+                        return@apply
                     }
+
+                    defaultUnitAmount()
+                    dimensions()
+                    matrixValues().forEach { it.validate() }
+                    validated = true
                 }
 
                 fun toBuilder() = Builder().from(this)
@@ -5032,11 +5134,13 @@ constructor(
                     private var validated: Boolean = false
 
                     fun validate(): MatrixValue = apply {
-                        if (!validated) {
-                            dimensionValues()
-                            unitAmount()
-                            validated = true
+                        if (validated) {
+                            return@apply
                         }
+
+                        dimensionValues()
+                        unitAmount()
+                        validated = true
                     }
 
                     fun toBuilder() = Builder().from(this)
@@ -5262,11 +5366,13 @@ constructor(
                 private var validated: Boolean = false
 
                 fun validate(): BillingCycleConfiguration = apply {
-                    if (!validated) {
-                        duration()
-                        durationUnit()
-                        validated = true
+                    if (validated) {
+                        return@apply
                     }
+
+                    duration()
+                    durationUnit()
+                    validated = true
                 }
 
                 fun toBuilder() = Builder().from(this)
@@ -5454,11 +5560,13 @@ constructor(
                 private var validated: Boolean = false
 
                 fun validate(): InvoicingCycleConfiguration = apply {
-                    if (!validated) {
-                        duration()
-                        durationUnit()
-                        validated = true
+                    if (validated) {
+                        return@apply
                     }
+
+                    duration()
+                    durationUnit()
+                    validated = true
                 }
 
                 fun toBuilder() = Builder().from(this)
@@ -5625,9 +5733,11 @@ constructor(
                 private var validated: Boolean = false
 
                 fun validate(): Metadata = apply {
-                    if (!validated) {
-                        validated = true
+                    if (validated) {
+                        return@apply
                     }
+
+                    validated = true
                 }
 
                 fun toBuilder() = Builder().from(this)
@@ -5919,24 +6029,26 @@ constructor(
             private var validated: Boolean = false
 
             fun validate(): NewPlanTieredPrice = apply {
-                if (!validated) {
-                    cadence()
-                    itemId()
-                    modelType()
-                    name()
-                    tieredConfig().validate()
-                    billableMetricId()
-                    billedInAdvance()
-                    billingCycleConfiguration()?.validate()
-                    conversionRate()
-                    currency()
-                    externalPriceId()
-                    fixedPriceQuantity()
-                    invoiceGroupingKey()
-                    invoicingCycleConfiguration()?.validate()
-                    metadata()?.validate()
-                    validated = true
+                if (validated) {
+                    return@apply
                 }
+
+                cadence()
+                itemId()
+                modelType()
+                name()
+                tieredConfig().validate()
+                billableMetricId()
+                billedInAdvance()
+                billingCycleConfiguration()?.validate()
+                conversionRate()
+                currency()
+                externalPriceId()
+                fixedPriceQuantity()
+                invoiceGroupingKey()
+                invoicingCycleConfiguration()?.validate()
+                metadata()?.validate()
+                validated = true
             }
 
             fun toBuilder() = Builder().from(this)
@@ -6364,10 +6476,12 @@ constructor(
                 private var validated: Boolean = false
 
                 fun validate(): TieredConfig = apply {
-                    if (!validated) {
-                        tiers().forEach { it.validate() }
-                        validated = true
+                    if (validated) {
+                        return@apply
                     }
+
+                    tiers().forEach { it.validate() }
+                    validated = true
                 }
 
                 fun toBuilder() = Builder().from(this)
@@ -6485,12 +6599,14 @@ constructor(
                     private var validated: Boolean = false
 
                     fun validate(): Tier = apply {
-                        if (!validated) {
-                            firstUnit()
-                            unitAmount()
-                            lastUnit()
-                            validated = true
+                        if (validated) {
+                            return@apply
                         }
+
+                        firstUnit()
+                        unitAmount()
+                        lastUnit()
+                        validated = true
                     }
 
                     fun toBuilder() = Builder().from(this)
@@ -6659,11 +6775,13 @@ constructor(
                 private var validated: Boolean = false
 
                 fun validate(): BillingCycleConfiguration = apply {
-                    if (!validated) {
-                        duration()
-                        durationUnit()
-                        validated = true
+                    if (validated) {
+                        return@apply
                     }
+
+                    duration()
+                    durationUnit()
+                    validated = true
                 }
 
                 fun toBuilder() = Builder().from(this)
@@ -6851,11 +6969,13 @@ constructor(
                 private var validated: Boolean = false
 
                 fun validate(): InvoicingCycleConfiguration = apply {
-                    if (!validated) {
-                        duration()
-                        durationUnit()
-                        validated = true
+                    if (validated) {
+                        return@apply
                     }
+
+                    duration()
+                    durationUnit()
+                    validated = true
                 }
 
                 fun toBuilder() = Builder().from(this)
@@ -7022,9 +7142,11 @@ constructor(
                 private var validated: Boolean = false
 
                 fun validate(): Metadata = apply {
-                    if (!validated) {
-                        validated = true
+                    if (validated) {
+                        return@apply
                     }
+
+                    validated = true
                 }
 
                 fun toBuilder() = Builder().from(this)
@@ -7317,24 +7439,26 @@ constructor(
             private var validated: Boolean = false
 
             fun validate(): NewPlanTieredBpsPrice = apply {
-                if (!validated) {
-                    cadence()
-                    itemId()
-                    modelType()
-                    name()
-                    tieredBpsConfig().validate()
-                    billableMetricId()
-                    billedInAdvance()
-                    billingCycleConfiguration()?.validate()
-                    conversionRate()
-                    currency()
-                    externalPriceId()
-                    fixedPriceQuantity()
-                    invoiceGroupingKey()
-                    invoicingCycleConfiguration()?.validate()
-                    metadata()?.validate()
-                    validated = true
+                if (validated) {
+                    return@apply
                 }
+
+                cadence()
+                itemId()
+                modelType()
+                name()
+                tieredBpsConfig().validate()
+                billableMetricId()
+                billedInAdvance()
+                billingCycleConfiguration()?.validate()
+                conversionRate()
+                currency()
+                externalPriceId()
+                fixedPriceQuantity()
+                invoiceGroupingKey()
+                invoicingCycleConfiguration()?.validate()
+                metadata()?.validate()
+                validated = true
             }
 
             fun toBuilder() = Builder().from(this)
@@ -7770,10 +7894,12 @@ constructor(
                 private var validated: Boolean = false
 
                 fun validate(): TieredBpsConfig = apply {
-                    if (!validated) {
-                        tiers().forEach { it.validate() }
-                        validated = true
+                    if (validated) {
+                        return@apply
                     }
+
+                    tiers().forEach { it.validate() }
+                    validated = true
                 }
 
                 fun toBuilder() = Builder().from(this)
@@ -7909,13 +8035,15 @@ constructor(
                     private var validated: Boolean = false
 
                     fun validate(): Tier = apply {
-                        if (!validated) {
-                            bps()
-                            minimumAmount()
-                            maximumAmount()
-                            perUnitMaximum()
-                            validated = true
+                        if (validated) {
+                            return@apply
                         }
+
+                        bps()
+                        minimumAmount()
+                        maximumAmount()
+                        perUnitMaximum()
+                        validated = true
                     }
 
                     fun toBuilder() = Builder().from(this)
@@ -8085,11 +8213,13 @@ constructor(
                 private var validated: Boolean = false
 
                 fun validate(): BillingCycleConfiguration = apply {
-                    if (!validated) {
-                        duration()
-                        durationUnit()
-                        validated = true
+                    if (validated) {
+                        return@apply
                     }
+
+                    duration()
+                    durationUnit()
+                    validated = true
                 }
 
                 fun toBuilder() = Builder().from(this)
@@ -8277,11 +8407,13 @@ constructor(
                 private var validated: Boolean = false
 
                 fun validate(): InvoicingCycleConfiguration = apply {
-                    if (!validated) {
-                        duration()
-                        durationUnit()
-                        validated = true
+                    if (validated) {
+                        return@apply
                     }
+
+                    duration()
+                    durationUnit()
+                    validated = true
                 }
 
                 fun toBuilder() = Builder().from(this)
@@ -8448,9 +8580,11 @@ constructor(
                 private var validated: Boolean = false
 
                 fun validate(): Metadata = apply {
-                    if (!validated) {
-                        validated = true
+                    if (validated) {
+                        return@apply
                     }
+
+                    validated = true
                 }
 
                 fun toBuilder() = Builder().from(this)
@@ -8742,24 +8876,26 @@ constructor(
             private var validated: Boolean = false
 
             fun validate(): NewPlanBpsPrice = apply {
-                if (!validated) {
-                    bpsConfig().validate()
-                    cadence()
-                    itemId()
-                    modelType()
-                    name()
-                    billableMetricId()
-                    billedInAdvance()
-                    billingCycleConfiguration()?.validate()
-                    conversionRate()
-                    currency()
-                    externalPriceId()
-                    fixedPriceQuantity()
-                    invoiceGroupingKey()
-                    invoicingCycleConfiguration()?.validate()
-                    metadata()?.validate()
-                    validated = true
+                if (validated) {
+                    return@apply
                 }
+
+                bpsConfig().validate()
+                cadence()
+                itemId()
+                modelType()
+                name()
+                billableMetricId()
+                billedInAdvance()
+                billingCycleConfiguration()?.validate()
+                conversionRate()
+                currency()
+                externalPriceId()
+                fixedPriceQuantity()
+                invoiceGroupingKey()
+                invoicingCycleConfiguration()?.validate()
+                metadata()?.validate()
+                validated = true
             }
 
             fun toBuilder() = Builder().from(this)
@@ -9065,11 +9201,13 @@ constructor(
                 private var validated: Boolean = false
 
                 fun validate(): BpsConfig = apply {
-                    if (!validated) {
-                        bps()
-                        perUnitMaximum()
-                        validated = true
+                    if (validated) {
+                        return@apply
                     }
+
+                    bps()
+                    perUnitMaximum()
+                    validated = true
                 }
 
                 fun toBuilder() = Builder().from(this)
@@ -9326,11 +9464,13 @@ constructor(
                 private var validated: Boolean = false
 
                 fun validate(): BillingCycleConfiguration = apply {
-                    if (!validated) {
-                        duration()
-                        durationUnit()
-                        validated = true
+                    if (validated) {
+                        return@apply
                     }
+
+                    duration()
+                    durationUnit()
+                    validated = true
                 }
 
                 fun toBuilder() = Builder().from(this)
@@ -9518,11 +9658,13 @@ constructor(
                 private var validated: Boolean = false
 
                 fun validate(): InvoicingCycleConfiguration = apply {
-                    if (!validated) {
-                        duration()
-                        durationUnit()
-                        validated = true
+                    if (validated) {
+                        return@apply
                     }
+
+                    duration()
+                    durationUnit()
+                    validated = true
                 }
 
                 fun toBuilder() = Builder().from(this)
@@ -9689,9 +9831,11 @@ constructor(
                 private var validated: Boolean = false
 
                 fun validate(): Metadata = apply {
-                    if (!validated) {
-                        validated = true
+                    if (validated) {
+                        return@apply
                     }
+
+                    validated = true
                 }
 
                 fun toBuilder() = Builder().from(this)
@@ -9983,24 +10127,26 @@ constructor(
             private var validated: Boolean = false
 
             fun validate(): NewPlanBulkBpsPrice = apply {
-                if (!validated) {
-                    bulkBpsConfig().validate()
-                    cadence()
-                    itemId()
-                    modelType()
-                    name()
-                    billableMetricId()
-                    billedInAdvance()
-                    billingCycleConfiguration()?.validate()
-                    conversionRate()
-                    currency()
-                    externalPriceId()
-                    fixedPriceQuantity()
-                    invoiceGroupingKey()
-                    invoicingCycleConfiguration()?.validate()
-                    metadata()?.validate()
-                    validated = true
+                if (validated) {
+                    return@apply
                 }
+
+                bulkBpsConfig().validate()
+                cadence()
+                itemId()
+                modelType()
+                name()
+                billableMetricId()
+                billedInAdvance()
+                billingCycleConfiguration()?.validate()
+                conversionRate()
+                currency()
+                externalPriceId()
+                fixedPriceQuantity()
+                invoiceGroupingKey()
+                invoicingCycleConfiguration()?.validate()
+                metadata()?.validate()
+                validated = true
             }
 
             fun toBuilder() = Builder().from(this)
@@ -10304,10 +10450,12 @@ constructor(
                 private var validated: Boolean = false
 
                 fun validate(): BulkBpsConfig = apply {
-                    if (!validated) {
-                        tiers().forEach { it.validate() }
-                        validated = true
+                    if (validated) {
+                        return@apply
                     }
+
+                    tiers().forEach { it.validate() }
+                    validated = true
                 }
 
                 fun toBuilder() = Builder().from(this)
@@ -10432,12 +10580,14 @@ constructor(
                     private var validated: Boolean = false
 
                     fun validate(): Tier = apply {
-                        if (!validated) {
-                            bps()
-                            maximumAmount()
-                            perUnitMaximum()
-                            validated = true
+                        if (validated) {
+                            return@apply
                         }
+
+                        bps()
+                        maximumAmount()
+                        perUnitMaximum()
+                        validated = true
                     }
 
                     fun toBuilder() = Builder().from(this)
@@ -10725,11 +10875,13 @@ constructor(
                 private var validated: Boolean = false
 
                 fun validate(): BillingCycleConfiguration = apply {
-                    if (!validated) {
-                        duration()
-                        durationUnit()
-                        validated = true
+                    if (validated) {
+                        return@apply
                     }
+
+                    duration()
+                    durationUnit()
+                    validated = true
                 }
 
                 fun toBuilder() = Builder().from(this)
@@ -10917,11 +11069,13 @@ constructor(
                 private var validated: Boolean = false
 
                 fun validate(): InvoicingCycleConfiguration = apply {
-                    if (!validated) {
-                        duration()
-                        durationUnit()
-                        validated = true
+                    if (validated) {
+                        return@apply
                     }
+
+                    duration()
+                    durationUnit()
+                    validated = true
                 }
 
                 fun toBuilder() = Builder().from(this)
@@ -11088,9 +11242,11 @@ constructor(
                 private var validated: Boolean = false
 
                 fun validate(): Metadata = apply {
-                    if (!validated) {
-                        validated = true
+                    if (validated) {
+                        return@apply
                     }
+
+                    validated = true
                 }
 
                 fun toBuilder() = Builder().from(this)
@@ -11382,24 +11538,26 @@ constructor(
             private var validated: Boolean = false
 
             fun validate(): NewPlanBulkPrice = apply {
-                if (!validated) {
-                    bulkConfig().validate()
-                    cadence()
-                    itemId()
-                    modelType()
-                    name()
-                    billableMetricId()
-                    billedInAdvance()
-                    billingCycleConfiguration()?.validate()
-                    conversionRate()
-                    currency()
-                    externalPriceId()
-                    fixedPriceQuantity()
-                    invoiceGroupingKey()
-                    invoicingCycleConfiguration()?.validate()
-                    metadata()?.validate()
-                    validated = true
+                if (validated) {
+                    return@apply
                 }
+
+                bulkConfig().validate()
+                cadence()
+                itemId()
+                modelType()
+                name()
+                billableMetricId()
+                billedInAdvance()
+                billingCycleConfiguration()?.validate()
+                conversionRate()
+                currency()
+                externalPriceId()
+                fixedPriceQuantity()
+                invoiceGroupingKey()
+                invoicingCycleConfiguration()?.validate()
+                metadata()?.validate()
+                validated = true
             }
 
             fun toBuilder() = Builder().from(this)
@@ -11694,10 +11852,12 @@ constructor(
                 private var validated: Boolean = false
 
                 fun validate(): BulkConfig = apply {
-                    if (!validated) {
-                        tiers().forEach { it.validate() }
-                        validated = true
+                    if (validated) {
+                        return@apply
                     }
+
+                    tiers().forEach { it.validate() }
+                    validated = true
                 }
 
                 fun toBuilder() = Builder().from(this)
@@ -11804,11 +11964,13 @@ constructor(
                     private var validated: Boolean = false
 
                     fun validate(): Tier = apply {
-                        if (!validated) {
-                            unitAmount()
-                            maximumUnits()
-                            validated = true
+                        if (validated) {
+                            return@apply
                         }
+
+                        unitAmount()
+                        maximumUnits()
+                        validated = true
                     }
 
                     fun toBuilder() = Builder().from(this)
@@ -12092,11 +12254,13 @@ constructor(
                 private var validated: Boolean = false
 
                 fun validate(): BillingCycleConfiguration = apply {
-                    if (!validated) {
-                        duration()
-                        durationUnit()
-                        validated = true
+                    if (validated) {
+                        return@apply
                     }
+
+                    duration()
+                    durationUnit()
+                    validated = true
                 }
 
                 fun toBuilder() = Builder().from(this)
@@ -12284,11 +12448,13 @@ constructor(
                 private var validated: Boolean = false
 
                 fun validate(): InvoicingCycleConfiguration = apply {
-                    if (!validated) {
-                        duration()
-                        durationUnit()
-                        validated = true
+                    if (validated) {
+                        return@apply
                     }
+
+                    duration()
+                    durationUnit()
+                    validated = true
                 }
 
                 fun toBuilder() = Builder().from(this)
@@ -12455,9 +12621,11 @@ constructor(
                 private var validated: Boolean = false
 
                 fun validate(): Metadata = apply {
-                    if (!validated) {
-                        validated = true
+                    if (validated) {
+                        return@apply
                     }
+
+                    validated = true
                 }
 
                 fun toBuilder() = Builder().from(this)
@@ -12752,24 +12920,26 @@ constructor(
             private var validated: Boolean = false
 
             fun validate(): NewPlanThresholdTotalAmountPrice = apply {
-                if (!validated) {
-                    cadence()
-                    itemId()
-                    modelType()
-                    name()
-                    thresholdTotalAmountConfig().validate()
-                    billableMetricId()
-                    billedInAdvance()
-                    billingCycleConfiguration()?.validate()
-                    conversionRate()
-                    currency()
-                    externalPriceId()
-                    fixedPriceQuantity()
-                    invoiceGroupingKey()
-                    invoicingCycleConfiguration()?.validate()
-                    metadata()?.validate()
-                    validated = true
+                if (validated) {
+                    return@apply
                 }
+
+                cadence()
+                itemId()
+                modelType()
+                name()
+                thresholdTotalAmountConfig().validate()
+                billableMetricId()
+                billedInAdvance()
+                billingCycleConfiguration()?.validate()
+                conversionRate()
+                currency()
+                externalPriceId()
+                fixedPriceQuantity()
+                invoiceGroupingKey()
+                invoicingCycleConfiguration()?.validate()
+                metadata()?.validate()
+                validated = true
             }
 
             fun toBuilder() = Builder().from(this)
@@ -13198,9 +13368,11 @@ constructor(
                 private var validated: Boolean = false
 
                 fun validate(): ThresholdTotalAmountConfig = apply {
-                    if (!validated) {
-                        validated = true
+                    if (validated) {
+                        return@apply
                     }
+
+                    validated = true
                 }
 
                 fun toBuilder() = Builder().from(this)
@@ -13304,11 +13476,13 @@ constructor(
                 private var validated: Boolean = false
 
                 fun validate(): BillingCycleConfiguration = apply {
-                    if (!validated) {
-                        duration()
-                        durationUnit()
-                        validated = true
+                    if (validated) {
+                        return@apply
                     }
+
+                    duration()
+                    durationUnit()
+                    validated = true
                 }
 
                 fun toBuilder() = Builder().from(this)
@@ -13496,11 +13670,13 @@ constructor(
                 private var validated: Boolean = false
 
                 fun validate(): InvoicingCycleConfiguration = apply {
-                    if (!validated) {
-                        duration()
-                        durationUnit()
-                        validated = true
+                    if (validated) {
+                        return@apply
                     }
+
+                    duration()
+                    durationUnit()
+                    validated = true
                 }
 
                 fun toBuilder() = Builder().from(this)
@@ -13667,9 +13843,11 @@ constructor(
                 private var validated: Boolean = false
 
                 fun validate(): Metadata = apply {
-                    if (!validated) {
-                        validated = true
+                    if (validated) {
+                        return@apply
                     }
+
+                    validated = true
                 }
 
                 fun toBuilder() = Builder().from(this)
@@ -13962,24 +14140,26 @@ constructor(
             private var validated: Boolean = false
 
             fun validate(): NewPlanTieredPackagePrice = apply {
-                if (!validated) {
-                    cadence()
-                    itemId()
-                    modelType()
-                    name()
-                    tieredPackageConfig().validate()
-                    billableMetricId()
-                    billedInAdvance()
-                    billingCycleConfiguration()?.validate()
-                    conversionRate()
-                    currency()
-                    externalPriceId()
-                    fixedPriceQuantity()
-                    invoiceGroupingKey()
-                    invoicingCycleConfiguration()?.validate()
-                    metadata()?.validate()
-                    validated = true
+                if (validated) {
+                    return@apply
                 }
+
+                cadence()
+                itemId()
+                modelType()
+                name()
+                tieredPackageConfig().validate()
+                billableMetricId()
+                billedInAdvance()
+                billingCycleConfiguration()?.validate()
+                conversionRate()
+                currency()
+                externalPriceId()
+                fixedPriceQuantity()
+                invoiceGroupingKey()
+                invoicingCycleConfiguration()?.validate()
+                metadata()?.validate()
+                validated = true
             }
 
             fun toBuilder() = Builder().from(this)
@@ -14403,9 +14583,11 @@ constructor(
                 private var validated: Boolean = false
 
                 fun validate(): TieredPackageConfig = apply {
-                    if (!validated) {
-                        validated = true
+                    if (validated) {
+                        return@apply
                     }
+
+                    validated = true
                 }
 
                 fun toBuilder() = Builder().from(this)
@@ -14508,11 +14690,13 @@ constructor(
                 private var validated: Boolean = false
 
                 fun validate(): BillingCycleConfiguration = apply {
-                    if (!validated) {
-                        duration()
-                        durationUnit()
-                        validated = true
+                    if (validated) {
+                        return@apply
                     }
+
+                    duration()
+                    durationUnit()
+                    validated = true
                 }
 
                 fun toBuilder() = Builder().from(this)
@@ -14700,11 +14884,13 @@ constructor(
                 private var validated: Boolean = false
 
                 fun validate(): InvoicingCycleConfiguration = apply {
-                    if (!validated) {
-                        duration()
-                        durationUnit()
-                        validated = true
+                    if (validated) {
+                        return@apply
                     }
+
+                    duration()
+                    durationUnit()
+                    validated = true
                 }
 
                 fun toBuilder() = Builder().from(this)
@@ -14871,9 +15057,11 @@ constructor(
                 private var validated: Boolean = false
 
                 fun validate(): Metadata = apply {
-                    if (!validated) {
-                        validated = true
+                    if (validated) {
+                        return@apply
                     }
+
+                    validated = true
                 }
 
                 fun toBuilder() = Builder().from(this)
@@ -15168,24 +15356,26 @@ constructor(
             private var validated: Boolean = false
 
             fun validate(): NewPlanTieredWithMinimumPrice = apply {
-                if (!validated) {
-                    cadence()
-                    itemId()
-                    modelType()
-                    name()
-                    tieredWithMinimumConfig().validate()
-                    billableMetricId()
-                    billedInAdvance()
-                    billingCycleConfiguration()?.validate()
-                    conversionRate()
-                    currency()
-                    externalPriceId()
-                    fixedPriceQuantity()
-                    invoiceGroupingKey()
-                    invoicingCycleConfiguration()?.validate()
-                    metadata()?.validate()
-                    validated = true
+                if (validated) {
+                    return@apply
                 }
+
+                cadence()
+                itemId()
+                modelType()
+                name()
+                tieredWithMinimumConfig().validate()
+                billableMetricId()
+                billedInAdvance()
+                billingCycleConfiguration()?.validate()
+                conversionRate()
+                currency()
+                externalPriceId()
+                fixedPriceQuantity()
+                invoiceGroupingKey()
+                invoicingCycleConfiguration()?.validate()
+                metadata()?.validate()
+                validated = true
             }
 
             fun toBuilder() = Builder().from(this)
@@ -15611,9 +15801,11 @@ constructor(
                 private var validated: Boolean = false
 
                 fun validate(): TieredWithMinimumConfig = apply {
-                    if (!validated) {
-                        validated = true
+                    if (validated) {
+                        return@apply
                     }
+
+                    validated = true
                 }
 
                 fun toBuilder() = Builder().from(this)
@@ -15716,11 +15908,13 @@ constructor(
                 private var validated: Boolean = false
 
                 fun validate(): BillingCycleConfiguration = apply {
-                    if (!validated) {
-                        duration()
-                        durationUnit()
-                        validated = true
+                    if (validated) {
+                        return@apply
                     }
+
+                    duration()
+                    durationUnit()
+                    validated = true
                 }
 
                 fun toBuilder() = Builder().from(this)
@@ -15908,11 +16102,13 @@ constructor(
                 private var validated: Boolean = false
 
                 fun validate(): InvoicingCycleConfiguration = apply {
-                    if (!validated) {
-                        duration()
-                        durationUnit()
-                        validated = true
+                    if (validated) {
+                        return@apply
                     }
+
+                    duration()
+                    durationUnit()
+                    validated = true
                 }
 
                 fun toBuilder() = Builder().from(this)
@@ -16079,9 +16275,11 @@ constructor(
                 private var validated: Boolean = false
 
                 fun validate(): Metadata = apply {
-                    if (!validated) {
-                        validated = true
+                    if (validated) {
+                        return@apply
                     }
+
+                    validated = true
                 }
 
                 fun toBuilder() = Builder().from(this)
@@ -16374,24 +16572,26 @@ constructor(
             private var validated: Boolean = false
 
             fun validate(): NewPlanUnitWithPercentPrice = apply {
-                if (!validated) {
-                    cadence()
-                    itemId()
-                    modelType()
-                    name()
-                    unitWithPercentConfig().validate()
-                    billableMetricId()
-                    billedInAdvance()
-                    billingCycleConfiguration()?.validate()
-                    conversionRate()
-                    currency()
-                    externalPriceId()
-                    fixedPriceQuantity()
-                    invoiceGroupingKey()
-                    invoicingCycleConfiguration()?.validate()
-                    metadata()?.validate()
-                    validated = true
+                if (validated) {
+                    return@apply
                 }
+
+                cadence()
+                itemId()
+                modelType()
+                name()
+                unitWithPercentConfig().validate()
+                billableMetricId()
+                billedInAdvance()
+                billingCycleConfiguration()?.validate()
+                conversionRate()
+                currency()
+                externalPriceId()
+                fixedPriceQuantity()
+                invoiceGroupingKey()
+                invoicingCycleConfiguration()?.validate()
+                metadata()?.validate()
+                validated = true
             }
 
             fun toBuilder() = Builder().from(this)
@@ -16817,9 +17017,11 @@ constructor(
                 private var validated: Boolean = false
 
                 fun validate(): UnitWithPercentConfig = apply {
-                    if (!validated) {
-                        validated = true
+                    if (validated) {
+                        return@apply
                     }
+
+                    validated = true
                 }
 
                 fun toBuilder() = Builder().from(this)
@@ -16922,11 +17124,13 @@ constructor(
                 private var validated: Boolean = false
 
                 fun validate(): BillingCycleConfiguration = apply {
-                    if (!validated) {
-                        duration()
-                        durationUnit()
-                        validated = true
+                    if (validated) {
+                        return@apply
                     }
+
+                    duration()
+                    durationUnit()
+                    validated = true
                 }
 
                 fun toBuilder() = Builder().from(this)
@@ -17114,11 +17318,13 @@ constructor(
                 private var validated: Boolean = false
 
                 fun validate(): InvoicingCycleConfiguration = apply {
-                    if (!validated) {
-                        duration()
-                        durationUnit()
-                        validated = true
+                    if (validated) {
+                        return@apply
                     }
+
+                    duration()
+                    durationUnit()
+                    validated = true
                 }
 
                 fun toBuilder() = Builder().from(this)
@@ -17285,9 +17491,11 @@ constructor(
                 private var validated: Boolean = false
 
                 fun validate(): Metadata = apply {
-                    if (!validated) {
-                        validated = true
+                    if (validated) {
+                        return@apply
                     }
+
+                    validated = true
                 }
 
                 fun toBuilder() = Builder().from(this)
@@ -17582,24 +17790,26 @@ constructor(
             private var validated: Boolean = false
 
             fun validate(): NewPlanPackageWithAllocationPrice = apply {
-                if (!validated) {
-                    cadence()
-                    itemId()
-                    modelType()
-                    name()
-                    packageWithAllocationConfig().validate()
-                    billableMetricId()
-                    billedInAdvance()
-                    billingCycleConfiguration()?.validate()
-                    conversionRate()
-                    currency()
-                    externalPriceId()
-                    fixedPriceQuantity()
-                    invoiceGroupingKey()
-                    invoicingCycleConfiguration()?.validate()
-                    metadata()?.validate()
-                    validated = true
+                if (validated) {
+                    return@apply
                 }
+
+                cadence()
+                itemId()
+                modelType()
+                name()
+                packageWithAllocationConfig().validate()
+                billableMetricId()
+                billedInAdvance()
+                billingCycleConfiguration()?.validate()
+                conversionRate()
+                currency()
+                externalPriceId()
+                fixedPriceQuantity()
+                invoiceGroupingKey()
+                invoicingCycleConfiguration()?.validate()
+                metadata()?.validate()
+                validated = true
             }
 
             fun toBuilder() = Builder().from(this)
@@ -18028,9 +18238,11 @@ constructor(
                 private var validated: Boolean = false
 
                 fun validate(): PackageWithAllocationConfig = apply {
-                    if (!validated) {
-                        validated = true
+                    if (validated) {
+                        return@apply
                     }
+
+                    validated = true
                 }
 
                 fun toBuilder() = Builder().from(this)
@@ -18134,11 +18346,13 @@ constructor(
                 private var validated: Boolean = false
 
                 fun validate(): BillingCycleConfiguration = apply {
-                    if (!validated) {
-                        duration()
-                        durationUnit()
-                        validated = true
+                    if (validated) {
+                        return@apply
                     }
+
+                    duration()
+                    durationUnit()
+                    validated = true
                 }
 
                 fun toBuilder() = Builder().from(this)
@@ -18326,11 +18540,13 @@ constructor(
                 private var validated: Boolean = false
 
                 fun validate(): InvoicingCycleConfiguration = apply {
-                    if (!validated) {
-                        duration()
-                        durationUnit()
-                        validated = true
+                    if (validated) {
+                        return@apply
                     }
+
+                    duration()
+                    durationUnit()
+                    validated = true
                 }
 
                 fun toBuilder() = Builder().from(this)
@@ -18497,9 +18713,11 @@ constructor(
                 private var validated: Boolean = false
 
                 fun validate(): Metadata = apply {
-                    if (!validated) {
-                        validated = true
+                    if (validated) {
+                        return@apply
                     }
+
+                    validated = true
                 }
 
                 fun toBuilder() = Builder().from(this)
@@ -18794,24 +19012,26 @@ constructor(
             private var validated: Boolean = false
 
             fun validate(): NewPlanTierWithProrationPrice = apply {
-                if (!validated) {
-                    cadence()
-                    itemId()
-                    modelType()
-                    name()
-                    tieredWithProrationConfig().validate()
-                    billableMetricId()
-                    billedInAdvance()
-                    billingCycleConfiguration()?.validate()
-                    conversionRate()
-                    currency()
-                    externalPriceId()
-                    fixedPriceQuantity()
-                    invoiceGroupingKey()
-                    invoicingCycleConfiguration()?.validate()
-                    metadata()?.validate()
-                    validated = true
+                if (validated) {
+                    return@apply
                 }
+
+                cadence()
+                itemId()
+                modelType()
+                name()
+                tieredWithProrationConfig().validate()
+                billableMetricId()
+                billedInAdvance()
+                billingCycleConfiguration()?.validate()
+                conversionRate()
+                currency()
+                externalPriceId()
+                fixedPriceQuantity()
+                invoiceGroupingKey()
+                invoicingCycleConfiguration()?.validate()
+                metadata()?.validate()
+                validated = true
             }
 
             fun toBuilder() = Builder().from(this)
@@ -19238,9 +19458,11 @@ constructor(
                 private var validated: Boolean = false
 
                 fun validate(): TieredWithProrationConfig = apply {
-                    if (!validated) {
-                        validated = true
+                    if (validated) {
+                        return@apply
                     }
+
+                    validated = true
                 }
 
                 fun toBuilder() = Builder().from(this)
@@ -19344,11 +19566,13 @@ constructor(
                 private var validated: Boolean = false
 
                 fun validate(): BillingCycleConfiguration = apply {
-                    if (!validated) {
-                        duration()
-                        durationUnit()
-                        validated = true
+                    if (validated) {
+                        return@apply
                     }
+
+                    duration()
+                    durationUnit()
+                    validated = true
                 }
 
                 fun toBuilder() = Builder().from(this)
@@ -19536,11 +19760,13 @@ constructor(
                 private var validated: Boolean = false
 
                 fun validate(): InvoicingCycleConfiguration = apply {
-                    if (!validated) {
-                        duration()
-                        durationUnit()
-                        validated = true
+                    if (validated) {
+                        return@apply
                     }
+
+                    duration()
+                    durationUnit()
+                    validated = true
                 }
 
                 fun toBuilder() = Builder().from(this)
@@ -19707,9 +19933,11 @@ constructor(
                 private var validated: Boolean = false
 
                 fun validate(): Metadata = apply {
-                    if (!validated) {
-                        validated = true
+                    if (validated) {
+                        return@apply
                     }
+
+                    validated = true
                 }
 
                 fun toBuilder() = Builder().from(this)
@@ -20004,24 +20232,26 @@ constructor(
             private var validated: Boolean = false
 
             fun validate(): NewPlanUnitWithProrationPrice = apply {
-                if (!validated) {
-                    cadence()
-                    itemId()
-                    modelType()
-                    name()
-                    unitWithProrationConfig().validate()
-                    billableMetricId()
-                    billedInAdvance()
-                    billingCycleConfiguration()?.validate()
-                    conversionRate()
-                    currency()
-                    externalPriceId()
-                    fixedPriceQuantity()
-                    invoiceGroupingKey()
-                    invoicingCycleConfiguration()?.validate()
-                    metadata()?.validate()
-                    validated = true
+                if (validated) {
+                    return@apply
                 }
+
+                cadence()
+                itemId()
+                modelType()
+                name()
+                unitWithProrationConfig().validate()
+                billableMetricId()
+                billedInAdvance()
+                billingCycleConfiguration()?.validate()
+                conversionRate()
+                currency()
+                externalPriceId()
+                fixedPriceQuantity()
+                invoiceGroupingKey()
+                invoicingCycleConfiguration()?.validate()
+                metadata()?.validate()
+                validated = true
             }
 
             fun toBuilder() = Builder().from(this)
@@ -20447,9 +20677,11 @@ constructor(
                 private var validated: Boolean = false
 
                 fun validate(): UnitWithProrationConfig = apply {
-                    if (!validated) {
-                        validated = true
+                    if (validated) {
+                        return@apply
                     }
+
+                    validated = true
                 }
 
                 fun toBuilder() = Builder().from(this)
@@ -20552,11 +20784,13 @@ constructor(
                 private var validated: Boolean = false
 
                 fun validate(): BillingCycleConfiguration = apply {
-                    if (!validated) {
-                        duration()
-                        durationUnit()
-                        validated = true
+                    if (validated) {
+                        return@apply
                     }
+
+                    duration()
+                    durationUnit()
+                    validated = true
                 }
 
                 fun toBuilder() = Builder().from(this)
@@ -20744,11 +20978,13 @@ constructor(
                 private var validated: Boolean = false
 
                 fun validate(): InvoicingCycleConfiguration = apply {
-                    if (!validated) {
-                        duration()
-                        durationUnit()
-                        validated = true
+                    if (validated) {
+                        return@apply
                     }
+
+                    duration()
+                    durationUnit()
+                    validated = true
                 }
 
                 fun toBuilder() = Builder().from(this)
@@ -20915,9 +21151,11 @@ constructor(
                 private var validated: Boolean = false
 
                 fun validate(): Metadata = apply {
-                    if (!validated) {
-                        validated = true
+                    if (validated) {
+                        return@apply
                     }
+
+                    validated = true
                 }
 
                 fun toBuilder() = Builder().from(this)
@@ -21212,24 +21450,26 @@ constructor(
             private var validated: Boolean = false
 
             fun validate(): NewPlanGroupedAllocationPrice = apply {
-                if (!validated) {
-                    cadence()
-                    groupedAllocationConfig().validate()
-                    itemId()
-                    modelType()
-                    name()
-                    billableMetricId()
-                    billedInAdvance()
-                    billingCycleConfiguration()?.validate()
-                    conversionRate()
-                    currency()
-                    externalPriceId()
-                    fixedPriceQuantity()
-                    invoiceGroupingKey()
-                    invoicingCycleConfiguration()?.validate()
-                    metadata()?.validate()
-                    validated = true
+                if (validated) {
+                    return@apply
                 }
+
+                cadence()
+                groupedAllocationConfig().validate()
+                itemId()
+                modelType()
+                name()
+                billableMetricId()
+                billedInAdvance()
+                billingCycleConfiguration()?.validate()
+                conversionRate()
+                currency()
+                externalPriceId()
+                fixedPriceQuantity()
+                invoiceGroupingKey()
+                invoicingCycleConfiguration()?.validate()
+                metadata()?.validate()
+                validated = true
             }
 
             fun toBuilder() = Builder().from(this)
@@ -21604,9 +21844,11 @@ constructor(
                 private var validated: Boolean = false
 
                 fun validate(): GroupedAllocationConfig = apply {
-                    if (!validated) {
-                        validated = true
+                    if (validated) {
+                        return@apply
                     }
+
+                    validated = true
                 }
 
                 fun toBuilder() = Builder().from(this)
@@ -21760,11 +22002,13 @@ constructor(
                 private var validated: Boolean = false
 
                 fun validate(): BillingCycleConfiguration = apply {
-                    if (!validated) {
-                        duration()
-                        durationUnit()
-                        validated = true
+                    if (validated) {
+                        return@apply
                     }
+
+                    duration()
+                    durationUnit()
+                    validated = true
                 }
 
                 fun toBuilder() = Builder().from(this)
@@ -21952,11 +22196,13 @@ constructor(
                 private var validated: Boolean = false
 
                 fun validate(): InvoicingCycleConfiguration = apply {
-                    if (!validated) {
-                        duration()
-                        durationUnit()
-                        validated = true
+                    if (validated) {
+                        return@apply
                     }
+
+                    duration()
+                    durationUnit()
+                    validated = true
                 }
 
                 fun toBuilder() = Builder().from(this)
@@ -22123,9 +22369,11 @@ constructor(
                 private var validated: Boolean = false
 
                 fun validate(): Metadata = apply {
-                    if (!validated) {
-                        validated = true
+                    if (validated) {
+                        return@apply
                     }
+
+                    validated = true
                 }
 
                 fun toBuilder() = Builder().from(this)
@@ -22421,24 +22669,26 @@ constructor(
             private var validated: Boolean = false
 
             fun validate(): NewPlanGroupedWithProratedMinimumPrice = apply {
-                if (!validated) {
-                    cadence()
-                    groupedWithProratedMinimumConfig().validate()
-                    itemId()
-                    modelType()
-                    name()
-                    billableMetricId()
-                    billedInAdvance()
-                    billingCycleConfiguration()?.validate()
-                    conversionRate()
-                    currency()
-                    externalPriceId()
-                    fixedPriceQuantity()
-                    invoiceGroupingKey()
-                    invoicingCycleConfiguration()?.validate()
-                    metadata()?.validate()
-                    validated = true
+                if (validated) {
+                    return@apply
                 }
+
+                cadence()
+                groupedWithProratedMinimumConfig().validate()
+                itemId()
+                modelType()
+                name()
+                billableMetricId()
+                billedInAdvance()
+                billingCycleConfiguration()?.validate()
+                conversionRate()
+                currency()
+                externalPriceId()
+                fixedPriceQuantity()
+                invoiceGroupingKey()
+                invoicingCycleConfiguration()?.validate()
+                metadata()?.validate()
+                validated = true
             }
 
             fun toBuilder() = Builder().from(this)
@@ -22819,9 +23069,11 @@ constructor(
                 private var validated: Boolean = false
 
                 fun validate(): GroupedWithProratedMinimumConfig = apply {
-                    if (!validated) {
-                        validated = true
+                    if (validated) {
+                        return@apply
                     }
+
+                    validated = true
                 }
 
                 fun toBuilder() = Builder().from(this)
@@ -22977,11 +23229,13 @@ constructor(
                 private var validated: Boolean = false
 
                 fun validate(): BillingCycleConfiguration = apply {
-                    if (!validated) {
-                        duration()
-                        durationUnit()
-                        validated = true
+                    if (validated) {
+                        return@apply
                     }
+
+                    duration()
+                    durationUnit()
+                    validated = true
                 }
 
                 fun toBuilder() = Builder().from(this)
@@ -23169,11 +23423,13 @@ constructor(
                 private var validated: Boolean = false
 
                 fun validate(): InvoicingCycleConfiguration = apply {
-                    if (!validated) {
-                        duration()
-                        durationUnit()
-                        validated = true
+                    if (validated) {
+                        return@apply
                     }
+
+                    duration()
+                    durationUnit()
+                    validated = true
                 }
 
                 fun toBuilder() = Builder().from(this)
@@ -23340,9 +23596,11 @@ constructor(
                 private var validated: Boolean = false
 
                 fun validate(): Metadata = apply {
-                    if (!validated) {
-                        validated = true
+                    if (validated) {
+                        return@apply
                     }
+
+                    validated = true
                 }
 
                 fun toBuilder() = Builder().from(this)
@@ -23638,24 +23896,26 @@ constructor(
             private var validated: Boolean = false
 
             fun validate(): NewPlanGroupedWithMeteredMinimumPrice = apply {
-                if (!validated) {
-                    cadence()
-                    groupedWithMeteredMinimumConfig().validate()
-                    itemId()
-                    modelType()
-                    name()
-                    billableMetricId()
-                    billedInAdvance()
-                    billingCycleConfiguration()?.validate()
-                    conversionRate()
-                    currency()
-                    externalPriceId()
-                    fixedPriceQuantity()
-                    invoiceGroupingKey()
-                    invoicingCycleConfiguration()?.validate()
-                    metadata()?.validate()
-                    validated = true
+                if (validated) {
+                    return@apply
                 }
+
+                cadence()
+                groupedWithMeteredMinimumConfig().validate()
+                itemId()
+                modelType()
+                name()
+                billableMetricId()
+                billedInAdvance()
+                billingCycleConfiguration()?.validate()
+                conversionRate()
+                currency()
+                externalPriceId()
+                fixedPriceQuantity()
+                invoiceGroupingKey()
+                invoicingCycleConfiguration()?.validate()
+                metadata()?.validate()
+                validated = true
             }
 
             fun toBuilder() = Builder().from(this)
@@ -24034,9 +24294,11 @@ constructor(
                 private var validated: Boolean = false
 
                 fun validate(): GroupedWithMeteredMinimumConfig = apply {
-                    if (!validated) {
-                        validated = true
+                    if (validated) {
+                        return@apply
                     }
+
+                    validated = true
                 }
 
                 fun toBuilder() = Builder().from(this)
@@ -24192,11 +24454,13 @@ constructor(
                 private var validated: Boolean = false
 
                 fun validate(): BillingCycleConfiguration = apply {
-                    if (!validated) {
-                        duration()
-                        durationUnit()
-                        validated = true
+                    if (validated) {
+                        return@apply
                     }
+
+                    duration()
+                    durationUnit()
+                    validated = true
                 }
 
                 fun toBuilder() = Builder().from(this)
@@ -24384,11 +24648,13 @@ constructor(
                 private var validated: Boolean = false
 
                 fun validate(): InvoicingCycleConfiguration = apply {
-                    if (!validated) {
-                        duration()
-                        durationUnit()
-                        validated = true
+                    if (validated) {
+                        return@apply
                     }
+
+                    duration()
+                    durationUnit()
+                    validated = true
                 }
 
                 fun toBuilder() = Builder().from(this)
@@ -24555,9 +24821,11 @@ constructor(
                 private var validated: Boolean = false
 
                 fun validate(): Metadata = apply {
-                    if (!validated) {
-                        validated = true
+                    if (validated) {
+                        return@apply
                     }
+
+                    validated = true
                 }
 
                 fun toBuilder() = Builder().from(this)
@@ -24852,24 +25120,26 @@ constructor(
             private var validated: Boolean = false
 
             fun validate(): NewPlanMatrixWithDisplayNamePrice = apply {
-                if (!validated) {
-                    cadence()
-                    itemId()
-                    matrixWithDisplayNameConfig().validate()
-                    modelType()
-                    name()
-                    billableMetricId()
-                    billedInAdvance()
-                    billingCycleConfiguration()?.validate()
-                    conversionRate()
-                    currency()
-                    externalPriceId()
-                    fixedPriceQuantity()
-                    invoiceGroupingKey()
-                    invoicingCycleConfiguration()?.validate()
-                    metadata()?.validate()
-                    validated = true
+                if (validated) {
+                    return@apply
                 }
+
+                cadence()
+                itemId()
+                matrixWithDisplayNameConfig().validate()
+                modelType()
+                name()
+                billableMetricId()
+                billedInAdvance()
+                billingCycleConfiguration()?.validate()
+                conversionRate()
+                currency()
+                externalPriceId()
+                fixedPriceQuantity()
+                invoiceGroupingKey()
+                invoicingCycleConfiguration()?.validate()
+                metadata()?.validate()
+                validated = true
             }
 
             fun toBuilder() = Builder().from(this)
@@ -25247,9 +25517,11 @@ constructor(
                 private var validated: Boolean = false
 
                 fun validate(): MatrixWithDisplayNameConfig = apply {
-                    if (!validated) {
-                        validated = true
+                    if (validated) {
+                        return@apply
                     }
+
+                    validated = true
                 }
 
                 fun toBuilder() = Builder().from(this)
@@ -25404,11 +25676,13 @@ constructor(
                 private var validated: Boolean = false
 
                 fun validate(): BillingCycleConfiguration = apply {
-                    if (!validated) {
-                        duration()
-                        durationUnit()
-                        validated = true
+                    if (validated) {
+                        return@apply
                     }
+
+                    duration()
+                    durationUnit()
+                    validated = true
                 }
 
                 fun toBuilder() = Builder().from(this)
@@ -25596,11 +25870,13 @@ constructor(
                 private var validated: Boolean = false
 
                 fun validate(): InvoicingCycleConfiguration = apply {
-                    if (!validated) {
-                        duration()
-                        durationUnit()
-                        validated = true
+                    if (validated) {
+                        return@apply
                     }
+
+                    duration()
+                    durationUnit()
+                    validated = true
                 }
 
                 fun toBuilder() = Builder().from(this)
@@ -25767,9 +26043,11 @@ constructor(
                 private var validated: Boolean = false
 
                 fun validate(): Metadata = apply {
-                    if (!validated) {
-                        validated = true
+                    if (validated) {
+                        return@apply
                     }
+
+                    validated = true
                 }
 
                 fun toBuilder() = Builder().from(this)
@@ -26064,24 +26342,26 @@ constructor(
             private var validated: Boolean = false
 
             fun validate(): NewPlanBulkWithProrationPrice = apply {
-                if (!validated) {
-                    bulkWithProrationConfig().validate()
-                    cadence()
-                    itemId()
-                    modelType()
-                    name()
-                    billableMetricId()
-                    billedInAdvance()
-                    billingCycleConfiguration()?.validate()
-                    conversionRate()
-                    currency()
-                    externalPriceId()
-                    fixedPriceQuantity()
-                    invoiceGroupingKey()
-                    invoicingCycleConfiguration()?.validate()
-                    metadata()?.validate()
-                    validated = true
+                if (validated) {
+                    return@apply
                 }
+
+                bulkWithProrationConfig().validate()
+                cadence()
+                itemId()
+                modelType()
+                name()
+                billableMetricId()
+                billedInAdvance()
+                billingCycleConfiguration()?.validate()
+                conversionRate()
+                currency()
+                externalPriceId()
+                fixedPriceQuantity()
+                invoiceGroupingKey()
+                invoicingCycleConfiguration()?.validate()
+                metadata()?.validate()
+                validated = true
             }
 
             fun toBuilder() = Builder().from(this)
@@ -26375,9 +26655,11 @@ constructor(
                 private var validated: Boolean = false
 
                 fun validate(): BulkWithProrationConfig = apply {
-                    if (!validated) {
-                        validated = true
+                    if (validated) {
+                        return@apply
                     }
+
+                    validated = true
                 }
 
                 fun toBuilder() = Builder().from(this)
@@ -26612,11 +26894,13 @@ constructor(
                 private var validated: Boolean = false
 
                 fun validate(): BillingCycleConfiguration = apply {
-                    if (!validated) {
-                        duration()
-                        durationUnit()
-                        validated = true
+                    if (validated) {
+                        return@apply
                     }
+
+                    duration()
+                    durationUnit()
+                    validated = true
                 }
 
                 fun toBuilder() = Builder().from(this)
@@ -26804,11 +27088,13 @@ constructor(
                 private var validated: Boolean = false
 
                 fun validate(): InvoicingCycleConfiguration = apply {
-                    if (!validated) {
-                        duration()
-                        durationUnit()
-                        validated = true
+                    if (validated) {
+                        return@apply
                     }
+
+                    duration()
+                    durationUnit()
+                    validated = true
                 }
 
                 fun toBuilder() = Builder().from(this)
@@ -26975,9 +27261,11 @@ constructor(
                 private var validated: Boolean = false
 
                 fun validate(): Metadata = apply {
-                    if (!validated) {
-                        validated = true
+                    if (validated) {
+                        return@apply
                     }
+
+                    validated = true
                 }
 
                 fun toBuilder() = Builder().from(this)
@@ -27272,24 +27560,26 @@ constructor(
             private var validated: Boolean = false
 
             fun validate(): NewPlanGroupedTieredPackagePrice = apply {
-                if (!validated) {
-                    cadence()
-                    groupedTieredPackageConfig().validate()
-                    itemId()
-                    modelType()
-                    name()
-                    billableMetricId()
-                    billedInAdvance()
-                    billingCycleConfiguration()?.validate()
-                    conversionRate()
-                    currency()
-                    externalPriceId()
-                    fixedPriceQuantity()
-                    invoiceGroupingKey()
-                    invoicingCycleConfiguration()?.validate()
-                    metadata()?.validate()
-                    validated = true
+                if (validated) {
+                    return@apply
                 }
+
+                cadence()
+                groupedTieredPackageConfig().validate()
+                itemId()
+                modelType()
+                name()
+                billableMetricId()
+                billedInAdvance()
+                billingCycleConfiguration()?.validate()
+                conversionRate()
+                currency()
+                externalPriceId()
+                fixedPriceQuantity()
+                invoiceGroupingKey()
+                invoicingCycleConfiguration()?.validate()
+                metadata()?.validate()
+                validated = true
             }
 
             fun toBuilder() = Builder().from(this)
@@ -27667,9 +27957,11 @@ constructor(
                 private var validated: Boolean = false
 
                 fun validate(): GroupedTieredPackageConfig = apply {
-                    if (!validated) {
-                        validated = true
+                    if (validated) {
+                        return@apply
                     }
+
+                    validated = true
                 }
 
                 fun toBuilder() = Builder().from(this)
@@ -27824,11 +28116,13 @@ constructor(
                 private var validated: Boolean = false
 
                 fun validate(): BillingCycleConfiguration = apply {
-                    if (!validated) {
-                        duration()
-                        durationUnit()
-                        validated = true
+                    if (validated) {
+                        return@apply
                     }
+
+                    duration()
+                    durationUnit()
+                    validated = true
                 }
 
                 fun toBuilder() = Builder().from(this)
@@ -28016,11 +28310,13 @@ constructor(
                 private var validated: Boolean = false
 
                 fun validate(): InvoicingCycleConfiguration = apply {
-                    if (!validated) {
-                        duration()
-                        durationUnit()
-                        validated = true
+                    if (validated) {
+                        return@apply
                     }
+
+                    duration()
+                    durationUnit()
+                    validated = true
                 }
 
                 fun toBuilder() = Builder().from(this)
@@ -28187,9 +28483,11 @@ constructor(
                 private var validated: Boolean = false
 
                 fun validate(): Metadata = apply {
-                    if (!validated) {
-                        validated = true
+                    if (validated) {
+                        return@apply
                     }
+
+                    validated = true
                 }
 
                 fun toBuilder() = Builder().from(this)
@@ -28288,9 +28586,11 @@ constructor(
         private var validated: Boolean = false
 
         fun validate(): Metadata = apply {
-            if (!validated) {
-                validated = true
+            if (validated) {
+                return@apply
             }
+
+            validated = true
         }
 
         fun toBuilder() = Builder().from(this)

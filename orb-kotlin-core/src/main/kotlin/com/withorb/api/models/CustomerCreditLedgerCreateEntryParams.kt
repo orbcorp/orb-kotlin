@@ -832,18 +832,20 @@ constructor(
         private var validated: Boolean = false
 
         fun validate(): AddIncrementCreditLedgerEntryRequestParams = apply {
-            if (!validated) {
-                amount()
-                entryType()
-                currency()
-                description()
-                effectiveDate()
-                expiryDate()
-                invoiceSettings()?.validate()
-                metadata()?.validate()
-                perUnitCostBasis()
-                validated = true
+            if (validated) {
+                return@apply
             }
+
+            amount()
+            entryType()
+            currency()
+            description()
+            effectiveDate()
+            expiryDate()
+            invoiceSettings()?.validate()
+            metadata()?.validate()
+            perUnitCostBasis()
+            validated = true
         }
 
         fun toBuilder() = Builder().from(this)
@@ -1161,13 +1163,15 @@ constructor(
             private var validated: Boolean = false
 
             fun validate(): InvoiceSettings = apply {
-                if (!validated) {
-                    autoCollection()
-                    netTerms()
-                    memo()
-                    requireSuccessfulPayment()
-                    validated = true
+                if (validated) {
+                    return@apply
                 }
+
+                autoCollection()
+                netTerms()
+                memo()
+                requireSuccessfulPayment()
+                validated = true
             }
 
             fun toBuilder() = Builder().from(this)
@@ -1315,9 +1319,11 @@ constructor(
             private var validated: Boolean = false
 
             fun validate(): Metadata = apply {
-                if (!validated) {
-                    validated = true
+                if (validated) {
+                    return@apply
                 }
+
+                validated = true
             }
 
             fun toBuilder() = Builder().from(this)
@@ -1485,14 +1491,16 @@ constructor(
         private var validated: Boolean = false
 
         fun validate(): AddDecrementCreditLedgerEntryRequestParams = apply {
-            if (!validated) {
-                amount()
-                entryType()
-                currency()
-                description()
-                metadata()?.validate()
-                validated = true
+            if (validated) {
+                return@apply
             }
+
+            amount()
+            entryType()
+            currency()
+            description()
+            metadata()?.validate()
+            validated = true
         }
 
         fun toBuilder() = Builder().from(this)
@@ -1683,9 +1691,11 @@ constructor(
             private var validated: Boolean = false
 
             fun validate(): Metadata = apply {
-                if (!validated) {
-                    validated = true
+                if (validated) {
+                    return@apply
                 }
+
+                validated = true
             }
 
             fun toBuilder() = Builder().from(this)
@@ -1896,17 +1906,19 @@ constructor(
         private var validated: Boolean = false
 
         fun validate(): AddExpirationChangeCreditLedgerEntryRequestParams = apply {
-            if (!validated) {
-                entryType()
-                expiryDate()
-                targetExpiryDate()
-                amount()
-                blockId()
-                currency()
-                description()
-                metadata()?.validate()
-                validated = true
+            if (validated) {
+                return@apply
             }
+
+            entryType()
+            expiryDate()
+            targetExpiryDate()
+            amount()
+            blockId()
+            currency()
+            description()
+            metadata()?.validate()
+            validated = true
         }
 
         fun toBuilder() = Builder().from(this)
@@ -2152,9 +2164,11 @@ constructor(
             private var validated: Boolean = false
 
             fun validate(): Metadata = apply {
-                if (!validated) {
-                    validated = true
+                if (validated) {
+                    return@apply
                 }
+
+                validated = true
             }
 
             fun toBuilder() = Builder().from(this)
@@ -2342,16 +2356,18 @@ constructor(
         private var validated: Boolean = false
 
         fun validate(): AddVoidCreditLedgerEntryRequestParams = apply {
-            if (!validated) {
-                amount()
-                blockId()
-                entryType()
-                currency()
-                description()
-                metadata()?.validate()
-                voidReason()
-                validated = true
+            if (validated) {
+                return@apply
             }
+
+            amount()
+            blockId()
+            entryType()
+            currency()
+            description()
+            metadata()?.validate()
+            voidReason()
+            validated = true
         }
 
         fun toBuilder() = Builder().from(this)
@@ -2561,9 +2577,11 @@ constructor(
             private var validated: Boolean = false
 
             fun validate(): Metadata = apply {
-                if (!validated) {
-                    validated = true
+                if (validated) {
+                    return@apply
                 }
+
+                validated = true
             }
 
             fun toBuilder() = Builder().from(this)
@@ -2791,15 +2809,17 @@ constructor(
         private var validated: Boolean = false
 
         fun validate(): AddAmendmentCreditLedgerEntryRequestParams = apply {
-            if (!validated) {
-                amount()
-                blockId()
-                entryType()
-                currency()
-                description()
-                metadata()?.validate()
-                validated = true
+            if (validated) {
+                return@apply
             }
+
+            amount()
+            blockId()
+            entryType()
+            currency()
+            description()
+            metadata()?.validate()
+            validated = true
         }
 
         fun toBuilder() = Builder().from(this)
@@ -2999,9 +3019,11 @@ constructor(
             private var validated: Boolean = false
 
             fun validate(): Metadata = apply {
-                if (!validated) {
-                    validated = true
+                if (validated) {
+                    return@apply
                 }
+
+                validated = true
             }
 
             fun toBuilder() = Builder().from(this)

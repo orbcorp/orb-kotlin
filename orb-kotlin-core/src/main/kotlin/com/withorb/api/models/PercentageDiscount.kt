@@ -75,13 +75,15 @@ private constructor(
     private var validated: Boolean = false
 
     fun validate(): PercentageDiscount = apply {
-        if (!validated) {
-            appliesToPriceIds()
-            discountType()
-            percentageDiscount()
-            reason()
-            validated = true
+        if (validated) {
+            return@apply
         }
+
+        appliesToPriceIds()
+        discountType()
+        percentageDiscount()
+        reason()
+        validated = true
     }
 
     fun toBuilder() = Builder().from(this)

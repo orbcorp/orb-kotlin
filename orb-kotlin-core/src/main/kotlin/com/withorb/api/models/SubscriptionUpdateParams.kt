@@ -220,14 +220,16 @@ constructor(
         private var validated: Boolean = false
 
         fun validate(): SubscriptionUpdateBody = apply {
-            if (!validated) {
-                autoCollection()
-                defaultInvoiceMemo()
-                invoicingThreshold()
-                metadata()?.validate()
-                netTerms()
-                validated = true
+            if (validated) {
+                return@apply
             }
+
+            autoCollection()
+            defaultInvoiceMemo()
+            invoicingThreshold()
+            metadata()?.validate()
+            netTerms()
+            validated = true
         }
 
         fun toBuilder() = Builder().from(this)
@@ -659,9 +661,11 @@ constructor(
         private var validated: Boolean = false
 
         fun validate(): Metadata = apply {
-            if (!validated) {
-                validated = true
+            if (validated) {
+                return@apply
             }
+
+            validated = true
         }
 
         fun toBuilder() = Builder().from(this)

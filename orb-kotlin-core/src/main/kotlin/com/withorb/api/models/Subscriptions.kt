@@ -46,11 +46,13 @@ private constructor(
     private var validated: Boolean = false
 
     fun validate(): Subscriptions = apply {
-        if (!validated) {
-            data().forEach { it.validate() }
-            paginationMetadata().validate()
-            validated = true
+        if (validated) {
+            return@apply
         }
+
+        data().forEach { it.validate() }
+        paginationMetadata().validate()
+        validated = true
     }
 
     fun toBuilder() = Builder().from(this)

@@ -116,12 +116,14 @@ constructor(
         private var validated: Boolean = false
 
         fun validate(): InvoiceMarkPaidBody = apply {
-            if (!validated) {
-                paymentReceivedDate()
-                externalId()
-                notes()
-                validated = true
+            if (validated) {
+                return@apply
             }
+
+            paymentReceivedDate()
+            externalId()
+            notes()
+            validated = true
         }
 
         fun toBuilder() = Builder().from(this)

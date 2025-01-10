@@ -82,10 +82,12 @@ constructor(
         private var validated: Boolean = false
 
         fun validate(): SubscriptionUnscheduleFixedFeeQuantityUpdatesBody = apply {
-            if (!validated) {
-                priceId()
-                validated = true
+            if (validated) {
+                return@apply
             }
+
+            priceId()
+            validated = true
         }
 
         fun toBuilder() = Builder().from(this)

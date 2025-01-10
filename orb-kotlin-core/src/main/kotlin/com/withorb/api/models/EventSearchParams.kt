@@ -157,12 +157,14 @@ constructor(
         private var validated: Boolean = false
 
         fun validate(): EventSearchBody = apply {
-            if (!validated) {
-                eventIds()
-                timeframeEnd()
-                timeframeStart()
-                validated = true
+            if (validated) {
+                return@apply
             }
+
+            eventIds()
+            timeframeEnd()
+            timeframeStart()
+            validated = true
         }
 
         fun toBuilder() = Builder().from(this)

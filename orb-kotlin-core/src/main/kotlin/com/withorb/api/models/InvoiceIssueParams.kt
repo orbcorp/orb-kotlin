@@ -105,10 +105,12 @@ constructor(
         private var validated: Boolean = false
 
         fun validate(): InvoiceIssueBody = apply {
-            if (!validated) {
-                synchronous()
-                validated = true
+            if (validated) {
+                return@apply
             }
+
+            synchronous()
+            validated = true
         }
 
         fun toBuilder() = Builder().from(this)

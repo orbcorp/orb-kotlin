@@ -268,16 +268,18 @@ constructor(
         private var validated: Boolean = false
 
         fun validate(): EventBackfillCreateBody = apply {
-            if (!validated) {
-                timeframeEnd()
-                timeframeStart()
-                closeTime()
-                customerId()
-                deprecationFilter()
-                externalCustomerId()
-                replaceExistingEvents()
-                validated = true
+            if (validated) {
+                return@apply
             }
+
+            timeframeEnd()
+            timeframeStart()
+            closeTime()
+            customerId()
+            deprecationFilter()
+            externalCustomerId()
+            replaceExistingEvents()
+            validated = true
         }
 
         fun toBuilder() = Builder().from(this)

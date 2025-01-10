@@ -170,13 +170,15 @@ constructor(
         private var validated: Boolean = false
 
         fun validate(): SubscriptionUpdateFixedFeeQuantityBody = apply {
-            if (!validated) {
-                priceId()
-                quantity()
-                changeOption()
-                effectiveDate()
-                validated = true
+            if (validated) {
+                return@apply
             }
+
+            priceId()
+            quantity()
+            changeOption()
+            effectiveDate()
+            validated = true
         }
 
         fun toBuilder() = Builder().from(this)
