@@ -37,10 +37,12 @@ private constructor(
     private var validated: Boolean = false
 
     fun validate(): EventVolumes = apply {
-        if (!validated) {
-            data().forEach { it.validate() }
-            validated = true
+        if (validated) {
+            return@apply
         }
+
+        data().forEach { it.validate() }
+        validated = true
     }
 
     fun toBuilder() = Builder().from(this)
@@ -150,12 +152,14 @@ private constructor(
         private var validated: Boolean = false
 
         fun validate(): Data = apply {
-            if (!validated) {
-                count()
-                timeframeEnd()
-                timeframeStart()
-                validated = true
+            if (validated) {
+                return@apply
             }
+
+            count()
+            timeframeEnd()
+            timeframeStart()
+            validated = true
         }
 
         fun toBuilder() = Builder().from(this)

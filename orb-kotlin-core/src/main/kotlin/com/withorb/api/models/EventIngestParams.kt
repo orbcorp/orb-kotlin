@@ -266,10 +266,12 @@ constructor(
         private var validated: Boolean = false
 
         fun validate(): EventIngestBody = apply {
-            if (!validated) {
-                events().forEach { it.validate() }
-                validated = true
+            if (validated) {
+                return@apply
             }
+
+            events().forEach { it.validate() }
+            validated = true
         }
 
         fun toBuilder() = Builder().from(this)
@@ -613,14 +615,16 @@ constructor(
         private var validated: Boolean = false
 
         fun validate(): Event = apply {
-            if (!validated) {
-                eventName()
-                idempotencyKey()
-                timestamp()
-                customerId()
-                externalCustomerId()
-                validated = true
+            if (validated) {
+                return@apply
             }
+
+            eventName()
+            idempotencyKey()
+            timestamp()
+            customerId()
+            externalCustomerId()
+            validated = true
         }
 
         fun toBuilder() = Builder().from(this)

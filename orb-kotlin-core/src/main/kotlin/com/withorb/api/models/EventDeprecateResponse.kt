@@ -38,10 +38,12 @@ private constructor(
     private var validated: Boolean = false
 
     fun validate(): EventDeprecateResponse = apply {
-        if (!validated) {
-            deprecated()
-            validated = true
+        if (validated) {
+            return@apply
         }
+
+        deprecated()
+        validated = true
     }
 
     fun toBuilder() = Builder().from(this)

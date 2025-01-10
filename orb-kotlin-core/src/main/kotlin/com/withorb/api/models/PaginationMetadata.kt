@@ -43,11 +43,13 @@ private constructor(
     private var validated: Boolean = false
 
     fun validate(): PaginationMetadata = apply {
-        if (!validated) {
-            hasMore()
-            nextCursor()
-            validated = true
+        if (validated) {
+            return@apply
         }
+
+        hasMore()
+        nextCursor()
+        validated = true
     }
 
     fun toBuilder() = Builder().from(this)

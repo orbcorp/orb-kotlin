@@ -165,16 +165,18 @@ private constructor(
     private var validated: Boolean = false
 
     fun validate(): Coupon = apply {
-        if (!validated) {
-            id()
-            archivedAt()
-            discount()
-            durationInMonths()
-            maxRedemptions()
-            redemptionCode()
-            timesRedeemed()
-            validated = true
+        if (validated) {
+            return@apply
         }
+
+        id()
+        archivedAt()
+        discount().validate()
+        durationInMonths()
+        maxRedemptions()
+        redemptionCode()
+        timesRedeemed()
+        validated = true
     }
 
     fun toBuilder() = Builder().from(this)
@@ -335,8 +337,6 @@ private constructor(
         private val _json: JsonValue? = null,
     ) {
 
-        private var validated: Boolean = false
-
         fun percentageDiscount(): PercentageDiscount? = percentageDiscount
 
         fun amountDiscount(): AmountDiscount? = amountDiscount
@@ -360,15 +360,25 @@ private constructor(
             }
         }
 
+        private var validated: Boolean = false
+
         fun validate(): Discount = apply {
-            if (!validated) {
-                if (percentageDiscount == null && amountDiscount == null) {
-                    throw OrbInvalidDataException("Unknown Discount: $_json")
-                }
-                percentageDiscount?.validate()
-                amountDiscount?.validate()
-                validated = true
+            if (validated) {
+                return@apply
             }
+
+            accept(
+                object : Visitor<Unit> {
+                    override fun visitPercentageDiscount(percentageDiscount: PercentageDiscount) {
+                        percentageDiscount.validate()
+                    }
+
+                    override fun visitAmountDiscount(amountDiscount: AmountDiscount) {
+                        amountDiscount.validate()
+                    }
+                }
+            )
+            validated = true
         }
 
         override fun equals(other: Any?): Boolean {

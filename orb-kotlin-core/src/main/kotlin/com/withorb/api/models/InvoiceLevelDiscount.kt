@@ -26,8 +26,6 @@ private constructor(
     private val _json: JsonValue? = null,
 ) {
 
-    private var validated: Boolean = false
-
     fun percentageDiscount(): PercentageDiscount? = percentageDiscount
 
     fun amountDiscount(): AmountDiscount? = amountDiscount
@@ -58,16 +56,29 @@ private constructor(
         }
     }
 
+    private var validated: Boolean = false
+
     fun validate(): InvoiceLevelDiscount = apply {
-        if (!validated) {
-            if (percentageDiscount == null && amountDiscount == null && trialDiscount == null) {
-                throw OrbInvalidDataException("Unknown InvoiceLevelDiscount: $_json")
-            }
-            percentageDiscount?.validate()
-            amountDiscount?.validate()
-            trialDiscount?.validate()
-            validated = true
+        if (validated) {
+            return@apply
         }
+
+        accept(
+            object : Visitor<Unit> {
+                override fun visitPercentageDiscount(percentageDiscount: PercentageDiscount) {
+                    percentageDiscount.validate()
+                }
+
+                override fun visitAmountDiscount(amountDiscount: AmountDiscount) {
+                    amountDiscount.validate()
+                }
+
+                override fun visitTrialDiscount(trialDiscount: TrialDiscount) {
+                    trialDiscount.validate()
+                }
+            }
+        )
+        validated = true
     }
 
     override fun equals(other: Any?): Boolean {

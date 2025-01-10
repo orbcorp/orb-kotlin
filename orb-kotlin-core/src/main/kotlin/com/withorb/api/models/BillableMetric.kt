@@ -91,15 +91,17 @@ private constructor(
     private var validated: Boolean = false
 
     fun validate(): BillableMetric = apply {
-        if (!validated) {
-            id()
-            description()
-            item().validate()
-            metadata().validate()
-            name()
-            status()
-            validated = true
+        if (validated) {
+            return@apply
         }
+
+        id()
+        description()
+        item().validate()
+        metadata().validate()
+        name()
+        status()
+        validated = true
     }
 
     fun toBuilder() = Builder().from(this)
@@ -224,9 +226,11 @@ private constructor(
         private var validated: Boolean = false
 
         fun validate(): Metadata = apply {
-            if (!validated) {
-                validated = true
+            if (validated) {
+                return@apply
             }
+
+            validated = true
         }
 
         fun toBuilder() = Builder().from(this)

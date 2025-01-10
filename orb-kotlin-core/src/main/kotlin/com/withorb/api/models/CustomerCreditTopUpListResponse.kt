@@ -125,17 +125,19 @@ private constructor(
     private var validated: Boolean = false
 
     fun validate(): CustomerCreditTopUpListResponse = apply {
-        if (!validated) {
-            id()
-            amount()
-            currency()
-            invoiceSettings().validate()
-            perUnitCostBasis()
-            threshold()
-            expiresAfter()
-            expiresAfterUnit()
-            validated = true
+        if (validated) {
+            return@apply
         }
+
+        id()
+        amount()
+        currency()
+        invoiceSettings().validate()
+        perUnitCostBasis()
+        threshold()
+        expiresAfter()
+        expiresAfterUnit()
+        validated = true
     }
 
     fun toBuilder() = Builder().from(this)
@@ -358,13 +360,15 @@ private constructor(
         private var validated: Boolean = false
 
         fun validate(): InvoiceSettings = apply {
-            if (!validated) {
-                autoCollection()
-                netTerms()
-                memo()
-                requireSuccessfulPayment()
-                validated = true
+            if (validated) {
+                return@apply
             }
+
+            autoCollection()
+            netTerms()
+            memo()
+            requireSuccessfulPayment()
+            validated = true
         }
 
         fun toBuilder() = Builder().from(this)

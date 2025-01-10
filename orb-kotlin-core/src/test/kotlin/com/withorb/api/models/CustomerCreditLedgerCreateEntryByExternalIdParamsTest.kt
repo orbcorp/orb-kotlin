@@ -57,6 +57,19 @@ class CustomerCreditLedgerCreateEntryByExternalIdParamsTest {
     fun getPathParam() {
         val params =
             CustomerCreditLedgerCreateEntryByExternalIdParams.builder()
+                .forAddIncrementCreditLedgerEntryRequestParams(
+                    CustomerCreditLedgerCreateEntryByExternalIdParams
+                        .AddIncrementCreditLedgerEntryRequestParams
+                        .builder()
+                        .amount(0.0)
+                        .entryType(
+                            CustomerCreditLedgerCreateEntryByExternalIdParams
+                                .AddIncrementCreditLedgerEntryRequestParams
+                                .EntryType
+                                .INCREMENT
+                        )
+                        .build()
+                )
                 .externalCustomerId("external_customer_id")
                 .build()
         assertThat(params).isNotNull

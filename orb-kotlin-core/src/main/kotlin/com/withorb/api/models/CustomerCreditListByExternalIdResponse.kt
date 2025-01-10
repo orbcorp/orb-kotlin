@@ -88,16 +88,18 @@ private constructor(
     private var validated: Boolean = false
 
     fun validate(): CustomerCreditListByExternalIdResponse = apply {
-        if (!validated) {
-            id()
-            balance()
-            effectiveDate()
-            expiryDate()
-            maximumInitialBalance()
-            perUnitCostBasis()
-            status()
-            validated = true
+        if (validated) {
+            return@apply
         }
+
+        id()
+        balance()
+        effectiveDate()
+        expiryDate()
+        maximumInitialBalance()
+        perUnitCostBasis()
+        status()
+        validated = true
     }
 
     fun toBuilder() = Builder().from(this)

@@ -153,13 +153,15 @@ constructor(
         private var validated: Boolean = false
 
         fun validate(): CouponCreateBody = apply {
-            if (!validated) {
-                discount()
-                redemptionCode()
-                durationInMonths()
-                maxRedemptions()
-                validated = true
+            if (validated) {
+                return@apply
             }
+
+            discount().validate()
+            redemptionCode()
+            durationInMonths()
+            maxRedemptions()
+            validated = true
         }
 
         fun toBuilder() = Builder().from(this)
@@ -510,8 +512,6 @@ constructor(
         private val _json: JsonValue? = null,
     ) {
 
-        private var validated: Boolean = false
-
         fun newCouponPercentageDiscount(): NewCouponPercentageDiscount? =
             newCouponPercentageDiscount
 
@@ -539,15 +539,29 @@ constructor(
             }
         }
 
+        private var validated: Boolean = false
+
         fun validate(): Discount = apply {
-            if (!validated) {
-                if (newCouponPercentageDiscount == null && newCouponAmountDiscount == null) {
-                    throw OrbInvalidDataException("Unknown Discount: $_json")
-                }
-                newCouponPercentageDiscount?.validate()
-                newCouponAmountDiscount?.validate()
-                validated = true
+            if (validated) {
+                return@apply
             }
+
+            accept(
+                object : Visitor<Unit> {
+                    override fun visitNewCouponPercentageDiscount(
+                        newCouponPercentageDiscount: NewCouponPercentageDiscount
+                    ) {
+                        newCouponPercentageDiscount.validate()
+                    }
+
+                    override fun visitNewCouponAmountDiscount(
+                        newCouponAmountDiscount: NewCouponAmountDiscount
+                    ) {
+                        newCouponAmountDiscount.validate()
+                    }
+                }
+            )
+            validated = true
         }
 
         override fun equals(other: Any?): Boolean {
@@ -673,11 +687,13 @@ constructor(
             private var validated: Boolean = false
 
             fun validate(): NewCouponPercentageDiscount = apply {
-                if (!validated) {
-                    discountType()
-                    percentageDiscount()
-                    validated = true
+                if (validated) {
+                    return@apply
                 }
+
+                discountType()
+                percentageDiscount()
+                validated = true
             }
 
             fun toBuilder() = Builder().from(this)
@@ -849,11 +865,13 @@ constructor(
             private var validated: Boolean = false
 
             fun validate(): NewCouponAmountDiscount = apply {
-                if (!validated) {
-                    amountDiscount()
-                    discountType()
-                    validated = true
+                if (validated) {
+                    return@apply
                 }
+
+                amountDiscount()
+                discountType()
+                validated = true
             }
 
             fun toBuilder() = Builder().from(this)

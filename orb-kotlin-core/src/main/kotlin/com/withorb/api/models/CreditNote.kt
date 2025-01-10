@@ -182,25 +182,27 @@ private constructor(
     private var validated: Boolean = false
 
     fun validate(): CreditNote = apply {
-        if (!validated) {
-            id()
-            createdAt()
-            creditNoteNumber()
-            creditNotePdf()
-            customer().validate()
-            invoiceId()
-            lineItems().forEach { it.validate() }
-            maximumAmountAdjustment()?.validate()
-            memo()
-            minimumAmountRefunded()
-            reason()
-            subtotal()
-            total()
-            type()
-            voidedAt()
-            discounts()?.forEach { it.validate() }
-            validated = true
+        if (validated) {
+            return@apply
         }
+
+        id()
+        createdAt()
+        creditNoteNumber()
+        creditNotePdf()
+        customer().validate()
+        invoiceId()
+        lineItems().forEach { it.validate() }
+        maximumAmountAdjustment()?.validate()
+        memo()
+        minimumAmountRefunded()
+        reason()
+        subtotal()
+        total()
+        type()
+        voidedAt()
+        discounts()?.forEach { it.validate() }
+        validated = true
     }
 
     fun toBuilder() = Builder().from(this)
@@ -456,11 +458,13 @@ private constructor(
         private var validated: Boolean = false
 
         fun validate(): Customer = apply {
-            if (!validated) {
-                id()
-                externalCustomerId()
-                validated = true
+            if (validated) {
+                return@apply
             }
+
+            id()
+            externalCustomerId()
+            validated = true
         }
 
         fun toBuilder() = Builder().from(this)
@@ -620,16 +624,18 @@ private constructor(
         private var validated: Boolean = false
 
         fun validate(): LineItem = apply {
-            if (!validated) {
-                id()
-                amount()
-                name()
-                quantity()
-                subtotal()
-                taxAmounts().forEach { it.validate() }
-                discounts()?.forEach { it.validate() }
-                validated = true
+            if (validated) {
+                return@apply
             }
+
+            id()
+            amount()
+            name()
+            quantity()
+            subtotal()
+            taxAmounts().forEach { it.validate() }
+            discounts()?.forEach { it.validate() }
+            validated = true
         }
 
         fun toBuilder() = Builder().from(this)
@@ -814,12 +820,14 @@ private constructor(
             private var validated: Boolean = false
 
             fun validate(): TaxAmount = apply {
-                if (!validated) {
-                    amount()
-                    taxRateDescription()
-                    taxRatePercentage()
-                    validated = true
+                if (validated) {
+                    return@apply
                 }
+
+                amount()
+                taxRateDescription()
+                taxRatePercentage()
+                validated = true
             }
 
             fun toBuilder() = Builder().from(this)
@@ -995,16 +1003,18 @@ private constructor(
             private var validated: Boolean = false
 
             fun validate(): Discount = apply {
-                if (!validated) {
-                    id()
-                    amountApplied()
-                    appliesToPriceIds()
-                    discountType()
-                    percentageDiscount()
-                    amountDiscount()
-                    reason()
-                    validated = true
+                if (validated) {
+                    return@apply
                 }
+
+                id()
+                amountApplied()
+                appliesToPriceIds()
+                discountType()
+                percentageDiscount()
+                amountDiscount()
+                reason()
+                validated = true
             }
 
             fun toBuilder() = Builder().from(this)
@@ -1285,14 +1295,16 @@ private constructor(
         private var validated: Boolean = false
 
         fun validate(): MaximumAmountAdjustment = apply {
-            if (!validated) {
-                amountApplied()
-                discountType()
-                percentageDiscount()
-                appliesToPrices()?.forEach { it.validate() }
-                reason()
-                validated = true
+            if (validated) {
+                return@apply
             }
+
+            amountApplied()
+            discountType()
+            percentageDiscount()
+            appliesToPrices()?.forEach { it.validate() }
+            reason()
+            validated = true
         }
 
         fun toBuilder() = Builder().from(this)
@@ -1473,11 +1485,13 @@ private constructor(
             private var validated: Boolean = false
 
             fun validate(): AppliesToPrice = apply {
-                if (!validated) {
-                    id()
-                    name()
-                    validated = true
+                if (validated) {
+                    return@apply
                 }
+
+                id()
+                name()
+                validated = true
             }
 
             fun toBuilder() = Builder().from(this)
@@ -1758,14 +1772,16 @@ private constructor(
         private var validated: Boolean = false
 
         fun validate(): Discount = apply {
-            if (!validated) {
-                amountApplied()
-                discountType()
-                percentageDiscount()
-                appliesToPrices()?.forEach { it.validate() }
-                reason()
-                validated = true
+            if (validated) {
+                return@apply
             }
+
+            amountApplied()
+            discountType()
+            percentageDiscount()
+            appliesToPrices()?.forEach { it.validate() }
+            reason()
+            validated = true
         }
 
         fun toBuilder() = Builder().from(this)
@@ -1946,11 +1962,13 @@ private constructor(
             private var validated: Boolean = false
 
             fun validate(): AppliesToPrice = apply {
-                if (!validated) {
-                    id()
-                    name()
-                    validated = true
+                if (validated) {
+                    return@apply
                 }
+
+                id()
+                name()
+                validated = true
             }
 
             fun toBuilder() = Builder().from(this)
