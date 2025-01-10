@@ -161,11 +161,13 @@ constructor(
         private var validated: Boolean = false
 
         fun validate(): SubscriptionCancelBody = apply {
-            if (!validated) {
-                cancelOption()
-                cancellationDate()
-                validated = true
+            if (validated) {
+                return@apply
             }
+
+            cancelOption()
+            cancellationDate()
+            validated = true
         }
 
         fun toBuilder() = Builder().from(this)

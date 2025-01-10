@@ -301,33 +301,35 @@ private constructor(
     private var validated: Boolean = false
 
     fun validate(): Plan = apply {
-        if (!validated) {
-            id()
-            adjustments()
-            basePlan()?.validate()
-            basePlanId()
-            createdAt()
-            currency()
-            defaultInvoiceMemo()
-            description()
-            discount()
-            externalPlanId()
-            invoicingCurrency()
-            maximum()?.validate()
-            maximumAmount()
-            metadata().validate()
-            minimum()?.validate()
-            minimumAmount()
-            name()
-            netTerms()
-            planPhases()?.forEach { it.validate() }
-            prices()
-            product().validate()
-            status()
-            trialConfig().validate()
-            version()
-            validated = true
+        if (validated) {
+            return@apply
         }
+
+        id()
+        adjustments().forEach { it.validate() }
+        basePlan()?.validate()
+        basePlanId()
+        createdAt()
+        currency()
+        defaultInvoiceMemo()
+        description()
+        discount()?.validate()
+        externalPlanId()
+        invoicingCurrency()
+        maximum()?.validate()
+        maximumAmount()
+        metadata().validate()
+        minimum()?.validate()
+        minimumAmount()
+        name()
+        netTerms()
+        planPhases()?.forEach { it.validate() }
+        prices().forEach { it.validate() }
+        product().validate()
+        status()
+        trialConfig().validate()
+        version()
+        validated = true
     }
 
     fun toBuilder() = Builder().from(this)
@@ -917,8 +919,6 @@ private constructor(
         private val _json: JsonValue? = null,
     ) {
 
-        private var validated: Boolean = false
-
         fun amountDiscountAdjustment(): AmountDiscountAdjustment? = amountDiscountAdjustment
 
         fun percentageDiscountAdjustment(): PercentageDiscountAdjustment? =
@@ -971,24 +971,43 @@ private constructor(
             }
         }
 
+        private var validated: Boolean = false
+
         fun validate(): Adjustment = apply {
-            if (!validated) {
-                if (
-                    amountDiscountAdjustment == null &&
-                        percentageDiscountAdjustment == null &&
-                        usageDiscountAdjustment == null &&
-                        minimumAdjustment == null &&
-                        maximumAdjustment == null
-                ) {
-                    throw OrbInvalidDataException("Unknown Adjustment: $_json")
-                }
-                amountDiscountAdjustment?.validate()
-                percentageDiscountAdjustment?.validate()
-                usageDiscountAdjustment?.validate()
-                minimumAdjustment?.validate()
-                maximumAdjustment?.validate()
-                validated = true
+            if (validated) {
+                return@apply
             }
+
+            accept(
+                object : Visitor<Unit> {
+                    override fun visitAmountDiscountAdjustment(
+                        amountDiscountAdjustment: AmountDiscountAdjustment
+                    ) {
+                        amountDiscountAdjustment.validate()
+                    }
+
+                    override fun visitPercentageDiscountAdjustment(
+                        percentageDiscountAdjustment: PercentageDiscountAdjustment
+                    ) {
+                        percentageDiscountAdjustment.validate()
+                    }
+
+                    override fun visitUsageDiscountAdjustment(
+                        usageDiscountAdjustment: UsageDiscountAdjustment
+                    ) {
+                        usageDiscountAdjustment.validate()
+                    }
+
+                    override fun visitMinimumAdjustment(minimumAdjustment: MinimumAdjustment) {
+                        minimumAdjustment.validate()
+                    }
+
+                    override fun visitMaximumAdjustment(maximumAdjustment: MaximumAdjustment) {
+                        maximumAdjustment.validate()
+                    }
+                }
+            )
+            validated = true
         }
 
         override fun equals(other: Any?): Boolean {
@@ -1223,16 +1242,18 @@ private constructor(
             private var validated: Boolean = false
 
             fun validate(): AmountDiscountAdjustment = apply {
-                if (!validated) {
-                    id()
-                    adjustmentType()
-                    amountDiscount()
-                    appliesToPriceIds()
-                    isInvoiceLevel()
-                    planPhaseOrder()
-                    reason()
-                    validated = true
+                if (validated) {
+                    return@apply
                 }
+
+                id()
+                adjustmentType()
+                amountDiscount()
+                appliesToPriceIds()
+                isInvoiceLevel()
+                planPhaseOrder()
+                reason()
+                validated = true
             }
 
             fun toBuilder() = Builder().from(this)
@@ -1558,16 +1579,18 @@ private constructor(
             private var validated: Boolean = false
 
             fun validate(): PercentageDiscountAdjustment = apply {
-                if (!validated) {
-                    id()
-                    adjustmentType()
-                    appliesToPriceIds()
-                    isInvoiceLevel()
-                    percentageDiscount()
-                    planPhaseOrder()
-                    reason()
-                    validated = true
+                if (validated) {
+                    return@apply
                 }
+
+                id()
+                adjustmentType()
+                appliesToPriceIds()
+                isInvoiceLevel()
+                percentageDiscount()
+                planPhaseOrder()
+                reason()
+                validated = true
             }
 
             fun toBuilder() = Builder().from(this)
@@ -1896,16 +1919,18 @@ private constructor(
             private var validated: Boolean = false
 
             fun validate(): UsageDiscountAdjustment = apply {
-                if (!validated) {
-                    id()
-                    adjustmentType()
-                    appliesToPriceIds()
-                    isInvoiceLevel()
-                    planPhaseOrder()
-                    reason()
-                    usageDiscount()
-                    validated = true
+                if (validated) {
+                    return@apply
                 }
+
+                id()
+                adjustmentType()
+                appliesToPriceIds()
+                isInvoiceLevel()
+                planPhaseOrder()
+                reason()
+                usageDiscount()
+                validated = true
             }
 
             fun toBuilder() = Builder().from(this)
@@ -2240,17 +2265,19 @@ private constructor(
             private var validated: Boolean = false
 
             fun validate(): MinimumAdjustment = apply {
-                if (!validated) {
-                    id()
-                    adjustmentType()
-                    appliesToPriceIds()
-                    isInvoiceLevel()
-                    itemId()
-                    minimumAmount()
-                    planPhaseOrder()
-                    reason()
-                    validated = true
+                if (validated) {
+                    return@apply
                 }
+
+                id()
+                adjustmentType()
+                appliesToPriceIds()
+                isInvoiceLevel()
+                itemId()
+                minimumAmount()
+                planPhaseOrder()
+                reason()
+                validated = true
             }
 
             fun toBuilder() = Builder().from(this)
@@ -2584,16 +2611,18 @@ private constructor(
             private var validated: Boolean = false
 
             fun validate(): MaximumAdjustment = apply {
-                if (!validated) {
-                    id()
-                    adjustmentType()
-                    appliesToPriceIds()
-                    isInvoiceLevel()
-                    maximumAmount()
-                    planPhaseOrder()
-                    reason()
-                    validated = true
+                if (validated) {
+                    return@apply
                 }
+
+                id()
+                adjustmentType()
+                appliesToPriceIds()
+                isInvoiceLevel()
+                maximumAmount()
+                planPhaseOrder()
+                reason()
+                validated = true
             }
 
             fun toBuilder() = Builder().from(this)
@@ -2868,12 +2897,14 @@ private constructor(
         private var validated: Boolean = false
 
         fun validate(): BasePlan = apply {
-            if (!validated) {
-                id()
-                externalPlanId()
-                name()
-                validated = true
+            if (validated) {
+                return@apply
             }
+
+            id()
+            externalPlanId()
+            name()
+            validated = true
         }
 
         fun toBuilder() = Builder().from(this)
@@ -3012,11 +3043,13 @@ private constructor(
         private var validated: Boolean = false
 
         fun validate(): Maximum = apply {
-            if (!validated) {
-                appliesToPriceIds()
-                maximumAmount()
-                validated = true
+            if (validated) {
+                return@apply
             }
+
+            appliesToPriceIds()
+            maximumAmount()
+            validated = true
         }
 
         fun toBuilder() = Builder().from(this)
@@ -3144,9 +3177,11 @@ private constructor(
         private var validated: Boolean = false
 
         fun validate(): Metadata = apply {
-            if (!validated) {
-                validated = true
+            if (validated) {
+                return@apply
             }
+
+            validated = true
         }
 
         fun toBuilder() = Builder().from(this)
@@ -3247,11 +3282,13 @@ private constructor(
         private var validated: Boolean = false
 
         fun validate(): Minimum = apply {
-            if (!validated) {
-                appliesToPriceIds()
-                minimumAmount()
-                validated = true
+            if (validated) {
+                return@apply
             }
+
+            appliesToPriceIds()
+            minimumAmount()
+            validated = true
         }
 
         fun toBuilder() = Builder().from(this)
@@ -3467,20 +3504,22 @@ private constructor(
         private var validated: Boolean = false
 
         fun validate(): PlanPhase = apply {
-            if (!validated) {
-                id()
-                description()
-                discount()
-                duration()
-                durationUnit()
-                maximum()?.validate()
-                maximumAmount()
-                minimum()?.validate()
-                minimumAmount()
-                name()
-                order()
-                validated = true
+            if (validated) {
+                return@apply
             }
+
+            id()
+            description()
+            discount()?.validate()
+            duration()
+            durationUnit()
+            maximum()?.validate()
+            maximumAmount()
+            minimum()?.validate()
+            minimumAmount()
+            name()
+            order()
+            validated = true
         }
 
         fun toBuilder() = Builder().from(this)
@@ -3758,11 +3797,13 @@ private constructor(
             private var validated: Boolean = false
 
             fun validate(): Maximum = apply {
-                if (!validated) {
-                    appliesToPriceIds()
-                    maximumAmount()
-                    validated = true
+                if (validated) {
+                    return@apply
                 }
+
+                appliesToPriceIds()
+                maximumAmount()
+                validated = true
             }
 
             fun toBuilder() = Builder().from(this)
@@ -3920,11 +3961,13 @@ private constructor(
             private var validated: Boolean = false
 
             fun validate(): Minimum = apply {
-                if (!validated) {
-                    appliesToPriceIds()
-                    minimumAmount()
-                    validated = true
+                if (validated) {
+                    return@apply
                 }
+
+                appliesToPriceIds()
+                minimumAmount()
+                validated = true
             }
 
             fun toBuilder() = Builder().from(this)
@@ -4092,12 +4135,14 @@ private constructor(
         private var validated: Boolean = false
 
         fun validate(): Product = apply {
-            if (!validated) {
-                id()
-                createdAt()
-                name()
-                validated = true
+            if (validated) {
+                return@apply
             }
+
+            id()
+            createdAt()
+            name()
+            validated = true
         }
 
         fun toBuilder() = Builder().from(this)
@@ -4277,11 +4322,13 @@ private constructor(
         private var validated: Boolean = false
 
         fun validate(): TrialConfig = apply {
-            if (!validated) {
-                trialPeriod()
-                trialPeriodUnit()
-                validated = true
+            if (validated) {
+                return@apply
             }
+
+            trialPeriod()
+            trialPeriodUnit()
+            validated = true
         }
 
         fun toBuilder() = Builder().from(this)

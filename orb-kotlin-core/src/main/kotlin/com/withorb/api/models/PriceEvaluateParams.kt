@@ -211,15 +211,17 @@ constructor(
         private var validated: Boolean = false
 
         fun validate(): PriceEvaluateBody = apply {
-            if (!validated) {
-                timeframeEnd()
-                timeframeStart()
-                customerId()
-                externalCustomerId()
-                filter()
-                groupingKeys()
-                validated = true
+            if (validated) {
+                return@apply
             }
+
+            timeframeEnd()
+            timeframeStart()
+            customerId()
+            externalCustomerId()
+            filter()
+            groupingKeys()
+            validated = true
         }
 
         fun toBuilder() = Builder().from(this)

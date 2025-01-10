@@ -55,7 +55,21 @@ class CustomerCreditLedgerCreateEntryParamsTest {
     @Test
     fun getPathParam() {
         val params =
-            CustomerCreditLedgerCreateEntryParams.builder().customerId("customer_id").build()
+            CustomerCreditLedgerCreateEntryParams.builder()
+                .forAddIncrementCreditLedgerEntryRequestParams(
+                    CustomerCreditLedgerCreateEntryParams.AddIncrementCreditLedgerEntryRequestParams
+                        .builder()
+                        .amount(0.0)
+                        .entryType(
+                            CustomerCreditLedgerCreateEntryParams
+                                .AddIncrementCreditLedgerEntryRequestParams
+                                .EntryType
+                                .INCREMENT
+                        )
+                        .build()
+                )
+                .customerId("customer_id")
+                .build()
         assertThat(params).isNotNull
         // path param "customerId"
         assertThat(params.getPathParam(0)).isEqualTo("customer_id")

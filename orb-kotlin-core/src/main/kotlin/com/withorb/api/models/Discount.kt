@@ -38,8 +38,6 @@ private constructor(
     private val _json: JsonValue? = null,
 ) {
 
-    private var validated: Boolean = false
-
     fun percentageDiscount(): PercentageDiscount? = percentageDiscount
 
     fun trialDiscount(): TrialDiscount? = trialDiscount
@@ -77,22 +75,33 @@ private constructor(
         }
     }
 
+    private var validated: Boolean = false
+
     fun validate(): Discount = apply {
-        if (!validated) {
-            if (
-                percentageDiscount == null &&
-                    trialDiscount == null &&
-                    usageDiscount == null &&
-                    amountDiscount == null
-            ) {
-                throw OrbInvalidDataException("Unknown Discount: $_json")
-            }
-            percentageDiscount?.validate()
-            trialDiscount?.validate()
-            usageDiscount?.validate()
-            amountDiscount?.validate()
-            validated = true
+        if (validated) {
+            return@apply
         }
+
+        accept(
+            object : Visitor<Unit> {
+                override fun visitPercentageDiscount(percentageDiscount: PercentageDiscount) {
+                    percentageDiscount.validate()
+                }
+
+                override fun visitTrialDiscount(trialDiscount: TrialDiscount) {
+                    trialDiscount.validate()
+                }
+
+                override fun visitUsageDiscount(usageDiscount: UsageDiscount) {
+                    usageDiscount.validate()
+                }
+
+                override fun visitAmountDiscount(amountDiscount: AmountDiscount) {
+                    amountDiscount.validate()
+                }
+            }
+        )
+        validated = true
     }
 
     override fun equals(other: Any?): Boolean {
@@ -264,13 +273,15 @@ private constructor(
         private var validated: Boolean = false
 
         fun validate(): UsageDiscount = apply {
-            if (!validated) {
-                appliesToPriceIds()
-                discountType()
-                usageDiscount()
-                reason()
-                validated = true
+            if (validated) {
+                return@apply
             }
+
+            appliesToPriceIds()
+            discountType()
+            usageDiscount()
+            reason()
+            validated = true
         }
 
         fun toBuilder() = Builder().from(this)

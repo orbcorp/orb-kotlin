@@ -38,10 +38,12 @@ private constructor(
     private var validated: Boolean = false
 
     fun validate(): EventUpdateResponse = apply {
-        if (!validated) {
-            amended()
-            validated = true
+        if (validated) {
+            return@apply
         }
+
+        amended()
+        validated = true
     }
 
     fun toBuilder() = Builder().from(this)

@@ -92,10 +92,12 @@ constructor(
         private var validated: Boolean = false
 
         fun validate(): SubscriptionTriggerPhaseBody = apply {
-            if (!validated) {
-                effectiveDate()
-                validated = true
+            if (validated) {
+                return@apply
             }
+
+            effectiveDate()
+            validated = true
         }
 
         fun toBuilder() = Builder().from(this)

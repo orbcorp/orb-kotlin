@@ -60,11 +60,13 @@ private constructor(
     private var validated: Boolean = false
 
     fun validate(): EventIngestResponse = apply {
-        if (!validated) {
-            validationFailed().forEach { it.validate() }
-            debug()?.validate()
-            validated = true
+        if (validated) {
+            return@apply
         }
+
+        validationFailed().forEach { it.validate() }
+        debug()?.validate()
+        validated = true
     }
 
     fun toBuilder() = Builder().from(this)
@@ -193,11 +195,13 @@ private constructor(
         private var validated: Boolean = false
 
         fun validate(): ValidationFailed = apply {
-            if (!validated) {
-                idempotencyKey()
-                validationErrors()
-                validated = true
+            if (validated) {
+                return@apply
             }
+
+            idempotencyKey()
+            validationErrors()
+            validated = true
         }
 
         fun toBuilder() = Builder().from(this)
@@ -340,11 +344,13 @@ private constructor(
         private var validated: Boolean = false
 
         fun validate(): Debug = apply {
-            if (!validated) {
-                duplicate()
-                ingested()
-                validated = true
+            if (validated) {
+                return@apply
             }
+
+            duplicate()
+            ingested()
+            validated = true
         }
 
         fun toBuilder() = Builder().from(this)

@@ -148,19 +148,21 @@ private constructor(
     private var validated: Boolean = false
 
     fun validate(): EventBackfillListResponse = apply {
-        if (!validated) {
-            id()
-            closeTime()
-            createdAt()
-            customerId()
-            eventsIngested()
-            revertedAt()
-            status()
-            timeframeEnd()
-            timeframeStart()
-            deprecationFilter()
-            validated = true
+        if (validated) {
+            return@apply
         }
+
+        id()
+        closeTime()
+        createdAt()
+        customerId()
+        eventsIngested()
+        revertedAt()
+        status()
+        timeframeEnd()
+        timeframeStart()
+        deprecationFilter()
+        validated = true
     }
 
     fun toBuilder() = Builder().from(this)

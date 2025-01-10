@@ -67,10 +67,12 @@ constructor(
         private var validated: Boolean = false
 
         fun validate(): ItemCreateBody = apply {
-            if (!validated) {
-                name()
-                validated = true
+            if (validated) {
+                return@apply
             }
+
+            name()
+            validated = true
         }
 
         fun toBuilder() = Builder().from(this)
