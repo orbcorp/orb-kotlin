@@ -12,6 +12,7 @@ import com.withorb.api.core.JsonField
 import com.withorb.api.core.JsonMissing
 import com.withorb.api.core.JsonValue
 import com.withorb.api.core.NoAutoDetect
+import com.withorb.api.core.checkRequired
 import com.withorb.api.core.immutableEmptyMap
 import com.withorb.api.core.toImmutable
 import com.withorb.api.errors.OrbInvalidDataException
@@ -995,32 +996,25 @@ private constructor(
 
         fun build(): Customer =
             Customer(
-                checkNotNull(id) { "`id` is required but was not set" },
-                checkNotNull(additionalEmails) { "`additionalEmails` is required but was not set" }
-                    .map { it.toImmutable() },
-                checkNotNull(autoCollection) { "`autoCollection` is required but was not set" },
-                checkNotNull(balance) { "`balance` is required but was not set" },
-                checkNotNull(billingAddress) { "`billingAddress` is required but was not set" },
-                checkNotNull(createdAt) { "`createdAt` is required but was not set" },
-                checkNotNull(currency) { "`currency` is required but was not set" },
-                checkNotNull(email) { "`email` is required but was not set" },
-                checkNotNull(emailDelivery) { "`emailDelivery` is required but was not set" },
-                checkNotNull(exemptFromAutomatedTax) {
-                    "`exemptFromAutomatedTax` is required but was not set"
-                },
-                checkNotNull(externalCustomerId) {
-                    "`externalCustomerId` is required but was not set"
-                },
-                checkNotNull(metadata) { "`metadata` is required but was not set" },
-                checkNotNull(name) { "`name` is required but was not set" },
-                checkNotNull(paymentProvider) { "`paymentProvider` is required but was not set" },
-                checkNotNull(paymentProviderId) {
-                    "`paymentProviderId` is required but was not set"
-                },
-                checkNotNull(portalUrl) { "`portalUrl` is required but was not set" },
-                checkNotNull(shippingAddress) { "`shippingAddress` is required but was not set" },
-                checkNotNull(taxId) { "`taxId` is required but was not set" },
-                checkNotNull(timezone) { "`timezone` is required but was not set" },
+                checkRequired("id", id),
+                checkRequired("additionalEmails", additionalEmails).map { it.toImmutable() },
+                checkRequired("autoCollection", autoCollection),
+                checkRequired("balance", balance),
+                checkRequired("billingAddress", billingAddress),
+                checkRequired("createdAt", createdAt),
+                checkRequired("currency", currency),
+                checkRequired("email", email),
+                checkRequired("emailDelivery", emailDelivery),
+                checkRequired("exemptFromAutomatedTax", exemptFromAutomatedTax),
+                checkRequired("externalCustomerId", externalCustomerId),
+                checkRequired("metadata", metadata),
+                checkRequired("name", name),
+                checkRequired("paymentProvider", paymentProvider),
+                checkRequired("paymentProviderId", paymentProviderId),
+                checkRequired("portalUrl", portalUrl),
+                checkRequired("shippingAddress", shippingAddress),
+                checkRequired("taxId", taxId),
+                checkRequired("timezone", timezone),
                 accountingSyncConfiguration,
                 reportingConfiguration,
                 additionalProperties.toImmutable(),
@@ -1171,12 +1165,12 @@ private constructor(
 
             fun build(): BillingAddress =
                 BillingAddress(
-                    checkNotNull(city) { "`city` is required but was not set" },
-                    checkNotNull(country) { "`country` is required but was not set" },
-                    checkNotNull(line1) { "`line1` is required but was not set" },
-                    checkNotNull(line2) { "`line2` is required but was not set" },
-                    checkNotNull(postalCode) { "`postalCode` is required but was not set" },
-                    checkNotNull(state) { "`state` is required but was not set" },
+                    checkRequired("city", city),
+                    checkRequired("country", country),
+                    checkRequired("line1", line1),
+                    checkRequired("line2", line2),
+                    checkRequired("postalCode", postalCode),
+                    checkRequired("state", state),
                     additionalProperties.toImmutable(),
                 )
         }
@@ -1499,12 +1493,12 @@ private constructor(
 
             fun build(): ShippingAddress =
                 ShippingAddress(
-                    checkNotNull(city) { "`city` is required but was not set" },
-                    checkNotNull(country) { "`country` is required but was not set" },
-                    checkNotNull(line1) { "`line1` is required but was not set" },
-                    checkNotNull(line2) { "`line2` is required but was not set" },
-                    checkNotNull(postalCode) { "`postalCode` is required but was not set" },
-                    checkNotNull(state) { "`state` is required but was not set" },
+                    checkRequired("city", city),
+                    checkRequired("country", country),
+                    checkRequired("line1", line1),
+                    checkRequired("line2", line2),
+                    checkRequired("postalCode", postalCode),
+                    checkRequired("state", state),
                     additionalProperties.toImmutable(),
                 )
         }
@@ -1731,9 +1725,9 @@ private constructor(
 
             fun build(): TaxId =
                 TaxId(
-                    checkNotNull(country) { "`country` is required but was not set" },
-                    checkNotNull(type) { "`type` is required but was not set" },
-                    checkNotNull(value) { "`value` is required but was not set" },
+                    checkRequired("country", country),
+                    checkRequired("type", type),
+                    checkRequired("value", value),
                     additionalProperties.toImmutable(),
                 )
         }
@@ -2846,11 +2840,10 @@ private constructor(
 
             fun build(): AccountingSyncConfiguration =
                 AccountingSyncConfiguration(
-                    checkNotNull(accountingProviders) {
-                            "`accountingProviders` is required but was not set"
-                        }
-                        .map { it.toImmutable() },
-                    checkNotNull(excluded) { "`excluded` is required but was not set" },
+                    checkRequired("accountingProviders", accountingProviders).map {
+                        it.toImmutable()
+                    },
+                    checkRequired("excluded", excluded),
                     additionalProperties.toImmutable(),
                 )
         }
@@ -2955,10 +2948,8 @@ private constructor(
 
                 fun build(): AccountingProvider =
                     AccountingProvider(
-                        checkNotNull(externalProviderId) {
-                            "`externalProviderId` is required but was not set"
-                        },
-                        checkNotNull(providerType) { "`providerType` is required but was not set" },
+                        checkRequired("externalProviderId", externalProviderId),
+                        checkRequired("providerType", providerType),
                         additionalProperties.toImmutable(),
                     )
             }
@@ -3128,7 +3119,7 @@ private constructor(
 
             fun build(): ReportingConfiguration =
                 ReportingConfiguration(
-                    checkNotNull(exempt) { "`exempt` is required but was not set" },
+                    checkRequired("exempt", exempt),
                     additionalProperties.toImmutable()
                 )
         }

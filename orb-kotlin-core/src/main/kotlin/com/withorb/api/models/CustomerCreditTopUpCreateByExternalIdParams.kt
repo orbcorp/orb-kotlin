@@ -12,6 +12,7 @@ import com.withorb.api.core.JsonField
 import com.withorb.api.core.JsonMissing
 import com.withorb.api.core.JsonValue
 import com.withorb.api.core.NoAutoDetect
+import com.withorb.api.core.checkRequired
 import com.withorb.api.core.http.Headers
 import com.withorb.api.core.http.QueryParams
 import com.withorb.api.core.immutableEmptyMap
@@ -365,15 +366,11 @@ constructor(
 
             fun build(): CustomerCreditTopUpCreateByExternalIdBody =
                 CustomerCreditTopUpCreateByExternalIdBody(
-                    checkNotNull(amount) { "`amount` is required but was not set" },
-                    checkNotNull(currency) { "`currency` is required but was not set" },
-                    checkNotNull(invoiceSettings) {
-                        "`invoiceSettings` is required but was not set"
-                    },
-                    checkNotNull(perUnitCostBasis) {
-                        "`perUnitCostBasis` is required but was not set"
-                    },
-                    checkNotNull(threshold) { "`threshold` is required but was not set" },
+                    checkRequired("amount", amount),
+                    checkRequired("currency", currency),
+                    checkRequired("invoiceSettings", invoiceSettings),
+                    checkRequired("perUnitCostBasis", perUnitCostBasis),
+                    checkRequired("threshold", threshold),
                     expiresAfter,
                     expiresAfterUnit,
                     additionalProperties.toImmutable(),
@@ -626,9 +623,7 @@ constructor(
 
         fun build(): CustomerCreditTopUpCreateByExternalIdParams =
             CustomerCreditTopUpCreateByExternalIdParams(
-                checkNotNull(externalCustomerId) {
-                    "`externalCustomerId` is required but was not set"
-                },
+                checkRequired("externalCustomerId", externalCustomerId),
                 body.build(),
                 additionalHeaders.build(),
                 additionalQueryParams.build(),
@@ -813,8 +808,8 @@ constructor(
 
             fun build(): InvoiceSettings =
                 InvoiceSettings(
-                    checkNotNull(autoCollection) { "`autoCollection` is required but was not set" },
-                    checkNotNull(netTerms) { "`netTerms` is required but was not set" },
+                    checkRequired("autoCollection", autoCollection),
+                    checkRequired("netTerms", netTerms),
                     memo,
                     requireSuccessfulPayment,
                     additionalProperties.toImmutable(),

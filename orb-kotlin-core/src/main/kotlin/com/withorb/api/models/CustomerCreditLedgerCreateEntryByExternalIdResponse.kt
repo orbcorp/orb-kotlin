@@ -21,6 +21,7 @@ import com.withorb.api.core.JsonField
 import com.withorb.api.core.JsonMissing
 import com.withorb.api.core.JsonValue
 import com.withorb.api.core.NoAutoDetect
+import com.withorb.api.core.checkRequired
 import com.withorb.api.core.getOrThrow
 import com.withorb.api.core.immutableEmptyMap
 import com.withorb.api.core.toImmutable
@@ -670,23 +671,19 @@ private constructor(
 
             fun build(): IncrementLedgerEntry =
                 IncrementLedgerEntry(
-                    checkNotNull(id) { "`id` is required but was not set" },
-                    checkNotNull(amount) { "`amount` is required but was not set" },
-                    checkNotNull(createdAt) { "`createdAt` is required but was not set" },
-                    checkNotNull(creditBlock) { "`creditBlock` is required but was not set" },
-                    checkNotNull(currency) { "`currency` is required but was not set" },
-                    checkNotNull(customer) { "`customer` is required but was not set" },
-                    checkNotNull(description) { "`description` is required but was not set" },
-                    checkNotNull(endingBalance) { "`endingBalance` is required but was not set" },
-                    checkNotNull(entryStatus) { "`entryStatus` is required but was not set" },
-                    checkNotNull(entryType) { "`entryType` is required but was not set" },
-                    checkNotNull(ledgerSequenceNumber) {
-                        "`ledgerSequenceNumber` is required but was not set"
-                    },
-                    checkNotNull(metadata) { "`metadata` is required but was not set" },
-                    checkNotNull(startingBalance) {
-                        "`startingBalance` is required but was not set"
-                    },
+                    checkRequired("id", id),
+                    checkRequired("amount", amount),
+                    checkRequired("createdAt", createdAt),
+                    checkRequired("creditBlock", creditBlock),
+                    checkRequired("currency", currency),
+                    checkRequired("customer", customer),
+                    checkRequired("description", description),
+                    checkRequired("endingBalance", endingBalance),
+                    checkRequired("entryStatus", entryStatus),
+                    checkRequired("entryType", entryType),
+                    checkRequired("ledgerSequenceNumber", ledgerSequenceNumber),
+                    checkRequired("metadata", metadata),
+                    checkRequired("startingBalance", startingBalance),
                     additionalProperties.toImmutable(),
                 )
         }
@@ -804,11 +801,9 @@ private constructor(
 
                 fun build(): CreditBlock =
                     CreditBlock(
-                        checkNotNull(id) { "`id` is required but was not set" },
-                        checkNotNull(expiryDate) { "`expiryDate` is required but was not set" },
-                        checkNotNull(perUnitCostBasis) {
-                            "`perUnitCostBasis` is required but was not set"
-                        },
+                        checkRequired("id", id),
+                        checkRequired("expiryDate", expiryDate),
+                        checkRequired("perUnitCostBasis", perUnitCostBasis),
                         additionalProperties.toImmutable(),
                     )
             }
@@ -926,10 +921,8 @@ private constructor(
 
                 fun build(): Customer =
                     Customer(
-                        checkNotNull(id) { "`id` is required but was not set" },
-                        checkNotNull(externalCustomerId) {
-                            "`externalCustomerId` is required but was not set"
-                        },
+                        checkRequired("id", id),
+                        checkRequired("externalCustomerId", externalCustomerId),
                         additionalProperties.toImmutable(),
                     )
             }
@@ -1495,23 +1488,19 @@ private constructor(
 
             fun build(): DecrementLedgerEntry =
                 DecrementLedgerEntry(
-                    checkNotNull(id) { "`id` is required but was not set" },
-                    checkNotNull(amount) { "`amount` is required but was not set" },
-                    checkNotNull(createdAt) { "`createdAt` is required but was not set" },
-                    checkNotNull(creditBlock) { "`creditBlock` is required but was not set" },
-                    checkNotNull(currency) { "`currency` is required but was not set" },
-                    checkNotNull(customer) { "`customer` is required but was not set" },
-                    checkNotNull(description) { "`description` is required but was not set" },
-                    checkNotNull(endingBalance) { "`endingBalance` is required but was not set" },
-                    checkNotNull(entryStatus) { "`entryStatus` is required but was not set" },
-                    checkNotNull(entryType) { "`entryType` is required but was not set" },
-                    checkNotNull(ledgerSequenceNumber) {
-                        "`ledgerSequenceNumber` is required but was not set"
-                    },
-                    checkNotNull(metadata) { "`metadata` is required but was not set" },
-                    checkNotNull(startingBalance) {
-                        "`startingBalance` is required but was not set"
-                    },
+                    checkRequired("id", id),
+                    checkRequired("amount", amount),
+                    checkRequired("createdAt", createdAt),
+                    checkRequired("creditBlock", creditBlock),
+                    checkRequired("currency", currency),
+                    checkRequired("customer", customer),
+                    checkRequired("description", description),
+                    checkRequired("endingBalance", endingBalance),
+                    checkRequired("entryStatus", entryStatus),
+                    checkRequired("entryType", entryType),
+                    checkRequired("ledgerSequenceNumber", ledgerSequenceNumber),
+                    checkRequired("metadata", metadata),
+                    checkRequired("startingBalance", startingBalance),
                     eventId,
                     invoiceId,
                     priceId,
@@ -1632,11 +1621,9 @@ private constructor(
 
                 fun build(): CreditBlock =
                     CreditBlock(
-                        checkNotNull(id) { "`id` is required but was not set" },
-                        checkNotNull(expiryDate) { "`expiryDate` is required but was not set" },
-                        checkNotNull(perUnitCostBasis) {
-                            "`perUnitCostBasis` is required but was not set"
-                        },
+                        checkRequired("id", id),
+                        checkRequired("expiryDate", expiryDate),
+                        checkRequired("perUnitCostBasis", perUnitCostBasis),
                         additionalProperties.toImmutable(),
                     )
             }
@@ -1754,10 +1741,8 @@ private constructor(
 
                 fun build(): Customer =
                     Customer(
-                        checkNotNull(id) { "`id` is required but was not set" },
-                        checkNotNull(externalCustomerId) {
-                            "`externalCustomerId` is required but was not set"
-                        },
+                        checkRequired("id", id),
+                        checkRequired("externalCustomerId", externalCustomerId),
                         additionalProperties.toImmutable(),
                     )
             }
@@ -2302,26 +2287,20 @@ private constructor(
 
             fun build(): ExpirationChangeLedgerEntry =
                 ExpirationChangeLedgerEntry(
-                    checkNotNull(id) { "`id` is required but was not set" },
-                    checkNotNull(amount) { "`amount` is required but was not set" },
-                    checkNotNull(createdAt) { "`createdAt` is required but was not set" },
-                    checkNotNull(creditBlock) { "`creditBlock` is required but was not set" },
-                    checkNotNull(currency) { "`currency` is required but was not set" },
-                    checkNotNull(customer) { "`customer` is required but was not set" },
-                    checkNotNull(description) { "`description` is required but was not set" },
-                    checkNotNull(endingBalance) { "`endingBalance` is required but was not set" },
-                    checkNotNull(entryStatus) { "`entryStatus` is required but was not set" },
-                    checkNotNull(entryType) { "`entryType` is required but was not set" },
-                    checkNotNull(ledgerSequenceNumber) {
-                        "`ledgerSequenceNumber` is required but was not set"
-                    },
-                    checkNotNull(metadata) { "`metadata` is required but was not set" },
-                    checkNotNull(newBlockExpiryDate) {
-                        "`newBlockExpiryDate` is required but was not set"
-                    },
-                    checkNotNull(startingBalance) {
-                        "`startingBalance` is required but was not set"
-                    },
+                    checkRequired("id", id),
+                    checkRequired("amount", amount),
+                    checkRequired("createdAt", createdAt),
+                    checkRequired("creditBlock", creditBlock),
+                    checkRequired("currency", currency),
+                    checkRequired("customer", customer),
+                    checkRequired("description", description),
+                    checkRequired("endingBalance", endingBalance),
+                    checkRequired("entryStatus", entryStatus),
+                    checkRequired("entryType", entryType),
+                    checkRequired("ledgerSequenceNumber", ledgerSequenceNumber),
+                    checkRequired("metadata", metadata),
+                    checkRequired("newBlockExpiryDate", newBlockExpiryDate),
+                    checkRequired("startingBalance", startingBalance),
                     additionalProperties.toImmutable(),
                 )
         }
@@ -2439,11 +2418,9 @@ private constructor(
 
                 fun build(): CreditBlock =
                     CreditBlock(
-                        checkNotNull(id) { "`id` is required but was not set" },
-                        checkNotNull(expiryDate) { "`expiryDate` is required but was not set" },
-                        checkNotNull(perUnitCostBasis) {
-                            "`perUnitCostBasis` is required but was not set"
-                        },
+                        checkRequired("id", id),
+                        checkRequired("expiryDate", expiryDate),
+                        checkRequired("perUnitCostBasis", perUnitCostBasis),
                         additionalProperties.toImmutable(),
                     )
             }
@@ -2561,10 +2538,8 @@ private constructor(
 
                 fun build(): Customer =
                     Customer(
-                        checkNotNull(id) { "`id` is required but was not set" },
-                        checkNotNull(externalCustomerId) {
-                            "`externalCustomerId` is required but was not set"
-                        },
+                        checkRequired("id", id),
+                        checkRequired("externalCustomerId", externalCustomerId),
                         additionalProperties.toImmutable(),
                     )
             }
@@ -3089,23 +3064,19 @@ private constructor(
 
             fun build(): CreditBlockExpiryLedgerEntry =
                 CreditBlockExpiryLedgerEntry(
-                    checkNotNull(id) { "`id` is required but was not set" },
-                    checkNotNull(amount) { "`amount` is required but was not set" },
-                    checkNotNull(createdAt) { "`createdAt` is required but was not set" },
-                    checkNotNull(creditBlock) { "`creditBlock` is required but was not set" },
-                    checkNotNull(currency) { "`currency` is required but was not set" },
-                    checkNotNull(customer) { "`customer` is required but was not set" },
-                    checkNotNull(description) { "`description` is required but was not set" },
-                    checkNotNull(endingBalance) { "`endingBalance` is required but was not set" },
-                    checkNotNull(entryStatus) { "`entryStatus` is required but was not set" },
-                    checkNotNull(entryType) { "`entryType` is required but was not set" },
-                    checkNotNull(ledgerSequenceNumber) {
-                        "`ledgerSequenceNumber` is required but was not set"
-                    },
-                    checkNotNull(metadata) { "`metadata` is required but was not set" },
-                    checkNotNull(startingBalance) {
-                        "`startingBalance` is required but was not set"
-                    },
+                    checkRequired("id", id),
+                    checkRequired("amount", amount),
+                    checkRequired("createdAt", createdAt),
+                    checkRequired("creditBlock", creditBlock),
+                    checkRequired("currency", currency),
+                    checkRequired("customer", customer),
+                    checkRequired("description", description),
+                    checkRequired("endingBalance", endingBalance),
+                    checkRequired("entryStatus", entryStatus),
+                    checkRequired("entryType", entryType),
+                    checkRequired("ledgerSequenceNumber", ledgerSequenceNumber),
+                    checkRequired("metadata", metadata),
+                    checkRequired("startingBalance", startingBalance),
                     additionalProperties.toImmutable(),
                 )
         }
@@ -3223,11 +3194,9 @@ private constructor(
 
                 fun build(): CreditBlock =
                     CreditBlock(
-                        checkNotNull(id) { "`id` is required but was not set" },
-                        checkNotNull(expiryDate) { "`expiryDate` is required but was not set" },
-                        checkNotNull(perUnitCostBasis) {
-                            "`perUnitCostBasis` is required but was not set"
-                        },
+                        checkRequired("id", id),
+                        checkRequired("expiryDate", expiryDate),
+                        checkRequired("perUnitCostBasis", perUnitCostBasis),
                         additionalProperties.toImmutable(),
                     )
             }
@@ -3345,10 +3314,8 @@ private constructor(
 
                 fun build(): Customer =
                     Customer(
-                        checkNotNull(id) { "`id` is required but was not set" },
-                        checkNotNull(externalCustomerId) {
-                            "`externalCustomerId` is required but was not set"
-                        },
+                        checkRequired("id", id),
+                        checkRequired("externalCustomerId", externalCustomerId),
                         additionalProperties.toImmutable(),
                     )
             }
@@ -3904,25 +3871,21 @@ private constructor(
 
             fun build(): VoidLedgerEntry =
                 VoidLedgerEntry(
-                    checkNotNull(id) { "`id` is required but was not set" },
-                    checkNotNull(amount) { "`amount` is required but was not set" },
-                    checkNotNull(createdAt) { "`createdAt` is required but was not set" },
-                    checkNotNull(creditBlock) { "`creditBlock` is required but was not set" },
-                    checkNotNull(currency) { "`currency` is required but was not set" },
-                    checkNotNull(customer) { "`customer` is required but was not set" },
-                    checkNotNull(description) { "`description` is required but was not set" },
-                    checkNotNull(endingBalance) { "`endingBalance` is required but was not set" },
-                    checkNotNull(entryStatus) { "`entryStatus` is required but was not set" },
-                    checkNotNull(entryType) { "`entryType` is required but was not set" },
-                    checkNotNull(ledgerSequenceNumber) {
-                        "`ledgerSequenceNumber` is required but was not set"
-                    },
-                    checkNotNull(metadata) { "`metadata` is required but was not set" },
-                    checkNotNull(startingBalance) {
-                        "`startingBalance` is required but was not set"
-                    },
-                    checkNotNull(voidAmount) { "`voidAmount` is required but was not set" },
-                    checkNotNull(voidReason) { "`voidReason` is required but was not set" },
+                    checkRequired("id", id),
+                    checkRequired("amount", amount),
+                    checkRequired("createdAt", createdAt),
+                    checkRequired("creditBlock", creditBlock),
+                    checkRequired("currency", currency),
+                    checkRequired("customer", customer),
+                    checkRequired("description", description),
+                    checkRequired("endingBalance", endingBalance),
+                    checkRequired("entryStatus", entryStatus),
+                    checkRequired("entryType", entryType),
+                    checkRequired("ledgerSequenceNumber", ledgerSequenceNumber),
+                    checkRequired("metadata", metadata),
+                    checkRequired("startingBalance", startingBalance),
+                    checkRequired("voidAmount", voidAmount),
+                    checkRequired("voidReason", voidReason),
                     additionalProperties.toImmutable(),
                 )
         }
@@ -4040,11 +4003,9 @@ private constructor(
 
                 fun build(): CreditBlock =
                     CreditBlock(
-                        checkNotNull(id) { "`id` is required but was not set" },
-                        checkNotNull(expiryDate) { "`expiryDate` is required but was not set" },
-                        checkNotNull(perUnitCostBasis) {
-                            "`perUnitCostBasis` is required but was not set"
-                        },
+                        checkRequired("id", id),
+                        checkRequired("expiryDate", expiryDate),
+                        checkRequired("perUnitCostBasis", perUnitCostBasis),
                         additionalProperties.toImmutable(),
                     )
             }
@@ -4162,10 +4123,8 @@ private constructor(
 
                 fun build(): Customer =
                     Customer(
-                        checkNotNull(id) { "`id` is required but was not set" },
-                        checkNotNull(externalCustomerId) {
-                            "`externalCustomerId` is required but was not set"
-                        },
+                        checkRequired("id", id),
+                        checkRequired("externalCustomerId", externalCustomerId),
                         additionalProperties.toImmutable(),
                     )
             }
@@ -4741,28 +4700,22 @@ private constructor(
 
             fun build(): VoidInitiatedLedgerEntry =
                 VoidInitiatedLedgerEntry(
-                    checkNotNull(id) { "`id` is required but was not set" },
-                    checkNotNull(amount) { "`amount` is required but was not set" },
-                    checkNotNull(createdAt) { "`createdAt` is required but was not set" },
-                    checkNotNull(creditBlock) { "`creditBlock` is required but was not set" },
-                    checkNotNull(currency) { "`currency` is required but was not set" },
-                    checkNotNull(customer) { "`customer` is required but was not set" },
-                    checkNotNull(description) { "`description` is required but was not set" },
-                    checkNotNull(endingBalance) { "`endingBalance` is required but was not set" },
-                    checkNotNull(entryStatus) { "`entryStatus` is required but was not set" },
-                    checkNotNull(entryType) { "`entryType` is required but was not set" },
-                    checkNotNull(ledgerSequenceNumber) {
-                        "`ledgerSequenceNumber` is required but was not set"
-                    },
-                    checkNotNull(metadata) { "`metadata` is required but was not set" },
-                    checkNotNull(newBlockExpiryDate) {
-                        "`newBlockExpiryDate` is required but was not set"
-                    },
-                    checkNotNull(startingBalance) {
-                        "`startingBalance` is required but was not set"
-                    },
-                    checkNotNull(voidAmount) { "`voidAmount` is required but was not set" },
-                    checkNotNull(voidReason) { "`voidReason` is required but was not set" },
+                    checkRequired("id", id),
+                    checkRequired("amount", amount),
+                    checkRequired("createdAt", createdAt),
+                    checkRequired("creditBlock", creditBlock),
+                    checkRequired("currency", currency),
+                    checkRequired("customer", customer),
+                    checkRequired("description", description),
+                    checkRequired("endingBalance", endingBalance),
+                    checkRequired("entryStatus", entryStatus),
+                    checkRequired("entryType", entryType),
+                    checkRequired("ledgerSequenceNumber", ledgerSequenceNumber),
+                    checkRequired("metadata", metadata),
+                    checkRequired("newBlockExpiryDate", newBlockExpiryDate),
+                    checkRequired("startingBalance", startingBalance),
+                    checkRequired("voidAmount", voidAmount),
+                    checkRequired("voidReason", voidReason),
                     additionalProperties.toImmutable(),
                 )
         }
@@ -4880,11 +4833,9 @@ private constructor(
 
                 fun build(): CreditBlock =
                     CreditBlock(
-                        checkNotNull(id) { "`id` is required but was not set" },
-                        checkNotNull(expiryDate) { "`expiryDate` is required but was not set" },
-                        checkNotNull(perUnitCostBasis) {
-                            "`perUnitCostBasis` is required but was not set"
-                        },
+                        checkRequired("id", id),
+                        checkRequired("expiryDate", expiryDate),
+                        checkRequired("perUnitCostBasis", perUnitCostBasis),
                         additionalProperties.toImmutable(),
                     )
             }
@@ -5002,10 +4953,8 @@ private constructor(
 
                 fun build(): Customer =
                     Customer(
-                        checkNotNull(id) { "`id` is required but was not set" },
-                        checkNotNull(externalCustomerId) {
-                            "`externalCustomerId` is required but was not set"
-                        },
+                        checkRequired("id", id),
+                        checkRequired("externalCustomerId", externalCustomerId),
                         additionalProperties.toImmutable(),
                     )
             }
@@ -5529,23 +5478,19 @@ private constructor(
 
             fun build(): AmendmentLedgerEntry =
                 AmendmentLedgerEntry(
-                    checkNotNull(id) { "`id` is required but was not set" },
-                    checkNotNull(amount) { "`amount` is required but was not set" },
-                    checkNotNull(createdAt) { "`createdAt` is required but was not set" },
-                    checkNotNull(creditBlock) { "`creditBlock` is required but was not set" },
-                    checkNotNull(currency) { "`currency` is required but was not set" },
-                    checkNotNull(customer) { "`customer` is required but was not set" },
-                    checkNotNull(description) { "`description` is required but was not set" },
-                    checkNotNull(endingBalance) { "`endingBalance` is required but was not set" },
-                    checkNotNull(entryStatus) { "`entryStatus` is required but was not set" },
-                    checkNotNull(entryType) { "`entryType` is required but was not set" },
-                    checkNotNull(ledgerSequenceNumber) {
-                        "`ledgerSequenceNumber` is required but was not set"
-                    },
-                    checkNotNull(metadata) { "`metadata` is required but was not set" },
-                    checkNotNull(startingBalance) {
-                        "`startingBalance` is required but was not set"
-                    },
+                    checkRequired("id", id),
+                    checkRequired("amount", amount),
+                    checkRequired("createdAt", createdAt),
+                    checkRequired("creditBlock", creditBlock),
+                    checkRequired("currency", currency),
+                    checkRequired("customer", customer),
+                    checkRequired("description", description),
+                    checkRequired("endingBalance", endingBalance),
+                    checkRequired("entryStatus", entryStatus),
+                    checkRequired("entryType", entryType),
+                    checkRequired("ledgerSequenceNumber", ledgerSequenceNumber),
+                    checkRequired("metadata", metadata),
+                    checkRequired("startingBalance", startingBalance),
                     additionalProperties.toImmutable(),
                 )
         }
@@ -5663,11 +5608,9 @@ private constructor(
 
                 fun build(): CreditBlock =
                     CreditBlock(
-                        checkNotNull(id) { "`id` is required but was not set" },
-                        checkNotNull(expiryDate) { "`expiryDate` is required but was not set" },
-                        checkNotNull(perUnitCostBasis) {
-                            "`perUnitCostBasis` is required but was not set"
-                        },
+                        checkRequired("id", id),
+                        checkRequired("expiryDate", expiryDate),
+                        checkRequired("perUnitCostBasis", perUnitCostBasis),
                         additionalProperties.toImmutable(),
                     )
             }
@@ -5785,10 +5728,8 @@ private constructor(
 
                 fun build(): Customer =
                     Customer(
-                        checkNotNull(id) { "`id` is required but was not set" },
-                        checkNotNull(externalCustomerId) {
-                            "`externalCustomerId` is required but was not set"
-                        },
+                        checkRequired("id", id),
+                        checkRequired("externalCustomerId", externalCustomerId),
                         additionalProperties.toImmutable(),
                     )
             }

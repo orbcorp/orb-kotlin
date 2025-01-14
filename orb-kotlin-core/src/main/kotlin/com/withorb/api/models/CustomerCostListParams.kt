@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonCreator
 import com.withorb.api.core.Enum
 import com.withorb.api.core.JsonField
 import com.withorb.api.core.NoAutoDetect
+import com.withorb.api.core.checkRequired
 import com.withorb.api.core.http.Headers
 import com.withorb.api.core.http.QueryParams
 import com.withorb.api.errors.OrbInvalidDataException
@@ -331,7 +332,7 @@ constructor(
 
         fun build(): CustomerCostListParams =
             CustomerCostListParams(
-                checkNotNull(customerId) { "`customerId` is required but was not set" },
+                checkRequired("customerId", customerId),
                 currency,
                 timeframeEnd,
                 timeframeStart,

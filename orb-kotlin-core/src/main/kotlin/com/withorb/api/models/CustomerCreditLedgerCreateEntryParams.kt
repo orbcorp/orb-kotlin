@@ -21,6 +21,7 @@ import com.withorb.api.core.JsonField
 import com.withorb.api.core.JsonMissing
 import com.withorb.api.core.JsonValue
 import com.withorb.api.core.NoAutoDetect
+import com.withorb.api.core.checkRequired
 import com.withorb.api.core.getOrThrow
 import com.withorb.api.core.http.Headers
 import com.withorb.api.core.http.QueryParams
@@ -671,7 +672,7 @@ constructor(
 
         fun build(): CustomerCreditLedgerCreateEntryParams =
             CustomerCreditLedgerCreateEntryParams(
-                checkNotNull(customerId) { "`customerId` is required but was not set" },
+                checkRequired("customerId", customerId),
                 body ?: CustomerCreditLedgerCreateEntryBody(),
                 additionalHeaders.build(),
                 additionalQueryParams.build(),
@@ -1020,8 +1021,8 @@ constructor(
 
             fun build(): AddIncrementCreditLedgerEntryRequestParams =
                 AddIncrementCreditLedgerEntryRequestParams(
-                    checkNotNull(amount) { "`amount` is required but was not set" },
-                    checkNotNull(entryType) { "`entryType` is required but was not set" },
+                    checkRequired("amount", amount),
+                    checkRequired("entryType", entryType),
                     currency,
                     description,
                     effectiveDate,
@@ -1271,10 +1272,8 @@ constructor(
 
                 fun build(): InvoiceSettings =
                     InvoiceSettings(
-                        checkNotNull(autoCollection) {
-                            "`autoCollection` is required but was not set"
-                        },
-                        checkNotNull(netTerms) { "`netTerms` is required but was not set" },
+                        checkRequired("autoCollection", autoCollection),
+                        checkRequired("netTerms", netTerms),
                         memo,
                         requireSuccessfulPayment,
                         additionalProperties.toImmutable(),
@@ -1611,8 +1610,8 @@ constructor(
 
             fun build(): AddDecrementCreditLedgerEntryRequestParams =
                 AddDecrementCreditLedgerEntryRequestParams(
-                    checkNotNull(amount) { "`amount` is required but was not set" },
-                    checkNotNull(entryType) { "`entryType` is required but was not set" },
+                    checkRequired("amount", amount),
+                    checkRequired("entryType", entryType),
                     currency,
                     description,
                     metadata,
@@ -2079,11 +2078,9 @@ constructor(
 
             fun build(): AddExpirationChangeCreditLedgerEntryRequestParams =
                 AddExpirationChangeCreditLedgerEntryRequestParams(
-                    checkNotNull(entryType) { "`entryType` is required but was not set" },
-                    checkNotNull(expiryDate) { "`expiryDate` is required but was not set" },
-                    checkNotNull(targetExpiryDate) {
-                        "`targetExpiryDate` is required but was not set"
-                    },
+                    checkRequired("entryType", entryType),
+                    checkRequired("expiryDate", expiryDate),
+                    checkRequired("targetExpiryDate", targetExpiryDate),
                     amount,
                     blockId,
                     currency,
@@ -2495,9 +2492,9 @@ constructor(
 
             fun build(): AddVoidCreditLedgerEntryRequestParams =
                 AddVoidCreditLedgerEntryRequestParams(
-                    checkNotNull(amount) { "`amount` is required but was not set" },
-                    checkNotNull(blockId) { "`blockId` is required but was not set" },
-                    checkNotNull(entryType) { "`entryType` is required but was not set" },
+                    checkRequired("amount", amount),
+                    checkRequired("blockId", blockId),
+                    checkRequired("entryType", entryType),
                     currency,
                     description,
                     metadata,
@@ -2938,9 +2935,9 @@ constructor(
 
             fun build(): AddAmendmentCreditLedgerEntryRequestParams =
                 AddAmendmentCreditLedgerEntryRequestParams(
-                    checkNotNull(amount) { "`amount` is required but was not set" },
-                    checkNotNull(blockId) { "`blockId` is required but was not set" },
-                    checkNotNull(entryType) { "`entryType` is required but was not set" },
+                    checkRequired("amount", amount),
+                    checkRequired("blockId", blockId),
+                    checkRequired("entryType", entryType),
                     currency,
                     description,
                     metadata,

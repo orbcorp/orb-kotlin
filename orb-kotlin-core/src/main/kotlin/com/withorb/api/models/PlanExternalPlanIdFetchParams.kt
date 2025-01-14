@@ -3,6 +3,7 @@
 package com.withorb.api.models
 
 import com.withorb.api.core.NoAutoDetect
+import com.withorb.api.core.checkRequired
 import com.withorb.api.core.http.Headers
 import com.withorb.api.core.http.QueryParams
 import java.util.Objects
@@ -169,7 +170,7 @@ constructor(
 
         fun build(): PlanExternalPlanIdFetchParams =
             PlanExternalPlanIdFetchParams(
-                checkNotNull(externalPlanId) { "`externalPlanId` is required but was not set" },
+                checkRequired("externalPlanId", externalPlanId),
                 additionalHeaders.build(),
                 additionalQueryParams.build(),
             )

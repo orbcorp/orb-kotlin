@@ -21,6 +21,7 @@ import com.withorb.api.core.JsonField
 import com.withorb.api.core.JsonMissing
 import com.withorb.api.core.JsonValue
 import com.withorb.api.core.NoAutoDetect
+import com.withorb.api.core.checkRequired
 import com.withorb.api.core.getOrThrow
 import com.withorb.api.core.http.Headers
 import com.withorb.api.core.http.QueryParams
@@ -270,8 +271,8 @@ constructor(
 
             fun build(): CouponCreateBody =
                 CouponCreateBody(
-                    checkNotNull(discount) { "`discount` is required but was not set" },
-                    checkNotNull(redemptionCode) { "`redemptionCode` is required but was not set" },
+                    checkRequired("discount", discount),
+                    checkRequired("redemptionCode", redemptionCode),
                     durationInMonths,
                     maxRedemptions,
                     additionalProperties.toImmutable(),
@@ -755,10 +756,8 @@ constructor(
 
                 fun build(): NewCouponPercentageDiscount =
                     NewCouponPercentageDiscount(
-                        checkNotNull(discountType) { "`discountType` is required but was not set" },
-                        checkNotNull(percentageDiscount) {
-                            "`percentageDiscount` is required but was not set"
-                        },
+                        checkRequired("discountType", discountType),
+                        checkRequired("percentageDiscount", percentageDiscount),
                         additionalProperties.toImmutable(),
                     )
             }
@@ -932,10 +931,8 @@ constructor(
 
                 fun build(): NewCouponAmountDiscount =
                     NewCouponAmountDiscount(
-                        checkNotNull(amountDiscount) {
-                            "`amountDiscount` is required but was not set"
-                        },
-                        checkNotNull(discountType) { "`discountType` is required but was not set" },
+                        checkRequired("amountDiscount", amountDiscount),
+                        checkRequired("discountType", discountType),
                         additionalProperties.toImmutable(),
                     )
             }

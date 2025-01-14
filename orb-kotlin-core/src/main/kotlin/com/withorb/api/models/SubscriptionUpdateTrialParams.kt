@@ -21,6 +21,7 @@ import com.withorb.api.core.JsonField
 import com.withorb.api.core.JsonMissing
 import com.withorb.api.core.JsonValue
 import com.withorb.api.core.NoAutoDetect
+import com.withorb.api.core.checkRequired
 import com.withorb.api.core.getOrThrow
 import com.withorb.api.core.http.Headers
 import com.withorb.api.core.http.QueryParams
@@ -238,7 +239,7 @@ constructor(
 
             fun build(): SubscriptionUpdateTrialBody =
                 SubscriptionUpdateTrialBody(
-                    checkNotNull(trialEndDate) { "`trialEndDate` is required but was not set" },
+                    checkRequired("trialEndDate", trialEndDate),
                     shift,
                     additionalProperties.toImmutable(),
                 )
@@ -448,7 +449,7 @@ constructor(
 
         fun build(): SubscriptionUpdateTrialParams =
             SubscriptionUpdateTrialParams(
-                checkNotNull(subscriptionId) { "`subscriptionId` is required but was not set" },
+                checkRequired("subscriptionId", subscriptionId),
                 body.build(),
                 additionalHeaders.build(),
                 additionalQueryParams.build(),

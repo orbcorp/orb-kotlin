@@ -12,6 +12,7 @@ import com.withorb.api.core.JsonField
 import com.withorb.api.core.JsonMissing
 import com.withorb.api.core.JsonValue
 import com.withorb.api.core.NoAutoDetect
+import com.withorb.api.core.checkRequired
 import com.withorb.api.core.immutableEmptyMap
 import com.withorb.api.core.toImmutable
 import com.withorb.api.errors.OrbInvalidDataException
@@ -151,13 +152,10 @@ private constructor(
 
         fun build(): Item =
             Item(
-                checkNotNull(id) { "`id` is required but was not set" },
-                checkNotNull(createdAt) { "`createdAt` is required but was not set" },
-                checkNotNull(externalConnections) {
-                        "`externalConnections` is required but was not set"
-                    }
-                    .map { it.toImmutable() },
-                checkNotNull(name) { "`name` is required but was not set" },
+                checkRequired("id", id),
+                checkRequired("createdAt", createdAt),
+                checkRequired("externalConnections", externalConnections).map { it.toImmutable() },
+                checkRequired("name", name),
                 additionalProperties.toImmutable(),
             )
     }
@@ -260,12 +258,8 @@ private constructor(
 
             fun build(): ExternalConnection =
                 ExternalConnection(
-                    checkNotNull(externalConnectionName) {
-                        "`externalConnectionName` is required but was not set"
-                    },
-                    checkNotNull(externalEntityId) {
-                        "`externalEntityId` is required but was not set"
-                    },
+                    checkRequired("externalConnectionName", externalConnectionName),
+                    checkRequired("externalEntityId", externalEntityId),
                     additionalProperties.toImmutable(),
                 )
         }

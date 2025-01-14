@@ -12,6 +12,7 @@ import com.withorb.api.core.JsonField
 import com.withorb.api.core.JsonMissing
 import com.withorb.api.core.JsonValue
 import com.withorb.api.core.NoAutoDetect
+import com.withorb.api.core.checkRequired
 import com.withorb.api.core.immutableEmptyMap
 import com.withorb.api.core.toImmutable
 import com.withorb.api.errors.OrbInvalidDataException
@@ -278,17 +279,16 @@ private constructor(
 
         fun build(): Alert =
             Alert(
-                checkNotNull(id) { "`id` is required but was not set" },
-                checkNotNull(createdAt) { "`createdAt` is required but was not set" },
-                checkNotNull(currency) { "`currency` is required but was not set" },
-                checkNotNull(customer) { "`customer` is required but was not set" },
-                checkNotNull(enabled) { "`enabled` is required but was not set" },
-                checkNotNull(metric) { "`metric` is required but was not set" },
-                checkNotNull(plan) { "`plan` is required but was not set" },
-                checkNotNull(subscription) { "`subscription` is required but was not set" },
-                checkNotNull(thresholds) { "`thresholds` is required but was not set" }
-                    .map { it.toImmutable() },
-                checkNotNull(type) { "`type` is required but was not set" },
+                checkRequired("id", id),
+                checkRequired("createdAt", createdAt),
+                checkRequired("currency", currency),
+                checkRequired("customer", customer),
+                checkRequired("enabled", enabled),
+                checkRequired("metric", metric),
+                checkRequired("plan", plan),
+                checkRequired("subscription", subscription),
+                checkRequired("thresholds", thresholds).map { it.toImmutable() },
+                checkRequired("type", type),
                 additionalProperties.toImmutable(),
             )
     }
@@ -383,10 +383,8 @@ private constructor(
 
             fun build(): Customer =
                 Customer(
-                    checkNotNull(id) { "`id` is required but was not set" },
-                    checkNotNull(externalCustomerId) {
-                        "`externalCustomerId` is required but was not set"
-                    },
+                    checkRequired("id", id),
+                    checkRequired("externalCustomerId", externalCustomerId),
                     additionalProperties.toImmutable(),
                 )
         }
@@ -479,10 +477,7 @@ private constructor(
             }
 
             fun build(): Metric =
-                Metric(
-                    checkNotNull(id) { "`id` is required but was not set" },
-                    additionalProperties.toImmutable()
-                )
+                Metric(checkRequired("id", id), additionalProperties.toImmutable())
         }
 
         override fun equals(other: Any?): Boolean {
@@ -644,10 +639,10 @@ private constructor(
 
             fun build(): Plan =
                 Plan(
-                    checkNotNull(id) { "`id` is required but was not set" },
-                    checkNotNull(externalPlanId) { "`externalPlanId` is required but was not set" },
-                    checkNotNull(name) { "`name` is required but was not set" },
-                    checkNotNull(planVersion) { "`planVersion` is required but was not set" },
+                    checkRequired("id", id),
+                    checkRequired("externalPlanId", externalPlanId),
+                    checkRequired("name", name),
+                    checkRequired("planVersion", planVersion),
                     additionalProperties.toImmutable(),
                 )
         }
@@ -740,10 +735,7 @@ private constructor(
             }
 
             fun build(): Subscription =
-                Subscription(
-                    checkNotNull(id) { "`id` is required but was not set" },
-                    additionalProperties.toImmutable()
-                )
+                Subscription(checkRequired("id", id), additionalProperties.toImmutable())
         }
 
         override fun equals(other: Any?): Boolean {
@@ -855,10 +847,7 @@ private constructor(
             }
 
             fun build(): Threshold =
-                Threshold(
-                    checkNotNull(value) { "`value` is required but was not set" },
-                    additionalProperties.toImmutable()
-                )
+                Threshold(checkRequired("value", value), additionalProperties.toImmutable())
         }
 
         override fun equals(other: Any?): Boolean {
