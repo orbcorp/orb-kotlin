@@ -21,6 +21,7 @@ import com.withorb.api.core.JsonField
 import com.withorb.api.core.JsonMissing
 import com.withorb.api.core.JsonValue
 import com.withorb.api.core.NoAutoDetect
+import com.withorb.api.core.checkRequired
 import com.withorb.api.core.getOrThrow
 import com.withorb.api.core.immutableEmptyMap
 import com.withorb.api.core.toImmutable
@@ -1527,39 +1528,29 @@ private constructor(
 
             fun build(): UnitPrice =
                 UnitPrice(
-                    checkNotNull(id) { "`id` is required but was not set" },
-                    checkNotNull(billableMetric) { "`billableMetric` is required but was not set" },
-                    checkNotNull(billingCycleConfiguration) {
-                        "`billingCycleConfiguration` is required but was not set"
-                    },
-                    checkNotNull(cadence) { "`cadence` is required but was not set" },
-                    checkNotNull(conversionRate) { "`conversionRate` is required but was not set" },
-                    checkNotNull(createdAt) { "`createdAt` is required but was not set" },
-                    checkNotNull(creditAllocation) {
-                        "`creditAllocation` is required but was not set"
-                    },
-                    checkNotNull(currency) { "`currency` is required but was not set" },
-                    checkNotNull(discount) { "`discount` is required but was not set" },
-                    checkNotNull(externalPriceId) {
-                        "`externalPriceId` is required but was not set"
-                    },
-                    checkNotNull(fixedPriceQuantity) {
-                        "`fixedPriceQuantity` is required but was not set"
-                    },
-                    checkNotNull(invoicingCycleConfiguration) {
-                        "`invoicingCycleConfiguration` is required but was not set"
-                    },
-                    checkNotNull(item) { "`item` is required but was not set" },
-                    checkNotNull(maximum) { "`maximum` is required but was not set" },
-                    checkNotNull(maximumAmount) { "`maximumAmount` is required but was not set" },
-                    checkNotNull(metadata) { "`metadata` is required but was not set" },
-                    checkNotNull(minimum) { "`minimum` is required but was not set" },
-                    checkNotNull(minimumAmount) { "`minimumAmount` is required but was not set" },
-                    checkNotNull(modelType) { "`modelType` is required but was not set" },
-                    checkNotNull(name) { "`name` is required but was not set" },
-                    checkNotNull(planPhaseOrder) { "`planPhaseOrder` is required but was not set" },
-                    checkNotNull(priceType) { "`priceType` is required but was not set" },
-                    checkNotNull(unitConfig) { "`unitConfig` is required but was not set" },
+                    checkRequired("id", id),
+                    checkRequired("billableMetric", billableMetric),
+                    checkRequired("billingCycleConfiguration", billingCycleConfiguration),
+                    checkRequired("cadence", cadence),
+                    checkRequired("conversionRate", conversionRate),
+                    checkRequired("createdAt", createdAt),
+                    checkRequired("creditAllocation", creditAllocation),
+                    checkRequired("currency", currency),
+                    checkRequired("discount", discount),
+                    checkRequired("externalPriceId", externalPriceId),
+                    checkRequired("fixedPriceQuantity", fixedPriceQuantity),
+                    checkRequired("invoicingCycleConfiguration", invoicingCycleConfiguration),
+                    checkRequired("item", item),
+                    checkRequired("maximum", maximum),
+                    checkRequired("maximumAmount", maximumAmount),
+                    checkRequired("metadata", metadata),
+                    checkRequired("minimum", minimum),
+                    checkRequired("minimumAmount", minimumAmount),
+                    checkRequired("modelType", modelType),
+                    checkRequired("name", name),
+                    checkRequired("planPhaseOrder", planPhaseOrder),
+                    checkRequired("priceType", priceType),
+                    checkRequired("unitConfig", unitConfig),
                     additionalProperties.toImmutable(),
                 )
         }
@@ -1638,10 +1629,7 @@ private constructor(
                 }
 
                 fun build(): BillableMetric =
-                    BillableMetric(
-                        checkNotNull(id) { "`id` is required but was not set" },
-                        additionalProperties.toImmutable()
-                    )
+                    BillableMetric(checkRequired("id", id), additionalProperties.toImmutable())
             }
 
             override fun equals(other: Any?): Boolean {
@@ -1757,8 +1745,8 @@ private constructor(
 
                 fun build(): BillingCycleConfiguration =
                     BillingCycleConfiguration(
-                        checkNotNull(duration) { "`duration` is required but was not set" },
-                        checkNotNull(durationUnit) { "`durationUnit` is required but was not set" },
+                        checkRequired("duration", duration),
+                        checkRequired("durationUnit", durationUnit),
                         additionalProperties.toImmutable(),
                     )
             }
@@ -2013,10 +2001,8 @@ private constructor(
 
                 fun build(): CreditAllocation =
                     CreditAllocation(
-                        checkNotNull(allowsRollover) {
-                            "`allowsRollover` is required but was not set"
-                        },
-                        checkNotNull(currency) { "`currency` is required but was not set" },
+                        checkRequired("allowsRollover", allowsRollover),
+                        checkRequired("currency", currency),
                         additionalProperties.toImmutable(),
                     )
             }
@@ -2135,8 +2121,8 @@ private constructor(
 
                 fun build(): InvoicingCycleConfiguration =
                     InvoicingCycleConfiguration(
-                        checkNotNull(duration) { "`duration` is required but was not set" },
-                        checkNotNull(durationUnit) { "`durationUnit` is required but was not set" },
+                        checkRequired("duration", duration),
+                        checkRequired("durationUnit", durationUnit),
                         additionalProperties.toImmutable(),
                     )
             }
@@ -2305,8 +2291,8 @@ private constructor(
 
                 fun build(): Item =
                     Item(
-                        checkNotNull(id) { "`id` is required but was not set" },
-                        checkNotNull(name) { "`name` is required but was not set" },
+                        checkRequired("id", id),
+                        checkRequired("name", name),
                         additionalProperties.toImmutable(),
                     )
             }
@@ -2464,13 +2450,10 @@ private constructor(
 
                 fun build(): Maximum =
                     Maximum(
-                        checkNotNull(appliesToPriceIds) {
-                                "`appliesToPriceIds` is required but was not set"
-                            }
-                            .map { it.toImmutable() },
-                        checkNotNull(maximumAmount) {
-                            "`maximumAmount` is required but was not set"
+                        checkRequired("appliesToPriceIds", appliesToPriceIds).map {
+                            it.toImmutable()
                         },
+                        checkRequired("maximumAmount", maximumAmount),
                         additionalProperties.toImmutable(),
                     )
             }
@@ -2712,13 +2695,10 @@ private constructor(
 
                 fun build(): Minimum =
                     Minimum(
-                        checkNotNull(appliesToPriceIds) {
-                                "`appliesToPriceIds` is required but was not set"
-                            }
-                            .map { it.toImmutable() },
-                        checkNotNull(minimumAmount) {
-                            "`minimumAmount` is required but was not set"
+                        checkRequired("appliesToPriceIds", appliesToPriceIds).map {
+                            it.toImmutable()
                         },
+                        checkRequired("minimumAmount", minimumAmount),
                         additionalProperties.toImmutable(),
                     )
             }
@@ -2932,7 +2912,7 @@ private constructor(
 
                 fun build(): UnitConfig =
                     UnitConfig(
-                        checkNotNull(unitAmount) { "`unitAmount` is required but was not set" },
+                        checkRequired("unitAmount", unitAmount),
                         additionalProperties.toImmutable()
                     )
             }
@@ -3459,39 +3439,29 @@ private constructor(
 
             fun build(): PackagePrice =
                 PackagePrice(
-                    checkNotNull(id) { "`id` is required but was not set" },
-                    checkNotNull(billableMetric) { "`billableMetric` is required but was not set" },
-                    checkNotNull(billingCycleConfiguration) {
-                        "`billingCycleConfiguration` is required but was not set"
-                    },
-                    checkNotNull(cadence) { "`cadence` is required but was not set" },
-                    checkNotNull(conversionRate) { "`conversionRate` is required but was not set" },
-                    checkNotNull(createdAt) { "`createdAt` is required but was not set" },
-                    checkNotNull(creditAllocation) {
-                        "`creditAllocation` is required but was not set"
-                    },
-                    checkNotNull(currency) { "`currency` is required but was not set" },
-                    checkNotNull(discount) { "`discount` is required but was not set" },
-                    checkNotNull(externalPriceId) {
-                        "`externalPriceId` is required but was not set"
-                    },
-                    checkNotNull(fixedPriceQuantity) {
-                        "`fixedPriceQuantity` is required but was not set"
-                    },
-                    checkNotNull(invoicingCycleConfiguration) {
-                        "`invoicingCycleConfiguration` is required but was not set"
-                    },
-                    checkNotNull(item) { "`item` is required but was not set" },
-                    checkNotNull(maximum) { "`maximum` is required but was not set" },
-                    checkNotNull(maximumAmount) { "`maximumAmount` is required but was not set" },
-                    checkNotNull(metadata) { "`metadata` is required but was not set" },
-                    checkNotNull(minimum) { "`minimum` is required but was not set" },
-                    checkNotNull(minimumAmount) { "`minimumAmount` is required but was not set" },
-                    checkNotNull(modelType) { "`modelType` is required but was not set" },
-                    checkNotNull(name) { "`name` is required but was not set" },
-                    checkNotNull(packageConfig) { "`packageConfig` is required but was not set" },
-                    checkNotNull(planPhaseOrder) { "`planPhaseOrder` is required but was not set" },
-                    checkNotNull(priceType) { "`priceType` is required but was not set" },
+                    checkRequired("id", id),
+                    checkRequired("billableMetric", billableMetric),
+                    checkRequired("billingCycleConfiguration", billingCycleConfiguration),
+                    checkRequired("cadence", cadence),
+                    checkRequired("conversionRate", conversionRate),
+                    checkRequired("createdAt", createdAt),
+                    checkRequired("creditAllocation", creditAllocation),
+                    checkRequired("currency", currency),
+                    checkRequired("discount", discount),
+                    checkRequired("externalPriceId", externalPriceId),
+                    checkRequired("fixedPriceQuantity", fixedPriceQuantity),
+                    checkRequired("invoicingCycleConfiguration", invoicingCycleConfiguration),
+                    checkRequired("item", item),
+                    checkRequired("maximum", maximum),
+                    checkRequired("maximumAmount", maximumAmount),
+                    checkRequired("metadata", metadata),
+                    checkRequired("minimum", minimum),
+                    checkRequired("minimumAmount", minimumAmount),
+                    checkRequired("modelType", modelType),
+                    checkRequired("name", name),
+                    checkRequired("packageConfig", packageConfig),
+                    checkRequired("planPhaseOrder", planPhaseOrder),
+                    checkRequired("priceType", priceType),
                     additionalProperties.toImmutable(),
                 )
         }
@@ -3570,10 +3540,7 @@ private constructor(
                 }
 
                 fun build(): BillableMetric =
-                    BillableMetric(
-                        checkNotNull(id) { "`id` is required but was not set" },
-                        additionalProperties.toImmutable()
-                    )
+                    BillableMetric(checkRequired("id", id), additionalProperties.toImmutable())
             }
 
             override fun equals(other: Any?): Boolean {
@@ -3689,8 +3656,8 @@ private constructor(
 
                 fun build(): BillingCycleConfiguration =
                     BillingCycleConfiguration(
-                        checkNotNull(duration) { "`duration` is required but was not set" },
-                        checkNotNull(durationUnit) { "`durationUnit` is required but was not set" },
+                        checkRequired("duration", duration),
+                        checkRequired("durationUnit", durationUnit),
                         additionalProperties.toImmutable(),
                     )
             }
@@ -3945,10 +3912,8 @@ private constructor(
 
                 fun build(): CreditAllocation =
                     CreditAllocation(
-                        checkNotNull(allowsRollover) {
-                            "`allowsRollover` is required but was not set"
-                        },
-                        checkNotNull(currency) { "`currency` is required but was not set" },
+                        checkRequired("allowsRollover", allowsRollover),
+                        checkRequired("currency", currency),
                         additionalProperties.toImmutable(),
                     )
             }
@@ -4067,8 +4032,8 @@ private constructor(
 
                 fun build(): InvoicingCycleConfiguration =
                     InvoicingCycleConfiguration(
-                        checkNotNull(duration) { "`duration` is required but was not set" },
-                        checkNotNull(durationUnit) { "`durationUnit` is required but was not set" },
+                        checkRequired("duration", duration),
+                        checkRequired("durationUnit", durationUnit),
                         additionalProperties.toImmutable(),
                     )
             }
@@ -4237,8 +4202,8 @@ private constructor(
 
                 fun build(): Item =
                     Item(
-                        checkNotNull(id) { "`id` is required but was not set" },
-                        checkNotNull(name) { "`name` is required but was not set" },
+                        checkRequired("id", id),
+                        checkRequired("name", name),
                         additionalProperties.toImmutable(),
                     )
             }
@@ -4396,13 +4361,10 @@ private constructor(
 
                 fun build(): Maximum =
                     Maximum(
-                        checkNotNull(appliesToPriceIds) {
-                                "`appliesToPriceIds` is required but was not set"
-                            }
-                            .map { it.toImmutable() },
-                        checkNotNull(maximumAmount) {
-                            "`maximumAmount` is required but was not set"
+                        checkRequired("appliesToPriceIds", appliesToPriceIds).map {
+                            it.toImmutable()
                         },
+                        checkRequired("maximumAmount", maximumAmount),
                         additionalProperties.toImmutable(),
                     )
             }
@@ -4644,13 +4606,10 @@ private constructor(
 
                 fun build(): Minimum =
                     Minimum(
-                        checkNotNull(appliesToPriceIds) {
-                                "`appliesToPriceIds` is required but was not set"
-                            }
-                            .map { it.toImmutable() },
-                        checkNotNull(minimumAmount) {
-                            "`minimumAmount` is required but was not set"
+                        checkRequired("appliesToPriceIds", appliesToPriceIds).map {
+                            it.toImmutable()
                         },
+                        checkRequired("minimumAmount", minimumAmount),
                         additionalProperties.toImmutable(),
                     )
             }
@@ -4842,10 +4801,8 @@ private constructor(
 
                 fun build(): PackageConfig =
                     PackageConfig(
-                        checkNotNull(packageAmount) {
-                            "`packageAmount` is required but was not set"
-                        },
-                        checkNotNull(packageSize) { "`packageSize` is required but was not set" },
+                        checkRequired("packageAmount", packageAmount),
+                        checkRequired("packageSize", packageSize),
                         additionalProperties.toImmutable(),
                     )
             }
@@ -5428,39 +5385,29 @@ private constructor(
 
             fun build(): MatrixPrice =
                 MatrixPrice(
-                    checkNotNull(id) { "`id` is required but was not set" },
-                    checkNotNull(billableMetric) { "`billableMetric` is required but was not set" },
-                    checkNotNull(billingCycleConfiguration) {
-                        "`billingCycleConfiguration` is required but was not set"
-                    },
-                    checkNotNull(cadence) { "`cadence` is required but was not set" },
-                    checkNotNull(conversionRate) { "`conversionRate` is required but was not set" },
-                    checkNotNull(createdAt) { "`createdAt` is required but was not set" },
-                    checkNotNull(creditAllocation) {
-                        "`creditAllocation` is required but was not set"
-                    },
-                    checkNotNull(currency) { "`currency` is required but was not set" },
-                    checkNotNull(discount) { "`discount` is required but was not set" },
-                    checkNotNull(externalPriceId) {
-                        "`externalPriceId` is required but was not set"
-                    },
-                    checkNotNull(fixedPriceQuantity) {
-                        "`fixedPriceQuantity` is required but was not set"
-                    },
-                    checkNotNull(invoicingCycleConfiguration) {
-                        "`invoicingCycleConfiguration` is required but was not set"
-                    },
-                    checkNotNull(item) { "`item` is required but was not set" },
-                    checkNotNull(matrixConfig) { "`matrixConfig` is required but was not set" },
-                    checkNotNull(maximum) { "`maximum` is required but was not set" },
-                    checkNotNull(maximumAmount) { "`maximumAmount` is required but was not set" },
-                    checkNotNull(metadata) { "`metadata` is required but was not set" },
-                    checkNotNull(minimum) { "`minimum` is required but was not set" },
-                    checkNotNull(minimumAmount) { "`minimumAmount` is required but was not set" },
-                    checkNotNull(modelType) { "`modelType` is required but was not set" },
-                    checkNotNull(name) { "`name` is required but was not set" },
-                    checkNotNull(planPhaseOrder) { "`planPhaseOrder` is required but was not set" },
-                    checkNotNull(priceType) { "`priceType` is required but was not set" },
+                    checkRequired("id", id),
+                    checkRequired("billableMetric", billableMetric),
+                    checkRequired("billingCycleConfiguration", billingCycleConfiguration),
+                    checkRequired("cadence", cadence),
+                    checkRequired("conversionRate", conversionRate),
+                    checkRequired("createdAt", createdAt),
+                    checkRequired("creditAllocation", creditAllocation),
+                    checkRequired("currency", currency),
+                    checkRequired("discount", discount),
+                    checkRequired("externalPriceId", externalPriceId),
+                    checkRequired("fixedPriceQuantity", fixedPriceQuantity),
+                    checkRequired("invoicingCycleConfiguration", invoicingCycleConfiguration),
+                    checkRequired("item", item),
+                    checkRequired("matrixConfig", matrixConfig),
+                    checkRequired("maximum", maximum),
+                    checkRequired("maximumAmount", maximumAmount),
+                    checkRequired("metadata", metadata),
+                    checkRequired("minimum", minimum),
+                    checkRequired("minimumAmount", minimumAmount),
+                    checkRequired("modelType", modelType),
+                    checkRequired("name", name),
+                    checkRequired("planPhaseOrder", planPhaseOrder),
+                    checkRequired("priceType", priceType),
                     additionalProperties.toImmutable(),
                 )
         }
@@ -5539,10 +5486,7 @@ private constructor(
                 }
 
                 fun build(): BillableMetric =
-                    BillableMetric(
-                        checkNotNull(id) { "`id` is required but was not set" },
-                        additionalProperties.toImmutable()
-                    )
+                    BillableMetric(checkRequired("id", id), additionalProperties.toImmutable())
             }
 
             override fun equals(other: Any?): Boolean {
@@ -5658,8 +5602,8 @@ private constructor(
 
                 fun build(): BillingCycleConfiguration =
                     BillingCycleConfiguration(
-                        checkNotNull(duration) { "`duration` is required but was not set" },
-                        checkNotNull(durationUnit) { "`durationUnit` is required but was not set" },
+                        checkRequired("duration", duration),
+                        checkRequired("durationUnit", durationUnit),
                         additionalProperties.toImmutable(),
                     )
             }
@@ -5914,10 +5858,8 @@ private constructor(
 
                 fun build(): CreditAllocation =
                     CreditAllocation(
-                        checkNotNull(allowsRollover) {
-                            "`allowsRollover` is required but was not set"
-                        },
-                        checkNotNull(currency) { "`currency` is required but was not set" },
+                        checkRequired("allowsRollover", allowsRollover),
+                        checkRequired("currency", currency),
                         additionalProperties.toImmutable(),
                     )
             }
@@ -6036,8 +5978,8 @@ private constructor(
 
                 fun build(): InvoicingCycleConfiguration =
                     InvoicingCycleConfiguration(
-                        checkNotNull(duration) { "`duration` is required but was not set" },
-                        checkNotNull(durationUnit) { "`durationUnit` is required but was not set" },
+                        checkRequired("duration", duration),
+                        checkRequired("durationUnit", durationUnit),
                         additionalProperties.toImmutable(),
                     )
             }
@@ -6206,8 +6148,8 @@ private constructor(
 
                 fun build(): Item =
                     Item(
-                        checkNotNull(id) { "`id` is required but was not set" },
-                        checkNotNull(name) { "`name` is required but was not set" },
+                        checkRequired("id", id),
+                        checkRequired("name", name),
                         additionalProperties.toImmutable(),
                     )
             }
@@ -6387,13 +6329,9 @@ private constructor(
 
                 fun build(): MatrixConfig =
                     MatrixConfig(
-                        checkNotNull(defaultUnitAmount) {
-                            "`defaultUnitAmount` is required but was not set"
-                        },
-                        checkNotNull(dimensions) { "`dimensions` is required but was not set" }
-                            .map { it.toImmutable() },
-                        checkNotNull(matrixValues) { "`matrixValues` is required but was not set" }
-                            .map { it.toImmutable() },
+                        checkRequired("defaultUnitAmount", defaultUnitAmount),
+                        checkRequired("dimensions", dimensions).map { it.toImmutable() },
+                        checkRequired("matrixValues", matrixValues).map { it.toImmutable() },
                         additionalProperties.toImmutable(),
                     )
             }
@@ -6537,11 +6475,10 @@ private constructor(
 
                     fun build(): MatrixValue =
                         MatrixValue(
-                            checkNotNull(dimensionValues) {
-                                    "`dimensionValues` is required but was not set"
-                                }
-                                .map { it.toImmutable() },
-                            checkNotNull(unitAmount) { "`unitAmount` is required but was not set" },
+                            checkRequired("dimensionValues", dimensionValues).map {
+                                it.toImmutable()
+                            },
+                            checkRequired("unitAmount", unitAmount),
                             additionalProperties.toImmutable(),
                         )
                 }
@@ -6717,13 +6654,10 @@ private constructor(
 
                 fun build(): Maximum =
                     Maximum(
-                        checkNotNull(appliesToPriceIds) {
-                                "`appliesToPriceIds` is required but was not set"
-                            }
-                            .map { it.toImmutable() },
-                        checkNotNull(maximumAmount) {
-                            "`maximumAmount` is required but was not set"
+                        checkRequired("appliesToPriceIds", appliesToPriceIds).map {
+                            it.toImmutable()
                         },
+                        checkRequired("maximumAmount", maximumAmount),
                         additionalProperties.toImmutable(),
                     )
             }
@@ -6965,13 +6899,10 @@ private constructor(
 
                 fun build(): Minimum =
                     Minimum(
-                        checkNotNull(appliesToPriceIds) {
-                                "`appliesToPriceIds` is required but was not set"
-                            }
-                            .map { it.toImmutable() },
-                        checkNotNull(minimumAmount) {
-                            "`minimumAmount` is required but was not set"
+                        checkRequired("appliesToPriceIds", appliesToPriceIds).map {
+                            it.toImmutable()
                         },
+                        checkRequired("minimumAmount", minimumAmount),
                         additionalProperties.toImmutable(),
                     )
             }
@@ -7605,39 +7536,29 @@ private constructor(
 
             fun build(): TieredPrice =
                 TieredPrice(
-                    checkNotNull(id) { "`id` is required but was not set" },
-                    checkNotNull(billableMetric) { "`billableMetric` is required but was not set" },
-                    checkNotNull(billingCycleConfiguration) {
-                        "`billingCycleConfiguration` is required but was not set"
-                    },
-                    checkNotNull(cadence) { "`cadence` is required but was not set" },
-                    checkNotNull(conversionRate) { "`conversionRate` is required but was not set" },
-                    checkNotNull(createdAt) { "`createdAt` is required but was not set" },
-                    checkNotNull(creditAllocation) {
-                        "`creditAllocation` is required but was not set"
-                    },
-                    checkNotNull(currency) { "`currency` is required but was not set" },
-                    checkNotNull(discount) { "`discount` is required but was not set" },
-                    checkNotNull(externalPriceId) {
-                        "`externalPriceId` is required but was not set"
-                    },
-                    checkNotNull(fixedPriceQuantity) {
-                        "`fixedPriceQuantity` is required but was not set"
-                    },
-                    checkNotNull(invoicingCycleConfiguration) {
-                        "`invoicingCycleConfiguration` is required but was not set"
-                    },
-                    checkNotNull(item) { "`item` is required but was not set" },
-                    checkNotNull(maximum) { "`maximum` is required but was not set" },
-                    checkNotNull(maximumAmount) { "`maximumAmount` is required but was not set" },
-                    checkNotNull(metadata) { "`metadata` is required but was not set" },
-                    checkNotNull(minimum) { "`minimum` is required but was not set" },
-                    checkNotNull(minimumAmount) { "`minimumAmount` is required but was not set" },
-                    checkNotNull(modelType) { "`modelType` is required but was not set" },
-                    checkNotNull(name) { "`name` is required but was not set" },
-                    checkNotNull(planPhaseOrder) { "`planPhaseOrder` is required but was not set" },
-                    checkNotNull(priceType) { "`priceType` is required but was not set" },
-                    checkNotNull(tieredConfig) { "`tieredConfig` is required but was not set" },
+                    checkRequired("id", id),
+                    checkRequired("billableMetric", billableMetric),
+                    checkRequired("billingCycleConfiguration", billingCycleConfiguration),
+                    checkRequired("cadence", cadence),
+                    checkRequired("conversionRate", conversionRate),
+                    checkRequired("createdAt", createdAt),
+                    checkRequired("creditAllocation", creditAllocation),
+                    checkRequired("currency", currency),
+                    checkRequired("discount", discount),
+                    checkRequired("externalPriceId", externalPriceId),
+                    checkRequired("fixedPriceQuantity", fixedPriceQuantity),
+                    checkRequired("invoicingCycleConfiguration", invoicingCycleConfiguration),
+                    checkRequired("item", item),
+                    checkRequired("maximum", maximum),
+                    checkRequired("maximumAmount", maximumAmount),
+                    checkRequired("metadata", metadata),
+                    checkRequired("minimum", minimum),
+                    checkRequired("minimumAmount", minimumAmount),
+                    checkRequired("modelType", modelType),
+                    checkRequired("name", name),
+                    checkRequired("planPhaseOrder", planPhaseOrder),
+                    checkRequired("priceType", priceType),
+                    checkRequired("tieredConfig", tieredConfig),
                     additionalProperties.toImmutable(),
                 )
         }
@@ -7716,10 +7637,7 @@ private constructor(
                 }
 
                 fun build(): BillableMetric =
-                    BillableMetric(
-                        checkNotNull(id) { "`id` is required but was not set" },
-                        additionalProperties.toImmutable()
-                    )
+                    BillableMetric(checkRequired("id", id), additionalProperties.toImmutable())
             }
 
             override fun equals(other: Any?): Boolean {
@@ -7835,8 +7753,8 @@ private constructor(
 
                 fun build(): BillingCycleConfiguration =
                     BillingCycleConfiguration(
-                        checkNotNull(duration) { "`duration` is required but was not set" },
-                        checkNotNull(durationUnit) { "`durationUnit` is required but was not set" },
+                        checkRequired("duration", duration),
+                        checkRequired("durationUnit", durationUnit),
                         additionalProperties.toImmutable(),
                     )
             }
@@ -8091,10 +8009,8 @@ private constructor(
 
                 fun build(): CreditAllocation =
                     CreditAllocation(
-                        checkNotNull(allowsRollover) {
-                            "`allowsRollover` is required but was not set"
-                        },
-                        checkNotNull(currency) { "`currency` is required but was not set" },
+                        checkRequired("allowsRollover", allowsRollover),
+                        checkRequired("currency", currency),
                         additionalProperties.toImmutable(),
                     )
             }
@@ -8213,8 +8129,8 @@ private constructor(
 
                 fun build(): InvoicingCycleConfiguration =
                     InvoicingCycleConfiguration(
-                        checkNotNull(duration) { "`duration` is required but was not set" },
-                        checkNotNull(durationUnit) { "`durationUnit` is required but was not set" },
+                        checkRequired("duration", duration),
+                        checkRequired("durationUnit", durationUnit),
                         additionalProperties.toImmutable(),
                     )
             }
@@ -8383,8 +8299,8 @@ private constructor(
 
                 fun build(): Item =
                     Item(
-                        checkNotNull(id) { "`id` is required but was not set" },
-                        checkNotNull(name) { "`name` is required but was not set" },
+                        checkRequired("id", id),
+                        checkRequired("name", name),
                         additionalProperties.toImmutable(),
                     )
             }
@@ -8542,13 +8458,10 @@ private constructor(
 
                 fun build(): Maximum =
                     Maximum(
-                        checkNotNull(appliesToPriceIds) {
-                                "`appliesToPriceIds` is required but was not set"
-                            }
-                            .map { it.toImmutable() },
-                        checkNotNull(maximumAmount) {
-                            "`maximumAmount` is required but was not set"
+                        checkRequired("appliesToPriceIds", appliesToPriceIds).map {
+                            it.toImmutable()
                         },
+                        checkRequired("maximumAmount", maximumAmount),
                         additionalProperties.toImmutable(),
                     )
             }
@@ -8790,13 +8703,10 @@ private constructor(
 
                 fun build(): Minimum =
                     Minimum(
-                        checkNotNull(appliesToPriceIds) {
-                                "`appliesToPriceIds` is required but was not set"
-                            }
-                            .map { it.toImmutable() },
-                        checkNotNull(minimumAmount) {
-                            "`minimumAmount` is required but was not set"
+                        checkRequired("appliesToPriceIds", appliesToPriceIds).map {
+                            it.toImmutable()
                         },
+                        checkRequired("minimumAmount", minimumAmount),
                         additionalProperties.toImmutable(),
                     )
             }
@@ -9020,8 +8930,7 @@ private constructor(
 
                 fun build(): TieredConfig =
                     TieredConfig(
-                        checkNotNull(tiers) { "`tiers` is required but was not set" }
-                            .map { it.toImmutable() },
+                        checkRequired("tiers", tiers).map { it.toImmutable() },
                         additionalProperties.toImmutable()
                     )
             }
@@ -9154,8 +9063,8 @@ private constructor(
 
                     fun build(): Tier =
                         Tier(
-                            checkNotNull(firstUnit) { "`firstUnit` is required but was not set" },
-                            checkNotNull(unitAmount) { "`unitAmount` is required but was not set" },
+                            checkRequired("firstUnit", firstUnit),
+                            checkRequired("unitAmount", unitAmount),
                             lastUnit,
                             additionalProperties.toImmutable(),
                         )
@@ -9701,41 +9610,29 @@ private constructor(
 
             fun build(): TieredBpsPrice =
                 TieredBpsPrice(
-                    checkNotNull(id) { "`id` is required but was not set" },
-                    checkNotNull(billableMetric) { "`billableMetric` is required but was not set" },
-                    checkNotNull(billingCycleConfiguration) {
-                        "`billingCycleConfiguration` is required but was not set"
-                    },
-                    checkNotNull(cadence) { "`cadence` is required but was not set" },
-                    checkNotNull(conversionRate) { "`conversionRate` is required but was not set" },
-                    checkNotNull(createdAt) { "`createdAt` is required but was not set" },
-                    checkNotNull(creditAllocation) {
-                        "`creditAllocation` is required but was not set"
-                    },
-                    checkNotNull(currency) { "`currency` is required but was not set" },
-                    checkNotNull(discount) { "`discount` is required but was not set" },
-                    checkNotNull(externalPriceId) {
-                        "`externalPriceId` is required but was not set"
-                    },
-                    checkNotNull(fixedPriceQuantity) {
-                        "`fixedPriceQuantity` is required but was not set"
-                    },
-                    checkNotNull(invoicingCycleConfiguration) {
-                        "`invoicingCycleConfiguration` is required but was not set"
-                    },
-                    checkNotNull(item) { "`item` is required but was not set" },
-                    checkNotNull(maximum) { "`maximum` is required but was not set" },
-                    checkNotNull(maximumAmount) { "`maximumAmount` is required but was not set" },
-                    checkNotNull(metadata) { "`metadata` is required but was not set" },
-                    checkNotNull(minimum) { "`minimum` is required but was not set" },
-                    checkNotNull(minimumAmount) { "`minimumAmount` is required but was not set" },
-                    checkNotNull(modelType) { "`modelType` is required but was not set" },
-                    checkNotNull(name) { "`name` is required but was not set" },
-                    checkNotNull(planPhaseOrder) { "`planPhaseOrder` is required but was not set" },
-                    checkNotNull(priceType) { "`priceType` is required but was not set" },
-                    checkNotNull(tieredBpsConfig) {
-                        "`tieredBpsConfig` is required but was not set"
-                    },
+                    checkRequired("id", id),
+                    checkRequired("billableMetric", billableMetric),
+                    checkRequired("billingCycleConfiguration", billingCycleConfiguration),
+                    checkRequired("cadence", cadence),
+                    checkRequired("conversionRate", conversionRate),
+                    checkRequired("createdAt", createdAt),
+                    checkRequired("creditAllocation", creditAllocation),
+                    checkRequired("currency", currency),
+                    checkRequired("discount", discount),
+                    checkRequired("externalPriceId", externalPriceId),
+                    checkRequired("fixedPriceQuantity", fixedPriceQuantity),
+                    checkRequired("invoicingCycleConfiguration", invoicingCycleConfiguration),
+                    checkRequired("item", item),
+                    checkRequired("maximum", maximum),
+                    checkRequired("maximumAmount", maximumAmount),
+                    checkRequired("metadata", metadata),
+                    checkRequired("minimum", minimum),
+                    checkRequired("minimumAmount", minimumAmount),
+                    checkRequired("modelType", modelType),
+                    checkRequired("name", name),
+                    checkRequired("planPhaseOrder", planPhaseOrder),
+                    checkRequired("priceType", priceType),
+                    checkRequired("tieredBpsConfig", tieredBpsConfig),
                     additionalProperties.toImmutable(),
                 )
         }
@@ -9814,10 +9711,7 @@ private constructor(
                 }
 
                 fun build(): BillableMetric =
-                    BillableMetric(
-                        checkNotNull(id) { "`id` is required but was not set" },
-                        additionalProperties.toImmutable()
-                    )
+                    BillableMetric(checkRequired("id", id), additionalProperties.toImmutable())
             }
 
             override fun equals(other: Any?): Boolean {
@@ -9933,8 +9827,8 @@ private constructor(
 
                 fun build(): BillingCycleConfiguration =
                     BillingCycleConfiguration(
-                        checkNotNull(duration) { "`duration` is required but was not set" },
-                        checkNotNull(durationUnit) { "`durationUnit` is required but was not set" },
+                        checkRequired("duration", duration),
+                        checkRequired("durationUnit", durationUnit),
                         additionalProperties.toImmutable(),
                     )
             }
@@ -10189,10 +10083,8 @@ private constructor(
 
                 fun build(): CreditAllocation =
                     CreditAllocation(
-                        checkNotNull(allowsRollover) {
-                            "`allowsRollover` is required but was not set"
-                        },
-                        checkNotNull(currency) { "`currency` is required but was not set" },
+                        checkRequired("allowsRollover", allowsRollover),
+                        checkRequired("currency", currency),
                         additionalProperties.toImmutable(),
                     )
             }
@@ -10311,8 +10203,8 @@ private constructor(
 
                 fun build(): InvoicingCycleConfiguration =
                     InvoicingCycleConfiguration(
-                        checkNotNull(duration) { "`duration` is required but was not set" },
-                        checkNotNull(durationUnit) { "`durationUnit` is required but was not set" },
+                        checkRequired("duration", duration),
+                        checkRequired("durationUnit", durationUnit),
                         additionalProperties.toImmutable(),
                     )
             }
@@ -10481,8 +10373,8 @@ private constructor(
 
                 fun build(): Item =
                     Item(
-                        checkNotNull(id) { "`id` is required but was not set" },
-                        checkNotNull(name) { "`name` is required but was not set" },
+                        checkRequired("id", id),
+                        checkRequired("name", name),
                         additionalProperties.toImmutable(),
                     )
             }
@@ -10640,13 +10532,10 @@ private constructor(
 
                 fun build(): Maximum =
                     Maximum(
-                        checkNotNull(appliesToPriceIds) {
-                                "`appliesToPriceIds` is required but was not set"
-                            }
-                            .map { it.toImmutable() },
-                        checkNotNull(maximumAmount) {
-                            "`maximumAmount` is required but was not set"
+                        checkRequired("appliesToPriceIds", appliesToPriceIds).map {
+                            it.toImmutable()
                         },
+                        checkRequired("maximumAmount", maximumAmount),
                         additionalProperties.toImmutable(),
                     )
             }
@@ -10888,13 +10777,10 @@ private constructor(
 
                 fun build(): Minimum =
                     Minimum(
-                        checkNotNull(appliesToPriceIds) {
-                                "`appliesToPriceIds` is required but was not set"
-                            }
-                            .map { it.toImmutable() },
-                        checkNotNull(minimumAmount) {
-                            "`minimumAmount` is required but was not set"
+                        checkRequired("appliesToPriceIds", appliesToPriceIds).map {
+                            it.toImmutable()
                         },
+                        checkRequired("minimumAmount", minimumAmount),
                         additionalProperties.toImmutable(),
                     )
             }
@@ -11131,8 +11017,7 @@ private constructor(
 
                 fun build(): TieredBpsConfig =
                     TieredBpsConfig(
-                        checkNotNull(tiers) { "`tiers` is required but was not set" }
-                            .map { it.toImmutable() },
+                        checkRequired("tiers", tiers).map { it.toImmutable() },
                         additionalProperties.toImmutable()
                     )
             }
@@ -11285,10 +11170,8 @@ private constructor(
 
                     fun build(): Tier =
                         Tier(
-                            checkNotNull(bps) { "`bps` is required but was not set" },
-                            checkNotNull(minimumAmount) {
-                                "`minimumAmount` is required but was not set"
-                            },
+                            checkRequired("bps", bps),
+                            checkRequired("minimumAmount", minimumAmount),
                             maximumAmount,
                             perUnitMaximum,
                             additionalProperties.toImmutable(),
@@ -11832,39 +11715,29 @@ private constructor(
 
             fun build(): BpsPrice =
                 BpsPrice(
-                    checkNotNull(id) { "`id` is required but was not set" },
-                    checkNotNull(billableMetric) { "`billableMetric` is required but was not set" },
-                    checkNotNull(billingCycleConfiguration) {
-                        "`billingCycleConfiguration` is required but was not set"
-                    },
-                    checkNotNull(bpsConfig) { "`bpsConfig` is required but was not set" },
-                    checkNotNull(cadence) { "`cadence` is required but was not set" },
-                    checkNotNull(conversionRate) { "`conversionRate` is required but was not set" },
-                    checkNotNull(createdAt) { "`createdAt` is required but was not set" },
-                    checkNotNull(creditAllocation) {
-                        "`creditAllocation` is required but was not set"
-                    },
-                    checkNotNull(currency) { "`currency` is required but was not set" },
-                    checkNotNull(discount) { "`discount` is required but was not set" },
-                    checkNotNull(externalPriceId) {
-                        "`externalPriceId` is required but was not set"
-                    },
-                    checkNotNull(fixedPriceQuantity) {
-                        "`fixedPriceQuantity` is required but was not set"
-                    },
-                    checkNotNull(invoicingCycleConfiguration) {
-                        "`invoicingCycleConfiguration` is required but was not set"
-                    },
-                    checkNotNull(item) { "`item` is required but was not set" },
-                    checkNotNull(maximum) { "`maximum` is required but was not set" },
-                    checkNotNull(maximumAmount) { "`maximumAmount` is required but was not set" },
-                    checkNotNull(metadata) { "`metadata` is required but was not set" },
-                    checkNotNull(minimum) { "`minimum` is required but was not set" },
-                    checkNotNull(minimumAmount) { "`minimumAmount` is required but was not set" },
-                    checkNotNull(modelType) { "`modelType` is required but was not set" },
-                    checkNotNull(name) { "`name` is required but was not set" },
-                    checkNotNull(planPhaseOrder) { "`planPhaseOrder` is required but was not set" },
-                    checkNotNull(priceType) { "`priceType` is required but was not set" },
+                    checkRequired("id", id),
+                    checkRequired("billableMetric", billableMetric),
+                    checkRequired("billingCycleConfiguration", billingCycleConfiguration),
+                    checkRequired("bpsConfig", bpsConfig),
+                    checkRequired("cadence", cadence),
+                    checkRequired("conversionRate", conversionRate),
+                    checkRequired("createdAt", createdAt),
+                    checkRequired("creditAllocation", creditAllocation),
+                    checkRequired("currency", currency),
+                    checkRequired("discount", discount),
+                    checkRequired("externalPriceId", externalPriceId),
+                    checkRequired("fixedPriceQuantity", fixedPriceQuantity),
+                    checkRequired("invoicingCycleConfiguration", invoicingCycleConfiguration),
+                    checkRequired("item", item),
+                    checkRequired("maximum", maximum),
+                    checkRequired("maximumAmount", maximumAmount),
+                    checkRequired("metadata", metadata),
+                    checkRequired("minimum", minimum),
+                    checkRequired("minimumAmount", minimumAmount),
+                    checkRequired("modelType", modelType),
+                    checkRequired("name", name),
+                    checkRequired("planPhaseOrder", planPhaseOrder),
+                    checkRequired("priceType", priceType),
                     additionalProperties.toImmutable(),
                 )
         }
@@ -11943,10 +11816,7 @@ private constructor(
                 }
 
                 fun build(): BillableMetric =
-                    BillableMetric(
-                        checkNotNull(id) { "`id` is required but was not set" },
-                        additionalProperties.toImmutable()
-                    )
+                    BillableMetric(checkRequired("id", id), additionalProperties.toImmutable())
             }
 
             override fun equals(other: Any?): Boolean {
@@ -12062,8 +11932,8 @@ private constructor(
 
                 fun build(): BillingCycleConfiguration =
                     BillingCycleConfiguration(
-                        checkNotNull(duration) { "`duration` is required but was not set" },
-                        checkNotNull(durationUnit) { "`durationUnit` is required but was not set" },
+                        checkRequired("duration", duration),
+                        checkRequired("durationUnit", durationUnit),
                         additionalProperties.toImmutable(),
                     )
             }
@@ -12245,7 +12115,7 @@ private constructor(
 
                 fun build(): BpsConfig =
                     BpsConfig(
-                        checkNotNull(bps) { "`bps` is required but was not set" },
+                        checkRequired("bps", bps),
                         perUnitMaximum,
                         additionalProperties.toImmutable(),
                     )
@@ -12444,10 +12314,8 @@ private constructor(
 
                 fun build(): CreditAllocation =
                     CreditAllocation(
-                        checkNotNull(allowsRollover) {
-                            "`allowsRollover` is required but was not set"
-                        },
-                        checkNotNull(currency) { "`currency` is required but was not set" },
+                        checkRequired("allowsRollover", allowsRollover),
+                        checkRequired("currency", currency),
                         additionalProperties.toImmutable(),
                     )
             }
@@ -12566,8 +12434,8 @@ private constructor(
 
                 fun build(): InvoicingCycleConfiguration =
                     InvoicingCycleConfiguration(
-                        checkNotNull(duration) { "`duration` is required but was not set" },
-                        checkNotNull(durationUnit) { "`durationUnit` is required but was not set" },
+                        checkRequired("duration", duration),
+                        checkRequired("durationUnit", durationUnit),
                         additionalProperties.toImmutable(),
                     )
             }
@@ -12736,8 +12604,8 @@ private constructor(
 
                 fun build(): Item =
                     Item(
-                        checkNotNull(id) { "`id` is required but was not set" },
-                        checkNotNull(name) { "`name` is required but was not set" },
+                        checkRequired("id", id),
+                        checkRequired("name", name),
                         additionalProperties.toImmutable(),
                     )
             }
@@ -12895,13 +12763,10 @@ private constructor(
 
                 fun build(): Maximum =
                     Maximum(
-                        checkNotNull(appliesToPriceIds) {
-                                "`appliesToPriceIds` is required but was not set"
-                            }
-                            .map { it.toImmutable() },
-                        checkNotNull(maximumAmount) {
-                            "`maximumAmount` is required but was not set"
+                        checkRequired("appliesToPriceIds", appliesToPriceIds).map {
+                            it.toImmutable()
                         },
+                        checkRequired("maximumAmount", maximumAmount),
                         additionalProperties.toImmutable(),
                     )
             }
@@ -13143,13 +13008,10 @@ private constructor(
 
                 fun build(): Minimum =
                     Minimum(
-                        checkNotNull(appliesToPriceIds) {
-                                "`appliesToPriceIds` is required but was not set"
-                            }
-                            .map { it.toImmutable() },
-                        checkNotNull(minimumAmount) {
-                            "`minimumAmount` is required but was not set"
+                        checkRequired("appliesToPriceIds", appliesToPriceIds).map {
+                            it.toImmutable()
                         },
+                        checkRequired("minimumAmount", minimumAmount),
                         additionalProperties.toImmutable(),
                     )
             }
@@ -13784,39 +13646,29 @@ private constructor(
 
             fun build(): BulkBpsPrice =
                 BulkBpsPrice(
-                    checkNotNull(id) { "`id` is required but was not set" },
-                    checkNotNull(billableMetric) { "`billableMetric` is required but was not set" },
-                    checkNotNull(billingCycleConfiguration) {
-                        "`billingCycleConfiguration` is required but was not set"
-                    },
-                    checkNotNull(bulkBpsConfig) { "`bulkBpsConfig` is required but was not set" },
-                    checkNotNull(cadence) { "`cadence` is required but was not set" },
-                    checkNotNull(conversionRate) { "`conversionRate` is required but was not set" },
-                    checkNotNull(createdAt) { "`createdAt` is required but was not set" },
-                    checkNotNull(creditAllocation) {
-                        "`creditAllocation` is required but was not set"
-                    },
-                    checkNotNull(currency) { "`currency` is required but was not set" },
-                    checkNotNull(discount) { "`discount` is required but was not set" },
-                    checkNotNull(externalPriceId) {
-                        "`externalPriceId` is required but was not set"
-                    },
-                    checkNotNull(fixedPriceQuantity) {
-                        "`fixedPriceQuantity` is required but was not set"
-                    },
-                    checkNotNull(invoicingCycleConfiguration) {
-                        "`invoicingCycleConfiguration` is required but was not set"
-                    },
-                    checkNotNull(item) { "`item` is required but was not set" },
-                    checkNotNull(maximum) { "`maximum` is required but was not set" },
-                    checkNotNull(maximumAmount) { "`maximumAmount` is required but was not set" },
-                    checkNotNull(metadata) { "`metadata` is required but was not set" },
-                    checkNotNull(minimum) { "`minimum` is required but was not set" },
-                    checkNotNull(minimumAmount) { "`minimumAmount` is required but was not set" },
-                    checkNotNull(modelType) { "`modelType` is required but was not set" },
-                    checkNotNull(name) { "`name` is required but was not set" },
-                    checkNotNull(planPhaseOrder) { "`planPhaseOrder` is required but was not set" },
-                    checkNotNull(priceType) { "`priceType` is required but was not set" },
+                    checkRequired("id", id),
+                    checkRequired("billableMetric", billableMetric),
+                    checkRequired("billingCycleConfiguration", billingCycleConfiguration),
+                    checkRequired("bulkBpsConfig", bulkBpsConfig),
+                    checkRequired("cadence", cadence),
+                    checkRequired("conversionRate", conversionRate),
+                    checkRequired("createdAt", createdAt),
+                    checkRequired("creditAllocation", creditAllocation),
+                    checkRequired("currency", currency),
+                    checkRequired("discount", discount),
+                    checkRequired("externalPriceId", externalPriceId),
+                    checkRequired("fixedPriceQuantity", fixedPriceQuantity),
+                    checkRequired("invoicingCycleConfiguration", invoicingCycleConfiguration),
+                    checkRequired("item", item),
+                    checkRequired("maximum", maximum),
+                    checkRequired("maximumAmount", maximumAmount),
+                    checkRequired("metadata", metadata),
+                    checkRequired("minimum", minimum),
+                    checkRequired("minimumAmount", minimumAmount),
+                    checkRequired("modelType", modelType),
+                    checkRequired("name", name),
+                    checkRequired("planPhaseOrder", planPhaseOrder),
+                    checkRequired("priceType", priceType),
                     additionalProperties.toImmutable(),
                 )
         }
@@ -13895,10 +13747,7 @@ private constructor(
                 }
 
                 fun build(): BillableMetric =
-                    BillableMetric(
-                        checkNotNull(id) { "`id` is required but was not set" },
-                        additionalProperties.toImmutable()
-                    )
+                    BillableMetric(checkRequired("id", id), additionalProperties.toImmutable())
             }
 
             override fun equals(other: Any?): Boolean {
@@ -14014,8 +13863,8 @@ private constructor(
 
                 fun build(): BillingCycleConfiguration =
                     BillingCycleConfiguration(
-                        checkNotNull(duration) { "`duration` is required but was not set" },
-                        checkNotNull(durationUnit) { "`durationUnit` is required but was not set" },
+                        checkRequired("duration", duration),
+                        checkRequired("durationUnit", durationUnit),
                         additionalProperties.toImmutable(),
                     )
             }
@@ -14203,8 +14052,7 @@ private constructor(
 
                 fun build(): BulkBpsConfig =
                     BulkBpsConfig(
-                        checkNotNull(tiers) { "`tiers` is required but was not set" }
-                            .map { it.toImmutable() },
+                        checkRequired("tiers", tiers).map { it.toImmutable() },
                         additionalProperties.toImmutable()
                     )
             }
@@ -14334,7 +14182,7 @@ private constructor(
 
                     fun build(): Tier =
                         Tier(
-                            checkNotNull(bps) { "`bps` is required but was not set" },
+                            checkRequired("bps", bps),
                             maximumAmount,
                             perUnitMaximum,
                             additionalProperties.toImmutable(),
@@ -14552,10 +14400,8 @@ private constructor(
 
                 fun build(): CreditAllocation =
                     CreditAllocation(
-                        checkNotNull(allowsRollover) {
-                            "`allowsRollover` is required but was not set"
-                        },
-                        checkNotNull(currency) { "`currency` is required but was not set" },
+                        checkRequired("allowsRollover", allowsRollover),
+                        checkRequired("currency", currency),
                         additionalProperties.toImmutable(),
                     )
             }
@@ -14674,8 +14520,8 @@ private constructor(
 
                 fun build(): InvoicingCycleConfiguration =
                     InvoicingCycleConfiguration(
-                        checkNotNull(duration) { "`duration` is required but was not set" },
-                        checkNotNull(durationUnit) { "`durationUnit` is required but was not set" },
+                        checkRequired("duration", duration),
+                        checkRequired("durationUnit", durationUnit),
                         additionalProperties.toImmutable(),
                     )
             }
@@ -14844,8 +14690,8 @@ private constructor(
 
                 fun build(): Item =
                     Item(
-                        checkNotNull(id) { "`id` is required but was not set" },
-                        checkNotNull(name) { "`name` is required but was not set" },
+                        checkRequired("id", id),
+                        checkRequired("name", name),
                         additionalProperties.toImmutable(),
                     )
             }
@@ -15003,13 +14849,10 @@ private constructor(
 
                 fun build(): Maximum =
                     Maximum(
-                        checkNotNull(appliesToPriceIds) {
-                                "`appliesToPriceIds` is required but was not set"
-                            }
-                            .map { it.toImmutable() },
-                        checkNotNull(maximumAmount) {
-                            "`maximumAmount` is required but was not set"
+                        checkRequired("appliesToPriceIds", appliesToPriceIds).map {
+                            it.toImmutable()
                         },
+                        checkRequired("maximumAmount", maximumAmount),
                         additionalProperties.toImmutable(),
                     )
             }
@@ -15251,13 +15094,10 @@ private constructor(
 
                 fun build(): Minimum =
                     Minimum(
-                        checkNotNull(appliesToPriceIds) {
-                                "`appliesToPriceIds` is required but was not set"
-                            }
-                            .map { it.toImmutable() },
-                        checkNotNull(minimumAmount) {
-                            "`minimumAmount` is required but was not set"
+                        checkRequired("appliesToPriceIds", appliesToPriceIds).map {
+                            it.toImmutable()
                         },
+                        checkRequired("minimumAmount", minimumAmount),
                         additionalProperties.toImmutable(),
                     )
             }
@@ -15891,39 +15731,29 @@ private constructor(
 
             fun build(): BulkPrice =
                 BulkPrice(
-                    checkNotNull(id) { "`id` is required but was not set" },
-                    checkNotNull(billableMetric) { "`billableMetric` is required but was not set" },
-                    checkNotNull(billingCycleConfiguration) {
-                        "`billingCycleConfiguration` is required but was not set"
-                    },
-                    checkNotNull(bulkConfig) { "`bulkConfig` is required but was not set" },
-                    checkNotNull(cadence) { "`cadence` is required but was not set" },
-                    checkNotNull(conversionRate) { "`conversionRate` is required but was not set" },
-                    checkNotNull(createdAt) { "`createdAt` is required but was not set" },
-                    checkNotNull(creditAllocation) {
-                        "`creditAllocation` is required but was not set"
-                    },
-                    checkNotNull(currency) { "`currency` is required but was not set" },
-                    checkNotNull(discount) { "`discount` is required but was not set" },
-                    checkNotNull(externalPriceId) {
-                        "`externalPriceId` is required but was not set"
-                    },
-                    checkNotNull(fixedPriceQuantity) {
-                        "`fixedPriceQuantity` is required but was not set"
-                    },
-                    checkNotNull(invoicingCycleConfiguration) {
-                        "`invoicingCycleConfiguration` is required but was not set"
-                    },
-                    checkNotNull(item) { "`item` is required but was not set" },
-                    checkNotNull(maximum) { "`maximum` is required but was not set" },
-                    checkNotNull(maximumAmount) { "`maximumAmount` is required but was not set" },
-                    checkNotNull(metadata) { "`metadata` is required but was not set" },
-                    checkNotNull(minimum) { "`minimum` is required but was not set" },
-                    checkNotNull(minimumAmount) { "`minimumAmount` is required but was not set" },
-                    checkNotNull(modelType) { "`modelType` is required but was not set" },
-                    checkNotNull(name) { "`name` is required but was not set" },
-                    checkNotNull(planPhaseOrder) { "`planPhaseOrder` is required but was not set" },
-                    checkNotNull(priceType) { "`priceType` is required but was not set" },
+                    checkRequired("id", id),
+                    checkRequired("billableMetric", billableMetric),
+                    checkRequired("billingCycleConfiguration", billingCycleConfiguration),
+                    checkRequired("bulkConfig", bulkConfig),
+                    checkRequired("cadence", cadence),
+                    checkRequired("conversionRate", conversionRate),
+                    checkRequired("createdAt", createdAt),
+                    checkRequired("creditAllocation", creditAllocation),
+                    checkRequired("currency", currency),
+                    checkRequired("discount", discount),
+                    checkRequired("externalPriceId", externalPriceId),
+                    checkRequired("fixedPriceQuantity", fixedPriceQuantity),
+                    checkRequired("invoicingCycleConfiguration", invoicingCycleConfiguration),
+                    checkRequired("item", item),
+                    checkRequired("maximum", maximum),
+                    checkRequired("maximumAmount", maximumAmount),
+                    checkRequired("metadata", metadata),
+                    checkRequired("minimum", minimum),
+                    checkRequired("minimumAmount", minimumAmount),
+                    checkRequired("modelType", modelType),
+                    checkRequired("name", name),
+                    checkRequired("planPhaseOrder", planPhaseOrder),
+                    checkRequired("priceType", priceType),
                     additionalProperties.toImmutable(),
                 )
         }
@@ -16002,10 +15832,7 @@ private constructor(
                 }
 
                 fun build(): BillableMetric =
-                    BillableMetric(
-                        checkNotNull(id) { "`id` is required but was not set" },
-                        additionalProperties.toImmutable()
-                    )
+                    BillableMetric(checkRequired("id", id), additionalProperties.toImmutable())
             }
 
             override fun equals(other: Any?): Boolean {
@@ -16121,8 +15948,8 @@ private constructor(
 
                 fun build(): BillingCycleConfiguration =
                     BillingCycleConfiguration(
-                        checkNotNull(duration) { "`duration` is required but was not set" },
-                        checkNotNull(durationUnit) { "`durationUnit` is required but was not set" },
+                        checkRequired("duration", duration),
+                        checkRequired("durationUnit", durationUnit),
                         additionalProperties.toImmutable(),
                     )
             }
@@ -16295,8 +16122,7 @@ private constructor(
 
                 fun build(): BulkConfig =
                     BulkConfig(
-                        checkNotNull(tiers) { "`tiers` is required but was not set" }
-                            .map { it.toImmutable() },
+                        checkRequired("tiers", tiers).map { it.toImmutable() },
                         additionalProperties.toImmutable()
                     )
             }
@@ -16410,7 +16236,7 @@ private constructor(
 
                     fun build(): Tier =
                         Tier(
-                            checkNotNull(unitAmount) { "`unitAmount` is required but was not set" },
+                            checkRequired("unitAmount", unitAmount),
                             maximumUnits,
                             additionalProperties.toImmutable(),
                         )
@@ -16627,10 +16453,8 @@ private constructor(
 
                 fun build(): CreditAllocation =
                     CreditAllocation(
-                        checkNotNull(allowsRollover) {
-                            "`allowsRollover` is required but was not set"
-                        },
-                        checkNotNull(currency) { "`currency` is required but was not set" },
+                        checkRequired("allowsRollover", allowsRollover),
+                        checkRequired("currency", currency),
                         additionalProperties.toImmutable(),
                     )
             }
@@ -16749,8 +16573,8 @@ private constructor(
 
                 fun build(): InvoicingCycleConfiguration =
                     InvoicingCycleConfiguration(
-                        checkNotNull(duration) { "`duration` is required but was not set" },
-                        checkNotNull(durationUnit) { "`durationUnit` is required but was not set" },
+                        checkRequired("duration", duration),
+                        checkRequired("durationUnit", durationUnit),
                         additionalProperties.toImmutable(),
                     )
             }
@@ -16919,8 +16743,8 @@ private constructor(
 
                 fun build(): Item =
                     Item(
-                        checkNotNull(id) { "`id` is required but was not set" },
-                        checkNotNull(name) { "`name` is required but was not set" },
+                        checkRequired("id", id),
+                        checkRequired("name", name),
                         additionalProperties.toImmutable(),
                     )
             }
@@ -17078,13 +16902,10 @@ private constructor(
 
                 fun build(): Maximum =
                     Maximum(
-                        checkNotNull(appliesToPriceIds) {
-                                "`appliesToPriceIds` is required but was not set"
-                            }
-                            .map { it.toImmutable() },
-                        checkNotNull(maximumAmount) {
-                            "`maximumAmount` is required but was not set"
+                        checkRequired("appliesToPriceIds", appliesToPriceIds).map {
+                            it.toImmutable()
                         },
+                        checkRequired("maximumAmount", maximumAmount),
                         additionalProperties.toImmutable(),
                     )
             }
@@ -17326,13 +17147,10 @@ private constructor(
 
                 fun build(): Minimum =
                     Minimum(
-                        checkNotNull(appliesToPriceIds) {
-                                "`appliesToPriceIds` is required but was not set"
-                            }
-                            .map { it.toImmutable() },
-                        checkNotNull(minimumAmount) {
-                            "`minimumAmount` is required but was not set"
+                        checkRequired("appliesToPriceIds", appliesToPriceIds).map {
+                            it.toImmutable()
                         },
+                        checkRequired("minimumAmount", minimumAmount),
                         additionalProperties.toImmutable(),
                     )
             }
@@ -17970,41 +17788,29 @@ private constructor(
 
             fun build(): ThresholdTotalAmountPrice =
                 ThresholdTotalAmountPrice(
-                    checkNotNull(id) { "`id` is required but was not set" },
-                    checkNotNull(billableMetric) { "`billableMetric` is required but was not set" },
-                    checkNotNull(billingCycleConfiguration) {
-                        "`billingCycleConfiguration` is required but was not set"
-                    },
-                    checkNotNull(cadence) { "`cadence` is required but was not set" },
-                    checkNotNull(conversionRate) { "`conversionRate` is required but was not set" },
-                    checkNotNull(createdAt) { "`createdAt` is required but was not set" },
-                    checkNotNull(creditAllocation) {
-                        "`creditAllocation` is required but was not set"
-                    },
-                    checkNotNull(currency) { "`currency` is required but was not set" },
-                    checkNotNull(discount) { "`discount` is required but was not set" },
-                    checkNotNull(externalPriceId) {
-                        "`externalPriceId` is required but was not set"
-                    },
-                    checkNotNull(fixedPriceQuantity) {
-                        "`fixedPriceQuantity` is required but was not set"
-                    },
-                    checkNotNull(invoicingCycleConfiguration) {
-                        "`invoicingCycleConfiguration` is required but was not set"
-                    },
-                    checkNotNull(item) { "`item` is required but was not set" },
-                    checkNotNull(maximum) { "`maximum` is required but was not set" },
-                    checkNotNull(maximumAmount) { "`maximumAmount` is required but was not set" },
-                    checkNotNull(metadata) { "`metadata` is required but was not set" },
-                    checkNotNull(minimum) { "`minimum` is required but was not set" },
-                    checkNotNull(minimumAmount) { "`minimumAmount` is required but was not set" },
-                    checkNotNull(modelType) { "`modelType` is required but was not set" },
-                    checkNotNull(name) { "`name` is required but was not set" },
-                    checkNotNull(planPhaseOrder) { "`planPhaseOrder` is required but was not set" },
-                    checkNotNull(priceType) { "`priceType` is required but was not set" },
-                    checkNotNull(thresholdTotalAmountConfig) {
-                        "`thresholdTotalAmountConfig` is required but was not set"
-                    },
+                    checkRequired("id", id),
+                    checkRequired("billableMetric", billableMetric),
+                    checkRequired("billingCycleConfiguration", billingCycleConfiguration),
+                    checkRequired("cadence", cadence),
+                    checkRequired("conversionRate", conversionRate),
+                    checkRequired("createdAt", createdAt),
+                    checkRequired("creditAllocation", creditAllocation),
+                    checkRequired("currency", currency),
+                    checkRequired("discount", discount),
+                    checkRequired("externalPriceId", externalPriceId),
+                    checkRequired("fixedPriceQuantity", fixedPriceQuantity),
+                    checkRequired("invoicingCycleConfiguration", invoicingCycleConfiguration),
+                    checkRequired("item", item),
+                    checkRequired("maximum", maximum),
+                    checkRequired("maximumAmount", maximumAmount),
+                    checkRequired("metadata", metadata),
+                    checkRequired("minimum", minimum),
+                    checkRequired("minimumAmount", minimumAmount),
+                    checkRequired("modelType", modelType),
+                    checkRequired("name", name),
+                    checkRequired("planPhaseOrder", planPhaseOrder),
+                    checkRequired("priceType", priceType),
+                    checkRequired("thresholdTotalAmountConfig", thresholdTotalAmountConfig),
                     additionalProperties.toImmutable(),
                 )
         }
@@ -18083,10 +17889,7 @@ private constructor(
                 }
 
                 fun build(): BillableMetric =
-                    BillableMetric(
-                        checkNotNull(id) { "`id` is required but was not set" },
-                        additionalProperties.toImmutable()
-                    )
+                    BillableMetric(checkRequired("id", id), additionalProperties.toImmutable())
             }
 
             override fun equals(other: Any?): Boolean {
@@ -18202,8 +18005,8 @@ private constructor(
 
                 fun build(): BillingCycleConfiguration =
                     BillingCycleConfiguration(
-                        checkNotNull(duration) { "`duration` is required but was not set" },
-                        checkNotNull(durationUnit) { "`durationUnit` is required but was not set" },
+                        checkRequired("duration", duration),
+                        checkRequired("durationUnit", durationUnit),
                         additionalProperties.toImmutable(),
                     )
             }
@@ -18458,10 +18261,8 @@ private constructor(
 
                 fun build(): CreditAllocation =
                     CreditAllocation(
-                        checkNotNull(allowsRollover) {
-                            "`allowsRollover` is required but was not set"
-                        },
-                        checkNotNull(currency) { "`currency` is required but was not set" },
+                        checkRequired("allowsRollover", allowsRollover),
+                        checkRequired("currency", currency),
                         additionalProperties.toImmutable(),
                     )
             }
@@ -18580,8 +18381,8 @@ private constructor(
 
                 fun build(): InvoicingCycleConfiguration =
                     InvoicingCycleConfiguration(
-                        checkNotNull(duration) { "`duration` is required but was not set" },
-                        checkNotNull(durationUnit) { "`durationUnit` is required but was not set" },
+                        checkRequired("duration", duration),
+                        checkRequired("durationUnit", durationUnit),
                         additionalProperties.toImmutable(),
                     )
             }
@@ -18750,8 +18551,8 @@ private constructor(
 
                 fun build(): Item =
                     Item(
-                        checkNotNull(id) { "`id` is required but was not set" },
-                        checkNotNull(name) { "`name` is required but was not set" },
+                        checkRequired("id", id),
+                        checkRequired("name", name),
                         additionalProperties.toImmutable(),
                     )
             }
@@ -18909,13 +18710,10 @@ private constructor(
 
                 fun build(): Maximum =
                     Maximum(
-                        checkNotNull(appliesToPriceIds) {
-                                "`appliesToPriceIds` is required but was not set"
-                            }
-                            .map { it.toImmutable() },
-                        checkNotNull(maximumAmount) {
-                            "`maximumAmount` is required but was not set"
+                        checkRequired("appliesToPriceIds", appliesToPriceIds).map {
+                            it.toImmutable()
                         },
+                        checkRequired("maximumAmount", maximumAmount),
                         additionalProperties.toImmutable(),
                     )
             }
@@ -19157,13 +18955,10 @@ private constructor(
 
                 fun build(): Minimum =
                     Minimum(
-                        checkNotNull(appliesToPriceIds) {
-                                "`appliesToPriceIds` is required but was not set"
-                            }
-                            .map { it.toImmutable() },
-                        checkNotNull(minimumAmount) {
-                            "`minimumAmount` is required but was not set"
+                        checkRequired("appliesToPriceIds", appliesToPriceIds).map {
+                            it.toImmutable()
                         },
+                        checkRequired("minimumAmount", minimumAmount),
                         additionalProperties.toImmutable(),
                     )
             }
@@ -19881,41 +19676,29 @@ private constructor(
 
             fun build(): TieredPackagePrice =
                 TieredPackagePrice(
-                    checkNotNull(id) { "`id` is required but was not set" },
-                    checkNotNull(billableMetric) { "`billableMetric` is required but was not set" },
-                    checkNotNull(billingCycleConfiguration) {
-                        "`billingCycleConfiguration` is required but was not set"
-                    },
-                    checkNotNull(cadence) { "`cadence` is required but was not set" },
-                    checkNotNull(conversionRate) { "`conversionRate` is required but was not set" },
-                    checkNotNull(createdAt) { "`createdAt` is required but was not set" },
-                    checkNotNull(creditAllocation) {
-                        "`creditAllocation` is required but was not set"
-                    },
-                    checkNotNull(currency) { "`currency` is required but was not set" },
-                    checkNotNull(discount) { "`discount` is required but was not set" },
-                    checkNotNull(externalPriceId) {
-                        "`externalPriceId` is required but was not set"
-                    },
-                    checkNotNull(fixedPriceQuantity) {
-                        "`fixedPriceQuantity` is required but was not set"
-                    },
-                    checkNotNull(invoicingCycleConfiguration) {
-                        "`invoicingCycleConfiguration` is required but was not set"
-                    },
-                    checkNotNull(item) { "`item` is required but was not set" },
-                    checkNotNull(maximum) { "`maximum` is required but was not set" },
-                    checkNotNull(maximumAmount) { "`maximumAmount` is required but was not set" },
-                    checkNotNull(metadata) { "`metadata` is required but was not set" },
-                    checkNotNull(minimum) { "`minimum` is required but was not set" },
-                    checkNotNull(minimumAmount) { "`minimumAmount` is required but was not set" },
-                    checkNotNull(modelType) { "`modelType` is required but was not set" },
-                    checkNotNull(name) { "`name` is required but was not set" },
-                    checkNotNull(planPhaseOrder) { "`planPhaseOrder` is required but was not set" },
-                    checkNotNull(priceType) { "`priceType` is required but was not set" },
-                    checkNotNull(tieredPackageConfig) {
-                        "`tieredPackageConfig` is required but was not set"
-                    },
+                    checkRequired("id", id),
+                    checkRequired("billableMetric", billableMetric),
+                    checkRequired("billingCycleConfiguration", billingCycleConfiguration),
+                    checkRequired("cadence", cadence),
+                    checkRequired("conversionRate", conversionRate),
+                    checkRequired("createdAt", createdAt),
+                    checkRequired("creditAllocation", creditAllocation),
+                    checkRequired("currency", currency),
+                    checkRequired("discount", discount),
+                    checkRequired("externalPriceId", externalPriceId),
+                    checkRequired("fixedPriceQuantity", fixedPriceQuantity),
+                    checkRequired("invoicingCycleConfiguration", invoicingCycleConfiguration),
+                    checkRequired("item", item),
+                    checkRequired("maximum", maximum),
+                    checkRequired("maximumAmount", maximumAmount),
+                    checkRequired("metadata", metadata),
+                    checkRequired("minimum", minimum),
+                    checkRequired("minimumAmount", minimumAmount),
+                    checkRequired("modelType", modelType),
+                    checkRequired("name", name),
+                    checkRequired("planPhaseOrder", planPhaseOrder),
+                    checkRequired("priceType", priceType),
+                    checkRequired("tieredPackageConfig", tieredPackageConfig),
                     additionalProperties.toImmutable(),
                 )
         }
@@ -19994,10 +19777,7 @@ private constructor(
                 }
 
                 fun build(): BillableMetric =
-                    BillableMetric(
-                        checkNotNull(id) { "`id` is required but was not set" },
-                        additionalProperties.toImmutable()
-                    )
+                    BillableMetric(checkRequired("id", id), additionalProperties.toImmutable())
             }
 
             override fun equals(other: Any?): Boolean {
@@ -20113,8 +19893,8 @@ private constructor(
 
                 fun build(): BillingCycleConfiguration =
                     BillingCycleConfiguration(
-                        checkNotNull(duration) { "`duration` is required but was not set" },
-                        checkNotNull(durationUnit) { "`durationUnit` is required but was not set" },
+                        checkRequired("duration", duration),
+                        checkRequired("durationUnit", durationUnit),
                         additionalProperties.toImmutable(),
                     )
             }
@@ -20369,10 +20149,8 @@ private constructor(
 
                 fun build(): CreditAllocation =
                     CreditAllocation(
-                        checkNotNull(allowsRollover) {
-                            "`allowsRollover` is required but was not set"
-                        },
-                        checkNotNull(currency) { "`currency` is required but was not set" },
+                        checkRequired("allowsRollover", allowsRollover),
+                        checkRequired("currency", currency),
                         additionalProperties.toImmutable(),
                     )
             }
@@ -20491,8 +20269,8 @@ private constructor(
 
                 fun build(): InvoicingCycleConfiguration =
                     InvoicingCycleConfiguration(
-                        checkNotNull(duration) { "`duration` is required but was not set" },
-                        checkNotNull(durationUnit) { "`durationUnit` is required but was not set" },
+                        checkRequired("duration", duration),
+                        checkRequired("durationUnit", durationUnit),
                         additionalProperties.toImmutable(),
                     )
             }
@@ -20661,8 +20439,8 @@ private constructor(
 
                 fun build(): Item =
                     Item(
-                        checkNotNull(id) { "`id` is required but was not set" },
-                        checkNotNull(name) { "`name` is required but was not set" },
+                        checkRequired("id", id),
+                        checkRequired("name", name),
                         additionalProperties.toImmutable(),
                     )
             }
@@ -20820,13 +20598,10 @@ private constructor(
 
                 fun build(): Maximum =
                     Maximum(
-                        checkNotNull(appliesToPriceIds) {
-                                "`appliesToPriceIds` is required but was not set"
-                            }
-                            .map { it.toImmutable() },
-                        checkNotNull(maximumAmount) {
-                            "`maximumAmount` is required but was not set"
+                        checkRequired("appliesToPriceIds", appliesToPriceIds).map {
+                            it.toImmutable()
                         },
+                        checkRequired("maximumAmount", maximumAmount),
                         additionalProperties.toImmutable(),
                     )
             }
@@ -21068,13 +20843,10 @@ private constructor(
 
                 fun build(): Minimum =
                     Minimum(
-                        checkNotNull(appliesToPriceIds) {
-                                "`appliesToPriceIds` is required but was not set"
-                            }
-                            .map { it.toImmutable() },
-                        checkNotNull(minimumAmount) {
-                            "`minimumAmount` is required but was not set"
+                        checkRequired("appliesToPriceIds", appliesToPriceIds).map {
+                            it.toImmutable()
                         },
+                        checkRequired("minimumAmount", minimumAmount),
                         additionalProperties.toImmutable(),
                     )
             }
@@ -21791,41 +21563,29 @@ private constructor(
 
             fun build(): GroupedTieredPrice =
                 GroupedTieredPrice(
-                    checkNotNull(id) { "`id` is required but was not set" },
-                    checkNotNull(billableMetric) { "`billableMetric` is required but was not set" },
-                    checkNotNull(billingCycleConfiguration) {
-                        "`billingCycleConfiguration` is required but was not set"
-                    },
-                    checkNotNull(cadence) { "`cadence` is required but was not set" },
-                    checkNotNull(conversionRate) { "`conversionRate` is required but was not set" },
-                    checkNotNull(createdAt) { "`createdAt` is required but was not set" },
-                    checkNotNull(creditAllocation) {
-                        "`creditAllocation` is required but was not set"
-                    },
-                    checkNotNull(currency) { "`currency` is required but was not set" },
-                    checkNotNull(discount) { "`discount` is required but was not set" },
-                    checkNotNull(externalPriceId) {
-                        "`externalPriceId` is required but was not set"
-                    },
-                    checkNotNull(fixedPriceQuantity) {
-                        "`fixedPriceQuantity` is required but was not set"
-                    },
-                    checkNotNull(groupedTieredConfig) {
-                        "`groupedTieredConfig` is required but was not set"
-                    },
-                    checkNotNull(invoicingCycleConfiguration) {
-                        "`invoicingCycleConfiguration` is required but was not set"
-                    },
-                    checkNotNull(item) { "`item` is required but was not set" },
-                    checkNotNull(maximum) { "`maximum` is required but was not set" },
-                    checkNotNull(maximumAmount) { "`maximumAmount` is required but was not set" },
-                    checkNotNull(metadata) { "`metadata` is required but was not set" },
-                    checkNotNull(minimum) { "`minimum` is required but was not set" },
-                    checkNotNull(minimumAmount) { "`minimumAmount` is required but was not set" },
-                    checkNotNull(modelType) { "`modelType` is required but was not set" },
-                    checkNotNull(name) { "`name` is required but was not set" },
-                    checkNotNull(planPhaseOrder) { "`planPhaseOrder` is required but was not set" },
-                    checkNotNull(priceType) { "`priceType` is required but was not set" },
+                    checkRequired("id", id),
+                    checkRequired("billableMetric", billableMetric),
+                    checkRequired("billingCycleConfiguration", billingCycleConfiguration),
+                    checkRequired("cadence", cadence),
+                    checkRequired("conversionRate", conversionRate),
+                    checkRequired("createdAt", createdAt),
+                    checkRequired("creditAllocation", creditAllocation),
+                    checkRequired("currency", currency),
+                    checkRequired("discount", discount),
+                    checkRequired("externalPriceId", externalPriceId),
+                    checkRequired("fixedPriceQuantity", fixedPriceQuantity),
+                    checkRequired("groupedTieredConfig", groupedTieredConfig),
+                    checkRequired("invoicingCycleConfiguration", invoicingCycleConfiguration),
+                    checkRequired("item", item),
+                    checkRequired("maximum", maximum),
+                    checkRequired("maximumAmount", maximumAmount),
+                    checkRequired("metadata", metadata),
+                    checkRequired("minimum", minimum),
+                    checkRequired("minimumAmount", minimumAmount),
+                    checkRequired("modelType", modelType),
+                    checkRequired("name", name),
+                    checkRequired("planPhaseOrder", planPhaseOrder),
+                    checkRequired("priceType", priceType),
                     additionalProperties.toImmutable(),
                 )
         }
@@ -21904,10 +21664,7 @@ private constructor(
                 }
 
                 fun build(): BillableMetric =
-                    BillableMetric(
-                        checkNotNull(id) { "`id` is required but was not set" },
-                        additionalProperties.toImmutable()
-                    )
+                    BillableMetric(checkRequired("id", id), additionalProperties.toImmutable())
             }
 
             override fun equals(other: Any?): Boolean {
@@ -22023,8 +21780,8 @@ private constructor(
 
                 fun build(): BillingCycleConfiguration =
                     BillingCycleConfiguration(
-                        checkNotNull(duration) { "`duration` is required but was not set" },
-                        checkNotNull(durationUnit) { "`durationUnit` is required but was not set" },
+                        checkRequired("duration", duration),
+                        checkRequired("durationUnit", durationUnit),
                         additionalProperties.toImmutable(),
                     )
             }
@@ -22279,10 +22036,8 @@ private constructor(
 
                 fun build(): CreditAllocation =
                     CreditAllocation(
-                        checkNotNull(allowsRollover) {
-                            "`allowsRollover` is required but was not set"
-                        },
-                        checkNotNull(currency) { "`currency` is required but was not set" },
+                        checkRequired("allowsRollover", allowsRollover),
+                        checkRequired("currency", currency),
                         additionalProperties.toImmutable(),
                     )
             }
@@ -22482,8 +22237,8 @@ private constructor(
 
                 fun build(): InvoicingCycleConfiguration =
                     InvoicingCycleConfiguration(
-                        checkNotNull(duration) { "`duration` is required but was not set" },
-                        checkNotNull(durationUnit) { "`durationUnit` is required but was not set" },
+                        checkRequired("duration", duration),
+                        checkRequired("durationUnit", durationUnit),
                         additionalProperties.toImmutable(),
                     )
             }
@@ -22652,8 +22407,8 @@ private constructor(
 
                 fun build(): Item =
                     Item(
-                        checkNotNull(id) { "`id` is required but was not set" },
-                        checkNotNull(name) { "`name` is required but was not set" },
+                        checkRequired("id", id),
+                        checkRequired("name", name),
                         additionalProperties.toImmutable(),
                     )
             }
@@ -22811,13 +22566,10 @@ private constructor(
 
                 fun build(): Maximum =
                     Maximum(
-                        checkNotNull(appliesToPriceIds) {
-                                "`appliesToPriceIds` is required but was not set"
-                            }
-                            .map { it.toImmutable() },
-                        checkNotNull(maximumAmount) {
-                            "`maximumAmount` is required but was not set"
+                        checkRequired("appliesToPriceIds", appliesToPriceIds).map {
+                            it.toImmutable()
                         },
+                        checkRequired("maximumAmount", maximumAmount),
                         additionalProperties.toImmutable(),
                     )
             }
@@ -23059,13 +22811,10 @@ private constructor(
 
                 fun build(): Minimum =
                     Minimum(
-                        checkNotNull(appliesToPriceIds) {
-                                "`appliesToPriceIds` is required but was not set"
-                            }
-                            .map { it.toImmutable() },
-                        checkNotNull(minimumAmount) {
-                            "`minimumAmount` is required but was not set"
+                        checkRequired("appliesToPriceIds", appliesToPriceIds).map {
+                            it.toImmutable()
                         },
+                        checkRequired("minimumAmount", minimumAmount),
                         additionalProperties.toImmutable(),
                     )
             }
@@ -23701,41 +23450,29 @@ private constructor(
 
             fun build(): TieredWithMinimumPrice =
                 TieredWithMinimumPrice(
-                    checkNotNull(id) { "`id` is required but was not set" },
-                    checkNotNull(billableMetric) { "`billableMetric` is required but was not set" },
-                    checkNotNull(billingCycleConfiguration) {
-                        "`billingCycleConfiguration` is required but was not set"
-                    },
-                    checkNotNull(cadence) { "`cadence` is required but was not set" },
-                    checkNotNull(conversionRate) { "`conversionRate` is required but was not set" },
-                    checkNotNull(createdAt) { "`createdAt` is required but was not set" },
-                    checkNotNull(creditAllocation) {
-                        "`creditAllocation` is required but was not set"
-                    },
-                    checkNotNull(currency) { "`currency` is required but was not set" },
-                    checkNotNull(discount) { "`discount` is required but was not set" },
-                    checkNotNull(externalPriceId) {
-                        "`externalPriceId` is required but was not set"
-                    },
-                    checkNotNull(fixedPriceQuantity) {
-                        "`fixedPriceQuantity` is required but was not set"
-                    },
-                    checkNotNull(invoicingCycleConfiguration) {
-                        "`invoicingCycleConfiguration` is required but was not set"
-                    },
-                    checkNotNull(item) { "`item` is required but was not set" },
-                    checkNotNull(maximum) { "`maximum` is required but was not set" },
-                    checkNotNull(maximumAmount) { "`maximumAmount` is required but was not set" },
-                    checkNotNull(metadata) { "`metadata` is required but was not set" },
-                    checkNotNull(minimum) { "`minimum` is required but was not set" },
-                    checkNotNull(minimumAmount) { "`minimumAmount` is required but was not set" },
-                    checkNotNull(modelType) { "`modelType` is required but was not set" },
-                    checkNotNull(name) { "`name` is required but was not set" },
-                    checkNotNull(planPhaseOrder) { "`planPhaseOrder` is required but was not set" },
-                    checkNotNull(priceType) { "`priceType` is required but was not set" },
-                    checkNotNull(tieredWithMinimumConfig) {
-                        "`tieredWithMinimumConfig` is required but was not set"
-                    },
+                    checkRequired("id", id),
+                    checkRequired("billableMetric", billableMetric),
+                    checkRequired("billingCycleConfiguration", billingCycleConfiguration),
+                    checkRequired("cadence", cadence),
+                    checkRequired("conversionRate", conversionRate),
+                    checkRequired("createdAt", createdAt),
+                    checkRequired("creditAllocation", creditAllocation),
+                    checkRequired("currency", currency),
+                    checkRequired("discount", discount),
+                    checkRequired("externalPriceId", externalPriceId),
+                    checkRequired("fixedPriceQuantity", fixedPriceQuantity),
+                    checkRequired("invoicingCycleConfiguration", invoicingCycleConfiguration),
+                    checkRequired("item", item),
+                    checkRequired("maximum", maximum),
+                    checkRequired("maximumAmount", maximumAmount),
+                    checkRequired("metadata", metadata),
+                    checkRequired("minimum", minimum),
+                    checkRequired("minimumAmount", minimumAmount),
+                    checkRequired("modelType", modelType),
+                    checkRequired("name", name),
+                    checkRequired("planPhaseOrder", planPhaseOrder),
+                    checkRequired("priceType", priceType),
+                    checkRequired("tieredWithMinimumConfig", tieredWithMinimumConfig),
                     additionalProperties.toImmutable(),
                 )
         }
@@ -23814,10 +23551,7 @@ private constructor(
                 }
 
                 fun build(): BillableMetric =
-                    BillableMetric(
-                        checkNotNull(id) { "`id` is required but was not set" },
-                        additionalProperties.toImmutable()
-                    )
+                    BillableMetric(checkRequired("id", id), additionalProperties.toImmutable())
             }
 
             override fun equals(other: Any?): Boolean {
@@ -23933,8 +23667,8 @@ private constructor(
 
                 fun build(): BillingCycleConfiguration =
                     BillingCycleConfiguration(
-                        checkNotNull(duration) { "`duration` is required but was not set" },
-                        checkNotNull(durationUnit) { "`durationUnit` is required but was not set" },
+                        checkRequired("duration", duration),
+                        checkRequired("durationUnit", durationUnit),
                         additionalProperties.toImmutable(),
                     )
             }
@@ -24189,10 +23923,8 @@ private constructor(
 
                 fun build(): CreditAllocation =
                     CreditAllocation(
-                        checkNotNull(allowsRollover) {
-                            "`allowsRollover` is required but was not set"
-                        },
-                        checkNotNull(currency) { "`currency` is required but was not set" },
+                        checkRequired("allowsRollover", allowsRollover),
+                        checkRequired("currency", currency),
                         additionalProperties.toImmutable(),
                     )
             }
@@ -24311,8 +24043,8 @@ private constructor(
 
                 fun build(): InvoicingCycleConfiguration =
                     InvoicingCycleConfiguration(
-                        checkNotNull(duration) { "`duration` is required but was not set" },
-                        checkNotNull(durationUnit) { "`durationUnit` is required but was not set" },
+                        checkRequired("duration", duration),
+                        checkRequired("durationUnit", durationUnit),
                         additionalProperties.toImmutable(),
                     )
             }
@@ -24481,8 +24213,8 @@ private constructor(
 
                 fun build(): Item =
                     Item(
-                        checkNotNull(id) { "`id` is required but was not set" },
-                        checkNotNull(name) { "`name` is required but was not set" },
+                        checkRequired("id", id),
+                        checkRequired("name", name),
                         additionalProperties.toImmutable(),
                     )
             }
@@ -24640,13 +24372,10 @@ private constructor(
 
                 fun build(): Maximum =
                     Maximum(
-                        checkNotNull(appliesToPriceIds) {
-                                "`appliesToPriceIds` is required but was not set"
-                            }
-                            .map { it.toImmutable() },
-                        checkNotNull(maximumAmount) {
-                            "`maximumAmount` is required but was not set"
+                        checkRequired("appliesToPriceIds", appliesToPriceIds).map {
+                            it.toImmutable()
                         },
+                        checkRequired("maximumAmount", maximumAmount),
                         additionalProperties.toImmutable(),
                     )
             }
@@ -24888,13 +24617,10 @@ private constructor(
 
                 fun build(): Minimum =
                     Minimum(
-                        checkNotNull(appliesToPriceIds) {
-                                "`appliesToPriceIds` is required but was not set"
-                            }
-                            .map { it.toImmutable() },
-                        checkNotNull(minimumAmount) {
-                            "`minimumAmount` is required but was not set"
+                        checkRequired("appliesToPriceIds", appliesToPriceIds).map {
+                            it.toImmutable()
                         },
+                        checkRequired("minimumAmount", minimumAmount),
                         additionalProperties.toImmutable(),
                     )
             }
@@ -25621,41 +25347,29 @@ private constructor(
 
             fun build(): TieredPackageWithMinimumPrice =
                 TieredPackageWithMinimumPrice(
-                    checkNotNull(id) { "`id` is required but was not set" },
-                    checkNotNull(billableMetric) { "`billableMetric` is required but was not set" },
-                    checkNotNull(billingCycleConfiguration) {
-                        "`billingCycleConfiguration` is required but was not set"
-                    },
-                    checkNotNull(cadence) { "`cadence` is required but was not set" },
-                    checkNotNull(conversionRate) { "`conversionRate` is required but was not set" },
-                    checkNotNull(createdAt) { "`createdAt` is required but was not set" },
-                    checkNotNull(creditAllocation) {
-                        "`creditAllocation` is required but was not set"
-                    },
-                    checkNotNull(currency) { "`currency` is required but was not set" },
-                    checkNotNull(discount) { "`discount` is required but was not set" },
-                    checkNotNull(externalPriceId) {
-                        "`externalPriceId` is required but was not set"
-                    },
-                    checkNotNull(fixedPriceQuantity) {
-                        "`fixedPriceQuantity` is required but was not set"
-                    },
-                    checkNotNull(invoicingCycleConfiguration) {
-                        "`invoicingCycleConfiguration` is required but was not set"
-                    },
-                    checkNotNull(item) { "`item` is required but was not set" },
-                    checkNotNull(maximum) { "`maximum` is required but was not set" },
-                    checkNotNull(maximumAmount) { "`maximumAmount` is required but was not set" },
-                    checkNotNull(metadata) { "`metadata` is required but was not set" },
-                    checkNotNull(minimum) { "`minimum` is required but was not set" },
-                    checkNotNull(minimumAmount) { "`minimumAmount` is required but was not set" },
-                    checkNotNull(modelType) { "`modelType` is required but was not set" },
-                    checkNotNull(name) { "`name` is required but was not set" },
-                    checkNotNull(planPhaseOrder) { "`planPhaseOrder` is required but was not set" },
-                    checkNotNull(priceType) { "`priceType` is required but was not set" },
-                    checkNotNull(tieredPackageWithMinimumConfig) {
-                        "`tieredPackageWithMinimumConfig` is required but was not set"
-                    },
+                    checkRequired("id", id),
+                    checkRequired("billableMetric", billableMetric),
+                    checkRequired("billingCycleConfiguration", billingCycleConfiguration),
+                    checkRequired("cadence", cadence),
+                    checkRequired("conversionRate", conversionRate),
+                    checkRequired("createdAt", createdAt),
+                    checkRequired("creditAllocation", creditAllocation),
+                    checkRequired("currency", currency),
+                    checkRequired("discount", discount),
+                    checkRequired("externalPriceId", externalPriceId),
+                    checkRequired("fixedPriceQuantity", fixedPriceQuantity),
+                    checkRequired("invoicingCycleConfiguration", invoicingCycleConfiguration),
+                    checkRequired("item", item),
+                    checkRequired("maximum", maximum),
+                    checkRequired("maximumAmount", maximumAmount),
+                    checkRequired("metadata", metadata),
+                    checkRequired("minimum", minimum),
+                    checkRequired("minimumAmount", minimumAmount),
+                    checkRequired("modelType", modelType),
+                    checkRequired("name", name),
+                    checkRequired("planPhaseOrder", planPhaseOrder),
+                    checkRequired("priceType", priceType),
+                    checkRequired("tieredPackageWithMinimumConfig", tieredPackageWithMinimumConfig),
                     additionalProperties.toImmutable(),
                 )
         }
@@ -25734,10 +25448,7 @@ private constructor(
                 }
 
                 fun build(): BillableMetric =
-                    BillableMetric(
-                        checkNotNull(id) { "`id` is required but was not set" },
-                        additionalProperties.toImmutable()
-                    )
+                    BillableMetric(checkRequired("id", id), additionalProperties.toImmutable())
             }
 
             override fun equals(other: Any?): Boolean {
@@ -25853,8 +25564,8 @@ private constructor(
 
                 fun build(): BillingCycleConfiguration =
                     BillingCycleConfiguration(
-                        checkNotNull(duration) { "`duration` is required but was not set" },
-                        checkNotNull(durationUnit) { "`durationUnit` is required but was not set" },
+                        checkRequired("duration", duration),
+                        checkRequired("durationUnit", durationUnit),
                         additionalProperties.toImmutable(),
                     )
             }
@@ -26109,10 +25820,8 @@ private constructor(
 
                 fun build(): CreditAllocation =
                     CreditAllocation(
-                        checkNotNull(allowsRollover) {
-                            "`allowsRollover` is required but was not set"
-                        },
-                        checkNotNull(currency) { "`currency` is required but was not set" },
+                        checkRequired("allowsRollover", allowsRollover),
+                        checkRequired("currency", currency),
                         additionalProperties.toImmutable(),
                     )
             }
@@ -26231,8 +25940,8 @@ private constructor(
 
                 fun build(): InvoicingCycleConfiguration =
                     InvoicingCycleConfiguration(
-                        checkNotNull(duration) { "`duration` is required but was not set" },
-                        checkNotNull(durationUnit) { "`durationUnit` is required but was not set" },
+                        checkRequired("duration", duration),
+                        checkRequired("durationUnit", durationUnit),
                         additionalProperties.toImmutable(),
                     )
             }
@@ -26401,8 +26110,8 @@ private constructor(
 
                 fun build(): Item =
                     Item(
-                        checkNotNull(id) { "`id` is required but was not set" },
-                        checkNotNull(name) { "`name` is required but was not set" },
+                        checkRequired("id", id),
+                        checkRequired("name", name),
                         additionalProperties.toImmutable(),
                     )
             }
@@ -26560,13 +26269,10 @@ private constructor(
 
                 fun build(): Maximum =
                     Maximum(
-                        checkNotNull(appliesToPriceIds) {
-                                "`appliesToPriceIds` is required but was not set"
-                            }
-                            .map { it.toImmutable() },
-                        checkNotNull(maximumAmount) {
-                            "`maximumAmount` is required but was not set"
+                        checkRequired("appliesToPriceIds", appliesToPriceIds).map {
+                            it.toImmutable()
                         },
+                        checkRequired("maximumAmount", maximumAmount),
                         additionalProperties.toImmutable(),
                     )
             }
@@ -26808,13 +26514,10 @@ private constructor(
 
                 fun build(): Minimum =
                     Minimum(
-                        checkNotNull(appliesToPriceIds) {
-                                "`appliesToPriceIds` is required but was not set"
-                            }
-                            .map { it.toImmutable() },
-                        checkNotNull(minimumAmount) {
-                            "`minimumAmount` is required but was not set"
+                        checkRequired("appliesToPriceIds", appliesToPriceIds).map {
+                            it.toImmutable()
                         },
+                        checkRequired("minimumAmount", minimumAmount),
                         additionalProperties.toImmutable(),
                     )
             }
@@ -27537,41 +27240,29 @@ private constructor(
 
             fun build(): PackageWithAllocationPrice =
                 PackageWithAllocationPrice(
-                    checkNotNull(id) { "`id` is required but was not set" },
-                    checkNotNull(billableMetric) { "`billableMetric` is required but was not set" },
-                    checkNotNull(billingCycleConfiguration) {
-                        "`billingCycleConfiguration` is required but was not set"
-                    },
-                    checkNotNull(cadence) { "`cadence` is required but was not set" },
-                    checkNotNull(conversionRate) { "`conversionRate` is required but was not set" },
-                    checkNotNull(createdAt) { "`createdAt` is required but was not set" },
-                    checkNotNull(creditAllocation) {
-                        "`creditAllocation` is required but was not set"
-                    },
-                    checkNotNull(currency) { "`currency` is required but was not set" },
-                    checkNotNull(discount) { "`discount` is required but was not set" },
-                    checkNotNull(externalPriceId) {
-                        "`externalPriceId` is required but was not set"
-                    },
-                    checkNotNull(fixedPriceQuantity) {
-                        "`fixedPriceQuantity` is required but was not set"
-                    },
-                    checkNotNull(invoicingCycleConfiguration) {
-                        "`invoicingCycleConfiguration` is required but was not set"
-                    },
-                    checkNotNull(item) { "`item` is required but was not set" },
-                    checkNotNull(maximum) { "`maximum` is required but was not set" },
-                    checkNotNull(maximumAmount) { "`maximumAmount` is required but was not set" },
-                    checkNotNull(metadata) { "`metadata` is required but was not set" },
-                    checkNotNull(minimum) { "`minimum` is required but was not set" },
-                    checkNotNull(minimumAmount) { "`minimumAmount` is required but was not set" },
-                    checkNotNull(modelType) { "`modelType` is required but was not set" },
-                    checkNotNull(name) { "`name` is required but was not set" },
-                    checkNotNull(packageWithAllocationConfig) {
-                        "`packageWithAllocationConfig` is required but was not set"
-                    },
-                    checkNotNull(planPhaseOrder) { "`planPhaseOrder` is required but was not set" },
-                    checkNotNull(priceType) { "`priceType` is required but was not set" },
+                    checkRequired("id", id),
+                    checkRequired("billableMetric", billableMetric),
+                    checkRequired("billingCycleConfiguration", billingCycleConfiguration),
+                    checkRequired("cadence", cadence),
+                    checkRequired("conversionRate", conversionRate),
+                    checkRequired("createdAt", createdAt),
+                    checkRequired("creditAllocation", creditAllocation),
+                    checkRequired("currency", currency),
+                    checkRequired("discount", discount),
+                    checkRequired("externalPriceId", externalPriceId),
+                    checkRequired("fixedPriceQuantity", fixedPriceQuantity),
+                    checkRequired("invoicingCycleConfiguration", invoicingCycleConfiguration),
+                    checkRequired("item", item),
+                    checkRequired("maximum", maximum),
+                    checkRequired("maximumAmount", maximumAmount),
+                    checkRequired("metadata", metadata),
+                    checkRequired("minimum", minimum),
+                    checkRequired("minimumAmount", minimumAmount),
+                    checkRequired("modelType", modelType),
+                    checkRequired("name", name),
+                    checkRequired("packageWithAllocationConfig", packageWithAllocationConfig),
+                    checkRequired("planPhaseOrder", planPhaseOrder),
+                    checkRequired("priceType", priceType),
                     additionalProperties.toImmutable(),
                 )
         }
@@ -27650,10 +27341,7 @@ private constructor(
                 }
 
                 fun build(): BillableMetric =
-                    BillableMetric(
-                        checkNotNull(id) { "`id` is required but was not set" },
-                        additionalProperties.toImmutable()
-                    )
+                    BillableMetric(checkRequired("id", id), additionalProperties.toImmutable())
             }
 
             override fun equals(other: Any?): Boolean {
@@ -27769,8 +27457,8 @@ private constructor(
 
                 fun build(): BillingCycleConfiguration =
                     BillingCycleConfiguration(
-                        checkNotNull(duration) { "`duration` is required but was not set" },
-                        checkNotNull(durationUnit) { "`durationUnit` is required but was not set" },
+                        checkRequired("duration", duration),
+                        checkRequired("durationUnit", durationUnit),
                         additionalProperties.toImmutable(),
                     )
             }
@@ -28025,10 +27713,8 @@ private constructor(
 
                 fun build(): CreditAllocation =
                     CreditAllocation(
-                        checkNotNull(allowsRollover) {
-                            "`allowsRollover` is required but was not set"
-                        },
-                        checkNotNull(currency) { "`currency` is required but was not set" },
+                        checkRequired("allowsRollover", allowsRollover),
+                        checkRequired("currency", currency),
                         additionalProperties.toImmutable(),
                     )
             }
@@ -28147,8 +27833,8 @@ private constructor(
 
                 fun build(): InvoicingCycleConfiguration =
                     InvoicingCycleConfiguration(
-                        checkNotNull(duration) { "`duration` is required but was not set" },
-                        checkNotNull(durationUnit) { "`durationUnit` is required but was not set" },
+                        checkRequired("duration", duration),
+                        checkRequired("durationUnit", durationUnit),
                         additionalProperties.toImmutable(),
                     )
             }
@@ -28317,8 +28003,8 @@ private constructor(
 
                 fun build(): Item =
                     Item(
-                        checkNotNull(id) { "`id` is required but was not set" },
-                        checkNotNull(name) { "`name` is required but was not set" },
+                        checkRequired("id", id),
+                        checkRequired("name", name),
                         additionalProperties.toImmutable(),
                     )
             }
@@ -28476,13 +28162,10 @@ private constructor(
 
                 fun build(): Maximum =
                     Maximum(
-                        checkNotNull(appliesToPriceIds) {
-                                "`appliesToPriceIds` is required but was not set"
-                            }
-                            .map { it.toImmutable() },
-                        checkNotNull(maximumAmount) {
-                            "`maximumAmount` is required but was not set"
+                        checkRequired("appliesToPriceIds", appliesToPriceIds).map {
+                            it.toImmutable()
                         },
+                        checkRequired("maximumAmount", maximumAmount),
                         additionalProperties.toImmutable(),
                     )
             }
@@ -28724,13 +28407,10 @@ private constructor(
 
                 fun build(): Minimum =
                     Minimum(
-                        checkNotNull(appliesToPriceIds) {
-                                "`appliesToPriceIds` is required but was not set"
-                            }
-                            .map { it.toImmutable() },
-                        checkNotNull(minimumAmount) {
-                            "`minimumAmount` is required but was not set"
+                        checkRequired("appliesToPriceIds", appliesToPriceIds).map {
+                            it.toImmutable()
                         },
+                        checkRequired("minimumAmount", minimumAmount),
                         additionalProperties.toImmutable(),
                     )
             }
@@ -29450,41 +29130,29 @@ private constructor(
 
             fun build(): UnitWithPercentPrice =
                 UnitWithPercentPrice(
-                    checkNotNull(id) { "`id` is required but was not set" },
-                    checkNotNull(billableMetric) { "`billableMetric` is required but was not set" },
-                    checkNotNull(billingCycleConfiguration) {
-                        "`billingCycleConfiguration` is required but was not set"
-                    },
-                    checkNotNull(cadence) { "`cadence` is required but was not set" },
-                    checkNotNull(conversionRate) { "`conversionRate` is required but was not set" },
-                    checkNotNull(createdAt) { "`createdAt` is required but was not set" },
-                    checkNotNull(creditAllocation) {
-                        "`creditAllocation` is required but was not set"
-                    },
-                    checkNotNull(currency) { "`currency` is required but was not set" },
-                    checkNotNull(discount) { "`discount` is required but was not set" },
-                    checkNotNull(externalPriceId) {
-                        "`externalPriceId` is required but was not set"
-                    },
-                    checkNotNull(fixedPriceQuantity) {
-                        "`fixedPriceQuantity` is required but was not set"
-                    },
-                    checkNotNull(invoicingCycleConfiguration) {
-                        "`invoicingCycleConfiguration` is required but was not set"
-                    },
-                    checkNotNull(item) { "`item` is required but was not set" },
-                    checkNotNull(maximum) { "`maximum` is required but was not set" },
-                    checkNotNull(maximumAmount) { "`maximumAmount` is required but was not set" },
-                    checkNotNull(metadata) { "`metadata` is required but was not set" },
-                    checkNotNull(minimum) { "`minimum` is required but was not set" },
-                    checkNotNull(minimumAmount) { "`minimumAmount` is required but was not set" },
-                    checkNotNull(modelType) { "`modelType` is required but was not set" },
-                    checkNotNull(name) { "`name` is required but was not set" },
-                    checkNotNull(planPhaseOrder) { "`planPhaseOrder` is required but was not set" },
-                    checkNotNull(priceType) { "`priceType` is required but was not set" },
-                    checkNotNull(unitWithPercentConfig) {
-                        "`unitWithPercentConfig` is required but was not set"
-                    },
+                    checkRequired("id", id),
+                    checkRequired("billableMetric", billableMetric),
+                    checkRequired("billingCycleConfiguration", billingCycleConfiguration),
+                    checkRequired("cadence", cadence),
+                    checkRequired("conversionRate", conversionRate),
+                    checkRequired("createdAt", createdAt),
+                    checkRequired("creditAllocation", creditAllocation),
+                    checkRequired("currency", currency),
+                    checkRequired("discount", discount),
+                    checkRequired("externalPriceId", externalPriceId),
+                    checkRequired("fixedPriceQuantity", fixedPriceQuantity),
+                    checkRequired("invoicingCycleConfiguration", invoicingCycleConfiguration),
+                    checkRequired("item", item),
+                    checkRequired("maximum", maximum),
+                    checkRequired("maximumAmount", maximumAmount),
+                    checkRequired("metadata", metadata),
+                    checkRequired("minimum", minimum),
+                    checkRequired("minimumAmount", minimumAmount),
+                    checkRequired("modelType", modelType),
+                    checkRequired("name", name),
+                    checkRequired("planPhaseOrder", planPhaseOrder),
+                    checkRequired("priceType", priceType),
+                    checkRequired("unitWithPercentConfig", unitWithPercentConfig),
                     additionalProperties.toImmutable(),
                 )
         }
@@ -29563,10 +29231,7 @@ private constructor(
                 }
 
                 fun build(): BillableMetric =
-                    BillableMetric(
-                        checkNotNull(id) { "`id` is required but was not set" },
-                        additionalProperties.toImmutable()
-                    )
+                    BillableMetric(checkRequired("id", id), additionalProperties.toImmutable())
             }
 
             override fun equals(other: Any?): Boolean {
@@ -29682,8 +29347,8 @@ private constructor(
 
                 fun build(): BillingCycleConfiguration =
                     BillingCycleConfiguration(
-                        checkNotNull(duration) { "`duration` is required but was not set" },
-                        checkNotNull(durationUnit) { "`durationUnit` is required but was not set" },
+                        checkRequired("duration", duration),
+                        checkRequired("durationUnit", durationUnit),
                         additionalProperties.toImmutable(),
                     )
             }
@@ -29938,10 +29603,8 @@ private constructor(
 
                 fun build(): CreditAllocation =
                     CreditAllocation(
-                        checkNotNull(allowsRollover) {
-                            "`allowsRollover` is required but was not set"
-                        },
-                        checkNotNull(currency) { "`currency` is required but was not set" },
+                        checkRequired("allowsRollover", allowsRollover),
+                        checkRequired("currency", currency),
                         additionalProperties.toImmutable(),
                     )
             }
@@ -30060,8 +29723,8 @@ private constructor(
 
                 fun build(): InvoicingCycleConfiguration =
                     InvoicingCycleConfiguration(
-                        checkNotNull(duration) { "`duration` is required but was not set" },
-                        checkNotNull(durationUnit) { "`durationUnit` is required but was not set" },
+                        checkRequired("duration", duration),
+                        checkRequired("durationUnit", durationUnit),
                         additionalProperties.toImmutable(),
                     )
             }
@@ -30230,8 +29893,8 @@ private constructor(
 
                 fun build(): Item =
                     Item(
-                        checkNotNull(id) { "`id` is required but was not set" },
-                        checkNotNull(name) { "`name` is required but was not set" },
+                        checkRequired("id", id),
+                        checkRequired("name", name),
                         additionalProperties.toImmutable(),
                     )
             }
@@ -30389,13 +30052,10 @@ private constructor(
 
                 fun build(): Maximum =
                     Maximum(
-                        checkNotNull(appliesToPriceIds) {
-                                "`appliesToPriceIds` is required but was not set"
-                            }
-                            .map { it.toImmutable() },
-                        checkNotNull(maximumAmount) {
-                            "`maximumAmount` is required but was not set"
+                        checkRequired("appliesToPriceIds", appliesToPriceIds).map {
+                            it.toImmutable()
                         },
+                        checkRequired("maximumAmount", maximumAmount),
                         additionalProperties.toImmutable(),
                     )
             }
@@ -30637,13 +30297,10 @@ private constructor(
 
                 fun build(): Minimum =
                     Minimum(
-                        checkNotNull(appliesToPriceIds) {
-                                "`appliesToPriceIds` is required but was not set"
-                            }
-                            .map { it.toImmutable() },
-                        checkNotNull(minimumAmount) {
-                            "`minimumAmount` is required but was not set"
+                        checkRequired("appliesToPriceIds", appliesToPriceIds).map {
+                            it.toImmutable()
                         },
+                        checkRequired("minimumAmount", minimumAmount),
                         additionalProperties.toImmutable(),
                     )
             }
@@ -31362,41 +31019,29 @@ private constructor(
 
             fun build(): MatrixWithAllocationPrice =
                 MatrixWithAllocationPrice(
-                    checkNotNull(id) { "`id` is required but was not set" },
-                    checkNotNull(billableMetric) { "`billableMetric` is required but was not set" },
-                    checkNotNull(billingCycleConfiguration) {
-                        "`billingCycleConfiguration` is required but was not set"
-                    },
-                    checkNotNull(cadence) { "`cadence` is required but was not set" },
-                    checkNotNull(conversionRate) { "`conversionRate` is required but was not set" },
-                    checkNotNull(createdAt) { "`createdAt` is required but was not set" },
-                    checkNotNull(creditAllocation) {
-                        "`creditAllocation` is required but was not set"
-                    },
-                    checkNotNull(currency) { "`currency` is required but was not set" },
-                    checkNotNull(discount) { "`discount` is required but was not set" },
-                    checkNotNull(externalPriceId) {
-                        "`externalPriceId` is required but was not set"
-                    },
-                    checkNotNull(fixedPriceQuantity) {
-                        "`fixedPriceQuantity` is required but was not set"
-                    },
-                    checkNotNull(invoicingCycleConfiguration) {
-                        "`invoicingCycleConfiguration` is required but was not set"
-                    },
-                    checkNotNull(item) { "`item` is required but was not set" },
-                    checkNotNull(matrixWithAllocationConfig) {
-                        "`matrixWithAllocationConfig` is required but was not set"
-                    },
-                    checkNotNull(maximum) { "`maximum` is required but was not set" },
-                    checkNotNull(maximumAmount) { "`maximumAmount` is required but was not set" },
-                    checkNotNull(metadata) { "`metadata` is required but was not set" },
-                    checkNotNull(minimum) { "`minimum` is required but was not set" },
-                    checkNotNull(minimumAmount) { "`minimumAmount` is required but was not set" },
-                    checkNotNull(modelType) { "`modelType` is required but was not set" },
-                    checkNotNull(name) { "`name` is required but was not set" },
-                    checkNotNull(planPhaseOrder) { "`planPhaseOrder` is required but was not set" },
-                    checkNotNull(priceType) { "`priceType` is required but was not set" },
+                    checkRequired("id", id),
+                    checkRequired("billableMetric", billableMetric),
+                    checkRequired("billingCycleConfiguration", billingCycleConfiguration),
+                    checkRequired("cadence", cadence),
+                    checkRequired("conversionRate", conversionRate),
+                    checkRequired("createdAt", createdAt),
+                    checkRequired("creditAllocation", creditAllocation),
+                    checkRequired("currency", currency),
+                    checkRequired("discount", discount),
+                    checkRequired("externalPriceId", externalPriceId),
+                    checkRequired("fixedPriceQuantity", fixedPriceQuantity),
+                    checkRequired("invoicingCycleConfiguration", invoicingCycleConfiguration),
+                    checkRequired("item", item),
+                    checkRequired("matrixWithAllocationConfig", matrixWithAllocationConfig),
+                    checkRequired("maximum", maximum),
+                    checkRequired("maximumAmount", maximumAmount),
+                    checkRequired("metadata", metadata),
+                    checkRequired("minimum", minimum),
+                    checkRequired("minimumAmount", minimumAmount),
+                    checkRequired("modelType", modelType),
+                    checkRequired("name", name),
+                    checkRequired("planPhaseOrder", planPhaseOrder),
+                    checkRequired("priceType", priceType),
                     additionalProperties.toImmutable(),
                 )
         }
@@ -31475,10 +31120,7 @@ private constructor(
                 }
 
                 fun build(): BillableMetric =
-                    BillableMetric(
-                        checkNotNull(id) { "`id` is required but was not set" },
-                        additionalProperties.toImmutable()
-                    )
+                    BillableMetric(checkRequired("id", id), additionalProperties.toImmutable())
             }
 
             override fun equals(other: Any?): Boolean {
@@ -31594,8 +31236,8 @@ private constructor(
 
                 fun build(): BillingCycleConfiguration =
                     BillingCycleConfiguration(
-                        checkNotNull(duration) { "`duration` is required but was not set" },
-                        checkNotNull(durationUnit) { "`durationUnit` is required but was not set" },
+                        checkRequired("duration", duration),
+                        checkRequired("durationUnit", durationUnit),
                         additionalProperties.toImmutable(),
                     )
             }
@@ -31850,10 +31492,8 @@ private constructor(
 
                 fun build(): CreditAllocation =
                     CreditAllocation(
-                        checkNotNull(allowsRollover) {
-                            "`allowsRollover` is required but was not set"
-                        },
-                        checkNotNull(currency) { "`currency` is required but was not set" },
+                        checkRequired("allowsRollover", allowsRollover),
+                        checkRequired("currency", currency),
                         additionalProperties.toImmutable(),
                     )
             }
@@ -31972,8 +31612,8 @@ private constructor(
 
                 fun build(): InvoicingCycleConfiguration =
                     InvoicingCycleConfiguration(
-                        checkNotNull(duration) { "`duration` is required but was not set" },
-                        checkNotNull(durationUnit) { "`durationUnit` is required but was not set" },
+                        checkRequired("duration", duration),
+                        checkRequired("durationUnit", durationUnit),
                         additionalProperties.toImmutable(),
                     )
             }
@@ -32142,8 +31782,8 @@ private constructor(
 
                 fun build(): Item =
                     Item(
-                        checkNotNull(id) { "`id` is required but was not set" },
-                        checkNotNull(name) { "`name` is required but was not set" },
+                        checkRequired("id", id),
+                        checkRequired("name", name),
                         additionalProperties.toImmutable(),
                     )
             }
@@ -32347,14 +31987,10 @@ private constructor(
 
                 fun build(): MatrixWithAllocationConfig =
                     MatrixWithAllocationConfig(
-                        checkNotNull(allocation) { "`allocation` is required but was not set" },
-                        checkNotNull(defaultUnitAmount) {
-                            "`defaultUnitAmount` is required but was not set"
-                        },
-                        checkNotNull(dimensions) { "`dimensions` is required but was not set" }
-                            .map { it.toImmutable() },
-                        checkNotNull(matrixValues) { "`matrixValues` is required but was not set" }
-                            .map { it.toImmutable() },
+                        checkRequired("allocation", allocation),
+                        checkRequired("defaultUnitAmount", defaultUnitAmount),
+                        checkRequired("dimensions", dimensions).map { it.toImmutable() },
+                        checkRequired("matrixValues", matrixValues).map { it.toImmutable() },
                         additionalProperties.toImmutable(),
                     )
             }
@@ -32498,11 +32134,10 @@ private constructor(
 
                     fun build(): MatrixValue =
                         MatrixValue(
-                            checkNotNull(dimensionValues) {
-                                    "`dimensionValues` is required but was not set"
-                                }
-                                .map { it.toImmutable() },
-                            checkNotNull(unitAmount) { "`unitAmount` is required but was not set" },
+                            checkRequired("dimensionValues", dimensionValues).map {
+                                it.toImmutable()
+                            },
+                            checkRequired("unitAmount", unitAmount),
                             additionalProperties.toImmutable(),
                         )
                 }
@@ -32678,13 +32313,10 @@ private constructor(
 
                 fun build(): Maximum =
                     Maximum(
-                        checkNotNull(appliesToPriceIds) {
-                                "`appliesToPriceIds` is required but was not set"
-                            }
-                            .map { it.toImmutable() },
-                        checkNotNull(maximumAmount) {
-                            "`maximumAmount` is required but was not set"
+                        checkRequired("appliesToPriceIds", appliesToPriceIds).map {
+                            it.toImmutable()
                         },
+                        checkRequired("maximumAmount", maximumAmount),
                         additionalProperties.toImmutable(),
                     )
             }
@@ -32926,13 +32558,10 @@ private constructor(
 
                 fun build(): Minimum =
                     Minimum(
-                        checkNotNull(appliesToPriceIds) {
-                                "`appliesToPriceIds` is required but was not set"
-                            }
-                            .map { it.toImmutable() },
-                        checkNotNull(minimumAmount) {
-                            "`minimumAmount` is required but was not set"
+                        checkRequired("appliesToPriceIds", appliesToPriceIds).map {
+                            it.toImmutable()
                         },
+                        checkRequired("minimumAmount", minimumAmount),
                         additionalProperties.toImmutable(),
                     )
             }
@@ -33570,41 +33199,29 @@ private constructor(
 
             fun build(): TieredWithProrationPrice =
                 TieredWithProrationPrice(
-                    checkNotNull(id) { "`id` is required but was not set" },
-                    checkNotNull(billableMetric) { "`billableMetric` is required but was not set" },
-                    checkNotNull(billingCycleConfiguration) {
-                        "`billingCycleConfiguration` is required but was not set"
-                    },
-                    checkNotNull(cadence) { "`cadence` is required but was not set" },
-                    checkNotNull(conversionRate) { "`conversionRate` is required but was not set" },
-                    checkNotNull(createdAt) { "`createdAt` is required but was not set" },
-                    checkNotNull(creditAllocation) {
-                        "`creditAllocation` is required but was not set"
-                    },
-                    checkNotNull(currency) { "`currency` is required but was not set" },
-                    checkNotNull(discount) { "`discount` is required but was not set" },
-                    checkNotNull(externalPriceId) {
-                        "`externalPriceId` is required but was not set"
-                    },
-                    checkNotNull(fixedPriceQuantity) {
-                        "`fixedPriceQuantity` is required but was not set"
-                    },
-                    checkNotNull(invoicingCycleConfiguration) {
-                        "`invoicingCycleConfiguration` is required but was not set"
-                    },
-                    checkNotNull(item) { "`item` is required but was not set" },
-                    checkNotNull(maximum) { "`maximum` is required but was not set" },
-                    checkNotNull(maximumAmount) { "`maximumAmount` is required but was not set" },
-                    checkNotNull(metadata) { "`metadata` is required but was not set" },
-                    checkNotNull(minimum) { "`minimum` is required but was not set" },
-                    checkNotNull(minimumAmount) { "`minimumAmount` is required but was not set" },
-                    checkNotNull(modelType) { "`modelType` is required but was not set" },
-                    checkNotNull(name) { "`name` is required but was not set" },
-                    checkNotNull(planPhaseOrder) { "`planPhaseOrder` is required but was not set" },
-                    checkNotNull(priceType) { "`priceType` is required but was not set" },
-                    checkNotNull(tieredWithProrationConfig) {
-                        "`tieredWithProrationConfig` is required but was not set"
-                    },
+                    checkRequired("id", id),
+                    checkRequired("billableMetric", billableMetric),
+                    checkRequired("billingCycleConfiguration", billingCycleConfiguration),
+                    checkRequired("cadence", cadence),
+                    checkRequired("conversionRate", conversionRate),
+                    checkRequired("createdAt", createdAt),
+                    checkRequired("creditAllocation", creditAllocation),
+                    checkRequired("currency", currency),
+                    checkRequired("discount", discount),
+                    checkRequired("externalPriceId", externalPriceId),
+                    checkRequired("fixedPriceQuantity", fixedPriceQuantity),
+                    checkRequired("invoicingCycleConfiguration", invoicingCycleConfiguration),
+                    checkRequired("item", item),
+                    checkRequired("maximum", maximum),
+                    checkRequired("maximumAmount", maximumAmount),
+                    checkRequired("metadata", metadata),
+                    checkRequired("minimum", minimum),
+                    checkRequired("minimumAmount", minimumAmount),
+                    checkRequired("modelType", modelType),
+                    checkRequired("name", name),
+                    checkRequired("planPhaseOrder", planPhaseOrder),
+                    checkRequired("priceType", priceType),
+                    checkRequired("tieredWithProrationConfig", tieredWithProrationConfig),
                     additionalProperties.toImmutable(),
                 )
         }
@@ -33683,10 +33300,7 @@ private constructor(
                 }
 
                 fun build(): BillableMetric =
-                    BillableMetric(
-                        checkNotNull(id) { "`id` is required but was not set" },
-                        additionalProperties.toImmutable()
-                    )
+                    BillableMetric(checkRequired("id", id), additionalProperties.toImmutable())
             }
 
             override fun equals(other: Any?): Boolean {
@@ -33802,8 +33416,8 @@ private constructor(
 
                 fun build(): BillingCycleConfiguration =
                     BillingCycleConfiguration(
-                        checkNotNull(duration) { "`duration` is required but was not set" },
-                        checkNotNull(durationUnit) { "`durationUnit` is required but was not set" },
+                        checkRequired("duration", duration),
+                        checkRequired("durationUnit", durationUnit),
                         additionalProperties.toImmutable(),
                     )
             }
@@ -34058,10 +33672,8 @@ private constructor(
 
                 fun build(): CreditAllocation =
                     CreditAllocation(
-                        checkNotNull(allowsRollover) {
-                            "`allowsRollover` is required but was not set"
-                        },
-                        checkNotNull(currency) { "`currency` is required but was not set" },
+                        checkRequired("allowsRollover", allowsRollover),
+                        checkRequired("currency", currency),
                         additionalProperties.toImmutable(),
                     )
             }
@@ -34180,8 +33792,8 @@ private constructor(
 
                 fun build(): InvoicingCycleConfiguration =
                     InvoicingCycleConfiguration(
-                        checkNotNull(duration) { "`duration` is required but was not set" },
-                        checkNotNull(durationUnit) { "`durationUnit` is required but was not set" },
+                        checkRequired("duration", duration),
+                        checkRequired("durationUnit", durationUnit),
                         additionalProperties.toImmutable(),
                     )
             }
@@ -34350,8 +33962,8 @@ private constructor(
 
                 fun build(): Item =
                     Item(
-                        checkNotNull(id) { "`id` is required but was not set" },
-                        checkNotNull(name) { "`name` is required but was not set" },
+                        checkRequired("id", id),
+                        checkRequired("name", name),
                         additionalProperties.toImmutable(),
                     )
             }
@@ -34509,13 +34121,10 @@ private constructor(
 
                 fun build(): Maximum =
                     Maximum(
-                        checkNotNull(appliesToPriceIds) {
-                                "`appliesToPriceIds` is required but was not set"
-                            }
-                            .map { it.toImmutable() },
-                        checkNotNull(maximumAmount) {
-                            "`maximumAmount` is required but was not set"
+                        checkRequired("appliesToPriceIds", appliesToPriceIds).map {
+                            it.toImmutable()
                         },
+                        checkRequired("maximumAmount", maximumAmount),
                         additionalProperties.toImmutable(),
                     )
             }
@@ -34757,13 +34366,10 @@ private constructor(
 
                 fun build(): Minimum =
                     Minimum(
-                        checkNotNull(appliesToPriceIds) {
-                                "`appliesToPriceIds` is required but was not set"
-                            }
-                            .map { it.toImmutable() },
-                        checkNotNull(minimumAmount) {
-                            "`minimumAmount` is required but was not set"
+                        checkRequired("appliesToPriceIds", appliesToPriceIds).map {
+                            it.toImmutable()
                         },
+                        checkRequired("minimumAmount", minimumAmount),
                         additionalProperties.toImmutable(),
                     )
             }
@@ -35481,41 +35087,29 @@ private constructor(
 
             fun build(): UnitWithProrationPrice =
                 UnitWithProrationPrice(
-                    checkNotNull(id) { "`id` is required but was not set" },
-                    checkNotNull(billableMetric) { "`billableMetric` is required but was not set" },
-                    checkNotNull(billingCycleConfiguration) {
-                        "`billingCycleConfiguration` is required but was not set"
-                    },
-                    checkNotNull(cadence) { "`cadence` is required but was not set" },
-                    checkNotNull(conversionRate) { "`conversionRate` is required but was not set" },
-                    checkNotNull(createdAt) { "`createdAt` is required but was not set" },
-                    checkNotNull(creditAllocation) {
-                        "`creditAllocation` is required but was not set"
-                    },
-                    checkNotNull(currency) { "`currency` is required but was not set" },
-                    checkNotNull(discount) { "`discount` is required but was not set" },
-                    checkNotNull(externalPriceId) {
-                        "`externalPriceId` is required but was not set"
-                    },
-                    checkNotNull(fixedPriceQuantity) {
-                        "`fixedPriceQuantity` is required but was not set"
-                    },
-                    checkNotNull(invoicingCycleConfiguration) {
-                        "`invoicingCycleConfiguration` is required but was not set"
-                    },
-                    checkNotNull(item) { "`item` is required but was not set" },
-                    checkNotNull(maximum) { "`maximum` is required but was not set" },
-                    checkNotNull(maximumAmount) { "`maximumAmount` is required but was not set" },
-                    checkNotNull(metadata) { "`metadata` is required but was not set" },
-                    checkNotNull(minimum) { "`minimum` is required but was not set" },
-                    checkNotNull(minimumAmount) { "`minimumAmount` is required but was not set" },
-                    checkNotNull(modelType) { "`modelType` is required but was not set" },
-                    checkNotNull(name) { "`name` is required but was not set" },
-                    checkNotNull(planPhaseOrder) { "`planPhaseOrder` is required but was not set" },
-                    checkNotNull(priceType) { "`priceType` is required but was not set" },
-                    checkNotNull(unitWithProrationConfig) {
-                        "`unitWithProrationConfig` is required but was not set"
-                    },
+                    checkRequired("id", id),
+                    checkRequired("billableMetric", billableMetric),
+                    checkRequired("billingCycleConfiguration", billingCycleConfiguration),
+                    checkRequired("cadence", cadence),
+                    checkRequired("conversionRate", conversionRate),
+                    checkRequired("createdAt", createdAt),
+                    checkRequired("creditAllocation", creditAllocation),
+                    checkRequired("currency", currency),
+                    checkRequired("discount", discount),
+                    checkRequired("externalPriceId", externalPriceId),
+                    checkRequired("fixedPriceQuantity", fixedPriceQuantity),
+                    checkRequired("invoicingCycleConfiguration", invoicingCycleConfiguration),
+                    checkRequired("item", item),
+                    checkRequired("maximum", maximum),
+                    checkRequired("maximumAmount", maximumAmount),
+                    checkRequired("metadata", metadata),
+                    checkRequired("minimum", minimum),
+                    checkRequired("minimumAmount", minimumAmount),
+                    checkRequired("modelType", modelType),
+                    checkRequired("name", name),
+                    checkRequired("planPhaseOrder", planPhaseOrder),
+                    checkRequired("priceType", priceType),
+                    checkRequired("unitWithProrationConfig", unitWithProrationConfig),
                     additionalProperties.toImmutable(),
                 )
         }
@@ -35594,10 +35188,7 @@ private constructor(
                 }
 
                 fun build(): BillableMetric =
-                    BillableMetric(
-                        checkNotNull(id) { "`id` is required but was not set" },
-                        additionalProperties.toImmutable()
-                    )
+                    BillableMetric(checkRequired("id", id), additionalProperties.toImmutable())
             }
 
             override fun equals(other: Any?): Boolean {
@@ -35713,8 +35304,8 @@ private constructor(
 
                 fun build(): BillingCycleConfiguration =
                     BillingCycleConfiguration(
-                        checkNotNull(duration) { "`duration` is required but was not set" },
-                        checkNotNull(durationUnit) { "`durationUnit` is required but was not set" },
+                        checkRequired("duration", duration),
+                        checkRequired("durationUnit", durationUnit),
                         additionalProperties.toImmutable(),
                     )
             }
@@ -35969,10 +35560,8 @@ private constructor(
 
                 fun build(): CreditAllocation =
                     CreditAllocation(
-                        checkNotNull(allowsRollover) {
-                            "`allowsRollover` is required but was not set"
-                        },
-                        checkNotNull(currency) { "`currency` is required but was not set" },
+                        checkRequired("allowsRollover", allowsRollover),
+                        checkRequired("currency", currency),
                         additionalProperties.toImmutable(),
                     )
             }
@@ -36091,8 +35680,8 @@ private constructor(
 
                 fun build(): InvoicingCycleConfiguration =
                     InvoicingCycleConfiguration(
-                        checkNotNull(duration) { "`duration` is required but was not set" },
-                        checkNotNull(durationUnit) { "`durationUnit` is required but was not set" },
+                        checkRequired("duration", duration),
+                        checkRequired("durationUnit", durationUnit),
                         additionalProperties.toImmutable(),
                     )
             }
@@ -36261,8 +35850,8 @@ private constructor(
 
                 fun build(): Item =
                     Item(
-                        checkNotNull(id) { "`id` is required but was not set" },
-                        checkNotNull(name) { "`name` is required but was not set" },
+                        checkRequired("id", id),
+                        checkRequired("name", name),
                         additionalProperties.toImmutable(),
                     )
             }
@@ -36420,13 +36009,10 @@ private constructor(
 
                 fun build(): Maximum =
                     Maximum(
-                        checkNotNull(appliesToPriceIds) {
-                                "`appliesToPriceIds` is required but was not set"
-                            }
-                            .map { it.toImmutable() },
-                        checkNotNull(maximumAmount) {
-                            "`maximumAmount` is required but was not set"
+                        checkRequired("appliesToPriceIds", appliesToPriceIds).map {
+                            it.toImmutable()
                         },
+                        checkRequired("maximumAmount", maximumAmount),
                         additionalProperties.toImmutable(),
                     )
             }
@@ -36668,13 +36254,10 @@ private constructor(
 
                 fun build(): Minimum =
                     Minimum(
-                        checkNotNull(appliesToPriceIds) {
-                                "`appliesToPriceIds` is required but was not set"
-                            }
-                            .map { it.toImmutable() },
-                        checkNotNull(minimumAmount) {
-                            "`minimumAmount` is required but was not set"
+                        checkRequired("appliesToPriceIds", appliesToPriceIds).map {
+                            it.toImmutable()
                         },
+                        checkRequired("minimumAmount", minimumAmount),
                         additionalProperties.toImmutable(),
                     )
             }
@@ -37392,41 +36975,29 @@ private constructor(
 
             fun build(): GroupedAllocationPrice =
                 GroupedAllocationPrice(
-                    checkNotNull(id) { "`id` is required but was not set" },
-                    checkNotNull(billableMetric) { "`billableMetric` is required but was not set" },
-                    checkNotNull(billingCycleConfiguration) {
-                        "`billingCycleConfiguration` is required but was not set"
-                    },
-                    checkNotNull(cadence) { "`cadence` is required but was not set" },
-                    checkNotNull(conversionRate) { "`conversionRate` is required but was not set" },
-                    checkNotNull(createdAt) { "`createdAt` is required but was not set" },
-                    checkNotNull(creditAllocation) {
-                        "`creditAllocation` is required but was not set"
-                    },
-                    checkNotNull(currency) { "`currency` is required but was not set" },
-                    checkNotNull(discount) { "`discount` is required but was not set" },
-                    checkNotNull(externalPriceId) {
-                        "`externalPriceId` is required but was not set"
-                    },
-                    checkNotNull(fixedPriceQuantity) {
-                        "`fixedPriceQuantity` is required but was not set"
-                    },
-                    checkNotNull(groupedAllocationConfig) {
-                        "`groupedAllocationConfig` is required but was not set"
-                    },
-                    checkNotNull(invoicingCycleConfiguration) {
-                        "`invoicingCycleConfiguration` is required but was not set"
-                    },
-                    checkNotNull(item) { "`item` is required but was not set" },
-                    checkNotNull(maximum) { "`maximum` is required but was not set" },
-                    checkNotNull(maximumAmount) { "`maximumAmount` is required but was not set" },
-                    checkNotNull(metadata) { "`metadata` is required but was not set" },
-                    checkNotNull(minimum) { "`minimum` is required but was not set" },
-                    checkNotNull(minimumAmount) { "`minimumAmount` is required but was not set" },
-                    checkNotNull(modelType) { "`modelType` is required but was not set" },
-                    checkNotNull(name) { "`name` is required but was not set" },
-                    checkNotNull(planPhaseOrder) { "`planPhaseOrder` is required but was not set" },
-                    checkNotNull(priceType) { "`priceType` is required but was not set" },
+                    checkRequired("id", id),
+                    checkRequired("billableMetric", billableMetric),
+                    checkRequired("billingCycleConfiguration", billingCycleConfiguration),
+                    checkRequired("cadence", cadence),
+                    checkRequired("conversionRate", conversionRate),
+                    checkRequired("createdAt", createdAt),
+                    checkRequired("creditAllocation", creditAllocation),
+                    checkRequired("currency", currency),
+                    checkRequired("discount", discount),
+                    checkRequired("externalPriceId", externalPriceId),
+                    checkRequired("fixedPriceQuantity", fixedPriceQuantity),
+                    checkRequired("groupedAllocationConfig", groupedAllocationConfig),
+                    checkRequired("invoicingCycleConfiguration", invoicingCycleConfiguration),
+                    checkRequired("item", item),
+                    checkRequired("maximum", maximum),
+                    checkRequired("maximumAmount", maximumAmount),
+                    checkRequired("metadata", metadata),
+                    checkRequired("minimum", minimum),
+                    checkRequired("minimumAmount", minimumAmount),
+                    checkRequired("modelType", modelType),
+                    checkRequired("name", name),
+                    checkRequired("planPhaseOrder", planPhaseOrder),
+                    checkRequired("priceType", priceType),
                     additionalProperties.toImmutable(),
                 )
         }
@@ -37505,10 +37076,7 @@ private constructor(
                 }
 
                 fun build(): BillableMetric =
-                    BillableMetric(
-                        checkNotNull(id) { "`id` is required but was not set" },
-                        additionalProperties.toImmutable()
-                    )
+                    BillableMetric(checkRequired("id", id), additionalProperties.toImmutable())
             }
 
             override fun equals(other: Any?): Boolean {
@@ -37624,8 +37192,8 @@ private constructor(
 
                 fun build(): BillingCycleConfiguration =
                     BillingCycleConfiguration(
-                        checkNotNull(duration) { "`duration` is required but was not set" },
-                        checkNotNull(durationUnit) { "`durationUnit` is required but was not set" },
+                        checkRequired("duration", duration),
+                        checkRequired("durationUnit", durationUnit),
                         additionalProperties.toImmutable(),
                     )
             }
@@ -37880,10 +37448,8 @@ private constructor(
 
                 fun build(): CreditAllocation =
                     CreditAllocation(
-                        checkNotNull(allowsRollover) {
-                            "`allowsRollover` is required but was not set"
-                        },
-                        checkNotNull(currency) { "`currency` is required but was not set" },
+                        checkRequired("allowsRollover", allowsRollover),
+                        checkRequired("currency", currency),
                         additionalProperties.toImmutable(),
                     )
             }
@@ -38084,8 +37650,8 @@ private constructor(
 
                 fun build(): InvoicingCycleConfiguration =
                     InvoicingCycleConfiguration(
-                        checkNotNull(duration) { "`duration` is required but was not set" },
-                        checkNotNull(durationUnit) { "`durationUnit` is required but was not set" },
+                        checkRequired("duration", duration),
+                        checkRequired("durationUnit", durationUnit),
                         additionalProperties.toImmutable(),
                     )
             }
@@ -38254,8 +37820,8 @@ private constructor(
 
                 fun build(): Item =
                     Item(
-                        checkNotNull(id) { "`id` is required but was not set" },
-                        checkNotNull(name) { "`name` is required but was not set" },
+                        checkRequired("id", id),
+                        checkRequired("name", name),
                         additionalProperties.toImmutable(),
                     )
             }
@@ -38413,13 +37979,10 @@ private constructor(
 
                 fun build(): Maximum =
                     Maximum(
-                        checkNotNull(appliesToPriceIds) {
-                                "`appliesToPriceIds` is required but was not set"
-                            }
-                            .map { it.toImmutable() },
-                        checkNotNull(maximumAmount) {
-                            "`maximumAmount` is required but was not set"
+                        checkRequired("appliesToPriceIds", appliesToPriceIds).map {
+                            it.toImmutable()
                         },
+                        checkRequired("maximumAmount", maximumAmount),
                         additionalProperties.toImmutable(),
                     )
             }
@@ -38661,13 +38224,10 @@ private constructor(
 
                 fun build(): Minimum =
                     Minimum(
-                        checkNotNull(appliesToPriceIds) {
-                                "`appliesToPriceIds` is required but was not set"
-                            }
-                            .map { it.toImmutable() },
-                        checkNotNull(minimumAmount) {
-                            "`minimumAmount` is required but was not set"
+                        checkRequired("appliesToPriceIds", appliesToPriceIds).map {
+                            it.toImmutable()
                         },
+                        checkRequired("minimumAmount", minimumAmount),
                         additionalProperties.toImmutable(),
                     )
             }
@@ -39313,41 +38873,32 @@ private constructor(
 
             fun build(): GroupedWithProratedMinimumPrice =
                 GroupedWithProratedMinimumPrice(
-                    checkNotNull(id) { "`id` is required but was not set" },
-                    checkNotNull(billableMetric) { "`billableMetric` is required but was not set" },
-                    checkNotNull(billingCycleConfiguration) {
-                        "`billingCycleConfiguration` is required but was not set"
-                    },
-                    checkNotNull(cadence) { "`cadence` is required but was not set" },
-                    checkNotNull(conversionRate) { "`conversionRate` is required but was not set" },
-                    checkNotNull(createdAt) { "`createdAt` is required but was not set" },
-                    checkNotNull(creditAllocation) {
-                        "`creditAllocation` is required but was not set"
-                    },
-                    checkNotNull(currency) { "`currency` is required but was not set" },
-                    checkNotNull(discount) { "`discount` is required but was not set" },
-                    checkNotNull(externalPriceId) {
-                        "`externalPriceId` is required but was not set"
-                    },
-                    checkNotNull(fixedPriceQuantity) {
-                        "`fixedPriceQuantity` is required but was not set"
-                    },
-                    checkNotNull(groupedWithProratedMinimumConfig) {
-                        "`groupedWithProratedMinimumConfig` is required but was not set"
-                    },
-                    checkNotNull(invoicingCycleConfiguration) {
-                        "`invoicingCycleConfiguration` is required but was not set"
-                    },
-                    checkNotNull(item) { "`item` is required but was not set" },
-                    checkNotNull(maximum) { "`maximum` is required but was not set" },
-                    checkNotNull(maximumAmount) { "`maximumAmount` is required but was not set" },
-                    checkNotNull(metadata) { "`metadata` is required but was not set" },
-                    checkNotNull(minimum) { "`minimum` is required but was not set" },
-                    checkNotNull(minimumAmount) { "`minimumAmount` is required but was not set" },
-                    checkNotNull(modelType) { "`modelType` is required but was not set" },
-                    checkNotNull(name) { "`name` is required but was not set" },
-                    checkNotNull(planPhaseOrder) { "`planPhaseOrder` is required but was not set" },
-                    checkNotNull(priceType) { "`priceType` is required but was not set" },
+                    checkRequired("id", id),
+                    checkRequired("billableMetric", billableMetric),
+                    checkRequired("billingCycleConfiguration", billingCycleConfiguration),
+                    checkRequired("cadence", cadence),
+                    checkRequired("conversionRate", conversionRate),
+                    checkRequired("createdAt", createdAt),
+                    checkRequired("creditAllocation", creditAllocation),
+                    checkRequired("currency", currency),
+                    checkRequired("discount", discount),
+                    checkRequired("externalPriceId", externalPriceId),
+                    checkRequired("fixedPriceQuantity", fixedPriceQuantity),
+                    checkRequired(
+                        "groupedWithProratedMinimumConfig",
+                        groupedWithProratedMinimumConfig
+                    ),
+                    checkRequired("invoicingCycleConfiguration", invoicingCycleConfiguration),
+                    checkRequired("item", item),
+                    checkRequired("maximum", maximum),
+                    checkRequired("maximumAmount", maximumAmount),
+                    checkRequired("metadata", metadata),
+                    checkRequired("minimum", minimum),
+                    checkRequired("minimumAmount", minimumAmount),
+                    checkRequired("modelType", modelType),
+                    checkRequired("name", name),
+                    checkRequired("planPhaseOrder", planPhaseOrder),
+                    checkRequired("priceType", priceType),
                     additionalProperties.toImmutable(),
                 )
         }
@@ -39426,10 +38977,7 @@ private constructor(
                 }
 
                 fun build(): BillableMetric =
-                    BillableMetric(
-                        checkNotNull(id) { "`id` is required but was not set" },
-                        additionalProperties.toImmutable()
-                    )
+                    BillableMetric(checkRequired("id", id), additionalProperties.toImmutable())
             }
 
             override fun equals(other: Any?): Boolean {
@@ -39545,8 +39093,8 @@ private constructor(
 
                 fun build(): BillingCycleConfiguration =
                     BillingCycleConfiguration(
-                        checkNotNull(duration) { "`duration` is required but was not set" },
-                        checkNotNull(durationUnit) { "`durationUnit` is required but was not set" },
+                        checkRequired("duration", duration),
+                        checkRequired("durationUnit", durationUnit),
                         additionalProperties.toImmutable(),
                     )
             }
@@ -39801,10 +39349,8 @@ private constructor(
 
                 fun build(): CreditAllocation =
                     CreditAllocation(
-                        checkNotNull(allowsRollover) {
-                            "`allowsRollover` is required but was not set"
-                        },
-                        checkNotNull(currency) { "`currency` is required but was not set" },
+                        checkRequired("allowsRollover", allowsRollover),
+                        checkRequired("currency", currency),
                         additionalProperties.toImmutable(),
                     )
             }
@@ -40007,8 +39553,8 @@ private constructor(
 
                 fun build(): InvoicingCycleConfiguration =
                     InvoicingCycleConfiguration(
-                        checkNotNull(duration) { "`duration` is required but was not set" },
-                        checkNotNull(durationUnit) { "`durationUnit` is required but was not set" },
+                        checkRequired("duration", duration),
+                        checkRequired("durationUnit", durationUnit),
                         additionalProperties.toImmutable(),
                     )
             }
@@ -40177,8 +39723,8 @@ private constructor(
 
                 fun build(): Item =
                     Item(
-                        checkNotNull(id) { "`id` is required but was not set" },
-                        checkNotNull(name) { "`name` is required but was not set" },
+                        checkRequired("id", id),
+                        checkRequired("name", name),
                         additionalProperties.toImmutable(),
                     )
             }
@@ -40336,13 +39882,10 @@ private constructor(
 
                 fun build(): Maximum =
                     Maximum(
-                        checkNotNull(appliesToPriceIds) {
-                                "`appliesToPriceIds` is required but was not set"
-                            }
-                            .map { it.toImmutable() },
-                        checkNotNull(maximumAmount) {
-                            "`maximumAmount` is required but was not set"
+                        checkRequired("appliesToPriceIds", appliesToPriceIds).map {
+                            it.toImmutable()
                         },
+                        checkRequired("maximumAmount", maximumAmount),
                         additionalProperties.toImmutable(),
                     )
             }
@@ -40584,13 +40127,10 @@ private constructor(
 
                 fun build(): Minimum =
                     Minimum(
-                        checkNotNull(appliesToPriceIds) {
-                                "`appliesToPriceIds` is required but was not set"
-                            }
-                            .map { it.toImmutable() },
-                        checkNotNull(minimumAmount) {
-                            "`minimumAmount` is required but was not set"
+                        checkRequired("appliesToPriceIds", appliesToPriceIds).map {
+                            it.toImmutable()
                         },
+                        checkRequired("minimumAmount", minimumAmount),
                         additionalProperties.toImmutable(),
                     )
             }
@@ -41236,41 +40776,32 @@ private constructor(
 
             fun build(): GroupedWithMeteredMinimumPrice =
                 GroupedWithMeteredMinimumPrice(
-                    checkNotNull(id) { "`id` is required but was not set" },
-                    checkNotNull(billableMetric) { "`billableMetric` is required but was not set" },
-                    checkNotNull(billingCycleConfiguration) {
-                        "`billingCycleConfiguration` is required but was not set"
-                    },
-                    checkNotNull(cadence) { "`cadence` is required but was not set" },
-                    checkNotNull(conversionRate) { "`conversionRate` is required but was not set" },
-                    checkNotNull(createdAt) { "`createdAt` is required but was not set" },
-                    checkNotNull(creditAllocation) {
-                        "`creditAllocation` is required but was not set"
-                    },
-                    checkNotNull(currency) { "`currency` is required but was not set" },
-                    checkNotNull(discount) { "`discount` is required but was not set" },
-                    checkNotNull(externalPriceId) {
-                        "`externalPriceId` is required but was not set"
-                    },
-                    checkNotNull(fixedPriceQuantity) {
-                        "`fixedPriceQuantity` is required but was not set"
-                    },
-                    checkNotNull(groupedWithMeteredMinimumConfig) {
-                        "`groupedWithMeteredMinimumConfig` is required but was not set"
-                    },
-                    checkNotNull(invoicingCycleConfiguration) {
-                        "`invoicingCycleConfiguration` is required but was not set"
-                    },
-                    checkNotNull(item) { "`item` is required but was not set" },
-                    checkNotNull(maximum) { "`maximum` is required but was not set" },
-                    checkNotNull(maximumAmount) { "`maximumAmount` is required but was not set" },
-                    checkNotNull(metadata) { "`metadata` is required but was not set" },
-                    checkNotNull(minimum) { "`minimum` is required but was not set" },
-                    checkNotNull(minimumAmount) { "`minimumAmount` is required but was not set" },
-                    checkNotNull(modelType) { "`modelType` is required but was not set" },
-                    checkNotNull(name) { "`name` is required but was not set" },
-                    checkNotNull(planPhaseOrder) { "`planPhaseOrder` is required but was not set" },
-                    checkNotNull(priceType) { "`priceType` is required but was not set" },
+                    checkRequired("id", id),
+                    checkRequired("billableMetric", billableMetric),
+                    checkRequired("billingCycleConfiguration", billingCycleConfiguration),
+                    checkRequired("cadence", cadence),
+                    checkRequired("conversionRate", conversionRate),
+                    checkRequired("createdAt", createdAt),
+                    checkRequired("creditAllocation", creditAllocation),
+                    checkRequired("currency", currency),
+                    checkRequired("discount", discount),
+                    checkRequired("externalPriceId", externalPriceId),
+                    checkRequired("fixedPriceQuantity", fixedPriceQuantity),
+                    checkRequired(
+                        "groupedWithMeteredMinimumConfig",
+                        groupedWithMeteredMinimumConfig
+                    ),
+                    checkRequired("invoicingCycleConfiguration", invoicingCycleConfiguration),
+                    checkRequired("item", item),
+                    checkRequired("maximum", maximum),
+                    checkRequired("maximumAmount", maximumAmount),
+                    checkRequired("metadata", metadata),
+                    checkRequired("minimum", minimum),
+                    checkRequired("minimumAmount", minimumAmount),
+                    checkRequired("modelType", modelType),
+                    checkRequired("name", name),
+                    checkRequired("planPhaseOrder", planPhaseOrder),
+                    checkRequired("priceType", priceType),
                     additionalProperties.toImmutable(),
                 )
         }
@@ -41349,10 +40880,7 @@ private constructor(
                 }
 
                 fun build(): BillableMetric =
-                    BillableMetric(
-                        checkNotNull(id) { "`id` is required but was not set" },
-                        additionalProperties.toImmutable()
-                    )
+                    BillableMetric(checkRequired("id", id), additionalProperties.toImmutable())
             }
 
             override fun equals(other: Any?): Boolean {
@@ -41468,8 +40996,8 @@ private constructor(
 
                 fun build(): BillingCycleConfiguration =
                     BillingCycleConfiguration(
-                        checkNotNull(duration) { "`duration` is required but was not set" },
-                        checkNotNull(durationUnit) { "`durationUnit` is required but was not set" },
+                        checkRequired("duration", duration),
+                        checkRequired("durationUnit", durationUnit),
                         additionalProperties.toImmutable(),
                     )
             }
@@ -41724,10 +41252,8 @@ private constructor(
 
                 fun build(): CreditAllocation =
                     CreditAllocation(
-                        checkNotNull(allowsRollover) {
-                            "`allowsRollover` is required but was not set"
-                        },
-                        checkNotNull(currency) { "`currency` is required but was not set" },
+                        checkRequired("allowsRollover", allowsRollover),
+                        checkRequired("currency", currency),
                         additionalProperties.toImmutable(),
                     )
             }
@@ -41930,8 +41456,8 @@ private constructor(
 
                 fun build(): InvoicingCycleConfiguration =
                     InvoicingCycleConfiguration(
-                        checkNotNull(duration) { "`duration` is required but was not set" },
-                        checkNotNull(durationUnit) { "`durationUnit` is required but was not set" },
+                        checkRequired("duration", duration),
+                        checkRequired("durationUnit", durationUnit),
                         additionalProperties.toImmutable(),
                     )
             }
@@ -42100,8 +41626,8 @@ private constructor(
 
                 fun build(): Item =
                     Item(
-                        checkNotNull(id) { "`id` is required but was not set" },
-                        checkNotNull(name) { "`name` is required but was not set" },
+                        checkRequired("id", id),
+                        checkRequired("name", name),
                         additionalProperties.toImmutable(),
                     )
             }
@@ -42259,13 +41785,10 @@ private constructor(
 
                 fun build(): Maximum =
                     Maximum(
-                        checkNotNull(appliesToPriceIds) {
-                                "`appliesToPriceIds` is required but was not set"
-                            }
-                            .map { it.toImmutable() },
-                        checkNotNull(maximumAmount) {
-                            "`maximumAmount` is required but was not set"
+                        checkRequired("appliesToPriceIds", appliesToPriceIds).map {
+                            it.toImmutable()
                         },
+                        checkRequired("maximumAmount", maximumAmount),
                         additionalProperties.toImmutable(),
                     )
             }
@@ -42507,13 +42030,10 @@ private constructor(
 
                 fun build(): Minimum =
                     Minimum(
-                        checkNotNull(appliesToPriceIds) {
-                                "`appliesToPriceIds` is required but was not set"
-                            }
-                            .map { it.toImmutable() },
-                        checkNotNull(minimumAmount) {
-                            "`minimumAmount` is required but was not set"
+                        checkRequired("appliesToPriceIds", appliesToPriceIds).map {
+                            it.toImmutable()
                         },
+                        checkRequired("minimumAmount", minimumAmount),
                         additionalProperties.toImmutable(),
                     )
             }
@@ -43153,41 +42673,29 @@ private constructor(
 
             fun build(): MatrixWithDisplayNamePrice =
                 MatrixWithDisplayNamePrice(
-                    checkNotNull(id) { "`id` is required but was not set" },
-                    checkNotNull(billableMetric) { "`billableMetric` is required but was not set" },
-                    checkNotNull(billingCycleConfiguration) {
-                        "`billingCycleConfiguration` is required but was not set"
-                    },
-                    checkNotNull(cadence) { "`cadence` is required but was not set" },
-                    checkNotNull(conversionRate) { "`conversionRate` is required but was not set" },
-                    checkNotNull(createdAt) { "`createdAt` is required but was not set" },
-                    checkNotNull(creditAllocation) {
-                        "`creditAllocation` is required but was not set"
-                    },
-                    checkNotNull(currency) { "`currency` is required but was not set" },
-                    checkNotNull(discount) { "`discount` is required but was not set" },
-                    checkNotNull(externalPriceId) {
-                        "`externalPriceId` is required but was not set"
-                    },
-                    checkNotNull(fixedPriceQuantity) {
-                        "`fixedPriceQuantity` is required but was not set"
-                    },
-                    checkNotNull(invoicingCycleConfiguration) {
-                        "`invoicingCycleConfiguration` is required but was not set"
-                    },
-                    checkNotNull(item) { "`item` is required but was not set" },
-                    checkNotNull(matrixWithDisplayNameConfig) {
-                        "`matrixWithDisplayNameConfig` is required but was not set"
-                    },
-                    checkNotNull(maximum) { "`maximum` is required but was not set" },
-                    checkNotNull(maximumAmount) { "`maximumAmount` is required but was not set" },
-                    checkNotNull(metadata) { "`metadata` is required but was not set" },
-                    checkNotNull(minimum) { "`minimum` is required but was not set" },
-                    checkNotNull(minimumAmount) { "`minimumAmount` is required but was not set" },
-                    checkNotNull(modelType) { "`modelType` is required but was not set" },
-                    checkNotNull(name) { "`name` is required but was not set" },
-                    checkNotNull(planPhaseOrder) { "`planPhaseOrder` is required but was not set" },
-                    checkNotNull(priceType) { "`priceType` is required but was not set" },
+                    checkRequired("id", id),
+                    checkRequired("billableMetric", billableMetric),
+                    checkRequired("billingCycleConfiguration", billingCycleConfiguration),
+                    checkRequired("cadence", cadence),
+                    checkRequired("conversionRate", conversionRate),
+                    checkRequired("createdAt", createdAt),
+                    checkRequired("creditAllocation", creditAllocation),
+                    checkRequired("currency", currency),
+                    checkRequired("discount", discount),
+                    checkRequired("externalPriceId", externalPriceId),
+                    checkRequired("fixedPriceQuantity", fixedPriceQuantity),
+                    checkRequired("invoicingCycleConfiguration", invoicingCycleConfiguration),
+                    checkRequired("item", item),
+                    checkRequired("matrixWithDisplayNameConfig", matrixWithDisplayNameConfig),
+                    checkRequired("maximum", maximum),
+                    checkRequired("maximumAmount", maximumAmount),
+                    checkRequired("metadata", metadata),
+                    checkRequired("minimum", minimum),
+                    checkRequired("minimumAmount", minimumAmount),
+                    checkRequired("modelType", modelType),
+                    checkRequired("name", name),
+                    checkRequired("planPhaseOrder", planPhaseOrder),
+                    checkRequired("priceType", priceType),
                     additionalProperties.toImmutable(),
                 )
         }
@@ -43266,10 +42774,7 @@ private constructor(
                 }
 
                 fun build(): BillableMetric =
-                    BillableMetric(
-                        checkNotNull(id) { "`id` is required but was not set" },
-                        additionalProperties.toImmutable()
-                    )
+                    BillableMetric(checkRequired("id", id), additionalProperties.toImmutable())
             }
 
             override fun equals(other: Any?): Boolean {
@@ -43385,8 +42890,8 @@ private constructor(
 
                 fun build(): BillingCycleConfiguration =
                     BillingCycleConfiguration(
-                        checkNotNull(duration) { "`duration` is required but was not set" },
-                        checkNotNull(durationUnit) { "`durationUnit` is required but was not set" },
+                        checkRequired("duration", duration),
+                        checkRequired("durationUnit", durationUnit),
                         additionalProperties.toImmutable(),
                     )
             }
@@ -43641,10 +43146,8 @@ private constructor(
 
                 fun build(): CreditAllocation =
                     CreditAllocation(
-                        checkNotNull(allowsRollover) {
-                            "`allowsRollover` is required but was not set"
-                        },
-                        checkNotNull(currency) { "`currency` is required but was not set" },
+                        checkRequired("allowsRollover", allowsRollover),
+                        checkRequired("currency", currency),
                         additionalProperties.toImmutable(),
                     )
             }
@@ -43763,8 +43266,8 @@ private constructor(
 
                 fun build(): InvoicingCycleConfiguration =
                     InvoicingCycleConfiguration(
-                        checkNotNull(duration) { "`duration` is required but was not set" },
-                        checkNotNull(durationUnit) { "`durationUnit` is required but was not set" },
+                        checkRequired("duration", duration),
+                        checkRequired("durationUnit", durationUnit),
                         additionalProperties.toImmutable(),
                     )
             }
@@ -43933,8 +43436,8 @@ private constructor(
 
                 fun build(): Item =
                     Item(
-                        checkNotNull(id) { "`id` is required but was not set" },
-                        checkNotNull(name) { "`name` is required but was not set" },
+                        checkRequired("id", id),
+                        checkRequired("name", name),
                         additionalProperties.toImmutable(),
                     )
             }
@@ -44175,13 +43678,10 @@ private constructor(
 
                 fun build(): Maximum =
                     Maximum(
-                        checkNotNull(appliesToPriceIds) {
-                                "`appliesToPriceIds` is required but was not set"
-                            }
-                            .map { it.toImmutable() },
-                        checkNotNull(maximumAmount) {
-                            "`maximumAmount` is required but was not set"
+                        checkRequired("appliesToPriceIds", appliesToPriceIds).map {
+                            it.toImmutable()
                         },
+                        checkRequired("maximumAmount", maximumAmount),
                         additionalProperties.toImmutable(),
                     )
             }
@@ -44423,13 +43923,10 @@ private constructor(
 
                 fun build(): Minimum =
                     Minimum(
-                        checkNotNull(appliesToPriceIds) {
-                                "`appliesToPriceIds` is required but was not set"
-                            }
-                            .map { it.toImmutable() },
-                        checkNotNull(minimumAmount) {
-                            "`minimumAmount` is required but was not set"
+                        checkRequired("appliesToPriceIds", appliesToPriceIds).map {
+                            it.toImmutable()
                         },
+                        checkRequired("minimumAmount", minimumAmount),
                         additionalProperties.toImmutable(),
                     )
             }
@@ -45065,41 +44562,29 @@ private constructor(
 
             fun build(): BulkWithProrationPrice =
                 BulkWithProrationPrice(
-                    checkNotNull(id) { "`id` is required but was not set" },
-                    checkNotNull(billableMetric) { "`billableMetric` is required but was not set" },
-                    checkNotNull(billingCycleConfiguration) {
-                        "`billingCycleConfiguration` is required but was not set"
-                    },
-                    checkNotNull(bulkWithProrationConfig) {
-                        "`bulkWithProrationConfig` is required but was not set"
-                    },
-                    checkNotNull(cadence) { "`cadence` is required but was not set" },
-                    checkNotNull(conversionRate) { "`conversionRate` is required but was not set" },
-                    checkNotNull(createdAt) { "`createdAt` is required but was not set" },
-                    checkNotNull(creditAllocation) {
-                        "`creditAllocation` is required but was not set"
-                    },
-                    checkNotNull(currency) { "`currency` is required but was not set" },
-                    checkNotNull(discount) { "`discount` is required but was not set" },
-                    checkNotNull(externalPriceId) {
-                        "`externalPriceId` is required but was not set"
-                    },
-                    checkNotNull(fixedPriceQuantity) {
-                        "`fixedPriceQuantity` is required but was not set"
-                    },
-                    checkNotNull(invoicingCycleConfiguration) {
-                        "`invoicingCycleConfiguration` is required but was not set"
-                    },
-                    checkNotNull(item) { "`item` is required but was not set" },
-                    checkNotNull(maximum) { "`maximum` is required but was not set" },
-                    checkNotNull(maximumAmount) { "`maximumAmount` is required but was not set" },
-                    checkNotNull(metadata) { "`metadata` is required but was not set" },
-                    checkNotNull(minimum) { "`minimum` is required but was not set" },
-                    checkNotNull(minimumAmount) { "`minimumAmount` is required but was not set" },
-                    checkNotNull(modelType) { "`modelType` is required but was not set" },
-                    checkNotNull(name) { "`name` is required but was not set" },
-                    checkNotNull(planPhaseOrder) { "`planPhaseOrder` is required but was not set" },
-                    checkNotNull(priceType) { "`priceType` is required but was not set" },
+                    checkRequired("id", id),
+                    checkRequired("billableMetric", billableMetric),
+                    checkRequired("billingCycleConfiguration", billingCycleConfiguration),
+                    checkRequired("bulkWithProrationConfig", bulkWithProrationConfig),
+                    checkRequired("cadence", cadence),
+                    checkRequired("conversionRate", conversionRate),
+                    checkRequired("createdAt", createdAt),
+                    checkRequired("creditAllocation", creditAllocation),
+                    checkRequired("currency", currency),
+                    checkRequired("discount", discount),
+                    checkRequired("externalPriceId", externalPriceId),
+                    checkRequired("fixedPriceQuantity", fixedPriceQuantity),
+                    checkRequired("invoicingCycleConfiguration", invoicingCycleConfiguration),
+                    checkRequired("item", item),
+                    checkRequired("maximum", maximum),
+                    checkRequired("maximumAmount", maximumAmount),
+                    checkRequired("metadata", metadata),
+                    checkRequired("minimum", minimum),
+                    checkRequired("minimumAmount", minimumAmount),
+                    checkRequired("modelType", modelType),
+                    checkRequired("name", name),
+                    checkRequired("planPhaseOrder", planPhaseOrder),
+                    checkRequired("priceType", priceType),
                     additionalProperties.toImmutable(),
                 )
         }
@@ -45178,10 +44663,7 @@ private constructor(
                 }
 
                 fun build(): BillableMetric =
-                    BillableMetric(
-                        checkNotNull(id) { "`id` is required but was not set" },
-                        additionalProperties.toImmutable()
-                    )
+                    BillableMetric(checkRequired("id", id), additionalProperties.toImmutable())
             }
 
             override fun equals(other: Any?): Boolean {
@@ -45297,8 +44779,8 @@ private constructor(
 
                 fun build(): BillingCycleConfiguration =
                     BillingCycleConfiguration(
-                        checkNotNull(duration) { "`duration` is required but was not set" },
-                        checkNotNull(durationUnit) { "`durationUnit` is required but was not set" },
+                        checkRequired("duration", duration),
+                        checkRequired("durationUnit", durationUnit),
                         additionalProperties.toImmutable(),
                     )
             }
@@ -45635,10 +45117,8 @@ private constructor(
 
                 fun build(): CreditAllocation =
                     CreditAllocation(
-                        checkNotNull(allowsRollover) {
-                            "`allowsRollover` is required but was not set"
-                        },
-                        checkNotNull(currency) { "`currency` is required but was not set" },
+                        checkRequired("allowsRollover", allowsRollover),
+                        checkRequired("currency", currency),
                         additionalProperties.toImmutable(),
                     )
             }
@@ -45757,8 +45237,8 @@ private constructor(
 
                 fun build(): InvoicingCycleConfiguration =
                     InvoicingCycleConfiguration(
-                        checkNotNull(duration) { "`duration` is required but was not set" },
-                        checkNotNull(durationUnit) { "`durationUnit` is required but was not set" },
+                        checkRequired("duration", duration),
+                        checkRequired("durationUnit", durationUnit),
                         additionalProperties.toImmutable(),
                     )
             }
@@ -45927,8 +45407,8 @@ private constructor(
 
                 fun build(): Item =
                     Item(
-                        checkNotNull(id) { "`id` is required but was not set" },
-                        checkNotNull(name) { "`name` is required but was not set" },
+                        checkRequired("id", id),
+                        checkRequired("name", name),
                         additionalProperties.toImmutable(),
                     )
             }
@@ -46086,13 +45566,10 @@ private constructor(
 
                 fun build(): Maximum =
                     Maximum(
-                        checkNotNull(appliesToPriceIds) {
-                                "`appliesToPriceIds` is required but was not set"
-                            }
-                            .map { it.toImmutable() },
-                        checkNotNull(maximumAmount) {
-                            "`maximumAmount` is required but was not set"
+                        checkRequired("appliesToPriceIds", appliesToPriceIds).map {
+                            it.toImmutable()
                         },
+                        checkRequired("maximumAmount", maximumAmount),
                         additionalProperties.toImmutable(),
                     )
             }
@@ -46334,13 +45811,10 @@ private constructor(
 
                 fun build(): Minimum =
                     Minimum(
-                        checkNotNull(appliesToPriceIds) {
-                                "`appliesToPriceIds` is required but was not set"
-                            }
-                            .map { it.toImmutable() },
-                        checkNotNull(minimumAmount) {
-                            "`minimumAmount` is required but was not set"
+                        checkRequired("appliesToPriceIds", appliesToPriceIds).map {
+                            it.toImmutable()
                         },
+                        checkRequired("minimumAmount", minimumAmount),
                         additionalProperties.toImmutable(),
                     )
             }
@@ -46978,41 +46452,29 @@ private constructor(
 
             fun build(): GroupedTieredPackagePrice =
                 GroupedTieredPackagePrice(
-                    checkNotNull(id) { "`id` is required but was not set" },
-                    checkNotNull(billableMetric) { "`billableMetric` is required but was not set" },
-                    checkNotNull(billingCycleConfiguration) {
-                        "`billingCycleConfiguration` is required but was not set"
-                    },
-                    checkNotNull(cadence) { "`cadence` is required but was not set" },
-                    checkNotNull(conversionRate) { "`conversionRate` is required but was not set" },
-                    checkNotNull(createdAt) { "`createdAt` is required but was not set" },
-                    checkNotNull(creditAllocation) {
-                        "`creditAllocation` is required but was not set"
-                    },
-                    checkNotNull(currency) { "`currency` is required but was not set" },
-                    checkNotNull(discount) { "`discount` is required but was not set" },
-                    checkNotNull(externalPriceId) {
-                        "`externalPriceId` is required but was not set"
-                    },
-                    checkNotNull(fixedPriceQuantity) {
-                        "`fixedPriceQuantity` is required but was not set"
-                    },
-                    checkNotNull(groupedTieredPackageConfig) {
-                        "`groupedTieredPackageConfig` is required but was not set"
-                    },
-                    checkNotNull(invoicingCycleConfiguration) {
-                        "`invoicingCycleConfiguration` is required but was not set"
-                    },
-                    checkNotNull(item) { "`item` is required but was not set" },
-                    checkNotNull(maximum) { "`maximum` is required but was not set" },
-                    checkNotNull(maximumAmount) { "`maximumAmount` is required but was not set" },
-                    checkNotNull(metadata) { "`metadata` is required but was not set" },
-                    checkNotNull(minimum) { "`minimum` is required but was not set" },
-                    checkNotNull(minimumAmount) { "`minimumAmount` is required but was not set" },
-                    checkNotNull(modelType) { "`modelType` is required but was not set" },
-                    checkNotNull(name) { "`name` is required but was not set" },
-                    checkNotNull(planPhaseOrder) { "`planPhaseOrder` is required but was not set" },
-                    checkNotNull(priceType) { "`priceType` is required but was not set" },
+                    checkRequired("id", id),
+                    checkRequired("billableMetric", billableMetric),
+                    checkRequired("billingCycleConfiguration", billingCycleConfiguration),
+                    checkRequired("cadence", cadence),
+                    checkRequired("conversionRate", conversionRate),
+                    checkRequired("createdAt", createdAt),
+                    checkRequired("creditAllocation", creditAllocation),
+                    checkRequired("currency", currency),
+                    checkRequired("discount", discount),
+                    checkRequired("externalPriceId", externalPriceId),
+                    checkRequired("fixedPriceQuantity", fixedPriceQuantity),
+                    checkRequired("groupedTieredPackageConfig", groupedTieredPackageConfig),
+                    checkRequired("invoicingCycleConfiguration", invoicingCycleConfiguration),
+                    checkRequired("item", item),
+                    checkRequired("maximum", maximum),
+                    checkRequired("maximumAmount", maximumAmount),
+                    checkRequired("metadata", metadata),
+                    checkRequired("minimum", minimum),
+                    checkRequired("minimumAmount", minimumAmount),
+                    checkRequired("modelType", modelType),
+                    checkRequired("name", name),
+                    checkRequired("planPhaseOrder", planPhaseOrder),
+                    checkRequired("priceType", priceType),
                     additionalProperties.toImmutable(),
                 )
         }
@@ -47091,10 +46553,7 @@ private constructor(
                 }
 
                 fun build(): BillableMetric =
-                    BillableMetric(
-                        checkNotNull(id) { "`id` is required but was not set" },
-                        additionalProperties.toImmutable()
-                    )
+                    BillableMetric(checkRequired("id", id), additionalProperties.toImmutable())
             }
 
             override fun equals(other: Any?): Boolean {
@@ -47210,8 +46669,8 @@ private constructor(
 
                 fun build(): BillingCycleConfiguration =
                     BillingCycleConfiguration(
-                        checkNotNull(duration) { "`duration` is required but was not set" },
-                        checkNotNull(durationUnit) { "`durationUnit` is required but was not set" },
+                        checkRequired("duration", duration),
+                        checkRequired("durationUnit", durationUnit),
                         additionalProperties.toImmutable(),
                     )
             }
@@ -47466,10 +46925,8 @@ private constructor(
 
                 fun build(): CreditAllocation =
                     CreditAllocation(
-                        checkNotNull(allowsRollover) {
-                            "`allowsRollover` is required but was not set"
-                        },
-                        checkNotNull(currency) { "`currency` is required but was not set" },
+                        checkRequired("allowsRollover", allowsRollover),
+                        checkRequired("currency", currency),
                         additionalProperties.toImmutable(),
                     )
             }
@@ -47670,8 +47127,8 @@ private constructor(
 
                 fun build(): InvoicingCycleConfiguration =
                     InvoicingCycleConfiguration(
-                        checkNotNull(duration) { "`duration` is required but was not set" },
-                        checkNotNull(durationUnit) { "`durationUnit` is required but was not set" },
+                        checkRequired("duration", duration),
+                        checkRequired("durationUnit", durationUnit),
                         additionalProperties.toImmutable(),
                     )
             }
@@ -47840,8 +47297,8 @@ private constructor(
 
                 fun build(): Item =
                     Item(
-                        checkNotNull(id) { "`id` is required but was not set" },
-                        checkNotNull(name) { "`name` is required but was not set" },
+                        checkRequired("id", id),
+                        checkRequired("name", name),
                         additionalProperties.toImmutable(),
                     )
             }
@@ -47999,13 +47456,10 @@ private constructor(
 
                 fun build(): Maximum =
                     Maximum(
-                        checkNotNull(appliesToPriceIds) {
-                                "`appliesToPriceIds` is required but was not set"
-                            }
-                            .map { it.toImmutable() },
-                        checkNotNull(maximumAmount) {
-                            "`maximumAmount` is required but was not set"
+                        checkRequired("appliesToPriceIds", appliesToPriceIds).map {
+                            it.toImmutable()
                         },
+                        checkRequired("maximumAmount", maximumAmount),
                         additionalProperties.toImmutable(),
                     )
             }
@@ -48247,13 +47701,10 @@ private constructor(
 
                 fun build(): Minimum =
                     Minimum(
-                        checkNotNull(appliesToPriceIds) {
-                                "`appliesToPriceIds` is required but was not set"
-                            }
-                            .map { it.toImmutable() },
-                        checkNotNull(minimumAmount) {
-                            "`minimumAmount` is required but was not set"
+                        checkRequired("appliesToPriceIds", appliesToPriceIds).map {
+                            it.toImmutable()
                         },
+                        checkRequired("minimumAmount", minimumAmount),
                         additionalProperties.toImmutable(),
                     )
             }

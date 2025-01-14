@@ -11,6 +11,7 @@ import com.withorb.api.core.JsonField
 import com.withorb.api.core.JsonMissing
 import com.withorb.api.core.JsonValue
 import com.withorb.api.core.NoAutoDetect
+import com.withorb.api.core.checkRequired
 import com.withorb.api.core.http.Headers
 import com.withorb.api.core.http.QueryParams
 import com.withorb.api.core.immutableEmptyMap
@@ -425,8 +426,8 @@ constructor(
 
             fun build(): EventBackfillCreateBody =
                 EventBackfillCreateBody(
-                    checkNotNull(timeframeEnd) { "`timeframeEnd` is required but was not set" },
-                    checkNotNull(timeframeStart) { "`timeframeStart` is required but was not set" },
+                    checkRequired("timeframeEnd", timeframeEnd),
+                    checkRequired("timeframeStart", timeframeStart),
                     closeTime,
                     customerId,
                     deprecationFilter,

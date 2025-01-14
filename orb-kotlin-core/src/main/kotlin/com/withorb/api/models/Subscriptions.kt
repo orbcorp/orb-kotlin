@@ -11,6 +11,7 @@ import com.withorb.api.core.JsonField
 import com.withorb.api.core.JsonMissing
 import com.withorb.api.core.JsonValue
 import com.withorb.api.core.NoAutoDetect
+import com.withorb.api.core.checkRequired
 import com.withorb.api.core.immutableEmptyMap
 import com.withorb.api.core.toImmutable
 import java.util.Objects
@@ -119,11 +120,8 @@ private constructor(
 
         fun build(): Subscriptions =
             Subscriptions(
-                checkNotNull(data) { "`data` is required but was not set" }
-                    .map { it.toImmutable() },
-                checkNotNull(paginationMetadata) {
-                    "`paginationMetadata` is required but was not set"
-                },
+                checkRequired("data", data).map { it.toImmutable() },
+                checkRequired("paginationMetadata", paginationMetadata),
                 additionalProperties.toImmutable(),
             )
     }

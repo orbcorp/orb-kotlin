@@ -11,6 +11,7 @@ import com.withorb.api.core.JsonField
 import com.withorb.api.core.JsonMissing
 import com.withorb.api.core.JsonValue
 import com.withorb.api.core.NoAutoDetect
+import com.withorb.api.core.checkRequired
 import com.withorb.api.core.immutableEmptyMap
 import com.withorb.api.core.toImmutable
 import java.time.OffsetDateTime
@@ -103,8 +104,7 @@ private constructor(
 
         fun build(): CustomerCostListByExternalIdResponse =
             CustomerCostListByExternalIdResponse(
-                checkNotNull(data) { "`data` is required but was not set" }
-                    .map { it.toImmutable() },
+                checkRequired("data", data).map { it.toImmutable() },
                 additionalProperties.toImmutable()
             )
     }
@@ -271,12 +271,11 @@ private constructor(
 
             fun build(): Data =
                 Data(
-                    checkNotNull(perPriceCosts) { "`perPriceCosts` is required but was not set" }
-                        .map { it.toImmutable() },
-                    checkNotNull(subtotal) { "`subtotal` is required but was not set" },
-                    checkNotNull(timeframeEnd) { "`timeframeEnd` is required but was not set" },
-                    checkNotNull(timeframeStart) { "`timeframeStart` is required but was not set" },
-                    checkNotNull(total) { "`total` is required but was not set" },
+                    checkRequired("perPriceCosts", perPriceCosts).map { it.toImmutable() },
+                    checkRequired("subtotal", subtotal),
+                    checkRequired("timeframeEnd", timeframeEnd),
+                    checkRequired("timeframeStart", timeframeStart),
+                    checkRequired("total", total),
                     additionalProperties.toImmutable(),
                 )
         }
@@ -6972,9 +6971,9 @@ private constructor(
 
                 fun build(): PerPriceCost =
                     PerPriceCost(
-                        checkNotNull(price) { "`price` is required but was not set" },
-                        checkNotNull(subtotal) { "`subtotal` is required but was not set" },
-                        checkNotNull(total) { "`total` is required but was not set" },
+                        checkRequired("price", price),
+                        checkRequired("subtotal", subtotal),
+                        checkRequired("total", total),
                         quantity,
                         additionalProperties.toImmutable(),
                     )

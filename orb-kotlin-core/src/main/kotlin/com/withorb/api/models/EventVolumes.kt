@@ -11,6 +11,7 @@ import com.withorb.api.core.JsonField
 import com.withorb.api.core.JsonMissing
 import com.withorb.api.core.JsonValue
 import com.withorb.api.core.NoAutoDetect
+import com.withorb.api.core.checkRequired
 import com.withorb.api.core.immutableEmptyMap
 import com.withorb.api.core.toImmutable
 import java.time.OffsetDateTime
@@ -100,8 +101,7 @@ private constructor(
 
         fun build(): EventVolumes =
             EventVolumes(
-                checkNotNull(data) { "`data` is required but was not set" }
-                    .map { it.toImmutable() },
+                checkRequired("data", data).map { it.toImmutable() },
                 additionalProperties.toImmutable()
             )
     }
@@ -224,9 +224,9 @@ private constructor(
 
             fun build(): Data =
                 Data(
-                    checkNotNull(count) { "`count` is required but was not set" },
-                    checkNotNull(timeframeEnd) { "`timeframeEnd` is required but was not set" },
-                    checkNotNull(timeframeStart) { "`timeframeStart` is required but was not set" },
+                    checkRequired("count", count),
+                    checkRequired("timeframeEnd", timeframeEnd),
+                    checkRequired("timeframeStart", timeframeStart),
                     additionalProperties.toImmutable(),
                 )
         }

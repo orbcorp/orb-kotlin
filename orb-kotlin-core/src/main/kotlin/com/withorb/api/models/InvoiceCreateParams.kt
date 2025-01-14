@@ -12,6 +12,7 @@ import com.withorb.api.core.JsonField
 import com.withorb.api.core.JsonMissing
 import com.withorb.api.core.JsonValue
 import com.withorb.api.core.NoAutoDetect
+import com.withorb.api.core.checkRequired
 import com.withorb.api.core.http.Headers
 import com.withorb.api.core.http.QueryParams
 import com.withorb.api.core.immutableEmptyMap
@@ -511,11 +512,10 @@ constructor(
 
             fun build(): InvoiceCreateBody =
                 InvoiceCreateBody(
-                    checkNotNull(currency) { "`currency` is required but was not set" },
-                    checkNotNull(invoiceDate) { "`invoiceDate` is required but was not set" },
-                    checkNotNull(lineItems) { "`lineItems` is required but was not set" }
-                        .map { it.toImmutable() },
-                    checkNotNull(netTerms) { "`netTerms` is required but was not set" },
+                    checkRequired("currency", currency),
+                    checkRequired("invoiceDate", invoiceDate),
+                    checkRequired("lineItems", lineItems).map { it.toImmutable() },
+                    checkRequired("netTerms", netTerms),
                     customerId,
                     discount,
                     externalCustomerId,
@@ -995,13 +995,13 @@ constructor(
 
             fun build(): LineItem =
                 LineItem(
-                    checkNotNull(endDate) { "`endDate` is required but was not set" },
-                    checkNotNull(itemId) { "`itemId` is required but was not set" },
-                    checkNotNull(modelType) { "`modelType` is required but was not set" },
-                    checkNotNull(name) { "`name` is required but was not set" },
-                    checkNotNull(quantity) { "`quantity` is required but was not set" },
-                    checkNotNull(startDate) { "`startDate` is required but was not set" },
-                    checkNotNull(unitConfig) { "`unitConfig` is required but was not set" },
+                    checkRequired("endDate", endDate),
+                    checkRequired("itemId", itemId),
+                    checkRequired("modelType", modelType),
+                    checkRequired("name", name),
+                    checkRequired("quantity", quantity),
+                    checkRequired("startDate", startDate),
+                    checkRequired("unitConfig", unitConfig),
                     additionalProperties.toImmutable(),
                 )
         }
@@ -1140,7 +1140,7 @@ constructor(
 
                 fun build(): UnitConfig =
                     UnitConfig(
-                        checkNotNull(unitAmount) { "`unitAmount` is required but was not set" },
+                        checkRequired("unitAmount", unitAmount),
                         additionalProperties.toImmutable()
                     )
             }

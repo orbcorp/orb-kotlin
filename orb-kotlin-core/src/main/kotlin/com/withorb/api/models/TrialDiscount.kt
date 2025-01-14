@@ -12,6 +12,7 @@ import com.withorb.api.core.JsonField
 import com.withorb.api.core.JsonMissing
 import com.withorb.api.core.JsonValue
 import com.withorb.api.core.NoAutoDetect
+import com.withorb.api.core.checkRequired
 import com.withorb.api.core.immutableEmptyMap
 import com.withorb.api.core.toImmutable
 import com.withorb.api.errors.OrbInvalidDataException
@@ -207,11 +208,8 @@ private constructor(
 
         fun build(): TrialDiscount =
             TrialDiscount(
-                checkNotNull(appliesToPriceIds) {
-                        "`appliesToPriceIds` is required but was not set"
-                    }
-                    .map { it.toImmutable() },
-                checkNotNull(discountType) { "`discountType` is required but was not set" },
+                checkRequired("appliesToPriceIds", appliesToPriceIds).map { it.toImmutable() },
+                checkRequired("discountType", discountType),
                 reason,
                 trialAmountDiscount,
                 trialPercentageDiscount,

@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonCreator
 import com.withorb.api.core.Enum
 import com.withorb.api.core.JsonField
 import com.withorb.api.core.NoAutoDetect
+import com.withorb.api.core.checkRequired
 import com.withorb.api.core.http.Headers
 import com.withorb.api.core.http.QueryParams
 import com.withorb.api.errors.OrbInvalidDataException
@@ -362,9 +363,7 @@ constructor(
 
         fun build(): CustomerCreditLedgerListByExternalIdParams =
             CustomerCreditLedgerListByExternalIdParams(
-                checkNotNull(externalCustomerId) {
-                    "`externalCustomerId` is required but was not set"
-                },
+                checkRequired("externalCustomerId", externalCustomerId),
                 createdAtGt,
                 createdAtGte,
                 createdAtLt,

@@ -11,6 +11,7 @@ import com.withorb.api.core.JsonField
 import com.withorb.api.core.JsonMissing
 import com.withorb.api.core.JsonValue
 import com.withorb.api.core.NoAutoDetect
+import com.withorb.api.core.checkRequired
 import com.withorb.api.core.immutableEmptyMap
 import com.withorb.api.core.toImmutable
 import java.util.Objects
@@ -232,15 +233,12 @@ private constructor(
 
         fun build(): DimensionalPriceGroup =
             DimensionalPriceGroup(
-                checkNotNull(id) { "`id` is required but was not set" },
-                checkNotNull(billableMetricId) { "`billableMetricId` is required but was not set" },
-                checkNotNull(dimensions) { "`dimensions` is required but was not set" }
-                    .map { it.toImmutable() },
-                checkNotNull(externalDimensionalPriceGroupId) {
-                    "`externalDimensionalPriceGroupId` is required but was not set"
-                },
-                checkNotNull(metadata) { "`metadata` is required but was not set" },
-                checkNotNull(name) { "`name` is required but was not set" },
+                checkRequired("id", id),
+                checkRequired("billableMetricId", billableMetricId),
+                checkRequired("dimensions", dimensions).map { it.toImmutable() },
+                checkRequired("externalDimensionalPriceGroupId", externalDimensionalPriceGroupId),
+                checkRequired("metadata", metadata),
+                checkRequired("name", name),
                 additionalProperties.toImmutable(),
             )
     }

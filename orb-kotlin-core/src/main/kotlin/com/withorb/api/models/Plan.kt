@@ -21,6 +21,7 @@ import com.withorb.api.core.JsonField
 import com.withorb.api.core.JsonMissing
 import com.withorb.api.core.JsonValue
 import com.withorb.api.core.NoAutoDetect
+import com.withorb.api.core.checkRequired
 import com.withorb.api.core.getOrThrow
 import com.withorb.api.core.immutableEmptyMap
 import com.withorb.api.core.toImmutable
@@ -872,37 +873,30 @@ private constructor(
 
         fun build(): Plan =
             Plan(
-                checkNotNull(id) { "`id` is required but was not set" },
-                checkNotNull(adjustments) { "`adjustments` is required but was not set" }
-                    .map { it.toImmutable() },
-                checkNotNull(basePlan) { "`basePlan` is required but was not set" },
-                checkNotNull(basePlanId) { "`basePlanId` is required but was not set" },
-                checkNotNull(createdAt) { "`createdAt` is required but was not set" },
-                checkNotNull(currency) { "`currency` is required but was not set" },
-                checkNotNull(defaultInvoiceMemo) {
-                    "`defaultInvoiceMemo` is required but was not set"
-                },
-                checkNotNull(description) { "`description` is required but was not set" },
-                checkNotNull(discount) { "`discount` is required but was not set" },
-                checkNotNull(externalPlanId) { "`externalPlanId` is required but was not set" },
-                checkNotNull(invoicingCurrency) {
-                    "`invoicingCurrency` is required but was not set"
-                },
-                checkNotNull(maximum) { "`maximum` is required but was not set" },
-                checkNotNull(maximumAmount) { "`maximumAmount` is required but was not set" },
-                checkNotNull(metadata) { "`metadata` is required but was not set" },
-                checkNotNull(minimum) { "`minimum` is required but was not set" },
-                checkNotNull(minimumAmount) { "`minimumAmount` is required but was not set" },
-                checkNotNull(name) { "`name` is required but was not set" },
-                checkNotNull(netTerms) { "`netTerms` is required but was not set" },
-                checkNotNull(planPhases) { "`planPhases` is required but was not set" }
-                    .map { it.toImmutable() },
-                checkNotNull(prices) { "`prices` is required but was not set" }
-                    .map { it.toImmutable() },
-                checkNotNull(product) { "`product` is required but was not set" },
-                checkNotNull(status) { "`status` is required but was not set" },
-                checkNotNull(trialConfig) { "`trialConfig` is required but was not set" },
-                checkNotNull(version) { "`version` is required but was not set" },
+                checkRequired("id", id),
+                checkRequired("adjustments", adjustments).map { it.toImmutable() },
+                checkRequired("basePlan", basePlan),
+                checkRequired("basePlanId", basePlanId),
+                checkRequired("createdAt", createdAt),
+                checkRequired("currency", currency),
+                checkRequired("defaultInvoiceMemo", defaultInvoiceMemo),
+                checkRequired("description", description),
+                checkRequired("discount", discount),
+                checkRequired("externalPlanId", externalPlanId),
+                checkRequired("invoicingCurrency", invoicingCurrency),
+                checkRequired("maximum", maximum),
+                checkRequired("maximumAmount", maximumAmount),
+                checkRequired("metadata", metadata),
+                checkRequired("minimum", minimum),
+                checkRequired("minimumAmount", minimumAmount),
+                checkRequired("name", name),
+                checkRequired("netTerms", netTerms),
+                checkRequired("planPhases", planPhases).map { it.toImmutable() },
+                checkRequired("prices", prices).map { it.toImmutable() },
+                checkRequired("product", product),
+                checkRequired("status", status),
+                checkRequired("trialConfig", trialConfig),
+                checkRequired("version", version),
                 additionalProperties.toImmutable(),
             )
     }
@@ -1391,24 +1385,15 @@ private constructor(
 
                 fun build(): AmountDiscountAdjustment =
                     AmountDiscountAdjustment(
-                        checkNotNull(id) { "`id` is required but was not set" },
-                        checkNotNull(adjustmentType) {
-                            "`adjustmentType` is required but was not set"
+                        checkRequired("id", id),
+                        checkRequired("adjustmentType", adjustmentType),
+                        checkRequired("amountDiscount", amountDiscount),
+                        checkRequired("appliesToPriceIds", appliesToPriceIds).map {
+                            it.toImmutable()
                         },
-                        checkNotNull(amountDiscount) {
-                            "`amountDiscount` is required but was not set"
-                        },
-                        checkNotNull(appliesToPriceIds) {
-                                "`appliesToPriceIds` is required but was not set"
-                            }
-                            .map { it.toImmutable() },
-                        checkNotNull(isInvoiceLevel) {
-                            "`isInvoiceLevel` is required but was not set"
-                        },
-                        checkNotNull(planPhaseOrder) {
-                            "`planPhaseOrder` is required but was not set"
-                        },
-                        checkNotNull(reason) { "`reason` is required but was not set" },
+                        checkRequired("isInvoiceLevel", isInvoiceLevel),
+                        checkRequired("planPhaseOrder", planPhaseOrder),
+                        checkRequired("reason", reason),
                         additionalProperties.toImmutable(),
                     )
             }
@@ -1731,24 +1716,15 @@ private constructor(
 
                 fun build(): PercentageDiscountAdjustment =
                     PercentageDiscountAdjustment(
-                        checkNotNull(id) { "`id` is required but was not set" },
-                        checkNotNull(adjustmentType) {
-                            "`adjustmentType` is required but was not set"
+                        checkRequired("id", id),
+                        checkRequired("adjustmentType", adjustmentType),
+                        checkRequired("appliesToPriceIds", appliesToPriceIds).map {
+                            it.toImmutable()
                         },
-                        checkNotNull(appliesToPriceIds) {
-                                "`appliesToPriceIds` is required but was not set"
-                            }
-                            .map { it.toImmutable() },
-                        checkNotNull(isInvoiceLevel) {
-                            "`isInvoiceLevel` is required but was not set"
-                        },
-                        checkNotNull(percentageDiscount) {
-                            "`percentageDiscount` is required but was not set"
-                        },
-                        checkNotNull(planPhaseOrder) {
-                            "`planPhaseOrder` is required but was not set"
-                        },
-                        checkNotNull(reason) { "`reason` is required but was not set" },
+                        checkRequired("isInvoiceLevel", isInvoiceLevel),
+                        checkRequired("percentageDiscount", percentageDiscount),
+                        checkRequired("planPhaseOrder", planPhaseOrder),
+                        checkRequired("reason", reason),
                         additionalProperties.toImmutable(),
                     )
             }
@@ -2068,24 +2044,15 @@ private constructor(
 
                 fun build(): UsageDiscountAdjustment =
                     UsageDiscountAdjustment(
-                        checkNotNull(id) { "`id` is required but was not set" },
-                        checkNotNull(adjustmentType) {
-                            "`adjustmentType` is required but was not set"
+                        checkRequired("id", id),
+                        checkRequired("adjustmentType", adjustmentType),
+                        checkRequired("appliesToPriceIds", appliesToPriceIds).map {
+                            it.toImmutable()
                         },
-                        checkNotNull(appliesToPriceIds) {
-                                "`appliesToPriceIds` is required but was not set"
-                            }
-                            .map { it.toImmutable() },
-                        checkNotNull(isInvoiceLevel) {
-                            "`isInvoiceLevel` is required but was not set"
-                        },
-                        checkNotNull(planPhaseOrder) {
-                            "`planPhaseOrder` is required but was not set"
-                        },
-                        checkNotNull(reason) { "`reason` is required but was not set" },
-                        checkNotNull(usageDiscount) {
-                            "`usageDiscount` is required but was not set"
-                        },
+                        checkRequired("isInvoiceLevel", isInvoiceLevel),
+                        checkRequired("planPhaseOrder", planPhaseOrder),
+                        checkRequired("reason", reason),
+                        checkRequired("usageDiscount", usageDiscount),
                         additionalProperties.toImmutable(),
                     )
             }
@@ -2422,25 +2389,16 @@ private constructor(
 
                 fun build(): MinimumAdjustment =
                     MinimumAdjustment(
-                        checkNotNull(id) { "`id` is required but was not set" },
-                        checkNotNull(adjustmentType) {
-                            "`adjustmentType` is required but was not set"
+                        checkRequired("id", id),
+                        checkRequired("adjustmentType", adjustmentType),
+                        checkRequired("appliesToPriceIds", appliesToPriceIds).map {
+                            it.toImmutable()
                         },
-                        checkNotNull(appliesToPriceIds) {
-                                "`appliesToPriceIds` is required but was not set"
-                            }
-                            .map { it.toImmutable() },
-                        checkNotNull(isInvoiceLevel) {
-                            "`isInvoiceLevel` is required but was not set"
-                        },
-                        checkNotNull(itemId) { "`itemId` is required but was not set" },
-                        checkNotNull(minimumAmount) {
-                            "`minimumAmount` is required but was not set"
-                        },
-                        checkNotNull(planPhaseOrder) {
-                            "`planPhaseOrder` is required but was not set"
-                        },
-                        checkNotNull(reason) { "`reason` is required but was not set" },
+                        checkRequired("isInvoiceLevel", isInvoiceLevel),
+                        checkRequired("itemId", itemId),
+                        checkRequired("minimumAmount", minimumAmount),
+                        checkRequired("planPhaseOrder", planPhaseOrder),
+                        checkRequired("reason", reason),
                         additionalProperties.toImmutable(),
                     )
             }
@@ -2759,24 +2717,15 @@ private constructor(
 
                 fun build(): MaximumAdjustment =
                     MaximumAdjustment(
-                        checkNotNull(id) { "`id` is required but was not set" },
-                        checkNotNull(adjustmentType) {
-                            "`adjustmentType` is required but was not set"
+                        checkRequired("id", id),
+                        checkRequired("adjustmentType", adjustmentType),
+                        checkRequired("appliesToPriceIds", appliesToPriceIds).map {
+                            it.toImmutable()
                         },
-                        checkNotNull(appliesToPriceIds) {
-                                "`appliesToPriceIds` is required but was not set"
-                            }
-                            .map { it.toImmutable() },
-                        checkNotNull(isInvoiceLevel) {
-                            "`isInvoiceLevel` is required but was not set"
-                        },
-                        checkNotNull(maximumAmount) {
-                            "`maximumAmount` is required but was not set"
-                        },
-                        checkNotNull(planPhaseOrder) {
-                            "`planPhaseOrder` is required but was not set"
-                        },
-                        checkNotNull(reason) { "`reason` is required but was not set" },
+                        checkRequired("isInvoiceLevel", isInvoiceLevel),
+                        checkRequired("maximumAmount", maximumAmount),
+                        checkRequired("planPhaseOrder", planPhaseOrder),
+                        checkRequired("reason", reason),
                         additionalProperties.toImmutable(),
                     )
             }
@@ -2974,9 +2923,9 @@ private constructor(
 
             fun build(): BasePlan =
                 BasePlan(
-                    checkNotNull(id) { "`id` is required but was not set" },
-                    checkNotNull(externalPlanId) { "`externalPlanId` is required but was not set" },
-                    checkNotNull(name) { "`name` is required but was not set" },
+                    checkRequired("id", id),
+                    checkRequired("externalPlanId", externalPlanId),
+                    checkRequired("name", name),
                     additionalProperties.toImmutable(),
                 )
         }
@@ -3130,11 +3079,8 @@ private constructor(
 
             fun build(): Maximum =
                 Maximum(
-                    checkNotNull(appliesToPriceIds) {
-                            "`appliesToPriceIds` is required but was not set"
-                        }
-                        .map { it.toImmutable() },
-                    checkNotNull(maximumAmount) { "`maximumAmount` is required but was not set" },
+                    checkRequired("appliesToPriceIds", appliesToPriceIds).map { it.toImmutable() },
+                    checkRequired("maximumAmount", maximumAmount),
                     additionalProperties.toImmutable(),
                 )
         }
@@ -3369,11 +3315,8 @@ private constructor(
 
             fun build(): Minimum =
                 Minimum(
-                    checkNotNull(appliesToPriceIds) {
-                            "`appliesToPriceIds` is required but was not set"
-                        }
-                        .map { it.toImmutable() },
-                    checkNotNull(minimumAmount) { "`minimumAmount` is required but was not set" },
+                    checkRequired("appliesToPriceIds", appliesToPriceIds).map { it.toImmutable() },
+                    checkRequired("minimumAmount", minimumAmount),
                     additionalProperties.toImmutable(),
                 )
         }
@@ -3663,17 +3606,17 @@ private constructor(
 
             fun build(): PlanPhase =
                 PlanPhase(
-                    checkNotNull(id) { "`id` is required but was not set" },
-                    checkNotNull(description) { "`description` is required but was not set" },
-                    checkNotNull(discount) { "`discount` is required but was not set" },
-                    checkNotNull(duration) { "`duration` is required but was not set" },
-                    checkNotNull(durationUnit) { "`durationUnit` is required but was not set" },
-                    checkNotNull(maximum) { "`maximum` is required but was not set" },
-                    checkNotNull(maximumAmount) { "`maximumAmount` is required but was not set" },
-                    checkNotNull(minimum) { "`minimum` is required but was not set" },
-                    checkNotNull(minimumAmount) { "`minimumAmount` is required but was not set" },
-                    checkNotNull(name) { "`name` is required but was not set" },
-                    checkNotNull(order) { "`order` is required but was not set" },
+                    checkRequired("id", id),
+                    checkRequired("description", description),
+                    checkRequired("discount", discount),
+                    checkRequired("duration", duration),
+                    checkRequired("durationUnit", durationUnit),
+                    checkRequired("maximum", maximum),
+                    checkRequired("maximumAmount", maximumAmount),
+                    checkRequired("minimum", minimum),
+                    checkRequired("minimumAmount", minimumAmount),
+                    checkRequired("name", name),
+                    checkRequired("order", order),
                     additionalProperties.toImmutable(),
                 )
         }
@@ -3888,13 +3831,10 @@ private constructor(
 
                 fun build(): Maximum =
                     Maximum(
-                        checkNotNull(appliesToPriceIds) {
-                                "`appliesToPriceIds` is required but was not set"
-                            }
-                            .map { it.toImmutable() },
-                        checkNotNull(maximumAmount) {
-                            "`maximumAmount` is required but was not set"
+                        checkRequired("appliesToPriceIds", appliesToPriceIds).map {
+                            it.toImmutable()
                         },
+                        checkRequired("maximumAmount", maximumAmount),
                         additionalProperties.toImmutable(),
                     )
             }
@@ -4052,13 +3992,10 @@ private constructor(
 
                 fun build(): Minimum =
                     Minimum(
-                        checkNotNull(appliesToPriceIds) {
-                                "`appliesToPriceIds` is required but was not set"
-                            }
-                            .map { it.toImmutable() },
-                        checkNotNull(minimumAmount) {
-                            "`minimumAmount` is required but was not set"
+                        checkRequired("appliesToPriceIds", appliesToPriceIds).map {
+                            it.toImmutable()
                         },
+                        checkRequired("minimumAmount", minimumAmount),
                         additionalProperties.toImmutable(),
                     )
             }
@@ -4201,9 +4138,9 @@ private constructor(
 
             fun build(): Product =
                 Product(
-                    checkNotNull(id) { "`id` is required but was not set" },
-                    checkNotNull(createdAt) { "`createdAt` is required but was not set" },
-                    checkNotNull(name) { "`name` is required but was not set" },
+                    checkRequired("id", id),
+                    checkRequired("createdAt", createdAt),
+                    checkRequired("name", name),
                     additionalProperties.toImmutable(),
                 )
         }
@@ -4384,10 +4321,8 @@ private constructor(
 
             fun build(): TrialConfig =
                 TrialConfig(
-                    checkNotNull(trialPeriod) { "`trialPeriod` is required but was not set" },
-                    checkNotNull(trialPeriodUnit) {
-                        "`trialPeriodUnit` is required but was not set"
-                    },
+                    checkRequired("trialPeriod", trialPeriod),
+                    checkRequired("trialPeriodUnit", trialPeriodUnit),
                     additionalProperties.toImmutable(),
                 )
         }

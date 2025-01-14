@@ -11,6 +11,7 @@ import com.withorb.api.core.JsonField
 import com.withorb.api.core.JsonMissing
 import com.withorb.api.core.JsonValue
 import com.withorb.api.core.NoAutoDetect
+import com.withorb.api.core.checkRequired
 import com.withorb.api.core.http.Headers
 import com.withorb.api.core.http.QueryParams
 import com.withorb.api.core.immutableEmptyMap
@@ -145,8 +146,7 @@ constructor(
 
             fun build(): AlertUpdateBody =
                 AlertUpdateBody(
-                    checkNotNull(thresholds) { "`thresholds` is required but was not set" }
-                        .map { it.toImmutable() },
+                    checkRequired("thresholds", thresholds).map { it.toImmutable() },
                     additionalProperties.toImmutable()
                 )
         }
@@ -325,9 +325,7 @@ constructor(
 
         fun build(): AlertUpdateParams =
             AlertUpdateParams(
-                checkNotNull(alertConfigurationId) {
-                    "`alertConfigurationId` is required but was not set"
-                },
+                checkRequired("alertConfigurationId", alertConfigurationId),
                 body.build(),
                 additionalHeaders.build(),
                 additionalQueryParams.build(),
@@ -426,10 +424,7 @@ constructor(
             }
 
             fun build(): Threshold =
-                Threshold(
-                    checkNotNull(value) { "`value` is required but was not set" },
-                    additionalProperties.toImmutable()
-                )
+                Threshold(checkRequired("value", value), additionalProperties.toImmutable())
         }
 
         override fun equals(other: Any?): Boolean {
