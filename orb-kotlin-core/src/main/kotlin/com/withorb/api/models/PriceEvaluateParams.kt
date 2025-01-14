@@ -11,6 +11,7 @@ import com.withorb.api.core.JsonField
 import com.withorb.api.core.JsonMissing
 import com.withorb.api.core.JsonValue
 import com.withorb.api.core.NoAutoDetect
+import com.withorb.api.core.checkRequired
 import com.withorb.api.core.http.Headers
 import com.withorb.api.core.http.QueryParams
 import com.withorb.api.core.immutableEmptyMap
@@ -351,8 +352,8 @@ constructor(
 
             fun build(): PriceEvaluateBody =
                 PriceEvaluateBody(
-                    checkNotNull(timeframeEnd) { "`timeframeEnd` is required but was not set" },
-                    checkNotNull(timeframeStart) { "`timeframeStart` is required but was not set" },
+                    checkRequired("timeframeEnd", timeframeEnd),
+                    checkRequired("timeframeStart", timeframeStart),
                     customerId,
                     externalCustomerId,
                     filter,
@@ -593,7 +594,7 @@ constructor(
 
         fun build(): PriceEvaluateParams =
             PriceEvaluateParams(
-                checkNotNull(priceId) { "`priceId` is required but was not set" },
+                checkRequired("priceId", priceId),
                 body.build(),
                 additionalHeaders.build(),
                 additionalQueryParams.build(),

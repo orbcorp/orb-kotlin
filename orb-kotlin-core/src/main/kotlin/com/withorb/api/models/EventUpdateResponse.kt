@@ -11,6 +11,7 @@ import com.withorb.api.core.JsonField
 import com.withorb.api.core.JsonMissing
 import com.withorb.api.core.JsonValue
 import com.withorb.api.core.NoAutoDetect
+import com.withorb.api.core.checkRequired
 import com.withorb.api.core.immutableEmptyMap
 import com.withorb.api.core.toImmutable
 import java.util.Objects
@@ -90,7 +91,7 @@ private constructor(
 
         fun build(): EventUpdateResponse =
             EventUpdateResponse(
-                checkNotNull(amended) { "`amended` is required but was not set" },
+                checkRequired("amended", amended),
                 additionalProperties.toImmutable()
             )
     }

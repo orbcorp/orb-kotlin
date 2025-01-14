@@ -12,6 +12,7 @@ import com.withorb.api.core.JsonField
 import com.withorb.api.core.JsonMissing
 import com.withorb.api.core.JsonValue
 import com.withorb.api.core.NoAutoDetect
+import com.withorb.api.core.checkRequired
 import com.withorb.api.core.http.Headers
 import com.withorb.api.core.http.QueryParams
 import com.withorb.api.core.immutableEmptyMap
@@ -178,8 +179,7 @@ constructor(
 
             fun build(): CreditNoteCreateBody =
                 CreditNoteCreateBody(
-                    checkNotNull(lineItems) { "`lineItems` is required but was not set" }
-                        .map { it.toImmutable() },
+                    checkRequired("lineItems", lineItems).map { it.toImmutable() },
                     memo,
                     reason,
                     additionalProperties.toImmutable(),
@@ -466,10 +466,8 @@ constructor(
 
             fun build(): LineItem =
                 LineItem(
-                    checkNotNull(amount) { "`amount` is required but was not set" },
-                    checkNotNull(invoiceLineItemId) {
-                        "`invoiceLineItemId` is required but was not set"
-                    },
+                    checkRequired("amount", amount),
+                    checkRequired("invoiceLineItemId", invoiceLineItemId),
                     additionalProperties.toImmutable(),
                 )
         }

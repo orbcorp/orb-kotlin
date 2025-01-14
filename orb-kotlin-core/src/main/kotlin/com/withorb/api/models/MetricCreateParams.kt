@@ -11,6 +11,7 @@ import com.withorb.api.core.JsonField
 import com.withorb.api.core.JsonMissing
 import com.withorb.api.core.JsonValue
 import com.withorb.api.core.NoAutoDetect
+import com.withorb.api.core.checkRequired
 import com.withorb.api.core.http.Headers
 import com.withorb.api.core.http.QueryParams
 import com.withorb.api.core.immutableEmptyMap
@@ -245,10 +246,10 @@ constructor(
 
             fun build(): MetricCreateBody =
                 MetricCreateBody(
-                    checkNotNull(description) { "`description` is required but was not set" },
-                    checkNotNull(itemId) { "`itemId` is required but was not set" },
-                    checkNotNull(name) { "`name` is required but was not set" },
-                    checkNotNull(sql) { "`sql` is required but was not set" },
+                    checkRequired("description", description),
+                    checkRequired("itemId", itemId),
+                    checkRequired("name", name),
+                    checkRequired("sql", sql),
                     metadata,
                     additionalProperties.toImmutable(),
                 )

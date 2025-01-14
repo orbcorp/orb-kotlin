@@ -12,6 +12,7 @@ import com.withorb.api.core.JsonField
 import com.withorb.api.core.JsonMissing
 import com.withorb.api.core.JsonValue
 import com.withorb.api.core.NoAutoDetect
+import com.withorb.api.core.checkRequired
 import com.withorb.api.core.http.Headers
 import com.withorb.api.core.http.QueryParams
 import com.withorb.api.core.immutableEmptyMap
@@ -271,8 +272,8 @@ constructor(
 
             fun build(): SubscriptionUpdateFixedFeeQuantityBody =
                 SubscriptionUpdateFixedFeeQuantityBody(
-                    checkNotNull(priceId) { "`priceId` is required but was not set" },
-                    checkNotNull(quantity) { "`quantity` is required but was not set" },
+                    checkRequired("priceId", priceId),
+                    checkRequired("quantity", quantity),
                     changeOption,
                     effectiveDate,
                     additionalProperties.toImmutable(),
@@ -487,7 +488,7 @@ constructor(
 
         fun build(): SubscriptionUpdateFixedFeeQuantityParams =
             SubscriptionUpdateFixedFeeQuantityParams(
-                checkNotNull(subscriptionId) { "`subscriptionId` is required but was not set" },
+                checkRequired("subscriptionId", subscriptionId),
                 body.build(),
                 additionalHeaders.build(),
                 additionalQueryParams.build(),

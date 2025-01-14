@@ -11,6 +11,7 @@ import com.withorb.api.core.JsonField
 import com.withorb.api.core.JsonMissing
 import com.withorb.api.core.JsonValue
 import com.withorb.api.core.NoAutoDetect
+import com.withorb.api.core.checkRequired
 import com.withorb.api.core.http.Headers
 import com.withorb.api.core.http.QueryParams
 import com.withorb.api.core.immutableEmptyMap
@@ -302,9 +303,9 @@ constructor(
 
             fun build(): EventUpdateBody =
                 EventUpdateBody(
-                    checkNotNull(eventName) { "`eventName` is required but was not set" },
-                    checkNotNull(properties) { "`properties` is required but was not set" },
-                    checkNotNull(timestamp) { "`timestamp` is required but was not set" },
+                    checkRequired("eventName", eventName),
+                    checkRequired("properties", properties),
+                    checkRequired("timestamp", timestamp),
                     customerId,
                     externalCustomerId,
                     additionalProperties.toImmutable(),
@@ -514,7 +515,7 @@ constructor(
 
         fun build(): EventUpdateParams =
             EventUpdateParams(
-                checkNotNull(eventId) { "`eventId` is required but was not set" },
+                checkRequired("eventId", eventId),
                 body.build(),
                 additionalHeaders.build(),
                 additionalQueryParams.build(),

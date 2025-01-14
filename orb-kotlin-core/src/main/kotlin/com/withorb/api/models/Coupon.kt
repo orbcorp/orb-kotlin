@@ -20,6 +20,7 @@ import com.withorb.api.core.JsonField
 import com.withorb.api.core.JsonMissing
 import com.withorb.api.core.JsonValue
 import com.withorb.api.core.NoAutoDetect
+import com.withorb.api.core.checkRequired
 import com.withorb.api.core.getOrThrow
 import com.withorb.api.core.immutableEmptyMap
 import com.withorb.api.core.toImmutable
@@ -317,13 +318,13 @@ private constructor(
 
         fun build(): Coupon =
             Coupon(
-                checkNotNull(id) { "`id` is required but was not set" },
-                checkNotNull(archivedAt) { "`archivedAt` is required but was not set" },
-                checkNotNull(discount) { "`discount` is required but was not set" },
-                checkNotNull(durationInMonths) { "`durationInMonths` is required but was not set" },
-                checkNotNull(maxRedemptions) { "`maxRedemptions` is required but was not set" },
-                checkNotNull(redemptionCode) { "`redemptionCode` is required but was not set" },
-                checkNotNull(timesRedeemed) { "`timesRedeemed` is required but was not set" },
+                checkRequired("id", id),
+                checkRequired("archivedAt", archivedAt),
+                checkRequired("discount", discount),
+                checkRequired("durationInMonths", durationInMonths),
+                checkRequired("maxRedemptions", maxRedemptions),
+                checkRequired("redemptionCode", redemptionCode),
+                checkRequired("timesRedeemed", timesRedeemed),
                 additionalProperties.toImmutable(),
             )
     }

@@ -12,6 +12,7 @@ import com.withorb.api.core.JsonField
 import com.withorb.api.core.JsonMissing
 import com.withorb.api.core.JsonValue
 import com.withorb.api.core.NoAutoDetect
+import com.withorb.api.core.checkRequired
 import com.withorb.api.core.immutableEmptyMap
 import com.withorb.api.core.toImmutable
 import com.withorb.api.errors.OrbInvalidDataException
@@ -404,26 +405,21 @@ private constructor(
 
         fun build(): CreditNote =
             CreditNote(
-                checkNotNull(id) { "`id` is required but was not set" },
-                checkNotNull(createdAt) { "`createdAt` is required but was not set" },
-                checkNotNull(creditNoteNumber) { "`creditNoteNumber` is required but was not set" },
-                checkNotNull(creditNotePdf) { "`creditNotePdf` is required but was not set" },
-                checkNotNull(customer) { "`customer` is required but was not set" },
-                checkNotNull(invoiceId) { "`invoiceId` is required but was not set" },
-                checkNotNull(lineItems) { "`lineItems` is required but was not set" }
-                    .map { it.toImmutable() },
-                checkNotNull(maximumAmountAdjustment) {
-                    "`maximumAmountAdjustment` is required but was not set"
-                },
-                checkNotNull(memo) { "`memo` is required but was not set" },
-                checkNotNull(minimumAmountRefunded) {
-                    "`minimumAmountRefunded` is required but was not set"
-                },
-                checkNotNull(reason) { "`reason` is required but was not set" },
-                checkNotNull(subtotal) { "`subtotal` is required but was not set" },
-                checkNotNull(total) { "`total` is required but was not set" },
-                checkNotNull(type) { "`type` is required but was not set" },
-                checkNotNull(voidedAt) { "`voidedAt` is required but was not set" },
+                checkRequired("id", id),
+                checkRequired("createdAt", createdAt),
+                checkRequired("creditNoteNumber", creditNoteNumber),
+                checkRequired("creditNotePdf", creditNotePdf),
+                checkRequired("customer", customer),
+                checkRequired("invoiceId", invoiceId),
+                checkRequired("lineItems", lineItems).map { it.toImmutable() },
+                checkRequired("maximumAmountAdjustment", maximumAmountAdjustment),
+                checkRequired("memo", memo),
+                checkRequired("minimumAmountRefunded", minimumAmountRefunded),
+                checkRequired("reason", reason),
+                checkRequired("subtotal", subtotal),
+                checkRequired("total", total),
+                checkRequired("type", type),
+                checkRequired("voidedAt", voidedAt),
                 (discounts ?: JsonMissing.of()).map { it.toImmutable() },
                 additionalProperties.toImmutable(),
             )
@@ -518,10 +514,8 @@ private constructor(
 
             fun build(): Customer =
                 Customer(
-                    checkNotNull(id) { "`id` is required but was not set" },
-                    checkNotNull(externalCustomerId) {
-                        "`externalCustomerId` is required but was not set"
-                    },
+                    checkRequired("id", id),
+                    checkRequired("externalCustomerId", externalCustomerId),
                     additionalProperties.toImmutable(),
                 )
         }
@@ -761,13 +755,12 @@ private constructor(
 
             fun build(): LineItem =
                 LineItem(
-                    checkNotNull(id) { "`id` is required but was not set" },
-                    checkNotNull(amount) { "`amount` is required but was not set" },
-                    checkNotNull(name) { "`name` is required but was not set" },
-                    checkNotNull(quantity) { "`quantity` is required but was not set" },
-                    checkNotNull(subtotal) { "`subtotal` is required but was not set" },
-                    checkNotNull(taxAmounts) { "`taxAmounts` is required but was not set" }
-                        .map { it.toImmutable() },
+                    checkRequired("id", id),
+                    checkRequired("amount", amount),
+                    checkRequired("name", name),
+                    checkRequired("quantity", quantity),
+                    checkRequired("subtotal", subtotal),
+                    checkRequired("taxAmounts", taxAmounts).map { it.toImmutable() },
                     (discounts ?: JsonMissing.of()).map { it.toImmutable() },
                     additionalProperties.toImmutable(),
                 )
@@ -899,13 +892,9 @@ private constructor(
 
                 fun build(): TaxAmount =
                     TaxAmount(
-                        checkNotNull(amount) { "`amount` is required but was not set" },
-                        checkNotNull(taxRateDescription) {
-                            "`taxRateDescription` is required but was not set"
-                        },
-                        checkNotNull(taxRatePercentage) {
-                            "`taxRatePercentage` is required but was not set"
-                        },
+                        checkRequired("amount", amount),
+                        checkRequired("taxRateDescription", taxRateDescription),
+                        checkRequired("taxRatePercentage", taxRatePercentage),
                         additionalProperties.toImmutable(),
                     )
             }
@@ -1124,18 +1113,13 @@ private constructor(
 
                 fun build(): Discount =
                     Discount(
-                        checkNotNull(id) { "`id` is required but was not set" },
-                        checkNotNull(amountApplied) {
-                            "`amountApplied` is required but was not set"
+                        checkRequired("id", id),
+                        checkRequired("amountApplied", amountApplied),
+                        checkRequired("appliesToPriceIds", appliesToPriceIds).map {
+                            it.toImmutable()
                         },
-                        checkNotNull(appliesToPriceIds) {
-                                "`appliesToPriceIds` is required but was not set"
-                            }
-                            .map { it.toImmutable() },
-                        checkNotNull(discountType) { "`discountType` is required but was not set" },
-                        checkNotNull(percentageDiscount) {
-                            "`percentageDiscount` is required but was not set"
-                        },
+                        checkRequired("discountType", discountType),
+                        checkRequired("percentageDiscount", percentageDiscount),
                         amountDiscount,
                         reason,
                         additionalProperties.toImmutable(),
@@ -1394,11 +1378,9 @@ private constructor(
 
             fun build(): MaximumAmountAdjustment =
                 MaximumAmountAdjustment(
-                    checkNotNull(amountApplied) { "`amountApplied` is required but was not set" },
-                    checkNotNull(discountType) { "`discountType` is required but was not set" },
-                    checkNotNull(percentageDiscount) {
-                        "`percentageDiscount` is required but was not set"
-                    },
+                    checkRequired("amountApplied", amountApplied),
+                    checkRequired("discountType", discountType),
+                    checkRequired("percentageDiscount", percentageDiscount),
                     (appliesToPrices ?: JsonMissing.of()).map { it.toImmutable() },
                     reason,
                     additionalProperties.toImmutable(),
@@ -1545,8 +1527,8 @@ private constructor(
 
                 fun build(): AppliesToPrice =
                     AppliesToPrice(
-                        checkNotNull(id) { "`id` is required but was not set" },
-                        checkNotNull(name) { "`name` is required but was not set" },
+                        checkRequired("id", id),
+                        checkRequired("name", name),
                         additionalProperties.toImmutable(),
                     )
             }
@@ -1871,11 +1853,9 @@ private constructor(
 
             fun build(): Discount =
                 Discount(
-                    checkNotNull(amountApplied) { "`amountApplied` is required but was not set" },
-                    checkNotNull(discountType) { "`discountType` is required but was not set" },
-                    checkNotNull(percentageDiscount) {
-                        "`percentageDiscount` is required but was not set"
-                    },
+                    checkRequired("amountApplied", amountApplied),
+                    checkRequired("discountType", discountType),
+                    checkRequired("percentageDiscount", percentageDiscount),
                     (appliesToPrices ?: JsonMissing.of()).map { it.toImmutable() },
                     reason,
                     additionalProperties.toImmutable(),
@@ -2022,8 +2002,8 @@ private constructor(
 
                 fun build(): AppliesToPrice =
                     AppliesToPrice(
-                        checkNotNull(id) { "`id` is required but was not set" },
-                        checkNotNull(name) { "`name` is required but was not set" },
+                        checkRequired("id", id),
+                        checkRequired("name", name),
                         additionalProperties.toImmutable(),
                     )
             }

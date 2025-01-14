@@ -12,6 +12,7 @@ import com.withorb.api.core.JsonField
 import com.withorb.api.core.JsonMissing
 import com.withorb.api.core.JsonValue
 import com.withorb.api.core.NoAutoDetect
+import com.withorb.api.core.checkRequired
 import com.withorb.api.core.immutableEmptyMap
 import com.withorb.api.core.toImmutable
 import com.withorb.api.errors.OrbInvalidDataException
@@ -196,12 +197,12 @@ private constructor(
 
         fun build(): BillableMetric =
             BillableMetric(
-                checkNotNull(id) { "`id` is required but was not set" },
-                checkNotNull(description) { "`description` is required but was not set" },
-                checkNotNull(item) { "`item` is required but was not set" },
-                checkNotNull(metadata) { "`metadata` is required but was not set" },
-                checkNotNull(name) { "`name` is required but was not set" },
-                checkNotNull(status) { "`status` is required but was not set" },
+                checkRequired("id", id),
+                checkRequired("description", description),
+                checkRequired("item", item),
+                checkRequired("metadata", metadata),
+                checkRequired("name", name),
+                checkRequired("status", status),
                 additionalProperties.toImmutable(),
             )
     }

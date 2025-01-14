@@ -12,6 +12,7 @@ import com.withorb.api.core.JsonField
 import com.withorb.api.core.JsonMissing
 import com.withorb.api.core.JsonValue
 import com.withorb.api.core.NoAutoDetect
+import com.withorb.api.core.checkRequired
 import com.withorb.api.core.http.Headers
 import com.withorb.api.core.http.QueryParams
 import com.withorb.api.core.immutableEmptyMap
@@ -175,8 +176,8 @@ constructor(
 
             fun build(): CustomerBalanceTransactionCreateBody =
                 CustomerBalanceTransactionCreateBody(
-                    checkNotNull(amount) { "`amount` is required but was not set" },
-                    checkNotNull(type) { "`type` is required but was not set" },
+                    checkRequired("amount", amount),
+                    checkRequired("type", type),
                     description,
                     additionalProperties.toImmutable(),
                 )
@@ -361,7 +362,7 @@ constructor(
 
         fun build(): CustomerBalanceTransactionCreateParams =
             CustomerBalanceTransactionCreateParams(
-                checkNotNull(customerId) { "`customerId` is required but was not set" },
+                checkRequired("customerId", customerId),
                 body.build(),
                 additionalHeaders.build(),
                 additionalQueryParams.build(),

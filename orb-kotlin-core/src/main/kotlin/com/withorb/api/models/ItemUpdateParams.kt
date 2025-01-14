@@ -12,6 +12,7 @@ import com.withorb.api.core.JsonField
 import com.withorb.api.core.JsonMissing
 import com.withorb.api.core.JsonValue
 import com.withorb.api.core.NoAutoDetect
+import com.withorb.api.core.checkRequired
 import com.withorb.api.core.http.Headers
 import com.withorb.api.core.http.QueryParams
 import com.withorb.api.core.immutableEmptyMap
@@ -349,7 +350,7 @@ constructor(
 
         fun build(): ItemUpdateParams =
             ItemUpdateParams(
-                checkNotNull(itemId) { "`itemId` is required but was not set" },
+                checkRequired("itemId", itemId),
                 body.build(),
                 additionalHeaders.build(),
                 additionalQueryParams.build(),
@@ -454,12 +455,8 @@ constructor(
 
             fun build(): ExternalConnection =
                 ExternalConnection(
-                    checkNotNull(externalConnectionName) {
-                        "`externalConnectionName` is required but was not set"
-                    },
-                    checkNotNull(externalEntityId) {
-                        "`externalEntityId` is required but was not set"
-                    },
+                    checkRequired("externalConnectionName", externalConnectionName),
+                    checkRequired("externalEntityId", externalEntityId),
                     additionalProperties.toImmutable(),
                 )
         }

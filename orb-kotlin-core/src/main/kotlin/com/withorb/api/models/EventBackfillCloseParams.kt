@@ -4,6 +4,7 @@ package com.withorb.api.models
 
 import com.withorb.api.core.JsonValue
 import com.withorb.api.core.NoAutoDetect
+import com.withorb.api.core.checkRequired
 import com.withorb.api.core.http.Headers
 import com.withorb.api.core.http.QueryParams
 import com.withorb.api.core.toImmutable
@@ -190,7 +191,7 @@ constructor(
 
         fun build(): EventBackfillCloseParams =
             EventBackfillCloseParams(
-                checkNotNull(backfillId) { "`backfillId` is required but was not set" },
+                checkRequired("backfillId", backfillId),
                 additionalHeaders.build(),
                 additionalQueryParams.build(),
                 additionalBodyProperties.toImmutable(),

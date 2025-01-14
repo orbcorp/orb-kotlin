@@ -11,6 +11,7 @@ import com.withorb.api.core.JsonField
 import com.withorb.api.core.JsonMissing
 import com.withorb.api.core.JsonValue
 import com.withorb.api.core.NoAutoDetect
+import com.withorb.api.core.checkRequired
 import com.withorb.api.core.http.Headers
 import com.withorb.api.core.http.QueryParams
 import com.withorb.api.core.immutableEmptyMap
@@ -263,12 +264,12 @@ constructor(
 
             fun build(): InvoiceLineItemCreateBody =
                 InvoiceLineItemCreateBody(
-                    checkNotNull(amount) { "`amount` is required but was not set" },
-                    checkNotNull(endDate) { "`endDate` is required but was not set" },
-                    checkNotNull(invoiceId) { "`invoiceId` is required but was not set" },
-                    checkNotNull(name) { "`name` is required but was not set" },
-                    checkNotNull(quantity) { "`quantity` is required but was not set" },
-                    checkNotNull(startDate) { "`startDate` is required but was not set" },
+                    checkRequired("amount", amount),
+                    checkRequired("endDate", endDate),
+                    checkRequired("invoiceId", invoiceId),
+                    checkRequired("name", name),
+                    checkRequired("quantity", quantity),
+                    checkRequired("startDate", startDate),
                     additionalProperties.toImmutable(),
                 )
         }

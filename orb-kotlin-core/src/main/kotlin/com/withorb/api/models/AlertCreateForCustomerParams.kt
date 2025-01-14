@@ -12,6 +12,7 @@ import com.withorb.api.core.JsonField
 import com.withorb.api.core.JsonMissing
 import com.withorb.api.core.JsonValue
 import com.withorb.api.core.NoAutoDetect
+import com.withorb.api.core.checkRequired
 import com.withorb.api.core.http.Headers
 import com.withorb.api.core.http.QueryParams
 import com.withorb.api.core.immutableEmptyMap
@@ -202,8 +203,8 @@ constructor(
 
             fun build(): AlertCreateForCustomerBody =
                 AlertCreateForCustomerBody(
-                    checkNotNull(currency) { "`currency` is required but was not set" },
-                    checkNotNull(type) { "`type` is required but was not set" },
+                    checkRequired("currency", currency),
+                    checkRequired("type", type),
                     (thresholds ?: JsonMissing.of()).map { it.toImmutable() },
                     additionalProperties.toImmutable(),
                 )
@@ -393,7 +394,7 @@ constructor(
 
         fun build(): AlertCreateForCustomerParams =
             AlertCreateForCustomerParams(
-                checkNotNull(customerId) { "`customerId` is required but was not set" },
+                checkRequired("customerId", customerId),
                 body.build(),
                 additionalHeaders.build(),
                 additionalQueryParams.build(),
@@ -567,10 +568,7 @@ constructor(
             }
 
             fun build(): Threshold =
-                Threshold(
-                    checkNotNull(value) { "`value` is required but was not set" },
-                    additionalProperties.toImmutable()
-                )
+                Threshold(checkRequired("value", value), additionalProperties.toImmutable())
         }
 
         override fun equals(other: Any?): Boolean {

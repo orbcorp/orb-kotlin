@@ -12,6 +12,7 @@ import com.withorb.api.core.JsonField
 import com.withorb.api.core.JsonMissing
 import com.withorb.api.core.JsonValue
 import com.withorb.api.core.NoAutoDetect
+import com.withorb.api.core.checkRequired
 import com.withorb.api.core.immutableEmptyMap
 import com.withorb.api.core.toImmutable
 import com.withorb.api.errors.OrbInvalidDataException
@@ -194,15 +195,13 @@ private constructor(
 
         fun build(): CustomerCreditListResponse =
             CustomerCreditListResponse(
-                checkNotNull(id) { "`id` is required but was not set" },
-                checkNotNull(balance) { "`balance` is required but was not set" },
-                checkNotNull(effectiveDate) { "`effectiveDate` is required but was not set" },
-                checkNotNull(expiryDate) { "`expiryDate` is required but was not set" },
-                checkNotNull(maximumInitialBalance) {
-                    "`maximumInitialBalance` is required but was not set"
-                },
-                checkNotNull(perUnitCostBasis) { "`perUnitCostBasis` is required but was not set" },
-                checkNotNull(status) { "`status` is required but was not set" },
+                checkRequired("id", id),
+                checkRequired("balance", balance),
+                checkRequired("effectiveDate", effectiveDate),
+                checkRequired("expiryDate", expiryDate),
+                checkRequired("maximumInitialBalance", maximumInitialBalance),
+                checkRequired("perUnitCostBasis", perUnitCostBasis),
+                checkRequired("status", status),
                 additionalProperties.toImmutable(),
             )
     }

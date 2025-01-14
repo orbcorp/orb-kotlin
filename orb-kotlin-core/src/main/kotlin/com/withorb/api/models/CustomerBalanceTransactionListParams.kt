@@ -3,6 +3,7 @@
 package com.withorb.api.models
 
 import com.withorb.api.core.NoAutoDetect
+import com.withorb.api.core.checkRequired
 import com.withorb.api.core.http.Headers
 import com.withorb.api.core.http.QueryParams
 import java.time.OffsetDateTime
@@ -277,7 +278,7 @@ constructor(
 
         fun build(): CustomerBalanceTransactionListParams =
             CustomerBalanceTransactionListParams(
-                checkNotNull(customerId) { "`customerId` is required but was not set" },
+                checkRequired("customerId", customerId),
                 cursor,
                 limit,
                 operationTimeGt,
