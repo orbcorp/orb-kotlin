@@ -3,6 +3,7 @@
 package com.withorb.api.models
 
 import com.withorb.api.core.NoAutoDetect
+import com.withorb.api.core.checkRequired
 import com.withorb.api.core.http.Headers
 import com.withorb.api.core.http.QueryParams
 import java.util.Objects
@@ -156,7 +157,7 @@ constructor(
 
         fun build(): InvoiceFetchParams =
             InvoiceFetchParams(
-                checkNotNull(invoiceId) { "`invoiceId` is required but was not set" },
+                checkRequired("invoiceId", invoiceId),
                 additionalHeaders.build(),
                 additionalQueryParams.build(),
             )

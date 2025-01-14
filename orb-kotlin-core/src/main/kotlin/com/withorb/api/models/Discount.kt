@@ -21,6 +21,7 @@ import com.withorb.api.core.JsonField
 import com.withorb.api.core.JsonMissing
 import com.withorb.api.core.JsonValue
 import com.withorb.api.core.NoAutoDetect
+import com.withorb.api.core.checkRequired
 import com.withorb.api.core.getOrThrow
 import com.withorb.api.core.immutableEmptyMap
 import com.withorb.api.core.toImmutable
@@ -382,12 +383,9 @@ private constructor(
 
             fun build(): UsageDiscount =
                 UsageDiscount(
-                    checkNotNull(appliesToPriceIds) {
-                            "`appliesToPriceIds` is required but was not set"
-                        }
-                        .map { it.toImmutable() },
-                    checkNotNull(discountType) { "`discountType` is required but was not set" },
-                    checkNotNull(usageDiscount) { "`usageDiscount` is required but was not set" },
+                    checkRequired("appliesToPriceIds", appliesToPriceIds).map { it.toImmutable() },
+                    checkRequired("discountType", discountType),
+                    checkRequired("usageDiscount", usageDiscount),
                     reason,
                     additionalProperties.toImmutable(),
                 )

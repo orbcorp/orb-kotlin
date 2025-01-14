@@ -20,6 +20,7 @@ import com.withorb.api.core.JsonField
 import com.withorb.api.core.JsonMissing
 import com.withorb.api.core.JsonValue
 import com.withorb.api.core.NoAutoDetect
+import com.withorb.api.core.checkRequired
 import com.withorb.api.core.getOrThrow
 import com.withorb.api.core.immutableEmptyMap
 import com.withorb.api.core.toImmutable
@@ -163,10 +164,9 @@ private constructor(
 
         fun build(): EvaluatePriceGroup =
             EvaluatePriceGroup(
-                checkNotNull(amount) { "`amount` is required but was not set" },
-                checkNotNull(groupingValues) { "`groupingValues` is required but was not set" }
-                    .map { it.toImmutable() },
-                checkNotNull(quantity) { "`quantity` is required but was not set" },
+                checkRequired("amount", amount),
+                checkRequired("groupingValues", groupingValues).map { it.toImmutable() },
+                checkRequired("quantity", quantity),
                 additionalProperties.toImmutable(),
             )
     }

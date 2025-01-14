@@ -11,6 +11,7 @@ import com.withorb.api.core.JsonField
 import com.withorb.api.core.JsonMissing
 import com.withorb.api.core.JsonValue
 import com.withorb.api.core.NoAutoDetect
+import com.withorb.api.core.checkRequired
 import com.withorb.api.core.http.Headers
 import com.withorb.api.core.http.QueryParams
 import com.withorb.api.core.immutableEmptyMap
@@ -118,10 +119,7 @@ constructor(
             }
 
             fun build(): ItemCreateBody =
-                ItemCreateBody(
-                    checkNotNull(name) { "`name` is required but was not set" },
-                    additionalProperties.toImmutable()
-                )
+                ItemCreateBody(checkRequired("name", name), additionalProperties.toImmutable())
         }
 
         override fun equals(other: Any?): Boolean {

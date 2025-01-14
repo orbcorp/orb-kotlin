@@ -11,6 +11,7 @@ import com.withorb.api.core.JsonField
 import com.withorb.api.core.JsonMissing
 import com.withorb.api.core.JsonValue
 import com.withorb.api.core.NoAutoDetect
+import com.withorb.api.core.checkRequired
 import com.withorb.api.core.immutableEmptyMap
 import com.withorb.api.core.toImmutable
 import java.time.OffsetDateTime
@@ -133,10 +134,10 @@ private constructor(
 
         fun build(): SubscriptionFetchScheduleResponse =
             SubscriptionFetchScheduleResponse(
-                checkNotNull(createdAt) { "`createdAt` is required but was not set" },
-                checkNotNull(endDate) { "`endDate` is required but was not set" },
-                checkNotNull(plan) { "`plan` is required but was not set" },
-                checkNotNull(startDate) { "`startDate` is required but was not set" },
+                checkRequired("createdAt", createdAt),
+                checkRequired("endDate", endDate),
+                checkRequired("plan", plan),
+                checkRequired("startDate", startDate),
                 additionalProperties.toImmutable(),
             )
     }
@@ -264,9 +265,9 @@ private constructor(
 
             fun build(): Plan =
                 Plan(
-                    checkNotNull(id) { "`id` is required but was not set" },
-                    checkNotNull(externalPlanId) { "`externalPlanId` is required but was not set" },
-                    checkNotNull(name) { "`name` is required but was not set" },
+                    checkRequired("id", id),
+                    checkRequired("externalPlanId", externalPlanId),
+                    checkRequired("name", name),
                     additionalProperties.toImmutable(),
                 )
         }

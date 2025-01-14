@@ -11,6 +11,7 @@ import com.withorb.api.core.JsonField
 import com.withorb.api.core.JsonMissing
 import com.withorb.api.core.JsonValue
 import com.withorb.api.core.NoAutoDetect
+import com.withorb.api.core.checkRequired
 import com.withorb.api.core.http.Headers
 import com.withorb.api.core.http.QueryParams
 import com.withorb.api.core.immutableEmptyMap
@@ -329,8 +330,7 @@ constructor(
 
             fun build(): EventIngestBody =
                 EventIngestBody(
-                    checkNotNull(events) { "`events` is required but was not set" }
-                        .map { it.toImmutable() },
+                    checkRequired("events", events).map { it.toImmutable() },
                     additionalProperties.toImmutable()
                 )
         }
@@ -739,10 +739,10 @@ constructor(
 
             fun build(): Event =
                 Event(
-                    checkNotNull(eventName) { "`eventName` is required but was not set" },
-                    checkNotNull(idempotencyKey) { "`idempotencyKey` is required but was not set" },
-                    checkNotNull(properties) { "`properties` is required but was not set" },
-                    checkNotNull(timestamp) { "`timestamp` is required but was not set" },
+                    checkRequired("eventName", eventName),
+                    checkRequired("idempotencyKey", idempotencyKey),
+                    checkRequired("properties", properties),
+                    checkRequired("timestamp", timestamp),
                     customerId,
                     externalCustomerId,
                     additionalProperties.toImmutable(),

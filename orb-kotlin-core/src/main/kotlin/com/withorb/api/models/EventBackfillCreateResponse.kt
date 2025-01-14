@@ -12,6 +12,7 @@ import com.withorb.api.core.JsonField
 import com.withorb.api.core.JsonMissing
 import com.withorb.api.core.JsonValue
 import com.withorb.api.core.NoAutoDetect
+import com.withorb.api.core.checkRequired
 import com.withorb.api.core.immutableEmptyMap
 import com.withorb.api.core.toImmutable
 import com.withorb.api.errors.OrbInvalidDataException
@@ -305,15 +306,15 @@ private constructor(
 
         fun build(): EventBackfillCreateResponse =
             EventBackfillCreateResponse(
-                checkNotNull(id) { "`id` is required but was not set" },
-                checkNotNull(closeTime) { "`closeTime` is required but was not set" },
-                checkNotNull(createdAt) { "`createdAt` is required but was not set" },
-                checkNotNull(customerId) { "`customerId` is required but was not set" },
-                checkNotNull(eventsIngested) { "`eventsIngested` is required but was not set" },
-                checkNotNull(revertedAt) { "`revertedAt` is required but was not set" },
-                checkNotNull(status) { "`status` is required but was not set" },
-                checkNotNull(timeframeEnd) { "`timeframeEnd` is required but was not set" },
-                checkNotNull(timeframeStart) { "`timeframeStart` is required but was not set" },
+                checkRequired("id", id),
+                checkRequired("closeTime", closeTime),
+                checkRequired("createdAt", createdAt),
+                checkRequired("customerId", customerId),
+                checkRequired("eventsIngested", eventsIngested),
+                checkRequired("revertedAt", revertedAt),
+                checkRequired("status", status),
+                checkRequired("timeframeEnd", timeframeEnd),
+                checkRequired("timeframeStart", timeframeStart),
                 deprecationFilter,
                 additionalProperties.toImmutable(),
             )

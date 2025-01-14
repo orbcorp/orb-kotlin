@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonCreator
 import com.withorb.api.core.Enum
 import com.withorb.api.core.JsonField
 import com.withorb.api.core.NoAutoDetect
+import com.withorb.api.core.checkRequired
 import com.withorb.api.core.http.Headers
 import com.withorb.api.core.http.QueryParams
 import com.withorb.api.errors.OrbInvalidDataException
@@ -477,7 +478,7 @@ constructor(
 
         fun build(): SubscriptionFetchUsageParams =
             SubscriptionFetchUsageParams(
-                checkNotNull(subscriptionId) { "`subscriptionId` is required but was not set" },
+                checkRequired("subscriptionId", subscriptionId),
                 billableMetricId,
                 firstDimensionKey,
                 firstDimensionValue,

@@ -4,6 +4,7 @@ package com.withorb.api.models
 
 import com.withorb.api.core.JsonValue
 import com.withorb.api.core.NoAutoDetect
+import com.withorb.api.core.checkRequired
 import com.withorb.api.core.http.Headers
 import com.withorb.api.core.http.QueryParams
 import com.withorb.api.core.toImmutable
@@ -200,10 +201,8 @@ constructor(
 
         fun build(): CustomerCreditTopUpDeleteByExternalIdParams =
             CustomerCreditTopUpDeleteByExternalIdParams(
-                checkNotNull(externalCustomerId) {
-                    "`externalCustomerId` is required but was not set"
-                },
-                checkNotNull(topUpId) { "`topUpId` is required but was not set" },
+                checkRequired("externalCustomerId", externalCustomerId),
+                checkRequired("topUpId", topUpId),
                 additionalHeaders.build(),
                 additionalQueryParams.build(),
                 additionalBodyProperties.toImmutable(),

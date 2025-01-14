@@ -11,6 +11,7 @@ import com.withorb.api.core.JsonField
 import com.withorb.api.core.JsonMissing
 import com.withorb.api.core.JsonValue
 import com.withorb.api.core.NoAutoDetect
+import com.withorb.api.core.checkRequired
 import com.withorb.api.core.immutableEmptyMap
 import com.withorb.api.core.toImmutable
 import java.util.Objects
@@ -151,8 +152,7 @@ private constructor(
 
         fun build(): EventIngestResponse =
             EventIngestResponse(
-                checkNotNull(validationFailed) { "`validationFailed` is required but was not set" }
-                    .map { it.toImmutable() },
+                checkRequired("validationFailed", validationFailed).map { it.toImmutable() },
                 debug,
                 additionalProperties.toImmutable(),
             )
@@ -280,11 +280,8 @@ private constructor(
 
             fun build(): ValidationFailed =
                 ValidationFailed(
-                    checkNotNull(idempotencyKey) { "`idempotencyKey` is required but was not set" },
-                    checkNotNull(validationErrors) {
-                            "`validationErrors` is required but was not set"
-                        }
-                        .map { it.toImmutable() },
+                    checkRequired("idempotencyKey", idempotencyKey),
+                    checkRequired("validationErrors", validationErrors).map { it.toImmutable() },
                     additionalProperties.toImmutable(),
                 )
         }
@@ -427,10 +424,8 @@ private constructor(
 
             fun build(): Debug =
                 Debug(
-                    checkNotNull(duplicate) { "`duplicate` is required but was not set" }
-                        .map { it.toImmutable() },
-                    checkNotNull(ingested) { "`ingested` is required but was not set" }
-                        .map { it.toImmutable() },
+                    checkRequired("duplicate", duplicate).map { it.toImmutable() },
+                    checkRequired("ingested", ingested).map { it.toImmutable() },
                     additionalProperties.toImmutable(),
                 )
         }

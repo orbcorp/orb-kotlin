@@ -12,6 +12,7 @@ import com.withorb.api.core.JsonField
 import com.withorb.api.core.JsonMissing
 import com.withorb.api.core.JsonValue
 import com.withorb.api.core.NoAutoDetect
+import com.withorb.api.core.checkRequired
 import com.withorb.api.core.immutableEmptyMap
 import com.withorb.api.core.toImmutable
 import com.withorb.api.errors.OrbInvalidDataException
@@ -273,16 +274,16 @@ private constructor(
 
         fun build(): CustomerBalanceTransactionListResponse =
             CustomerBalanceTransactionListResponse(
-                checkNotNull(id) { "`id` is required but was not set" },
-                checkNotNull(action) { "`action` is required but was not set" },
-                checkNotNull(amount) { "`amount` is required but was not set" },
-                checkNotNull(createdAt) { "`createdAt` is required but was not set" },
-                checkNotNull(creditNote) { "`creditNote` is required but was not set" },
-                checkNotNull(description) { "`description` is required but was not set" },
-                checkNotNull(endingBalance) { "`endingBalance` is required but was not set" },
-                checkNotNull(invoice) { "`invoice` is required but was not set" },
-                checkNotNull(startingBalance) { "`startingBalance` is required but was not set" },
-                checkNotNull(type) { "`type` is required but was not set" },
+                checkRequired("id", id),
+                checkRequired("action", action),
+                checkRequired("amount", amount),
+                checkRequired("createdAt", createdAt),
+                checkRequired("creditNote", creditNote),
+                checkRequired("description", description),
+                checkRequired("endingBalance", endingBalance),
+                checkRequired("invoice", invoice),
+                checkRequired("startingBalance", startingBalance),
+                checkRequired("type", type),
                 additionalProperties.toImmutable(),
             )
     }
@@ -453,10 +454,7 @@ private constructor(
             }
 
             fun build(): CreditNote =
-                CreditNote(
-                    checkNotNull(id) { "`id` is required but was not set" },
-                    additionalProperties.toImmutable()
-                )
+                CreditNote(checkRequired("id", id), additionalProperties.toImmutable())
         }
 
         override fun equals(other: Any?): Boolean {
@@ -549,10 +547,7 @@ private constructor(
             }
 
             fun build(): Invoice =
-                Invoice(
-                    checkNotNull(id) { "`id` is required but was not set" },
-                    additionalProperties.toImmutable()
-                )
+                Invoice(checkRequired("id", id), additionalProperties.toImmutable())
         }
 
         override fun equals(other: Any?): Boolean {

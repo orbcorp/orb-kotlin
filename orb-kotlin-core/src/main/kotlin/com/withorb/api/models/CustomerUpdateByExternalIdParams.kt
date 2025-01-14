@@ -21,6 +21,7 @@ import com.withorb.api.core.JsonField
 import com.withorb.api.core.JsonMissing
 import com.withorb.api.core.JsonValue
 import com.withorb.api.core.NoAutoDetect
+import com.withorb.api.core.checkRequired
 import com.withorb.api.core.getOrThrow
 import com.withorb.api.core.http.Headers
 import com.withorb.api.core.http.QueryParams
@@ -1959,7 +1960,7 @@ constructor(
 
         fun build(): CustomerUpdateByExternalIdParams =
             CustomerUpdateByExternalIdParams(
-                checkNotNull(id) { "`id` is required but was not set" },
+                checkRequired("id", id),
                 body.build(),
                 additionalHeaders.build(),
                 additionalQueryParams.build(),
@@ -2179,10 +2180,8 @@ constructor(
 
                 fun build(): AccountingProvider =
                     AccountingProvider(
-                        checkNotNull(externalProviderId) {
-                            "`externalProviderId` is required but was not set"
-                        },
-                        checkNotNull(providerType) { "`providerType` is required but was not set" },
+                        checkRequired("externalProviderId", externalProviderId),
+                        checkRequired("providerType", providerType),
                         additionalProperties.toImmutable(),
                     )
             }
@@ -2623,7 +2622,7 @@ constructor(
 
             fun build(): ReportingConfiguration =
                 ReportingConfiguration(
-                    checkNotNull(exempt) { "`exempt` is required but was not set" },
+                    checkRequired("exempt", exempt),
                     additionalProperties.toImmutable()
                 )
         }
@@ -3086,8 +3085,8 @@ constructor(
 
                 fun build(): NewAvalaraTaxConfiguration =
                     NewAvalaraTaxConfiguration(
-                        checkNotNull(taxExempt) { "`taxExempt` is required but was not set" },
-                        checkNotNull(taxProvider) { "`taxProvider` is required but was not set" },
+                        checkRequired("taxExempt", taxExempt),
+                        checkRequired("taxProvider", taxProvider),
                         taxExemptionCode,
                         additionalProperties.toImmutable(),
                     )
@@ -3258,8 +3257,8 @@ constructor(
 
                 fun build(): NewTaxJarConfiguration =
                     NewTaxJarConfiguration(
-                        checkNotNull(taxExempt) { "`taxExempt` is required but was not set" },
-                        checkNotNull(taxProvider) { "`taxProvider` is required but was not set" },
+                        checkRequired("taxExempt", taxExempt),
+                        checkRequired("taxProvider", taxProvider),
                         additionalProperties.toImmutable(),
                     )
             }
@@ -3538,9 +3537,9 @@ constructor(
 
             fun build(): TaxId =
                 TaxId(
-                    checkNotNull(country) { "`country` is required but was not set" },
-                    checkNotNull(type) { "`type` is required but was not set" },
-                    checkNotNull(value) { "`value` is required but was not set" },
+                    checkRequired("country", country),
+                    checkRequired("type", type),
+                    checkRequired("value", value),
                     additionalProperties.toImmutable(),
                 )
         }
