@@ -14,7 +14,70 @@ class PlanCreateParamsTest {
             .currency("currency")
             .name("name")
             .addPrice(
-                PlanCreateParams.Price.ofNewPlanUnitPrice(
+                PlanCreateParams.Price.NewPlanUnitPrice.builder()
+                    .cadence(PlanCreateParams.Price.NewPlanUnitPrice.Cadence.ANNUAL)
+                    .itemId("item_id")
+                    .modelType(PlanCreateParams.Price.NewPlanUnitPrice.ModelType.UNIT)
+                    .name("Annual fee")
+                    .unitConfig(
+                        PlanCreateParams.Price.NewPlanUnitPrice.UnitConfig.builder()
+                            .unitAmount("unit_amount")
+                            .build()
+                    )
+                    .billableMetricId("billable_metric_id")
+                    .billedInAdvance(true)
+                    .billingCycleConfiguration(
+                        PlanCreateParams.Price.NewPlanUnitPrice.BillingCycleConfiguration.builder()
+                            .duration(0L)
+                            .durationUnit(
+                                PlanCreateParams.Price.NewPlanUnitPrice.BillingCycleConfiguration
+                                    .DurationUnit
+                                    .DAY
+                            )
+                            .build()
+                    )
+                    .conversionRate(0.0)
+                    .currency("currency")
+                    .externalPriceId("external_price_id")
+                    .fixedPriceQuantity(0.0)
+                    .invoiceGroupingKey("invoice_grouping_key")
+                    .invoicingCycleConfiguration(
+                        PlanCreateParams.Price.NewPlanUnitPrice.InvoicingCycleConfiguration
+                            .builder()
+                            .duration(0L)
+                            .durationUnit(
+                                PlanCreateParams.Price.NewPlanUnitPrice.InvoicingCycleConfiguration
+                                    .DurationUnit
+                                    .DAY
+                            )
+                            .build()
+                    )
+                    .metadata(
+                        PlanCreateParams.Price.NewPlanUnitPrice.Metadata.builder()
+                            .putAdditionalProperty("foo", JsonValue.from("string"))
+                            .build()
+                    )
+                    .build()
+            )
+            .defaultInvoiceMemo("default_invoice_memo")
+            .externalPlanId("external_plan_id")
+            .metadata(
+                PlanCreateParams.Metadata.builder()
+                    .putAdditionalProperty("foo", JsonValue.from("string"))
+                    .build()
+            )
+            .netTerms(0L)
+            .status(PlanCreateParams.Status.ACTIVE)
+            .build()
+    }
+
+    @Test
+    fun getBody() {
+        val params =
+            PlanCreateParams.builder()
+                .currency("currency")
+                .name("name")
+                .addPrice(
                     PlanCreateParams.Price.NewPlanUnitPrice.builder()
                         .cadence(PlanCreateParams.Price.NewPlanUnitPrice.Cadence.ANNUAL)
                         .itemId("item_id")
@@ -62,76 +125,6 @@ class PlanCreateParamsTest {
                                 .build()
                         )
                         .build()
-                )
-            )
-            .defaultInvoiceMemo("default_invoice_memo")
-            .externalPlanId("external_plan_id")
-            .metadata(
-                PlanCreateParams.Metadata.builder()
-                    .putAdditionalProperty("foo", JsonValue.from("string"))
-                    .build()
-            )
-            .netTerms(0L)
-            .status(PlanCreateParams.Status.ACTIVE)
-            .build()
-    }
-
-    @Test
-    fun getBody() {
-        val params =
-            PlanCreateParams.builder()
-                .currency("currency")
-                .name("name")
-                .addPrice(
-                    PlanCreateParams.Price.ofNewPlanUnitPrice(
-                        PlanCreateParams.Price.NewPlanUnitPrice.builder()
-                            .cadence(PlanCreateParams.Price.NewPlanUnitPrice.Cadence.ANNUAL)
-                            .itemId("item_id")
-                            .modelType(PlanCreateParams.Price.NewPlanUnitPrice.ModelType.UNIT)
-                            .name("Annual fee")
-                            .unitConfig(
-                                PlanCreateParams.Price.NewPlanUnitPrice.UnitConfig.builder()
-                                    .unitAmount("unit_amount")
-                                    .build()
-                            )
-                            .billableMetricId("billable_metric_id")
-                            .billedInAdvance(true)
-                            .billingCycleConfiguration(
-                                PlanCreateParams.Price.NewPlanUnitPrice.BillingCycleConfiguration
-                                    .builder()
-                                    .duration(0L)
-                                    .durationUnit(
-                                        PlanCreateParams.Price.NewPlanUnitPrice
-                                            .BillingCycleConfiguration
-                                            .DurationUnit
-                                            .DAY
-                                    )
-                                    .build()
-                            )
-                            .conversionRate(0.0)
-                            .currency("currency")
-                            .externalPriceId("external_price_id")
-                            .fixedPriceQuantity(0.0)
-                            .invoiceGroupingKey("invoice_grouping_key")
-                            .invoicingCycleConfiguration(
-                                PlanCreateParams.Price.NewPlanUnitPrice.InvoicingCycleConfiguration
-                                    .builder()
-                                    .duration(0L)
-                                    .durationUnit(
-                                        PlanCreateParams.Price.NewPlanUnitPrice
-                                            .InvoicingCycleConfiguration
-                                            .DurationUnit
-                                            .DAY
-                                    )
-                                    .build()
-                            )
-                            .metadata(
-                                PlanCreateParams.Price.NewPlanUnitPrice.Metadata.builder()
-                                    .putAdditionalProperty("foo", JsonValue.from("string"))
-                                    .build()
-                            )
-                            .build()
-                    )
                 )
                 .defaultInvoiceMemo("default_invoice_memo")
                 .externalPlanId("external_plan_id")
@@ -220,19 +213,17 @@ class PlanCreateParamsTest {
                 .currency("currency")
                 .name("name")
                 .addPrice(
-                    PlanCreateParams.Price.ofNewPlanUnitPrice(
-                        PlanCreateParams.Price.NewPlanUnitPrice.builder()
-                            .cadence(PlanCreateParams.Price.NewPlanUnitPrice.Cadence.ANNUAL)
-                            .itemId("item_id")
-                            .modelType(PlanCreateParams.Price.NewPlanUnitPrice.ModelType.UNIT)
-                            .name("Annual fee")
-                            .unitConfig(
-                                PlanCreateParams.Price.NewPlanUnitPrice.UnitConfig.builder()
-                                    .unitAmount("unit_amount")
-                                    .build()
-                            )
-                            .build()
-                    )
+                    PlanCreateParams.Price.NewPlanUnitPrice.builder()
+                        .cadence(PlanCreateParams.Price.NewPlanUnitPrice.Cadence.ANNUAL)
+                        .itemId("item_id")
+                        .modelType(PlanCreateParams.Price.NewPlanUnitPrice.ModelType.UNIT)
+                        .name("Annual fee")
+                        .unitConfig(
+                            PlanCreateParams.Price.NewPlanUnitPrice.UnitConfig.builder()
+                                .unitAmount("unit_amount")
+                                .build()
+                        )
+                        .build()
                 )
                 .build()
         val body = params.getBody()

@@ -106,17 +106,15 @@ class ServiceParamsTest {
                         .build()
                 )
                 .taxConfiguration(
-                    CustomerCreateParams.TaxConfiguration.ofNewAvalaraTaxConfiguration(
-                        CustomerCreateParams.TaxConfiguration.NewAvalaraTaxConfiguration.builder()
-                            .taxExempt(true)
-                            .taxProvider(
-                                CustomerCreateParams.TaxConfiguration.NewAvalaraTaxConfiguration
-                                    .TaxProvider
-                                    .AVALARA
-                            )
-                            .taxExemptionCode("tax_exemption_code")
-                            .build()
-                    )
+                    CustomerCreateParams.TaxConfiguration.NewAvalaraTaxConfiguration.builder()
+                        .taxExempt(true)
+                        .taxProvider(
+                            CustomerCreateParams.TaxConfiguration.NewAvalaraTaxConfiguration
+                                .TaxProvider
+                                .AVALARA
+                        )
+                        .taxExemptionCode("tax_exemption_code")
+                        .build()
                 )
                 .taxId(
                     CustomerCreateParams.TaxId.builder()
