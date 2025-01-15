@@ -5,7 +5,6 @@ package com.withorb.api.services.blocking
 import com.withorb.api.TestServerExtension
 import com.withorb.api.client.okhttp.OrbOkHttpClient
 import com.withorb.api.core.JsonValue
-import com.withorb.api.models.Discount
 import com.withorb.api.models.InvoiceCreateParams
 import com.withorb.api.models.InvoiceFetchParams
 import com.withorb.api.models.InvoiceFetchUpcomingParams
@@ -55,15 +54,13 @@ class InvoiceServiceTest {
                     .netTerms(0L)
                     .customerId("4khy3nwzktxv7")
                     .discount(
-                        Discount.ofPercentageDiscount(
-                            PercentageDiscount.builder()
-                                .addAppliesToPriceId("h74gfhdjvn7ujokd")
-                                .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
-                                .discountType(PercentageDiscount.DiscountType.PERCENTAGE)
-                                .percentageDiscount(0.15)
-                                .reason("reason")
-                                .build()
-                        )
+                        PercentageDiscount.builder()
+                            .addAppliesToPriceId("h74gfhdjvn7ujokd")
+                            .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
+                            .discountType(PercentageDiscount.DiscountType.PERCENTAGE)
+                            .percentageDiscount(0.15)
+                            .reason("reason")
+                            .build()
                     )
                     .externalCustomerId("external-customer-id")
                     .memo("An optional memo for my invoice.")

@@ -14,7 +14,7 @@ class PriceEvaluateResponseTest {
                 .addData(
                     EvaluatePriceGroup.builder()
                         .amount("amount")
-                        .addGroupingValue(EvaluatePriceGroup.GroupingValue.ofString("string"))
+                        .addGroupingValue("string")
                         .quantity(0.0)
                         .build()
                 )
@@ -24,7 +24,7 @@ class PriceEvaluateResponseTest {
             .containsExactly(
                 EvaluatePriceGroup.builder()
                     .amount("amount")
-                    .addGroupingValue(EvaluatePriceGroup.GroupingValue.ofString("string"))
+                    .addGroupingValue("string")
                     .quantity(0.0)
                     .build()
             )

@@ -65,19 +65,16 @@ class CustomerUpdateByExternalIdParamsTest {
                     .build()
             )
             .taxConfiguration(
-                CustomerUpdateByExternalIdParams.TaxConfiguration.ofNewAvalaraTaxConfiguration(
-                    CustomerUpdateByExternalIdParams.TaxConfiguration.NewAvalaraTaxConfiguration
-                        .builder()
-                        .taxExempt(true)
-                        .taxProvider(
-                            CustomerUpdateByExternalIdParams.TaxConfiguration
-                                .NewAvalaraTaxConfiguration
-                                .TaxProvider
-                                .AVALARA
-                        )
-                        .taxExemptionCode("tax_exemption_code")
-                        .build()
-                )
+                CustomerUpdateByExternalIdParams.TaxConfiguration.NewAvalaraTaxConfiguration
+                    .builder()
+                    .taxExempt(true)
+                    .taxProvider(
+                        CustomerUpdateByExternalIdParams.TaxConfiguration.NewAvalaraTaxConfiguration
+                            .TaxProvider
+                            .AVALARA
+                    )
+                    .taxExemptionCode("tax_exemption_code")
+                    .build()
             )
             .taxId(
                 CustomerUpdateByExternalIdParams.TaxId.builder()
@@ -147,19 +144,17 @@ class CustomerUpdateByExternalIdParamsTest {
                         .build()
                 )
                 .taxConfiguration(
-                    CustomerUpdateByExternalIdParams.TaxConfiguration.ofNewAvalaraTaxConfiguration(
-                        CustomerUpdateByExternalIdParams.TaxConfiguration.NewAvalaraTaxConfiguration
-                            .builder()
-                            .taxExempt(true)
-                            .taxProvider(
-                                CustomerUpdateByExternalIdParams.TaxConfiguration
-                                    .NewAvalaraTaxConfiguration
-                                    .TaxProvider
-                                    .AVALARA
-                            )
-                            .taxExemptionCode("tax_exemption_code")
-                            .build()
-                    )
+                    CustomerUpdateByExternalIdParams.TaxConfiguration.NewAvalaraTaxConfiguration
+                        .builder()
+                        .taxExempt(true)
+                        .taxProvider(
+                            CustomerUpdateByExternalIdParams.TaxConfiguration
+                                .NewAvalaraTaxConfiguration
+                                .TaxProvider
+                                .AVALARA
+                        )
+                        .taxExemptionCode("tax_exemption_code")
+                        .build()
                 )
                 .taxId(
                     CustomerUpdateByExternalIdParams.TaxId.builder()
