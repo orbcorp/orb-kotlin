@@ -12,21 +12,20 @@ class DimensionalPriceGroupsTest {
     fun createDimensionalPriceGroups() {
         val dimensionalPriceGroups =
             DimensionalPriceGroups.builder()
-                .data(
-                    listOf(
-                        DimensionalPriceGroup.builder()
-                            .id("id")
-                            .billableMetricId("billable_metric_id")
-                            .dimensions(listOf("region", "instance_type"))
-                            .externalDimensionalPriceGroupId("my_dimensional_price_group_id")
-                            .metadata(
-                                DimensionalPriceGroup.Metadata.builder()
-                                    .putAdditionalProperty("foo", JsonValue.from("string"))
-                                    .build()
-                            )
-                            .name("name")
-                            .build()
-                    )
+                .addData(
+                    DimensionalPriceGroup.builder()
+                        .id("id")
+                        .billableMetricId("billable_metric_id")
+                        .addDimension("region")
+                        .addDimension("instance_type")
+                        .externalDimensionalPriceGroupId("my_dimensional_price_group_id")
+                        .metadata(
+                            DimensionalPriceGroup.Metadata.builder()
+                                .putAdditionalProperty("foo", JsonValue.from("string"))
+                                .build()
+                        )
+                        .name("name")
+                        .build()
                 )
                 .paginationMetadata(
                     PaginationMetadata.builder().hasMore(true).nextCursor("next_cursor").build()
@@ -38,7 +37,8 @@ class DimensionalPriceGroupsTest {
                 DimensionalPriceGroup.builder()
                     .id("id")
                     .billableMetricId("billable_metric_id")
-                    .dimensions(listOf("region", "instance_type"))
+                    .addDimension("region")
+                    .addDimension("instance_type")
                     .externalDimensionalPriceGroupId("my_dimensional_price_group_id")
                     .metadata(
                         DimensionalPriceGroup.Metadata.builder()

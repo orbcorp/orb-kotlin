@@ -64,17 +64,15 @@ class EventServiceTest {
         val eventIngestResponse =
             eventService.ingest(
                 EventIngestParams.builder()
-                    .events(
-                        listOf(
-                            EventIngestParams.Event.builder()
-                                .eventName("event_name")
-                                .idempotencyKey("idempotency_key")
-                                .properties(JsonValue.from(mapOf<String, Any>()))
-                                .timestamp(OffsetDateTime.parse("2020-12-09T16:09:53Z"))
-                                .customerId("customer_id")
-                                .externalCustomerId("external_customer_id")
-                                .build()
-                        )
+                    .addEvent(
+                        EventIngestParams.Event.builder()
+                            .eventName("event_name")
+                            .idempotencyKey("idempotency_key")
+                            .properties(JsonValue.from(mapOf<String, Any>()))
+                            .timestamp(OffsetDateTime.parse("2020-12-09T16:09:53Z"))
+                            .customerId("customer_id")
+                            .externalCustomerId("external_customer_id")
+                            .build()
                     )
                     .backfillId("backfill_id")
                     .debug(true)
@@ -95,7 +93,7 @@ class EventServiceTest {
         val eventSearchResponse =
             eventService.search(
                 EventSearchParams.builder()
-                    .eventIds(listOf("string"))
+                    .addEventId("string")
                     .timeframeEnd(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                     .timeframeStart(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                     .build()

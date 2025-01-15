@@ -32,7 +32,7 @@ class AlertTest {
                         .build()
                 )
                 .subscription(Alert.Subscription.builder().id("VDGsT23osdLb84KD").build())
-                .thresholds(listOf(Alert.Threshold.builder().value(0.0).build()))
+                .addThreshold(Alert.Threshold.builder().value(0.0).build())
                 .type(Alert.Type.USAGE_EXCEEDED)
                 .build()
         assertThat(alert).isNotNull

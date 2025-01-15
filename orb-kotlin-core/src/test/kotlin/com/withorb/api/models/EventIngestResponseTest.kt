@@ -11,18 +11,16 @@ class EventIngestResponseTest {
     fun createEventIngestResponse() {
         val eventIngestResponse =
             EventIngestResponse.builder()
-                .validationFailed(
-                    listOf(
-                        EventIngestResponse.ValidationFailed.builder()
-                            .idempotencyKey("idempotency_key")
-                            .validationErrors(listOf("string"))
-                            .build()
-                    )
+                .addValidationFailed(
+                    EventIngestResponse.ValidationFailed.builder()
+                        .idempotencyKey("idempotency_key")
+                        .addValidationError("string")
+                        .build()
                 )
                 .debug(
                     EventIngestResponse.Debug.builder()
-                        .duplicate(listOf("string"))
-                        .ingested(listOf("string"))
+                        .addDuplicate("string")
+                        .addIngested("string")
                         .build()
                 )
                 .build()
@@ -31,14 +29,14 @@ class EventIngestResponseTest {
             .containsExactly(
                 EventIngestResponse.ValidationFailed.builder()
                     .idempotencyKey("idempotency_key")
-                    .validationErrors(listOf("string"))
+                    .addValidationError("string")
                     .build()
             )
         assertThat(eventIngestResponse.debug())
             .isEqualTo(
                 EventIngestResponse.Debug.builder()
-                    .duplicate(listOf("string"))
-                    .ingested(listOf("string"))
+                    .addDuplicate("string")
+                    .addIngested("string")
                     .build()
             )
     }

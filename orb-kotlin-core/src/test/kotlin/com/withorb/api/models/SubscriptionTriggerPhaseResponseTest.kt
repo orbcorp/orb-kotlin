@@ -15,38 +15,35 @@ class SubscriptionTriggerPhaseResponseTest {
             SubscriptionTriggerPhaseResponse.builder()
                 .id("id")
                 .activePlanPhaseOrder(0L)
-                .adjustmentIntervals(
-                    listOf(
-                        SubscriptionTriggerPhaseResponse.AdjustmentInterval.builder()
-                            .id("id")
-                            .adjustment(
-                                SubscriptionTriggerPhaseResponse.AdjustmentInterval.Adjustment
-                                    .ofAmountDiscountAdjustment(
-                                        SubscriptionTriggerPhaseResponse.AdjustmentInterval
-                                            .Adjustment
-                                            .AmountDiscountAdjustment
-                                            .builder()
-                                            .id("id")
-                                            .adjustmentType(
-                                                SubscriptionTriggerPhaseResponse.AdjustmentInterval
-                                                    .Adjustment
-                                                    .AmountDiscountAdjustment
-                                                    .AdjustmentType
-                                                    .AMOUNT_DISCOUNT
-                                            )
-                                            .amountDiscount("amount_discount")
-                                            .appliesToPriceIds(listOf("string"))
-                                            .isInvoiceLevel(true)
-                                            .planPhaseOrder(0L)
-                                            .reason("reason")
-                                            .build()
-                                    )
-                            )
-                            .appliesToPriceIntervalIds(listOf("string"))
-                            .endDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
-                            .startDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
-                            .build()
-                    )
+                .addAdjustmentInterval(
+                    SubscriptionTriggerPhaseResponse.AdjustmentInterval.builder()
+                        .id("id")
+                        .adjustment(
+                            SubscriptionTriggerPhaseResponse.AdjustmentInterval.Adjustment
+                                .ofAmountDiscountAdjustment(
+                                    SubscriptionTriggerPhaseResponse.AdjustmentInterval.Adjustment
+                                        .AmountDiscountAdjustment
+                                        .builder()
+                                        .id("id")
+                                        .adjustmentType(
+                                            SubscriptionTriggerPhaseResponse.AdjustmentInterval
+                                                .Adjustment
+                                                .AmountDiscountAdjustment
+                                                .AdjustmentType
+                                                .AMOUNT_DISCOUNT
+                                        )
+                                        .amountDiscount("amount_discount")
+                                        .addAppliesToPriceId("string")
+                                        .isInvoiceLevel(true)
+                                        .planPhaseOrder(0L)
+                                        .reason("reason")
+                                        .build()
+                                )
+                        )
+                        .addAppliesToPriceIntervalId("string")
+                        .endDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                        .startDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                        .build()
                 )
                 .autoCollection(true)
                 .billingCycleAnchorConfiguration(
@@ -63,7 +60,7 @@ class SubscriptionTriggerPhaseResponseTest {
                 .customer(
                     Customer.builder()
                         .id("id")
-                        .additionalEmails(listOf("string"))
+                        .addAdditionalEmail("string")
                         .autoCollection(true)
                         .balance("balance")
                         .billingAddress(
@@ -111,19 +108,16 @@ class SubscriptionTriggerPhaseResponseTest {
                         .timezone("timezone")
                         .accountingSyncConfiguration(
                             Customer.AccountingSyncConfiguration.builder()
-                                .accountingProviders(
-                                    listOf(
-                                        Customer.AccountingSyncConfiguration.AccountingProvider
-                                            .builder()
-                                            .externalProviderId("external_provider_id")
-                                            .providerType(
-                                                Customer.AccountingSyncConfiguration
-                                                    .AccountingProvider
-                                                    .ProviderType
-                                                    .QUICKBOOKS
-                                            )
-                                            .build()
-                                    )
+                                .addAccountingProvider(
+                                    Customer.AccountingSyncConfiguration.AccountingProvider
+                                        .builder()
+                                        .externalProviderId("external_provider_id")
+                                        .providerType(
+                                            Customer.AccountingSyncConfiguration.AccountingProvider
+                                                .ProviderType
+                                                .QUICKBOOKS
+                                        )
+                                        .build()
                                 )
                                 .excluded(true)
                                 .build()
@@ -134,85 +128,75 @@ class SubscriptionTriggerPhaseResponseTest {
                         .build()
                 )
                 .defaultInvoiceMemo("default_invoice_memo")
-                .discountIntervals(
-                    listOf(
-                        SubscriptionTriggerPhaseResponse.DiscountInterval.ofAmountDiscountInterval(
-                            SubscriptionTriggerPhaseResponse.DiscountInterval.AmountDiscountInterval
-                                .builder()
-                                .amountDiscount("amount_discount")
-                                .appliesToPriceIds(listOf("string"))
-                                .appliesToPriceIntervalIds(listOf("string"))
-                                .discountType(
-                                    SubscriptionTriggerPhaseResponse.DiscountInterval
-                                        .AmountDiscountInterval
-                                        .DiscountType
-                                        .AMOUNT
-                                )
-                                .endDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
-                                .startDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
-                                .build()
-                        )
+                .addDiscountInterval(
+                    SubscriptionTriggerPhaseResponse.DiscountInterval.ofAmountDiscountInterval(
+                        SubscriptionTriggerPhaseResponse.DiscountInterval.AmountDiscountInterval
+                            .builder()
+                            .amountDiscount("amount_discount")
+                            .addAppliesToPriceId("string")
+                            .addAppliesToPriceIntervalId("string")
+                            .discountType(
+                                SubscriptionTriggerPhaseResponse.DiscountInterval
+                                    .AmountDiscountInterval
+                                    .DiscountType
+                                    .AMOUNT
+                            )
+                            .endDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                            .startDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                            .build()
                     )
                 )
                 .endDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
-                .fixedFeeQuantitySchedule(
-                    listOf(
-                        SubscriptionTriggerPhaseResponse.FixedFeeQuantitySchedule.builder()
-                            .endDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
-                            .priceId("price_id")
-                            .quantity(0.0)
-                            .startDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
-                            .build()
-                    )
+                .addFixedFeeQuantitySchedule(
+                    SubscriptionTriggerPhaseResponse.FixedFeeQuantitySchedule.builder()
+                        .endDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                        .priceId("price_id")
+                        .quantity(0.0)
+                        .startDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                        .build()
                 )
                 .invoicingThreshold("invoicing_threshold")
-                .maximumIntervals(
-                    listOf(
-                        SubscriptionTriggerPhaseResponse.MaximumInterval.builder()
-                            .appliesToPriceIds(listOf("string"))
-                            .appliesToPriceIntervalIds(listOf("string"))
-                            .endDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
-                            .maximumAmount("maximum_amount")
-                            .startDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
-                            .build()
-                    )
+                .addMaximumInterval(
+                    SubscriptionTriggerPhaseResponse.MaximumInterval.builder()
+                        .addAppliesToPriceId("string")
+                        .addAppliesToPriceIntervalId("string")
+                        .endDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                        .maximumAmount("maximum_amount")
+                        .startDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                        .build()
                 )
                 .metadata(
                     SubscriptionTriggerPhaseResponse.Metadata.builder()
                         .putAdditionalProperty("foo", JsonValue.from("string"))
                         .build()
                 )
-                .minimumIntervals(
-                    listOf(
-                        SubscriptionTriggerPhaseResponse.MinimumInterval.builder()
-                            .appliesToPriceIds(listOf("string"))
-                            .appliesToPriceIntervalIds(listOf("string"))
-                            .endDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
-                            .minimumAmount("minimum_amount")
-                            .startDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
-                            .build()
-                    )
+                .addMinimumInterval(
+                    SubscriptionTriggerPhaseResponse.MinimumInterval.builder()
+                        .addAppliesToPriceId("string")
+                        .addAppliesToPriceIntervalId("string")
+                        .endDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                        .minimumAmount("minimum_amount")
+                        .startDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                        .build()
                 )
                 .netTerms(0L)
                 .plan(
                     Plan.builder()
                         .id("id")
-                        .adjustments(
-                            listOf(
-                                Plan.Adjustment.ofAmountDiscountAdjustment(
-                                    Plan.Adjustment.AmountDiscountAdjustment.builder()
-                                        .id("id")
-                                        .adjustmentType(
-                                            Plan.Adjustment.AmountDiscountAdjustment.AdjustmentType
-                                                .AMOUNT_DISCOUNT
-                                        )
-                                        .amountDiscount("amount_discount")
-                                        .appliesToPriceIds(listOf("string"))
-                                        .isInvoiceLevel(true)
-                                        .planPhaseOrder(0L)
-                                        .reason("reason")
-                                        .build()
-                                )
+                        .addAdjustment(
+                            Plan.Adjustment.ofAmountDiscountAdjustment(
+                                Plan.Adjustment.AmountDiscountAdjustment.builder()
+                                    .id("id")
+                                    .adjustmentType(
+                                        Plan.Adjustment.AmountDiscountAdjustment.AdjustmentType
+                                            .AMOUNT_DISCOUNT
+                                    )
+                                    .amountDiscount("amount_discount")
+                                    .addAppliesToPriceId("string")
+                                    .isInvoiceLevel(true)
+                                    .planPhaseOrder(0L)
+                                    .reason("reason")
+                                    .build()
                             )
                         )
                         .basePlan(
@@ -230,9 +214,8 @@ class SubscriptionTriggerPhaseResponseTest {
                         .discount(
                             Discount.ofPercentageDiscount(
                                 PercentageDiscount.builder()
-                                    .appliesToPriceIds(
-                                        listOf("h74gfhdjvn7ujokd", "7hfgtgjnbvc3ujkl")
-                                    )
+                                    .addAppliesToPriceId("h74gfhdjvn7ujokd")
+                                    .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                                     .discountType(PercentageDiscount.DiscountType.PERCENTAGE)
                                     .percentageDiscount(0.15)
                                     .reason("reason")
@@ -243,7 +226,7 @@ class SubscriptionTriggerPhaseResponseTest {
                         .invoicingCurrency("invoicing_currency")
                         .maximum(
                             Plan.Maximum.builder()
-                                .appliesToPriceIds(listOf("string"))
+                                .addAppliesToPriceId("string")
                                 .maximumAmount("maximum_amount")
                                 .build()
                         )
@@ -255,24 +238,82 @@ class SubscriptionTriggerPhaseResponseTest {
                         )
                         .minimum(
                             Plan.Minimum.builder()
-                                .appliesToPriceIds(listOf("string"))
+                                .addAppliesToPriceId("string")
                                 .minimumAmount("minimum_amount")
                                 .build()
                         )
                         .minimumAmount("minimum_amount")
                         .name("name")
                         .netTerms(0L)
-                        .planPhases(
-                            listOf(
-                                Plan.PlanPhase.builder()
+                        .addPlanPhase(
+                            Plan.PlanPhase.builder()
+                                .id("id")
+                                .description("description")
+                                .discount(
+                                    Discount.ofPercentageDiscount(
+                                        PercentageDiscount.builder()
+                                            .addAppliesToPriceId("h74gfhdjvn7ujokd")
+                                            .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
+                                            .discountType(
+                                                PercentageDiscount.DiscountType.PERCENTAGE
+                                            )
+                                            .percentageDiscount(0.15)
+                                            .reason("reason")
+                                            .build()
+                                    )
+                                )
+                                .duration(0L)
+                                .durationUnit(Plan.PlanPhase.DurationUnit.DAILY)
+                                .maximum(
+                                    Plan.PlanPhase.Maximum.builder()
+                                        .addAppliesToPriceId("string")
+                                        .maximumAmount("maximum_amount")
+                                        .build()
+                                )
+                                .maximumAmount("maximum_amount")
+                                .minimum(
+                                    Plan.PlanPhase.Minimum.builder()
+                                        .addAppliesToPriceId("string")
+                                        .minimumAmount("minimum_amount")
+                                        .build()
+                                )
+                                .minimumAmount("minimum_amount")
+                                .name("name")
+                                .order(0L)
+                                .build()
+                        )
+                        .addPrice(
+                            Price.ofUnitPrice(
+                                Price.UnitPrice.builder()
                                     .id("id")
-                                    .description("description")
+                                    .billableMetric(
+                                        Price.UnitPrice.BillableMetric.builder().id("id").build()
+                                    )
+                                    .billingCycleConfiguration(
+                                        Price.UnitPrice.BillingCycleConfiguration.builder()
+                                            .duration(0L)
+                                            .durationUnit(
+                                                Price.UnitPrice.BillingCycleConfiguration
+                                                    .DurationUnit
+                                                    .DAY
+                                            )
+                                            .build()
+                                    )
+                                    .cadence(Price.UnitPrice.Cadence.ONE_TIME)
+                                    .conversionRate(0.0)
+                                    .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                                    .creditAllocation(
+                                        Price.UnitPrice.CreditAllocation.builder()
+                                            .allowsRollover(true)
+                                            .currency("currency")
+                                            .build()
+                                    )
+                                    .currency("currency")
                                     .discount(
                                         Discount.ofPercentageDiscount(
                                             PercentageDiscount.builder()
-                                                .appliesToPriceIds(
-                                                    listOf("h74gfhdjvn7ujokd", "7hfgtgjnbvc3ujkl")
-                                                )
+                                                .addAppliesToPriceId("h74gfhdjvn7ujokd")
+                                                .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                                                 .discountType(
                                                     PercentageDiscount.DiscountType.PERCENTAGE
                                                 )
@@ -281,125 +322,50 @@ class SubscriptionTriggerPhaseResponseTest {
                                                 .build()
                                         )
                                     )
-                                    .duration(0L)
-                                    .durationUnit(Plan.PlanPhase.DurationUnit.DAILY)
+                                    .externalPriceId("external_price_id")
+                                    .fixedPriceQuantity(0.0)
+                                    .invoicingCycleConfiguration(
+                                        Price.UnitPrice.InvoicingCycleConfiguration.builder()
+                                            .duration(0L)
+                                            .durationUnit(
+                                                Price.UnitPrice.InvoicingCycleConfiguration
+                                                    .DurationUnit
+                                                    .DAY
+                                            )
+                                            .build()
+                                    )
+                                    .item(
+                                        Price.UnitPrice.Item.builder().id("id").name("name").build()
+                                    )
                                     .maximum(
-                                        Plan.PlanPhase.Maximum.builder()
-                                            .appliesToPriceIds(listOf("string"))
+                                        Price.UnitPrice.Maximum.builder()
+                                            .addAppliesToPriceId("string")
                                             .maximumAmount("maximum_amount")
                                             .build()
                                     )
                                     .maximumAmount("maximum_amount")
+                                    .metadata(
+                                        Price.UnitPrice.Metadata.builder()
+                                            .putAdditionalProperty("foo", JsonValue.from("string"))
+                                            .build()
+                                    )
                                     .minimum(
-                                        Plan.PlanPhase.Minimum.builder()
-                                            .appliesToPriceIds(listOf("string"))
+                                        Price.UnitPrice.Minimum.builder()
+                                            .addAppliesToPriceId("string")
                                             .minimumAmount("minimum_amount")
                                             .build()
                                     )
                                     .minimumAmount("minimum_amount")
+                                    .modelType(Price.UnitPrice.ModelType.UNIT)
                                     .name("name")
-                                    .order(0L)
+                                    .planPhaseOrder(0L)
+                                    .priceType(Price.UnitPrice.PriceType.USAGE_PRICE)
+                                    .unitConfig(
+                                        Price.UnitPrice.UnitConfig.builder()
+                                            .unitAmount("unit_amount")
+                                            .build()
+                                    )
                                     .build()
-                            )
-                        )
-                        .prices(
-                            listOf(
-                                Price.ofUnitPrice(
-                                    Price.UnitPrice.builder()
-                                        .id("id")
-                                        .billableMetric(
-                                            Price.UnitPrice.BillableMetric.builder()
-                                                .id("id")
-                                                .build()
-                                        )
-                                        .billingCycleConfiguration(
-                                            Price.UnitPrice.BillingCycleConfiguration.builder()
-                                                .duration(0L)
-                                                .durationUnit(
-                                                    Price.UnitPrice.BillingCycleConfiguration
-                                                        .DurationUnit
-                                                        .DAY
-                                                )
-                                                .build()
-                                        )
-                                        .cadence(Price.UnitPrice.Cadence.ONE_TIME)
-                                        .conversionRate(0.0)
-                                        .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
-                                        .creditAllocation(
-                                            Price.UnitPrice.CreditAllocation.builder()
-                                                .allowsRollover(true)
-                                                .currency("currency")
-                                                .build()
-                                        )
-                                        .currency("currency")
-                                        .discount(
-                                            Discount.ofPercentageDiscount(
-                                                PercentageDiscount.builder()
-                                                    .appliesToPriceIds(
-                                                        listOf(
-                                                            "h74gfhdjvn7ujokd",
-                                                            "7hfgtgjnbvc3ujkl"
-                                                        )
-                                                    )
-                                                    .discountType(
-                                                        PercentageDiscount.DiscountType.PERCENTAGE
-                                                    )
-                                                    .percentageDiscount(0.15)
-                                                    .reason("reason")
-                                                    .build()
-                                            )
-                                        )
-                                        .externalPriceId("external_price_id")
-                                        .fixedPriceQuantity(0.0)
-                                        .invoicingCycleConfiguration(
-                                            Price.UnitPrice.InvoicingCycleConfiguration.builder()
-                                                .duration(0L)
-                                                .durationUnit(
-                                                    Price.UnitPrice.InvoicingCycleConfiguration
-                                                        .DurationUnit
-                                                        .DAY
-                                                )
-                                                .build()
-                                        )
-                                        .item(
-                                            Price.UnitPrice.Item.builder()
-                                                .id("id")
-                                                .name("name")
-                                                .build()
-                                        )
-                                        .maximum(
-                                            Price.UnitPrice.Maximum.builder()
-                                                .appliesToPriceIds(listOf("string"))
-                                                .maximumAmount("maximum_amount")
-                                                .build()
-                                        )
-                                        .maximumAmount("maximum_amount")
-                                        .metadata(
-                                            Price.UnitPrice.Metadata.builder()
-                                                .putAdditionalProperty(
-                                                    "foo",
-                                                    JsonValue.from("string")
-                                                )
-                                                .build()
-                                        )
-                                        .minimum(
-                                            Price.UnitPrice.Minimum.builder()
-                                                .appliesToPriceIds(listOf("string"))
-                                                .minimumAmount("minimum_amount")
-                                                .build()
-                                        )
-                                        .minimumAmount("minimum_amount")
-                                        .modelType(Price.UnitPrice.ModelType.UNIT)
-                                        .name("name")
-                                        .planPhaseOrder(0L)
-                                        .priceType(Price.UnitPrice.PriceType.USAGE_PRICE)
-                                        .unitConfig(
-                                            Price.UnitPrice.UnitConfig.builder()
-                                                .unitAmount("unit_amount")
-                                                .build()
-                                        )
-                                        .build()
-                                )
                             )
                         )
                         .product(
@@ -419,132 +385,114 @@ class SubscriptionTriggerPhaseResponseTest {
                         .version(0L)
                         .build()
                 )
-                .priceIntervals(
-                    listOf(
-                        SubscriptionTriggerPhaseResponse.PriceInterval.builder()
-                            .id("id")
-                            .billingCycleDay(0L)
-                            .currentBillingPeriodEndDate(
-                                OffsetDateTime.parse("2019-12-27T18:11:19.117Z")
-                            )
-                            .currentBillingPeriodStartDate(
-                                OffsetDateTime.parse("2019-12-27T18:11:19.117Z")
-                            )
-                            .endDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
-                            .fixedFeeQuantityTransitions(
-                                listOf(
-                                    SubscriptionTriggerPhaseResponse.PriceInterval
-                                        .FixedFeeQuantityTransition
-                                        .builder()
-                                        .effectiveDate(
-                                            OffsetDateTime.parse("2019-12-27T18:11:19.117Z")
-                                        )
-                                        .priceId("price_id")
-                                        .quantity(0L)
-                                        .build()
-                                )
-                            )
-                            .price(
-                                Price.ofUnitPrice(
-                                    Price.UnitPrice.builder()
-                                        .id("id")
-                                        .billableMetric(
-                                            Price.UnitPrice.BillableMetric.builder()
-                                                .id("id")
-                                                .build()
-                                        )
-                                        .billingCycleConfiguration(
-                                            Price.UnitPrice.BillingCycleConfiguration.builder()
-                                                .duration(0L)
-                                                .durationUnit(
-                                                    Price.UnitPrice.BillingCycleConfiguration
-                                                        .DurationUnit
-                                                        .DAY
-                                                )
-                                                .build()
-                                        )
-                                        .cadence(Price.UnitPrice.Cadence.ONE_TIME)
-                                        .conversionRate(0.0)
-                                        .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
-                                        .creditAllocation(
-                                            Price.UnitPrice.CreditAllocation.builder()
-                                                .allowsRollover(true)
-                                                .currency("currency")
-                                                .build()
-                                        )
-                                        .currency("currency")
-                                        .discount(
-                                            Discount.ofPercentageDiscount(
-                                                PercentageDiscount.builder()
-                                                    .appliesToPriceIds(
-                                                        listOf(
-                                                            "h74gfhdjvn7ujokd",
-                                                            "7hfgtgjnbvc3ujkl"
-                                                        )
-                                                    )
-                                                    .discountType(
-                                                        PercentageDiscount.DiscountType.PERCENTAGE
-                                                    )
-                                                    .percentageDiscount(0.15)
-                                                    .reason("reason")
-                                                    .build()
+                .addPriceInterval(
+                    SubscriptionTriggerPhaseResponse.PriceInterval.builder()
+                        .id("id")
+                        .billingCycleDay(0L)
+                        .currentBillingPeriodEndDate(
+                            OffsetDateTime.parse("2019-12-27T18:11:19.117Z")
+                        )
+                        .currentBillingPeriodStartDate(
+                            OffsetDateTime.parse("2019-12-27T18:11:19.117Z")
+                        )
+                        .endDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                        .addFixedFeeQuantityTransition(
+                            SubscriptionTriggerPhaseResponse.PriceInterval
+                                .FixedFeeQuantityTransition
+                                .builder()
+                                .effectiveDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                                .priceId("price_id")
+                                .quantity(0L)
+                                .build()
+                        )
+                        .price(
+                            Price.ofUnitPrice(
+                                Price.UnitPrice.builder()
+                                    .id("id")
+                                    .billableMetric(
+                                        Price.UnitPrice.BillableMetric.builder().id("id").build()
+                                    )
+                                    .billingCycleConfiguration(
+                                        Price.UnitPrice.BillingCycleConfiguration.builder()
+                                            .duration(0L)
+                                            .durationUnit(
+                                                Price.UnitPrice.BillingCycleConfiguration
+                                                    .DurationUnit
+                                                    .DAY
                                             )
-                                        )
-                                        .externalPriceId("external_price_id")
-                                        .fixedPriceQuantity(0.0)
-                                        .invoicingCycleConfiguration(
-                                            Price.UnitPrice.InvoicingCycleConfiguration.builder()
-                                                .duration(0L)
-                                                .durationUnit(
-                                                    Price.UnitPrice.InvoicingCycleConfiguration
-                                                        .DurationUnit
-                                                        .DAY
+                                            .build()
+                                    )
+                                    .cadence(Price.UnitPrice.Cadence.ONE_TIME)
+                                    .conversionRate(0.0)
+                                    .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                                    .creditAllocation(
+                                        Price.UnitPrice.CreditAllocation.builder()
+                                            .allowsRollover(true)
+                                            .currency("currency")
+                                            .build()
+                                    )
+                                    .currency("currency")
+                                    .discount(
+                                        Discount.ofPercentageDiscount(
+                                            PercentageDiscount.builder()
+                                                .addAppliesToPriceId("h74gfhdjvn7ujokd")
+                                                .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
+                                                .discountType(
+                                                    PercentageDiscount.DiscountType.PERCENTAGE
                                                 )
+                                                .percentageDiscount(0.15)
+                                                .reason("reason")
                                                 .build()
                                         )
-                                        .item(
-                                            Price.UnitPrice.Item.builder()
-                                                .id("id")
-                                                .name("name")
-                                                .build()
-                                        )
-                                        .maximum(
-                                            Price.UnitPrice.Maximum.builder()
-                                                .appliesToPriceIds(listOf("string"))
-                                                .maximumAmount("maximum_amount")
-                                                .build()
-                                        )
-                                        .maximumAmount("maximum_amount")
-                                        .metadata(
-                                            Price.UnitPrice.Metadata.builder()
-                                                .putAdditionalProperty(
-                                                    "foo",
-                                                    JsonValue.from("string")
-                                                )
-                                                .build()
-                                        )
-                                        .minimum(
-                                            Price.UnitPrice.Minimum.builder()
-                                                .appliesToPriceIds(listOf("string"))
-                                                .minimumAmount("minimum_amount")
-                                                .build()
-                                        )
-                                        .minimumAmount("minimum_amount")
-                                        .modelType(Price.UnitPrice.ModelType.UNIT)
-                                        .name("name")
-                                        .planPhaseOrder(0L)
-                                        .priceType(Price.UnitPrice.PriceType.USAGE_PRICE)
-                                        .unitConfig(
-                                            Price.UnitPrice.UnitConfig.builder()
-                                                .unitAmount("unit_amount")
-                                                .build()
-                                        )
-                                        .build()
-                                )
+                                    )
+                                    .externalPriceId("external_price_id")
+                                    .fixedPriceQuantity(0.0)
+                                    .invoicingCycleConfiguration(
+                                        Price.UnitPrice.InvoicingCycleConfiguration.builder()
+                                            .duration(0L)
+                                            .durationUnit(
+                                                Price.UnitPrice.InvoicingCycleConfiguration
+                                                    .DurationUnit
+                                                    .DAY
+                                            )
+                                            .build()
+                                    )
+                                    .item(
+                                        Price.UnitPrice.Item.builder().id("id").name("name").build()
+                                    )
+                                    .maximum(
+                                        Price.UnitPrice.Maximum.builder()
+                                            .addAppliesToPriceId("string")
+                                            .maximumAmount("maximum_amount")
+                                            .build()
+                                    )
+                                    .maximumAmount("maximum_amount")
+                                    .metadata(
+                                        Price.UnitPrice.Metadata.builder()
+                                            .putAdditionalProperty("foo", JsonValue.from("string"))
+                                            .build()
+                                    )
+                                    .minimum(
+                                        Price.UnitPrice.Minimum.builder()
+                                            .addAppliesToPriceId("string")
+                                            .minimumAmount("minimum_amount")
+                                            .build()
+                                    )
+                                    .minimumAmount("minimum_amount")
+                                    .modelType(Price.UnitPrice.ModelType.UNIT)
+                                    .name("name")
+                                    .planPhaseOrder(0L)
+                                    .priceType(Price.UnitPrice.PriceType.USAGE_PRICE)
+                                    .unitConfig(
+                                        Price.UnitPrice.UnitConfig.builder()
+                                            .unitAmount("unit_amount")
+                                            .build()
+                                    )
+                                    .build()
                             )
-                            .startDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
-                            .build()
-                    )
+                        )
+                        .startDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                        .build()
                 )
                 .redeemedCoupon(
                     SubscriptionTriggerPhaseResponse.RedeemedCoupon.builder()
@@ -583,14 +531,14 @@ class SubscriptionTriggerPhaseResponseTest {
                                             .AMOUNT_DISCOUNT
                                     )
                                     .amountDiscount("amount_discount")
-                                    .appliesToPriceIds(listOf("string"))
+                                    .addAppliesToPriceId("string")
                                     .isInvoiceLevel(true)
                                     .planPhaseOrder(0L)
                                     .reason("reason")
                                     .build()
                             )
                     )
-                    .appliesToPriceIntervalIds(listOf("string"))
+                    .addAppliesToPriceIntervalId("string")
                     .endDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                     .startDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                     .build()
@@ -615,7 +563,7 @@ class SubscriptionTriggerPhaseResponseTest {
             .isEqualTo(
                 Customer.builder()
                     .id("id")
-                    .additionalEmails(listOf("string"))
+                    .addAdditionalEmail("string")
                     .autoCollection(true)
                     .balance("balance")
                     .billingAddress(
@@ -663,18 +611,15 @@ class SubscriptionTriggerPhaseResponseTest {
                     .timezone("timezone")
                     .accountingSyncConfiguration(
                         Customer.AccountingSyncConfiguration.builder()
-                            .accountingProviders(
-                                listOf(
-                                    Customer.AccountingSyncConfiguration.AccountingProvider
-                                        .builder()
-                                        .externalProviderId("external_provider_id")
-                                        .providerType(
-                                            Customer.AccountingSyncConfiguration.AccountingProvider
-                                                .ProviderType
-                                                .QUICKBOOKS
-                                        )
-                                        .build()
-                                )
+                            .addAccountingProvider(
+                                Customer.AccountingSyncConfiguration.AccountingProvider.builder()
+                                    .externalProviderId("external_provider_id")
+                                    .providerType(
+                                        Customer.AccountingSyncConfiguration.AccountingProvider
+                                            .ProviderType
+                                            .QUICKBOOKS
+                                    )
+                                    .build()
                             )
                             .excluded(true)
                             .build()
@@ -692,8 +637,8 @@ class SubscriptionTriggerPhaseResponseTest {
                     SubscriptionTriggerPhaseResponse.DiscountInterval.AmountDiscountInterval
                         .builder()
                         .amountDiscount("amount_discount")
-                        .appliesToPriceIds(listOf("string"))
-                        .appliesToPriceIntervalIds(listOf("string"))
+                        .addAppliesToPriceId("string")
+                        .addAppliesToPriceIntervalId("string")
                         .discountType(
                             SubscriptionTriggerPhaseResponse.DiscountInterval.AmountDiscountInterval
                                 .DiscountType
@@ -720,8 +665,8 @@ class SubscriptionTriggerPhaseResponseTest {
         assertThat(subscriptionTriggerPhaseResponse.maximumIntervals())
             .containsExactly(
                 SubscriptionTriggerPhaseResponse.MaximumInterval.builder()
-                    .appliesToPriceIds(listOf("string"))
-                    .appliesToPriceIntervalIds(listOf("string"))
+                    .addAppliesToPriceId("string")
+                    .addAppliesToPriceIntervalId("string")
                     .endDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                     .maximumAmount("maximum_amount")
                     .startDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
@@ -736,8 +681,8 @@ class SubscriptionTriggerPhaseResponseTest {
         assertThat(subscriptionTriggerPhaseResponse.minimumIntervals())
             .containsExactly(
                 SubscriptionTriggerPhaseResponse.MinimumInterval.builder()
-                    .appliesToPriceIds(listOf("string"))
-                    .appliesToPriceIntervalIds(listOf("string"))
+                    .addAppliesToPriceId("string")
+                    .addAppliesToPriceIntervalId("string")
                     .endDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                     .minimumAmount("minimum_amount")
                     .startDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
@@ -748,22 +693,20 @@ class SubscriptionTriggerPhaseResponseTest {
             .isEqualTo(
                 Plan.builder()
                     .id("id")
-                    .adjustments(
-                        listOf(
-                            Plan.Adjustment.ofAmountDiscountAdjustment(
-                                Plan.Adjustment.AmountDiscountAdjustment.builder()
-                                    .id("id")
-                                    .adjustmentType(
-                                        Plan.Adjustment.AmountDiscountAdjustment.AdjustmentType
-                                            .AMOUNT_DISCOUNT
-                                    )
-                                    .amountDiscount("amount_discount")
-                                    .appliesToPriceIds(listOf("string"))
-                                    .isInvoiceLevel(true)
-                                    .planPhaseOrder(0L)
-                                    .reason("reason")
-                                    .build()
-                            )
+                    .addAdjustment(
+                        Plan.Adjustment.ofAmountDiscountAdjustment(
+                            Plan.Adjustment.AmountDiscountAdjustment.builder()
+                                .id("id")
+                                .adjustmentType(
+                                    Plan.Adjustment.AmountDiscountAdjustment.AdjustmentType
+                                        .AMOUNT_DISCOUNT
+                                )
+                                .amountDiscount("amount_discount")
+                                .addAppliesToPriceId("string")
+                                .isInvoiceLevel(true)
+                                .planPhaseOrder(0L)
+                                .reason("reason")
+                                .build()
                         )
                     )
                     .basePlan(
@@ -781,7 +724,8 @@ class SubscriptionTriggerPhaseResponseTest {
                     .discount(
                         Discount.ofPercentageDiscount(
                             PercentageDiscount.builder()
-                                .appliesToPriceIds(listOf("h74gfhdjvn7ujokd", "7hfgtgjnbvc3ujkl"))
+                                .addAppliesToPriceId("h74gfhdjvn7ujokd")
+                                .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                                 .discountType(PercentageDiscount.DiscountType.PERCENTAGE)
                                 .percentageDiscount(0.15)
                                 .reason("reason")
@@ -792,7 +736,7 @@ class SubscriptionTriggerPhaseResponseTest {
                     .invoicingCurrency("invoicing_currency")
                     .maximum(
                         Plan.Maximum.builder()
-                            .appliesToPriceIds(listOf("string"))
+                            .addAppliesToPriceId("string")
                             .maximumAmount("maximum_amount")
                             .build()
                     )
@@ -804,24 +748,79 @@ class SubscriptionTriggerPhaseResponseTest {
                     )
                     .minimum(
                         Plan.Minimum.builder()
-                            .appliesToPriceIds(listOf("string"))
+                            .addAppliesToPriceId("string")
                             .minimumAmount("minimum_amount")
                             .build()
                     )
                     .minimumAmount("minimum_amount")
                     .name("name")
                     .netTerms(0L)
-                    .planPhases(
-                        listOf(
-                            Plan.PlanPhase.builder()
+                    .addPlanPhase(
+                        Plan.PlanPhase.builder()
+                            .id("id")
+                            .description("description")
+                            .discount(
+                                Discount.ofPercentageDiscount(
+                                    PercentageDiscount.builder()
+                                        .addAppliesToPriceId("h74gfhdjvn7ujokd")
+                                        .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
+                                        .discountType(PercentageDiscount.DiscountType.PERCENTAGE)
+                                        .percentageDiscount(0.15)
+                                        .reason("reason")
+                                        .build()
+                                )
+                            )
+                            .duration(0L)
+                            .durationUnit(Plan.PlanPhase.DurationUnit.DAILY)
+                            .maximum(
+                                Plan.PlanPhase.Maximum.builder()
+                                    .addAppliesToPriceId("string")
+                                    .maximumAmount("maximum_amount")
+                                    .build()
+                            )
+                            .maximumAmount("maximum_amount")
+                            .minimum(
+                                Plan.PlanPhase.Minimum.builder()
+                                    .addAppliesToPriceId("string")
+                                    .minimumAmount("minimum_amount")
+                                    .build()
+                            )
+                            .minimumAmount("minimum_amount")
+                            .name("name")
+                            .order(0L)
+                            .build()
+                    )
+                    .addPrice(
+                        Price.ofUnitPrice(
+                            Price.UnitPrice.builder()
                                 .id("id")
-                                .description("description")
+                                .billableMetric(
+                                    Price.UnitPrice.BillableMetric.builder().id("id").build()
+                                )
+                                .billingCycleConfiguration(
+                                    Price.UnitPrice.BillingCycleConfiguration.builder()
+                                        .duration(0L)
+                                        .durationUnit(
+                                            Price.UnitPrice.BillingCycleConfiguration.DurationUnit
+                                                .DAY
+                                        )
+                                        .build()
+                                )
+                                .cadence(Price.UnitPrice.Cadence.ONE_TIME)
+                                .conversionRate(0.0)
+                                .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                                .creditAllocation(
+                                    Price.UnitPrice.CreditAllocation.builder()
+                                        .allowsRollover(true)
+                                        .currency("currency")
+                                        .build()
+                                )
+                                .currency("currency")
                                 .discount(
                                     Discount.ofPercentageDiscount(
                                         PercentageDiscount.builder()
-                                            .appliesToPriceIds(
-                                                listOf("h74gfhdjvn7ujokd", "7hfgtgjnbvc3ujkl")
-                                            )
+                                            .addAppliesToPriceId("h74gfhdjvn7ujokd")
+                                            .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                                             .discountType(
                                                 PercentageDiscount.DiscountType.PERCENTAGE
                                             )
@@ -830,114 +829,47 @@ class SubscriptionTriggerPhaseResponseTest {
                                             .build()
                                     )
                                 )
-                                .duration(0L)
-                                .durationUnit(Plan.PlanPhase.DurationUnit.DAILY)
+                                .externalPriceId("external_price_id")
+                                .fixedPriceQuantity(0.0)
+                                .invoicingCycleConfiguration(
+                                    Price.UnitPrice.InvoicingCycleConfiguration.builder()
+                                        .duration(0L)
+                                        .durationUnit(
+                                            Price.UnitPrice.InvoicingCycleConfiguration.DurationUnit
+                                                .DAY
+                                        )
+                                        .build()
+                                )
+                                .item(Price.UnitPrice.Item.builder().id("id").name("name").build())
                                 .maximum(
-                                    Plan.PlanPhase.Maximum.builder()
-                                        .appliesToPriceIds(listOf("string"))
+                                    Price.UnitPrice.Maximum.builder()
+                                        .addAppliesToPriceId("string")
                                         .maximumAmount("maximum_amount")
                                         .build()
                                 )
                                 .maximumAmount("maximum_amount")
+                                .metadata(
+                                    Price.UnitPrice.Metadata.builder()
+                                        .putAdditionalProperty("foo", JsonValue.from("string"))
+                                        .build()
+                                )
                                 .minimum(
-                                    Plan.PlanPhase.Minimum.builder()
-                                        .appliesToPriceIds(listOf("string"))
+                                    Price.UnitPrice.Minimum.builder()
+                                        .addAppliesToPriceId("string")
                                         .minimumAmount("minimum_amount")
                                         .build()
                                 )
                                 .minimumAmount("minimum_amount")
+                                .modelType(Price.UnitPrice.ModelType.UNIT)
                                 .name("name")
-                                .order(0L)
+                                .planPhaseOrder(0L)
+                                .priceType(Price.UnitPrice.PriceType.USAGE_PRICE)
+                                .unitConfig(
+                                    Price.UnitPrice.UnitConfig.builder()
+                                        .unitAmount("unit_amount")
+                                        .build()
+                                )
                                 .build()
-                        )
-                    )
-                    .prices(
-                        listOf(
-                            Price.ofUnitPrice(
-                                Price.UnitPrice.builder()
-                                    .id("id")
-                                    .billableMetric(
-                                        Price.UnitPrice.BillableMetric.builder().id("id").build()
-                                    )
-                                    .billingCycleConfiguration(
-                                        Price.UnitPrice.BillingCycleConfiguration.builder()
-                                            .duration(0L)
-                                            .durationUnit(
-                                                Price.UnitPrice.BillingCycleConfiguration
-                                                    .DurationUnit
-                                                    .DAY
-                                            )
-                                            .build()
-                                    )
-                                    .cadence(Price.UnitPrice.Cadence.ONE_TIME)
-                                    .conversionRate(0.0)
-                                    .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
-                                    .creditAllocation(
-                                        Price.UnitPrice.CreditAllocation.builder()
-                                            .allowsRollover(true)
-                                            .currency("currency")
-                                            .build()
-                                    )
-                                    .currency("currency")
-                                    .discount(
-                                        Discount.ofPercentageDiscount(
-                                            PercentageDiscount.builder()
-                                                .appliesToPriceIds(
-                                                    listOf("h74gfhdjvn7ujokd", "7hfgtgjnbvc3ujkl")
-                                                )
-                                                .discountType(
-                                                    PercentageDiscount.DiscountType.PERCENTAGE
-                                                )
-                                                .percentageDiscount(0.15)
-                                                .reason("reason")
-                                                .build()
-                                        )
-                                    )
-                                    .externalPriceId("external_price_id")
-                                    .fixedPriceQuantity(0.0)
-                                    .invoicingCycleConfiguration(
-                                        Price.UnitPrice.InvoicingCycleConfiguration.builder()
-                                            .duration(0L)
-                                            .durationUnit(
-                                                Price.UnitPrice.InvoicingCycleConfiguration
-                                                    .DurationUnit
-                                                    .DAY
-                                            )
-                                            .build()
-                                    )
-                                    .item(
-                                        Price.UnitPrice.Item.builder().id("id").name("name").build()
-                                    )
-                                    .maximum(
-                                        Price.UnitPrice.Maximum.builder()
-                                            .appliesToPriceIds(listOf("string"))
-                                            .maximumAmount("maximum_amount")
-                                            .build()
-                                    )
-                                    .maximumAmount("maximum_amount")
-                                    .metadata(
-                                        Price.UnitPrice.Metadata.builder()
-                                            .putAdditionalProperty("foo", JsonValue.from("string"))
-                                            .build()
-                                    )
-                                    .minimum(
-                                        Price.UnitPrice.Minimum.builder()
-                                            .appliesToPriceIds(listOf("string"))
-                                            .minimumAmount("minimum_amount")
-                                            .build()
-                                    )
-                                    .minimumAmount("minimum_amount")
-                                    .modelType(Price.UnitPrice.ModelType.UNIT)
-                                    .name("name")
-                                    .planPhaseOrder(0L)
-                                    .priceType(Price.UnitPrice.PriceType.USAGE_PRICE)
-                                    .unitConfig(
-                                        Price.UnitPrice.UnitConfig.builder()
-                                            .unitAmount("unit_amount")
-                                            .build()
-                                    )
-                                    .build()
-                            )
                         )
                     )
                     .product(
@@ -965,16 +897,13 @@ class SubscriptionTriggerPhaseResponseTest {
                     .currentBillingPeriodEndDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                     .currentBillingPeriodStartDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                     .endDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
-                    .fixedFeeQuantityTransitions(
-                        listOf(
-                            SubscriptionTriggerPhaseResponse.PriceInterval
-                                .FixedFeeQuantityTransition
-                                .builder()
-                                .effectiveDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
-                                .priceId("price_id")
-                                .quantity(0L)
-                                .build()
-                        )
+                    .addFixedFeeQuantityTransition(
+                        SubscriptionTriggerPhaseResponse.PriceInterval.FixedFeeQuantityTransition
+                            .builder()
+                            .effectiveDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                            .priceId("price_id")
+                            .quantity(0L)
+                            .build()
                     )
                     .price(
                         Price.ofUnitPrice(
@@ -1005,9 +934,8 @@ class SubscriptionTriggerPhaseResponseTest {
                                 .discount(
                                     Discount.ofPercentageDiscount(
                                         PercentageDiscount.builder()
-                                            .appliesToPriceIds(
-                                                listOf("h74gfhdjvn7ujokd", "7hfgtgjnbvc3ujkl")
-                                            )
+                                            .addAppliesToPriceId("h74gfhdjvn7ujokd")
+                                            .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                                             .discountType(
                                                 PercentageDiscount.DiscountType.PERCENTAGE
                                             )
@@ -1030,7 +958,7 @@ class SubscriptionTriggerPhaseResponseTest {
                                 .item(Price.UnitPrice.Item.builder().id("id").name("name").build())
                                 .maximum(
                                     Price.UnitPrice.Maximum.builder()
-                                        .appliesToPriceIds(listOf("string"))
+                                        .addAppliesToPriceId("string")
                                         .maximumAmount("maximum_amount")
                                         .build()
                                 )
@@ -1042,7 +970,7 @@ class SubscriptionTriggerPhaseResponseTest {
                                 )
                                 .minimum(
                                     Price.UnitPrice.Minimum.builder()
-                                        .appliesToPriceIds(listOf("string"))
+                                        .addAppliesToPriceId("string")
                                         .minimumAmount("minimum_amount")
                                         .build()
                                 )

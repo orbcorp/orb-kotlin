@@ -12,14 +12,12 @@ class EventVolumesTest {
     fun createEventVolumes() {
         val eventVolumes =
             EventVolumes.builder()
-                .data(
-                    listOf(
-                        EventVolumes.Data.builder()
-                            .count(0L)
-                            .timeframeEnd(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
-                            .timeframeStart(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
-                            .build()
-                    )
+                .addData(
+                    EventVolumes.Data.builder()
+                        .count(0L)
+                        .timeframeEnd(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                        .timeframeStart(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                        .build()
                 )
                 .build()
         assertThat(eventVolumes).isNotNull
