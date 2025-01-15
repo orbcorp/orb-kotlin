@@ -34,18 +34,16 @@ class InvoiceFetchUpcomingResponseTest {
                         .build()
                 )
                 .createdAt(OffsetDateTime.parse("2022-05-01T07:01:31+00:00"))
-                .creditNotes(
-                    listOf(
-                        InvoiceFetchUpcomingResponse.CreditNote.builder()
-                            .id("id")
-                            .creditNoteNumber("credit_note_number")
-                            .memo("memo")
-                            .reason("reason")
-                            .total("total")
-                            .type("type")
-                            .voidedAt(OffsetDateTime.parse("2022-05-01T07:01:31+00:00"))
-                            .build()
-                    )
+                .addCreditNote(
+                    InvoiceFetchUpcomingResponse.CreditNote.builder()
+                        .id("id")
+                        .creditNoteNumber("credit_note_number")
+                        .memo("memo")
+                        .reason("reason")
+                        .total("total")
+                        .type("type")
+                        .voidedAt(OffsetDateTime.parse("2022-05-01T07:01:31+00:00"))
+                        .build()
                 )
                 .currency("USD")
                 .customer(
@@ -54,37 +52,34 @@ class InvoiceFetchUpcomingResponseTest {
                         .externalCustomerId("external_customer_id")
                         .build()
                 )
-                .customerBalanceTransactions(
-                    listOf(
-                        InvoiceFetchUpcomingResponse.CustomerBalanceTransaction.builder()
-                            .id("cgZa3SXcsPTVyC4Y")
-                            .action(
-                                InvoiceFetchUpcomingResponse.CustomerBalanceTransaction.Action
-                                    .APPLIED_TO_INVOICE
-                            )
-                            .amount("11.00")
-                            .createdAt(OffsetDateTime.parse("2022-05-01T07:01:31+00:00"))
-                            .creditNote(
-                                InvoiceFetchUpcomingResponse.CustomerBalanceTransaction.CreditNote
-                                    .builder()
-                                    .id("id")
-                                    .build()
-                            )
-                            .description("An optional description")
-                            .endingBalance("22.00")
-                            .invoice(
-                                InvoiceFetchUpcomingResponse.CustomerBalanceTransaction.Invoice
-                                    .builder()
-                                    .id("gXcsPTVyC4YZa3Sc")
-                                    .build()
-                            )
-                            .startingBalance("33.00")
-                            .type(
-                                InvoiceFetchUpcomingResponse.CustomerBalanceTransaction.Type
-                                    .INCREMENT
-                            )
-                            .build()
-                    )
+                .addCustomerBalanceTransaction(
+                    InvoiceFetchUpcomingResponse.CustomerBalanceTransaction.builder()
+                        .id("cgZa3SXcsPTVyC4Y")
+                        .action(
+                            InvoiceFetchUpcomingResponse.CustomerBalanceTransaction.Action
+                                .APPLIED_TO_INVOICE
+                        )
+                        .amount("11.00")
+                        .createdAt(OffsetDateTime.parse("2022-05-01T07:01:31+00:00"))
+                        .creditNote(
+                            InvoiceFetchUpcomingResponse.CustomerBalanceTransaction.CreditNote
+                                .builder()
+                                .id("id")
+                                .build()
+                        )
+                        .description("An optional description")
+                        .endingBalance("22.00")
+                        .invoice(
+                            InvoiceFetchUpcomingResponse.CustomerBalanceTransaction.Invoice
+                                .builder()
+                                .id("gXcsPTVyC4YZa3Sc")
+                                .build()
+                        )
+                        .startingBalance("33.00")
+                        .type(
+                            InvoiceFetchUpcomingResponse.CustomerBalanceTransaction.Type.INCREMENT
+                        )
+                        .build()
                 )
                 .customerTaxId(
                     InvoiceFetchUpcomingResponse.CustomerTaxId.builder()
@@ -94,16 +89,15 @@ class InvoiceFetchUpcomingResponseTest {
                         .build()
                 )
                 .discount(JsonValue.from(mapOf<String, Any>()))
-                .discounts(
-                    listOf(
-                        InvoiceLevelDiscount.ofPercentageDiscount(
-                            PercentageDiscount.builder()
-                                .appliesToPriceIds(listOf("h74gfhdjvn7ujokd", "7hfgtgjnbvc3ujkl"))
-                                .discountType(PercentageDiscount.DiscountType.PERCENTAGE)
-                                .percentageDiscount(0.15)
-                                .reason("reason")
-                                .build()
-                        )
+                .addDiscount(
+                    InvoiceLevelDiscount.ofPercentageDiscount(
+                        PercentageDiscount.builder()
+                            .addAppliesToPriceId("h74gfhdjvn7ujokd")
+                            .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
+                            .discountType(PercentageDiscount.DiscountType.PERCENTAGE)
+                            .percentageDiscount(0.15)
+                            .reason("reason")
+                            .build()
                     )
                 )
                 .dueDate(OffsetDateTime.parse("2022-05-30T07:00:00+00:00"))
@@ -114,196 +108,172 @@ class InvoiceFetchUpcomingResponseTest {
                 .invoiceSource(InvoiceFetchUpcomingResponse.InvoiceSource.SUBSCRIPTION)
                 .issueFailedAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                 .issuedAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
-                .lineItems(
-                    listOf(
-                        InvoiceFetchUpcomingResponse.LineItem.builder()
-                            .id("id")
-                            .amount("7.00")
-                            .discount(
-                                Discount.ofPercentageDiscount(
-                                    PercentageDiscount.builder()
-                                        .appliesToPriceIds(
-                                            listOf("h74gfhdjvn7ujokd", "7hfgtgjnbvc3ujkl")
-                                        )
-                                        .discountType(PercentageDiscount.DiscountType.PERCENTAGE)
-                                        .percentageDiscount(0.15)
-                                        .reason("reason")
-                                        .build()
-                                )
-                            )
-                            .endDate(OffsetDateTime.parse("2022-02-01T08:00:00+00:00"))
-                            .grouping("grouping")
-                            .maximum(
-                                InvoiceFetchUpcomingResponse.LineItem.Maximum.builder()
-                                    .appliesToPriceIds(listOf("string"))
-                                    .maximumAmount("maximum_amount")
+                .addLineItem(
+                    InvoiceFetchUpcomingResponse.LineItem.builder()
+                        .id("id")
+                        .amount("7.00")
+                        .discount(
+                            Discount.ofPercentageDiscount(
+                                PercentageDiscount.builder()
+                                    .addAppliesToPriceId("h74gfhdjvn7ujokd")
+                                    .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
+                                    .discountType(PercentageDiscount.DiscountType.PERCENTAGE)
+                                    .percentageDiscount(0.15)
+                                    .reason("reason")
                                     .build()
                             )
-                            .maximumAmount("maximum_amount")
-                            .minimum(
-                                InvoiceFetchUpcomingResponse.LineItem.Minimum.builder()
-                                    .appliesToPriceIds(listOf("string"))
-                                    .minimumAmount("minimum_amount")
-                                    .build()
-                            )
-                            .minimumAmount("minimum_amount")
-                            .name("Fixed Fee")
-                            .price(
-                                Price.ofUnitPrice(
-                                    Price.UnitPrice.builder()
-                                        .id("id")
-                                        .billableMetric(
-                                            Price.UnitPrice.BillableMetric.builder()
-                                                .id("id")
-                                                .build()
-                                        )
-                                        .billingCycleConfiguration(
-                                            Price.UnitPrice.BillingCycleConfiguration.builder()
-                                                .duration(0L)
-                                                .durationUnit(
-                                                    Price.UnitPrice.BillingCycleConfiguration
-                                                        .DurationUnit
-                                                        .DAY
-                                                )
-                                                .build()
-                                        )
-                                        .cadence(Price.UnitPrice.Cadence.ONE_TIME)
-                                        .conversionRate(0.0)
-                                        .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
-                                        .creditAllocation(
-                                            Price.UnitPrice.CreditAllocation.builder()
-                                                .allowsRollover(true)
-                                                .currency("currency")
-                                                .build()
-                                        )
-                                        .currency("currency")
-                                        .discount(
-                                            Discount.ofPercentageDiscount(
-                                                PercentageDiscount.builder()
-                                                    .appliesToPriceIds(
-                                                        listOf(
-                                                            "h74gfhdjvn7ujokd",
-                                                            "7hfgtgjnbvc3ujkl"
-                                                        )
-                                                    )
-                                                    .discountType(
-                                                        PercentageDiscount.DiscountType.PERCENTAGE
-                                                    )
-                                                    .percentageDiscount(0.15)
-                                                    .reason("reason")
-                                                    .build()
+                        )
+                        .endDate(OffsetDateTime.parse("2022-02-01T08:00:00+00:00"))
+                        .grouping("grouping")
+                        .maximum(
+                            InvoiceFetchUpcomingResponse.LineItem.Maximum.builder()
+                                .addAppliesToPriceId("string")
+                                .maximumAmount("maximum_amount")
+                                .build()
+                        )
+                        .maximumAmount("maximum_amount")
+                        .minimum(
+                            InvoiceFetchUpcomingResponse.LineItem.Minimum.builder()
+                                .addAppliesToPriceId("string")
+                                .minimumAmount("minimum_amount")
+                                .build()
+                        )
+                        .minimumAmount("minimum_amount")
+                        .name("Fixed Fee")
+                        .price(
+                            Price.ofUnitPrice(
+                                Price.UnitPrice.builder()
+                                    .id("id")
+                                    .billableMetric(
+                                        Price.UnitPrice.BillableMetric.builder().id("id").build()
+                                    )
+                                    .billingCycleConfiguration(
+                                        Price.UnitPrice.BillingCycleConfiguration.builder()
+                                            .duration(0L)
+                                            .durationUnit(
+                                                Price.UnitPrice.BillingCycleConfiguration
+                                                    .DurationUnit
+                                                    .DAY
                                             )
-                                        )
-                                        .externalPriceId("external_price_id")
-                                        .fixedPriceQuantity(0.0)
-                                        .invoicingCycleConfiguration(
-                                            Price.UnitPrice.InvoicingCycleConfiguration.builder()
-                                                .duration(0L)
-                                                .durationUnit(
-                                                    Price.UnitPrice.InvoicingCycleConfiguration
-                                                        .DurationUnit
-                                                        .DAY
+                                            .build()
+                                    )
+                                    .cadence(Price.UnitPrice.Cadence.ONE_TIME)
+                                    .conversionRate(0.0)
+                                    .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                                    .creditAllocation(
+                                        Price.UnitPrice.CreditAllocation.builder()
+                                            .allowsRollover(true)
+                                            .currency("currency")
+                                            .build()
+                                    )
+                                    .currency("currency")
+                                    .discount(
+                                        Discount.ofPercentageDiscount(
+                                            PercentageDiscount.builder()
+                                                .addAppliesToPriceId("h74gfhdjvn7ujokd")
+                                                .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
+                                                .discountType(
+                                                    PercentageDiscount.DiscountType.PERCENTAGE
                                                 )
+                                                .percentageDiscount(0.15)
+                                                .reason("reason")
                                                 .build()
                                         )
-                                        .item(
-                                            Price.UnitPrice.Item.builder()
-                                                .id("id")
-                                                .name("name")
-                                                .build()
-                                        )
-                                        .maximum(
-                                            Price.UnitPrice.Maximum.builder()
-                                                .appliesToPriceIds(listOf("string"))
-                                                .maximumAmount("maximum_amount")
-                                                .build()
-                                        )
-                                        .maximumAmount("maximum_amount")
-                                        .metadata(
-                                            Price.UnitPrice.Metadata.builder()
-                                                .putAdditionalProperty(
-                                                    "foo",
-                                                    JsonValue.from("string")
-                                                )
-                                                .build()
-                                        )
-                                        .minimum(
-                                            Price.UnitPrice.Minimum.builder()
-                                                .appliesToPriceIds(listOf("string"))
-                                                .minimumAmount("minimum_amount")
-                                                .build()
-                                        )
-                                        .minimumAmount("minimum_amount")
-                                        .modelType(Price.UnitPrice.ModelType.UNIT)
-                                        .name("name")
-                                        .planPhaseOrder(0L)
-                                        .priceType(Price.UnitPrice.PriceType.USAGE_PRICE)
-                                        .unitConfig(
-                                            Price.UnitPrice.UnitConfig.builder()
-                                                .unitAmount("unit_amount")
-                                                .build()
-                                        )
-                                        .build()
-                                )
+                                    )
+                                    .externalPriceId("external_price_id")
+                                    .fixedPriceQuantity(0.0)
+                                    .invoicingCycleConfiguration(
+                                        Price.UnitPrice.InvoicingCycleConfiguration.builder()
+                                            .duration(0L)
+                                            .durationUnit(
+                                                Price.UnitPrice.InvoicingCycleConfiguration
+                                                    .DurationUnit
+                                                    .DAY
+                                            )
+                                            .build()
+                                    )
+                                    .item(
+                                        Price.UnitPrice.Item.builder().id("id").name("name").build()
+                                    )
+                                    .maximum(
+                                        Price.UnitPrice.Maximum.builder()
+                                            .addAppliesToPriceId("string")
+                                            .maximumAmount("maximum_amount")
+                                            .build()
+                                    )
+                                    .maximumAmount("maximum_amount")
+                                    .metadata(
+                                        Price.UnitPrice.Metadata.builder()
+                                            .putAdditionalProperty("foo", JsonValue.from("string"))
+                                            .build()
+                                    )
+                                    .minimum(
+                                        Price.UnitPrice.Minimum.builder()
+                                            .addAppliesToPriceId("string")
+                                            .minimumAmount("minimum_amount")
+                                            .build()
+                                    )
+                                    .minimumAmount("minimum_amount")
+                                    .modelType(Price.UnitPrice.ModelType.UNIT)
+                                    .name("name")
+                                    .planPhaseOrder(0L)
+                                    .priceType(Price.UnitPrice.PriceType.USAGE_PRICE)
+                                    .unitConfig(
+                                        Price.UnitPrice.UnitConfig.builder()
+                                            .unitAmount("unit_amount")
+                                            .build()
+                                    )
+                                    .build()
                             )
-                            .quantity(1.0)
-                            .startDate(OffsetDateTime.parse("2022-02-01T08:00:00+00:00"))
-                            .subLineItems(
-                                listOf(
-                                    InvoiceFetchUpcomingResponse.LineItem.SubLineItem
-                                        .ofMatrixSubLineItem(
-                                            InvoiceFetchUpcomingResponse.LineItem.SubLineItem
-                                                .MatrixSubLineItem
-                                                .builder()
-                                                .amount("9.00")
-                                                .grouping(
-                                                    InvoiceFetchUpcomingResponse.LineItem
-                                                        .SubLineItem
-                                                        .MatrixSubLineItem
-                                                        .Grouping
-                                                        .builder()
-                                                        .key("region")
-                                                        .value("west")
-                                                        .build()
-                                                )
-                                                .matrixConfig(
-                                                    InvoiceFetchUpcomingResponse.LineItem
-                                                        .SubLineItem
-                                                        .MatrixSubLineItem
-                                                        .MatrixConfig
-                                                        .builder()
-                                                        .dimensionValues(listOf("string"))
-                                                        .build()
-                                                )
-                                                .name("Tier One")
-                                                .quantity(5.0)
-                                                .type(
-                                                    InvoiceFetchUpcomingResponse.LineItem
-                                                        .SubLineItem
-                                                        .MatrixSubLineItem
-                                                        .Type
-                                                        .MATRIX
-                                                )
-                                                .build()
-                                        )
-                                )
+                        )
+                        .quantity(1.0)
+                        .startDate(OffsetDateTime.parse("2022-02-01T08:00:00+00:00"))
+                        .addSubLineItem(
+                            InvoiceFetchUpcomingResponse.LineItem.SubLineItem.ofMatrixSubLineItem(
+                                InvoiceFetchUpcomingResponse.LineItem.SubLineItem.MatrixSubLineItem
+                                    .builder()
+                                    .amount("9.00")
+                                    .grouping(
+                                        InvoiceFetchUpcomingResponse.LineItem.SubLineItem
+                                            .MatrixSubLineItem
+                                            .Grouping
+                                            .builder()
+                                            .key("region")
+                                            .value("west")
+                                            .build()
+                                    )
+                                    .matrixConfig(
+                                        InvoiceFetchUpcomingResponse.LineItem.SubLineItem
+                                            .MatrixSubLineItem
+                                            .MatrixConfig
+                                            .builder()
+                                            .addDimensionValue("string")
+                                            .build()
+                                    )
+                                    .name("Tier One")
+                                    .quantity(5.0)
+                                    .type(
+                                        InvoiceFetchUpcomingResponse.LineItem.SubLineItem
+                                            .MatrixSubLineItem
+                                            .Type
+                                            .MATRIX
+                                    )
+                                    .build()
                             )
-                            .subtotal("9.00")
-                            .taxAmounts(
-                                listOf(
-                                    InvoiceFetchUpcomingResponse.LineItem.TaxAmount.builder()
-                                        .amount("amount")
-                                        .taxRateDescription("tax_rate_description")
-                                        .taxRatePercentage("tax_rate_percentage")
-                                        .build()
-                                )
-                            )
-                            .build()
-                    )
+                        )
+                        .subtotal("9.00")
+                        .addTaxAmount(
+                            InvoiceFetchUpcomingResponse.LineItem.TaxAmount.builder()
+                                .amount("amount")
+                                .taxRateDescription("tax_rate_description")
+                                .taxRatePercentage("tax_rate_percentage")
+                                .build()
+                        )
+                        .build()
                 )
                 .maximum(
                     InvoiceFetchUpcomingResponse.Maximum.builder()
-                        .appliesToPriceIds(listOf("string"))
+                        .addAppliesToPriceId("string")
                         .maximumAmount("maximum_amount")
                         .build()
                 )
@@ -316,25 +286,23 @@ class InvoiceFetchUpcomingResponseTest {
                 )
                 .minimum(
                     InvoiceFetchUpcomingResponse.Minimum.builder()
-                        .appliesToPriceIds(listOf("string"))
+                        .addAppliesToPriceId("string")
                         .minimumAmount("minimum_amount")
                         .build()
                 )
                 .minimumAmount("minimum_amount")
                 .paidAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
-                .paymentAttempts(
-                    listOf(
-                        InvoiceFetchUpcomingResponse.PaymentAttempt.builder()
-                            .id("id")
-                            .amount("amount")
-                            .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
-                            .paymentProvider(
-                                InvoiceFetchUpcomingResponse.PaymentAttempt.PaymentProvider.STRIPE
-                            )
-                            .paymentProviderId("payment_provider_id")
-                            .succeeded(true)
-                            .build()
-                    )
+                .addPaymentAttempt(
+                    InvoiceFetchUpcomingResponse.PaymentAttempt.builder()
+                        .id("id")
+                        .amount("amount")
+                        .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                        .paymentProvider(
+                            InvoiceFetchUpcomingResponse.PaymentAttempt.PaymentProvider.STRIPE
+                        )
+                        .paymentProviderId("payment_provider_id")
+                        .succeeded(true)
+                        .build()
                 )
                 .paymentFailedAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                 .paymentStartedAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
@@ -447,7 +415,8 @@ class InvoiceFetchUpcomingResponseTest {
             .containsExactly(
                 InvoiceLevelDiscount.ofPercentageDiscount(
                     PercentageDiscount.builder()
-                        .appliesToPriceIds(listOf("h74gfhdjvn7ujokd", "7hfgtgjnbvc3ujkl"))
+                        .addAppliesToPriceId("h74gfhdjvn7ujokd")
+                        .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                         .discountType(PercentageDiscount.DiscountType.PERCENTAGE)
                         .percentageDiscount(0.15)
                         .reason("reason")
@@ -476,7 +445,8 @@ class InvoiceFetchUpcomingResponseTest {
                     .discount(
                         Discount.ofPercentageDiscount(
                             PercentageDiscount.builder()
-                                .appliesToPriceIds(listOf("h74gfhdjvn7ujokd", "7hfgtgjnbvc3ujkl"))
+                                .addAppliesToPriceId("h74gfhdjvn7ujokd")
+                                .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                                 .discountType(PercentageDiscount.DiscountType.PERCENTAGE)
                                 .percentageDiscount(0.15)
                                 .reason("reason")
@@ -487,14 +457,14 @@ class InvoiceFetchUpcomingResponseTest {
                     .grouping("grouping")
                     .maximum(
                         InvoiceFetchUpcomingResponse.LineItem.Maximum.builder()
-                            .appliesToPriceIds(listOf("string"))
+                            .addAppliesToPriceId("string")
                             .maximumAmount("maximum_amount")
                             .build()
                     )
                     .maximumAmount("maximum_amount")
                     .minimum(
                         InvoiceFetchUpcomingResponse.LineItem.Minimum.builder()
-                            .appliesToPriceIds(listOf("string"))
+                            .addAppliesToPriceId("string")
                             .minimumAmount("minimum_amount")
                             .build()
                     )
@@ -529,9 +499,8 @@ class InvoiceFetchUpcomingResponseTest {
                                 .discount(
                                     Discount.ofPercentageDiscount(
                                         PercentageDiscount.builder()
-                                            .appliesToPriceIds(
-                                                listOf("h74gfhdjvn7ujokd", "7hfgtgjnbvc3ujkl")
-                                            )
+                                            .addAppliesToPriceId("h74gfhdjvn7ujokd")
+                                            .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                                             .discountType(
                                                 PercentageDiscount.DiscountType.PERCENTAGE
                                             )
@@ -554,7 +523,7 @@ class InvoiceFetchUpcomingResponseTest {
                                 .item(Price.UnitPrice.Item.builder().id("id").name("name").build())
                                 .maximum(
                                     Price.UnitPrice.Maximum.builder()
-                                        .appliesToPriceIds(listOf("string"))
+                                        .addAppliesToPriceId("string")
                                         .maximumAmount("maximum_amount")
                                         .build()
                                 )
@@ -566,7 +535,7 @@ class InvoiceFetchUpcomingResponseTest {
                                 )
                                 .minimum(
                                     Price.UnitPrice.Minimum.builder()
-                                        .appliesToPriceIds(listOf("string"))
+                                        .addAppliesToPriceId("string")
                                         .minimumAmount("minimum_amount")
                                         .build()
                                 )
@@ -585,57 +554,53 @@ class InvoiceFetchUpcomingResponseTest {
                     )
                     .quantity(1.0)
                     .startDate(OffsetDateTime.parse("2022-02-01T08:00:00+00:00"))
-                    .subLineItems(
-                        listOf(
-                            InvoiceFetchUpcomingResponse.LineItem.SubLineItem.ofMatrixSubLineItem(
-                                InvoiceFetchUpcomingResponse.LineItem.SubLineItem.MatrixSubLineItem
-                                    .builder()
-                                    .amount("9.00")
-                                    .grouping(
-                                        InvoiceFetchUpcomingResponse.LineItem.SubLineItem
-                                            .MatrixSubLineItem
-                                            .Grouping
-                                            .builder()
-                                            .key("region")
-                                            .value("west")
-                                            .build()
-                                    )
-                                    .matrixConfig(
-                                        InvoiceFetchUpcomingResponse.LineItem.SubLineItem
-                                            .MatrixSubLineItem
-                                            .MatrixConfig
-                                            .builder()
-                                            .dimensionValues(listOf("string"))
-                                            .build()
-                                    )
-                                    .name("Tier One")
-                                    .quantity(5.0)
-                                    .type(
-                                        InvoiceFetchUpcomingResponse.LineItem.SubLineItem
-                                            .MatrixSubLineItem
-                                            .Type
-                                            .MATRIX
-                                    )
-                                    .build()
-                            )
+                    .addSubLineItem(
+                        InvoiceFetchUpcomingResponse.LineItem.SubLineItem.ofMatrixSubLineItem(
+                            InvoiceFetchUpcomingResponse.LineItem.SubLineItem.MatrixSubLineItem
+                                .builder()
+                                .amount("9.00")
+                                .grouping(
+                                    InvoiceFetchUpcomingResponse.LineItem.SubLineItem
+                                        .MatrixSubLineItem
+                                        .Grouping
+                                        .builder()
+                                        .key("region")
+                                        .value("west")
+                                        .build()
+                                )
+                                .matrixConfig(
+                                    InvoiceFetchUpcomingResponse.LineItem.SubLineItem
+                                        .MatrixSubLineItem
+                                        .MatrixConfig
+                                        .builder()
+                                        .addDimensionValue("string")
+                                        .build()
+                                )
+                                .name("Tier One")
+                                .quantity(5.0)
+                                .type(
+                                    InvoiceFetchUpcomingResponse.LineItem.SubLineItem
+                                        .MatrixSubLineItem
+                                        .Type
+                                        .MATRIX
+                                )
+                                .build()
                         )
                     )
                     .subtotal("9.00")
-                    .taxAmounts(
-                        listOf(
-                            InvoiceFetchUpcomingResponse.LineItem.TaxAmount.builder()
-                                .amount("amount")
-                                .taxRateDescription("tax_rate_description")
-                                .taxRatePercentage("tax_rate_percentage")
-                                .build()
-                        )
+                    .addTaxAmount(
+                        InvoiceFetchUpcomingResponse.LineItem.TaxAmount.builder()
+                            .amount("amount")
+                            .taxRateDescription("tax_rate_description")
+                            .taxRatePercentage("tax_rate_percentage")
+                            .build()
                     )
                     .build()
             )
         assertThat(invoiceFetchUpcomingResponse.maximum())
             .isEqualTo(
                 InvoiceFetchUpcomingResponse.Maximum.builder()
-                    .appliesToPriceIds(listOf("string"))
+                    .addAppliesToPriceId("string")
                     .maximumAmount("maximum_amount")
                     .build()
             )
@@ -650,7 +615,7 @@ class InvoiceFetchUpcomingResponseTest {
         assertThat(invoiceFetchUpcomingResponse.minimum())
             .isEqualTo(
                 InvoiceFetchUpcomingResponse.Minimum.builder()
-                    .appliesToPriceIds(listOf("string"))
+                    .addAppliesToPriceId("string")
                     .minimumAmount("minimum_amount")
                     .build()
             )

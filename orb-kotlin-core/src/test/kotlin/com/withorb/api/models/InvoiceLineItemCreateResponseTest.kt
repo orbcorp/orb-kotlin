@@ -18,7 +18,8 @@ class InvoiceLineItemCreateResponseTest {
                 .discount(
                     Discount.ofPercentageDiscount(
                         PercentageDiscount.builder()
-                            .appliesToPriceIds(listOf("h74gfhdjvn7ujokd", "7hfgtgjnbvc3ujkl"))
+                            .addAppliesToPriceId("h74gfhdjvn7ujokd")
+                            .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                             .discountType(PercentageDiscount.DiscountType.PERCENTAGE)
                             .percentageDiscount(0.15)
                             .reason("reason")
@@ -29,14 +30,14 @@ class InvoiceLineItemCreateResponseTest {
                 .grouping("grouping")
                 .maximum(
                     InvoiceLineItemCreateResponse.Maximum.builder()
-                        .appliesToPriceIds(listOf("string"))
+                        .addAppliesToPriceId("string")
                         .maximumAmount("maximum_amount")
                         .build()
                 )
                 .maximumAmount("maximum_amount")
                 .minimum(
                     InvoiceLineItemCreateResponse.Minimum.builder()
-                        .appliesToPriceIds(listOf("string"))
+                        .addAppliesToPriceId("string")
                         .minimumAmount("minimum_amount")
                         .build()
                 )
@@ -70,9 +71,8 @@ class InvoiceLineItemCreateResponseTest {
                             .discount(
                                 Discount.ofPercentageDiscount(
                                     PercentageDiscount.builder()
-                                        .appliesToPriceIds(
-                                            listOf("h74gfhdjvn7ujokd", "7hfgtgjnbvc3ujkl")
-                                        )
+                                        .addAppliesToPriceId("h74gfhdjvn7ujokd")
+                                        .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                                         .discountType(PercentageDiscount.DiscountType.PERCENTAGE)
                                         .percentageDiscount(0.15)
                                         .reason("reason")
@@ -92,7 +92,7 @@ class InvoiceLineItemCreateResponseTest {
                             .item(Price.UnitPrice.Item.builder().id("id").name("name").build())
                             .maximum(
                                 Price.UnitPrice.Maximum.builder()
-                                    .appliesToPriceIds(listOf("string"))
+                                    .addAppliesToPriceId("string")
                                     .maximumAmount("maximum_amount")
                                     .build()
                             )
@@ -104,7 +104,7 @@ class InvoiceLineItemCreateResponseTest {
                             )
                             .minimum(
                                 Price.UnitPrice.Minimum.builder()
-                                    .appliesToPriceIds(listOf("string"))
+                                    .addAppliesToPriceId("string")
                                     .minimumAmount("minimum_amount")
                                     .build()
                             )
@@ -123,45 +123,40 @@ class InvoiceLineItemCreateResponseTest {
                 )
                 .quantity(1.0)
                 .startDate(OffsetDateTime.parse("2022-02-01T08:00:00+00:00"))
-                .subLineItems(
-                    listOf(
-                        InvoiceLineItemCreateResponse.SubLineItem.ofMatrixSubLineItem(
-                            InvoiceLineItemCreateResponse.SubLineItem.MatrixSubLineItem.builder()
-                                .amount("9.00")
-                                .grouping(
-                                    InvoiceLineItemCreateResponse.SubLineItem.MatrixSubLineItem
-                                        .Grouping
-                                        .builder()
-                                        .key("region")
-                                        .value("west")
-                                        .build()
-                                )
-                                .matrixConfig(
-                                    InvoiceLineItemCreateResponse.SubLineItem.MatrixSubLineItem
-                                        .MatrixConfig
-                                        .builder()
-                                        .dimensionValues(listOf("string"))
-                                        .build()
-                                )
-                                .name("Tier One")
-                                .quantity(5.0)
-                                .type(
-                                    InvoiceLineItemCreateResponse.SubLineItem.MatrixSubLineItem.Type
-                                        .MATRIX
-                                )
-                                .build()
-                        )
+                .addSubLineItem(
+                    InvoiceLineItemCreateResponse.SubLineItem.ofMatrixSubLineItem(
+                        InvoiceLineItemCreateResponse.SubLineItem.MatrixSubLineItem.builder()
+                            .amount("9.00")
+                            .grouping(
+                                InvoiceLineItemCreateResponse.SubLineItem.MatrixSubLineItem.Grouping
+                                    .builder()
+                                    .key("region")
+                                    .value("west")
+                                    .build()
+                            )
+                            .matrixConfig(
+                                InvoiceLineItemCreateResponse.SubLineItem.MatrixSubLineItem
+                                    .MatrixConfig
+                                    .builder()
+                                    .addDimensionValue("string")
+                                    .build()
+                            )
+                            .name("Tier One")
+                            .quantity(5.0)
+                            .type(
+                                InvoiceLineItemCreateResponse.SubLineItem.MatrixSubLineItem.Type
+                                    .MATRIX
+                            )
+                            .build()
                     )
                 )
                 .subtotal("9.00")
-                .taxAmounts(
-                    listOf(
-                        InvoiceLineItemCreateResponse.TaxAmount.builder()
-                            .amount("amount")
-                            .taxRateDescription("tax_rate_description")
-                            .taxRatePercentage("tax_rate_percentage")
-                            .build()
-                    )
+                .addTaxAmount(
+                    InvoiceLineItemCreateResponse.TaxAmount.builder()
+                        .amount("amount")
+                        .taxRateDescription("tax_rate_description")
+                        .taxRatePercentage("tax_rate_percentage")
+                        .build()
                 )
                 .build()
         assertThat(invoiceLineItemCreateResponse).isNotNull
@@ -171,7 +166,8 @@ class InvoiceLineItemCreateResponseTest {
             .isEqualTo(
                 Discount.ofPercentageDiscount(
                     PercentageDiscount.builder()
-                        .appliesToPriceIds(listOf("h74gfhdjvn7ujokd", "7hfgtgjnbvc3ujkl"))
+                        .addAppliesToPriceId("h74gfhdjvn7ujokd")
+                        .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                         .discountType(PercentageDiscount.DiscountType.PERCENTAGE)
                         .percentageDiscount(0.15)
                         .reason("reason")
@@ -184,7 +180,7 @@ class InvoiceLineItemCreateResponseTest {
         assertThat(invoiceLineItemCreateResponse.maximum())
             .isEqualTo(
                 InvoiceLineItemCreateResponse.Maximum.builder()
-                    .appliesToPriceIds(listOf("string"))
+                    .addAppliesToPriceId("string")
                     .maximumAmount("maximum_amount")
                     .build()
             )
@@ -192,7 +188,7 @@ class InvoiceLineItemCreateResponseTest {
         assertThat(invoiceLineItemCreateResponse.minimum())
             .isEqualTo(
                 InvoiceLineItemCreateResponse.Minimum.builder()
-                    .appliesToPriceIds(listOf("string"))
+                    .addAppliesToPriceId("string")
                     .minimumAmount("minimum_amount")
                     .build()
             )
@@ -225,9 +221,8 @@ class InvoiceLineItemCreateResponseTest {
                         .discount(
                             Discount.ofPercentageDiscount(
                                 PercentageDiscount.builder()
-                                    .appliesToPriceIds(
-                                        listOf("h74gfhdjvn7ujokd", "7hfgtgjnbvc3ujkl")
-                                    )
+                                    .addAppliesToPriceId("h74gfhdjvn7ujokd")
+                                    .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                                     .discountType(PercentageDiscount.DiscountType.PERCENTAGE)
                                     .percentageDiscount(0.15)
                                     .reason("reason")
@@ -247,7 +242,7 @@ class InvoiceLineItemCreateResponseTest {
                         .item(Price.UnitPrice.Item.builder().id("id").name("name").build())
                         .maximum(
                             Price.UnitPrice.Maximum.builder()
-                                .appliesToPriceIds(listOf("string"))
+                                .addAppliesToPriceId("string")
                                 .maximumAmount("maximum_amount")
                                 .build()
                         )
@@ -259,7 +254,7 @@ class InvoiceLineItemCreateResponseTest {
                         )
                         .minimum(
                             Price.UnitPrice.Minimum.builder()
-                                .appliesToPriceIds(listOf("string"))
+                                .addAppliesToPriceId("string")
                                 .minimumAmount("minimum_amount")
                                 .build()
                         )
@@ -292,7 +287,7 @@ class InvoiceLineItemCreateResponseTest {
                         .matrixConfig(
                             InvoiceLineItemCreateResponse.SubLineItem.MatrixSubLineItem.MatrixConfig
                                 .builder()
-                                .dimensionValues(listOf("string"))
+                                .addDimensionValue("string")
                                 .build()
                         )
                         .name("Tier One")

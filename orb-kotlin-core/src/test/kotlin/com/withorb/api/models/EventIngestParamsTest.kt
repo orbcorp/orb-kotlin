@@ -13,17 +13,15 @@ class EventIngestParamsTest {
     @Test
     fun createEventIngestParams() {
         EventIngestParams.builder()
-            .events(
-                listOf(
-                    EventIngestParams.Event.builder()
-                        .eventName("event_name")
-                        .idempotencyKey("idempotency_key")
-                        .properties(JsonValue.from(mapOf<String, Any>()))
-                        .timestamp(OffsetDateTime.parse("2020-12-09T16:09:53Z"))
-                        .customerId("customer_id")
-                        .externalCustomerId("external_customer_id")
-                        .build()
-                )
+            .addEvent(
+                EventIngestParams.Event.builder()
+                    .eventName("event_name")
+                    .idempotencyKey("idempotency_key")
+                    .properties(JsonValue.from(mapOf<String, Any>()))
+                    .timestamp(OffsetDateTime.parse("2020-12-09T16:09:53Z"))
+                    .customerId("customer_id")
+                    .externalCustomerId("external_customer_id")
+                    .build()
             )
             .backfillId("backfill_id")
             .debug(true)
@@ -34,17 +32,15 @@ class EventIngestParamsTest {
     fun getQueryParams() {
         val params =
             EventIngestParams.builder()
-                .events(
-                    listOf(
-                        EventIngestParams.Event.builder()
-                            .eventName("event_name")
-                            .idempotencyKey("idempotency_key")
-                            .properties(JsonValue.from(mapOf<String, Any>()))
-                            .timestamp(OffsetDateTime.parse("2020-12-09T16:09:53Z"))
-                            .customerId("customer_id")
-                            .externalCustomerId("external_customer_id")
-                            .build()
-                    )
+                .addEvent(
+                    EventIngestParams.Event.builder()
+                        .eventName("event_name")
+                        .idempotencyKey("idempotency_key")
+                        .properties(JsonValue.from(mapOf<String, Any>()))
+                        .timestamp(OffsetDateTime.parse("2020-12-09T16:09:53Z"))
+                        .customerId("customer_id")
+                        .externalCustomerId("external_customer_id")
+                        .build()
                 )
                 .backfillId("backfill_id")
                 .debug(true)
@@ -59,15 +55,13 @@ class EventIngestParamsTest {
     fun getQueryParamsWithoutOptionalFields() {
         val params =
             EventIngestParams.builder()
-                .events(
-                    listOf(
-                        EventIngestParams.Event.builder()
-                            .eventName("event_name")
-                            .idempotencyKey("idempotency_key")
-                            .properties(JsonValue.from(mapOf<String, Any>()))
-                            .timestamp(OffsetDateTime.parse("2020-12-09T16:09:53Z"))
-                            .build()
-                    )
+                .addEvent(
+                    EventIngestParams.Event.builder()
+                        .eventName("event_name")
+                        .idempotencyKey("idempotency_key")
+                        .properties(JsonValue.from(mapOf<String, Any>()))
+                        .timestamp(OffsetDateTime.parse("2020-12-09T16:09:53Z"))
+                        .build()
                 )
                 .build()
         val expected = QueryParams.builder()
@@ -78,17 +72,15 @@ class EventIngestParamsTest {
     fun getBody() {
         val params =
             EventIngestParams.builder()
-                .events(
-                    listOf(
-                        EventIngestParams.Event.builder()
-                            .eventName("event_name")
-                            .idempotencyKey("idempotency_key")
-                            .properties(JsonValue.from(mapOf<String, Any>()))
-                            .timestamp(OffsetDateTime.parse("2020-12-09T16:09:53Z"))
-                            .customerId("customer_id")
-                            .externalCustomerId("external_customer_id")
-                            .build()
-                    )
+                .addEvent(
+                    EventIngestParams.Event.builder()
+                        .eventName("event_name")
+                        .idempotencyKey("idempotency_key")
+                        .properties(JsonValue.from(mapOf<String, Any>()))
+                        .timestamp(OffsetDateTime.parse("2020-12-09T16:09:53Z"))
+                        .customerId("customer_id")
+                        .externalCustomerId("external_customer_id")
+                        .build()
                 )
                 .backfillId("backfill_id")
                 .debug(true)
@@ -114,15 +106,13 @@ class EventIngestParamsTest {
     fun getBodyWithoutOptionalFields() {
         val params =
             EventIngestParams.builder()
-                .events(
-                    listOf(
-                        EventIngestParams.Event.builder()
-                            .eventName("event_name")
-                            .idempotencyKey("idempotency_key")
-                            .properties(JsonValue.from(mapOf<String, Any>()))
-                            .timestamp(OffsetDateTime.parse("2020-12-09T16:09:53Z"))
-                            .build()
-                    )
+                .addEvent(
+                    EventIngestParams.Event.builder()
+                        .eventName("event_name")
+                        .idempotencyKey("idempotency_key")
+                        .properties(JsonValue.from(mapOf<String, Any>()))
+                        .timestamp(OffsetDateTime.parse("2020-12-09T16:09:53Z"))
+                        .build()
                 )
                 .build()
         val body = params.getBody()

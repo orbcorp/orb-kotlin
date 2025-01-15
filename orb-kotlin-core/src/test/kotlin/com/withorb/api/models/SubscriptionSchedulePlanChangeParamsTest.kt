@@ -14,8 +14,305 @@ class SubscriptionSchedulePlanChangeParamsTest {
         SubscriptionSchedulePlanChangeParams.builder()
             .subscriptionId("subscription_id")
             .changeOption(SubscriptionSchedulePlanChangeParams.ChangeOption.REQUESTED_DATE)
-            .addAdjustments(
-                listOf(
+            .addAddAdjustment(
+                SubscriptionSchedulePlanChangeParams.AddAdjustment.builder()
+                    .adjustment(
+                        SubscriptionSchedulePlanChangeParams.AddAdjustment.Adjustment
+                            .ofNewPercentageDiscount(
+                                SubscriptionSchedulePlanChangeParams.AddAdjustment.Adjustment
+                                    .NewPercentageDiscount
+                                    .builder()
+                                    .adjustmentType(
+                                        SubscriptionSchedulePlanChangeParams.AddAdjustment
+                                            .Adjustment
+                                            .NewPercentageDiscount
+                                            .AdjustmentType
+                                            .PERCENTAGE_DISCOUNT
+                                    )
+                                    .addAppliesToPriceId("price_1")
+                                    .addAppliesToPriceId("price_2")
+                                    .percentageDiscount(0.0)
+                                    .isInvoiceLevel(true)
+                                    .build()
+                            )
+                    )
+                    .endDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                    .planPhaseOrder(0L)
+                    .startDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                    .build()
+            )
+            .addAddPrice(
+                SubscriptionSchedulePlanChangeParams.AddPrice.builder()
+                    .addDiscount(
+                        SubscriptionSchedulePlanChangeParams.AddPrice.Discount.builder()
+                            .discountType(
+                                SubscriptionSchedulePlanChangeParams.AddPrice.Discount.DiscountType
+                                    .PERCENTAGE
+                            )
+                            .amountDiscount("amount_discount")
+                            .percentageDiscount(0.15)
+                            .usageDiscount(0.0)
+                            .build()
+                    )
+                    .endDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                    .externalPriceId("external_price_id")
+                    .maximumAmount("1.23")
+                    .minimumAmount("1.23")
+                    .planPhaseOrder(0L)
+                    .price(
+                        SubscriptionSchedulePlanChangeParams.AddPrice.Price
+                            .ofNewSubscriptionUnitPrice(
+                                SubscriptionSchedulePlanChangeParams.AddPrice.Price
+                                    .NewSubscriptionUnitPrice
+                                    .builder()
+                                    .cadence(
+                                        SubscriptionSchedulePlanChangeParams.AddPrice.Price
+                                            .NewSubscriptionUnitPrice
+                                            .Cadence
+                                            .ANNUAL
+                                    )
+                                    .itemId("item_id")
+                                    .modelType(
+                                        SubscriptionSchedulePlanChangeParams.AddPrice.Price
+                                            .NewSubscriptionUnitPrice
+                                            .ModelType
+                                            .UNIT
+                                    )
+                                    .name("Annual fee")
+                                    .unitConfig(
+                                        SubscriptionSchedulePlanChangeParams.AddPrice.Price
+                                            .NewSubscriptionUnitPrice
+                                            .UnitConfig
+                                            .builder()
+                                            .unitAmount("unit_amount")
+                                            .build()
+                                    )
+                                    .billableMetricId("billable_metric_id")
+                                    .billedInAdvance(true)
+                                    .billingCycleConfiguration(
+                                        SubscriptionSchedulePlanChangeParams.AddPrice.Price
+                                            .NewSubscriptionUnitPrice
+                                            .BillingCycleConfiguration
+                                            .builder()
+                                            .duration(0L)
+                                            .durationUnit(
+                                                SubscriptionSchedulePlanChangeParams.AddPrice.Price
+                                                    .NewSubscriptionUnitPrice
+                                                    .BillingCycleConfiguration
+                                                    .DurationUnit
+                                                    .DAY
+                                            )
+                                            .build()
+                                    )
+                                    .conversionRate(0.0)
+                                    .currency("currency")
+                                    .externalPriceId("external_price_id")
+                                    .fixedPriceQuantity(0.0)
+                                    .invoiceGroupingKey("invoice_grouping_key")
+                                    .invoicingCycleConfiguration(
+                                        SubscriptionSchedulePlanChangeParams.AddPrice.Price
+                                            .NewSubscriptionUnitPrice
+                                            .InvoicingCycleConfiguration
+                                            .builder()
+                                            .duration(0L)
+                                            .durationUnit(
+                                                SubscriptionSchedulePlanChangeParams.AddPrice.Price
+                                                    .NewSubscriptionUnitPrice
+                                                    .InvoicingCycleConfiguration
+                                                    .DurationUnit
+                                                    .DAY
+                                            )
+                                            .build()
+                                    )
+                                    .metadata(
+                                        SubscriptionSchedulePlanChangeParams.AddPrice.Price
+                                            .NewSubscriptionUnitPrice
+                                            .Metadata
+                                            .builder()
+                                            .putAdditionalProperty("foo", JsonValue.from("string"))
+                                            .build()
+                                    )
+                                    .referenceId("reference_id")
+                                    .build()
+                            )
+                    )
+                    .priceId("h74gfhdjvn7ujokd")
+                    .startDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                    .build()
+            )
+            .alignBillingWithPlanChangeDate(true)
+            .autoCollection(true)
+            .billingCycleAlignment(
+                SubscriptionSchedulePlanChangeParams.BillingCycleAlignment.UNCHANGED
+            )
+            .billingCycleAnchorConfiguration(
+                SubscriptionSchedulePlanChangeParams.BillingCycleAnchorConfiguration.builder()
+                    .day(1L)
+                    .month(1L)
+                    .year(0L)
+                    .build()
+            )
+            .changeDate(OffsetDateTime.parse("2017-07-21T17:32:28Z"))
+            .couponRedemptionCode("coupon_redemption_code")
+            .creditsOverageRate(0.0)
+            .defaultInvoiceMemo("default_invoice_memo")
+            .externalPlanId("ZMwNQefe7J3ecf7W")
+            .filter("my_property > 100 AND my_other_property = 'bar'")
+            .initialPhaseOrder(2L)
+            .invoicingThreshold("10.00")
+            .netTerms(0L)
+            .perCreditOverageAmount(0.0)
+            .planId("ZMwNQefe7J3ecf7W")
+            .planVersionNumber(0L)
+            .addPriceOverride(JsonValue.from(mapOf<String, Any>()))
+            .addRemoveAdjustment(
+                SubscriptionSchedulePlanChangeParams.RemoveAdjustment.builder()
+                    .adjustmentId("h74gfhdjvn7ujokd")
+                    .build()
+            )
+            .addRemovePrice(
+                SubscriptionSchedulePlanChangeParams.RemovePrice.builder()
+                    .externalPriceId("external_price_id")
+                    .priceId("h74gfhdjvn7ujokd")
+                    .build()
+            )
+            .addReplaceAdjustment(
+                SubscriptionSchedulePlanChangeParams.ReplaceAdjustment.builder()
+                    .adjustment(
+                        SubscriptionSchedulePlanChangeParams.ReplaceAdjustment.Adjustment
+                            .ofNewPercentageDiscount(
+                                SubscriptionSchedulePlanChangeParams.ReplaceAdjustment.Adjustment
+                                    .NewPercentageDiscount
+                                    .builder()
+                                    .adjustmentType(
+                                        SubscriptionSchedulePlanChangeParams.ReplaceAdjustment
+                                            .Adjustment
+                                            .NewPercentageDiscount
+                                            .AdjustmentType
+                                            .PERCENTAGE_DISCOUNT
+                                    )
+                                    .addAppliesToPriceId("price_1")
+                                    .addAppliesToPriceId("price_2")
+                                    .percentageDiscount(0.0)
+                                    .isInvoiceLevel(true)
+                                    .build()
+                            )
+                    )
+                    .replacesAdjustmentId("replaces_adjustment_id")
+                    .build()
+            )
+            .addReplacePrice(
+                SubscriptionSchedulePlanChangeParams.ReplacePrice.builder()
+                    .replacesPriceId("replaces_price_id")
+                    .addDiscount(
+                        SubscriptionSchedulePlanChangeParams.ReplacePrice.Discount.builder()
+                            .discountType(
+                                SubscriptionSchedulePlanChangeParams.ReplacePrice.Discount
+                                    .DiscountType
+                                    .PERCENTAGE
+                            )
+                            .amountDiscount("amount_discount")
+                            .percentageDiscount(0.15)
+                            .usageDiscount(0.0)
+                            .build()
+                    )
+                    .externalPriceId("external_price_id")
+                    .fixedPriceQuantity(2.0)
+                    .maximumAmount("1.23")
+                    .minimumAmount("1.23")
+                    .price(
+                        SubscriptionSchedulePlanChangeParams.ReplacePrice.Price
+                            .ofNewSubscriptionUnitPrice(
+                                SubscriptionSchedulePlanChangeParams.ReplacePrice.Price
+                                    .NewSubscriptionUnitPrice
+                                    .builder()
+                                    .cadence(
+                                        SubscriptionSchedulePlanChangeParams.ReplacePrice.Price
+                                            .NewSubscriptionUnitPrice
+                                            .Cadence
+                                            .ANNUAL
+                                    )
+                                    .itemId("item_id")
+                                    .modelType(
+                                        SubscriptionSchedulePlanChangeParams.ReplacePrice.Price
+                                            .NewSubscriptionUnitPrice
+                                            .ModelType
+                                            .UNIT
+                                    )
+                                    .name("Annual fee")
+                                    .unitConfig(
+                                        SubscriptionSchedulePlanChangeParams.ReplacePrice.Price
+                                            .NewSubscriptionUnitPrice
+                                            .UnitConfig
+                                            .builder()
+                                            .unitAmount("unit_amount")
+                                            .build()
+                                    )
+                                    .billableMetricId("billable_metric_id")
+                                    .billedInAdvance(true)
+                                    .billingCycleConfiguration(
+                                        SubscriptionSchedulePlanChangeParams.ReplacePrice.Price
+                                            .NewSubscriptionUnitPrice
+                                            .BillingCycleConfiguration
+                                            .builder()
+                                            .duration(0L)
+                                            .durationUnit(
+                                                SubscriptionSchedulePlanChangeParams.ReplacePrice
+                                                    .Price
+                                                    .NewSubscriptionUnitPrice
+                                                    .BillingCycleConfiguration
+                                                    .DurationUnit
+                                                    .DAY
+                                            )
+                                            .build()
+                                    )
+                                    .conversionRate(0.0)
+                                    .currency("currency")
+                                    .externalPriceId("external_price_id")
+                                    .fixedPriceQuantity(0.0)
+                                    .invoiceGroupingKey("invoice_grouping_key")
+                                    .invoicingCycleConfiguration(
+                                        SubscriptionSchedulePlanChangeParams.ReplacePrice.Price
+                                            .NewSubscriptionUnitPrice
+                                            .InvoicingCycleConfiguration
+                                            .builder()
+                                            .duration(0L)
+                                            .durationUnit(
+                                                SubscriptionSchedulePlanChangeParams.ReplacePrice
+                                                    .Price
+                                                    .NewSubscriptionUnitPrice
+                                                    .InvoicingCycleConfiguration
+                                                    .DurationUnit
+                                                    .DAY
+                                            )
+                                            .build()
+                                    )
+                                    .metadata(
+                                        SubscriptionSchedulePlanChangeParams.ReplacePrice.Price
+                                            .NewSubscriptionUnitPrice
+                                            .Metadata
+                                            .builder()
+                                            .putAdditionalProperty("foo", JsonValue.from("string"))
+                                            .build()
+                                    )
+                                    .referenceId("reference_id")
+                                    .build()
+                            )
+                    )
+                    .priceId("h74gfhdjvn7ujokd")
+                    .build()
+            )
+            .trialDurationDays(0L)
+            .build()
+    }
+
+    @Test
+    fun getBody() {
+        val params =
+            SubscriptionSchedulePlanChangeParams.builder()
+                .subscriptionId("subscription_id")
+                .changeOption(SubscriptionSchedulePlanChangeParams.ChangeOption.REQUESTED_DATE)
+                .addAddAdjustment(
                     SubscriptionSchedulePlanChangeParams.AddAdjustment.builder()
                         .adjustment(
                             SubscriptionSchedulePlanChangeParams.AddAdjustment.Adjustment
@@ -30,7 +327,8 @@ class SubscriptionSchedulePlanChangeParamsTest {
                                                 .AdjustmentType
                                                 .PERCENTAGE_DISCOUNT
                                         )
-                                        .appliesToPriceIds(listOf("price_1", "price_2"))
+                                        .addAppliesToPriceId("price_1")
+                                        .addAppliesToPriceId("price_2")
                                         .percentageDiscount(0.0)
                                         .isInvoiceLevel(true)
                                         .build()
@@ -41,23 +339,19 @@ class SubscriptionSchedulePlanChangeParamsTest {
                         .startDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                         .build()
                 )
-            )
-            .addPrices(
-                listOf(
+                .addAddPrice(
                     SubscriptionSchedulePlanChangeParams.AddPrice.builder()
-                        .discounts(
-                            listOf(
-                                SubscriptionSchedulePlanChangeParams.AddPrice.Discount.builder()
-                                    .discountType(
-                                        SubscriptionSchedulePlanChangeParams.AddPrice.Discount
-                                            .DiscountType
-                                            .PERCENTAGE
-                                    )
-                                    .amountDiscount("amount_discount")
-                                    .percentageDiscount(0.15)
-                                    .usageDiscount(0.0)
-                                    .build()
-                            )
+                        .addDiscount(
+                            SubscriptionSchedulePlanChangeParams.AddPrice.Discount.builder()
+                                .discountType(
+                                    SubscriptionSchedulePlanChangeParams.AddPrice.Discount
+                                        .DiscountType
+                                        .PERCENTAGE
+                                )
+                                .amountDiscount("amount_discount")
+                                .percentageDiscount(0.15)
+                                .usageDiscount(0.0)
+                                .build()
                         )
                         .endDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                         .externalPriceId("external_price_id")
@@ -150,49 +444,43 @@ class SubscriptionSchedulePlanChangeParamsTest {
                         .startDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                         .build()
                 )
-            )
-            .alignBillingWithPlanChangeDate(true)
-            .autoCollection(true)
-            .billingCycleAlignment(
-                SubscriptionSchedulePlanChangeParams.BillingCycleAlignment.UNCHANGED
-            )
-            .billingCycleAnchorConfiguration(
-                SubscriptionSchedulePlanChangeParams.BillingCycleAnchorConfiguration.builder()
-                    .day(1L)
-                    .month(1L)
-                    .year(0L)
-                    .build()
-            )
-            .changeDate(OffsetDateTime.parse("2017-07-21T17:32:28Z"))
-            .couponRedemptionCode("coupon_redemption_code")
-            .creditsOverageRate(0.0)
-            .defaultInvoiceMemo("default_invoice_memo")
-            .externalPlanId("ZMwNQefe7J3ecf7W")
-            .filter("my_property > 100 AND my_other_property = 'bar'")
-            .initialPhaseOrder(2L)
-            .invoicingThreshold("10.00")
-            .netTerms(0L)
-            .perCreditOverageAmount(0.0)
-            .planId("ZMwNQefe7J3ecf7W")
-            .planVersionNumber(0L)
-            .priceOverrides(listOf(JsonValue.from(mapOf<String, Any>())))
-            .removeAdjustments(
-                listOf(
+                .alignBillingWithPlanChangeDate(true)
+                .autoCollection(true)
+                .billingCycleAlignment(
+                    SubscriptionSchedulePlanChangeParams.BillingCycleAlignment.UNCHANGED
+                )
+                .billingCycleAnchorConfiguration(
+                    SubscriptionSchedulePlanChangeParams.BillingCycleAnchorConfiguration.builder()
+                        .day(1L)
+                        .month(1L)
+                        .year(0L)
+                        .build()
+                )
+                .changeDate(OffsetDateTime.parse("2017-07-21T17:32:28Z"))
+                .couponRedemptionCode("coupon_redemption_code")
+                .creditsOverageRate(0.0)
+                .defaultInvoiceMemo("default_invoice_memo")
+                .externalPlanId("ZMwNQefe7J3ecf7W")
+                .filter("my_property > 100 AND my_other_property = 'bar'")
+                .initialPhaseOrder(2L)
+                .invoicingThreshold("10.00")
+                .netTerms(0L)
+                .perCreditOverageAmount(0.0)
+                .planId("ZMwNQefe7J3ecf7W")
+                .planVersionNumber(0L)
+                .addPriceOverride(JsonValue.from(mapOf<String, Any>()))
+                .addRemoveAdjustment(
                     SubscriptionSchedulePlanChangeParams.RemoveAdjustment.builder()
                         .adjustmentId("h74gfhdjvn7ujokd")
                         .build()
                 )
-            )
-            .removePrices(
-                listOf(
+                .addRemovePrice(
                     SubscriptionSchedulePlanChangeParams.RemovePrice.builder()
                         .externalPriceId("external_price_id")
                         .priceId("h74gfhdjvn7ujokd")
                         .build()
                 )
-            )
-            .replaceAdjustments(
-                listOf(
+                .addReplaceAdjustment(
                     SubscriptionSchedulePlanChangeParams.ReplaceAdjustment.builder()
                         .adjustment(
                             SubscriptionSchedulePlanChangeParams.ReplaceAdjustment.Adjustment
@@ -208,7 +496,8 @@ class SubscriptionSchedulePlanChangeParamsTest {
                                                 .AdjustmentType
                                                 .PERCENTAGE_DISCOUNT
                                         )
-                                        .appliesToPriceIds(listOf("price_1", "price_2"))
+                                        .addAppliesToPriceId("price_1")
+                                        .addAppliesToPriceId("price_2")
                                         .percentageDiscount(0.0)
                                         .isInvoiceLevel(true)
                                         .build()
@@ -217,24 +506,20 @@ class SubscriptionSchedulePlanChangeParamsTest {
                         .replacesAdjustmentId("replaces_adjustment_id")
                         .build()
                 )
-            )
-            .replacePrices(
-                listOf(
+                .addReplacePrice(
                     SubscriptionSchedulePlanChangeParams.ReplacePrice.builder()
                         .replacesPriceId("replaces_price_id")
-                        .discounts(
-                            listOf(
-                                SubscriptionSchedulePlanChangeParams.ReplacePrice.Discount.builder()
-                                    .discountType(
-                                        SubscriptionSchedulePlanChangeParams.ReplacePrice.Discount
-                                            .DiscountType
-                                            .PERCENTAGE
-                                    )
-                                    .amountDiscount("amount_discount")
-                                    .percentageDiscount(0.15)
-                                    .usageDiscount(0.0)
-                                    .build()
-                            )
+                        .addDiscount(
+                            SubscriptionSchedulePlanChangeParams.ReplacePrice.Discount.builder()
+                                .discountType(
+                                    SubscriptionSchedulePlanChangeParams.ReplacePrice.Discount
+                                        .DiscountType
+                                        .PERCENTAGE
+                                )
+                                .amountDiscount("amount_discount")
+                                .percentageDiscount(0.15)
+                                .usageDiscount(0.0)
+                                .build()
                         )
                         .externalPriceId("external_price_id")
                         .fixedPriceQuantity(2.0)
@@ -327,343 +612,6 @@ class SubscriptionSchedulePlanChangeParamsTest {
                         .priceId("h74gfhdjvn7ujokd")
                         .build()
                 )
-            )
-            .trialDurationDays(0L)
-            .build()
-    }
-
-    @Test
-    fun getBody() {
-        val params =
-            SubscriptionSchedulePlanChangeParams.builder()
-                .subscriptionId("subscription_id")
-                .changeOption(SubscriptionSchedulePlanChangeParams.ChangeOption.REQUESTED_DATE)
-                .addAdjustments(
-                    listOf(
-                        SubscriptionSchedulePlanChangeParams.AddAdjustment.builder()
-                            .adjustment(
-                                SubscriptionSchedulePlanChangeParams.AddAdjustment.Adjustment
-                                    .ofNewPercentageDiscount(
-                                        SubscriptionSchedulePlanChangeParams.AddAdjustment
-                                            .Adjustment
-                                            .NewPercentageDiscount
-                                            .builder()
-                                            .adjustmentType(
-                                                SubscriptionSchedulePlanChangeParams.AddAdjustment
-                                                    .Adjustment
-                                                    .NewPercentageDiscount
-                                                    .AdjustmentType
-                                                    .PERCENTAGE_DISCOUNT
-                                            )
-                                            .appliesToPriceIds(listOf("price_1", "price_2"))
-                                            .percentageDiscount(0.0)
-                                            .isInvoiceLevel(true)
-                                            .build()
-                                    )
-                            )
-                            .endDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
-                            .planPhaseOrder(0L)
-                            .startDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
-                            .build()
-                    )
-                )
-                .addPrices(
-                    listOf(
-                        SubscriptionSchedulePlanChangeParams.AddPrice.builder()
-                            .discounts(
-                                listOf(
-                                    SubscriptionSchedulePlanChangeParams.AddPrice.Discount.builder()
-                                        .discountType(
-                                            SubscriptionSchedulePlanChangeParams.AddPrice.Discount
-                                                .DiscountType
-                                                .PERCENTAGE
-                                        )
-                                        .amountDiscount("amount_discount")
-                                        .percentageDiscount(0.15)
-                                        .usageDiscount(0.0)
-                                        .build()
-                                )
-                            )
-                            .endDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
-                            .externalPriceId("external_price_id")
-                            .maximumAmount("1.23")
-                            .minimumAmount("1.23")
-                            .planPhaseOrder(0L)
-                            .price(
-                                SubscriptionSchedulePlanChangeParams.AddPrice.Price
-                                    .ofNewSubscriptionUnitPrice(
-                                        SubscriptionSchedulePlanChangeParams.AddPrice.Price
-                                            .NewSubscriptionUnitPrice
-                                            .builder()
-                                            .cadence(
-                                                SubscriptionSchedulePlanChangeParams.AddPrice.Price
-                                                    .NewSubscriptionUnitPrice
-                                                    .Cadence
-                                                    .ANNUAL
-                                            )
-                                            .itemId("item_id")
-                                            .modelType(
-                                                SubscriptionSchedulePlanChangeParams.AddPrice.Price
-                                                    .NewSubscriptionUnitPrice
-                                                    .ModelType
-                                                    .UNIT
-                                            )
-                                            .name("Annual fee")
-                                            .unitConfig(
-                                                SubscriptionSchedulePlanChangeParams.AddPrice.Price
-                                                    .NewSubscriptionUnitPrice
-                                                    .UnitConfig
-                                                    .builder()
-                                                    .unitAmount("unit_amount")
-                                                    .build()
-                                            )
-                                            .billableMetricId("billable_metric_id")
-                                            .billedInAdvance(true)
-                                            .billingCycleConfiguration(
-                                                SubscriptionSchedulePlanChangeParams.AddPrice.Price
-                                                    .NewSubscriptionUnitPrice
-                                                    .BillingCycleConfiguration
-                                                    .builder()
-                                                    .duration(0L)
-                                                    .durationUnit(
-                                                        SubscriptionSchedulePlanChangeParams
-                                                            .AddPrice
-                                                            .Price
-                                                            .NewSubscriptionUnitPrice
-                                                            .BillingCycleConfiguration
-                                                            .DurationUnit
-                                                            .DAY
-                                                    )
-                                                    .build()
-                                            )
-                                            .conversionRate(0.0)
-                                            .currency("currency")
-                                            .externalPriceId("external_price_id")
-                                            .fixedPriceQuantity(0.0)
-                                            .invoiceGroupingKey("invoice_grouping_key")
-                                            .invoicingCycleConfiguration(
-                                                SubscriptionSchedulePlanChangeParams.AddPrice.Price
-                                                    .NewSubscriptionUnitPrice
-                                                    .InvoicingCycleConfiguration
-                                                    .builder()
-                                                    .duration(0L)
-                                                    .durationUnit(
-                                                        SubscriptionSchedulePlanChangeParams
-                                                            .AddPrice
-                                                            .Price
-                                                            .NewSubscriptionUnitPrice
-                                                            .InvoicingCycleConfiguration
-                                                            .DurationUnit
-                                                            .DAY
-                                                    )
-                                                    .build()
-                                            )
-                                            .metadata(
-                                                SubscriptionSchedulePlanChangeParams.AddPrice.Price
-                                                    .NewSubscriptionUnitPrice
-                                                    .Metadata
-                                                    .builder()
-                                                    .putAdditionalProperty(
-                                                        "foo",
-                                                        JsonValue.from("string")
-                                                    )
-                                                    .build()
-                                            )
-                                            .referenceId("reference_id")
-                                            .build()
-                                    )
-                            )
-                            .priceId("h74gfhdjvn7ujokd")
-                            .startDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
-                            .build()
-                    )
-                )
-                .alignBillingWithPlanChangeDate(true)
-                .autoCollection(true)
-                .billingCycleAlignment(
-                    SubscriptionSchedulePlanChangeParams.BillingCycleAlignment.UNCHANGED
-                )
-                .billingCycleAnchorConfiguration(
-                    SubscriptionSchedulePlanChangeParams.BillingCycleAnchorConfiguration.builder()
-                        .day(1L)
-                        .month(1L)
-                        .year(0L)
-                        .build()
-                )
-                .changeDate(OffsetDateTime.parse("2017-07-21T17:32:28Z"))
-                .couponRedemptionCode("coupon_redemption_code")
-                .creditsOverageRate(0.0)
-                .defaultInvoiceMemo("default_invoice_memo")
-                .externalPlanId("ZMwNQefe7J3ecf7W")
-                .filter("my_property > 100 AND my_other_property = 'bar'")
-                .initialPhaseOrder(2L)
-                .invoicingThreshold("10.00")
-                .netTerms(0L)
-                .perCreditOverageAmount(0.0)
-                .planId("ZMwNQefe7J3ecf7W")
-                .planVersionNumber(0L)
-                .priceOverrides(listOf(JsonValue.from(mapOf<String, Any>())))
-                .removeAdjustments(
-                    listOf(
-                        SubscriptionSchedulePlanChangeParams.RemoveAdjustment.builder()
-                            .adjustmentId("h74gfhdjvn7ujokd")
-                            .build()
-                    )
-                )
-                .removePrices(
-                    listOf(
-                        SubscriptionSchedulePlanChangeParams.RemovePrice.builder()
-                            .externalPriceId("external_price_id")
-                            .priceId("h74gfhdjvn7ujokd")
-                            .build()
-                    )
-                )
-                .replaceAdjustments(
-                    listOf(
-                        SubscriptionSchedulePlanChangeParams.ReplaceAdjustment.builder()
-                            .adjustment(
-                                SubscriptionSchedulePlanChangeParams.ReplaceAdjustment.Adjustment
-                                    .ofNewPercentageDiscount(
-                                        SubscriptionSchedulePlanChangeParams.ReplaceAdjustment
-                                            .Adjustment
-                                            .NewPercentageDiscount
-                                            .builder()
-                                            .adjustmentType(
-                                                SubscriptionSchedulePlanChangeParams
-                                                    .ReplaceAdjustment
-                                                    .Adjustment
-                                                    .NewPercentageDiscount
-                                                    .AdjustmentType
-                                                    .PERCENTAGE_DISCOUNT
-                                            )
-                                            .appliesToPriceIds(listOf("price_1", "price_2"))
-                                            .percentageDiscount(0.0)
-                                            .isInvoiceLevel(true)
-                                            .build()
-                                    )
-                            )
-                            .replacesAdjustmentId("replaces_adjustment_id")
-                            .build()
-                    )
-                )
-                .replacePrices(
-                    listOf(
-                        SubscriptionSchedulePlanChangeParams.ReplacePrice.builder()
-                            .replacesPriceId("replaces_price_id")
-                            .discounts(
-                                listOf(
-                                    SubscriptionSchedulePlanChangeParams.ReplacePrice.Discount
-                                        .builder()
-                                        .discountType(
-                                            SubscriptionSchedulePlanChangeParams.ReplacePrice
-                                                .Discount
-                                                .DiscountType
-                                                .PERCENTAGE
-                                        )
-                                        .amountDiscount("amount_discount")
-                                        .percentageDiscount(0.15)
-                                        .usageDiscount(0.0)
-                                        .build()
-                                )
-                            )
-                            .externalPriceId("external_price_id")
-                            .fixedPriceQuantity(2.0)
-                            .maximumAmount("1.23")
-                            .minimumAmount("1.23")
-                            .price(
-                                SubscriptionSchedulePlanChangeParams.ReplacePrice.Price
-                                    .ofNewSubscriptionUnitPrice(
-                                        SubscriptionSchedulePlanChangeParams.ReplacePrice.Price
-                                            .NewSubscriptionUnitPrice
-                                            .builder()
-                                            .cadence(
-                                                SubscriptionSchedulePlanChangeParams.ReplacePrice
-                                                    .Price
-                                                    .NewSubscriptionUnitPrice
-                                                    .Cadence
-                                                    .ANNUAL
-                                            )
-                                            .itemId("item_id")
-                                            .modelType(
-                                                SubscriptionSchedulePlanChangeParams.ReplacePrice
-                                                    .Price
-                                                    .NewSubscriptionUnitPrice
-                                                    .ModelType
-                                                    .UNIT
-                                            )
-                                            .name("Annual fee")
-                                            .unitConfig(
-                                                SubscriptionSchedulePlanChangeParams.ReplacePrice
-                                                    .Price
-                                                    .NewSubscriptionUnitPrice
-                                                    .UnitConfig
-                                                    .builder()
-                                                    .unitAmount("unit_amount")
-                                                    .build()
-                                            )
-                                            .billableMetricId("billable_metric_id")
-                                            .billedInAdvance(true)
-                                            .billingCycleConfiguration(
-                                                SubscriptionSchedulePlanChangeParams.ReplacePrice
-                                                    .Price
-                                                    .NewSubscriptionUnitPrice
-                                                    .BillingCycleConfiguration
-                                                    .builder()
-                                                    .duration(0L)
-                                                    .durationUnit(
-                                                        SubscriptionSchedulePlanChangeParams
-                                                            .ReplacePrice
-                                                            .Price
-                                                            .NewSubscriptionUnitPrice
-                                                            .BillingCycleConfiguration
-                                                            .DurationUnit
-                                                            .DAY
-                                                    )
-                                                    .build()
-                                            )
-                                            .conversionRate(0.0)
-                                            .currency("currency")
-                                            .externalPriceId("external_price_id")
-                                            .fixedPriceQuantity(0.0)
-                                            .invoiceGroupingKey("invoice_grouping_key")
-                                            .invoicingCycleConfiguration(
-                                                SubscriptionSchedulePlanChangeParams.ReplacePrice
-                                                    .Price
-                                                    .NewSubscriptionUnitPrice
-                                                    .InvoicingCycleConfiguration
-                                                    .builder()
-                                                    .duration(0L)
-                                                    .durationUnit(
-                                                        SubscriptionSchedulePlanChangeParams
-                                                            .ReplacePrice
-                                                            .Price
-                                                            .NewSubscriptionUnitPrice
-                                                            .InvoicingCycleConfiguration
-                                                            .DurationUnit
-                                                            .DAY
-                                                    )
-                                                    .build()
-                                            )
-                                            .metadata(
-                                                SubscriptionSchedulePlanChangeParams.ReplacePrice
-                                                    .Price
-                                                    .NewSubscriptionUnitPrice
-                                                    .Metadata
-                                                    .builder()
-                                                    .putAdditionalProperty(
-                                                        "foo",
-                                                        JsonValue.from("string")
-                                                    )
-                                                    .build()
-                                            )
-                                            .referenceId("reference_id")
-                                            .build()
-                                    )
-                            )
-                            .priceId("h74gfhdjvn7ujokd")
-                            .build()
-                    )
-                )
                 .trialDurationDays(0L)
                 .build()
         val body = params.getBody()
@@ -687,7 +635,8 @@ class SubscriptionSchedulePlanChangeParamsTest {
                                                 .AdjustmentType
                                                 .PERCENTAGE_DISCOUNT
                                         )
-                                        .appliesToPriceIds(listOf("price_1", "price_2"))
+                                        .addAppliesToPriceId("price_1")
+                                        .addAppliesToPriceId("price_2")
                                         .percentageDiscount(0.0)
                                         .isInvoiceLevel(true)
                                         .build()
@@ -703,19 +652,17 @@ class SubscriptionSchedulePlanChangeParamsTest {
             .isEqualTo(
                 listOf(
                     SubscriptionSchedulePlanChangeParams.AddPrice.builder()
-                        .discounts(
-                            listOf(
-                                SubscriptionSchedulePlanChangeParams.AddPrice.Discount.builder()
-                                    .discountType(
-                                        SubscriptionSchedulePlanChangeParams.AddPrice.Discount
-                                            .DiscountType
-                                            .PERCENTAGE
-                                    )
-                                    .amountDiscount("amount_discount")
-                                    .percentageDiscount(0.15)
-                                    .usageDiscount(0.0)
-                                    .build()
-                            )
+                        .addDiscount(
+                            SubscriptionSchedulePlanChangeParams.AddPrice.Discount.builder()
+                                .discountType(
+                                    SubscriptionSchedulePlanChangeParams.AddPrice.Discount
+                                        .DiscountType
+                                        .PERCENTAGE
+                                )
+                                .amountDiscount("amount_discount")
+                                .percentageDiscount(0.15)
+                                .usageDiscount(0.0)
+                                .build()
                         )
                         .endDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                         .externalPriceId("external_price_id")
@@ -869,7 +816,8 @@ class SubscriptionSchedulePlanChangeParamsTest {
                                                 .AdjustmentType
                                                 .PERCENTAGE_DISCOUNT
                                         )
-                                        .appliesToPriceIds(listOf("price_1", "price_2"))
+                                        .addAppliesToPriceId("price_1")
+                                        .addAppliesToPriceId("price_2")
                                         .percentageDiscount(0.0)
                                         .isInvoiceLevel(true)
                                         .build()
@@ -884,19 +832,17 @@ class SubscriptionSchedulePlanChangeParamsTest {
                 listOf(
                     SubscriptionSchedulePlanChangeParams.ReplacePrice.builder()
                         .replacesPriceId("replaces_price_id")
-                        .discounts(
-                            listOf(
-                                SubscriptionSchedulePlanChangeParams.ReplacePrice.Discount.builder()
-                                    .discountType(
-                                        SubscriptionSchedulePlanChangeParams.ReplacePrice.Discount
-                                            .DiscountType
-                                            .PERCENTAGE
-                                    )
-                                    .amountDiscount("amount_discount")
-                                    .percentageDiscount(0.15)
-                                    .usageDiscount(0.0)
-                                    .build()
-                            )
+                        .addDiscount(
+                            SubscriptionSchedulePlanChangeParams.ReplacePrice.Discount.builder()
+                                .discountType(
+                                    SubscriptionSchedulePlanChangeParams.ReplacePrice.Discount
+                                        .DiscountType
+                                        .PERCENTAGE
+                                )
+                                .amountDiscount("amount_discount")
+                                .percentageDiscount(0.15)
+                                .usageDiscount(0.0)
+                                .build()
                         )
                         .externalPriceId("external_price_id")
                         .fixedPriceQuantity(2.0)

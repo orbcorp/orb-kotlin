@@ -14,7 +14,8 @@ class DimensionalPriceGroupTest {
             DimensionalPriceGroup.builder()
                 .id("id")
                 .billableMetricId("billable_metric_id")
-                .dimensions(listOf("region", "instance_type"))
+                .addDimension("region")
+                .addDimension("instance_type")
                 .externalDimensionalPriceGroupId("my_dimensional_price_group_id")
                 .metadata(
                     DimensionalPriceGroup.Metadata.builder()
