@@ -81,15 +81,13 @@ class InvoiceTest {
                 )
                 .discount(JsonValue.from(mapOf<String, Any>()))
                 .addDiscount(
-                    InvoiceLevelDiscount.ofPercentageDiscount(
-                        PercentageDiscount.builder()
-                            .addAppliesToPriceId("h74gfhdjvn7ujokd")
-                            .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
-                            .discountType(PercentageDiscount.DiscountType.PERCENTAGE)
-                            .percentageDiscount(0.15)
-                            .reason("reason")
-                            .build()
-                    )
+                    PercentageDiscount.builder()
+                        .addAppliesToPriceId("h74gfhdjvn7ujokd")
+                        .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
+                        .discountType(PercentageDiscount.DiscountType.PERCENTAGE)
+                        .percentageDiscount(0.15)
+                        .reason("reason")
+                        .build()
                 )
                 .dueDate(OffsetDateTime.parse("2022-05-30T07:00:00+00:00"))
                 .eligibleToIssueAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
@@ -105,15 +103,13 @@ class InvoiceTest {
                         .id("id")
                         .amount("7.00")
                         .discount(
-                            Discount.ofPercentageDiscount(
-                                PercentageDiscount.builder()
-                                    .addAppliesToPriceId("h74gfhdjvn7ujokd")
-                                    .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
-                                    .discountType(PercentageDiscount.DiscountType.PERCENTAGE)
-                                    .percentageDiscount(0.15)
-                                    .reason("reason")
-                                    .build()
-                            )
+                            PercentageDiscount.builder()
+                                .addAppliesToPriceId("h74gfhdjvn7ujokd")
+                                .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
+                                .discountType(PercentageDiscount.DiscountType.PERCENTAGE)
+                                .percentageDiscount(0.15)
+                                .reason("reason")
+                                .build()
                         )
                         .endDate(OffsetDateTime.parse("2022-02-01T08:00:00+00:00"))
                         .grouping("grouping")
@@ -133,117 +129,103 @@ class InvoiceTest {
                         .minimumAmount("minimum_amount")
                         .name("Fixed Fee")
                         .price(
-                            Price.ofUnitPrice(
-                                Price.UnitPrice.builder()
-                                    .id("id")
-                                    .billableMetric(
-                                        Price.UnitPrice.BillableMetric.builder().id("id").build()
-                                    )
-                                    .billingCycleConfiguration(
-                                        Price.UnitPrice.BillingCycleConfiguration.builder()
-                                            .duration(0L)
-                                            .durationUnit(
-                                                Price.UnitPrice.BillingCycleConfiguration
-                                                    .DurationUnit
-                                                    .DAY
-                                            )
-                                            .build()
-                                    )
-                                    .cadence(Price.UnitPrice.Cadence.ONE_TIME)
-                                    .conversionRate(0.0)
-                                    .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
-                                    .creditAllocation(
-                                        Price.UnitPrice.CreditAllocation.builder()
-                                            .allowsRollover(true)
-                                            .currency("currency")
-                                            .build()
-                                    )
-                                    .currency("currency")
-                                    .discount(
-                                        Discount.ofPercentageDiscount(
-                                            PercentageDiscount.builder()
-                                                .addAppliesToPriceId("h74gfhdjvn7ujokd")
-                                                .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
-                                                .discountType(
-                                                    PercentageDiscount.DiscountType.PERCENTAGE
-                                                )
-                                                .percentageDiscount(0.15)
-                                                .reason("reason")
-                                                .build()
+                            Price.UnitPrice.builder()
+                                .id("id")
+                                .billableMetric(
+                                    Price.UnitPrice.BillableMetric.builder().id("id").build()
+                                )
+                                .billingCycleConfiguration(
+                                    Price.UnitPrice.BillingCycleConfiguration.builder()
+                                        .duration(0L)
+                                        .durationUnit(
+                                            Price.UnitPrice.BillingCycleConfiguration.DurationUnit
+                                                .DAY
                                         )
-                                    )
-                                    .externalPriceId("external_price_id")
-                                    .fixedPriceQuantity(0.0)
-                                    .invoicingCycleConfiguration(
-                                        Price.UnitPrice.InvoicingCycleConfiguration.builder()
-                                            .duration(0L)
-                                            .durationUnit(
-                                                Price.UnitPrice.InvoicingCycleConfiguration
-                                                    .DurationUnit
-                                                    .DAY
-                                            )
-                                            .build()
-                                    )
-                                    .item(
-                                        Price.UnitPrice.Item.builder().id("id").name("name").build()
-                                    )
-                                    .maximum(
-                                        Price.UnitPrice.Maximum.builder()
-                                            .addAppliesToPriceId("string")
-                                            .maximumAmount("maximum_amount")
-                                            .build()
-                                    )
-                                    .maximumAmount("maximum_amount")
-                                    .metadata(
-                                        Price.UnitPrice.Metadata.builder()
-                                            .putAdditionalProperty("foo", JsonValue.from("string"))
-                                            .build()
-                                    )
-                                    .minimum(
-                                        Price.UnitPrice.Minimum.builder()
-                                            .addAppliesToPriceId("string")
-                                            .minimumAmount("minimum_amount")
-                                            .build()
-                                    )
-                                    .minimumAmount("minimum_amount")
-                                    .modelType(Price.UnitPrice.ModelType.UNIT)
-                                    .name("name")
-                                    .planPhaseOrder(0L)
-                                    .priceType(Price.UnitPrice.PriceType.USAGE_PRICE)
-                                    .unitConfig(
-                                        Price.UnitPrice.UnitConfig.builder()
-                                            .unitAmount("unit_amount")
-                                            .build()
-                                    )
-                                    .build()
-                            )
+                                        .build()
+                                )
+                                .cadence(Price.UnitPrice.Cadence.ONE_TIME)
+                                .conversionRate(0.0)
+                                .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                                .creditAllocation(
+                                    Price.UnitPrice.CreditAllocation.builder()
+                                        .allowsRollover(true)
+                                        .currency("currency")
+                                        .build()
+                                )
+                                .currency("currency")
+                                .discount(
+                                    PercentageDiscount.builder()
+                                        .addAppliesToPriceId("h74gfhdjvn7ujokd")
+                                        .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
+                                        .discountType(PercentageDiscount.DiscountType.PERCENTAGE)
+                                        .percentageDiscount(0.15)
+                                        .reason("reason")
+                                        .build()
+                                )
+                                .externalPriceId("external_price_id")
+                                .fixedPriceQuantity(0.0)
+                                .invoicingCycleConfiguration(
+                                    Price.UnitPrice.InvoicingCycleConfiguration.builder()
+                                        .duration(0L)
+                                        .durationUnit(
+                                            Price.UnitPrice.InvoicingCycleConfiguration.DurationUnit
+                                                .DAY
+                                        )
+                                        .build()
+                                )
+                                .item(Price.UnitPrice.Item.builder().id("id").name("name").build())
+                                .maximum(
+                                    Price.UnitPrice.Maximum.builder()
+                                        .addAppliesToPriceId("string")
+                                        .maximumAmount("maximum_amount")
+                                        .build()
+                                )
+                                .maximumAmount("maximum_amount")
+                                .metadata(
+                                    Price.UnitPrice.Metadata.builder()
+                                        .putAdditionalProperty("foo", JsonValue.from("string"))
+                                        .build()
+                                )
+                                .minimum(
+                                    Price.UnitPrice.Minimum.builder()
+                                        .addAppliesToPriceId("string")
+                                        .minimumAmount("minimum_amount")
+                                        .build()
+                                )
+                                .minimumAmount("minimum_amount")
+                                .modelType(Price.UnitPrice.ModelType.UNIT)
+                                .name("name")
+                                .planPhaseOrder(0L)
+                                .priceType(Price.UnitPrice.PriceType.USAGE_PRICE)
+                                .unitConfig(
+                                    Price.UnitPrice.UnitConfig.builder()
+                                        .unitAmount("unit_amount")
+                                        .build()
+                                )
+                                .build()
                         )
                         .quantity(1.0)
                         .startDate(OffsetDateTime.parse("2022-02-01T08:00:00+00:00"))
                         .addSubLineItem(
-                            Invoice.LineItem.SubLineItem.ofMatrixSubLineItem(
-                                Invoice.LineItem.SubLineItem.MatrixSubLineItem.builder()
-                                    .amount("9.00")
-                                    .grouping(
-                                        Invoice.LineItem.SubLineItem.MatrixSubLineItem.Grouping
-                                            .builder()
-                                            .key("region")
-                                            .value("west")
-                                            .build()
-                                    )
-                                    .matrixConfig(
-                                        Invoice.LineItem.SubLineItem.MatrixSubLineItem.MatrixConfig
-                                            .builder()
-                                            .addDimensionValue("string")
-                                            .build()
-                                    )
-                                    .name("Tier One")
-                                    .quantity(5.0)
-                                    .type(
-                                        Invoice.LineItem.SubLineItem.MatrixSubLineItem.Type.MATRIX
-                                    )
-                                    .build()
-                            )
+                            Invoice.LineItem.SubLineItem.MatrixSubLineItem.builder()
+                                .amount("9.00")
+                                .grouping(
+                                    Invoice.LineItem.SubLineItem.MatrixSubLineItem.Grouping
+                                        .builder()
+                                        .key("region")
+                                        .value("west")
+                                        .build()
+                                )
+                                .matrixConfig(
+                                    Invoice.LineItem.SubLineItem.MatrixSubLineItem.MatrixConfig
+                                        .builder()
+                                        .addDimensionValue("string")
+                                        .build()
+                                )
+                                .name("Tier One")
+                                .quantity(5.0)
+                                .type(Invoice.LineItem.SubLineItem.MatrixSubLineItem.Type.MATRIX)
+                                .build()
                         )
                         .subtotal("9.00")
                         .addTaxAmount(
@@ -412,15 +394,13 @@ class InvoiceTest {
                     .id("id")
                     .amount("7.00")
                     .discount(
-                        Discount.ofPercentageDiscount(
-                            PercentageDiscount.builder()
-                                .addAppliesToPriceId("h74gfhdjvn7ujokd")
-                                .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
-                                .discountType(PercentageDiscount.DiscountType.PERCENTAGE)
-                                .percentageDiscount(0.15)
-                                .reason("reason")
-                                .build()
-                        )
+                        PercentageDiscount.builder()
+                            .addAppliesToPriceId("h74gfhdjvn7ujokd")
+                            .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
+                            .discountType(PercentageDiscount.DiscountType.PERCENTAGE)
+                            .percentageDiscount(0.15)
+                            .reason("reason")
+                            .build()
                     )
                     .endDate(OffsetDateTime.parse("2022-02-01T08:00:00+00:00"))
                     .grouping("grouping")
@@ -440,111 +420,100 @@ class InvoiceTest {
                     .minimumAmount("minimum_amount")
                     .name("Fixed Fee")
                     .price(
-                        Price.ofUnitPrice(
-                            Price.UnitPrice.builder()
-                                .id("id")
-                                .billableMetric(
-                                    Price.UnitPrice.BillableMetric.builder().id("id").build()
-                                )
-                                .billingCycleConfiguration(
-                                    Price.UnitPrice.BillingCycleConfiguration.builder()
-                                        .duration(0L)
-                                        .durationUnit(
-                                            Price.UnitPrice.BillingCycleConfiguration.DurationUnit
-                                                .DAY
-                                        )
-                                        .build()
-                                )
-                                .cadence(Price.UnitPrice.Cadence.ONE_TIME)
-                                .conversionRate(0.0)
-                                .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
-                                .creditAllocation(
-                                    Price.UnitPrice.CreditAllocation.builder()
-                                        .allowsRollover(true)
-                                        .currency("currency")
-                                        .build()
-                                )
-                                .currency("currency")
-                                .discount(
-                                    Discount.ofPercentageDiscount(
-                                        PercentageDiscount.builder()
-                                            .addAppliesToPriceId("h74gfhdjvn7ujokd")
-                                            .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
-                                            .discountType(
-                                                PercentageDiscount.DiscountType.PERCENTAGE
-                                            )
-                                            .percentageDiscount(0.15)
-                                            .reason("reason")
-                                            .build()
+                        Price.UnitPrice.builder()
+                            .id("id")
+                            .billableMetric(
+                                Price.UnitPrice.BillableMetric.builder().id("id").build()
+                            )
+                            .billingCycleConfiguration(
+                                Price.UnitPrice.BillingCycleConfiguration.builder()
+                                    .duration(0L)
+                                    .durationUnit(
+                                        Price.UnitPrice.BillingCycleConfiguration.DurationUnit.DAY
                                     )
-                                )
-                                .externalPriceId("external_price_id")
-                                .fixedPriceQuantity(0.0)
-                                .invoicingCycleConfiguration(
-                                    Price.UnitPrice.InvoicingCycleConfiguration.builder()
-                                        .duration(0L)
-                                        .durationUnit(
-                                            Price.UnitPrice.InvoicingCycleConfiguration.DurationUnit
-                                                .DAY
-                                        )
-                                        .build()
-                                )
-                                .item(Price.UnitPrice.Item.builder().id("id").name("name").build())
-                                .maximum(
-                                    Price.UnitPrice.Maximum.builder()
-                                        .addAppliesToPriceId("string")
-                                        .maximumAmount("maximum_amount")
-                                        .build()
-                                )
-                                .maximumAmount("maximum_amount")
-                                .metadata(
-                                    Price.UnitPrice.Metadata.builder()
-                                        .putAdditionalProperty("foo", JsonValue.from("string"))
-                                        .build()
-                                )
-                                .minimum(
-                                    Price.UnitPrice.Minimum.builder()
-                                        .addAppliesToPriceId("string")
-                                        .minimumAmount("minimum_amount")
-                                        .build()
-                                )
-                                .minimumAmount("minimum_amount")
-                                .modelType(Price.UnitPrice.ModelType.UNIT)
-                                .name("name")
-                                .planPhaseOrder(0L)
-                                .priceType(Price.UnitPrice.PriceType.USAGE_PRICE)
-                                .unitConfig(
-                                    Price.UnitPrice.UnitConfig.builder()
-                                        .unitAmount("unit_amount")
-                                        .build()
-                                )
-                                .build()
-                        )
+                                    .build()
+                            )
+                            .cadence(Price.UnitPrice.Cadence.ONE_TIME)
+                            .conversionRate(0.0)
+                            .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                            .creditAllocation(
+                                Price.UnitPrice.CreditAllocation.builder()
+                                    .allowsRollover(true)
+                                    .currency("currency")
+                                    .build()
+                            )
+                            .currency("currency")
+                            .discount(
+                                PercentageDiscount.builder()
+                                    .addAppliesToPriceId("h74gfhdjvn7ujokd")
+                                    .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
+                                    .discountType(PercentageDiscount.DiscountType.PERCENTAGE)
+                                    .percentageDiscount(0.15)
+                                    .reason("reason")
+                                    .build()
+                            )
+                            .externalPriceId("external_price_id")
+                            .fixedPriceQuantity(0.0)
+                            .invoicingCycleConfiguration(
+                                Price.UnitPrice.InvoicingCycleConfiguration.builder()
+                                    .duration(0L)
+                                    .durationUnit(
+                                        Price.UnitPrice.InvoicingCycleConfiguration.DurationUnit.DAY
+                                    )
+                                    .build()
+                            )
+                            .item(Price.UnitPrice.Item.builder().id("id").name("name").build())
+                            .maximum(
+                                Price.UnitPrice.Maximum.builder()
+                                    .addAppliesToPriceId("string")
+                                    .maximumAmount("maximum_amount")
+                                    .build()
+                            )
+                            .maximumAmount("maximum_amount")
+                            .metadata(
+                                Price.UnitPrice.Metadata.builder()
+                                    .putAdditionalProperty("foo", JsonValue.from("string"))
+                                    .build()
+                            )
+                            .minimum(
+                                Price.UnitPrice.Minimum.builder()
+                                    .addAppliesToPriceId("string")
+                                    .minimumAmount("minimum_amount")
+                                    .build()
+                            )
+                            .minimumAmount("minimum_amount")
+                            .modelType(Price.UnitPrice.ModelType.UNIT)
+                            .name("name")
+                            .planPhaseOrder(0L)
+                            .priceType(Price.UnitPrice.PriceType.USAGE_PRICE)
+                            .unitConfig(
+                                Price.UnitPrice.UnitConfig.builder()
+                                    .unitAmount("unit_amount")
+                                    .build()
+                            )
+                            .build()
                     )
                     .quantity(1.0)
                     .startDate(OffsetDateTime.parse("2022-02-01T08:00:00+00:00"))
                     .addSubLineItem(
-                        Invoice.LineItem.SubLineItem.ofMatrixSubLineItem(
-                            Invoice.LineItem.SubLineItem.MatrixSubLineItem.builder()
-                                .amount("9.00")
-                                .grouping(
-                                    Invoice.LineItem.SubLineItem.MatrixSubLineItem.Grouping
-                                        .builder()
-                                        .key("region")
-                                        .value("west")
-                                        .build()
-                                )
-                                .matrixConfig(
-                                    Invoice.LineItem.SubLineItem.MatrixSubLineItem.MatrixConfig
-                                        .builder()
-                                        .addDimensionValue("string")
-                                        .build()
-                                )
-                                .name("Tier One")
-                                .quantity(5.0)
-                                .type(Invoice.LineItem.SubLineItem.MatrixSubLineItem.Type.MATRIX)
-                                .build()
-                        )
+                        Invoice.LineItem.SubLineItem.MatrixSubLineItem.builder()
+                            .amount("9.00")
+                            .grouping(
+                                Invoice.LineItem.SubLineItem.MatrixSubLineItem.Grouping.builder()
+                                    .key("region")
+                                    .value("west")
+                                    .build()
+                            )
+                            .matrixConfig(
+                                Invoice.LineItem.SubLineItem.MatrixSubLineItem.MatrixConfig
+                                    .builder()
+                                    .addDimensionValue("string")
+                                    .build()
+                            )
+                            .name("Tier One")
+                            .quantity(5.0)
+                            .type(Invoice.LineItem.SubLineItem.MatrixSubLineItem.Type.MATRIX)
+                            .build()
                     )
                     .subtotal("9.00")
                     .addTaxAmount(

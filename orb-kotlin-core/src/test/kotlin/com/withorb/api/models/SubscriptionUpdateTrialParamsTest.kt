@@ -12,11 +12,7 @@ class SubscriptionUpdateTrialParamsTest {
     fun createSubscriptionUpdateTrialParams() {
         SubscriptionUpdateTrialParams.builder()
             .subscriptionId("subscription_id")
-            .trialEndDate(
-                SubscriptionUpdateTrialParams.TrialEndDate.ofOffsetDateTime(
-                    OffsetDateTime.parse("2017-07-21T17:32:28Z")
-                )
-            )
+            .trialEndDate(OffsetDateTime.parse("2017-07-21T17:32:28Z"))
             .shift(true)
             .build()
     }
@@ -26,11 +22,7 @@ class SubscriptionUpdateTrialParamsTest {
         val params =
             SubscriptionUpdateTrialParams.builder()
                 .subscriptionId("subscription_id")
-                .trialEndDate(
-                    SubscriptionUpdateTrialParams.TrialEndDate.ofOffsetDateTime(
-                        OffsetDateTime.parse("2017-07-21T17:32:28Z")
-                    )
-                )
+                .trialEndDate(OffsetDateTime.parse("2017-07-21T17:32:28Z"))
                 .shift(true)
                 .build()
         val body = params.getBody()
@@ -49,11 +41,7 @@ class SubscriptionUpdateTrialParamsTest {
         val params =
             SubscriptionUpdateTrialParams.builder()
                 .subscriptionId("subscription_id")
-                .trialEndDate(
-                    SubscriptionUpdateTrialParams.TrialEndDate.ofOffsetDateTime(
-                        OffsetDateTime.parse("2017-07-21T17:32:28Z")
-                    )
-                )
+                .trialEndDate(OffsetDateTime.parse("2017-07-21T17:32:28Z"))
                 .build()
         val body = params.getBody()
         assertThat(body).isNotNull
@@ -70,11 +58,7 @@ class SubscriptionUpdateTrialParamsTest {
         val params =
             SubscriptionUpdateTrialParams.builder()
                 .subscriptionId("subscription_id")
-                .trialEndDate(
-                    SubscriptionUpdateTrialParams.TrialEndDate.ofOffsetDateTime(
-                        OffsetDateTime.parse("2017-07-21T17:32:28Z")
-                    )
-                )
+                .trialEndDate(OffsetDateTime.parse("2017-07-21T17:32:28Z"))
                 .build()
         assertThat(params).isNotNull
         // path param "subscriptionId"

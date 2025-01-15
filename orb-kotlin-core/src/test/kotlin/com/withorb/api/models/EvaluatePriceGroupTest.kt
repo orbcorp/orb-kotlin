@@ -12,7 +12,7 @@ class EvaluatePriceGroupTest {
         val evaluatePriceGroup =
             EvaluatePriceGroup.builder()
                 .amount("amount")
-                .addGroupingValue(EvaluatePriceGroup.GroupingValue.ofString("string"))
+                .addGroupingValue("string")
                 .quantity(0.0)
                 .build()
         assertThat(evaluatePriceGroup).isNotNull
