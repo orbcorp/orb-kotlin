@@ -12,7 +12,8 @@ class AmountDiscountTest {
         val amountDiscount =
             AmountDiscount.builder()
                 .amountDiscount("amount_discount")
-                .appliesToPriceIds(listOf("h74gfhdjvn7ujokd", "7hfgtgjnbvc3ujkl"))
+                .addAppliesToPriceId("h74gfhdjvn7ujokd")
+                .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                 .discountType(AmountDiscount.DiscountType.AMOUNT)
                 .reason("reason")
                 .build()

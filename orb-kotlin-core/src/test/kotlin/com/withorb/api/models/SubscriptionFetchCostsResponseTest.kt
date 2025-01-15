@@ -13,141 +13,9 @@ class SubscriptionFetchCostsResponseTest {
     fun createSubscriptionFetchCostsResponse() {
         val subscriptionFetchCostsResponse =
             SubscriptionFetchCostsResponse.builder()
-                .data(
-                    listOf(
-                        SubscriptionFetchCostsResponse.Data.builder()
-                            .perPriceCosts(
-                                listOf(
-                                    SubscriptionFetchCostsResponse.Data.PerPriceCost.builder()
-                                        .price(
-                                            Price.ofUnitPrice(
-                                                Price.UnitPrice.builder()
-                                                    .id("id")
-                                                    .billableMetric(
-                                                        Price.UnitPrice.BillableMetric.builder()
-                                                            .id("id")
-                                                            .build()
-                                                    )
-                                                    .billingCycleConfiguration(
-                                                        Price.UnitPrice.BillingCycleConfiguration
-                                                            .builder()
-                                                            .duration(0L)
-                                                            .durationUnit(
-                                                                Price.UnitPrice
-                                                                    .BillingCycleConfiguration
-                                                                    .DurationUnit
-                                                                    .DAY
-                                                            )
-                                                            .build()
-                                                    )
-                                                    .cadence(Price.UnitPrice.Cadence.ONE_TIME)
-                                                    .conversionRate(0.0)
-                                                    .createdAt(
-                                                        OffsetDateTime.parse(
-                                                            "2019-12-27T18:11:19.117Z"
-                                                        )
-                                                    )
-                                                    .creditAllocation(
-                                                        Price.UnitPrice.CreditAllocation.builder()
-                                                            .allowsRollover(true)
-                                                            .currency("currency")
-                                                            .build()
-                                                    )
-                                                    .currency("currency")
-                                                    .discount(
-                                                        Discount.ofPercentageDiscount(
-                                                            PercentageDiscount.builder()
-                                                                .appliesToPriceIds(
-                                                                    listOf(
-                                                                        "h74gfhdjvn7ujokd",
-                                                                        "7hfgtgjnbvc3ujkl"
-                                                                    )
-                                                                )
-                                                                .discountType(
-                                                                    PercentageDiscount.DiscountType
-                                                                        .PERCENTAGE
-                                                                )
-                                                                .percentageDiscount(0.15)
-                                                                .reason("reason")
-                                                                .build()
-                                                        )
-                                                    )
-                                                    .externalPriceId("external_price_id")
-                                                    .fixedPriceQuantity(0.0)
-                                                    .invoicingCycleConfiguration(
-                                                        Price.UnitPrice.InvoicingCycleConfiguration
-                                                            .builder()
-                                                            .duration(0L)
-                                                            .durationUnit(
-                                                                Price.UnitPrice
-                                                                    .InvoicingCycleConfiguration
-                                                                    .DurationUnit
-                                                                    .DAY
-                                                            )
-                                                            .build()
-                                                    )
-                                                    .item(
-                                                        Price.UnitPrice.Item.builder()
-                                                            .id("id")
-                                                            .name("name")
-                                                            .build()
-                                                    )
-                                                    .maximum(
-                                                        Price.UnitPrice.Maximum.builder()
-                                                            .appliesToPriceIds(listOf("string"))
-                                                            .maximumAmount("maximum_amount")
-                                                            .build()
-                                                    )
-                                                    .maximumAmount("maximum_amount")
-                                                    .metadata(
-                                                        Price.UnitPrice.Metadata.builder()
-                                                            .putAdditionalProperty(
-                                                                "foo",
-                                                                JsonValue.from("string")
-                                                            )
-                                                            .build()
-                                                    )
-                                                    .minimum(
-                                                        Price.UnitPrice.Minimum.builder()
-                                                            .appliesToPriceIds(listOf("string"))
-                                                            .minimumAmount("minimum_amount")
-                                                            .build()
-                                                    )
-                                                    .minimumAmount("minimum_amount")
-                                                    .modelType(Price.UnitPrice.ModelType.UNIT)
-                                                    .name("name")
-                                                    .planPhaseOrder(0L)
-                                                    .priceType(
-                                                        Price.UnitPrice.PriceType.USAGE_PRICE
-                                                    )
-                                                    .unitConfig(
-                                                        Price.UnitPrice.UnitConfig.builder()
-                                                            .unitAmount("unit_amount")
-                                                            .build()
-                                                    )
-                                                    .build()
-                                            )
-                                        )
-                                        .subtotal("subtotal")
-                                        .total("total")
-                                        .quantity(0.0)
-                                        .build()
-                                )
-                            )
-                            .subtotal("subtotal")
-                            .timeframeEnd(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
-                            .timeframeStart(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
-                            .total("total")
-                            .build()
-                    )
-                )
-                .build()
-        assertThat(subscriptionFetchCostsResponse).isNotNull
-        assertThat(subscriptionFetchCostsResponse.data())
-            .containsExactly(
-                SubscriptionFetchCostsResponse.Data.builder()
-                    .perPriceCosts(
-                        listOf(
+                .addData(
+                    SubscriptionFetchCostsResponse.Data.builder()
+                        .addPerPriceCost(
                             SubscriptionFetchCostsResponse.Data.PerPriceCost.builder()
                                 .price(
                                     Price.ofUnitPrice(
@@ -183,12 +51,8 @@ class SubscriptionFetchCostsResponseTest {
                                             .discount(
                                                 Discount.ofPercentageDiscount(
                                                     PercentageDiscount.builder()
-                                                        .appliesToPriceIds(
-                                                            listOf(
-                                                                "h74gfhdjvn7ujokd",
-                                                                "7hfgtgjnbvc3ujkl"
-                                                            )
-                                                        )
+                                                        .addAppliesToPriceId("h74gfhdjvn7ujokd")
+                                                        .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                                                         .discountType(
                                                             PercentageDiscount.DiscountType
                                                                 .PERCENTAGE
@@ -219,7 +83,7 @@ class SubscriptionFetchCostsResponseTest {
                                             )
                                             .maximum(
                                                 Price.UnitPrice.Maximum.builder()
-                                                    .appliesToPriceIds(listOf("string"))
+                                                    .addAppliesToPriceId("string")
                                                     .maximumAmount("maximum_amount")
                                                     .build()
                                             )
@@ -234,7 +98,7 @@ class SubscriptionFetchCostsResponseTest {
                                             )
                                             .minimum(
                                                 Price.UnitPrice.Minimum.builder()
-                                                    .appliesToPriceIds(listOf("string"))
+                                                    .addAppliesToPriceId("string")
                                                     .minimumAmount("minimum_amount")
                                                     .build()
                                             )
@@ -256,6 +120,117 @@ class SubscriptionFetchCostsResponseTest {
                                 .quantity(0.0)
                                 .build()
                         )
+                        .subtotal("subtotal")
+                        .timeframeEnd(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                        .timeframeStart(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                        .total("total")
+                        .build()
+                )
+                .build()
+        assertThat(subscriptionFetchCostsResponse).isNotNull
+        assertThat(subscriptionFetchCostsResponse.data())
+            .containsExactly(
+                SubscriptionFetchCostsResponse.Data.builder()
+                    .addPerPriceCost(
+                        SubscriptionFetchCostsResponse.Data.PerPriceCost.builder()
+                            .price(
+                                Price.ofUnitPrice(
+                                    Price.UnitPrice.builder()
+                                        .id("id")
+                                        .billableMetric(
+                                            Price.UnitPrice.BillableMetric.builder()
+                                                .id("id")
+                                                .build()
+                                        )
+                                        .billingCycleConfiguration(
+                                            Price.UnitPrice.BillingCycleConfiguration.builder()
+                                                .duration(0L)
+                                                .durationUnit(
+                                                    Price.UnitPrice.BillingCycleConfiguration
+                                                        .DurationUnit
+                                                        .DAY
+                                                )
+                                                .build()
+                                        )
+                                        .cadence(Price.UnitPrice.Cadence.ONE_TIME)
+                                        .conversionRate(0.0)
+                                        .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                                        .creditAllocation(
+                                            Price.UnitPrice.CreditAllocation.builder()
+                                                .allowsRollover(true)
+                                                .currency("currency")
+                                                .build()
+                                        )
+                                        .currency("currency")
+                                        .discount(
+                                            Discount.ofPercentageDiscount(
+                                                PercentageDiscount.builder()
+                                                    .addAppliesToPriceId("h74gfhdjvn7ujokd")
+                                                    .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
+                                                    .discountType(
+                                                        PercentageDiscount.DiscountType.PERCENTAGE
+                                                    )
+                                                    .percentageDiscount(0.15)
+                                                    .reason("reason")
+                                                    .build()
+                                            )
+                                        )
+                                        .externalPriceId("external_price_id")
+                                        .fixedPriceQuantity(0.0)
+                                        .invoicingCycleConfiguration(
+                                            Price.UnitPrice.InvoicingCycleConfiguration.builder()
+                                                .duration(0L)
+                                                .durationUnit(
+                                                    Price.UnitPrice.InvoicingCycleConfiguration
+                                                        .DurationUnit
+                                                        .DAY
+                                                )
+                                                .build()
+                                        )
+                                        .item(
+                                            Price.UnitPrice.Item.builder()
+                                                .id("id")
+                                                .name("name")
+                                                .build()
+                                        )
+                                        .maximum(
+                                            Price.UnitPrice.Maximum.builder()
+                                                .addAppliesToPriceId("string")
+                                                .maximumAmount("maximum_amount")
+                                                .build()
+                                        )
+                                        .maximumAmount("maximum_amount")
+                                        .metadata(
+                                            Price.UnitPrice.Metadata.builder()
+                                                .putAdditionalProperty(
+                                                    "foo",
+                                                    JsonValue.from("string")
+                                                )
+                                                .build()
+                                        )
+                                        .minimum(
+                                            Price.UnitPrice.Minimum.builder()
+                                                .addAppliesToPriceId("string")
+                                                .minimumAmount("minimum_amount")
+                                                .build()
+                                        )
+                                        .minimumAmount("minimum_amount")
+                                        .modelType(Price.UnitPrice.ModelType.UNIT)
+                                        .name("name")
+                                        .planPhaseOrder(0L)
+                                        .priceType(Price.UnitPrice.PriceType.USAGE_PRICE)
+                                        .unitConfig(
+                                            Price.UnitPrice.UnitConfig.builder()
+                                                .unitAmount("unit_amount")
+                                                .build()
+                                        )
+                                        .build()
+                                )
+                            )
+                            .subtotal("subtotal")
+                            .total("total")
+                            .quantity(0.0)
+                            .build()
                     )
                     .subtotal("subtotal")
                     .timeframeEnd(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))

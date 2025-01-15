@@ -19,15 +19,13 @@ class BillableMetricTest {
                     Item.builder()
                         .id("id")
                         .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
-                        .externalConnections(
-                            listOf(
-                                Item.ExternalConnection.builder()
-                                    .externalConnectionName(
-                                        Item.ExternalConnection.ExternalConnectionName.STRIPE
-                                    )
-                                    .externalEntityId("external_entity_id")
-                                    .build()
-                            )
+                        .addExternalConnection(
+                            Item.ExternalConnection.builder()
+                                .externalConnectionName(
+                                    Item.ExternalConnection.ExternalConnectionName.STRIPE
+                                )
+                                .externalEntityId("external_entity_id")
+                                .build()
                         )
                         .name("name")
                         .build()
@@ -48,15 +46,13 @@ class BillableMetricTest {
                 Item.builder()
                     .id("id")
                     .createdAt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
-                    .externalConnections(
-                        listOf(
-                            Item.ExternalConnection.builder()
-                                .externalConnectionName(
-                                    Item.ExternalConnection.ExternalConnectionName.STRIPE
-                                )
-                                .externalEntityId("external_entity_id")
-                                .build()
-                        )
+                    .addExternalConnection(
+                        Item.ExternalConnection.builder()
+                            .externalConnectionName(
+                                Item.ExternalConnection.ExternalConnectionName.STRIPE
+                            )
+                            .externalEntityId("external_entity_id")
+                            .build()
                     )
                     .name("name")
                     .build()

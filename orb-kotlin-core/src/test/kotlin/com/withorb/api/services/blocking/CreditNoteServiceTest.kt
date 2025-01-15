@@ -24,13 +24,11 @@ class CreditNoteServiceTest {
         val creditNote =
             creditNoteService.create(
                 CreditNoteCreateParams.builder()
-                    .lineItems(
-                        listOf(
-                            CreditNoteCreateParams.LineItem.builder()
-                                .amount("amount")
-                                .invoiceLineItemId("4khy3nwzktxv7")
-                                .build()
-                        )
+                    .addLineItem(
+                        CreditNoteCreateParams.LineItem.builder()
+                            .amount("amount")
+                            .invoiceLineItemId("4khy3nwzktxv7")
+                            .build()
                     )
                     .memo("An optional memo for my credit note.")
                     .reason(CreditNoteCreateParams.Reason.DUPLICATE)

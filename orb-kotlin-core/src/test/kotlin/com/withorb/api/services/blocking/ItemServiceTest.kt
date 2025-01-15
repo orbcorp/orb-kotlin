@@ -39,16 +39,13 @@ class ItemServiceTest {
             itemService.update(
                 ItemUpdateParams.builder()
                     .itemId("item_id")
-                    .externalConnections(
-                        listOf(
-                            ItemUpdateParams.ExternalConnection.builder()
-                                .externalConnectionName(
-                                    ItemUpdateParams.ExternalConnection.ExternalConnectionName
-                                        .STRIPE
-                                )
-                                .externalEntityId("external_entity_id")
-                                .build()
-                        )
+                    .addExternalConnection(
+                        ItemUpdateParams.ExternalConnection.builder()
+                            .externalConnectionName(
+                                ItemUpdateParams.ExternalConnection.ExternalConnectionName.STRIPE
+                            )
+                            .externalEntityId("external_entity_id")
+                            .build()
                     )
                     .name("name")
                     .build()

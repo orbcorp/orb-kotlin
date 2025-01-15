@@ -14,20 +14,18 @@ class CustomerUpdateByExternalIdParamsTest {
             .id("external_customer_id")
             .accountingSyncConfiguration(
                 CustomerUpdateByExternalIdParams.AccountingSyncConfiguration.builder()
-                    .accountingProviders(
-                        listOf(
-                            CustomerUpdateByExternalIdParams.AccountingSyncConfiguration
-                                .AccountingProvider
-                                .builder()
-                                .externalProviderId("external_provider_id")
-                                .providerType("provider_type")
-                                .build()
-                        )
+                    .addAccountingProvider(
+                        CustomerUpdateByExternalIdParams.AccountingSyncConfiguration
+                            .AccountingProvider
+                            .builder()
+                            .externalProviderId("external_provider_id")
+                            .providerType("provider_type")
+                            .build()
                     )
                     .excluded(true)
                     .build()
             )
-            .additionalEmails(listOf("string"))
+            .addAdditionalEmail("string")
             .autoCollection(true)
             .billingAddress(
                 CustomerUpdateByExternalIdParams.BillingAddress.builder()
@@ -98,20 +96,18 @@ class CustomerUpdateByExternalIdParamsTest {
                 .id("external_customer_id")
                 .accountingSyncConfiguration(
                     CustomerUpdateByExternalIdParams.AccountingSyncConfiguration.builder()
-                        .accountingProviders(
-                            listOf(
-                                CustomerUpdateByExternalIdParams.AccountingSyncConfiguration
-                                    .AccountingProvider
-                                    .builder()
-                                    .externalProviderId("external_provider_id")
-                                    .providerType("provider_type")
-                                    .build()
-                            )
+                        .addAccountingProvider(
+                            CustomerUpdateByExternalIdParams.AccountingSyncConfiguration
+                                .AccountingProvider
+                                .builder()
+                                .externalProviderId("external_provider_id")
+                                .providerType("provider_type")
+                                .build()
                         )
                         .excluded(true)
                         .build()
                 )
-                .additionalEmails(listOf("string"))
+                .addAdditionalEmail("string")
                 .autoCollection(true)
                 .billingAddress(
                     CustomerUpdateByExternalIdParams.BillingAddress.builder()
@@ -178,15 +174,13 @@ class CustomerUpdateByExternalIdParamsTest {
         assertThat(body.accountingSyncConfiguration())
             .isEqualTo(
                 CustomerUpdateByExternalIdParams.AccountingSyncConfiguration.builder()
-                    .accountingProviders(
-                        listOf(
-                            CustomerUpdateByExternalIdParams.AccountingSyncConfiguration
-                                .AccountingProvider
-                                .builder()
-                                .externalProviderId("external_provider_id")
-                                .providerType("provider_type")
-                                .build()
-                        )
+                    .addAccountingProvider(
+                        CustomerUpdateByExternalIdParams.AccountingSyncConfiguration
+                            .AccountingProvider
+                            .builder()
+                            .externalProviderId("external_provider_id")
+                            .providerType("provider_type")
+                            .build()
                     )
                     .excluded(true)
                     .build()

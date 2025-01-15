@@ -13,8 +13,8 @@ class AlertCreateForExternalCustomerParamsTest {
             .externalCustomerId("external_customer_id")
             .currency("currency")
             .type(AlertCreateForExternalCustomerParams.Type.USAGE_EXCEEDED)
-            .thresholds(
-                listOf(AlertCreateForExternalCustomerParams.Threshold.builder().value(0.0).build())
+            .addThreshold(
+                AlertCreateForExternalCustomerParams.Threshold.builder().value(0.0).build()
             )
             .build()
     }
@@ -26,10 +26,8 @@ class AlertCreateForExternalCustomerParamsTest {
                 .externalCustomerId("external_customer_id")
                 .currency("currency")
                 .type(AlertCreateForExternalCustomerParams.Type.USAGE_EXCEEDED)
-                .thresholds(
-                    listOf(
-                        AlertCreateForExternalCustomerParams.Threshold.builder().value(0.0).build()
-                    )
+                .addThreshold(
+                    AlertCreateForExternalCustomerParams.Threshold.builder().value(0.0).build()
                 )
                 .build()
         val body = params.getBody()
