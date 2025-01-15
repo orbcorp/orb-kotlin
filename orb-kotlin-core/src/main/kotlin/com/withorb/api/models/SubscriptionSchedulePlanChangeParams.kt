@@ -237,7 +237,8 @@ constructor(
 
     /**
      * The date that the plan change should take effect. This parameter can only be passed if the
-     * `change_option` is `requested_date`.
+     * `change_option` is `requested_date`. If a date with no time is passed, the plan change will
+     * happen at midnight in the customer's timezone.
      */
     fun changeDate(): OffsetDateTime? = body.changeDate()
 
@@ -371,7 +372,8 @@ constructor(
 
     /**
      * The date that the plan change should take effect. This parameter can only be passed if the
-     * `change_option` is `requested_date`.
+     * `change_option` is `requested_date`. If a date with no time is passed, the plan change will
+     * happen at midnight in the customer's timezone.
      */
     fun _changeDate(): JsonField<OffsetDateTime> = body._changeDate()
 
@@ -610,7 +612,8 @@ constructor(
 
         /**
          * The date that the plan change should take effect. This parameter can only be passed if
-         * the `change_option` is `requested_date`.
+         * the `change_option` is `requested_date`. If a date with no time is passed, the plan
+         * change will happen at midnight in the customer's timezone.
          */
         fun changeDate(): OffsetDateTime? = changeDate.getNullable("change_date")
 
@@ -764,7 +767,8 @@ constructor(
 
         /**
          * The date that the plan change should take effect. This parameter can only be passed if
-         * the `change_option` is `requested_date`.
+         * the `change_option` is `requested_date`. If a date with no time is passed, the plan
+         * change will happen at midnight in the customer's timezone.
          */
         @JsonProperty("change_date")
         @ExcludeMissing
@@ -1151,14 +1155,16 @@ constructor(
 
             /**
              * The date that the plan change should take effect. This parameter can only be passed
-             * if the `change_option` is `requested_date`.
+             * if the `change_option` is `requested_date`. If a date with no time is passed, the
+             * plan change will happen at midnight in the customer's timezone.
              */
             fun changeDate(changeDate: OffsetDateTime?) =
                 changeDate(JsonField.ofNullable(changeDate))
 
             /**
              * The date that the plan change should take effect. This parameter can only be passed
-             * if the `change_option` is `requested_date`.
+             * if the `change_option` is `requested_date`. If a date with no time is passed, the
+             * plan change will happen at midnight in the customer's timezone.
              */
             fun changeDate(changeDate: JsonField<OffsetDateTime>) = apply {
                 this.changeDate = changeDate
@@ -1714,13 +1720,15 @@ constructor(
 
         /**
          * The date that the plan change should take effect. This parameter can only be passed if
-         * the `change_option` is `requested_date`.
+         * the `change_option` is `requested_date`. If a date with no time is passed, the plan
+         * change will happen at midnight in the customer's timezone.
          */
         fun changeDate(changeDate: OffsetDateTime?) = apply { body.changeDate(changeDate) }
 
         /**
          * The date that the plan change should take effect. This parameter can only be passed if
-         * the `change_option` is `requested_date`.
+         * the `change_option` is `requested_date`. If a date with no time is passed, the plan
+         * change will happen at midnight in the customer's timezone.
          */
         fun changeDate(changeDate: JsonField<OffsetDateTime>) = apply {
             body.changeDate(changeDate)
