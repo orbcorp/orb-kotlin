@@ -11,7 +11,8 @@ class TrialDiscountTest {
     fun createTrialDiscount() {
         val trialDiscount =
             TrialDiscount.builder()
-                .appliesToPriceIds(listOf("h74gfhdjvn7ujokd", "7hfgtgjnbvc3ujkl"))
+                .addAppliesToPriceId("h74gfhdjvn7ujokd")
+                .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                 .discountType(TrialDiscount.DiscountType.TRIAL)
                 .reason("reason")
                 .trialAmountDiscount("trial_amount_discount")

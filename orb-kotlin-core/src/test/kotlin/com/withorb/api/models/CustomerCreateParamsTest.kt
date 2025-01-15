@@ -15,19 +15,17 @@ class CustomerCreateParamsTest {
             .name("x")
             .accountingSyncConfiguration(
                 CustomerCreateParams.AccountingSyncConfiguration.builder()
-                    .accountingProviders(
-                        listOf(
-                            CustomerCreateParams.AccountingSyncConfiguration.AccountingProvider
-                                .builder()
-                                .externalProviderId("external_provider_id")
-                                .providerType("provider_type")
-                                .build()
-                        )
+                    .addAccountingProvider(
+                        CustomerCreateParams.AccountingSyncConfiguration.AccountingProvider
+                            .builder()
+                            .externalProviderId("external_provider_id")
+                            .providerType("provider_type")
+                            .build()
                     )
                     .excluded(true)
                     .build()
             )
-            .additionalEmails(listOf("string"))
+            .addAdditionalEmail("string")
             .autoCollection(true)
             .billingAddress(
                 CustomerCreateParams.BillingAddress.builder()
@@ -94,19 +92,17 @@ class CustomerCreateParamsTest {
                 .name("x")
                 .accountingSyncConfiguration(
                     CustomerCreateParams.AccountingSyncConfiguration.builder()
-                        .accountingProviders(
-                            listOf(
-                                CustomerCreateParams.AccountingSyncConfiguration.AccountingProvider
-                                    .builder()
-                                    .externalProviderId("external_provider_id")
-                                    .providerType("provider_type")
-                                    .build()
-                            )
+                        .addAccountingProvider(
+                            CustomerCreateParams.AccountingSyncConfiguration.AccountingProvider
+                                .builder()
+                                .externalProviderId("external_provider_id")
+                                .providerType("provider_type")
+                                .build()
                         )
                         .excluded(true)
                         .build()
                 )
-                .additionalEmails(listOf("string"))
+                .addAdditionalEmail("string")
                 .autoCollection(true)
                 .billingAddress(
                     CustomerCreateParams.BillingAddress.builder()
@@ -170,14 +166,12 @@ class CustomerCreateParamsTest {
         assertThat(body.accountingSyncConfiguration())
             .isEqualTo(
                 CustomerCreateParams.AccountingSyncConfiguration.builder()
-                    .accountingProviders(
-                        listOf(
-                            CustomerCreateParams.AccountingSyncConfiguration.AccountingProvider
-                                .builder()
-                                .externalProviderId("external_provider_id")
-                                .providerType("provider_type")
-                                .build()
-                        )
+                    .addAccountingProvider(
+                        CustomerCreateParams.AccountingSyncConfiguration.AccountingProvider
+                            .builder()
+                            .externalProviderId("external_provider_id")
+                            .providerType("provider_type")
+                            .build()
                     )
                     .excluded(true)
                     .build()

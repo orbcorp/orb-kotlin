@@ -11,16 +11,12 @@ class PriceEvaluateResponseTest {
     fun createPriceEvaluateResponse() {
         val priceEvaluateResponse =
             PriceEvaluateResponse.builder()
-                .data(
-                    listOf(
-                        EvaluatePriceGroup.builder()
-                            .amount("amount")
-                            .groupingValues(
-                                listOf(EvaluatePriceGroup.GroupingValue.ofString("string"))
-                            )
-                            .quantity(0.0)
-                            .build()
-                    )
+                .addData(
+                    EvaluatePriceGroup.builder()
+                        .amount("amount")
+                        .addGroupingValue(EvaluatePriceGroup.GroupingValue.ofString("string"))
+                        .quantity(0.0)
+                        .build()
                 )
                 .build()
         assertThat(priceEvaluateResponse).isNotNull
@@ -28,7 +24,7 @@ class PriceEvaluateResponseTest {
             .containsExactly(
                 EvaluatePriceGroup.builder()
                     .amount("amount")
-                    .groupingValues(listOf(EvaluatePriceGroup.GroupingValue.ofString("string")))
+                    .addGroupingValue(EvaluatePriceGroup.GroupingValue.ofString("string"))
                     .quantity(0.0)
                     .build()
             )

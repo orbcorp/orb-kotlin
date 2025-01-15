@@ -11,7 +11,8 @@ class PercentageDiscountTest {
     fun createPercentageDiscount() {
         val percentageDiscount =
             PercentageDiscount.builder()
-                .appliesToPriceIds(listOf("h74gfhdjvn7ujokd", "7hfgtgjnbvc3ujkl"))
+                .addAppliesToPriceId("h74gfhdjvn7ujokd")
+                .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
                 .discountType(PercentageDiscount.DiscountType.PERCENTAGE)
                 .percentageDiscount(0.15)
                 .reason("reason")

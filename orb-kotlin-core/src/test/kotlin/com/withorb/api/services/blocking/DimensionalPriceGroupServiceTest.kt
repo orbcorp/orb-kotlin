@@ -26,7 +26,8 @@ class DimensionalPriceGroupServiceTest {
             dimensionalPriceGroupService.create(
                 DimensionalPriceGroupCreateParams.builder()
                     .billableMetricId("billable_metric_id")
-                    .dimensions(listOf("region", "instance_type"))
+                    .addDimension("region")
+                    .addDimension("instance_type")
                     .name("name")
                     .externalDimensionalPriceGroupId("external_dimensional_price_group_id")
                     .metadata(

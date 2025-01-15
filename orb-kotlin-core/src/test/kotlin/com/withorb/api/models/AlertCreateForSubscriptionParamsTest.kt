@@ -11,9 +11,7 @@ class AlertCreateForSubscriptionParamsTest {
     fun createAlertCreateForSubscriptionParams() {
         AlertCreateForSubscriptionParams.builder()
             .subscriptionId("subscription_id")
-            .thresholds(
-                listOf(AlertCreateForSubscriptionParams.Threshold.builder().value(0.0).build())
-            )
+            .addThreshold(AlertCreateForSubscriptionParams.Threshold.builder().value(0.0).build())
             .type(AlertCreateForSubscriptionParams.Type.USAGE_EXCEEDED)
             .metricId("metric_id")
             .build()
@@ -24,8 +22,8 @@ class AlertCreateForSubscriptionParamsTest {
         val params =
             AlertCreateForSubscriptionParams.builder()
                 .subscriptionId("subscription_id")
-                .thresholds(
-                    listOf(AlertCreateForSubscriptionParams.Threshold.builder().value(0.0).build())
+                .addThreshold(
+                    AlertCreateForSubscriptionParams.Threshold.builder().value(0.0).build()
                 )
                 .type(AlertCreateForSubscriptionParams.Type.USAGE_EXCEEDED)
                 .metricId("metric_id")
@@ -45,8 +43,8 @@ class AlertCreateForSubscriptionParamsTest {
         val params =
             AlertCreateForSubscriptionParams.builder()
                 .subscriptionId("subscription_id")
-                .thresholds(
-                    listOf(AlertCreateForSubscriptionParams.Threshold.builder().value(0.0).build())
+                .addThreshold(
+                    AlertCreateForSubscriptionParams.Threshold.builder().value(0.0).build()
                 )
                 .type(AlertCreateForSubscriptionParams.Type.USAGE_EXCEEDED)
                 .build()
@@ -64,8 +62,8 @@ class AlertCreateForSubscriptionParamsTest {
         val params =
             AlertCreateForSubscriptionParams.builder()
                 .subscriptionId("subscription_id")
-                .thresholds(
-                    listOf(AlertCreateForSubscriptionParams.Threshold.builder().value(0.0).build())
+                .addThreshold(
+                    AlertCreateForSubscriptionParams.Threshold.builder().value(0.0).build()
                 )
                 .type(AlertCreateForSubscriptionParams.Type.USAGE_EXCEEDED)
                 .build()

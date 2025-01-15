@@ -44,7 +44,7 @@ class AlertServiceTest {
             alertService.update(
                 AlertUpdateParams.builder()
                     .alertConfigurationId("alert_configuration_id")
-                    .thresholds(listOf(AlertUpdateParams.Threshold.builder().value(0.0).build()))
+                    .addThreshold(AlertUpdateParams.Threshold.builder().value(0.0).build())
                     .build()
             )
         println(alert)
@@ -79,8 +79,8 @@ class AlertServiceTest {
                     .customerId("customer_id")
                     .currency("currency")
                     .type(AlertCreateForCustomerParams.Type.USAGE_EXCEEDED)
-                    .thresholds(
-                        listOf(AlertCreateForCustomerParams.Threshold.builder().value(0.0).build())
+                    .addThreshold(
+                        AlertCreateForCustomerParams.Threshold.builder().value(0.0).build()
                     )
                     .build()
             )
@@ -102,12 +102,8 @@ class AlertServiceTest {
                     .externalCustomerId("external_customer_id")
                     .currency("currency")
                     .type(AlertCreateForExternalCustomerParams.Type.USAGE_EXCEEDED)
-                    .thresholds(
-                        listOf(
-                            AlertCreateForExternalCustomerParams.Threshold.builder()
-                                .value(0.0)
-                                .build()
-                        )
+                    .addThreshold(
+                        AlertCreateForExternalCustomerParams.Threshold.builder().value(0.0).build()
                     )
                     .build()
             )
@@ -127,10 +123,8 @@ class AlertServiceTest {
             alertService.createForSubscription(
                 AlertCreateForSubscriptionParams.builder()
                     .subscriptionId("subscription_id")
-                    .thresholds(
-                        listOf(
-                            AlertCreateForSubscriptionParams.Threshold.builder().value(0.0).build()
-                        )
+                    .addThreshold(
+                        AlertCreateForSubscriptionParams.Threshold.builder().value(0.0).build()
                     )
                     .type(AlertCreateForSubscriptionParams.Type.USAGE_EXCEEDED)
                     .metricId("metric_id")

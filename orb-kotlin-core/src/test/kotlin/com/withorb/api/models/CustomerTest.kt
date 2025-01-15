@@ -14,7 +14,7 @@ class CustomerTest {
         val customer =
             Customer.builder()
                 .id("id")
-                .additionalEmails(listOf("string"))
+                .addAdditionalEmail("string")
                 .autoCollection(true)
                 .balance("balance")
                 .billingAddress(
@@ -62,17 +62,15 @@ class CustomerTest {
                 .timezone("timezone")
                 .accountingSyncConfiguration(
                     Customer.AccountingSyncConfiguration.builder()
-                        .accountingProviders(
-                            listOf(
-                                Customer.AccountingSyncConfiguration.AccountingProvider.builder()
-                                    .externalProviderId("external_provider_id")
-                                    .providerType(
-                                        Customer.AccountingSyncConfiguration.AccountingProvider
-                                            .ProviderType
-                                            .QUICKBOOKS
-                                    )
-                                    .build()
-                            )
+                        .addAccountingProvider(
+                            Customer.AccountingSyncConfiguration.AccountingProvider.builder()
+                                .externalProviderId("external_provider_id")
+                                .providerType(
+                                    Customer.AccountingSyncConfiguration.AccountingProvider
+                                        .ProviderType
+                                        .QUICKBOOKS
+                                )
+                                .build()
                         )
                         .excluded(true)
                         .build()
@@ -136,17 +134,14 @@ class CustomerTest {
         assertThat(customer.accountingSyncConfiguration())
             .isEqualTo(
                 Customer.AccountingSyncConfiguration.builder()
-                    .accountingProviders(
-                        listOf(
-                            Customer.AccountingSyncConfiguration.AccountingProvider.builder()
-                                .externalProviderId("external_provider_id")
-                                .providerType(
-                                    Customer.AccountingSyncConfiguration.AccountingProvider
-                                        .ProviderType
-                                        .QUICKBOOKS
-                                )
-                                .build()
-                        )
+                    .addAccountingProvider(
+                        Customer.AccountingSyncConfiguration.AccountingProvider.builder()
+                            .externalProviderId("external_provider_id")
+                            .providerType(
+                                Customer.AccountingSyncConfiguration.AccountingProvider.ProviderType
+                                    .QUICKBOOKS
+                            )
+                            .build()
                     )
                     .excluded(true)
                     .build()

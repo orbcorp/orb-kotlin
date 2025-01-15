@@ -134,9 +134,7 @@ class PriceServiceTest {
                     .customerId("customer_id")
                     .externalCustomerId("external_customer_id")
                     .filter("my_numeric_property > 100 AND my_other_property = 'bar'")
-                    .groupingKeys(
-                        listOf("case when my_event_type = 'foo' then true else false end")
-                    )
+                    .addGroupingKey("case when my_event_type = 'foo' then true else false end")
                     .build()
             )
         println(priceEvaluateResponse)
