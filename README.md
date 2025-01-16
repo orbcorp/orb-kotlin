@@ -1,5 +1,11 @@
 # Orb Kotlin API Library
 
+<!-- x-release-please-start-version -->
+
+[![Maven Central](https://img.shields.io/maven-central/v/com.withorb.api/orb-kotlin)](https://central.sonatype.com/artifact/com.withorb.api/orb-kotlin/0.1.0-alpha.10)
+
+<!-- x-release-please-end -->
+
 The Orb Kotlin SDK provides convenient access to the Orb REST API from applications written in Kotlin. It includes helper classes with helpful types and documentation for every request and response property.
 
 The Orb Kotlin SDK is similar to the Orb Java SDK but with minor differences that make it more ergonomic for use in Kotlin, such as nullable values instead of `Optional`, `Sequence` instead of `Stream`, and suspend functions instead of `CompletableFuture`.
