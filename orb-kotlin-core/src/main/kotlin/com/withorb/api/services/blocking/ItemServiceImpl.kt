@@ -29,7 +29,7 @@ constructor(
     private val createHandler: Handler<Item> =
         jsonHandler<Item>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
 
-    /** This endpoint is used to create an [Item](../guides/concepts#item). */
+    /** This endpoint is used to create an [Item](/core-concepts#item). */
     override fun create(params: ItemCreateParams, requestOptions: RequestOptions): Item {
         val request =
             HttpRequest.builder()

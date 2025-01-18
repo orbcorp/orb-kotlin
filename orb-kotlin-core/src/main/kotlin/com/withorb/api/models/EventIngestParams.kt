@@ -179,7 +179,7 @@ import java.util.Objects
  *
  * If `debug=true` is not specified, the response will only contain `validation_failed`. Orb will
  * still honor the idempotency guarantees set
- * [here](../guides/events-and-metrics/event-ingestion#event-volume-and-concurrency) in all cases.
+ * [here](/events-and-metrics/event-ingestion#event-volume-and-concurrency) in all cases.
  *
  * We strongly recommend that you only use debug mode as part of testing your initial Orb
  * integration. Once you're ready to switch to production, disable debug mode to take advantage of

@@ -43,11 +43,11 @@ import java.util.Objects
  * for that customer. If neither is specified, the backfill will affect all customers.
  *
  * When `replace_existing_events` is `true`, this indicates that existing events in the timeframe
- * should no longer be counted towards invoiced usage. In this scenario, the parameter `filter` can
+ * should no longer be counter towards invoiced usage. In this scenario, the parameter `filter` can
  * be optionally added which enables filtering using
- * [computed properties](../guides/extensibility/advanced-metrics#computed-properties). The
- * expressiveness of computed properties allows you to deprecate existing events based on both a
- * period of time and specific property values.
+ * [computed properties](/extensibility/advanced-metrics#computed-properties). The expressiveness of
+ * computed properties allows you to deprecate existing events based on both a period of time and
+ * specific property values.
  */
 class EventBackfillCreateParams
 constructor(
@@ -76,8 +76,8 @@ constructor(
     fun customerId(): String? = body.customerId()
 
     /**
-     * A boolean [computed property](../guides/extensibility/advanced-metrics#computed-properties)
-     * used to filter the set of events to deprecate
+     * A boolean [computed property](/extensibility/advanced-metrics#computed-properties) used to
+     * filter the set of events to deprecate
      */
     fun deprecationFilter(): String? = body.deprecationFilter()
 
@@ -113,8 +113,8 @@ constructor(
     fun _customerId(): JsonField<String> = body._customerId()
 
     /**
-     * A boolean [computed property](../guides/extensibility/advanced-metrics#computed-properties)
-     * used to filter the set of events to deprecate
+     * A boolean [computed property](/extensibility/advanced-metrics#computed-properties) used to
+     * filter the set of events to deprecate
      */
     fun _deprecationFilter(): JsonField<String> = body._deprecationFilter()
 
@@ -191,9 +191,8 @@ constructor(
         fun customerId(): String? = customerId.getNullable("customer_id")
 
         /**
-         * A boolean
-         * [computed property](../guides/extensibility/advanced-metrics#computed-properties) used to
-         * filter the set of events to deprecate
+         * A boolean [computed property](/extensibility/advanced-metrics#computed-properties) used
+         * to filter the set of events to deprecate
          */
         fun deprecationFilter(): String? = deprecationFilter.getNullable("deprecation_filter")
 
@@ -238,9 +237,8 @@ constructor(
         fun _customerId(): JsonField<String> = customerId
 
         /**
-         * A boolean
-         * [computed property](../guides/extensibility/advanced-metrics#computed-properties) used to
-         * filter the set of events to deprecate
+         * A boolean [computed property](/extensibility/advanced-metrics#computed-properties) used
+         * to filter the set of events to deprecate
          */
         @JsonProperty("deprecation_filter")
         @ExcludeMissing
@@ -359,16 +357,14 @@ constructor(
             fun customerId(customerId: JsonField<String>) = apply { this.customerId = customerId }
 
             /**
-             * A boolean
-             * [computed property](../guides/extensibility/advanced-metrics#computed-properties)
+             * A boolean [computed property](/extensibility/advanced-metrics#computed-properties)
              * used to filter the set of events to deprecate
              */
             fun deprecationFilter(deprecationFilter: String?) =
                 deprecationFilter(JsonField.ofNullable(deprecationFilter))
 
             /**
-             * A boolean
-             * [computed property](../guides/extensibility/advanced-metrics#computed-properties)
+             * A boolean [computed property](/extensibility/advanced-metrics#computed-properties)
              * used to filter the set of events to deprecate
              */
             fun deprecationFilter(deprecationFilter: JsonField<String>) = apply {
@@ -520,18 +516,16 @@ constructor(
         fun customerId(customerId: JsonField<String>) = apply { body.customerId(customerId) }
 
         /**
-         * A boolean
-         * [computed property](../guides/extensibility/advanced-metrics#computed-properties) used to
-         * filter the set of events to deprecate
+         * A boolean [computed property](/extensibility/advanced-metrics#computed-properties) used
+         * to filter the set of events to deprecate
          */
         fun deprecationFilter(deprecationFilter: String?) = apply {
             body.deprecationFilter(deprecationFilter)
         }
 
         /**
-         * A boolean
-         * [computed property](../guides/extensibility/advanced-metrics#computed-properties) used to
-         * filter the set of events to deprecate
+         * A boolean [computed property](/extensibility/advanced-metrics#computed-properties) used
+         * to filter the set of events to deprecate
          */
         fun deprecationFilter(deprecationFilter: JsonField<String>) = apply {
             body.deprecationFilter(deprecationFilter)

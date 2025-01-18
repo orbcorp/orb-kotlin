@@ -11,9 +11,7 @@ import com.withorb.api.models.CreditNoteListParams
 
 interface CreditNoteServiceAsync {
 
-    /**
-     * This endpoint is used to create a single [`Credit Note`](../guides/invoicing/credit-notes).
-     */
+    /** This endpoint is used to create a single [`Credit Note`](/invoicing/credit-notes). */
     suspend fun create(
         params: CreditNoteCreateParams,
         requestOptions: RequestOptions = RequestOptions.none()
@@ -30,8 +28,8 @@ interface CreditNoteServiceAsync {
     ): CreditNoteListPageAsync
 
     /**
-     * This endpoint is used to fetch a single [`Credit Note`](../guides/invoicing/credit-notes)
-     * given an identifier.
+     * This endpoint is used to fetch a single [`Credit Note`](/invoicing/credit-notes) given an
+     * identifier.
      */
     suspend fun fetch(
         params: CreditNoteFetchParams,

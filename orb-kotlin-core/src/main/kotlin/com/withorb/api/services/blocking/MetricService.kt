@@ -13,9 +13,9 @@ import com.withorb.api.models.MetricUpdateParams
 interface MetricService {
 
     /**
-     * This endpoint is used to create a [metric](../guides/concepts##metric) using a SQL string.
-     * See [SQL support](../guides/extensibility/advanced-metrics#sql-support) for a description of
-     * constructing SQL queries with examples.
+     * This endpoint is used to create a [metric](/core-concepts###metric) using a SQL string. See
+     * [SQL support](/extensibility/advanced-metrics#sql-support) for a description of constructing
+     * SQL queries with examples.
      */
     fun create(
         params: MetricCreateParams,
@@ -32,7 +32,7 @@ interface MetricService {
     ): BillableMetric
 
     /**
-     * This endpoint is used to fetch [metric](../guides/concepts#metric) details given a metric
+     * This endpoint is used to fetch [metric](/core-concepts##metric) details given a metric
      * identifier. It returns information about the metrics including its name, description, and
      * item.
      */
@@ -42,8 +42,8 @@ interface MetricService {
     ): MetricListPage
 
     /**
-     * This endpoint is used to list [metrics](../guides/concepts##metric). It returns information
-     * about the metrics including its name, description, and item.
+     * This endpoint is used to list [metrics](/core-concepts#metric). It returns information about
+     * the metrics including its name, description, and item.
      */
     fun fetch(
         params: MetricFetchParams,

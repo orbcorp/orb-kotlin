@@ -9,8 +9,8 @@ import com.withorb.api.core.http.QueryParams
 import java.util.Objects
 
 /**
- * This endpoint is used to list [metrics](../guides/concepts##metric). It returns information about
- * the metrics including its name, description, and item.
+ * This endpoint is used to list [metrics](/core-concepts#metric). It returns information about the
+ * metrics including its name, description, and item.
  */
 class MetricFetchParams
 constructor(

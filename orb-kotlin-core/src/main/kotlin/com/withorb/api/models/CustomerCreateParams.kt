@@ -32,15 +32,15 @@ import java.util.Objects
 
 /**
  * This operation is used to create an Orb customer, who is party to the core billing relationship.
- * See [Customer](../guides/concepts#customer) for an overview of the customer resource.
+ * See [Customer](/core-concepts##customer) for an overview of the customer resource.
  *
  * This endpoint is critical in the following Orb functionality:
  * - Automated charges can be configured by setting `payment_provider` and `payment_provider_id` to
  *   automatically issue invoices
- * - [Customer ID Aliases](../guides/events-and-metrics/customer-aliases) can be configured by
- *   setting `external_customer_id`
- * - [Timezone localization](../guides/product-catalog/timezones.md) can be configured on a
- *   per-customer basis by setting the `timezone` parameter
+ * - [Customer ID Aliases](/events-and-metrics/customer-aliases) can be configured by setting
+ *   `external_customer_id`
+ * - [Timezone localization](/essentials/timezones) can be configured on a per-customer basis by
+ *   setting the `timezone` parameter
  */
 class CustomerCreateParams
 constructor(

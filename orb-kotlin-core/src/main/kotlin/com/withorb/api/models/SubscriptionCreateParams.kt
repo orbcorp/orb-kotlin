@@ -40,7 +40,7 @@ import java.util.Objects
  * billing cycle at the cadence that's configured in the plan definition.
  *
  * The default configuration for subscriptions in Orb is **In-advance billing** and **Beginning of
- * month alignment** (see [Subscription](../guides/concepts#subscription) for more details).
+ * month alignment** (see [Subscription](/core-concepts##subscription) for more details).
  *
  * In order to change the alignment behavior, Orb also supports billing subscriptions on the day of
  * the month they are created. If `align_billing_with_subscription_start_date = true` is specified,
@@ -62,26 +62,26 @@ import java.util.Objects
  * created. This is useful when a customer has prices that differ from the default prices for a
  * specific plan.
  *
- * :::info This feature is only available for accounts that have migrated to Subscription Overrides
+ * <Note> This feature is only available for accounts that have migrated to Subscription Overrides
  * Version 2. You can find your Subscription Overrides Version at the bottom of your
- * [Plans page](https://app.withorb.com/plans) :::
+ * [Plans page](https://app.withorb.com/plans) </Note>
  *
  * ### Adding Prices
  *
  * To add prices, provide a list of objects with the key `add_prices`. An object in the list must
  * specify an existing add-on price with a `price_id` or `external_price_id` field, or create a new
  * add-on price by including an object with the key `price`, identical to what would be used in the
- * request body for the [create price endpoint](../reference/create-price). See the
- * [Price resource](../reference/price) for the specification of different price model
- * configurations possible in this object.
+ * request body for the [create price endpoint](/api-reference/price/create-price). See the
+ * [Price resource](/product-catalog/price-configuration) for the specification of different price
+ * model configurations possible in this object.
  *
  * If the plan has phases, each object in the list must include a number with `plan_phase_order` key
  * to indicate which phase the price should be added to.
  *
  * An object in the list can specify an optional `start_date` and optional `end_date`. This is
  * equivalent to creating a price interval with the
- * [add/edit price intervals endpoint](../reference/add-edit-price-intervals). If unspecified, the
- * start or end date of the phase or subscription will be used.
+ * [add/edit price intervals endpoint](/api-reference/price-interval/add-or-edit-price-intervals).
+ * If unspecified, the start or end date of the phase or subscription will be used.
  *
  * An object in the list can specify an optional `minimum_amount`, `maximum_amount`, or `discounts`.
  * This will create adjustments which apply only to this price.
@@ -102,12 +102,14 @@ import java.util.Objects
  * price to replace it with by either referencing an existing add-on price with a `price_id` or
  * `external_price_id` field, or by creating a new add-on price by including an object with the key
  * `price`, identical to what would be used in the request body for the
- * [create price endpoint](../reference/create-price). See the [Price resource](../reference/price)
- * for the specification of different price model configurations possible in this object.
+ * [create price endpoint](/api-reference/price/create-price). See the
+ * [Price resource](/product-catalog/price-configuration) for the specification of different price
+ * model configurations possible in this object.
  *
  * For fixed fees, an object in the list can supply a `fixed_price_quantity` instead of a `price`,
  * `price_id`, or `external_price_id` field. This will update only the quantity for the price,
- * similar to the [Update price quantity](../reference/update-fixed-fee-quantity) endpoint.
+ * similar to the [Update price quantity](/api-reference/subscription/update-price-quantity)
+ * endpoint.
  *
  * The replacement price will have the same phase, if applicable, and the same start and end dates
  * as the price it replaces.
@@ -124,7 +126,7 @@ import java.util.Objects
  *
  * To add adjustments, provide a list of objects with the key `add_adjustments`. An object in the
  * list must include an object with the key `adjustment`, identical to the adjustment object in the
- * [add/edit price intervals endpoint](../reference/add-edit-price-intervals).
+ * [add/edit price intervals endpoint](/api-reference/price-interval/add-or-edit-price-intervals).
  *
  * If the plan has phases, each object in the list must include a number with `plan_phase_order` key
  * to indicate which phase the adjustment should be added to.
@@ -143,16 +145,16 @@ import java.util.Objects
  * in the list must specify a plan adjustment to replace with the `replaces_adjustment_id` key, and
  * it must specify an adjustment to replace it with by including an object with the key
  * `adjustment`, identical to the adjustment object in the
- * [add/edit price intervals endpoint](../reference/add-edit-price-intervals).
+ * [add/edit price intervals endpoint](/api-reference/price-interval/add-or-edit-price-intervals).
  *
  * The replacement adjustment will have the same phase, if applicable, and the same start and end
  * dates as the adjustment it replaces.
  *
  * ## Price overrides (DEPRECATED)
  *
- * :::info Price overrides are being phased out in favor adding/removing/replacing prices. (See
- * [Customize your customer's subscriptions](../reference/create-subscription#customize-your-customers-subscriptions))
- * :::
+ * <Note> Price overrides are being phased out in favor adding/removing/replacing prices. (See
+ * [Customize your customer's subscriptions](/api-reference/subscription/create-subscription))
+ * </Note>
  *
  * Price overrides are used to update some or all prices in a plan for the specific subscription
  * being created. This is useful when a new customer has negotiated a rate that is unique to the
@@ -160,9 +162,9 @@ import java.util.Objects
  *
  * To override prices, provide a list of objects with the key `price_overrides`. The price object in
  * the list of overrides is expected to contain the existing price id, the `model_type` and
- * configuration. (See the [Price resource](../reference/price) for the specification of different
- * price model configurations.) The numerical values can be updated, but the billable metric,
- * cadence, type, and name of a price can not be overridden.
+ * configuration. (See the [Price resource](/product-catalog/price-configuration) for the
+ * specification of different price model configurations.) The numerical values can be updated, but
+ * the billable metric, cadence, type, and name of a price can not be overridden.
  *
  * ### Maximums and Minimums
  *
@@ -328,8 +330,8 @@ constructor(
 
     /**
      * An additional filter to apply to usage queries. This filter must be expressed as a boolean
-     * [computed property](../guides/extensibility/advanced-metrics#computed-properties). If null,
-     * usage queries will not include any additional filter.
+     * [computed property](/extensibility/advanced-metrics#computed-properties). If null, usage
+     * queries will not include any additional filter.
      */
     fun filter(): String? = body.filter()
 
@@ -467,8 +469,8 @@ constructor(
 
     /**
      * An additional filter to apply to usage queries. This filter must be expressed as a boolean
-     * [computed property](../guides/extensibility/advanced-metrics#computed-properties). If null,
-     * usage queries will not include any additional filter.
+     * [computed property](/extensibility/advanced-metrics#computed-properties). If null, usage
+     * queries will not include any additional filter.
      */
     fun _filter(): JsonField<String> = body._filter()
 
@@ -721,8 +723,7 @@ constructor(
 
         /**
          * An additional filter to apply to usage queries. This filter must be expressed as a
-         * boolean
-         * [computed property](../guides/extensibility/advanced-metrics#computed-properties). If
+         * boolean [computed property](/extensibility/advanced-metrics#computed-properties). If
          * null, usage queries will not include any additional filter.
          */
         fun filter(): String? = filter.getNullable("filter")
@@ -891,8 +892,7 @@ constructor(
 
         /**
          * An additional filter to apply to usage queries. This filter must be expressed as a
-         * boolean
-         * [computed property](../guides/extensibility/advanced-metrics#computed-properties). If
+         * boolean [computed property](/extensibility/advanced-metrics#computed-properties). If
          * null, usage queries will not include any additional filter.
          */
         @JsonProperty("filter") @ExcludeMissing fun _filter(): JsonField<String> = filter
@@ -1318,16 +1318,14 @@ constructor(
 
             /**
              * An additional filter to apply to usage queries. This filter must be expressed as a
-             * boolean
-             * [computed property](../guides/extensibility/advanced-metrics#computed-properties). If
+             * boolean [computed property](/extensibility/advanced-metrics#computed-properties). If
              * null, usage queries will not include any additional filter.
              */
             fun filter(filter: String?) = filter(JsonField.ofNullable(filter))
 
             /**
              * An additional filter to apply to usage queries. This filter must be expressed as a
-             * boolean
-             * [computed property](../guides/extensibility/advanced-metrics#computed-properties). If
+             * boolean [computed property](/extensibility/advanced-metrics#computed-properties). If
              * null, usage queries will not include any additional filter.
              */
             fun filter(filter: JsonField<String>) = apply { this.filter = filter }
@@ -1885,16 +1883,14 @@ constructor(
 
         /**
          * An additional filter to apply to usage queries. This filter must be expressed as a
-         * boolean
-         * [computed property](../guides/extensibility/advanced-metrics#computed-properties). If
+         * boolean [computed property](/extensibility/advanced-metrics#computed-properties). If
          * null, usage queries will not include any additional filter.
          */
         fun filter(filter: String?) = apply { body.filter(filter) }
 
         /**
          * An additional filter to apply to usage queries. This filter must be expressed as a
-         * boolean
-         * [computed property](../guides/extensibility/advanced-metrics#computed-properties). If
+         * boolean [computed property](/extensibility/advanced-metrics#computed-properties). If
          * null, usage queries will not include any additional filter.
          */
         fun filter(filter: JsonField<String>) = apply { body.filter(filter) }

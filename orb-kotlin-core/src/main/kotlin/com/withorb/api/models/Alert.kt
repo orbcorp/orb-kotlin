@@ -20,8 +20,8 @@ import java.time.OffsetDateTime
 import java.util.Objects
 
 /**
- * [Alerts within Orb](https://docs.withorb.com/guides/product-catalog/configuring-alerts) monitor
- * spending, usage, or credit balance and trigger webhooks when a threshold is exceeded.
+ * [Alerts within Orb](/product-catalog/configuring-alerts) monitor spending, usage, or credit
+ * balance and trigger webhooks when a threshold is exceeded.
  *
  * Alerts created through the API can be scoped to either customers or subscriptions.
  */

@@ -17,11 +17,10 @@ import java.util.Objects
 /**
  * The credits ledger provides _auditing_ functionality over Orb's credits system with a list of
  * actions that have taken place to modify a customer's credit balance. This
- * [paginated endpoint](../reference/pagination) lists these entries, starting from the most recent
- * ledger entry.
+ * [paginated endpoint](/api-reference/pagination) lists these entries, starting from the most
+ * recent ledger entry.
  *
- * More details on using Orb's real-time credit feature are
- * [here](../guides/product-catalog/prepurchase.md).
+ * More details on using Orb's real-time credit feature are [here](/product-catalog/prepurchase).
  *
  * There are four major types of modifications to credit balance, detailed below.
  *

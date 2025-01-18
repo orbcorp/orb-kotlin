@@ -30,9 +30,9 @@ import java.time.OffsetDateTime
 import java.util.Objects
 
 /**
- * The [Plan](../guides/core-concepts.mdx#plan-and-price) resource represents a plan that can be
- * subscribed to by a customer. Plans define the billing behavior of the subscription. You can see
- * more about how to configure prices in the [Price resource](/reference/price).
+ * The [Plan](/core-concepts#plan-and-price) resource represents a plan that can be subscribed to by
+ * a customer. Plans define the billing behavior of the subscription. You can see more about how to
+ * configure prices in the [Price resource](/reference/price).
  */
 @NoAutoDetect
 class Plan
@@ -833,13 +833,6 @@ private constructor(
          */
         fun addPrice(groupedTieredPackagePrice: Price.GroupedTieredPackagePrice) =
             addPrice(Price.ofGroupedTieredPackagePrice(groupedTieredPackagePrice))
-
-        /**
-         * Prices for this plan. If the plan has phases, this includes prices across all phases of
-         * the plan.
-         */
-        fun addPrice(maxGroupTieredPrice: Price.MaxGroupTieredPrice) =
-            addPrice(Price.ofMaxGroupTieredPrice(maxGroupTieredPrice))
 
         fun product(product: Product) = product(JsonField.of(product))
 

@@ -22,8 +22,8 @@ import java.util.Objects
 /**
  * This endpoint is used to evaluate the output of a price for a given customer and time range. It
  * enables filtering and grouping the output using
- * [computed properties](../guides/extensibility/advanced-metrics#computed-properties), supporting
- * the following workflows:
+ * [computed properties](/extensibility/advanced-metrics#computed-properties), supporting the
+ * following workflows:
  * 1. Showing detailed usage and costs to the end customer.
  * 2. Auditing subtotals on invoice line items.
  *
@@ -61,15 +61,14 @@ constructor(
     fun externalCustomerId(): String? = body.externalCustomerId()
 
     /**
-     * A boolean [computed property](../guides/extensibility/advanced-metrics#computed-properties)
-     * used to filter the underlying billable metric
+     * A boolean [computed property](/extensibility/advanced-metrics#computed-properties) used to
+     * filter the underlying billable metric
      */
     fun filter(): String? = body.filter()
 
     /**
-     * Properties (or
-     * [computed properties](../guides/extensibility/advanced-metrics#computed-properties)) used to
-     * group the underlying billable metric
+     * Properties (or [computed properties](/extensibility/advanced-metrics#computed-properties))
+     * used to group the underlying billable metric
      */
     fun groupingKeys(): List<String>? = body.groupingKeys()
 
@@ -86,15 +85,14 @@ constructor(
     fun _externalCustomerId(): JsonField<String> = body._externalCustomerId()
 
     /**
-     * A boolean [computed property](../guides/extensibility/advanced-metrics#computed-properties)
-     * used to filter the underlying billable metric
+     * A boolean [computed property](/extensibility/advanced-metrics#computed-properties) used to
+     * filter the underlying billable metric
      */
     fun _filter(): JsonField<String> = body._filter()
 
     /**
-     * Properties (or
-     * [computed properties](../guides/extensibility/advanced-metrics#computed-properties)) used to
-     * group the underlying billable metric
+     * Properties (or [computed properties](/extensibility/advanced-metrics#computed-properties))
+     * used to group the underlying billable metric
      */
     fun _groupingKeys(): JsonField<List<String>> = body._groupingKeys()
 
@@ -156,16 +154,15 @@ constructor(
         fun externalCustomerId(): String? = externalCustomerId.getNullable("external_customer_id")
 
         /**
-         * A boolean
-         * [computed property](../guides/extensibility/advanced-metrics#computed-properties) used to
-         * filter the underlying billable metric
+         * A boolean [computed property](/extensibility/advanced-metrics#computed-properties) used
+         * to filter the underlying billable metric
          */
         fun filter(): String? = filter.getNullable("filter")
 
         /**
          * Properties (or
-         * [computed properties](../guides/extensibility/advanced-metrics#computed-properties)) used
-         * to group the underlying billable metric
+         * [computed properties](/extensibility/advanced-metrics#computed-properties)) used to group
+         * the underlying billable metric
          */
         fun groupingKeys(): List<String>? = groupingKeys.getNullable("grouping_keys")
 
@@ -190,16 +187,15 @@ constructor(
         fun _externalCustomerId(): JsonField<String> = externalCustomerId
 
         /**
-         * A boolean
-         * [computed property](../guides/extensibility/advanced-metrics#computed-properties) used to
-         * filter the underlying billable metric
+         * A boolean [computed property](/extensibility/advanced-metrics#computed-properties) used
+         * to filter the underlying billable metric
          */
         @JsonProperty("filter") @ExcludeMissing fun _filter(): JsonField<String> = filter
 
         /**
          * Properties (or
-         * [computed properties](../guides/extensibility/advanced-metrics#computed-properties)) used
-         * to group the underlying billable metric
+         * [computed properties](/extensibility/advanced-metrics#computed-properties)) used to group
+         * the underlying billable metric
          */
         @JsonProperty("grouping_keys")
         @ExcludeMissing
@@ -286,30 +282,28 @@ constructor(
             }
 
             /**
-             * A boolean
-             * [computed property](../guides/extensibility/advanced-metrics#computed-properties)
+             * A boolean [computed property](/extensibility/advanced-metrics#computed-properties)
              * used to filter the underlying billable metric
              */
             fun filter(filter: String?) = filter(JsonField.ofNullable(filter))
 
             /**
-             * A boolean
-             * [computed property](../guides/extensibility/advanced-metrics#computed-properties)
+             * A boolean [computed property](/extensibility/advanced-metrics#computed-properties)
              * used to filter the underlying billable metric
              */
             fun filter(filter: JsonField<String>) = apply { this.filter = filter }
 
             /**
              * Properties (or
-             * [computed properties](../guides/extensibility/advanced-metrics#computed-properties))
-             * used to group the underlying billable metric
+             * [computed properties](/extensibility/advanced-metrics#computed-properties)) used to
+             * group the underlying billable metric
              */
             fun groupingKeys(groupingKeys: List<String>) = groupingKeys(JsonField.of(groupingKeys))
 
             /**
              * Properties (or
-             * [computed properties](../guides/extensibility/advanced-metrics#computed-properties))
-             * used to group the underlying billable metric
+             * [computed properties](/extensibility/advanced-metrics#computed-properties)) used to
+             * group the underlying billable metric
              */
             fun groupingKeys(groupingKeys: JsonField<List<String>>) = apply {
                 this.groupingKeys = groupingKeys.map { it.toMutableList() }
@@ -317,8 +311,8 @@ constructor(
 
             /**
              * Properties (or
-             * [computed properties](../guides/extensibility/advanced-metrics#computed-properties))
-             * used to group the underlying billable metric
+             * [computed properties](/extensibility/advanced-metrics#computed-properties)) used to
+             * group the underlying billable metric
              */
             fun addGroupingKey(groupingKey: String) = apply {
                 groupingKeys =
@@ -439,30 +433,28 @@ constructor(
         }
 
         /**
-         * A boolean
-         * [computed property](../guides/extensibility/advanced-metrics#computed-properties) used to
-         * filter the underlying billable metric
+         * A boolean [computed property](/extensibility/advanced-metrics#computed-properties) used
+         * to filter the underlying billable metric
          */
         fun filter(filter: String?) = apply { body.filter(filter) }
 
         /**
-         * A boolean
-         * [computed property](../guides/extensibility/advanced-metrics#computed-properties) used to
-         * filter the underlying billable metric
+         * A boolean [computed property](/extensibility/advanced-metrics#computed-properties) used
+         * to filter the underlying billable metric
          */
         fun filter(filter: JsonField<String>) = apply { body.filter(filter) }
 
         /**
          * Properties (or
-         * [computed properties](../guides/extensibility/advanced-metrics#computed-properties)) used
-         * to group the underlying billable metric
+         * [computed properties](/extensibility/advanced-metrics#computed-properties)) used to group
+         * the underlying billable metric
          */
         fun groupingKeys(groupingKeys: List<String>) = apply { body.groupingKeys(groupingKeys) }
 
         /**
          * Properties (or
-         * [computed properties](../guides/extensibility/advanced-metrics#computed-properties)) used
-         * to group the underlying billable metric
+         * [computed properties](/extensibility/advanced-metrics#computed-properties)) used to group
+         * the underlying billable metric
          */
         fun groupingKeys(groupingKeys: JsonField<List<String>>) = apply {
             body.groupingKeys(groupingKeys)
@@ -470,8 +462,8 @@ constructor(
 
         /**
          * Properties (or
-         * [computed properties](../guides/extensibility/advanced-metrics#computed-properties)) used
-         * to group the underlying billable metric
+         * [computed properties](/extensibility/advanced-metrics#computed-properties)) used to group
+         * the underlying billable metric
          */
         fun addGroupingKey(groupingKey: String) = apply { body.addGroupingKey(groupingKey) }
 
