@@ -12,8 +12,7 @@ import java.util.Objects
  * This endpoint is used to fetch customer details given an identifier. If the `Customer` is in the
  * process of being deleted, only the properties `id` and `deleted: true` will be returned.
  *
- * See the [Customer resource](../guides/core-concepts.mdx#customer) for a full discussion of the
- * Customer model.
+ * See the [Customer resource](/core-concepts#customer) for a full discussion of the Customer model.
  */
 class CustomerFetchParams
 constructor(

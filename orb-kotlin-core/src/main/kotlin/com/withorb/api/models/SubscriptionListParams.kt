@@ -16,9 +16,9 @@ import java.util.Objects
 
 /**
  * This endpoint returns a list of all subscriptions for an account as a
- * [paginated](../reference/pagination) list, ordered starting from the most recently created
+ * [paginated](/api-reference/pagination) list, ordered starting from the most recently created
  * subscription. For a full discussion of the subscription resource, see
- * [Subscription](../guides/concepts#subscription).
+ * [Subscription](/core-concepts##subscription).
  *
  * Subscriptions can be filtered for a specific customer by using either the customer_id or
  * external_customer_id query parameters. To filter subscriptions for multiple customers, use the

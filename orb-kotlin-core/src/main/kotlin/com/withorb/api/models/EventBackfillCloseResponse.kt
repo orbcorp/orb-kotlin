@@ -88,8 +88,8 @@ private constructor(
     fun timeframeStart(): OffsetDateTime = timeframeStart.getRequired("timeframe_start")
 
     /**
-     * A boolean [computed property](../guides/extensibility/advanced-metrics#computed-properties)
-     * used to filter the set of events to deprecate
+     * A boolean [computed property](/extensibility/advanced-metrics#computed-properties) used to
+     * filter the set of events to deprecate
      */
     fun deprecationFilter(): String? = deprecationFilter.getNullable("deprecation_filter")
 
@@ -135,8 +135,8 @@ private constructor(
     fun _timeframeStart(): JsonField<OffsetDateTime> = timeframeStart
 
     /**
-     * A boolean [computed property](../guides/extensibility/advanced-metrics#computed-properties)
-     * used to filter the set of events to deprecate
+     * A boolean [computed property](/extensibility/advanced-metrics#computed-properties) used to
+     * filter the set of events to deprecate
      */
     @JsonProperty("deprecation_filter")
     @ExcludeMissing
@@ -269,17 +269,15 @@ private constructor(
         }
 
         /**
-         * A boolean
-         * [computed property](../guides/extensibility/advanced-metrics#computed-properties) used to
-         * filter the set of events to deprecate
+         * A boolean [computed property](/extensibility/advanced-metrics#computed-properties) used
+         * to filter the set of events to deprecate
          */
         fun deprecationFilter(deprecationFilter: String?) =
             deprecationFilter(JsonField.ofNullable(deprecationFilter))
 
         /**
-         * A boolean
-         * [computed property](../guides/extensibility/advanced-metrics#computed-properties) used to
-         * filter the set of events to deprecate
+         * A boolean [computed property](/extensibility/advanced-metrics#computed-properties) used
+         * to filter the set of events to deprecate
          */
         fun deprecationFilter(deprecationFilter: JsonField<String>) = apply {
             this.deprecationFilter = deprecationFilter

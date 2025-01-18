@@ -21,7 +21,7 @@ import java.util.Objects
 
 /**
  * This endpoint returns a filtered set of events for an account in a
- * [paginated list format](../reference/pagination).
+ * [paginated list format](/api-reference/pagination).
  *
  * Note that this is a `POST` endpoint rather than a `GET` endpoint because it employs a JSON body
  * for search criteria rather than query parameters, allowing for a more flexible search syntax.

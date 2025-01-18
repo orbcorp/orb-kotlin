@@ -97,7 +97,7 @@ constructor(
      * as the plan level alerts associated with the subscription.
      *
      * The list of alerts is ordered starting from the most recently created alert. This endpoint
-     * follows Orb's [standardized pagination format](../reference/pagination).
+     * follows Orb's [standardized pagination format](/api-reference/pagination).
      */
     override suspend fun list(
         params: AlertListParams,
@@ -131,8 +131,7 @@ constructor(
      * This endpoint creates a new alert to monitor a customer's credit balance. There are three
      * types of alerts that can be scoped to customers: `credit_balance_depleted`,
      * `credit_balance_dropped`, and `credit_balance_recovered`. Customers can have a maximum of one
-     * of each type of alert per
-     * [credit balance currency](https://docs.withorb.com/guides/product-catalog/prepurchase).
+     * of each type of alert per [credit balance currency](/product-catalog/prepurchase).
      * `credit_balance_dropped` alerts require a list of thresholds to be provided while
      * `credit_balance_depleted` and `credit_balance_recovered` alerts do not require thresholds.
      */
@@ -168,8 +167,7 @@ constructor(
      * This endpoint creates a new alert to monitor a customer's credit balance. There are three
      * types of alerts that can be scoped to customers: `credit_balance_depleted`,
      * `credit_balance_dropped`, and `credit_balance_recovered`. Customers can have a maximum of one
-     * of each type of alert per
-     * [credit balance currency](https://docs.withorb.com/guides/product-catalog/prepurchase).
+     * of each type of alert per [credit balance currency](/product-catalog/prepurchase).
      * `credit_balance_dropped` alerts require a list of thresholds to be provided while
      * `credit_balance_depleted` and `credit_balance_recovered` alerts do not require thresholds.
      */
