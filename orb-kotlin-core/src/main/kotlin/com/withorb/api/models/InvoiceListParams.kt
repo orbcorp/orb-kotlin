@@ -16,11 +16,11 @@ import java.time.format.DateTimeFormatter
 import java.util.Objects
 
 /**
- * This endpoint returns a list of all [`Invoice`](../guides/concepts#invoice)s for an account in a
- * list format.
+ * This endpoint returns a list of all [`Invoice`](/core-concepts#invoice)s for an account in a list
+ * format.
  *
  * The list of invoices is ordered starting from the most recently issued invoice date. The response
- * also includes [`pagination_metadata`](../reference/pagination), which lets the caller retrieve
+ * also includes [`pagination_metadata`](/api-reference/pagination), which lets the caller retrieve
  * the next page of results if they exist.
  *
  * By default, this only returns invoices that are `issued`, `paid`, or `synced`.

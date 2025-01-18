@@ -33,10 +33,10 @@ interface PlanServiceAsync {
     ): Plan
 
     /**
-     * This endpoint returns a list of all [plans](../guides/concepts##plan-and-price) for an
-     * account in a list format. The list of plans is ordered starting from the most recently
-     * created plan. The response also includes [`pagination_metadata`](../reference/pagination),
-     * which lets the caller retrieve the next page of results if they exist.
+     * This endpoint returns a list of all [plans](/core-concepts#plan-and-price) for an account in
+     * a list format. The list of plans is ordered starting from the most recently created plan. The
+     * response also includes [`pagination_metadata`](/api-reference/pagination), which lets the
+     * caller retrieve the next page of results if they exist.
      */
     suspend fun list(
         params: PlanListParams,
@@ -44,17 +44,17 @@ interface PlanServiceAsync {
     ): PlanListPageAsync
 
     /**
-     * This endpoint is used to fetch [plan](../guides/concepts##plan-and-price) details given a
-     * plan identifier. It returns information about the prices included in the plan and their
+     * This endpoint is used to fetch [plan](/core-concepts#plan-and-price) details given a plan
+     * identifier. It returns information about the prices included in the plan and their
      * configuration, as well as the product that the plan is attached to.
      *
      * ## Serialized prices
      *
      * Orb supports a few different pricing models out of the box. Each of these models is
-     * serialized differently in a given [Price](../guides/concepts#plan-and-price) object. The
+     * serialized differently in a given [Price](/core-concepts#plan-and-price) object. The
      * `model_type` field determines the key for the configuration object that is present. A
      * detailed explanation of price types can be found in the
-     * [Price schema](../guides/concepts#plan-and-price).
+     * [Price schema](/core-concepts#plan-and-price).
      *
      * ## Phases
      *

@@ -40,15 +40,16 @@ constructor(
         jsonHandler<Price>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
 
     /**
-     * This endpoint is used to create a [price](../reference/price). A price created using this
-     * endpoint is always an add-on, meaning that it’s not associated with a specific plan and can
-     * instead be individually added to subscriptions, including subscriptions on different plans.
+     * This endpoint is used to create a [price](/product-catalog/price-configuration). A price
+     * created using this endpoint is always an add-on, meaning that it’s not associated with a
+     * specific plan and can instead be individually added to subscriptions, including subscriptions
+     * on different plans.
      *
      * An `external_price_id` can be optionally specified as an alias to allow ergonomic interaction
      * with prices in the Orb API.
      *
-     * See the [Price resource](../reference/price) for the specification of different price model
-     * configurations possible in this endpoint.
+     * See the [Price resource](/product-catalog/price-configuration) for the specification of
+     * different price model configurations possible in this endpoint.
      */
     override fun create(params: PriceCreateParams, requestOptions: RequestOptions): Price {
         val request =
@@ -106,7 +107,7 @@ constructor(
 
     /**
      * This endpoint is used to list all add-on prices created using the
-     * [price creation endpoint](../reference/create-price).
+     * [price creation endpoint](/api-reference/price/create-price).
      */
     override fun list(params: PriceListParams, requestOptions: RequestOptions): PriceListPage {
         val request =
@@ -136,8 +137,8 @@ constructor(
     /**
      * This endpoint is used to evaluate the output of a price for a given customer and time range.
      * It enables filtering and grouping the output using
-     * [computed properties](../guides/extensibility/advanced-metrics#computed-properties),
-     * supporting the following workflows:
+     * [computed properties](/extensibility/advanced-metrics#computed-properties), supporting the
+     * following workflows:
      * 1. Showing detailed usage and costs to the end customer.
      * 2. Auditing subtotals on invoice line items.
      *

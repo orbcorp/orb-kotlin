@@ -60,8 +60,8 @@ constructor(
 
     /**
      * This endpoint returns a price given an external price id. See the
-     * [price creation API](../reference/create-price) for more information about external price
-     * aliases.
+     * [price creation API](/api-reference/price/create-price) for more information about external
+     * price aliases.
      */
     override fun fetch(
         params: PriceExternalPriceIdFetchParams,

@@ -9,16 +9,16 @@ import com.withorb.api.core.http.QueryParams
 import java.util.Objects
 
 /**
- * This endpoint is used to fetch [plan](../guides/concepts##plan-and-price) details given a plan
+ * This endpoint is used to fetch [plan](/core-concepts#plan-and-price) details given a plan
  * identifier. It returns information about the prices included in the plan and their configuration,
  * as well as the product that the plan is attached to.
  *
  * ## Serialized prices
  *
  * Orb supports a few different pricing models out of the box. Each of these models is serialized
- * differently in a given [Price](../guides/concepts#plan-and-price) object. The `model_type` field
+ * differently in a given [Price](/core-concepts#plan-and-price) object. The `model_type` field
  * determines the key for the configuration object that is present. A detailed explanation of price
- * types can be found in the [Price schema](../guides/concepts#plan-and-price).
+ * types can be found in the [Price schema](/core-concepts#plan-and-price).
  *
  * ## Phases
  *
