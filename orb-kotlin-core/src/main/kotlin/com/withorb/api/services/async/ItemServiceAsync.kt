@@ -12,7 +12,7 @@ import com.withorb.api.models.ItemUpdateParams
 
 interface ItemServiceAsync {
 
-    /** This endpoint is used to create an [Item](../guides/concepts#item). */
+    /** This endpoint is used to create an [Item](/core-concepts#item). */
     suspend fun create(
         params: ItemCreateParams,
         requestOptions: RequestOptions = RequestOptions.none()

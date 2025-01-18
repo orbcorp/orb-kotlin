@@ -70,7 +70,7 @@ import java.util.Objects
  * invoice, Orb will generate a balance refund for the current period. If the cancellation is before
  * the most recently issued invoice, Orb will void the intervening invoice and generate a new one
  * based on the new dates for the subscription. See the section on
- * [cancellation behaviors](../guides/product-catalog/creating-subscriptions.md#cancellation-behaviors).
+ * [cancellation behaviors](/product-catalog/creating-subscriptions#cancellation-behaviors).
  */
 class SubscriptionCancelParams
 constructor(

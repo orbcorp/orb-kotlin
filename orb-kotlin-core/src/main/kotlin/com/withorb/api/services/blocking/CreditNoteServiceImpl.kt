@@ -28,9 +28,7 @@ constructor(
     private val createHandler: Handler<CreditNote> =
         jsonHandler<CreditNote>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
 
-    /**
-     * This endpoint is used to create a single [`Credit Note`](../guides/invoicing/credit-notes).
-     */
+    /** This endpoint is used to create a single [`Credit Note`](/invoicing/credit-notes). */
     override fun create(
         params: CreditNoteCreateParams,
         requestOptions: RequestOptions
@@ -94,8 +92,8 @@ constructor(
         jsonHandler<CreditNote>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
 
     /**
-     * This endpoint is used to fetch a single [`Credit Note`](../guides/invoicing/credit-notes)
-     * given an identifier.
+     * This endpoint is used to fetch a single [`Credit Note`](/invoicing/credit-notes) given an
+     * identifier.
      */
     override fun fetch(params: CreditNoteFetchParams, requestOptions: RequestOptions): CreditNote {
         val request =

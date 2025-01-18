@@ -69,26 +69,26 @@ import java.util.Objects
  * schedule the plan change. This is useful when a customer has prices that differ from the default
  * prices for a specific plan.
  *
- * :::info This feature is only available for accounts that have migrated to Subscription Overrides
+ * <Note> This feature is only available for accounts that have migrated to Subscription Overrides
  * Version 2. You can find your Subscription Overrides Version at the bottom of your
- * [Plans page](https://app.withorb.com/plans) :::
+ * [Plans page](https://app.withorb.com/plans) </Note>
  *
  * ### Adding Prices
  *
  * To add prices, provide a list of objects with the key `add_prices`. An object in the list must
  * specify an existing add-on price with a `price_id` or `external_price_id` field, or create a new
  * add-on price by including an object with the key `price`, identical to what would be used in the
- * request body for the [create price endpoint](../reference/create-price). See the
- * [Price resource](../reference/price) for the specification of different price model
- * configurations possible in this object.
+ * request body for the [create price endpoint](/api-reference/price/create-price). See the
+ * [Price resource](/product-catalog/price-configuration) for the specification of different price
+ * model configurations possible in this object.
  *
  * If the plan has phases, each object in the list must include a number with `plan_phase_order` key
  * to indicate which phase the price should be added to.
  *
  * An object in the list can specify an optional `start_date` and optional `end_date`. This is
  * equivalent to creating a price interval with the
- * [add/edit price intervals endpoint](../reference/add-edit-price-intervals). If unspecified, the
- * start or end date of the phase or subscription will be used.
+ * [add/edit price intervals endpoint](/api-reference/price-interval/add-or-edit-price-intervals).
+ * If unspecified, the start or end date of the phase or subscription will be used.
  *
  * An object in the list can specify an optional `minimum_amount`, `maximum_amount`, or `discounts`.
  * This will create adjustments which apply only to this price.
@@ -109,12 +109,14 @@ import java.util.Objects
  * price to replace it with by either referencing an existing add-on price with a `price_id` or
  * `external_price_id` field, or by creating a new add-on price by including an object with the key
  * `price`, identical to what would be used in the request body for the
- * [create price endpoint](../reference/create-price). See the [Price resource](../reference/price)
- * for the specification of different price model configurations possible in this object.
+ * [create price endpoint](/api-reference/price/create-price). See the
+ * [Price resource](/product-catalog/price-configuration) for the specification of different price
+ * model configurations possible in this object.
  *
  * For fixed fees, an object in the list can supply a `fixed_price_quantity` instead of a `price`,
  * `price_id`, or `external_price_id` field. This will update only the quantity for the price,
- * similar to the [Update price quantity](../reference/update-fixed-fee-quantity) endpoint.
+ * similar to the [Update price quantity](/api-reference/subscription/update-price-quantity)
+ * endpoint.
  *
  * The replacement price will have the same phase, if applicable, and the same start and end dates
  * as the price it replaces.
@@ -131,7 +133,7 @@ import java.util.Objects
  *
  * To add adjustments, provide a list of objects with the key `add_adjustments`. An object in the
  * list must include an object with the key `adjustment`, identical to the adjustment object in the
- * [add/edit price intervals endpoint](../reference/add-edit-price-intervals).
+ * [add/edit price intervals endpoint](/api-reference/price-interval/add-or-edit-price-intervals).
  *
  * If the plan has phases, each object in the list must include a number with `plan_phase_order` key
  * to indicate which phase the adjustment should be added to.
@@ -150,16 +152,16 @@ import java.util.Objects
  * in the list must specify a plan adjustment to replace with the `replaces_adjustment_id` key, and
  * it must specify an adjustment to replace it with by including an object with the key
  * `adjustment`, identical to the adjustment object in the
- * [add/edit price intervals endpoint](../reference/add-edit-price-intervals).
+ * [add/edit price intervals endpoint](/api-reference/price-interval/add-or-edit-price-intervals).
  *
  * The replacement adjustment will have the same phase, if applicable, and the same start and end
  * dates as the adjustment it replaces.
  *
  * ## Price overrides (DEPRECATED)
  *
- * :::info Price overrides are being phased out in favor adding/removing/replacing prices. (See
- * [Customize your customer's subscriptions](../reference/schedule-plan-change#customize-your-customers-subscriptions))
- * :::
+ * <Note> Price overrides are being phased out in favor adding/removing/replacing prices. (See
+ * [Customize your customer's subscriptions](/api-reference/subscription/schedule-plan-change))
+ * </Note>
  *
  * Price overrides are used to update some or all prices in a plan for the specific subscription
  * being created. This is useful when a new customer has negotiated a rate that is unique to the
@@ -167,9 +169,9 @@ import java.util.Objects
  *
  * To override prices, provide a list of objects with the key `price_overrides`. The price object in
  * the list of overrides is expected to contain the existing price id, the `model_type` and
- * configuration. (See the [Price resource](../reference/price) for the specification of different
- * price model configurations.) The numerical values can be updated, but the billable metric,
- * cadence, type, and name of a price can not be overridden.
+ * configuration. (See the [Price resource](/product-catalog/price-configuration) for the
+ * specification of different price model configurations.) The numerical values can be updated, but
+ * the billable metric, cadence, type, and name of a price can not be overridden.
  *
  * ### Maximums, and minimums
  *
@@ -187,7 +189,7 @@ import java.util.Objects
  *
  * By default, Orb calculates the prorated difference in any fixed fees when making a plan change,
  * adjusting the customer balance as needed. For details on this behavior, see
- * [Modifying subscriptions](../guides/product-catalog/modifying-subscriptions.md#prorations-for-in-advance-fees).
+ * [Modifying subscriptions](/product-catalog/modifying-subscriptions#prorations-for-in-advance-fees).
  */
 class SubscriptionSchedulePlanChangeParams
 constructor(
@@ -237,8 +239,7 @@ constructor(
 
     /**
      * The date that the plan change should take effect. This parameter can only be passed if the
-     * `change_option` is `requested_date`. If a date with no time is passed, the plan change will
-     * happen at midnight in the customer's timezone.
+     * `change_option` is `requested_date`.
      */
     fun changeDate(): OffsetDateTime? = body.changeDate()
 
@@ -265,8 +266,8 @@ constructor(
 
     /**
      * An additional filter to apply to usage queries. This filter must be expressed as a boolean
-     * [computed property](../guides/extensibility/advanced-metrics#computed-properties). If null,
-     * usage queries will not include any additional filter.
+     * [computed property](/extensibility/advanced-metrics#computed-properties). If null, usage
+     * queries will not include any additional filter.
      */
     fun filter(): String? = body.filter()
 
@@ -372,8 +373,7 @@ constructor(
 
     /**
      * The date that the plan change should take effect. This parameter can only be passed if the
-     * `change_option` is `requested_date`. If a date with no time is passed, the plan change will
-     * happen at midnight in the customer's timezone.
+     * `change_option` is `requested_date`.
      */
     fun _changeDate(): JsonField<OffsetDateTime> = body._changeDate()
 
@@ -400,8 +400,8 @@ constructor(
 
     /**
      * An additional filter to apply to usage queries. This filter must be expressed as a boolean
-     * [computed property](../guides/extensibility/advanced-metrics#computed-properties). If null,
-     * usage queries will not include any additional filter.
+     * [computed property](/extensibility/advanced-metrics#computed-properties). If null, usage
+     * queries will not include any additional filter.
      */
     fun _filter(): JsonField<String> = body._filter()
 
@@ -612,8 +612,7 @@ constructor(
 
         /**
          * The date that the plan change should take effect. This parameter can only be passed if
-         * the `change_option` is `requested_date`. If a date with no time is passed, the plan
-         * change will happen at midnight in the customer's timezone.
+         * the `change_option` is `requested_date`.
          */
         fun changeDate(): OffsetDateTime? = changeDate.getNullable("change_date")
 
@@ -641,8 +640,7 @@ constructor(
 
         /**
          * An additional filter to apply to usage queries. This filter must be expressed as a
-         * boolean
-         * [computed property](../guides/extensibility/advanced-metrics#computed-properties). If
+         * boolean [computed property](/extensibility/advanced-metrics#computed-properties). If
          * null, usage queries will not include any additional filter.
          */
         fun filter(): String? = filter.getNullable("filter")
@@ -767,8 +765,7 @@ constructor(
 
         /**
          * The date that the plan change should take effect. This parameter can only be passed if
-         * the `change_option` is `requested_date`. If a date with no time is passed, the plan
-         * change will happen at midnight in the customer's timezone.
+         * the `change_option` is `requested_date`.
          */
         @JsonProperty("change_date")
         @ExcludeMissing
@@ -805,8 +802,7 @@ constructor(
 
         /**
          * An additional filter to apply to usage queries. This filter must be expressed as a
-         * boolean
-         * [computed property](../guides/extensibility/advanced-metrics#computed-properties). If
+         * boolean [computed property](/extensibility/advanced-metrics#computed-properties). If
          * null, usage queries will not include any additional filter.
          */
         @JsonProperty("filter") @ExcludeMissing fun _filter(): JsonField<String> = filter
@@ -1155,16 +1151,14 @@ constructor(
 
             /**
              * The date that the plan change should take effect. This parameter can only be passed
-             * if the `change_option` is `requested_date`. If a date with no time is passed, the
-             * plan change will happen at midnight in the customer's timezone.
+             * if the `change_option` is `requested_date`.
              */
             fun changeDate(changeDate: OffsetDateTime?) =
                 changeDate(JsonField.ofNullable(changeDate))
 
             /**
              * The date that the plan change should take effect. This parameter can only be passed
-             * if the `change_option` is `requested_date`. If a date with no time is passed, the
-             * plan change will happen at midnight in the customer's timezone.
+             * if the `change_option` is `requested_date`.
              */
             fun changeDate(changeDate: JsonField<OffsetDateTime>) = apply {
                 this.changeDate = changeDate
@@ -1229,16 +1223,14 @@ constructor(
 
             /**
              * An additional filter to apply to usage queries. This filter must be expressed as a
-             * boolean
-             * [computed property](../guides/extensibility/advanced-metrics#computed-properties). If
+             * boolean [computed property](/extensibility/advanced-metrics#computed-properties). If
              * null, usage queries will not include any additional filter.
              */
             fun filter(filter: String?) = filter(JsonField.ofNullable(filter))
 
             /**
              * An additional filter to apply to usage queries. This filter must be expressed as a
-             * boolean
-             * [computed property](../guides/extensibility/advanced-metrics#computed-properties). If
+             * boolean [computed property](/extensibility/advanced-metrics#computed-properties). If
              * null, usage queries will not include any additional filter.
              */
             fun filter(filter: JsonField<String>) = apply { this.filter = filter }
@@ -1720,15 +1712,13 @@ constructor(
 
         /**
          * The date that the plan change should take effect. This parameter can only be passed if
-         * the `change_option` is `requested_date`. If a date with no time is passed, the plan
-         * change will happen at midnight in the customer's timezone.
+         * the `change_option` is `requested_date`.
          */
         fun changeDate(changeDate: OffsetDateTime?) = apply { body.changeDate(changeDate) }
 
         /**
          * The date that the plan change should take effect. This parameter can only be passed if
-         * the `change_option` is `requested_date`. If a date with no time is passed, the plan
-         * change will happen at midnight in the customer's timezone.
+         * the `change_option` is `requested_date`.
          */
         fun changeDate(changeDate: JsonField<OffsetDateTime>) = apply {
             body.changeDate(changeDate)
@@ -1795,16 +1785,14 @@ constructor(
 
         /**
          * An additional filter to apply to usage queries. This filter must be expressed as a
-         * boolean
-         * [computed property](../guides/extensibility/advanced-metrics#computed-properties). If
+         * boolean [computed property](/extensibility/advanced-metrics#computed-properties). If
          * null, usage queries will not include any additional filter.
          */
         fun filter(filter: String?) = apply { body.filter(filter) }
 
         /**
          * An additional filter to apply to usage queries. This filter must be expressed as a
-         * boolean
-         * [computed property](../guides/extensibility/advanced-metrics#computed-properties). If
+         * boolean [computed property](/extensibility/advanced-metrics#computed-properties). If
          * null, usage queries will not include any additional filter.
          */
         fun filter(filter: JsonField<String>) = apply { body.filter(filter) }

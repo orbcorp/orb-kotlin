@@ -32,7 +32,7 @@ import java.util.Objects
 
 /**
  * This endpoint is used to update customer details given an `external_customer_id` (see
- * [Customer ID Aliases](../guides/events-and-metrics/customer-aliases)). Note that the resource and
+ * [Customer ID Aliases](/events-and-metrics/customer-aliases)). Note that the resource and
  * semantics of this endpoint exactly mirror [Update Customer](update-customer).
  */
 class CustomerUpdateByExternalIdParams

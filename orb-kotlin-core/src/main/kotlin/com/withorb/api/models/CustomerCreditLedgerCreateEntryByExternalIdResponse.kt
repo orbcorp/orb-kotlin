@@ -30,8 +30,8 @@ import java.time.OffsetDateTime
 import java.util.Objects
 
 /**
- * The [Credit Ledger Entry resource](/guides/product-catalog/prepurchase) models prepaid credits
- * within Orb.
+ * The [Credit Ledger Entry resource](/product-catalog/prepurchase) models prepaid credits within
+ * Orb.
  */
 @JsonDeserialize(using = CustomerCreditLedgerCreateEntryByExternalIdResponse.Deserializer::class)
 @JsonSerialize(using = CustomerCreditLedgerCreateEntryByExternalIdResponse.Serializer::class)

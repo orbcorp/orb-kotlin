@@ -9,7 +9,7 @@ import com.withorb.api.core.http.QueryParams
 import java.util.Objects
 
 /**
- * This endpoint is used to fetch a [Subscription](../guides/concepts#subscription) given an
+ * This endpoint is used to fetch a [Subscription](/core-concepts##subscription) given an
  * identifier.
  */
 class SubscriptionFetchParams
