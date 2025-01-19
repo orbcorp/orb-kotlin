@@ -16,6 +16,7 @@ import com.withorb.api.core.toImmutable
 import com.withorb.api.services.blocking.DimensionalPriceGroupService
 import java.util.Objects
 
+/** List dimensional price groups */
 class DimensionalPriceGroupListPage
 private constructor(
     private val dimensionalPriceGroupsService: DimensionalPriceGroupService,

@@ -18,6 +18,10 @@ import java.util.Objects
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.FlowCollector
 
+/**
+ * This endpoint is used to list all add-on prices created using the
+ * [price creation endpoint](/api-reference/price/create-price).
+ */
 class PriceListPageAsync
 private constructor(
     private val pricesService: PriceServiceAsync,

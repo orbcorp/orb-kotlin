@@ -18,6 +18,11 @@ import java.util.Objects
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.FlowCollector
 
+/**
+ * This endpoint returns a [paginated](/api-reference/pagination) list of all plans associated with
+ * a subscription along with their start and end dates. This list contains the subscription's
+ * initial plan along with past and future plan changes.
+ */
 class SubscriptionFetchSchedulePageAsync
 private constructor(
     private val subscriptionsService: SubscriptionServiceAsync,

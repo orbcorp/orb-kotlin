@@ -128,7 +128,7 @@ private constructor(
     fun createdAt(): OffsetDateTime = createdAt.getRequired("created_at")
 
     /** An ISO 4217 currency string or custom pricing unit (`credits`) for this plan's prices. */
-    fun currency(): String = currency.getRequired("currency")
+    @Deprecated("deprecated") fun currency(): String = currency.getRequired("currency")
 
     /**
      * The default memo text on the invoices corresponding to subscriptions on this plan. Note that
@@ -216,7 +216,10 @@ private constructor(
     fun _createdAt(): JsonField<OffsetDateTime> = createdAt
 
     /** An ISO 4217 currency string or custom pricing unit (`credits`) for this plan's prices. */
-    @JsonProperty("currency") @ExcludeMissing fun _currency(): JsonField<String> = currency
+    @Deprecated("deprecated")
+    @JsonProperty("currency")
+    @ExcludeMissing
+    fun _currency(): JsonField<String> = currency
 
     /**
      * The default memo text on the invoices corresponding to subscriptions on this plan. Note that
@@ -487,11 +490,12 @@ private constructor(
         /**
          * An ISO 4217 currency string or custom pricing unit (`credits`) for this plan's prices.
          */
-        fun currency(currency: String) = currency(JsonField.of(currency))
+        @Deprecated("deprecated") fun currency(currency: String) = currency(JsonField.of(currency))
 
         /**
          * An ISO 4217 currency string or custom pricing unit (`credits`) for this plan's prices.
          */
+        @Deprecated("deprecated")
         fun currency(currency: JsonField<String>) = apply { this.currency = currency }
 
         /**

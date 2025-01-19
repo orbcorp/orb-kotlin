@@ -258,6 +258,7 @@ constructor(
             )
     }
 
+    /** The plan status to filter to ('active', 'archived', or 'draft'). */
     class Status
     @JsonCreator
     private constructor(

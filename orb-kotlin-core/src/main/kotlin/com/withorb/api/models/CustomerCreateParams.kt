@@ -2531,6 +2531,10 @@ constructor(
         override fun toString() = "Metadata{additionalProperties=$additionalProperties}"
     }
 
+    /**
+     * This is used for creating charges or invoices in an external system via Orb. When not in test
+     * mode, the connection must first be configured in the Orb webapp.
+     */
     class PaymentProvider
     @JsonCreator
     private constructor(
