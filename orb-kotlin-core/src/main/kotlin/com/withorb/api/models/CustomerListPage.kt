@@ -16,6 +16,13 @@ import com.withorb.api.core.toImmutable
 import com.withorb.api.services.blocking.CustomerService
 import java.util.Objects
 
+/**
+ * This endpoint returns a list of all customers for an account. The list of customers is ordered
+ * starting from the most recently created customer. This endpoint follows Orb's
+ * [standardized pagination format](/api-reference/pagination).
+ *
+ * See [Customer](/core-concepts##customer) for an overview of the customer model.
+ */
 class CustomerListPage
 private constructor(
     private val customersService: CustomerService,

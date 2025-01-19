@@ -16,6 +16,10 @@ import com.withorb.api.core.toImmutable
 import com.withorb.api.services.blocking.PriceService
 import java.util.Objects
 
+/**
+ * This endpoint is used to list all add-on prices created using the
+ * [price creation endpoint](/api-reference/price/create-price).
+ */
 class PriceListPage
 private constructor(
     private val pricesService: PriceService,

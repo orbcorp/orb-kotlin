@@ -292,7 +292,7 @@ constructor(
      */
     fun autoCollection(): Boolean? = body.autoCollection()
 
-    fun awsRegion(): String? = body.awsRegion()
+    @Deprecated("deprecated") fun awsRegion(): String? = body.awsRegion()
 
     fun billingCycleAnchorConfiguration(): BillingCycleAnchorConfiguration? =
         body.billingCycleAnchorConfiguration()
@@ -304,7 +304,7 @@ constructor(
      */
     fun couponRedemptionCode(): String? = body.couponRedemptionCode()
 
-    fun creditsOverageRate(): Double? = body.creditsOverageRate()
+    @Deprecated("deprecated") fun creditsOverageRate(): Double? = body.creditsOverageRate()
 
     fun customerId(): String? = body.customerId()
 
@@ -318,8 +318,10 @@ constructor(
 
     fun externalCustomerId(): String? = body.externalCustomerId()
 
+    @Deprecated("deprecated")
     fun externalMarketplace(): ExternalMarketplace? = body.externalMarketplace()
 
+    @Deprecated("deprecated")
     fun externalMarketplaceReportingId(): String? = body.externalMarketplaceReportingId()
 
     /**
@@ -359,7 +361,7 @@ constructor(
      */
     fun netTerms(): Long? = body.netTerms()
 
-    fun perCreditOverageAmount(): Double? = body.perCreditOverageAmount()
+    @Deprecated("deprecated") fun perCreditOverageAmount(): Double? = body.perCreditOverageAmount()
 
     /**
      * The plan that the given subscription should be switched to. Note that either this property or
@@ -374,7 +376,7 @@ constructor(
     fun planVersionNumber(): Long? = body.planVersionNumber()
 
     /** Optionally provide a list of overrides for prices on the plan */
-    fun priceOverrides(): List<JsonValue>? = body.priceOverrides()
+    @Deprecated("deprecated") fun priceOverrides(): List<JsonValue>? = body.priceOverrides()
 
     /**
      * Plan adjustments to be removed from the subscription. (Only available for accounts that have
@@ -430,7 +432,7 @@ constructor(
      */
     fun _autoCollection(): JsonField<Boolean> = body._autoCollection()
 
-    fun _awsRegion(): JsonField<String> = body._awsRegion()
+    @Deprecated("deprecated") fun _awsRegion(): JsonField<String> = body._awsRegion()
 
     fun _billingCycleAnchorConfiguration(): JsonField<BillingCycleAnchorConfiguration> =
         body._billingCycleAnchorConfiguration()
@@ -442,6 +444,7 @@ constructor(
      */
     fun _couponRedemptionCode(): JsonField<String> = body._couponRedemptionCode()
 
+    @Deprecated("deprecated")
     fun _creditsOverageRate(): JsonField<Double> = body._creditsOverageRate()
 
     fun _customerId(): JsonField<String> = body._customerId()
@@ -456,8 +459,10 @@ constructor(
 
     fun _externalCustomerId(): JsonField<String> = body._externalCustomerId()
 
+    @Deprecated("deprecated")
     fun _externalMarketplace(): JsonField<ExternalMarketplace> = body._externalMarketplace()
 
+    @Deprecated("deprecated")
     fun _externalMarketplaceReportingId(): JsonField<String> =
         body._externalMarketplaceReportingId()
 
@@ -498,6 +503,7 @@ constructor(
      */
     fun _netTerms(): JsonField<Long> = body._netTerms()
 
+    @Deprecated("deprecated")
     fun _perCreditOverageAmount(): JsonField<Double> = body._perCreditOverageAmount()
 
     /**
@@ -513,6 +519,7 @@ constructor(
     fun _planVersionNumber(): JsonField<Long> = body._planVersionNumber()
 
     /** Optionally provide a list of overrides for prices on the plan */
+    @Deprecated("deprecated")
     fun _priceOverrides(): JsonField<List<JsonValue>> = body._priceOverrides()
 
     /**
@@ -682,7 +689,7 @@ constructor(
          */
         fun autoCollection(): Boolean? = autoCollection.getNullable("auto_collection")
 
-        fun awsRegion(): String? = awsRegion.getNullable("aws_region")
+        @Deprecated("deprecated") fun awsRegion(): String? = awsRegion.getNullable("aws_region")
 
         fun billingCycleAnchorConfiguration(): BillingCycleAnchorConfiguration? =
             billingCycleAnchorConfiguration.getNullable("billing_cycle_anchor_configuration")
@@ -695,6 +702,7 @@ constructor(
         fun couponRedemptionCode(): String? =
             couponRedemptionCode.getNullable("coupon_redemption_code")
 
+        @Deprecated("deprecated")
         fun creditsOverageRate(): Double? = creditsOverageRate.getNullable("credits_overage_rate")
 
         fun customerId(): String? = customerId.getNullable("customer_id")
@@ -709,9 +717,11 @@ constructor(
 
         fun externalCustomerId(): String? = externalCustomerId.getNullable("external_customer_id")
 
+        @Deprecated("deprecated")
         fun externalMarketplace(): ExternalMarketplace? =
             externalMarketplace.getNullable("external_marketplace")
 
+        @Deprecated("deprecated")
         fun externalMarketplaceReportingId(): String? =
             externalMarketplaceReportingId.getNullable("external_marketplace_reporting_id")
 
@@ -752,6 +762,7 @@ constructor(
          */
         fun netTerms(): Long? = netTerms.getNullable("net_terms")
 
+        @Deprecated("deprecated")
         fun perCreditOverageAmount(): Double? =
             perCreditOverageAmount.getNullable("per_credit_overage_amount")
 
@@ -768,6 +779,7 @@ constructor(
         fun planVersionNumber(): Long? = planVersionNumber.getNullable("plan_version_number")
 
         /** Optionally provide a list of overrides for prices on the plan */
+        @Deprecated("deprecated")
         fun priceOverrides(): List<JsonValue>? = priceOverrides.getNullable("price_overrides")
 
         /**
@@ -834,7 +846,10 @@ constructor(
         @ExcludeMissing
         fun _autoCollection(): JsonField<Boolean> = autoCollection
 
-        @JsonProperty("aws_region") @ExcludeMissing fun _awsRegion(): JsonField<String> = awsRegion
+        @Deprecated("deprecated")
+        @JsonProperty("aws_region")
+        @ExcludeMissing
+        fun _awsRegion(): JsonField<String> = awsRegion
 
         @JsonProperty("billing_cycle_anchor_configuration")
         @ExcludeMissing
@@ -850,6 +865,7 @@ constructor(
         @ExcludeMissing
         fun _couponRedemptionCode(): JsonField<String> = couponRedemptionCode
 
+        @Deprecated("deprecated")
         @JsonProperty("credits_overage_rate")
         @ExcludeMissing
         fun _creditsOverageRate(): JsonField<Double> = creditsOverageRate
@@ -874,10 +890,12 @@ constructor(
         @ExcludeMissing
         fun _externalCustomerId(): JsonField<String> = externalCustomerId
 
+        @Deprecated("deprecated")
         @JsonProperty("external_marketplace")
         @ExcludeMissing
         fun _externalMarketplace(): JsonField<ExternalMarketplace> = externalMarketplace
 
+        @Deprecated("deprecated")
         @JsonProperty("external_marketplace_reporting_id")
         @ExcludeMissing
         fun _externalMarketplaceReportingId(): JsonField<String> = externalMarketplaceReportingId
@@ -925,6 +943,7 @@ constructor(
          */
         @JsonProperty("net_terms") @ExcludeMissing fun _netTerms(): JsonField<Long> = netTerms
 
+        @Deprecated("deprecated")
         @JsonProperty("per_credit_overage_amount")
         @ExcludeMissing
         fun _perCreditOverageAmount(): JsonField<Double> = perCreditOverageAmount
@@ -944,6 +963,7 @@ constructor(
         fun _planVersionNumber(): JsonField<Long> = planVersionNumber
 
         /** Optionally provide a list of overrides for prices on the plan */
+        @Deprecated("deprecated")
         @JsonProperty("price_overrides")
         @ExcludeMissing
         fun _priceOverrides(): JsonField<List<JsonValue>> = priceOverrides
@@ -1214,8 +1234,10 @@ constructor(
                 this.autoCollection = autoCollection
             }
 
+            @Deprecated("deprecated")
             fun awsRegion(awsRegion: String?) = awsRegion(JsonField.ofNullable(awsRegion))
 
+            @Deprecated("deprecated")
             fun awsRegion(awsRegion: JsonField<String>) = apply { this.awsRegion = awsRegion }
 
             fun billingCycleAnchorConfiguration(
@@ -1246,12 +1268,15 @@ constructor(
                 this.couponRedemptionCode = couponRedemptionCode
             }
 
+            @Deprecated("deprecated")
             fun creditsOverageRate(creditsOverageRate: Double?) =
                 creditsOverageRate(JsonField.ofNullable(creditsOverageRate))
 
+            @Deprecated("deprecated")
             fun creditsOverageRate(creditsOverageRate: Double) =
                 creditsOverageRate(creditsOverageRate as Double?)
 
+            @Deprecated("deprecated")
             fun creditsOverageRate(creditsOverageRate: JsonField<Double>) = apply {
                 this.creditsOverageRate = creditsOverageRate
             }
@@ -1286,16 +1311,20 @@ constructor(
                 this.externalCustomerId = externalCustomerId
             }
 
+            @Deprecated("deprecated")
             fun externalMarketplace(externalMarketplace: ExternalMarketplace?) =
                 externalMarketplace(JsonField.ofNullable(externalMarketplace))
 
+            @Deprecated("deprecated")
             fun externalMarketplace(externalMarketplace: JsonField<ExternalMarketplace>) = apply {
                 this.externalMarketplace = externalMarketplace
             }
 
+            @Deprecated("deprecated")
             fun externalMarketplaceReportingId(externalMarketplaceReportingId: String?) =
                 externalMarketplaceReportingId(JsonField.ofNullable(externalMarketplaceReportingId))
 
+            @Deprecated("deprecated")
             fun externalMarketplaceReportingId(externalMarketplaceReportingId: JsonField<String>) =
                 apply {
                     this.externalMarketplaceReportingId = externalMarketplaceReportingId
@@ -1395,12 +1424,15 @@ constructor(
              */
             fun netTerms(netTerms: JsonField<Long>) = apply { this.netTerms = netTerms }
 
+            @Deprecated("deprecated")
             fun perCreditOverageAmount(perCreditOverageAmount: Double?) =
                 perCreditOverageAmount(JsonField.ofNullable(perCreditOverageAmount))
 
+            @Deprecated("deprecated")
             fun perCreditOverageAmount(perCreditOverageAmount: Double) =
                 perCreditOverageAmount(perCreditOverageAmount as Double?)
 
+            @Deprecated("deprecated")
             fun perCreditOverageAmount(perCreditOverageAmount: JsonField<Double>) = apply {
                 this.perCreditOverageAmount = perCreditOverageAmount
             }
@@ -1440,15 +1472,18 @@ constructor(
             }
 
             /** Optionally provide a list of overrides for prices on the plan */
+            @Deprecated("deprecated")
             fun priceOverrides(priceOverrides: List<JsonValue>?) =
                 priceOverrides(JsonField.ofNullable(priceOverrides))
 
             /** Optionally provide a list of overrides for prices on the plan */
+            @Deprecated("deprecated")
             fun priceOverrides(priceOverrides: JsonField<List<JsonValue>>) = apply {
                 this.priceOverrides = priceOverrides.map { it.toMutableList() }
             }
 
             /** Optionally provide a list of overrides for prices on the plan */
+            @Deprecated("deprecated")
             fun addPriceOverride(priceOverride: JsonValue) = apply {
                 priceOverrides =
                     (priceOverrides ?: JsonField.of(mutableListOf())).apply {
@@ -1777,8 +1812,10 @@ constructor(
             body.autoCollection(autoCollection)
         }
 
+        @Deprecated("deprecated")
         fun awsRegion(awsRegion: String?) = apply { body.awsRegion(awsRegion) }
 
+        @Deprecated("deprecated")
         fun awsRegion(awsRegion: JsonField<String>) = apply { body.awsRegion(awsRegion) }
 
         fun billingCycleAnchorConfiguration(
@@ -1807,13 +1844,16 @@ constructor(
             body.couponRedemptionCode(couponRedemptionCode)
         }
 
+        @Deprecated("deprecated")
         fun creditsOverageRate(creditsOverageRate: Double?) = apply {
             body.creditsOverageRate(creditsOverageRate)
         }
 
+        @Deprecated("deprecated")
         fun creditsOverageRate(creditsOverageRate: Double) =
             creditsOverageRate(creditsOverageRate as Double?)
 
+        @Deprecated("deprecated")
         fun creditsOverageRate(creditsOverageRate: JsonField<Double>) = apply {
             body.creditsOverageRate(creditsOverageRate)
         }
@@ -1850,18 +1890,22 @@ constructor(
             body.externalCustomerId(externalCustomerId)
         }
 
+        @Deprecated("deprecated")
         fun externalMarketplace(externalMarketplace: ExternalMarketplace?) = apply {
             body.externalMarketplace(externalMarketplace)
         }
 
+        @Deprecated("deprecated")
         fun externalMarketplace(externalMarketplace: JsonField<ExternalMarketplace>) = apply {
             body.externalMarketplace(externalMarketplace)
         }
 
+        @Deprecated("deprecated")
         fun externalMarketplaceReportingId(externalMarketplaceReportingId: String?) = apply {
             body.externalMarketplaceReportingId(externalMarketplaceReportingId)
         }
 
+        @Deprecated("deprecated")
         fun externalMarketplaceReportingId(externalMarketplaceReportingId: JsonField<String>) =
             apply {
                 body.externalMarketplaceReportingId(externalMarketplaceReportingId)
@@ -1962,13 +2006,16 @@ constructor(
          */
         fun netTerms(netTerms: JsonField<Long>) = apply { body.netTerms(netTerms) }
 
+        @Deprecated("deprecated")
         fun perCreditOverageAmount(perCreditOverageAmount: Double?) = apply {
             body.perCreditOverageAmount(perCreditOverageAmount)
         }
 
+        @Deprecated("deprecated")
         fun perCreditOverageAmount(perCreditOverageAmount: Double) =
             perCreditOverageAmount(perCreditOverageAmount as Double?)
 
+        @Deprecated("deprecated")
         fun perCreditOverageAmount(perCreditOverageAmount: JsonField<Double>) = apply {
             body.perCreditOverageAmount(perCreditOverageAmount)
         }
@@ -2009,16 +2056,19 @@ constructor(
         }
 
         /** Optionally provide a list of overrides for prices on the plan */
+        @Deprecated("deprecated")
         fun priceOverrides(priceOverrides: List<JsonValue>?) = apply {
             body.priceOverrides(priceOverrides)
         }
 
         /** Optionally provide a list of overrides for prices on the plan */
+        @Deprecated("deprecated")
         fun priceOverrides(priceOverrides: JsonField<List<JsonValue>>) = apply {
             body.priceOverrides(priceOverrides)
         }
 
         /** Optionally provide a list of overrides for prices on the plan */
+        @Deprecated("deprecated")
         fun addPriceOverride(priceOverride: JsonValue) = apply {
             body.addPriceOverride(priceOverride)
         }
@@ -4029,6 +4079,7 @@ constructor(
         /**
          * [DEPRECATED] Use add_adjustments instead. The subscription's discounts for this price.
          */
+        @Deprecated("deprecated")
         fun discounts(): List<Discount>? = discounts.getNullable("discounts")
 
         /**
@@ -4044,12 +4095,14 @@ constructor(
          * [DEPRECATED] Use add_adjustments instead. The subscription's maximum amount for this
          * price.
          */
+        @Deprecated("deprecated")
         fun maximumAmount(): String? = maximumAmount.getNullable("maximum_amount")
 
         /**
          * [DEPRECATED] Use add_adjustments instead. The subscription's minimum amount for this
          * price.
          */
+        @Deprecated("deprecated")
         fun minimumAmount(): String? = minimumAmount.getNullable("minimum_amount")
 
         /** The phase to add this price to. */
@@ -4070,6 +4123,7 @@ constructor(
         /**
          * [DEPRECATED] Use add_adjustments instead. The subscription's discounts for this price.
          */
+        @Deprecated("deprecated")
         @JsonProperty("discounts")
         @ExcludeMissing
         fun _discounts(): JsonField<List<Discount>> = discounts
@@ -4091,6 +4145,7 @@ constructor(
          * [DEPRECATED] Use add_adjustments instead. The subscription's maximum amount for this
          * price.
          */
+        @Deprecated("deprecated")
         @JsonProperty("maximum_amount")
         @ExcludeMissing
         fun _maximumAmount(): JsonField<String> = maximumAmount
@@ -4099,6 +4154,7 @@ constructor(
          * [DEPRECATED] Use add_adjustments instead. The subscription's minimum amount for this
          * price.
          */
+        @Deprecated("deprecated")
         @JsonProperty("minimum_amount")
         @ExcludeMissing
         fun _minimumAmount(): JsonField<String> = minimumAmount
@@ -4182,12 +4238,14 @@ constructor(
              * [DEPRECATED] Use add_adjustments instead. The subscription's discounts for this
              * price.
              */
+            @Deprecated("deprecated")
             fun discounts(discounts: List<Discount>?) = discounts(JsonField.ofNullable(discounts))
 
             /**
              * [DEPRECATED] Use add_adjustments instead. The subscription's discounts for this
              * price.
              */
+            @Deprecated("deprecated")
             fun discounts(discounts: JsonField<List<Discount>>) = apply {
                 this.discounts = discounts.map { it.toMutableList() }
             }
@@ -4196,6 +4254,7 @@ constructor(
              * [DEPRECATED] Use add_adjustments instead. The subscription's discounts for this
              * price.
              */
+            @Deprecated("deprecated")
             fun addDiscount(discount: Discount) = apply {
                 discounts =
                     (discounts ?: JsonField.of(mutableListOf())).apply {
@@ -4232,6 +4291,7 @@ constructor(
              * [DEPRECATED] Use add_adjustments instead. The subscription's maximum amount for this
              * price.
              */
+            @Deprecated("deprecated")
             fun maximumAmount(maximumAmount: String?) =
                 maximumAmount(JsonField.ofNullable(maximumAmount))
 
@@ -4239,6 +4299,7 @@ constructor(
              * [DEPRECATED] Use add_adjustments instead. The subscription's maximum amount for this
              * price.
              */
+            @Deprecated("deprecated")
             fun maximumAmount(maximumAmount: JsonField<String>) = apply {
                 this.maximumAmount = maximumAmount
             }
@@ -4247,6 +4308,7 @@ constructor(
              * [DEPRECATED] Use add_adjustments instead. The subscription's minimum amount for this
              * price.
              */
+            @Deprecated("deprecated")
             fun minimumAmount(minimumAmount: String?) =
                 minimumAmount(JsonField.ofNullable(minimumAmount))
 
@@ -4254,6 +4316,7 @@ constructor(
              * [DEPRECATED] Use add_adjustments instead. The subscription's minimum amount for this
              * price.
              */
+            @Deprecated("deprecated")
             fun minimumAmount(minimumAmount: JsonField<String>) = apply {
                 this.minimumAmount = minimumAmount
             }
@@ -6217,6 +6280,7 @@ constructor(
                         )
                 }
 
+                /** The cadence to bill for this price on. */
                 class Cadence
                 @JsonCreator
                 private constructor(
@@ -6575,6 +6639,7 @@ constructor(
                             )
                     }
 
+                    /** The unit of billing period duration. */
                     class DurationUnit
                     @JsonCreator
                     private constructor(
@@ -6770,6 +6835,7 @@ constructor(
                             )
                     }
 
+                    /** The unit of billing period duration. */
                     class DurationUnit
                     @JsonCreator
                     private constructor(
@@ -7515,6 +7581,7 @@ constructor(
                         )
                 }
 
+                /** The cadence to bill for this price on. */
                 class Cadence
                 @JsonCreator
                 private constructor(
@@ -7909,6 +7976,7 @@ constructor(
                             )
                     }
 
+                    /** The unit of billing period duration. */
                     class DurationUnit
                     @JsonCreator
                     private constructor(
@@ -8104,6 +8172,7 @@ constructor(
                             )
                     }
 
+                    /** The unit of billing period duration. */
                     class DurationUnit
                     @JsonCreator
                     private constructor(
@@ -8849,6 +8918,7 @@ constructor(
                         )
                 }
 
+                /** The cadence to bill for this price on. */
                 class Cadence
                 @JsonCreator
                 private constructor(
@@ -9466,6 +9536,7 @@ constructor(
                             )
                     }
 
+                    /** The unit of billing period duration. */
                     class DurationUnit
                     @JsonCreator
                     private constructor(
@@ -9661,6 +9732,7 @@ constructor(
                             )
                     }
 
+                    /** The unit of billing period duration. */
                     class DurationUnit
                     @JsonCreator
                     private constructor(
@@ -10406,6 +10478,7 @@ constructor(
                         )
                 }
 
+                /** The cadence to bill for this price on. */
                 class Cadence
                 @JsonCreator
                 private constructor(
@@ -10954,6 +11027,7 @@ constructor(
                             )
                     }
 
+                    /** The unit of billing period duration. */
                     class DurationUnit
                     @JsonCreator
                     private constructor(
@@ -11149,6 +11223,7 @@ constructor(
                             )
                     }
 
+                    /** The unit of billing period duration. */
                     class DurationUnit
                     @JsonCreator
                     private constructor(
@@ -11896,6 +11971,7 @@ constructor(
                         )
                 }
 
+                /** The cadence to bill for this price on. */
                 class Cadence
                 @JsonCreator
                 private constructor(
@@ -12459,6 +12535,7 @@ constructor(
                             )
                     }
 
+                    /** The unit of billing period duration. */
                     class DurationUnit
                     @JsonCreator
                     private constructor(
@@ -12654,6 +12731,7 @@ constructor(
                             )
                     }
 
+                    /** The unit of billing period duration. */
                     class DurationUnit
                     @JsonCreator
                     private constructor(
@@ -13524,6 +13602,7 @@ constructor(
                         "BpsConfig{bps=$bps, perUnitMaximum=$perUnitMaximum, additionalProperties=$additionalProperties}"
                 }
 
+                /** The cadence to bill for this price on. */
                 class Cadence
                 @JsonCreator
                 private constructor(
@@ -13775,6 +13854,7 @@ constructor(
                             )
                     }
 
+                    /** The unit of billing period duration. */
                     class DurationUnit
                     @JsonCreator
                     private constructor(
@@ -13970,6 +14050,7 @@ constructor(
                             )
                     }
 
+                    /** The unit of billing period duration. */
                     class DurationUnit
                     @JsonCreator
                     private constructor(
@@ -15002,6 +15083,7 @@ constructor(
                         "BulkBpsConfig{tiers=$tiers, additionalProperties=$additionalProperties}"
                 }
 
+                /** The cadence to bill for this price on. */
                 class Cadence
                 @JsonCreator
                 private constructor(
@@ -15253,6 +15335,7 @@ constructor(
                             )
                     }
 
+                    /** The unit of billing period duration. */
                     class DurationUnit
                     @JsonCreator
                     private constructor(
@@ -15448,6 +15531,7 @@ constructor(
                             )
                     }
 
+                    /** The unit of billing period duration. */
                     class DurationUnit
                     @JsonCreator
                     private constructor(
@@ -16447,6 +16531,7 @@ constructor(
                         "BulkConfig{tiers=$tiers, additionalProperties=$additionalProperties}"
                 }
 
+                /** The cadence to bill for this price on. */
                 class Cadence
                 @JsonCreator
                 private constructor(
@@ -16698,6 +16783,7 @@ constructor(
                             )
                     }
 
+                    /** The unit of billing period duration. */
                     class DurationUnit
                     @JsonCreator
                     private constructor(
@@ -16893,6 +16979,7 @@ constructor(
                             )
                     }
 
+                    /** The unit of billing period duration. */
                     class DurationUnit
                     @JsonCreator
                     private constructor(
@@ -17649,6 +17736,7 @@ constructor(
                         )
                 }
 
+                /** The cadence to bill for this price on. */
                 class Cadence
                 @JsonCreator
                 private constructor(
@@ -17984,6 +18072,7 @@ constructor(
                             )
                     }
 
+                    /** The unit of billing period duration. */
                     class DurationUnit
                     @JsonCreator
                     private constructor(
@@ -18179,6 +18268,7 @@ constructor(
                             )
                     }
 
+                    /** The unit of billing period duration. */
                     class DurationUnit
                     @JsonCreator
                     private constructor(
@@ -18927,6 +19017,7 @@ constructor(
                         )
                 }
 
+                /** The cadence to bill for this price on. */
                 class Cadence
                 @JsonCreator
                 private constructor(
@@ -19261,6 +19352,7 @@ constructor(
                             )
                     }
 
+                    /** The unit of billing period duration. */
                     class DurationUnit
                     @JsonCreator
                     private constructor(
@@ -19456,6 +19548,7 @@ constructor(
                             )
                     }
 
+                    /** The unit of billing period duration. */
                     class DurationUnit
                     @JsonCreator
                     private constructor(
@@ -20209,6 +20302,7 @@ constructor(
                         )
                 }
 
+                /** The cadence to bill for this price on. */
                 class Cadence
                 @JsonCreator
                 private constructor(
@@ -20544,6 +20638,7 @@ constructor(
                             )
                     }
 
+                    /** The unit of billing period duration. */
                     class DurationUnit
                     @JsonCreator
                     private constructor(
@@ -20739,6 +20834,7 @@ constructor(
                             )
                     }
 
+                    /** The unit of billing period duration. */
                     class DurationUnit
                     @JsonCreator
                     private constructor(
@@ -21489,6 +21585,7 @@ constructor(
                         )
                 }
 
+                /** The cadence to bill for this price on. */
                 class Cadence
                 @JsonCreator
                 private constructor(
@@ -21823,6 +21920,7 @@ constructor(
                             )
                     }
 
+                    /** The unit of billing period duration. */
                     class DurationUnit
                     @JsonCreator
                     private constructor(
@@ -22018,6 +22116,7 @@ constructor(
                             )
                     }
 
+                    /** The unit of billing period duration. */
                     class DurationUnit
                     @JsonCreator
                     private constructor(
@@ -22779,6 +22878,7 @@ constructor(
                         )
                 }
 
+                /** The cadence to bill for this price on. */
                 class Cadence
                 @JsonCreator
                 private constructor(
@@ -23115,6 +23215,7 @@ constructor(
                             )
                     }
 
+                    /** The unit of billing period duration. */
                     class DurationUnit
                     @JsonCreator
                     private constructor(
@@ -23310,6 +23411,7 @@ constructor(
                             )
                     }
 
+                    /** The unit of billing period duration. */
                     class DurationUnit
                     @JsonCreator
                     private constructor(
@@ -24065,6 +24167,7 @@ constructor(
                         )
                 }
 
+                /** The cadence to bill for this price on. */
                 class Cadence
                 @JsonCreator
                 private constructor(
@@ -24400,6 +24503,7 @@ constructor(
                             )
                     }
 
+                    /** The unit of billing period duration. */
                     class DurationUnit
                     @JsonCreator
                     private constructor(
@@ -24595,6 +24699,7 @@ constructor(
                             )
                     }
 
+                    /** The unit of billing period duration. */
                     class DurationUnit
                     @JsonCreator
                     private constructor(
@@ -25348,6 +25453,7 @@ constructor(
                         )
                 }
 
+                /** The cadence to bill for this price on. */
                 class Cadence
                 @JsonCreator
                 private constructor(
@@ -25683,6 +25789,7 @@ constructor(
                             )
                     }
 
+                    /** The unit of billing period duration. */
                     class DurationUnit
                     @JsonCreator
                     private constructor(
@@ -25878,6 +25985,7 @@ constructor(
                             )
                     }
 
+                    /** The unit of billing period duration. */
                     class DurationUnit
                     @JsonCreator
                     private constructor(
@@ -26631,6 +26739,7 @@ constructor(
                         )
                 }
 
+                /** The cadence to bill for this price on. */
                 class Cadence
                 @JsonCreator
                 private constructor(
@@ -26966,6 +27075,7 @@ constructor(
                             )
                     }
 
+                    /** The unit of billing period duration. */
                     class DurationUnit
                     @JsonCreator
                     private constructor(
@@ -27161,6 +27271,7 @@ constructor(
                             )
                     }
 
+                    /** The unit of billing period duration. */
                     class DurationUnit
                     @JsonCreator
                     private constructor(
@@ -27936,6 +28047,7 @@ constructor(
                         )
                 }
 
+                /** The cadence to bill for this price on. */
                 class Cadence
                 @JsonCreator
                 private constructor(
@@ -28272,6 +28384,7 @@ constructor(
                             )
                     }
 
+                    /** The unit of billing period duration. */
                     class DurationUnit
                     @JsonCreator
                     private constructor(
@@ -28467,6 +28580,7 @@ constructor(
                             )
                     }
 
+                    /** The unit of billing period duration. */
                     class DurationUnit
                     @JsonCreator
                     private constructor(
@@ -29304,6 +29418,7 @@ constructor(
                         "BulkWithProrationConfig{additionalProperties=$additionalProperties}"
                 }
 
+                /** The cadence to bill for this price on. */
                 class Cadence
                 @JsonCreator
                 private constructor(
@@ -29555,6 +29670,7 @@ constructor(
                             )
                     }
 
+                    /** The unit of billing period duration. */
                     class DurationUnit
                     @JsonCreator
                     private constructor(
@@ -29750,6 +29866,7 @@ constructor(
                             )
                     }
 
+                    /** The unit of billing period duration. */
                     class DurationUnit
                     @JsonCreator
                     private constructor(
@@ -30140,6 +30257,7 @@ constructor(
             "BillingCycleAnchorConfiguration{day=$day, month=$month, year=$year, additionalProperties=$additionalProperties}"
     }
 
+    @Deprecated("deprecated")
     class ExternalMarketplace
     @JsonCreator
     private constructor(
@@ -32193,6 +32311,7 @@ constructor(
          * [DEPRECATED] Use add_adjustments instead. The subscription's discounts for the
          * replacement price.
          */
+        @Deprecated("deprecated")
         fun discounts(): List<Discount>? = discounts.getNullable("discounts")
 
         /** The external price id of the price to add to the subscription. */
@@ -32205,12 +32324,14 @@ constructor(
          * [DEPRECATED] Use add_adjustments instead. The subscription's maximum amount for the
          * replacement price.
          */
+        @Deprecated("deprecated")
         fun maximumAmount(): String? = maximumAmount.getNullable("maximum_amount")
 
         /**
          * [DEPRECATED] Use add_adjustments instead. The subscription's minimum amount for the
          * replacement price.
          */
+        @Deprecated("deprecated")
         fun minimumAmount(): String? = minimumAmount.getNullable("minimum_amount")
 
         /** The definition of a new price to create and add to the subscription. */
@@ -32228,6 +32349,7 @@ constructor(
          * [DEPRECATED] Use add_adjustments instead. The subscription's discounts for the
          * replacement price.
          */
+        @Deprecated("deprecated")
         @JsonProperty("discounts")
         @ExcludeMissing
         fun _discounts(): JsonField<List<Discount>> = discounts
@@ -32246,6 +32368,7 @@ constructor(
          * [DEPRECATED] Use add_adjustments instead. The subscription's maximum amount for the
          * replacement price.
          */
+        @Deprecated("deprecated")
         @JsonProperty("maximum_amount")
         @ExcludeMissing
         fun _maximumAmount(): JsonField<String> = maximumAmount
@@ -32254,6 +32377,7 @@ constructor(
          * [DEPRECATED] Use add_adjustments instead. The subscription's minimum amount for the
          * replacement price.
          */
+        @Deprecated("deprecated")
         @JsonProperty("minimum_amount")
         @ExcludeMissing
         fun _minimumAmount(): JsonField<String> = minimumAmount
@@ -32330,12 +32454,14 @@ constructor(
              * [DEPRECATED] Use add_adjustments instead. The subscription's discounts for the
              * replacement price.
              */
+            @Deprecated("deprecated")
             fun discounts(discounts: List<Discount>?) = discounts(JsonField.ofNullable(discounts))
 
             /**
              * [DEPRECATED] Use add_adjustments instead. The subscription's discounts for the
              * replacement price.
              */
+            @Deprecated("deprecated")
             fun discounts(discounts: JsonField<List<Discount>>) = apply {
                 this.discounts = discounts.map { it.toMutableList() }
             }
@@ -32344,6 +32470,7 @@ constructor(
              * [DEPRECATED] Use add_adjustments instead. The subscription's discounts for the
              * replacement price.
              */
+            @Deprecated("deprecated")
             fun addDiscount(discount: Discount) = apply {
                 discounts =
                     (discounts ?: JsonField.of(mutableListOf())).apply {
@@ -32381,6 +32508,7 @@ constructor(
              * [DEPRECATED] Use add_adjustments instead. The subscription's maximum amount for the
              * replacement price.
              */
+            @Deprecated("deprecated")
             fun maximumAmount(maximumAmount: String?) =
                 maximumAmount(JsonField.ofNullable(maximumAmount))
 
@@ -32388,6 +32516,7 @@ constructor(
              * [DEPRECATED] Use add_adjustments instead. The subscription's maximum amount for the
              * replacement price.
              */
+            @Deprecated("deprecated")
             fun maximumAmount(maximumAmount: JsonField<String>) = apply {
                 this.maximumAmount = maximumAmount
             }
@@ -32396,6 +32525,7 @@ constructor(
              * [DEPRECATED] Use add_adjustments instead. The subscription's minimum amount for the
              * replacement price.
              */
+            @Deprecated("deprecated")
             fun minimumAmount(minimumAmount: String?) =
                 minimumAmount(JsonField.ofNullable(minimumAmount))
 
@@ -32403,6 +32533,7 @@ constructor(
              * [DEPRECATED] Use add_adjustments instead. The subscription's minimum amount for the
              * replacement price.
              */
+            @Deprecated("deprecated")
             fun minimumAmount(minimumAmount: JsonField<String>) = apply {
                 this.minimumAmount = minimumAmount
             }
@@ -34337,6 +34468,7 @@ constructor(
                         )
                 }
 
+                /** The cadence to bill for this price on. */
                 class Cadence
                 @JsonCreator
                 private constructor(
@@ -34695,6 +34827,7 @@ constructor(
                             )
                     }
 
+                    /** The unit of billing period duration. */
                     class DurationUnit
                     @JsonCreator
                     private constructor(
@@ -34890,6 +35023,7 @@ constructor(
                             )
                     }
 
+                    /** The unit of billing period duration. */
                     class DurationUnit
                     @JsonCreator
                     private constructor(
@@ -35635,6 +35769,7 @@ constructor(
                         )
                 }
 
+                /** The cadence to bill for this price on. */
                 class Cadence
                 @JsonCreator
                 private constructor(
@@ -36029,6 +36164,7 @@ constructor(
                             )
                     }
 
+                    /** The unit of billing period duration. */
                     class DurationUnit
                     @JsonCreator
                     private constructor(
@@ -36224,6 +36360,7 @@ constructor(
                             )
                     }
 
+                    /** The unit of billing period duration. */
                     class DurationUnit
                     @JsonCreator
                     private constructor(
@@ -36969,6 +37106,7 @@ constructor(
                         )
                 }
 
+                /** The cadence to bill for this price on. */
                 class Cadence
                 @JsonCreator
                 private constructor(
@@ -37586,6 +37724,7 @@ constructor(
                             )
                     }
 
+                    /** The unit of billing period duration. */
                     class DurationUnit
                     @JsonCreator
                     private constructor(
@@ -37781,6 +37920,7 @@ constructor(
                             )
                     }
 
+                    /** The unit of billing period duration. */
                     class DurationUnit
                     @JsonCreator
                     private constructor(
@@ -38526,6 +38666,7 @@ constructor(
                         )
                 }
 
+                /** The cadence to bill for this price on. */
                 class Cadence
                 @JsonCreator
                 private constructor(
@@ -39074,6 +39215,7 @@ constructor(
                             )
                     }
 
+                    /** The unit of billing period duration. */
                     class DurationUnit
                     @JsonCreator
                     private constructor(
@@ -39269,6 +39411,7 @@ constructor(
                             )
                     }
 
+                    /** The unit of billing period duration. */
                     class DurationUnit
                     @JsonCreator
                     private constructor(
@@ -40016,6 +40159,7 @@ constructor(
                         )
                 }
 
+                /** The cadence to bill for this price on. */
                 class Cadence
                 @JsonCreator
                 private constructor(
@@ -40579,6 +40723,7 @@ constructor(
                             )
                     }
 
+                    /** The unit of billing period duration. */
                     class DurationUnit
                     @JsonCreator
                     private constructor(
@@ -40774,6 +40919,7 @@ constructor(
                             )
                     }
 
+                    /** The unit of billing period duration. */
                     class DurationUnit
                     @JsonCreator
                     private constructor(
@@ -41644,6 +41790,7 @@ constructor(
                         "BpsConfig{bps=$bps, perUnitMaximum=$perUnitMaximum, additionalProperties=$additionalProperties}"
                 }
 
+                /** The cadence to bill for this price on. */
                 class Cadence
                 @JsonCreator
                 private constructor(
@@ -41895,6 +42042,7 @@ constructor(
                             )
                     }
 
+                    /** The unit of billing period duration. */
                     class DurationUnit
                     @JsonCreator
                     private constructor(
@@ -42090,6 +42238,7 @@ constructor(
                             )
                     }
 
+                    /** The unit of billing period duration. */
                     class DurationUnit
                     @JsonCreator
                     private constructor(
@@ -43122,6 +43271,7 @@ constructor(
                         "BulkBpsConfig{tiers=$tiers, additionalProperties=$additionalProperties}"
                 }
 
+                /** The cadence to bill for this price on. */
                 class Cadence
                 @JsonCreator
                 private constructor(
@@ -43373,6 +43523,7 @@ constructor(
                             )
                     }
 
+                    /** The unit of billing period duration. */
                     class DurationUnit
                     @JsonCreator
                     private constructor(
@@ -43568,6 +43719,7 @@ constructor(
                             )
                     }
 
+                    /** The unit of billing period duration. */
                     class DurationUnit
                     @JsonCreator
                     private constructor(
@@ -44567,6 +44719,7 @@ constructor(
                         "BulkConfig{tiers=$tiers, additionalProperties=$additionalProperties}"
                 }
 
+                /** The cadence to bill for this price on. */
                 class Cadence
                 @JsonCreator
                 private constructor(
@@ -44818,6 +44971,7 @@ constructor(
                             )
                     }
 
+                    /** The unit of billing period duration. */
                     class DurationUnit
                     @JsonCreator
                     private constructor(
@@ -45013,6 +45167,7 @@ constructor(
                             )
                     }
 
+                    /** The unit of billing period duration. */
                     class DurationUnit
                     @JsonCreator
                     private constructor(
@@ -45769,6 +45924,7 @@ constructor(
                         )
                 }
 
+                /** The cadence to bill for this price on. */
                 class Cadence
                 @JsonCreator
                 private constructor(
@@ -46104,6 +46260,7 @@ constructor(
                             )
                     }
 
+                    /** The unit of billing period duration. */
                     class DurationUnit
                     @JsonCreator
                     private constructor(
@@ -46299,6 +46456,7 @@ constructor(
                             )
                     }
 
+                    /** The unit of billing period duration. */
                     class DurationUnit
                     @JsonCreator
                     private constructor(
@@ -47047,6 +47205,7 @@ constructor(
                         )
                 }
 
+                /** The cadence to bill for this price on. */
                 class Cadence
                 @JsonCreator
                 private constructor(
@@ -47381,6 +47540,7 @@ constructor(
                             )
                     }
 
+                    /** The unit of billing period duration. */
                     class DurationUnit
                     @JsonCreator
                     private constructor(
@@ -47576,6 +47736,7 @@ constructor(
                             )
                     }
 
+                    /** The unit of billing period duration. */
                     class DurationUnit
                     @JsonCreator
                     private constructor(
@@ -48329,6 +48490,7 @@ constructor(
                         )
                 }
 
+                /** The cadence to bill for this price on. */
                 class Cadence
                 @JsonCreator
                 private constructor(
@@ -48664,6 +48826,7 @@ constructor(
                             )
                     }
 
+                    /** The unit of billing period duration. */
                     class DurationUnit
                     @JsonCreator
                     private constructor(
@@ -48859,6 +49022,7 @@ constructor(
                             )
                     }
 
+                    /** The unit of billing period duration. */
                     class DurationUnit
                     @JsonCreator
                     private constructor(
@@ -49609,6 +49773,7 @@ constructor(
                         )
                 }
 
+                /** The cadence to bill for this price on. */
                 class Cadence
                 @JsonCreator
                 private constructor(
@@ -49943,6 +50108,7 @@ constructor(
                             )
                     }
 
+                    /** The unit of billing period duration. */
                     class DurationUnit
                     @JsonCreator
                     private constructor(
@@ -50138,6 +50304,7 @@ constructor(
                             )
                     }
 
+                    /** The unit of billing period duration. */
                     class DurationUnit
                     @JsonCreator
                     private constructor(
@@ -50899,6 +51066,7 @@ constructor(
                         )
                 }
 
+                /** The cadence to bill for this price on. */
                 class Cadence
                 @JsonCreator
                 private constructor(
@@ -51235,6 +51403,7 @@ constructor(
                             )
                     }
 
+                    /** The unit of billing period duration. */
                     class DurationUnit
                     @JsonCreator
                     private constructor(
@@ -51430,6 +51599,7 @@ constructor(
                             )
                     }
 
+                    /** The unit of billing period duration. */
                     class DurationUnit
                     @JsonCreator
                     private constructor(
@@ -52185,6 +52355,7 @@ constructor(
                         )
                 }
 
+                /** The cadence to bill for this price on. */
                 class Cadence
                 @JsonCreator
                 private constructor(
@@ -52520,6 +52691,7 @@ constructor(
                             )
                     }
 
+                    /** The unit of billing period duration. */
                     class DurationUnit
                     @JsonCreator
                     private constructor(
@@ -52715,6 +52887,7 @@ constructor(
                             )
                     }
 
+                    /** The unit of billing period duration. */
                     class DurationUnit
                     @JsonCreator
                     private constructor(
@@ -53468,6 +53641,7 @@ constructor(
                         )
                 }
 
+                /** The cadence to bill for this price on. */
                 class Cadence
                 @JsonCreator
                 private constructor(
@@ -53803,6 +53977,7 @@ constructor(
                             )
                     }
 
+                    /** The unit of billing period duration. */
                     class DurationUnit
                     @JsonCreator
                     private constructor(
@@ -53998,6 +54173,7 @@ constructor(
                             )
                     }
 
+                    /** The unit of billing period duration. */
                     class DurationUnit
                     @JsonCreator
                     private constructor(
@@ -54751,6 +54927,7 @@ constructor(
                         )
                 }
 
+                /** The cadence to bill for this price on. */
                 class Cadence
                 @JsonCreator
                 private constructor(
@@ -55086,6 +55263,7 @@ constructor(
                             )
                     }
 
+                    /** The unit of billing period duration. */
                     class DurationUnit
                     @JsonCreator
                     private constructor(
@@ -55281,6 +55459,7 @@ constructor(
                             )
                     }
 
+                    /** The unit of billing period duration. */
                     class DurationUnit
                     @JsonCreator
                     private constructor(
@@ -56056,6 +56235,7 @@ constructor(
                         )
                 }
 
+                /** The cadence to bill for this price on. */
                 class Cadence
                 @JsonCreator
                 private constructor(
@@ -56392,6 +56572,7 @@ constructor(
                             )
                     }
 
+                    /** The unit of billing period duration. */
                     class DurationUnit
                     @JsonCreator
                     private constructor(
@@ -56587,6 +56768,7 @@ constructor(
                             )
                     }
 
+                    /** The unit of billing period duration. */
                     class DurationUnit
                     @JsonCreator
                     private constructor(
@@ -57424,6 +57606,7 @@ constructor(
                         "BulkWithProrationConfig{additionalProperties=$additionalProperties}"
                 }
 
+                /** The cadence to bill for this price on. */
                 class Cadence
                 @JsonCreator
                 private constructor(
@@ -57675,6 +57858,7 @@ constructor(
                             )
                     }
 
+                    /** The unit of billing period duration. */
                     class DurationUnit
                     @JsonCreator
                     private constructor(
@@ -57870,6 +58054,7 @@ constructor(
                             )
                     }
 
+                    /** The unit of billing period duration. */
                     class DurationUnit
                     @JsonCreator
                     private constructor(

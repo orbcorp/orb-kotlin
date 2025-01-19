@@ -868,6 +868,7 @@ private constructor(
             "Threshold{value=$value, additionalProperties=$additionalProperties}"
     }
 
+    /** The type of alert. This must be a valid alert type. */
     class Type
     @JsonCreator
     private constructor(

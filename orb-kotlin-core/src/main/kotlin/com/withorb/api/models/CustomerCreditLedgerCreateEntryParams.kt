@@ -2638,6 +2638,7 @@ constructor(
             override fun toString() = "Metadata{additionalProperties=$additionalProperties}"
         }
 
+        /** Can only be specified when `entry_type=void`. The reason for the void. */
         class VoidReason
         @JsonCreator
         private constructor(

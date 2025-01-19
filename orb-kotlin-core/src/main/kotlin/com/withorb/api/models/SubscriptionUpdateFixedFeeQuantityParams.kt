@@ -495,6 +495,11 @@ constructor(
             )
     }
 
+    /**
+     * Determines when the change takes effect. Note that if `effective_date` is specified, this
+     * defaults to `effective_date`. Otherwise, this defaults to `immediate` unless it's explicitly
+     * set to `upcoming_invoice.
+     */
     class ChangeOption
     @JsonCreator
     private constructor(
