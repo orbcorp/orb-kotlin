@@ -18,6 +18,12 @@ import java.util.Objects
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.FlowCollector
 
+/**
+ * This endpoint returns a list of all [plans](/core-concepts#plan-and-price) for an account in a
+ * list format. The list of plans is ordered starting from the most recently created plan. The
+ * response also includes [`pagination_metadata`](/api-reference/pagination), which lets the caller
+ * retrieve the next page of results if they exist.
+ */
 class PlanListPageAsync
 private constructor(
     private val plansService: PlanServiceAsync,

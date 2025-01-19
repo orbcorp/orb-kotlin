@@ -16,6 +16,7 @@ import com.withorb.api.core.toImmutable
 import com.withorb.api.services.blocking.customers.credits.TopUpService
 import java.util.Objects
 
+/** List top-ups by external ID */
 class CustomerCreditTopUpListByExternalIdPage
 private constructor(
     private val topUpsService: TopUpService,

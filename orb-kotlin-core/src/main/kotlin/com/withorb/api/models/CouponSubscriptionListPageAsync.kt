@@ -18,6 +18,12 @@ import java.util.Objects
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.FlowCollector
 
+/**
+ * This endpoint returns a list of all subscriptions that have redeemed a given coupon as a
+ * [paginated](/api-reference/pagination) list, ordered starting from the most recently created
+ * subscription. For a full discussion of the subscription resource, see
+ * [Subscription](/core-concepts#subscription).
+ */
 class CouponSubscriptionListPageAsync
 private constructor(
     private val subscriptionsService: SubscriptionServiceAsync,

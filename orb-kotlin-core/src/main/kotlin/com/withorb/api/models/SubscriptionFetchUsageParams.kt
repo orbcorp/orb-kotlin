@@ -494,6 +494,7 @@ constructor(
             )
     }
 
+    /** This determines the windowing of usage reporting. */
     class Granularity
     @JsonCreator
     private constructor(
@@ -545,6 +546,11 @@ constructor(
         override fun toString() = value.toString()
     }
 
+    /**
+     * Controls whether Orb returns cumulative usage since the start of the billing period, or
+     * incremental day-by-day usage. If your customer has minimums or discounts, it's strongly
+     * recommended that you use the default cumulative behavior.
+     */
     class ViewMode
     @JsonCreator
     private constructor(

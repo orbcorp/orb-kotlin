@@ -18,6 +18,7 @@ import java.util.Objects
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.FlowCollector
 
+/** List dimensional price groups */
 class DimensionalPriceGroupListPageAsync
 private constructor(
     private val dimensionalPriceGroupsService: DimensionalPriceGroupServiceAsync,

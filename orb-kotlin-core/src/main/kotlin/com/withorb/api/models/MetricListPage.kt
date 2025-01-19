@@ -16,6 +16,10 @@ import com.withorb.api.core.toImmutable
 import com.withorb.api.services.blocking.MetricService
 import java.util.Objects
 
+/**
+ * This endpoint is used to fetch [metric](/core-concepts##metric) details given a metric
+ * identifier. It returns information about the metrics including its name, description, and item.
+ */
 class MetricListPage
 private constructor(
     private val metricsService: MetricService,

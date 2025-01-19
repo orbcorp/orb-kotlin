@@ -410,6 +410,7 @@ constructor(
             )
     }
 
+    /** The type of alert to create. This must be a valid alert type. */
     class Type
     @JsonCreator
     private constructor(

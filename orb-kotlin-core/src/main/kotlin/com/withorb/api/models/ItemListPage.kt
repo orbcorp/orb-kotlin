@@ -16,6 +16,7 @@ import com.withorb.api.core.toImmutable
 import com.withorb.api.services.blocking.ItemService
 import java.util.Objects
 
+/** This endpoint returns a list of all Items, ordered in descending order by creation time. */
 class ItemListPage
 private constructor(
     private val itemsService: ItemService,
