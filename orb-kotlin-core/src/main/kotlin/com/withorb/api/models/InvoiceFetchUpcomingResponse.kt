@@ -290,7 +290,10 @@ private constructor(
      * This field is deprecated in favor of `discounts`. If a `discounts` list is provided, the
      * first discount in the list will be returned. If the list is empty, `None` will be returned.
      */
-    @JsonProperty("discount") @ExcludeMissing fun _discount(): JsonValue = discount
+    @Deprecated("deprecated")
+    @JsonProperty("discount")
+    @ExcludeMissing
+    fun _discount(): JsonValue = discount
 
     fun discounts(): List<InvoiceLevelDiscount> = discounts.getRequired("discounts")
 
@@ -1178,6 +1181,7 @@ private constructor(
          * first discount in the list will be returned. If the list is empty, `None` will be
          * returned.
          */
+        @Deprecated("deprecated")
         fun discount(discount: JsonValue) = apply { this.discount = discount }
 
         fun discounts(discounts: List<InvoiceLevelDiscount>) = discounts(JsonField.of(discounts))
@@ -7634,6 +7638,7 @@ private constructor(
                 )
         }
 
+        /** The payment provider that attempted to collect the payment. */
         class PaymentProvider
         @JsonCreator
         private constructor(

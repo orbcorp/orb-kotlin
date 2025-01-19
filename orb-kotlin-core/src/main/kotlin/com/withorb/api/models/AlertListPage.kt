@@ -16,6 +16,17 @@ import com.withorb.api.core.toImmutable
 import com.withorb.api.services.blocking.AlertService
 import java.util.Objects
 
+/**
+ * This endpoint returns a list of alerts within Orb.
+ *
+ * The request must specify one of `customer_id`, `external_customer_id`, or `subscription_id`.
+ *
+ * If querying by subscripion_id, the endpoint will return the subscription level alerts as well as
+ * the plan level alerts associated with the subscription.
+ *
+ * The list of alerts is ordered starting from the most recently created alert. This endpoint
+ * follows Orb's [standardized pagination format](/api-reference/pagination).
+ */
 class AlertListPage
 private constructor(
     private val alertsService: AlertService,

@@ -16,6 +16,11 @@ import com.withorb.api.core.toImmutable
 import com.withorb.api.services.blocking.SubscriptionService
 import java.util.Objects
 
+/**
+ * This endpoint returns a [paginated](/api-reference/pagination) list of all plans associated with
+ * a subscription along with their start and end dates. This list contains the subscription's
+ * initial plan along with past and future plan changes.
+ */
 class SubscriptionFetchSchedulePage
 private constructor(
     private val subscriptionsService: SubscriptionService,

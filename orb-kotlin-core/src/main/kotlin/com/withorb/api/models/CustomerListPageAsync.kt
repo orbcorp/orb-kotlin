@@ -18,6 +18,13 @@ import java.util.Objects
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.FlowCollector
 
+/**
+ * This endpoint returns a list of all customers for an account. The list of customers is ordered
+ * starting from the most recently created customer. This endpoint follows Orb's
+ * [standardized pagination format](/api-reference/pagination).
+ *
+ * See [Customer](/core-concepts##customer) for an overview of the customer model.
+ */
 class CustomerListPageAsync
 private constructor(
     private val customersService: CustomerServiceAsync,

@@ -18,6 +18,11 @@ import java.util.Objects
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.FlowCollector
 
+/**
+ * Get a paginated list of CreditNotes. Users can also filter by customer_id, subscription_id, or
+ * external_customer_id. The credit notes will be returned in reverse chronological order by
+ * `creation_time`.
+ */
 class CreditNoteListPageAsync
 private constructor(
     private val creditNotesService: CreditNoteServiceAsync,

@@ -18,6 +18,7 @@ import java.util.Objects
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.FlowCollector
 
+/** This endpoint returns a list of all Items, ordered in descending order by creation time. */
 class ItemListPageAsync
 private constructor(
     private val itemsService: ItemServiceAsync,

@@ -16,6 +16,13 @@ import com.withorb.api.core.toImmutable
 import com.withorb.api.services.blocking.CouponService
 import java.util.Objects
 
+/**
+ * This endpoint returns a list of all coupons for an account in a list format.
+ *
+ * The list of coupons is ordered starting from the most recently created coupon. The response also
+ * includes `pagination_metadata`, which lets the caller retrieve the next page of results if they
+ * exist. More information about pagination can be found in the Pagination-metadata schema.
+ */
 class CouponListPage
 private constructor(
     private val couponsService: CouponService,
