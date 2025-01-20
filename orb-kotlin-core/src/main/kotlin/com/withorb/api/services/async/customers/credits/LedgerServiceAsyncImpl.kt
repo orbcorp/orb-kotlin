@@ -22,7 +22,7 @@ import com.withorb.api.models.CustomerCreditLedgerListPageAsync
 import com.withorb.api.models.CustomerCreditLedgerListParams
 
 class LedgerServiceAsyncImpl
-constructor(
+internal constructor(
     private val clientOptions: ClientOptions,
 ) : LedgerServiceAsync {
 

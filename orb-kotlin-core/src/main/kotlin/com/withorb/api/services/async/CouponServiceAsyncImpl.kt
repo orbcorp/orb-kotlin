@@ -22,7 +22,7 @@ import com.withorb.api.services.async.coupons.SubscriptionServiceAsync
 import com.withorb.api.services.async.coupons.SubscriptionServiceAsyncImpl
 
 class CouponServiceAsyncImpl
-constructor(
+internal constructor(
     private val clientOptions: ClientOptions,
 ) : CouponServiceAsync {
 

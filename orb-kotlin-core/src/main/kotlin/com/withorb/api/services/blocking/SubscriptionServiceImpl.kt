@@ -45,7 +45,7 @@ import com.withorb.api.models.SubscriptionUpdateTrialResponse
 import com.withorb.api.models.SubscriptionUsage
 
 class SubscriptionServiceImpl
-constructor(
+internal constructor(
     private val clientOptions: ClientOptions,
 ) : SubscriptionService {
 

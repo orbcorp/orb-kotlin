@@ -15,7 +15,7 @@ import com.withorb.api.models.DimensionalPriceGroup
 import com.withorb.api.models.DimensionalPriceGroupExternalDimensionalPriceGroupIdRetrieveParams
 
 class ExternalDimensionalPriceGroupIdServiceImpl
-constructor(
+internal constructor(
     private val clientOptions: ClientOptions,
 ) : ExternalDimensionalPriceGroupIdService {
 

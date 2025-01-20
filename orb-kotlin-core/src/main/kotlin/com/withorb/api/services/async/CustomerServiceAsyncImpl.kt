@@ -30,7 +30,7 @@ import com.withorb.api.services.async.customers.CreditServiceAsync
 import com.withorb.api.services.async.customers.CreditServiceAsyncImpl
 
 class CustomerServiceAsyncImpl
-constructor(
+internal constructor(
     private val clientOptions: ClientOptions,
 ) : CustomerServiceAsync {
 

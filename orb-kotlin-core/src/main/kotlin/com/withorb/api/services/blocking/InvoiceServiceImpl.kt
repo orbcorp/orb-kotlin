@@ -26,7 +26,7 @@ import com.withorb.api.models.InvoiceUpdateParams
 import com.withorb.api.models.InvoiceVoidParams
 
 class InvoiceServiceImpl
-constructor(
+internal constructor(
     private val clientOptions: ClientOptions,
 ) : InvoiceService {
 

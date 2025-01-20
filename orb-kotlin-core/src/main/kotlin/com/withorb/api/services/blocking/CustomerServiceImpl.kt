@@ -30,7 +30,7 @@ import com.withorb.api.services.blocking.customers.CreditService
 import com.withorb.api.services.blocking.customers.CreditServiceImpl
 
 class CustomerServiceImpl
-constructor(
+internal constructor(
     private val clientOptions: ClientOptions,
 ) : CustomerService {
 

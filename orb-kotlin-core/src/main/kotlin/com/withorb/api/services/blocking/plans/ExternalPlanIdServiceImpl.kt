@@ -17,7 +17,7 @@ import com.withorb.api.models.PlanExternalPlanIdFetchParams
 import com.withorb.api.models.PlanExternalPlanIdUpdateParams
 
 class ExternalPlanIdServiceImpl
-constructor(
+internal constructor(
     private val clientOptions: ClientOptions,
 ) : ExternalPlanIdService {
 

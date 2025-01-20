@@ -24,7 +24,7 @@ import com.withorb.api.services.async.prices.ExternalPriceIdServiceAsync
 import com.withorb.api.services.async.prices.ExternalPriceIdServiceAsyncImpl
 
 class PriceServiceAsyncImpl
-constructor(
+internal constructor(
     private val clientOptions: ClientOptions,
 ) : PriceServiceAsync {
 

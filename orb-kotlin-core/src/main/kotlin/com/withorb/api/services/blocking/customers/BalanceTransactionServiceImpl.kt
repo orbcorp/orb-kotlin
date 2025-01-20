@@ -18,7 +18,7 @@ import com.withorb.api.models.CustomerBalanceTransactionListPage
 import com.withorb.api.models.CustomerBalanceTransactionListParams
 
 class BalanceTransactionServiceImpl
-constructor(
+internal constructor(
     private val clientOptions: ClientOptions,
 ) : BalanceTransactionService {
 

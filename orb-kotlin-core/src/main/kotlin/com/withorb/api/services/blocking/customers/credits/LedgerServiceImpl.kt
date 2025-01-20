@@ -22,7 +22,7 @@ import com.withorb.api.models.CustomerCreditLedgerListPage
 import com.withorb.api.models.CustomerCreditLedgerListParams
 
 class LedgerServiceImpl
-constructor(
+internal constructor(
     private val clientOptions: ClientOptions,
 ) : LedgerService {
 

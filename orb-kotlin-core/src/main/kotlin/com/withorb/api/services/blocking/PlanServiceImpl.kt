@@ -22,7 +22,7 @@ import com.withorb.api.services.blocking.plans.ExternalPlanIdService
 import com.withorb.api.services.blocking.plans.ExternalPlanIdServiceImpl
 
 class PlanServiceImpl
-constructor(
+internal constructor(
     private val clientOptions: ClientOptions,
 ) : PlanService {
 

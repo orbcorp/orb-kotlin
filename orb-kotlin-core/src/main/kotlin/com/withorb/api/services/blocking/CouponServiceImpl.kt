@@ -22,7 +22,7 @@ import com.withorb.api.services.blocking.coupons.SubscriptionService
 import com.withorb.api.services.blocking.coupons.SubscriptionServiceImpl
 
 class CouponServiceImpl
-constructor(
+internal constructor(
     private val clientOptions: ClientOptions,
 ) : CouponService {
 
