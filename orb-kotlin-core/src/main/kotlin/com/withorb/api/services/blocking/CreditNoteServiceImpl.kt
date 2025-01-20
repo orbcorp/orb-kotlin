@@ -19,7 +19,7 @@ import com.withorb.api.models.CreditNoteListPage
 import com.withorb.api.models.CreditNoteListParams
 
 class CreditNoteServiceImpl
-constructor(
+internal constructor(
     private val clientOptions: ClientOptions,
 ) : CreditNoteService {
 

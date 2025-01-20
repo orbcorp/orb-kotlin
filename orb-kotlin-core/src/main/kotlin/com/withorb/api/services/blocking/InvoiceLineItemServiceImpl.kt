@@ -16,7 +16,7 @@ import com.withorb.api.models.InvoiceLineItemCreateParams
 import com.withorb.api.models.InvoiceLineItemCreateResponse
 
 class InvoiceLineItemServiceImpl
-constructor(
+internal constructor(
     private val clientOptions: ClientOptions,
 ) : InvoiceLineItemService {
 

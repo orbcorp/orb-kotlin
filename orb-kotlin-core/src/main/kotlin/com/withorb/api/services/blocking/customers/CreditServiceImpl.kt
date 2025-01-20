@@ -21,7 +21,7 @@ import com.withorb.api.services.blocking.customers.credits.TopUpService
 import com.withorb.api.services.blocking.customers.credits.TopUpServiceImpl
 
 class CreditServiceImpl
-constructor(
+internal constructor(
     private val clientOptions: ClientOptions,
 ) : CreditService {
 

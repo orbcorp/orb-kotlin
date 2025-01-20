@@ -15,7 +15,7 @@ import com.withorb.api.models.TopLevelPingParams
 import com.withorb.api.models.TopLevelPingResponse
 
 class TopLevelServiceAsyncImpl
-constructor(
+internal constructor(
     private val clientOptions: ClientOptions,
 ) : TopLevelServiceAsync {
 

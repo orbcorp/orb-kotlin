@@ -17,7 +17,7 @@ import com.withorb.api.models.PriceExternalPriceIdFetchParams
 import com.withorb.api.models.PriceExternalPriceIdUpdateParams
 
 class ExternalPriceIdServiceAsyncImpl
-constructor(
+internal constructor(
     private val clientOptions: ClientOptions,
 ) : ExternalPriceIdServiceAsync {
 

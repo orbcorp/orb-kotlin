@@ -24,7 +24,7 @@ import com.withorb.api.models.EventBackfillRevertParams
 import com.withorb.api.models.EventBackfillRevertResponse
 
 class BackfillServiceAsyncImpl
-constructor(
+internal constructor(
     private val clientOptions: ClientOptions,
 ) : BackfillServiceAsync {
 

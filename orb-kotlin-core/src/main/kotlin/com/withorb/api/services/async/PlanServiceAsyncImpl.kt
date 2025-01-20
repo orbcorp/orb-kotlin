@@ -22,7 +22,7 @@ import com.withorb.api.services.async.plans.ExternalPlanIdServiceAsync
 import com.withorb.api.services.async.plans.ExternalPlanIdServiceAsyncImpl
 
 class PlanServiceAsyncImpl
-constructor(
+internal constructor(
     private val clientOptions: ClientOptions,
 ) : PlanServiceAsync {
 

@@ -24,7 +24,7 @@ import com.withorb.api.models.AlertRetrieveParams
 import com.withorb.api.models.AlertUpdateParams
 
 class AlertServiceImpl
-constructor(
+internal constructor(
     private val clientOptions: ClientOptions,
 ) : AlertService {
 

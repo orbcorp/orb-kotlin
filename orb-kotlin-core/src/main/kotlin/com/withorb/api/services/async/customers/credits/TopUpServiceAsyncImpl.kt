@@ -25,7 +25,7 @@ import com.withorb.api.models.CustomerCreditTopUpListPageAsync
 import com.withorb.api.models.CustomerCreditTopUpListParams
 
 class TopUpServiceAsyncImpl
-constructor(
+internal constructor(
     private val clientOptions: ClientOptions,
 ) : TopUpServiceAsync {
 

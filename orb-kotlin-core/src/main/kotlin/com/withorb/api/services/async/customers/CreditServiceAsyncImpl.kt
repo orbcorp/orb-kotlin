@@ -21,7 +21,7 @@ import com.withorb.api.services.async.customers.credits.TopUpServiceAsync
 import com.withorb.api.services.async.customers.credits.TopUpServiceAsyncImpl
 
 class CreditServiceAsyncImpl
-constructor(
+internal constructor(
     private val clientOptions: ClientOptions,
 ) : CreditServiceAsync {
 

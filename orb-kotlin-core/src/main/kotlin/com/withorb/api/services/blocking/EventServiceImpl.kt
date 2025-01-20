@@ -26,7 +26,7 @@ import com.withorb.api.services.blocking.events.VolumeService
 import com.withorb.api.services.blocking.events.VolumeServiceImpl
 
 class EventServiceImpl
-constructor(
+internal constructor(
     private val clientOptions: ClientOptions,
 ) : EventService {
 
