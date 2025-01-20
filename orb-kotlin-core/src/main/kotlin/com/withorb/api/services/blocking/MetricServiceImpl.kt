@@ -20,7 +20,7 @@ import com.withorb.api.models.MetricListParams
 import com.withorb.api.models.MetricUpdateParams
 
 class MetricServiceImpl
-constructor(
+internal constructor(
     private val clientOptions: ClientOptions,
 ) : MetricService {
 

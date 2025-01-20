@@ -17,7 +17,7 @@ import com.withorb.api.models.CustomerCostListParams
 import com.withorb.api.models.CustomerCostListResponse
 
 class CostServiceImpl
-constructor(
+internal constructor(
     private val clientOptions: ClientOptions,
 ) : CostService {
 

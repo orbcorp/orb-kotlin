@@ -24,7 +24,7 @@ import com.withorb.api.services.blocking.prices.ExternalPriceIdService
 import com.withorb.api.services.blocking.prices.ExternalPriceIdServiceImpl
 
 class PriceServiceImpl
-constructor(
+internal constructor(
     private val clientOptions: ClientOptions,
 ) : PriceService {
 

@@ -21,7 +21,7 @@ import com.withorb.api.services.blocking.dimensionalPriceGroups.ExternalDimensio
 import com.withorb.api.services.blocking.dimensionalPriceGroups.ExternalDimensionalPriceGroupIdServiceImpl
 
 class DimensionalPriceGroupServiceImpl
-constructor(
+internal constructor(
     private val clientOptions: ClientOptions,
 ) : DimensionalPriceGroupService {
 
