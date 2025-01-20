@@ -15,7 +15,7 @@ import com.withorb.api.models.EventVolumeListParams
 import com.withorb.api.models.EventVolumes
 
 class VolumeServiceAsyncImpl
-constructor(
+internal constructor(
     private val clientOptions: ClientOptions,
 ) : VolumeServiceAsync {
 

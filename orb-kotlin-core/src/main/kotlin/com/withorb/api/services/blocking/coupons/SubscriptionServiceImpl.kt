@@ -15,7 +15,7 @@ import com.withorb.api.models.CouponSubscriptionListPage
 import com.withorb.api.models.CouponSubscriptionListParams
 
 class SubscriptionServiceImpl
-constructor(
+internal constructor(
     private val clientOptions: ClientOptions,
 ) : SubscriptionService {
 

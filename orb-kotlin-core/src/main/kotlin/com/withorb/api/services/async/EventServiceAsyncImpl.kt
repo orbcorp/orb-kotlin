@@ -26,7 +26,7 @@ import com.withorb.api.services.async.events.VolumeServiceAsync
 import com.withorb.api.services.async.events.VolumeServiceAsyncImpl
 
 class EventServiceAsyncImpl
-constructor(
+internal constructor(
     private val clientOptions: ClientOptions,
 ) : EventServiceAsync {
 

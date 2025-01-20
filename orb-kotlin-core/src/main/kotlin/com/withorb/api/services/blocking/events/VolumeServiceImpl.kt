@@ -15,7 +15,7 @@ import com.withorb.api.models.EventVolumeListParams
 import com.withorb.api.models.EventVolumes
 
 class VolumeServiceImpl
-constructor(
+internal constructor(
     private val clientOptions: ClientOptions,
 ) : VolumeService {
 

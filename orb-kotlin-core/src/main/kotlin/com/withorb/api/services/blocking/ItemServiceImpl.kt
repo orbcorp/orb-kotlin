@@ -20,7 +20,7 @@ import com.withorb.api.models.ItemListParams
 import com.withorb.api.models.ItemUpdateParams
 
 class ItemServiceImpl
-constructor(
+internal constructor(
     private val clientOptions: ClientOptions,
 ) : ItemService {
 
