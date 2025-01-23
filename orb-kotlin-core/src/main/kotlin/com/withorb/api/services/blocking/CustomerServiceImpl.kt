@@ -20,6 +20,8 @@ import com.withorb.api.models.CustomerFetchByExternalIdParams
 import com.withorb.api.models.CustomerFetchParams
 import com.withorb.api.models.CustomerListPage
 import com.withorb.api.models.CustomerListParams
+import com.withorb.api.models.CustomerSyncPaymentMethodsFromGatewayByExternalCustomerIdParams
+import com.withorb.api.models.CustomerSyncPaymentMethodsFromGatewayParams
 import com.withorb.api.models.CustomerUpdateByExternalIdParams
 import com.withorb.api.models.CustomerUpdateParams
 import com.withorb.api.services.blocking.customers.BalanceTransactionService
@@ -250,6 +252,75 @@ internal constructor(
                         validate()
                     }
                 }
+        }
+    }
+
+    private val syncPaymentMethodsFromGatewayHandler: Handler<Void?> =
+        emptyHandler().withErrorHandler(errorHandler)
+
+    /**
+     * Sync Orb's payment methods for the customer with their gateway.
+     *
+     * This method can be called before taking an action that may cause the customer to be charged,
+     * ensuring that the most up-to-date payment method is charged.
+     *
+     * **Note**: This functionality is currently only available for Stripe.
+     */
+    override fun syncPaymentMethodsFromGateway(
+        params: CustomerSyncPaymentMethodsFromGatewayParams,
+        requestOptions: RequestOptions
+    ) {
+        val request =
+            HttpRequest.builder()
+                .method(HttpMethod.POST)
+                .addPathSegments(
+                    "customers",
+                    "external_customer_id",
+                    params.getPathParam(0),
+                    "sync_payment_methods_from_gateway"
+                )
+                .putAllQueryParams(clientOptions.queryParams)
+                .replaceAllQueryParams(params.getQueryParams())
+                .putAllHeaders(clientOptions.headers)
+                .replaceAllHeaders(params.getHeaders())
+                .apply { params.getBody()?.also { body(json(clientOptions.jsonMapper, it)) } }
+                .build()
+        clientOptions.httpClient.execute(request, requestOptions).let { response ->
+            response.use { syncPaymentMethodsFromGatewayHandler.handle(it) }
+        }
+    }
+
+    private val syncPaymentMethodsFromGatewayByExternalCustomerIdHandler: Handler<Void?> =
+        emptyHandler().withErrorHandler(errorHandler)
+
+    /**
+     * Sync Orb's payment methods for the customer with their gateway.
+     *
+     * This method can be called before taking an action that may cause the customer to be charged,
+     * ensuring that the most up-to-date payment method is charged.
+     *
+     * **Note**: This functionality is currently only available for Stripe.
+     */
+    override fun syncPaymentMethodsFromGatewayByExternalCustomerId(
+        params: CustomerSyncPaymentMethodsFromGatewayByExternalCustomerIdParams,
+        requestOptions: RequestOptions
+    ) {
+        val request =
+            HttpRequest.builder()
+                .method(HttpMethod.POST)
+                .addPathSegments(
+                    "customers",
+                    params.getPathParam(0),
+                    "sync_payment_methods_from_gateway"
+                )
+                .putAllQueryParams(clientOptions.queryParams)
+                .replaceAllQueryParams(params.getQueryParams())
+                .putAllHeaders(clientOptions.headers)
+                .replaceAllHeaders(params.getHeaders())
+                .apply { params.getBody()?.also { body(json(clientOptions.jsonMapper, it)) } }
+                .build()
+        clientOptions.httpClient.execute(request, requestOptions).let { response ->
+            response.use { syncPaymentMethodsFromGatewayByExternalCustomerIdHandler.handle(it) }
         }
     }
 

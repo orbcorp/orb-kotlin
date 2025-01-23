@@ -10,6 +10,8 @@ import com.withorb.api.models.CustomerDeleteParams
 import com.withorb.api.models.CustomerFetchByExternalIdParams
 import com.withorb.api.models.CustomerFetchParams
 import com.withorb.api.models.CustomerListParams
+import com.withorb.api.models.CustomerSyncPaymentMethodsFromGatewayByExternalCustomerIdParams
+import com.withorb.api.models.CustomerSyncPaymentMethodsFromGatewayParams
 import com.withorb.api.models.CustomerUpdateByExternalIdParams
 import com.withorb.api.models.CustomerUpdateParams
 import org.junit.jupiter.api.Test
@@ -242,6 +244,36 @@ class CustomerServiceTest {
             )
         println(customer)
         customer.validate()
+    }
+
+    @Test
+    fun callSyncPaymentMethodsFromGateway() {
+        val client =
+            OrbOkHttpClient.builder()
+                .baseUrl(TestServerExtension.BASE_URL)
+                .apiKey("My API Key")
+                .build()
+        val customerService = client.customers()
+        customerService.syncPaymentMethodsFromGateway(
+            CustomerSyncPaymentMethodsFromGatewayParams.builder()
+                .externalCustomerId("external_customer_id")
+                .build()
+        )
+    }
+
+    @Test
+    fun callSyncPaymentMethodsFromGatewayByExternalCustomerId() {
+        val client =
+            OrbOkHttpClient.builder()
+                .baseUrl(TestServerExtension.BASE_URL)
+                .apiKey("My API Key")
+                .build()
+        val customerService = client.customers()
+        customerService.syncPaymentMethodsFromGatewayByExternalCustomerId(
+            CustomerSyncPaymentMethodsFromGatewayByExternalCustomerIdParams.builder()
+                .customerId("customer_id")
+                .build()
+        )
     }
 
     @Test
