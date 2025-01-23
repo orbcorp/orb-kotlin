@@ -10,6 +10,8 @@ import com.withorb.api.models.CustomerFetchByExternalIdParams
 import com.withorb.api.models.CustomerFetchParams
 import com.withorb.api.models.CustomerListPage
 import com.withorb.api.models.CustomerListParams
+import com.withorb.api.models.CustomerSyncPaymentMethodsFromGatewayByExternalCustomerIdParams
+import com.withorb.api.models.CustomerSyncPaymentMethodsFromGatewayParams
 import com.withorb.api.models.CustomerUpdateByExternalIdParams
 import com.withorb.api.models.CustomerUpdateParams
 import com.withorb.api.services.blocking.customers.BalanceTransactionService
@@ -105,6 +107,32 @@ interface CustomerService {
         params: CustomerFetchByExternalIdParams,
         requestOptions: RequestOptions = RequestOptions.none()
     ): Customer
+
+    /**
+     * Sync Orb's payment methods for the customer with their gateway.
+     *
+     * This method can be called before taking an action that may cause the customer to be charged,
+     * ensuring that the most up-to-date payment method is charged.
+     *
+     * **Note**: This functionality is currently only available for Stripe.
+     */
+    fun syncPaymentMethodsFromGateway(
+        params: CustomerSyncPaymentMethodsFromGatewayParams,
+        requestOptions: RequestOptions = RequestOptions.none()
+    )
+
+    /**
+     * Sync Orb's payment methods for the customer with their gateway.
+     *
+     * This method can be called before taking an action that may cause the customer to be charged,
+     * ensuring that the most up-to-date payment method is charged.
+     *
+     * **Note**: This functionality is currently only available for Stripe.
+     */
+    fun syncPaymentMethodsFromGatewayByExternalCustomerId(
+        params: CustomerSyncPaymentMethodsFromGatewayByExternalCustomerIdParams,
+        requestOptions: RequestOptions = RequestOptions.none()
+    )
 
     /**
      * This endpoint is used to update customer details given an `external_customer_id` (see
