@@ -1,5 +1,25 @@
 # Changelog
 
+## 0.1.0-alpha.12 (2025-01-24)
+
+Full Changelog: [v0.1.0-alpha.11...v0.1.0-alpha.12](https://github.com/orbcorp/orb-kotlin/compare/v0.1.0-alpha.11...v0.1.0-alpha.12)
+
+### ⚠ BREAKING CHANGES
+
+* **client:** better union variant method and variable names ([#169](https://github.com/orbcorp/orb-kotlin/issues/169))
+
+### Features
+
+* **api:** api update ([#165](https://github.com/orbcorp/orb-kotlin/issues/165)) ([66c11e1](https://github.com/orbcorp/orb-kotlin/commit/66c11e12be6920982ef0b7c16dd2adcef0bea39b))
+* **client:** better union variant method and variable names ([#169](https://github.com/orbcorp/orb-kotlin/issues/169)) ([69086b0](https://github.com/orbcorp/orb-kotlin/commit/69086b034b08d1e5024a19db8e1d1903e19fc8f4))
+
+
+### Chores
+
+* add max retries to test ([#170](https://github.com/orbcorp/orb-kotlin/issues/170)) ([ee4979d](https://github.com/orbcorp/orb-kotlin/commit/ee4979d427564e441552f5b63cccf65d5b3dc91e))
+* **internal:** codegen related update ([#168](https://github.com/orbcorp/orb-kotlin/issues/168)) ([945faf6](https://github.com/orbcorp/orb-kotlin/commit/945faf6051468d64373e262bd3be6441cc3968d3))
+* **internal:** swap `checkNotNull` to `checkRequired` ([#167](https://github.com/orbcorp/orb-kotlin/issues/167)) ([2d6ca43](https://github.com/orbcorp/orb-kotlin/commit/2d6ca4331e89fbc666b222d0dc28209c358dad51))
+
 ## 0.1.0-alpha.11 (2025-01-22)
 
 Full Changelog: [v0.1.0-alpha.10...v0.1.0-alpha.11](https://github.com/orbcorp/orb-kotlin/compare/v0.1.0-alpha.10...v0.1.0-alpha.11)
