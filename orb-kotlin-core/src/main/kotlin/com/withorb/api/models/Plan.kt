@@ -436,36 +436,36 @@ private constructor(
          * Adjustments for this plan. If the plan has phases, this includes adjustments across all
          * phases of the plan.
          */
-        fun addAdjustment(amountDiscountAdjustment: Adjustment.AmountDiscountAdjustment) =
-            addAdjustment(Adjustment.ofAmountDiscountAdjustment(amountDiscountAdjustment))
+        fun addAdjustment(amountDiscount: Adjustment.AmountDiscountAdjustment) =
+            addAdjustment(Adjustment.ofAmountDiscount(amountDiscount))
 
         /**
          * Adjustments for this plan. If the plan has phases, this includes adjustments across all
          * phases of the plan.
          */
-        fun addAdjustment(percentageDiscountAdjustment: Adjustment.PercentageDiscountAdjustment) =
-            addAdjustment(Adjustment.ofPercentageDiscountAdjustment(percentageDiscountAdjustment))
+        fun addAdjustment(percentageDiscount: Adjustment.PercentageDiscountAdjustment) =
+            addAdjustment(Adjustment.ofPercentageDiscount(percentageDiscount))
 
         /**
          * Adjustments for this plan. If the plan has phases, this includes adjustments across all
          * phases of the plan.
          */
-        fun addAdjustment(usageDiscountAdjustment: Adjustment.UsageDiscountAdjustment) =
-            addAdjustment(Adjustment.ofUsageDiscountAdjustment(usageDiscountAdjustment))
+        fun addAdjustment(usageDiscount: Adjustment.UsageDiscountAdjustment) =
+            addAdjustment(Adjustment.ofUsageDiscount(usageDiscount))
 
         /**
          * Adjustments for this plan. If the plan has phases, this includes adjustments across all
          * phases of the plan.
          */
-        fun addAdjustment(minimumAdjustment: Adjustment.MinimumAdjustment) =
-            addAdjustment(Adjustment.ofMinimumAdjustment(minimumAdjustment))
+        fun addAdjustment(minimum: Adjustment.MinimumAdjustment) =
+            addAdjustment(Adjustment.ofMinimum(minimum))
 
         /**
          * Adjustments for this plan. If the plan has phases, this includes adjustments across all
          * phases of the plan.
          */
-        fun addAdjustment(maximumAdjustment: Adjustment.MaximumAdjustment) =
-            addAdjustment(Adjustment.ofMaximumAdjustment(maximumAdjustment))
+        fun addAdjustment(maximum: Adjustment.MaximumAdjustment) =
+            addAdjustment(Adjustment.ofMaximum(maximum))
 
         fun basePlan(basePlan: BasePlan?) = basePlan(JsonField.ofNullable(basePlan))
 
@@ -521,17 +521,13 @@ private constructor(
 
         fun discount(discount: JsonField<Discount>) = apply { this.discount = discount }
 
-        fun discount(percentageDiscount: PercentageDiscount) =
-            discount(Discount.ofPercentageDiscount(percentageDiscount))
+        fun discount(percentage: PercentageDiscount) = discount(Discount.ofPercentage(percentage))
 
-        fun discount(trialDiscount: TrialDiscount) =
-            discount(Discount.ofTrialDiscount(trialDiscount))
+        fun discount(trial: TrialDiscount) = discount(Discount.ofTrial(trial))
 
-        fun discount(usageDiscount: Discount.UsageDiscount) =
-            discount(Discount.ofUsageDiscount(usageDiscount))
+        fun discount(usage: Discount.UsageDiscount) = discount(Discount.ofUsage(usage))
 
-        fun discount(amountDiscount: AmountDiscount) =
-            discount(Discount.ofAmountDiscount(amountDiscount))
+        fun discount(amount: AmountDiscount) = discount(Discount.ofAmount(amount))
 
         /**
          * An optional user-defined ID for this plan resource, used throughout the system as an
@@ -679,7 +675,7 @@ private constructor(
          * Prices for this plan. If the plan has phases, this includes prices across all phases of
          * the plan.
          */
-        fun addPrice(unitPrice: Price.UnitPrice) = addPrice(Price.ofUnitPrice(unitPrice))
+        fun addPrice(unit: Price.UnitPrice) = addPrice(Price.ofUnit(unit))
 
         /**
          * Prices for this plan. If the plan has phases, this includes prices across all phases of
@@ -692,158 +688,156 @@ private constructor(
          * Prices for this plan. If the plan has phases, this includes prices across all phases of
          * the plan.
          */
-        fun addPrice(matrixPrice: Price.MatrixPrice) = addPrice(Price.ofMatrixPrice(matrixPrice))
+        fun addPrice(matrix: Price.MatrixPrice) = addPrice(Price.ofMatrix(matrix))
 
         /**
          * Prices for this plan. If the plan has phases, this includes prices across all phases of
          * the plan.
          */
-        fun addPrice(tieredPrice: Price.TieredPrice) = addPrice(Price.ofTieredPrice(tieredPrice))
+        fun addPrice(tiered: Price.TieredPrice) = addPrice(Price.ofTiered(tiered))
 
         /**
          * Prices for this plan. If the plan has phases, this includes prices across all phases of
          * the plan.
          */
-        fun addPrice(tieredBpsPrice: Price.TieredBpsPrice) =
-            addPrice(Price.ofTieredBpsPrice(tieredBpsPrice))
+        fun addPrice(tieredBps: Price.TieredBpsPrice) = addPrice(Price.ofTieredBps(tieredBps))
 
         /**
          * Prices for this plan. If the plan has phases, this includes prices across all phases of
          * the plan.
          */
-        fun addPrice(bpsPrice: Price.BpsPrice) = addPrice(Price.ofBpsPrice(bpsPrice))
+        fun addPrice(bps: Price.BpsPrice) = addPrice(Price.ofBps(bps))
 
         /**
          * Prices for this plan. If the plan has phases, this includes prices across all phases of
          * the plan.
          */
-        fun addPrice(bulkBpsPrice: Price.BulkBpsPrice) =
-            addPrice(Price.ofBulkBpsPrice(bulkBpsPrice))
+        fun addPrice(bulkBps: Price.BulkBpsPrice) = addPrice(Price.ofBulkBps(bulkBps))
 
         /**
          * Prices for this plan. If the plan has phases, this includes prices across all phases of
          * the plan.
          */
-        fun addPrice(bulkPrice: Price.BulkPrice) = addPrice(Price.ofBulkPrice(bulkPrice))
+        fun addPrice(bulk: Price.BulkPrice) = addPrice(Price.ofBulk(bulk))
 
         /**
          * Prices for this plan. If the plan has phases, this includes prices across all phases of
          * the plan.
          */
-        fun addPrice(thresholdTotalAmountPrice: Price.ThresholdTotalAmountPrice) =
-            addPrice(Price.ofThresholdTotalAmountPrice(thresholdTotalAmountPrice))
+        fun addPrice(thresholdTotalAmount: Price.ThresholdTotalAmountPrice) =
+            addPrice(Price.ofThresholdTotalAmount(thresholdTotalAmount))
 
         /**
          * Prices for this plan. If the plan has phases, this includes prices across all phases of
          * the plan.
          */
-        fun addPrice(tieredPackagePrice: Price.TieredPackagePrice) =
-            addPrice(Price.ofTieredPackagePrice(tieredPackagePrice))
+        fun addPrice(tieredPackage: Price.TieredPackagePrice) =
+            addPrice(Price.ofTieredPackage(tieredPackage))
 
         /**
          * Prices for this plan. If the plan has phases, this includes prices across all phases of
          * the plan.
          */
-        fun addPrice(groupedTieredPrice: Price.GroupedTieredPrice) =
-            addPrice(Price.ofGroupedTieredPrice(groupedTieredPrice))
+        fun addPrice(groupedTiered: Price.GroupedTieredPrice) =
+            addPrice(Price.ofGroupedTiered(groupedTiered))
 
         /**
          * Prices for this plan. If the plan has phases, this includes prices across all phases of
          * the plan.
          */
-        fun addPrice(tieredWithMinimumPrice: Price.TieredWithMinimumPrice) =
-            addPrice(Price.ofTieredWithMinimumPrice(tieredWithMinimumPrice))
+        fun addPrice(tieredWithMinimum: Price.TieredWithMinimumPrice) =
+            addPrice(Price.ofTieredWithMinimum(tieredWithMinimum))
 
         /**
          * Prices for this plan. If the plan has phases, this includes prices across all phases of
          * the plan.
          */
-        fun addPrice(tieredPackageWithMinimumPrice: Price.TieredPackageWithMinimumPrice) =
-            addPrice(Price.ofTieredPackageWithMinimumPrice(tieredPackageWithMinimumPrice))
+        fun addPrice(tieredPackageWithMinimum: Price.TieredPackageWithMinimumPrice) =
+            addPrice(Price.ofTieredPackageWithMinimum(tieredPackageWithMinimum))
 
         /**
          * Prices for this plan. If the plan has phases, this includes prices across all phases of
          * the plan.
          */
-        fun addPrice(packageWithAllocationPrice: Price.PackageWithAllocationPrice) =
-            addPrice(Price.ofPackageWithAllocationPrice(packageWithAllocationPrice))
+        fun addPrice(packageWithAllocation: Price.PackageWithAllocationPrice) =
+            addPrice(Price.ofPackageWithAllocation(packageWithAllocation))
 
         /**
          * Prices for this plan. If the plan has phases, this includes prices across all phases of
          * the plan.
          */
-        fun addPrice(unitWithPercentPrice: Price.UnitWithPercentPrice) =
-            addPrice(Price.ofUnitWithPercentPrice(unitWithPercentPrice))
+        fun addPrice(unitWithPercent: Price.UnitWithPercentPrice) =
+            addPrice(Price.ofUnitWithPercent(unitWithPercent))
 
         /**
          * Prices for this plan. If the plan has phases, this includes prices across all phases of
          * the plan.
          */
-        fun addPrice(matrixWithAllocationPrice: Price.MatrixWithAllocationPrice) =
-            addPrice(Price.ofMatrixWithAllocationPrice(matrixWithAllocationPrice))
+        fun addPrice(matrixWithAllocation: Price.MatrixWithAllocationPrice) =
+            addPrice(Price.ofMatrixWithAllocation(matrixWithAllocation))
 
         /**
          * Prices for this plan. If the plan has phases, this includes prices across all phases of
          * the plan.
          */
-        fun addPrice(tieredWithProrationPrice: Price.TieredWithProrationPrice) =
-            addPrice(Price.ofTieredWithProrationPrice(tieredWithProrationPrice))
+        fun addPrice(tieredWithProration: Price.TieredWithProrationPrice) =
+            addPrice(Price.ofTieredWithProration(tieredWithProration))
 
         /**
          * Prices for this plan. If the plan has phases, this includes prices across all phases of
          * the plan.
          */
-        fun addPrice(unitWithProrationPrice: Price.UnitWithProrationPrice) =
-            addPrice(Price.ofUnitWithProrationPrice(unitWithProrationPrice))
+        fun addPrice(unitWithProration: Price.UnitWithProrationPrice) =
+            addPrice(Price.ofUnitWithProration(unitWithProration))
 
         /**
          * Prices for this plan. If the plan has phases, this includes prices across all phases of
          * the plan.
          */
-        fun addPrice(groupedAllocationPrice: Price.GroupedAllocationPrice) =
-            addPrice(Price.ofGroupedAllocationPrice(groupedAllocationPrice))
+        fun addPrice(groupedAllocation: Price.GroupedAllocationPrice) =
+            addPrice(Price.ofGroupedAllocation(groupedAllocation))
 
         /**
          * Prices for this plan. If the plan has phases, this includes prices across all phases of
          * the plan.
          */
-        fun addPrice(groupedWithProratedMinimumPrice: Price.GroupedWithProratedMinimumPrice) =
-            addPrice(Price.ofGroupedWithProratedMinimumPrice(groupedWithProratedMinimumPrice))
+        fun addPrice(groupedWithProratedMinimum: Price.GroupedWithProratedMinimumPrice) =
+            addPrice(Price.ofGroupedWithProratedMinimum(groupedWithProratedMinimum))
 
         /**
          * Prices for this plan. If the plan has phases, this includes prices across all phases of
          * the plan.
          */
-        fun addPrice(groupedWithMeteredMinimumPrice: Price.GroupedWithMeteredMinimumPrice) =
-            addPrice(Price.ofGroupedWithMeteredMinimumPrice(groupedWithMeteredMinimumPrice))
+        fun addPrice(groupedWithMeteredMinimum: Price.GroupedWithMeteredMinimumPrice) =
+            addPrice(Price.ofGroupedWithMeteredMinimum(groupedWithMeteredMinimum))
 
         /**
          * Prices for this plan. If the plan has phases, this includes prices across all phases of
          * the plan.
          */
-        fun addPrice(matrixWithDisplayNamePrice: Price.MatrixWithDisplayNamePrice) =
-            addPrice(Price.ofMatrixWithDisplayNamePrice(matrixWithDisplayNamePrice))
+        fun addPrice(matrixWithDisplayName: Price.MatrixWithDisplayNamePrice) =
+            addPrice(Price.ofMatrixWithDisplayName(matrixWithDisplayName))
 
         /**
          * Prices for this plan. If the plan has phases, this includes prices across all phases of
          * the plan.
          */
-        fun addPrice(bulkWithProrationPrice: Price.BulkWithProrationPrice) =
-            addPrice(Price.ofBulkWithProrationPrice(bulkWithProrationPrice))
+        fun addPrice(bulkWithProration: Price.BulkWithProrationPrice) =
+            addPrice(Price.ofBulkWithProration(bulkWithProration))
 
         /**
          * Prices for this plan. If the plan has phases, this includes prices across all phases of
          * the plan.
          */
-        fun addPrice(groupedTieredPackagePrice: Price.GroupedTieredPackagePrice) =
-            addPrice(Price.ofGroupedTieredPackagePrice(groupedTieredPackagePrice))
+        fun addPrice(groupedTieredPackage: Price.GroupedTieredPackagePrice) =
+            addPrice(Price.ofGroupedTieredPackage(groupedTieredPackage))
 
         /**
          * Prices for this plan. If the plan has phases, this includes prices across all phases of
          * the plan.
          */
-        fun addPrice(maxGroupTieredPrice: Price.MaxGroupTieredPrice) =
-            addPrice(Price.ofMaxGroupTieredPrice(maxGroupTieredPrice))
+        fun addPrice(maxGroupTiered: Price.MaxGroupTieredPrice) =
+            addPrice(Price.ofMaxGroupTiered(maxGroupTiered))
 
         fun product(product: Product) = product(JsonField.of(product))
 
@@ -916,62 +910,55 @@ private constructor(
     @JsonSerialize(using = Adjustment.Serializer::class)
     class Adjustment
     private constructor(
-        private val amountDiscountAdjustment: AmountDiscountAdjustment? = null,
-        private val percentageDiscountAdjustment: PercentageDiscountAdjustment? = null,
-        private val usageDiscountAdjustment: UsageDiscountAdjustment? = null,
-        private val minimumAdjustment: MinimumAdjustment? = null,
-        private val maximumAdjustment: MaximumAdjustment? = null,
+        private val amountDiscount: AmountDiscountAdjustment? = null,
+        private val percentageDiscount: PercentageDiscountAdjustment? = null,
+        private val usageDiscount: UsageDiscountAdjustment? = null,
+        private val minimum: MinimumAdjustment? = null,
+        private val maximum: MaximumAdjustment? = null,
         private val _json: JsonValue? = null,
     ) {
 
-        fun amountDiscountAdjustment(): AmountDiscountAdjustment? = amountDiscountAdjustment
+        fun amountDiscount(): AmountDiscountAdjustment? = amountDiscount
 
-        fun percentageDiscountAdjustment(): PercentageDiscountAdjustment? =
-            percentageDiscountAdjustment
+        fun percentageDiscount(): PercentageDiscountAdjustment? = percentageDiscount
 
-        fun usageDiscountAdjustment(): UsageDiscountAdjustment? = usageDiscountAdjustment
+        fun usageDiscount(): UsageDiscountAdjustment? = usageDiscount
 
-        fun minimumAdjustment(): MinimumAdjustment? = minimumAdjustment
+        fun minimum(): MinimumAdjustment? = minimum
 
-        fun maximumAdjustment(): MaximumAdjustment? = maximumAdjustment
+        fun maximum(): MaximumAdjustment? = maximum
 
-        fun isAmountDiscountAdjustment(): Boolean = amountDiscountAdjustment != null
+        fun isAmountDiscount(): Boolean = amountDiscount != null
 
-        fun isPercentageDiscountAdjustment(): Boolean = percentageDiscountAdjustment != null
+        fun isPercentageDiscount(): Boolean = percentageDiscount != null
 
-        fun isUsageDiscountAdjustment(): Boolean = usageDiscountAdjustment != null
+        fun isUsageDiscount(): Boolean = usageDiscount != null
 
-        fun isMinimumAdjustment(): Boolean = minimumAdjustment != null
+        fun isMinimum(): Boolean = minimum != null
 
-        fun isMaximumAdjustment(): Boolean = maximumAdjustment != null
+        fun isMaximum(): Boolean = maximum != null
 
-        fun asAmountDiscountAdjustment(): AmountDiscountAdjustment =
-            amountDiscountAdjustment.getOrThrow("amountDiscountAdjustment")
+        fun asAmountDiscount(): AmountDiscountAdjustment =
+            amountDiscount.getOrThrow("amountDiscount")
 
-        fun asPercentageDiscountAdjustment(): PercentageDiscountAdjustment =
-            percentageDiscountAdjustment.getOrThrow("percentageDiscountAdjustment")
+        fun asPercentageDiscount(): PercentageDiscountAdjustment =
+            percentageDiscount.getOrThrow("percentageDiscount")
 
-        fun asUsageDiscountAdjustment(): UsageDiscountAdjustment =
-            usageDiscountAdjustment.getOrThrow("usageDiscountAdjustment")
+        fun asUsageDiscount(): UsageDiscountAdjustment = usageDiscount.getOrThrow("usageDiscount")
 
-        fun asMinimumAdjustment(): MinimumAdjustment =
-            minimumAdjustment.getOrThrow("minimumAdjustment")
+        fun asMinimum(): MinimumAdjustment = minimum.getOrThrow("minimum")
 
-        fun asMaximumAdjustment(): MaximumAdjustment =
-            maximumAdjustment.getOrThrow("maximumAdjustment")
+        fun asMaximum(): MaximumAdjustment = maximum.getOrThrow("maximum")
 
         fun _json(): JsonValue? = _json
 
         fun <T> accept(visitor: Visitor<T>): T {
             return when {
-                amountDiscountAdjustment != null ->
-                    visitor.visitAmountDiscountAdjustment(amountDiscountAdjustment)
-                percentageDiscountAdjustment != null ->
-                    visitor.visitPercentageDiscountAdjustment(percentageDiscountAdjustment)
-                usageDiscountAdjustment != null ->
-                    visitor.visitUsageDiscountAdjustment(usageDiscountAdjustment)
-                minimumAdjustment != null -> visitor.visitMinimumAdjustment(minimumAdjustment)
-                maximumAdjustment != null -> visitor.visitMaximumAdjustment(maximumAdjustment)
+                amountDiscount != null -> visitor.visitAmountDiscount(amountDiscount)
+                percentageDiscount != null -> visitor.visitPercentageDiscount(percentageDiscount)
+                usageDiscount != null -> visitor.visitUsageDiscount(usageDiscount)
+                minimum != null -> visitor.visitMinimum(minimum)
+                maximum != null -> visitor.visitMaximum(maximum)
                 else -> visitor.unknown(_json)
             }
         }
@@ -985,30 +972,26 @@ private constructor(
 
             accept(
                 object : Visitor<Unit> {
-                    override fun visitAmountDiscountAdjustment(
-                        amountDiscountAdjustment: AmountDiscountAdjustment
+                    override fun visitAmountDiscount(amountDiscount: AmountDiscountAdjustment) {
+                        amountDiscount.validate()
+                    }
+
+                    override fun visitPercentageDiscount(
+                        percentageDiscount: PercentageDiscountAdjustment
                     ) {
-                        amountDiscountAdjustment.validate()
+                        percentageDiscount.validate()
                     }
 
-                    override fun visitPercentageDiscountAdjustment(
-                        percentageDiscountAdjustment: PercentageDiscountAdjustment
-                    ) {
-                        percentageDiscountAdjustment.validate()
+                    override fun visitUsageDiscount(usageDiscount: UsageDiscountAdjustment) {
+                        usageDiscount.validate()
                     }
 
-                    override fun visitUsageDiscountAdjustment(
-                        usageDiscountAdjustment: UsageDiscountAdjustment
-                    ) {
-                        usageDiscountAdjustment.validate()
+                    override fun visitMinimum(minimum: MinimumAdjustment) {
+                        minimum.validate()
                     }
 
-                    override fun visitMinimumAdjustment(minimumAdjustment: MinimumAdjustment) {
-                        minimumAdjustment.validate()
-                    }
-
-                    override fun visitMaximumAdjustment(maximumAdjustment: MaximumAdjustment) {
-                        maximumAdjustment.validate()
+                    override fun visitMaximum(maximum: MaximumAdjustment) {
+                        maximum.validate()
                     }
                 }
             )
@@ -1020,57 +1003,49 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is Adjustment && amountDiscountAdjustment == other.amountDiscountAdjustment && percentageDiscountAdjustment == other.percentageDiscountAdjustment && usageDiscountAdjustment == other.usageDiscountAdjustment && minimumAdjustment == other.minimumAdjustment && maximumAdjustment == other.maximumAdjustment /* spotless:on */
+            return /* spotless:off */ other is Adjustment && amountDiscount == other.amountDiscount && percentageDiscount == other.percentageDiscount && usageDiscount == other.usageDiscount && minimum == other.minimum && maximum == other.maximum /* spotless:on */
         }
 
-        override fun hashCode(): Int = /* spotless:off */ Objects.hash(amountDiscountAdjustment, percentageDiscountAdjustment, usageDiscountAdjustment, minimumAdjustment, maximumAdjustment) /* spotless:on */
+        override fun hashCode(): Int = /* spotless:off */ Objects.hash(amountDiscount, percentageDiscount, usageDiscount, minimum, maximum) /* spotless:on */
 
         override fun toString(): String =
             when {
-                amountDiscountAdjustment != null ->
-                    "Adjustment{amountDiscountAdjustment=$amountDiscountAdjustment}"
-                percentageDiscountAdjustment != null ->
-                    "Adjustment{percentageDiscountAdjustment=$percentageDiscountAdjustment}"
-                usageDiscountAdjustment != null ->
-                    "Adjustment{usageDiscountAdjustment=$usageDiscountAdjustment}"
-                minimumAdjustment != null -> "Adjustment{minimumAdjustment=$minimumAdjustment}"
-                maximumAdjustment != null -> "Adjustment{maximumAdjustment=$maximumAdjustment}"
+                amountDiscount != null -> "Adjustment{amountDiscount=$amountDiscount}"
+                percentageDiscount != null -> "Adjustment{percentageDiscount=$percentageDiscount}"
+                usageDiscount != null -> "Adjustment{usageDiscount=$usageDiscount}"
+                minimum != null -> "Adjustment{minimum=$minimum}"
+                maximum != null -> "Adjustment{maximum=$maximum}"
                 _json != null -> "Adjustment{_unknown=$_json}"
                 else -> throw IllegalStateException("Invalid Adjustment")
             }
 
         companion object {
 
-            fun ofAmountDiscountAdjustment(amountDiscountAdjustment: AmountDiscountAdjustment) =
-                Adjustment(amountDiscountAdjustment = amountDiscountAdjustment)
+            fun ofAmountDiscount(amountDiscount: AmountDiscountAdjustment) =
+                Adjustment(amountDiscount = amountDiscount)
 
-            fun ofPercentageDiscountAdjustment(
-                percentageDiscountAdjustment: PercentageDiscountAdjustment
-            ) = Adjustment(percentageDiscountAdjustment = percentageDiscountAdjustment)
+            fun ofPercentageDiscount(percentageDiscount: PercentageDiscountAdjustment) =
+                Adjustment(percentageDiscount = percentageDiscount)
 
-            fun ofUsageDiscountAdjustment(usageDiscountAdjustment: UsageDiscountAdjustment) =
-                Adjustment(usageDiscountAdjustment = usageDiscountAdjustment)
+            fun ofUsageDiscount(usageDiscount: UsageDiscountAdjustment) =
+                Adjustment(usageDiscount = usageDiscount)
 
-            fun ofMinimumAdjustment(minimumAdjustment: MinimumAdjustment) =
-                Adjustment(minimumAdjustment = minimumAdjustment)
+            fun ofMinimum(minimum: MinimumAdjustment) = Adjustment(minimum = minimum)
 
-            fun ofMaximumAdjustment(maximumAdjustment: MaximumAdjustment) =
-                Adjustment(maximumAdjustment = maximumAdjustment)
+            fun ofMaximum(maximum: MaximumAdjustment) = Adjustment(maximum = maximum)
         }
 
         interface Visitor<out T> {
 
-            fun visitAmountDiscountAdjustment(amountDiscountAdjustment: AmountDiscountAdjustment): T
+            fun visitAmountDiscount(amountDiscount: AmountDiscountAdjustment): T
 
-            fun visitPercentageDiscountAdjustment(
-                percentageDiscountAdjustment: PercentageDiscountAdjustment
-            ): T
+            fun visitPercentageDiscount(percentageDiscount: PercentageDiscountAdjustment): T
 
-            fun visitUsageDiscountAdjustment(usageDiscountAdjustment: UsageDiscountAdjustment): T
+            fun visitUsageDiscount(usageDiscount: UsageDiscountAdjustment): T
 
-            fun visitMinimumAdjustment(minimumAdjustment: MinimumAdjustment): T
+            fun visitMinimum(minimum: MinimumAdjustment): T
 
-            fun visitMaximumAdjustment(maximumAdjustment: MaximumAdjustment): T
+            fun visitMaximum(maximum: MaximumAdjustment): T
 
             fun unknown(json: JsonValue?): T {
                 throw OrbInvalidDataException("Unknown Adjustment: $json")
@@ -1089,7 +1064,7 @@ private constructor(
                                 it.validate()
                             }
                             ?.let {
-                                return Adjustment(amountDiscountAdjustment = it, _json = json)
+                                return Adjustment(amountDiscount = it, _json = json)
                             }
                     }
                     "percentage_discount" -> {
@@ -1097,7 +1072,7 @@ private constructor(
                                 it.validate()
                             }
                             ?.let {
-                                return Adjustment(percentageDiscountAdjustment = it, _json = json)
+                                return Adjustment(percentageDiscount = it, _json = json)
                             }
                     }
                     "usage_discount" -> {
@@ -1105,19 +1080,19 @@ private constructor(
                                 it.validate()
                             }
                             ?.let {
-                                return Adjustment(usageDiscountAdjustment = it, _json = json)
+                                return Adjustment(usageDiscount = it, _json = json)
                             }
                     }
                     "minimum" -> {
                         tryDeserialize(node, jacksonTypeRef<MinimumAdjustment>()) { it.validate() }
                             ?.let {
-                                return Adjustment(minimumAdjustment = it, _json = json)
+                                return Adjustment(minimum = it, _json = json)
                             }
                     }
                     "maximum" -> {
                         tryDeserialize(node, jacksonTypeRef<MaximumAdjustment>()) { it.validate() }
                             ?.let {
-                                return Adjustment(maximumAdjustment = it, _json = json)
+                                return Adjustment(maximum = it, _json = json)
                             }
                     }
                 }
@@ -1134,16 +1109,12 @@ private constructor(
                 provider: SerializerProvider
             ) {
                 when {
-                    value.amountDiscountAdjustment != null ->
-                        generator.writeObject(value.amountDiscountAdjustment)
-                    value.percentageDiscountAdjustment != null ->
-                        generator.writeObject(value.percentageDiscountAdjustment)
-                    value.usageDiscountAdjustment != null ->
-                        generator.writeObject(value.usageDiscountAdjustment)
-                    value.minimumAdjustment != null ->
-                        generator.writeObject(value.minimumAdjustment)
-                    value.maximumAdjustment != null ->
-                        generator.writeObject(value.maximumAdjustment)
+                    value.amountDiscount != null -> generator.writeObject(value.amountDiscount)
+                    value.percentageDiscount != null ->
+                        generator.writeObject(value.percentageDiscount)
+                    value.usageDiscount != null -> generator.writeObject(value.usageDiscount)
+                    value.minimum != null -> generator.writeObject(value.minimum)
+                    value.maximum != null -> generator.writeObject(value.maximum)
                     value._json != null -> generator.writeObject(value._json)
                     else -> throw IllegalStateException("Invalid Adjustment")
                 }
@@ -3527,17 +3498,14 @@ private constructor(
 
             fun discount(discount: JsonField<Discount>) = apply { this.discount = discount }
 
-            fun discount(percentageDiscount: PercentageDiscount) =
-                discount(Discount.ofPercentageDiscount(percentageDiscount))
+            fun discount(percentage: PercentageDiscount) =
+                discount(Discount.ofPercentage(percentage))
 
-            fun discount(trialDiscount: TrialDiscount) =
-                discount(Discount.ofTrialDiscount(trialDiscount))
+            fun discount(trial: TrialDiscount) = discount(Discount.ofTrial(trial))
 
-            fun discount(usageDiscount: Discount.UsageDiscount) =
-                discount(Discount.ofUsageDiscount(usageDiscount))
+            fun discount(usage: Discount.UsageDiscount) = discount(Discount.ofUsage(usage))
 
-            fun discount(amountDiscount: AmountDiscount) =
-                discount(Discount.ofAmountDiscount(amountDiscount))
+            fun discount(amount: AmountDiscount) = discount(Discount.ofAmount(amount))
 
             /**
              * How many terms of length `duration_unit` this phase is active for. If null, this

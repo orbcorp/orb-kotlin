@@ -32,46 +32,45 @@ import java.util.Objects
 @JsonSerialize(using = Discount.Serializer::class)
 class Discount
 private constructor(
-    private val percentageDiscount: PercentageDiscount? = null,
-    private val trialDiscount: TrialDiscount? = null,
-    private val usageDiscount: UsageDiscount? = null,
-    private val amountDiscount: AmountDiscount? = null,
+    private val percentage: PercentageDiscount? = null,
+    private val trial: TrialDiscount? = null,
+    private val usage: UsageDiscount? = null,
+    private val amount: AmountDiscount? = null,
     private val _json: JsonValue? = null,
 ) {
 
-    fun percentageDiscount(): PercentageDiscount? = percentageDiscount
+    fun percentage(): PercentageDiscount? = percentage
 
-    fun trialDiscount(): TrialDiscount? = trialDiscount
+    fun trial(): TrialDiscount? = trial
 
-    fun usageDiscount(): UsageDiscount? = usageDiscount
+    fun usage(): UsageDiscount? = usage
 
-    fun amountDiscount(): AmountDiscount? = amountDiscount
+    fun amount(): AmountDiscount? = amount
 
-    fun isPercentageDiscount(): Boolean = percentageDiscount != null
+    fun isPercentage(): Boolean = percentage != null
 
-    fun isTrialDiscount(): Boolean = trialDiscount != null
+    fun isTrial(): Boolean = trial != null
 
-    fun isUsageDiscount(): Boolean = usageDiscount != null
+    fun isUsage(): Boolean = usage != null
 
-    fun isAmountDiscount(): Boolean = amountDiscount != null
+    fun isAmount(): Boolean = amount != null
 
-    fun asPercentageDiscount(): PercentageDiscount =
-        percentageDiscount.getOrThrow("percentageDiscount")
+    fun asPercentage(): PercentageDiscount = percentage.getOrThrow("percentage")
 
-    fun asTrialDiscount(): TrialDiscount = trialDiscount.getOrThrow("trialDiscount")
+    fun asTrial(): TrialDiscount = trial.getOrThrow("trial")
 
-    fun asUsageDiscount(): UsageDiscount = usageDiscount.getOrThrow("usageDiscount")
+    fun asUsage(): UsageDiscount = usage.getOrThrow("usage")
 
-    fun asAmountDiscount(): AmountDiscount = amountDiscount.getOrThrow("amountDiscount")
+    fun asAmount(): AmountDiscount = amount.getOrThrow("amount")
 
     fun _json(): JsonValue? = _json
 
     fun <T> accept(visitor: Visitor<T>): T {
         return when {
-            percentageDiscount != null -> visitor.visitPercentageDiscount(percentageDiscount)
-            trialDiscount != null -> visitor.visitTrialDiscount(trialDiscount)
-            usageDiscount != null -> visitor.visitUsageDiscount(usageDiscount)
-            amountDiscount != null -> visitor.visitAmountDiscount(amountDiscount)
+            percentage != null -> visitor.visitPercentage(percentage)
+            trial != null -> visitor.visitTrial(trial)
+            usage != null -> visitor.visitUsage(usage)
+            amount != null -> visitor.visitAmount(amount)
             else -> visitor.unknown(_json)
         }
     }
@@ -85,20 +84,20 @@ private constructor(
 
         accept(
             object : Visitor<Unit> {
-                override fun visitPercentageDiscount(percentageDiscount: PercentageDiscount) {
-                    percentageDiscount.validate()
+                override fun visitPercentage(percentage: PercentageDiscount) {
+                    percentage.validate()
                 }
 
-                override fun visitTrialDiscount(trialDiscount: TrialDiscount) {
-                    trialDiscount.validate()
+                override fun visitTrial(trial: TrialDiscount) {
+                    trial.validate()
                 }
 
-                override fun visitUsageDiscount(usageDiscount: UsageDiscount) {
-                    usageDiscount.validate()
+                override fun visitUsage(usage: UsageDiscount) {
+                    usage.validate()
                 }
 
-                override fun visitAmountDiscount(amountDiscount: AmountDiscount) {
-                    amountDiscount.validate()
+                override fun visitAmount(amount: AmountDiscount) {
+                    amount.validate()
                 }
             }
         )
@@ -110,43 +109,41 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is Discount && percentageDiscount == other.percentageDiscount && trialDiscount == other.trialDiscount && usageDiscount == other.usageDiscount && amountDiscount == other.amountDiscount /* spotless:on */
+        return /* spotless:off */ other is Discount && percentage == other.percentage && trial == other.trial && usage == other.usage && amount == other.amount /* spotless:on */
     }
 
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(percentageDiscount, trialDiscount, usageDiscount, amountDiscount) /* spotless:on */
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(percentage, trial, usage, amount) /* spotless:on */
 
     override fun toString(): String =
         when {
-            percentageDiscount != null -> "Discount{percentageDiscount=$percentageDiscount}"
-            trialDiscount != null -> "Discount{trialDiscount=$trialDiscount}"
-            usageDiscount != null -> "Discount{usageDiscount=$usageDiscount}"
-            amountDiscount != null -> "Discount{amountDiscount=$amountDiscount}"
+            percentage != null -> "Discount{percentage=$percentage}"
+            trial != null -> "Discount{trial=$trial}"
+            usage != null -> "Discount{usage=$usage}"
+            amount != null -> "Discount{amount=$amount}"
             _json != null -> "Discount{_unknown=$_json}"
             else -> throw IllegalStateException("Invalid Discount")
         }
 
     companion object {
 
-        fun ofPercentageDiscount(percentageDiscount: PercentageDiscount) =
-            Discount(percentageDiscount = percentageDiscount)
+        fun ofPercentage(percentage: PercentageDiscount) = Discount(percentage = percentage)
 
-        fun ofTrialDiscount(trialDiscount: TrialDiscount) = Discount(trialDiscount = trialDiscount)
+        fun ofTrial(trial: TrialDiscount) = Discount(trial = trial)
 
-        fun ofUsageDiscount(usageDiscount: UsageDiscount) = Discount(usageDiscount = usageDiscount)
+        fun ofUsage(usage: UsageDiscount) = Discount(usage = usage)
 
-        fun ofAmountDiscount(amountDiscount: AmountDiscount) =
-            Discount(amountDiscount = amountDiscount)
+        fun ofAmount(amount: AmountDiscount) = Discount(amount = amount)
     }
 
     interface Visitor<out T> {
 
-        fun visitPercentageDiscount(percentageDiscount: PercentageDiscount): T
+        fun visitPercentage(percentage: PercentageDiscount): T
 
-        fun visitTrialDiscount(trialDiscount: TrialDiscount): T
+        fun visitTrial(trial: TrialDiscount): T
 
-        fun visitUsageDiscount(usageDiscount: UsageDiscount): T
+        fun visitUsage(usage: UsageDiscount): T
 
-        fun visitAmountDiscount(amountDiscount: AmountDiscount): T
+        fun visitAmount(amount: AmountDiscount): T
 
         fun unknown(json: JsonValue?): T {
             throw OrbInvalidDataException("Unknown Discount: $json")
@@ -163,25 +160,25 @@ private constructor(
                 "percentage" -> {
                     tryDeserialize(node, jacksonTypeRef<PercentageDiscount>()) { it.validate() }
                         ?.let {
-                            return Discount(percentageDiscount = it, _json = json)
+                            return Discount(percentage = it, _json = json)
                         }
                 }
                 "trial" -> {
                     tryDeserialize(node, jacksonTypeRef<TrialDiscount>()) { it.validate() }
                         ?.let {
-                            return Discount(trialDiscount = it, _json = json)
+                            return Discount(trial = it, _json = json)
                         }
                 }
                 "usage" -> {
                     tryDeserialize(node, jacksonTypeRef<UsageDiscount>()) { it.validate() }
                         ?.let {
-                            return Discount(usageDiscount = it, _json = json)
+                            return Discount(usage = it, _json = json)
                         }
                 }
                 "amount" -> {
                     tryDeserialize(node, jacksonTypeRef<AmountDiscount>()) { it.validate() }
                         ?.let {
-                            return Discount(amountDiscount = it, _json = json)
+                            return Discount(amount = it, _json = json)
                         }
                 }
             }
@@ -198,10 +195,10 @@ private constructor(
             provider: SerializerProvider
         ) {
             when {
-                value.percentageDiscount != null -> generator.writeObject(value.percentageDiscount)
-                value.trialDiscount != null -> generator.writeObject(value.trialDiscount)
-                value.usageDiscount != null -> generator.writeObject(value.usageDiscount)
-                value.amountDiscount != null -> generator.writeObject(value.amountDiscount)
+                value.percentage != null -> generator.writeObject(value.percentage)
+                value.trial != null -> generator.writeObject(value.trial)
+                value.usage != null -> generator.writeObject(value.usage)
+                value.amount != null -> generator.writeObject(value.amount)
                 value._json != null -> generator.writeObject(value._json)
                 else -> throw IllegalStateException("Invalid Discount")
             }

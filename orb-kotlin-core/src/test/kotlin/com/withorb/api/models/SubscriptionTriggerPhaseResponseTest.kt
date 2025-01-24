@@ -594,7 +594,7 @@ class SubscriptionTriggerPhaseResponseTest {
             .isEqualTo("default_invoice_memo")
         assertThat(subscriptionTriggerPhaseResponse.discountIntervals())
             .containsExactly(
-                SubscriptionTriggerPhaseResponse.DiscountInterval.ofAmountDiscountInterval(
+                SubscriptionTriggerPhaseResponse.DiscountInterval.ofAmount(
                     SubscriptionTriggerPhaseResponse.DiscountInterval.AmountDiscountInterval
                         .builder()
                         .amountDiscount("amount_discount")

@@ -33,7 +33,7 @@ class CouponTest {
         assertThat(coupon.archivedAt()).isEqualTo(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
         assertThat(coupon.discount())
             .isEqualTo(
-                Coupon.Discount.ofPercentageDiscount(
+                Coupon.Discount.ofPercentage(
                     PercentageDiscount.builder()
                         .addAppliesToPriceId("h74gfhdjvn7ujokd")
                         .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
