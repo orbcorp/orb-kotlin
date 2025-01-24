@@ -2343,7 +2343,7 @@ private constructor(
         private val endingBalance: JsonField<String> = JsonMissing.of(),
         @JsonProperty("invoice")
         @ExcludeMissing
-        private val invoice: JsonField<Invoice> = JsonMissing.of(),
+        private val invoice: JsonField<InnerInvoice> = JsonMissing.of(),
         @JsonProperty("starting_balance")
         @ExcludeMissing
         private val startingBalance: JsonField<String> = JsonMissing.of(),
@@ -2374,7 +2374,7 @@ private constructor(
          */
         fun endingBalance(): String = endingBalance.getRequired("ending_balance")
 
-        fun invoice(): Invoice? = invoice.getNullable("invoice")
+        fun invoice(): InnerInvoice? = invoice.getNullable("invoice")
 
         /**
          * The original value of the customer's balance prior to the transaction, in the customer's
@@ -2414,7 +2414,7 @@ private constructor(
         @ExcludeMissing
         fun _endingBalance(): JsonField<String> = endingBalance
 
-        @JsonProperty("invoice") @ExcludeMissing fun _invoice(): JsonField<Invoice> = invoice
+        @JsonProperty("invoice") @ExcludeMissing fun _invoice(): JsonField<InnerInvoice> = invoice
 
         /**
          * The original value of the customer's balance prior to the transaction, in the customer's
@@ -2466,7 +2466,7 @@ private constructor(
             private var creditNote: JsonField<CreditNote>? = null
             private var description: JsonField<String>? = null
             private var endingBalance: JsonField<String>? = null
-            private var invoice: JsonField<Invoice>? = null
+            private var invoice: JsonField<InnerInvoice>? = null
             private var startingBalance: JsonField<String>? = null
             private var type: JsonField<Type>? = null
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
@@ -2538,9 +2538,9 @@ private constructor(
                 this.endingBalance = endingBalance
             }
 
-            fun invoice(invoice: Invoice?) = invoice(JsonField.ofNullable(invoice))
+            fun invoice(invoice: InnerInvoice?) = invoice(JsonField.ofNullable(invoice))
 
-            fun invoice(invoice: JsonField<Invoice>) = apply { this.invoice = invoice }
+            fun invoice(invoice: JsonField<InnerInvoice>) = apply { this.invoice = invoice }
 
             /**
              * The original value of the customer's balance prior to the transaction, in the
@@ -2789,7 +2789,7 @@ private constructor(
         }
 
         @NoAutoDetect
-        class Invoice
+        class InnerInvoice
         @JsonCreator
         private constructor(
             @JsonProperty("id")
@@ -2811,7 +2811,7 @@ private constructor(
 
             private var validated: Boolean = false
 
-            fun validate(): Invoice = apply {
+            fun validate(): InnerInvoice = apply {
                 if (validated) {
                     return@apply
                 }
@@ -2832,9 +2832,9 @@ private constructor(
                 private var id: JsonField<String>? = null
                 private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
-                internal fun from(invoice: Invoice) = apply {
-                    id = invoice.id
-                    additionalProperties = invoice.additionalProperties.toMutableMap()
+                internal fun from(innerInvoice: InnerInvoice) = apply {
+                    id = innerInvoice.id
+                    additionalProperties = innerInvoice.additionalProperties.toMutableMap()
                 }
 
                 /** The Invoice id */
@@ -2865,8 +2865,8 @@ private constructor(
                     keys.forEach(::removeAdditionalProperty)
                 }
 
-                fun build(): Invoice =
-                    Invoice(checkRequired("id", id), additionalProperties.toImmutable())
+                fun build(): InnerInvoice =
+                    InnerInvoice(checkRequired("id", id), additionalProperties.toImmutable())
             }
 
             override fun equals(other: Any?): Boolean {
@@ -2874,7 +2874,7 @@ private constructor(
                     return true
                 }
 
-                return /* spotless:off */ other is Invoice && id == other.id && additionalProperties == other.additionalProperties /* spotless:on */
+                return /* spotless:off */ other is InnerInvoice && id == other.id && additionalProperties == other.additionalProperties /* spotless:on */
             }
 
             /* spotless:off */
@@ -2883,7 +2883,8 @@ private constructor(
 
             override fun hashCode(): Int = hashCode
 
-            override fun toString() = "Invoice{id=$id, additionalProperties=$additionalProperties}"
+            override fun toString() =
+                "InnerInvoice{id=$id, additionalProperties=$additionalProperties}"
         }
 
         class Type
