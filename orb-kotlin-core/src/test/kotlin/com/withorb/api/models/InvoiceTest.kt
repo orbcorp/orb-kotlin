@@ -64,7 +64,7 @@ class InvoiceTest {
                         .description("An optional description")
                         .endingBalance("22.00")
                         .invoice(
-                            Invoice.CustomerBalanceTransaction.Invoice.builder()
+                            Invoice.CustomerBalanceTransaction.InnerInvoice.builder()
                                 .id("gXcsPTVyC4YZa3Sc")
                                 .build()
                         )
@@ -346,7 +346,7 @@ class InvoiceTest {
                     .description("An optional description")
                     .endingBalance("22.00")
                     .invoice(
-                        Invoice.CustomerBalanceTransaction.Invoice.builder()
+                        Invoice.CustomerBalanceTransaction.InnerInvoice.builder()
                             .id("gXcsPTVyC4YZa3Sc")
                             .build()
                     )
