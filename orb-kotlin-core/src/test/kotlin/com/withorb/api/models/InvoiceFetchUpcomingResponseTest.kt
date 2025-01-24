@@ -397,7 +397,7 @@ class InvoiceFetchUpcomingResponseTest {
             .isEqualTo(JsonValue.from(mapOf<String, Any>()))
         assertThat(invoiceFetchUpcomingResponse.discounts())
             .containsExactly(
-                InvoiceLevelDiscount.ofPercentageDiscount(
+                InvoiceLevelDiscount.ofPercentage(
                     PercentageDiscount.builder()
                         .addAppliesToPriceId("h74gfhdjvn7ujokd")
                         .addAppliesToPriceId("7hfgtgjnbvc3ujkl")

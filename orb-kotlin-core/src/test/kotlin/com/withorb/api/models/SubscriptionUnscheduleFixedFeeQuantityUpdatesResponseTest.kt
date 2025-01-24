@@ -619,25 +619,23 @@ class SubscriptionUnscheduleFixedFeeQuantityUpdatesResponseTest {
             .isEqualTo("default_invoice_memo")
         assertThat(subscriptionUnscheduleFixedFeeQuantityUpdatesResponse.discountIntervals())
             .containsExactly(
-                SubscriptionUnscheduleFixedFeeQuantityUpdatesResponse.DiscountInterval
-                    .ofAmountDiscountInterval(
-                        SubscriptionUnscheduleFixedFeeQuantityUpdatesResponse.DiscountInterval
-                            .AmountDiscountInterval
-                            .builder()
-                            .amountDiscount("amount_discount")
-                            .addAppliesToPriceId("string")
-                            .addAppliesToPriceIntervalId("string")
-                            .discountType(
-                                SubscriptionUnscheduleFixedFeeQuantityUpdatesResponse
-                                    .DiscountInterval
-                                    .AmountDiscountInterval
-                                    .DiscountType
-                                    .AMOUNT
-                            )
-                            .endDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
-                            .startDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
-                            .build()
-                    )
+                SubscriptionUnscheduleFixedFeeQuantityUpdatesResponse.DiscountInterval.ofAmount(
+                    SubscriptionUnscheduleFixedFeeQuantityUpdatesResponse.DiscountInterval
+                        .AmountDiscountInterval
+                        .builder()
+                        .amountDiscount("amount_discount")
+                        .addAppliesToPriceId("string")
+                        .addAppliesToPriceIntervalId("string")
+                        .discountType(
+                            SubscriptionUnscheduleFixedFeeQuantityUpdatesResponse.DiscountInterval
+                                .AmountDiscountInterval
+                                .DiscountType
+                                .AMOUNT
+                        )
+                        .endDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                        .startDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                        .build()
+                )
             )
         assertThat(subscriptionUnscheduleFixedFeeQuantityUpdatesResponse.endDate())
             .isEqualTo(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))

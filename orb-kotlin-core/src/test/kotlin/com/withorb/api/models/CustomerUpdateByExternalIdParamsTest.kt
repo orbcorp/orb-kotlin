@@ -226,7 +226,7 @@ class CustomerUpdateByExternalIdParamsTest {
             )
         assertThat(body.taxConfiguration())
             .isEqualTo(
-                CustomerUpdateByExternalIdParams.TaxConfiguration.ofNewAvalaraTaxConfiguration(
+                CustomerUpdateByExternalIdParams.TaxConfiguration.ofNewAvalara(
                     CustomerUpdateByExternalIdParams.TaxConfiguration.NewAvalaraTaxConfiguration
                         .builder()
                         .taxExempt(true)
