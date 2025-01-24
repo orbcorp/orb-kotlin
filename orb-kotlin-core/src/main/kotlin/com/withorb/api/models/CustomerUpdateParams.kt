@@ -1112,15 +1112,11 @@ constructor(
                 this.taxConfiguration = taxConfiguration
             }
 
-            fun taxConfiguration(
-                newAvalaraTaxConfiguration: TaxConfiguration.NewAvalaraTaxConfiguration
-            ) =
-                taxConfiguration(
-                    TaxConfiguration.ofNewAvalaraTaxConfiguration(newAvalaraTaxConfiguration)
-                )
+            fun taxConfiguration(newAvalara: TaxConfiguration.NewAvalaraTaxConfiguration) =
+                taxConfiguration(TaxConfiguration.ofNewAvalara(newAvalara))
 
-            fun taxConfiguration(newTaxJarConfiguration: TaxConfiguration.NewTaxJarConfiguration) =
-                taxConfiguration(TaxConfiguration.ofNewTaxJarConfiguration(newTaxJarConfiguration))
+            fun taxConfiguration(newTaxJar: TaxConfiguration.NewTaxJarConfiguration) =
+                taxConfiguration(TaxConfiguration.ofNewTaxJar(newTaxJar))
 
             /**
              * Tax IDs are commonly required to be displayed on customer invoices, which are added
@@ -1610,14 +1606,13 @@ constructor(
             body.taxConfiguration(taxConfiguration)
         }
 
-        fun taxConfiguration(
-            newAvalaraTaxConfiguration: TaxConfiguration.NewAvalaraTaxConfiguration
-        ) = apply { body.taxConfiguration(newAvalaraTaxConfiguration) }
+        fun taxConfiguration(newAvalara: TaxConfiguration.NewAvalaraTaxConfiguration) = apply {
+            body.taxConfiguration(newAvalara)
+        }
 
-        fun taxConfiguration(newTaxJarConfiguration: TaxConfiguration.NewTaxJarConfiguration) =
-            apply {
-                body.taxConfiguration(newTaxJarConfiguration)
-            }
+        fun taxConfiguration(newTaxJar: TaxConfiguration.NewTaxJarConfiguration) = apply {
+            body.taxConfiguration(newTaxJar)
+        }
 
         /**
          * Tax IDs are commonly required to be displayed on customer invoices, which are added to
@@ -2822,33 +2817,29 @@ constructor(
     @JsonSerialize(using = TaxConfiguration.Serializer::class)
     class TaxConfiguration
     private constructor(
-        private val newAvalaraTaxConfiguration: NewAvalaraTaxConfiguration? = null,
-        private val newTaxJarConfiguration: NewTaxJarConfiguration? = null,
+        private val newAvalara: NewAvalaraTaxConfiguration? = null,
+        private val newTaxJar: NewTaxJarConfiguration? = null,
         private val _json: JsonValue? = null,
     ) {
 
-        fun newAvalaraTaxConfiguration(): NewAvalaraTaxConfiguration? = newAvalaraTaxConfiguration
+        fun newAvalara(): NewAvalaraTaxConfiguration? = newAvalara
 
-        fun newTaxJarConfiguration(): NewTaxJarConfiguration? = newTaxJarConfiguration
+        fun newTaxJar(): NewTaxJarConfiguration? = newTaxJar
 
-        fun isNewAvalaraTaxConfiguration(): Boolean = newAvalaraTaxConfiguration != null
+        fun isNewAvalara(): Boolean = newAvalara != null
 
-        fun isNewTaxJarConfiguration(): Boolean = newTaxJarConfiguration != null
+        fun isNewTaxJar(): Boolean = newTaxJar != null
 
-        fun asNewAvalaraTaxConfiguration(): NewAvalaraTaxConfiguration =
-            newAvalaraTaxConfiguration.getOrThrow("newAvalaraTaxConfiguration")
+        fun asNewAvalara(): NewAvalaraTaxConfiguration = newAvalara.getOrThrow("newAvalara")
 
-        fun asNewTaxJarConfiguration(): NewTaxJarConfiguration =
-            newTaxJarConfiguration.getOrThrow("newTaxJarConfiguration")
+        fun asNewTaxJar(): NewTaxJarConfiguration = newTaxJar.getOrThrow("newTaxJar")
 
         fun _json(): JsonValue? = _json
 
         fun <T> accept(visitor: Visitor<T>): T {
             return when {
-                newAvalaraTaxConfiguration != null ->
-                    visitor.visitNewAvalaraTaxConfiguration(newAvalaraTaxConfiguration)
-                newTaxJarConfiguration != null ->
-                    visitor.visitNewTaxJarConfiguration(newTaxJarConfiguration)
+                newAvalara != null -> visitor.visitNewAvalara(newAvalara)
+                newTaxJar != null -> visitor.visitNewTaxJar(newTaxJar)
                 else -> visitor.unknown(_json)
             }
         }
@@ -2862,16 +2853,12 @@ constructor(
 
             accept(
                 object : Visitor<Unit> {
-                    override fun visitNewAvalaraTaxConfiguration(
-                        newAvalaraTaxConfiguration: NewAvalaraTaxConfiguration
-                    ) {
-                        newAvalaraTaxConfiguration.validate()
+                    override fun visitNewAvalara(newAvalara: NewAvalaraTaxConfiguration) {
+                        newAvalara.validate()
                     }
 
-                    override fun visitNewTaxJarConfiguration(
-                        newTaxJarConfiguration: NewTaxJarConfiguration
-                    ) {
-                        newTaxJarConfiguration.validate()
+                    override fun visitNewTaxJar(newTaxJar: NewTaxJarConfiguration) {
+                        newTaxJar.validate()
                     }
                 }
             )
@@ -2883,38 +2870,33 @@ constructor(
                 return true
             }
 
-            return /* spotless:off */ other is TaxConfiguration && newAvalaraTaxConfiguration == other.newAvalaraTaxConfiguration && newTaxJarConfiguration == other.newTaxJarConfiguration /* spotless:on */
+            return /* spotless:off */ other is TaxConfiguration && newAvalara == other.newAvalara && newTaxJar == other.newTaxJar /* spotless:on */
         }
 
-        override fun hashCode(): Int = /* spotless:off */ Objects.hash(newAvalaraTaxConfiguration, newTaxJarConfiguration) /* spotless:on */
+        override fun hashCode(): Int = /* spotless:off */ Objects.hash(newAvalara, newTaxJar) /* spotless:on */
 
         override fun toString(): String =
             when {
-                newAvalaraTaxConfiguration != null ->
-                    "TaxConfiguration{newAvalaraTaxConfiguration=$newAvalaraTaxConfiguration}"
-                newTaxJarConfiguration != null ->
-                    "TaxConfiguration{newTaxJarConfiguration=$newTaxJarConfiguration}"
+                newAvalara != null -> "TaxConfiguration{newAvalara=$newAvalara}"
+                newTaxJar != null -> "TaxConfiguration{newTaxJar=$newTaxJar}"
                 _json != null -> "TaxConfiguration{_unknown=$_json}"
                 else -> throw IllegalStateException("Invalid TaxConfiguration")
             }
 
         companion object {
 
-            fun ofNewAvalaraTaxConfiguration(
-                newAvalaraTaxConfiguration: NewAvalaraTaxConfiguration
-            ) = TaxConfiguration(newAvalaraTaxConfiguration = newAvalaraTaxConfiguration)
+            fun ofNewAvalara(newAvalara: NewAvalaraTaxConfiguration) =
+                TaxConfiguration(newAvalara = newAvalara)
 
-            fun ofNewTaxJarConfiguration(newTaxJarConfiguration: NewTaxJarConfiguration) =
-                TaxConfiguration(newTaxJarConfiguration = newTaxJarConfiguration)
+            fun ofNewTaxJar(newTaxJar: NewTaxJarConfiguration) =
+                TaxConfiguration(newTaxJar = newTaxJar)
         }
 
         interface Visitor<out T> {
 
-            fun visitNewAvalaraTaxConfiguration(
-                newAvalaraTaxConfiguration: NewAvalaraTaxConfiguration
-            ): T
+            fun visitNewAvalara(newAvalara: NewAvalaraTaxConfiguration): T
 
-            fun visitNewTaxJarConfiguration(newTaxJarConfiguration: NewTaxJarConfiguration): T
+            fun visitNewTaxJar(newTaxJar: NewTaxJarConfiguration): T
 
             fun unknown(json: JsonValue?): T {
                 throw OrbInvalidDataException("Unknown TaxConfiguration: $json")
@@ -2933,10 +2915,7 @@ constructor(
                                 it.validate()
                             }
                             ?.let {
-                                return TaxConfiguration(
-                                    newAvalaraTaxConfiguration = it,
-                                    _json = json
-                                )
+                                return TaxConfiguration(newAvalara = it, _json = json)
                             }
                     }
                     "taxjar" -> {
@@ -2944,7 +2923,7 @@ constructor(
                                 it.validate()
                             }
                             ?.let {
-                                return TaxConfiguration(newTaxJarConfiguration = it, _json = json)
+                                return TaxConfiguration(newTaxJar = it, _json = json)
                             }
                     }
                 }
@@ -2961,10 +2940,8 @@ constructor(
                 provider: SerializerProvider
             ) {
                 when {
-                    value.newAvalaraTaxConfiguration != null ->
-                        generator.writeObject(value.newAvalaraTaxConfiguration)
-                    value.newTaxJarConfiguration != null ->
-                        generator.writeObject(value.newTaxJarConfiguration)
+                    value.newAvalara != null -> generator.writeObject(value.newAvalara)
+                    value.newTaxJar != null -> generator.writeObject(value.newTaxJar)
                     value._json != null -> generator.writeObject(value._json)
                     else -> throw IllegalStateException("Invalid TaxConfiguration")
                 }

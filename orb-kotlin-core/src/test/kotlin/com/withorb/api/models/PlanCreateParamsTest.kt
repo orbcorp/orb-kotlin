@@ -143,7 +143,7 @@ class PlanCreateParamsTest {
         assertThat(body.prices())
             .isEqualTo(
                 listOf(
-                    PlanCreateParams.Price.ofNewPlanUnitPrice(
+                    PlanCreateParams.Price.ofNewPlanUnit(
                         PlanCreateParams.Price.NewPlanUnitPrice.builder()
                             .cadence(PlanCreateParams.Price.NewPlanUnitPrice.Cadence.ANNUAL)
                             .itemId("item_id")
@@ -233,7 +233,7 @@ class PlanCreateParamsTest {
         assertThat(body.prices())
             .isEqualTo(
                 listOf(
-                    PlanCreateParams.Price.ofNewPlanUnitPrice(
+                    PlanCreateParams.Price.ofNewPlanUnit(
                         PlanCreateParams.Price.NewPlanUnitPrice.builder()
                             .cadence(PlanCreateParams.Price.NewPlanUnitPrice.Cadence.ANNUAL)
                             .itemId("item_id")

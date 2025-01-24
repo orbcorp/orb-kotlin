@@ -202,11 +202,9 @@ private constructor(
 
         fun discount(discount: JsonField<Discount>) = apply { this.discount = discount }
 
-        fun discount(percentageDiscount: PercentageDiscount) =
-            discount(Discount.ofPercentageDiscount(percentageDiscount))
+        fun discount(percentage: PercentageDiscount) = discount(Discount.ofPercentage(percentage))
 
-        fun discount(amountDiscount: AmountDiscount) =
-            discount(Discount.ofAmountDiscount(amountDiscount))
+        fun discount(amount: AmountDiscount) = discount(Discount.ofAmount(amount))
 
         /**
          * This allows for a coupon's discount to apply for a limited time (determined in months); a
@@ -302,30 +300,29 @@ private constructor(
     @JsonSerialize(using = Discount.Serializer::class)
     class Discount
     private constructor(
-        private val percentageDiscount: PercentageDiscount? = null,
-        private val amountDiscount: AmountDiscount? = null,
+        private val percentage: PercentageDiscount? = null,
+        private val amount: AmountDiscount? = null,
         private val _json: JsonValue? = null,
     ) {
 
-        fun percentageDiscount(): PercentageDiscount? = percentageDiscount
+        fun percentage(): PercentageDiscount? = percentage
 
-        fun amountDiscount(): AmountDiscount? = amountDiscount
+        fun amount(): AmountDiscount? = amount
 
-        fun isPercentageDiscount(): Boolean = percentageDiscount != null
+        fun isPercentage(): Boolean = percentage != null
 
-        fun isAmountDiscount(): Boolean = amountDiscount != null
+        fun isAmount(): Boolean = amount != null
 
-        fun asPercentageDiscount(): PercentageDiscount =
-            percentageDiscount.getOrThrow("percentageDiscount")
+        fun asPercentage(): PercentageDiscount = percentage.getOrThrow("percentage")
 
-        fun asAmountDiscount(): AmountDiscount = amountDiscount.getOrThrow("amountDiscount")
+        fun asAmount(): AmountDiscount = amount.getOrThrow("amount")
 
         fun _json(): JsonValue? = _json
 
         fun <T> accept(visitor: Visitor<T>): T {
             return when {
-                percentageDiscount != null -> visitor.visitPercentageDiscount(percentageDiscount)
-                amountDiscount != null -> visitor.visitAmountDiscount(amountDiscount)
+                percentage != null -> visitor.visitPercentage(percentage)
+                amount != null -> visitor.visitAmount(amount)
                 else -> visitor.unknown(_json)
             }
         }
@@ -339,12 +336,12 @@ private constructor(
 
             accept(
                 object : Visitor<Unit> {
-                    override fun visitPercentageDiscount(percentageDiscount: PercentageDiscount) {
-                        percentageDiscount.validate()
+                    override fun visitPercentage(percentage: PercentageDiscount) {
+                        percentage.validate()
                     }
 
-                    override fun visitAmountDiscount(amountDiscount: AmountDiscount) {
-                        amountDiscount.validate()
+                    override fun visitAmount(amount: AmountDiscount) {
+                        amount.validate()
                     }
                 }
             )
@@ -356,33 +353,31 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is Discount && percentageDiscount == other.percentageDiscount && amountDiscount == other.amountDiscount /* spotless:on */
+            return /* spotless:off */ other is Discount && percentage == other.percentage && amount == other.amount /* spotless:on */
         }
 
-        override fun hashCode(): Int = /* spotless:off */ Objects.hash(percentageDiscount, amountDiscount) /* spotless:on */
+        override fun hashCode(): Int = /* spotless:off */ Objects.hash(percentage, amount) /* spotless:on */
 
         override fun toString(): String =
             when {
-                percentageDiscount != null -> "Discount{percentageDiscount=$percentageDiscount}"
-                amountDiscount != null -> "Discount{amountDiscount=$amountDiscount}"
+                percentage != null -> "Discount{percentage=$percentage}"
+                amount != null -> "Discount{amount=$amount}"
                 _json != null -> "Discount{_unknown=$_json}"
                 else -> throw IllegalStateException("Invalid Discount")
             }
 
         companion object {
 
-            fun ofPercentageDiscount(percentageDiscount: PercentageDiscount) =
-                Discount(percentageDiscount = percentageDiscount)
+            fun ofPercentage(percentage: PercentageDiscount) = Discount(percentage = percentage)
 
-            fun ofAmountDiscount(amountDiscount: AmountDiscount) =
-                Discount(amountDiscount = amountDiscount)
+            fun ofAmount(amount: AmountDiscount) = Discount(amount = amount)
         }
 
         interface Visitor<out T> {
 
-            fun visitPercentageDiscount(percentageDiscount: PercentageDiscount): T
+            fun visitPercentage(percentage: PercentageDiscount): T
 
-            fun visitAmountDiscount(amountDiscount: AmountDiscount): T
+            fun visitAmount(amount: AmountDiscount): T
 
             fun unknown(json: JsonValue?): T {
                 throw OrbInvalidDataException("Unknown Discount: $json")
@@ -399,13 +394,13 @@ private constructor(
                     "percentage" -> {
                         tryDeserialize(node, jacksonTypeRef<PercentageDiscount>()) { it.validate() }
                             ?.let {
-                                return Discount(percentageDiscount = it, _json = json)
+                                return Discount(percentage = it, _json = json)
                             }
                     }
                     "amount" -> {
                         tryDeserialize(node, jacksonTypeRef<AmountDiscount>()) { it.validate() }
                             ?.let {
-                                return Discount(amountDiscount = it, _json = json)
+                                return Discount(amount = it, _json = json)
                             }
                     }
                 }
@@ -422,9 +417,8 @@ private constructor(
                 provider: SerializerProvider
             ) {
                 when {
-                    value.percentageDiscount != null ->
-                        generator.writeObject(value.percentageDiscount)
-                    value.amountDiscount != null -> generator.writeObject(value.amountDiscount)
+                    value.percentage != null -> generator.writeObject(value.percentage)
+                    value.amount != null -> generator.writeObject(value.amount)
                     value._json != null -> generator.writeObject(value._json)
                     else -> throw IllegalStateException("Invalid Discount")
                 }

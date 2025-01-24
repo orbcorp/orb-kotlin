@@ -194,7 +194,7 @@ class PlanTest {
         assertThat(plan.id()).isEqualTo("id")
         assertThat(plan.adjustments())
             .containsExactly(
-                Plan.Adjustment.ofAmountDiscountAdjustment(
+                Plan.Adjustment.ofAmountDiscount(
                     Plan.Adjustment.AmountDiscountAdjustment.builder()
                         .id("id")
                         .adjustmentType(
@@ -223,7 +223,7 @@ class PlanTest {
         assertThat(plan.description()).isEqualTo("description")
         assertThat(plan.discount())
             .isEqualTo(
-                Discount.ofPercentageDiscount(
+                Discount.ofPercentage(
                     PercentageDiscount.builder()
                         .addAppliesToPriceId("h74gfhdjvn7ujokd")
                         .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
@@ -295,7 +295,7 @@ class PlanTest {
             )
         assertThat(plan.prices())
             .containsExactly(
-                Price.ofUnitPrice(
+                Price.ofUnit(
                     Price.UnitPrice.builder()
                         .id("id")
                         .billableMetric(Price.UnitPrice.BillableMetric.builder().id("id").build())

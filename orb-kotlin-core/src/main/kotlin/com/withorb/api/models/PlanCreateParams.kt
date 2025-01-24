@@ -322,142 +322,123 @@ constructor(
              * Prices for this plan. If the plan has phases, this includes prices across all phases
              * of the plan.
              */
-            fun addPrice(newPlanUnitPrice: Price.NewPlanUnitPrice) =
-                addPrice(Price.ofNewPlanUnitPrice(newPlanUnitPrice))
+            fun addPrice(newPlanUnit: Price.NewPlanUnitPrice) =
+                addPrice(Price.ofNewPlanUnit(newPlanUnit))
 
             /**
              * Prices for this plan. If the plan has phases, this includes prices across all phases
              * of the plan.
              */
-            fun addPrice(newPlanPackagePrice: Price.NewPlanPackagePrice) =
-                addPrice(Price.ofNewPlanPackagePrice(newPlanPackagePrice))
+            fun addPrice(newPlanPackage: Price.NewPlanPackagePrice) =
+                addPrice(Price.ofNewPlanPackage(newPlanPackage))
 
             /**
              * Prices for this plan. If the plan has phases, this includes prices across all phases
              * of the plan.
              */
-            fun addPrice(newPlanMatrixPrice: Price.NewPlanMatrixPrice) =
-                addPrice(Price.ofNewPlanMatrixPrice(newPlanMatrixPrice))
+            fun addPrice(newPlanMatrix: Price.NewPlanMatrixPrice) =
+                addPrice(Price.ofNewPlanMatrix(newPlanMatrix))
 
             /**
              * Prices for this plan. If the plan has phases, this includes prices across all phases
              * of the plan.
              */
-            fun addPrice(newPlanTieredPrice: Price.NewPlanTieredPrice) =
-                addPrice(Price.ofNewPlanTieredPrice(newPlanTieredPrice))
+            fun addPrice(newPlanTiered: Price.NewPlanTieredPrice) =
+                addPrice(Price.ofNewPlanTiered(newPlanTiered))
 
             /**
              * Prices for this plan. If the plan has phases, this includes prices across all phases
              * of the plan.
              */
-            fun addPrice(newPlanTieredBpsPrice: Price.NewPlanTieredBpsPrice) =
-                addPrice(Price.ofNewPlanTieredBpsPrice(newPlanTieredBpsPrice))
+            fun addPrice(newPlanTieredBps: Price.NewPlanTieredBpsPrice) =
+                addPrice(Price.ofNewPlanTieredBps(newPlanTieredBps))
 
             /**
              * Prices for this plan. If the plan has phases, this includes prices across all phases
              * of the plan.
              */
-            fun addPrice(newPlanBpsPrice: Price.NewPlanBpsPrice) =
-                addPrice(Price.ofNewPlanBpsPrice(newPlanBpsPrice))
+            fun addPrice(newPlanBps: Price.NewPlanBpsPrice) =
+                addPrice(Price.ofNewPlanBps(newPlanBps))
 
             /**
              * Prices for this plan. If the plan has phases, this includes prices across all phases
              * of the plan.
              */
-            fun addPrice(newPlanBulkBpsPrice: Price.NewPlanBulkBpsPrice) =
-                addPrice(Price.ofNewPlanBulkBpsPrice(newPlanBulkBpsPrice))
+            fun addPrice(newPlanBulkBps: Price.NewPlanBulkBpsPrice) =
+                addPrice(Price.ofNewPlanBulkBps(newPlanBulkBps))
 
             /**
              * Prices for this plan. If the plan has phases, this includes prices across all phases
              * of the plan.
              */
-            fun addPrice(newPlanBulkPrice: Price.NewPlanBulkPrice) =
-                addPrice(Price.ofNewPlanBulkPrice(newPlanBulkPrice))
+            fun addPrice(newPlanBulk: Price.NewPlanBulkPrice) =
+                addPrice(Price.ofNewPlanBulk(newPlanBulk))
 
             /**
              * Prices for this plan. If the plan has phases, this includes prices across all phases
              * of the plan.
              */
-            fun addPrice(newPlanThresholdTotalAmountPrice: Price.NewPlanThresholdTotalAmountPrice) =
-                addPrice(Price.ofNewPlanThresholdTotalAmountPrice(newPlanThresholdTotalAmountPrice))
+            fun addPrice(newPlanThresholdTotalAmount: Price.NewPlanThresholdTotalAmountPrice) =
+                addPrice(Price.ofNewPlanThresholdTotalAmount(newPlanThresholdTotalAmount))
 
             /**
              * Prices for this plan. If the plan has phases, this includes prices across all phases
              * of the plan.
              */
-            fun addPrice(newPlanTieredPackagePrice: Price.NewPlanTieredPackagePrice) =
-                addPrice(Price.ofNewPlanTieredPackagePrice(newPlanTieredPackagePrice))
+            fun addPrice(newPlanTieredPackage: Price.NewPlanTieredPackagePrice) =
+                addPrice(Price.ofNewPlanTieredPackage(newPlanTieredPackage))
 
             /**
              * Prices for this plan. If the plan has phases, this includes prices across all phases
              * of the plan.
              */
-            fun addPrice(newPlanTieredWithMinimumPrice: Price.NewPlanTieredWithMinimumPrice) =
-                addPrice(Price.ofNewPlanTieredWithMinimumPrice(newPlanTieredWithMinimumPrice))
+            fun addPrice(newPlanTieredWithMinimum: Price.NewPlanTieredWithMinimumPrice) =
+                addPrice(Price.ofNewPlanTieredWithMinimum(newPlanTieredWithMinimum))
 
             /**
              * Prices for this plan. If the plan has phases, this includes prices across all phases
              * of the plan.
              */
-            fun addPrice(newPlanUnitWithPercentPrice: Price.NewPlanUnitWithPercentPrice) =
-                addPrice(Price.ofNewPlanUnitWithPercentPrice(newPlanUnitWithPercentPrice))
+            fun addPrice(newPlanUnitWithPercent: Price.NewPlanUnitWithPercentPrice) =
+                addPrice(Price.ofNewPlanUnitWithPercent(newPlanUnitWithPercent))
 
             /**
              * Prices for this plan. If the plan has phases, this includes prices across all phases
              * of the plan.
              */
-            fun addPrice(
-                newPlanPackageWithAllocationPrice: Price.NewPlanPackageWithAllocationPrice
-            ) =
-                addPrice(
-                    Price.ofNewPlanPackageWithAllocationPrice(newPlanPackageWithAllocationPrice)
-                )
+            fun addPrice(newPlanPackageWithAllocation: Price.NewPlanPackageWithAllocationPrice) =
+                addPrice(Price.ofNewPlanPackageWithAllocation(newPlanPackageWithAllocation))
 
             /**
              * Prices for this plan. If the plan has phases, this includes prices across all phases
              * of the plan.
              */
-            fun addPrice(newPlanTierWithProrationPrice: Price.NewPlanTierWithProrationPrice) =
-                addPrice(Price.ofNewPlanTierWithProrationPrice(newPlanTierWithProrationPrice))
+            fun addPrice(newPlanTierWithProration: Price.NewPlanTierWithProrationPrice) =
+                addPrice(Price.ofNewPlanTierWithProration(newPlanTierWithProration))
 
             /**
              * Prices for this plan. If the plan has phases, this includes prices across all phases
              * of the plan.
              */
-            fun addPrice(newPlanUnitWithProrationPrice: Price.NewPlanUnitWithProrationPrice) =
-                addPrice(Price.ofNewPlanUnitWithProrationPrice(newPlanUnitWithProrationPrice))
+            fun addPrice(newPlanUnitWithProration: Price.NewPlanUnitWithProrationPrice) =
+                addPrice(Price.ofNewPlanUnitWithProration(newPlanUnitWithProration))
 
             /**
              * Prices for this plan. If the plan has phases, this includes prices across all phases
              * of the plan.
              */
-            fun addPrice(newPlanGroupedAllocationPrice: Price.NewPlanGroupedAllocationPrice) =
-                addPrice(Price.ofNewPlanGroupedAllocationPrice(newPlanGroupedAllocationPrice))
-
-            /**
-             * Prices for this plan. If the plan has phases, this includes prices across all phases
-             * of the plan.
-             */
-            fun addPrice(
-                newPlanGroupedWithProratedMinimumPrice: Price.NewPlanGroupedWithProratedMinimumPrice
-            ) =
-                addPrice(
-                    Price.ofNewPlanGroupedWithProratedMinimumPrice(
-                        newPlanGroupedWithProratedMinimumPrice
-                    )
-                )
+            fun addPrice(newPlanGroupedAllocation: Price.NewPlanGroupedAllocationPrice) =
+                addPrice(Price.ofNewPlanGroupedAllocation(newPlanGroupedAllocation))
 
             /**
              * Prices for this plan. If the plan has phases, this includes prices across all phases
              * of the plan.
              */
             fun addPrice(
-                newPlanGroupedWithMeteredMinimumPrice: Price.NewPlanGroupedWithMeteredMinimumPrice
+                newPlanGroupedWithProratedMinimum: Price.NewPlanGroupedWithProratedMinimumPrice
             ) =
                 addPrice(
-                    Price.ofNewPlanGroupedWithMeteredMinimumPrice(
-                        newPlanGroupedWithMeteredMinimumPrice
-                    )
+                    Price.ofNewPlanGroupedWithProratedMinimum(newPlanGroupedWithProratedMinimum)
                 )
 
             /**
@@ -465,32 +446,36 @@ constructor(
              * of the plan.
              */
             fun addPrice(
-                newPlanMatrixWithDisplayNamePrice: Price.NewPlanMatrixWithDisplayNamePrice
-            ) =
-                addPrice(
-                    Price.ofNewPlanMatrixWithDisplayNamePrice(newPlanMatrixWithDisplayNamePrice)
-                )
+                newPlanGroupedWithMeteredMinimum: Price.NewPlanGroupedWithMeteredMinimumPrice
+            ) = addPrice(Price.ofNewPlanGroupedWithMeteredMinimum(newPlanGroupedWithMeteredMinimum))
 
             /**
              * Prices for this plan. If the plan has phases, this includes prices across all phases
              * of the plan.
              */
-            fun addPrice(newPlanBulkWithProrationPrice: Price.NewPlanBulkWithProrationPrice) =
-                addPrice(Price.ofNewPlanBulkWithProrationPrice(newPlanBulkWithProrationPrice))
+            fun addPrice(newPlanMatrixWithDisplayName: Price.NewPlanMatrixWithDisplayNamePrice) =
+                addPrice(Price.ofNewPlanMatrixWithDisplayName(newPlanMatrixWithDisplayName))
 
             /**
              * Prices for this plan. If the plan has phases, this includes prices across all phases
              * of the plan.
              */
-            fun addPrice(newPlanGroupedTieredPackagePrice: Price.NewPlanGroupedTieredPackagePrice) =
-                addPrice(Price.ofNewPlanGroupedTieredPackagePrice(newPlanGroupedTieredPackagePrice))
+            fun addPrice(newPlanBulkWithProration: Price.NewPlanBulkWithProrationPrice) =
+                addPrice(Price.ofNewPlanBulkWithProration(newPlanBulkWithProration))
 
             /**
              * Prices for this plan. If the plan has phases, this includes prices across all phases
              * of the plan.
              */
-            fun addPrice(newPlanMaxGroupTieredPrice: Price.NewPlanMaxGroupTieredPrice) =
-                addPrice(Price.ofNewPlanMaxGroupTieredPrice(newPlanMaxGroupTieredPrice))
+            fun addPrice(newPlanGroupedTieredPackage: Price.NewPlanGroupedTieredPackagePrice) =
+                addPrice(Price.ofNewPlanGroupedTieredPackage(newPlanGroupedTieredPackage))
+
+            /**
+             * Prices for this plan. If the plan has phases, this includes prices across all phases
+             * of the plan.
+             */
+            fun addPrice(newPlanMaxGroupTiered: Price.NewPlanMaxGroupTieredPrice) =
+                addPrice(Price.ofNewPlanMaxGroupTiered(newPlanMaxGroupTiered))
 
             /** Free-form text which is available on the invoice PDF and the Orb invoice portal. */
             fun defaultInvoiceMemo(defaultInvoiceMemo: String?) =
@@ -655,130 +640,123 @@ constructor(
          * Prices for this plan. If the plan has phases, this includes prices across all phases of
          * the plan.
          */
-        fun addPrice(newPlanUnitPrice: Price.NewPlanUnitPrice) = apply {
-            body.addPrice(newPlanUnitPrice)
+        fun addPrice(newPlanUnit: Price.NewPlanUnitPrice) = apply { body.addPrice(newPlanUnit) }
+
+        /**
+         * Prices for this plan. If the plan has phases, this includes prices across all phases of
+         * the plan.
+         */
+        fun addPrice(newPlanPackage: Price.NewPlanPackagePrice) = apply {
+            body.addPrice(newPlanPackage)
         }
 
         /**
          * Prices for this plan. If the plan has phases, this includes prices across all phases of
          * the plan.
          */
-        fun addPrice(newPlanPackagePrice: Price.NewPlanPackagePrice) = apply {
-            body.addPrice(newPlanPackagePrice)
+        fun addPrice(newPlanMatrix: Price.NewPlanMatrixPrice) = apply {
+            body.addPrice(newPlanMatrix)
         }
 
         /**
          * Prices for this plan. If the plan has phases, this includes prices across all phases of
          * the plan.
          */
-        fun addPrice(newPlanMatrixPrice: Price.NewPlanMatrixPrice) = apply {
-            body.addPrice(newPlanMatrixPrice)
+        fun addPrice(newPlanTiered: Price.NewPlanTieredPrice) = apply {
+            body.addPrice(newPlanTiered)
         }
 
         /**
          * Prices for this plan. If the plan has phases, this includes prices across all phases of
          * the plan.
          */
-        fun addPrice(newPlanTieredPrice: Price.NewPlanTieredPrice) = apply {
-            body.addPrice(newPlanTieredPrice)
+        fun addPrice(newPlanTieredBps: Price.NewPlanTieredBpsPrice) = apply {
+            body.addPrice(newPlanTieredBps)
         }
 
         /**
          * Prices for this plan. If the plan has phases, this includes prices across all phases of
          * the plan.
          */
-        fun addPrice(newPlanTieredBpsPrice: Price.NewPlanTieredBpsPrice) = apply {
-            body.addPrice(newPlanTieredBpsPrice)
+        fun addPrice(newPlanBps: Price.NewPlanBpsPrice) = apply { body.addPrice(newPlanBps) }
+
+        /**
+         * Prices for this plan. If the plan has phases, this includes prices across all phases of
+         * the plan.
+         */
+        fun addPrice(newPlanBulkBps: Price.NewPlanBulkBpsPrice) = apply {
+            body.addPrice(newPlanBulkBps)
         }
 
         /**
          * Prices for this plan. If the plan has phases, this includes prices across all phases of
          * the plan.
          */
-        fun addPrice(newPlanBpsPrice: Price.NewPlanBpsPrice) = apply {
-            body.addPrice(newPlanBpsPrice)
+        fun addPrice(newPlanBulk: Price.NewPlanBulkPrice) = apply { body.addPrice(newPlanBulk) }
+
+        /**
+         * Prices for this plan. If the plan has phases, this includes prices across all phases of
+         * the plan.
+         */
+        fun addPrice(newPlanThresholdTotalAmount: Price.NewPlanThresholdTotalAmountPrice) = apply {
+            body.addPrice(newPlanThresholdTotalAmount)
         }
 
         /**
          * Prices for this plan. If the plan has phases, this includes prices across all phases of
          * the plan.
          */
-        fun addPrice(newPlanBulkBpsPrice: Price.NewPlanBulkBpsPrice) = apply {
-            body.addPrice(newPlanBulkBpsPrice)
+        fun addPrice(newPlanTieredPackage: Price.NewPlanTieredPackagePrice) = apply {
+            body.addPrice(newPlanTieredPackage)
         }
 
         /**
          * Prices for this plan. If the plan has phases, this includes prices across all phases of
          * the plan.
          */
-        fun addPrice(newPlanBulkPrice: Price.NewPlanBulkPrice) = apply {
-            body.addPrice(newPlanBulkPrice)
+        fun addPrice(newPlanTieredWithMinimum: Price.NewPlanTieredWithMinimumPrice) = apply {
+            body.addPrice(newPlanTieredWithMinimum)
         }
 
         /**
          * Prices for this plan. If the plan has phases, this includes prices across all phases of
          * the plan.
          */
-        fun addPrice(newPlanThresholdTotalAmountPrice: Price.NewPlanThresholdTotalAmountPrice) =
+        fun addPrice(newPlanUnitWithPercent: Price.NewPlanUnitWithPercentPrice) = apply {
+            body.addPrice(newPlanUnitWithPercent)
+        }
+
+        /**
+         * Prices for this plan. If the plan has phases, this includes prices across all phases of
+         * the plan.
+         */
+        fun addPrice(newPlanPackageWithAllocation: Price.NewPlanPackageWithAllocationPrice) =
             apply {
-                body.addPrice(newPlanThresholdTotalAmountPrice)
+                body.addPrice(newPlanPackageWithAllocation)
             }
 
         /**
          * Prices for this plan. If the plan has phases, this includes prices across all phases of
          * the plan.
          */
-        fun addPrice(newPlanTieredPackagePrice: Price.NewPlanTieredPackagePrice) = apply {
-            body.addPrice(newPlanTieredPackagePrice)
+        fun addPrice(newPlanTierWithProration: Price.NewPlanTierWithProrationPrice) = apply {
+            body.addPrice(newPlanTierWithProration)
         }
 
         /**
          * Prices for this plan. If the plan has phases, this includes prices across all phases of
          * the plan.
          */
-        fun addPrice(newPlanTieredWithMinimumPrice: Price.NewPlanTieredWithMinimumPrice) = apply {
-            body.addPrice(newPlanTieredWithMinimumPrice)
+        fun addPrice(newPlanUnitWithProration: Price.NewPlanUnitWithProrationPrice) = apply {
+            body.addPrice(newPlanUnitWithProration)
         }
 
         /**
          * Prices for this plan. If the plan has phases, this includes prices across all phases of
          * the plan.
          */
-        fun addPrice(newPlanUnitWithPercentPrice: Price.NewPlanUnitWithPercentPrice) = apply {
-            body.addPrice(newPlanUnitWithPercentPrice)
-        }
-
-        /**
-         * Prices for this plan. If the plan has phases, this includes prices across all phases of
-         * the plan.
-         */
-        fun addPrice(newPlanPackageWithAllocationPrice: Price.NewPlanPackageWithAllocationPrice) =
-            apply {
-                body.addPrice(newPlanPackageWithAllocationPrice)
-            }
-
-        /**
-         * Prices for this plan. If the plan has phases, this includes prices across all phases of
-         * the plan.
-         */
-        fun addPrice(newPlanTierWithProrationPrice: Price.NewPlanTierWithProrationPrice) = apply {
-            body.addPrice(newPlanTierWithProrationPrice)
-        }
-
-        /**
-         * Prices for this plan. If the plan has phases, this includes prices across all phases of
-         * the plan.
-         */
-        fun addPrice(newPlanUnitWithProrationPrice: Price.NewPlanUnitWithProrationPrice) = apply {
-            body.addPrice(newPlanUnitWithProrationPrice)
-        }
-
-        /**
-         * Prices for this plan. If the plan has phases, this includes prices across all phases of
-         * the plan.
-         */
-        fun addPrice(newPlanGroupedAllocationPrice: Price.NewPlanGroupedAllocationPrice) = apply {
-            body.addPrice(newPlanGroupedAllocationPrice)
+        fun addPrice(newPlanGroupedAllocation: Price.NewPlanGroupedAllocationPrice) = apply {
+            body.addPrice(newPlanGroupedAllocation)
         }
 
         /**
@@ -786,49 +764,48 @@ constructor(
          * the plan.
          */
         fun addPrice(
-            newPlanGroupedWithProratedMinimumPrice: Price.NewPlanGroupedWithProratedMinimumPrice
-        ) = apply { body.addPrice(newPlanGroupedWithProratedMinimumPrice) }
+            newPlanGroupedWithProratedMinimum: Price.NewPlanGroupedWithProratedMinimumPrice
+        ) = apply { body.addPrice(newPlanGroupedWithProratedMinimum) }
 
         /**
          * Prices for this plan. If the plan has phases, this includes prices across all phases of
          * the plan.
          */
         fun addPrice(
-            newPlanGroupedWithMeteredMinimumPrice: Price.NewPlanGroupedWithMeteredMinimumPrice
-        ) = apply { body.addPrice(newPlanGroupedWithMeteredMinimumPrice) }
+            newPlanGroupedWithMeteredMinimum: Price.NewPlanGroupedWithMeteredMinimumPrice
+        ) = apply { body.addPrice(newPlanGroupedWithMeteredMinimum) }
 
         /**
          * Prices for this plan. If the plan has phases, this includes prices across all phases of
          * the plan.
          */
-        fun addPrice(newPlanMatrixWithDisplayNamePrice: Price.NewPlanMatrixWithDisplayNamePrice) =
+        fun addPrice(newPlanMatrixWithDisplayName: Price.NewPlanMatrixWithDisplayNamePrice) =
             apply {
-                body.addPrice(newPlanMatrixWithDisplayNamePrice)
+                body.addPrice(newPlanMatrixWithDisplayName)
             }
 
         /**
          * Prices for this plan. If the plan has phases, this includes prices across all phases of
          * the plan.
          */
-        fun addPrice(newPlanBulkWithProrationPrice: Price.NewPlanBulkWithProrationPrice) = apply {
-            body.addPrice(newPlanBulkWithProrationPrice)
+        fun addPrice(newPlanBulkWithProration: Price.NewPlanBulkWithProrationPrice) = apply {
+            body.addPrice(newPlanBulkWithProration)
         }
 
         /**
          * Prices for this plan. If the plan has phases, this includes prices across all phases of
          * the plan.
          */
-        fun addPrice(newPlanGroupedTieredPackagePrice: Price.NewPlanGroupedTieredPackagePrice) =
-            apply {
-                body.addPrice(newPlanGroupedTieredPackagePrice)
-            }
+        fun addPrice(newPlanGroupedTieredPackage: Price.NewPlanGroupedTieredPackagePrice) = apply {
+            body.addPrice(newPlanGroupedTieredPackage)
+        }
 
         /**
          * Prices for this plan. If the plan has phases, this includes prices across all phases of
          * the plan.
          */
-        fun addPrice(newPlanMaxGroupTieredPrice: Price.NewPlanMaxGroupTieredPrice) = apply {
-            body.addPrice(newPlanMaxGroupTieredPrice)
+        fun addPrice(newPlanMaxGroupTiered: Price.NewPlanMaxGroupTieredPrice) = apply {
+            body.addPrice(newPlanMaxGroupTiered)
         }
 
         /** Free-form text which is available on the invoice PDF and the Orb invoice portal. */
@@ -1020,254 +997,228 @@ constructor(
     @JsonSerialize(using = Price.Serializer::class)
     class Price
     private constructor(
-        private val newPlanUnitPrice: NewPlanUnitPrice? = null,
-        private val newPlanPackagePrice: NewPlanPackagePrice? = null,
-        private val newPlanMatrixPrice: NewPlanMatrixPrice? = null,
-        private val newPlanTieredPrice: NewPlanTieredPrice? = null,
-        private val newPlanTieredBpsPrice: NewPlanTieredBpsPrice? = null,
-        private val newPlanBpsPrice: NewPlanBpsPrice? = null,
-        private val newPlanBulkBpsPrice: NewPlanBulkBpsPrice? = null,
-        private val newPlanBulkPrice: NewPlanBulkPrice? = null,
-        private val newPlanThresholdTotalAmountPrice: NewPlanThresholdTotalAmountPrice? = null,
-        private val newPlanTieredPackagePrice: NewPlanTieredPackagePrice? = null,
-        private val newPlanTieredWithMinimumPrice: NewPlanTieredWithMinimumPrice? = null,
-        private val newPlanUnitWithPercentPrice: NewPlanUnitWithPercentPrice? = null,
-        private val newPlanPackageWithAllocationPrice: NewPlanPackageWithAllocationPrice? = null,
-        private val newPlanTierWithProrationPrice: NewPlanTierWithProrationPrice? = null,
-        private val newPlanUnitWithProrationPrice: NewPlanUnitWithProrationPrice? = null,
-        private val newPlanGroupedAllocationPrice: NewPlanGroupedAllocationPrice? = null,
-        private val newPlanGroupedWithProratedMinimumPrice:
-            NewPlanGroupedWithProratedMinimumPrice? =
+        private val newPlanUnit: NewPlanUnitPrice? = null,
+        private val newPlanPackage: NewPlanPackagePrice? = null,
+        private val newPlanMatrix: NewPlanMatrixPrice? = null,
+        private val newPlanTiered: NewPlanTieredPrice? = null,
+        private val newPlanTieredBps: NewPlanTieredBpsPrice? = null,
+        private val newPlanBps: NewPlanBpsPrice? = null,
+        private val newPlanBulkBps: NewPlanBulkBpsPrice? = null,
+        private val newPlanBulk: NewPlanBulkPrice? = null,
+        private val newPlanThresholdTotalAmount: NewPlanThresholdTotalAmountPrice? = null,
+        private val newPlanTieredPackage: NewPlanTieredPackagePrice? = null,
+        private val newPlanTieredWithMinimum: NewPlanTieredWithMinimumPrice? = null,
+        private val newPlanUnitWithPercent: NewPlanUnitWithPercentPrice? = null,
+        private val newPlanPackageWithAllocation: NewPlanPackageWithAllocationPrice? = null,
+        private val newPlanTierWithProration: NewPlanTierWithProrationPrice? = null,
+        private val newPlanUnitWithProration: NewPlanUnitWithProrationPrice? = null,
+        private val newPlanGroupedAllocation: NewPlanGroupedAllocationPrice? = null,
+        private val newPlanGroupedWithProratedMinimum: NewPlanGroupedWithProratedMinimumPrice? =
             null,
-        private val newPlanGroupedWithMeteredMinimumPrice: NewPlanGroupedWithMeteredMinimumPrice? =
-            null,
-        private val newPlanMatrixWithDisplayNamePrice: NewPlanMatrixWithDisplayNamePrice? = null,
-        private val newPlanBulkWithProrationPrice: NewPlanBulkWithProrationPrice? = null,
-        private val newPlanGroupedTieredPackagePrice: NewPlanGroupedTieredPackagePrice? = null,
-        private val newPlanMaxGroupTieredPrice: NewPlanMaxGroupTieredPrice? = null,
+        private val newPlanGroupedWithMeteredMinimum: NewPlanGroupedWithMeteredMinimumPrice? = null,
+        private val newPlanMatrixWithDisplayName: NewPlanMatrixWithDisplayNamePrice? = null,
+        private val newPlanBulkWithProration: NewPlanBulkWithProrationPrice? = null,
+        private val newPlanGroupedTieredPackage: NewPlanGroupedTieredPackagePrice? = null,
+        private val newPlanMaxGroupTiered: NewPlanMaxGroupTieredPrice? = null,
         private val _json: JsonValue? = null,
     ) {
 
-        fun newPlanUnitPrice(): NewPlanUnitPrice? = newPlanUnitPrice
+        fun newPlanUnit(): NewPlanUnitPrice? = newPlanUnit
 
-        fun newPlanPackagePrice(): NewPlanPackagePrice? = newPlanPackagePrice
+        fun newPlanPackage(): NewPlanPackagePrice? = newPlanPackage
 
-        fun newPlanMatrixPrice(): NewPlanMatrixPrice? = newPlanMatrixPrice
+        fun newPlanMatrix(): NewPlanMatrixPrice? = newPlanMatrix
 
-        fun newPlanTieredPrice(): NewPlanTieredPrice? = newPlanTieredPrice
+        fun newPlanTiered(): NewPlanTieredPrice? = newPlanTiered
 
-        fun newPlanTieredBpsPrice(): NewPlanTieredBpsPrice? = newPlanTieredBpsPrice
+        fun newPlanTieredBps(): NewPlanTieredBpsPrice? = newPlanTieredBps
 
-        fun newPlanBpsPrice(): NewPlanBpsPrice? = newPlanBpsPrice
+        fun newPlanBps(): NewPlanBpsPrice? = newPlanBps
 
-        fun newPlanBulkBpsPrice(): NewPlanBulkBpsPrice? = newPlanBulkBpsPrice
+        fun newPlanBulkBps(): NewPlanBulkBpsPrice? = newPlanBulkBps
 
-        fun newPlanBulkPrice(): NewPlanBulkPrice? = newPlanBulkPrice
+        fun newPlanBulk(): NewPlanBulkPrice? = newPlanBulk
 
-        fun newPlanThresholdTotalAmountPrice(): NewPlanThresholdTotalAmountPrice? =
-            newPlanThresholdTotalAmountPrice
+        fun newPlanThresholdTotalAmount(): NewPlanThresholdTotalAmountPrice? =
+            newPlanThresholdTotalAmount
 
-        fun newPlanTieredPackagePrice(): NewPlanTieredPackagePrice? = newPlanTieredPackagePrice
+        fun newPlanTieredPackage(): NewPlanTieredPackagePrice? = newPlanTieredPackage
 
-        fun newPlanTieredWithMinimumPrice(): NewPlanTieredWithMinimumPrice? =
-            newPlanTieredWithMinimumPrice
+        fun newPlanTieredWithMinimum(): NewPlanTieredWithMinimumPrice? = newPlanTieredWithMinimum
 
-        fun newPlanUnitWithPercentPrice(): NewPlanUnitWithPercentPrice? =
-            newPlanUnitWithPercentPrice
+        fun newPlanUnitWithPercent(): NewPlanUnitWithPercentPrice? = newPlanUnitWithPercent
 
-        fun newPlanPackageWithAllocationPrice(): NewPlanPackageWithAllocationPrice? =
-            newPlanPackageWithAllocationPrice
+        fun newPlanPackageWithAllocation(): NewPlanPackageWithAllocationPrice? =
+            newPlanPackageWithAllocation
 
-        fun newPlanTierWithProrationPrice(): NewPlanTierWithProrationPrice? =
-            newPlanTierWithProrationPrice
+        fun newPlanTierWithProration(): NewPlanTierWithProrationPrice? = newPlanTierWithProration
 
-        fun newPlanUnitWithProrationPrice(): NewPlanUnitWithProrationPrice? =
-            newPlanUnitWithProrationPrice
+        fun newPlanUnitWithProration(): NewPlanUnitWithProrationPrice? = newPlanUnitWithProration
 
-        fun newPlanGroupedAllocationPrice(): NewPlanGroupedAllocationPrice? =
-            newPlanGroupedAllocationPrice
+        fun newPlanGroupedAllocation(): NewPlanGroupedAllocationPrice? = newPlanGroupedAllocation
 
-        fun newPlanGroupedWithProratedMinimumPrice(): NewPlanGroupedWithProratedMinimumPrice? =
-            newPlanGroupedWithProratedMinimumPrice
+        fun newPlanGroupedWithProratedMinimum(): NewPlanGroupedWithProratedMinimumPrice? =
+            newPlanGroupedWithProratedMinimum
 
-        fun newPlanGroupedWithMeteredMinimumPrice(): NewPlanGroupedWithMeteredMinimumPrice? =
-            newPlanGroupedWithMeteredMinimumPrice
+        fun newPlanGroupedWithMeteredMinimum(): NewPlanGroupedWithMeteredMinimumPrice? =
+            newPlanGroupedWithMeteredMinimum
 
-        fun newPlanMatrixWithDisplayNamePrice(): NewPlanMatrixWithDisplayNamePrice? =
-            newPlanMatrixWithDisplayNamePrice
+        fun newPlanMatrixWithDisplayName(): NewPlanMatrixWithDisplayNamePrice? =
+            newPlanMatrixWithDisplayName
 
-        fun newPlanBulkWithProrationPrice(): NewPlanBulkWithProrationPrice? =
-            newPlanBulkWithProrationPrice
+        fun newPlanBulkWithProration(): NewPlanBulkWithProrationPrice? = newPlanBulkWithProration
 
-        fun newPlanGroupedTieredPackagePrice(): NewPlanGroupedTieredPackagePrice? =
-            newPlanGroupedTieredPackagePrice
+        fun newPlanGroupedTieredPackage(): NewPlanGroupedTieredPackagePrice? =
+            newPlanGroupedTieredPackage
 
-        fun newPlanMaxGroupTieredPrice(): NewPlanMaxGroupTieredPrice? = newPlanMaxGroupTieredPrice
+        fun newPlanMaxGroupTiered(): NewPlanMaxGroupTieredPrice? = newPlanMaxGroupTiered
 
-        fun isNewPlanUnitPrice(): Boolean = newPlanUnitPrice != null
+        fun isNewPlanUnit(): Boolean = newPlanUnit != null
 
-        fun isNewPlanPackagePrice(): Boolean = newPlanPackagePrice != null
+        fun isNewPlanPackage(): Boolean = newPlanPackage != null
 
-        fun isNewPlanMatrixPrice(): Boolean = newPlanMatrixPrice != null
+        fun isNewPlanMatrix(): Boolean = newPlanMatrix != null
 
-        fun isNewPlanTieredPrice(): Boolean = newPlanTieredPrice != null
+        fun isNewPlanTiered(): Boolean = newPlanTiered != null
 
-        fun isNewPlanTieredBpsPrice(): Boolean = newPlanTieredBpsPrice != null
+        fun isNewPlanTieredBps(): Boolean = newPlanTieredBps != null
 
-        fun isNewPlanBpsPrice(): Boolean = newPlanBpsPrice != null
+        fun isNewPlanBps(): Boolean = newPlanBps != null
 
-        fun isNewPlanBulkBpsPrice(): Boolean = newPlanBulkBpsPrice != null
+        fun isNewPlanBulkBps(): Boolean = newPlanBulkBps != null
 
-        fun isNewPlanBulkPrice(): Boolean = newPlanBulkPrice != null
+        fun isNewPlanBulk(): Boolean = newPlanBulk != null
 
-        fun isNewPlanThresholdTotalAmountPrice(): Boolean = newPlanThresholdTotalAmountPrice != null
+        fun isNewPlanThresholdTotalAmount(): Boolean = newPlanThresholdTotalAmount != null
 
-        fun isNewPlanTieredPackagePrice(): Boolean = newPlanTieredPackagePrice != null
+        fun isNewPlanTieredPackage(): Boolean = newPlanTieredPackage != null
 
-        fun isNewPlanTieredWithMinimumPrice(): Boolean = newPlanTieredWithMinimumPrice != null
+        fun isNewPlanTieredWithMinimum(): Boolean = newPlanTieredWithMinimum != null
 
-        fun isNewPlanUnitWithPercentPrice(): Boolean = newPlanUnitWithPercentPrice != null
+        fun isNewPlanUnitWithPercent(): Boolean = newPlanUnitWithPercent != null
 
-        fun isNewPlanPackageWithAllocationPrice(): Boolean =
-            newPlanPackageWithAllocationPrice != null
+        fun isNewPlanPackageWithAllocation(): Boolean = newPlanPackageWithAllocation != null
 
-        fun isNewPlanTierWithProrationPrice(): Boolean = newPlanTierWithProrationPrice != null
+        fun isNewPlanTierWithProration(): Boolean = newPlanTierWithProration != null
 
-        fun isNewPlanUnitWithProrationPrice(): Boolean = newPlanUnitWithProrationPrice != null
+        fun isNewPlanUnitWithProration(): Boolean = newPlanUnitWithProration != null
 
-        fun isNewPlanGroupedAllocationPrice(): Boolean = newPlanGroupedAllocationPrice != null
+        fun isNewPlanGroupedAllocation(): Boolean = newPlanGroupedAllocation != null
 
-        fun isNewPlanGroupedWithProratedMinimumPrice(): Boolean =
-            newPlanGroupedWithProratedMinimumPrice != null
+        fun isNewPlanGroupedWithProratedMinimum(): Boolean =
+            newPlanGroupedWithProratedMinimum != null
 
-        fun isNewPlanGroupedWithMeteredMinimumPrice(): Boolean =
-            newPlanGroupedWithMeteredMinimumPrice != null
+        fun isNewPlanGroupedWithMeteredMinimum(): Boolean = newPlanGroupedWithMeteredMinimum != null
 
-        fun isNewPlanMatrixWithDisplayNamePrice(): Boolean =
-            newPlanMatrixWithDisplayNamePrice != null
+        fun isNewPlanMatrixWithDisplayName(): Boolean = newPlanMatrixWithDisplayName != null
 
-        fun isNewPlanBulkWithProrationPrice(): Boolean = newPlanBulkWithProrationPrice != null
+        fun isNewPlanBulkWithProration(): Boolean = newPlanBulkWithProration != null
 
-        fun isNewPlanGroupedTieredPackagePrice(): Boolean = newPlanGroupedTieredPackagePrice != null
+        fun isNewPlanGroupedTieredPackage(): Boolean = newPlanGroupedTieredPackage != null
 
-        fun isNewPlanMaxGroupTieredPrice(): Boolean = newPlanMaxGroupTieredPrice != null
+        fun isNewPlanMaxGroupTiered(): Boolean = newPlanMaxGroupTiered != null
 
-        fun asNewPlanUnitPrice(): NewPlanUnitPrice = newPlanUnitPrice.getOrThrow("newPlanUnitPrice")
+        fun asNewPlanUnit(): NewPlanUnitPrice = newPlanUnit.getOrThrow("newPlanUnit")
 
-        fun asNewPlanPackagePrice(): NewPlanPackagePrice =
-            newPlanPackagePrice.getOrThrow("newPlanPackagePrice")
+        fun asNewPlanPackage(): NewPlanPackagePrice = newPlanPackage.getOrThrow("newPlanPackage")
 
-        fun asNewPlanMatrixPrice(): NewPlanMatrixPrice =
-            newPlanMatrixPrice.getOrThrow("newPlanMatrixPrice")
+        fun asNewPlanMatrix(): NewPlanMatrixPrice = newPlanMatrix.getOrThrow("newPlanMatrix")
 
-        fun asNewPlanTieredPrice(): NewPlanTieredPrice =
-            newPlanTieredPrice.getOrThrow("newPlanTieredPrice")
+        fun asNewPlanTiered(): NewPlanTieredPrice = newPlanTiered.getOrThrow("newPlanTiered")
 
-        fun asNewPlanTieredBpsPrice(): NewPlanTieredBpsPrice =
-            newPlanTieredBpsPrice.getOrThrow("newPlanTieredBpsPrice")
+        fun asNewPlanTieredBps(): NewPlanTieredBpsPrice =
+            newPlanTieredBps.getOrThrow("newPlanTieredBps")
 
-        fun asNewPlanBpsPrice(): NewPlanBpsPrice = newPlanBpsPrice.getOrThrow("newPlanBpsPrice")
+        fun asNewPlanBps(): NewPlanBpsPrice = newPlanBps.getOrThrow("newPlanBps")
 
-        fun asNewPlanBulkBpsPrice(): NewPlanBulkBpsPrice =
-            newPlanBulkBpsPrice.getOrThrow("newPlanBulkBpsPrice")
+        fun asNewPlanBulkBps(): NewPlanBulkBpsPrice = newPlanBulkBps.getOrThrow("newPlanBulkBps")
 
-        fun asNewPlanBulkPrice(): NewPlanBulkPrice = newPlanBulkPrice.getOrThrow("newPlanBulkPrice")
+        fun asNewPlanBulk(): NewPlanBulkPrice = newPlanBulk.getOrThrow("newPlanBulk")
 
-        fun asNewPlanThresholdTotalAmountPrice(): NewPlanThresholdTotalAmountPrice =
-            newPlanThresholdTotalAmountPrice.getOrThrow("newPlanThresholdTotalAmountPrice")
+        fun asNewPlanThresholdTotalAmount(): NewPlanThresholdTotalAmountPrice =
+            newPlanThresholdTotalAmount.getOrThrow("newPlanThresholdTotalAmount")
 
-        fun asNewPlanTieredPackagePrice(): NewPlanTieredPackagePrice =
-            newPlanTieredPackagePrice.getOrThrow("newPlanTieredPackagePrice")
+        fun asNewPlanTieredPackage(): NewPlanTieredPackagePrice =
+            newPlanTieredPackage.getOrThrow("newPlanTieredPackage")
 
-        fun asNewPlanTieredWithMinimumPrice(): NewPlanTieredWithMinimumPrice =
-            newPlanTieredWithMinimumPrice.getOrThrow("newPlanTieredWithMinimumPrice")
+        fun asNewPlanTieredWithMinimum(): NewPlanTieredWithMinimumPrice =
+            newPlanTieredWithMinimum.getOrThrow("newPlanTieredWithMinimum")
 
-        fun asNewPlanUnitWithPercentPrice(): NewPlanUnitWithPercentPrice =
-            newPlanUnitWithPercentPrice.getOrThrow("newPlanUnitWithPercentPrice")
+        fun asNewPlanUnitWithPercent(): NewPlanUnitWithPercentPrice =
+            newPlanUnitWithPercent.getOrThrow("newPlanUnitWithPercent")
 
-        fun asNewPlanPackageWithAllocationPrice(): NewPlanPackageWithAllocationPrice =
-            newPlanPackageWithAllocationPrice.getOrThrow("newPlanPackageWithAllocationPrice")
+        fun asNewPlanPackageWithAllocation(): NewPlanPackageWithAllocationPrice =
+            newPlanPackageWithAllocation.getOrThrow("newPlanPackageWithAllocation")
 
-        fun asNewPlanTierWithProrationPrice(): NewPlanTierWithProrationPrice =
-            newPlanTierWithProrationPrice.getOrThrow("newPlanTierWithProrationPrice")
+        fun asNewPlanTierWithProration(): NewPlanTierWithProrationPrice =
+            newPlanTierWithProration.getOrThrow("newPlanTierWithProration")
 
-        fun asNewPlanUnitWithProrationPrice(): NewPlanUnitWithProrationPrice =
-            newPlanUnitWithProrationPrice.getOrThrow("newPlanUnitWithProrationPrice")
+        fun asNewPlanUnitWithProration(): NewPlanUnitWithProrationPrice =
+            newPlanUnitWithProration.getOrThrow("newPlanUnitWithProration")
 
-        fun asNewPlanGroupedAllocationPrice(): NewPlanGroupedAllocationPrice =
-            newPlanGroupedAllocationPrice.getOrThrow("newPlanGroupedAllocationPrice")
+        fun asNewPlanGroupedAllocation(): NewPlanGroupedAllocationPrice =
+            newPlanGroupedAllocation.getOrThrow("newPlanGroupedAllocation")
 
-        fun asNewPlanGroupedWithProratedMinimumPrice(): NewPlanGroupedWithProratedMinimumPrice =
-            newPlanGroupedWithProratedMinimumPrice.getOrThrow(
-                "newPlanGroupedWithProratedMinimumPrice"
-            )
+        fun asNewPlanGroupedWithProratedMinimum(): NewPlanGroupedWithProratedMinimumPrice =
+            newPlanGroupedWithProratedMinimum.getOrThrow("newPlanGroupedWithProratedMinimum")
 
-        fun asNewPlanGroupedWithMeteredMinimumPrice(): NewPlanGroupedWithMeteredMinimumPrice =
-            newPlanGroupedWithMeteredMinimumPrice.getOrThrow(
-                "newPlanGroupedWithMeteredMinimumPrice"
-            )
+        fun asNewPlanGroupedWithMeteredMinimum(): NewPlanGroupedWithMeteredMinimumPrice =
+            newPlanGroupedWithMeteredMinimum.getOrThrow("newPlanGroupedWithMeteredMinimum")
 
-        fun asNewPlanMatrixWithDisplayNamePrice(): NewPlanMatrixWithDisplayNamePrice =
-            newPlanMatrixWithDisplayNamePrice.getOrThrow("newPlanMatrixWithDisplayNamePrice")
+        fun asNewPlanMatrixWithDisplayName(): NewPlanMatrixWithDisplayNamePrice =
+            newPlanMatrixWithDisplayName.getOrThrow("newPlanMatrixWithDisplayName")
 
-        fun asNewPlanBulkWithProrationPrice(): NewPlanBulkWithProrationPrice =
-            newPlanBulkWithProrationPrice.getOrThrow("newPlanBulkWithProrationPrice")
+        fun asNewPlanBulkWithProration(): NewPlanBulkWithProrationPrice =
+            newPlanBulkWithProration.getOrThrow("newPlanBulkWithProration")
 
-        fun asNewPlanGroupedTieredPackagePrice(): NewPlanGroupedTieredPackagePrice =
-            newPlanGroupedTieredPackagePrice.getOrThrow("newPlanGroupedTieredPackagePrice")
+        fun asNewPlanGroupedTieredPackage(): NewPlanGroupedTieredPackagePrice =
+            newPlanGroupedTieredPackage.getOrThrow("newPlanGroupedTieredPackage")
 
-        fun asNewPlanMaxGroupTieredPrice(): NewPlanMaxGroupTieredPrice =
-            newPlanMaxGroupTieredPrice.getOrThrow("newPlanMaxGroupTieredPrice")
+        fun asNewPlanMaxGroupTiered(): NewPlanMaxGroupTieredPrice =
+            newPlanMaxGroupTiered.getOrThrow("newPlanMaxGroupTiered")
 
         fun _json(): JsonValue? = _json
 
         fun <T> accept(visitor: Visitor<T>): T {
             return when {
-                newPlanUnitPrice != null -> visitor.visitNewPlanUnitPrice(newPlanUnitPrice)
-                newPlanPackagePrice != null -> visitor.visitNewPlanPackagePrice(newPlanPackagePrice)
-                newPlanMatrixPrice != null -> visitor.visitNewPlanMatrixPrice(newPlanMatrixPrice)
-                newPlanTieredPrice != null -> visitor.visitNewPlanTieredPrice(newPlanTieredPrice)
-                newPlanTieredBpsPrice != null ->
-                    visitor.visitNewPlanTieredBpsPrice(newPlanTieredBpsPrice)
-                newPlanBpsPrice != null -> visitor.visitNewPlanBpsPrice(newPlanBpsPrice)
-                newPlanBulkBpsPrice != null -> visitor.visitNewPlanBulkBpsPrice(newPlanBulkBpsPrice)
-                newPlanBulkPrice != null -> visitor.visitNewPlanBulkPrice(newPlanBulkPrice)
-                newPlanThresholdTotalAmountPrice != null ->
-                    visitor.visitNewPlanThresholdTotalAmountPrice(newPlanThresholdTotalAmountPrice)
-                newPlanTieredPackagePrice != null ->
-                    visitor.visitNewPlanTieredPackagePrice(newPlanTieredPackagePrice)
-                newPlanTieredWithMinimumPrice != null ->
-                    visitor.visitNewPlanTieredWithMinimumPrice(newPlanTieredWithMinimumPrice)
-                newPlanUnitWithPercentPrice != null ->
-                    visitor.visitNewPlanUnitWithPercentPrice(newPlanUnitWithPercentPrice)
-                newPlanPackageWithAllocationPrice != null ->
-                    visitor.visitNewPlanPackageWithAllocationPrice(
-                        newPlanPackageWithAllocationPrice
+                newPlanUnit != null -> visitor.visitNewPlanUnit(newPlanUnit)
+                newPlanPackage != null -> visitor.visitNewPlanPackage(newPlanPackage)
+                newPlanMatrix != null -> visitor.visitNewPlanMatrix(newPlanMatrix)
+                newPlanTiered != null -> visitor.visitNewPlanTiered(newPlanTiered)
+                newPlanTieredBps != null -> visitor.visitNewPlanTieredBps(newPlanTieredBps)
+                newPlanBps != null -> visitor.visitNewPlanBps(newPlanBps)
+                newPlanBulkBps != null -> visitor.visitNewPlanBulkBps(newPlanBulkBps)
+                newPlanBulk != null -> visitor.visitNewPlanBulk(newPlanBulk)
+                newPlanThresholdTotalAmount != null ->
+                    visitor.visitNewPlanThresholdTotalAmount(newPlanThresholdTotalAmount)
+                newPlanTieredPackage != null ->
+                    visitor.visitNewPlanTieredPackage(newPlanTieredPackage)
+                newPlanTieredWithMinimum != null ->
+                    visitor.visitNewPlanTieredWithMinimum(newPlanTieredWithMinimum)
+                newPlanUnitWithPercent != null ->
+                    visitor.visitNewPlanUnitWithPercent(newPlanUnitWithPercent)
+                newPlanPackageWithAllocation != null ->
+                    visitor.visitNewPlanPackageWithAllocation(newPlanPackageWithAllocation)
+                newPlanTierWithProration != null ->
+                    visitor.visitNewPlanTierWithProration(newPlanTierWithProration)
+                newPlanUnitWithProration != null ->
+                    visitor.visitNewPlanUnitWithProration(newPlanUnitWithProration)
+                newPlanGroupedAllocation != null ->
+                    visitor.visitNewPlanGroupedAllocation(newPlanGroupedAllocation)
+                newPlanGroupedWithProratedMinimum != null ->
+                    visitor.visitNewPlanGroupedWithProratedMinimum(
+                        newPlanGroupedWithProratedMinimum
                     )
-                newPlanTierWithProrationPrice != null ->
-                    visitor.visitNewPlanTierWithProrationPrice(newPlanTierWithProrationPrice)
-                newPlanUnitWithProrationPrice != null ->
-                    visitor.visitNewPlanUnitWithProrationPrice(newPlanUnitWithProrationPrice)
-                newPlanGroupedAllocationPrice != null ->
-                    visitor.visitNewPlanGroupedAllocationPrice(newPlanGroupedAllocationPrice)
-                newPlanGroupedWithProratedMinimumPrice != null ->
-                    visitor.visitNewPlanGroupedWithProratedMinimumPrice(
-                        newPlanGroupedWithProratedMinimumPrice
-                    )
-                newPlanGroupedWithMeteredMinimumPrice != null ->
-                    visitor.visitNewPlanGroupedWithMeteredMinimumPrice(
-                        newPlanGroupedWithMeteredMinimumPrice
-                    )
-                newPlanMatrixWithDisplayNamePrice != null ->
-                    visitor.visitNewPlanMatrixWithDisplayNamePrice(
-                        newPlanMatrixWithDisplayNamePrice
-                    )
-                newPlanBulkWithProrationPrice != null ->
-                    visitor.visitNewPlanBulkWithProrationPrice(newPlanBulkWithProrationPrice)
-                newPlanGroupedTieredPackagePrice != null ->
-                    visitor.visitNewPlanGroupedTieredPackagePrice(newPlanGroupedTieredPackagePrice)
-                newPlanMaxGroupTieredPrice != null ->
-                    visitor.visitNewPlanMaxGroupTieredPrice(newPlanMaxGroupTieredPrice)
+                newPlanGroupedWithMeteredMinimum != null ->
+                    visitor.visitNewPlanGroupedWithMeteredMinimum(newPlanGroupedWithMeteredMinimum)
+                newPlanMatrixWithDisplayName != null ->
+                    visitor.visitNewPlanMatrixWithDisplayName(newPlanMatrixWithDisplayName)
+                newPlanBulkWithProration != null ->
+                    visitor.visitNewPlanBulkWithProration(newPlanBulkWithProration)
+                newPlanGroupedTieredPackage != null ->
+                    visitor.visitNewPlanGroupedTieredPackage(newPlanGroupedTieredPackage)
+                newPlanMaxGroupTiered != null ->
+                    visitor.visitNewPlanMaxGroupTiered(newPlanMaxGroupTiered)
                 else -> visitor.unknown(_json)
             }
         }
@@ -1281,127 +1232,120 @@ constructor(
 
             accept(
                 object : Visitor<Unit> {
-                    override fun visitNewPlanUnitPrice(newPlanUnitPrice: NewPlanUnitPrice) {
-                        newPlanUnitPrice.validate()
+                    override fun visitNewPlanUnit(newPlanUnit: NewPlanUnitPrice) {
+                        newPlanUnit.validate()
                     }
 
-                    override fun visitNewPlanPackagePrice(
-                        newPlanPackagePrice: NewPlanPackagePrice
+                    override fun visitNewPlanPackage(newPlanPackage: NewPlanPackagePrice) {
+                        newPlanPackage.validate()
+                    }
+
+                    override fun visitNewPlanMatrix(newPlanMatrix: NewPlanMatrixPrice) {
+                        newPlanMatrix.validate()
+                    }
+
+                    override fun visitNewPlanTiered(newPlanTiered: NewPlanTieredPrice) {
+                        newPlanTiered.validate()
+                    }
+
+                    override fun visitNewPlanTieredBps(newPlanTieredBps: NewPlanTieredBpsPrice) {
+                        newPlanTieredBps.validate()
+                    }
+
+                    override fun visitNewPlanBps(newPlanBps: NewPlanBpsPrice) {
+                        newPlanBps.validate()
+                    }
+
+                    override fun visitNewPlanBulkBps(newPlanBulkBps: NewPlanBulkBpsPrice) {
+                        newPlanBulkBps.validate()
+                    }
+
+                    override fun visitNewPlanBulk(newPlanBulk: NewPlanBulkPrice) {
+                        newPlanBulk.validate()
+                    }
+
+                    override fun visitNewPlanThresholdTotalAmount(
+                        newPlanThresholdTotalAmount: NewPlanThresholdTotalAmountPrice
                     ) {
-                        newPlanPackagePrice.validate()
+                        newPlanThresholdTotalAmount.validate()
                     }
 
-                    override fun visitNewPlanMatrixPrice(newPlanMatrixPrice: NewPlanMatrixPrice) {
-                        newPlanMatrixPrice.validate()
-                    }
-
-                    override fun visitNewPlanTieredPrice(newPlanTieredPrice: NewPlanTieredPrice) {
-                        newPlanTieredPrice.validate()
-                    }
-
-                    override fun visitNewPlanTieredBpsPrice(
-                        newPlanTieredBpsPrice: NewPlanTieredBpsPrice
+                    override fun visitNewPlanTieredPackage(
+                        newPlanTieredPackage: NewPlanTieredPackagePrice
                     ) {
-                        newPlanTieredBpsPrice.validate()
+                        newPlanTieredPackage.validate()
                     }
 
-                    override fun visitNewPlanBpsPrice(newPlanBpsPrice: NewPlanBpsPrice) {
-                        newPlanBpsPrice.validate()
-                    }
-
-                    override fun visitNewPlanBulkBpsPrice(
-                        newPlanBulkBpsPrice: NewPlanBulkBpsPrice
+                    override fun visitNewPlanTieredWithMinimum(
+                        newPlanTieredWithMinimum: NewPlanTieredWithMinimumPrice
                     ) {
-                        newPlanBulkBpsPrice.validate()
+                        newPlanTieredWithMinimum.validate()
                     }
 
-                    override fun visitNewPlanBulkPrice(newPlanBulkPrice: NewPlanBulkPrice) {
-                        newPlanBulkPrice.validate()
-                    }
-
-                    override fun visitNewPlanThresholdTotalAmountPrice(
-                        newPlanThresholdTotalAmountPrice: NewPlanThresholdTotalAmountPrice
+                    override fun visitNewPlanUnitWithPercent(
+                        newPlanUnitWithPercent: NewPlanUnitWithPercentPrice
                     ) {
-                        newPlanThresholdTotalAmountPrice.validate()
+                        newPlanUnitWithPercent.validate()
                     }
 
-                    override fun visitNewPlanTieredPackagePrice(
-                        newPlanTieredPackagePrice: NewPlanTieredPackagePrice
+                    override fun visitNewPlanPackageWithAllocation(
+                        newPlanPackageWithAllocation: NewPlanPackageWithAllocationPrice
                     ) {
-                        newPlanTieredPackagePrice.validate()
+                        newPlanPackageWithAllocation.validate()
                     }
 
-                    override fun visitNewPlanTieredWithMinimumPrice(
-                        newPlanTieredWithMinimumPrice: NewPlanTieredWithMinimumPrice
+                    override fun visitNewPlanTierWithProration(
+                        newPlanTierWithProration: NewPlanTierWithProrationPrice
                     ) {
-                        newPlanTieredWithMinimumPrice.validate()
+                        newPlanTierWithProration.validate()
                     }
 
-                    override fun visitNewPlanUnitWithPercentPrice(
-                        newPlanUnitWithPercentPrice: NewPlanUnitWithPercentPrice
+                    override fun visitNewPlanUnitWithProration(
+                        newPlanUnitWithProration: NewPlanUnitWithProrationPrice
                     ) {
-                        newPlanUnitWithPercentPrice.validate()
+                        newPlanUnitWithProration.validate()
                     }
 
-                    override fun visitNewPlanPackageWithAllocationPrice(
-                        newPlanPackageWithAllocationPrice: NewPlanPackageWithAllocationPrice
+                    override fun visitNewPlanGroupedAllocation(
+                        newPlanGroupedAllocation: NewPlanGroupedAllocationPrice
                     ) {
-                        newPlanPackageWithAllocationPrice.validate()
+                        newPlanGroupedAllocation.validate()
                     }
 
-                    override fun visitNewPlanTierWithProrationPrice(
-                        newPlanTierWithProrationPrice: NewPlanTierWithProrationPrice
+                    override fun visitNewPlanGroupedWithProratedMinimum(
+                        newPlanGroupedWithProratedMinimum: NewPlanGroupedWithProratedMinimumPrice
                     ) {
-                        newPlanTierWithProrationPrice.validate()
+                        newPlanGroupedWithProratedMinimum.validate()
                     }
 
-                    override fun visitNewPlanUnitWithProrationPrice(
-                        newPlanUnitWithProrationPrice: NewPlanUnitWithProrationPrice
+                    override fun visitNewPlanGroupedWithMeteredMinimum(
+                        newPlanGroupedWithMeteredMinimum: NewPlanGroupedWithMeteredMinimumPrice
                     ) {
-                        newPlanUnitWithProrationPrice.validate()
+                        newPlanGroupedWithMeteredMinimum.validate()
                     }
 
-                    override fun visitNewPlanGroupedAllocationPrice(
-                        newPlanGroupedAllocationPrice: NewPlanGroupedAllocationPrice
+                    override fun visitNewPlanMatrixWithDisplayName(
+                        newPlanMatrixWithDisplayName: NewPlanMatrixWithDisplayNamePrice
                     ) {
-                        newPlanGroupedAllocationPrice.validate()
+                        newPlanMatrixWithDisplayName.validate()
                     }
 
-                    override fun visitNewPlanGroupedWithProratedMinimumPrice(
-                        newPlanGroupedWithProratedMinimumPrice:
-                            NewPlanGroupedWithProratedMinimumPrice
+                    override fun visitNewPlanBulkWithProration(
+                        newPlanBulkWithProration: NewPlanBulkWithProrationPrice
                     ) {
-                        newPlanGroupedWithProratedMinimumPrice.validate()
+                        newPlanBulkWithProration.validate()
                     }
 
-                    override fun visitNewPlanGroupedWithMeteredMinimumPrice(
-                        newPlanGroupedWithMeteredMinimumPrice: NewPlanGroupedWithMeteredMinimumPrice
+                    override fun visitNewPlanGroupedTieredPackage(
+                        newPlanGroupedTieredPackage: NewPlanGroupedTieredPackagePrice
                     ) {
-                        newPlanGroupedWithMeteredMinimumPrice.validate()
+                        newPlanGroupedTieredPackage.validate()
                     }
 
-                    override fun visitNewPlanMatrixWithDisplayNamePrice(
-                        newPlanMatrixWithDisplayNamePrice: NewPlanMatrixWithDisplayNamePrice
+                    override fun visitNewPlanMaxGroupTiered(
+                        newPlanMaxGroupTiered: NewPlanMaxGroupTieredPrice
                     ) {
-                        newPlanMatrixWithDisplayNamePrice.validate()
-                    }
-
-                    override fun visitNewPlanBulkWithProrationPrice(
-                        newPlanBulkWithProrationPrice: NewPlanBulkWithProrationPrice
-                    ) {
-                        newPlanBulkWithProrationPrice.validate()
-                    }
-
-                    override fun visitNewPlanGroupedTieredPackagePrice(
-                        newPlanGroupedTieredPackagePrice: NewPlanGroupedTieredPackagePrice
-                    ) {
-                        newPlanGroupedTieredPackagePrice.validate()
-                    }
-
-                    override fun visitNewPlanMaxGroupTieredPrice(
-                        newPlanMaxGroupTieredPrice: NewPlanMaxGroupTieredPrice
-                    ) {
-                        newPlanMaxGroupTieredPrice.validate()
+                        newPlanMaxGroupTiered.validate()
                     }
                 }
             )
@@ -1413,212 +1357,196 @@ constructor(
                 return true
             }
 
-            return /* spotless:off */ other is Price && newPlanUnitPrice == other.newPlanUnitPrice && newPlanPackagePrice == other.newPlanPackagePrice && newPlanMatrixPrice == other.newPlanMatrixPrice && newPlanTieredPrice == other.newPlanTieredPrice && newPlanTieredBpsPrice == other.newPlanTieredBpsPrice && newPlanBpsPrice == other.newPlanBpsPrice && newPlanBulkBpsPrice == other.newPlanBulkBpsPrice && newPlanBulkPrice == other.newPlanBulkPrice && newPlanThresholdTotalAmountPrice == other.newPlanThresholdTotalAmountPrice && newPlanTieredPackagePrice == other.newPlanTieredPackagePrice && newPlanTieredWithMinimumPrice == other.newPlanTieredWithMinimumPrice && newPlanUnitWithPercentPrice == other.newPlanUnitWithPercentPrice && newPlanPackageWithAllocationPrice == other.newPlanPackageWithAllocationPrice && newPlanTierWithProrationPrice == other.newPlanTierWithProrationPrice && newPlanUnitWithProrationPrice == other.newPlanUnitWithProrationPrice && newPlanGroupedAllocationPrice == other.newPlanGroupedAllocationPrice && newPlanGroupedWithProratedMinimumPrice == other.newPlanGroupedWithProratedMinimumPrice && newPlanGroupedWithMeteredMinimumPrice == other.newPlanGroupedWithMeteredMinimumPrice && newPlanMatrixWithDisplayNamePrice == other.newPlanMatrixWithDisplayNamePrice && newPlanBulkWithProrationPrice == other.newPlanBulkWithProrationPrice && newPlanGroupedTieredPackagePrice == other.newPlanGroupedTieredPackagePrice && newPlanMaxGroupTieredPrice == other.newPlanMaxGroupTieredPrice /* spotless:on */
+            return /* spotless:off */ other is Price && newPlanUnit == other.newPlanUnit && newPlanPackage == other.newPlanPackage && newPlanMatrix == other.newPlanMatrix && newPlanTiered == other.newPlanTiered && newPlanTieredBps == other.newPlanTieredBps && newPlanBps == other.newPlanBps && newPlanBulkBps == other.newPlanBulkBps && newPlanBulk == other.newPlanBulk && newPlanThresholdTotalAmount == other.newPlanThresholdTotalAmount && newPlanTieredPackage == other.newPlanTieredPackage && newPlanTieredWithMinimum == other.newPlanTieredWithMinimum && newPlanUnitWithPercent == other.newPlanUnitWithPercent && newPlanPackageWithAllocation == other.newPlanPackageWithAllocation && newPlanTierWithProration == other.newPlanTierWithProration && newPlanUnitWithProration == other.newPlanUnitWithProration && newPlanGroupedAllocation == other.newPlanGroupedAllocation && newPlanGroupedWithProratedMinimum == other.newPlanGroupedWithProratedMinimum && newPlanGroupedWithMeteredMinimum == other.newPlanGroupedWithMeteredMinimum && newPlanMatrixWithDisplayName == other.newPlanMatrixWithDisplayName && newPlanBulkWithProration == other.newPlanBulkWithProration && newPlanGroupedTieredPackage == other.newPlanGroupedTieredPackage && newPlanMaxGroupTiered == other.newPlanMaxGroupTiered /* spotless:on */
         }
 
-        override fun hashCode(): Int = /* spotless:off */ Objects.hash(newPlanUnitPrice, newPlanPackagePrice, newPlanMatrixPrice, newPlanTieredPrice, newPlanTieredBpsPrice, newPlanBpsPrice, newPlanBulkBpsPrice, newPlanBulkPrice, newPlanThresholdTotalAmountPrice, newPlanTieredPackagePrice, newPlanTieredWithMinimumPrice, newPlanUnitWithPercentPrice, newPlanPackageWithAllocationPrice, newPlanTierWithProrationPrice, newPlanUnitWithProrationPrice, newPlanGroupedAllocationPrice, newPlanGroupedWithProratedMinimumPrice, newPlanGroupedWithMeteredMinimumPrice, newPlanMatrixWithDisplayNamePrice, newPlanBulkWithProrationPrice, newPlanGroupedTieredPackagePrice, newPlanMaxGroupTieredPrice) /* spotless:on */
+        override fun hashCode(): Int = /* spotless:off */ Objects.hash(newPlanUnit, newPlanPackage, newPlanMatrix, newPlanTiered, newPlanTieredBps, newPlanBps, newPlanBulkBps, newPlanBulk, newPlanThresholdTotalAmount, newPlanTieredPackage, newPlanTieredWithMinimum, newPlanUnitWithPercent, newPlanPackageWithAllocation, newPlanTierWithProration, newPlanUnitWithProration, newPlanGroupedAllocation, newPlanGroupedWithProratedMinimum, newPlanGroupedWithMeteredMinimum, newPlanMatrixWithDisplayName, newPlanBulkWithProration, newPlanGroupedTieredPackage, newPlanMaxGroupTiered) /* spotless:on */
 
         override fun toString(): String =
             when {
-                newPlanUnitPrice != null -> "Price{newPlanUnitPrice=$newPlanUnitPrice}"
-                newPlanPackagePrice != null -> "Price{newPlanPackagePrice=$newPlanPackagePrice}"
-                newPlanMatrixPrice != null -> "Price{newPlanMatrixPrice=$newPlanMatrixPrice}"
-                newPlanTieredPrice != null -> "Price{newPlanTieredPrice=$newPlanTieredPrice}"
-                newPlanTieredBpsPrice != null ->
-                    "Price{newPlanTieredBpsPrice=$newPlanTieredBpsPrice}"
-                newPlanBpsPrice != null -> "Price{newPlanBpsPrice=$newPlanBpsPrice}"
-                newPlanBulkBpsPrice != null -> "Price{newPlanBulkBpsPrice=$newPlanBulkBpsPrice}"
-                newPlanBulkPrice != null -> "Price{newPlanBulkPrice=$newPlanBulkPrice}"
-                newPlanThresholdTotalAmountPrice != null ->
-                    "Price{newPlanThresholdTotalAmountPrice=$newPlanThresholdTotalAmountPrice}"
-                newPlanTieredPackagePrice != null ->
-                    "Price{newPlanTieredPackagePrice=$newPlanTieredPackagePrice}"
-                newPlanTieredWithMinimumPrice != null ->
-                    "Price{newPlanTieredWithMinimumPrice=$newPlanTieredWithMinimumPrice}"
-                newPlanUnitWithPercentPrice != null ->
-                    "Price{newPlanUnitWithPercentPrice=$newPlanUnitWithPercentPrice}"
-                newPlanPackageWithAllocationPrice != null ->
-                    "Price{newPlanPackageWithAllocationPrice=$newPlanPackageWithAllocationPrice}"
-                newPlanTierWithProrationPrice != null ->
-                    "Price{newPlanTierWithProrationPrice=$newPlanTierWithProrationPrice}"
-                newPlanUnitWithProrationPrice != null ->
-                    "Price{newPlanUnitWithProrationPrice=$newPlanUnitWithProrationPrice}"
-                newPlanGroupedAllocationPrice != null ->
-                    "Price{newPlanGroupedAllocationPrice=$newPlanGroupedAllocationPrice}"
-                newPlanGroupedWithProratedMinimumPrice != null ->
-                    "Price{newPlanGroupedWithProratedMinimumPrice=$newPlanGroupedWithProratedMinimumPrice}"
-                newPlanGroupedWithMeteredMinimumPrice != null ->
-                    "Price{newPlanGroupedWithMeteredMinimumPrice=$newPlanGroupedWithMeteredMinimumPrice}"
-                newPlanMatrixWithDisplayNamePrice != null ->
-                    "Price{newPlanMatrixWithDisplayNamePrice=$newPlanMatrixWithDisplayNamePrice}"
-                newPlanBulkWithProrationPrice != null ->
-                    "Price{newPlanBulkWithProrationPrice=$newPlanBulkWithProrationPrice}"
-                newPlanGroupedTieredPackagePrice != null ->
-                    "Price{newPlanGroupedTieredPackagePrice=$newPlanGroupedTieredPackagePrice}"
-                newPlanMaxGroupTieredPrice != null ->
-                    "Price{newPlanMaxGroupTieredPrice=$newPlanMaxGroupTieredPrice}"
+                newPlanUnit != null -> "Price{newPlanUnit=$newPlanUnit}"
+                newPlanPackage != null -> "Price{newPlanPackage=$newPlanPackage}"
+                newPlanMatrix != null -> "Price{newPlanMatrix=$newPlanMatrix}"
+                newPlanTiered != null -> "Price{newPlanTiered=$newPlanTiered}"
+                newPlanTieredBps != null -> "Price{newPlanTieredBps=$newPlanTieredBps}"
+                newPlanBps != null -> "Price{newPlanBps=$newPlanBps}"
+                newPlanBulkBps != null -> "Price{newPlanBulkBps=$newPlanBulkBps}"
+                newPlanBulk != null -> "Price{newPlanBulk=$newPlanBulk}"
+                newPlanThresholdTotalAmount != null ->
+                    "Price{newPlanThresholdTotalAmount=$newPlanThresholdTotalAmount}"
+                newPlanTieredPackage != null -> "Price{newPlanTieredPackage=$newPlanTieredPackage}"
+                newPlanTieredWithMinimum != null ->
+                    "Price{newPlanTieredWithMinimum=$newPlanTieredWithMinimum}"
+                newPlanUnitWithPercent != null ->
+                    "Price{newPlanUnitWithPercent=$newPlanUnitWithPercent}"
+                newPlanPackageWithAllocation != null ->
+                    "Price{newPlanPackageWithAllocation=$newPlanPackageWithAllocation}"
+                newPlanTierWithProration != null ->
+                    "Price{newPlanTierWithProration=$newPlanTierWithProration}"
+                newPlanUnitWithProration != null ->
+                    "Price{newPlanUnitWithProration=$newPlanUnitWithProration}"
+                newPlanGroupedAllocation != null ->
+                    "Price{newPlanGroupedAllocation=$newPlanGroupedAllocation}"
+                newPlanGroupedWithProratedMinimum != null ->
+                    "Price{newPlanGroupedWithProratedMinimum=$newPlanGroupedWithProratedMinimum}"
+                newPlanGroupedWithMeteredMinimum != null ->
+                    "Price{newPlanGroupedWithMeteredMinimum=$newPlanGroupedWithMeteredMinimum}"
+                newPlanMatrixWithDisplayName != null ->
+                    "Price{newPlanMatrixWithDisplayName=$newPlanMatrixWithDisplayName}"
+                newPlanBulkWithProration != null ->
+                    "Price{newPlanBulkWithProration=$newPlanBulkWithProration}"
+                newPlanGroupedTieredPackage != null ->
+                    "Price{newPlanGroupedTieredPackage=$newPlanGroupedTieredPackage}"
+                newPlanMaxGroupTiered != null ->
+                    "Price{newPlanMaxGroupTiered=$newPlanMaxGroupTiered}"
                 _json != null -> "Price{_unknown=$_json}"
                 else -> throw IllegalStateException("Invalid Price")
             }
 
         companion object {
 
-            fun ofNewPlanUnitPrice(newPlanUnitPrice: NewPlanUnitPrice) =
-                Price(newPlanUnitPrice = newPlanUnitPrice)
+            fun ofNewPlanUnit(newPlanUnit: NewPlanUnitPrice) = Price(newPlanUnit = newPlanUnit)
 
-            fun ofNewPlanPackagePrice(newPlanPackagePrice: NewPlanPackagePrice) =
-                Price(newPlanPackagePrice = newPlanPackagePrice)
+            fun ofNewPlanPackage(newPlanPackage: NewPlanPackagePrice) =
+                Price(newPlanPackage = newPlanPackage)
 
-            fun ofNewPlanMatrixPrice(newPlanMatrixPrice: NewPlanMatrixPrice) =
-                Price(newPlanMatrixPrice = newPlanMatrixPrice)
+            fun ofNewPlanMatrix(newPlanMatrix: NewPlanMatrixPrice) =
+                Price(newPlanMatrix = newPlanMatrix)
 
-            fun ofNewPlanTieredPrice(newPlanTieredPrice: NewPlanTieredPrice) =
-                Price(newPlanTieredPrice = newPlanTieredPrice)
+            fun ofNewPlanTiered(newPlanTiered: NewPlanTieredPrice) =
+                Price(newPlanTiered = newPlanTiered)
 
-            fun ofNewPlanTieredBpsPrice(newPlanTieredBpsPrice: NewPlanTieredBpsPrice) =
-                Price(newPlanTieredBpsPrice = newPlanTieredBpsPrice)
+            fun ofNewPlanTieredBps(newPlanTieredBps: NewPlanTieredBpsPrice) =
+                Price(newPlanTieredBps = newPlanTieredBps)
 
-            fun ofNewPlanBpsPrice(newPlanBpsPrice: NewPlanBpsPrice) =
-                Price(newPlanBpsPrice = newPlanBpsPrice)
+            fun ofNewPlanBps(newPlanBps: NewPlanBpsPrice) = Price(newPlanBps = newPlanBps)
 
-            fun ofNewPlanBulkBpsPrice(newPlanBulkBpsPrice: NewPlanBulkBpsPrice) =
-                Price(newPlanBulkBpsPrice = newPlanBulkBpsPrice)
+            fun ofNewPlanBulkBps(newPlanBulkBps: NewPlanBulkBpsPrice) =
+                Price(newPlanBulkBps = newPlanBulkBps)
 
-            fun ofNewPlanBulkPrice(newPlanBulkPrice: NewPlanBulkPrice) =
-                Price(newPlanBulkPrice = newPlanBulkPrice)
+            fun ofNewPlanBulk(newPlanBulk: NewPlanBulkPrice) = Price(newPlanBulk = newPlanBulk)
 
-            fun ofNewPlanThresholdTotalAmountPrice(
-                newPlanThresholdTotalAmountPrice: NewPlanThresholdTotalAmountPrice
-            ) = Price(newPlanThresholdTotalAmountPrice = newPlanThresholdTotalAmountPrice)
+            fun ofNewPlanThresholdTotalAmount(
+                newPlanThresholdTotalAmount: NewPlanThresholdTotalAmountPrice
+            ) = Price(newPlanThresholdTotalAmount = newPlanThresholdTotalAmount)
 
-            fun ofNewPlanTieredPackagePrice(newPlanTieredPackagePrice: NewPlanTieredPackagePrice) =
-                Price(newPlanTieredPackagePrice = newPlanTieredPackagePrice)
+            fun ofNewPlanTieredPackage(newPlanTieredPackage: NewPlanTieredPackagePrice) =
+                Price(newPlanTieredPackage = newPlanTieredPackage)
 
-            fun ofNewPlanTieredWithMinimumPrice(
-                newPlanTieredWithMinimumPrice: NewPlanTieredWithMinimumPrice
-            ) = Price(newPlanTieredWithMinimumPrice = newPlanTieredWithMinimumPrice)
+            fun ofNewPlanTieredWithMinimum(
+                newPlanTieredWithMinimum: NewPlanTieredWithMinimumPrice
+            ) = Price(newPlanTieredWithMinimum = newPlanTieredWithMinimum)
 
-            fun ofNewPlanUnitWithPercentPrice(
-                newPlanUnitWithPercentPrice: NewPlanUnitWithPercentPrice
-            ) = Price(newPlanUnitWithPercentPrice = newPlanUnitWithPercentPrice)
+            fun ofNewPlanUnitWithPercent(newPlanUnitWithPercent: NewPlanUnitWithPercentPrice) =
+                Price(newPlanUnitWithPercent = newPlanUnitWithPercent)
 
-            fun ofNewPlanPackageWithAllocationPrice(
-                newPlanPackageWithAllocationPrice: NewPlanPackageWithAllocationPrice
-            ) = Price(newPlanPackageWithAllocationPrice = newPlanPackageWithAllocationPrice)
+            fun ofNewPlanPackageWithAllocation(
+                newPlanPackageWithAllocation: NewPlanPackageWithAllocationPrice
+            ) = Price(newPlanPackageWithAllocation = newPlanPackageWithAllocation)
 
-            fun ofNewPlanTierWithProrationPrice(
-                newPlanTierWithProrationPrice: NewPlanTierWithProrationPrice
-            ) = Price(newPlanTierWithProrationPrice = newPlanTierWithProrationPrice)
+            fun ofNewPlanTierWithProration(
+                newPlanTierWithProration: NewPlanTierWithProrationPrice
+            ) = Price(newPlanTierWithProration = newPlanTierWithProration)
 
-            fun ofNewPlanUnitWithProrationPrice(
-                newPlanUnitWithProrationPrice: NewPlanUnitWithProrationPrice
-            ) = Price(newPlanUnitWithProrationPrice = newPlanUnitWithProrationPrice)
+            fun ofNewPlanUnitWithProration(
+                newPlanUnitWithProration: NewPlanUnitWithProrationPrice
+            ) = Price(newPlanUnitWithProration = newPlanUnitWithProration)
 
-            fun ofNewPlanGroupedAllocationPrice(
-                newPlanGroupedAllocationPrice: NewPlanGroupedAllocationPrice
-            ) = Price(newPlanGroupedAllocationPrice = newPlanGroupedAllocationPrice)
+            fun ofNewPlanGroupedAllocation(
+                newPlanGroupedAllocation: NewPlanGroupedAllocationPrice
+            ) = Price(newPlanGroupedAllocation = newPlanGroupedAllocation)
 
-            fun ofNewPlanGroupedWithProratedMinimumPrice(
-                newPlanGroupedWithProratedMinimumPrice: NewPlanGroupedWithProratedMinimumPrice
-            ) =
-                Price(
-                    newPlanGroupedWithProratedMinimumPrice = newPlanGroupedWithProratedMinimumPrice
-                )
+            fun ofNewPlanGroupedWithProratedMinimum(
+                newPlanGroupedWithProratedMinimum: NewPlanGroupedWithProratedMinimumPrice
+            ) = Price(newPlanGroupedWithProratedMinimum = newPlanGroupedWithProratedMinimum)
 
-            fun ofNewPlanGroupedWithMeteredMinimumPrice(
-                newPlanGroupedWithMeteredMinimumPrice: NewPlanGroupedWithMeteredMinimumPrice
-            ) = Price(newPlanGroupedWithMeteredMinimumPrice = newPlanGroupedWithMeteredMinimumPrice)
+            fun ofNewPlanGroupedWithMeteredMinimum(
+                newPlanGroupedWithMeteredMinimum: NewPlanGroupedWithMeteredMinimumPrice
+            ) = Price(newPlanGroupedWithMeteredMinimum = newPlanGroupedWithMeteredMinimum)
 
-            fun ofNewPlanMatrixWithDisplayNamePrice(
-                newPlanMatrixWithDisplayNamePrice: NewPlanMatrixWithDisplayNamePrice
-            ) = Price(newPlanMatrixWithDisplayNamePrice = newPlanMatrixWithDisplayNamePrice)
+            fun ofNewPlanMatrixWithDisplayName(
+                newPlanMatrixWithDisplayName: NewPlanMatrixWithDisplayNamePrice
+            ) = Price(newPlanMatrixWithDisplayName = newPlanMatrixWithDisplayName)
 
-            fun ofNewPlanBulkWithProrationPrice(
-                newPlanBulkWithProrationPrice: NewPlanBulkWithProrationPrice
-            ) = Price(newPlanBulkWithProrationPrice = newPlanBulkWithProrationPrice)
+            fun ofNewPlanBulkWithProration(
+                newPlanBulkWithProration: NewPlanBulkWithProrationPrice
+            ) = Price(newPlanBulkWithProration = newPlanBulkWithProration)
 
-            fun ofNewPlanGroupedTieredPackagePrice(
-                newPlanGroupedTieredPackagePrice: NewPlanGroupedTieredPackagePrice
-            ) = Price(newPlanGroupedTieredPackagePrice = newPlanGroupedTieredPackagePrice)
+            fun ofNewPlanGroupedTieredPackage(
+                newPlanGroupedTieredPackage: NewPlanGroupedTieredPackagePrice
+            ) = Price(newPlanGroupedTieredPackage = newPlanGroupedTieredPackage)
 
-            fun ofNewPlanMaxGroupTieredPrice(
-                newPlanMaxGroupTieredPrice: NewPlanMaxGroupTieredPrice
-            ) = Price(newPlanMaxGroupTieredPrice = newPlanMaxGroupTieredPrice)
+            fun ofNewPlanMaxGroupTiered(newPlanMaxGroupTiered: NewPlanMaxGroupTieredPrice) =
+                Price(newPlanMaxGroupTiered = newPlanMaxGroupTiered)
         }
 
         interface Visitor<out T> {
 
-            fun visitNewPlanUnitPrice(newPlanUnitPrice: NewPlanUnitPrice): T
+            fun visitNewPlanUnit(newPlanUnit: NewPlanUnitPrice): T
 
-            fun visitNewPlanPackagePrice(newPlanPackagePrice: NewPlanPackagePrice): T
+            fun visitNewPlanPackage(newPlanPackage: NewPlanPackagePrice): T
 
-            fun visitNewPlanMatrixPrice(newPlanMatrixPrice: NewPlanMatrixPrice): T
+            fun visitNewPlanMatrix(newPlanMatrix: NewPlanMatrixPrice): T
 
-            fun visitNewPlanTieredPrice(newPlanTieredPrice: NewPlanTieredPrice): T
+            fun visitNewPlanTiered(newPlanTiered: NewPlanTieredPrice): T
 
-            fun visitNewPlanTieredBpsPrice(newPlanTieredBpsPrice: NewPlanTieredBpsPrice): T
+            fun visitNewPlanTieredBps(newPlanTieredBps: NewPlanTieredBpsPrice): T
 
-            fun visitNewPlanBpsPrice(newPlanBpsPrice: NewPlanBpsPrice): T
+            fun visitNewPlanBps(newPlanBps: NewPlanBpsPrice): T
 
-            fun visitNewPlanBulkBpsPrice(newPlanBulkBpsPrice: NewPlanBulkBpsPrice): T
+            fun visitNewPlanBulkBps(newPlanBulkBps: NewPlanBulkBpsPrice): T
 
-            fun visitNewPlanBulkPrice(newPlanBulkPrice: NewPlanBulkPrice): T
+            fun visitNewPlanBulk(newPlanBulk: NewPlanBulkPrice): T
 
-            fun visitNewPlanThresholdTotalAmountPrice(
-                newPlanThresholdTotalAmountPrice: NewPlanThresholdTotalAmountPrice
+            fun visitNewPlanThresholdTotalAmount(
+                newPlanThresholdTotalAmount: NewPlanThresholdTotalAmountPrice
             ): T
 
-            fun visitNewPlanTieredPackagePrice(
-                newPlanTieredPackagePrice: NewPlanTieredPackagePrice
+            fun visitNewPlanTieredPackage(newPlanTieredPackage: NewPlanTieredPackagePrice): T
+
+            fun visitNewPlanTieredWithMinimum(
+                newPlanTieredWithMinimum: NewPlanTieredWithMinimumPrice
             ): T
 
-            fun visitNewPlanTieredWithMinimumPrice(
-                newPlanTieredWithMinimumPrice: NewPlanTieredWithMinimumPrice
+            fun visitNewPlanUnitWithPercent(newPlanUnitWithPercent: NewPlanUnitWithPercentPrice): T
+
+            fun visitNewPlanPackageWithAllocation(
+                newPlanPackageWithAllocation: NewPlanPackageWithAllocationPrice
             ): T
 
-            fun visitNewPlanUnitWithPercentPrice(
-                newPlanUnitWithPercentPrice: NewPlanUnitWithPercentPrice
+            fun visitNewPlanTierWithProration(
+                newPlanTierWithProration: NewPlanTierWithProrationPrice
             ): T
 
-            fun visitNewPlanPackageWithAllocationPrice(
-                newPlanPackageWithAllocationPrice: NewPlanPackageWithAllocationPrice
+            fun visitNewPlanUnitWithProration(
+                newPlanUnitWithProration: NewPlanUnitWithProrationPrice
             ): T
 
-            fun visitNewPlanTierWithProrationPrice(
-                newPlanTierWithProrationPrice: NewPlanTierWithProrationPrice
+            fun visitNewPlanGroupedAllocation(
+                newPlanGroupedAllocation: NewPlanGroupedAllocationPrice
             ): T
 
-            fun visitNewPlanUnitWithProrationPrice(
-                newPlanUnitWithProrationPrice: NewPlanUnitWithProrationPrice
+            fun visitNewPlanGroupedWithProratedMinimum(
+                newPlanGroupedWithProratedMinimum: NewPlanGroupedWithProratedMinimumPrice
             ): T
 
-            fun visitNewPlanGroupedAllocationPrice(
-                newPlanGroupedAllocationPrice: NewPlanGroupedAllocationPrice
+            fun visitNewPlanGroupedWithMeteredMinimum(
+                newPlanGroupedWithMeteredMinimum: NewPlanGroupedWithMeteredMinimumPrice
             ): T
 
-            fun visitNewPlanGroupedWithProratedMinimumPrice(
-                newPlanGroupedWithProratedMinimumPrice: NewPlanGroupedWithProratedMinimumPrice
+            fun visitNewPlanMatrixWithDisplayName(
+                newPlanMatrixWithDisplayName: NewPlanMatrixWithDisplayNamePrice
             ): T
 
-            fun visitNewPlanGroupedWithMeteredMinimumPrice(
-                newPlanGroupedWithMeteredMinimumPrice: NewPlanGroupedWithMeteredMinimumPrice
+            fun visitNewPlanBulkWithProration(
+                newPlanBulkWithProration: NewPlanBulkWithProrationPrice
             ): T
 
-            fun visitNewPlanMatrixWithDisplayNamePrice(
-                newPlanMatrixWithDisplayNamePrice: NewPlanMatrixWithDisplayNamePrice
+            fun visitNewPlanGroupedTieredPackage(
+                newPlanGroupedTieredPackage: NewPlanGroupedTieredPackagePrice
             ): T
 
-            fun visitNewPlanBulkWithProrationPrice(
-                newPlanBulkWithProrationPrice: NewPlanBulkWithProrationPrice
-            ): T
-
-            fun visitNewPlanGroupedTieredPackagePrice(
-                newPlanGroupedTieredPackagePrice: NewPlanGroupedTieredPackagePrice
-            ): T
-
-            fun visitNewPlanMaxGroupTieredPrice(
-                newPlanMaxGroupTieredPrice: NewPlanMaxGroupTieredPrice
-            ): T
+            fun visitNewPlanMaxGroupTiered(newPlanMaxGroupTiered: NewPlanMaxGroupTieredPrice): T
 
             fun unknown(json: JsonValue?): T {
                 throw OrbInvalidDataException("Unknown Price: $json")
@@ -1635,7 +1563,7 @@ constructor(
                     "unit" -> {
                         tryDeserialize(node, jacksonTypeRef<NewPlanUnitPrice>()) { it.validate() }
                             ?.let {
-                                return Price(newPlanUnitPrice = it, _json = json)
+                                return Price(newPlanUnit = it, _json = json)
                             }
                     }
                     "package" -> {
@@ -1643,19 +1571,19 @@ constructor(
                                 it.validate()
                             }
                             ?.let {
-                                return Price(newPlanPackagePrice = it, _json = json)
+                                return Price(newPlanPackage = it, _json = json)
                             }
                     }
                     "matrix" -> {
                         tryDeserialize(node, jacksonTypeRef<NewPlanMatrixPrice>()) { it.validate() }
                             ?.let {
-                                return Price(newPlanMatrixPrice = it, _json = json)
+                                return Price(newPlanMatrix = it, _json = json)
                             }
                     }
                     "tiered" -> {
                         tryDeserialize(node, jacksonTypeRef<NewPlanTieredPrice>()) { it.validate() }
                             ?.let {
-                                return Price(newPlanTieredPrice = it, _json = json)
+                                return Price(newPlanTiered = it, _json = json)
                             }
                     }
                     "tiered_bps" -> {
@@ -1663,13 +1591,13 @@ constructor(
                                 it.validate()
                             }
                             ?.let {
-                                return Price(newPlanTieredBpsPrice = it, _json = json)
+                                return Price(newPlanTieredBps = it, _json = json)
                             }
                     }
                     "bps" -> {
                         tryDeserialize(node, jacksonTypeRef<NewPlanBpsPrice>()) { it.validate() }
                             ?.let {
-                                return Price(newPlanBpsPrice = it, _json = json)
+                                return Price(newPlanBps = it, _json = json)
                             }
                     }
                     "bulk_bps" -> {
@@ -1677,13 +1605,13 @@ constructor(
                                 it.validate()
                             }
                             ?.let {
-                                return Price(newPlanBulkBpsPrice = it, _json = json)
+                                return Price(newPlanBulkBps = it, _json = json)
                             }
                     }
                     "bulk" -> {
                         tryDeserialize(node, jacksonTypeRef<NewPlanBulkPrice>()) { it.validate() }
                             ?.let {
-                                return Price(newPlanBulkPrice = it, _json = json)
+                                return Price(newPlanBulk = it, _json = json)
                             }
                     }
                     "threshold_total_amount" -> {
@@ -1691,7 +1619,7 @@ constructor(
                                 it.validate()
                             }
                             ?.let {
-                                return Price(newPlanThresholdTotalAmountPrice = it, _json = json)
+                                return Price(newPlanThresholdTotalAmount = it, _json = json)
                             }
                     }
                     "tiered_package" -> {
@@ -1699,7 +1627,7 @@ constructor(
                                 it.validate()
                             }
                             ?.let {
-                                return Price(newPlanTieredPackagePrice = it, _json = json)
+                                return Price(newPlanTieredPackage = it, _json = json)
                             }
                     }
                     "tiered_with_minimum" -> {
@@ -1707,7 +1635,7 @@ constructor(
                                 it.validate()
                             }
                             ?.let {
-                                return Price(newPlanTieredWithMinimumPrice = it, _json = json)
+                                return Price(newPlanTieredWithMinimum = it, _json = json)
                             }
                     }
                     "unit_with_percent" -> {
@@ -1715,7 +1643,7 @@ constructor(
                                 it.validate()
                             }
                             ?.let {
-                                return Price(newPlanUnitWithPercentPrice = it, _json = json)
+                                return Price(newPlanUnitWithPercent = it, _json = json)
                             }
                     }
                     "package_with_allocation" -> {
@@ -1723,7 +1651,7 @@ constructor(
                                 it.validate()
                             }
                             ?.let {
-                                return Price(newPlanPackageWithAllocationPrice = it, _json = json)
+                                return Price(newPlanPackageWithAllocation = it, _json = json)
                             }
                     }
                     "tiered_with_proration" -> {
@@ -1731,7 +1659,7 @@ constructor(
                                 it.validate()
                             }
                             ?.let {
-                                return Price(newPlanTierWithProrationPrice = it, _json = json)
+                                return Price(newPlanTierWithProration = it, _json = json)
                             }
                     }
                     "unit_with_proration" -> {
@@ -1739,7 +1667,7 @@ constructor(
                                 it.validate()
                             }
                             ?.let {
-                                return Price(newPlanUnitWithProrationPrice = it, _json = json)
+                                return Price(newPlanUnitWithProration = it, _json = json)
                             }
                     }
                     "grouped_allocation" -> {
@@ -1747,7 +1675,7 @@ constructor(
                                 it.validate()
                             }
                             ?.let {
-                                return Price(newPlanGroupedAllocationPrice = it, _json = json)
+                                return Price(newPlanGroupedAllocation = it, _json = json)
                             }
                     }
                     "grouped_with_prorated_minimum" -> {
@@ -1758,10 +1686,7 @@ constructor(
                                 it.validate()
                             }
                             ?.let {
-                                return Price(
-                                    newPlanGroupedWithProratedMinimumPrice = it,
-                                    _json = json
-                                )
+                                return Price(newPlanGroupedWithProratedMinimum = it, _json = json)
                             }
                     }
                     "grouped_with_metered_minimum" -> {
@@ -1772,10 +1697,7 @@ constructor(
                                 it.validate()
                             }
                             ?.let {
-                                return Price(
-                                    newPlanGroupedWithMeteredMinimumPrice = it,
-                                    _json = json
-                                )
+                                return Price(newPlanGroupedWithMeteredMinimum = it, _json = json)
                             }
                     }
                     "matrix_with_display_name" -> {
@@ -1783,7 +1705,7 @@ constructor(
                                 it.validate()
                             }
                             ?.let {
-                                return Price(newPlanMatrixWithDisplayNamePrice = it, _json = json)
+                                return Price(newPlanMatrixWithDisplayName = it, _json = json)
                             }
                     }
                     "bulk_with_proration" -> {
@@ -1791,7 +1713,7 @@ constructor(
                                 it.validate()
                             }
                             ?.let {
-                                return Price(newPlanBulkWithProrationPrice = it, _json = json)
+                                return Price(newPlanBulkWithProration = it, _json = json)
                             }
                     }
                     "grouped_tiered_package" -> {
@@ -1799,7 +1721,7 @@ constructor(
                                 it.validate()
                             }
                             ?.let {
-                                return Price(newPlanGroupedTieredPackagePrice = it, _json = json)
+                                return Price(newPlanGroupedTieredPackage = it, _json = json)
                             }
                     }
                     "max_group_tiered" -> {
@@ -1807,7 +1729,7 @@ constructor(
                                 it.validate()
                             }
                             ?.let {
-                                return Price(newPlanMaxGroupTieredPrice = it, _json = json)
+                                return Price(newPlanMaxGroupTiered = it, _json = json)
                             }
                     }
                 }
@@ -1824,47 +1746,42 @@ constructor(
                 provider: SerializerProvider
             ) {
                 when {
-                    value.newPlanUnitPrice != null -> generator.writeObject(value.newPlanUnitPrice)
-                    value.newPlanPackagePrice != null ->
-                        generator.writeObject(value.newPlanPackagePrice)
-                    value.newPlanMatrixPrice != null ->
-                        generator.writeObject(value.newPlanMatrixPrice)
-                    value.newPlanTieredPrice != null ->
-                        generator.writeObject(value.newPlanTieredPrice)
-                    value.newPlanTieredBpsPrice != null ->
-                        generator.writeObject(value.newPlanTieredBpsPrice)
-                    value.newPlanBpsPrice != null -> generator.writeObject(value.newPlanBpsPrice)
-                    value.newPlanBulkBpsPrice != null ->
-                        generator.writeObject(value.newPlanBulkBpsPrice)
-                    value.newPlanBulkPrice != null -> generator.writeObject(value.newPlanBulkPrice)
-                    value.newPlanThresholdTotalAmountPrice != null ->
-                        generator.writeObject(value.newPlanThresholdTotalAmountPrice)
-                    value.newPlanTieredPackagePrice != null ->
-                        generator.writeObject(value.newPlanTieredPackagePrice)
-                    value.newPlanTieredWithMinimumPrice != null ->
-                        generator.writeObject(value.newPlanTieredWithMinimumPrice)
-                    value.newPlanUnitWithPercentPrice != null ->
-                        generator.writeObject(value.newPlanUnitWithPercentPrice)
-                    value.newPlanPackageWithAllocationPrice != null ->
-                        generator.writeObject(value.newPlanPackageWithAllocationPrice)
-                    value.newPlanTierWithProrationPrice != null ->
-                        generator.writeObject(value.newPlanTierWithProrationPrice)
-                    value.newPlanUnitWithProrationPrice != null ->
-                        generator.writeObject(value.newPlanUnitWithProrationPrice)
-                    value.newPlanGroupedAllocationPrice != null ->
-                        generator.writeObject(value.newPlanGroupedAllocationPrice)
-                    value.newPlanGroupedWithProratedMinimumPrice != null ->
-                        generator.writeObject(value.newPlanGroupedWithProratedMinimumPrice)
-                    value.newPlanGroupedWithMeteredMinimumPrice != null ->
-                        generator.writeObject(value.newPlanGroupedWithMeteredMinimumPrice)
-                    value.newPlanMatrixWithDisplayNamePrice != null ->
-                        generator.writeObject(value.newPlanMatrixWithDisplayNamePrice)
-                    value.newPlanBulkWithProrationPrice != null ->
-                        generator.writeObject(value.newPlanBulkWithProrationPrice)
-                    value.newPlanGroupedTieredPackagePrice != null ->
-                        generator.writeObject(value.newPlanGroupedTieredPackagePrice)
-                    value.newPlanMaxGroupTieredPrice != null ->
-                        generator.writeObject(value.newPlanMaxGroupTieredPrice)
+                    value.newPlanUnit != null -> generator.writeObject(value.newPlanUnit)
+                    value.newPlanPackage != null -> generator.writeObject(value.newPlanPackage)
+                    value.newPlanMatrix != null -> generator.writeObject(value.newPlanMatrix)
+                    value.newPlanTiered != null -> generator.writeObject(value.newPlanTiered)
+                    value.newPlanTieredBps != null -> generator.writeObject(value.newPlanTieredBps)
+                    value.newPlanBps != null -> generator.writeObject(value.newPlanBps)
+                    value.newPlanBulkBps != null -> generator.writeObject(value.newPlanBulkBps)
+                    value.newPlanBulk != null -> generator.writeObject(value.newPlanBulk)
+                    value.newPlanThresholdTotalAmount != null ->
+                        generator.writeObject(value.newPlanThresholdTotalAmount)
+                    value.newPlanTieredPackage != null ->
+                        generator.writeObject(value.newPlanTieredPackage)
+                    value.newPlanTieredWithMinimum != null ->
+                        generator.writeObject(value.newPlanTieredWithMinimum)
+                    value.newPlanUnitWithPercent != null ->
+                        generator.writeObject(value.newPlanUnitWithPercent)
+                    value.newPlanPackageWithAllocation != null ->
+                        generator.writeObject(value.newPlanPackageWithAllocation)
+                    value.newPlanTierWithProration != null ->
+                        generator.writeObject(value.newPlanTierWithProration)
+                    value.newPlanUnitWithProration != null ->
+                        generator.writeObject(value.newPlanUnitWithProration)
+                    value.newPlanGroupedAllocation != null ->
+                        generator.writeObject(value.newPlanGroupedAllocation)
+                    value.newPlanGroupedWithProratedMinimum != null ->
+                        generator.writeObject(value.newPlanGroupedWithProratedMinimum)
+                    value.newPlanGroupedWithMeteredMinimum != null ->
+                        generator.writeObject(value.newPlanGroupedWithMeteredMinimum)
+                    value.newPlanMatrixWithDisplayName != null ->
+                        generator.writeObject(value.newPlanMatrixWithDisplayName)
+                    value.newPlanBulkWithProration != null ->
+                        generator.writeObject(value.newPlanBulkWithProration)
+                    value.newPlanGroupedTieredPackage != null ->
+                        generator.writeObject(value.newPlanGroupedTieredPackage)
+                    value.newPlanMaxGroupTiered != null ->
+                        generator.writeObject(value.newPlanMaxGroupTiered)
                     value._json != null -> generator.writeObject(value._json)
                     else -> throw IllegalStateException("Invalid Price")
                 }
