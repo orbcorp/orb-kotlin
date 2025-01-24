@@ -1,6 +1,7 @@
 package com.withorb.api.core.http
 
 import com.withorb.api.core.RequestOptions
+import com.withorb.api.core.checkRequired
 import com.withorb.api.errors.OrbIoException
 import java.io.IOException
 import java.time.Clock
@@ -226,7 +227,7 @@ private constructor(
 
         fun build(): HttpClient =
             RetryingHttpClient(
-                checkNotNull(httpClient) { "`httpClient` is required but was not set" },
+                checkRequired("httpClient", httpClient),
                 clock,
                 maxRetries,
                 idempotencyHeader,
