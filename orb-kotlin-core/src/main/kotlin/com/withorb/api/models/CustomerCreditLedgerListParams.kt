@@ -92,7 +92,7 @@ import java.util.Objects
  * added to the ledger to indicate the adjustment of credits.
  */
 class CustomerCreditLedgerListParams
-constructor(
+private constructor(
     private val customerId: String,
     private val createdAtGt: OffsetDateTime?,
     private val createdAtGte: OffsetDateTime?,
@@ -193,7 +193,7 @@ constructor(
     }
 
     @NoAutoDetect
-    class Builder {
+    class Builder internal constructor() {
 
         private var customerId: String? = null
         private var createdAtGt: OffsetDateTime? = null

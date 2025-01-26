@@ -19,7 +19,7 @@ import java.util.Objects
  * **Note**: This functionality is currently only available for Stripe.
  */
 class CustomerSyncPaymentMethodsFromGatewayByExternalCustomerIdParams
-constructor(
+private constructor(
     private val customerId: String,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
@@ -55,7 +55,7 @@ constructor(
     }
 
     @NoAutoDetect
-    class Builder {
+    class Builder internal constructor() {
 
         private var customerId: String? = null
         private var additionalHeaders: Headers.Builder = Headers.builder()

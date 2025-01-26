@@ -191,7 +191,7 @@ import java.util.Objects
  * - `second_dimension_value`: `aws`
  */
 class SubscriptionFetchUsageParams
-constructor(
+private constructor(
     private val subscriptionId: String,
     private val billableMetricId: String?,
     private val firstDimensionKey: String?,
@@ -298,7 +298,7 @@ constructor(
     }
 
     @NoAutoDetect
-    class Builder {
+    class Builder internal constructor() {
 
         private var subscriptionId: String? = null
         private var billableMetricId: String? = null

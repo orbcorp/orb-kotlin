@@ -12,7 +12,7 @@ import java.util.Objects
 
 /** Delete top-up */
 class CustomerCreditTopUpDeleteParams
-constructor(
+private constructor(
     private val customerId: String,
     private val topUpId: String,
     private val additionalHeaders: Headers,
@@ -52,7 +52,7 @@ constructor(
     }
 
     @NoAutoDetect
-    class Builder {
+    class Builder internal constructor() {
 
         private var customerId: String? = null
         private var topUpId: String? = null

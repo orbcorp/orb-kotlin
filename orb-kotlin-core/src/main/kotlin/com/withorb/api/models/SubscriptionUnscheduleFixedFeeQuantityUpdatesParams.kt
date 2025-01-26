@@ -25,7 +25,7 @@ import java.util.Objects
  * code.
  */
 class SubscriptionUnscheduleFixedFeeQuantityUpdatesParams
-constructor(
+private constructor(
     private val subscriptionId: String,
     private val body: SubscriptionUnscheduleFixedFeeQuantityUpdatesBody,
     private val additionalHeaders: Headers,
@@ -98,7 +98,7 @@ constructor(
             fun builder() = Builder()
         }
 
-        class Builder {
+        class Builder internal constructor() {
 
             private var priceId: JsonField<String>? = null
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
@@ -171,7 +171,7 @@ constructor(
     }
 
     @NoAutoDetect
-    class Builder {
+    class Builder internal constructor() {
 
         private var subscriptionId: String? = null
         private var body: SubscriptionUnscheduleFixedFeeQuantityUpdatesBody.Builder =

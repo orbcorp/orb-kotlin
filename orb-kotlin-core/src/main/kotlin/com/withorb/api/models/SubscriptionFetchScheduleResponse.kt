@@ -79,7 +79,7 @@ private constructor(
         fun builder() = Builder()
     }
 
-    class Builder {
+    class Builder internal constructor() {
 
         private var createdAt: JsonField<OffsetDateTime>? = null
         private var endDate: JsonField<OffsetDateTime>? = null
@@ -205,7 +205,7 @@ private constructor(
             fun builder() = Builder()
         }
 
-        class Builder {
+        class Builder internal constructor() {
 
             private var id: JsonField<String>? = null
             private var externalPlanId: JsonField<String>? = null

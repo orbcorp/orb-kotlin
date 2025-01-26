@@ -21,7 +21,7 @@ import java.util.Objects
  * follows Orb's [standardized pagination format](/api-reference/pagination).
  */
 class AlertListParams
-constructor(
+private constructor(
     private val createdAtGt: OffsetDateTime?,
     private val createdAtGte: OffsetDateTime?,
     private val createdAtLt: OffsetDateTime?,
@@ -112,7 +112,7 @@ constructor(
     }
 
     @NoAutoDetect
-    class Builder {
+    class Builder internal constructor() {
 
         private var createdAtGt: OffsetDateTime? = null
         private var createdAtGte: OffsetDateTime? = null

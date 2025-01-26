@@ -123,7 +123,7 @@ import java.util.Objects
  * available.
  */
 class CustomerCostListByExternalIdParams
-constructor(
+private constructor(
     private val externalCustomerId: String,
     private val currency: String?,
     private val timeframeEnd: OffsetDateTime?,
@@ -192,7 +192,7 @@ constructor(
     }
 
     @NoAutoDetect
-    class Builder {
+    class Builder internal constructor() {
 
         private var externalCustomerId: String? = null
         private var currency: String? = null

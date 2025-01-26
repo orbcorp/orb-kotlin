@@ -12,7 +12,7 @@ import java.util.Objects
 
 /** This endpoint can be used to unschedule any pending plan changes on an existing subscription. */
 class SubscriptionUnschedulePendingPlanChangesParams
-constructor(
+private constructor(
     private val subscriptionId: String,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
@@ -48,7 +48,7 @@ constructor(
     }
 
     @NoAutoDetect
-    class Builder {
+    class Builder internal constructor() {
 
         private var subscriptionId: String? = null
         private var additionalHeaders: Headers.Builder = Headers.builder()

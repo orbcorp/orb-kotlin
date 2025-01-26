@@ -26,7 +26,7 @@ import java.util.Objects
  * subscription has started and stopped on the same day).
  */
 class SubscriptionFetchCostsParams
-constructor(
+private constructor(
     private val subscriptionId: String,
     private val currency: String?,
     private val timeframeEnd: OffsetDateTime?,
@@ -95,7 +95,7 @@ constructor(
     }
 
     @NoAutoDetect
-    class Builder {
+    class Builder internal constructor() {
 
         private var subscriptionId: String? = null
         private var currency: String? = null

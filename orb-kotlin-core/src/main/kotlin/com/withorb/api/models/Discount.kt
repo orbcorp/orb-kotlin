@@ -150,7 +150,7 @@ private constructor(
         }
     }
 
-    class Deserializer : BaseDeserializer<Discount>(Discount::class) {
+    internal class Deserializer : BaseDeserializer<Discount>(Discount::class) {
 
         override fun ObjectCodec.deserialize(node: JsonNode): Discount {
             val json = JsonValue.fromJsonNode(node)
@@ -187,7 +187,7 @@ private constructor(
         }
     }
 
-    class Serializer : BaseSerializer<Discount>(Discount::class) {
+    internal class Serializer : BaseSerializer<Discount>(Discount::class) {
 
         override fun serialize(
             value: Discount,
@@ -289,7 +289,7 @@ private constructor(
             fun builder() = Builder()
         }
 
-        class Builder {
+        class Builder internal constructor() {
 
             private var appliesToPriceIds: JsonField<MutableList<String>>? = null
             private var discountType: JsonField<DiscountType>? = null

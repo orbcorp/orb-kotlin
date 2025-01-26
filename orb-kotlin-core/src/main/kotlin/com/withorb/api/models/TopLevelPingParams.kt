@@ -15,7 +15,7 @@ import java.util.Objects
  * This API does not have any side-effects or return any Orb resources.
  */
 class TopLevelPingParams
-constructor(
+private constructor(
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
 ) {
@@ -36,7 +36,7 @@ constructor(
     }
 
     @NoAutoDetect
-    class Builder {
+    class Builder internal constructor() {
 
         private var additionalHeaders: Headers.Builder = Headers.builder()
         private var additionalQueryParams: QueryParams.Builder = QueryParams.builder()

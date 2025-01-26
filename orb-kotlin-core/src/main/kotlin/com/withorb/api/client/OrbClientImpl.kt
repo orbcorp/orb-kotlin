@@ -35,8 +35,7 @@ import com.withorb.api.services.blocking.TopLevelServiceImpl
 import com.withorb.api.services.blocking.WebhookService
 import com.withorb.api.services.blocking.WebhookServiceImpl
 
-class OrbClientImpl
-constructor(
+class OrbClientImpl(
     private val clientOptions: ClientOptions,
 ) : OrbClient {
 

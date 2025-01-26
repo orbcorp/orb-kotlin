@@ -12,7 +12,7 @@ import java.util.Objects
 
 /** Delete top-up by external ID */
 class CustomerCreditTopUpDeleteByExternalIdParams
-constructor(
+private constructor(
     private val externalCustomerId: String,
     private val topUpId: String,
     private val additionalHeaders: Headers,
@@ -52,7 +52,7 @@ constructor(
     }
 
     @NoAutoDetect
-    class Builder {
+    class Builder internal constructor() {
 
         private var externalCustomerId: String? = null
         private var topUpId: String? = null

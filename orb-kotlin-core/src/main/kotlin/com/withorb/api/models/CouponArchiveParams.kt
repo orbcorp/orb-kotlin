@@ -16,7 +16,7 @@ import java.util.Objects
  * redemption code can be reused for a different coupon.
  */
 class CouponArchiveParams
-constructor(
+private constructor(
     private val couponId: String,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
@@ -52,7 +52,7 @@ constructor(
     }
 
     @NoAutoDetect
-    class Builder {
+    class Builder internal constructor() {
 
         private var couponId: String? = null
         private var additionalHeaders: Headers.Builder = Headers.builder()

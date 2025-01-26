@@ -43,7 +43,7 @@ import java.util.Objects
  * price model configurations possible in this endpoint.
  */
 class PriceCreateParams
-constructor(
+private constructor(
     private val body: PriceCreateBody,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
@@ -768,7 +768,7 @@ constructor(
             }
         }
 
-        class Deserializer : BaseDeserializer<PriceCreateBody>(PriceCreateBody::class) {
+        internal class Deserializer : BaseDeserializer<PriceCreateBody>(PriceCreateBody::class) {
 
             override fun ObjectCodec.deserialize(node: JsonNode): PriceCreateBody {
                 val json = JsonValue.fromJsonNode(node)
@@ -981,7 +981,7 @@ constructor(
             }
         }
 
-        class Serializer : BaseSerializer<PriceCreateBody>(PriceCreateBody::class) {
+        internal class Serializer : BaseSerializer<PriceCreateBody>(PriceCreateBody::class) {
 
             override fun serialize(
                 value: PriceCreateBody,
@@ -1054,7 +1054,7 @@ constructor(
     }
 
     @NoAutoDetect
-    class Builder {
+    class Builder internal constructor() {
 
         private var body: PriceCreateBody? = null
         private var additionalHeaders: Headers.Builder = Headers.builder()
@@ -1568,7 +1568,7 @@ constructor(
             fun builder() = Builder()
         }
 
-        class Builder {
+        class Builder internal constructor() {
 
             private var cadence: JsonField<Cadence>? = null
             private var currency: JsonField<String>? = null
@@ -1983,7 +1983,7 @@ constructor(
                 fun builder() = Builder()
             }
 
-            class Builder {
+            class Builder internal constructor() {
 
                 private var unitAmount: JsonField<String>? = null
                 private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
@@ -2100,7 +2100,7 @@ constructor(
                 fun builder() = Builder()
             }
 
-            class Builder {
+            class Builder internal constructor() {
 
                 private var duration: JsonField<Long>? = null
                 private var durationUnit: JsonField<DurationUnit>? = null
@@ -2289,7 +2289,7 @@ constructor(
                 fun builder() = Builder()
             }
 
-            class Builder {
+            class Builder internal constructor() {
 
                 private var duration: JsonField<Long>? = null
                 private var durationUnit: JsonField<DurationUnit>? = null
@@ -2458,7 +2458,7 @@ constructor(
                 fun builder() = Builder()
             }
 
-            class Builder {
+            class Builder internal constructor() {
 
                 private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
@@ -2747,7 +2747,7 @@ constructor(
             fun builder() = Builder()
         }
 
-        class Builder {
+        class Builder internal constructor() {
 
             private var cadence: JsonField<Cadence>? = null
             private var currency: JsonField<String>? = null
@@ -3181,7 +3181,7 @@ constructor(
                 fun builder() = Builder()
             }
 
-            class Builder {
+            class Builder internal constructor() {
 
                 private var packageAmount: JsonField<String>? = null
                 private var packageSize: JsonField<Long>? = null
@@ -3316,7 +3316,7 @@ constructor(
                 fun builder() = Builder()
             }
 
-            class Builder {
+            class Builder internal constructor() {
 
                 private var duration: JsonField<Long>? = null
                 private var durationUnit: JsonField<DurationUnit>? = null
@@ -3505,7 +3505,7 @@ constructor(
                 fun builder() = Builder()
             }
 
-            class Builder {
+            class Builder internal constructor() {
 
                 private var duration: JsonField<Long>? = null
                 private var durationUnit: JsonField<DurationUnit>? = null
@@ -3674,7 +3674,7 @@ constructor(
                 fun builder() = Builder()
             }
 
-            class Builder {
+            class Builder internal constructor() {
 
                 private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
@@ -3963,7 +3963,7 @@ constructor(
             fun builder() = Builder()
         }
 
-        class Builder {
+        class Builder internal constructor() {
 
             private var cadence: JsonField<Cadence>? = null
             private var currency: JsonField<String>? = null
@@ -4351,7 +4351,7 @@ constructor(
                 fun builder() = Builder()
             }
 
-            class Builder {
+            class Builder internal constructor() {
 
                 private var defaultUnitAmount: JsonField<String>? = null
                 private var dimensions: JsonField<MutableList<String?>>? = null
@@ -4512,7 +4512,7 @@ constructor(
                     fun builder() = Builder()
                 }
 
-                class Builder {
+                class Builder internal constructor() {
 
                     private var dimensionValues: JsonField<MutableList<String?>>? = null
                     private var unitAmount: JsonField<String>? = null
@@ -4736,7 +4736,7 @@ constructor(
                 fun builder() = Builder()
             }
 
-            class Builder {
+            class Builder internal constructor() {
 
                 private var duration: JsonField<Long>? = null
                 private var durationUnit: JsonField<DurationUnit>? = null
@@ -4925,7 +4925,7 @@ constructor(
                 fun builder() = Builder()
             }
 
-            class Builder {
+            class Builder internal constructor() {
 
                 private var duration: JsonField<Long>? = null
                 private var durationUnit: JsonField<DurationUnit>? = null
@@ -5094,7 +5094,7 @@ constructor(
                 fun builder() = Builder()
             }
 
-            class Builder {
+            class Builder internal constructor() {
 
                 private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
@@ -5386,7 +5386,7 @@ constructor(
             fun builder() = Builder()
         }
 
-        class Builder {
+        class Builder internal constructor() {
 
             private var cadence: JsonField<Cadence>? = null
             private var currency: JsonField<String>? = null
@@ -5793,7 +5793,7 @@ constructor(
                 fun builder() = Builder()
             }
 
-            class Builder {
+            class Builder internal constructor() {
 
                 private var allocation: JsonField<Double>? = null
                 private var defaultUnitAmount: JsonField<String>? = null
@@ -5967,7 +5967,7 @@ constructor(
                     fun builder() = Builder()
                 }
 
-                class Builder {
+                class Builder internal constructor() {
 
                     private var dimensionValues: JsonField<MutableList<String?>>? = null
                     private var unitAmount: JsonField<String>? = null
@@ -6191,7 +6191,7 @@ constructor(
                 fun builder() = Builder()
             }
 
-            class Builder {
+            class Builder internal constructor() {
 
                 private var duration: JsonField<Long>? = null
                 private var durationUnit: JsonField<DurationUnit>? = null
@@ -6380,7 +6380,7 @@ constructor(
                 fun builder() = Builder()
             }
 
-            class Builder {
+            class Builder internal constructor() {
 
                 private var duration: JsonField<Long>? = null
                 private var durationUnit: JsonField<DurationUnit>? = null
@@ -6549,7 +6549,7 @@ constructor(
                 fun builder() = Builder()
             }
 
-            class Builder {
+            class Builder internal constructor() {
 
                 private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
@@ -6838,7 +6838,7 @@ constructor(
             fun builder() = Builder()
         }
 
-        class Builder {
+        class Builder internal constructor() {
 
             private var cadence: JsonField<Cadence>? = null
             private var currency: JsonField<String>? = null
@@ -7251,7 +7251,7 @@ constructor(
                 fun builder() = Builder()
             }
 
-            class Builder {
+            class Builder internal constructor() {
 
                 private var tiers: JsonField<MutableList<Tier>>? = null
                 private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
@@ -7375,7 +7375,7 @@ constructor(
                     fun builder() = Builder()
                 }
 
-                class Builder {
+                class Builder internal constructor() {
 
                     private var firstUnit: JsonField<Double>? = null
                     private var unitAmount: JsonField<String>? = null
@@ -7533,7 +7533,7 @@ constructor(
                 fun builder() = Builder()
             }
 
-            class Builder {
+            class Builder internal constructor() {
 
                 private var duration: JsonField<Long>? = null
                 private var durationUnit: JsonField<DurationUnit>? = null
@@ -7722,7 +7722,7 @@ constructor(
                 fun builder() = Builder()
             }
 
-            class Builder {
+            class Builder internal constructor() {
 
                 private var duration: JsonField<Long>? = null
                 private var durationUnit: JsonField<DurationUnit>? = null
@@ -7891,7 +7891,7 @@ constructor(
                 fun builder() = Builder()
             }
 
-            class Builder {
+            class Builder internal constructor() {
 
                 private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
@@ -8180,7 +8180,7 @@ constructor(
             fun builder() = Builder()
         }
 
-        class Builder {
+        class Builder internal constructor() {
 
             private var cadence: JsonField<Cadence>? = null
             private var currency: JsonField<String>? = null
@@ -8598,7 +8598,7 @@ constructor(
                 fun builder() = Builder()
             }
 
-            class Builder {
+            class Builder internal constructor() {
 
                 private var tiers: JsonField<MutableList<Tier>>? = null
                 private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
@@ -8741,7 +8741,7 @@ constructor(
                     fun builder() = Builder()
                 }
 
-                class Builder {
+                class Builder internal constructor() {
 
                     private var bps: JsonField<Double>? = null
                     private var minimumAmount: JsonField<String>? = null
@@ -8910,7 +8910,7 @@ constructor(
                 fun builder() = Builder()
             }
 
-            class Builder {
+            class Builder internal constructor() {
 
                 private var duration: JsonField<Long>? = null
                 private var durationUnit: JsonField<DurationUnit>? = null
@@ -9099,7 +9099,7 @@ constructor(
                 fun builder() = Builder()
             }
 
-            class Builder {
+            class Builder internal constructor() {
 
                 private var duration: JsonField<Long>? = null
                 private var durationUnit: JsonField<DurationUnit>? = null
@@ -9268,7 +9268,7 @@ constructor(
                 fun builder() = Builder()
             }
 
-            class Builder {
+            class Builder internal constructor() {
 
                 private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
@@ -9557,7 +9557,7 @@ constructor(
             fun builder() = Builder()
         }
 
-        class Builder {
+        class Builder internal constructor() {
 
             private var bpsConfig: JsonField<BpsConfig>? = null
             private var cadence: JsonField<Cadence>? = null
@@ -9847,7 +9847,7 @@ constructor(
                 fun builder() = Builder()
             }
 
-            class Builder {
+            class Builder internal constructor() {
 
                 private var bps: JsonField<Double>? = null
                 private var perUnitMaximum: JsonField<String> = JsonMissing.of()
@@ -10107,7 +10107,7 @@ constructor(
                 fun builder() = Builder()
             }
 
-            class Builder {
+            class Builder internal constructor() {
 
                 private var duration: JsonField<Long>? = null
                 private var durationUnit: JsonField<DurationUnit>? = null
@@ -10296,7 +10296,7 @@ constructor(
                 fun builder() = Builder()
             }
 
-            class Builder {
+            class Builder internal constructor() {
 
                 private var duration: JsonField<Long>? = null
                 private var durationUnit: JsonField<DurationUnit>? = null
@@ -10465,7 +10465,7 @@ constructor(
                 fun builder() = Builder()
             }
 
-            class Builder {
+            class Builder internal constructor() {
 
                 private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
@@ -10754,7 +10754,7 @@ constructor(
             fun builder() = Builder()
         }
 
-        class Builder {
+        class Builder internal constructor() {
 
             private var bulkBpsConfig: JsonField<BulkBpsConfig>? = null
             private var cadence: JsonField<Cadence>? = null
@@ -11041,7 +11041,7 @@ constructor(
                 fun builder() = Builder()
             }
 
-            class Builder {
+            class Builder internal constructor() {
 
                 private var tiers: JsonField<MutableList<Tier>>? = null
                 private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
@@ -11172,7 +11172,7 @@ constructor(
                     fun builder() = Builder()
                 }
 
-                class Builder {
+                class Builder internal constructor() {
 
                     private var bps: JsonField<Double>? = null
                     private var maximumAmount: JsonField<String> = JsonMissing.of()
@@ -11462,7 +11462,7 @@ constructor(
                 fun builder() = Builder()
             }
 
-            class Builder {
+            class Builder internal constructor() {
 
                 private var duration: JsonField<Long>? = null
                 private var durationUnit: JsonField<DurationUnit>? = null
@@ -11651,7 +11651,7 @@ constructor(
                 fun builder() = Builder()
             }
 
-            class Builder {
+            class Builder internal constructor() {
 
                 private var duration: JsonField<Long>? = null
                 private var durationUnit: JsonField<DurationUnit>? = null
@@ -11820,7 +11820,7 @@ constructor(
                 fun builder() = Builder()
             }
 
-            class Builder {
+            class Builder internal constructor() {
 
                 private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
@@ -12109,7 +12109,7 @@ constructor(
             fun builder() = Builder()
         }
 
-        class Builder {
+        class Builder internal constructor() {
 
             private var bulkConfig: JsonField<BulkConfig>? = null
             private var cadence: JsonField<Cadence>? = null
@@ -12389,7 +12389,7 @@ constructor(
                 fun builder() = Builder()
             }
 
-            class Builder {
+            class Builder internal constructor() {
 
                 private var tiers: JsonField<MutableList<Tier>>? = null
                 private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
@@ -12501,7 +12501,7 @@ constructor(
                     fun builder() = Builder()
                 }
 
-                class Builder {
+                class Builder internal constructor() {
 
                     private var unitAmount: JsonField<String>? = null
                     private var maximumUnits: JsonField<Double> = JsonMissing.of()
@@ -12784,7 +12784,7 @@ constructor(
                 fun builder() = Builder()
             }
 
-            class Builder {
+            class Builder internal constructor() {
 
                 private var duration: JsonField<Long>? = null
                 private var durationUnit: JsonField<DurationUnit>? = null
@@ -12973,7 +12973,7 @@ constructor(
                 fun builder() = Builder()
             }
 
-            class Builder {
+            class Builder internal constructor() {
 
                 private var duration: JsonField<Long>? = null
                 private var durationUnit: JsonField<DurationUnit>? = null
@@ -13142,7 +13142,7 @@ constructor(
                 fun builder() = Builder()
             }
 
-            class Builder {
+            class Builder internal constructor() {
 
                 private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
@@ -13434,7 +13434,7 @@ constructor(
             fun builder() = Builder()
         }
 
-        class Builder {
+        class Builder internal constructor() {
 
             private var cadence: JsonField<Cadence>? = null
             private var currency: JsonField<String>? = null
@@ -13844,7 +13844,7 @@ constructor(
                 fun builder() = Builder()
             }
 
-            class Builder {
+            class Builder internal constructor() {
 
                 private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
@@ -13949,7 +13949,7 @@ constructor(
                 fun builder() = Builder()
             }
 
-            class Builder {
+            class Builder internal constructor() {
 
                 private var duration: JsonField<Long>? = null
                 private var durationUnit: JsonField<DurationUnit>? = null
@@ -14138,7 +14138,7 @@ constructor(
                 fun builder() = Builder()
             }
 
-            class Builder {
+            class Builder internal constructor() {
 
                 private var duration: JsonField<Long>? = null
                 private var durationUnit: JsonField<DurationUnit>? = null
@@ -14307,7 +14307,7 @@ constructor(
                 fun builder() = Builder()
             }
 
-            class Builder {
+            class Builder internal constructor() {
 
                 private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
@@ -14597,7 +14597,7 @@ constructor(
             fun builder() = Builder()
         }
 
-        class Builder {
+        class Builder internal constructor() {
 
             private var cadence: JsonField<Cadence>? = null
             private var currency: JsonField<String>? = null
@@ -15005,7 +15005,7 @@ constructor(
                 fun builder() = Builder()
             }
 
-            class Builder {
+            class Builder internal constructor() {
 
                 private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
@@ -15109,7 +15109,7 @@ constructor(
                 fun builder() = Builder()
             }
 
-            class Builder {
+            class Builder internal constructor() {
 
                 private var duration: JsonField<Long>? = null
                 private var durationUnit: JsonField<DurationUnit>? = null
@@ -15298,7 +15298,7 @@ constructor(
                 fun builder() = Builder()
             }
 
-            class Builder {
+            class Builder internal constructor() {
 
                 private var duration: JsonField<Long>? = null
                 private var durationUnit: JsonField<DurationUnit>? = null
@@ -15467,7 +15467,7 @@ constructor(
                 fun builder() = Builder()
             }
 
-            class Builder {
+            class Builder internal constructor() {
 
                 private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
@@ -15757,7 +15757,7 @@ constructor(
             fun builder() = Builder()
         }
 
-        class Builder {
+        class Builder internal constructor() {
 
             private var cadence: JsonField<Cadence>? = null
             private var currency: JsonField<String>? = null
@@ -16114,7 +16114,7 @@ constructor(
                 fun builder() = Builder()
             }
 
-            class Builder {
+            class Builder internal constructor() {
 
                 private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
@@ -16269,7 +16269,7 @@ constructor(
                 fun builder() = Builder()
             }
 
-            class Builder {
+            class Builder internal constructor() {
 
                 private var duration: JsonField<Long>? = null
                 private var durationUnit: JsonField<DurationUnit>? = null
@@ -16458,7 +16458,7 @@ constructor(
                 fun builder() = Builder()
             }
 
-            class Builder {
+            class Builder internal constructor() {
 
                 private var duration: JsonField<Long>? = null
                 private var durationUnit: JsonField<DurationUnit>? = null
@@ -16627,7 +16627,7 @@ constructor(
                 fun builder() = Builder()
             }
 
-            class Builder {
+            class Builder internal constructor() {
 
                 private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
@@ -16917,7 +16917,7 @@ constructor(
             fun builder() = Builder()
         }
 
-        class Builder {
+        class Builder internal constructor() {
 
             private var cadence: JsonField<Cadence>? = null
             private var currency: JsonField<String>? = null
@@ -17275,7 +17275,7 @@ constructor(
                 fun builder() = Builder()
             }
 
-            class Builder {
+            class Builder internal constructor() {
 
                 private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
@@ -17430,7 +17430,7 @@ constructor(
                 fun builder() = Builder()
             }
 
-            class Builder {
+            class Builder internal constructor() {
 
                 private var duration: JsonField<Long>? = null
                 private var durationUnit: JsonField<DurationUnit>? = null
@@ -17619,7 +17619,7 @@ constructor(
                 fun builder() = Builder()
             }
 
-            class Builder {
+            class Builder internal constructor() {
 
                 private var duration: JsonField<Long>? = null
                 private var durationUnit: JsonField<DurationUnit>? = null
@@ -17788,7 +17788,7 @@ constructor(
                 fun builder() = Builder()
             }
 
-            class Builder {
+            class Builder internal constructor() {
 
                 private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
@@ -18078,7 +18078,7 @@ constructor(
             fun builder() = Builder()
         }
 
-        class Builder {
+        class Builder internal constructor() {
 
             private var cadence: JsonField<Cadence>? = null
             private var currency: JsonField<String>? = null
@@ -18487,7 +18487,7 @@ constructor(
                 fun builder() = Builder()
             }
 
-            class Builder {
+            class Builder internal constructor() {
 
                 private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
@@ -18592,7 +18592,7 @@ constructor(
                 fun builder() = Builder()
             }
 
-            class Builder {
+            class Builder internal constructor() {
 
                 private var duration: JsonField<Long>? = null
                 private var durationUnit: JsonField<DurationUnit>? = null
@@ -18781,7 +18781,7 @@ constructor(
                 fun builder() = Builder()
             }
 
-            class Builder {
+            class Builder internal constructor() {
 
                 private var duration: JsonField<Long>? = null
                 private var durationUnit: JsonField<DurationUnit>? = null
@@ -18950,7 +18950,7 @@ constructor(
                 fun builder() = Builder()
             }
 
-            class Builder {
+            class Builder internal constructor() {
 
                 private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
@@ -19242,7 +19242,7 @@ constructor(
             fun builder() = Builder()
         }
 
-        class Builder {
+        class Builder internal constructor() {
 
             private var cadence: JsonField<Cadence>? = null
             private var currency: JsonField<String>? = null
@@ -19653,7 +19653,7 @@ constructor(
                 fun builder() = Builder()
             }
 
-            class Builder {
+            class Builder internal constructor() {
 
                 private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
@@ -19759,7 +19759,7 @@ constructor(
                 fun builder() = Builder()
             }
 
-            class Builder {
+            class Builder internal constructor() {
 
                 private var duration: JsonField<Long>? = null
                 private var durationUnit: JsonField<DurationUnit>? = null
@@ -19948,7 +19948,7 @@ constructor(
                 fun builder() = Builder()
             }
 
-            class Builder {
+            class Builder internal constructor() {
 
                 private var duration: JsonField<Long>? = null
                 private var durationUnit: JsonField<DurationUnit>? = null
@@ -20117,7 +20117,7 @@ constructor(
                 fun builder() = Builder()
             }
 
-            class Builder {
+            class Builder internal constructor() {
 
                 private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
@@ -20409,7 +20409,7 @@ constructor(
             fun builder() = Builder()
         }
 
-        class Builder {
+        class Builder internal constructor() {
 
             private var cadence: JsonField<Cadence>? = null
             private var currency: JsonField<String>? = null
@@ -20821,7 +20821,7 @@ constructor(
                 fun builder() = Builder()
             }
 
-            class Builder {
+            class Builder internal constructor() {
 
                 private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
@@ -20927,7 +20927,7 @@ constructor(
                 fun builder() = Builder()
             }
 
-            class Builder {
+            class Builder internal constructor() {
 
                 private var duration: JsonField<Long>? = null
                 private var durationUnit: JsonField<DurationUnit>? = null
@@ -21116,7 +21116,7 @@ constructor(
                 fun builder() = Builder()
             }
 
-            class Builder {
+            class Builder internal constructor() {
 
                 private var duration: JsonField<Long>? = null
                 private var durationUnit: JsonField<DurationUnit>? = null
@@ -21285,7 +21285,7 @@ constructor(
                 fun builder() = Builder()
             }
 
-            class Builder {
+            class Builder internal constructor() {
 
                 private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
@@ -21575,7 +21575,7 @@ constructor(
             fun builder() = Builder()
         }
 
-        class Builder {
+        class Builder internal constructor() {
 
             private var cadence: JsonField<Cadence>? = null
             private var currency: JsonField<String>? = null
@@ -21984,7 +21984,7 @@ constructor(
                 fun builder() = Builder()
             }
 
-            class Builder {
+            class Builder internal constructor() {
 
                 private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
@@ -22088,7 +22088,7 @@ constructor(
                 fun builder() = Builder()
             }
 
-            class Builder {
+            class Builder internal constructor() {
 
                 private var duration: JsonField<Long>? = null
                 private var durationUnit: JsonField<DurationUnit>? = null
@@ -22277,7 +22277,7 @@ constructor(
                 fun builder() = Builder()
             }
 
-            class Builder {
+            class Builder internal constructor() {
 
                 private var duration: JsonField<Long>? = null
                 private var durationUnit: JsonField<DurationUnit>? = null
@@ -22446,7 +22446,7 @@ constructor(
                 fun builder() = Builder()
             }
 
-            class Builder {
+            class Builder internal constructor() {
 
                 private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
@@ -22738,7 +22738,7 @@ constructor(
             fun builder() = Builder()
         }
 
-        class Builder {
+        class Builder internal constructor() {
 
             private var cadence: JsonField<Cadence>? = null
             private var currency: JsonField<String>? = null
@@ -23148,7 +23148,7 @@ constructor(
                 fun builder() = Builder()
             }
 
-            class Builder {
+            class Builder internal constructor() {
 
                 private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
@@ -23253,7 +23253,7 @@ constructor(
                 fun builder() = Builder()
             }
 
-            class Builder {
+            class Builder internal constructor() {
 
                 private var duration: JsonField<Long>? = null
                 private var durationUnit: JsonField<DurationUnit>? = null
@@ -23442,7 +23442,7 @@ constructor(
                 fun builder() = Builder()
             }
 
-            class Builder {
+            class Builder internal constructor() {
 
                 private var duration: JsonField<Long>? = null
                 private var durationUnit: JsonField<DurationUnit>? = null
@@ -23611,7 +23611,7 @@ constructor(
                 fun builder() = Builder()
             }
 
-            class Builder {
+            class Builder internal constructor() {
 
                 private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
@@ -23901,7 +23901,7 @@ constructor(
             fun builder() = Builder()
         }
 
-        class Builder {
+        class Builder internal constructor() {
 
             private var cadence: JsonField<Cadence>? = null
             private var currency: JsonField<String>? = null
@@ -24310,7 +24310,7 @@ constructor(
                 fun builder() = Builder()
             }
 
-            class Builder {
+            class Builder internal constructor() {
 
                 private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
@@ -24415,7 +24415,7 @@ constructor(
                 fun builder() = Builder()
             }
 
-            class Builder {
+            class Builder internal constructor() {
 
                 private var duration: JsonField<Long>? = null
                 private var durationUnit: JsonField<DurationUnit>? = null
@@ -24604,7 +24604,7 @@ constructor(
                 fun builder() = Builder()
             }
 
-            class Builder {
+            class Builder internal constructor() {
 
                 private var duration: JsonField<Long>? = null
                 private var durationUnit: JsonField<DurationUnit>? = null
@@ -24773,7 +24773,7 @@ constructor(
                 fun builder() = Builder()
             }
 
-            class Builder {
+            class Builder internal constructor() {
 
                 private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
@@ -25063,7 +25063,7 @@ constructor(
             fun builder() = Builder()
         }
 
-        class Builder {
+        class Builder internal constructor() {
 
             private var cadence: JsonField<Cadence>? = null
             private var currency: JsonField<String>? = null
@@ -25421,7 +25421,7 @@ constructor(
                 fun builder() = Builder()
             }
 
-            class Builder {
+            class Builder internal constructor() {
 
                 private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
@@ -25577,7 +25577,7 @@ constructor(
                 fun builder() = Builder()
             }
 
-            class Builder {
+            class Builder internal constructor() {
 
                 private var duration: JsonField<Long>? = null
                 private var durationUnit: JsonField<DurationUnit>? = null
@@ -25766,7 +25766,7 @@ constructor(
                 fun builder() = Builder()
             }
 
-            class Builder {
+            class Builder internal constructor() {
 
                 private var duration: JsonField<Long>? = null
                 private var durationUnit: JsonField<DurationUnit>? = null
@@ -25935,7 +25935,7 @@ constructor(
                 fun builder() = Builder()
             }
 
-            class Builder {
+            class Builder internal constructor() {
 
                 private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
@@ -26227,7 +26227,7 @@ constructor(
             fun builder() = Builder()
         }
 
-        class Builder {
+        class Builder internal constructor() {
 
             private var cadence: JsonField<Cadence>? = null
             private var currency: JsonField<String>? = null
@@ -26593,7 +26593,7 @@ constructor(
                 fun builder() = Builder()
             }
 
-            class Builder {
+            class Builder internal constructor() {
 
                 private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
@@ -26751,7 +26751,7 @@ constructor(
                 fun builder() = Builder()
             }
 
-            class Builder {
+            class Builder internal constructor() {
 
                 private var duration: JsonField<Long>? = null
                 private var durationUnit: JsonField<DurationUnit>? = null
@@ -26940,7 +26940,7 @@ constructor(
                 fun builder() = Builder()
             }
 
-            class Builder {
+            class Builder internal constructor() {
 
                 private var duration: JsonField<Long>? = null
                 private var durationUnit: JsonField<DurationUnit>? = null
@@ -27109,7 +27109,7 @@ constructor(
                 fun builder() = Builder()
             }
 
-            class Builder {
+            class Builder internal constructor() {
 
                 private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
@@ -27401,7 +27401,7 @@ constructor(
             fun builder() = Builder()
         }
 
-        class Builder {
+        class Builder internal constructor() {
 
             private var cadence: JsonField<Cadence>? = null
             private var currency: JsonField<String>? = null
@@ -27766,7 +27766,7 @@ constructor(
                 fun builder() = Builder()
             }
 
-            class Builder {
+            class Builder internal constructor() {
 
                 private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
@@ -27924,7 +27924,7 @@ constructor(
                 fun builder() = Builder()
             }
 
-            class Builder {
+            class Builder internal constructor() {
 
                 private var duration: JsonField<Long>? = null
                 private var durationUnit: JsonField<DurationUnit>? = null
@@ -28113,7 +28113,7 @@ constructor(
                 fun builder() = Builder()
             }
 
-            class Builder {
+            class Builder internal constructor() {
 
                 private var duration: JsonField<Long>? = null
                 private var durationUnit: JsonField<DurationUnit>? = null
@@ -28282,7 +28282,7 @@ constructor(
                 fun builder() = Builder()
             }
 
-            class Builder {
+            class Builder internal constructor() {
 
                 private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
@@ -28574,7 +28574,7 @@ constructor(
             fun builder() = Builder()
         }
 
-        class Builder {
+        class Builder internal constructor() {
 
             private var cadence: JsonField<Cadence>? = null
             private var currency: JsonField<String>? = null
@@ -28934,7 +28934,7 @@ constructor(
                 fun builder() = Builder()
             }
 
-            class Builder {
+            class Builder internal constructor() {
 
                 private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
@@ -29091,7 +29091,7 @@ constructor(
                 fun builder() = Builder()
             }
 
-            class Builder {
+            class Builder internal constructor() {
 
                 private var duration: JsonField<Long>? = null
                 private var durationUnit: JsonField<DurationUnit>? = null
@@ -29280,7 +29280,7 @@ constructor(
                 fun builder() = Builder()
             }
 
-            class Builder {
+            class Builder internal constructor() {
 
                 private var duration: JsonField<Long>? = null
                 private var durationUnit: JsonField<DurationUnit>? = null
@@ -29449,7 +29449,7 @@ constructor(
                 fun builder() = Builder()
             }
 
-            class Builder {
+            class Builder internal constructor() {
 
                 private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
@@ -29739,7 +29739,7 @@ constructor(
             fun builder() = Builder()
         }
 
-        class Builder {
+        class Builder internal constructor() {
 
             private var bulkWithProrationConfig: JsonField<BulkWithProrationConfig>? = null
             private var cadence: JsonField<Cadence>? = null
@@ -30015,7 +30015,7 @@ constructor(
                 fun builder() = Builder()
             }
 
-            class Builder {
+            class Builder internal constructor() {
 
                 private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
@@ -30253,7 +30253,7 @@ constructor(
                 fun builder() = Builder()
             }
 
-            class Builder {
+            class Builder internal constructor() {
 
                 private var duration: JsonField<Long>? = null
                 private var durationUnit: JsonField<DurationUnit>? = null
@@ -30442,7 +30442,7 @@ constructor(
                 fun builder() = Builder()
             }
 
-            class Builder {
+            class Builder internal constructor() {
 
                 private var duration: JsonField<Long>? = null
                 private var durationUnit: JsonField<DurationUnit>? = null
@@ -30611,7 +30611,7 @@ constructor(
                 fun builder() = Builder()
             }
 
-            class Builder {
+            class Builder internal constructor() {
 
                 private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
@@ -30903,7 +30903,7 @@ constructor(
             fun builder() = Builder()
         }
 
-        class Builder {
+        class Builder internal constructor() {
 
             private var cadence: JsonField<Cadence>? = null
             private var currency: JsonField<String>? = null
@@ -31262,7 +31262,7 @@ constructor(
                 fun builder() = Builder()
             }
 
-            class Builder {
+            class Builder internal constructor() {
 
                 private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
@@ -31418,7 +31418,7 @@ constructor(
                 fun builder() = Builder()
             }
 
-            class Builder {
+            class Builder internal constructor() {
 
                 private var duration: JsonField<Long>? = null
                 private var durationUnit: JsonField<DurationUnit>? = null
@@ -31607,7 +31607,7 @@ constructor(
                 fun builder() = Builder()
             }
 
-            class Builder {
+            class Builder internal constructor() {
 
                 private var duration: JsonField<Long>? = null
                 private var durationUnit: JsonField<DurationUnit>? = null
@@ -31776,7 +31776,7 @@ constructor(
                 fun builder() = Builder()
             }
 
-            class Builder {
+            class Builder internal constructor() {
 
                 private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 

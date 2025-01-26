@@ -43,7 +43,7 @@ import java.util.Objects
  *   setting the `timezone` parameter
  */
 class CustomerCreateParams
-constructor(
+private constructor(
     private val body: CustomerCreateBody,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
@@ -912,7 +912,7 @@ constructor(
             fun builder() = Builder()
         }
 
-        class Builder {
+        class Builder internal constructor() {
 
             private var email: JsonField<String>? = null
             private var name: JsonField<String>? = null
@@ -1452,7 +1452,7 @@ constructor(
     }
 
     @NoAutoDetect
-    class Builder {
+    class Builder internal constructor() {
 
         private var body: CustomerCreateBody.Builder = CustomerCreateBody.builder()
         private var additionalHeaders: Headers.Builder = Headers.builder()
@@ -2066,7 +2066,7 @@ constructor(
             fun builder() = Builder()
         }
 
-        class Builder {
+        class Builder internal constructor() {
 
             private var accountingProviders: JsonField<MutableList<AccountingProvider>>? = null
             private var excluded: JsonField<Boolean> = JsonMissing.of()
@@ -2182,7 +2182,7 @@ constructor(
                 fun builder() = Builder()
             }
 
-            class Builder {
+            class Builder internal constructor() {
 
                 private var externalProviderId: JsonField<String>? = null
                 private var providerType: JsonField<String>? = null
@@ -2352,7 +2352,7 @@ constructor(
             fun builder() = Builder()
         }
 
-        class Builder {
+        class Builder internal constructor() {
 
             private var city: JsonField<String> = JsonMissing.of()
             private var country: JsonField<String> = JsonMissing.of()
@@ -2479,7 +2479,7 @@ constructor(
             fun builder() = Builder()
         }
 
-        class Builder {
+        class Builder internal constructor() {
 
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
@@ -2642,7 +2642,7 @@ constructor(
             fun builder() = Builder()
         }
 
-        class Builder {
+        class Builder internal constructor() {
 
             private var exempt: JsonField<Boolean>? = null
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
@@ -2779,7 +2779,7 @@ constructor(
             fun builder() = Builder()
         }
 
-        class Builder {
+        class Builder internal constructor() {
 
             private var city: JsonField<String> = JsonMissing.of()
             private var country: JsonField<String> = JsonMissing.of()
@@ -2962,7 +2962,7 @@ constructor(
             }
         }
 
-        class Deserializer : BaseDeserializer<TaxConfiguration>(TaxConfiguration::class) {
+        internal class Deserializer : BaseDeserializer<TaxConfiguration>(TaxConfiguration::class) {
 
             override fun ObjectCodec.deserialize(node: JsonNode): TaxConfiguration {
                 val json = JsonValue.fromJsonNode(node)
@@ -2991,7 +2991,7 @@ constructor(
             }
         }
 
-        class Serializer : BaseSerializer<TaxConfiguration>(TaxConfiguration::class) {
+        internal class Serializer : BaseSerializer<TaxConfiguration>(TaxConfiguration::class) {
 
             override fun serialize(
                 value: TaxConfiguration,
@@ -3066,7 +3066,7 @@ constructor(
                 fun builder() = Builder()
             }
 
-            class Builder {
+            class Builder internal constructor() {
 
                 private var taxExempt: JsonField<Boolean>? = null
                 private var taxProvider: JsonField<TaxProvider>? = null
@@ -3247,7 +3247,7 @@ constructor(
                 fun builder() = Builder()
             }
 
-            class Builder {
+            class Builder internal constructor() {
 
                 private var taxExempt: JsonField<Boolean>? = null
                 private var taxProvider: JsonField<TaxProvider>? = null
@@ -3527,7 +3527,7 @@ constructor(
             fun builder() = Builder()
         }
 
-        class Builder {
+        class Builder internal constructor() {
 
             private var country: JsonField<Country>? = null
             private var type: JsonField<Type>? = null

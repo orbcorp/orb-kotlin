@@ -429,7 +429,7 @@ private constructor(
         fun builder() = Builder()
     }
 
-    class Builder {
+    class Builder internal constructor() {
 
         private var id: JsonField<String>? = null
         private var activePlanPhaseOrder: JsonField<Long>? = null
@@ -1028,7 +1028,7 @@ private constructor(
             fun builder() = Builder()
         }
 
-        class Builder {
+        class Builder internal constructor() {
 
             private var id: JsonField<String>? = null
             private var adjustment: JsonField<Adjustment>? = null
@@ -1290,7 +1290,7 @@ private constructor(
                 }
             }
 
-            class Deserializer : BaseDeserializer<Adjustment>(Adjustment::class) {
+            internal class Deserializer : BaseDeserializer<Adjustment>(Adjustment::class) {
 
                 override fun ObjectCodec.deserialize(node: JsonNode): Adjustment {
                     val json = JsonValue.fromJsonNode(node)
@@ -1343,7 +1343,7 @@ private constructor(
                 }
             }
 
-            class Serializer : BaseSerializer<Adjustment>(Adjustment::class) {
+            internal class Serializer : BaseSerializer<Adjustment>(Adjustment::class) {
 
                 override fun serialize(
                     value: Adjustment,
@@ -1481,7 +1481,7 @@ private constructor(
                     fun builder() = Builder()
                 }
 
-                class Builder {
+                class Builder internal constructor() {
 
                     private var id: JsonField<String>? = null
                     private var adjustmentType: JsonField<AdjustmentType>? = null
@@ -1812,7 +1812,7 @@ private constructor(
                     fun builder() = Builder()
                 }
 
-                class Builder {
+                class Builder internal constructor() {
 
                     private var id: JsonField<String>? = null
                     private var adjustmentType: JsonField<AdjustmentType>? = null
@@ -2145,7 +2145,7 @@ private constructor(
                     fun builder() = Builder()
                 }
 
-                class Builder {
+                class Builder internal constructor() {
 
                     private var id: JsonField<String>? = null
                     private var adjustmentType: JsonField<AdjustmentType>? = null
@@ -2485,7 +2485,7 @@ private constructor(
                     fun builder() = Builder()
                 }
 
-                class Builder {
+                class Builder internal constructor() {
 
                     private var id: JsonField<String>? = null
                     private var adjustmentType: JsonField<AdjustmentType>? = null
@@ -2823,7 +2823,7 @@ private constructor(
                     fun builder() = Builder()
                 }
 
-                class Builder {
+                class Builder internal constructor() {
 
                     private var id: JsonField<String>? = null
                     private var adjustmentType: JsonField<AdjustmentType>? = null
@@ -3130,7 +3130,7 @@ private constructor(
             fun builder() = Builder()
         }
 
-        class Builder {
+        class Builder internal constructor() {
 
             private var day: JsonField<Long>? = null
             private var month: JsonField<Long> = JsonMissing.of()
@@ -3350,7 +3350,7 @@ private constructor(
             }
         }
 
-        class Deserializer : BaseDeserializer<DiscountInterval>(DiscountInterval::class) {
+        internal class Deserializer : BaseDeserializer<DiscountInterval>(DiscountInterval::class) {
 
             override fun ObjectCodec.deserialize(node: JsonNode): DiscountInterval {
                 val json = JsonValue.fromJsonNode(node)
@@ -3387,7 +3387,7 @@ private constructor(
             }
         }
 
-        class Serializer : BaseSerializer<DiscountInterval>(DiscountInterval::class) {
+        internal class Serializer : BaseSerializer<DiscountInterval>(DiscountInterval::class) {
 
             override fun serialize(
                 value: DiscountInterval,
@@ -3505,7 +3505,7 @@ private constructor(
                 fun builder() = Builder()
             }
 
-            class Builder {
+            class Builder internal constructor() {
 
                 private var amountDiscount: JsonField<String>? = null
                 private var appliesToPriceIds: JsonField<MutableList<String>>? = null
@@ -3810,7 +3810,7 @@ private constructor(
                 fun builder() = Builder()
             }
 
-            class Builder {
+            class Builder internal constructor() {
 
                 private var appliesToPriceIds: JsonField<MutableList<String>>? = null
                 private var appliesToPriceIntervalIds: JsonField<MutableList<String>>? = null
@@ -4127,7 +4127,7 @@ private constructor(
                 fun builder() = Builder()
             }
 
-            class Builder {
+            class Builder internal constructor() {
 
                 private var appliesToPriceIds: JsonField<MutableList<String>>? = null
                 private var appliesToPriceIntervalIds: JsonField<MutableList<String>>? = null
@@ -4402,7 +4402,7 @@ private constructor(
             fun builder() = Builder()
         }
 
-        class Builder {
+        class Builder internal constructor() {
 
             private var endDate: JsonField<OffsetDateTime>? = null
             private var priceId: JsonField<String>? = null
@@ -4580,7 +4580,7 @@ private constructor(
             fun builder() = Builder()
         }
 
-        class Builder {
+        class Builder internal constructor() {
 
             private var appliesToPriceIds: JsonField<MutableList<String>>? = null
             private var appliesToPriceIntervalIds: JsonField<MutableList<String>>? = null
@@ -4755,7 +4755,7 @@ private constructor(
             fun builder() = Builder()
         }
 
-        class Builder {
+        class Builder internal constructor() {
 
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
@@ -4899,7 +4899,7 @@ private constructor(
             fun builder() = Builder()
         }
 
-        class Builder {
+        class Builder internal constructor() {
 
             private var appliesToPriceIds: JsonField<MutableList<String>>? = null
             private var appliesToPriceIntervalIds: JsonField<MutableList<String>>? = null
@@ -5223,7 +5223,7 @@ private constructor(
             fun builder() = Builder()
         }
 
-        class Builder {
+        class Builder internal constructor() {
 
             private var id: JsonField<String>? = null
             private var billingCycleDay: JsonField<Long>? = null
@@ -5844,7 +5844,7 @@ private constructor(
                 fun builder() = Builder()
             }
 
-            class Builder {
+            class Builder internal constructor() {
 
                 private var effectiveDate: JsonField<OffsetDateTime>? = null
                 private var priceId: JsonField<String>? = null
@@ -5998,7 +5998,7 @@ private constructor(
             fun builder() = Builder()
         }
 
-        class Builder {
+        class Builder internal constructor() {
 
             private var couponId: JsonField<String>? = null
             private var endDate: JsonField<OffsetDateTime>? = null
@@ -6174,7 +6174,7 @@ private constructor(
             fun builder() = Builder()
         }
 
-        class Builder {
+        class Builder internal constructor() {
 
             private var endDate: JsonField<OffsetDateTime>? = null
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()

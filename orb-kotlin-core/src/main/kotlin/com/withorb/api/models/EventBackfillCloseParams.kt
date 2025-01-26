@@ -16,7 +16,7 @@ import java.util.Objects
  * updates are complete, the backfill's status will transition to `reflected`.
  */
 class EventBackfillCloseParams
-constructor(
+private constructor(
     private val backfillId: String,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
@@ -52,7 +52,7 @@ constructor(
     }
 
     @NoAutoDetect
-    class Builder {
+    class Builder internal constructor() {
 
         private var backfillId: String? = null
         private var additionalHeaders: Headers.Builder = Headers.builder()

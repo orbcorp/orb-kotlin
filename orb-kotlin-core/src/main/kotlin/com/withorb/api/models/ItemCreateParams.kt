@@ -20,7 +20,7 @@ import java.util.Objects
 
 /** This endpoint is used to create an [Item](/core-concepts#item). */
 class ItemCreateParams
-constructor(
+private constructor(
     private val body: ItemCreateBody,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
@@ -83,7 +83,7 @@ constructor(
             fun builder() = Builder()
         }
 
-        class Builder {
+        class Builder internal constructor() {
 
             private var name: JsonField<String>? = null
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
@@ -148,7 +148,7 @@ constructor(
     }
 
     @NoAutoDetect
-    class Builder {
+    class Builder internal constructor() {
 
         private var body: ItemCreateBody.Builder = ItemCreateBody.builder()
         private var additionalHeaders: Headers.Builder = Headers.builder()

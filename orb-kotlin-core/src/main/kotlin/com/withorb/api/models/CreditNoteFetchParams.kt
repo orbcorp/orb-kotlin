@@ -13,7 +13,7 @@ import java.util.Objects
  * identifier.
  */
 class CreditNoteFetchParams
-constructor(
+private constructor(
     private val creditNoteId: String,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
@@ -44,7 +44,7 @@ constructor(
     }
 
     @NoAutoDetect
-    class Builder {
+    class Builder internal constructor() {
 
         private var creditNoteId: String? = null
         private var additionalHeaders: Headers.Builder = Headers.builder()

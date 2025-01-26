@@ -261,8 +261,7 @@ private constructor(
         }
     }
 
-    class AutoPager
-    constructor(
+    class AutoPager(
         private val firstPage: CustomerCreditLedgerListByExternalIdPageAsync,
     ) : Flow<CustomerCreditLedgerListByExternalIdResponse> {
 

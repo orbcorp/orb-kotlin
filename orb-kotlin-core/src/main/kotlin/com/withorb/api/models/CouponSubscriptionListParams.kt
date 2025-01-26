@@ -15,7 +15,7 @@ import java.util.Objects
  * [Subscription](/core-concepts#subscription).
  */
 class CouponSubscriptionListParams
-constructor(
+private constructor(
     private val couponId: String,
     private val cursor: String?,
     private val limit: Long?,
@@ -63,7 +63,7 @@ constructor(
     }
 
     @NoAutoDetect
-    class Builder {
+    class Builder internal constructor() {
 
         private var couponId: String? = null
         private var cursor: String? = null

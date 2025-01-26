@@ -23,7 +23,7 @@ import java.util.Objects
  * metadata value, it will clear any existing metadata for that price.
  */
 class PriceUpdateParams
-constructor(
+private constructor(
     private val priceId: String,
     private val body: PriceUpdateBody,
     private val additionalHeaders: Headers,
@@ -112,7 +112,7 @@ constructor(
             fun builder() = Builder()
         }
 
-        class Builder {
+        class Builder internal constructor() {
 
             private var metadata: JsonField<Metadata> = JsonMissing.of()
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
@@ -185,7 +185,7 @@ constructor(
     }
 
     @NoAutoDetect
-    class Builder {
+    class Builder internal constructor() {
 
         private var priceId: String? = null
         private var body: PriceUpdateBody.Builder = PriceUpdateBody.builder()
@@ -375,7 +375,7 @@ constructor(
             fun builder() = Builder()
         }
 
-        class Builder {
+        class Builder internal constructor() {
 
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 

@@ -73,7 +73,7 @@ import java.util.Objects
  * [cancellation behaviors](/product-catalog/creating-subscriptions#cancellation-behaviors).
  */
 class SubscriptionCancelParams
-constructor(
+private constructor(
     private val subscriptionId: String,
     private val body: SubscriptionCancelBody,
     private val additionalHeaders: Headers,
@@ -178,7 +178,7 @@ constructor(
             fun builder() = Builder()
         }
 
-        class Builder {
+        class Builder internal constructor() {
 
             private var cancelOption: JsonField<CancelOption>? = null
             private var cancellationDate: JsonField<OffsetDateTime> = JsonMissing.of()
@@ -266,7 +266,7 @@ constructor(
     }
 
     @NoAutoDetect
-    class Builder {
+    class Builder internal constructor() {
 
         private var subscriptionId: String? = null
         private var body: SubscriptionCancelBody.Builder = SubscriptionCancelBody.builder()

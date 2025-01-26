@@ -22,7 +22,7 @@ import java.util.Objects
 
 /** This endpoint is used to create a single [`Credit Note`](/invoicing/credit-notes). */
 class CreditNoteCreateParams
-constructor(
+private constructor(
     private val body: CreditNoteCreateBody,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
@@ -115,7 +115,7 @@ constructor(
             fun builder() = Builder()
         }
 
-        class Builder {
+        class Builder internal constructor() {
 
             private var lineItems: JsonField<MutableList<LineItem>>? = null
             private var memo: JsonField<String> = JsonMissing.of()
@@ -212,7 +212,7 @@ constructor(
     }
 
     @NoAutoDetect
-    class Builder {
+    class Builder internal constructor() {
 
         private var body: CreditNoteCreateBody.Builder = CreditNoteCreateBody.builder()
         private var additionalHeaders: Headers.Builder = Headers.builder()
@@ -418,7 +418,7 @@ constructor(
             fun builder() = Builder()
         }
 
-        class Builder {
+        class Builder internal constructor() {
 
             private var amount: JsonField<String>? = null
             private var invoiceLineItemId: JsonField<String>? = null

@@ -19,7 +19,7 @@ import java.util.Objects
  * and it will immediately transition to `reverted`.
  */
 class EventBackfillRevertParams
-constructor(
+private constructor(
     private val backfillId: String,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
@@ -55,7 +55,7 @@ constructor(
     }
 
     @NoAutoDetect
-    class Builder {
+    class Builder internal constructor() {
 
         private var backfillId: String? = null
         private var additionalHeaders: Headers.Builder = Headers.builder()
