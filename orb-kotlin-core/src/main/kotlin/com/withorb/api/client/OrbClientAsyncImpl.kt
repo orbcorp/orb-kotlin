@@ -131,4 +131,6 @@ constructor(
 
     override fun dimensionalPriceGroups(): DimensionalPriceGroupServiceAsync =
         dimensionalPriceGroups
+
+    override fun close() = clientOptions.httpClient.close()
 }
