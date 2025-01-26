@@ -10,7 +10,7 @@ import java.util.Objects
 
 /** Fetch dimensional price group by external ID */
 class DimensionalPriceGroupExternalDimensionalPriceGroupIdRetrieveParams
-constructor(
+private constructor(
     private val externalDimensionalPriceGroupId: String,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
@@ -41,7 +41,7 @@ constructor(
     }
 
     @NoAutoDetect
-    class Builder {
+    class Builder internal constructor() {
 
         private var externalDimensionalPriceGroupId: String? = null
         private var additionalHeaders: Headers.Builder = Headers.builder()

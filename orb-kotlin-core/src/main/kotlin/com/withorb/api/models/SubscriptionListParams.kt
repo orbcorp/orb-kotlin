@@ -25,7 +25,7 @@ import java.util.Objects
  * customer_id[] or external_customer_id[] query parameters.
  */
 class SubscriptionListParams
-constructor(
+private constructor(
     private val createdAtGt: OffsetDateTime?,
     private val createdAtGte: OffsetDateTime?,
     private val createdAtLt: OffsetDateTime?,
@@ -113,7 +113,7 @@ constructor(
     }
 
     @NoAutoDetect
-    class Builder {
+    class Builder internal constructor() {
 
         private var createdAtGt: OffsetDateTime? = null
         private var createdAtGte: OffsetDateTime? = null

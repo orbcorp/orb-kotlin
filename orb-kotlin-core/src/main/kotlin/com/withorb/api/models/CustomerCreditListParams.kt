@@ -18,7 +18,7 @@ import java.util.Objects
  * `currency` to an ISO 4217 string.
  */
 class CustomerCreditListParams
-constructor(
+private constructor(
     private val customerId: String,
     private val currency: String?,
     private val cursor: String?,
@@ -78,7 +78,7 @@ constructor(
     }
 
     @NoAutoDetect
-    class Builder {
+    class Builder internal constructor() {
 
         private var customerId: String? = null
         private var currency: String? = null

@@ -30,7 +30,7 @@ import java.util.Objects
  * asynchronously.
  */
 class InvoiceListParams
-constructor(
+private constructor(
     private val amount: String?,
     private val amountGt: String?,
     private val amountLt: String?,
@@ -163,7 +163,7 @@ constructor(
     }
 
     @NoAutoDetect
-    class Builder {
+    class Builder internal constructor() {
 
         private var amount: String? = null
         private var amountGt: String? = null

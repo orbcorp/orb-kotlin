@@ -13,7 +13,7 @@ import java.util.Objects
  * metrics including its name, description, and item.
  */
 class MetricFetchParams
-constructor(
+private constructor(
     private val metricId: String,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
@@ -44,7 +44,7 @@ constructor(
     }
 
     @NoAutoDetect
-    class Builder {
+    class Builder internal constructor() {
 
         private var metricId: String? = null
         private var additionalHeaders: Headers.Builder = Headers.builder()

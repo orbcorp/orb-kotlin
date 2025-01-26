@@ -16,7 +16,7 @@ import java.util.Objects
  * customer or subscription level alerts.
  */
 class AlertEnableParams
-constructor(
+private constructor(
     private val alertConfigurationId: String,
     private val subscriptionId: String?,
     private val additionalHeaders: Headers,
@@ -61,7 +61,7 @@ constructor(
     }
 
     @NoAutoDetect
-    class Builder {
+    class Builder internal constructor() {
 
         private var alertConfigurationId: String? = null
         private var subscriptionId: String? = null

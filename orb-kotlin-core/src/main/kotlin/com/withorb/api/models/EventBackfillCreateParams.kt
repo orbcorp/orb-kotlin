@@ -50,7 +50,7 @@ import java.util.Objects
  * specific property values.
  */
 class EventBackfillCreateParams
-constructor(
+private constructor(
     private val body: EventBackfillCreateBody,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
@@ -288,7 +288,7 @@ constructor(
             fun builder() = Builder()
         }
 
-        class Builder {
+        class Builder internal constructor() {
 
             private var timeframeEnd: JsonField<OffsetDateTime>? = null
             private var timeframeStart: JsonField<OffsetDateTime>? = null
@@ -459,7 +459,7 @@ constructor(
     }
 
     @NoAutoDetect
-    class Builder {
+    class Builder internal constructor() {
 
         private var body: EventBackfillCreateBody.Builder = EventBackfillCreateBody.builder()
         private var additionalHeaders: Headers.Builder = Headers.builder()

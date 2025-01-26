@@ -24,7 +24,7 @@ import java.util.Objects
  * queries with examples.
  */
 class MetricCreateParams
-constructor(
+private constructor(
     private val body: MetricCreateBody,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
@@ -167,7 +167,7 @@ constructor(
             fun builder() = Builder()
         }
 
-        class Builder {
+        class Builder internal constructor() {
 
             private var description: JsonField<String>? = null
             private var itemId: JsonField<String>? = null
@@ -281,7 +281,7 @@ constructor(
     }
 
     @NoAutoDetect
-    class Builder {
+    class Builder internal constructor() {
 
         private var body: MetricCreateBody.Builder = MetricCreateBody.builder()
         private var additionalHeaders: Headers.Builder = Headers.builder()
@@ -490,7 +490,7 @@ constructor(
             fun builder() = Builder()
         }
 
-        class Builder {
+        class Builder internal constructor() {
 
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 

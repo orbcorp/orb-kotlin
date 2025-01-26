@@ -20,7 +20,7 @@ import java.util.Objects
  * retrieve the next page of results if they exist.
  */
 class PlanListParams
-constructor(
+private constructor(
     private val createdAtGt: OffsetDateTime?,
     private val createdAtGte: OffsetDateTime?,
     private val createdAtLt: OffsetDateTime?,
@@ -99,7 +99,7 @@ constructor(
     }
 
     @NoAutoDetect
-    class Builder {
+    class Builder internal constructor() {
 
         private var createdAtGt: OffsetDateTime? = null
         private var createdAtGte: OffsetDateTime? = null

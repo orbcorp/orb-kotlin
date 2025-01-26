@@ -50,7 +50,7 @@ import java.util.Objects
  * extended).
  */
 class SubscriptionUpdateTrialParams
-constructor(
+private constructor(
     private val subscriptionId: String,
     private val body: SubscriptionUpdateTrialBody,
     private val additionalHeaders: Headers,
@@ -165,7 +165,7 @@ constructor(
             fun builder() = Builder()
         }
 
-        class Builder {
+        class Builder internal constructor() {
 
             private var trialEndDate: JsonField<TrialEndDate>? = null
             private var shift: JsonField<Boolean> = JsonMissing.of()
@@ -271,7 +271,7 @@ constructor(
     }
 
     @NoAutoDetect
-    class Builder {
+    class Builder internal constructor() {
 
         private var subscriptionId: String? = null
         private var body: SubscriptionUpdateTrialBody.Builder =
@@ -546,7 +546,7 @@ constructor(
             }
         }
 
-        class Deserializer : BaseDeserializer<TrialEndDate>(TrialEndDate::class) {
+        internal class Deserializer : BaseDeserializer<TrialEndDate>(TrialEndDate::class) {
 
             override fun ObjectCodec.deserialize(node: JsonNode): TrialEndDate {
                 val json = JsonValue.fromJsonNode(node)
@@ -562,7 +562,7 @@ constructor(
             }
         }
 
-        class Serializer : BaseSerializer<TrialEndDate>(TrialEndDate::class) {
+        internal class Serializer : BaseSerializer<TrialEndDate>(TrialEndDate::class) {
 
             override fun serialize(
                 value: TrialEndDate,

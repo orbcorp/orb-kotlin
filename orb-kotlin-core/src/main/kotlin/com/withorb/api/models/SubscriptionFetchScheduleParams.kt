@@ -16,7 +16,7 @@ import java.util.Objects
  * initial plan along with past and future plan changes.
  */
 class SubscriptionFetchScheduleParams
-constructor(
+private constructor(
     private val subscriptionId: String,
     private val cursor: String?,
     private val limit: Long?,
@@ -100,7 +100,7 @@ constructor(
     }
 
     @NoAutoDetect
-    class Builder {
+    class Builder internal constructor() {
 
         private var subscriptionId: String? = null
         private var cursor: String? = null

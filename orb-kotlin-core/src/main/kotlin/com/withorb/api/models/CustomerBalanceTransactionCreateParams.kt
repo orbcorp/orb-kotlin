@@ -25,7 +25,7 @@ import java.util.Objects
  * newly created transaction.
  */
 class CustomerBalanceTransactionCreateParams
-constructor(
+private constructor(
     private val customerId: String,
     private val body: CustomerBalanceTransactionCreateBody,
     private val additionalHeaders: Headers,
@@ -122,7 +122,7 @@ constructor(
             fun builder() = Builder()
         }
 
-        class Builder {
+        class Builder internal constructor() {
 
             private var amount: JsonField<String>? = null
             private var type: JsonField<Type>? = null
@@ -209,7 +209,7 @@ constructor(
     }
 
     @NoAutoDetect
-    class Builder {
+    class Builder internal constructor() {
 
         private var customerId: String? = null
         private var body: CustomerBalanceTransactionCreateBody.Builder =

@@ -524,7 +524,7 @@ private constructor(
         fun builder() = Builder()
     }
 
-    class Builder {
+    class Builder internal constructor() {
 
         private var id: JsonField<String>? = null
         private var additionalEmails: JsonField<MutableList<String>>? = null
@@ -1100,7 +1100,7 @@ private constructor(
             fun builder() = Builder()
         }
 
-        class Builder {
+        class Builder internal constructor() {
 
             private var city: JsonField<String>? = null
             private var country: JsonField<String>? = null
@@ -1227,7 +1227,7 @@ private constructor(
             fun builder() = Builder()
         }
 
-        class Builder {
+        class Builder internal constructor() {
 
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
@@ -1432,7 +1432,7 @@ private constructor(
             fun builder() = Builder()
         }
 
-        class Builder {
+        class Builder internal constructor() {
 
             private var city: JsonField<String>? = null
             private var country: JsonField<String>? = null
@@ -1682,7 +1682,7 @@ private constructor(
             fun builder() = Builder()
         }
 
-        class Builder {
+        class Builder internal constructor() {
 
             private var country: JsonField<Country>? = null
             private var type: JsonField<Type>? = null
@@ -2786,7 +2786,7 @@ private constructor(
             fun builder() = Builder()
         }
 
-        class Builder {
+        class Builder internal constructor() {
 
             private var accountingProviders: JsonField<MutableList<AccountingProvider>>? = null
             private var excluded: JsonField<Boolean>? = null
@@ -2902,7 +2902,7 @@ private constructor(
                 fun builder() = Builder()
             }
 
-            class Builder {
+            class Builder internal constructor() {
 
                 private var externalProviderId: JsonField<String>? = null
                 private var providerType: JsonField<ProviderType>? = null
@@ -3088,7 +3088,7 @@ private constructor(
             fun builder() = Builder()
         }
 
-        class Builder {
+        class Builder internal constructor() {
 
             private var exempt: JsonField<Boolean>? = null
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()

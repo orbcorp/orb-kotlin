@@ -24,7 +24,7 @@ import java.util.Objects
  * Other fields on a customer are currently immutable.
  */
 class PlanUpdateParams
-constructor(
+private constructor(
     private val planId: String,
     private val body: PlanUpdateBody,
     private val additionalHeaders: Headers,
@@ -145,7 +145,7 @@ constructor(
             fun builder() = Builder()
         }
 
-        class Builder {
+        class Builder internal constructor() {
 
             private var externalPlanId: JsonField<String> = JsonMissing.of()
             private var metadata: JsonField<Metadata> = JsonMissing.of()
@@ -241,7 +241,7 @@ constructor(
     }
 
     @NoAutoDetect
-    class Builder {
+    class Builder internal constructor() {
 
         private var planId: String? = null
         private var body: PlanUpdateBody.Builder = PlanUpdateBody.builder()
@@ -447,7 +447,7 @@ constructor(
             fun builder() = Builder()
         }
 
-        class Builder {
+        class Builder internal constructor() {
 
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 

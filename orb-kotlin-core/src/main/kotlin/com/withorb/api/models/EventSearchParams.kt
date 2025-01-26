@@ -34,7 +34,7 @@ import java.util.Objects
  * `data` instead.
  */
 class EventSearchParams
-constructor(
+private constructor(
     private val body: EventSearchBody,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
@@ -175,7 +175,7 @@ constructor(
             fun builder() = Builder()
         }
 
-        class Builder {
+        class Builder internal constructor() {
 
             private var eventIds: JsonField<MutableList<String>>? = null
             private var timeframeEnd: JsonField<OffsetDateTime> = JsonMissing.of()
@@ -305,7 +305,7 @@ constructor(
     }
 
     @NoAutoDetect
-    class Builder {
+    class Builder internal constructor() {
 
         private var body: EventSearchBody.Builder = EventSearchBody.builder()
         private var additionalHeaders: Headers.Builder = Headers.builder()

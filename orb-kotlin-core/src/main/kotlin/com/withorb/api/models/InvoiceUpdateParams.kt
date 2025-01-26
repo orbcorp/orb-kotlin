@@ -25,7 +25,7 @@ import java.util.Objects
  * `metadata` can be modified regardless of invoice state.
  */
 class InvoiceUpdateParams
-constructor(
+private constructor(
     private val invoiceId: String,
     private val body: InvoiceUpdateBody,
     private val additionalHeaders: Headers,
@@ -114,7 +114,7 @@ constructor(
             fun builder() = Builder()
         }
 
-        class Builder {
+        class Builder internal constructor() {
 
             private var metadata: JsonField<Metadata> = JsonMissing.of()
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
@@ -187,7 +187,7 @@ constructor(
     }
 
     @NoAutoDetect
-    class Builder {
+    class Builder internal constructor() {
 
         private var invoiceId: String? = null
         private var body: InvoiceUpdateBody.Builder = InvoiceUpdateBody.builder()
@@ -377,7 +377,7 @@ constructor(
             fun builder() = Builder()
         }
 
-        class Builder {
+        class Builder internal constructor() {
 
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 

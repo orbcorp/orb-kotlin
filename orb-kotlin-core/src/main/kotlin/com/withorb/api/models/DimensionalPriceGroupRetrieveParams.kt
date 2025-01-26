@@ -10,7 +10,7 @@ import java.util.Objects
 
 /** Fetch dimensional price group */
 class DimensionalPriceGroupRetrieveParams
-constructor(
+private constructor(
     private val dimensionalPriceGroupId: String,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
@@ -41,7 +41,7 @@ constructor(
     }
 
     @NoAutoDetect
-    class Builder {
+    class Builder internal constructor() {
 
         private var dimensionalPriceGroupId: String? = null
         private var additionalHeaders: Headers.Builder = Headers.builder()

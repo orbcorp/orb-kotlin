@@ -24,7 +24,7 @@ import java.util.Objects
  * invoices that are in the `issued` status.
  */
 class InvoiceMarkPaidParams
-constructor(
+private constructor(
     private val invoiceId: String,
     private val body: InvoiceMarkPaidBody,
     private val additionalHeaders: Headers,
@@ -134,7 +134,7 @@ constructor(
             fun builder() = Builder()
         }
 
-        class Builder {
+        class Builder internal constructor() {
 
             private var paymentReceivedDate: JsonField<LocalDate>? = null
             private var externalId: JsonField<String> = JsonMissing.of()
@@ -223,7 +223,7 @@ constructor(
     }
 
     @NoAutoDetect
-    class Builder {
+    class Builder internal constructor() {
 
         private var invoiceId: String? = null
         private var body: InvoiceMarkPaidBody.Builder = InvoiceMarkPaidBody.builder()

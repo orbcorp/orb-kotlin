@@ -59,7 +59,7 @@ import java.util.Objects
  *   For higher volume updates, consider using the [event backfill](create-backfill) endpoint.
  */
 class EventUpdateParams
-constructor(
+private constructor(
     private val eventId: String,
     private val body: EventUpdateBody,
     private val additionalHeaders: Headers,
@@ -217,7 +217,7 @@ constructor(
             fun builder() = Builder()
         }
 
-        class Builder {
+        class Builder internal constructor() {
 
             private var eventName: JsonField<String>? = null
             private var properties: JsonValue? = null
@@ -338,7 +338,7 @@ constructor(
     }
 
     @NoAutoDetect
-    class Builder {
+    class Builder internal constructor() {
 
         private var eventId: String? = null
         private var body: EventUpdateBody.Builder = EventUpdateBody.builder()

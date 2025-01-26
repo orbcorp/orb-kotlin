@@ -29,7 +29,7 @@ import java.util.Objects
  * `credit_balance_recovered` alerts do not require thresholds.
  */
 class AlertCreateForExternalCustomerParams
-constructor(
+private constructor(
     private val externalCustomerId: String,
     private val body: AlertCreateForExternalCustomerBody,
     private val additionalHeaders: Headers,
@@ -134,7 +134,7 @@ constructor(
             fun builder() = Builder()
         }
 
-        class Builder {
+        class Builder internal constructor() {
 
             private var currency: JsonField<String>? = null
             private var type: JsonField<Type>? = null
@@ -239,7 +239,7 @@ constructor(
     }
 
     @NoAutoDetect
-    class Builder {
+    class Builder internal constructor() {
 
         private var externalCustomerId: String? = null
         private var body: AlertCreateForExternalCustomerBody.Builder =
@@ -534,7 +534,7 @@ constructor(
             fun builder() = Builder()
         }
 
-        class Builder {
+        class Builder internal constructor() {
 
             private var value: JsonField<Double>? = null
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
