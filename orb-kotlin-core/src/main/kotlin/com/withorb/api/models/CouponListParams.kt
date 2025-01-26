@@ -15,7 +15,7 @@ import java.util.Objects
  * exist. More information about pagination can be found in the Pagination-metadata schema.
  */
 class CouponListParams
-constructor(
+private constructor(
     private val cursor: String?,
     private val limit: Long?,
     private val redemptionCode: String?,
@@ -63,7 +63,7 @@ constructor(
     }
 
     @NoAutoDetect
-    class Builder {
+    class Builder internal constructor() {
 
         private var cursor: String? = null
         private var limit: Long? = null

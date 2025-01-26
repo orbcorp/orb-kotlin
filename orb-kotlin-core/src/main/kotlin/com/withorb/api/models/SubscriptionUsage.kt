@@ -118,7 +118,7 @@ private constructor(
         }
     }
 
-    class Deserializer : BaseDeserializer<SubscriptionUsage>(SubscriptionUsage::class) {
+    internal class Deserializer : BaseDeserializer<SubscriptionUsage>(SubscriptionUsage::class) {
 
         override fun ObjectCodec.deserialize(node: JsonNode): SubscriptionUsage {
             val json = JsonValue.fromJsonNode(node)
@@ -136,7 +136,7 @@ private constructor(
         }
     }
 
-    class Serializer : BaseSerializer<SubscriptionUsage>(SubscriptionUsage::class) {
+    internal class Serializer : BaseSerializer<SubscriptionUsage>(SubscriptionUsage::class) {
 
         override fun serialize(
             value: SubscriptionUsage,
@@ -189,7 +189,7 @@ private constructor(
             fun builder() = Builder()
         }
 
-        class Builder {
+        class Builder internal constructor() {
 
             private var data: JsonField<MutableList<Data>>? = null
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
@@ -300,7 +300,7 @@ private constructor(
                 fun builder() = Builder()
             }
 
-            class Builder {
+            class Builder internal constructor() {
 
                 private var billableMetric: JsonField<BillableMetric>? = null
                 private var usage: JsonField<MutableList<Usage>>? = null
@@ -418,7 +418,7 @@ private constructor(
                     fun builder() = Builder()
                 }
 
-                class Builder {
+                class Builder internal constructor() {
 
                     private var id: JsonField<String>? = null
                     private var name: JsonField<String>? = null
@@ -545,7 +545,7 @@ private constructor(
                     fun builder() = Builder()
                 }
 
-                class Builder {
+                class Builder internal constructor() {
 
                     private var quantity: JsonField<Double>? = null
                     private var timeframeEnd: JsonField<OffsetDateTime>? = null
@@ -767,7 +767,7 @@ private constructor(
             fun builder() = Builder()
         }
 
-        class Builder {
+        class Builder internal constructor() {
 
             private var data: JsonField<MutableList<Data>>? = null
             private var paginationMetadata: JsonField<PaginationMetadata> = JsonMissing.of()
@@ -897,7 +897,7 @@ private constructor(
                 fun builder() = Builder()
             }
 
-            class Builder {
+            class Builder internal constructor() {
 
                 private var billableMetric: JsonField<BillableMetric>? = null
                 private var metricGroup: JsonField<MetricGroup>? = null
@@ -1024,7 +1024,7 @@ private constructor(
                     fun builder() = Builder()
                 }
 
-                class Builder {
+                class Builder internal constructor() {
 
                     private var id: JsonField<String>? = null
                     private var name: JsonField<String>? = null
@@ -1141,7 +1141,7 @@ private constructor(
                     fun builder() = Builder()
                 }
 
-                class Builder {
+                class Builder internal constructor() {
 
                     private var propertyKey: JsonField<String>? = null
                     private var propertyValue: JsonField<String>? = null
@@ -1273,7 +1273,7 @@ private constructor(
                     fun builder() = Builder()
                 }
 
-                class Builder {
+                class Builder internal constructor() {
 
                     private var quantity: JsonField<Double>? = null
                     private var timeframeEnd: JsonField<OffsetDateTime>? = null

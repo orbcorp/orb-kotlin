@@ -21,7 +21,7 @@ import java.util.Objects
 
 /** Manually trigger a phase, effective the given date (or the current time, if not specified). */
 class SubscriptionTriggerPhaseParams
-constructor(
+private constructor(
     private val subscriptionId: String,
     private val body: SubscriptionTriggerPhaseBody,
     private val additionalHeaders: Headers,
@@ -108,7 +108,7 @@ constructor(
             fun builder() = Builder()
         }
 
-        class Builder {
+        class Builder internal constructor() {
 
             private var effectiveDate: JsonField<LocalDate> = JsonMissing.of()
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
@@ -183,7 +183,7 @@ constructor(
     }
 
     @NoAutoDetect
-    class Builder {
+    class Builder internal constructor() {
 
         private var subscriptionId: String? = null
         private var body: SubscriptionTriggerPhaseBody.Builder =

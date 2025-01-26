@@ -23,7 +23,7 @@ import java.util.Objects
  * `invoicing_threshold`, and `default_invoice_memo` properties on a subscription.
  */
 class SubscriptionUpdateParams
-constructor(
+private constructor(
     private val subscriptionId: String,
     private val body: SubscriptionUpdateBody,
     private val additionalHeaders: Headers,
@@ -240,7 +240,7 @@ constructor(
             fun builder() = Builder()
         }
 
-        class Builder {
+        class Builder internal constructor() {
 
             private var autoCollection: JsonField<Boolean> = JsonMissing.of()
             private var defaultInvoiceMemo: JsonField<String> = JsonMissing.of()
@@ -408,7 +408,7 @@ constructor(
     }
 
     @NoAutoDetect
-    class Builder {
+    class Builder internal constructor() {
 
         private var subscriptionId: String? = null
         private var body: SubscriptionUpdateBody.Builder = SubscriptionUpdateBody.builder()
@@ -676,7 +676,7 @@ constructor(
             fun builder() = Builder()
         }
 
-        class Builder {
+        class Builder internal constructor() {
 
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 

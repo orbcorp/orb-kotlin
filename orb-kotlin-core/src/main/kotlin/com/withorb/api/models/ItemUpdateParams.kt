@@ -22,7 +22,7 @@ import java.util.Objects
 
 /** This endpoint can be used to update properties on the Item. */
 class ItemUpdateParams
-constructor(
+private constructor(
     private val itemId: String,
     private val body: ItemUpdateBody,
     private val additionalHeaders: Headers,
@@ -111,7 +111,7 @@ constructor(
             fun builder() = Builder()
         }
 
-        class Builder {
+        class Builder internal constructor() {
 
             private var externalConnections: JsonField<MutableList<ExternalConnection>>? = null
             private var name: JsonField<String> = JsonMissing.of()
@@ -199,7 +199,7 @@ constructor(
     }
 
     @NoAutoDetect
-    class Builder {
+    class Builder internal constructor() {
 
         private var itemId: String? = null
         private var body: ItemUpdateBody.Builder = ItemUpdateBody.builder()
@@ -407,7 +407,7 @@ constructor(
             fun builder() = Builder()
         }
 
-        class Builder {
+        class Builder internal constructor() {
 
             private var externalConnectionName: JsonField<ExternalConnectionName>? = null
             private var externalEntityId: JsonField<String>? = null

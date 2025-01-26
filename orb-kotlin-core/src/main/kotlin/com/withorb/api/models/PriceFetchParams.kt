@@ -10,7 +10,7 @@ import java.util.Objects
 
 /** This endpoint returns a price given an identifier. */
 class PriceFetchParams
-constructor(
+private constructor(
     private val priceId: String,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
@@ -41,7 +41,7 @@ constructor(
     }
 
     @NoAutoDetect
-    class Builder {
+    class Builder internal constructor() {
 
         private var priceId: String? = null
         private var additionalHeaders: Headers.Builder = Headers.builder()

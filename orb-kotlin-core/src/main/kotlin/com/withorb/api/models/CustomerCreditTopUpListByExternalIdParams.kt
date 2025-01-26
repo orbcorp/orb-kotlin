@@ -10,7 +10,7 @@ import java.util.Objects
 
 /** List top-ups by external ID */
 class CustomerCreditTopUpListByExternalIdParams
-constructor(
+private constructor(
     private val externalCustomerId: String,
     private val cursor: String?,
     private val limit: Long?,
@@ -58,7 +58,7 @@ constructor(
     }
 
     @NoAutoDetect
-    class Builder {
+    class Builder internal constructor() {
 
         private var externalCustomerId: String? = null
         private var cursor: String? = null

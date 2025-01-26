@@ -39,7 +39,7 @@ import java.util.Objects
  * endpoint because it employs a JSON body rather than query parameters.
  */
 class PriceEvaluateParams
-constructor(
+private constructor(
     private val priceId: String,
     private val body: PriceEvaluateBody,
     private val additionalHeaders: Headers,
@@ -228,7 +228,7 @@ constructor(
             fun builder() = Builder()
         }
 
-        class Builder {
+        class Builder internal constructor() {
 
             private var timeframeEnd: JsonField<OffsetDateTime>? = null
             private var timeframeStart: JsonField<OffsetDateTime>? = null
@@ -382,7 +382,7 @@ constructor(
     }
 
     @NoAutoDetect
-    class Builder {
+    class Builder internal constructor() {
 
         private var priceId: String? = null
         private var body: PriceEvaluateBody.Builder = PriceEvaluateBody.builder()

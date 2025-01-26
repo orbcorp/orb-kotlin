@@ -53,7 +53,7 @@ private constructor(
         fun builder() = Builder()
     }
 
-    class Builder {
+    class Builder internal constructor() {
 
         private var data: JsonField<MutableList<Data>>? = null
         private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
@@ -186,7 +186,7 @@ private constructor(
             fun builder() = Builder()
         }
 
-        class Builder {
+        class Builder internal constructor() {
 
             private var perPriceCosts: JsonField<MutableList<PerPriceCost>>? = null
             private var subtotal: JsonField<String>? = null
@@ -369,7 +369,7 @@ private constructor(
                 fun builder() = Builder()
             }
 
-            class Builder {
+            class Builder internal constructor() {
 
                 private var price: JsonField<Price>? = null
                 private var subtotal: JsonField<String>? = null

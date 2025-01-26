@@ -10,7 +10,7 @@ import java.util.Objects
 
 /** This endpoint returns an item identified by its item_id. */
 class ItemFetchParams
-constructor(
+private constructor(
     private val itemId: String,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
@@ -41,7 +41,7 @@ constructor(
     }
 
     @NoAutoDetect
-    class Builder {
+    class Builder internal constructor() {
 
         private var itemId: String? = null
         private var additionalHeaders: Headers.Builder = Headers.builder()

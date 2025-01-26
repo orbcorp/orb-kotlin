@@ -36,7 +36,7 @@ import java.util.Objects
  * for the remainder of the billing period.
  */
 class SubscriptionUpdateFixedFeeQuantityParams
-constructor(
+private constructor(
     private val subscriptionId: String,
     private val body: SubscriptionUpdateFixedFeeQuantityBody,
     private val additionalHeaders: Headers,
@@ -189,7 +189,7 @@ constructor(
             fun builder() = Builder()
         }
 
-        class Builder {
+        class Builder internal constructor() {
 
             private var priceId: JsonField<String>? = null
             private var quantity: JsonField<Double>? = null
@@ -306,7 +306,7 @@ constructor(
     }
 
     @NoAutoDetect
-    class Builder {
+    class Builder internal constructor() {
 
         private var subscriptionId: String? = null
         private var body: SubscriptionUpdateFixedFeeQuantityBody.Builder =

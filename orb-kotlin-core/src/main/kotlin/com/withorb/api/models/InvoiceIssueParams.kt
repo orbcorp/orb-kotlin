@@ -26,7 +26,7 @@ import java.util.Objects
  * providers, etc).
  */
 class InvoiceIssueParams
-constructor(
+private constructor(
     private val invoiceId: String,
     private val body: InvoiceIssueBody,
     private val additionalHeaders: Headers,
@@ -121,7 +121,7 @@ constructor(
             fun builder() = Builder()
         }
 
-        class Builder {
+        class Builder internal constructor() {
 
             private var synchronous: JsonField<Boolean> = JsonMissing.of()
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
@@ -200,7 +200,7 @@ constructor(
     }
 
     @NoAutoDetect
-    class Builder {
+    class Builder internal constructor() {
 
         private var invoiceId: String? = null
         private var body: InvoiceIssueBody.Builder = InvoiceIssueBody.builder()

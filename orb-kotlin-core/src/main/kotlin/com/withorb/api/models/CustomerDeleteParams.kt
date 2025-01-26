@@ -26,7 +26,7 @@ import java.util.Objects
  * On successful processing, this returns an empty dictionary (`{}`) in the API.
  */
 class CustomerDeleteParams
-constructor(
+private constructor(
     private val customerId: String,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
@@ -62,7 +62,7 @@ constructor(
     }
 
     @NoAutoDetect
-    class Builder {
+    class Builder internal constructor() {
 
         private var customerId: String? = null
         private var additionalHeaders: Headers.Builder = Headers.builder()

@@ -19,7 +19,7 @@ import java.util.Objects
  * that amount will be added back to the customer balance upon voiding.
  */
 class InvoiceVoidParams
-constructor(
+private constructor(
     private val invoiceId: String,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
@@ -55,7 +55,7 @@ constructor(
     }
 
     @NoAutoDetect
-    class Builder {
+    class Builder internal constructor() {
 
         private var invoiceId: String? = null
         private var additionalHeaders: Headers.Builder = Headers.builder()

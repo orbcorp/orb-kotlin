@@ -28,7 +28,7 @@ import java.util.Objects
  * per blue widget.
  */
 class DimensionalPriceGroupCreateParams
-constructor(
+private constructor(
     private val body: DimensionalPriceGroupCreateBody,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
@@ -167,7 +167,7 @@ constructor(
             fun builder() = Builder()
         }
 
-        class Builder {
+        class Builder internal constructor() {
 
             private var billableMetricId: JsonField<String>? = null
             private var dimensions: JsonField<MutableList<String>>? = null
@@ -299,7 +299,7 @@ constructor(
     }
 
     @NoAutoDetect
-    class Builder {
+    class Builder internal constructor() {
 
         private var body: DimensionalPriceGroupCreateBody.Builder =
             DimensionalPriceGroupCreateBody.builder()
@@ -517,7 +517,7 @@ constructor(
             fun builder() = Builder()
         }
 
-        class Builder {
+        class Builder internal constructor() {
 
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 

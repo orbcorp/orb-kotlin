@@ -13,7 +13,7 @@ import java.util.Objects
  * [List coupons](list-coupons) endpoint with the redemption_code parameter.
  */
 class CouponFetchParams
-constructor(
+private constructor(
     private val couponId: String,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
@@ -44,7 +44,7 @@ constructor(
     }
 
     @NoAutoDetect
-    class Builder {
+    class Builder internal constructor() {
 
         private var couponId: String? = null
         private var additionalHeaders: Headers.Builder = Headers.builder()

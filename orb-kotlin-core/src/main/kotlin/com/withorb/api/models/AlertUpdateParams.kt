@@ -20,7 +20,7 @@ import java.util.Objects
 
 /** This endpoint updates the thresholds of an alert. */
 class AlertUpdateParams
-constructor(
+private constructor(
     private val alertConfigurationId: String,
     private val body: AlertUpdateBody,
     private val additionalHeaders: Headers,
@@ -95,7 +95,7 @@ constructor(
             fun builder() = Builder()
         }
 
-        class Builder {
+        class Builder internal constructor() {
 
             private var thresholds: JsonField<MutableList<Threshold>>? = null
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
@@ -177,7 +177,7 @@ constructor(
     }
 
     @NoAutoDetect
-    class Builder {
+    class Builder internal constructor() {
 
         private var alertConfigurationId: String? = null
         private var body: AlertUpdateBody.Builder = AlertUpdateBody.builder()
@@ -380,7 +380,7 @@ constructor(
             fun builder() = Builder()
         }
 
-        class Builder {
+        class Builder internal constructor() {
 
             private var value: JsonField<Double>? = null
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()

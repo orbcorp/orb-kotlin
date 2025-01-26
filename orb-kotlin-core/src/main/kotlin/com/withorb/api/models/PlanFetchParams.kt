@@ -26,7 +26,7 @@ import java.util.Objects
  * prices refer to all prices across all phases.
  */
 class PlanFetchParams
-constructor(
+private constructor(
     private val planId: String,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
@@ -57,7 +57,7 @@ constructor(
     }
 
     @NoAutoDetect
-    class Builder {
+    class Builder internal constructor() {
 
         private var planId: String? = null
         private var additionalHeaders: Headers.Builder = Headers.builder()

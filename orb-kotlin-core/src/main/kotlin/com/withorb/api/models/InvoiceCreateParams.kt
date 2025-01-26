@@ -24,7 +24,7 @@ import java.util.Objects
 
 /** This endpoint is used to create a one-off invoice for a customer. */
 class InvoiceCreateParams
-constructor(
+private constructor(
     private val body: InvoiceCreateBody,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
@@ -321,7 +321,7 @@ constructor(
             fun builder() = Builder()
         }
 
-        class Builder {
+        class Builder internal constructor() {
 
             private var currency: JsonField<String>? = null
             private var invoiceDate: JsonField<OffsetDateTime>? = null
@@ -549,7 +549,7 @@ constructor(
     }
 
     @NoAutoDetect
-    class Builder {
+    class Builder internal constructor() {
 
         private var body: InvoiceCreateBody.Builder = InvoiceCreateBody.builder()
         private var additionalHeaders: Headers.Builder = Headers.builder()
@@ -909,7 +909,7 @@ constructor(
             fun builder() = Builder()
         }
 
-        class Builder {
+        class Builder internal constructor() {
 
             private var endDate: JsonField<LocalDate>? = null
             private var itemId: JsonField<String>? = null
@@ -1093,7 +1093,7 @@ constructor(
                 fun builder() = Builder()
             }
 
-            class Builder {
+            class Builder internal constructor() {
 
                 private var unitAmount: JsonField<String>? = null
                 private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
@@ -1210,7 +1210,7 @@ constructor(
             fun builder() = Builder()
         }
 
-        class Builder {
+        class Builder internal constructor() {
 
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 

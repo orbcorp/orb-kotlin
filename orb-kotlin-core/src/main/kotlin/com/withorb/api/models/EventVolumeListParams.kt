@@ -24,7 +24,7 @@ import java.util.Objects
  * end time, the response includes the hours the timestamp falls in.
  */
 class EventVolumeListParams
-constructor(
+private constructor(
     private val timeframeStart: OffsetDateTime,
     private val cursor: String?,
     private val limit: Long?,
@@ -91,7 +91,7 @@ constructor(
     }
 
     @NoAutoDetect
-    class Builder {
+    class Builder internal constructor() {
 
         private var timeframeStart: OffsetDateTime? = null
         private var cursor: String? = null
