@@ -206,7 +206,7 @@ import java.util.Objects
  * ```
  */
 class EventIngestParams
-constructor(
+private constructor(
     private val backfillId: String?,
     private val debug: Boolean?,
     private val body: EventIngestBody,
@@ -282,7 +282,7 @@ constructor(
             fun builder() = Builder()
         }
 
-        class Builder {
+        class Builder internal constructor() {
 
             private var events: JsonField<MutableList<Event>>? = null
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
@@ -361,7 +361,7 @@ constructor(
     }
 
     @NoAutoDetect
-    class Builder {
+    class Builder internal constructor() {
 
         private var backfillId: String? = null
         private var debug: Boolean? = null
@@ -634,7 +634,7 @@ constructor(
             fun builder() = Builder()
         }
 
-        class Builder {
+        class Builder internal constructor() {
 
             private var eventName: JsonField<String>? = null
             private var idempotencyKey: JsonField<String>? = null

@@ -94,7 +94,7 @@ private constructor(
         fun builder() = Builder()
     }
 
-    class Builder {
+    class Builder internal constructor() {
 
         private var amountDiscount: JsonField<String>? = null
         private var appliesToPriceIds: JsonField<MutableList<String>>? = null

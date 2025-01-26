@@ -10,7 +10,7 @@ import java.util.Objects
 
 /** This endpoint retrieves an alert by its ID. */
 class AlertRetrieveParams
-constructor(
+private constructor(
     private val alertId: String,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
@@ -41,7 +41,7 @@ constructor(
     }
 
     @NoAutoDetect
-    class Builder {
+    class Builder internal constructor() {
 
         private var alertId: String? = null
         private var additionalHeaders: Headers.Builder = Headers.builder()

@@ -24,7 +24,7 @@ import java.util.Objects
  * invoices that are in a `draft` status.
  */
 class InvoiceLineItemCreateParams
-constructor(
+private constructor(
     private val body: InvoiceLineItemCreateBody,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
@@ -181,7 +181,7 @@ constructor(
             fun builder() = Builder()
         }
 
-        class Builder {
+        class Builder internal constructor() {
 
             private var amount: JsonField<String>? = null
             private var endDate: JsonField<LocalDate>? = null
@@ -300,7 +300,7 @@ constructor(
     }
 
     @NoAutoDetect
-    class Builder {
+    class Builder internal constructor() {
 
         private var body: InvoiceLineItemCreateBody.Builder = InvoiceLineItemCreateBody.builder()
         private var additionalHeaders: Headers.Builder = Headers.builder()

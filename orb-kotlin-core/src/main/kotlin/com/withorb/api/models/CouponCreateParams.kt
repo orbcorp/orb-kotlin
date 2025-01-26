@@ -35,7 +35,7 @@ import java.util.Objects
  * or plan change.
  */
 class CouponCreateParams
-constructor(
+private constructor(
     private val body: CouponCreateBody,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
@@ -172,7 +172,7 @@ constructor(
             fun builder() = Builder()
         }
 
-        class Builder {
+        class Builder internal constructor() {
 
             private var discount: JsonField<Discount>? = null
             private var redemptionCode: JsonField<String>? = null
@@ -305,7 +305,7 @@ constructor(
     }
 
     @NoAutoDetect
-    class Builder {
+    class Builder internal constructor() {
 
         private var body: CouponCreateBody.Builder = CouponCreateBody.builder()
         private var additionalHeaders: Headers.Builder = Headers.builder()
@@ -598,7 +598,7 @@ constructor(
             }
         }
 
-        class Deserializer : BaseDeserializer<Discount>(Discount::class) {
+        internal class Deserializer : BaseDeserializer<Discount>(Discount::class) {
 
             override fun ObjectCodec.deserialize(node: JsonNode): Discount {
                 val json = JsonValue.fromJsonNode(node)
@@ -627,7 +627,7 @@ constructor(
             }
         }
 
-        class Serializer : BaseSerializer<Discount>(Discount::class) {
+        internal class Serializer : BaseSerializer<Discount>(Discount::class) {
 
             override fun serialize(
                 value: Discount,
@@ -693,7 +693,7 @@ constructor(
                 fun builder() = Builder()
             }
 
-            class Builder {
+            class Builder internal constructor() {
 
                 private var discountType: JsonField<DiscountType>? = null
                 private var percentageDiscount: JsonField<Double>? = null
@@ -869,7 +869,7 @@ constructor(
                 fun builder() = Builder()
             }
 
-            class Builder {
+            class Builder internal constructor() {
 
                 private var amountDiscount: JsonField<String>? = null
                 private var discountType: JsonField<DiscountType>? = null

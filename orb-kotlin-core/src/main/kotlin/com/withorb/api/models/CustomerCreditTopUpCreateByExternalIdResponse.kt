@@ -148,7 +148,7 @@ private constructor(
         fun builder() = Builder()
     }
 
-    class Builder {
+    class Builder internal constructor() {
 
         private var id: JsonField<String>? = null
         private var amount: JsonField<String>? = null
@@ -381,7 +381,7 @@ private constructor(
             fun builder() = Builder()
         }
 
-        class Builder {
+        class Builder internal constructor() {
 
             private var autoCollection: JsonField<Boolean>? = null
             private var netTerms: JsonField<Long>? = null

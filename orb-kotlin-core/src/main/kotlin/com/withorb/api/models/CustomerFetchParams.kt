@@ -15,7 +15,7 @@ import java.util.Objects
  * See the [Customer resource](/core-concepts#customer) for a full discussion of the Customer model.
  */
 class CustomerFetchParams
-constructor(
+private constructor(
     private val customerId: String,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
@@ -46,7 +46,7 @@ constructor(
     }
 
     @NoAutoDetect
-    class Builder {
+    class Builder internal constructor() {
 
         private var customerId: String? = null
         private var additionalHeaders: Headers.Builder = Headers.builder()

@@ -15,7 +15,7 @@ import java.util.Objects
  * action can only be taken on invoices with status "issued".
  */
 class InvoicePayParams
-constructor(
+private constructor(
     private val invoiceId: String,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
@@ -51,7 +51,7 @@ constructor(
     }
 
     @NoAutoDetect
-    class Builder {
+    class Builder internal constructor() {
 
         private var invoiceId: String? = null
         private var additionalHeaders: Headers.Builder = Headers.builder()

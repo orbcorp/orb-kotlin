@@ -87,7 +87,7 @@ private constructor(
         fun builder() = Builder()
     }
 
-    class Builder {
+    class Builder internal constructor() {
 
         private var amount: JsonField<String>? = null
         private var groupingValues: JsonField<MutableList<GroupingValue>>? = null
@@ -270,7 +270,7 @@ private constructor(
             }
         }
 
-        class Deserializer : BaseDeserializer<GroupingValue>(GroupingValue::class) {
+        internal class Deserializer : BaseDeserializer<GroupingValue>(GroupingValue::class) {
 
             override fun ObjectCodec.deserialize(node: JsonNode): GroupingValue {
                 val json = JsonValue.fromJsonNode(node)
@@ -289,7 +289,7 @@ private constructor(
             }
         }
 
-        class Serializer : BaseSerializer<GroupingValue>(GroupingValue::class) {
+        internal class Serializer : BaseSerializer<GroupingValue>(GroupingValue::class) {
 
             override fun serialize(
                 value: GroupingValue,

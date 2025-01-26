@@ -10,7 +10,7 @@ import java.util.Objects
 
 /** This endpoint is used to fetch a backfill given an identifier. */
 class EventBackfillFetchParams
-constructor(
+private constructor(
     private val backfillId: String,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
@@ -41,7 +41,7 @@ constructor(
     }
 
     @NoAutoDetect
-    class Builder {
+    class Builder internal constructor() {
 
         private var backfillId: String? = null
         private var additionalHeaders: Headers.Builder = Headers.builder()

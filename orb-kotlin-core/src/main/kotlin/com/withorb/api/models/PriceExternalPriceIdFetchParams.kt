@@ -14,7 +14,7 @@ import java.util.Objects
  * aliases.
  */
 class PriceExternalPriceIdFetchParams
-constructor(
+private constructor(
     private val externalPriceId: String,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
@@ -45,7 +45,7 @@ constructor(
     }
 
     @NoAutoDetect
-    class Builder {
+    class Builder internal constructor() {
 
         private var externalPriceId: String? = null
         private var additionalHeaders: Headers.Builder = Headers.builder()

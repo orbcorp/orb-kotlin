@@ -9,7 +9,7 @@ import java.util.Objects
 
 /** This endpoint returns a list of all Items, ordered in descending order by creation time. */
 class ItemListParams
-constructor(
+private constructor(
     private val cursor: String?,
     private val limit: Long?,
     private val additionalHeaders: Headers,
@@ -47,7 +47,7 @@ constructor(
     }
 
     @NoAutoDetect
-    class Builder {
+    class Builder internal constructor() {
 
         private var cursor: String? = null
         private var limit: Long? = null

@@ -10,7 +10,7 @@ import java.util.Objects
 
 /** List top-ups */
 class CustomerCreditTopUpListParams
-constructor(
+private constructor(
     private val customerId: String,
     private val cursor: String?,
     private val limit: Long?,
@@ -58,7 +58,7 @@ constructor(
     }
 
     @NoAutoDetect
-    class Builder {
+    class Builder internal constructor() {
 
         private var customerId: String? = null
         private var cursor: String? = null

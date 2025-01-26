@@ -122,7 +122,8 @@ private constructor(
         }
     }
 
-    class Deserializer : BaseDeserializer<InvoiceLevelDiscount>(InvoiceLevelDiscount::class) {
+    internal class Deserializer :
+        BaseDeserializer<InvoiceLevelDiscount>(InvoiceLevelDiscount::class) {
 
         override fun ObjectCodec.deserialize(node: JsonNode): InvoiceLevelDiscount {
             val json = JsonValue.fromJsonNode(node)
@@ -153,7 +154,7 @@ private constructor(
         }
     }
 
-    class Serializer : BaseSerializer<InvoiceLevelDiscount>(InvoiceLevelDiscount::class) {
+    internal class Serializer : BaseSerializer<InvoiceLevelDiscount>(InvoiceLevelDiscount::class) {
 
         override fun serialize(
             value: InvoiceLevelDiscount,

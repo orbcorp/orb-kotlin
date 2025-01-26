@@ -12,7 +12,7 @@ import java.util.Objects
  * [price creation endpoint](/api-reference/price/create-price).
  */
 class PriceListParams
-constructor(
+private constructor(
     private val cursor: String?,
     private val limit: Long?,
     private val additionalHeaders: Headers,
@@ -50,7 +50,7 @@ constructor(
     }
 
     @NoAutoDetect
-    class Builder {
+    class Builder internal constructor() {
 
         private var cursor: String? = null
         private var limit: Long? = null

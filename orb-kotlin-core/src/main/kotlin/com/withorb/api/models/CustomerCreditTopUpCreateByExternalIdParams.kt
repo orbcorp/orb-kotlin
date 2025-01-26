@@ -29,7 +29,7 @@ import java.util.Objects
  * replaced.
  */
 class CustomerCreditTopUpCreateByExternalIdParams
-constructor(
+private constructor(
     private val externalCustomerId: String,
     private val body: CustomerCreditTopUpCreateByExternalIdBody,
     private val additionalHeaders: Headers,
@@ -243,7 +243,7 @@ constructor(
             fun builder() = Builder()
         }
 
-        class Builder {
+        class Builder internal constructor() {
 
             private var amount: JsonField<String>? = null
             private var currency: JsonField<String>? = null
@@ -403,7 +403,7 @@ constructor(
     }
 
     @NoAutoDetect
-    class Builder {
+    class Builder internal constructor() {
 
         private var externalCustomerId: String? = null
         private var body: CustomerCreditTopUpCreateByExternalIdBody.Builder =
@@ -723,7 +723,7 @@ constructor(
             fun builder() = Builder()
         }
 
-        class Builder {
+        class Builder internal constructor() {
 
             private var autoCollection: JsonField<Boolean>? = null
             private var netTerms: JsonField<Long>? = null

@@ -135,7 +135,7 @@ import java.util.Objects
  * initial balance.
  */
 class CustomerCreditLedgerCreateEntryByExternalIdParams
-constructor(
+private constructor(
     private val externalCustomerId: String,
     private val body: CustomerCreditLedgerCreateEntryByExternalIdBody,
     private val additionalHeaders: Headers,
@@ -394,7 +394,7 @@ constructor(
             }
         }
 
-        class Deserializer :
+        internal class Deserializer :
             BaseDeserializer<CustomerCreditLedgerCreateEntryByExternalIdBody>(
                 CustomerCreditLedgerCreateEntryByExternalIdBody::class
             ) {
@@ -472,7 +472,7 @@ constructor(
             }
         }
 
-        class Serializer :
+        internal class Serializer :
             BaseSerializer<CustomerCreditLedgerCreateEntryByExternalIdBody>(
                 CustomerCreditLedgerCreateEntryByExternalIdBody::class
             ) {
@@ -513,7 +513,7 @@ constructor(
     }
 
     @NoAutoDetect
-    class Builder {
+    class Builder internal constructor() {
 
         private var externalCustomerId: String? = null
         private var body: CustomerCreditLedgerCreateEntryByExternalIdBody? = null
@@ -870,7 +870,7 @@ constructor(
             fun builder() = Builder()
         }
 
-        class Builder {
+        class Builder internal constructor() {
 
             private var amount: JsonField<Double>? = null
             private var entryType: JsonField<EntryType>? = null
@@ -1196,7 +1196,7 @@ constructor(
                 fun builder() = Builder()
             }
 
-            class Builder {
+            class Builder internal constructor() {
 
                 private var autoCollection: JsonField<Boolean>? = null
                 private var netTerms: JsonField<Long>? = null
@@ -1346,7 +1346,7 @@ constructor(
                 fun builder() = Builder()
             }
 
-            class Builder {
+            class Builder internal constructor() {
 
                 private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
@@ -1523,7 +1523,7 @@ constructor(
             fun builder() = Builder()
         }
 
-        class Builder {
+        class Builder internal constructor() {
 
             private var amount: JsonField<Double>? = null
             private var entryType: JsonField<EntryType>? = null
@@ -1718,7 +1718,7 @@ constructor(
                 fun builder() = Builder()
             }
 
-            class Builder {
+            class Builder internal constructor() {
 
                 private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
@@ -1941,7 +1941,7 @@ constructor(
             fun builder() = Builder()
         }
 
-        class Builder {
+        class Builder internal constructor() {
 
             private var entryType: JsonField<EntryType>? = null
             private var expiryDate: JsonField<OffsetDateTime>? = null
@@ -2189,7 +2189,7 @@ constructor(
                 fun builder() = Builder()
             }
 
-            class Builder {
+            class Builder internal constructor() {
 
                 private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
@@ -2388,7 +2388,7 @@ constructor(
             fun builder() = Builder()
         }
 
-        class Builder {
+        class Builder internal constructor() {
 
             private var amount: JsonField<Double>? = null
             private var blockId: JsonField<String>? = null
@@ -2602,7 +2602,7 @@ constructor(
                 fun builder() = Builder()
             }
 
-            class Builder {
+            class Builder internal constructor() {
 
                 private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
@@ -2841,7 +2841,7 @@ constructor(
             fun builder() = Builder()
         }
 
-        class Builder {
+        class Builder internal constructor() {
 
             private var amount: JsonField<Double>? = null
             private var blockId: JsonField<String>? = null
@@ -3045,7 +3045,7 @@ constructor(
                 fun builder() = Builder()
             }
 
-            class Builder {
+            class Builder internal constructor() {
 
                 private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
