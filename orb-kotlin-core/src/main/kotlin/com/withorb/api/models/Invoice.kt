@@ -304,8 +304,10 @@ private constructor(
 
     fun discounts(): List<InvoiceLevelDiscount> = discounts.getRequired("discounts")
 
-    /** When the invoice payment is due. */
-    fun dueDate(): OffsetDateTime = dueDate.getRequired("due_date")
+    /**
+     * When the invoice payment is due. The due date is null if the invoice is not yet finalized.
+     */
+    fun dueDate(): OffsetDateTime? = dueDate.getNullable("due_date")
 
     /**
      * If the invoice has a status of `draft`, this will be the time that the invoice will be
@@ -570,7 +572,9 @@ private constructor(
     @ExcludeMissing
     fun _discounts(): JsonField<List<InvoiceLevelDiscount>> = discounts
 
-    /** When the invoice payment is due. */
+    /**
+     * When the invoice payment is due. The due date is null if the invoice is not yet finalized.
+     */
     @JsonProperty("due_date") @ExcludeMissing fun _dueDate(): JsonField<OffsetDateTime> = dueDate
 
     /**
@@ -1207,19 +1211,23 @@ private constructor(
                 }
         }
 
-        fun addDiscount(percentageDiscount: PercentageDiscount) =
-            addDiscount(InvoiceLevelDiscount.ofPercentageDiscount(percentageDiscount))
+        fun addDiscount(percentage: PercentageDiscount) =
+            addDiscount(InvoiceLevelDiscount.ofPercentage(percentage))
 
-        fun addDiscount(amountDiscount: AmountDiscount) =
-            addDiscount(InvoiceLevelDiscount.ofAmountDiscount(amountDiscount))
+        fun addDiscount(amount: AmountDiscount) = addDiscount(InvoiceLevelDiscount.ofAmount(amount))
 
-        fun addDiscount(trialDiscount: TrialDiscount) =
-            addDiscount(InvoiceLevelDiscount.ofTrialDiscount(trialDiscount))
+        fun addDiscount(trial: TrialDiscount) = addDiscount(InvoiceLevelDiscount.ofTrial(trial))
 
-        /** When the invoice payment is due. */
-        fun dueDate(dueDate: OffsetDateTime) = dueDate(JsonField.of(dueDate))
+        /**
+         * When the invoice payment is due. The due date is null if the invoice is not yet
+         * finalized.
+         */
+        fun dueDate(dueDate: OffsetDateTime?) = dueDate(JsonField.ofNullable(dueDate))
 
-        /** When the invoice payment is due. */
+        /**
+         * When the invoice payment is due. The due date is null if the invoice is not yet
+         * finalized.
+         */
         fun dueDate(dueDate: JsonField<OffsetDateTime>) = apply { this.dueDate = dueDate }
 
         /**
@@ -2333,7 +2341,7 @@ private constructor(
         private val endingBalance: JsonField<String> = JsonMissing.of(),
         @JsonProperty("invoice")
         @ExcludeMissing
-        private val invoice: JsonField<Invoice> = JsonMissing.of(),
+        private val invoice: JsonField<InnerInvoice> = JsonMissing.of(),
         @JsonProperty("starting_balance")
         @ExcludeMissing
         private val startingBalance: JsonField<String> = JsonMissing.of(),
@@ -2364,7 +2372,7 @@ private constructor(
          */
         fun endingBalance(): String = endingBalance.getRequired("ending_balance")
 
-        fun invoice(): Invoice? = invoice.getNullable("invoice")
+        fun invoice(): InnerInvoice? = invoice.getNullable("invoice")
 
         /**
          * The original value of the customer's balance prior to the transaction, in the customer's
@@ -2404,7 +2412,7 @@ private constructor(
         @ExcludeMissing
         fun _endingBalance(): JsonField<String> = endingBalance
 
-        @JsonProperty("invoice") @ExcludeMissing fun _invoice(): JsonField<Invoice> = invoice
+        @JsonProperty("invoice") @ExcludeMissing fun _invoice(): JsonField<InnerInvoice> = invoice
 
         /**
          * The original value of the customer's balance prior to the transaction, in the customer's
@@ -2456,7 +2464,7 @@ private constructor(
             private var creditNote: JsonField<CreditNote>? = null
             private var description: JsonField<String>? = null
             private var endingBalance: JsonField<String>? = null
-            private var invoice: JsonField<Invoice>? = null
+            private var invoice: JsonField<InnerInvoice>? = null
             private var startingBalance: JsonField<String>? = null
             private var type: JsonField<Type>? = null
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
@@ -2528,9 +2536,9 @@ private constructor(
                 this.endingBalance = endingBalance
             }
 
-            fun invoice(invoice: Invoice?) = invoice(JsonField.ofNullable(invoice))
+            fun invoice(invoice: InnerInvoice?) = invoice(JsonField.ofNullable(invoice))
 
-            fun invoice(invoice: JsonField<Invoice>) = apply { this.invoice = invoice }
+            fun invoice(invoice: JsonField<InnerInvoice>) = apply { this.invoice = invoice }
 
             /**
              * The original value of the customer's balance prior to the transaction, in the
@@ -2779,7 +2787,7 @@ private constructor(
         }
 
         @NoAutoDetect
-        class Invoice
+        class InnerInvoice
         @JsonCreator
         private constructor(
             @JsonProperty("id")
@@ -2801,7 +2809,7 @@ private constructor(
 
             private var validated: Boolean = false
 
-            fun validate(): Invoice = apply {
+            fun validate(): InnerInvoice = apply {
                 if (validated) {
                     return@apply
                 }
@@ -2822,9 +2830,9 @@ private constructor(
                 private var id: JsonField<String>? = null
                 private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
-                internal fun from(invoice: Invoice) = apply {
-                    id = invoice.id
-                    additionalProperties = invoice.additionalProperties.toMutableMap()
+                internal fun from(innerInvoice: InnerInvoice) = apply {
+                    id = innerInvoice.id
+                    additionalProperties = innerInvoice.additionalProperties.toMutableMap()
                 }
 
                 /** The Invoice id */
@@ -2855,8 +2863,8 @@ private constructor(
                     keys.forEach(::removeAdditionalProperty)
                 }
 
-                fun build(): Invoice =
-                    Invoice(checkRequired("id", id), additionalProperties.toImmutable())
+                fun build(): InnerInvoice =
+                    InnerInvoice(checkRequired("id", id), additionalProperties.toImmutable())
             }
 
             override fun equals(other: Any?): Boolean {
@@ -2864,7 +2872,7 @@ private constructor(
                     return true
                 }
 
-                return /* spotless:off */ other is Invoice && id == other.id && additionalProperties == other.additionalProperties /* spotless:on */
+                return /* spotless:off */ other is InnerInvoice && id == other.id && additionalProperties == other.additionalProperties /* spotless:on */
             }
 
             /* spotless:off */
@@ -2873,7 +2881,8 @@ private constructor(
 
             override fun hashCode(): Int = hashCode
 
-            override fun toString() = "Invoice{id=$id, additionalProperties=$additionalProperties}"
+            override fun toString() =
+                "InnerInvoice{id=$id, additionalProperties=$additionalProperties}"
         }
 
         class Type
@@ -4512,17 +4521,14 @@ private constructor(
 
             fun discount(discount: JsonField<Discount>) = apply { this.discount = discount }
 
-            fun discount(percentageDiscount: PercentageDiscount) =
-                discount(Discount.ofPercentageDiscount(percentageDiscount))
+            fun discount(percentage: PercentageDiscount) =
+                discount(Discount.ofPercentage(percentage))
 
-            fun discount(trialDiscount: TrialDiscount) =
-                discount(Discount.ofTrialDiscount(trialDiscount))
+            fun discount(trial: TrialDiscount) = discount(Discount.ofTrial(trial))
 
-            fun discount(usageDiscount: Discount.UsageDiscount) =
-                discount(Discount.ofUsageDiscount(usageDiscount))
+            fun discount(usage: Discount.UsageDiscount) = discount(Discount.ofUsage(usage))
 
-            fun discount(amountDiscount: AmountDiscount) =
-                discount(Discount.ofAmountDiscount(amountDiscount))
+            fun discount(amount: AmountDiscount) = discount(Discount.ofAmount(amount))
 
             /** The end date of the range of time applied for this line item's price. */
             fun endDate(endDate: OffsetDateTime) = endDate(JsonField.of(endDate))
@@ -4612,7 +4618,7 @@ private constructor(
              * For more on the types of prices, see
              * [the core concepts documentation](/core-concepts#plan-and-price)
              */
-            fun price(unitPrice: Price.UnitPrice) = price(Price.ofUnitPrice(unitPrice))
+            fun price(unit: Price.UnitPrice) = price(Price.ofUnit(unit))
 
             /**
              * The Price resource represents a price that can be billed on a subscription, resulting
@@ -4640,7 +4646,7 @@ private constructor(
              * For more on the types of prices, see
              * [the core concepts documentation](/core-concepts#plan-and-price)
              */
-            fun price(matrixPrice: Price.MatrixPrice) = price(Price.ofMatrixPrice(matrixPrice))
+            fun price(matrix: Price.MatrixPrice) = price(Price.ofMatrix(matrix))
 
             /**
              * The Price resource represents a price that can be billed on a subscription, resulting
@@ -4654,7 +4660,7 @@ private constructor(
              * For more on the types of prices, see
              * [the core concepts documentation](/core-concepts#plan-and-price)
              */
-            fun price(tieredPrice: Price.TieredPrice) = price(Price.ofTieredPrice(tieredPrice))
+            fun price(tiered: Price.TieredPrice) = price(Price.ofTiered(tiered))
 
             /**
              * The Price resource represents a price that can be billed on a subscription, resulting
@@ -4668,8 +4674,7 @@ private constructor(
              * For more on the types of prices, see
              * [the core concepts documentation](/core-concepts#plan-and-price)
              */
-            fun price(tieredBpsPrice: Price.TieredBpsPrice) =
-                price(Price.ofTieredBpsPrice(tieredBpsPrice))
+            fun price(tieredBps: Price.TieredBpsPrice) = price(Price.ofTieredBps(tieredBps))
 
             /**
              * The Price resource represents a price that can be billed on a subscription, resulting
@@ -4683,7 +4688,7 @@ private constructor(
              * For more on the types of prices, see
              * [the core concepts documentation](/core-concepts#plan-and-price)
              */
-            fun price(bpsPrice: Price.BpsPrice) = price(Price.ofBpsPrice(bpsPrice))
+            fun price(bps: Price.BpsPrice) = price(Price.ofBps(bps))
 
             /**
              * The Price resource represents a price that can be billed on a subscription, resulting
@@ -4697,7 +4702,7 @@ private constructor(
              * For more on the types of prices, see
              * [the core concepts documentation](/core-concepts#plan-and-price)
              */
-            fun price(bulkBpsPrice: Price.BulkBpsPrice) = price(Price.ofBulkBpsPrice(bulkBpsPrice))
+            fun price(bulkBps: Price.BulkBpsPrice) = price(Price.ofBulkBps(bulkBps))
 
             /**
              * The Price resource represents a price that can be billed on a subscription, resulting
@@ -4711,7 +4716,7 @@ private constructor(
              * For more on the types of prices, see
              * [the core concepts documentation](/core-concepts#plan-and-price)
              */
-            fun price(bulkPrice: Price.BulkPrice) = price(Price.ofBulkPrice(bulkPrice))
+            fun price(bulk: Price.BulkPrice) = price(Price.ofBulk(bulk))
 
             /**
              * The Price resource represents a price that can be billed on a subscription, resulting
@@ -4725,8 +4730,8 @@ private constructor(
              * For more on the types of prices, see
              * [the core concepts documentation](/core-concepts#plan-and-price)
              */
-            fun price(thresholdTotalAmountPrice: Price.ThresholdTotalAmountPrice) =
-                price(Price.ofThresholdTotalAmountPrice(thresholdTotalAmountPrice))
+            fun price(thresholdTotalAmount: Price.ThresholdTotalAmountPrice) =
+                price(Price.ofThresholdTotalAmount(thresholdTotalAmount))
 
             /**
              * The Price resource represents a price that can be billed on a subscription, resulting
@@ -4740,8 +4745,8 @@ private constructor(
              * For more on the types of prices, see
              * [the core concepts documentation](/core-concepts#plan-and-price)
              */
-            fun price(tieredPackagePrice: Price.TieredPackagePrice) =
-                price(Price.ofTieredPackagePrice(tieredPackagePrice))
+            fun price(tieredPackage: Price.TieredPackagePrice) =
+                price(Price.ofTieredPackage(tieredPackage))
 
             /**
              * The Price resource represents a price that can be billed on a subscription, resulting
@@ -4755,8 +4760,8 @@ private constructor(
              * For more on the types of prices, see
              * [the core concepts documentation](/core-concepts#plan-and-price)
              */
-            fun price(groupedTieredPrice: Price.GroupedTieredPrice) =
-                price(Price.ofGroupedTieredPrice(groupedTieredPrice))
+            fun price(groupedTiered: Price.GroupedTieredPrice) =
+                price(Price.ofGroupedTiered(groupedTiered))
 
             /**
              * The Price resource represents a price that can be billed on a subscription, resulting
@@ -4770,8 +4775,8 @@ private constructor(
              * For more on the types of prices, see
              * [the core concepts documentation](/core-concepts#plan-and-price)
              */
-            fun price(tieredWithMinimumPrice: Price.TieredWithMinimumPrice) =
-                price(Price.ofTieredWithMinimumPrice(tieredWithMinimumPrice))
+            fun price(tieredWithMinimum: Price.TieredWithMinimumPrice) =
+                price(Price.ofTieredWithMinimum(tieredWithMinimum))
 
             /**
              * The Price resource represents a price that can be billed on a subscription, resulting
@@ -4785,8 +4790,8 @@ private constructor(
              * For more on the types of prices, see
              * [the core concepts documentation](/core-concepts#plan-and-price)
              */
-            fun price(tieredPackageWithMinimumPrice: Price.TieredPackageWithMinimumPrice) =
-                price(Price.ofTieredPackageWithMinimumPrice(tieredPackageWithMinimumPrice))
+            fun price(tieredPackageWithMinimum: Price.TieredPackageWithMinimumPrice) =
+                price(Price.ofTieredPackageWithMinimum(tieredPackageWithMinimum))
 
             /**
              * The Price resource represents a price that can be billed on a subscription, resulting
@@ -4800,8 +4805,8 @@ private constructor(
              * For more on the types of prices, see
              * [the core concepts documentation](/core-concepts#plan-and-price)
              */
-            fun price(packageWithAllocationPrice: Price.PackageWithAllocationPrice) =
-                price(Price.ofPackageWithAllocationPrice(packageWithAllocationPrice))
+            fun price(packageWithAllocation: Price.PackageWithAllocationPrice) =
+                price(Price.ofPackageWithAllocation(packageWithAllocation))
 
             /**
              * The Price resource represents a price that can be billed on a subscription, resulting
@@ -4815,8 +4820,8 @@ private constructor(
              * For more on the types of prices, see
              * [the core concepts documentation](/core-concepts#plan-and-price)
              */
-            fun price(unitWithPercentPrice: Price.UnitWithPercentPrice) =
-                price(Price.ofUnitWithPercentPrice(unitWithPercentPrice))
+            fun price(unitWithPercent: Price.UnitWithPercentPrice) =
+                price(Price.ofUnitWithPercent(unitWithPercent))
 
             /**
              * The Price resource represents a price that can be billed on a subscription, resulting
@@ -4830,8 +4835,8 @@ private constructor(
              * For more on the types of prices, see
              * [the core concepts documentation](/core-concepts#plan-and-price)
              */
-            fun price(matrixWithAllocationPrice: Price.MatrixWithAllocationPrice) =
-                price(Price.ofMatrixWithAllocationPrice(matrixWithAllocationPrice))
+            fun price(matrixWithAllocation: Price.MatrixWithAllocationPrice) =
+                price(Price.ofMatrixWithAllocation(matrixWithAllocation))
 
             /**
              * The Price resource represents a price that can be billed on a subscription, resulting
@@ -4845,8 +4850,8 @@ private constructor(
              * For more on the types of prices, see
              * [the core concepts documentation](/core-concepts#plan-and-price)
              */
-            fun price(tieredWithProrationPrice: Price.TieredWithProrationPrice) =
-                price(Price.ofTieredWithProrationPrice(tieredWithProrationPrice))
+            fun price(tieredWithProration: Price.TieredWithProrationPrice) =
+                price(Price.ofTieredWithProration(tieredWithProration))
 
             /**
              * The Price resource represents a price that can be billed on a subscription, resulting
@@ -4860,8 +4865,8 @@ private constructor(
              * For more on the types of prices, see
              * [the core concepts documentation](/core-concepts#plan-and-price)
              */
-            fun price(unitWithProrationPrice: Price.UnitWithProrationPrice) =
-                price(Price.ofUnitWithProrationPrice(unitWithProrationPrice))
+            fun price(unitWithProration: Price.UnitWithProrationPrice) =
+                price(Price.ofUnitWithProration(unitWithProration))
 
             /**
              * The Price resource represents a price that can be billed on a subscription, resulting
@@ -4875,8 +4880,8 @@ private constructor(
              * For more on the types of prices, see
              * [the core concepts documentation](/core-concepts#plan-and-price)
              */
-            fun price(groupedAllocationPrice: Price.GroupedAllocationPrice) =
-                price(Price.ofGroupedAllocationPrice(groupedAllocationPrice))
+            fun price(groupedAllocation: Price.GroupedAllocationPrice) =
+                price(Price.ofGroupedAllocation(groupedAllocation))
 
             /**
              * The Price resource represents a price that can be billed on a subscription, resulting
@@ -4890,8 +4895,8 @@ private constructor(
              * For more on the types of prices, see
              * [the core concepts documentation](/core-concepts#plan-and-price)
              */
-            fun price(groupedWithProratedMinimumPrice: Price.GroupedWithProratedMinimumPrice) =
-                price(Price.ofGroupedWithProratedMinimumPrice(groupedWithProratedMinimumPrice))
+            fun price(groupedWithProratedMinimum: Price.GroupedWithProratedMinimumPrice) =
+                price(Price.ofGroupedWithProratedMinimum(groupedWithProratedMinimum))
 
             /**
              * The Price resource represents a price that can be billed on a subscription, resulting
@@ -4905,8 +4910,8 @@ private constructor(
              * For more on the types of prices, see
              * [the core concepts documentation](/core-concepts#plan-and-price)
              */
-            fun price(groupedWithMeteredMinimumPrice: Price.GroupedWithMeteredMinimumPrice) =
-                price(Price.ofGroupedWithMeteredMinimumPrice(groupedWithMeteredMinimumPrice))
+            fun price(groupedWithMeteredMinimum: Price.GroupedWithMeteredMinimumPrice) =
+                price(Price.ofGroupedWithMeteredMinimum(groupedWithMeteredMinimum))
 
             /**
              * The Price resource represents a price that can be billed on a subscription, resulting
@@ -4920,8 +4925,8 @@ private constructor(
              * For more on the types of prices, see
              * [the core concepts documentation](/core-concepts#plan-and-price)
              */
-            fun price(matrixWithDisplayNamePrice: Price.MatrixWithDisplayNamePrice) =
-                price(Price.ofMatrixWithDisplayNamePrice(matrixWithDisplayNamePrice))
+            fun price(matrixWithDisplayName: Price.MatrixWithDisplayNamePrice) =
+                price(Price.ofMatrixWithDisplayName(matrixWithDisplayName))
 
             /**
              * The Price resource represents a price that can be billed on a subscription, resulting
@@ -4935,8 +4940,8 @@ private constructor(
              * For more on the types of prices, see
              * [the core concepts documentation](/core-concepts#plan-and-price)
              */
-            fun price(bulkWithProrationPrice: Price.BulkWithProrationPrice) =
-                price(Price.ofBulkWithProrationPrice(bulkWithProrationPrice))
+            fun price(bulkWithProration: Price.BulkWithProrationPrice) =
+                price(Price.ofBulkWithProration(bulkWithProration))
 
             /**
              * The Price resource represents a price that can be billed on a subscription, resulting
@@ -4950,8 +4955,8 @@ private constructor(
              * For more on the types of prices, see
              * [the core concepts documentation](/core-concepts#plan-and-price)
              */
-            fun price(groupedTieredPackagePrice: Price.GroupedTieredPackagePrice) =
-                price(Price.ofGroupedTieredPackagePrice(groupedTieredPackagePrice))
+            fun price(groupedTieredPackage: Price.GroupedTieredPackagePrice) =
+                price(Price.ofGroupedTieredPackage(groupedTieredPackage))
 
             /**
              * The Price resource represents a price that can be billed on a subscription, resulting
@@ -4965,8 +4970,8 @@ private constructor(
              * For more on the types of prices, see
              * [the core concepts documentation](/core-concepts#plan-and-price)
              */
-            fun price(maxGroupTieredPrice: Price.MaxGroupTieredPrice) =
-                price(Price.ofMaxGroupTieredPrice(maxGroupTieredPrice))
+            fun price(maxGroupTiered: Price.MaxGroupTieredPrice) =
+                price(Price.ofMaxGroupTiered(maxGroupTiered))
 
             fun quantity(quantity: Double) = quantity(JsonField.of(quantity))
 
@@ -5014,22 +5019,22 @@ private constructor(
              * For complex pricing structures, the line item can be broken down further in
              * `sub_line_items`.
              */
-            fun addSubLineItem(matrixSubLineItem: SubLineItem.MatrixSubLineItem) =
-                addSubLineItem(SubLineItem.ofMatrixSubLineItem(matrixSubLineItem))
+            fun addSubLineItem(matrix: SubLineItem.MatrixSubLineItem) =
+                addSubLineItem(SubLineItem.ofMatrix(matrix))
 
             /**
              * For complex pricing structures, the line item can be broken down further in
              * `sub_line_items`.
              */
-            fun addSubLineItem(tierSubLineItem: SubLineItem.TierSubLineItem) =
-                addSubLineItem(SubLineItem.ofTierSubLineItem(tierSubLineItem))
+            fun addSubLineItem(tier: SubLineItem.TierSubLineItem) =
+                addSubLineItem(SubLineItem.ofTier(tier))
 
             /**
              * For complex pricing structures, the line item can be broken down further in
              * `sub_line_items`.
              */
-            fun addSubLineItem(otherSubLineItem: SubLineItem.OtherSubLineItem) =
-                addSubLineItem(SubLineItem.ofOtherSubLineItem(otherSubLineItem))
+            fun addSubLineItem(other: SubLineItem.OtherSubLineItem) =
+                addSubLineItem(SubLineItem.ofOther(other))
 
             /** The line amount before any line item-specific discounts or minimums. */
             fun subtotal(subtotal: String) = subtotal(JsonField.of(subtotal))
@@ -5433,39 +5438,37 @@ private constructor(
         @JsonSerialize(using = SubLineItem.Serializer::class)
         class SubLineItem
         private constructor(
-            private val matrixSubLineItem: MatrixSubLineItem? = null,
-            private val tierSubLineItem: TierSubLineItem? = null,
-            private val otherSubLineItem: OtherSubLineItem? = null,
+            private val matrix: MatrixSubLineItem? = null,
+            private val tier: TierSubLineItem? = null,
+            private val other: OtherSubLineItem? = null,
             private val _json: JsonValue? = null,
         ) {
 
-            fun matrixSubLineItem(): MatrixSubLineItem? = matrixSubLineItem
+            fun matrix(): MatrixSubLineItem? = matrix
 
-            fun tierSubLineItem(): TierSubLineItem? = tierSubLineItem
+            fun tier(): TierSubLineItem? = tier
 
-            fun otherSubLineItem(): OtherSubLineItem? = otherSubLineItem
+            fun other(): OtherSubLineItem? = other
 
-            fun isMatrixSubLineItem(): Boolean = matrixSubLineItem != null
+            fun isMatrix(): Boolean = matrix != null
 
-            fun isTierSubLineItem(): Boolean = tierSubLineItem != null
+            fun isTier(): Boolean = tier != null
 
-            fun isOtherSubLineItem(): Boolean = otherSubLineItem != null
+            fun isOther(): Boolean = other != null
 
-            fun asMatrixSubLineItem(): MatrixSubLineItem =
-                matrixSubLineItem.getOrThrow("matrixSubLineItem")
+            fun asMatrix(): MatrixSubLineItem = matrix.getOrThrow("matrix")
 
-            fun asTierSubLineItem(): TierSubLineItem = tierSubLineItem.getOrThrow("tierSubLineItem")
+            fun asTier(): TierSubLineItem = tier.getOrThrow("tier")
 
-            fun asOtherSubLineItem(): OtherSubLineItem =
-                otherSubLineItem.getOrThrow("otherSubLineItem")
+            fun asOther(): OtherSubLineItem = other.getOrThrow("other")
 
             fun _json(): JsonValue? = _json
 
             fun <T> accept(visitor: Visitor<T>): T {
                 return when {
-                    matrixSubLineItem != null -> visitor.visitMatrixSubLineItem(matrixSubLineItem)
-                    tierSubLineItem != null -> visitor.visitTierSubLineItem(tierSubLineItem)
-                    otherSubLineItem != null -> visitor.visitOtherSubLineItem(otherSubLineItem)
+                    matrix != null -> visitor.visitMatrix(matrix)
+                    tier != null -> visitor.visitTier(tier)
+                    other != null -> visitor.visitOther(other)
                     else -> visitor.unknown(_json)
                 }
             }
@@ -5479,16 +5482,16 @@ private constructor(
 
                 accept(
                     object : Visitor<Unit> {
-                        override fun visitMatrixSubLineItem(matrixSubLineItem: MatrixSubLineItem) {
-                            matrixSubLineItem.validate()
+                        override fun visitMatrix(matrix: MatrixSubLineItem) {
+                            matrix.validate()
                         }
 
-                        override fun visitTierSubLineItem(tierSubLineItem: TierSubLineItem) {
-                            tierSubLineItem.validate()
+                        override fun visitTier(tier: TierSubLineItem) {
+                            tier.validate()
                         }
 
-                        override fun visitOtherSubLineItem(otherSubLineItem: OtherSubLineItem) {
-                            otherSubLineItem.validate()
+                        override fun visitOther(other: OtherSubLineItem) {
+                            other.validate()
                         }
                     }
                 )
@@ -5500,39 +5503,36 @@ private constructor(
                     return true
                 }
 
-                return /* spotless:off */ other is SubLineItem && matrixSubLineItem == other.matrixSubLineItem && tierSubLineItem == other.tierSubLineItem && otherSubLineItem == other.otherSubLineItem /* spotless:on */
+                return /* spotless:off */ other is SubLineItem && matrix == other.matrix && tier == other.tier && this.other == other.other /* spotless:on */
             }
 
-            override fun hashCode(): Int = /* spotless:off */ Objects.hash(matrixSubLineItem, tierSubLineItem, otherSubLineItem) /* spotless:on */
+            override fun hashCode(): Int = /* spotless:off */ Objects.hash(matrix, tier, other) /* spotless:on */
 
             override fun toString(): String =
                 when {
-                    matrixSubLineItem != null -> "SubLineItem{matrixSubLineItem=$matrixSubLineItem}"
-                    tierSubLineItem != null -> "SubLineItem{tierSubLineItem=$tierSubLineItem}"
-                    otherSubLineItem != null -> "SubLineItem{otherSubLineItem=$otherSubLineItem}"
+                    matrix != null -> "SubLineItem{matrix=$matrix}"
+                    tier != null -> "SubLineItem{tier=$tier}"
+                    other != null -> "SubLineItem{other=$other}"
                     _json != null -> "SubLineItem{_unknown=$_json}"
                     else -> throw IllegalStateException("Invalid SubLineItem")
                 }
 
             companion object {
 
-                fun ofMatrixSubLineItem(matrixSubLineItem: MatrixSubLineItem) =
-                    SubLineItem(matrixSubLineItem = matrixSubLineItem)
+                fun ofMatrix(matrix: MatrixSubLineItem) = SubLineItem(matrix = matrix)
 
-                fun ofTierSubLineItem(tierSubLineItem: TierSubLineItem) =
-                    SubLineItem(tierSubLineItem = tierSubLineItem)
+                fun ofTier(tier: TierSubLineItem) = SubLineItem(tier = tier)
 
-                fun ofOtherSubLineItem(otherSubLineItem: OtherSubLineItem) =
-                    SubLineItem(otherSubLineItem = otherSubLineItem)
+                fun ofOther(other: OtherSubLineItem) = SubLineItem(other = other)
             }
 
             interface Visitor<out T> {
 
-                fun visitMatrixSubLineItem(matrixSubLineItem: MatrixSubLineItem): T
+                fun visitMatrix(matrix: MatrixSubLineItem): T
 
-                fun visitTierSubLineItem(tierSubLineItem: TierSubLineItem): T
+                fun visitTier(tier: TierSubLineItem): T
 
-                fun visitOtherSubLineItem(otherSubLineItem: OtherSubLineItem): T
+                fun visitOther(other: OtherSubLineItem): T
 
                 fun unknown(json: JsonValue?): T {
                     throw OrbInvalidDataException("Unknown SubLineItem: $json")
@@ -5551,7 +5551,7 @@ private constructor(
                                     it.validate()
                                 }
                                 ?.let {
-                                    return SubLineItem(matrixSubLineItem = it, _json = json)
+                                    return SubLineItem(matrix = it, _json = json)
                                 }
                         }
                         "tier" -> {
@@ -5559,7 +5559,7 @@ private constructor(
                                     it.validate()
                                 }
                                 ?.let {
-                                    return SubLineItem(tierSubLineItem = it, _json = json)
+                                    return SubLineItem(tier = it, _json = json)
                                 }
                         }
                         "'null'" -> {
@@ -5567,7 +5567,7 @@ private constructor(
                                     it.validate()
                                 }
                                 ?.let {
-                                    return SubLineItem(otherSubLineItem = it, _json = json)
+                                    return SubLineItem(other = it, _json = json)
                                 }
                         }
                     }
@@ -5584,12 +5584,9 @@ private constructor(
                     provider: SerializerProvider
                 ) {
                     when {
-                        value.matrixSubLineItem != null ->
-                            generator.writeObject(value.matrixSubLineItem)
-                        value.tierSubLineItem != null ->
-                            generator.writeObject(value.tierSubLineItem)
-                        value.otherSubLineItem != null ->
-                            generator.writeObject(value.otherSubLineItem)
+                        value.matrix != null -> generator.writeObject(value.matrix)
+                        value.tier != null -> generator.writeObject(value.tier)
+                        value.other != null -> generator.writeObject(value.other)
                         value._json != null -> generator.writeObject(value._json)
                         else -> throw IllegalStateException("Invalid SubLineItem")
                     }

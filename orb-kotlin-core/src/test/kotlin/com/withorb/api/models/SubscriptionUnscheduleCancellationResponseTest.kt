@@ -599,24 +599,23 @@ class SubscriptionUnscheduleCancellationResponseTest {
             .isEqualTo("default_invoice_memo")
         assertThat(subscriptionUnscheduleCancellationResponse.discountIntervals())
             .containsExactly(
-                SubscriptionUnscheduleCancellationResponse.DiscountInterval
-                    .ofAmountDiscountInterval(
-                        SubscriptionUnscheduleCancellationResponse.DiscountInterval
-                            .AmountDiscountInterval
-                            .builder()
-                            .amountDiscount("amount_discount")
-                            .addAppliesToPriceId("string")
-                            .addAppliesToPriceIntervalId("string")
-                            .discountType(
-                                SubscriptionUnscheduleCancellationResponse.DiscountInterval
-                                    .AmountDiscountInterval
-                                    .DiscountType
-                                    .AMOUNT
-                            )
-                            .endDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
-                            .startDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
-                            .build()
-                    )
+                SubscriptionUnscheduleCancellationResponse.DiscountInterval.ofAmount(
+                    SubscriptionUnscheduleCancellationResponse.DiscountInterval
+                        .AmountDiscountInterval
+                        .builder()
+                        .amountDiscount("amount_discount")
+                        .addAppliesToPriceId("string")
+                        .addAppliesToPriceIntervalId("string")
+                        .discountType(
+                            SubscriptionUnscheduleCancellationResponse.DiscountInterval
+                                .AmountDiscountInterval
+                                .DiscountType
+                                .AMOUNT
+                        )
+                        .endDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                        .startDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                        .build()
+                )
             )
         assertThat(subscriptionUnscheduleCancellationResponse.endDate())
             .isEqualTo(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))

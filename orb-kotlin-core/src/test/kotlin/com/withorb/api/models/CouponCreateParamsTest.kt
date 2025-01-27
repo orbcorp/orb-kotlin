@@ -46,7 +46,7 @@ class CouponCreateParamsTest {
         assertThat(body).isNotNull
         assertThat(body.discount())
             .isEqualTo(
-                CouponCreateParams.Discount.ofNewCouponPercentageDiscount(
+                CouponCreateParams.Discount.ofNewCouponPercentage(
                     CouponCreateParams.Discount.NewCouponPercentageDiscount.builder()
                         .discountType(
                             CouponCreateParams.Discount.NewCouponPercentageDiscount.DiscountType
@@ -80,7 +80,7 @@ class CouponCreateParamsTest {
         assertThat(body).isNotNull
         assertThat(body.discount())
             .isEqualTo(
-                CouponCreateParams.Discount.ofNewCouponPercentageDiscount(
+                CouponCreateParams.Discount.ofNewCouponPercentage(
                     CouponCreateParams.Discount.NewCouponPercentageDiscount.builder()
                         .discountType(
                             CouponCreateParams.Discount.NewCouponPercentageDiscount.DiscountType

@@ -595,7 +595,7 @@ class SubscriptionPriceIntervalsResponseTest {
             .isEqualTo("default_invoice_memo")
         assertThat(subscriptionPriceIntervalsResponse.discountIntervals())
             .containsExactly(
-                SubscriptionPriceIntervalsResponse.DiscountInterval.ofAmountDiscountInterval(
+                SubscriptionPriceIntervalsResponse.DiscountInterval.ofAmount(
                     SubscriptionPriceIntervalsResponse.DiscountInterval.AmountDiscountInterval
                         .builder()
                         .amountDiscount("amount_discount")

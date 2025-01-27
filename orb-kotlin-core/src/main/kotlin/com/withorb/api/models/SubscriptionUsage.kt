@@ -33,33 +33,29 @@ import java.util.Objects
 @JsonSerialize(using = SubscriptionUsage.Serializer::class)
 class SubscriptionUsage
 private constructor(
-    private val ungroupedSubscriptionUsage: UngroupedSubscriptionUsage? = null,
-    private val groupedSubscriptionUsage: GroupedSubscriptionUsage? = null,
+    private val ungrouped: UngroupedSubscriptionUsage? = null,
+    private val grouped: GroupedSubscriptionUsage? = null,
     private val _json: JsonValue? = null,
 ) {
 
-    fun ungroupedSubscriptionUsage(): UngroupedSubscriptionUsage? = ungroupedSubscriptionUsage
+    fun ungrouped(): UngroupedSubscriptionUsage? = ungrouped
 
-    fun groupedSubscriptionUsage(): GroupedSubscriptionUsage? = groupedSubscriptionUsage
+    fun grouped(): GroupedSubscriptionUsage? = grouped
 
-    fun isUngroupedSubscriptionUsage(): Boolean = ungroupedSubscriptionUsage != null
+    fun isUngrouped(): Boolean = ungrouped != null
 
-    fun isGroupedSubscriptionUsage(): Boolean = groupedSubscriptionUsage != null
+    fun isGrouped(): Boolean = grouped != null
 
-    fun asUngroupedSubscriptionUsage(): UngroupedSubscriptionUsage =
-        ungroupedSubscriptionUsage.getOrThrow("ungroupedSubscriptionUsage")
+    fun asUngrouped(): UngroupedSubscriptionUsage = ungrouped.getOrThrow("ungrouped")
 
-    fun asGroupedSubscriptionUsage(): GroupedSubscriptionUsage =
-        groupedSubscriptionUsage.getOrThrow("groupedSubscriptionUsage")
+    fun asGrouped(): GroupedSubscriptionUsage = grouped.getOrThrow("grouped")
 
     fun _json(): JsonValue? = _json
 
     fun <T> accept(visitor: Visitor<T>): T {
         return when {
-            ungroupedSubscriptionUsage != null ->
-                visitor.visitUngroupedSubscriptionUsage(ungroupedSubscriptionUsage)
-            groupedSubscriptionUsage != null ->
-                visitor.visitGroupedSubscriptionUsage(groupedSubscriptionUsage)
+            ungrouped != null -> visitor.visitUngrouped(ungrouped)
+            grouped != null -> visitor.visitGrouped(grouped)
             else -> visitor.unknown(_json)
         }
     }
@@ -73,16 +69,12 @@ private constructor(
 
         accept(
             object : Visitor<Unit> {
-                override fun visitUngroupedSubscriptionUsage(
-                    ungroupedSubscriptionUsage: UngroupedSubscriptionUsage
-                ) {
-                    ungroupedSubscriptionUsage.validate()
+                override fun visitUngrouped(ungrouped: UngroupedSubscriptionUsage) {
+                    ungrouped.validate()
                 }
 
-                override fun visitGroupedSubscriptionUsage(
-                    groupedSubscriptionUsage: GroupedSubscriptionUsage
-                ) {
-                    groupedSubscriptionUsage.validate()
+                override fun visitGrouped(grouped: GroupedSubscriptionUsage) {
+                    grouped.validate()
                 }
             }
         )
@@ -94,37 +86,32 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is SubscriptionUsage && ungroupedSubscriptionUsage == other.ungroupedSubscriptionUsage && groupedSubscriptionUsage == other.groupedSubscriptionUsage /* spotless:on */
+        return /* spotless:off */ other is SubscriptionUsage && ungrouped == other.ungrouped && grouped == other.grouped /* spotless:on */
     }
 
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(ungroupedSubscriptionUsage, groupedSubscriptionUsage) /* spotless:on */
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(ungrouped, grouped) /* spotless:on */
 
     override fun toString(): String =
         when {
-            ungroupedSubscriptionUsage != null ->
-                "SubscriptionUsage{ungroupedSubscriptionUsage=$ungroupedSubscriptionUsage}"
-            groupedSubscriptionUsage != null ->
-                "SubscriptionUsage{groupedSubscriptionUsage=$groupedSubscriptionUsage}"
+            ungrouped != null -> "SubscriptionUsage{ungrouped=$ungrouped}"
+            grouped != null -> "SubscriptionUsage{grouped=$grouped}"
             _json != null -> "SubscriptionUsage{_unknown=$_json}"
             else -> throw IllegalStateException("Invalid SubscriptionUsage")
         }
 
     companion object {
 
-        fun ofUngroupedSubscriptionUsage(ungroupedSubscriptionUsage: UngroupedSubscriptionUsage) =
-            SubscriptionUsage(ungroupedSubscriptionUsage = ungroupedSubscriptionUsage)
+        fun ofUngrouped(ungrouped: UngroupedSubscriptionUsage) =
+            SubscriptionUsage(ungrouped = ungrouped)
 
-        fun ofGroupedSubscriptionUsage(groupedSubscriptionUsage: GroupedSubscriptionUsage) =
-            SubscriptionUsage(groupedSubscriptionUsage = groupedSubscriptionUsage)
+        fun ofGrouped(grouped: GroupedSubscriptionUsage) = SubscriptionUsage(grouped = grouped)
     }
 
     interface Visitor<out T> {
 
-        fun visitUngroupedSubscriptionUsage(
-            ungroupedSubscriptionUsage: UngroupedSubscriptionUsage
-        ): T
+        fun visitUngrouped(ungrouped: UngroupedSubscriptionUsage): T
 
-        fun visitGroupedSubscriptionUsage(groupedSubscriptionUsage: GroupedSubscriptionUsage): T
+        fun visitGrouped(grouped: GroupedSubscriptionUsage): T
 
         fun unknown(json: JsonValue?): T {
             throw OrbInvalidDataException("Unknown SubscriptionUsage: $json")
@@ -138,11 +125,11 @@ private constructor(
 
             tryDeserialize(node, jacksonTypeRef<UngroupedSubscriptionUsage>()) { it.validate() }
                 ?.let {
-                    return SubscriptionUsage(ungroupedSubscriptionUsage = it, _json = json)
+                    return SubscriptionUsage(ungrouped = it, _json = json)
                 }
             tryDeserialize(node, jacksonTypeRef<GroupedSubscriptionUsage>()) { it.validate() }
                 ?.let {
-                    return SubscriptionUsage(groupedSubscriptionUsage = it, _json = json)
+                    return SubscriptionUsage(grouped = it, _json = json)
                 }
 
             return SubscriptionUsage(_json = json)
@@ -157,10 +144,8 @@ private constructor(
             provider: SerializerProvider
         ) {
             when {
-                value.ungroupedSubscriptionUsage != null ->
-                    generator.writeObject(value.ungroupedSubscriptionUsage)
-                value.groupedSubscriptionUsage != null ->
-                    generator.writeObject(value.groupedSubscriptionUsage)
+                value.ungrouped != null -> generator.writeObject(value.ungrouped)
+                value.grouped != null -> generator.writeObject(value.grouped)
                 value._json != null -> generator.writeObject(value._json)
                 else -> throw IllegalStateException("Invalid SubscriptionUsage")
             }

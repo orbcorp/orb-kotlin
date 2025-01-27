@@ -150,7 +150,7 @@ class InvoiceLineItemCreateResponseTest {
         assertThat(invoiceLineItemCreateResponse.amount()).isEqualTo("7.00")
         assertThat(invoiceLineItemCreateResponse.discount())
             .isEqualTo(
-                Discount.ofPercentageDiscount(
+                Discount.ofPercentage(
                     PercentageDiscount.builder()
                         .addAppliesToPriceId("h74gfhdjvn7ujokd")
                         .addAppliesToPriceId("7hfgtgjnbvc3ujkl")
@@ -182,7 +182,7 @@ class InvoiceLineItemCreateResponseTest {
         assertThat(invoiceLineItemCreateResponse.name()).isEqualTo("Fixed Fee")
         assertThat(invoiceLineItemCreateResponse.price())
             .isEqualTo(
-                Price.ofUnitPrice(
+                Price.ofUnit(
                     Price.UnitPrice.builder()
                         .id("id")
                         .billableMetric(Price.UnitPrice.BillableMetric.builder().id("id").build())
@@ -258,7 +258,7 @@ class InvoiceLineItemCreateResponseTest {
             .isEqualTo(OffsetDateTime.parse("2022-02-01T08:00:00+00:00"))
         assertThat(invoiceLineItemCreateResponse.subLineItems())
             .containsExactly(
-                InvoiceLineItemCreateResponse.SubLineItem.ofMatrixSubLineItem(
+                InvoiceLineItemCreateResponse.SubLineItem.ofMatrix(
                     InvoiceLineItemCreateResponse.SubLineItem.MatrixSubLineItem.builder()
                         .amount("9.00")
                         .grouping(

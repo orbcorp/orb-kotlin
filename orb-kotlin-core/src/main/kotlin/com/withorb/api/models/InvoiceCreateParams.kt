@@ -427,20 +427,17 @@ constructor(
             fun discount(discount: JsonField<Discount>) = apply { this.discount = discount }
 
             /** An optional discount to attach to the invoice. */
-            fun discount(percentageDiscount: PercentageDiscount) =
-                discount(Discount.ofPercentageDiscount(percentageDiscount))
+            fun discount(percentage: PercentageDiscount) =
+                discount(Discount.ofPercentage(percentage))
 
             /** An optional discount to attach to the invoice. */
-            fun discount(trialDiscount: TrialDiscount) =
-                discount(Discount.ofTrialDiscount(trialDiscount))
+            fun discount(trial: TrialDiscount) = discount(Discount.ofTrial(trial))
 
             /** An optional discount to attach to the invoice. */
-            fun discount(usageDiscount: Discount.UsageDiscount) =
-                discount(Discount.ofUsageDiscount(usageDiscount))
+            fun discount(usage: Discount.UsageDiscount) = discount(Discount.ofUsage(usage))
 
             /** An optional discount to attach to the invoice. */
-            fun discount(amountDiscount: AmountDiscount) =
-                discount(Discount.ofAmountDiscount(amountDiscount))
+            fun discount(amount: AmountDiscount) = discount(Discount.ofAmount(amount))
 
             /**
              * The `external_customer_id` of the `Customer` to create this invoice for. One of
@@ -627,18 +624,16 @@ constructor(
         fun discount(discount: JsonField<Discount>) = apply { body.discount(discount) }
 
         /** An optional discount to attach to the invoice. */
-        fun discount(percentageDiscount: PercentageDiscount) = apply {
-            body.discount(percentageDiscount)
-        }
+        fun discount(percentage: PercentageDiscount) = apply { body.discount(percentage) }
 
         /** An optional discount to attach to the invoice. */
-        fun discount(trialDiscount: TrialDiscount) = apply { body.discount(trialDiscount) }
+        fun discount(trial: TrialDiscount) = apply { body.discount(trial) }
 
         /** An optional discount to attach to the invoice. */
-        fun discount(usageDiscount: Discount.UsageDiscount) = apply { body.discount(usageDiscount) }
+        fun discount(usage: Discount.UsageDiscount) = apply { body.discount(usage) }
 
         /** An optional discount to attach to the invoice. */
-        fun discount(amountDiscount: AmountDiscount) = apply { body.discount(amountDiscount) }
+        fun discount(amount: AmountDiscount) = apply { body.discount(amount) }
 
         /**
          * The `external_customer_id` of the `Customer` to create this invoice for. One of

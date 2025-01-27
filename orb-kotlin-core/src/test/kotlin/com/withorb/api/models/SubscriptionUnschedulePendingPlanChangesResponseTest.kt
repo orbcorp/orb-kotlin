@@ -608,24 +608,23 @@ class SubscriptionUnschedulePendingPlanChangesResponseTest {
             .isEqualTo("default_invoice_memo")
         assertThat(subscriptionUnschedulePendingPlanChangesResponse.discountIntervals())
             .containsExactly(
-                SubscriptionUnschedulePendingPlanChangesResponse.DiscountInterval
-                    .ofAmountDiscountInterval(
-                        SubscriptionUnschedulePendingPlanChangesResponse.DiscountInterval
-                            .AmountDiscountInterval
-                            .builder()
-                            .amountDiscount("amount_discount")
-                            .addAppliesToPriceId("string")
-                            .addAppliesToPriceIntervalId("string")
-                            .discountType(
-                                SubscriptionUnschedulePendingPlanChangesResponse.DiscountInterval
-                                    .AmountDiscountInterval
-                                    .DiscountType
-                                    .AMOUNT
-                            )
-                            .endDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
-                            .startDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
-                            .build()
-                    )
+                SubscriptionUnschedulePendingPlanChangesResponse.DiscountInterval.ofAmount(
+                    SubscriptionUnschedulePendingPlanChangesResponse.DiscountInterval
+                        .AmountDiscountInterval
+                        .builder()
+                        .amountDiscount("amount_discount")
+                        .addAppliesToPriceId("string")
+                        .addAppliesToPriceIntervalId("string")
+                        .discountType(
+                            SubscriptionUnschedulePendingPlanChangesResponse.DiscountInterval
+                                .AmountDiscountInterval
+                                .DiscountType
+                                .AMOUNT
+                        )
+                        .endDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                        .startDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                        .build()
+                )
             )
         assertThat(subscriptionUnschedulePendingPlanChangesResponse.endDate())
             .isEqualTo(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))

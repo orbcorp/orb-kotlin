@@ -794,8 +794,8 @@ constructor(
              * The start date of the price interval. This is the date that the price will start
              * billing on the subscription.
              */
-            fun startDate(billingCycleRelativeDate: BillingCycleRelativeDate) =
-                startDate(StartDate.ofBillingCycleRelativeDate(billingCycleRelativeDate))
+            fun startDate(billingCycleRelative: BillingCycleRelativeDate) =
+                startDate(StartDate.ofBillingCycleRelative(billingCycleRelative))
 
             /** The definition of a new allocation price to create and add to the subscription. */
             fun allocationPrice(allocationPrice: AllocationPrice?) =
@@ -864,8 +864,8 @@ constructor(
              * The end date of the price interval. This is the date that the price will stop billing
              * on the subscription.
              */
-            fun endDate(billingCycleRelativeDate: BillingCycleRelativeDate) =
-                endDate(EndDate.ofBillingCycleRelativeDate(billingCycleRelativeDate))
+            fun endDate(billingCycleRelative: BillingCycleRelativeDate) =
+                endDate(EndDate.ofBillingCycleRelative(billingCycleRelative))
 
             /** The external price id of the price to add to the subscription. */
             fun externalPriceId(externalPriceId: String?) =
@@ -952,159 +952,124 @@ constructor(
             fun price(price: JsonField<Price>) = apply { this.price = price }
 
             /** The definition of a new price to create and add to the subscription. */
-            fun price(newFloatingUnitPrice: Price.NewFloatingUnitPrice) =
-                price(Price.ofNewFloatingUnitPrice(newFloatingUnitPrice))
+            fun price(newFloatingUnit: Price.NewFloatingUnitPrice) =
+                price(Price.ofNewFloatingUnit(newFloatingUnit))
 
             /** The definition of a new price to create and add to the subscription. */
-            fun price(newFloatingPackagePrice: Price.NewFloatingPackagePrice) =
-                price(Price.ofNewFloatingPackagePrice(newFloatingPackagePrice))
+            fun price(newFloatingPackage: Price.NewFloatingPackagePrice) =
+                price(Price.ofNewFloatingPackage(newFloatingPackage))
 
             /** The definition of a new price to create and add to the subscription. */
-            fun price(newFloatingMatrixPrice: Price.NewFloatingMatrixPrice) =
-                price(Price.ofNewFloatingMatrixPrice(newFloatingMatrixPrice))
+            fun price(newFloatingMatrix: Price.NewFloatingMatrixPrice) =
+                price(Price.ofNewFloatingMatrix(newFloatingMatrix))
+
+            /** The definition of a new price to create and add to the subscription. */
+            fun price(newFloatingMatrixWithAllocation: Price.NewFloatingMatrixWithAllocationPrice) =
+                price(Price.ofNewFloatingMatrixWithAllocation(newFloatingMatrixWithAllocation))
+
+            /** The definition of a new price to create and add to the subscription. */
+            fun price(newFloatingTiered: Price.NewFloatingTieredPrice) =
+                price(Price.ofNewFloatingTiered(newFloatingTiered))
+
+            /** The definition of a new price to create and add to the subscription. */
+            fun price(newFloatingTieredBps: Price.NewFloatingTieredBpsPrice) =
+                price(Price.ofNewFloatingTieredBps(newFloatingTieredBps))
+
+            /** The definition of a new price to create and add to the subscription. */
+            fun price(newFloatingBps: Price.NewFloatingBpsPrice) =
+                price(Price.ofNewFloatingBps(newFloatingBps))
+
+            /** The definition of a new price to create and add to the subscription. */
+            fun price(newFloatingBulkBps: Price.NewFloatingBulkBpsPrice) =
+                price(Price.ofNewFloatingBulkBps(newFloatingBulkBps))
+
+            /** The definition of a new price to create and add to the subscription. */
+            fun price(newFloatingBulk: Price.NewFloatingBulkPrice) =
+                price(Price.ofNewFloatingBulk(newFloatingBulk))
+
+            /** The definition of a new price to create and add to the subscription. */
+            fun price(newFloatingThresholdTotalAmount: Price.NewFloatingThresholdTotalAmountPrice) =
+                price(Price.ofNewFloatingThresholdTotalAmount(newFloatingThresholdTotalAmount))
+
+            /** The definition of a new price to create and add to the subscription. */
+            fun price(newFloatingTieredPackage: Price.NewFloatingTieredPackagePrice) =
+                price(Price.ofNewFloatingTieredPackage(newFloatingTieredPackage))
+
+            /** The definition of a new price to create and add to the subscription. */
+            fun price(newFloatingGroupedTiered: Price.NewFloatingGroupedTieredPrice) =
+                price(Price.ofNewFloatingGroupedTiered(newFloatingGroupedTiered))
+
+            /** The definition of a new price to create and add to the subscription. */
+            fun price(newFloatingMaxGroupTiered: Price.NewFloatingMaxGroupTieredPrice) =
+                price(Price.ofNewFloatingMaxGroupTiered(newFloatingMaxGroupTiered))
+
+            /** The definition of a new price to create and add to the subscription. */
+            fun price(newFloatingTieredWithMinimum: Price.NewFloatingTieredWithMinimumPrice) =
+                price(Price.ofNewFloatingTieredWithMinimum(newFloatingTieredWithMinimum))
 
             /** The definition of a new price to create and add to the subscription. */
             fun price(
-                newFloatingMatrixWithAllocationPrice: Price.NewFloatingMatrixWithAllocationPrice
+                newFloatingPackageWithAllocation: Price.NewFloatingPackageWithAllocationPrice
+            ) = price(Price.ofNewFloatingPackageWithAllocation(newFloatingPackageWithAllocation))
+
+            /** The definition of a new price to create and add to the subscription. */
+            fun price(
+                newFloatingTieredPackageWithMinimum: Price.NewFloatingTieredPackageWithMinimumPrice
             ) =
                 price(
-                    Price.ofNewFloatingMatrixWithAllocationPrice(
-                        newFloatingMatrixWithAllocationPrice
-                    )
+                    Price.ofNewFloatingTieredPackageWithMinimum(newFloatingTieredPackageWithMinimum)
                 )
 
             /** The definition of a new price to create and add to the subscription. */
-            fun price(newFloatingTieredPrice: Price.NewFloatingTieredPrice) =
-                price(Price.ofNewFloatingTieredPrice(newFloatingTieredPrice))
+            fun price(newFloatingUnitWithPercent: Price.NewFloatingUnitWithPercentPrice) =
+                price(Price.ofNewFloatingUnitWithPercent(newFloatingUnitWithPercent))
 
             /** The definition of a new price to create and add to the subscription. */
-            fun price(newFloatingTieredBpsPrice: Price.NewFloatingTieredBpsPrice) =
-                price(Price.ofNewFloatingTieredBpsPrice(newFloatingTieredBpsPrice))
+            fun price(newFloatingTieredWithProration: Price.NewFloatingTieredWithProrationPrice) =
+                price(Price.ofNewFloatingTieredWithProration(newFloatingTieredWithProration))
 
             /** The definition of a new price to create and add to the subscription. */
-            fun price(newFloatingBpsPrice: Price.NewFloatingBpsPrice) =
-                price(Price.ofNewFloatingBpsPrice(newFloatingBpsPrice))
+            fun price(newFloatingUnitWithProration: Price.NewFloatingUnitWithProrationPrice) =
+                price(Price.ofNewFloatingUnitWithProration(newFloatingUnitWithProration))
 
             /** The definition of a new price to create and add to the subscription. */
-            fun price(newFloatingBulkBpsPrice: Price.NewFloatingBulkBpsPrice) =
-                price(Price.ofNewFloatingBulkBpsPrice(newFloatingBulkBpsPrice))
-
-            /** The definition of a new price to create and add to the subscription. */
-            fun price(newFloatingBulkPrice: Price.NewFloatingBulkPrice) =
-                price(Price.ofNewFloatingBulkPrice(newFloatingBulkPrice))
+            fun price(newFloatingGroupedAllocation: Price.NewFloatingGroupedAllocationPrice) =
+                price(Price.ofNewFloatingGroupedAllocation(newFloatingGroupedAllocation))
 
             /** The definition of a new price to create and add to the subscription. */
             fun price(
-                newFloatingThresholdTotalAmountPrice: Price.NewFloatingThresholdTotalAmountPrice
-            ) =
-                price(
-                    Price.ofNewFloatingThresholdTotalAmountPrice(
-                        newFloatingThresholdTotalAmountPrice
-                    )
-                )
-
-            /** The definition of a new price to create and add to the subscription. */
-            fun price(newFloatingTieredPackagePrice: Price.NewFloatingTieredPackagePrice) =
-                price(Price.ofNewFloatingTieredPackagePrice(newFloatingTieredPackagePrice))
-
-            /** The definition of a new price to create and add to the subscription. */
-            fun price(newFloatingGroupedTieredPrice: Price.NewFloatingGroupedTieredPrice) =
-                price(Price.ofNewFloatingGroupedTieredPrice(newFloatingGroupedTieredPrice))
-
-            /** The definition of a new price to create and add to the subscription. */
-            fun price(newFloatingMaxGroupTieredPrice: Price.NewFloatingMaxGroupTieredPrice) =
-                price(Price.ofNewFloatingMaxGroupTieredPrice(newFloatingMaxGroupTieredPrice))
-
-            /** The definition of a new price to create and add to the subscription. */
-            fun price(newFloatingTieredWithMinimumPrice: Price.NewFloatingTieredWithMinimumPrice) =
-                price(Price.ofNewFloatingTieredWithMinimumPrice(newFloatingTieredWithMinimumPrice))
-
-            /** The definition of a new price to create and add to the subscription. */
-            fun price(
-                newFloatingPackageWithAllocationPrice: Price.NewFloatingPackageWithAllocationPrice
-            ) =
-                price(
-                    Price.ofNewFloatingPackageWithAllocationPrice(
-                        newFloatingPackageWithAllocationPrice
-                    )
-                )
-
-            /** The definition of a new price to create and add to the subscription. */
-            fun price(
-                newFloatingTieredPackageWithMinimumPrice:
-                    Price.NewFloatingTieredPackageWithMinimumPrice
-            ) =
-                price(
-                    Price.ofNewFloatingTieredPackageWithMinimumPrice(
-                        newFloatingTieredPackageWithMinimumPrice
-                    )
-                )
-
-            /** The definition of a new price to create and add to the subscription. */
-            fun price(newFloatingUnitWithPercentPrice: Price.NewFloatingUnitWithPercentPrice) =
-                price(Price.ofNewFloatingUnitWithPercentPrice(newFloatingUnitWithPercentPrice))
-
-            /** The definition of a new price to create and add to the subscription. */
-            fun price(
-                newFloatingTieredWithProrationPrice: Price.NewFloatingTieredWithProrationPrice
-            ) =
-                price(
-                    Price.ofNewFloatingTieredWithProrationPrice(newFloatingTieredWithProrationPrice)
-                )
-
-            /** The definition of a new price to create and add to the subscription. */
-            fun price(newFloatingUnitWithProrationPrice: Price.NewFloatingUnitWithProrationPrice) =
-                price(Price.ofNewFloatingUnitWithProrationPrice(newFloatingUnitWithProrationPrice))
-
-            /** The definition of a new price to create and add to the subscription. */
-            fun price(newFloatingGroupedAllocationPrice: Price.NewFloatingGroupedAllocationPrice) =
-                price(Price.ofNewFloatingGroupedAllocationPrice(newFloatingGroupedAllocationPrice))
-
-            /** The definition of a new price to create and add to the subscription. */
-            fun price(
-                newFloatingGroupedWithProratedMinimumPrice:
+                newFloatingGroupedWithProratedMinimum:
                     Price.NewFloatingGroupedWithProratedMinimumPrice
             ) =
                 price(
-                    Price.ofNewFloatingGroupedWithProratedMinimumPrice(
-                        newFloatingGroupedWithProratedMinimumPrice
+                    Price.ofNewFloatingGroupedWithProratedMinimum(
+                        newFloatingGroupedWithProratedMinimum
                     )
                 )
 
             /** The definition of a new price to create and add to the subscription. */
             fun price(
-                newFloatingGroupedWithMeteredMinimumPrice:
+                newFloatingGroupedWithMeteredMinimum:
                     Price.NewFloatingGroupedWithMeteredMinimumPrice
             ) =
                 price(
-                    Price.ofNewFloatingGroupedWithMeteredMinimumPrice(
-                        newFloatingGroupedWithMeteredMinimumPrice
+                    Price.ofNewFloatingGroupedWithMeteredMinimum(
+                        newFloatingGroupedWithMeteredMinimum
                     )
                 )
 
             /** The definition of a new price to create and add to the subscription. */
             fun price(
-                newFloatingMatrixWithDisplayNamePrice: Price.NewFloatingMatrixWithDisplayNamePrice
-            ) =
-                price(
-                    Price.ofNewFloatingMatrixWithDisplayNamePrice(
-                        newFloatingMatrixWithDisplayNamePrice
-                    )
-                )
+                newFloatingMatrixWithDisplayName: Price.NewFloatingMatrixWithDisplayNamePrice
+            ) = price(Price.ofNewFloatingMatrixWithDisplayName(newFloatingMatrixWithDisplayName))
 
             /** The definition of a new price to create and add to the subscription. */
-            fun price(newFloatingBulkWithProrationPrice: Price.NewFloatingBulkWithProrationPrice) =
-                price(Price.ofNewFloatingBulkWithProrationPrice(newFloatingBulkWithProrationPrice))
+            fun price(newFloatingBulkWithProration: Price.NewFloatingBulkWithProrationPrice) =
+                price(Price.ofNewFloatingBulkWithProration(newFloatingBulkWithProration))
 
             /** The definition of a new price to create and add to the subscription. */
-            fun price(
-                newFloatingGroupedTieredPackagePrice: Price.NewFloatingGroupedTieredPackagePrice
-            ) =
-                price(
-                    Price.ofNewFloatingGroupedTieredPackagePrice(
-                        newFloatingGroupedTieredPackagePrice
-                    )
-                )
+            fun price(newFloatingGroupedTieredPackage: Price.NewFloatingGroupedTieredPackagePrice) =
+                price(Price.ofNewFloatingGroupedTieredPackage(newFloatingGroupedTieredPackage))
 
             /** The id of the price to add to the subscription. */
             fun priceId(priceId: String?) = priceId(JsonField.ofNullable(priceId))
@@ -1156,30 +1121,30 @@ constructor(
         class StartDate
         private constructor(
             private val dateTime: OffsetDateTime? = null,
-            private val billingCycleRelativeDate: BillingCycleRelativeDate? = null,
+            private val billingCycleRelative: BillingCycleRelativeDate? = null,
             private val _json: JsonValue? = null,
         ) {
 
             fun dateTime(): OffsetDateTime? = dateTime
 
-            fun billingCycleRelativeDate(): BillingCycleRelativeDate? = billingCycleRelativeDate
+            fun billingCycleRelative(): BillingCycleRelativeDate? = billingCycleRelative
 
             fun isDateTime(): Boolean = dateTime != null
 
-            fun isBillingCycleRelativeDate(): Boolean = billingCycleRelativeDate != null
+            fun isBillingCycleRelative(): Boolean = billingCycleRelative != null
 
             fun asDateTime(): OffsetDateTime = dateTime.getOrThrow("dateTime")
 
-            fun asBillingCycleRelativeDate(): BillingCycleRelativeDate =
-                billingCycleRelativeDate.getOrThrow("billingCycleRelativeDate")
+            fun asBillingCycleRelative(): BillingCycleRelativeDate =
+                billingCycleRelative.getOrThrow("billingCycleRelative")
 
             fun _json(): JsonValue? = _json
 
             fun <T> accept(visitor: Visitor<T>): T {
                 return when {
                     dateTime != null -> visitor.visitDateTime(dateTime)
-                    billingCycleRelativeDate != null ->
-                        visitor.visitBillingCycleRelativeDate(billingCycleRelativeDate)
+                    billingCycleRelative != null ->
+                        visitor.visitBillingCycleRelative(billingCycleRelative)
                     else -> visitor.unknown(_json)
                 }
             }
@@ -1195,8 +1160,8 @@ constructor(
                     object : Visitor<Unit> {
                         override fun visitDateTime(dateTime: OffsetDateTime) {}
 
-                        override fun visitBillingCycleRelativeDate(
-                            billingCycleRelativeDate: BillingCycleRelativeDate
+                        override fun visitBillingCycleRelative(
+                            billingCycleRelative: BillingCycleRelativeDate
                         ) {}
                     }
                 )
@@ -1208,16 +1173,16 @@ constructor(
                     return true
                 }
 
-                return /* spotless:off */ other is StartDate && dateTime == other.dateTime && billingCycleRelativeDate == other.billingCycleRelativeDate /* spotless:on */
+                return /* spotless:off */ other is StartDate && dateTime == other.dateTime && billingCycleRelative == other.billingCycleRelative /* spotless:on */
             }
 
-            override fun hashCode(): Int = /* spotless:off */ Objects.hash(dateTime, billingCycleRelativeDate) /* spotless:on */
+            override fun hashCode(): Int = /* spotless:off */ Objects.hash(dateTime, billingCycleRelative) /* spotless:on */
 
             override fun toString(): String =
                 when {
                     dateTime != null -> "StartDate{dateTime=$dateTime}"
-                    billingCycleRelativeDate != null ->
-                        "StartDate{billingCycleRelativeDate=$billingCycleRelativeDate}"
+                    billingCycleRelative != null ->
+                        "StartDate{billingCycleRelative=$billingCycleRelative}"
                     _json != null -> "StartDate{_unknown=$_json}"
                     else -> throw IllegalStateException("Invalid StartDate")
                 }
@@ -1226,17 +1191,15 @@ constructor(
 
                 fun ofDateTime(dateTime: OffsetDateTime) = StartDate(dateTime = dateTime)
 
-                fun ofBillingCycleRelativeDate(billingCycleRelativeDate: BillingCycleRelativeDate) =
-                    StartDate(billingCycleRelativeDate = billingCycleRelativeDate)
+                fun ofBillingCycleRelative(billingCycleRelative: BillingCycleRelativeDate) =
+                    StartDate(billingCycleRelative = billingCycleRelative)
             }
 
             interface Visitor<out T> {
 
                 fun visitDateTime(dateTime: OffsetDateTime): T
 
-                fun visitBillingCycleRelativeDate(
-                    billingCycleRelativeDate: BillingCycleRelativeDate
-                ): T
+                fun visitBillingCycleRelative(billingCycleRelative: BillingCycleRelativeDate): T
 
                 fun unknown(json: JsonValue?): T {
                     throw OrbInvalidDataException("Unknown StartDate: $json")
@@ -1252,7 +1215,7 @@ constructor(
                         return StartDate(dateTime = it, _json = json)
                     }
                     tryDeserialize(node, jacksonTypeRef<BillingCycleRelativeDate>())?.let {
-                        return StartDate(billingCycleRelativeDate = it, _json = json)
+                        return StartDate(billingCycleRelative = it, _json = json)
                     }
 
                     return StartDate(_json = json)
@@ -1268,8 +1231,8 @@ constructor(
                 ) {
                     when {
                         value.dateTime != null -> generator.writeObject(value.dateTime)
-                        value.billingCycleRelativeDate != null ->
-                            generator.writeObject(value.billingCycleRelativeDate)
+                        value.billingCycleRelative != null ->
+                            generator.writeObject(value.billingCycleRelative)
                         value._json != null -> generator.writeObject(value._json)
                         else -> throw IllegalStateException("Invalid StartDate")
                     }
@@ -2333,30 +2296,30 @@ constructor(
         class EndDate
         private constructor(
             private val dateTime: OffsetDateTime? = null,
-            private val billingCycleRelativeDate: BillingCycleRelativeDate? = null,
+            private val billingCycleRelative: BillingCycleRelativeDate? = null,
             private val _json: JsonValue? = null,
         ) {
 
             fun dateTime(): OffsetDateTime? = dateTime
 
-            fun billingCycleRelativeDate(): BillingCycleRelativeDate? = billingCycleRelativeDate
+            fun billingCycleRelative(): BillingCycleRelativeDate? = billingCycleRelative
 
             fun isDateTime(): Boolean = dateTime != null
 
-            fun isBillingCycleRelativeDate(): Boolean = billingCycleRelativeDate != null
+            fun isBillingCycleRelative(): Boolean = billingCycleRelative != null
 
             fun asDateTime(): OffsetDateTime = dateTime.getOrThrow("dateTime")
 
-            fun asBillingCycleRelativeDate(): BillingCycleRelativeDate =
-                billingCycleRelativeDate.getOrThrow("billingCycleRelativeDate")
+            fun asBillingCycleRelative(): BillingCycleRelativeDate =
+                billingCycleRelative.getOrThrow("billingCycleRelative")
 
             fun _json(): JsonValue? = _json
 
             fun <T> accept(visitor: Visitor<T>): T {
                 return when {
                     dateTime != null -> visitor.visitDateTime(dateTime)
-                    billingCycleRelativeDate != null ->
-                        visitor.visitBillingCycleRelativeDate(billingCycleRelativeDate)
+                    billingCycleRelative != null ->
+                        visitor.visitBillingCycleRelative(billingCycleRelative)
                     else -> visitor.unknown(_json)
                 }
             }
@@ -2372,8 +2335,8 @@ constructor(
                     object : Visitor<Unit> {
                         override fun visitDateTime(dateTime: OffsetDateTime) {}
 
-                        override fun visitBillingCycleRelativeDate(
-                            billingCycleRelativeDate: BillingCycleRelativeDate
+                        override fun visitBillingCycleRelative(
+                            billingCycleRelative: BillingCycleRelativeDate
                         ) {}
                     }
                 )
@@ -2385,16 +2348,16 @@ constructor(
                     return true
                 }
 
-                return /* spotless:off */ other is EndDate && dateTime == other.dateTime && billingCycleRelativeDate == other.billingCycleRelativeDate /* spotless:on */
+                return /* spotless:off */ other is EndDate && dateTime == other.dateTime && billingCycleRelative == other.billingCycleRelative /* spotless:on */
             }
 
-            override fun hashCode(): Int = /* spotless:off */ Objects.hash(dateTime, billingCycleRelativeDate) /* spotless:on */
+            override fun hashCode(): Int = /* spotless:off */ Objects.hash(dateTime, billingCycleRelative) /* spotless:on */
 
             override fun toString(): String =
                 when {
                     dateTime != null -> "EndDate{dateTime=$dateTime}"
-                    billingCycleRelativeDate != null ->
-                        "EndDate{billingCycleRelativeDate=$billingCycleRelativeDate}"
+                    billingCycleRelative != null ->
+                        "EndDate{billingCycleRelative=$billingCycleRelative}"
                     _json != null -> "EndDate{_unknown=$_json}"
                     else -> throw IllegalStateException("Invalid EndDate")
                 }
@@ -2403,17 +2366,15 @@ constructor(
 
                 fun ofDateTime(dateTime: OffsetDateTime) = EndDate(dateTime = dateTime)
 
-                fun ofBillingCycleRelativeDate(billingCycleRelativeDate: BillingCycleRelativeDate) =
-                    EndDate(billingCycleRelativeDate = billingCycleRelativeDate)
+                fun ofBillingCycleRelative(billingCycleRelative: BillingCycleRelativeDate) =
+                    EndDate(billingCycleRelative = billingCycleRelative)
             }
 
             interface Visitor<out T> {
 
                 fun visitDateTime(dateTime: OffsetDateTime): T
 
-                fun visitBillingCycleRelativeDate(
-                    billingCycleRelativeDate: BillingCycleRelativeDate
-                ): T
+                fun visitBillingCycleRelative(billingCycleRelative: BillingCycleRelativeDate): T
 
                 fun unknown(json: JsonValue?): T {
                     throw OrbInvalidDataException("Unknown EndDate: $json")
@@ -2429,7 +2390,7 @@ constructor(
                         return EndDate(dateTime = it, _json = json)
                     }
                     tryDeserialize(node, jacksonTypeRef<BillingCycleRelativeDate>())?.let {
-                        return EndDate(billingCycleRelativeDate = it, _json = json)
+                        return EndDate(billingCycleRelative = it, _json = json)
                     }
 
                     return EndDate(_json = json)
@@ -2445,8 +2406,8 @@ constructor(
                 ) {
                     when {
                         value.dateTime != null -> generator.writeObject(value.dateTime)
-                        value.billingCycleRelativeDate != null ->
-                            generator.writeObject(value.billingCycleRelativeDate)
+                        value.billingCycleRelative != null ->
+                            generator.writeObject(value.billingCycleRelative)
                         value._json != null -> generator.writeObject(value._json)
                         else -> throw IllegalStateException("Invalid EndDate")
                     }
@@ -2586,365 +2547,317 @@ constructor(
         @JsonSerialize(using = Price.Serializer::class)
         class Price
         private constructor(
-            private val newFloatingUnitPrice: NewFloatingUnitPrice? = null,
-            private val newFloatingPackagePrice: NewFloatingPackagePrice? = null,
-            private val newFloatingMatrixPrice: NewFloatingMatrixPrice? = null,
-            private val newFloatingMatrixWithAllocationPrice:
-                NewFloatingMatrixWithAllocationPrice? =
+            private val newFloatingUnit: NewFloatingUnitPrice? = null,
+            private val newFloatingPackage: NewFloatingPackagePrice? = null,
+            private val newFloatingMatrix: NewFloatingMatrixPrice? = null,
+            private val newFloatingMatrixWithAllocation: NewFloatingMatrixWithAllocationPrice? =
                 null,
-            private val newFloatingTieredPrice: NewFloatingTieredPrice? = null,
-            private val newFloatingTieredBpsPrice: NewFloatingTieredBpsPrice? = null,
-            private val newFloatingBpsPrice: NewFloatingBpsPrice? = null,
-            private val newFloatingBulkBpsPrice: NewFloatingBulkBpsPrice? = null,
-            private val newFloatingBulkPrice: NewFloatingBulkPrice? = null,
-            private val newFloatingThresholdTotalAmountPrice:
-                NewFloatingThresholdTotalAmountPrice? =
+            private val newFloatingTiered: NewFloatingTieredPrice? = null,
+            private val newFloatingTieredBps: NewFloatingTieredBpsPrice? = null,
+            private val newFloatingBps: NewFloatingBpsPrice? = null,
+            private val newFloatingBulkBps: NewFloatingBulkBpsPrice? = null,
+            private val newFloatingBulk: NewFloatingBulkPrice? = null,
+            private val newFloatingThresholdTotalAmount: NewFloatingThresholdTotalAmountPrice? =
                 null,
-            private val newFloatingTieredPackagePrice: NewFloatingTieredPackagePrice? = null,
-            private val newFloatingGroupedTieredPrice: NewFloatingGroupedTieredPrice? = null,
-            private val newFloatingMaxGroupTieredPrice: NewFloatingMaxGroupTieredPrice? = null,
-            private val newFloatingTieredWithMinimumPrice: NewFloatingTieredWithMinimumPrice? =
+            private val newFloatingTieredPackage: NewFloatingTieredPackagePrice? = null,
+            private val newFloatingGroupedTiered: NewFloatingGroupedTieredPrice? = null,
+            private val newFloatingMaxGroupTiered: NewFloatingMaxGroupTieredPrice? = null,
+            private val newFloatingTieredWithMinimum: NewFloatingTieredWithMinimumPrice? = null,
+            private val newFloatingPackageWithAllocation: NewFloatingPackageWithAllocationPrice? =
                 null,
-            private val newFloatingPackageWithAllocationPrice:
-                NewFloatingPackageWithAllocationPrice? =
-                null,
-            private val newFloatingTieredPackageWithMinimumPrice:
+            private val newFloatingTieredPackageWithMinimum:
                 NewFloatingTieredPackageWithMinimumPrice? =
                 null,
-            private val newFloatingUnitWithPercentPrice: NewFloatingUnitWithPercentPrice? = null,
-            private val newFloatingTieredWithProrationPrice: NewFloatingTieredWithProrationPrice? =
-                null,
-            private val newFloatingUnitWithProrationPrice: NewFloatingUnitWithProrationPrice? =
-                null,
-            private val newFloatingGroupedAllocationPrice: NewFloatingGroupedAllocationPrice? =
-                null,
-            private val newFloatingGroupedWithProratedMinimumPrice:
+            private val newFloatingUnitWithPercent: NewFloatingUnitWithPercentPrice? = null,
+            private val newFloatingTieredWithProration: NewFloatingTieredWithProrationPrice? = null,
+            private val newFloatingUnitWithProration: NewFloatingUnitWithProrationPrice? = null,
+            private val newFloatingGroupedAllocation: NewFloatingGroupedAllocationPrice? = null,
+            private val newFloatingGroupedWithProratedMinimum:
                 NewFloatingGroupedWithProratedMinimumPrice? =
                 null,
-            private val newFloatingGroupedWithMeteredMinimumPrice:
+            private val newFloatingGroupedWithMeteredMinimum:
                 NewFloatingGroupedWithMeteredMinimumPrice? =
                 null,
-            private val newFloatingMatrixWithDisplayNamePrice:
-                NewFloatingMatrixWithDisplayNamePrice? =
+            private val newFloatingMatrixWithDisplayName: NewFloatingMatrixWithDisplayNamePrice? =
                 null,
-            private val newFloatingBulkWithProrationPrice: NewFloatingBulkWithProrationPrice? =
-                null,
-            private val newFloatingGroupedTieredPackagePrice:
-                NewFloatingGroupedTieredPackagePrice? =
+            private val newFloatingBulkWithProration: NewFloatingBulkWithProrationPrice? = null,
+            private val newFloatingGroupedTieredPackage: NewFloatingGroupedTieredPackagePrice? =
                 null,
             private val _json: JsonValue? = null,
         ) {
 
-            fun newFloatingUnitPrice(): NewFloatingUnitPrice? = newFloatingUnitPrice
+            fun newFloatingUnit(): NewFloatingUnitPrice? = newFloatingUnit
 
-            fun newFloatingPackagePrice(): NewFloatingPackagePrice? = newFloatingPackagePrice
+            fun newFloatingPackage(): NewFloatingPackagePrice? = newFloatingPackage
 
-            fun newFloatingMatrixPrice(): NewFloatingMatrixPrice? = newFloatingMatrixPrice
+            fun newFloatingMatrix(): NewFloatingMatrixPrice? = newFloatingMatrix
 
-            fun newFloatingMatrixWithAllocationPrice(): NewFloatingMatrixWithAllocationPrice? =
-                newFloatingMatrixWithAllocationPrice
+            fun newFloatingMatrixWithAllocation(): NewFloatingMatrixWithAllocationPrice? =
+                newFloatingMatrixWithAllocation
 
-            fun newFloatingTieredPrice(): NewFloatingTieredPrice? = newFloatingTieredPrice
+            fun newFloatingTiered(): NewFloatingTieredPrice? = newFloatingTiered
 
-            fun newFloatingTieredBpsPrice(): NewFloatingTieredBpsPrice? = newFloatingTieredBpsPrice
+            fun newFloatingTieredBps(): NewFloatingTieredBpsPrice? = newFloatingTieredBps
 
-            fun newFloatingBpsPrice(): NewFloatingBpsPrice? = newFloatingBpsPrice
+            fun newFloatingBps(): NewFloatingBpsPrice? = newFloatingBps
 
-            fun newFloatingBulkBpsPrice(): NewFloatingBulkBpsPrice? = newFloatingBulkBpsPrice
+            fun newFloatingBulkBps(): NewFloatingBulkBpsPrice? = newFloatingBulkBps
 
-            fun newFloatingBulkPrice(): NewFloatingBulkPrice? = newFloatingBulkPrice
+            fun newFloatingBulk(): NewFloatingBulkPrice? = newFloatingBulk
 
-            fun newFloatingThresholdTotalAmountPrice(): NewFloatingThresholdTotalAmountPrice? =
-                newFloatingThresholdTotalAmountPrice
+            fun newFloatingThresholdTotalAmount(): NewFloatingThresholdTotalAmountPrice? =
+                newFloatingThresholdTotalAmount
 
-            fun newFloatingTieredPackagePrice(): NewFloatingTieredPackagePrice? =
-                newFloatingTieredPackagePrice
+            fun newFloatingTieredPackage(): NewFloatingTieredPackagePrice? =
+                newFloatingTieredPackage
 
-            fun newFloatingGroupedTieredPrice(): NewFloatingGroupedTieredPrice? =
-                newFloatingGroupedTieredPrice
+            fun newFloatingGroupedTiered(): NewFloatingGroupedTieredPrice? =
+                newFloatingGroupedTiered
 
-            fun newFloatingMaxGroupTieredPrice(): NewFloatingMaxGroupTieredPrice? =
-                newFloatingMaxGroupTieredPrice
+            fun newFloatingMaxGroupTiered(): NewFloatingMaxGroupTieredPrice? =
+                newFloatingMaxGroupTiered
 
-            fun newFloatingTieredWithMinimumPrice(): NewFloatingTieredWithMinimumPrice? =
-                newFloatingTieredWithMinimumPrice
+            fun newFloatingTieredWithMinimum(): NewFloatingTieredWithMinimumPrice? =
+                newFloatingTieredWithMinimum
 
-            fun newFloatingPackageWithAllocationPrice(): NewFloatingPackageWithAllocationPrice? =
-                newFloatingPackageWithAllocationPrice
+            fun newFloatingPackageWithAllocation(): NewFloatingPackageWithAllocationPrice? =
+                newFloatingPackageWithAllocation
 
-            fun newFloatingTieredPackageWithMinimumPrice():
-                NewFloatingTieredPackageWithMinimumPrice? = newFloatingTieredPackageWithMinimumPrice
+            fun newFloatingTieredPackageWithMinimum(): NewFloatingTieredPackageWithMinimumPrice? =
+                newFloatingTieredPackageWithMinimum
 
-            fun newFloatingUnitWithPercentPrice(): NewFloatingUnitWithPercentPrice? =
-                newFloatingUnitWithPercentPrice
+            fun newFloatingUnitWithPercent(): NewFloatingUnitWithPercentPrice? =
+                newFloatingUnitWithPercent
 
-            fun newFloatingTieredWithProrationPrice(): NewFloatingTieredWithProrationPrice? =
-                newFloatingTieredWithProrationPrice
+            fun newFloatingTieredWithProration(): NewFloatingTieredWithProrationPrice? =
+                newFloatingTieredWithProration
 
-            fun newFloatingUnitWithProrationPrice(): NewFloatingUnitWithProrationPrice? =
-                newFloatingUnitWithProrationPrice
+            fun newFloatingUnitWithProration(): NewFloatingUnitWithProrationPrice? =
+                newFloatingUnitWithProration
 
-            fun newFloatingGroupedAllocationPrice(): NewFloatingGroupedAllocationPrice? =
-                newFloatingGroupedAllocationPrice
+            fun newFloatingGroupedAllocation(): NewFloatingGroupedAllocationPrice? =
+                newFloatingGroupedAllocation
 
-            fun newFloatingGroupedWithProratedMinimumPrice():
-                NewFloatingGroupedWithProratedMinimumPrice? =
-                newFloatingGroupedWithProratedMinimumPrice
+            fun newFloatingGroupedWithProratedMinimum():
+                NewFloatingGroupedWithProratedMinimumPrice? = newFloatingGroupedWithProratedMinimum
 
-            fun newFloatingGroupedWithMeteredMinimumPrice():
-                NewFloatingGroupedWithMeteredMinimumPrice? =
-                newFloatingGroupedWithMeteredMinimumPrice
+            fun newFloatingGroupedWithMeteredMinimum(): NewFloatingGroupedWithMeteredMinimumPrice? =
+                newFloatingGroupedWithMeteredMinimum
 
-            fun newFloatingMatrixWithDisplayNamePrice(): NewFloatingMatrixWithDisplayNamePrice? =
-                newFloatingMatrixWithDisplayNamePrice
+            fun newFloatingMatrixWithDisplayName(): NewFloatingMatrixWithDisplayNamePrice? =
+                newFloatingMatrixWithDisplayName
 
-            fun newFloatingBulkWithProrationPrice(): NewFloatingBulkWithProrationPrice? =
-                newFloatingBulkWithProrationPrice
+            fun newFloatingBulkWithProration(): NewFloatingBulkWithProrationPrice? =
+                newFloatingBulkWithProration
 
-            fun newFloatingGroupedTieredPackagePrice(): NewFloatingGroupedTieredPackagePrice? =
-                newFloatingGroupedTieredPackagePrice
+            fun newFloatingGroupedTieredPackage(): NewFloatingGroupedTieredPackagePrice? =
+                newFloatingGroupedTieredPackage
 
-            fun isNewFloatingUnitPrice(): Boolean = newFloatingUnitPrice != null
+            fun isNewFloatingUnit(): Boolean = newFloatingUnit != null
 
-            fun isNewFloatingPackagePrice(): Boolean = newFloatingPackagePrice != null
+            fun isNewFloatingPackage(): Boolean = newFloatingPackage != null
 
-            fun isNewFloatingMatrixPrice(): Boolean = newFloatingMatrixPrice != null
+            fun isNewFloatingMatrix(): Boolean = newFloatingMatrix != null
 
-            fun isNewFloatingMatrixWithAllocationPrice(): Boolean =
-                newFloatingMatrixWithAllocationPrice != null
+            fun isNewFloatingMatrixWithAllocation(): Boolean =
+                newFloatingMatrixWithAllocation != null
 
-            fun isNewFloatingTieredPrice(): Boolean = newFloatingTieredPrice != null
+            fun isNewFloatingTiered(): Boolean = newFloatingTiered != null
 
-            fun isNewFloatingTieredBpsPrice(): Boolean = newFloatingTieredBpsPrice != null
+            fun isNewFloatingTieredBps(): Boolean = newFloatingTieredBps != null
 
-            fun isNewFloatingBpsPrice(): Boolean = newFloatingBpsPrice != null
+            fun isNewFloatingBps(): Boolean = newFloatingBps != null
 
-            fun isNewFloatingBulkBpsPrice(): Boolean = newFloatingBulkBpsPrice != null
+            fun isNewFloatingBulkBps(): Boolean = newFloatingBulkBps != null
 
-            fun isNewFloatingBulkPrice(): Boolean = newFloatingBulkPrice != null
+            fun isNewFloatingBulk(): Boolean = newFloatingBulk != null
 
-            fun isNewFloatingThresholdTotalAmountPrice(): Boolean =
-                newFloatingThresholdTotalAmountPrice != null
+            fun isNewFloatingThresholdTotalAmount(): Boolean =
+                newFloatingThresholdTotalAmount != null
 
-            fun isNewFloatingTieredPackagePrice(): Boolean = newFloatingTieredPackagePrice != null
+            fun isNewFloatingTieredPackage(): Boolean = newFloatingTieredPackage != null
 
-            fun isNewFloatingGroupedTieredPrice(): Boolean = newFloatingGroupedTieredPrice != null
+            fun isNewFloatingGroupedTiered(): Boolean = newFloatingGroupedTiered != null
 
-            fun isNewFloatingMaxGroupTieredPrice(): Boolean = newFloatingMaxGroupTieredPrice != null
+            fun isNewFloatingMaxGroupTiered(): Boolean = newFloatingMaxGroupTiered != null
 
-            fun isNewFloatingTieredWithMinimumPrice(): Boolean =
-                newFloatingTieredWithMinimumPrice != null
+            fun isNewFloatingTieredWithMinimum(): Boolean = newFloatingTieredWithMinimum != null
 
-            fun isNewFloatingPackageWithAllocationPrice(): Boolean =
-                newFloatingPackageWithAllocationPrice != null
+            fun isNewFloatingPackageWithAllocation(): Boolean =
+                newFloatingPackageWithAllocation != null
 
-            fun isNewFloatingTieredPackageWithMinimumPrice(): Boolean =
-                newFloatingTieredPackageWithMinimumPrice != null
+            fun isNewFloatingTieredPackageWithMinimum(): Boolean =
+                newFloatingTieredPackageWithMinimum != null
 
-            fun isNewFloatingUnitWithPercentPrice(): Boolean =
-                newFloatingUnitWithPercentPrice != null
+            fun isNewFloatingUnitWithPercent(): Boolean = newFloatingUnitWithPercent != null
 
-            fun isNewFloatingTieredWithProrationPrice(): Boolean =
-                newFloatingTieredWithProrationPrice != null
+            fun isNewFloatingTieredWithProration(): Boolean = newFloatingTieredWithProration != null
 
-            fun isNewFloatingUnitWithProrationPrice(): Boolean =
-                newFloatingUnitWithProrationPrice != null
+            fun isNewFloatingUnitWithProration(): Boolean = newFloatingUnitWithProration != null
 
-            fun isNewFloatingGroupedAllocationPrice(): Boolean =
-                newFloatingGroupedAllocationPrice != null
+            fun isNewFloatingGroupedAllocation(): Boolean = newFloatingGroupedAllocation != null
 
-            fun isNewFloatingGroupedWithProratedMinimumPrice(): Boolean =
-                newFloatingGroupedWithProratedMinimumPrice != null
+            fun isNewFloatingGroupedWithProratedMinimum(): Boolean =
+                newFloatingGroupedWithProratedMinimum != null
 
-            fun isNewFloatingGroupedWithMeteredMinimumPrice(): Boolean =
-                newFloatingGroupedWithMeteredMinimumPrice != null
+            fun isNewFloatingGroupedWithMeteredMinimum(): Boolean =
+                newFloatingGroupedWithMeteredMinimum != null
 
-            fun isNewFloatingMatrixWithDisplayNamePrice(): Boolean =
-                newFloatingMatrixWithDisplayNamePrice != null
+            fun isNewFloatingMatrixWithDisplayName(): Boolean =
+                newFloatingMatrixWithDisplayName != null
 
-            fun isNewFloatingBulkWithProrationPrice(): Boolean =
-                newFloatingBulkWithProrationPrice != null
+            fun isNewFloatingBulkWithProration(): Boolean = newFloatingBulkWithProration != null
 
-            fun isNewFloatingGroupedTieredPackagePrice(): Boolean =
-                newFloatingGroupedTieredPackagePrice != null
+            fun isNewFloatingGroupedTieredPackage(): Boolean =
+                newFloatingGroupedTieredPackage != null
 
-            fun asNewFloatingUnitPrice(): NewFloatingUnitPrice =
-                newFloatingUnitPrice.getOrThrow("newFloatingUnitPrice")
+            fun asNewFloatingUnit(): NewFloatingUnitPrice =
+                newFloatingUnit.getOrThrow("newFloatingUnit")
 
-            fun asNewFloatingPackagePrice(): NewFloatingPackagePrice =
-                newFloatingPackagePrice.getOrThrow("newFloatingPackagePrice")
+            fun asNewFloatingPackage(): NewFloatingPackagePrice =
+                newFloatingPackage.getOrThrow("newFloatingPackage")
 
-            fun asNewFloatingMatrixPrice(): NewFloatingMatrixPrice =
-                newFloatingMatrixPrice.getOrThrow("newFloatingMatrixPrice")
+            fun asNewFloatingMatrix(): NewFloatingMatrixPrice =
+                newFloatingMatrix.getOrThrow("newFloatingMatrix")
 
-            fun asNewFloatingMatrixWithAllocationPrice(): NewFloatingMatrixWithAllocationPrice =
-                newFloatingMatrixWithAllocationPrice.getOrThrow(
-                    "newFloatingMatrixWithAllocationPrice"
+            fun asNewFloatingMatrixWithAllocation(): NewFloatingMatrixWithAllocationPrice =
+                newFloatingMatrixWithAllocation.getOrThrow("newFloatingMatrixWithAllocation")
+
+            fun asNewFloatingTiered(): NewFloatingTieredPrice =
+                newFloatingTiered.getOrThrow("newFloatingTiered")
+
+            fun asNewFloatingTieredBps(): NewFloatingTieredBpsPrice =
+                newFloatingTieredBps.getOrThrow("newFloatingTieredBps")
+
+            fun asNewFloatingBps(): NewFloatingBpsPrice =
+                newFloatingBps.getOrThrow("newFloatingBps")
+
+            fun asNewFloatingBulkBps(): NewFloatingBulkBpsPrice =
+                newFloatingBulkBps.getOrThrow("newFloatingBulkBps")
+
+            fun asNewFloatingBulk(): NewFloatingBulkPrice =
+                newFloatingBulk.getOrThrow("newFloatingBulk")
+
+            fun asNewFloatingThresholdTotalAmount(): NewFloatingThresholdTotalAmountPrice =
+                newFloatingThresholdTotalAmount.getOrThrow("newFloatingThresholdTotalAmount")
+
+            fun asNewFloatingTieredPackage(): NewFloatingTieredPackagePrice =
+                newFloatingTieredPackage.getOrThrow("newFloatingTieredPackage")
+
+            fun asNewFloatingGroupedTiered(): NewFloatingGroupedTieredPrice =
+                newFloatingGroupedTiered.getOrThrow("newFloatingGroupedTiered")
+
+            fun asNewFloatingMaxGroupTiered(): NewFloatingMaxGroupTieredPrice =
+                newFloatingMaxGroupTiered.getOrThrow("newFloatingMaxGroupTiered")
+
+            fun asNewFloatingTieredWithMinimum(): NewFloatingTieredWithMinimumPrice =
+                newFloatingTieredWithMinimum.getOrThrow("newFloatingTieredWithMinimum")
+
+            fun asNewFloatingPackageWithAllocation(): NewFloatingPackageWithAllocationPrice =
+                newFloatingPackageWithAllocation.getOrThrow("newFloatingPackageWithAllocation")
+
+            fun asNewFloatingTieredPackageWithMinimum(): NewFloatingTieredPackageWithMinimumPrice =
+                newFloatingTieredPackageWithMinimum.getOrThrow(
+                    "newFloatingTieredPackageWithMinimum"
                 )
 
-            fun asNewFloatingTieredPrice(): NewFloatingTieredPrice =
-                newFloatingTieredPrice.getOrThrow("newFloatingTieredPrice")
+            fun asNewFloatingUnitWithPercent(): NewFloatingUnitWithPercentPrice =
+                newFloatingUnitWithPercent.getOrThrow("newFloatingUnitWithPercent")
 
-            fun asNewFloatingTieredBpsPrice(): NewFloatingTieredBpsPrice =
-                newFloatingTieredBpsPrice.getOrThrow("newFloatingTieredBpsPrice")
+            fun asNewFloatingTieredWithProration(): NewFloatingTieredWithProrationPrice =
+                newFloatingTieredWithProration.getOrThrow("newFloatingTieredWithProration")
 
-            fun asNewFloatingBpsPrice(): NewFloatingBpsPrice =
-                newFloatingBpsPrice.getOrThrow("newFloatingBpsPrice")
+            fun asNewFloatingUnitWithProration(): NewFloatingUnitWithProrationPrice =
+                newFloatingUnitWithProration.getOrThrow("newFloatingUnitWithProration")
 
-            fun asNewFloatingBulkBpsPrice(): NewFloatingBulkBpsPrice =
-                newFloatingBulkBpsPrice.getOrThrow("newFloatingBulkBpsPrice")
+            fun asNewFloatingGroupedAllocation(): NewFloatingGroupedAllocationPrice =
+                newFloatingGroupedAllocation.getOrThrow("newFloatingGroupedAllocation")
 
-            fun asNewFloatingBulkPrice(): NewFloatingBulkPrice =
-                newFloatingBulkPrice.getOrThrow("newFloatingBulkPrice")
-
-            fun asNewFloatingThresholdTotalAmountPrice(): NewFloatingThresholdTotalAmountPrice =
-                newFloatingThresholdTotalAmountPrice.getOrThrow(
-                    "newFloatingThresholdTotalAmountPrice"
-                )
-
-            fun asNewFloatingTieredPackagePrice(): NewFloatingTieredPackagePrice =
-                newFloatingTieredPackagePrice.getOrThrow("newFloatingTieredPackagePrice")
-
-            fun asNewFloatingGroupedTieredPrice(): NewFloatingGroupedTieredPrice =
-                newFloatingGroupedTieredPrice.getOrThrow("newFloatingGroupedTieredPrice")
-
-            fun asNewFloatingMaxGroupTieredPrice(): NewFloatingMaxGroupTieredPrice =
-                newFloatingMaxGroupTieredPrice.getOrThrow("newFloatingMaxGroupTieredPrice")
-
-            fun asNewFloatingTieredWithMinimumPrice(): NewFloatingTieredWithMinimumPrice =
-                newFloatingTieredWithMinimumPrice.getOrThrow("newFloatingTieredWithMinimumPrice")
-
-            fun asNewFloatingPackageWithAllocationPrice(): NewFloatingPackageWithAllocationPrice =
-                newFloatingPackageWithAllocationPrice.getOrThrow(
-                    "newFloatingPackageWithAllocationPrice"
-                )
-
-            fun asNewFloatingTieredPackageWithMinimumPrice():
-                NewFloatingTieredPackageWithMinimumPrice =
-                newFloatingTieredPackageWithMinimumPrice.getOrThrow(
-                    "newFloatingTieredPackageWithMinimumPrice"
-                )
-
-            fun asNewFloatingUnitWithPercentPrice(): NewFloatingUnitWithPercentPrice =
-                newFloatingUnitWithPercentPrice.getOrThrow("newFloatingUnitWithPercentPrice")
-
-            fun asNewFloatingTieredWithProrationPrice(): NewFloatingTieredWithProrationPrice =
-                newFloatingTieredWithProrationPrice.getOrThrow(
-                    "newFloatingTieredWithProrationPrice"
-                )
-
-            fun asNewFloatingUnitWithProrationPrice(): NewFloatingUnitWithProrationPrice =
-                newFloatingUnitWithProrationPrice.getOrThrow("newFloatingUnitWithProrationPrice")
-
-            fun asNewFloatingGroupedAllocationPrice(): NewFloatingGroupedAllocationPrice =
-                newFloatingGroupedAllocationPrice.getOrThrow("newFloatingGroupedAllocationPrice")
-
-            fun asNewFloatingGroupedWithProratedMinimumPrice():
+            fun asNewFloatingGroupedWithProratedMinimum():
                 NewFloatingGroupedWithProratedMinimumPrice =
-                newFloatingGroupedWithProratedMinimumPrice.getOrThrow(
-                    "newFloatingGroupedWithProratedMinimumPrice"
+                newFloatingGroupedWithProratedMinimum.getOrThrow(
+                    "newFloatingGroupedWithProratedMinimum"
                 )
 
-            fun asNewFloatingGroupedWithMeteredMinimumPrice():
+            fun asNewFloatingGroupedWithMeteredMinimum():
                 NewFloatingGroupedWithMeteredMinimumPrice =
-                newFloatingGroupedWithMeteredMinimumPrice.getOrThrow(
-                    "newFloatingGroupedWithMeteredMinimumPrice"
+                newFloatingGroupedWithMeteredMinimum.getOrThrow(
+                    "newFloatingGroupedWithMeteredMinimum"
                 )
 
-            fun asNewFloatingMatrixWithDisplayNamePrice(): NewFloatingMatrixWithDisplayNamePrice =
-                newFloatingMatrixWithDisplayNamePrice.getOrThrow(
-                    "newFloatingMatrixWithDisplayNamePrice"
-                )
+            fun asNewFloatingMatrixWithDisplayName(): NewFloatingMatrixWithDisplayNamePrice =
+                newFloatingMatrixWithDisplayName.getOrThrow("newFloatingMatrixWithDisplayName")
 
-            fun asNewFloatingBulkWithProrationPrice(): NewFloatingBulkWithProrationPrice =
-                newFloatingBulkWithProrationPrice.getOrThrow("newFloatingBulkWithProrationPrice")
+            fun asNewFloatingBulkWithProration(): NewFloatingBulkWithProrationPrice =
+                newFloatingBulkWithProration.getOrThrow("newFloatingBulkWithProration")
 
-            fun asNewFloatingGroupedTieredPackagePrice(): NewFloatingGroupedTieredPackagePrice =
-                newFloatingGroupedTieredPackagePrice.getOrThrow(
-                    "newFloatingGroupedTieredPackagePrice"
-                )
+            fun asNewFloatingGroupedTieredPackage(): NewFloatingGroupedTieredPackagePrice =
+                newFloatingGroupedTieredPackage.getOrThrow("newFloatingGroupedTieredPackage")
 
             fun _json(): JsonValue? = _json
 
             fun <T> accept(visitor: Visitor<T>): T {
                 return when {
-                    newFloatingUnitPrice != null ->
-                        visitor.visitNewFloatingUnitPrice(newFloatingUnitPrice)
-                    newFloatingPackagePrice != null ->
-                        visitor.visitNewFloatingPackagePrice(newFloatingPackagePrice)
-                    newFloatingMatrixPrice != null ->
-                        visitor.visitNewFloatingMatrixPrice(newFloatingMatrixPrice)
-                    newFloatingMatrixWithAllocationPrice != null ->
-                        visitor.visitNewFloatingMatrixWithAllocationPrice(
-                            newFloatingMatrixWithAllocationPrice
+                    newFloatingUnit != null -> visitor.visitNewFloatingUnit(newFloatingUnit)
+                    newFloatingPackage != null ->
+                        visitor.visitNewFloatingPackage(newFloatingPackage)
+                    newFloatingMatrix != null -> visitor.visitNewFloatingMatrix(newFloatingMatrix)
+                    newFloatingMatrixWithAllocation != null ->
+                        visitor.visitNewFloatingMatrixWithAllocation(
+                            newFloatingMatrixWithAllocation
                         )
-                    newFloatingTieredPrice != null ->
-                        visitor.visitNewFloatingTieredPrice(newFloatingTieredPrice)
-                    newFloatingTieredBpsPrice != null ->
-                        visitor.visitNewFloatingTieredBpsPrice(newFloatingTieredBpsPrice)
-                    newFloatingBpsPrice != null ->
-                        visitor.visitNewFloatingBpsPrice(newFloatingBpsPrice)
-                    newFloatingBulkBpsPrice != null ->
-                        visitor.visitNewFloatingBulkBpsPrice(newFloatingBulkBpsPrice)
-                    newFloatingBulkPrice != null ->
-                        visitor.visitNewFloatingBulkPrice(newFloatingBulkPrice)
-                    newFloatingThresholdTotalAmountPrice != null ->
-                        visitor.visitNewFloatingThresholdTotalAmountPrice(
-                            newFloatingThresholdTotalAmountPrice
+                    newFloatingTiered != null -> visitor.visitNewFloatingTiered(newFloatingTiered)
+                    newFloatingTieredBps != null ->
+                        visitor.visitNewFloatingTieredBps(newFloatingTieredBps)
+                    newFloatingBps != null -> visitor.visitNewFloatingBps(newFloatingBps)
+                    newFloatingBulkBps != null ->
+                        visitor.visitNewFloatingBulkBps(newFloatingBulkBps)
+                    newFloatingBulk != null -> visitor.visitNewFloatingBulk(newFloatingBulk)
+                    newFloatingThresholdTotalAmount != null ->
+                        visitor.visitNewFloatingThresholdTotalAmount(
+                            newFloatingThresholdTotalAmount
                         )
-                    newFloatingTieredPackagePrice != null ->
-                        visitor.visitNewFloatingTieredPackagePrice(newFloatingTieredPackagePrice)
-                    newFloatingGroupedTieredPrice != null ->
-                        visitor.visitNewFloatingGroupedTieredPrice(newFloatingGroupedTieredPrice)
-                    newFloatingMaxGroupTieredPrice != null ->
-                        visitor.visitNewFloatingMaxGroupTieredPrice(newFloatingMaxGroupTieredPrice)
-                    newFloatingTieredWithMinimumPrice != null ->
-                        visitor.visitNewFloatingTieredWithMinimumPrice(
-                            newFloatingTieredWithMinimumPrice
+                    newFloatingTieredPackage != null ->
+                        visitor.visitNewFloatingTieredPackage(newFloatingTieredPackage)
+                    newFloatingGroupedTiered != null ->
+                        visitor.visitNewFloatingGroupedTiered(newFloatingGroupedTiered)
+                    newFloatingMaxGroupTiered != null ->
+                        visitor.visitNewFloatingMaxGroupTiered(newFloatingMaxGroupTiered)
+                    newFloatingTieredWithMinimum != null ->
+                        visitor.visitNewFloatingTieredWithMinimum(newFloatingTieredWithMinimum)
+                    newFloatingPackageWithAllocation != null ->
+                        visitor.visitNewFloatingPackageWithAllocation(
+                            newFloatingPackageWithAllocation
                         )
-                    newFloatingPackageWithAllocationPrice != null ->
-                        visitor.visitNewFloatingPackageWithAllocationPrice(
-                            newFloatingPackageWithAllocationPrice
+                    newFloatingTieredPackageWithMinimum != null ->
+                        visitor.visitNewFloatingTieredPackageWithMinimum(
+                            newFloatingTieredPackageWithMinimum
                         )
-                    newFloatingTieredPackageWithMinimumPrice != null ->
-                        visitor.visitNewFloatingTieredPackageWithMinimumPrice(
-                            newFloatingTieredPackageWithMinimumPrice
+                    newFloatingUnitWithPercent != null ->
+                        visitor.visitNewFloatingUnitWithPercent(newFloatingUnitWithPercent)
+                    newFloatingTieredWithProration != null ->
+                        visitor.visitNewFloatingTieredWithProration(newFloatingTieredWithProration)
+                    newFloatingUnitWithProration != null ->
+                        visitor.visitNewFloatingUnitWithProration(newFloatingUnitWithProration)
+                    newFloatingGroupedAllocation != null ->
+                        visitor.visitNewFloatingGroupedAllocation(newFloatingGroupedAllocation)
+                    newFloatingGroupedWithProratedMinimum != null ->
+                        visitor.visitNewFloatingGroupedWithProratedMinimum(
+                            newFloatingGroupedWithProratedMinimum
                         )
-                    newFloatingUnitWithPercentPrice != null ->
-                        visitor.visitNewFloatingUnitWithPercentPrice(
-                            newFloatingUnitWithPercentPrice
+                    newFloatingGroupedWithMeteredMinimum != null ->
+                        visitor.visitNewFloatingGroupedWithMeteredMinimum(
+                            newFloatingGroupedWithMeteredMinimum
                         )
-                    newFloatingTieredWithProrationPrice != null ->
-                        visitor.visitNewFloatingTieredWithProrationPrice(
-                            newFloatingTieredWithProrationPrice
+                    newFloatingMatrixWithDisplayName != null ->
+                        visitor.visitNewFloatingMatrixWithDisplayName(
+                            newFloatingMatrixWithDisplayName
                         )
-                    newFloatingUnitWithProrationPrice != null ->
-                        visitor.visitNewFloatingUnitWithProrationPrice(
-                            newFloatingUnitWithProrationPrice
-                        )
-                    newFloatingGroupedAllocationPrice != null ->
-                        visitor.visitNewFloatingGroupedAllocationPrice(
-                            newFloatingGroupedAllocationPrice
-                        )
-                    newFloatingGroupedWithProratedMinimumPrice != null ->
-                        visitor.visitNewFloatingGroupedWithProratedMinimumPrice(
-                            newFloatingGroupedWithProratedMinimumPrice
-                        )
-                    newFloatingGroupedWithMeteredMinimumPrice != null ->
-                        visitor.visitNewFloatingGroupedWithMeteredMinimumPrice(
-                            newFloatingGroupedWithMeteredMinimumPrice
-                        )
-                    newFloatingMatrixWithDisplayNamePrice != null ->
-                        visitor.visitNewFloatingMatrixWithDisplayNamePrice(
-                            newFloatingMatrixWithDisplayNamePrice
-                        )
-                    newFloatingBulkWithProrationPrice != null ->
-                        visitor.visitNewFloatingBulkWithProrationPrice(
-                            newFloatingBulkWithProrationPrice
-                        )
-                    newFloatingGroupedTieredPackagePrice != null ->
-                        visitor.visitNewFloatingGroupedTieredPackagePrice(
-                            newFloatingGroupedTieredPackagePrice
+                    newFloatingBulkWithProration != null ->
+                        visitor.visitNewFloatingBulkWithProration(newFloatingBulkWithProration)
+                    newFloatingGroupedTieredPackage != null ->
+                        visitor.visitNewFloatingGroupedTieredPackage(
+                            newFloatingGroupedTieredPackage
                         )
                     else -> visitor.unknown(_json)
                 }
@@ -2959,162 +2872,151 @@ constructor(
 
                 accept(
                     object : Visitor<Unit> {
-                        override fun visitNewFloatingUnitPrice(
-                            newFloatingUnitPrice: NewFloatingUnitPrice
-                        ) {
-                            newFloatingUnitPrice.validate()
+                        override fun visitNewFloatingUnit(newFloatingUnit: NewFloatingUnitPrice) {
+                            newFloatingUnit.validate()
                         }
 
-                        override fun visitNewFloatingPackagePrice(
-                            newFloatingPackagePrice: NewFloatingPackagePrice
+                        override fun visitNewFloatingPackage(
+                            newFloatingPackage: NewFloatingPackagePrice
                         ) {
-                            newFloatingPackagePrice.validate()
+                            newFloatingPackage.validate()
                         }
 
-                        override fun visitNewFloatingMatrixPrice(
-                            newFloatingMatrixPrice: NewFloatingMatrixPrice
+                        override fun visitNewFloatingMatrix(
+                            newFloatingMatrix: NewFloatingMatrixPrice
                         ) {
-                            newFloatingMatrixPrice.validate()
+                            newFloatingMatrix.validate()
                         }
 
-                        override fun visitNewFloatingMatrixWithAllocationPrice(
-                            newFloatingMatrixWithAllocationPrice:
-                                NewFloatingMatrixWithAllocationPrice
+                        override fun visitNewFloatingMatrixWithAllocation(
+                            newFloatingMatrixWithAllocation: NewFloatingMatrixWithAllocationPrice
                         ) {
-                            newFloatingMatrixWithAllocationPrice.validate()
+                            newFloatingMatrixWithAllocation.validate()
                         }
 
-                        override fun visitNewFloatingTieredPrice(
-                            newFloatingTieredPrice: NewFloatingTieredPrice
+                        override fun visitNewFloatingTiered(
+                            newFloatingTiered: NewFloatingTieredPrice
                         ) {
-                            newFloatingTieredPrice.validate()
+                            newFloatingTiered.validate()
                         }
 
-                        override fun visitNewFloatingTieredBpsPrice(
-                            newFloatingTieredBpsPrice: NewFloatingTieredBpsPrice
+                        override fun visitNewFloatingTieredBps(
+                            newFloatingTieredBps: NewFloatingTieredBpsPrice
                         ) {
-                            newFloatingTieredBpsPrice.validate()
+                            newFloatingTieredBps.validate()
                         }
 
-                        override fun visitNewFloatingBpsPrice(
-                            newFloatingBpsPrice: NewFloatingBpsPrice
-                        ) {
-                            newFloatingBpsPrice.validate()
+                        override fun visitNewFloatingBps(newFloatingBps: NewFloatingBpsPrice) {
+                            newFloatingBps.validate()
                         }
 
-                        override fun visitNewFloatingBulkBpsPrice(
-                            newFloatingBulkBpsPrice: NewFloatingBulkBpsPrice
+                        override fun visitNewFloatingBulkBps(
+                            newFloatingBulkBps: NewFloatingBulkBpsPrice
                         ) {
-                            newFloatingBulkBpsPrice.validate()
+                            newFloatingBulkBps.validate()
                         }
 
-                        override fun visitNewFloatingBulkPrice(
-                            newFloatingBulkPrice: NewFloatingBulkPrice
-                        ) {
-                            newFloatingBulkPrice.validate()
+                        override fun visitNewFloatingBulk(newFloatingBulk: NewFloatingBulkPrice) {
+                            newFloatingBulk.validate()
                         }
 
-                        override fun visitNewFloatingThresholdTotalAmountPrice(
-                            newFloatingThresholdTotalAmountPrice:
-                                NewFloatingThresholdTotalAmountPrice
+                        override fun visitNewFloatingThresholdTotalAmount(
+                            newFloatingThresholdTotalAmount: NewFloatingThresholdTotalAmountPrice
                         ) {
-                            newFloatingThresholdTotalAmountPrice.validate()
+                            newFloatingThresholdTotalAmount.validate()
                         }
 
-                        override fun visitNewFloatingTieredPackagePrice(
-                            newFloatingTieredPackagePrice: NewFloatingTieredPackagePrice
+                        override fun visitNewFloatingTieredPackage(
+                            newFloatingTieredPackage: NewFloatingTieredPackagePrice
                         ) {
-                            newFloatingTieredPackagePrice.validate()
+                            newFloatingTieredPackage.validate()
                         }
 
-                        override fun visitNewFloatingGroupedTieredPrice(
-                            newFloatingGroupedTieredPrice: NewFloatingGroupedTieredPrice
+                        override fun visitNewFloatingGroupedTiered(
+                            newFloatingGroupedTiered: NewFloatingGroupedTieredPrice
                         ) {
-                            newFloatingGroupedTieredPrice.validate()
+                            newFloatingGroupedTiered.validate()
                         }
 
-                        override fun visitNewFloatingMaxGroupTieredPrice(
-                            newFloatingMaxGroupTieredPrice: NewFloatingMaxGroupTieredPrice
+                        override fun visitNewFloatingMaxGroupTiered(
+                            newFloatingMaxGroupTiered: NewFloatingMaxGroupTieredPrice
                         ) {
-                            newFloatingMaxGroupTieredPrice.validate()
+                            newFloatingMaxGroupTiered.validate()
                         }
 
-                        override fun visitNewFloatingTieredWithMinimumPrice(
-                            newFloatingTieredWithMinimumPrice: NewFloatingTieredWithMinimumPrice
+                        override fun visitNewFloatingTieredWithMinimum(
+                            newFloatingTieredWithMinimum: NewFloatingTieredWithMinimumPrice
                         ) {
-                            newFloatingTieredWithMinimumPrice.validate()
+                            newFloatingTieredWithMinimum.validate()
                         }
 
-                        override fun visitNewFloatingPackageWithAllocationPrice(
-                            newFloatingPackageWithAllocationPrice:
-                                NewFloatingPackageWithAllocationPrice
+                        override fun visitNewFloatingPackageWithAllocation(
+                            newFloatingPackageWithAllocation: NewFloatingPackageWithAllocationPrice
                         ) {
-                            newFloatingPackageWithAllocationPrice.validate()
+                            newFloatingPackageWithAllocation.validate()
                         }
 
-                        override fun visitNewFloatingTieredPackageWithMinimumPrice(
-                            newFloatingTieredPackageWithMinimumPrice:
+                        override fun visitNewFloatingTieredPackageWithMinimum(
+                            newFloatingTieredPackageWithMinimum:
                                 NewFloatingTieredPackageWithMinimumPrice
                         ) {
-                            newFloatingTieredPackageWithMinimumPrice.validate()
+                            newFloatingTieredPackageWithMinimum.validate()
                         }
 
-                        override fun visitNewFloatingUnitWithPercentPrice(
-                            newFloatingUnitWithPercentPrice: NewFloatingUnitWithPercentPrice
+                        override fun visitNewFloatingUnitWithPercent(
+                            newFloatingUnitWithPercent: NewFloatingUnitWithPercentPrice
                         ) {
-                            newFloatingUnitWithPercentPrice.validate()
+                            newFloatingUnitWithPercent.validate()
                         }
 
-                        override fun visitNewFloatingTieredWithProrationPrice(
-                            newFloatingTieredWithProrationPrice: NewFloatingTieredWithProrationPrice
+                        override fun visitNewFloatingTieredWithProration(
+                            newFloatingTieredWithProration: NewFloatingTieredWithProrationPrice
                         ) {
-                            newFloatingTieredWithProrationPrice.validate()
+                            newFloatingTieredWithProration.validate()
                         }
 
-                        override fun visitNewFloatingUnitWithProrationPrice(
-                            newFloatingUnitWithProrationPrice: NewFloatingUnitWithProrationPrice
+                        override fun visitNewFloatingUnitWithProration(
+                            newFloatingUnitWithProration: NewFloatingUnitWithProrationPrice
                         ) {
-                            newFloatingUnitWithProrationPrice.validate()
+                            newFloatingUnitWithProration.validate()
                         }
 
-                        override fun visitNewFloatingGroupedAllocationPrice(
-                            newFloatingGroupedAllocationPrice: NewFloatingGroupedAllocationPrice
+                        override fun visitNewFloatingGroupedAllocation(
+                            newFloatingGroupedAllocation: NewFloatingGroupedAllocationPrice
                         ) {
-                            newFloatingGroupedAllocationPrice.validate()
+                            newFloatingGroupedAllocation.validate()
                         }
 
-                        override fun visitNewFloatingGroupedWithProratedMinimumPrice(
-                            newFloatingGroupedWithProratedMinimumPrice:
+                        override fun visitNewFloatingGroupedWithProratedMinimum(
+                            newFloatingGroupedWithProratedMinimum:
                                 NewFloatingGroupedWithProratedMinimumPrice
                         ) {
-                            newFloatingGroupedWithProratedMinimumPrice.validate()
+                            newFloatingGroupedWithProratedMinimum.validate()
                         }
 
-                        override fun visitNewFloatingGroupedWithMeteredMinimumPrice(
-                            newFloatingGroupedWithMeteredMinimumPrice:
+                        override fun visitNewFloatingGroupedWithMeteredMinimum(
+                            newFloatingGroupedWithMeteredMinimum:
                                 NewFloatingGroupedWithMeteredMinimumPrice
                         ) {
-                            newFloatingGroupedWithMeteredMinimumPrice.validate()
+                            newFloatingGroupedWithMeteredMinimum.validate()
                         }
 
-                        override fun visitNewFloatingMatrixWithDisplayNamePrice(
-                            newFloatingMatrixWithDisplayNamePrice:
-                                NewFloatingMatrixWithDisplayNamePrice
+                        override fun visitNewFloatingMatrixWithDisplayName(
+                            newFloatingMatrixWithDisplayName: NewFloatingMatrixWithDisplayNamePrice
                         ) {
-                            newFloatingMatrixWithDisplayNamePrice.validate()
+                            newFloatingMatrixWithDisplayName.validate()
                         }
 
-                        override fun visitNewFloatingBulkWithProrationPrice(
-                            newFloatingBulkWithProrationPrice: NewFloatingBulkWithProrationPrice
+                        override fun visitNewFloatingBulkWithProration(
+                            newFloatingBulkWithProration: NewFloatingBulkWithProrationPrice
                         ) {
-                            newFloatingBulkWithProrationPrice.validate()
+                            newFloatingBulkWithProration.validate()
                         }
 
-                        override fun visitNewFloatingGroupedTieredPackagePrice(
-                            newFloatingGroupedTieredPackagePrice:
-                                NewFloatingGroupedTieredPackagePrice
+                        override fun visitNewFloatingGroupedTieredPackage(
+                            newFloatingGroupedTieredPackage: NewFloatingGroupedTieredPackagePrice
                         ) {
-                            newFloatingGroupedTieredPackagePrice.validate()
+                            newFloatingGroupedTieredPackage.validate()
                         }
                     }
                 )
@@ -3126,287 +3028,248 @@ constructor(
                     return true
                 }
 
-                return /* spotless:off */ other is Price && newFloatingUnitPrice == other.newFloatingUnitPrice && newFloatingPackagePrice == other.newFloatingPackagePrice && newFloatingMatrixPrice == other.newFloatingMatrixPrice && newFloatingMatrixWithAllocationPrice == other.newFloatingMatrixWithAllocationPrice && newFloatingTieredPrice == other.newFloatingTieredPrice && newFloatingTieredBpsPrice == other.newFloatingTieredBpsPrice && newFloatingBpsPrice == other.newFloatingBpsPrice && newFloatingBulkBpsPrice == other.newFloatingBulkBpsPrice && newFloatingBulkPrice == other.newFloatingBulkPrice && newFloatingThresholdTotalAmountPrice == other.newFloatingThresholdTotalAmountPrice && newFloatingTieredPackagePrice == other.newFloatingTieredPackagePrice && newFloatingGroupedTieredPrice == other.newFloatingGroupedTieredPrice && newFloatingMaxGroupTieredPrice == other.newFloatingMaxGroupTieredPrice && newFloatingTieredWithMinimumPrice == other.newFloatingTieredWithMinimumPrice && newFloatingPackageWithAllocationPrice == other.newFloatingPackageWithAllocationPrice && newFloatingTieredPackageWithMinimumPrice == other.newFloatingTieredPackageWithMinimumPrice && newFloatingUnitWithPercentPrice == other.newFloatingUnitWithPercentPrice && newFloatingTieredWithProrationPrice == other.newFloatingTieredWithProrationPrice && newFloatingUnitWithProrationPrice == other.newFloatingUnitWithProrationPrice && newFloatingGroupedAllocationPrice == other.newFloatingGroupedAllocationPrice && newFloatingGroupedWithProratedMinimumPrice == other.newFloatingGroupedWithProratedMinimumPrice && newFloatingGroupedWithMeteredMinimumPrice == other.newFloatingGroupedWithMeteredMinimumPrice && newFloatingMatrixWithDisplayNamePrice == other.newFloatingMatrixWithDisplayNamePrice && newFloatingBulkWithProrationPrice == other.newFloatingBulkWithProrationPrice && newFloatingGroupedTieredPackagePrice == other.newFloatingGroupedTieredPackagePrice /* spotless:on */
+                return /* spotless:off */ other is Price && newFloatingUnit == other.newFloatingUnit && newFloatingPackage == other.newFloatingPackage && newFloatingMatrix == other.newFloatingMatrix && newFloatingMatrixWithAllocation == other.newFloatingMatrixWithAllocation && newFloatingTiered == other.newFloatingTiered && newFloatingTieredBps == other.newFloatingTieredBps && newFloatingBps == other.newFloatingBps && newFloatingBulkBps == other.newFloatingBulkBps && newFloatingBulk == other.newFloatingBulk && newFloatingThresholdTotalAmount == other.newFloatingThresholdTotalAmount && newFloatingTieredPackage == other.newFloatingTieredPackage && newFloatingGroupedTiered == other.newFloatingGroupedTiered && newFloatingMaxGroupTiered == other.newFloatingMaxGroupTiered && newFloatingTieredWithMinimum == other.newFloatingTieredWithMinimum && newFloatingPackageWithAllocation == other.newFloatingPackageWithAllocation && newFloatingTieredPackageWithMinimum == other.newFloatingTieredPackageWithMinimum && newFloatingUnitWithPercent == other.newFloatingUnitWithPercent && newFloatingTieredWithProration == other.newFloatingTieredWithProration && newFloatingUnitWithProration == other.newFloatingUnitWithProration && newFloatingGroupedAllocation == other.newFloatingGroupedAllocation && newFloatingGroupedWithProratedMinimum == other.newFloatingGroupedWithProratedMinimum && newFloatingGroupedWithMeteredMinimum == other.newFloatingGroupedWithMeteredMinimum && newFloatingMatrixWithDisplayName == other.newFloatingMatrixWithDisplayName && newFloatingBulkWithProration == other.newFloatingBulkWithProration && newFloatingGroupedTieredPackage == other.newFloatingGroupedTieredPackage /* spotless:on */
             }
 
-            override fun hashCode(): Int = /* spotless:off */ Objects.hash(newFloatingUnitPrice, newFloatingPackagePrice, newFloatingMatrixPrice, newFloatingMatrixWithAllocationPrice, newFloatingTieredPrice, newFloatingTieredBpsPrice, newFloatingBpsPrice, newFloatingBulkBpsPrice, newFloatingBulkPrice, newFloatingThresholdTotalAmountPrice, newFloatingTieredPackagePrice, newFloatingGroupedTieredPrice, newFloatingMaxGroupTieredPrice, newFloatingTieredWithMinimumPrice, newFloatingPackageWithAllocationPrice, newFloatingTieredPackageWithMinimumPrice, newFloatingUnitWithPercentPrice, newFloatingTieredWithProrationPrice, newFloatingUnitWithProrationPrice, newFloatingGroupedAllocationPrice, newFloatingGroupedWithProratedMinimumPrice, newFloatingGroupedWithMeteredMinimumPrice, newFloatingMatrixWithDisplayNamePrice, newFloatingBulkWithProrationPrice, newFloatingGroupedTieredPackagePrice) /* spotless:on */
+            override fun hashCode(): Int = /* spotless:off */ Objects.hash(newFloatingUnit, newFloatingPackage, newFloatingMatrix, newFloatingMatrixWithAllocation, newFloatingTiered, newFloatingTieredBps, newFloatingBps, newFloatingBulkBps, newFloatingBulk, newFloatingThresholdTotalAmount, newFloatingTieredPackage, newFloatingGroupedTiered, newFloatingMaxGroupTiered, newFloatingTieredWithMinimum, newFloatingPackageWithAllocation, newFloatingTieredPackageWithMinimum, newFloatingUnitWithPercent, newFloatingTieredWithProration, newFloatingUnitWithProration, newFloatingGroupedAllocation, newFloatingGroupedWithProratedMinimum, newFloatingGroupedWithMeteredMinimum, newFloatingMatrixWithDisplayName, newFloatingBulkWithProration, newFloatingGroupedTieredPackage) /* spotless:on */
 
             override fun toString(): String =
                 when {
-                    newFloatingUnitPrice != null ->
-                        "Price{newFloatingUnitPrice=$newFloatingUnitPrice}"
-                    newFloatingPackagePrice != null ->
-                        "Price{newFloatingPackagePrice=$newFloatingPackagePrice}"
-                    newFloatingMatrixPrice != null ->
-                        "Price{newFloatingMatrixPrice=$newFloatingMatrixPrice}"
-                    newFloatingMatrixWithAllocationPrice != null ->
-                        "Price{newFloatingMatrixWithAllocationPrice=$newFloatingMatrixWithAllocationPrice}"
-                    newFloatingTieredPrice != null ->
-                        "Price{newFloatingTieredPrice=$newFloatingTieredPrice}"
-                    newFloatingTieredBpsPrice != null ->
-                        "Price{newFloatingTieredBpsPrice=$newFloatingTieredBpsPrice}"
-                    newFloatingBpsPrice != null -> "Price{newFloatingBpsPrice=$newFloatingBpsPrice}"
-                    newFloatingBulkBpsPrice != null ->
-                        "Price{newFloatingBulkBpsPrice=$newFloatingBulkBpsPrice}"
-                    newFloatingBulkPrice != null ->
-                        "Price{newFloatingBulkPrice=$newFloatingBulkPrice}"
-                    newFloatingThresholdTotalAmountPrice != null ->
-                        "Price{newFloatingThresholdTotalAmountPrice=$newFloatingThresholdTotalAmountPrice}"
-                    newFloatingTieredPackagePrice != null ->
-                        "Price{newFloatingTieredPackagePrice=$newFloatingTieredPackagePrice}"
-                    newFloatingGroupedTieredPrice != null ->
-                        "Price{newFloatingGroupedTieredPrice=$newFloatingGroupedTieredPrice}"
-                    newFloatingMaxGroupTieredPrice != null ->
-                        "Price{newFloatingMaxGroupTieredPrice=$newFloatingMaxGroupTieredPrice}"
-                    newFloatingTieredWithMinimumPrice != null ->
-                        "Price{newFloatingTieredWithMinimumPrice=$newFloatingTieredWithMinimumPrice}"
-                    newFloatingPackageWithAllocationPrice != null ->
-                        "Price{newFloatingPackageWithAllocationPrice=$newFloatingPackageWithAllocationPrice}"
-                    newFloatingTieredPackageWithMinimumPrice != null ->
-                        "Price{newFloatingTieredPackageWithMinimumPrice=$newFloatingTieredPackageWithMinimumPrice}"
-                    newFloatingUnitWithPercentPrice != null ->
-                        "Price{newFloatingUnitWithPercentPrice=$newFloatingUnitWithPercentPrice}"
-                    newFloatingTieredWithProrationPrice != null ->
-                        "Price{newFloatingTieredWithProrationPrice=$newFloatingTieredWithProrationPrice}"
-                    newFloatingUnitWithProrationPrice != null ->
-                        "Price{newFloatingUnitWithProrationPrice=$newFloatingUnitWithProrationPrice}"
-                    newFloatingGroupedAllocationPrice != null ->
-                        "Price{newFloatingGroupedAllocationPrice=$newFloatingGroupedAllocationPrice}"
-                    newFloatingGroupedWithProratedMinimumPrice != null ->
-                        "Price{newFloatingGroupedWithProratedMinimumPrice=$newFloatingGroupedWithProratedMinimumPrice}"
-                    newFloatingGroupedWithMeteredMinimumPrice != null ->
-                        "Price{newFloatingGroupedWithMeteredMinimumPrice=$newFloatingGroupedWithMeteredMinimumPrice}"
-                    newFloatingMatrixWithDisplayNamePrice != null ->
-                        "Price{newFloatingMatrixWithDisplayNamePrice=$newFloatingMatrixWithDisplayNamePrice}"
-                    newFloatingBulkWithProrationPrice != null ->
-                        "Price{newFloatingBulkWithProrationPrice=$newFloatingBulkWithProrationPrice}"
-                    newFloatingGroupedTieredPackagePrice != null ->
-                        "Price{newFloatingGroupedTieredPackagePrice=$newFloatingGroupedTieredPackagePrice}"
+                    newFloatingUnit != null -> "Price{newFloatingUnit=$newFloatingUnit}"
+                    newFloatingPackage != null -> "Price{newFloatingPackage=$newFloatingPackage}"
+                    newFloatingMatrix != null -> "Price{newFloatingMatrix=$newFloatingMatrix}"
+                    newFloatingMatrixWithAllocation != null ->
+                        "Price{newFloatingMatrixWithAllocation=$newFloatingMatrixWithAllocation}"
+                    newFloatingTiered != null -> "Price{newFloatingTiered=$newFloatingTiered}"
+                    newFloatingTieredBps != null ->
+                        "Price{newFloatingTieredBps=$newFloatingTieredBps}"
+                    newFloatingBps != null -> "Price{newFloatingBps=$newFloatingBps}"
+                    newFloatingBulkBps != null -> "Price{newFloatingBulkBps=$newFloatingBulkBps}"
+                    newFloatingBulk != null -> "Price{newFloatingBulk=$newFloatingBulk}"
+                    newFloatingThresholdTotalAmount != null ->
+                        "Price{newFloatingThresholdTotalAmount=$newFloatingThresholdTotalAmount}"
+                    newFloatingTieredPackage != null ->
+                        "Price{newFloatingTieredPackage=$newFloatingTieredPackage}"
+                    newFloatingGroupedTiered != null ->
+                        "Price{newFloatingGroupedTiered=$newFloatingGroupedTiered}"
+                    newFloatingMaxGroupTiered != null ->
+                        "Price{newFloatingMaxGroupTiered=$newFloatingMaxGroupTiered}"
+                    newFloatingTieredWithMinimum != null ->
+                        "Price{newFloatingTieredWithMinimum=$newFloatingTieredWithMinimum}"
+                    newFloatingPackageWithAllocation != null ->
+                        "Price{newFloatingPackageWithAllocation=$newFloatingPackageWithAllocation}"
+                    newFloatingTieredPackageWithMinimum != null ->
+                        "Price{newFloatingTieredPackageWithMinimum=$newFloatingTieredPackageWithMinimum}"
+                    newFloatingUnitWithPercent != null ->
+                        "Price{newFloatingUnitWithPercent=$newFloatingUnitWithPercent}"
+                    newFloatingTieredWithProration != null ->
+                        "Price{newFloatingTieredWithProration=$newFloatingTieredWithProration}"
+                    newFloatingUnitWithProration != null ->
+                        "Price{newFloatingUnitWithProration=$newFloatingUnitWithProration}"
+                    newFloatingGroupedAllocation != null ->
+                        "Price{newFloatingGroupedAllocation=$newFloatingGroupedAllocation}"
+                    newFloatingGroupedWithProratedMinimum != null ->
+                        "Price{newFloatingGroupedWithProratedMinimum=$newFloatingGroupedWithProratedMinimum}"
+                    newFloatingGroupedWithMeteredMinimum != null ->
+                        "Price{newFloatingGroupedWithMeteredMinimum=$newFloatingGroupedWithMeteredMinimum}"
+                    newFloatingMatrixWithDisplayName != null ->
+                        "Price{newFloatingMatrixWithDisplayName=$newFloatingMatrixWithDisplayName}"
+                    newFloatingBulkWithProration != null ->
+                        "Price{newFloatingBulkWithProration=$newFloatingBulkWithProration}"
+                    newFloatingGroupedTieredPackage != null ->
+                        "Price{newFloatingGroupedTieredPackage=$newFloatingGroupedTieredPackage}"
                     _json != null -> "Price{_unknown=$_json}"
                     else -> throw IllegalStateException("Invalid Price")
                 }
 
             companion object {
 
-                fun ofNewFloatingUnitPrice(newFloatingUnitPrice: NewFloatingUnitPrice) =
-                    Price(newFloatingUnitPrice = newFloatingUnitPrice)
+                fun ofNewFloatingUnit(newFloatingUnit: NewFloatingUnitPrice) =
+                    Price(newFloatingUnit = newFloatingUnit)
 
-                fun ofNewFloatingPackagePrice(newFloatingPackagePrice: NewFloatingPackagePrice) =
-                    Price(newFloatingPackagePrice = newFloatingPackagePrice)
+                fun ofNewFloatingPackage(newFloatingPackage: NewFloatingPackagePrice) =
+                    Price(newFloatingPackage = newFloatingPackage)
 
-                fun ofNewFloatingMatrixPrice(newFloatingMatrixPrice: NewFloatingMatrixPrice) =
-                    Price(newFloatingMatrixPrice = newFloatingMatrixPrice)
+                fun ofNewFloatingMatrix(newFloatingMatrix: NewFloatingMatrixPrice) =
+                    Price(newFloatingMatrix = newFloatingMatrix)
 
-                fun ofNewFloatingMatrixWithAllocationPrice(
-                    newFloatingMatrixWithAllocationPrice: NewFloatingMatrixWithAllocationPrice
-                ) =
-                    Price(
-                        newFloatingMatrixWithAllocationPrice = newFloatingMatrixWithAllocationPrice
-                    )
+                fun ofNewFloatingMatrixWithAllocation(
+                    newFloatingMatrixWithAllocation: NewFloatingMatrixWithAllocationPrice
+                ) = Price(newFloatingMatrixWithAllocation = newFloatingMatrixWithAllocation)
 
-                fun ofNewFloatingTieredPrice(newFloatingTieredPrice: NewFloatingTieredPrice) =
-                    Price(newFloatingTieredPrice = newFloatingTieredPrice)
+                fun ofNewFloatingTiered(newFloatingTiered: NewFloatingTieredPrice) =
+                    Price(newFloatingTiered = newFloatingTiered)
 
-                fun ofNewFloatingTieredBpsPrice(
-                    newFloatingTieredBpsPrice: NewFloatingTieredBpsPrice
-                ) = Price(newFloatingTieredBpsPrice = newFloatingTieredBpsPrice)
+                fun ofNewFloatingTieredBps(newFloatingTieredBps: NewFloatingTieredBpsPrice) =
+                    Price(newFloatingTieredBps = newFloatingTieredBps)
 
-                fun ofNewFloatingBpsPrice(newFloatingBpsPrice: NewFloatingBpsPrice) =
-                    Price(newFloatingBpsPrice = newFloatingBpsPrice)
+                fun ofNewFloatingBps(newFloatingBps: NewFloatingBpsPrice) =
+                    Price(newFloatingBps = newFloatingBps)
 
-                fun ofNewFloatingBulkBpsPrice(newFloatingBulkBpsPrice: NewFloatingBulkBpsPrice) =
-                    Price(newFloatingBulkBpsPrice = newFloatingBulkBpsPrice)
+                fun ofNewFloatingBulkBps(newFloatingBulkBps: NewFloatingBulkBpsPrice) =
+                    Price(newFloatingBulkBps = newFloatingBulkBps)
 
-                fun ofNewFloatingBulkPrice(newFloatingBulkPrice: NewFloatingBulkPrice) =
-                    Price(newFloatingBulkPrice = newFloatingBulkPrice)
+                fun ofNewFloatingBulk(newFloatingBulk: NewFloatingBulkPrice) =
+                    Price(newFloatingBulk = newFloatingBulk)
 
-                fun ofNewFloatingThresholdTotalAmountPrice(
-                    newFloatingThresholdTotalAmountPrice: NewFloatingThresholdTotalAmountPrice
-                ) =
-                    Price(
-                        newFloatingThresholdTotalAmountPrice = newFloatingThresholdTotalAmountPrice
-                    )
+                fun ofNewFloatingThresholdTotalAmount(
+                    newFloatingThresholdTotalAmount: NewFloatingThresholdTotalAmountPrice
+                ) = Price(newFloatingThresholdTotalAmount = newFloatingThresholdTotalAmount)
 
-                fun ofNewFloatingTieredPackagePrice(
-                    newFloatingTieredPackagePrice: NewFloatingTieredPackagePrice
-                ) = Price(newFloatingTieredPackagePrice = newFloatingTieredPackagePrice)
+                fun ofNewFloatingTieredPackage(
+                    newFloatingTieredPackage: NewFloatingTieredPackagePrice
+                ) = Price(newFloatingTieredPackage = newFloatingTieredPackage)
 
-                fun ofNewFloatingGroupedTieredPrice(
-                    newFloatingGroupedTieredPrice: NewFloatingGroupedTieredPrice
-                ) = Price(newFloatingGroupedTieredPrice = newFloatingGroupedTieredPrice)
+                fun ofNewFloatingGroupedTiered(
+                    newFloatingGroupedTiered: NewFloatingGroupedTieredPrice
+                ) = Price(newFloatingGroupedTiered = newFloatingGroupedTiered)
 
-                fun ofNewFloatingMaxGroupTieredPrice(
-                    newFloatingMaxGroupTieredPrice: NewFloatingMaxGroupTieredPrice
-                ) = Price(newFloatingMaxGroupTieredPrice = newFloatingMaxGroupTieredPrice)
+                fun ofNewFloatingMaxGroupTiered(
+                    newFloatingMaxGroupTiered: NewFloatingMaxGroupTieredPrice
+                ) = Price(newFloatingMaxGroupTiered = newFloatingMaxGroupTiered)
 
-                fun ofNewFloatingTieredWithMinimumPrice(
-                    newFloatingTieredWithMinimumPrice: NewFloatingTieredWithMinimumPrice
-                ) = Price(newFloatingTieredWithMinimumPrice = newFloatingTieredWithMinimumPrice)
+                fun ofNewFloatingTieredWithMinimum(
+                    newFloatingTieredWithMinimum: NewFloatingTieredWithMinimumPrice
+                ) = Price(newFloatingTieredWithMinimum = newFloatingTieredWithMinimum)
 
-                fun ofNewFloatingPackageWithAllocationPrice(
-                    newFloatingPackageWithAllocationPrice: NewFloatingPackageWithAllocationPrice
-                ) =
-                    Price(
-                        newFloatingPackageWithAllocationPrice =
-                            newFloatingPackageWithAllocationPrice
-                    )
+                fun ofNewFloatingPackageWithAllocation(
+                    newFloatingPackageWithAllocation: NewFloatingPackageWithAllocationPrice
+                ) = Price(newFloatingPackageWithAllocation = newFloatingPackageWithAllocation)
 
-                fun ofNewFloatingTieredPackageWithMinimumPrice(
-                    newFloatingTieredPackageWithMinimumPrice:
-                        NewFloatingTieredPackageWithMinimumPrice
-                ) =
-                    Price(
-                        newFloatingTieredPackageWithMinimumPrice =
-                            newFloatingTieredPackageWithMinimumPrice
-                    )
+                fun ofNewFloatingTieredPackageWithMinimum(
+                    newFloatingTieredPackageWithMinimum: NewFloatingTieredPackageWithMinimumPrice
+                ) = Price(newFloatingTieredPackageWithMinimum = newFloatingTieredPackageWithMinimum)
 
-                fun ofNewFloatingUnitWithPercentPrice(
-                    newFloatingUnitWithPercentPrice: NewFloatingUnitWithPercentPrice
-                ) = Price(newFloatingUnitWithPercentPrice = newFloatingUnitWithPercentPrice)
+                fun ofNewFloatingUnitWithPercent(
+                    newFloatingUnitWithPercent: NewFloatingUnitWithPercentPrice
+                ) = Price(newFloatingUnitWithPercent = newFloatingUnitWithPercent)
 
-                fun ofNewFloatingTieredWithProrationPrice(
-                    newFloatingTieredWithProrationPrice: NewFloatingTieredWithProrationPrice
-                ) = Price(newFloatingTieredWithProrationPrice = newFloatingTieredWithProrationPrice)
+                fun ofNewFloatingTieredWithProration(
+                    newFloatingTieredWithProration: NewFloatingTieredWithProrationPrice
+                ) = Price(newFloatingTieredWithProration = newFloatingTieredWithProration)
 
-                fun ofNewFloatingUnitWithProrationPrice(
-                    newFloatingUnitWithProrationPrice: NewFloatingUnitWithProrationPrice
-                ) = Price(newFloatingUnitWithProrationPrice = newFloatingUnitWithProrationPrice)
+                fun ofNewFloatingUnitWithProration(
+                    newFloatingUnitWithProration: NewFloatingUnitWithProrationPrice
+                ) = Price(newFloatingUnitWithProration = newFloatingUnitWithProration)
 
-                fun ofNewFloatingGroupedAllocationPrice(
-                    newFloatingGroupedAllocationPrice: NewFloatingGroupedAllocationPrice
-                ) = Price(newFloatingGroupedAllocationPrice = newFloatingGroupedAllocationPrice)
+                fun ofNewFloatingGroupedAllocation(
+                    newFloatingGroupedAllocation: NewFloatingGroupedAllocationPrice
+                ) = Price(newFloatingGroupedAllocation = newFloatingGroupedAllocation)
 
-                fun ofNewFloatingGroupedWithProratedMinimumPrice(
-                    newFloatingGroupedWithProratedMinimumPrice:
+                fun ofNewFloatingGroupedWithProratedMinimum(
+                    newFloatingGroupedWithProratedMinimum:
                         NewFloatingGroupedWithProratedMinimumPrice
                 ) =
                     Price(
-                        newFloatingGroupedWithProratedMinimumPrice =
-                            newFloatingGroupedWithProratedMinimumPrice
+                        newFloatingGroupedWithProratedMinimum =
+                            newFloatingGroupedWithProratedMinimum
                     )
 
-                fun ofNewFloatingGroupedWithMeteredMinimumPrice(
-                    newFloatingGroupedWithMeteredMinimumPrice:
-                        NewFloatingGroupedWithMeteredMinimumPrice
+                fun ofNewFloatingGroupedWithMeteredMinimum(
+                    newFloatingGroupedWithMeteredMinimum: NewFloatingGroupedWithMeteredMinimumPrice
                 ) =
                     Price(
-                        newFloatingGroupedWithMeteredMinimumPrice =
-                            newFloatingGroupedWithMeteredMinimumPrice
+                        newFloatingGroupedWithMeteredMinimum = newFloatingGroupedWithMeteredMinimum
                     )
 
-                fun ofNewFloatingMatrixWithDisplayNamePrice(
-                    newFloatingMatrixWithDisplayNamePrice: NewFloatingMatrixWithDisplayNamePrice
-                ) =
-                    Price(
-                        newFloatingMatrixWithDisplayNamePrice =
-                            newFloatingMatrixWithDisplayNamePrice
-                    )
+                fun ofNewFloatingMatrixWithDisplayName(
+                    newFloatingMatrixWithDisplayName: NewFloatingMatrixWithDisplayNamePrice
+                ) = Price(newFloatingMatrixWithDisplayName = newFloatingMatrixWithDisplayName)
 
-                fun ofNewFloatingBulkWithProrationPrice(
-                    newFloatingBulkWithProrationPrice: NewFloatingBulkWithProrationPrice
-                ) = Price(newFloatingBulkWithProrationPrice = newFloatingBulkWithProrationPrice)
+                fun ofNewFloatingBulkWithProration(
+                    newFloatingBulkWithProration: NewFloatingBulkWithProrationPrice
+                ) = Price(newFloatingBulkWithProration = newFloatingBulkWithProration)
 
-                fun ofNewFloatingGroupedTieredPackagePrice(
-                    newFloatingGroupedTieredPackagePrice: NewFloatingGroupedTieredPackagePrice
-                ) =
-                    Price(
-                        newFloatingGroupedTieredPackagePrice = newFloatingGroupedTieredPackagePrice
-                    )
+                fun ofNewFloatingGroupedTieredPackage(
+                    newFloatingGroupedTieredPackage: NewFloatingGroupedTieredPackagePrice
+                ) = Price(newFloatingGroupedTieredPackage = newFloatingGroupedTieredPackage)
             }
 
             interface Visitor<out T> {
 
-                fun visitNewFloatingUnitPrice(newFloatingUnitPrice: NewFloatingUnitPrice): T
+                fun visitNewFloatingUnit(newFloatingUnit: NewFloatingUnitPrice): T
 
-                fun visitNewFloatingPackagePrice(
-                    newFloatingPackagePrice: NewFloatingPackagePrice
+                fun visitNewFloatingPackage(newFloatingPackage: NewFloatingPackagePrice): T
+
+                fun visitNewFloatingMatrix(newFloatingMatrix: NewFloatingMatrixPrice): T
+
+                fun visitNewFloatingMatrixWithAllocation(
+                    newFloatingMatrixWithAllocation: NewFloatingMatrixWithAllocationPrice
                 ): T
 
-                fun visitNewFloatingMatrixPrice(newFloatingMatrixPrice: NewFloatingMatrixPrice): T
+                fun visitNewFloatingTiered(newFloatingTiered: NewFloatingTieredPrice): T
 
-                fun visitNewFloatingMatrixWithAllocationPrice(
-                    newFloatingMatrixWithAllocationPrice: NewFloatingMatrixWithAllocationPrice
+                fun visitNewFloatingTieredBps(newFloatingTieredBps: NewFloatingTieredBpsPrice): T
+
+                fun visitNewFloatingBps(newFloatingBps: NewFloatingBpsPrice): T
+
+                fun visitNewFloatingBulkBps(newFloatingBulkBps: NewFloatingBulkBpsPrice): T
+
+                fun visitNewFloatingBulk(newFloatingBulk: NewFloatingBulkPrice): T
+
+                fun visitNewFloatingThresholdTotalAmount(
+                    newFloatingThresholdTotalAmount: NewFloatingThresholdTotalAmountPrice
                 ): T
 
-                fun visitNewFloatingTieredPrice(newFloatingTieredPrice: NewFloatingTieredPrice): T
-
-                fun visitNewFloatingTieredBpsPrice(
-                    newFloatingTieredBpsPrice: NewFloatingTieredBpsPrice
+                fun visitNewFloatingTieredPackage(
+                    newFloatingTieredPackage: NewFloatingTieredPackagePrice
                 ): T
 
-                fun visitNewFloatingBpsPrice(newFloatingBpsPrice: NewFloatingBpsPrice): T
-
-                fun visitNewFloatingBulkBpsPrice(
-                    newFloatingBulkBpsPrice: NewFloatingBulkBpsPrice
+                fun visitNewFloatingGroupedTiered(
+                    newFloatingGroupedTiered: NewFloatingGroupedTieredPrice
                 ): T
 
-                fun visitNewFloatingBulkPrice(newFloatingBulkPrice: NewFloatingBulkPrice): T
-
-                fun visitNewFloatingThresholdTotalAmountPrice(
-                    newFloatingThresholdTotalAmountPrice: NewFloatingThresholdTotalAmountPrice
+                fun visitNewFloatingMaxGroupTiered(
+                    newFloatingMaxGroupTiered: NewFloatingMaxGroupTieredPrice
                 ): T
 
-                fun visitNewFloatingTieredPackagePrice(
-                    newFloatingTieredPackagePrice: NewFloatingTieredPackagePrice
+                fun visitNewFloatingTieredWithMinimum(
+                    newFloatingTieredWithMinimum: NewFloatingTieredWithMinimumPrice
                 ): T
 
-                fun visitNewFloatingGroupedTieredPrice(
-                    newFloatingGroupedTieredPrice: NewFloatingGroupedTieredPrice
+                fun visitNewFloatingPackageWithAllocation(
+                    newFloatingPackageWithAllocation: NewFloatingPackageWithAllocationPrice
                 ): T
 
-                fun visitNewFloatingMaxGroupTieredPrice(
-                    newFloatingMaxGroupTieredPrice: NewFloatingMaxGroupTieredPrice
+                fun visitNewFloatingTieredPackageWithMinimum(
+                    newFloatingTieredPackageWithMinimum: NewFloatingTieredPackageWithMinimumPrice
                 ): T
 
-                fun visitNewFloatingTieredWithMinimumPrice(
-                    newFloatingTieredWithMinimumPrice: NewFloatingTieredWithMinimumPrice
+                fun visitNewFloatingUnitWithPercent(
+                    newFloatingUnitWithPercent: NewFloatingUnitWithPercentPrice
                 ): T
 
-                fun visitNewFloatingPackageWithAllocationPrice(
-                    newFloatingPackageWithAllocationPrice: NewFloatingPackageWithAllocationPrice
+                fun visitNewFloatingTieredWithProration(
+                    newFloatingTieredWithProration: NewFloatingTieredWithProrationPrice
                 ): T
 
-                fun visitNewFloatingTieredPackageWithMinimumPrice(
-                    newFloatingTieredPackageWithMinimumPrice:
-                        NewFloatingTieredPackageWithMinimumPrice
+                fun visitNewFloatingUnitWithProration(
+                    newFloatingUnitWithProration: NewFloatingUnitWithProrationPrice
                 ): T
 
-                fun visitNewFloatingUnitWithPercentPrice(
-                    newFloatingUnitWithPercentPrice: NewFloatingUnitWithPercentPrice
+                fun visitNewFloatingGroupedAllocation(
+                    newFloatingGroupedAllocation: NewFloatingGroupedAllocationPrice
                 ): T
 
-                fun visitNewFloatingTieredWithProrationPrice(
-                    newFloatingTieredWithProrationPrice: NewFloatingTieredWithProrationPrice
-                ): T
-
-                fun visitNewFloatingUnitWithProrationPrice(
-                    newFloatingUnitWithProrationPrice: NewFloatingUnitWithProrationPrice
-                ): T
-
-                fun visitNewFloatingGroupedAllocationPrice(
-                    newFloatingGroupedAllocationPrice: NewFloatingGroupedAllocationPrice
-                ): T
-
-                fun visitNewFloatingGroupedWithProratedMinimumPrice(
-                    newFloatingGroupedWithProratedMinimumPrice:
+                fun visitNewFloatingGroupedWithProratedMinimum(
+                    newFloatingGroupedWithProratedMinimum:
                         NewFloatingGroupedWithProratedMinimumPrice
                 ): T
 
-                fun visitNewFloatingGroupedWithMeteredMinimumPrice(
-                    newFloatingGroupedWithMeteredMinimumPrice:
-                        NewFloatingGroupedWithMeteredMinimumPrice
+                fun visitNewFloatingGroupedWithMeteredMinimum(
+                    newFloatingGroupedWithMeteredMinimum: NewFloatingGroupedWithMeteredMinimumPrice
                 ): T
 
-                fun visitNewFloatingMatrixWithDisplayNamePrice(
-                    newFloatingMatrixWithDisplayNamePrice: NewFloatingMatrixWithDisplayNamePrice
+                fun visitNewFloatingMatrixWithDisplayName(
+                    newFloatingMatrixWithDisplayName: NewFloatingMatrixWithDisplayNamePrice
                 ): T
 
-                fun visitNewFloatingBulkWithProrationPrice(
-                    newFloatingBulkWithProrationPrice: NewFloatingBulkWithProrationPrice
+                fun visitNewFloatingBulkWithProration(
+                    newFloatingBulkWithProration: NewFloatingBulkWithProrationPrice
                 ): T
 
-                fun visitNewFloatingGroupedTieredPackagePrice(
-                    newFloatingGroupedTieredPackagePrice: NewFloatingGroupedTieredPackagePrice
+                fun visitNewFloatingGroupedTieredPackage(
+                    newFloatingGroupedTieredPackage: NewFloatingGroupedTieredPackagePrice
                 ): T
 
                 fun unknown(json: JsonValue?): T {
@@ -3426,7 +3289,7 @@ constructor(
                                     it.validate()
                                 }
                                 ?.let {
-                                    return Price(newFloatingUnitPrice = it, _json = json)
+                                    return Price(newFloatingUnit = it, _json = json)
                                 }
                         }
                         "package" -> {
@@ -3434,7 +3297,7 @@ constructor(
                                     it.validate()
                                 }
                                 ?.let {
-                                    return Price(newFloatingPackagePrice = it, _json = json)
+                                    return Price(newFloatingPackage = it, _json = json)
                                 }
                         }
                         "matrix" -> {
@@ -3442,7 +3305,7 @@ constructor(
                                     it.validate()
                                 }
                                 ?.let {
-                                    return Price(newFloatingMatrixPrice = it, _json = json)
+                                    return Price(newFloatingMatrix = it, _json = json)
                                 }
                         }
                         "matrix_with_allocation" -> {
@@ -3453,10 +3316,7 @@ constructor(
                                     it.validate()
                                 }
                                 ?.let {
-                                    return Price(
-                                        newFloatingMatrixWithAllocationPrice = it,
-                                        _json = json
-                                    )
+                                    return Price(newFloatingMatrixWithAllocation = it, _json = json)
                                 }
                         }
                         "tiered" -> {
@@ -3464,7 +3324,7 @@ constructor(
                                     it.validate()
                                 }
                                 ?.let {
-                                    return Price(newFloatingTieredPrice = it, _json = json)
+                                    return Price(newFloatingTiered = it, _json = json)
                                 }
                         }
                         "tiered_bps" -> {
@@ -3472,7 +3332,7 @@ constructor(
                                     it.validate()
                                 }
                                 ?.let {
-                                    return Price(newFloatingTieredBpsPrice = it, _json = json)
+                                    return Price(newFloatingTieredBps = it, _json = json)
                                 }
                         }
                         "bps" -> {
@@ -3480,7 +3340,7 @@ constructor(
                                     it.validate()
                                 }
                                 ?.let {
-                                    return Price(newFloatingBpsPrice = it, _json = json)
+                                    return Price(newFloatingBps = it, _json = json)
                                 }
                         }
                         "bulk_bps" -> {
@@ -3488,7 +3348,7 @@ constructor(
                                     it.validate()
                                 }
                                 ?.let {
-                                    return Price(newFloatingBulkBpsPrice = it, _json = json)
+                                    return Price(newFloatingBulkBps = it, _json = json)
                                 }
                         }
                         "bulk" -> {
@@ -3496,7 +3356,7 @@ constructor(
                                     it.validate()
                                 }
                                 ?.let {
-                                    return Price(newFloatingBulkPrice = it, _json = json)
+                                    return Price(newFloatingBulk = it, _json = json)
                                 }
                         }
                         "threshold_total_amount" -> {
@@ -3507,10 +3367,7 @@ constructor(
                                     it.validate()
                                 }
                                 ?.let {
-                                    return Price(
-                                        newFloatingThresholdTotalAmountPrice = it,
-                                        _json = json
-                                    )
+                                    return Price(newFloatingThresholdTotalAmount = it, _json = json)
                                 }
                         }
                         "tiered_package" -> {
@@ -3518,7 +3375,7 @@ constructor(
                                     it.validate()
                                 }
                                 ?.let {
-                                    return Price(newFloatingTieredPackagePrice = it, _json = json)
+                                    return Price(newFloatingTieredPackage = it, _json = json)
                                 }
                         }
                         "grouped_tiered" -> {
@@ -3526,7 +3383,7 @@ constructor(
                                     it.validate()
                                 }
                                 ?.let {
-                                    return Price(newFloatingGroupedTieredPrice = it, _json = json)
+                                    return Price(newFloatingGroupedTiered = it, _json = json)
                                 }
                         }
                         "max_group_tiered" -> {
@@ -3534,7 +3391,7 @@ constructor(
                                     it.validate()
                                 }
                                 ?.let {
-                                    return Price(newFloatingMaxGroupTieredPrice = it, _json = json)
+                                    return Price(newFloatingMaxGroupTiered = it, _json = json)
                                 }
                         }
                         "tiered_with_minimum" -> {
@@ -3545,10 +3402,7 @@ constructor(
                                     it.validate()
                                 }
                                 ?.let {
-                                    return Price(
-                                        newFloatingTieredWithMinimumPrice = it,
-                                        _json = json
-                                    )
+                                    return Price(newFloatingTieredWithMinimum = it, _json = json)
                                 }
                         }
                         "package_with_allocation" -> {
@@ -3560,7 +3414,7 @@ constructor(
                                 }
                                 ?.let {
                                     return Price(
-                                        newFloatingPackageWithAllocationPrice = it,
+                                        newFloatingPackageWithAllocation = it,
                                         _json = json
                                     )
                                 }
@@ -3574,7 +3428,7 @@ constructor(
                                 }
                                 ?.let {
                                     return Price(
-                                        newFloatingTieredPackageWithMinimumPrice = it,
+                                        newFloatingTieredPackageWithMinimum = it,
                                         _json = json
                                     )
                                 }
@@ -3587,7 +3441,7 @@ constructor(
                                     it.validate()
                                 }
                                 ?.let {
-                                    return Price(newFloatingUnitWithPercentPrice = it, _json = json)
+                                    return Price(newFloatingUnitWithPercent = it, _json = json)
                                 }
                         }
                         "tiered_with_proration" -> {
@@ -3598,10 +3452,7 @@ constructor(
                                     it.validate()
                                 }
                                 ?.let {
-                                    return Price(
-                                        newFloatingTieredWithProrationPrice = it,
-                                        _json = json
-                                    )
+                                    return Price(newFloatingTieredWithProration = it, _json = json)
                                 }
                         }
                         "unit_with_proration" -> {
@@ -3612,10 +3463,7 @@ constructor(
                                     it.validate()
                                 }
                                 ?.let {
-                                    return Price(
-                                        newFloatingUnitWithProrationPrice = it,
-                                        _json = json
-                                    )
+                                    return Price(newFloatingUnitWithProration = it, _json = json)
                                 }
                         }
                         "grouped_allocation" -> {
@@ -3626,10 +3474,7 @@ constructor(
                                     it.validate()
                                 }
                                 ?.let {
-                                    return Price(
-                                        newFloatingGroupedAllocationPrice = it,
-                                        _json = json
-                                    )
+                                    return Price(newFloatingGroupedAllocation = it, _json = json)
                                 }
                         }
                         "grouped_with_prorated_minimum" -> {
@@ -3641,7 +3486,7 @@ constructor(
                                 }
                                 ?.let {
                                     return Price(
-                                        newFloatingGroupedWithProratedMinimumPrice = it,
+                                        newFloatingGroupedWithProratedMinimum = it,
                                         _json = json
                                     )
                                 }
@@ -3655,7 +3500,7 @@ constructor(
                                 }
                                 ?.let {
                                     return Price(
-                                        newFloatingGroupedWithMeteredMinimumPrice = it,
+                                        newFloatingGroupedWithMeteredMinimum = it,
                                         _json = json
                                     )
                                 }
@@ -3669,7 +3514,7 @@ constructor(
                                 }
                                 ?.let {
                                     return Price(
-                                        newFloatingMatrixWithDisplayNamePrice = it,
+                                        newFloatingMatrixWithDisplayName = it,
                                         _json = json
                                     )
                                 }
@@ -3682,10 +3527,7 @@ constructor(
                                     it.validate()
                                 }
                                 ?.let {
-                                    return Price(
-                                        newFloatingBulkWithProrationPrice = it,
-                                        _json = json
-                                    )
+                                    return Price(newFloatingBulkWithProration = it, _json = json)
                                 }
                         }
                         "grouped_tiered_package" -> {
@@ -3696,10 +3538,7 @@ constructor(
                                     it.validate()
                                 }
                                 ?.let {
-                                    return Price(
-                                        newFloatingGroupedTieredPackagePrice = it,
-                                        _json = json
-                                    )
+                                    return Price(newFloatingGroupedTieredPackage = it, _json = json)
                                 }
                         }
                     }
@@ -3716,56 +3555,55 @@ constructor(
                     provider: SerializerProvider
                 ) {
                     when {
-                        value.newFloatingUnitPrice != null ->
-                            generator.writeObject(value.newFloatingUnitPrice)
-                        value.newFloatingPackagePrice != null ->
-                            generator.writeObject(value.newFloatingPackagePrice)
-                        value.newFloatingMatrixPrice != null ->
-                            generator.writeObject(value.newFloatingMatrixPrice)
-                        value.newFloatingMatrixWithAllocationPrice != null ->
-                            generator.writeObject(value.newFloatingMatrixWithAllocationPrice)
-                        value.newFloatingTieredPrice != null ->
-                            generator.writeObject(value.newFloatingTieredPrice)
-                        value.newFloatingTieredBpsPrice != null ->
-                            generator.writeObject(value.newFloatingTieredBpsPrice)
-                        value.newFloatingBpsPrice != null ->
-                            generator.writeObject(value.newFloatingBpsPrice)
-                        value.newFloatingBulkBpsPrice != null ->
-                            generator.writeObject(value.newFloatingBulkBpsPrice)
-                        value.newFloatingBulkPrice != null ->
-                            generator.writeObject(value.newFloatingBulkPrice)
-                        value.newFloatingThresholdTotalAmountPrice != null ->
-                            generator.writeObject(value.newFloatingThresholdTotalAmountPrice)
-                        value.newFloatingTieredPackagePrice != null ->
-                            generator.writeObject(value.newFloatingTieredPackagePrice)
-                        value.newFloatingGroupedTieredPrice != null ->
-                            generator.writeObject(value.newFloatingGroupedTieredPrice)
-                        value.newFloatingMaxGroupTieredPrice != null ->
-                            generator.writeObject(value.newFloatingMaxGroupTieredPrice)
-                        value.newFloatingTieredWithMinimumPrice != null ->
-                            generator.writeObject(value.newFloatingTieredWithMinimumPrice)
-                        value.newFloatingPackageWithAllocationPrice != null ->
-                            generator.writeObject(value.newFloatingPackageWithAllocationPrice)
-                        value.newFloatingTieredPackageWithMinimumPrice != null ->
-                            generator.writeObject(value.newFloatingTieredPackageWithMinimumPrice)
-                        value.newFloatingUnitWithPercentPrice != null ->
-                            generator.writeObject(value.newFloatingUnitWithPercentPrice)
-                        value.newFloatingTieredWithProrationPrice != null ->
-                            generator.writeObject(value.newFloatingTieredWithProrationPrice)
-                        value.newFloatingUnitWithProrationPrice != null ->
-                            generator.writeObject(value.newFloatingUnitWithProrationPrice)
-                        value.newFloatingGroupedAllocationPrice != null ->
-                            generator.writeObject(value.newFloatingGroupedAllocationPrice)
-                        value.newFloatingGroupedWithProratedMinimumPrice != null ->
-                            generator.writeObject(value.newFloatingGroupedWithProratedMinimumPrice)
-                        value.newFloatingGroupedWithMeteredMinimumPrice != null ->
-                            generator.writeObject(value.newFloatingGroupedWithMeteredMinimumPrice)
-                        value.newFloatingMatrixWithDisplayNamePrice != null ->
-                            generator.writeObject(value.newFloatingMatrixWithDisplayNamePrice)
-                        value.newFloatingBulkWithProrationPrice != null ->
-                            generator.writeObject(value.newFloatingBulkWithProrationPrice)
-                        value.newFloatingGroupedTieredPackagePrice != null ->
-                            generator.writeObject(value.newFloatingGroupedTieredPackagePrice)
+                        value.newFloatingUnit != null ->
+                            generator.writeObject(value.newFloatingUnit)
+                        value.newFloatingPackage != null ->
+                            generator.writeObject(value.newFloatingPackage)
+                        value.newFloatingMatrix != null ->
+                            generator.writeObject(value.newFloatingMatrix)
+                        value.newFloatingMatrixWithAllocation != null ->
+                            generator.writeObject(value.newFloatingMatrixWithAllocation)
+                        value.newFloatingTiered != null ->
+                            generator.writeObject(value.newFloatingTiered)
+                        value.newFloatingTieredBps != null ->
+                            generator.writeObject(value.newFloatingTieredBps)
+                        value.newFloatingBps != null -> generator.writeObject(value.newFloatingBps)
+                        value.newFloatingBulkBps != null ->
+                            generator.writeObject(value.newFloatingBulkBps)
+                        value.newFloatingBulk != null ->
+                            generator.writeObject(value.newFloatingBulk)
+                        value.newFloatingThresholdTotalAmount != null ->
+                            generator.writeObject(value.newFloatingThresholdTotalAmount)
+                        value.newFloatingTieredPackage != null ->
+                            generator.writeObject(value.newFloatingTieredPackage)
+                        value.newFloatingGroupedTiered != null ->
+                            generator.writeObject(value.newFloatingGroupedTiered)
+                        value.newFloatingMaxGroupTiered != null ->
+                            generator.writeObject(value.newFloatingMaxGroupTiered)
+                        value.newFloatingTieredWithMinimum != null ->
+                            generator.writeObject(value.newFloatingTieredWithMinimum)
+                        value.newFloatingPackageWithAllocation != null ->
+                            generator.writeObject(value.newFloatingPackageWithAllocation)
+                        value.newFloatingTieredPackageWithMinimum != null ->
+                            generator.writeObject(value.newFloatingTieredPackageWithMinimum)
+                        value.newFloatingUnitWithPercent != null ->
+                            generator.writeObject(value.newFloatingUnitWithPercent)
+                        value.newFloatingTieredWithProration != null ->
+                            generator.writeObject(value.newFloatingTieredWithProration)
+                        value.newFloatingUnitWithProration != null ->
+                            generator.writeObject(value.newFloatingUnitWithProration)
+                        value.newFloatingGroupedAllocation != null ->
+                            generator.writeObject(value.newFloatingGroupedAllocation)
+                        value.newFloatingGroupedWithProratedMinimum != null ->
+                            generator.writeObject(value.newFloatingGroupedWithProratedMinimum)
+                        value.newFloatingGroupedWithMeteredMinimum != null ->
+                            generator.writeObject(value.newFloatingGroupedWithMeteredMinimum)
+                        value.newFloatingMatrixWithDisplayName != null ->
+                            generator.writeObject(value.newFloatingMatrixWithDisplayName)
+                        value.newFloatingBulkWithProration != null ->
+                            generator.writeObject(value.newFloatingBulkWithProration)
+                        value.newFloatingGroupedTieredPackage != null ->
+                            generator.writeObject(value.newFloatingGroupedTieredPackage)
                         value._json != null -> generator.writeObject(value._json)
                         else -> throw IllegalStateException("Invalid Price")
                     }
@@ -36360,8 +36198,8 @@ constructor(
              * The start date of the adjustment interval. This is the date that the adjustment will
              * start affecting prices on the subscription.
              */
-            fun startDate(billingCycleRelativeDate: BillingCycleRelativeDate) =
-                startDate(StartDate.ofBillingCycleRelativeDate(billingCycleRelativeDate))
+            fun startDate(billingCycleRelative: BillingCycleRelativeDate) =
+                startDate(StartDate.ofBillingCycleRelative(billingCycleRelative))
 
             /**
              * The end date of the adjustment interval. This is the date that the adjustment will
@@ -36385,8 +36223,8 @@ constructor(
              * The end date of the adjustment interval. This is the date that the adjustment will
              * stop affecting prices on the subscription.
              */
-            fun endDate(billingCycleRelativeDate: BillingCycleRelativeDate) =
-                endDate(EndDate.ofBillingCycleRelativeDate(billingCycleRelativeDate))
+            fun endDate(billingCycleRelative: BillingCycleRelativeDate) =
+                endDate(EndDate.ofBillingCycleRelative(billingCycleRelative))
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
@@ -37921,30 +37759,30 @@ constructor(
         class StartDate
         private constructor(
             private val dateTime: OffsetDateTime? = null,
-            private val billingCycleRelativeDate: BillingCycleRelativeDate? = null,
+            private val billingCycleRelative: BillingCycleRelativeDate? = null,
             private val _json: JsonValue? = null,
         ) {
 
             fun dateTime(): OffsetDateTime? = dateTime
 
-            fun billingCycleRelativeDate(): BillingCycleRelativeDate? = billingCycleRelativeDate
+            fun billingCycleRelative(): BillingCycleRelativeDate? = billingCycleRelative
 
             fun isDateTime(): Boolean = dateTime != null
 
-            fun isBillingCycleRelativeDate(): Boolean = billingCycleRelativeDate != null
+            fun isBillingCycleRelative(): Boolean = billingCycleRelative != null
 
             fun asDateTime(): OffsetDateTime = dateTime.getOrThrow("dateTime")
 
-            fun asBillingCycleRelativeDate(): BillingCycleRelativeDate =
-                billingCycleRelativeDate.getOrThrow("billingCycleRelativeDate")
+            fun asBillingCycleRelative(): BillingCycleRelativeDate =
+                billingCycleRelative.getOrThrow("billingCycleRelative")
 
             fun _json(): JsonValue? = _json
 
             fun <T> accept(visitor: Visitor<T>): T {
                 return when {
                     dateTime != null -> visitor.visitDateTime(dateTime)
-                    billingCycleRelativeDate != null ->
-                        visitor.visitBillingCycleRelativeDate(billingCycleRelativeDate)
+                    billingCycleRelative != null ->
+                        visitor.visitBillingCycleRelative(billingCycleRelative)
                     else -> visitor.unknown(_json)
                 }
             }
@@ -37960,8 +37798,8 @@ constructor(
                     object : Visitor<Unit> {
                         override fun visitDateTime(dateTime: OffsetDateTime) {}
 
-                        override fun visitBillingCycleRelativeDate(
-                            billingCycleRelativeDate: BillingCycleRelativeDate
+                        override fun visitBillingCycleRelative(
+                            billingCycleRelative: BillingCycleRelativeDate
                         ) {}
                     }
                 )
@@ -37973,16 +37811,16 @@ constructor(
                     return true
                 }
 
-                return /* spotless:off */ other is StartDate && dateTime == other.dateTime && billingCycleRelativeDate == other.billingCycleRelativeDate /* spotless:on */
+                return /* spotless:off */ other is StartDate && dateTime == other.dateTime && billingCycleRelative == other.billingCycleRelative /* spotless:on */
             }
 
-            override fun hashCode(): Int = /* spotless:off */ Objects.hash(dateTime, billingCycleRelativeDate) /* spotless:on */
+            override fun hashCode(): Int = /* spotless:off */ Objects.hash(dateTime, billingCycleRelative) /* spotless:on */
 
             override fun toString(): String =
                 when {
                     dateTime != null -> "StartDate{dateTime=$dateTime}"
-                    billingCycleRelativeDate != null ->
-                        "StartDate{billingCycleRelativeDate=$billingCycleRelativeDate}"
+                    billingCycleRelative != null ->
+                        "StartDate{billingCycleRelative=$billingCycleRelative}"
                     _json != null -> "StartDate{_unknown=$_json}"
                     else -> throw IllegalStateException("Invalid StartDate")
                 }
@@ -37991,17 +37829,15 @@ constructor(
 
                 fun ofDateTime(dateTime: OffsetDateTime) = StartDate(dateTime = dateTime)
 
-                fun ofBillingCycleRelativeDate(billingCycleRelativeDate: BillingCycleRelativeDate) =
-                    StartDate(billingCycleRelativeDate = billingCycleRelativeDate)
+                fun ofBillingCycleRelative(billingCycleRelative: BillingCycleRelativeDate) =
+                    StartDate(billingCycleRelative = billingCycleRelative)
             }
 
             interface Visitor<out T> {
 
                 fun visitDateTime(dateTime: OffsetDateTime): T
 
-                fun visitBillingCycleRelativeDate(
-                    billingCycleRelativeDate: BillingCycleRelativeDate
-                ): T
+                fun visitBillingCycleRelative(billingCycleRelative: BillingCycleRelativeDate): T
 
                 fun unknown(json: JsonValue?): T {
                     throw OrbInvalidDataException("Unknown StartDate: $json")
@@ -38017,7 +37853,7 @@ constructor(
                         return StartDate(dateTime = it, _json = json)
                     }
                     tryDeserialize(node, jacksonTypeRef<BillingCycleRelativeDate>())?.let {
-                        return StartDate(billingCycleRelativeDate = it, _json = json)
+                        return StartDate(billingCycleRelative = it, _json = json)
                     }
 
                     return StartDate(_json = json)
@@ -38033,8 +37869,8 @@ constructor(
                 ) {
                     when {
                         value.dateTime != null -> generator.writeObject(value.dateTime)
-                        value.billingCycleRelativeDate != null ->
-                            generator.writeObject(value.billingCycleRelativeDate)
+                        value.billingCycleRelative != null ->
+                            generator.writeObject(value.billingCycleRelative)
                         value._json != null -> generator.writeObject(value._json)
                         else -> throw IllegalStateException("Invalid StartDate")
                     }
@@ -38051,30 +37887,30 @@ constructor(
         class EndDate
         private constructor(
             private val dateTime: OffsetDateTime? = null,
-            private val billingCycleRelativeDate: BillingCycleRelativeDate? = null,
+            private val billingCycleRelative: BillingCycleRelativeDate? = null,
             private val _json: JsonValue? = null,
         ) {
 
             fun dateTime(): OffsetDateTime? = dateTime
 
-            fun billingCycleRelativeDate(): BillingCycleRelativeDate? = billingCycleRelativeDate
+            fun billingCycleRelative(): BillingCycleRelativeDate? = billingCycleRelative
 
             fun isDateTime(): Boolean = dateTime != null
 
-            fun isBillingCycleRelativeDate(): Boolean = billingCycleRelativeDate != null
+            fun isBillingCycleRelative(): Boolean = billingCycleRelative != null
 
             fun asDateTime(): OffsetDateTime = dateTime.getOrThrow("dateTime")
 
-            fun asBillingCycleRelativeDate(): BillingCycleRelativeDate =
-                billingCycleRelativeDate.getOrThrow("billingCycleRelativeDate")
+            fun asBillingCycleRelative(): BillingCycleRelativeDate =
+                billingCycleRelative.getOrThrow("billingCycleRelative")
 
             fun _json(): JsonValue? = _json
 
             fun <T> accept(visitor: Visitor<T>): T {
                 return when {
                     dateTime != null -> visitor.visitDateTime(dateTime)
-                    billingCycleRelativeDate != null ->
-                        visitor.visitBillingCycleRelativeDate(billingCycleRelativeDate)
+                    billingCycleRelative != null ->
+                        visitor.visitBillingCycleRelative(billingCycleRelative)
                     else -> visitor.unknown(_json)
                 }
             }
@@ -38090,8 +37926,8 @@ constructor(
                     object : Visitor<Unit> {
                         override fun visitDateTime(dateTime: OffsetDateTime) {}
 
-                        override fun visitBillingCycleRelativeDate(
-                            billingCycleRelativeDate: BillingCycleRelativeDate
+                        override fun visitBillingCycleRelative(
+                            billingCycleRelative: BillingCycleRelativeDate
                         ) {}
                     }
                 )
@@ -38103,16 +37939,16 @@ constructor(
                     return true
                 }
 
-                return /* spotless:off */ other is EndDate && dateTime == other.dateTime && billingCycleRelativeDate == other.billingCycleRelativeDate /* spotless:on */
+                return /* spotless:off */ other is EndDate && dateTime == other.dateTime && billingCycleRelative == other.billingCycleRelative /* spotless:on */
             }
 
-            override fun hashCode(): Int = /* spotless:off */ Objects.hash(dateTime, billingCycleRelativeDate) /* spotless:on */
+            override fun hashCode(): Int = /* spotless:off */ Objects.hash(dateTime, billingCycleRelative) /* spotless:on */
 
             override fun toString(): String =
                 when {
                     dateTime != null -> "EndDate{dateTime=$dateTime}"
-                    billingCycleRelativeDate != null ->
-                        "EndDate{billingCycleRelativeDate=$billingCycleRelativeDate}"
+                    billingCycleRelative != null ->
+                        "EndDate{billingCycleRelative=$billingCycleRelative}"
                     _json != null -> "EndDate{_unknown=$_json}"
                     else -> throw IllegalStateException("Invalid EndDate")
                 }
@@ -38121,17 +37957,15 @@ constructor(
 
                 fun ofDateTime(dateTime: OffsetDateTime) = EndDate(dateTime = dateTime)
 
-                fun ofBillingCycleRelativeDate(billingCycleRelativeDate: BillingCycleRelativeDate) =
-                    EndDate(billingCycleRelativeDate = billingCycleRelativeDate)
+                fun ofBillingCycleRelative(billingCycleRelative: BillingCycleRelativeDate) =
+                    EndDate(billingCycleRelative = billingCycleRelative)
             }
 
             interface Visitor<out T> {
 
                 fun visitDateTime(dateTime: OffsetDateTime): T
 
-                fun visitBillingCycleRelativeDate(
-                    billingCycleRelativeDate: BillingCycleRelativeDate
-                ): T
+                fun visitBillingCycleRelative(billingCycleRelative: BillingCycleRelativeDate): T
 
                 fun unknown(json: JsonValue?): T {
                     throw OrbInvalidDataException("Unknown EndDate: $json")
@@ -38147,7 +37981,7 @@ constructor(
                         return EndDate(dateTime = it, _json = json)
                     }
                     tryDeserialize(node, jacksonTypeRef<BillingCycleRelativeDate>())?.let {
-                        return EndDate(billingCycleRelativeDate = it, _json = json)
+                        return EndDate(billingCycleRelative = it, _json = json)
                     }
 
                     return EndDate(_json = json)
@@ -38163,8 +37997,8 @@ constructor(
                 ) {
                     when {
                         value.dateTime != null -> generator.writeObject(value.dateTime)
-                        value.billingCycleRelativeDate != null ->
-                            generator.writeObject(value.billingCycleRelativeDate)
+                        value.billingCycleRelative != null ->
+                            generator.writeObject(value.billingCycleRelative)
                         value._json != null -> generator.writeObject(value._json)
                         else -> throw IllegalStateException("Invalid EndDate")
                     }
@@ -38382,8 +38216,8 @@ constructor(
              * The updated end date of this price interval. If not specified, the start date will
              * not be updated.
              */
-            fun endDate(billingCycleRelativeDate: BillingCycleRelativeDate) =
-                endDate(EndDate.ofBillingCycleRelativeDate(billingCycleRelativeDate))
+            fun endDate(billingCycleRelative: BillingCycleRelativeDate) =
+                endDate(EndDate.ofBillingCycleRelative(billingCycleRelative))
 
             /**
              * A list of fixed fee quantity transitions to use for this price interval. Note that
@@ -38446,8 +38280,8 @@ constructor(
              * The updated start date of this price interval. If not specified, the start date will
              * not be updated.
              */
-            fun startDate(billingCycleRelativeDate: BillingCycleRelativeDate) =
-                startDate(StartDate.ofBillingCycleRelativeDate(billingCycleRelativeDate))
+            fun startDate(billingCycleRelative: BillingCycleRelativeDate) =
+                startDate(StartDate.ofBillingCycleRelative(billingCycleRelative))
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
@@ -38488,30 +38322,30 @@ constructor(
         class EndDate
         private constructor(
             private val dateTime: OffsetDateTime? = null,
-            private val billingCycleRelativeDate: BillingCycleRelativeDate? = null,
+            private val billingCycleRelative: BillingCycleRelativeDate? = null,
             private val _json: JsonValue? = null,
         ) {
 
             fun dateTime(): OffsetDateTime? = dateTime
 
-            fun billingCycleRelativeDate(): BillingCycleRelativeDate? = billingCycleRelativeDate
+            fun billingCycleRelative(): BillingCycleRelativeDate? = billingCycleRelative
 
             fun isDateTime(): Boolean = dateTime != null
 
-            fun isBillingCycleRelativeDate(): Boolean = billingCycleRelativeDate != null
+            fun isBillingCycleRelative(): Boolean = billingCycleRelative != null
 
             fun asDateTime(): OffsetDateTime = dateTime.getOrThrow("dateTime")
 
-            fun asBillingCycleRelativeDate(): BillingCycleRelativeDate =
-                billingCycleRelativeDate.getOrThrow("billingCycleRelativeDate")
+            fun asBillingCycleRelative(): BillingCycleRelativeDate =
+                billingCycleRelative.getOrThrow("billingCycleRelative")
 
             fun _json(): JsonValue? = _json
 
             fun <T> accept(visitor: Visitor<T>): T {
                 return when {
                     dateTime != null -> visitor.visitDateTime(dateTime)
-                    billingCycleRelativeDate != null ->
-                        visitor.visitBillingCycleRelativeDate(billingCycleRelativeDate)
+                    billingCycleRelative != null ->
+                        visitor.visitBillingCycleRelative(billingCycleRelative)
                     else -> visitor.unknown(_json)
                 }
             }
@@ -38527,8 +38361,8 @@ constructor(
                     object : Visitor<Unit> {
                         override fun visitDateTime(dateTime: OffsetDateTime) {}
 
-                        override fun visitBillingCycleRelativeDate(
-                            billingCycleRelativeDate: BillingCycleRelativeDate
+                        override fun visitBillingCycleRelative(
+                            billingCycleRelative: BillingCycleRelativeDate
                         ) {}
                     }
                 )
@@ -38540,16 +38374,16 @@ constructor(
                     return true
                 }
 
-                return /* spotless:off */ other is EndDate && dateTime == other.dateTime && billingCycleRelativeDate == other.billingCycleRelativeDate /* spotless:on */
+                return /* spotless:off */ other is EndDate && dateTime == other.dateTime && billingCycleRelative == other.billingCycleRelative /* spotless:on */
             }
 
-            override fun hashCode(): Int = /* spotless:off */ Objects.hash(dateTime, billingCycleRelativeDate) /* spotless:on */
+            override fun hashCode(): Int = /* spotless:off */ Objects.hash(dateTime, billingCycleRelative) /* spotless:on */
 
             override fun toString(): String =
                 when {
                     dateTime != null -> "EndDate{dateTime=$dateTime}"
-                    billingCycleRelativeDate != null ->
-                        "EndDate{billingCycleRelativeDate=$billingCycleRelativeDate}"
+                    billingCycleRelative != null ->
+                        "EndDate{billingCycleRelative=$billingCycleRelative}"
                     _json != null -> "EndDate{_unknown=$_json}"
                     else -> throw IllegalStateException("Invalid EndDate")
                 }
@@ -38558,17 +38392,15 @@ constructor(
 
                 fun ofDateTime(dateTime: OffsetDateTime) = EndDate(dateTime = dateTime)
 
-                fun ofBillingCycleRelativeDate(billingCycleRelativeDate: BillingCycleRelativeDate) =
-                    EndDate(billingCycleRelativeDate = billingCycleRelativeDate)
+                fun ofBillingCycleRelative(billingCycleRelative: BillingCycleRelativeDate) =
+                    EndDate(billingCycleRelative = billingCycleRelative)
             }
 
             interface Visitor<out T> {
 
                 fun visitDateTime(dateTime: OffsetDateTime): T
 
-                fun visitBillingCycleRelativeDate(
-                    billingCycleRelativeDate: BillingCycleRelativeDate
-                ): T
+                fun visitBillingCycleRelative(billingCycleRelative: BillingCycleRelativeDate): T
 
                 fun unknown(json: JsonValue?): T {
                     throw OrbInvalidDataException("Unknown EndDate: $json")
@@ -38584,7 +38416,7 @@ constructor(
                         return EndDate(dateTime = it, _json = json)
                     }
                     tryDeserialize(node, jacksonTypeRef<BillingCycleRelativeDate>())?.let {
-                        return EndDate(billingCycleRelativeDate = it, _json = json)
+                        return EndDate(billingCycleRelative = it, _json = json)
                     }
 
                     return EndDate(_json = json)
@@ -38600,8 +38432,8 @@ constructor(
                 ) {
                     when {
                         value.dateTime != null -> generator.writeObject(value.dateTime)
-                        value.billingCycleRelativeDate != null ->
-                            generator.writeObject(value.billingCycleRelativeDate)
+                        value.billingCycleRelative != null ->
+                            generator.writeObject(value.billingCycleRelative)
                         value._json != null -> generator.writeObject(value._json)
                         else -> throw IllegalStateException("Invalid EndDate")
                     }
@@ -38745,30 +38577,30 @@ constructor(
         class StartDate
         private constructor(
             private val dateTime: OffsetDateTime? = null,
-            private val billingCycleRelativeDate: BillingCycleRelativeDate? = null,
+            private val billingCycleRelative: BillingCycleRelativeDate? = null,
             private val _json: JsonValue? = null,
         ) {
 
             fun dateTime(): OffsetDateTime? = dateTime
 
-            fun billingCycleRelativeDate(): BillingCycleRelativeDate? = billingCycleRelativeDate
+            fun billingCycleRelative(): BillingCycleRelativeDate? = billingCycleRelative
 
             fun isDateTime(): Boolean = dateTime != null
 
-            fun isBillingCycleRelativeDate(): Boolean = billingCycleRelativeDate != null
+            fun isBillingCycleRelative(): Boolean = billingCycleRelative != null
 
             fun asDateTime(): OffsetDateTime = dateTime.getOrThrow("dateTime")
 
-            fun asBillingCycleRelativeDate(): BillingCycleRelativeDate =
-                billingCycleRelativeDate.getOrThrow("billingCycleRelativeDate")
+            fun asBillingCycleRelative(): BillingCycleRelativeDate =
+                billingCycleRelative.getOrThrow("billingCycleRelative")
 
             fun _json(): JsonValue? = _json
 
             fun <T> accept(visitor: Visitor<T>): T {
                 return when {
                     dateTime != null -> visitor.visitDateTime(dateTime)
-                    billingCycleRelativeDate != null ->
-                        visitor.visitBillingCycleRelativeDate(billingCycleRelativeDate)
+                    billingCycleRelative != null ->
+                        visitor.visitBillingCycleRelative(billingCycleRelative)
                     else -> visitor.unknown(_json)
                 }
             }
@@ -38784,8 +38616,8 @@ constructor(
                     object : Visitor<Unit> {
                         override fun visitDateTime(dateTime: OffsetDateTime) {}
 
-                        override fun visitBillingCycleRelativeDate(
-                            billingCycleRelativeDate: BillingCycleRelativeDate
+                        override fun visitBillingCycleRelative(
+                            billingCycleRelative: BillingCycleRelativeDate
                         ) {}
                     }
                 )
@@ -38797,16 +38629,16 @@ constructor(
                     return true
                 }
 
-                return /* spotless:off */ other is StartDate && dateTime == other.dateTime && billingCycleRelativeDate == other.billingCycleRelativeDate /* spotless:on */
+                return /* spotless:off */ other is StartDate && dateTime == other.dateTime && billingCycleRelative == other.billingCycleRelative /* spotless:on */
             }
 
-            override fun hashCode(): Int = /* spotless:off */ Objects.hash(dateTime, billingCycleRelativeDate) /* spotless:on */
+            override fun hashCode(): Int = /* spotless:off */ Objects.hash(dateTime, billingCycleRelative) /* spotless:on */
 
             override fun toString(): String =
                 when {
                     dateTime != null -> "StartDate{dateTime=$dateTime}"
-                    billingCycleRelativeDate != null ->
-                        "StartDate{billingCycleRelativeDate=$billingCycleRelativeDate}"
+                    billingCycleRelative != null ->
+                        "StartDate{billingCycleRelative=$billingCycleRelative}"
                     _json != null -> "StartDate{_unknown=$_json}"
                     else -> throw IllegalStateException("Invalid StartDate")
                 }
@@ -38815,17 +38647,15 @@ constructor(
 
                 fun ofDateTime(dateTime: OffsetDateTime) = StartDate(dateTime = dateTime)
 
-                fun ofBillingCycleRelativeDate(billingCycleRelativeDate: BillingCycleRelativeDate) =
-                    StartDate(billingCycleRelativeDate = billingCycleRelativeDate)
+                fun ofBillingCycleRelative(billingCycleRelative: BillingCycleRelativeDate) =
+                    StartDate(billingCycleRelative = billingCycleRelative)
             }
 
             interface Visitor<out T> {
 
                 fun visitDateTime(dateTime: OffsetDateTime): T
 
-                fun visitBillingCycleRelativeDate(
-                    billingCycleRelativeDate: BillingCycleRelativeDate
-                ): T
+                fun visitBillingCycleRelative(billingCycleRelative: BillingCycleRelativeDate): T
 
                 fun unknown(json: JsonValue?): T {
                     throw OrbInvalidDataException("Unknown StartDate: $json")
@@ -38841,7 +38671,7 @@ constructor(
                         return StartDate(dateTime = it, _json = json)
                     }
                     tryDeserialize(node, jacksonTypeRef<BillingCycleRelativeDate>())?.let {
-                        return StartDate(billingCycleRelativeDate = it, _json = json)
+                        return StartDate(billingCycleRelative = it, _json = json)
                     }
 
                     return StartDate(_json = json)
@@ -38857,8 +38687,8 @@ constructor(
                 ) {
                     when {
                         value.dateTime != null -> generator.writeObject(value.dateTime)
-                        value.billingCycleRelativeDate != null ->
-                            generator.writeObject(value.billingCycleRelativeDate)
+                        value.billingCycleRelative != null ->
+                            generator.writeObject(value.billingCycleRelative)
                         value._json != null -> generator.writeObject(value._json)
                         else -> throw IllegalStateException("Invalid StartDate")
                     }
@@ -39005,8 +38835,8 @@ constructor(
              * The updated end date of this adjustment interval. If not specified, the start date
              * will not be updated.
              */
-            fun endDate(billingCycleRelativeDate: BillingCycleRelativeDate) =
-                endDate(EndDate.ofBillingCycleRelativeDate(billingCycleRelativeDate))
+            fun endDate(billingCycleRelative: BillingCycleRelativeDate) =
+                endDate(EndDate.ofBillingCycleRelative(billingCycleRelative))
 
             /**
              * The updated start date of this adjustment interval. If not specified, the start date
@@ -39030,8 +38860,8 @@ constructor(
              * The updated start date of this adjustment interval. If not specified, the start date
              * will not be updated.
              */
-            fun startDate(billingCycleRelativeDate: BillingCycleRelativeDate) =
-                startDate(StartDate.ofBillingCycleRelativeDate(billingCycleRelativeDate))
+            fun startDate(billingCycleRelative: BillingCycleRelativeDate) =
+                startDate(StartDate.ofBillingCycleRelative(billingCycleRelative))
 
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
@@ -39070,30 +38900,30 @@ constructor(
         class EndDate
         private constructor(
             private val dateTime: OffsetDateTime? = null,
-            private val billingCycleRelativeDate: BillingCycleRelativeDate? = null,
+            private val billingCycleRelative: BillingCycleRelativeDate? = null,
             private val _json: JsonValue? = null,
         ) {
 
             fun dateTime(): OffsetDateTime? = dateTime
 
-            fun billingCycleRelativeDate(): BillingCycleRelativeDate? = billingCycleRelativeDate
+            fun billingCycleRelative(): BillingCycleRelativeDate? = billingCycleRelative
 
             fun isDateTime(): Boolean = dateTime != null
 
-            fun isBillingCycleRelativeDate(): Boolean = billingCycleRelativeDate != null
+            fun isBillingCycleRelative(): Boolean = billingCycleRelative != null
 
             fun asDateTime(): OffsetDateTime = dateTime.getOrThrow("dateTime")
 
-            fun asBillingCycleRelativeDate(): BillingCycleRelativeDate =
-                billingCycleRelativeDate.getOrThrow("billingCycleRelativeDate")
+            fun asBillingCycleRelative(): BillingCycleRelativeDate =
+                billingCycleRelative.getOrThrow("billingCycleRelative")
 
             fun _json(): JsonValue? = _json
 
             fun <T> accept(visitor: Visitor<T>): T {
                 return when {
                     dateTime != null -> visitor.visitDateTime(dateTime)
-                    billingCycleRelativeDate != null ->
-                        visitor.visitBillingCycleRelativeDate(billingCycleRelativeDate)
+                    billingCycleRelative != null ->
+                        visitor.visitBillingCycleRelative(billingCycleRelative)
                     else -> visitor.unknown(_json)
                 }
             }
@@ -39109,8 +38939,8 @@ constructor(
                     object : Visitor<Unit> {
                         override fun visitDateTime(dateTime: OffsetDateTime) {}
 
-                        override fun visitBillingCycleRelativeDate(
-                            billingCycleRelativeDate: BillingCycleRelativeDate
+                        override fun visitBillingCycleRelative(
+                            billingCycleRelative: BillingCycleRelativeDate
                         ) {}
                     }
                 )
@@ -39122,16 +38952,16 @@ constructor(
                     return true
                 }
 
-                return /* spotless:off */ other is EndDate && dateTime == other.dateTime && billingCycleRelativeDate == other.billingCycleRelativeDate /* spotless:on */
+                return /* spotless:off */ other is EndDate && dateTime == other.dateTime && billingCycleRelative == other.billingCycleRelative /* spotless:on */
             }
 
-            override fun hashCode(): Int = /* spotless:off */ Objects.hash(dateTime, billingCycleRelativeDate) /* spotless:on */
+            override fun hashCode(): Int = /* spotless:off */ Objects.hash(dateTime, billingCycleRelative) /* spotless:on */
 
             override fun toString(): String =
                 when {
                     dateTime != null -> "EndDate{dateTime=$dateTime}"
-                    billingCycleRelativeDate != null ->
-                        "EndDate{billingCycleRelativeDate=$billingCycleRelativeDate}"
+                    billingCycleRelative != null ->
+                        "EndDate{billingCycleRelative=$billingCycleRelative}"
                     _json != null -> "EndDate{_unknown=$_json}"
                     else -> throw IllegalStateException("Invalid EndDate")
                 }
@@ -39140,17 +38970,15 @@ constructor(
 
                 fun ofDateTime(dateTime: OffsetDateTime) = EndDate(dateTime = dateTime)
 
-                fun ofBillingCycleRelativeDate(billingCycleRelativeDate: BillingCycleRelativeDate) =
-                    EndDate(billingCycleRelativeDate = billingCycleRelativeDate)
+                fun ofBillingCycleRelative(billingCycleRelative: BillingCycleRelativeDate) =
+                    EndDate(billingCycleRelative = billingCycleRelative)
             }
 
             interface Visitor<out T> {
 
                 fun visitDateTime(dateTime: OffsetDateTime): T
 
-                fun visitBillingCycleRelativeDate(
-                    billingCycleRelativeDate: BillingCycleRelativeDate
-                ): T
+                fun visitBillingCycleRelative(billingCycleRelative: BillingCycleRelativeDate): T
 
                 fun unknown(json: JsonValue?): T {
                     throw OrbInvalidDataException("Unknown EndDate: $json")
@@ -39166,7 +38994,7 @@ constructor(
                         return EndDate(dateTime = it, _json = json)
                     }
                     tryDeserialize(node, jacksonTypeRef<BillingCycleRelativeDate>())?.let {
-                        return EndDate(billingCycleRelativeDate = it, _json = json)
+                        return EndDate(billingCycleRelative = it, _json = json)
                     }
 
                     return EndDate(_json = json)
@@ -39182,8 +39010,8 @@ constructor(
                 ) {
                     when {
                         value.dateTime != null -> generator.writeObject(value.dateTime)
-                        value.billingCycleRelativeDate != null ->
-                            generator.writeObject(value.billingCycleRelativeDate)
+                        value.billingCycleRelative != null ->
+                            generator.writeObject(value.billingCycleRelative)
                         value._json != null -> generator.writeObject(value._json)
                         else -> throw IllegalStateException("Invalid EndDate")
                     }
@@ -39200,30 +39028,30 @@ constructor(
         class StartDate
         private constructor(
             private val dateTime: OffsetDateTime? = null,
-            private val billingCycleRelativeDate: BillingCycleRelativeDate? = null,
+            private val billingCycleRelative: BillingCycleRelativeDate? = null,
             private val _json: JsonValue? = null,
         ) {
 
             fun dateTime(): OffsetDateTime? = dateTime
 
-            fun billingCycleRelativeDate(): BillingCycleRelativeDate? = billingCycleRelativeDate
+            fun billingCycleRelative(): BillingCycleRelativeDate? = billingCycleRelative
 
             fun isDateTime(): Boolean = dateTime != null
 
-            fun isBillingCycleRelativeDate(): Boolean = billingCycleRelativeDate != null
+            fun isBillingCycleRelative(): Boolean = billingCycleRelative != null
 
             fun asDateTime(): OffsetDateTime = dateTime.getOrThrow("dateTime")
 
-            fun asBillingCycleRelativeDate(): BillingCycleRelativeDate =
-                billingCycleRelativeDate.getOrThrow("billingCycleRelativeDate")
+            fun asBillingCycleRelative(): BillingCycleRelativeDate =
+                billingCycleRelative.getOrThrow("billingCycleRelative")
 
             fun _json(): JsonValue? = _json
 
             fun <T> accept(visitor: Visitor<T>): T {
                 return when {
                     dateTime != null -> visitor.visitDateTime(dateTime)
-                    billingCycleRelativeDate != null ->
-                        visitor.visitBillingCycleRelativeDate(billingCycleRelativeDate)
+                    billingCycleRelative != null ->
+                        visitor.visitBillingCycleRelative(billingCycleRelative)
                     else -> visitor.unknown(_json)
                 }
             }
@@ -39239,8 +39067,8 @@ constructor(
                     object : Visitor<Unit> {
                         override fun visitDateTime(dateTime: OffsetDateTime) {}
 
-                        override fun visitBillingCycleRelativeDate(
-                            billingCycleRelativeDate: BillingCycleRelativeDate
+                        override fun visitBillingCycleRelative(
+                            billingCycleRelative: BillingCycleRelativeDate
                         ) {}
                     }
                 )
@@ -39252,16 +39080,16 @@ constructor(
                     return true
                 }
 
-                return /* spotless:off */ other is StartDate && dateTime == other.dateTime && billingCycleRelativeDate == other.billingCycleRelativeDate /* spotless:on */
+                return /* spotless:off */ other is StartDate && dateTime == other.dateTime && billingCycleRelative == other.billingCycleRelative /* spotless:on */
             }
 
-            override fun hashCode(): Int = /* spotless:off */ Objects.hash(dateTime, billingCycleRelativeDate) /* spotless:on */
+            override fun hashCode(): Int = /* spotless:off */ Objects.hash(dateTime, billingCycleRelative) /* spotless:on */
 
             override fun toString(): String =
                 when {
                     dateTime != null -> "StartDate{dateTime=$dateTime}"
-                    billingCycleRelativeDate != null ->
-                        "StartDate{billingCycleRelativeDate=$billingCycleRelativeDate}"
+                    billingCycleRelative != null ->
+                        "StartDate{billingCycleRelative=$billingCycleRelative}"
                     _json != null -> "StartDate{_unknown=$_json}"
                     else -> throw IllegalStateException("Invalid StartDate")
                 }
@@ -39270,17 +39098,15 @@ constructor(
 
                 fun ofDateTime(dateTime: OffsetDateTime) = StartDate(dateTime = dateTime)
 
-                fun ofBillingCycleRelativeDate(billingCycleRelativeDate: BillingCycleRelativeDate) =
-                    StartDate(billingCycleRelativeDate = billingCycleRelativeDate)
+                fun ofBillingCycleRelative(billingCycleRelative: BillingCycleRelativeDate) =
+                    StartDate(billingCycleRelative = billingCycleRelative)
             }
 
             interface Visitor<out T> {
 
                 fun visitDateTime(dateTime: OffsetDateTime): T
 
-                fun visitBillingCycleRelativeDate(
-                    billingCycleRelativeDate: BillingCycleRelativeDate
-                ): T
+                fun visitBillingCycleRelative(billingCycleRelative: BillingCycleRelativeDate): T
 
                 fun unknown(json: JsonValue?): T {
                     throw OrbInvalidDataException("Unknown StartDate: $json")
@@ -39296,7 +39122,7 @@ constructor(
                         return StartDate(dateTime = it, _json = json)
                     }
                     tryDeserialize(node, jacksonTypeRef<BillingCycleRelativeDate>())?.let {
-                        return StartDate(billingCycleRelativeDate = it, _json = json)
+                        return StartDate(billingCycleRelative = it, _json = json)
                     }
 
                     return StartDate(_json = json)
@@ -39312,8 +39138,8 @@ constructor(
                 ) {
                     when {
                         value.dateTime != null -> generator.writeObject(value.dateTime)
-                        value.billingCycleRelativeDate != null ->
-                            generator.writeObject(value.billingCycleRelativeDate)
+                        value.billingCycleRelative != null ->
+                            generator.writeObject(value.billingCycleRelative)
                         value._json != null -> generator.writeObject(value._json)
                         else -> throw IllegalStateException("Invalid StartDate")
                     }
