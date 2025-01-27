@@ -77,6 +77,7 @@ private constructor(
         fun builder() = Builder()
     }
 
+    /** A builder for [EventIngestResponse]. */
     class Builder internal constructor() {
 
         private var validationFailed: JsonField<MutableList<ValidationFailed>>? = null
@@ -211,6 +212,7 @@ private constructor(
             fun builder() = Builder()
         }
 
+        /** A builder for [ValidationFailed]. */
         class Builder internal constructor() {
 
             private var idempotencyKey: JsonField<String>? = null
@@ -357,6 +359,7 @@ private constructor(
             fun builder() = Builder()
         }
 
+        /** A builder for [Debug]. */
         class Builder internal constructor() {
 
             private var duplicate: JsonField<MutableList<String>>? = null

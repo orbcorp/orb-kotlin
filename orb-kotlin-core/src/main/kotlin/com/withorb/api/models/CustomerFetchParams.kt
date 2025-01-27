@@ -45,6 +45,7 @@ private constructor(
         fun builder() = Builder()
     }
 
+    /** A builder for [CustomerFetchParams]. */
     @NoAutoDetect
     class Builder internal constructor() {
 

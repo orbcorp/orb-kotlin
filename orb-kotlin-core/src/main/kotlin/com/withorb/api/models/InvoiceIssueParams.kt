@@ -121,6 +121,7 @@ private constructor(
             fun builder() = Builder()
         }
 
+        /** A builder for [InvoiceIssueBody]. */
         class Builder internal constructor() {
 
             private var synchronous: JsonField<Boolean> = JsonMissing.of()
@@ -199,6 +200,7 @@ private constructor(
         fun builder() = Builder()
     }
 
+    /** A builder for [InvoiceIssueParams]. */
     @NoAutoDetect
     class Builder internal constructor() {
 

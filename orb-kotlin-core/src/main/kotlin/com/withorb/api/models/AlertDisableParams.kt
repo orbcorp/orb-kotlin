@@ -60,6 +60,7 @@ private constructor(
         fun builder() = Builder()
     }
 
+    /** A builder for [AlertDisableParams]. */
     @NoAutoDetect
     class Builder internal constructor() {
 

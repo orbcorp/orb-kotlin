@@ -53,6 +53,7 @@ private constructor(
         fun builder() = Builder()
     }
 
+    /** A builder for [EventSearchResponse]. */
     class Builder internal constructor() {
 
         private var data: JsonField<MutableList<Data>>? = null
@@ -231,6 +232,7 @@ private constructor(
             fun builder() = Builder()
         }
 
+        /** A builder for [Data]. */
         class Builder internal constructor() {
 
             private var id: JsonField<String>? = null

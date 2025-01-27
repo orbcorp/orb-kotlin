@@ -167,6 +167,7 @@ private constructor(
             fun builder() = Builder()
         }
 
+        /** A builder for [DimensionalPriceGroupCreateBody]. */
         class Builder internal constructor() {
 
             private var billableMetricId: JsonField<String>? = null
@@ -298,6 +299,7 @@ private constructor(
         fun builder() = Builder()
     }
 
+    /** A builder for [DimensionalPriceGroupCreateParams]. */
     @NoAutoDetect
     class Builder internal constructor() {
 
@@ -517,6 +519,7 @@ private constructor(
             fun builder() = Builder()
         }
 
+        /** A builder for [Metadata]. */
         class Builder internal constructor() {
 
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()

@@ -21,6 +21,7 @@ class OrbOkHttpClient private constructor() {
         fun fromEnv(): OrbClient = builder().fromEnv().build()
     }
 
+    /** A builder for [OrbOkHttpClient]. */
     class Builder internal constructor() {
 
         private var clientOptions: ClientOptions.Builder = ClientOptions.builder()

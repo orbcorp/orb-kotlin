@@ -217,6 +217,7 @@ private constructor(
             fun builder() = Builder()
         }
 
+        /** A builder for [EventUpdateBody]. */
         class Builder internal constructor() {
 
             private var eventName: JsonField<String>? = null
@@ -337,6 +338,7 @@ private constructor(
         fun builder() = Builder()
     }
 
+    /** A builder for [EventUpdateParams]. */
     @NoAutoDetect
     class Builder internal constructor() {
 

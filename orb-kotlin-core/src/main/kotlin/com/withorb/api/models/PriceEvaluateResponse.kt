@@ -52,6 +52,7 @@ private constructor(
         fun builder() = Builder()
     }
 
+    /** A builder for [PriceEvaluateResponse]. */
     class Builder internal constructor() {
 
         private var data: JsonField<MutableList<EvaluatePriceGroup>>? = null

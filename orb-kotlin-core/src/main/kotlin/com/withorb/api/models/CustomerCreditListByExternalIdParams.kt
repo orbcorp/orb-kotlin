@@ -77,6 +77,7 @@ private constructor(
         fun builder() = Builder()
     }
 
+    /** A builder for [CustomerCreditListByExternalIdParams]. */
     @NoAutoDetect
     class Builder internal constructor() {
 

@@ -43,6 +43,7 @@ private constructor(
         fun builder() = Builder()
     }
 
+    /** A builder for [CreditNoteFetchParams]. */
     @NoAutoDetect
     class Builder internal constructor() {
 

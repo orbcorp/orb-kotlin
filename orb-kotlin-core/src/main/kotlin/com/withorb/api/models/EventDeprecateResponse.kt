@@ -54,6 +54,7 @@ private constructor(
         fun builder() = Builder()
     }
 
+    /** A builder for [EventDeprecateResponse]. */
     class Builder internal constructor() {
 
         private var deprecated: JsonField<String>? = null

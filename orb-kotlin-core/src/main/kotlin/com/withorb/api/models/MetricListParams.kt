@@ -87,6 +87,7 @@ private constructor(
         fun builder() = Builder()
     }
 
+    /** A builder for [MetricListParams]. */
     @NoAutoDetect
     class Builder internal constructor() {
 

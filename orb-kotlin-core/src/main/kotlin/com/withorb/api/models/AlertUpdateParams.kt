@@ -95,6 +95,7 @@ private constructor(
             fun builder() = Builder()
         }
 
+        /** A builder for [AlertUpdateBody]. */
         class Builder internal constructor() {
 
             private var thresholds: JsonField<MutableList<Threshold>>? = null
@@ -176,6 +177,7 @@ private constructor(
         fun builder() = Builder()
     }
 
+    /** A builder for [AlertUpdateParams]. */
     @NoAutoDetect
     class Builder internal constructor() {
 
@@ -380,6 +382,7 @@ private constructor(
             fun builder() = Builder()
         }
 
+        /** A builder for [Threshold]. */
         class Builder internal constructor() {
 
             private var value: JsonField<Double>? = null

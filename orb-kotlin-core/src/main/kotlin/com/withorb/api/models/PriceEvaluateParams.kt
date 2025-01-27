@@ -228,6 +228,7 @@ private constructor(
             fun builder() = Builder()
         }
 
+        /** A builder for [PriceEvaluateBody]. */
         class Builder internal constructor() {
 
             private var timeframeEnd: JsonField<OffsetDateTime>? = null
@@ -381,6 +382,7 @@ private constructor(
         fun builder() = Builder()
     }
 
+    /** A builder for [PriceEvaluateParams]. */
     @NoAutoDetect
     class Builder internal constructor() {
 
