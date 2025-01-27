@@ -55,6 +55,7 @@ private constructor(
         fun builder() = Builder()
     }
 
+    /** A builder for [PlanExternalPlanIdFetchParams]. */
     @NoAutoDetect
     class Builder internal constructor() {
 

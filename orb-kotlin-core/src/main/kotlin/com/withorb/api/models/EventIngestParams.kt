@@ -282,6 +282,7 @@ private constructor(
             fun builder() = Builder()
         }
 
+        /** A builder for [EventIngestBody]. */
         class Builder internal constructor() {
 
             private var events: JsonField<MutableList<Event>>? = null
@@ -360,6 +361,7 @@ private constructor(
         fun builder() = Builder()
     }
 
+    /** A builder for [EventIngestParams]. */
     @NoAutoDetect
     class Builder internal constructor() {
 
@@ -634,6 +636,7 @@ private constructor(
             fun builder() = Builder()
         }
 
+        /** A builder for [Event]. */
         class Builder internal constructor() {
 
             private var eventName: JsonField<String>? = null

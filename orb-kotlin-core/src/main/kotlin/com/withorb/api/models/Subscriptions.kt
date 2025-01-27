@@ -63,6 +63,7 @@ private constructor(
         fun builder() = Builder()
     }
 
+    /** A builder for [Subscriptions]. */
     class Builder internal constructor() {
 
         private var data: JsonField<MutableList<Subscription>>? = null

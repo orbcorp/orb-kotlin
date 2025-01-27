@@ -52,6 +52,7 @@ private constructor(
         fun builder() = Builder()
     }
 
+    /** A builder for [TopLevelPingResponse]. */
     class Builder internal constructor() {
 
         private var response: JsonField<String>? = null

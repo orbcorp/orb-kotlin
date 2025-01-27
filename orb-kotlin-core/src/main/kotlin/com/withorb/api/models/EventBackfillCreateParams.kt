@@ -288,6 +288,7 @@ private constructor(
             fun builder() = Builder()
         }
 
+        /** A builder for [EventBackfillCreateBody]. */
         class Builder internal constructor() {
 
             private var timeframeEnd: JsonField<OffsetDateTime>? = null
@@ -458,6 +459,7 @@ private constructor(
         fun builder() = Builder()
     }
 
+    /** A builder for [EventBackfillCreateParams]. */
     @NoAutoDetect
     class Builder internal constructor() {
 

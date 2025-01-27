@@ -108,6 +108,7 @@ private constructor(
             fun builder() = Builder()
         }
 
+        /** A builder for [SubscriptionTriggerPhaseBody]. */
         class Builder internal constructor() {
 
             private var effectiveDate: JsonField<LocalDate> = JsonMissing.of()
@@ -182,6 +183,7 @@ private constructor(
         fun builder() = Builder()
     }
 
+    /** A builder for [SubscriptionTriggerPhaseParams]. */
     @NoAutoDetect
     class Builder internal constructor() {
 

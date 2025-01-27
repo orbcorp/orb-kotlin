@@ -54,6 +54,7 @@ private constructor(
         fun builder() = Builder()
     }
 
+    /** A builder for [EventUpdateResponse]. */
     class Builder internal constructor() {
 
         private var amended: JsonField<String>? = null

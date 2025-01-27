@@ -44,6 +44,7 @@ private constructor(
         fun builder() = Builder()
     }
 
+    /** A builder for [PriceExternalPriceIdFetchParams]. */
     @NoAutoDetect
     class Builder internal constructor() {
 

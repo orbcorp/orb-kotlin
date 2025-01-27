@@ -49,6 +49,7 @@ private constructor(
         fun builder() = Builder()
     }
 
+    /** A builder for [PriceListParams]. */
     @NoAutoDetect
     class Builder internal constructor() {
 

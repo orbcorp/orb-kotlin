@@ -62,6 +62,7 @@ private constructor(
         fun builder() = Builder()
     }
 
+    /** A builder for [CouponSubscriptionListParams]. */
     @NoAutoDetect
     class Builder internal constructor() {
 

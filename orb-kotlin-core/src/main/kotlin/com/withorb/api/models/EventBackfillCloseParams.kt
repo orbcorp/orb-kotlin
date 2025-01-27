@@ -51,6 +51,7 @@ private constructor(
         fun builder() = Builder()
     }
 
+    /** A builder for [EventBackfillCloseParams]. */
     @NoAutoDetect
     class Builder internal constructor() {
 

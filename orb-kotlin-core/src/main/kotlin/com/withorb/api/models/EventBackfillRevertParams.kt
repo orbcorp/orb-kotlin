@@ -54,6 +54,7 @@ private constructor(
         fun builder() = Builder()
     }
 
+    /** A builder for [EventBackfillRevertParams]. */
     @NoAutoDetect
     class Builder internal constructor() {
 

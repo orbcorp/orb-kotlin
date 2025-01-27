@@ -112,6 +112,7 @@ private constructor(
             fun builder() = Builder()
         }
 
+        /** A builder for [MetricUpdateBody]. */
         class Builder internal constructor() {
 
             private var metadata: JsonField<Metadata> = JsonMissing.of()
@@ -184,6 +185,7 @@ private constructor(
         fun builder() = Builder()
     }
 
+    /** A builder for [MetricUpdateParams]. */
     @NoAutoDetect
     class Builder internal constructor() {
 
@@ -375,6 +377,7 @@ private constructor(
             fun builder() = Builder()
         }
 
+        /** A builder for [Metadata]. */
         class Builder internal constructor() {
 
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()

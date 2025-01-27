@@ -156,6 +156,7 @@ private constructor(
         fun builder() = Builder()
     }
 
+    /** A builder for [Coupon]. */
     class Builder internal constructor() {
 
         private var id: JsonField<String>? = null
@@ -373,12 +374,25 @@ private constructor(
             fun ofAmount(amount: AmountDiscount) = Discount(amount = amount)
         }
 
+        /**
+         * An interface that defines how to map each variant of [Discount] to a value of type [T].
+         */
         interface Visitor<out T> {
 
             fun visitPercentage(percentage: PercentageDiscount): T
 
             fun visitAmount(amount: AmountDiscount): T
 
+            /**
+             * Maps an unknown variant of [Discount] to a value of type [T].
+             *
+             * An instance of [Discount] can contain an unknown variant if it was deserialized from
+             * data that doesn't match any known variant. For example, if the SDK is on an older
+             * version than the API, then the API may respond with new variants that the SDK is
+             * unaware of.
+             *
+             * @throws OrbInvalidDataException in the default implementation.
+             */
             fun unknown(json: JsonValue?): T {
                 throw OrbInvalidDataException("Unknown Discount: $json")
             }
