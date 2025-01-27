@@ -98,6 +98,7 @@ private constructor(
             fun builder() = Builder()
         }
 
+        /** A builder for [SubscriptionUnscheduleFixedFeeQuantityUpdatesBody]. */
         class Builder internal constructor() {
 
             private var priceId: JsonField<String>? = null
@@ -170,6 +171,7 @@ private constructor(
         fun builder() = Builder()
     }
 
+    /** A builder for [SubscriptionUnscheduleFixedFeeQuantityUpdatesParams]. */
     @NoAutoDetect
     class Builder internal constructor() {
 

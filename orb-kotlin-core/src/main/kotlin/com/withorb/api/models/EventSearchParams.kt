@@ -175,6 +175,7 @@ private constructor(
             fun builder() = Builder()
         }
 
+        /** A builder for [EventSearchBody]. */
         class Builder internal constructor() {
 
             private var eventIds: JsonField<MutableList<String>>? = null
@@ -304,6 +305,7 @@ private constructor(
         fun builder() = Builder()
     }
 
+    /** A builder for [EventSearchParams]. */
     @NoAutoDetect
     class Builder internal constructor() {
 

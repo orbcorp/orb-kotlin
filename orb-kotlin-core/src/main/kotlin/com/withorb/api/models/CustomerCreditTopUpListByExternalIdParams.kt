@@ -57,6 +57,7 @@ private constructor(
         fun builder() = Builder()
     }
 
+    /** A builder for [CustomerCreditTopUpListByExternalIdParams]. */
     @NoAutoDetect
     class Builder internal constructor() {
 

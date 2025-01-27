@@ -99,6 +99,7 @@ private constructor(
         fun builder() = Builder()
     }
 
+    /** A builder for [SubscriptionFetchScheduleParams]. */
     @NoAutoDetect
     class Builder internal constructor() {
 

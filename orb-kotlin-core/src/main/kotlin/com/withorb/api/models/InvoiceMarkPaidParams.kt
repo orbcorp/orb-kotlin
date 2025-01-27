@@ -134,6 +134,7 @@ private constructor(
             fun builder() = Builder()
         }
 
+        /** A builder for [InvoiceMarkPaidBody]. */
         class Builder internal constructor() {
 
             private var paymentReceivedDate: JsonField<LocalDate>? = null
@@ -222,6 +223,7 @@ private constructor(
         fun builder() = Builder()
     }
 
+    /** A builder for [InvoiceMarkPaidParams]. */
     @NoAutoDetect
     class Builder internal constructor() {
 

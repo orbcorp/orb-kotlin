@@ -80,6 +80,7 @@ private constructor(
         fun builder() = Builder()
     }
 
+    /** A builder for [EventDeprecateParams]. */
     @NoAutoDetect
     class Builder internal constructor() {
 

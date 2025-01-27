@@ -50,6 +50,7 @@ private constructor(
         fun builder() = Builder()
     }
 
+    /** A builder for [InvoicePayParams]. */
     @NoAutoDetect
     class Builder internal constructor() {
 

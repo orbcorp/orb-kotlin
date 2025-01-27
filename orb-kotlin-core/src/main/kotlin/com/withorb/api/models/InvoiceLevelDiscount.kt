@@ -109,6 +109,10 @@ private constructor(
         fun ofTrial(trial: TrialDiscount) = InvoiceLevelDiscount(trial = trial)
     }
 
+    /**
+     * An interface that defines how to map each variant of [InvoiceLevelDiscount] to a value of
+     * type [T].
+     */
     interface Visitor<out T> {
 
         fun visitPercentage(percentage: PercentageDiscount): T
@@ -117,6 +121,16 @@ private constructor(
 
         fun visitTrial(trial: TrialDiscount): T
 
+        /**
+         * Maps an unknown variant of [InvoiceLevelDiscount] to a value of type [T].
+         *
+         * An instance of [InvoiceLevelDiscount] can contain an unknown variant if it was
+         * deserialized from data that doesn't match any known variant. For example, if the SDK is
+         * on an older version than the API, then the API may respond with new variants that the SDK
+         * is unaware of.
+         *
+         * @throws OrbInvalidDataException in the default implementation.
+         */
         fun unknown(json: JsonValue?): T {
             throw OrbInvalidDataException("Unknown InvoiceLevelDiscount: $json")
         }

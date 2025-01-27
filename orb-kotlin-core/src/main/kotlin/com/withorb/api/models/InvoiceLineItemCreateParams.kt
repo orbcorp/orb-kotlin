@@ -181,6 +181,7 @@ private constructor(
             fun builder() = Builder()
         }
 
+        /** A builder for [InvoiceLineItemCreateBody]. */
         class Builder internal constructor() {
 
             private var amount: JsonField<String>? = null
@@ -299,6 +300,7 @@ private constructor(
         fun builder() = Builder()
     }
 
+    /** A builder for [InvoiceLineItemCreateParams]. */
     @NoAutoDetect
     class Builder internal constructor() {
 

@@ -50,6 +50,7 @@ private constructor(
         fun builder() = Builder()
     }
 
+    /** A builder for [CreditNoteListParams]. */
     @NoAutoDetect
     class Builder internal constructor() {
 

@@ -46,6 +46,7 @@ private constructor(
         fun builder() = Builder()
     }
 
+    /** A builder for [CustomerFetchByExternalIdParams]. */
     @NoAutoDetect
     class Builder internal constructor() {
 

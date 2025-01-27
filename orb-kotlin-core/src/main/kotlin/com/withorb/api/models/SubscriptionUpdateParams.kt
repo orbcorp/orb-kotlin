@@ -240,6 +240,7 @@ private constructor(
             fun builder() = Builder()
         }
 
+        /** A builder for [SubscriptionUpdateBody]. */
         class Builder internal constructor() {
 
             private var autoCollection: JsonField<Boolean> = JsonMissing.of()
@@ -407,6 +408,7 @@ private constructor(
         fun builder() = Builder()
     }
 
+    /** A builder for [SubscriptionUpdateParams]. */
     @NoAutoDetect
     class Builder internal constructor() {
 
@@ -676,6 +678,7 @@ private constructor(
             fun builder() = Builder()
         }
 
+        /** A builder for [Metadata]. */
         class Builder internal constructor() {
 
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()

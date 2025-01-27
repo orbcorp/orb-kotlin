@@ -79,6 +79,7 @@ private constructor(
         fun builder() = Builder()
     }
 
+    /** A builder for [SubscriptionFetchScheduleResponse]. */
     class Builder internal constructor() {
 
         private var createdAt: JsonField<OffsetDateTime>? = null
@@ -205,6 +206,7 @@ private constructor(
             fun builder() = Builder()
         }
 
+        /** A builder for [Plan]. */
         class Builder internal constructor() {
 
             private var id: JsonField<String>? = null
