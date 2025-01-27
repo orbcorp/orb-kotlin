@@ -124,4 +124,6 @@ constructor(
     override fun dimensionalPriceGroups(): DimensionalPriceGroupService = dimensionalPriceGroups
 
     override fun webhooks(): WebhookService = webhooks
+
+    override fun close() = clientOptions.httpClient.close()
 }
