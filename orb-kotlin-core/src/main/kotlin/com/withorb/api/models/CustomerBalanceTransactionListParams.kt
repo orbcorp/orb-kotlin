@@ -120,6 +120,7 @@ private constructor(
         fun builder() = Builder()
     }
 
+    /** A builder for [CustomerBalanceTransactionListParams]. */
     @NoAutoDetect
     class Builder internal constructor() {
 

@@ -83,6 +83,7 @@ private constructor(
             fun builder() = Builder()
         }
 
+        /** A builder for [ItemCreateBody]. */
         class Builder internal constructor() {
 
             private var name: JsonField<String>? = null
@@ -147,6 +148,7 @@ private constructor(
         fun builder() = Builder()
     }
 
+    /** A builder for [ItemCreateParams]. */
     @NoAutoDetect
     class Builder internal constructor() {
 

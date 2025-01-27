@@ -53,6 +53,7 @@ private constructor(
         fun builder() = Builder()
     }
 
+    /** A builder for [SubscriptionUnscheduleCancellationParams]. */
     @NoAutoDetect
     class Builder internal constructor() {
 

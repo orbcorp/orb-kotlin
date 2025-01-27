@@ -60,6 +60,7 @@ private constructor(
         fun builder() = Builder()
     }
 
+    /** A builder for [PaginationMetadata]. */
     class Builder internal constructor() {
 
         private var hasMore: JsonField<Boolean>? = null

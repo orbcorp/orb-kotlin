@@ -145,6 +145,7 @@ private constructor(
             fun builder() = Builder()
         }
 
+        /** A builder for [PlanExternalPlanIdUpdateBody]. */
         class Builder internal constructor() {
 
             private var externalPlanId: JsonField<String> = JsonMissing.of()
@@ -241,6 +242,7 @@ private constructor(
         fun builder() = Builder()
     }
 
+    /** A builder for [PlanExternalPlanIdUpdateParams]. */
     @NoAutoDetect
     class Builder internal constructor() {
 
@@ -451,6 +453,7 @@ private constructor(
             fun builder() = Builder()
         }
 
+        /** A builder for [Metadata]. */
         class Builder internal constructor() {
 
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
