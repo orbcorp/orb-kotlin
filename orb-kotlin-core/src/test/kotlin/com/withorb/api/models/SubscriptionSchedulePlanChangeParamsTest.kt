@@ -285,7 +285,7 @@ class SubscriptionSchedulePlanChangeParamsTest {
                     .priceId("h74gfhdjvn7ujokd")
                     .build()
             )
-            .trialDurationDays(0L)
+            .trialDurationDays(999999L)
             .build()
     }
 
@@ -569,7 +569,7 @@ class SubscriptionSchedulePlanChangeParamsTest {
                         .priceId("h74gfhdjvn7ujokd")
                         .build()
                 )
-                .trialDurationDays(0L)
+                .trialDurationDays(999999L)
                 .build()
         val body = params.getBody()
         assertThat(body).isNotNull
@@ -867,7 +867,7 @@ class SubscriptionSchedulePlanChangeParamsTest {
                         .build()
                 )
             )
-        assertThat(body.trialDurationDays()).isEqualTo(0L)
+        assertThat(body.trialDurationDays()).isEqualTo(999999L)
     }
 
     @Test
