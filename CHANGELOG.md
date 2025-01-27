@@ -1,5 +1,31 @@
 # Changelog
 
+## 0.1.0-alpha.13 (2025-01-27)
+
+Full Changelog: [v0.1.0-alpha.12...v0.1.0-alpha.13](https://github.com/orbcorp/orb-kotlin/compare/v0.1.0-alpha.12...v0.1.0-alpha.13)
+
+### Features
+
+* **client:** add `close` method ([#171](https://github.com/orbcorp/orb-kotlin/issues/171)) ([eb8a9ac](https://github.com/orbcorp/orb-kotlin/commit/eb8a9ac6fa5e282a56c760d0d7e8b9502e136454))
+
+
+### Bug Fixes
+
+* **client:** make some classes and constructors non-public ([#175](https://github.com/orbcorp/orb-kotlin/issues/175)) ([f39254b](https://github.com/orbcorp/orb-kotlin/commit/f39254b214e227e46627b0d11605e51151db1c77))
+
+
+### Chores
+
+* **internal:** codegen related update ([#180](https://github.com/orbcorp/orb-kotlin/issues/180)) ([aaea37a](https://github.com/orbcorp/orb-kotlin/commit/aaea37acf970b5b4b520426bf8f91fd7709ccc93))
+* **internal:** remove some unnecessary `constructor` keywords ([f39254b](https://github.com/orbcorp/orb-kotlin/commit/f39254b214e227e46627b0d11605e51151db1c77))
+
+
+### Documentation
+
+* `async` and `sync` method comments ([#174](https://github.com/orbcorp/orb-kotlin/issues/174)) ([4f0c1f9](https://github.com/orbcorp/orb-kotlin/commit/4f0c1f93b1734b23db36506d192bb5974cc5fc7f))
+* add client documentation ([#173](https://github.com/orbcorp/orb-kotlin/issues/173)) ([d3469f1](https://github.com/orbcorp/orb-kotlin/commit/d3469f140f19383f9a6985d8b76eaab2e58953e8))
+* builder, enum, and union comments ([#179](https://github.com/orbcorp/orb-kotlin/issues/179)) ([89b48f2](https://github.com/orbcorp/orb-kotlin/commit/89b48f2b1693180c9e0e07fc5736c4e7c0b3916d))
+
 ## 0.1.0-alpha.12 (2025-01-24)
 
 Full Changelog: [v0.1.0-alpha.11...v0.1.0-alpha.12](https://github.com/orbcorp/orb-kotlin/compare/v0.1.0-alpha.11...v0.1.0-alpha.12)
