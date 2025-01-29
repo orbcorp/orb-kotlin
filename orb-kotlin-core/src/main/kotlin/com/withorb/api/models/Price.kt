@@ -1188,6 +1188,14 @@ private constructor(
 
             fun discount(trial: TrialDiscount) = discount(Discount.ofTrial(trial))
 
+            fun trialDiscount(appliesToPriceIds: List<String>) =
+                discount(
+                    TrialDiscount.builder()
+                        .discountType(TrialDiscount.DiscountType.TRIAL)
+                        .appliesToPriceIds(appliesToPriceIds)
+                        .build()
+                )
+
             fun discount(usage: Discount.UsageDiscount) = discount(Discount.ofUsage(usage))
 
             fun discount(amount: AmountDiscount) = discount(Discount.ofAmount(amount))
@@ -3295,6 +3303,14 @@ private constructor(
                 discount(Discount.ofPercentage(percentage))
 
             fun discount(trial: TrialDiscount) = discount(Discount.ofTrial(trial))
+
+            fun trialDiscount(appliesToPriceIds: List<String>) =
+                discount(
+                    TrialDiscount.builder()
+                        .discountType(TrialDiscount.DiscountType.TRIAL)
+                        .appliesToPriceIds(appliesToPriceIds)
+                        .build()
+                )
 
             fun discount(usage: Discount.UsageDiscount) = discount(Discount.ofUsage(usage))
 
@@ -5440,6 +5456,14 @@ private constructor(
                 discount(Discount.ofPercentage(percentage))
 
             fun discount(trial: TrialDiscount) = discount(Discount.ofTrial(trial))
+
+            fun trialDiscount(appliesToPriceIds: List<String>) =
+                discount(
+                    TrialDiscount.builder()
+                        .discountType(TrialDiscount.DiscountType.TRIAL)
+                        .appliesToPriceIds(appliesToPriceIds)
+                        .build()
+                )
 
             fun discount(usage: Discount.UsageDiscount) = discount(Discount.ofUsage(usage))
 
@@ -7791,6 +7815,14 @@ private constructor(
 
             fun discount(trial: TrialDiscount) = discount(Discount.ofTrial(trial))
 
+            fun trialDiscount(appliesToPriceIds: List<String>) =
+                discount(
+                    TrialDiscount.builder()
+                        .discountType(TrialDiscount.DiscountType.TRIAL)
+                        .appliesToPriceIds(appliesToPriceIds)
+                        .build()
+                )
+
             fun discount(usage: Discount.UsageDiscount) = discount(Discount.ofUsage(usage))
 
             fun discount(amount: AmountDiscount) = discount(Discount.ofAmount(amount))
@@ -10062,6 +10094,14 @@ private constructor(
                 discount(Discount.ofPercentage(percentage))
 
             fun discount(trial: TrialDiscount) = discount(Discount.ofTrial(trial))
+
+            fun trialDiscount(appliesToPriceIds: List<String>) =
+                discount(
+                    TrialDiscount.builder()
+                        .discountType(TrialDiscount.DiscountType.TRIAL)
+                        .appliesToPriceIds(appliesToPriceIds)
+                        .build()
+                )
 
             fun discount(usage: Discount.UsageDiscount) = discount(Discount.ofUsage(usage))
 
@@ -12374,6 +12414,14 @@ private constructor(
 
             fun discount(trial: TrialDiscount) = discount(Discount.ofTrial(trial))
 
+            fun trialDiscount(appliesToPriceIds: List<String>) =
+                discount(
+                    TrialDiscount.builder()
+                        .discountType(TrialDiscount.DiscountType.TRIAL)
+                        .appliesToPriceIds(appliesToPriceIds)
+                        .build()
+                )
+
             fun discount(usage: Discount.UsageDiscount) = discount(Discount.ofUsage(usage))
 
             fun discount(amount: AmountDiscount) = discount(Discount.ofAmount(amount))
@@ -14502,6 +14550,14 @@ private constructor(
                 discount(Discount.ofPercentage(percentage))
 
             fun discount(trial: TrialDiscount) = discount(Discount.ofTrial(trial))
+
+            fun trialDiscount(appliesToPriceIds: List<String>) =
+                discount(
+                    TrialDiscount.builder()
+                        .discountType(TrialDiscount.DiscountType.TRIAL)
+                        .appliesToPriceIds(appliesToPriceIds)
+                        .build()
+                )
 
             fun discount(usage: Discount.UsageDiscount) = discount(Discount.ofUsage(usage))
 
@@ -16787,6 +16843,14 @@ private constructor(
 
             fun discount(trial: TrialDiscount) = discount(Discount.ofTrial(trial))
 
+            fun trialDiscount(appliesToPriceIds: List<String>) =
+                discount(
+                    TrialDiscount.builder()
+                        .discountType(TrialDiscount.DiscountType.TRIAL)
+                        .appliesToPriceIds(appliesToPriceIds)
+                        .build()
+                )
+
             fun discount(usage: Discount.UsageDiscount) = discount(Discount.ofUsage(usage))
 
             fun discount(amount: AmountDiscount) = discount(Discount.ofAmount(amount))
@@ -19036,6 +19100,14 @@ private constructor(
 
             fun discount(trial: TrialDiscount) = discount(Discount.ofTrial(trial))
 
+            fun trialDiscount(appliesToPriceIds: List<String>) =
+                discount(
+                    TrialDiscount.builder()
+                        .discountType(TrialDiscount.DiscountType.TRIAL)
+                        .appliesToPriceIds(appliesToPriceIds)
+                        .build()
+                )
+
             fun discount(usage: Discount.UsageDiscount) = discount(Discount.ofUsage(usage))
 
             fun discount(amount: AmountDiscount) = discount(Discount.ofAmount(amount))
@@ -21122,6 +21194,14 @@ private constructor(
 
             fun discount(trial: TrialDiscount) = discount(Discount.ofTrial(trial))
 
+            fun trialDiscount(appliesToPriceIds: List<String>) =
+                discount(
+                    TrialDiscount.builder()
+                        .discountType(TrialDiscount.DiscountType.TRIAL)
+                        .appliesToPriceIds(appliesToPriceIds)
+                        .build()
+                )
+
             fun discount(usage: Discount.UsageDiscount) = discount(Discount.ofUsage(usage))
 
             fun discount(amount: AmountDiscount) = discount(Discount.ofAmount(amount))
@@ -23207,6 +23287,14 @@ private constructor(
 
             fun discount(trial: TrialDiscount) = discount(Discount.ofTrial(trial))
 
+            fun trialDiscount(appliesToPriceIds: List<String>) =
+                discount(
+                    TrialDiscount.builder()
+                        .discountType(TrialDiscount.DiscountType.TRIAL)
+                        .appliesToPriceIds(appliesToPriceIds)
+                        .build()
+                )
+
             fun discount(usage: Discount.UsageDiscount) = discount(Discount.ofUsage(usage))
 
             fun discount(amount: AmountDiscount) = discount(Discount.ofAmount(amount))
@@ -25291,6 +25379,14 @@ private constructor(
                 discount(Discount.ofPercentage(percentage))
 
             fun discount(trial: TrialDiscount) = discount(Discount.ofTrial(trial))
+
+            fun trialDiscount(appliesToPriceIds: List<String>) =
+                discount(
+                    TrialDiscount.builder()
+                        .discountType(TrialDiscount.DiscountType.TRIAL)
+                        .appliesToPriceIds(appliesToPriceIds)
+                        .build()
+                )
 
             fun discount(usage: Discount.UsageDiscount) = discount(Discount.ofUsage(usage))
 
@@ -27386,6 +27482,14 @@ private constructor(
 
             fun discount(trial: TrialDiscount) = discount(Discount.ofTrial(trial))
 
+            fun trialDiscount(appliesToPriceIds: List<String>) =
+                discount(
+                    TrialDiscount.builder()
+                        .discountType(TrialDiscount.DiscountType.TRIAL)
+                        .appliesToPriceIds(appliesToPriceIds)
+                        .build()
+                )
+
             fun discount(usage: Discount.UsageDiscount) = discount(Discount.ofUsage(usage))
 
             fun discount(amount: AmountDiscount) = discount(Discount.ofAmount(amount))
@@ -29477,6 +29581,14 @@ private constructor(
 
             fun discount(trial: TrialDiscount) = discount(Discount.ofTrial(trial))
 
+            fun trialDiscount(appliesToPriceIds: List<String>) =
+                discount(
+                    TrialDiscount.builder()
+                        .discountType(TrialDiscount.DiscountType.TRIAL)
+                        .appliesToPriceIds(appliesToPriceIds)
+                        .build()
+                )
+
             fun discount(usage: Discount.UsageDiscount) = discount(Discount.ofUsage(usage))
 
             fun discount(amount: AmountDiscount) = discount(Discount.ofAmount(amount))
@@ -31565,6 +31677,14 @@ private constructor(
 
             fun discount(trial: TrialDiscount) = discount(Discount.ofTrial(trial))
 
+            fun trialDiscount(appliesToPriceIds: List<String>) =
+                discount(
+                    TrialDiscount.builder()
+                        .discountType(TrialDiscount.DiscountType.TRIAL)
+                        .appliesToPriceIds(appliesToPriceIds)
+                        .build()
+                )
+
             fun discount(usage: Discount.UsageDiscount) = discount(Discount.ofUsage(usage))
 
             fun discount(amount: AmountDiscount) = discount(Discount.ofAmount(amount))
@@ -33652,6 +33772,14 @@ private constructor(
                 discount(Discount.ofPercentage(percentage))
 
             fun discount(trial: TrialDiscount) = discount(Discount.ofTrial(trial))
+
+            fun trialDiscount(appliesToPriceIds: List<String>) =
+                discount(
+                    TrialDiscount.builder()
+                        .discountType(TrialDiscount.DiscountType.TRIAL)
+                        .appliesToPriceIds(appliesToPriceIds)
+                        .build()
+                )
 
             fun discount(usage: Discount.UsageDiscount) = discount(Discount.ofUsage(usage))
 
@@ -36032,6 +36160,14 @@ private constructor(
 
             fun discount(trial: TrialDiscount) = discount(Discount.ofTrial(trial))
 
+            fun trialDiscount(appliesToPriceIds: List<String>) =
+                discount(
+                    TrialDiscount.builder()
+                        .discountType(TrialDiscount.DiscountType.TRIAL)
+                        .appliesToPriceIds(appliesToPriceIds)
+                        .build()
+                )
+
             fun discount(usage: Discount.UsageDiscount) = discount(Discount.ofUsage(usage))
 
             fun discount(amount: AmountDiscount) = discount(Discount.ofAmount(amount))
@@ -38118,6 +38254,14 @@ private constructor(
 
             fun discount(trial: TrialDiscount) = discount(Discount.ofTrial(trial))
 
+            fun trialDiscount(appliesToPriceIds: List<String>) =
+                discount(
+                    TrialDiscount.builder()
+                        .discountType(TrialDiscount.DiscountType.TRIAL)
+                        .appliesToPriceIds(appliesToPriceIds)
+                        .build()
+                )
+
             fun discount(usage: Discount.UsageDiscount) = discount(Discount.ofUsage(usage))
 
             fun discount(amount: AmountDiscount) = discount(Discount.ofAmount(amount))
@@ -40203,6 +40347,14 @@ private constructor(
                 discount(Discount.ofPercentage(percentage))
 
             fun discount(trial: TrialDiscount) = discount(Discount.ofTrial(trial))
+
+            fun trialDiscount(appliesToPriceIds: List<String>) =
+                discount(
+                    TrialDiscount.builder()
+                        .discountType(TrialDiscount.DiscountType.TRIAL)
+                        .appliesToPriceIds(appliesToPriceIds)
+                        .build()
+                )
 
             fun discount(usage: Discount.UsageDiscount) = discount(Discount.ofUsage(usage))
 
@@ -42298,6 +42450,14 @@ private constructor(
                 discount(Discount.ofPercentage(percentage))
 
             fun discount(trial: TrialDiscount) = discount(Discount.ofTrial(trial))
+
+            fun trialDiscount(appliesToPriceIds: List<String>) =
+                discount(
+                    TrialDiscount.builder()
+                        .discountType(TrialDiscount.DiscountType.TRIAL)
+                        .appliesToPriceIds(appliesToPriceIds)
+                        .build()
+                )
 
             fun discount(usage: Discount.UsageDiscount) = discount(Discount.ofUsage(usage))
 
@@ -44400,6 +44560,14 @@ private constructor(
 
             fun discount(trial: TrialDiscount) = discount(Discount.ofTrial(trial))
 
+            fun trialDiscount(appliesToPriceIds: List<String>) =
+                discount(
+                    TrialDiscount.builder()
+                        .discountType(TrialDiscount.DiscountType.TRIAL)
+                        .appliesToPriceIds(appliesToPriceIds)
+                        .build()
+                )
+
             fun discount(usage: Discount.UsageDiscount) = discount(Discount.ofUsage(usage))
 
             fun discount(amount: AmountDiscount) = discount(Discount.ofAmount(amount))
@@ -46494,6 +46662,14 @@ private constructor(
                 discount(Discount.ofPercentage(percentage))
 
             fun discount(trial: TrialDiscount) = discount(Discount.ofTrial(trial))
+
+            fun trialDiscount(appliesToPriceIds: List<String>) =
+                discount(
+                    TrialDiscount.builder()
+                        .discountType(TrialDiscount.DiscountType.TRIAL)
+                        .appliesToPriceIds(appliesToPriceIds)
+                        .build()
+                )
 
             fun discount(usage: Discount.UsageDiscount) = discount(Discount.ofUsage(usage))
 
@@ -48590,6 +48766,14 @@ private constructor(
 
             fun discount(trial: TrialDiscount) = discount(Discount.ofTrial(trial))
 
+            fun trialDiscount(appliesToPriceIds: List<String>) =
+                discount(
+                    TrialDiscount.builder()
+                        .discountType(TrialDiscount.DiscountType.TRIAL)
+                        .appliesToPriceIds(appliesToPriceIds)
+                        .build()
+                )
+
             fun discount(usage: Discount.UsageDiscount) = discount(Discount.ofUsage(usage))
 
             fun discount(amount: AmountDiscount) = discount(Discount.ofAmount(amount))
@@ -50670,6 +50854,14 @@ private constructor(
                 discount(Discount.ofPercentage(percentage))
 
             fun discount(trial: TrialDiscount) = discount(Discount.ofTrial(trial))
+
+            fun trialDiscount(appliesToPriceIds: List<String>) =
+                discount(
+                    TrialDiscount.builder()
+                        .discountType(TrialDiscount.DiscountType.TRIAL)
+                        .appliesToPriceIds(appliesToPriceIds)
+                        .build()
+                )
 
             fun discount(usage: Discount.UsageDiscount) = discount(Discount.ofUsage(usage))
 
@@ -52756,6 +52948,14 @@ private constructor(
                 discount(Discount.ofPercentage(percentage))
 
             fun discount(trial: TrialDiscount) = discount(Discount.ofTrial(trial))
+
+            fun trialDiscount(appliesToPriceIds: List<String>) =
+                discount(
+                    TrialDiscount.builder()
+                        .discountType(TrialDiscount.DiscountType.TRIAL)
+                        .appliesToPriceIds(appliesToPriceIds)
+                        .build()
+                )
 
             fun discount(usage: Discount.UsageDiscount) = discount(Discount.ofUsage(usage))
 

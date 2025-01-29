@@ -1120,8 +1120,33 @@ private constructor(
             fun taxConfiguration(newAvalara: TaxConfiguration.NewAvalaraTaxConfiguration) =
                 taxConfiguration(TaxConfiguration.ofNewAvalara(newAvalara))
 
+            fun newAvalaraTaxConfiguration(taxExempt: Boolean) =
+                taxConfiguration(
+                    TaxConfiguration.NewAvalaraTaxConfiguration.builder()
+                        .taxProvider(
+                            CustomerUpdateByExternalIdParams.TaxConfiguration
+                                .NewAvalaraTaxConfiguration
+                                .TaxProvider
+                                .AVALARA
+                        )
+                        .taxExempt(taxExempt)
+                        .build()
+                )
+
             fun taxConfiguration(newTaxJar: TaxConfiguration.NewTaxJarConfiguration) =
                 taxConfiguration(TaxConfiguration.ofNewTaxJar(newTaxJar))
+
+            fun newTaxJarTaxConfiguration(taxExempt: Boolean) =
+                taxConfiguration(
+                    TaxConfiguration.NewTaxJarConfiguration.builder()
+                        .taxProvider(
+                            CustomerUpdateByExternalIdParams.TaxConfiguration.NewTaxJarConfiguration
+                                .TaxProvider
+                                .TAXJAR
+                        )
+                        .taxExempt(taxExempt)
+                        .build()
+                )
 
             /**
              * Tax IDs are commonly required to be displayed on customer invoices, which are added
@@ -1619,8 +1644,16 @@ private constructor(
             body.taxConfiguration(newAvalara)
         }
 
+        fun newAvalaraTaxConfiguration(taxExempt: Boolean) = apply {
+            body.newAvalaraTaxConfiguration(taxExempt)
+        }
+
         fun taxConfiguration(newTaxJar: TaxConfiguration.NewTaxJarConfiguration) = apply {
             body.taxConfiguration(newTaxJar)
+        }
+
+        fun newTaxJarTaxConfiguration(taxExempt: Boolean) = apply {
+            body.newTaxJarTaxConfiguration(taxExempt)
         }
 
         /**

@@ -197,8 +197,29 @@ private constructor(
             fun discount(newCouponPercentage: Discount.NewCouponPercentageDiscount) =
                 discount(Discount.ofNewCouponPercentage(newCouponPercentage))
 
+            fun newCouponPercentageDiscount(percentageDiscount: Double) =
+                discount(
+                    Discount.NewCouponPercentageDiscount.builder()
+                        .discountType(
+                            CouponCreateParams.Discount.NewCouponPercentageDiscount.DiscountType
+                                .PERCENTAGE
+                        )
+                        .percentageDiscount(percentageDiscount)
+                        .build()
+                )
+
             fun discount(newCouponAmount: Discount.NewCouponAmountDiscount) =
                 discount(Discount.ofNewCouponAmount(newCouponAmount))
+
+            fun newCouponAmountDiscount(amountDiscount: String) =
+                discount(
+                    Discount.NewCouponAmountDiscount.builder()
+                        .discountType(
+                            CouponCreateParams.Discount.NewCouponAmountDiscount.DiscountType.AMOUNT
+                        )
+                        .amountDiscount(amountDiscount)
+                        .build()
+                )
 
             /** This string can be used to redeem this coupon for a given subscription. */
             fun redemptionCode(redemptionCode: String) =
@@ -328,8 +349,16 @@ private constructor(
             body.discount(newCouponPercentage)
         }
 
+        fun newCouponPercentageDiscount(percentageDiscount: Double) = apply {
+            body.newCouponPercentageDiscount(percentageDiscount)
+        }
+
         fun discount(newCouponAmount: Discount.NewCouponAmountDiscount) = apply {
             body.discount(newCouponAmount)
+        }
+
+        fun newCouponAmountDiscount(amountDiscount: String) = apply {
+            body.newCouponAmountDiscount(amountDiscount)
         }
 
         /** This string can be used to redeem this coupon for a given subscription. */
