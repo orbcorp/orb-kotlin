@@ -1213,6 +1213,14 @@ private constructor(
 
         fun addDiscount(trial: TrialDiscount) = addDiscount(InvoiceLevelDiscount.ofTrial(trial))
 
+        fun addTrialDiscount(appliesToPriceIds: List<String>) =
+            addDiscount(
+                TrialDiscount.builder()
+                    .discountType(TrialDiscount.DiscountType.TRIAL)
+                    .appliesToPriceIds(appliesToPriceIds)
+                    .build()
+            )
+
         /**
          * When the invoice payment is due. The due date is null if the invoice is not yet
          * finalized.
@@ -4709,6 +4717,14 @@ private constructor(
                 discount(Discount.ofPercentage(percentage))
 
             fun discount(trial: TrialDiscount) = discount(Discount.ofTrial(trial))
+
+            fun trialDiscount(appliesToPriceIds: List<String>) =
+                discount(
+                    TrialDiscount.builder()
+                        .discountType(TrialDiscount.DiscountType.TRIAL)
+                        .appliesToPriceIds(appliesToPriceIds)
+                        .build()
+                )
 
             fun discount(usage: Discount.UsageDiscount) = discount(Discount.ofUsage(usage))
 
