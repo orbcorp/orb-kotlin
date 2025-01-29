@@ -11,13 +11,15 @@ class CouponCreateParamsTest {
     fun createCouponCreateParams() {
         CouponCreateParams.builder()
             .discount(
-                CouponCreateParams.Discount.NewCouponPercentageDiscount.builder()
-                    .discountType(
-                        CouponCreateParams.Discount.NewCouponPercentageDiscount.DiscountType
-                            .PERCENTAGE
-                    )
-                    .percentageDiscount(0.0)
-                    .build()
+                CouponCreateParams.Discount.ofNewCouponPercentage(
+                    CouponCreateParams.Discount.NewCouponPercentageDiscount.builder()
+                        .discountType(
+                            CouponCreateParams.Discount.NewCouponPercentageDiscount.DiscountType
+                                .PERCENTAGE
+                        )
+                        .percentageDiscount(0.0)
+                        .build()
+                )
             )
             .redemptionCode("HALFOFF")
             .durationInMonths(12L)
@@ -30,13 +32,15 @@ class CouponCreateParamsTest {
         val params =
             CouponCreateParams.builder()
                 .discount(
-                    CouponCreateParams.Discount.NewCouponPercentageDiscount.builder()
-                        .discountType(
-                            CouponCreateParams.Discount.NewCouponPercentageDiscount.DiscountType
-                                .PERCENTAGE
-                        )
-                        .percentageDiscount(0.0)
-                        .build()
+                    CouponCreateParams.Discount.ofNewCouponPercentage(
+                        CouponCreateParams.Discount.NewCouponPercentageDiscount.builder()
+                            .discountType(
+                                CouponCreateParams.Discount.NewCouponPercentageDiscount.DiscountType
+                                    .PERCENTAGE
+                            )
+                            .percentageDiscount(0.0)
+                            .build()
+                    )
                 )
                 .redemptionCode("HALFOFF")
                 .durationInMonths(12L)
@@ -66,13 +70,15 @@ class CouponCreateParamsTest {
         val params =
             CouponCreateParams.builder()
                 .discount(
-                    CouponCreateParams.Discount.NewCouponPercentageDiscount.builder()
-                        .discountType(
-                            CouponCreateParams.Discount.NewCouponPercentageDiscount.DiscountType
-                                .PERCENTAGE
-                        )
-                        .percentageDiscount(0.0)
-                        .build()
+                    CouponCreateParams.Discount.ofNewCouponPercentage(
+                        CouponCreateParams.Discount.NewCouponPercentageDiscount.builder()
+                            .discountType(
+                                CouponCreateParams.Discount.NewCouponPercentageDiscount.DiscountType
+                                    .PERCENTAGE
+                            )
+                            .percentageDiscount(0.0)
+                            .build()
+                    )
                 )
                 .redemptionCode("HALFOFF")
                 .build()

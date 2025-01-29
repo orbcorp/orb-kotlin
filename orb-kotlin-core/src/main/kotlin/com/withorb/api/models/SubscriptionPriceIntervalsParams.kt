@@ -835,6 +835,20 @@ private constructor(
                 addDiscount(Discount.ofAmountDiscountCreationParams(amountDiscountCreationParams))
 
             /** A list of discounts to initialize on the price interval. */
+            fun addAmountDiscountCreationParamsDiscount(amountDiscount: Double) =
+                addDiscount(
+                    Discount.AmountDiscountCreationParams.builder()
+                        .discountType(
+                            SubscriptionPriceIntervalsParams.Add.Discount
+                                .AmountDiscountCreationParams
+                                .DiscountType
+                                .AMOUNT
+                        )
+                        .amountDiscount(amountDiscount)
+                        .build()
+                )
+
+            /** A list of discounts to initialize on the price interval. */
             fun addDiscount(
                 percentageDiscountCreationParams: Discount.PercentageDiscountCreationParams
             ) =
@@ -843,8 +857,36 @@ private constructor(
                 )
 
             /** A list of discounts to initialize on the price interval. */
+            fun addPercentageDiscountCreationParamsDiscount(percentageDiscount: Double) =
+                addDiscount(
+                    Discount.PercentageDiscountCreationParams.builder()
+                        .discountType(
+                            SubscriptionPriceIntervalsParams.Add.Discount
+                                .PercentageDiscountCreationParams
+                                .DiscountType
+                                .PERCENTAGE
+                        )
+                        .percentageDiscount(percentageDiscount)
+                        .build()
+                )
+
+            /** A list of discounts to initialize on the price interval. */
             fun addDiscount(usageDiscountCreationParams: Discount.UsageDiscountCreationParams) =
                 addDiscount(Discount.ofUsageDiscountCreationParams(usageDiscountCreationParams))
+
+            /** A list of discounts to initialize on the price interval. */
+            fun addUsageDiscountCreationParamsDiscount(usageDiscount: Double) =
+                addDiscount(
+                    Discount.UsageDiscountCreationParams.builder()
+                        .discountType(
+                            SubscriptionPriceIntervalsParams.Add.Discount
+                                .UsageDiscountCreationParams
+                                .DiscountType
+                                .USAGE
+                        )
+                        .usageDiscount(usageDiscount)
+                        .build()
+                )
 
             /**
              * The end date of the price interval. This is the date that the price will stop billing

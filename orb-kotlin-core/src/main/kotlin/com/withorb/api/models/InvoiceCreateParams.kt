@@ -436,6 +436,15 @@ private constructor(
             fun discount(trial: TrialDiscount) = discount(Discount.ofTrial(trial))
 
             /** An optional discount to attach to the invoice. */
+            fun trialDiscount(appliesToPriceIds: List<String>) =
+                discount(
+                    TrialDiscount.builder()
+                        .discountType(TrialDiscount.DiscountType.TRIAL)
+                        .appliesToPriceIds(appliesToPriceIds)
+                        .build()
+                )
+
+            /** An optional discount to attach to the invoice. */
             fun discount(usage: Discount.UsageDiscount) = discount(Discount.ofUsage(usage))
 
             /** An optional discount to attach to the invoice. */
@@ -631,6 +640,11 @@ private constructor(
 
         /** An optional discount to attach to the invoice. */
         fun discount(trial: TrialDiscount) = apply { body.discount(trial) }
+
+        /** An optional discount to attach to the invoice. */
+        fun trialDiscount(appliesToPriceIds: List<String>) = apply {
+            body.trialDiscount(appliesToPriceIds)
+        }
 
         /** An optional discount to attach to the invoice. */
         fun discount(usage: Discount.UsageDiscount) = apply { body.discount(usage) }
