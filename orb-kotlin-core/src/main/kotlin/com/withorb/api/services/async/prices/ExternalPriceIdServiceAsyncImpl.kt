@@ -11,6 +11,7 @@ import com.withorb.api.core.http.HttpMethod
 import com.withorb.api.core.http.HttpRequest
 import com.withorb.api.core.http.HttpResponse.Handler
 import com.withorb.api.core.json
+import com.withorb.api.core.prepareAsync
 import com.withorb.api.errors.OrbError
 import com.withorb.api.models.Price
 import com.withorb.api.models.PriceExternalPriceIdFetchParams
@@ -38,12 +39,9 @@ internal constructor(
             HttpRequest.builder()
                 .method(HttpMethod.PUT)
                 .addPathSegments("prices", "external_price_id", params.getPathParam(0))
-                .putAllQueryParams(clientOptions.queryParams)
-                .replaceAllQueryParams(params.getQueryParams())
-                .putAllHeaders(clientOptions.headers)
-                .replaceAllHeaders(params.getHeaders())
-                .body(json(clientOptions.jsonMapper, params.getBody()))
+                .body(json(clientOptions.jsonMapper, params._body()))
                 .build()
+                .prepareAsync(clientOptions, params)
         return clientOptions.httpClient.executeAsync(request, requestOptions).let { response ->
             response
                 .use { updateHandler.handle(it) }
@@ -71,11 +69,8 @@ internal constructor(
             HttpRequest.builder()
                 .method(HttpMethod.GET)
                 .addPathSegments("prices", "external_price_id", params.getPathParam(0))
-                .putAllQueryParams(clientOptions.queryParams)
-                .replaceAllQueryParams(params.getQueryParams())
-                .putAllHeaders(clientOptions.headers)
-                .replaceAllHeaders(params.getHeaders())
                 .build()
+                .prepareAsync(clientOptions, params)
         return clientOptions.httpClient.executeAsync(request, requestOptions).let { response ->
             response
                 .use { fetchHandler.handle(it) }

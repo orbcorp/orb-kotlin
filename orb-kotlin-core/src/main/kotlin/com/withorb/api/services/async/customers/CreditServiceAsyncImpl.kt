@@ -10,6 +10,7 @@ import com.withorb.api.core.handlers.withErrorHandler
 import com.withorb.api.core.http.HttpMethod
 import com.withorb.api.core.http.HttpRequest
 import com.withorb.api.core.http.HttpResponse.Handler
+import com.withorb.api.core.prepareAsync
 import com.withorb.api.errors.OrbError
 import com.withorb.api.models.CustomerCreditListByExternalIdPageAsync
 import com.withorb.api.models.CustomerCreditListByExternalIdParams
@@ -56,11 +57,8 @@ internal constructor(
             HttpRequest.builder()
                 .method(HttpMethod.GET)
                 .addPathSegments("customers", params.getPathParam(0), "credits")
-                .putAllQueryParams(clientOptions.queryParams)
-                .replaceAllQueryParams(params.getQueryParams())
-                .putAllHeaders(clientOptions.headers)
-                .replaceAllHeaders(params.getHeaders())
                 .build()
+                .prepareAsync(clientOptions, params)
         return clientOptions.httpClient.executeAsync(request, requestOptions).let { response ->
             response
                 .use { listHandler.handle(it) }
@@ -99,11 +97,8 @@ internal constructor(
                     params.getPathParam(0),
                     "credits"
                 )
-                .putAllQueryParams(clientOptions.queryParams)
-                .replaceAllQueryParams(params.getQueryParams())
-                .putAllHeaders(clientOptions.headers)
-                .replaceAllHeaders(params.getHeaders())
                 .build()
+                .prepareAsync(clientOptions, params)
         return clientOptions.httpClient.executeAsync(request, requestOptions).let { response ->
             response
                 .use { listByExternalIdHandler.handle(it) }

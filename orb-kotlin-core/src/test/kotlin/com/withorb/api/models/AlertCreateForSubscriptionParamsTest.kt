@@ -18,7 +18,7 @@ class AlertCreateForSubscriptionParamsTest {
     }
 
     @Test
-    fun getBody() {
+    fun body() {
         val params =
             AlertCreateForSubscriptionParams.builder()
                 .subscriptionId("subscription_id")
@@ -28,7 +28,7 @@ class AlertCreateForSubscriptionParamsTest {
                 .type(AlertCreateForSubscriptionParams.Type.USAGE_EXCEEDED)
                 .metricId("metric_id")
                 .build()
-        val body = params.getBody()
+        val body = params._body()
         assertThat(body).isNotNull
         assertThat(body.thresholds())
             .isEqualTo(
@@ -39,7 +39,7 @@ class AlertCreateForSubscriptionParamsTest {
     }
 
     @Test
-    fun getBodyWithoutOptionalFields() {
+    fun bodyWithoutOptionalFields() {
         val params =
             AlertCreateForSubscriptionParams.builder()
                 .subscriptionId("subscription_id")
@@ -48,7 +48,7 @@ class AlertCreateForSubscriptionParamsTest {
                 )
                 .type(AlertCreateForSubscriptionParams.Type.USAGE_EXCEEDED)
                 .build()
-        val body = params.getBody()
+        val body = params._body()
         assertThat(body).isNotNull
         assertThat(body.thresholds())
             .isEqualTo(

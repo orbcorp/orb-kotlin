@@ -82,7 +82,7 @@ class CustomerUpdateParamsTest {
     }
 
     @Test
-    fun getBody() {
+    fun body() {
         val params =
             CustomerUpdateParams.builder()
                 .customerId("customer_id")
@@ -154,7 +154,7 @@ class CustomerUpdateParamsTest {
                         .build()
                 )
                 .build()
-        val body = params.getBody()
+        val body = params._body()
         assertThat(body).isNotNull
         assertThat(body.accountingSyncConfiguration())
             .isEqualTo(
@@ -234,9 +234,9 @@ class CustomerUpdateParamsTest {
     }
 
     @Test
-    fun getBodyWithoutOptionalFields() {
+    fun bodyWithoutOptionalFields() {
         val params = CustomerUpdateParams.builder().customerId("customer_id").build()
-        val body = params.getBody()
+        val body = params._body()
         assertThat(body).isNotNull
     }
 

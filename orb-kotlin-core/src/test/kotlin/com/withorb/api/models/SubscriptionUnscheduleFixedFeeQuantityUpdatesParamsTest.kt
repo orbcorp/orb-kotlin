@@ -16,25 +16,25 @@ class SubscriptionUnscheduleFixedFeeQuantityUpdatesParamsTest {
     }
 
     @Test
-    fun getBody() {
+    fun body() {
         val params =
             SubscriptionUnscheduleFixedFeeQuantityUpdatesParams.builder()
                 .subscriptionId("subscription_id")
                 .priceId("price_id")
                 .build()
-        val body = params.getBody()
+        val body = params._body()
         assertThat(body).isNotNull
         assertThat(body.priceId()).isEqualTo("price_id")
     }
 
     @Test
-    fun getBodyWithoutOptionalFields() {
+    fun bodyWithoutOptionalFields() {
         val params =
             SubscriptionUnscheduleFixedFeeQuantityUpdatesParams.builder()
                 .subscriptionId("subscription_id")
                 .priceId("price_id")
                 .build()
-        val body = params.getBody()
+        val body = params._body()
         assertThat(body).isNotNull
         assertThat(body.priceId()).isEqualTo("price_id")
     }

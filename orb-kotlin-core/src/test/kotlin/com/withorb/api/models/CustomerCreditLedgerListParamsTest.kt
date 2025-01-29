@@ -27,7 +27,7 @@ class CustomerCreditLedgerListParamsTest {
     }
 
     @Test
-    fun getQueryParams() {
+    fun queryParams() {
         val params =
             CustomerCreditLedgerListParams.builder()
                 .customerId("customer_id")
@@ -56,14 +56,14 @@ class CustomerCreditLedgerListParamsTest {
         expected.put("entry_type", CustomerCreditLedgerListParams.EntryType.INCREMENT.toString())
         expected.put("limit", "1")
         expected.put("minimum_amount", "minimum_amount")
-        assertThat(params.getQueryParams()).isEqualTo(expected.build())
+        assertThat(params._queryParams()).isEqualTo(expected.build())
     }
 
     @Test
-    fun getQueryParamsWithoutOptionalFields() {
+    fun queryParamsWithoutOptionalFields() {
         val params = CustomerCreditLedgerListParams.builder().customerId("customer_id").build()
         val expected = QueryParams.builder()
-        assertThat(params.getQueryParams()).isEqualTo(expected.build())
+        assertThat(params._queryParams()).isEqualTo(expected.build())
     }
 
     @Test

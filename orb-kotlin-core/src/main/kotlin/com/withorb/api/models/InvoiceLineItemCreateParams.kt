@@ -11,6 +11,7 @@ import com.withorb.api.core.JsonField
 import com.withorb.api.core.JsonMissing
 import com.withorb.api.core.JsonValue
 import com.withorb.api.core.NoAutoDetect
+import com.withorb.api.core.Params
 import com.withorb.api.core.checkRequired
 import com.withorb.api.core.http.Headers
 import com.withorb.api.core.http.QueryParams
@@ -28,7 +29,7 @@ private constructor(
     private val body: InvoiceLineItemCreateBody,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
-) {
+) : Params {
 
     /** The total amount in the invoice's currency to add to the line item. */
     fun amount(): String = body.amount()
@@ -78,11 +79,11 @@ private constructor(
 
     fun _additionalQueryParams(): QueryParams = additionalQueryParams
 
-    internal fun getBody(): InvoiceLineItemCreateBody = body
+    internal fun _body(): InvoiceLineItemCreateBody = body
 
-    internal fun getHeaders(): Headers = additionalHeaders
+    override fun _headers(): Headers = additionalHeaders
 
-    internal fun getQueryParams(): QueryParams = additionalQueryParams
+    override fun _queryParams(): QueryParams = additionalQueryParams
 
     @NoAutoDetect
     class InvoiceLineItemCreateBody

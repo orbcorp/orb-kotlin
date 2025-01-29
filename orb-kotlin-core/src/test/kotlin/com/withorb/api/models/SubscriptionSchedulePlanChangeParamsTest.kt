@@ -290,7 +290,7 @@ class SubscriptionSchedulePlanChangeParamsTest {
     }
 
     @Test
-    fun getBody() {
+    fun body() {
         val params =
             SubscriptionSchedulePlanChangeParams.builder()
                 .subscriptionId("subscription_id")
@@ -571,7 +571,7 @@ class SubscriptionSchedulePlanChangeParamsTest {
                 )
                 .trialDurationDays(999999L)
                 .build()
-        val body = params.getBody()
+        val body = params._body()
         assertThat(body).isNotNull
         assertThat(body.changeOption())
             .isEqualTo(SubscriptionSchedulePlanChangeParams.ChangeOption.REQUESTED_DATE)
@@ -871,13 +871,13 @@ class SubscriptionSchedulePlanChangeParamsTest {
     }
 
     @Test
-    fun getBodyWithoutOptionalFields() {
+    fun bodyWithoutOptionalFields() {
         val params =
             SubscriptionSchedulePlanChangeParams.builder()
                 .subscriptionId("subscription_id")
                 .changeOption(SubscriptionSchedulePlanChangeParams.ChangeOption.REQUESTED_DATE)
                 .build()
-        val body = params.getBody()
+        val body = params._body()
         assertThat(body).isNotNull
         assertThat(body.changeOption())
             .isEqualTo(SubscriptionSchedulePlanChangeParams.ChangeOption.REQUESTED_DATE)

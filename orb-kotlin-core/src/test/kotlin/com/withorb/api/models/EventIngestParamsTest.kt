@@ -29,7 +29,7 @@ class EventIngestParamsTest {
     }
 
     @Test
-    fun getQueryParams() {
+    fun queryParams() {
         val params =
             EventIngestParams.builder()
                 .addEvent(
@@ -48,11 +48,11 @@ class EventIngestParamsTest {
         val expected = QueryParams.builder()
         expected.put("backfill_id", "backfill_id")
         expected.put("debug", "true")
-        assertThat(params.getQueryParams()).isEqualTo(expected.build())
+        assertThat(params._queryParams()).isEqualTo(expected.build())
     }
 
     @Test
-    fun getQueryParamsWithoutOptionalFields() {
+    fun queryParamsWithoutOptionalFields() {
         val params =
             EventIngestParams.builder()
                 .addEvent(
@@ -65,11 +65,11 @@ class EventIngestParamsTest {
                 )
                 .build()
         val expected = QueryParams.builder()
-        assertThat(params.getQueryParams()).isEqualTo(expected.build())
+        assertThat(params._queryParams()).isEqualTo(expected.build())
     }
 
     @Test
-    fun getBody() {
+    fun body() {
         val params =
             EventIngestParams.builder()
                 .addEvent(
@@ -85,7 +85,7 @@ class EventIngestParamsTest {
                 .backfillId("backfill_id")
                 .debug(true)
                 .build()
-        val body = params.getBody()
+        val body = params._body()
         assertThat(body).isNotNull
         assertThat(body.events())
             .isEqualTo(
@@ -103,7 +103,7 @@ class EventIngestParamsTest {
     }
 
     @Test
-    fun getBodyWithoutOptionalFields() {
+    fun bodyWithoutOptionalFields() {
         val params =
             EventIngestParams.builder()
                 .addEvent(
@@ -115,7 +115,7 @@ class EventIngestParamsTest {
                         .build()
                 )
                 .build()
-        val body = params.getBody()
+        val body = params._body()
         assertThat(body).isNotNull
         assertThat(body.events())
             .isEqualTo(

@@ -87,7 +87,7 @@ class CustomerUpdateByExternalIdParamsTest {
     }
 
     @Test
-    fun getBody() {
+    fun body() {
         val params =
             CustomerUpdateByExternalIdParams.builder()
                 .id("external_customer_id")
@@ -164,7 +164,7 @@ class CustomerUpdateByExternalIdParamsTest {
                         .build()
                 )
                 .build()
-        val body = params.getBody()
+        val body = params._body()
         assertThat(body).isNotNull
         assertThat(body.accountingSyncConfiguration())
             .isEqualTo(
@@ -251,9 +251,9 @@ class CustomerUpdateByExternalIdParamsTest {
     }
 
     @Test
-    fun getBodyWithoutOptionalFields() {
+    fun bodyWithoutOptionalFields() {
         val params = CustomerUpdateByExternalIdParams.builder().id("external_customer_id").build()
-        val body = params.getBody()
+        val body = params._body()
         assertThat(body).isNotNull
     }
 
