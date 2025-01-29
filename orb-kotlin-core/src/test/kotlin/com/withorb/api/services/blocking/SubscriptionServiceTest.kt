@@ -496,16 +496,19 @@ class SubscriptionServiceTest {
                             )
                             .addDiscount(
                                 SubscriptionPriceIntervalsParams.Add.Discount
-                                    .AmountDiscountCreationParams
-                                    .builder()
-                                    .amountDiscount(0.0)
-                                    .discountType(
+                                    .ofAmountDiscountCreationParams(
                                         SubscriptionPriceIntervalsParams.Add.Discount
                                             .AmountDiscountCreationParams
-                                            .DiscountType
-                                            .AMOUNT
+                                            .builder()
+                                            .amountDiscount(0.0)
+                                            .discountType(
+                                                SubscriptionPriceIntervalsParams.Add.Discount
+                                                    .AmountDiscountCreationParams
+                                                    .DiscountType
+                                                    .AMOUNT
+                                            )
+                                            .build()
                                     )
-                                    .build()
                             )
                             .endDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                             .externalPriceId("external_price_id")
