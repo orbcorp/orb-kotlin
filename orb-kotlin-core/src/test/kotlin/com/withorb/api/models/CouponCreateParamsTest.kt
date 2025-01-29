@@ -26,7 +26,7 @@ class CouponCreateParamsTest {
     }
 
     @Test
-    fun getBody() {
+    fun body() {
         val params =
             CouponCreateParams.builder()
                 .discount(
@@ -42,7 +42,7 @@ class CouponCreateParamsTest {
                 .durationInMonths(12L)
                 .maxRedemptions(1L)
                 .build()
-        val body = params.getBody()
+        val body = params._body()
         assertThat(body).isNotNull
         assertThat(body.discount())
             .isEqualTo(
@@ -62,7 +62,7 @@ class CouponCreateParamsTest {
     }
 
     @Test
-    fun getBodyWithoutOptionalFields() {
+    fun bodyWithoutOptionalFields() {
         val params =
             CouponCreateParams.builder()
                 .discount(
@@ -76,7 +76,7 @@ class CouponCreateParamsTest {
                 )
                 .redemptionCode("HALFOFF")
                 .build()
-        val body = params.getBody()
+        val body = params._body()
         assertThat(body).isNotNull
         assertThat(body.discount())
             .isEqualTo(

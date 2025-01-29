@@ -23,7 +23,7 @@ class CustomerBalanceTransactionListParamsTest {
     }
 
     @Test
-    fun getQueryParams() {
+    fun queryParams() {
         val params =
             CustomerBalanceTransactionListParams.builder()
                 .customerId("customer_id")
@@ -41,15 +41,15 @@ class CustomerBalanceTransactionListParamsTest {
         expected.put("operation_time[gte]", "2019-12-27T18:11:19.117Z")
         expected.put("operation_time[lt]", "2019-12-27T18:11:19.117Z")
         expected.put("operation_time[lte]", "2019-12-27T18:11:19.117Z")
-        assertThat(params.getQueryParams()).isEqualTo(expected.build())
+        assertThat(params._queryParams()).isEqualTo(expected.build())
     }
 
     @Test
-    fun getQueryParamsWithoutOptionalFields() {
+    fun queryParamsWithoutOptionalFields() {
         val params =
             CustomerBalanceTransactionListParams.builder().customerId("customer_id").build()
         val expected = QueryParams.builder()
-        assertThat(params.getQueryParams()).isEqualTo(expected.build())
+        assertThat(params._queryParams()).isEqualTo(expected.build())
     }
 
     @Test

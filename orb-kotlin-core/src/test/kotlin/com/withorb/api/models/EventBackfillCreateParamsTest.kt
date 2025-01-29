@@ -22,7 +22,7 @@ class EventBackfillCreateParamsTest {
     }
 
     @Test
-    fun getBody() {
+    fun body() {
         val params =
             EventBackfillCreateParams.builder()
                 .timeframeEnd(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
@@ -33,7 +33,7 @@ class EventBackfillCreateParamsTest {
                 .externalCustomerId("external_customer_id")
                 .replaceExistingEvents(true)
                 .build()
-        val body = params.getBody()
+        val body = params._body()
         assertThat(body).isNotNull
         assertThat(body.timeframeEnd()).isEqualTo(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
         assertThat(body.timeframeStart())
@@ -47,13 +47,13 @@ class EventBackfillCreateParamsTest {
     }
 
     @Test
-    fun getBodyWithoutOptionalFields() {
+    fun bodyWithoutOptionalFields() {
         val params =
             EventBackfillCreateParams.builder()
                 .timeframeEnd(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                 .timeframeStart(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                 .build()
-        val body = params.getBody()
+        val body = params._body()
         assertThat(body).isNotNull
         assertThat(body.timeframeEnd()).isEqualTo(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
         assertThat(body.timeframeStart())

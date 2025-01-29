@@ -53,7 +53,7 @@ class InvoiceCreateParamsTest {
     }
 
     @Test
-    fun getBody() {
+    fun body() {
         val params =
             InvoiceCreateParams.builder()
                 .currency("USD")
@@ -93,7 +93,7 @@ class InvoiceCreateParamsTest {
                 )
                 .willAutoIssue(false)
                 .build()
-        val body = params.getBody()
+        val body = params._body()
         assertThat(body).isNotNull
         assertThat(body.currency()).isEqualTo("USD")
         assertThat(body.invoiceDate()).isEqualTo(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
@@ -141,7 +141,7 @@ class InvoiceCreateParamsTest {
     }
 
     @Test
-    fun getBodyWithoutOptionalFields() {
+    fun bodyWithoutOptionalFields() {
         val params =
             InvoiceCreateParams.builder()
                 .currency("USD")
@@ -163,7 +163,7 @@ class InvoiceCreateParamsTest {
                 )
                 .netTerms(0L)
                 .build()
-        val body = params.getBody()
+        val body = params._body()
         assertThat(body).isNotNull
         assertThat(body.currency()).isEqualTo("USD")
         assertThat(body.invoiceDate()).isEqualTo(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))

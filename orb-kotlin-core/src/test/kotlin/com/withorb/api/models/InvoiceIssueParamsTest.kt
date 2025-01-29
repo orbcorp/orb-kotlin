@@ -13,17 +13,17 @@ class InvoiceIssueParamsTest {
     }
 
     @Test
-    fun getBody() {
+    fun body() {
         val params = InvoiceIssueParams.builder().invoiceId("invoice_id").synchronous(true).build()
-        val body = params.getBody()
+        val body = params._body()
         assertThat(body).isNotNull
         assertThat(body.synchronous()).isEqualTo(true)
     }
 
     @Test
-    fun getBodyWithoutOptionalFields() {
+    fun bodyWithoutOptionalFields() {
         val params = InvoiceIssueParams.builder().invoiceId("invoice_id").build()
-        val body = params.getBody()
+        val body = params._body()
         assertThat(body).isNotNull
     }
 

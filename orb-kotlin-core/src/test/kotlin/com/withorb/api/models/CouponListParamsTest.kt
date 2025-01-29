@@ -19,7 +19,7 @@ class CouponListParamsTest {
     }
 
     @Test
-    fun getQueryParams() {
+    fun queryParams() {
         val params =
             CouponListParams.builder()
                 .cursor("cursor")
@@ -32,13 +32,13 @@ class CouponListParamsTest {
         expected.put("limit", "1")
         expected.put("redemption_code", "redemption_code")
         expected.put("show_archived", "true")
-        assertThat(params.getQueryParams()).isEqualTo(expected.build())
+        assertThat(params._queryParams()).isEqualTo(expected.build())
     }
 
     @Test
-    fun getQueryParamsWithoutOptionalFields() {
+    fun queryParamsWithoutOptionalFields() {
         val params = CouponListParams.builder().build()
         val expected = QueryParams.builder()
-        assertThat(params.getQueryParams()).isEqualTo(expected.build())
+        assertThat(params._queryParams()).isEqualTo(expected.build())
     }
 }

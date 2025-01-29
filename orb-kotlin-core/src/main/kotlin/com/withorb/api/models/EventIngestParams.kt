@@ -11,6 +11,7 @@ import com.withorb.api.core.JsonField
 import com.withorb.api.core.JsonMissing
 import com.withorb.api.core.JsonValue
 import com.withorb.api.core.NoAutoDetect
+import com.withorb.api.core.Params
 import com.withorb.api.core.checkRequired
 import com.withorb.api.core.http.Headers
 import com.withorb.api.core.http.QueryParams
@@ -212,7 +213,7 @@ private constructor(
     private val body: EventIngestBody,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
-) {
+) : Params {
 
     /**
      * If this ingestion request is part of a backfill, this parameter ties the ingested events to
@@ -233,11 +234,11 @@ private constructor(
 
     fun _additionalQueryParams(): QueryParams = additionalQueryParams
 
-    internal fun getBody(): EventIngestBody = body
+    internal fun _body(): EventIngestBody = body
 
-    internal fun getHeaders(): Headers = additionalHeaders
+    override fun _headers(): Headers = additionalHeaders
 
-    internal fun getQueryParams(): QueryParams {
+    override fun _queryParams(): QueryParams {
         val queryParams = QueryParams.builder()
         this.backfillId?.let { queryParams.put("backfill_id", listOf(it.toString())) }
         this.debug?.let { queryParams.put("debug", listOf(it.toString())) }

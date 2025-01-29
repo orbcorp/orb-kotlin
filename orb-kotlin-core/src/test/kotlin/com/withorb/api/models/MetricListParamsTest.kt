@@ -22,7 +22,7 @@ class MetricListParamsTest {
     }
 
     @Test
-    fun getQueryParams() {
+    fun queryParams() {
         val params =
             MetricListParams.builder()
                 .createdAtGt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
@@ -39,13 +39,13 @@ class MetricListParamsTest {
         expected.put("created_at[lte]", "2019-12-27T18:11:19.117Z")
         expected.put("cursor", "cursor")
         expected.put("limit", "1")
-        assertThat(params.getQueryParams()).isEqualTo(expected.build())
+        assertThat(params._queryParams()).isEqualTo(expected.build())
     }
 
     @Test
-    fun getQueryParamsWithoutOptionalFields() {
+    fun queryParamsWithoutOptionalFields() {
         val params = MetricListParams.builder().build()
         val expected = QueryParams.builder()
-        assertThat(params.getQueryParams()).isEqualTo(expected.build())
+        assertThat(params._queryParams()).isEqualTo(expected.build())
     }
 }

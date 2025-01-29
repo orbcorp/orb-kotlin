@@ -25,7 +25,7 @@ class SubscriptionListParamsTest {
     }
 
     @Test
-    fun getQueryParams() {
+    fun queryParams() {
         val params =
             SubscriptionListParams.builder()
                 .createdAtGt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
@@ -48,13 +48,13 @@ class SubscriptionListParamsTest {
         expected.put("external_customer_id", "external_customer_id")
         expected.put("limit", "1")
         expected.put("status", SubscriptionListParams.Status.ACTIVE.toString())
-        assertThat(params.getQueryParams()).isEqualTo(expected.build())
+        assertThat(params._queryParams()).isEqualTo(expected.build())
     }
 
     @Test
-    fun getQueryParamsWithoutOptionalFields() {
+    fun queryParamsWithoutOptionalFields() {
         val params = SubscriptionListParams.builder().build()
         val expected = QueryParams.builder()
-        assertThat(params.getQueryParams()).isEqualTo(expected.build())
+        assertThat(params._queryParams()).isEqualTo(expected.build())
     }
 }

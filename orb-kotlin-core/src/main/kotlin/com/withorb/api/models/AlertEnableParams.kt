@@ -4,6 +4,7 @@ package com.withorb.api.models
 
 import com.withorb.api.core.JsonValue
 import com.withorb.api.core.NoAutoDetect
+import com.withorb.api.core.Params
 import com.withorb.api.core.checkRequired
 import com.withorb.api.core.http.Headers
 import com.withorb.api.core.http.QueryParams
@@ -22,7 +23,7 @@ private constructor(
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
     private val additionalBodyProperties: Map<String, JsonValue>,
-) {
+) : Params {
 
     fun alertConfigurationId(): String = alertConfigurationId
 
@@ -35,11 +36,11 @@ private constructor(
 
     fun _additionalBodyProperties(): Map<String, JsonValue> = additionalBodyProperties
 
-    internal fun getBody(): Map<String, JsonValue>? = additionalBodyProperties.ifEmpty { null }
+    internal fun _body(): Map<String, JsonValue>? = additionalBodyProperties.ifEmpty { null }
 
-    internal fun getHeaders(): Headers = additionalHeaders
+    override fun _headers(): Headers = additionalHeaders
 
-    internal fun getQueryParams(): QueryParams {
+    override fun _queryParams(): QueryParams {
         val queryParams = QueryParams.builder()
         this.subscriptionId?.let { queryParams.put("subscription_id", listOf(it.toString())) }
         queryParams.putAll(additionalQueryParams)

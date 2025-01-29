@@ -21,7 +21,7 @@ class MetricUpdateParamsTest {
     }
 
     @Test
-    fun getBody() {
+    fun body() {
         val params =
             MetricUpdateParams.builder()
                 .metricId("metric_id")
@@ -31,7 +31,7 @@ class MetricUpdateParamsTest {
                         .build()
                 )
                 .build()
-        val body = params.getBody()
+        val body = params._body()
         assertThat(body).isNotNull
         assertThat(body.metadata())
             .isEqualTo(
@@ -42,9 +42,9 @@ class MetricUpdateParamsTest {
     }
 
     @Test
-    fun getBodyWithoutOptionalFields() {
+    fun bodyWithoutOptionalFields() {
         val params = MetricUpdateParams.builder().metricId("metric_id").build()
-        val body = params.getBody()
+        val body = params._body()
         assertThat(body).isNotNull
     }
 

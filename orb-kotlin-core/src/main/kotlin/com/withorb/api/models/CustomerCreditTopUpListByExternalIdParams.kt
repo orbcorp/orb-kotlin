@@ -3,6 +3,7 @@
 package com.withorb.api.models
 
 import com.withorb.api.core.NoAutoDetect
+import com.withorb.api.core.Params
 import com.withorb.api.core.checkRequired
 import com.withorb.api.core.http.Headers
 import com.withorb.api.core.http.QueryParams
@@ -16,7 +17,7 @@ private constructor(
     private val limit: Long?,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
-) {
+) : Params {
 
     fun externalCustomerId(): String = externalCustomerId
 
@@ -33,9 +34,9 @@ private constructor(
 
     fun _additionalQueryParams(): QueryParams = additionalQueryParams
 
-    internal fun getHeaders(): Headers = additionalHeaders
+    override fun _headers(): Headers = additionalHeaders
 
-    internal fun getQueryParams(): QueryParams {
+    override fun _queryParams(): QueryParams {
         val queryParams = QueryParams.builder()
         this.cursor?.let { queryParams.put("cursor", listOf(it.toString())) }
         this.limit?.let { queryParams.put("limit", listOf(it.toString())) }

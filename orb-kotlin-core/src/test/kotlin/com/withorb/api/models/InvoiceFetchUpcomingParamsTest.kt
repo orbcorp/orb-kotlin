@@ -14,18 +14,18 @@ class InvoiceFetchUpcomingParamsTest {
     }
 
     @Test
-    fun getQueryParams() {
+    fun queryParams() {
         val params = InvoiceFetchUpcomingParams.builder().subscriptionId("subscription_id").build()
         val expected = QueryParams.builder()
         expected.put("subscription_id", "subscription_id")
-        assertThat(params.getQueryParams()).isEqualTo(expected.build())
+        assertThat(params._queryParams()).isEqualTo(expected.build())
     }
 
     @Test
-    fun getQueryParamsWithoutOptionalFields() {
+    fun queryParamsWithoutOptionalFields() {
         val params = InvoiceFetchUpcomingParams.builder().subscriptionId("subscription_id").build()
         val expected = QueryParams.builder()
         expected.put("subscription_id", "subscription_id")
-        assertThat(params.getQueryParams()).isEqualTo(expected.build())
+        assertThat(params._queryParams()).isEqualTo(expected.build())
     }
 }

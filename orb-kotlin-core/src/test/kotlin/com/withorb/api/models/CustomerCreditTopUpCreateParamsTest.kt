@@ -29,7 +29,7 @@ class CustomerCreditTopUpCreateParamsTest {
     }
 
     @Test
-    fun getBody() {
+    fun body() {
         val params =
             CustomerCreditTopUpCreateParams.builder()
                 .customerId("customer_id")
@@ -48,7 +48,7 @@ class CustomerCreditTopUpCreateParamsTest {
                 .expiresAfter(0L)
                 .expiresAfterUnit(CustomerCreditTopUpCreateParams.ExpiresAfterUnit.DAY)
                 .build()
-        val body = params.getBody()
+        val body = params._body()
         assertThat(body).isNotNull
         assertThat(body.amount()).isEqualTo("amount")
         assertThat(body.currency()).isEqualTo("currency")
@@ -69,7 +69,7 @@ class CustomerCreditTopUpCreateParamsTest {
     }
 
     @Test
-    fun getBodyWithoutOptionalFields() {
+    fun bodyWithoutOptionalFields() {
         val params =
             CustomerCreditTopUpCreateParams.builder()
                 .customerId("customer_id")
@@ -84,7 +84,7 @@ class CustomerCreditTopUpCreateParamsTest {
                 .perUnitCostBasis("per_unit_cost_basis")
                 .threshold("threshold")
                 .build()
-        val body = params.getBody()
+        val body = params._body()
         assertThat(body).isNotNull
         assertThat(body.amount()).isEqualTo("amount")
         assertThat(body.currency()).isEqualTo("currency")

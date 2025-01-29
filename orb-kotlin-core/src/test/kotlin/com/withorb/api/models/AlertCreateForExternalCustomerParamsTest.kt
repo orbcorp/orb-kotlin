@@ -20,7 +20,7 @@ class AlertCreateForExternalCustomerParamsTest {
     }
 
     @Test
-    fun getBody() {
+    fun body() {
         val params =
             AlertCreateForExternalCustomerParams.builder()
                 .externalCustomerId("external_customer_id")
@@ -30,7 +30,7 @@ class AlertCreateForExternalCustomerParamsTest {
                     AlertCreateForExternalCustomerParams.Threshold.builder().value(0.0).build()
                 )
                 .build()
-        val body = params.getBody()
+        val body = params._body()
         assertThat(body).isNotNull
         assertThat(body.currency()).isEqualTo("currency")
         assertThat(body.type()).isEqualTo(AlertCreateForExternalCustomerParams.Type.USAGE_EXCEEDED)
@@ -41,14 +41,14 @@ class AlertCreateForExternalCustomerParamsTest {
     }
 
     @Test
-    fun getBodyWithoutOptionalFields() {
+    fun bodyWithoutOptionalFields() {
         val params =
             AlertCreateForExternalCustomerParams.builder()
                 .externalCustomerId("external_customer_id")
                 .currency("currency")
                 .type(AlertCreateForExternalCustomerParams.Type.USAGE_EXCEEDED)
                 .build()
-        val body = params.getBody()
+        val body = params._body()
         assertThat(body).isNotNull
         assertThat(body.currency()).isEqualTo("currency")
         assertThat(body.type()).isEqualTo(AlertCreateForExternalCustomerParams.Type.USAGE_EXCEEDED)

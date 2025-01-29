@@ -11,6 +11,7 @@ import com.withorb.api.core.http.HttpMethod
 import com.withorb.api.core.http.HttpRequest
 import com.withorb.api.core.http.HttpResponse.Handler
 import com.withorb.api.core.json
+import com.withorb.api.core.prepareAsync
 import com.withorb.api.errors.OrbError
 import com.withorb.api.models.BillableMetric
 import com.withorb.api.models.MetricCreateParams
@@ -42,12 +43,9 @@ internal constructor(
             HttpRequest.builder()
                 .method(HttpMethod.POST)
                 .addPathSegments("metrics")
-                .putAllQueryParams(clientOptions.queryParams)
-                .replaceAllQueryParams(params.getQueryParams())
-                .putAllHeaders(clientOptions.headers)
-                .replaceAllHeaders(params.getHeaders())
-                .body(json(clientOptions.jsonMapper, params.getBody()))
+                .body(json(clientOptions.jsonMapper, params._body()))
                 .build()
+                .prepareAsync(clientOptions, params)
         return clientOptions.httpClient.executeAsync(request, requestOptions).let { response ->
             response
                 .use { createHandler.handle(it) }
@@ -74,12 +72,9 @@ internal constructor(
             HttpRequest.builder()
                 .method(HttpMethod.PUT)
                 .addPathSegments("metrics", params.getPathParam(0))
-                .putAllQueryParams(clientOptions.queryParams)
-                .replaceAllQueryParams(params.getQueryParams())
-                .putAllHeaders(clientOptions.headers)
-                .replaceAllHeaders(params.getHeaders())
-                .body(json(clientOptions.jsonMapper, params.getBody()))
+                .body(json(clientOptions.jsonMapper, params._body()))
                 .build()
+                .prepareAsync(clientOptions, params)
         return clientOptions.httpClient.executeAsync(request, requestOptions).let { response ->
             response
                 .use { updateHandler.handle(it) }
@@ -108,11 +103,8 @@ internal constructor(
             HttpRequest.builder()
                 .method(HttpMethod.GET)
                 .addPathSegments("metrics")
-                .putAllQueryParams(clientOptions.queryParams)
-                .replaceAllQueryParams(params.getQueryParams())
-                .putAllHeaders(clientOptions.headers)
-                .replaceAllHeaders(params.getHeaders())
                 .build()
+                .prepareAsync(clientOptions, params)
         return clientOptions.httpClient.executeAsync(request, requestOptions).let { response ->
             response
                 .use { listHandler.handle(it) }
@@ -140,11 +132,8 @@ internal constructor(
             HttpRequest.builder()
                 .method(HttpMethod.GET)
                 .addPathSegments("metrics", params.getPathParam(0))
-                .putAllQueryParams(clientOptions.queryParams)
-                .replaceAllQueryParams(params.getQueryParams())
-                .putAllHeaders(clientOptions.headers)
-                .replaceAllHeaders(params.getHeaders())
                 .build()
+                .prepareAsync(clientOptions, params)
         return clientOptions.httpClient.executeAsync(request, requestOptions).let { response ->
             response
                 .use { fetchHandler.handle(it) }

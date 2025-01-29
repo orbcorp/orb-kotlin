@@ -27,7 +27,7 @@ class SubscriptionFetchUsageParamsTest {
     }
 
     @Test
-    fun getQueryParams() {
+    fun queryParams() {
         val params =
             SubscriptionFetchUsageParams.builder()
                 .subscriptionId("subscription_id")
@@ -53,15 +53,15 @@ class SubscriptionFetchUsageParamsTest {
         expected.put("timeframe_end", "2022-03-01T05:00:00Z")
         expected.put("timeframe_start", "2022-02-01T05:00:00Z")
         expected.put("view_mode", SubscriptionFetchUsageParams.ViewMode.PERIODIC.toString())
-        assertThat(params.getQueryParams()).isEqualTo(expected.build())
+        assertThat(params._queryParams()).isEqualTo(expected.build())
     }
 
     @Test
-    fun getQueryParamsWithoutOptionalFields() {
+    fun queryParamsWithoutOptionalFields() {
         val params =
             SubscriptionFetchUsageParams.builder().subscriptionId("subscription_id").build()
         val expected = QueryParams.builder()
-        assertThat(params.getQueryParams()).isEqualTo(expected.build())
+        assertThat(params._queryParams()).isEqualTo(expected.build())
     }
 
     @Test
