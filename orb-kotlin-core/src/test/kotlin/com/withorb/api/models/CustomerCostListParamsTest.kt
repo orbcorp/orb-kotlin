@@ -21,7 +21,7 @@ class CustomerCostListParamsTest {
     }
 
     @Test
-    fun getQueryParams() {
+    fun queryParams() {
         val params =
             CustomerCostListParams.builder()
                 .customerId("customer_id")
@@ -35,14 +35,14 @@ class CustomerCostListParamsTest {
         expected.put("timeframe_end", "2022-03-01T05:00:00Z")
         expected.put("timeframe_start", "2022-02-01T05:00:00Z")
         expected.put("view_mode", CustomerCostListParams.ViewMode.PERIODIC.toString())
-        assertThat(params.getQueryParams()).isEqualTo(expected.build())
+        assertThat(params._queryParams()).isEqualTo(expected.build())
     }
 
     @Test
-    fun getQueryParamsWithoutOptionalFields() {
+    fun queryParamsWithoutOptionalFields() {
         val params = CustomerCostListParams.builder().customerId("customer_id").build()
         val expected = QueryParams.builder()
-        assertThat(params.getQueryParams()).isEqualTo(expected.build())
+        assertThat(params._queryParams()).isEqualTo(expected.build())
     }
 
     @Test

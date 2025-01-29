@@ -27,7 +27,7 @@ class CustomerCreditLedgerListByExternalIdParamsTest {
     }
 
     @Test
-    fun getQueryParams() {
+    fun queryParams() {
         val params =
             CustomerCreditLedgerListByExternalIdParams.builder()
                 .externalCustomerId("external_customer_id")
@@ -59,17 +59,17 @@ class CustomerCreditLedgerListByExternalIdParamsTest {
         )
         expected.put("limit", "1")
         expected.put("minimum_amount", "minimum_amount")
-        assertThat(params.getQueryParams()).isEqualTo(expected.build())
+        assertThat(params._queryParams()).isEqualTo(expected.build())
     }
 
     @Test
-    fun getQueryParamsWithoutOptionalFields() {
+    fun queryParamsWithoutOptionalFields() {
         val params =
             CustomerCreditLedgerListByExternalIdParams.builder()
                 .externalCustomerId("external_customer_id")
                 .build()
         val expected = QueryParams.builder()
-        assertThat(params.getQueryParams()).isEqualTo(expected.build())
+        assertThat(params._queryParams()).isEqualTo(expected.build())
     }
 
     @Test

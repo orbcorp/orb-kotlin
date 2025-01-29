@@ -24,7 +24,7 @@ class MetricCreateParamsTest {
     }
 
     @Test
-    fun getBody() {
+    fun body() {
         val params =
             MetricCreateParams.builder()
                 .description("Sum of bytes downloaded in fast mode")
@@ -37,7 +37,7 @@ class MetricCreateParamsTest {
                         .build()
                 )
                 .build()
-        val body = params.getBody()
+        val body = params._body()
         assertThat(body).isNotNull
         assertThat(body.description()).isEqualTo("Sum of bytes downloaded in fast mode")
         assertThat(body.itemId()).isEqualTo("item_id")
@@ -53,7 +53,7 @@ class MetricCreateParamsTest {
     }
 
     @Test
-    fun getBodyWithoutOptionalFields() {
+    fun bodyWithoutOptionalFields() {
         val params =
             MetricCreateParams.builder()
                 .description("Sum of bytes downloaded in fast mode")
@@ -61,7 +61,7 @@ class MetricCreateParamsTest {
                 .name("Bytes downloaded")
                 .sql("SELECT sum(bytes_downloaded) FROM events WHERE download_speed = 'fast'")
                 .build()
-        val body = params.getBody()
+        val body = params._body()
         assertThat(body).isNotNull
         assertThat(body.description()).isEqualTo("Sum of bytes downloaded in fast mode")
         assertThat(body.itemId()).isEqualTo("item_id")

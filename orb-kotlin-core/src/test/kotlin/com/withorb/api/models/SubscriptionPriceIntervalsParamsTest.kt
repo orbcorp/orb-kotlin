@@ -164,7 +164,7 @@ class SubscriptionPriceIntervalsParamsTest {
     }
 
     @Test
-    fun getBody() {
+    fun body() {
         val params =
             SubscriptionPriceIntervalsParams.builder()
                 .subscriptionId("subscription_id")
@@ -320,7 +320,7 @@ class SubscriptionPriceIntervalsParamsTest {
                         .build()
                 )
                 .build()
-        val body = params.getBody()
+        val body = params._body()
         assertThat(body).isNotNull
         assertThat(body.add())
             .isEqualTo(
@@ -488,10 +488,10 @@ class SubscriptionPriceIntervalsParamsTest {
     }
 
     @Test
-    fun getBodyWithoutOptionalFields() {
+    fun bodyWithoutOptionalFields() {
         val params =
             SubscriptionPriceIntervalsParams.builder().subscriptionId("subscription_id").build()
-        val body = params.getBody()
+        val body = params._body()
         assertThat(body).isNotNull
     }
 

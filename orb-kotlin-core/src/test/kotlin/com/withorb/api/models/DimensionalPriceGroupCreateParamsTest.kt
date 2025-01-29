@@ -25,7 +25,7 @@ class DimensionalPriceGroupCreateParamsTest {
     }
 
     @Test
-    fun getBody() {
+    fun body() {
         val params =
             DimensionalPriceGroupCreateParams.builder()
                 .billableMetricId("billable_metric_id")
@@ -39,7 +39,7 @@ class DimensionalPriceGroupCreateParamsTest {
                         .build()
                 )
                 .build()
-        val body = params.getBody()
+        val body = params._body()
         assertThat(body).isNotNull
         assertThat(body.billableMetricId()).isEqualTo("billable_metric_id")
         assertThat(body.dimensions()).isEqualTo(listOf("region", "instance_type"))
@@ -55,7 +55,7 @@ class DimensionalPriceGroupCreateParamsTest {
     }
 
     @Test
-    fun getBodyWithoutOptionalFields() {
+    fun bodyWithoutOptionalFields() {
         val params =
             DimensionalPriceGroupCreateParams.builder()
                 .billableMetricId("billable_metric_id")
@@ -63,7 +63,7 @@ class DimensionalPriceGroupCreateParamsTest {
                 .addDimension("instance_type")
                 .name("name")
                 .build()
-        val body = params.getBody()
+        val body = params._body()
         assertThat(body).isNotNull
         assertThat(body.billableMetricId()).isEqualTo("billable_metric_id")
         assertThat(body.dimensions()).isEqualTo(listOf("region", "instance_type"))

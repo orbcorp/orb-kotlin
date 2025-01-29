@@ -17,22 +17,22 @@ class SubscriptionTriggerPhaseParamsTest {
     }
 
     @Test
-    fun getBody() {
+    fun body() {
         val params =
             SubscriptionTriggerPhaseParams.builder()
                 .subscriptionId("subscription_id")
                 .effectiveDate(LocalDate.parse("2019-12-27"))
                 .build()
-        val body = params.getBody()
+        val body = params._body()
         assertThat(body).isNotNull
         assertThat(body.effectiveDate()).isEqualTo(LocalDate.parse("2019-12-27"))
     }
 
     @Test
-    fun getBodyWithoutOptionalFields() {
+    fun bodyWithoutOptionalFields() {
         val params =
             SubscriptionTriggerPhaseParams.builder().subscriptionId("subscription_id").build()
-        val body = params.getBody()
+        val body = params._body()
         assertThat(body).isNotNull
     }
 

@@ -21,7 +21,7 @@ class InvoiceLineItemCreateParamsTest {
     }
 
     @Test
-    fun getBody() {
+    fun body() {
         val params =
             InvoiceLineItemCreateParams.builder()
                 .amount("12.00")
@@ -31,7 +31,7 @@ class InvoiceLineItemCreateParamsTest {
                 .quantity(1.0)
                 .startDate(LocalDate.parse("2023-09-22"))
                 .build()
-        val body = params.getBody()
+        val body = params._body()
         assertThat(body).isNotNull
         assertThat(body.amount()).isEqualTo("12.00")
         assertThat(body.endDate()).isEqualTo(LocalDate.parse("2023-09-22"))
@@ -42,7 +42,7 @@ class InvoiceLineItemCreateParamsTest {
     }
 
     @Test
-    fun getBodyWithoutOptionalFields() {
+    fun bodyWithoutOptionalFields() {
         val params =
             InvoiceLineItemCreateParams.builder()
                 .amount("12.00")
@@ -52,7 +52,7 @@ class InvoiceLineItemCreateParamsTest {
                 .quantity(1.0)
                 .startDate(LocalDate.parse("2023-09-22"))
                 .build()
-        val body = params.getBody()
+        val body = params._body()
         assertThat(body).isNotNull
         assertThat(body.amount()).isEqualTo("12.00")
         assertThat(body.endDate()).isEqualTo(LocalDate.parse("2023-09-22"))

@@ -72,7 +72,7 @@ class PlanCreateParamsTest {
     }
 
     @Test
-    fun getBody() {
+    fun body() {
         val params =
             PlanCreateParams.builder()
                 .currency("currency")
@@ -136,7 +136,7 @@ class PlanCreateParamsTest {
                 .netTerms(0L)
                 .status(PlanCreateParams.Status.ACTIVE)
                 .build()
-        val body = params.getBody()
+        val body = params._body()
         assertThat(body).isNotNull
         assertThat(body.currency()).isEqualTo("currency")
         assertThat(body.name()).isEqualTo("name")
@@ -207,7 +207,7 @@ class PlanCreateParamsTest {
     }
 
     @Test
-    fun getBodyWithoutOptionalFields() {
+    fun bodyWithoutOptionalFields() {
         val params =
             PlanCreateParams.builder()
                 .currency("currency")
@@ -226,7 +226,7 @@ class PlanCreateParamsTest {
                         .build()
                 )
                 .build()
-        val body = params.getBody()
+        val body = params._body()
         assertThat(body).isNotNull
         assertThat(body.currency()).isEqualTo("currency")
         assertThat(body.name()).isEqualTo("name")

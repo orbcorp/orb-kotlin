@@ -21,7 +21,7 @@ class CustomerCostListByExternalIdParamsTest {
     }
 
     @Test
-    fun getQueryParams() {
+    fun queryParams() {
         val params =
             CustomerCostListByExternalIdParams.builder()
                 .externalCustomerId("external_customer_id")
@@ -35,17 +35,17 @@ class CustomerCostListByExternalIdParamsTest {
         expected.put("timeframe_end", "2022-03-01T05:00:00Z")
         expected.put("timeframe_start", "2022-02-01T05:00:00Z")
         expected.put("view_mode", CustomerCostListByExternalIdParams.ViewMode.PERIODIC.toString())
-        assertThat(params.getQueryParams()).isEqualTo(expected.build())
+        assertThat(params._queryParams()).isEqualTo(expected.build())
     }
 
     @Test
-    fun getQueryParamsWithoutOptionalFields() {
+    fun queryParamsWithoutOptionalFields() {
         val params =
             CustomerCostListByExternalIdParams.builder()
                 .externalCustomerId("external_customer_id")
                 .build()
         val expected = QueryParams.builder()
-        assertThat(params.getQueryParams()).isEqualTo(expected.build())
+        assertThat(params._queryParams()).isEqualTo(expected.build())
     }
 
     @Test
