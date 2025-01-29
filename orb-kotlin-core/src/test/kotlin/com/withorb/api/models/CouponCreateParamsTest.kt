@@ -10,17 +10,7 @@ class CouponCreateParamsTest {
     @Test
     fun createCouponCreateParams() {
         CouponCreateParams.builder()
-            .discount(
-                CouponCreateParams.Discount.ofNewCouponPercentage(
-                    CouponCreateParams.Discount.NewCouponPercentageDiscount.builder()
-                        .discountType(
-                            CouponCreateParams.Discount.NewCouponPercentageDiscount.DiscountType
-                                .PERCENTAGE
-                        )
-                        .percentageDiscount(0.0)
-                        .build()
-                )
-            )
+            .newCouponPercentageDiscount(0.0)
             .redemptionCode("HALFOFF")
             .durationInMonths(12L)
             .maxRedemptions(1L)
@@ -31,17 +21,7 @@ class CouponCreateParamsTest {
     fun body() {
         val params =
             CouponCreateParams.builder()
-                .discount(
-                    CouponCreateParams.Discount.ofNewCouponPercentage(
-                        CouponCreateParams.Discount.NewCouponPercentageDiscount.builder()
-                            .discountType(
-                                CouponCreateParams.Discount.NewCouponPercentageDiscount.DiscountType
-                                    .PERCENTAGE
-                            )
-                            .percentageDiscount(0.0)
-                            .build()
-                    )
-                )
+                .newCouponPercentageDiscount(0.0)
                 .redemptionCode("HALFOFF")
                 .durationInMonths(12L)
                 .maxRedemptions(1L)
@@ -69,17 +49,7 @@ class CouponCreateParamsTest {
     fun bodyWithoutOptionalFields() {
         val params =
             CouponCreateParams.builder()
-                .discount(
-                    CouponCreateParams.Discount.ofNewCouponPercentage(
-                        CouponCreateParams.Discount.NewCouponPercentageDiscount.builder()
-                            .discountType(
-                                CouponCreateParams.Discount.NewCouponPercentageDiscount.DiscountType
-                                    .PERCENTAGE
-                            )
-                            .percentageDiscount(0.0)
-                            .build()
-                    )
-                )
+                .newCouponPercentageDiscount(0.0)
                 .redemptionCode("HALFOFF")
                 .build()
         val body = params._body()

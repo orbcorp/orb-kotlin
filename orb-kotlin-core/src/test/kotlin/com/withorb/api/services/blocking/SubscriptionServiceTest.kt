@@ -494,22 +494,7 @@ class SubscriptionServiceTest {
                                     .expiresAtEndOfCadence(true)
                                     .build()
                             )
-                            .addDiscount(
-                                SubscriptionPriceIntervalsParams.Add.Discount
-                                    .ofAmountDiscountCreationParams(
-                                        SubscriptionPriceIntervalsParams.Add.Discount
-                                            .AmountDiscountCreationParams
-                                            .builder()
-                                            .amountDiscount(0.0)
-                                            .discountType(
-                                                SubscriptionPriceIntervalsParams.Add.Discount
-                                                    .AmountDiscountCreationParams
-                                                    .DiscountType
-                                                    .AMOUNT
-                                            )
-                                            .build()
-                                    )
-                            )
+                            .addAmountDiscountCreationParamsDiscount(0.0)
                             .endDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                             .externalPriceId("external_price_id")
                             .addFixedFeeQuantityTransition(
