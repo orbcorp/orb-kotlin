@@ -25,18 +25,7 @@ class CouponServiceTest {
         val coupon =
             couponService.create(
                 CouponCreateParams.builder()
-                    .discount(
-                        CouponCreateParams.Discount.ofNewCouponPercentage(
-                            CouponCreateParams.Discount.NewCouponPercentageDiscount.builder()
-                                .discountType(
-                                    CouponCreateParams.Discount.NewCouponPercentageDiscount
-                                        .DiscountType
-                                        .PERCENTAGE
-                                )
-                                .percentageDiscount(0.0)
-                                .build()
-                        )
-                    )
+                    .newCouponPercentageDiscount(0.0)
                     .redemptionCode("HALFOFF")
                     .durationInMonths(12L)
                     .maxRedemptions(1L)
