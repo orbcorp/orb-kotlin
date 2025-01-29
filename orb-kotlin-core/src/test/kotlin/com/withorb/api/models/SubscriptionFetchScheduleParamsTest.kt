@@ -23,7 +23,7 @@ class SubscriptionFetchScheduleParamsTest {
     }
 
     @Test
-    fun getQueryParams() {
+    fun queryParams() {
         val params =
             SubscriptionFetchScheduleParams.builder()
                 .subscriptionId("subscription_id")
@@ -41,15 +41,15 @@ class SubscriptionFetchScheduleParamsTest {
         expected.put("start_date[gte]", "2019-12-27T18:11:19.117Z")
         expected.put("start_date[lt]", "2019-12-27T18:11:19.117Z")
         expected.put("start_date[lte]", "2019-12-27T18:11:19.117Z")
-        assertThat(params.getQueryParams()).isEqualTo(expected.build())
+        assertThat(params._queryParams()).isEqualTo(expected.build())
     }
 
     @Test
-    fun getQueryParamsWithoutOptionalFields() {
+    fun queryParamsWithoutOptionalFields() {
         val params =
             SubscriptionFetchScheduleParams.builder().subscriptionId("subscription_id").build()
         val expected = QueryParams.builder()
-        assertThat(params.getQueryParams()).isEqualTo(expected.build())
+        assertThat(params._queryParams()).isEqualTo(expected.build())
     }
 
     @Test

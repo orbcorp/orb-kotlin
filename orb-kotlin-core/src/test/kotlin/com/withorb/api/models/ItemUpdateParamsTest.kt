@@ -24,7 +24,7 @@ class ItemUpdateParamsTest {
     }
 
     @Test
-    fun getBody() {
+    fun body() {
         val params =
             ItemUpdateParams.builder()
                 .itemId("item_id")
@@ -38,7 +38,7 @@ class ItemUpdateParamsTest {
                 )
                 .name("name")
                 .build()
-        val body = params.getBody()
+        val body = params._body()
         assertThat(body).isNotNull
         assertThat(body.externalConnections())
             .isEqualTo(
@@ -55,9 +55,9 @@ class ItemUpdateParamsTest {
     }
 
     @Test
-    fun getBodyWithoutOptionalFields() {
+    fun bodyWithoutOptionalFields() {
         val params = ItemUpdateParams.builder().itemId("item_id").build()
-        val body = params.getBody()
+        val body = params._body()
         assertThat(body).isNotNull
     }
 

@@ -25,7 +25,7 @@ class AlertListParamsTest {
     }
 
     @Test
-    fun getQueryParams() {
+    fun queryParams() {
         val params =
             AlertListParams.builder()
                 .createdAtGt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
@@ -48,13 +48,13 @@ class AlertListParamsTest {
         expected.put("external_customer_id", "external_customer_id")
         expected.put("limit", "1")
         expected.put("subscription_id", "subscription_id")
-        assertThat(params.getQueryParams()).isEqualTo(expected.build())
+        assertThat(params._queryParams()).isEqualTo(expected.build())
     }
 
     @Test
-    fun getQueryParamsWithoutOptionalFields() {
+    fun queryParamsWithoutOptionalFields() {
         val params = AlertListParams.builder().build()
         val expected = QueryParams.builder()
-        assertThat(params.getQueryParams()).isEqualTo(expected.build())
+        assertThat(params._queryParams()).isEqualTo(expected.build())
     }
 }

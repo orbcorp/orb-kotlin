@@ -18,14 +18,14 @@ class SubscriptionUpdateTrialParamsTest {
     }
 
     @Test
-    fun getBody() {
+    fun body() {
         val params =
             SubscriptionUpdateTrialParams.builder()
                 .subscriptionId("subscription_id")
                 .trialEndDate(OffsetDateTime.parse("2017-07-21T17:32:28Z"))
                 .shift(true)
                 .build()
-        val body = params.getBody()
+        val body = params._body()
         assertThat(body).isNotNull
         assertThat(body.trialEndDate())
             .isEqualTo(
@@ -37,13 +37,13 @@ class SubscriptionUpdateTrialParamsTest {
     }
 
     @Test
-    fun getBodyWithoutOptionalFields() {
+    fun bodyWithoutOptionalFields() {
         val params =
             SubscriptionUpdateTrialParams.builder()
                 .subscriptionId("subscription_id")
                 .trialEndDate(OffsetDateTime.parse("2017-07-21T17:32:28Z"))
                 .build()
-        val body = params.getBody()
+        val body = params._body()
         assertThat(body).isNotNull
         assertThat(body.trialEndDate())
             .isEqualTo(

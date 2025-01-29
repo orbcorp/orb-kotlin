@@ -21,7 +21,7 @@ class PriceUpdateParamsTest {
     }
 
     @Test
-    fun getBody() {
+    fun body() {
         val params =
             PriceUpdateParams.builder()
                 .priceId("price_id")
@@ -31,7 +31,7 @@ class PriceUpdateParamsTest {
                         .build()
                 )
                 .build()
-        val body = params.getBody()
+        val body = params._body()
         assertThat(body).isNotNull
         assertThat(body.metadata())
             .isEqualTo(
@@ -42,9 +42,9 @@ class PriceUpdateParamsTest {
     }
 
     @Test
-    fun getBodyWithoutOptionalFields() {
+    fun bodyWithoutOptionalFields() {
         val params = PriceUpdateParams.builder().priceId("price_id").build()
-        val body = params.getBody()
+        val body = params._body()
         assertThat(body).isNotNull
     }
 

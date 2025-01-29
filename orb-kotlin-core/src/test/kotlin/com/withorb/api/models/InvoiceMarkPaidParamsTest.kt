@@ -19,7 +19,7 @@ class InvoiceMarkPaidParamsTest {
     }
 
     @Test
-    fun getBody() {
+    fun body() {
         val params =
             InvoiceMarkPaidParams.builder()
                 .invoiceId("invoice_id")
@@ -27,7 +27,7 @@ class InvoiceMarkPaidParamsTest {
                 .externalId("external_payment_id_123")
                 .notes("notes")
                 .build()
-        val body = params.getBody()
+        val body = params._body()
         assertThat(body).isNotNull
         assertThat(body.paymentReceivedDate()).isEqualTo(LocalDate.parse("2023-09-22"))
         assertThat(body.externalId()).isEqualTo("external_payment_id_123")
@@ -35,13 +35,13 @@ class InvoiceMarkPaidParamsTest {
     }
 
     @Test
-    fun getBodyWithoutOptionalFields() {
+    fun bodyWithoutOptionalFields() {
         val params =
             InvoiceMarkPaidParams.builder()
                 .invoiceId("invoice_id")
                 .paymentReceivedDate(LocalDate.parse("2023-09-22"))
                 .build()
-        val body = params.getBody()
+        val body = params._body()
         assertThat(body).isNotNull
         assertThat(body.paymentReceivedDate()).isEqualTo(LocalDate.parse("2023-09-22"))
     }

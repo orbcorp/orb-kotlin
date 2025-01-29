@@ -23,7 +23,7 @@ class PlanListParamsTest {
     }
 
     @Test
-    fun getQueryParams() {
+    fun queryParams() {
         val params =
             PlanListParams.builder()
                 .createdAtGt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
@@ -42,13 +42,13 @@ class PlanListParamsTest {
         expected.put("cursor", "cursor")
         expected.put("limit", "1")
         expected.put("status", PlanListParams.Status.ACTIVE.toString())
-        assertThat(params.getQueryParams()).isEqualTo(expected.build())
+        assertThat(params._queryParams()).isEqualTo(expected.build())
     }
 
     @Test
-    fun getQueryParamsWithoutOptionalFields() {
+    fun queryParamsWithoutOptionalFields() {
         val params = PlanListParams.builder().build()
         val expected = QueryParams.builder()
-        assertThat(params.getQueryParams()).isEqualTo(expected.build())
+        assertThat(params._queryParams()).isEqualTo(expected.build())
     }
 }

@@ -18,7 +18,7 @@ class CustomerCreditTopUpListParamsTest {
     }
 
     @Test
-    fun getQueryParams() {
+    fun queryParams() {
         val params =
             CustomerCreditTopUpListParams.builder()
                 .customerId("customer_id")
@@ -28,14 +28,14 @@ class CustomerCreditTopUpListParamsTest {
         val expected = QueryParams.builder()
         expected.put("cursor", "cursor")
         expected.put("limit", "1")
-        assertThat(params.getQueryParams()).isEqualTo(expected.build())
+        assertThat(params._queryParams()).isEqualTo(expected.build())
     }
 
     @Test
-    fun getQueryParamsWithoutOptionalFields() {
+    fun queryParamsWithoutOptionalFields() {
         val params = CustomerCreditTopUpListParams.builder().customerId("customer_id").build()
         val expected = QueryParams.builder()
-        assertThat(params.getQueryParams()).isEqualTo(expected.build())
+        assertThat(params._queryParams()).isEqualTo(expected.build())
     }
 
     @Test

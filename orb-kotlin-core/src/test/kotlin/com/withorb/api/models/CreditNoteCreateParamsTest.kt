@@ -22,7 +22,7 @@ class CreditNoteCreateParamsTest {
     }
 
     @Test
-    fun getBody() {
+    fun body() {
         val params =
             CreditNoteCreateParams.builder()
                 .addLineItem(
@@ -34,7 +34,7 @@ class CreditNoteCreateParamsTest {
                 .memo("An optional memo for my credit note.")
                 .reason(CreditNoteCreateParams.Reason.DUPLICATE)
                 .build()
-        val body = params.getBody()
+        val body = params._body()
         assertThat(body).isNotNull
         assertThat(body.lineItems())
             .isEqualTo(
@@ -50,7 +50,7 @@ class CreditNoteCreateParamsTest {
     }
 
     @Test
-    fun getBodyWithoutOptionalFields() {
+    fun bodyWithoutOptionalFields() {
         val params =
             CreditNoteCreateParams.builder()
                 .addLineItem(
@@ -60,7 +60,7 @@ class CreditNoteCreateParamsTest {
                         .build()
                 )
                 .build()
-        val body = params.getBody()
+        val body = params._body()
         assertThat(body).isNotNull
         assertThat(body.lineItems())
             .isEqualTo(

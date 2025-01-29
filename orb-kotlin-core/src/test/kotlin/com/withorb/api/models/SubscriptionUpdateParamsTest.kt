@@ -25,7 +25,7 @@ class SubscriptionUpdateParamsTest {
     }
 
     @Test
-    fun getBody() {
+    fun body() {
         val params =
             SubscriptionUpdateParams.builder()
                 .subscriptionId("subscription_id")
@@ -39,7 +39,7 @@ class SubscriptionUpdateParamsTest {
                 )
                 .netTerms(0L)
                 .build()
-        val body = params.getBody()
+        val body = params._body()
         assertThat(body).isNotNull
         assertThat(body.autoCollection()).isEqualTo(true)
         assertThat(body.defaultInvoiceMemo()).isEqualTo("default_invoice_memo")
@@ -54,9 +54,9 @@ class SubscriptionUpdateParamsTest {
     }
 
     @Test
-    fun getBodyWithoutOptionalFields() {
+    fun bodyWithoutOptionalFields() {
         val params = SubscriptionUpdateParams.builder().subscriptionId("subscription_id").build()
-        val body = params.getBody()
+        val body = params._body()
         assertThat(body).isNotNull
     }
 
