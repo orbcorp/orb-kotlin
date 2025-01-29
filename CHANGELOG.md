@@ -1,5 +1,30 @@
 # Changelog
 
+## 0.1.0-alpha.14 (2025-01-29)
+
+Full Changelog: [v0.1.0-alpha.13...v0.1.0-alpha.14](https://github.com/orbcorp/orb-kotlin/compare/v0.1.0-alpha.13...v0.1.0-alpha.14)
+
+### Features
+
+* **client:** add `_queryParams` and `_headers` methods ([#182](https://github.com/orbcorp/orb-kotlin/issues/182)) ([6832bb1](https://github.com/orbcorp/orb-kotlin/commit/6832bb18308557fe3491aa395017ac64543a7e32))
+* **client:** helpers for discriminated union variants with one required prop ([#185](https://github.com/orbcorp/orb-kotlin/issues/185)) ([6456e6b](https://github.com/orbcorp/orb-kotlin/commit/6456e6b29d5601031422a7f3cfa101e8acdae5cf))
+
+
+### Bug Fixes
+
+* **client:** don't leak responses when retrying ([#187](https://github.com/orbcorp/orb-kotlin/issues/187)) ([a69f2f5](https://github.com/orbcorp/orb-kotlin/commit/a69f2f5ada77a0b35362a6a25aba1a2ed0fdc890))
+
+
+### Chores
+
+* **internal:** improve `RetryingHttpClientTest` ([#184](https://github.com/orbcorp/orb-kotlin/issues/184)) ([c4c047d](https://github.com/orbcorp/orb-kotlin/commit/c4c047d49b7ad8c18730202c968049aeb9158103))
+* **internal:** simplify object construction ([#186](https://github.com/orbcorp/orb-kotlin/issues/186)) ([654dcfd](https://github.com/orbcorp/orb-kotlin/commit/654dcfd9952192077dfe100159130e09cabc2c52))
+
+
+### Refactors
+
+* **internal:** extract request preparation logic ([6832bb1](https://github.com/orbcorp/orb-kotlin/commit/6832bb18308557fe3491aa395017ac64543a7e32))
+
 ## 0.1.0-alpha.13 (2025-01-27)
 
 Full Changelog: [v0.1.0-alpha.12...v0.1.0-alpha.13](https://github.com/orbcorp/orb-kotlin/compare/v0.1.0-alpha.12...v0.1.0-alpha.13)
