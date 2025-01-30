@@ -845,8 +845,8 @@ private constructor(
          * Prices for this plan. If the plan has phases, this includes prices across all phases of
          * the plan.
          */
-        fun addPrice(maxGroupTiered: Price.MaxGroupTieredPrice) =
-            addPrice(Price.ofMaxGroupTiered(maxGroupTiered))
+        fun addPrice(maxGroupTieredPackage: Price.MaxGroupTieredPackagePrice) =
+            addPrice(Price.ofMaxGroupTieredPackage(maxGroupTieredPackage))
 
         fun product(product: Product) = product(JsonField.of(product))
 

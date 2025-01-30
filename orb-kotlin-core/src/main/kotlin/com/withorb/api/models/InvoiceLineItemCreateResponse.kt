@@ -762,8 +762,8 @@ private constructor(
          * For more on the types of prices, see
          * [the core concepts documentation](/core-concepts#plan-and-price)
          */
-        fun price(maxGroupTiered: Price.MaxGroupTieredPrice) =
-            price(Price.ofMaxGroupTiered(maxGroupTiered))
+        fun price(maxGroupTieredPackage: Price.MaxGroupTieredPackagePrice) =
+            price(Price.ofMaxGroupTieredPackage(maxGroupTieredPackage))
 
         fun quantity(quantity: Double) = quantity(JsonField.of(quantity))
 
