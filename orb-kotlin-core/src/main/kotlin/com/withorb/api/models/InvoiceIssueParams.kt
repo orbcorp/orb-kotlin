@@ -38,7 +38,7 @@ private constructor(
 
     /**
      * If true, the invoice will be issued synchronously. If false, the invoice will be issued
-     * asynchronously. The synchronous option is only available for invoices containin no usage
+     * asynchronously. The synchronous option is only available for invoices that have no usage
      * fees. If the invoice is configured to sync to an external provider, a successful response
      * from this endpoint guarantees the invoice is present in the provider.
      */
@@ -46,7 +46,7 @@ private constructor(
 
     /**
      * If true, the invoice will be issued synchronously. If false, the invoice will be issued
-     * asynchronously. The synchronous option is only available for invoices containin no usage
+     * asynchronously. The synchronous option is only available for invoices that have no usage
      * fees. If the invoice is configured to sync to an external provider, a successful response
      * from this endpoint guarantees the invoice is present in the provider.
      */
@@ -84,7 +84,7 @@ private constructor(
 
         /**
          * If true, the invoice will be issued synchronously. If false, the invoice will be issued
-         * asynchronously. The synchronous option is only available for invoices containin no usage
+         * asynchronously. The synchronous option is only available for invoices that have no usage
          * fees. If the invoice is configured to sync to an external provider, a successful response
          * from this endpoint guarantees the invoice is present in the provider.
          */
@@ -92,7 +92,7 @@ private constructor(
 
         /**
          * If true, the invoice will be issued synchronously. If false, the invoice will be issued
-         * asynchronously. The synchronous option is only available for invoices containin no usage
+         * asynchronously. The synchronous option is only available for invoices that have no usage
          * fees. If the invoice is configured to sync to an external provider, a successful response
          * from this endpoint guarantees the invoice is present in the provider.
          */
@@ -135,19 +135,19 @@ private constructor(
 
             /**
              * If true, the invoice will be issued synchronously. If false, the invoice will be
-             * issued asynchronously. The synchronous option is only available for invoices
-             * containin no usage fees. If the invoice is configured to sync to an external
-             * provider, a successful response from this endpoint guarantees the invoice is present
-             * in the provider.
+             * issued asynchronously. The synchronous option is only available for invoices that
+             * have no usage fees. If the invoice is configured to sync to an external provider, a
+             * successful response from this endpoint guarantees the invoice is present in the
+             * provider.
              */
             fun synchronous(synchronous: Boolean) = synchronous(JsonField.of(synchronous))
 
             /**
              * If true, the invoice will be issued synchronously. If false, the invoice will be
-             * issued asynchronously. The synchronous option is only available for invoices
-             * containin no usage fees. If the invoice is configured to sync to an external
-             * provider, a successful response from this endpoint guarantees the invoice is present
-             * in the provider.
+             * issued asynchronously. The synchronous option is only available for invoices that
+             * have no usage fees. If the invoice is configured to sync to an external provider, a
+             * successful response from this endpoint guarantees the invoice is present in the
+             * provider.
              */
             fun synchronous(synchronous: JsonField<Boolean>) = apply {
                 this.synchronous = synchronous
@@ -221,7 +221,7 @@ private constructor(
 
         /**
          * If true, the invoice will be issued synchronously. If false, the invoice will be issued
-         * asynchronously. The synchronous option is only available for invoices containin no usage
+         * asynchronously. The synchronous option is only available for invoices that have no usage
          * fees. If the invoice is configured to sync to an external provider, a successful response
          * from this endpoint guarantees the invoice is present in the provider.
          */
@@ -229,7 +229,7 @@ private constructor(
 
         /**
          * If true, the invoice will be issued synchronously. If false, the invoice will be issued
-         * asynchronously. The synchronous option is only available for invoices containin no usage
+         * asynchronously. The synchronous option is only available for invoices that have no usage
          * fees. If the invoice is configured to sync to an external provider, a successful response
          * from this endpoint guarantees the invoice is present in the provider.
          */
