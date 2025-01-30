@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.1.0-alpha.16 (2025-01-30)
+
+Full Changelog: [v0.1.0-alpha.15...v0.1.0-alpha.16](https://github.com/orbcorp/orb-kotlin/compare/v0.1.0-alpha.15...v0.1.0-alpha.16)
+
+### Documentation
+
+* fix incorrect additional properties info ([#192](https://github.com/orbcorp/orb-kotlin/issues/192)) ([a72c1a0](https://github.com/orbcorp/orb-kotlin/commit/a72c1a0058cfa4404826f8cc715685d18777a926))
+
 ## 0.1.0-alpha.15 (2025-01-30)
 
 Full Changelog: [v0.1.0-alpha.14...v0.1.0-alpha.15](https://github.com/orbcorp/orb-kotlin/compare/v0.1.0-alpha.14...v0.1.0-alpha.15)
