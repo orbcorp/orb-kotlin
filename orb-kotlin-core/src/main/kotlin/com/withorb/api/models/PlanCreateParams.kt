@@ -476,8 +476,8 @@ private constructor(
              * Prices for this plan. If the plan has phases, this includes prices across all phases
              * of the plan.
              */
-            fun addPrice(newPlanMaxGroupTiered: Price.NewPlanMaxGroupTieredPrice) =
-                addPrice(Price.ofNewPlanMaxGroupTiered(newPlanMaxGroupTiered))
+            fun addPrice(newPlanMaxGroupTieredPackage: Price.NewPlanMaxGroupTieredPackagePrice) =
+                addPrice(Price.ofNewPlanMaxGroupTieredPackage(newPlanMaxGroupTieredPackage))
 
             /** Free-form text which is available on the invoice PDF and the Orb invoice portal. */
             fun defaultInvoiceMemo(defaultInvoiceMemo: String?) =
@@ -807,9 +807,10 @@ private constructor(
          * Prices for this plan. If the plan has phases, this includes prices across all phases of
          * the plan.
          */
-        fun addPrice(newPlanMaxGroupTiered: Price.NewPlanMaxGroupTieredPrice) = apply {
-            body.addPrice(newPlanMaxGroupTiered)
-        }
+        fun addPrice(newPlanMaxGroupTieredPackage: Price.NewPlanMaxGroupTieredPackagePrice) =
+            apply {
+                body.addPrice(newPlanMaxGroupTieredPackage)
+            }
 
         /** Free-form text which is available on the invoice PDF and the Orb invoice portal. */
         fun defaultInvoiceMemo(defaultInvoiceMemo: String?) = apply {
@@ -1022,7 +1023,7 @@ private constructor(
         private val newPlanMatrixWithDisplayName: NewPlanMatrixWithDisplayNamePrice? = null,
         private val newPlanBulkWithProration: NewPlanBulkWithProrationPrice? = null,
         private val newPlanGroupedTieredPackage: NewPlanGroupedTieredPackagePrice? = null,
-        private val newPlanMaxGroupTiered: NewPlanMaxGroupTieredPrice? = null,
+        private val newPlanMaxGroupTieredPackage: NewPlanMaxGroupTieredPackagePrice? = null,
         private val _json: JsonValue? = null,
     ) {
 
@@ -1074,7 +1075,8 @@ private constructor(
         fun newPlanGroupedTieredPackage(): NewPlanGroupedTieredPackagePrice? =
             newPlanGroupedTieredPackage
 
-        fun newPlanMaxGroupTiered(): NewPlanMaxGroupTieredPrice? = newPlanMaxGroupTiered
+        fun newPlanMaxGroupTieredPackage(): NewPlanMaxGroupTieredPackagePrice? =
+            newPlanMaxGroupTieredPackage
 
         fun isNewPlanUnit(): Boolean = newPlanUnit != null
 
@@ -1119,7 +1121,7 @@ private constructor(
 
         fun isNewPlanGroupedTieredPackage(): Boolean = newPlanGroupedTieredPackage != null
 
-        fun isNewPlanMaxGroupTiered(): Boolean = newPlanMaxGroupTiered != null
+        fun isNewPlanMaxGroupTieredPackage(): Boolean = newPlanMaxGroupTieredPackage != null
 
         fun asNewPlanUnit(): NewPlanUnitPrice = newPlanUnit.getOrThrow("newPlanUnit")
 
@@ -1177,8 +1179,8 @@ private constructor(
         fun asNewPlanGroupedTieredPackage(): NewPlanGroupedTieredPackagePrice =
             newPlanGroupedTieredPackage.getOrThrow("newPlanGroupedTieredPackage")
 
-        fun asNewPlanMaxGroupTiered(): NewPlanMaxGroupTieredPrice =
-            newPlanMaxGroupTiered.getOrThrow("newPlanMaxGroupTiered")
+        fun asNewPlanMaxGroupTieredPackage(): NewPlanMaxGroupTieredPackagePrice =
+            newPlanMaxGroupTieredPackage.getOrThrow("newPlanMaxGroupTieredPackage")
 
         fun _json(): JsonValue? = _json
 
@@ -1220,8 +1222,8 @@ private constructor(
                     visitor.visitNewPlanBulkWithProration(newPlanBulkWithProration)
                 newPlanGroupedTieredPackage != null ->
                     visitor.visitNewPlanGroupedTieredPackage(newPlanGroupedTieredPackage)
-                newPlanMaxGroupTiered != null ->
-                    visitor.visitNewPlanMaxGroupTiered(newPlanMaxGroupTiered)
+                newPlanMaxGroupTieredPackage != null ->
+                    visitor.visitNewPlanMaxGroupTieredPackage(newPlanMaxGroupTieredPackage)
                 else -> visitor.unknown(_json)
             }
         }
@@ -1345,10 +1347,10 @@ private constructor(
                         newPlanGroupedTieredPackage.validate()
                     }
 
-                    override fun visitNewPlanMaxGroupTiered(
-                        newPlanMaxGroupTiered: NewPlanMaxGroupTieredPrice
+                    override fun visitNewPlanMaxGroupTieredPackage(
+                        newPlanMaxGroupTieredPackage: NewPlanMaxGroupTieredPackagePrice
                     ) {
-                        newPlanMaxGroupTiered.validate()
+                        newPlanMaxGroupTieredPackage.validate()
                     }
                 }
             )
@@ -1360,10 +1362,10 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is Price && newPlanUnit == other.newPlanUnit && newPlanPackage == other.newPlanPackage && newPlanMatrix == other.newPlanMatrix && newPlanTiered == other.newPlanTiered && newPlanTieredBps == other.newPlanTieredBps && newPlanBps == other.newPlanBps && newPlanBulkBps == other.newPlanBulkBps && newPlanBulk == other.newPlanBulk && newPlanThresholdTotalAmount == other.newPlanThresholdTotalAmount && newPlanTieredPackage == other.newPlanTieredPackage && newPlanTieredWithMinimum == other.newPlanTieredWithMinimum && newPlanUnitWithPercent == other.newPlanUnitWithPercent && newPlanPackageWithAllocation == other.newPlanPackageWithAllocation && newPlanTierWithProration == other.newPlanTierWithProration && newPlanUnitWithProration == other.newPlanUnitWithProration && newPlanGroupedAllocation == other.newPlanGroupedAllocation && newPlanGroupedWithProratedMinimum == other.newPlanGroupedWithProratedMinimum && newPlanGroupedWithMeteredMinimum == other.newPlanGroupedWithMeteredMinimum && newPlanMatrixWithDisplayName == other.newPlanMatrixWithDisplayName && newPlanBulkWithProration == other.newPlanBulkWithProration && newPlanGroupedTieredPackage == other.newPlanGroupedTieredPackage && newPlanMaxGroupTiered == other.newPlanMaxGroupTiered /* spotless:on */
+            return /* spotless:off */ other is Price && newPlanUnit == other.newPlanUnit && newPlanPackage == other.newPlanPackage && newPlanMatrix == other.newPlanMatrix && newPlanTiered == other.newPlanTiered && newPlanTieredBps == other.newPlanTieredBps && newPlanBps == other.newPlanBps && newPlanBulkBps == other.newPlanBulkBps && newPlanBulk == other.newPlanBulk && newPlanThresholdTotalAmount == other.newPlanThresholdTotalAmount && newPlanTieredPackage == other.newPlanTieredPackage && newPlanTieredWithMinimum == other.newPlanTieredWithMinimum && newPlanUnitWithPercent == other.newPlanUnitWithPercent && newPlanPackageWithAllocation == other.newPlanPackageWithAllocation && newPlanTierWithProration == other.newPlanTierWithProration && newPlanUnitWithProration == other.newPlanUnitWithProration && newPlanGroupedAllocation == other.newPlanGroupedAllocation && newPlanGroupedWithProratedMinimum == other.newPlanGroupedWithProratedMinimum && newPlanGroupedWithMeteredMinimum == other.newPlanGroupedWithMeteredMinimum && newPlanMatrixWithDisplayName == other.newPlanMatrixWithDisplayName && newPlanBulkWithProration == other.newPlanBulkWithProration && newPlanGroupedTieredPackage == other.newPlanGroupedTieredPackage && newPlanMaxGroupTieredPackage == other.newPlanMaxGroupTieredPackage /* spotless:on */
         }
 
-        override fun hashCode(): Int = /* spotless:off */ Objects.hash(newPlanUnit, newPlanPackage, newPlanMatrix, newPlanTiered, newPlanTieredBps, newPlanBps, newPlanBulkBps, newPlanBulk, newPlanThresholdTotalAmount, newPlanTieredPackage, newPlanTieredWithMinimum, newPlanUnitWithPercent, newPlanPackageWithAllocation, newPlanTierWithProration, newPlanUnitWithProration, newPlanGroupedAllocation, newPlanGroupedWithProratedMinimum, newPlanGroupedWithMeteredMinimum, newPlanMatrixWithDisplayName, newPlanBulkWithProration, newPlanGroupedTieredPackage, newPlanMaxGroupTiered) /* spotless:on */
+        override fun hashCode(): Int = /* spotless:off */ Objects.hash(newPlanUnit, newPlanPackage, newPlanMatrix, newPlanTiered, newPlanTieredBps, newPlanBps, newPlanBulkBps, newPlanBulk, newPlanThresholdTotalAmount, newPlanTieredPackage, newPlanTieredWithMinimum, newPlanUnitWithPercent, newPlanPackageWithAllocation, newPlanTierWithProration, newPlanUnitWithProration, newPlanGroupedAllocation, newPlanGroupedWithProratedMinimum, newPlanGroupedWithMeteredMinimum, newPlanMatrixWithDisplayName, newPlanBulkWithProration, newPlanGroupedTieredPackage, newPlanMaxGroupTieredPackage) /* spotless:on */
 
         override fun toString(): String =
             when {
@@ -1400,8 +1402,8 @@ private constructor(
                     "Price{newPlanBulkWithProration=$newPlanBulkWithProration}"
                 newPlanGroupedTieredPackage != null ->
                     "Price{newPlanGroupedTieredPackage=$newPlanGroupedTieredPackage}"
-                newPlanMaxGroupTiered != null ->
-                    "Price{newPlanMaxGroupTiered=$newPlanMaxGroupTiered}"
+                newPlanMaxGroupTieredPackage != null ->
+                    "Price{newPlanMaxGroupTieredPackage=$newPlanMaxGroupTieredPackage}"
                 _json != null -> "Price{_unknown=$_json}"
                 else -> throw IllegalStateException("Invalid Price")
             }
@@ -1479,8 +1481,9 @@ private constructor(
                 newPlanGroupedTieredPackage: NewPlanGroupedTieredPackagePrice
             ) = Price(newPlanGroupedTieredPackage = newPlanGroupedTieredPackage)
 
-            fun ofNewPlanMaxGroupTiered(newPlanMaxGroupTiered: NewPlanMaxGroupTieredPrice) =
-                Price(newPlanMaxGroupTiered = newPlanMaxGroupTiered)
+            fun ofNewPlanMaxGroupTieredPackage(
+                newPlanMaxGroupTieredPackage: NewPlanMaxGroupTieredPackagePrice
+            ) = Price(newPlanMaxGroupTieredPackage = newPlanMaxGroupTieredPackage)
         }
 
         /** An interface that defines how to map each variant of [Price] to a value of type [T]. */
@@ -1550,7 +1553,9 @@ private constructor(
                 newPlanGroupedTieredPackage: NewPlanGroupedTieredPackagePrice
             ): T
 
-            fun visitNewPlanMaxGroupTiered(newPlanMaxGroupTiered: NewPlanMaxGroupTieredPrice): T
+            fun visitNewPlanMaxGroupTieredPackage(
+                newPlanMaxGroupTieredPackage: NewPlanMaxGroupTieredPackagePrice
+            ): T
 
             /**
              * Maps an unknown variant of [Price] to a value of type [T].
@@ -1738,12 +1743,12 @@ private constructor(
                                 return Price(newPlanGroupedTieredPackage = it, _json = json)
                             }
                     }
-                    "max_group_tiered" -> {
-                        tryDeserialize(node, jacksonTypeRef<NewPlanMaxGroupTieredPrice>()) {
+                    "max_group_tiered_package" -> {
+                        tryDeserialize(node, jacksonTypeRef<NewPlanMaxGroupTieredPackagePrice>()) {
                                 it.validate()
                             }
                             ?.let {
-                                return Price(newPlanMaxGroupTiered = it, _json = json)
+                                return Price(newPlanMaxGroupTieredPackage = it, _json = json)
                             }
                     }
                 }
@@ -1794,8 +1799,8 @@ private constructor(
                         generator.writeObject(value.newPlanBulkWithProration)
                     value.newPlanGroupedTieredPackage != null ->
                         generator.writeObject(value.newPlanGroupedTieredPackage)
-                    value.newPlanMaxGroupTiered != null ->
-                        generator.writeObject(value.newPlanMaxGroupTiered)
+                    value.newPlanMaxGroupTieredPackage != null ->
+                        generator.writeObject(value.newPlanMaxGroupTieredPackage)
                     value._json != null -> generator.writeObject(value._json)
                     else -> throw IllegalStateException("Invalid Price")
                 }
@@ -31862,7 +31867,7 @@ private constructor(
         }
 
         @NoAutoDetect
-        class NewPlanMaxGroupTieredPrice
+        class NewPlanMaxGroupTieredPackagePrice
         @JsonCreator
         private constructor(
             @JsonProperty("cadence")
@@ -31871,9 +31876,10 @@ private constructor(
             @JsonProperty("item_id")
             @ExcludeMissing
             private val itemId: JsonField<String> = JsonMissing.of(),
-            @JsonProperty("max_group_tiered_config")
+            @JsonProperty("max_group_tiered_package_config")
             @ExcludeMissing
-            private val maxGroupTieredConfig: JsonField<MaxGroupTieredConfig> = JsonMissing.of(),
+            private val maxGroupTieredPackageConfig: JsonField<MaxGroupTieredPackageConfig> =
+                JsonMissing.of(),
             @JsonProperty("model_type")
             @ExcludeMissing
             private val modelType: JsonField<ModelType> = JsonMissing.of(),
@@ -31922,8 +31928,8 @@ private constructor(
             /** The id of the item the plan will be associated with. */
             fun itemId(): String = itemId.getRequired("item_id")
 
-            fun maxGroupTieredConfig(): MaxGroupTieredConfig =
-                maxGroupTieredConfig.getRequired("max_group_tiered_config")
+            fun maxGroupTieredPackageConfig(): MaxGroupTieredPackageConfig =
+                maxGroupTieredPackageConfig.getRequired("max_group_tiered_package_config")
 
             fun modelType(): ModelType = modelType.getRequired("model_type")
 
@@ -31989,9 +31995,10 @@ private constructor(
             /** The id of the item the plan will be associated with. */
             @JsonProperty("item_id") @ExcludeMissing fun _itemId(): JsonField<String> = itemId
 
-            @JsonProperty("max_group_tiered_config")
+            @JsonProperty("max_group_tiered_package_config")
             @ExcludeMissing
-            fun _maxGroupTieredConfig(): JsonField<MaxGroupTieredConfig> = maxGroupTieredConfig
+            fun _maxGroupTieredPackageConfig(): JsonField<MaxGroupTieredPackageConfig> =
+                maxGroupTieredPackageConfig
 
             @JsonProperty("model_type")
             @ExcludeMissing
@@ -32075,14 +32082,14 @@ private constructor(
 
             private var validated: Boolean = false
 
-            fun validate(): NewPlanMaxGroupTieredPrice = apply {
+            fun validate(): NewPlanMaxGroupTieredPackagePrice = apply {
                 if (validated) {
                     return@apply
                 }
 
                 cadence()
                 itemId()
-                maxGroupTieredConfig().validate()
+                maxGroupTieredPackageConfig().validate()
                 modelType()
                 name()
                 billableMetricId()
@@ -32105,12 +32112,13 @@ private constructor(
                 fun builder() = Builder()
             }
 
-            /** A builder for [NewPlanMaxGroupTieredPrice]. */
+            /** A builder for [NewPlanMaxGroupTieredPackagePrice]. */
             class Builder internal constructor() {
 
                 private var cadence: JsonField<Cadence>? = null
                 private var itemId: JsonField<String>? = null
-                private var maxGroupTieredConfig: JsonField<MaxGroupTieredConfig>? = null
+                private var maxGroupTieredPackageConfig: JsonField<MaxGroupTieredPackageConfig>? =
+                    null
                 private var modelType: JsonField<ModelType>? = null
                 private var name: JsonField<String>? = null
                 private var billableMetricId: JsonField<String> = JsonMissing.of()
@@ -32127,25 +32135,29 @@ private constructor(
                 private var metadata: JsonField<Metadata> = JsonMissing.of()
                 private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
-                internal fun from(newPlanMaxGroupTieredPrice: NewPlanMaxGroupTieredPrice) = apply {
-                    cadence = newPlanMaxGroupTieredPrice.cadence
-                    itemId = newPlanMaxGroupTieredPrice.itemId
-                    maxGroupTieredConfig = newPlanMaxGroupTieredPrice.maxGroupTieredConfig
-                    modelType = newPlanMaxGroupTieredPrice.modelType
-                    name = newPlanMaxGroupTieredPrice.name
-                    billableMetricId = newPlanMaxGroupTieredPrice.billableMetricId
-                    billedInAdvance = newPlanMaxGroupTieredPrice.billedInAdvance
-                    billingCycleConfiguration = newPlanMaxGroupTieredPrice.billingCycleConfiguration
-                    conversionRate = newPlanMaxGroupTieredPrice.conversionRate
-                    currency = newPlanMaxGroupTieredPrice.currency
-                    externalPriceId = newPlanMaxGroupTieredPrice.externalPriceId
-                    fixedPriceQuantity = newPlanMaxGroupTieredPrice.fixedPriceQuantity
-                    invoiceGroupingKey = newPlanMaxGroupTieredPrice.invoiceGroupingKey
+                internal fun from(
+                    newPlanMaxGroupTieredPackagePrice: NewPlanMaxGroupTieredPackagePrice
+                ) = apply {
+                    cadence = newPlanMaxGroupTieredPackagePrice.cadence
+                    itemId = newPlanMaxGroupTieredPackagePrice.itemId
+                    maxGroupTieredPackageConfig =
+                        newPlanMaxGroupTieredPackagePrice.maxGroupTieredPackageConfig
+                    modelType = newPlanMaxGroupTieredPackagePrice.modelType
+                    name = newPlanMaxGroupTieredPackagePrice.name
+                    billableMetricId = newPlanMaxGroupTieredPackagePrice.billableMetricId
+                    billedInAdvance = newPlanMaxGroupTieredPackagePrice.billedInAdvance
+                    billingCycleConfiguration =
+                        newPlanMaxGroupTieredPackagePrice.billingCycleConfiguration
+                    conversionRate = newPlanMaxGroupTieredPackagePrice.conversionRate
+                    currency = newPlanMaxGroupTieredPackagePrice.currency
+                    externalPriceId = newPlanMaxGroupTieredPackagePrice.externalPriceId
+                    fixedPriceQuantity = newPlanMaxGroupTieredPackagePrice.fixedPriceQuantity
+                    invoiceGroupingKey = newPlanMaxGroupTieredPackagePrice.invoiceGroupingKey
                     invoicingCycleConfiguration =
-                        newPlanMaxGroupTieredPrice.invoicingCycleConfiguration
-                    metadata = newPlanMaxGroupTieredPrice.metadata
+                        newPlanMaxGroupTieredPackagePrice.invoicingCycleConfiguration
+                    metadata = newPlanMaxGroupTieredPackagePrice.metadata
                     additionalProperties =
-                        newPlanMaxGroupTieredPrice.additionalProperties.toMutableMap()
+                        newPlanMaxGroupTieredPackagePrice.additionalProperties.toMutableMap()
                 }
 
                 /** The cadence to bill for this price on. */
@@ -32160,13 +32172,13 @@ private constructor(
                 /** The id of the item the plan will be associated with. */
                 fun itemId(itemId: JsonField<String>) = apply { this.itemId = itemId }
 
-                fun maxGroupTieredConfig(maxGroupTieredConfig: MaxGroupTieredConfig) =
-                    maxGroupTieredConfig(JsonField.of(maxGroupTieredConfig))
+                fun maxGroupTieredPackageConfig(
+                    maxGroupTieredPackageConfig: MaxGroupTieredPackageConfig
+                ) = maxGroupTieredPackageConfig(JsonField.of(maxGroupTieredPackageConfig))
 
-                fun maxGroupTieredConfig(maxGroupTieredConfig: JsonField<MaxGroupTieredConfig>) =
-                    apply {
-                        this.maxGroupTieredConfig = maxGroupTieredConfig
-                    }
+                fun maxGroupTieredPackageConfig(
+                    maxGroupTieredPackageConfig: JsonField<MaxGroupTieredPackageConfig>
+                ) = apply { this.maxGroupTieredPackageConfig = maxGroupTieredPackageConfig }
 
                 fun modelType(modelType: ModelType) = modelType(JsonField.of(modelType))
 
@@ -32350,11 +32362,11 @@ private constructor(
                     keys.forEach(::removeAdditionalProperty)
                 }
 
-                fun build(): NewPlanMaxGroupTieredPrice =
-                    NewPlanMaxGroupTieredPrice(
+                fun build(): NewPlanMaxGroupTieredPackagePrice =
+                    NewPlanMaxGroupTieredPackagePrice(
                         checkRequired("cadence", cadence),
                         checkRequired("itemId", itemId),
-                        checkRequired("maxGroupTieredConfig", maxGroupTieredConfig),
+                        checkRequired("maxGroupTieredPackageConfig", maxGroupTieredPackageConfig),
                         checkRequired("modelType", modelType),
                         checkRequired("name", name),
                         billableMetricId,
@@ -32492,7 +32504,7 @@ private constructor(
             }
 
             @NoAutoDetect
-            class MaxGroupTieredConfig
+            class MaxGroupTieredPackageConfig
             @JsonCreator
             private constructor(
                 @JsonAnySetter
@@ -32505,7 +32517,7 @@ private constructor(
 
                 private var validated: Boolean = false
 
-                fun validate(): MaxGroupTieredConfig = apply {
+                fun validate(): MaxGroupTieredPackageConfig = apply {
                     if (validated) {
                         return@apply
                     }
@@ -32520,15 +32532,16 @@ private constructor(
                     fun builder() = Builder()
                 }
 
-                /** A builder for [MaxGroupTieredConfig]. */
+                /** A builder for [MaxGroupTieredPackageConfig]. */
                 class Builder internal constructor() {
 
                     private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
-                    internal fun from(maxGroupTieredConfig: MaxGroupTieredConfig) = apply {
-                        additionalProperties =
-                            maxGroupTieredConfig.additionalProperties.toMutableMap()
-                    }
+                    internal fun from(maxGroupTieredPackageConfig: MaxGroupTieredPackageConfig) =
+                        apply {
+                            additionalProperties =
+                                maxGroupTieredPackageConfig.additionalProperties.toMutableMap()
+                        }
 
                     fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                         this.additionalProperties.clear()
@@ -32552,8 +32565,8 @@ private constructor(
                         keys.forEach(::removeAdditionalProperty)
                     }
 
-                    fun build(): MaxGroupTieredConfig =
-                        MaxGroupTieredConfig(additionalProperties.toImmutable())
+                    fun build(): MaxGroupTieredPackageConfig =
+                        MaxGroupTieredPackageConfig(additionalProperties.toImmutable())
                 }
 
                 override fun equals(other: Any?): Boolean {
@@ -32561,7 +32574,7 @@ private constructor(
                         return true
                     }
 
-                    return /* spotless:off */ other is MaxGroupTieredConfig && additionalProperties == other.additionalProperties /* spotless:on */
+                    return /* spotless:off */ other is MaxGroupTieredPackageConfig && additionalProperties == other.additionalProperties /* spotless:on */
                 }
 
                 /* spotless:off */
@@ -32571,7 +32584,7 @@ private constructor(
                 override fun hashCode(): Int = hashCode
 
                 override fun toString() =
-                    "MaxGroupTieredConfig{additionalProperties=$additionalProperties}"
+                    "MaxGroupTieredPackageConfig{additionalProperties=$additionalProperties}"
             }
 
             class ModelType
@@ -32592,14 +32605,14 @@ private constructor(
 
                 companion object {
 
-                    val MAX_GROUP_TIERED = of("max_group_tiered")
+                    val MAX_GROUP_TIERED_PACKAGE = of("max_group_tiered_package")
 
                     fun of(value: String) = ModelType(JsonField.of(value))
                 }
 
                 /** An enum containing [ModelType]'s known values. */
                 enum class Known {
-                    MAX_GROUP_TIERED,
+                    MAX_GROUP_TIERED_PACKAGE,
                 }
 
                 /**
@@ -32612,7 +32625,7 @@ private constructor(
                  * - It was constructed with an arbitrary value using the [of] method.
                  */
                 enum class Value {
-                    MAX_GROUP_TIERED,
+                    MAX_GROUP_TIERED_PACKAGE,
                     /**
                      * An enum member indicating that [ModelType] was instantiated with an unknown
                      * value.
@@ -32629,7 +32642,7 @@ private constructor(
                  */
                 fun value(): Value =
                     when (this) {
-                        MAX_GROUP_TIERED -> Value.MAX_GROUP_TIERED
+                        MAX_GROUP_TIERED_PACKAGE -> Value.MAX_GROUP_TIERED_PACKAGE
                         else -> Value._UNKNOWN
                     }
 
@@ -32644,7 +32657,7 @@ private constructor(
                  */
                 fun known(): Known =
                     when (this) {
-                        MAX_GROUP_TIERED -> Known.MAX_GROUP_TIERED
+                        MAX_GROUP_TIERED_PACKAGE -> Known.MAX_GROUP_TIERED_PACKAGE
                         else -> throw OrbInvalidDataException("Unknown ModelType: $value")
                     }
 
@@ -33220,17 +33233,17 @@ private constructor(
                     return true
                 }
 
-                return /* spotless:off */ other is NewPlanMaxGroupTieredPrice && cadence == other.cadence && itemId == other.itemId && maxGroupTieredConfig == other.maxGroupTieredConfig && modelType == other.modelType && name == other.name && billableMetricId == other.billableMetricId && billedInAdvance == other.billedInAdvance && billingCycleConfiguration == other.billingCycleConfiguration && conversionRate == other.conversionRate && currency == other.currency && externalPriceId == other.externalPriceId && fixedPriceQuantity == other.fixedPriceQuantity && invoiceGroupingKey == other.invoiceGroupingKey && invoicingCycleConfiguration == other.invoicingCycleConfiguration && metadata == other.metadata && additionalProperties == other.additionalProperties /* spotless:on */
+                return /* spotless:off */ other is NewPlanMaxGroupTieredPackagePrice && cadence == other.cadence && itemId == other.itemId && maxGroupTieredPackageConfig == other.maxGroupTieredPackageConfig && modelType == other.modelType && name == other.name && billableMetricId == other.billableMetricId && billedInAdvance == other.billedInAdvance && billingCycleConfiguration == other.billingCycleConfiguration && conversionRate == other.conversionRate && currency == other.currency && externalPriceId == other.externalPriceId && fixedPriceQuantity == other.fixedPriceQuantity && invoiceGroupingKey == other.invoiceGroupingKey && invoicingCycleConfiguration == other.invoicingCycleConfiguration && metadata == other.metadata && additionalProperties == other.additionalProperties /* spotless:on */
             }
 
             /* spotless:off */
-            private val hashCode: Int by lazy { Objects.hash(cadence, itemId, maxGroupTieredConfig, modelType, name, billableMetricId, billedInAdvance, billingCycleConfiguration, conversionRate, currency, externalPriceId, fixedPriceQuantity, invoiceGroupingKey, invoicingCycleConfiguration, metadata, additionalProperties) }
+            private val hashCode: Int by lazy { Objects.hash(cadence, itemId, maxGroupTieredPackageConfig, modelType, name, billableMetricId, billedInAdvance, billingCycleConfiguration, conversionRate, currency, externalPriceId, fixedPriceQuantity, invoiceGroupingKey, invoicingCycleConfiguration, metadata, additionalProperties) }
             /* spotless:on */
 
             override fun hashCode(): Int = hashCode
 
             override fun toString() =
-                "NewPlanMaxGroupTieredPrice{cadence=$cadence, itemId=$itemId, maxGroupTieredConfig=$maxGroupTieredConfig, modelType=$modelType, name=$name, billableMetricId=$billableMetricId, billedInAdvance=$billedInAdvance, billingCycleConfiguration=$billingCycleConfiguration, conversionRate=$conversionRate, currency=$currency, externalPriceId=$externalPriceId, fixedPriceQuantity=$fixedPriceQuantity, invoiceGroupingKey=$invoiceGroupingKey, invoicingCycleConfiguration=$invoicingCycleConfiguration, metadata=$metadata, additionalProperties=$additionalProperties}"
+                "NewPlanMaxGroupTieredPackagePrice{cadence=$cadence, itemId=$itemId, maxGroupTieredPackageConfig=$maxGroupTieredPackageConfig, modelType=$modelType, name=$name, billableMetricId=$billableMetricId, billedInAdvance=$billedInAdvance, billingCycleConfiguration=$billingCycleConfiguration, conversionRate=$conversionRate, currency=$currency, externalPriceId=$externalPriceId, fixedPriceQuantity=$fixedPriceQuantity, invoiceGroupingKey=$invoiceGroupingKey, invoicingCycleConfiguration=$invoicingCycleConfiguration, metadata=$metadata, additionalProperties=$additionalProperties}"
         }
     }
 

@@ -1046,8 +1046,9 @@ private constructor(
                 price(Price.ofNewFloatingGroupedTiered(newFloatingGroupedTiered))
 
             /** The definition of a new price to create and add to the subscription. */
-            fun price(newFloatingMaxGroupTiered: Price.NewFloatingMaxGroupTieredPrice) =
-                price(Price.ofNewFloatingMaxGroupTiered(newFloatingMaxGroupTiered))
+            fun price(
+                newFloatingMaxGroupTieredPackage: Price.NewFloatingMaxGroupTieredPackagePrice
+            ) = price(Price.ofNewFloatingMaxGroupTieredPackage(newFloatingMaxGroupTieredPackage))
 
             /** The definition of a new price to create and add to the subscription. */
             fun price(newFloatingTieredWithMinimum: Price.NewFloatingTieredWithMinimumPrice) =
@@ -2812,7 +2813,8 @@ private constructor(
                 null,
             private val newFloatingTieredPackage: NewFloatingTieredPackagePrice? = null,
             private val newFloatingGroupedTiered: NewFloatingGroupedTieredPrice? = null,
-            private val newFloatingMaxGroupTiered: NewFloatingMaxGroupTieredPrice? = null,
+            private val newFloatingMaxGroupTieredPackage: NewFloatingMaxGroupTieredPackagePrice? =
+                null,
             private val newFloatingTieredWithMinimum: NewFloatingTieredWithMinimumPrice? = null,
             private val newFloatingPackageWithAllocation: NewFloatingPackageWithAllocationPrice? =
                 null,
@@ -2865,8 +2867,8 @@ private constructor(
             fun newFloatingGroupedTiered(): NewFloatingGroupedTieredPrice? =
                 newFloatingGroupedTiered
 
-            fun newFloatingMaxGroupTiered(): NewFloatingMaxGroupTieredPrice? =
-                newFloatingMaxGroupTiered
+            fun newFloatingMaxGroupTieredPackage(): NewFloatingMaxGroupTieredPackagePrice? =
+                newFloatingMaxGroupTieredPackage
 
             fun newFloatingTieredWithMinimum(): NewFloatingTieredWithMinimumPrice? =
                 newFloatingTieredWithMinimum
@@ -2930,7 +2932,8 @@ private constructor(
 
             fun isNewFloatingGroupedTiered(): Boolean = newFloatingGroupedTiered != null
 
-            fun isNewFloatingMaxGroupTiered(): Boolean = newFloatingMaxGroupTiered != null
+            fun isNewFloatingMaxGroupTieredPackage(): Boolean =
+                newFloatingMaxGroupTieredPackage != null
 
             fun isNewFloatingTieredWithMinimum(): Boolean = newFloatingTieredWithMinimum != null
 
@@ -2998,8 +3001,8 @@ private constructor(
             fun asNewFloatingGroupedTiered(): NewFloatingGroupedTieredPrice =
                 newFloatingGroupedTiered.getOrThrow("newFloatingGroupedTiered")
 
-            fun asNewFloatingMaxGroupTiered(): NewFloatingMaxGroupTieredPrice =
-                newFloatingMaxGroupTiered.getOrThrow("newFloatingMaxGroupTiered")
+            fun asNewFloatingMaxGroupTieredPackage(): NewFloatingMaxGroupTieredPackagePrice =
+                newFloatingMaxGroupTieredPackage.getOrThrow("newFloatingMaxGroupTieredPackage")
 
             fun asNewFloatingTieredWithMinimum(): NewFloatingTieredWithMinimumPrice =
                 newFloatingTieredWithMinimum.getOrThrow("newFloatingTieredWithMinimum")
@@ -3072,8 +3075,10 @@ private constructor(
                         visitor.visitNewFloatingTieredPackage(newFloatingTieredPackage)
                     newFloatingGroupedTiered != null ->
                         visitor.visitNewFloatingGroupedTiered(newFloatingGroupedTiered)
-                    newFloatingMaxGroupTiered != null ->
-                        visitor.visitNewFloatingMaxGroupTiered(newFloatingMaxGroupTiered)
+                    newFloatingMaxGroupTieredPackage != null ->
+                        visitor.visitNewFloatingMaxGroupTieredPackage(
+                            newFloatingMaxGroupTieredPackage
+                        )
                     newFloatingTieredWithMinimum != null ->
                         visitor.visitNewFloatingTieredWithMinimum(newFloatingTieredWithMinimum)
                     newFloatingPackageWithAllocation != null ->
@@ -3189,10 +3194,10 @@ private constructor(
                             newFloatingGroupedTiered.validate()
                         }
 
-                        override fun visitNewFloatingMaxGroupTiered(
-                            newFloatingMaxGroupTiered: NewFloatingMaxGroupTieredPrice
+                        override fun visitNewFloatingMaxGroupTieredPackage(
+                            newFloatingMaxGroupTieredPackage: NewFloatingMaxGroupTieredPackagePrice
                         ) {
-                            newFloatingMaxGroupTiered.validate()
+                            newFloatingMaxGroupTieredPackage.validate()
                         }
 
                         override fun visitNewFloatingTieredWithMinimum(
@@ -3279,10 +3284,10 @@ private constructor(
                     return true
                 }
 
-                return /* spotless:off */ other is Price && newFloatingUnit == other.newFloatingUnit && newFloatingPackage == other.newFloatingPackage && newFloatingMatrix == other.newFloatingMatrix && newFloatingMatrixWithAllocation == other.newFloatingMatrixWithAllocation && newFloatingTiered == other.newFloatingTiered && newFloatingTieredBps == other.newFloatingTieredBps && newFloatingBps == other.newFloatingBps && newFloatingBulkBps == other.newFloatingBulkBps && newFloatingBulk == other.newFloatingBulk && newFloatingThresholdTotalAmount == other.newFloatingThresholdTotalAmount && newFloatingTieredPackage == other.newFloatingTieredPackage && newFloatingGroupedTiered == other.newFloatingGroupedTiered && newFloatingMaxGroupTiered == other.newFloatingMaxGroupTiered && newFloatingTieredWithMinimum == other.newFloatingTieredWithMinimum && newFloatingPackageWithAllocation == other.newFloatingPackageWithAllocation && newFloatingTieredPackageWithMinimum == other.newFloatingTieredPackageWithMinimum && newFloatingUnitWithPercent == other.newFloatingUnitWithPercent && newFloatingTieredWithProration == other.newFloatingTieredWithProration && newFloatingUnitWithProration == other.newFloatingUnitWithProration && newFloatingGroupedAllocation == other.newFloatingGroupedAllocation && newFloatingGroupedWithProratedMinimum == other.newFloatingGroupedWithProratedMinimum && newFloatingGroupedWithMeteredMinimum == other.newFloatingGroupedWithMeteredMinimum && newFloatingMatrixWithDisplayName == other.newFloatingMatrixWithDisplayName && newFloatingBulkWithProration == other.newFloatingBulkWithProration && newFloatingGroupedTieredPackage == other.newFloatingGroupedTieredPackage /* spotless:on */
+                return /* spotless:off */ other is Price && newFloatingUnit == other.newFloatingUnit && newFloatingPackage == other.newFloatingPackage && newFloatingMatrix == other.newFloatingMatrix && newFloatingMatrixWithAllocation == other.newFloatingMatrixWithAllocation && newFloatingTiered == other.newFloatingTiered && newFloatingTieredBps == other.newFloatingTieredBps && newFloatingBps == other.newFloatingBps && newFloatingBulkBps == other.newFloatingBulkBps && newFloatingBulk == other.newFloatingBulk && newFloatingThresholdTotalAmount == other.newFloatingThresholdTotalAmount && newFloatingTieredPackage == other.newFloatingTieredPackage && newFloatingGroupedTiered == other.newFloatingGroupedTiered && newFloatingMaxGroupTieredPackage == other.newFloatingMaxGroupTieredPackage && newFloatingTieredWithMinimum == other.newFloatingTieredWithMinimum && newFloatingPackageWithAllocation == other.newFloatingPackageWithAllocation && newFloatingTieredPackageWithMinimum == other.newFloatingTieredPackageWithMinimum && newFloatingUnitWithPercent == other.newFloatingUnitWithPercent && newFloatingTieredWithProration == other.newFloatingTieredWithProration && newFloatingUnitWithProration == other.newFloatingUnitWithProration && newFloatingGroupedAllocation == other.newFloatingGroupedAllocation && newFloatingGroupedWithProratedMinimum == other.newFloatingGroupedWithProratedMinimum && newFloatingGroupedWithMeteredMinimum == other.newFloatingGroupedWithMeteredMinimum && newFloatingMatrixWithDisplayName == other.newFloatingMatrixWithDisplayName && newFloatingBulkWithProration == other.newFloatingBulkWithProration && newFloatingGroupedTieredPackage == other.newFloatingGroupedTieredPackage /* spotless:on */
             }
 
-            override fun hashCode(): Int = /* spotless:off */ Objects.hash(newFloatingUnit, newFloatingPackage, newFloatingMatrix, newFloatingMatrixWithAllocation, newFloatingTiered, newFloatingTieredBps, newFloatingBps, newFloatingBulkBps, newFloatingBulk, newFloatingThresholdTotalAmount, newFloatingTieredPackage, newFloatingGroupedTiered, newFloatingMaxGroupTiered, newFloatingTieredWithMinimum, newFloatingPackageWithAllocation, newFloatingTieredPackageWithMinimum, newFloatingUnitWithPercent, newFloatingTieredWithProration, newFloatingUnitWithProration, newFloatingGroupedAllocation, newFloatingGroupedWithProratedMinimum, newFloatingGroupedWithMeteredMinimum, newFloatingMatrixWithDisplayName, newFloatingBulkWithProration, newFloatingGroupedTieredPackage) /* spotless:on */
+            override fun hashCode(): Int = /* spotless:off */ Objects.hash(newFloatingUnit, newFloatingPackage, newFloatingMatrix, newFloatingMatrixWithAllocation, newFloatingTiered, newFloatingTieredBps, newFloatingBps, newFloatingBulkBps, newFloatingBulk, newFloatingThresholdTotalAmount, newFloatingTieredPackage, newFloatingGroupedTiered, newFloatingMaxGroupTieredPackage, newFloatingTieredWithMinimum, newFloatingPackageWithAllocation, newFloatingTieredPackageWithMinimum, newFloatingUnitWithPercent, newFloatingTieredWithProration, newFloatingUnitWithProration, newFloatingGroupedAllocation, newFloatingGroupedWithProratedMinimum, newFloatingGroupedWithMeteredMinimum, newFloatingMatrixWithDisplayName, newFloatingBulkWithProration, newFloatingGroupedTieredPackage) /* spotless:on */
 
             override fun toString(): String =
                 when {
@@ -3303,8 +3308,8 @@ private constructor(
                         "Price{newFloatingTieredPackage=$newFloatingTieredPackage}"
                     newFloatingGroupedTiered != null ->
                         "Price{newFloatingGroupedTiered=$newFloatingGroupedTiered}"
-                    newFloatingMaxGroupTiered != null ->
-                        "Price{newFloatingMaxGroupTiered=$newFloatingMaxGroupTiered}"
+                    newFloatingMaxGroupTieredPackage != null ->
+                        "Price{newFloatingMaxGroupTieredPackage=$newFloatingMaxGroupTieredPackage}"
                     newFloatingTieredWithMinimum != null ->
                         "Price{newFloatingTieredWithMinimum=$newFloatingTieredWithMinimum}"
                     newFloatingPackageWithAllocation != null ->
@@ -3375,9 +3380,9 @@ private constructor(
                     newFloatingGroupedTiered: NewFloatingGroupedTieredPrice
                 ) = Price(newFloatingGroupedTiered = newFloatingGroupedTiered)
 
-                fun ofNewFloatingMaxGroupTiered(
-                    newFloatingMaxGroupTiered: NewFloatingMaxGroupTieredPrice
-                ) = Price(newFloatingMaxGroupTiered = newFloatingMaxGroupTiered)
+                fun ofNewFloatingMaxGroupTieredPackage(
+                    newFloatingMaxGroupTieredPackage: NewFloatingMaxGroupTieredPackagePrice
+                ) = Price(newFloatingMaxGroupTieredPackage = newFloatingMaxGroupTieredPackage)
 
                 fun ofNewFloatingTieredWithMinimum(
                     newFloatingTieredWithMinimum: NewFloatingTieredWithMinimumPrice
@@ -3473,8 +3478,8 @@ private constructor(
                     newFloatingGroupedTiered: NewFloatingGroupedTieredPrice
                 ): T
 
-                fun visitNewFloatingMaxGroupTiered(
-                    newFloatingMaxGroupTiered: NewFloatingMaxGroupTieredPrice
+                fun visitNewFloatingMaxGroupTieredPackage(
+                    newFloatingMaxGroupTieredPackage: NewFloatingMaxGroupTieredPackagePrice
                 ): T
 
                 fun visitNewFloatingTieredWithMinimum(
@@ -3650,12 +3655,18 @@ private constructor(
                                     return Price(newFloatingGroupedTiered = it, _json = json)
                                 }
                         }
-                        "max_group_tiered" -> {
-                            tryDeserialize(node, jacksonTypeRef<NewFloatingMaxGroupTieredPrice>()) {
+                        "max_group_tiered_package" -> {
+                            tryDeserialize(
+                                    node,
+                                    jacksonTypeRef<NewFloatingMaxGroupTieredPackagePrice>()
+                                ) {
                                     it.validate()
                                 }
                                 ?.let {
-                                    return Price(newFloatingMaxGroupTiered = it, _json = json)
+                                    return Price(
+                                        newFloatingMaxGroupTieredPackage = it,
+                                        _json = json
+                                    )
                                 }
                         }
                         "tiered_with_minimum" -> {
@@ -3842,8 +3853,8 @@ private constructor(
                             generator.writeObject(value.newFloatingTieredPackage)
                         value.newFloatingGroupedTiered != null ->
                             generator.writeObject(value.newFloatingGroupedTiered)
-                        value.newFloatingMaxGroupTiered != null ->
-                            generator.writeObject(value.newFloatingMaxGroupTiered)
+                        value.newFloatingMaxGroupTieredPackage != null ->
+                            generator.writeObject(value.newFloatingMaxGroupTieredPackage)
                         value.newFloatingTieredWithMinimum != null ->
                             generator.writeObject(value.newFloatingTieredWithMinimum)
                         value.newFloatingPackageWithAllocation != null ->
@@ -22123,7 +22134,7 @@ private constructor(
             }
 
             @NoAutoDetect
-            class NewFloatingMaxGroupTieredPrice
+            class NewFloatingMaxGroupTieredPackagePrice
             @JsonCreator
             private constructor(
                 @JsonProperty("cadence")
@@ -22135,9 +22146,9 @@ private constructor(
                 @JsonProperty("item_id")
                 @ExcludeMissing
                 private val itemId: JsonField<String> = JsonMissing.of(),
-                @JsonProperty("max_group_tiered_config")
+                @JsonProperty("max_group_tiered_package_config")
                 @ExcludeMissing
-                private val maxGroupTieredConfig: JsonField<MaxGroupTieredConfig> =
+                private val maxGroupTieredPackageConfig: JsonField<MaxGroupTieredPackageConfig> =
                     JsonMissing.of(),
                 @JsonProperty("model_type")
                 @ExcludeMissing
@@ -22187,8 +22198,8 @@ private constructor(
                 /** The id of the item the plan will be associated with. */
                 fun itemId(): String = itemId.getRequired("item_id")
 
-                fun maxGroupTieredConfig(): MaxGroupTieredConfig =
-                    maxGroupTieredConfig.getRequired("max_group_tiered_config")
+                fun maxGroupTieredPackageConfig(): MaxGroupTieredPackageConfig =
+                    maxGroupTieredPackageConfig.getRequired("max_group_tiered_package_config")
 
                 fun modelType(): ModelType = modelType.getRequired("model_type")
 
@@ -22258,9 +22269,10 @@ private constructor(
                 /** The id of the item the plan will be associated with. */
                 @JsonProperty("item_id") @ExcludeMissing fun _itemId(): JsonField<String> = itemId
 
-                @JsonProperty("max_group_tiered_config")
+                @JsonProperty("max_group_tiered_package_config")
                 @ExcludeMissing
-                fun _maxGroupTieredConfig(): JsonField<MaxGroupTieredConfig> = maxGroupTieredConfig
+                fun _maxGroupTieredPackageConfig(): JsonField<MaxGroupTieredPackageConfig> =
+                    maxGroupTieredPackageConfig
 
                 @JsonProperty("model_type")
                 @ExcludeMissing
@@ -22341,7 +22353,7 @@ private constructor(
 
                 private var validated: Boolean = false
 
-                fun validate(): NewFloatingMaxGroupTieredPrice = apply {
+                fun validate(): NewFloatingMaxGroupTieredPackagePrice = apply {
                     if (validated) {
                         return@apply
                     }
@@ -22349,7 +22361,7 @@ private constructor(
                     cadence()
                     currency()
                     itemId()
-                    maxGroupTieredConfig().validate()
+                    maxGroupTieredPackageConfig().validate()
                     modelType()
                     name()
                     billableMetricId()
@@ -22371,13 +22383,15 @@ private constructor(
                     fun builder() = Builder()
                 }
 
-                /** A builder for [NewFloatingMaxGroupTieredPrice]. */
+                /** A builder for [NewFloatingMaxGroupTieredPackagePrice]. */
                 class Builder internal constructor() {
 
                     private var cadence: JsonField<Cadence>? = null
                     private var currency: JsonField<String>? = null
                     private var itemId: JsonField<String>? = null
-                    private var maxGroupTieredConfig: JsonField<MaxGroupTieredConfig>? = null
+                    private var maxGroupTieredPackageConfig:
+                        JsonField<MaxGroupTieredPackageConfig>? =
+                        null
                     private var modelType: JsonField<ModelType>? = null
                     private var name: JsonField<String>? = null
                     private var billableMetricId: JsonField<String> = JsonMissing.of()
@@ -22395,27 +22409,31 @@ private constructor(
                     private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
                     internal fun from(
-                        newFloatingMaxGroupTieredPrice: NewFloatingMaxGroupTieredPrice
+                        newFloatingMaxGroupTieredPackagePrice: NewFloatingMaxGroupTieredPackagePrice
                     ) = apply {
-                        cadence = newFloatingMaxGroupTieredPrice.cadence
-                        currency = newFloatingMaxGroupTieredPrice.currency
-                        itemId = newFloatingMaxGroupTieredPrice.itemId
-                        maxGroupTieredConfig = newFloatingMaxGroupTieredPrice.maxGroupTieredConfig
-                        modelType = newFloatingMaxGroupTieredPrice.modelType
-                        name = newFloatingMaxGroupTieredPrice.name
-                        billableMetricId = newFloatingMaxGroupTieredPrice.billableMetricId
-                        billedInAdvance = newFloatingMaxGroupTieredPrice.billedInAdvance
+                        cadence = newFloatingMaxGroupTieredPackagePrice.cadence
+                        currency = newFloatingMaxGroupTieredPackagePrice.currency
+                        itemId = newFloatingMaxGroupTieredPackagePrice.itemId
+                        maxGroupTieredPackageConfig =
+                            newFloatingMaxGroupTieredPackagePrice.maxGroupTieredPackageConfig
+                        modelType = newFloatingMaxGroupTieredPackagePrice.modelType
+                        name = newFloatingMaxGroupTieredPackagePrice.name
+                        billableMetricId = newFloatingMaxGroupTieredPackagePrice.billableMetricId
+                        billedInAdvance = newFloatingMaxGroupTieredPackagePrice.billedInAdvance
                         billingCycleConfiguration =
-                            newFloatingMaxGroupTieredPrice.billingCycleConfiguration
-                        conversionRate = newFloatingMaxGroupTieredPrice.conversionRate
-                        externalPriceId = newFloatingMaxGroupTieredPrice.externalPriceId
-                        fixedPriceQuantity = newFloatingMaxGroupTieredPrice.fixedPriceQuantity
-                        invoiceGroupingKey = newFloatingMaxGroupTieredPrice.invoiceGroupingKey
+                            newFloatingMaxGroupTieredPackagePrice.billingCycleConfiguration
+                        conversionRate = newFloatingMaxGroupTieredPackagePrice.conversionRate
+                        externalPriceId = newFloatingMaxGroupTieredPackagePrice.externalPriceId
+                        fixedPriceQuantity =
+                            newFloatingMaxGroupTieredPackagePrice.fixedPriceQuantity
+                        invoiceGroupingKey =
+                            newFloatingMaxGroupTieredPackagePrice.invoiceGroupingKey
                         invoicingCycleConfiguration =
-                            newFloatingMaxGroupTieredPrice.invoicingCycleConfiguration
-                        metadata = newFloatingMaxGroupTieredPrice.metadata
+                            newFloatingMaxGroupTieredPackagePrice.invoicingCycleConfiguration
+                        metadata = newFloatingMaxGroupTieredPackagePrice.metadata
                         additionalProperties =
-                            newFloatingMaxGroupTieredPrice.additionalProperties.toMutableMap()
+                            newFloatingMaxGroupTieredPackagePrice.additionalProperties
+                                .toMutableMap()
                     }
 
                     /** The cadence to bill for this price on. */
@@ -22436,12 +22454,13 @@ private constructor(
                     /** The id of the item the plan will be associated with. */
                     fun itemId(itemId: JsonField<String>) = apply { this.itemId = itemId }
 
-                    fun maxGroupTieredConfig(maxGroupTieredConfig: MaxGroupTieredConfig) =
-                        maxGroupTieredConfig(JsonField.of(maxGroupTieredConfig))
+                    fun maxGroupTieredPackageConfig(
+                        maxGroupTieredPackageConfig: MaxGroupTieredPackageConfig
+                    ) = maxGroupTieredPackageConfig(JsonField.of(maxGroupTieredPackageConfig))
 
-                    fun maxGroupTieredConfig(
-                        maxGroupTieredConfig: JsonField<MaxGroupTieredConfig>
-                    ) = apply { this.maxGroupTieredConfig = maxGroupTieredConfig }
+                    fun maxGroupTieredPackageConfig(
+                        maxGroupTieredPackageConfig: JsonField<MaxGroupTieredPackageConfig>
+                    ) = apply { this.maxGroupTieredPackageConfig = maxGroupTieredPackageConfig }
 
                     fun modelType(modelType: ModelType) = modelType(JsonField.of(modelType))
 
@@ -22622,12 +22641,15 @@ private constructor(
                         keys.forEach(::removeAdditionalProperty)
                     }
 
-                    fun build(): NewFloatingMaxGroupTieredPrice =
-                        NewFloatingMaxGroupTieredPrice(
+                    fun build(): NewFloatingMaxGroupTieredPackagePrice =
+                        NewFloatingMaxGroupTieredPackagePrice(
                             checkRequired("cadence", cadence),
                             checkRequired("currency", currency),
                             checkRequired("itemId", itemId),
-                            checkRequired("maxGroupTieredConfig", maxGroupTieredConfig),
+                            checkRequired(
+                                "maxGroupTieredPackageConfig",
+                                maxGroupTieredPackageConfig
+                            ),
                             checkRequired("modelType", modelType),
                             checkRequired("name", name),
                             billableMetricId,
@@ -22765,7 +22787,7 @@ private constructor(
                 }
 
                 @NoAutoDetect
-                class MaxGroupTieredConfig
+                class MaxGroupTieredPackageConfig
                 @JsonCreator
                 private constructor(
                     @JsonAnySetter
@@ -22778,7 +22800,7 @@ private constructor(
 
                     private var validated: Boolean = false
 
-                    fun validate(): MaxGroupTieredConfig = apply {
+                    fun validate(): MaxGroupTieredPackageConfig = apply {
                         if (validated) {
                             return@apply
                         }
@@ -22793,15 +22815,17 @@ private constructor(
                         fun builder() = Builder()
                     }
 
-                    /** A builder for [MaxGroupTieredConfig]. */
+                    /** A builder for [MaxGroupTieredPackageConfig]. */
                     class Builder internal constructor() {
 
                         private var additionalProperties: MutableMap<String, JsonValue> =
                             mutableMapOf()
 
-                        internal fun from(maxGroupTieredConfig: MaxGroupTieredConfig) = apply {
+                        internal fun from(
+                            maxGroupTieredPackageConfig: MaxGroupTieredPackageConfig
+                        ) = apply {
                             additionalProperties =
-                                maxGroupTieredConfig.additionalProperties.toMutableMap()
+                                maxGroupTieredPackageConfig.additionalProperties.toMutableMap()
                         }
 
                         fun additionalProperties(additionalProperties: Map<String, JsonValue>) =
@@ -22826,8 +22850,8 @@ private constructor(
                             keys.forEach(::removeAdditionalProperty)
                         }
 
-                        fun build(): MaxGroupTieredConfig =
-                            MaxGroupTieredConfig(additionalProperties.toImmutable())
+                        fun build(): MaxGroupTieredPackageConfig =
+                            MaxGroupTieredPackageConfig(additionalProperties.toImmutable())
                     }
 
                     override fun equals(other: Any?): Boolean {
@@ -22835,7 +22859,7 @@ private constructor(
                             return true
                         }
 
-                        return /* spotless:off */ other is MaxGroupTieredConfig && additionalProperties == other.additionalProperties /* spotless:on */
+                        return /* spotless:off */ other is MaxGroupTieredPackageConfig && additionalProperties == other.additionalProperties /* spotless:on */
                     }
 
                     /* spotless:off */
@@ -22845,7 +22869,7 @@ private constructor(
                     override fun hashCode(): Int = hashCode
 
                     override fun toString() =
-                        "MaxGroupTieredConfig{additionalProperties=$additionalProperties}"
+                        "MaxGroupTieredPackageConfig{additionalProperties=$additionalProperties}"
                 }
 
                 class ModelType
@@ -22867,14 +22891,14 @@ private constructor(
 
                     companion object {
 
-                        val MAX_GROUP_TIERED = of("max_group_tiered")
+                        val MAX_GROUP_TIERED_PACKAGE = of("max_group_tiered_package")
 
                         fun of(value: String) = ModelType(JsonField.of(value))
                     }
 
                     /** An enum containing [ModelType]'s known values. */
                     enum class Known {
-                        MAX_GROUP_TIERED,
+                        MAX_GROUP_TIERED_PACKAGE,
                     }
 
                     /**
@@ -22888,7 +22912,7 @@ private constructor(
                      * - It was constructed with an arbitrary value using the [of] method.
                      */
                     enum class Value {
-                        MAX_GROUP_TIERED,
+                        MAX_GROUP_TIERED_PACKAGE,
                         /**
                          * An enum member indicating that [ModelType] was instantiated with an
                          * unknown value.
@@ -22905,7 +22929,7 @@ private constructor(
                      */
                     fun value(): Value =
                         when (this) {
-                            MAX_GROUP_TIERED -> Value.MAX_GROUP_TIERED
+                            MAX_GROUP_TIERED_PACKAGE -> Value.MAX_GROUP_TIERED_PACKAGE
                             else -> Value._UNKNOWN
                         }
 
@@ -22920,7 +22944,7 @@ private constructor(
                      */
                     fun known(): Known =
                         when (this) {
-                            MAX_GROUP_TIERED -> Known.MAX_GROUP_TIERED
+                            MAX_GROUP_TIERED_PACKAGE -> Known.MAX_GROUP_TIERED_PACKAGE
                             else -> throw OrbInvalidDataException("Unknown ModelType: $value")
                         }
 
@@ -23503,17 +23527,17 @@ private constructor(
                         return true
                     }
 
-                    return /* spotless:off */ other is NewFloatingMaxGroupTieredPrice && cadence == other.cadence && currency == other.currency && itemId == other.itemId && maxGroupTieredConfig == other.maxGroupTieredConfig && modelType == other.modelType && name == other.name && billableMetricId == other.billableMetricId && billedInAdvance == other.billedInAdvance && billingCycleConfiguration == other.billingCycleConfiguration && conversionRate == other.conversionRate && externalPriceId == other.externalPriceId && fixedPriceQuantity == other.fixedPriceQuantity && invoiceGroupingKey == other.invoiceGroupingKey && invoicingCycleConfiguration == other.invoicingCycleConfiguration && metadata == other.metadata && additionalProperties == other.additionalProperties /* spotless:on */
+                    return /* spotless:off */ other is NewFloatingMaxGroupTieredPackagePrice && cadence == other.cadence && currency == other.currency && itemId == other.itemId && maxGroupTieredPackageConfig == other.maxGroupTieredPackageConfig && modelType == other.modelType && name == other.name && billableMetricId == other.billableMetricId && billedInAdvance == other.billedInAdvance && billingCycleConfiguration == other.billingCycleConfiguration && conversionRate == other.conversionRate && externalPriceId == other.externalPriceId && fixedPriceQuantity == other.fixedPriceQuantity && invoiceGroupingKey == other.invoiceGroupingKey && invoicingCycleConfiguration == other.invoicingCycleConfiguration && metadata == other.metadata && additionalProperties == other.additionalProperties /* spotless:on */
                 }
 
                 /* spotless:off */
-                private val hashCode: Int by lazy { Objects.hash(cadence, currency, itemId, maxGroupTieredConfig, modelType, name, billableMetricId, billedInAdvance, billingCycleConfiguration, conversionRate, externalPriceId, fixedPriceQuantity, invoiceGroupingKey, invoicingCycleConfiguration, metadata, additionalProperties) }
+                private val hashCode: Int by lazy { Objects.hash(cadence, currency, itemId, maxGroupTieredPackageConfig, modelType, name, billableMetricId, billedInAdvance, billingCycleConfiguration, conversionRate, externalPriceId, fixedPriceQuantity, invoiceGroupingKey, invoicingCycleConfiguration, metadata, additionalProperties) }
                 /* spotless:on */
 
                 override fun hashCode(): Int = hashCode
 
                 override fun toString() =
-                    "NewFloatingMaxGroupTieredPrice{cadence=$cadence, currency=$currency, itemId=$itemId, maxGroupTieredConfig=$maxGroupTieredConfig, modelType=$modelType, name=$name, billableMetricId=$billableMetricId, billedInAdvance=$billedInAdvance, billingCycleConfiguration=$billingCycleConfiguration, conversionRate=$conversionRate, externalPriceId=$externalPriceId, fixedPriceQuantity=$fixedPriceQuantity, invoiceGroupingKey=$invoiceGroupingKey, invoicingCycleConfiguration=$invoicingCycleConfiguration, metadata=$metadata, additionalProperties=$additionalProperties}"
+                    "NewFloatingMaxGroupTieredPackagePrice{cadence=$cadence, currency=$currency, itemId=$itemId, maxGroupTieredPackageConfig=$maxGroupTieredPackageConfig, modelType=$modelType, name=$name, billableMetricId=$billableMetricId, billedInAdvance=$billedInAdvance, billingCycleConfiguration=$billingCycleConfiguration, conversionRate=$conversionRate, externalPriceId=$externalPriceId, fixedPriceQuantity=$fixedPriceQuantity, invoiceGroupingKey=$invoiceGroupingKey, invoicingCycleConfiguration=$invoicingCycleConfiguration, metadata=$metadata, additionalProperties=$additionalProperties}"
             }
 
             @NoAutoDetect
