@@ -1,5 +1,19 @@
 # Changelog
 
+## 0.1.0-alpha.16 (2025-02-04)
+
+Full Changelog: [v0.1.0-alpha.15...v0.1.0-alpha.16](https://github.com/orbcorp/orb-kotlin/compare/v0.1.0-alpha.15...v0.1.0-alpha.16)
+
+### Features
+
+* **api:** api update ([#195](https://github.com/orbcorp/orb-kotlin/issues/195)) ([a37c06c](https://github.com/orbcorp/orb-kotlin/commit/a37c06cd81b9789c3f340c345314e9d4263c1bf2))
+* **client:** send client-side timeout headers ([#194](https://github.com/orbcorp/orb-kotlin/issues/194)) ([8505280](https://github.com/orbcorp/orb-kotlin/commit/8505280ddc6f97bc437231987c807a56b01045f4))
+
+
+### Documentation
+
+* fix incorrect additional properties info ([#192](https://github.com/orbcorp/orb-kotlin/issues/192)) ([a72c1a0](https://github.com/orbcorp/orb-kotlin/commit/a72c1a0058cfa4404826f8cc715685d18777a926))
+
 ## 0.1.0-alpha.15 (2025-01-30)
 
 Full Changelog: [v0.1.0-alpha.14...v0.1.0-alpha.15](https://github.com/orbcorp/orb-kotlin/compare/v0.1.0-alpha.14...v0.1.0-alpha.15)
