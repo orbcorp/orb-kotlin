@@ -479,6 +479,34 @@ private constructor(
             fun addPrice(newPlanMaxGroupTieredPackage: Price.NewPlanMaxGroupTieredPackagePrice) =
                 addPrice(Price.ofNewPlanMaxGroupTieredPackage(newPlanMaxGroupTieredPackage))
 
+            /**
+             * Prices for this plan. If the plan has phases, this includes prices across all phases
+             * of the plan.
+             */
+            fun addPrice(
+                newPlanScalableMatrixWithUnitPricing:
+                    Price.NewPlanScalableMatrixWithUnitPricingPrice
+            ) =
+                addPrice(
+                    Price.ofNewPlanScalableMatrixWithUnitPricing(
+                        newPlanScalableMatrixWithUnitPricing
+                    )
+                )
+
+            /**
+             * Prices for this plan. If the plan has phases, this includes prices across all phases
+             * of the plan.
+             */
+            fun addPrice(
+                newPlanScalableMatrixWithTieredPricing:
+                    Price.NewPlanScalableMatrixWithTieredPricingPrice
+            ) =
+                addPrice(
+                    Price.ofNewPlanScalableMatrixWithTieredPricing(
+                        newPlanScalableMatrixWithTieredPricing
+                    )
+                )
+
             /** Free-form text which is available on the invoice PDF and the Orb invoice portal. */
             fun defaultInvoiceMemo(defaultInvoiceMemo: String?) =
                 defaultInvoiceMemo(JsonField.ofNullable(defaultInvoiceMemo))
@@ -812,6 +840,23 @@ private constructor(
                 body.addPrice(newPlanMaxGroupTieredPackage)
             }
 
+        /**
+         * Prices for this plan. If the plan has phases, this includes prices across all phases of
+         * the plan.
+         */
+        fun addPrice(
+            newPlanScalableMatrixWithUnitPricing: Price.NewPlanScalableMatrixWithUnitPricingPrice
+        ) = apply { body.addPrice(newPlanScalableMatrixWithUnitPricing) }
+
+        /**
+         * Prices for this plan. If the plan has phases, this includes prices across all phases of
+         * the plan.
+         */
+        fun addPrice(
+            newPlanScalableMatrixWithTieredPricing:
+                Price.NewPlanScalableMatrixWithTieredPricingPrice
+        ) = apply { body.addPrice(newPlanScalableMatrixWithTieredPricing) }
+
         /** Free-form text which is available on the invoice PDF and the Orb invoice portal. */
         fun defaultInvoiceMemo(defaultInvoiceMemo: String?) = apply {
             body.defaultInvoiceMemo(defaultInvoiceMemo)
@@ -1024,6 +1069,12 @@ private constructor(
         private val newPlanBulkWithProration: NewPlanBulkWithProrationPrice? = null,
         private val newPlanGroupedTieredPackage: NewPlanGroupedTieredPackagePrice? = null,
         private val newPlanMaxGroupTieredPackage: NewPlanMaxGroupTieredPackagePrice? = null,
+        private val newPlanScalableMatrixWithUnitPricing:
+            NewPlanScalableMatrixWithUnitPricingPrice? =
+            null,
+        private val newPlanScalableMatrixWithTieredPricing:
+            NewPlanScalableMatrixWithTieredPricingPrice? =
+            null,
         private val _json: JsonValue? = null,
     ) {
 
@@ -1078,6 +1129,12 @@ private constructor(
         fun newPlanMaxGroupTieredPackage(): NewPlanMaxGroupTieredPackagePrice? =
             newPlanMaxGroupTieredPackage
 
+        fun newPlanScalableMatrixWithUnitPricing(): NewPlanScalableMatrixWithUnitPricingPrice? =
+            newPlanScalableMatrixWithUnitPricing
+
+        fun newPlanScalableMatrixWithTieredPricing(): NewPlanScalableMatrixWithTieredPricingPrice? =
+            newPlanScalableMatrixWithTieredPricing
+
         fun isNewPlanUnit(): Boolean = newPlanUnit != null
 
         fun isNewPlanPackage(): Boolean = newPlanPackage != null
@@ -1122,6 +1179,12 @@ private constructor(
         fun isNewPlanGroupedTieredPackage(): Boolean = newPlanGroupedTieredPackage != null
 
         fun isNewPlanMaxGroupTieredPackage(): Boolean = newPlanMaxGroupTieredPackage != null
+
+        fun isNewPlanScalableMatrixWithUnitPricing(): Boolean =
+            newPlanScalableMatrixWithUnitPricing != null
+
+        fun isNewPlanScalableMatrixWithTieredPricing(): Boolean =
+            newPlanScalableMatrixWithTieredPricing != null
 
         fun asNewPlanUnit(): NewPlanUnitPrice = newPlanUnit.getOrThrow("newPlanUnit")
 
@@ -1182,6 +1245,15 @@ private constructor(
         fun asNewPlanMaxGroupTieredPackage(): NewPlanMaxGroupTieredPackagePrice =
             newPlanMaxGroupTieredPackage.getOrThrow("newPlanMaxGroupTieredPackage")
 
+        fun asNewPlanScalableMatrixWithUnitPricing(): NewPlanScalableMatrixWithUnitPricingPrice =
+            newPlanScalableMatrixWithUnitPricing.getOrThrow("newPlanScalableMatrixWithUnitPricing")
+
+        fun asNewPlanScalableMatrixWithTieredPricing():
+            NewPlanScalableMatrixWithTieredPricingPrice =
+            newPlanScalableMatrixWithTieredPricing.getOrThrow(
+                "newPlanScalableMatrixWithTieredPricing"
+            )
+
         fun _json(): JsonValue? = _json
 
         fun <T> accept(visitor: Visitor<T>): T {
@@ -1224,6 +1296,14 @@ private constructor(
                     visitor.visitNewPlanGroupedTieredPackage(newPlanGroupedTieredPackage)
                 newPlanMaxGroupTieredPackage != null ->
                     visitor.visitNewPlanMaxGroupTieredPackage(newPlanMaxGroupTieredPackage)
+                newPlanScalableMatrixWithUnitPricing != null ->
+                    visitor.visitNewPlanScalableMatrixWithUnitPricing(
+                        newPlanScalableMatrixWithUnitPricing
+                    )
+                newPlanScalableMatrixWithTieredPricing != null ->
+                    visitor.visitNewPlanScalableMatrixWithTieredPricing(
+                        newPlanScalableMatrixWithTieredPricing
+                    )
                 else -> visitor.unknown(_json)
             }
         }
@@ -1352,6 +1432,20 @@ private constructor(
                     ) {
                         newPlanMaxGroupTieredPackage.validate()
                     }
+
+                    override fun visitNewPlanScalableMatrixWithUnitPricing(
+                        newPlanScalableMatrixWithUnitPricing:
+                            NewPlanScalableMatrixWithUnitPricingPrice
+                    ) {
+                        newPlanScalableMatrixWithUnitPricing.validate()
+                    }
+
+                    override fun visitNewPlanScalableMatrixWithTieredPricing(
+                        newPlanScalableMatrixWithTieredPricing:
+                            NewPlanScalableMatrixWithTieredPricingPrice
+                    ) {
+                        newPlanScalableMatrixWithTieredPricing.validate()
+                    }
                 }
             )
             validated = true
@@ -1362,10 +1456,10 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is Price && newPlanUnit == other.newPlanUnit && newPlanPackage == other.newPlanPackage && newPlanMatrix == other.newPlanMatrix && newPlanTiered == other.newPlanTiered && newPlanTieredBps == other.newPlanTieredBps && newPlanBps == other.newPlanBps && newPlanBulkBps == other.newPlanBulkBps && newPlanBulk == other.newPlanBulk && newPlanThresholdTotalAmount == other.newPlanThresholdTotalAmount && newPlanTieredPackage == other.newPlanTieredPackage && newPlanTieredWithMinimum == other.newPlanTieredWithMinimum && newPlanUnitWithPercent == other.newPlanUnitWithPercent && newPlanPackageWithAllocation == other.newPlanPackageWithAllocation && newPlanTierWithProration == other.newPlanTierWithProration && newPlanUnitWithProration == other.newPlanUnitWithProration && newPlanGroupedAllocation == other.newPlanGroupedAllocation && newPlanGroupedWithProratedMinimum == other.newPlanGroupedWithProratedMinimum && newPlanGroupedWithMeteredMinimum == other.newPlanGroupedWithMeteredMinimum && newPlanMatrixWithDisplayName == other.newPlanMatrixWithDisplayName && newPlanBulkWithProration == other.newPlanBulkWithProration && newPlanGroupedTieredPackage == other.newPlanGroupedTieredPackage && newPlanMaxGroupTieredPackage == other.newPlanMaxGroupTieredPackage /* spotless:on */
+            return /* spotless:off */ other is Price && newPlanUnit == other.newPlanUnit && newPlanPackage == other.newPlanPackage && newPlanMatrix == other.newPlanMatrix && newPlanTiered == other.newPlanTiered && newPlanTieredBps == other.newPlanTieredBps && newPlanBps == other.newPlanBps && newPlanBulkBps == other.newPlanBulkBps && newPlanBulk == other.newPlanBulk && newPlanThresholdTotalAmount == other.newPlanThresholdTotalAmount && newPlanTieredPackage == other.newPlanTieredPackage && newPlanTieredWithMinimum == other.newPlanTieredWithMinimum && newPlanUnitWithPercent == other.newPlanUnitWithPercent && newPlanPackageWithAllocation == other.newPlanPackageWithAllocation && newPlanTierWithProration == other.newPlanTierWithProration && newPlanUnitWithProration == other.newPlanUnitWithProration && newPlanGroupedAllocation == other.newPlanGroupedAllocation && newPlanGroupedWithProratedMinimum == other.newPlanGroupedWithProratedMinimum && newPlanGroupedWithMeteredMinimum == other.newPlanGroupedWithMeteredMinimum && newPlanMatrixWithDisplayName == other.newPlanMatrixWithDisplayName && newPlanBulkWithProration == other.newPlanBulkWithProration && newPlanGroupedTieredPackage == other.newPlanGroupedTieredPackage && newPlanMaxGroupTieredPackage == other.newPlanMaxGroupTieredPackage && newPlanScalableMatrixWithUnitPricing == other.newPlanScalableMatrixWithUnitPricing && newPlanScalableMatrixWithTieredPricing == other.newPlanScalableMatrixWithTieredPricing /* spotless:on */
         }
 
-        override fun hashCode(): Int = /* spotless:off */ Objects.hash(newPlanUnit, newPlanPackage, newPlanMatrix, newPlanTiered, newPlanTieredBps, newPlanBps, newPlanBulkBps, newPlanBulk, newPlanThresholdTotalAmount, newPlanTieredPackage, newPlanTieredWithMinimum, newPlanUnitWithPercent, newPlanPackageWithAllocation, newPlanTierWithProration, newPlanUnitWithProration, newPlanGroupedAllocation, newPlanGroupedWithProratedMinimum, newPlanGroupedWithMeteredMinimum, newPlanMatrixWithDisplayName, newPlanBulkWithProration, newPlanGroupedTieredPackage, newPlanMaxGroupTieredPackage) /* spotless:on */
+        override fun hashCode(): Int = /* spotless:off */ Objects.hash(newPlanUnit, newPlanPackage, newPlanMatrix, newPlanTiered, newPlanTieredBps, newPlanBps, newPlanBulkBps, newPlanBulk, newPlanThresholdTotalAmount, newPlanTieredPackage, newPlanTieredWithMinimum, newPlanUnitWithPercent, newPlanPackageWithAllocation, newPlanTierWithProration, newPlanUnitWithProration, newPlanGroupedAllocation, newPlanGroupedWithProratedMinimum, newPlanGroupedWithMeteredMinimum, newPlanMatrixWithDisplayName, newPlanBulkWithProration, newPlanGroupedTieredPackage, newPlanMaxGroupTieredPackage, newPlanScalableMatrixWithUnitPricing, newPlanScalableMatrixWithTieredPricing) /* spotless:on */
 
         override fun toString(): String =
             when {
@@ -1404,6 +1498,10 @@ private constructor(
                     "Price{newPlanGroupedTieredPackage=$newPlanGroupedTieredPackage}"
                 newPlanMaxGroupTieredPackage != null ->
                     "Price{newPlanMaxGroupTieredPackage=$newPlanMaxGroupTieredPackage}"
+                newPlanScalableMatrixWithUnitPricing != null ->
+                    "Price{newPlanScalableMatrixWithUnitPricing=$newPlanScalableMatrixWithUnitPricing}"
+                newPlanScalableMatrixWithTieredPricing != null ->
+                    "Price{newPlanScalableMatrixWithTieredPricing=$newPlanScalableMatrixWithTieredPricing}"
                 _json != null -> "Price{_unknown=$_json}"
                 else -> throw IllegalStateException("Invalid Price")
             }
@@ -1484,6 +1582,17 @@ private constructor(
             fun ofNewPlanMaxGroupTieredPackage(
                 newPlanMaxGroupTieredPackage: NewPlanMaxGroupTieredPackagePrice
             ) = Price(newPlanMaxGroupTieredPackage = newPlanMaxGroupTieredPackage)
+
+            fun ofNewPlanScalableMatrixWithUnitPricing(
+                newPlanScalableMatrixWithUnitPricing: NewPlanScalableMatrixWithUnitPricingPrice
+            ) = Price(newPlanScalableMatrixWithUnitPricing = newPlanScalableMatrixWithUnitPricing)
+
+            fun ofNewPlanScalableMatrixWithTieredPricing(
+                newPlanScalableMatrixWithTieredPricing: NewPlanScalableMatrixWithTieredPricingPrice
+            ) =
+                Price(
+                    newPlanScalableMatrixWithTieredPricing = newPlanScalableMatrixWithTieredPricing
+                )
         }
 
         /** An interface that defines how to map each variant of [Price] to a value of type [T]. */
@@ -1555,6 +1664,14 @@ private constructor(
 
             fun visitNewPlanMaxGroupTieredPackage(
                 newPlanMaxGroupTieredPackage: NewPlanMaxGroupTieredPackagePrice
+            ): T
+
+            fun visitNewPlanScalableMatrixWithUnitPricing(
+                newPlanScalableMatrixWithUnitPricing: NewPlanScalableMatrixWithUnitPricingPrice
+            ): T
+
+            fun visitNewPlanScalableMatrixWithTieredPricing(
+                newPlanScalableMatrixWithTieredPricing: NewPlanScalableMatrixWithTieredPricingPrice
             ): T
 
             /**
@@ -1751,6 +1868,34 @@ private constructor(
                                 return Price(newPlanMaxGroupTieredPackage = it, _json = json)
                             }
                     }
+                    "scalable_matrix_with_unit_pricing" -> {
+                        tryDeserialize(
+                                node,
+                                jacksonTypeRef<NewPlanScalableMatrixWithUnitPricingPrice>()
+                            ) {
+                                it.validate()
+                            }
+                            ?.let {
+                                return Price(
+                                    newPlanScalableMatrixWithUnitPricing = it,
+                                    _json = json
+                                )
+                            }
+                    }
+                    "scalable_matrix_with_tiered_pricing" -> {
+                        tryDeserialize(
+                                node,
+                                jacksonTypeRef<NewPlanScalableMatrixWithTieredPricingPrice>()
+                            ) {
+                                it.validate()
+                            }
+                            ?.let {
+                                return Price(
+                                    newPlanScalableMatrixWithTieredPricing = it,
+                                    _json = json
+                                )
+                            }
+                    }
                 }
 
                 return Price(_json = json)
@@ -1801,6 +1946,10 @@ private constructor(
                         generator.writeObject(value.newPlanGroupedTieredPackage)
                     value.newPlanMaxGroupTieredPackage != null ->
                         generator.writeObject(value.newPlanMaxGroupTieredPackage)
+                    value.newPlanScalableMatrixWithUnitPricing != null ->
+                        generator.writeObject(value.newPlanScalableMatrixWithUnitPricing)
+                    value.newPlanScalableMatrixWithTieredPricing != null ->
+                        generator.writeObject(value.newPlanScalableMatrixWithTieredPricing)
                     value._json != null -> generator.writeObject(value._json)
                     else -> throw IllegalStateException("Invalid Price")
                 }
@@ -33244,6 +33393,2810 @@ private constructor(
 
             override fun toString() =
                 "NewPlanMaxGroupTieredPackagePrice{cadence=$cadence, itemId=$itemId, maxGroupTieredPackageConfig=$maxGroupTieredPackageConfig, modelType=$modelType, name=$name, billableMetricId=$billableMetricId, billedInAdvance=$billedInAdvance, billingCycleConfiguration=$billingCycleConfiguration, conversionRate=$conversionRate, currency=$currency, externalPriceId=$externalPriceId, fixedPriceQuantity=$fixedPriceQuantity, invoiceGroupingKey=$invoiceGroupingKey, invoicingCycleConfiguration=$invoicingCycleConfiguration, metadata=$metadata, additionalProperties=$additionalProperties}"
+        }
+
+        @NoAutoDetect
+        class NewPlanScalableMatrixWithUnitPricingPrice
+        @JsonCreator
+        private constructor(
+            @JsonProperty("cadence")
+            @ExcludeMissing
+            private val cadence: JsonField<Cadence> = JsonMissing.of(),
+            @JsonProperty("item_id")
+            @ExcludeMissing
+            private val itemId: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("model_type")
+            @ExcludeMissing
+            private val modelType: JsonField<ModelType> = JsonMissing.of(),
+            @JsonProperty("name")
+            @ExcludeMissing
+            private val name: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("scalable_matrix_with_unit_pricing_config")
+            @ExcludeMissing
+            private val scalableMatrixWithUnitPricingConfig:
+                JsonField<ScalableMatrixWithUnitPricingConfig> =
+                JsonMissing.of(),
+            @JsonProperty("billable_metric_id")
+            @ExcludeMissing
+            private val billableMetricId: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("billed_in_advance")
+            @ExcludeMissing
+            private val billedInAdvance: JsonField<Boolean> = JsonMissing.of(),
+            @JsonProperty("billing_cycle_configuration")
+            @ExcludeMissing
+            private val billingCycleConfiguration: JsonField<BillingCycleConfiguration> =
+                JsonMissing.of(),
+            @JsonProperty("conversion_rate")
+            @ExcludeMissing
+            private val conversionRate: JsonField<Double> = JsonMissing.of(),
+            @JsonProperty("currency")
+            @ExcludeMissing
+            private val currency: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("external_price_id")
+            @ExcludeMissing
+            private val externalPriceId: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("fixed_price_quantity")
+            @ExcludeMissing
+            private val fixedPriceQuantity: JsonField<Double> = JsonMissing.of(),
+            @JsonProperty("invoice_grouping_key")
+            @ExcludeMissing
+            private val invoiceGroupingKey: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("invoicing_cycle_configuration")
+            @ExcludeMissing
+            private val invoicingCycleConfiguration: JsonField<InvoicingCycleConfiguration> =
+                JsonMissing.of(),
+            @JsonProperty("metadata")
+            @ExcludeMissing
+            private val metadata: JsonField<Metadata> = JsonMissing.of(),
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
+        ) {
+
+            /** The cadence to bill for this price on. */
+            fun cadence(): Cadence = cadence.getRequired("cadence")
+
+            /** The id of the item the plan will be associated with. */
+            fun itemId(): String = itemId.getRequired("item_id")
+
+            fun modelType(): ModelType = modelType.getRequired("model_type")
+
+            /** The name of the price. */
+            fun name(): String = name.getRequired("name")
+
+            fun scalableMatrixWithUnitPricingConfig(): ScalableMatrixWithUnitPricingConfig =
+                scalableMatrixWithUnitPricingConfig.getRequired(
+                    "scalable_matrix_with_unit_pricing_config"
+                )
+
+            /**
+             * The id of the billable metric for the price. Only needed if the price is usage-based.
+             */
+            fun billableMetricId(): String? = billableMetricId.getNullable("billable_metric_id")
+
+            /**
+             * If the Price represents a fixed cost, the price will be billed in-advance if this is
+             * true, and in-arrears if this is false.
+             */
+            fun billedInAdvance(): Boolean? = billedInAdvance.getNullable("billed_in_advance")
+
+            /**
+             * For custom cadence: specifies the duration of the billing period in days or months.
+             */
+            fun billingCycleConfiguration(): BillingCycleConfiguration? =
+                billingCycleConfiguration.getNullable("billing_cycle_configuration")
+
+            /** The per unit conversion rate of the price currency to the invoicing currency. */
+            fun conversionRate(): Double? = conversionRate.getNullable("conversion_rate")
+
+            /**
+             * An ISO 4217 currency string, or custom pricing unit identifier, in which this price
+             * is billed.
+             */
+            fun currency(): String? = currency.getNullable("currency")
+
+            /** An alias for the price. */
+            fun externalPriceId(): String? = externalPriceId.getNullable("external_price_id")
+
+            /**
+             * If the Price represents a fixed cost, this represents the quantity of units applied.
+             */
+            fun fixedPriceQuantity(): Double? =
+                fixedPriceQuantity.getNullable("fixed_price_quantity")
+
+            /** The property used to group this price on an invoice */
+            fun invoiceGroupingKey(): String? =
+                invoiceGroupingKey.getNullable("invoice_grouping_key")
+
+            /**
+             * Within each billing cycle, specifies the cadence at which invoices are produced. If
+             * unspecified, a single invoice is produced per billing cycle.
+             */
+            fun invoicingCycleConfiguration(): InvoicingCycleConfiguration? =
+                invoicingCycleConfiguration.getNullable("invoicing_cycle_configuration")
+
+            /**
+             * User-specified key/value pairs for the resource. Individual keys can be removed by
+             * setting the value to `null`, and the entire metadata mapping can be cleared by
+             * setting `metadata` to `null`.
+             */
+            fun metadata(): Metadata? = metadata.getNullable("metadata")
+
+            /** The cadence to bill for this price on. */
+            @JsonProperty("cadence") @ExcludeMissing fun _cadence(): JsonField<Cadence> = cadence
+
+            /** The id of the item the plan will be associated with. */
+            @JsonProperty("item_id") @ExcludeMissing fun _itemId(): JsonField<String> = itemId
+
+            @JsonProperty("model_type")
+            @ExcludeMissing
+            fun _modelType(): JsonField<ModelType> = modelType
+
+            /** The name of the price. */
+            @JsonProperty("name") @ExcludeMissing fun _name(): JsonField<String> = name
+
+            @JsonProperty("scalable_matrix_with_unit_pricing_config")
+            @ExcludeMissing
+            fun _scalableMatrixWithUnitPricingConfig():
+                JsonField<ScalableMatrixWithUnitPricingConfig> = scalableMatrixWithUnitPricingConfig
+
+            /**
+             * The id of the billable metric for the price. Only needed if the price is usage-based.
+             */
+            @JsonProperty("billable_metric_id")
+            @ExcludeMissing
+            fun _billableMetricId(): JsonField<String> = billableMetricId
+
+            /**
+             * If the Price represents a fixed cost, the price will be billed in-advance if this is
+             * true, and in-arrears if this is false.
+             */
+            @JsonProperty("billed_in_advance")
+            @ExcludeMissing
+            fun _billedInAdvance(): JsonField<Boolean> = billedInAdvance
+
+            /**
+             * For custom cadence: specifies the duration of the billing period in days or months.
+             */
+            @JsonProperty("billing_cycle_configuration")
+            @ExcludeMissing
+            fun _billingCycleConfiguration(): JsonField<BillingCycleConfiguration> =
+                billingCycleConfiguration
+
+            /** The per unit conversion rate of the price currency to the invoicing currency. */
+            @JsonProperty("conversion_rate")
+            @ExcludeMissing
+            fun _conversionRate(): JsonField<Double> = conversionRate
+
+            /**
+             * An ISO 4217 currency string, or custom pricing unit identifier, in which this price
+             * is billed.
+             */
+            @JsonProperty("currency") @ExcludeMissing fun _currency(): JsonField<String> = currency
+
+            /** An alias for the price. */
+            @JsonProperty("external_price_id")
+            @ExcludeMissing
+            fun _externalPriceId(): JsonField<String> = externalPriceId
+
+            /**
+             * If the Price represents a fixed cost, this represents the quantity of units applied.
+             */
+            @JsonProperty("fixed_price_quantity")
+            @ExcludeMissing
+            fun _fixedPriceQuantity(): JsonField<Double> = fixedPriceQuantity
+
+            /** The property used to group this price on an invoice */
+            @JsonProperty("invoice_grouping_key")
+            @ExcludeMissing
+            fun _invoiceGroupingKey(): JsonField<String> = invoiceGroupingKey
+
+            /**
+             * Within each billing cycle, specifies the cadence at which invoices are produced. If
+             * unspecified, a single invoice is produced per billing cycle.
+             */
+            @JsonProperty("invoicing_cycle_configuration")
+            @ExcludeMissing
+            fun _invoicingCycleConfiguration(): JsonField<InvoicingCycleConfiguration> =
+                invoicingCycleConfiguration
+
+            /**
+             * User-specified key/value pairs for the resource. Individual keys can be removed by
+             * setting the value to `null`, and the entire metadata mapping can be cleared by
+             * setting `metadata` to `null`.
+             */
+            @JsonProperty("metadata")
+            @ExcludeMissing
+            fun _metadata(): JsonField<Metadata> = metadata
+
+            @JsonAnyGetter
+            @ExcludeMissing
+            fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
+
+            private var validated: Boolean = false
+
+            fun validate(): NewPlanScalableMatrixWithUnitPricingPrice = apply {
+                if (validated) {
+                    return@apply
+                }
+
+                cadence()
+                itemId()
+                modelType()
+                name()
+                scalableMatrixWithUnitPricingConfig().validate()
+                billableMetricId()
+                billedInAdvance()
+                billingCycleConfiguration()?.validate()
+                conversionRate()
+                currency()
+                externalPriceId()
+                fixedPriceQuantity()
+                invoiceGroupingKey()
+                invoicingCycleConfiguration()?.validate()
+                metadata()?.validate()
+                validated = true
+            }
+
+            fun toBuilder() = Builder().from(this)
+
+            companion object {
+
+                fun builder() = Builder()
+            }
+
+            /** A builder for [NewPlanScalableMatrixWithUnitPricingPrice]. */
+            class Builder internal constructor() {
+
+                private var cadence: JsonField<Cadence>? = null
+                private var itemId: JsonField<String>? = null
+                private var modelType: JsonField<ModelType>? = null
+                private var name: JsonField<String>? = null
+                private var scalableMatrixWithUnitPricingConfig:
+                    JsonField<ScalableMatrixWithUnitPricingConfig>? =
+                    null
+                private var billableMetricId: JsonField<String> = JsonMissing.of()
+                private var billedInAdvance: JsonField<Boolean> = JsonMissing.of()
+                private var billingCycleConfiguration: JsonField<BillingCycleConfiguration> =
+                    JsonMissing.of()
+                private var conversionRate: JsonField<Double> = JsonMissing.of()
+                private var currency: JsonField<String> = JsonMissing.of()
+                private var externalPriceId: JsonField<String> = JsonMissing.of()
+                private var fixedPriceQuantity: JsonField<Double> = JsonMissing.of()
+                private var invoiceGroupingKey: JsonField<String> = JsonMissing.of()
+                private var invoicingCycleConfiguration: JsonField<InvoicingCycleConfiguration> =
+                    JsonMissing.of()
+                private var metadata: JsonField<Metadata> = JsonMissing.of()
+                private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
+
+                internal fun from(
+                    newPlanScalableMatrixWithUnitPricingPrice:
+                        NewPlanScalableMatrixWithUnitPricingPrice
+                ) = apply {
+                    cadence = newPlanScalableMatrixWithUnitPricingPrice.cadence
+                    itemId = newPlanScalableMatrixWithUnitPricingPrice.itemId
+                    modelType = newPlanScalableMatrixWithUnitPricingPrice.modelType
+                    name = newPlanScalableMatrixWithUnitPricingPrice.name
+                    scalableMatrixWithUnitPricingConfig =
+                        newPlanScalableMatrixWithUnitPricingPrice
+                            .scalableMatrixWithUnitPricingConfig
+                    billableMetricId = newPlanScalableMatrixWithUnitPricingPrice.billableMetricId
+                    billedInAdvance = newPlanScalableMatrixWithUnitPricingPrice.billedInAdvance
+                    billingCycleConfiguration =
+                        newPlanScalableMatrixWithUnitPricingPrice.billingCycleConfiguration
+                    conversionRate = newPlanScalableMatrixWithUnitPricingPrice.conversionRate
+                    currency = newPlanScalableMatrixWithUnitPricingPrice.currency
+                    externalPriceId = newPlanScalableMatrixWithUnitPricingPrice.externalPriceId
+                    fixedPriceQuantity =
+                        newPlanScalableMatrixWithUnitPricingPrice.fixedPriceQuantity
+                    invoiceGroupingKey =
+                        newPlanScalableMatrixWithUnitPricingPrice.invoiceGroupingKey
+                    invoicingCycleConfiguration =
+                        newPlanScalableMatrixWithUnitPricingPrice.invoicingCycleConfiguration
+                    metadata = newPlanScalableMatrixWithUnitPricingPrice.metadata
+                    additionalProperties =
+                        newPlanScalableMatrixWithUnitPricingPrice.additionalProperties
+                            .toMutableMap()
+                }
+
+                /** The cadence to bill for this price on. */
+                fun cadence(cadence: Cadence) = cadence(JsonField.of(cadence))
+
+                /** The cadence to bill for this price on. */
+                fun cadence(cadence: JsonField<Cadence>) = apply { this.cadence = cadence }
+
+                /** The id of the item the plan will be associated with. */
+                fun itemId(itemId: String) = itemId(JsonField.of(itemId))
+
+                /** The id of the item the plan will be associated with. */
+                fun itemId(itemId: JsonField<String>) = apply { this.itemId = itemId }
+
+                fun modelType(modelType: ModelType) = modelType(JsonField.of(modelType))
+
+                fun modelType(modelType: JsonField<ModelType>) = apply {
+                    this.modelType = modelType
+                }
+
+                /** The name of the price. */
+                fun name(name: String) = name(JsonField.of(name))
+
+                /** The name of the price. */
+                fun name(name: JsonField<String>) = apply { this.name = name }
+
+                fun scalableMatrixWithUnitPricingConfig(
+                    scalableMatrixWithUnitPricingConfig: ScalableMatrixWithUnitPricingConfig
+                ) =
+                    scalableMatrixWithUnitPricingConfig(
+                        JsonField.of(scalableMatrixWithUnitPricingConfig)
+                    )
+
+                fun scalableMatrixWithUnitPricingConfig(
+                    scalableMatrixWithUnitPricingConfig:
+                        JsonField<ScalableMatrixWithUnitPricingConfig>
+                ) = apply {
+                    this.scalableMatrixWithUnitPricingConfig = scalableMatrixWithUnitPricingConfig
+                }
+
+                /**
+                 * The id of the billable metric for the price. Only needed if the price is
+                 * usage-based.
+                 */
+                fun billableMetricId(billableMetricId: String?) =
+                    billableMetricId(JsonField.ofNullable(billableMetricId))
+
+                /**
+                 * The id of the billable metric for the price. Only needed if the price is
+                 * usage-based.
+                 */
+                fun billableMetricId(billableMetricId: JsonField<String>) = apply {
+                    this.billableMetricId = billableMetricId
+                }
+
+                /**
+                 * If the Price represents a fixed cost, the price will be billed in-advance if this
+                 * is true, and in-arrears if this is false.
+                 */
+                fun billedInAdvance(billedInAdvance: Boolean?) =
+                    billedInAdvance(JsonField.ofNullable(billedInAdvance))
+
+                /**
+                 * If the Price represents a fixed cost, the price will be billed in-advance if this
+                 * is true, and in-arrears if this is false.
+                 */
+                fun billedInAdvance(billedInAdvance: Boolean) =
+                    billedInAdvance(billedInAdvance as Boolean?)
+
+                /**
+                 * If the Price represents a fixed cost, the price will be billed in-advance if this
+                 * is true, and in-arrears if this is false.
+                 */
+                fun billedInAdvance(billedInAdvance: JsonField<Boolean>) = apply {
+                    this.billedInAdvance = billedInAdvance
+                }
+
+                /**
+                 * For custom cadence: specifies the duration of the billing period in days or
+                 * months.
+                 */
+                fun billingCycleConfiguration(
+                    billingCycleConfiguration: BillingCycleConfiguration?
+                ) = billingCycleConfiguration(JsonField.ofNullable(billingCycleConfiguration))
+
+                /**
+                 * For custom cadence: specifies the duration of the billing period in days or
+                 * months.
+                 */
+                fun billingCycleConfiguration(
+                    billingCycleConfiguration: JsonField<BillingCycleConfiguration>
+                ) = apply { this.billingCycleConfiguration = billingCycleConfiguration }
+
+                /** The per unit conversion rate of the price currency to the invoicing currency. */
+                fun conversionRate(conversionRate: Double?) =
+                    conversionRate(JsonField.ofNullable(conversionRate))
+
+                /** The per unit conversion rate of the price currency to the invoicing currency. */
+                fun conversionRate(conversionRate: Double) =
+                    conversionRate(conversionRate as Double?)
+
+                /** The per unit conversion rate of the price currency to the invoicing currency. */
+                fun conversionRate(conversionRate: JsonField<Double>) = apply {
+                    this.conversionRate = conversionRate
+                }
+
+                /**
+                 * An ISO 4217 currency string, or custom pricing unit identifier, in which this
+                 * price is billed.
+                 */
+                fun currency(currency: String?) = currency(JsonField.ofNullable(currency))
+
+                /**
+                 * An ISO 4217 currency string, or custom pricing unit identifier, in which this
+                 * price is billed.
+                 */
+                fun currency(currency: JsonField<String>) = apply { this.currency = currency }
+
+                /** An alias for the price. */
+                fun externalPriceId(externalPriceId: String?) =
+                    externalPriceId(JsonField.ofNullable(externalPriceId))
+
+                /** An alias for the price. */
+                fun externalPriceId(externalPriceId: JsonField<String>) = apply {
+                    this.externalPriceId = externalPriceId
+                }
+
+                /**
+                 * If the Price represents a fixed cost, this represents the quantity of units
+                 * applied.
+                 */
+                fun fixedPriceQuantity(fixedPriceQuantity: Double?) =
+                    fixedPriceQuantity(JsonField.ofNullable(fixedPriceQuantity))
+
+                /**
+                 * If the Price represents a fixed cost, this represents the quantity of units
+                 * applied.
+                 */
+                fun fixedPriceQuantity(fixedPriceQuantity: Double) =
+                    fixedPriceQuantity(fixedPriceQuantity as Double?)
+
+                /**
+                 * If the Price represents a fixed cost, this represents the quantity of units
+                 * applied.
+                 */
+                fun fixedPriceQuantity(fixedPriceQuantity: JsonField<Double>) = apply {
+                    this.fixedPriceQuantity = fixedPriceQuantity
+                }
+
+                /** The property used to group this price on an invoice */
+                fun invoiceGroupingKey(invoiceGroupingKey: String?) =
+                    invoiceGroupingKey(JsonField.ofNullable(invoiceGroupingKey))
+
+                /** The property used to group this price on an invoice */
+                fun invoiceGroupingKey(invoiceGroupingKey: JsonField<String>) = apply {
+                    this.invoiceGroupingKey = invoiceGroupingKey
+                }
+
+                /**
+                 * Within each billing cycle, specifies the cadence at which invoices are produced.
+                 * If unspecified, a single invoice is produced per billing cycle.
+                 */
+                fun invoicingCycleConfiguration(
+                    invoicingCycleConfiguration: InvoicingCycleConfiguration?
+                ) = invoicingCycleConfiguration(JsonField.ofNullable(invoicingCycleConfiguration))
+
+                /**
+                 * Within each billing cycle, specifies the cadence at which invoices are produced.
+                 * If unspecified, a single invoice is produced per billing cycle.
+                 */
+                fun invoicingCycleConfiguration(
+                    invoicingCycleConfiguration: JsonField<InvoicingCycleConfiguration>
+                ) = apply { this.invoicingCycleConfiguration = invoicingCycleConfiguration }
+
+                /**
+                 * User-specified key/value pairs for the resource. Individual keys can be removed
+                 * by setting the value to `null`, and the entire metadata mapping can be cleared by
+                 * setting `metadata` to `null`.
+                 */
+                fun metadata(metadata: Metadata?) = metadata(JsonField.ofNullable(metadata))
+
+                /**
+                 * User-specified key/value pairs for the resource. Individual keys can be removed
+                 * by setting the value to `null`, and the entire metadata mapping can be cleared by
+                 * setting `metadata` to `null`.
+                 */
+                fun metadata(metadata: JsonField<Metadata>) = apply { this.metadata = metadata }
+
+                fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                    this.additionalProperties.clear()
+                    putAllAdditionalProperties(additionalProperties)
+                }
+
+                fun putAdditionalProperty(key: String, value: JsonValue) = apply {
+                    additionalProperties.put(key, value)
+                }
+
+                fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) =
+                    apply {
+                        this.additionalProperties.putAll(additionalProperties)
+                    }
+
+                fun removeAdditionalProperty(key: String) = apply {
+                    additionalProperties.remove(key)
+                }
+
+                fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                    keys.forEach(::removeAdditionalProperty)
+                }
+
+                fun build(): NewPlanScalableMatrixWithUnitPricingPrice =
+                    NewPlanScalableMatrixWithUnitPricingPrice(
+                        checkRequired("cadence", cadence),
+                        checkRequired("itemId", itemId),
+                        checkRequired("modelType", modelType),
+                        checkRequired("name", name),
+                        checkRequired(
+                            "scalableMatrixWithUnitPricingConfig",
+                            scalableMatrixWithUnitPricingConfig
+                        ),
+                        billableMetricId,
+                        billedInAdvance,
+                        billingCycleConfiguration,
+                        conversionRate,
+                        currency,
+                        externalPriceId,
+                        fixedPriceQuantity,
+                        invoiceGroupingKey,
+                        invoicingCycleConfiguration,
+                        metadata,
+                        additionalProperties.toImmutable(),
+                    )
+            }
+
+            /** The cadence to bill for this price on. */
+            class Cadence
+            @JsonCreator
+            private constructor(
+                private val value: JsonField<String>,
+            ) : Enum {
+
+                /**
+                 * Returns this class instance's raw value.
+                 *
+                 * This is usually only useful if this instance was deserialized from data that
+                 * doesn't match any known member, and you want to know that value. For example, if
+                 * the SDK is on an older version than the API, then the API may respond with new
+                 * members that the SDK is unaware of.
+                 */
+                @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
+
+                companion object {
+
+                    val ANNUAL = of("annual")
+
+                    val SEMI_ANNUAL = of("semi_annual")
+
+                    val MONTHLY = of("monthly")
+
+                    val QUARTERLY = of("quarterly")
+
+                    val ONE_TIME = of("one_time")
+
+                    val CUSTOM = of("custom")
+
+                    fun of(value: String) = Cadence(JsonField.of(value))
+                }
+
+                /** An enum containing [Cadence]'s known values. */
+                enum class Known {
+                    ANNUAL,
+                    SEMI_ANNUAL,
+                    MONTHLY,
+                    QUARTERLY,
+                    ONE_TIME,
+                    CUSTOM,
+                }
+
+                /**
+                 * An enum containing [Cadence]'s known values, as well as an [_UNKNOWN] member.
+                 *
+                 * An instance of [Cadence] can contain an unknown value in a couple of cases:
+                 * - It was deserialized from data that doesn't match any known member. For example,
+                 *   if the SDK is on an older version than the API, then the API may respond with
+                 *   new members that the SDK is unaware of.
+                 * - It was constructed with an arbitrary value using the [of] method.
+                 */
+                enum class Value {
+                    ANNUAL,
+                    SEMI_ANNUAL,
+                    MONTHLY,
+                    QUARTERLY,
+                    ONE_TIME,
+                    CUSTOM,
+                    /**
+                     * An enum member indicating that [Cadence] was instantiated with an unknown
+                     * value.
+                     */
+                    _UNKNOWN,
+                }
+
+                /**
+                 * Returns an enum member corresponding to this class instance's value, or
+                 * [Value._UNKNOWN] if the class was instantiated with an unknown value.
+                 *
+                 * Use the [known] method instead if you're certain the value is always known or if
+                 * you want to throw for the unknown case.
+                 */
+                fun value(): Value =
+                    when (this) {
+                        ANNUAL -> Value.ANNUAL
+                        SEMI_ANNUAL -> Value.SEMI_ANNUAL
+                        MONTHLY -> Value.MONTHLY
+                        QUARTERLY -> Value.QUARTERLY
+                        ONE_TIME -> Value.ONE_TIME
+                        CUSTOM -> Value.CUSTOM
+                        else -> Value._UNKNOWN
+                    }
+
+                /**
+                 * Returns an enum member corresponding to this class instance's value.
+                 *
+                 * Use the [value] method instead if you're uncertain the value is always known and
+                 * don't want to throw for the unknown case.
+                 *
+                 * @throws OrbInvalidDataException if this class instance's value is a not a known
+                 *   member.
+                 */
+                fun known(): Known =
+                    when (this) {
+                        ANNUAL -> Known.ANNUAL
+                        SEMI_ANNUAL -> Known.SEMI_ANNUAL
+                        MONTHLY -> Known.MONTHLY
+                        QUARTERLY -> Known.QUARTERLY
+                        ONE_TIME -> Known.ONE_TIME
+                        CUSTOM -> Known.CUSTOM
+                        else -> throw OrbInvalidDataException("Unknown Cadence: $value")
+                    }
+
+                fun asString(): String = _value().asStringOrThrow()
+
+                override fun equals(other: Any?): Boolean {
+                    if (this === other) {
+                        return true
+                    }
+
+                    return /* spotless:off */ other is Cadence && value == other.value /* spotless:on */
+                }
+
+                override fun hashCode() = value.hashCode()
+
+                override fun toString() = value.toString()
+            }
+
+            class ModelType
+            @JsonCreator
+            private constructor(
+                private val value: JsonField<String>,
+            ) : Enum {
+
+                /**
+                 * Returns this class instance's raw value.
+                 *
+                 * This is usually only useful if this instance was deserialized from data that
+                 * doesn't match any known member, and you want to know that value. For example, if
+                 * the SDK is on an older version than the API, then the API may respond with new
+                 * members that the SDK is unaware of.
+                 */
+                @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
+
+                companion object {
+
+                    val SCALABLE_MATRIX_WITH_UNIT_PRICING = of("scalable_matrix_with_unit_pricing")
+
+                    fun of(value: String) = ModelType(JsonField.of(value))
+                }
+
+                /** An enum containing [ModelType]'s known values. */
+                enum class Known {
+                    SCALABLE_MATRIX_WITH_UNIT_PRICING,
+                }
+
+                /**
+                 * An enum containing [ModelType]'s known values, as well as an [_UNKNOWN] member.
+                 *
+                 * An instance of [ModelType] can contain an unknown value in a couple of cases:
+                 * - It was deserialized from data that doesn't match any known member. For example,
+                 *   if the SDK is on an older version than the API, then the API may respond with
+                 *   new members that the SDK is unaware of.
+                 * - It was constructed with an arbitrary value using the [of] method.
+                 */
+                enum class Value {
+                    SCALABLE_MATRIX_WITH_UNIT_PRICING,
+                    /**
+                     * An enum member indicating that [ModelType] was instantiated with an unknown
+                     * value.
+                     */
+                    _UNKNOWN,
+                }
+
+                /**
+                 * Returns an enum member corresponding to this class instance's value, or
+                 * [Value._UNKNOWN] if the class was instantiated with an unknown value.
+                 *
+                 * Use the [known] method instead if you're certain the value is always known or if
+                 * you want to throw for the unknown case.
+                 */
+                fun value(): Value =
+                    when (this) {
+                        SCALABLE_MATRIX_WITH_UNIT_PRICING -> Value.SCALABLE_MATRIX_WITH_UNIT_PRICING
+                        else -> Value._UNKNOWN
+                    }
+
+                /**
+                 * Returns an enum member corresponding to this class instance's value.
+                 *
+                 * Use the [value] method instead if you're uncertain the value is always known and
+                 * don't want to throw for the unknown case.
+                 *
+                 * @throws OrbInvalidDataException if this class instance's value is a not a known
+                 *   member.
+                 */
+                fun known(): Known =
+                    when (this) {
+                        SCALABLE_MATRIX_WITH_UNIT_PRICING -> Known.SCALABLE_MATRIX_WITH_UNIT_PRICING
+                        else -> throw OrbInvalidDataException("Unknown ModelType: $value")
+                    }
+
+                fun asString(): String = _value().asStringOrThrow()
+
+                override fun equals(other: Any?): Boolean {
+                    if (this === other) {
+                        return true
+                    }
+
+                    return /* spotless:off */ other is ModelType && value == other.value /* spotless:on */
+                }
+
+                override fun hashCode() = value.hashCode()
+
+                override fun toString() = value.toString()
+            }
+
+            @NoAutoDetect
+            class ScalableMatrixWithUnitPricingConfig
+            @JsonCreator
+            private constructor(
+                @JsonAnySetter
+                private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
+            ) {
+
+                @JsonAnyGetter
+                @ExcludeMissing
+                fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
+
+                private var validated: Boolean = false
+
+                fun validate(): ScalableMatrixWithUnitPricingConfig = apply {
+                    if (validated) {
+                        return@apply
+                    }
+
+                    validated = true
+                }
+
+                fun toBuilder() = Builder().from(this)
+
+                companion object {
+
+                    fun builder() = Builder()
+                }
+
+                /** A builder for [ScalableMatrixWithUnitPricingConfig]. */
+                class Builder internal constructor() {
+
+                    private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
+
+                    internal fun from(
+                        scalableMatrixWithUnitPricingConfig: ScalableMatrixWithUnitPricingConfig
+                    ) = apply {
+                        additionalProperties =
+                            scalableMatrixWithUnitPricingConfig.additionalProperties.toMutableMap()
+                    }
+
+                    fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                        this.additionalProperties.clear()
+                        putAllAdditionalProperties(additionalProperties)
+                    }
+
+                    fun putAdditionalProperty(key: String, value: JsonValue) = apply {
+                        additionalProperties.put(key, value)
+                    }
+
+                    fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) =
+                        apply {
+                            this.additionalProperties.putAll(additionalProperties)
+                        }
+
+                    fun removeAdditionalProperty(key: String) = apply {
+                        additionalProperties.remove(key)
+                    }
+
+                    fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                        keys.forEach(::removeAdditionalProperty)
+                    }
+
+                    fun build(): ScalableMatrixWithUnitPricingConfig =
+                        ScalableMatrixWithUnitPricingConfig(additionalProperties.toImmutable())
+                }
+
+                override fun equals(other: Any?): Boolean {
+                    if (this === other) {
+                        return true
+                    }
+
+                    return /* spotless:off */ other is ScalableMatrixWithUnitPricingConfig && additionalProperties == other.additionalProperties /* spotless:on */
+                }
+
+                /* spotless:off */
+                private val hashCode: Int by lazy { Objects.hash(additionalProperties) }
+                /* spotless:on */
+
+                override fun hashCode(): Int = hashCode
+
+                override fun toString() =
+                    "ScalableMatrixWithUnitPricingConfig{additionalProperties=$additionalProperties}"
+            }
+
+            /**
+             * For custom cadence: specifies the duration of the billing period in days or months.
+             */
+            @NoAutoDetect
+            class BillingCycleConfiguration
+            @JsonCreator
+            private constructor(
+                @JsonProperty("duration")
+                @ExcludeMissing
+                private val duration: JsonField<Long> = JsonMissing.of(),
+                @JsonProperty("duration_unit")
+                @ExcludeMissing
+                private val durationUnit: JsonField<DurationUnit> = JsonMissing.of(),
+                @JsonAnySetter
+                private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
+            ) {
+
+                /** The duration of the billing period. */
+                fun duration(): Long = duration.getRequired("duration")
+
+                /** The unit of billing period duration. */
+                fun durationUnit(): DurationUnit = durationUnit.getRequired("duration_unit")
+
+                /** The duration of the billing period. */
+                @JsonProperty("duration")
+                @ExcludeMissing
+                fun _duration(): JsonField<Long> = duration
+
+                /** The unit of billing period duration. */
+                @JsonProperty("duration_unit")
+                @ExcludeMissing
+                fun _durationUnit(): JsonField<DurationUnit> = durationUnit
+
+                @JsonAnyGetter
+                @ExcludeMissing
+                fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
+
+                private var validated: Boolean = false
+
+                fun validate(): BillingCycleConfiguration = apply {
+                    if (validated) {
+                        return@apply
+                    }
+
+                    duration()
+                    durationUnit()
+                    validated = true
+                }
+
+                fun toBuilder() = Builder().from(this)
+
+                companion object {
+
+                    fun builder() = Builder()
+                }
+
+                /** A builder for [BillingCycleConfiguration]. */
+                class Builder internal constructor() {
+
+                    private var duration: JsonField<Long>? = null
+                    private var durationUnit: JsonField<DurationUnit>? = null
+                    private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
+
+                    internal fun from(billingCycleConfiguration: BillingCycleConfiguration) =
+                        apply {
+                            duration = billingCycleConfiguration.duration
+                            durationUnit = billingCycleConfiguration.durationUnit
+                            additionalProperties =
+                                billingCycleConfiguration.additionalProperties.toMutableMap()
+                        }
+
+                    /** The duration of the billing period. */
+                    fun duration(duration: Long) = duration(JsonField.of(duration))
+
+                    /** The duration of the billing period. */
+                    fun duration(duration: JsonField<Long>) = apply { this.duration = duration }
+
+                    /** The unit of billing period duration. */
+                    fun durationUnit(durationUnit: DurationUnit) =
+                        durationUnit(JsonField.of(durationUnit))
+
+                    /** The unit of billing period duration. */
+                    fun durationUnit(durationUnit: JsonField<DurationUnit>) = apply {
+                        this.durationUnit = durationUnit
+                    }
+
+                    fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                        this.additionalProperties.clear()
+                        putAllAdditionalProperties(additionalProperties)
+                    }
+
+                    fun putAdditionalProperty(key: String, value: JsonValue) = apply {
+                        additionalProperties.put(key, value)
+                    }
+
+                    fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) =
+                        apply {
+                            this.additionalProperties.putAll(additionalProperties)
+                        }
+
+                    fun removeAdditionalProperty(key: String) = apply {
+                        additionalProperties.remove(key)
+                    }
+
+                    fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                        keys.forEach(::removeAdditionalProperty)
+                    }
+
+                    fun build(): BillingCycleConfiguration =
+                        BillingCycleConfiguration(
+                            checkRequired("duration", duration),
+                            checkRequired("durationUnit", durationUnit),
+                            additionalProperties.toImmutable(),
+                        )
+                }
+
+                /** The unit of billing period duration. */
+                class DurationUnit
+                @JsonCreator
+                private constructor(
+                    private val value: JsonField<String>,
+                ) : Enum {
+
+                    /**
+                     * Returns this class instance's raw value.
+                     *
+                     * This is usually only useful if this instance was deserialized from data that
+                     * doesn't match any known member, and you want to know that value. For example,
+                     * if the SDK is on an older version than the API, then the API may respond with
+                     * new members that the SDK is unaware of.
+                     */
+                    @com.fasterxml.jackson.annotation.JsonValue
+                    fun _value(): JsonField<String> = value
+
+                    companion object {
+
+                        val DAY = of("day")
+
+                        val MONTH = of("month")
+
+                        fun of(value: String) = DurationUnit(JsonField.of(value))
+                    }
+
+                    /** An enum containing [DurationUnit]'s known values. */
+                    enum class Known {
+                        DAY,
+                        MONTH,
+                    }
+
+                    /**
+                     * An enum containing [DurationUnit]'s known values, as well as an [_UNKNOWN]
+                     * member.
+                     *
+                     * An instance of [DurationUnit] can contain an unknown value in a couple of
+                     * cases:
+                     * - It was deserialized from data that doesn't match any known member. For
+                     *   example, if the SDK is on an older version than the API, then the API may
+                     *   respond with new members that the SDK is unaware of.
+                     * - It was constructed with an arbitrary value using the [of] method.
+                     */
+                    enum class Value {
+                        DAY,
+                        MONTH,
+                        /**
+                         * An enum member indicating that [DurationUnit] was instantiated with an
+                         * unknown value.
+                         */
+                        _UNKNOWN,
+                    }
+
+                    /**
+                     * Returns an enum member corresponding to this class instance's value, or
+                     * [Value._UNKNOWN] if the class was instantiated with an unknown value.
+                     *
+                     * Use the [known] method instead if you're certain the value is always known or
+                     * if you want to throw for the unknown case.
+                     */
+                    fun value(): Value =
+                        when (this) {
+                            DAY -> Value.DAY
+                            MONTH -> Value.MONTH
+                            else -> Value._UNKNOWN
+                        }
+
+                    /**
+                     * Returns an enum member corresponding to this class instance's value.
+                     *
+                     * Use the [value] method instead if you're uncertain the value is always known
+                     * and don't want to throw for the unknown case.
+                     *
+                     * @throws OrbInvalidDataException if this class instance's value is a not a
+                     *   known member.
+                     */
+                    fun known(): Known =
+                        when (this) {
+                            DAY -> Known.DAY
+                            MONTH -> Known.MONTH
+                            else -> throw OrbInvalidDataException("Unknown DurationUnit: $value")
+                        }
+
+                    fun asString(): String = _value().asStringOrThrow()
+
+                    override fun equals(other: Any?): Boolean {
+                        if (this === other) {
+                            return true
+                        }
+
+                        return /* spotless:off */ other is DurationUnit && value == other.value /* spotless:on */
+                    }
+
+                    override fun hashCode() = value.hashCode()
+
+                    override fun toString() = value.toString()
+                }
+
+                override fun equals(other: Any?): Boolean {
+                    if (this === other) {
+                        return true
+                    }
+
+                    return /* spotless:off */ other is BillingCycleConfiguration && duration == other.duration && durationUnit == other.durationUnit && additionalProperties == other.additionalProperties /* spotless:on */
+                }
+
+                /* spotless:off */
+                private val hashCode: Int by lazy { Objects.hash(duration, durationUnit, additionalProperties) }
+                /* spotless:on */
+
+                override fun hashCode(): Int = hashCode
+
+                override fun toString() =
+                    "BillingCycleConfiguration{duration=$duration, durationUnit=$durationUnit, additionalProperties=$additionalProperties}"
+            }
+
+            /**
+             * Within each billing cycle, specifies the cadence at which invoices are produced. If
+             * unspecified, a single invoice is produced per billing cycle.
+             */
+            @NoAutoDetect
+            class InvoicingCycleConfiguration
+            @JsonCreator
+            private constructor(
+                @JsonProperty("duration")
+                @ExcludeMissing
+                private val duration: JsonField<Long> = JsonMissing.of(),
+                @JsonProperty("duration_unit")
+                @ExcludeMissing
+                private val durationUnit: JsonField<DurationUnit> = JsonMissing.of(),
+                @JsonAnySetter
+                private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
+            ) {
+
+                /** The duration of the billing period. */
+                fun duration(): Long = duration.getRequired("duration")
+
+                /** The unit of billing period duration. */
+                fun durationUnit(): DurationUnit = durationUnit.getRequired("duration_unit")
+
+                /** The duration of the billing period. */
+                @JsonProperty("duration")
+                @ExcludeMissing
+                fun _duration(): JsonField<Long> = duration
+
+                /** The unit of billing period duration. */
+                @JsonProperty("duration_unit")
+                @ExcludeMissing
+                fun _durationUnit(): JsonField<DurationUnit> = durationUnit
+
+                @JsonAnyGetter
+                @ExcludeMissing
+                fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
+
+                private var validated: Boolean = false
+
+                fun validate(): InvoicingCycleConfiguration = apply {
+                    if (validated) {
+                        return@apply
+                    }
+
+                    duration()
+                    durationUnit()
+                    validated = true
+                }
+
+                fun toBuilder() = Builder().from(this)
+
+                companion object {
+
+                    fun builder() = Builder()
+                }
+
+                /** A builder for [InvoicingCycleConfiguration]. */
+                class Builder internal constructor() {
+
+                    private var duration: JsonField<Long>? = null
+                    private var durationUnit: JsonField<DurationUnit>? = null
+                    private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
+
+                    internal fun from(invoicingCycleConfiguration: InvoicingCycleConfiguration) =
+                        apply {
+                            duration = invoicingCycleConfiguration.duration
+                            durationUnit = invoicingCycleConfiguration.durationUnit
+                            additionalProperties =
+                                invoicingCycleConfiguration.additionalProperties.toMutableMap()
+                        }
+
+                    /** The duration of the billing period. */
+                    fun duration(duration: Long) = duration(JsonField.of(duration))
+
+                    /** The duration of the billing period. */
+                    fun duration(duration: JsonField<Long>) = apply { this.duration = duration }
+
+                    /** The unit of billing period duration. */
+                    fun durationUnit(durationUnit: DurationUnit) =
+                        durationUnit(JsonField.of(durationUnit))
+
+                    /** The unit of billing period duration. */
+                    fun durationUnit(durationUnit: JsonField<DurationUnit>) = apply {
+                        this.durationUnit = durationUnit
+                    }
+
+                    fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                        this.additionalProperties.clear()
+                        putAllAdditionalProperties(additionalProperties)
+                    }
+
+                    fun putAdditionalProperty(key: String, value: JsonValue) = apply {
+                        additionalProperties.put(key, value)
+                    }
+
+                    fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) =
+                        apply {
+                            this.additionalProperties.putAll(additionalProperties)
+                        }
+
+                    fun removeAdditionalProperty(key: String) = apply {
+                        additionalProperties.remove(key)
+                    }
+
+                    fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                        keys.forEach(::removeAdditionalProperty)
+                    }
+
+                    fun build(): InvoicingCycleConfiguration =
+                        InvoicingCycleConfiguration(
+                            checkRequired("duration", duration),
+                            checkRequired("durationUnit", durationUnit),
+                            additionalProperties.toImmutable(),
+                        )
+                }
+
+                /** The unit of billing period duration. */
+                class DurationUnit
+                @JsonCreator
+                private constructor(
+                    private val value: JsonField<String>,
+                ) : Enum {
+
+                    /**
+                     * Returns this class instance's raw value.
+                     *
+                     * This is usually only useful if this instance was deserialized from data that
+                     * doesn't match any known member, and you want to know that value. For example,
+                     * if the SDK is on an older version than the API, then the API may respond with
+                     * new members that the SDK is unaware of.
+                     */
+                    @com.fasterxml.jackson.annotation.JsonValue
+                    fun _value(): JsonField<String> = value
+
+                    companion object {
+
+                        val DAY = of("day")
+
+                        val MONTH = of("month")
+
+                        fun of(value: String) = DurationUnit(JsonField.of(value))
+                    }
+
+                    /** An enum containing [DurationUnit]'s known values. */
+                    enum class Known {
+                        DAY,
+                        MONTH,
+                    }
+
+                    /**
+                     * An enum containing [DurationUnit]'s known values, as well as an [_UNKNOWN]
+                     * member.
+                     *
+                     * An instance of [DurationUnit] can contain an unknown value in a couple of
+                     * cases:
+                     * - It was deserialized from data that doesn't match any known member. For
+                     *   example, if the SDK is on an older version than the API, then the API may
+                     *   respond with new members that the SDK is unaware of.
+                     * - It was constructed with an arbitrary value using the [of] method.
+                     */
+                    enum class Value {
+                        DAY,
+                        MONTH,
+                        /**
+                         * An enum member indicating that [DurationUnit] was instantiated with an
+                         * unknown value.
+                         */
+                        _UNKNOWN,
+                    }
+
+                    /**
+                     * Returns an enum member corresponding to this class instance's value, or
+                     * [Value._UNKNOWN] if the class was instantiated with an unknown value.
+                     *
+                     * Use the [known] method instead if you're certain the value is always known or
+                     * if you want to throw for the unknown case.
+                     */
+                    fun value(): Value =
+                        when (this) {
+                            DAY -> Value.DAY
+                            MONTH -> Value.MONTH
+                            else -> Value._UNKNOWN
+                        }
+
+                    /**
+                     * Returns an enum member corresponding to this class instance's value.
+                     *
+                     * Use the [value] method instead if you're uncertain the value is always known
+                     * and don't want to throw for the unknown case.
+                     *
+                     * @throws OrbInvalidDataException if this class instance's value is a not a
+                     *   known member.
+                     */
+                    fun known(): Known =
+                        when (this) {
+                            DAY -> Known.DAY
+                            MONTH -> Known.MONTH
+                            else -> throw OrbInvalidDataException("Unknown DurationUnit: $value")
+                        }
+
+                    fun asString(): String = _value().asStringOrThrow()
+
+                    override fun equals(other: Any?): Boolean {
+                        if (this === other) {
+                            return true
+                        }
+
+                        return /* spotless:off */ other is DurationUnit && value == other.value /* spotless:on */
+                    }
+
+                    override fun hashCode() = value.hashCode()
+
+                    override fun toString() = value.toString()
+                }
+
+                override fun equals(other: Any?): Boolean {
+                    if (this === other) {
+                        return true
+                    }
+
+                    return /* spotless:off */ other is InvoicingCycleConfiguration && duration == other.duration && durationUnit == other.durationUnit && additionalProperties == other.additionalProperties /* spotless:on */
+                }
+
+                /* spotless:off */
+                private val hashCode: Int by lazy { Objects.hash(duration, durationUnit, additionalProperties) }
+                /* spotless:on */
+
+                override fun hashCode(): Int = hashCode
+
+                override fun toString() =
+                    "InvoicingCycleConfiguration{duration=$duration, durationUnit=$durationUnit, additionalProperties=$additionalProperties}"
+            }
+
+            /**
+             * User-specified key/value pairs for the resource. Individual keys can be removed by
+             * setting the value to `null`, and the entire metadata mapping can be cleared by
+             * setting `metadata` to `null`.
+             */
+            @NoAutoDetect
+            class Metadata
+            @JsonCreator
+            private constructor(
+                @JsonAnySetter
+                private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
+            ) {
+
+                @JsonAnyGetter
+                @ExcludeMissing
+                fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
+
+                private var validated: Boolean = false
+
+                fun validate(): Metadata = apply {
+                    if (validated) {
+                        return@apply
+                    }
+
+                    validated = true
+                }
+
+                fun toBuilder() = Builder().from(this)
+
+                companion object {
+
+                    fun builder() = Builder()
+                }
+
+                /** A builder for [Metadata]. */
+                class Builder internal constructor() {
+
+                    private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
+
+                    internal fun from(metadata: Metadata) = apply {
+                        additionalProperties = metadata.additionalProperties.toMutableMap()
+                    }
+
+                    fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                        this.additionalProperties.clear()
+                        putAllAdditionalProperties(additionalProperties)
+                    }
+
+                    fun putAdditionalProperty(key: String, value: JsonValue) = apply {
+                        additionalProperties.put(key, value)
+                    }
+
+                    fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) =
+                        apply {
+                            this.additionalProperties.putAll(additionalProperties)
+                        }
+
+                    fun removeAdditionalProperty(key: String) = apply {
+                        additionalProperties.remove(key)
+                    }
+
+                    fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                        keys.forEach(::removeAdditionalProperty)
+                    }
+
+                    fun build(): Metadata = Metadata(additionalProperties.toImmutable())
+                }
+
+                override fun equals(other: Any?): Boolean {
+                    if (this === other) {
+                        return true
+                    }
+
+                    return /* spotless:off */ other is Metadata && additionalProperties == other.additionalProperties /* spotless:on */
+                }
+
+                /* spotless:off */
+                private val hashCode: Int by lazy { Objects.hash(additionalProperties) }
+                /* spotless:on */
+
+                override fun hashCode(): Int = hashCode
+
+                override fun toString() = "Metadata{additionalProperties=$additionalProperties}"
+            }
+
+            override fun equals(other: Any?): Boolean {
+                if (this === other) {
+                    return true
+                }
+
+                return /* spotless:off */ other is NewPlanScalableMatrixWithUnitPricingPrice && cadence == other.cadence && itemId == other.itemId && modelType == other.modelType && name == other.name && scalableMatrixWithUnitPricingConfig == other.scalableMatrixWithUnitPricingConfig && billableMetricId == other.billableMetricId && billedInAdvance == other.billedInAdvance && billingCycleConfiguration == other.billingCycleConfiguration && conversionRate == other.conversionRate && currency == other.currency && externalPriceId == other.externalPriceId && fixedPriceQuantity == other.fixedPriceQuantity && invoiceGroupingKey == other.invoiceGroupingKey && invoicingCycleConfiguration == other.invoicingCycleConfiguration && metadata == other.metadata && additionalProperties == other.additionalProperties /* spotless:on */
+            }
+
+            /* spotless:off */
+            private val hashCode: Int by lazy { Objects.hash(cadence, itemId, modelType, name, scalableMatrixWithUnitPricingConfig, billableMetricId, billedInAdvance, billingCycleConfiguration, conversionRate, currency, externalPriceId, fixedPriceQuantity, invoiceGroupingKey, invoicingCycleConfiguration, metadata, additionalProperties) }
+            /* spotless:on */
+
+            override fun hashCode(): Int = hashCode
+
+            override fun toString() =
+                "NewPlanScalableMatrixWithUnitPricingPrice{cadence=$cadence, itemId=$itemId, modelType=$modelType, name=$name, scalableMatrixWithUnitPricingConfig=$scalableMatrixWithUnitPricingConfig, billableMetricId=$billableMetricId, billedInAdvance=$billedInAdvance, billingCycleConfiguration=$billingCycleConfiguration, conversionRate=$conversionRate, currency=$currency, externalPriceId=$externalPriceId, fixedPriceQuantity=$fixedPriceQuantity, invoiceGroupingKey=$invoiceGroupingKey, invoicingCycleConfiguration=$invoicingCycleConfiguration, metadata=$metadata, additionalProperties=$additionalProperties}"
+        }
+
+        @NoAutoDetect
+        class NewPlanScalableMatrixWithTieredPricingPrice
+        @JsonCreator
+        private constructor(
+            @JsonProperty("cadence")
+            @ExcludeMissing
+            private val cadence: JsonField<Cadence> = JsonMissing.of(),
+            @JsonProperty("item_id")
+            @ExcludeMissing
+            private val itemId: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("model_type")
+            @ExcludeMissing
+            private val modelType: JsonField<ModelType> = JsonMissing.of(),
+            @JsonProperty("name")
+            @ExcludeMissing
+            private val name: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("scalable_matrix_with_tiered_pricing_config")
+            @ExcludeMissing
+            private val scalableMatrixWithTieredPricingConfig:
+                JsonField<ScalableMatrixWithTieredPricingConfig> =
+                JsonMissing.of(),
+            @JsonProperty("billable_metric_id")
+            @ExcludeMissing
+            private val billableMetricId: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("billed_in_advance")
+            @ExcludeMissing
+            private val billedInAdvance: JsonField<Boolean> = JsonMissing.of(),
+            @JsonProperty("billing_cycle_configuration")
+            @ExcludeMissing
+            private val billingCycleConfiguration: JsonField<BillingCycleConfiguration> =
+                JsonMissing.of(),
+            @JsonProperty("conversion_rate")
+            @ExcludeMissing
+            private val conversionRate: JsonField<Double> = JsonMissing.of(),
+            @JsonProperty("currency")
+            @ExcludeMissing
+            private val currency: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("external_price_id")
+            @ExcludeMissing
+            private val externalPriceId: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("fixed_price_quantity")
+            @ExcludeMissing
+            private val fixedPriceQuantity: JsonField<Double> = JsonMissing.of(),
+            @JsonProperty("invoice_grouping_key")
+            @ExcludeMissing
+            private val invoiceGroupingKey: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("invoicing_cycle_configuration")
+            @ExcludeMissing
+            private val invoicingCycleConfiguration: JsonField<InvoicingCycleConfiguration> =
+                JsonMissing.of(),
+            @JsonProperty("metadata")
+            @ExcludeMissing
+            private val metadata: JsonField<Metadata> = JsonMissing.of(),
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
+        ) {
+
+            /** The cadence to bill for this price on. */
+            fun cadence(): Cadence = cadence.getRequired("cadence")
+
+            /** The id of the item the plan will be associated with. */
+            fun itemId(): String = itemId.getRequired("item_id")
+
+            fun modelType(): ModelType = modelType.getRequired("model_type")
+
+            /** The name of the price. */
+            fun name(): String = name.getRequired("name")
+
+            fun scalableMatrixWithTieredPricingConfig(): ScalableMatrixWithTieredPricingConfig =
+                scalableMatrixWithTieredPricingConfig.getRequired(
+                    "scalable_matrix_with_tiered_pricing_config"
+                )
+
+            /**
+             * The id of the billable metric for the price. Only needed if the price is usage-based.
+             */
+            fun billableMetricId(): String? = billableMetricId.getNullable("billable_metric_id")
+
+            /**
+             * If the Price represents a fixed cost, the price will be billed in-advance if this is
+             * true, and in-arrears if this is false.
+             */
+            fun billedInAdvance(): Boolean? = billedInAdvance.getNullable("billed_in_advance")
+
+            /**
+             * For custom cadence: specifies the duration of the billing period in days or months.
+             */
+            fun billingCycleConfiguration(): BillingCycleConfiguration? =
+                billingCycleConfiguration.getNullable("billing_cycle_configuration")
+
+            /** The per unit conversion rate of the price currency to the invoicing currency. */
+            fun conversionRate(): Double? = conversionRate.getNullable("conversion_rate")
+
+            /**
+             * An ISO 4217 currency string, or custom pricing unit identifier, in which this price
+             * is billed.
+             */
+            fun currency(): String? = currency.getNullable("currency")
+
+            /** An alias for the price. */
+            fun externalPriceId(): String? = externalPriceId.getNullable("external_price_id")
+
+            /**
+             * If the Price represents a fixed cost, this represents the quantity of units applied.
+             */
+            fun fixedPriceQuantity(): Double? =
+                fixedPriceQuantity.getNullable("fixed_price_quantity")
+
+            /** The property used to group this price on an invoice */
+            fun invoiceGroupingKey(): String? =
+                invoiceGroupingKey.getNullable("invoice_grouping_key")
+
+            /**
+             * Within each billing cycle, specifies the cadence at which invoices are produced. If
+             * unspecified, a single invoice is produced per billing cycle.
+             */
+            fun invoicingCycleConfiguration(): InvoicingCycleConfiguration? =
+                invoicingCycleConfiguration.getNullable("invoicing_cycle_configuration")
+
+            /**
+             * User-specified key/value pairs for the resource. Individual keys can be removed by
+             * setting the value to `null`, and the entire metadata mapping can be cleared by
+             * setting `metadata` to `null`.
+             */
+            fun metadata(): Metadata? = metadata.getNullable("metadata")
+
+            /** The cadence to bill for this price on. */
+            @JsonProperty("cadence") @ExcludeMissing fun _cadence(): JsonField<Cadence> = cadence
+
+            /** The id of the item the plan will be associated with. */
+            @JsonProperty("item_id") @ExcludeMissing fun _itemId(): JsonField<String> = itemId
+
+            @JsonProperty("model_type")
+            @ExcludeMissing
+            fun _modelType(): JsonField<ModelType> = modelType
+
+            /** The name of the price. */
+            @JsonProperty("name") @ExcludeMissing fun _name(): JsonField<String> = name
+
+            @JsonProperty("scalable_matrix_with_tiered_pricing_config")
+            @ExcludeMissing
+            fun _scalableMatrixWithTieredPricingConfig():
+                JsonField<ScalableMatrixWithTieredPricingConfig> =
+                scalableMatrixWithTieredPricingConfig
+
+            /**
+             * The id of the billable metric for the price. Only needed if the price is usage-based.
+             */
+            @JsonProperty("billable_metric_id")
+            @ExcludeMissing
+            fun _billableMetricId(): JsonField<String> = billableMetricId
+
+            /**
+             * If the Price represents a fixed cost, the price will be billed in-advance if this is
+             * true, and in-arrears if this is false.
+             */
+            @JsonProperty("billed_in_advance")
+            @ExcludeMissing
+            fun _billedInAdvance(): JsonField<Boolean> = billedInAdvance
+
+            /**
+             * For custom cadence: specifies the duration of the billing period in days or months.
+             */
+            @JsonProperty("billing_cycle_configuration")
+            @ExcludeMissing
+            fun _billingCycleConfiguration(): JsonField<BillingCycleConfiguration> =
+                billingCycleConfiguration
+
+            /** The per unit conversion rate of the price currency to the invoicing currency. */
+            @JsonProperty("conversion_rate")
+            @ExcludeMissing
+            fun _conversionRate(): JsonField<Double> = conversionRate
+
+            /**
+             * An ISO 4217 currency string, or custom pricing unit identifier, in which this price
+             * is billed.
+             */
+            @JsonProperty("currency") @ExcludeMissing fun _currency(): JsonField<String> = currency
+
+            /** An alias for the price. */
+            @JsonProperty("external_price_id")
+            @ExcludeMissing
+            fun _externalPriceId(): JsonField<String> = externalPriceId
+
+            /**
+             * If the Price represents a fixed cost, this represents the quantity of units applied.
+             */
+            @JsonProperty("fixed_price_quantity")
+            @ExcludeMissing
+            fun _fixedPriceQuantity(): JsonField<Double> = fixedPriceQuantity
+
+            /** The property used to group this price on an invoice */
+            @JsonProperty("invoice_grouping_key")
+            @ExcludeMissing
+            fun _invoiceGroupingKey(): JsonField<String> = invoiceGroupingKey
+
+            /**
+             * Within each billing cycle, specifies the cadence at which invoices are produced. If
+             * unspecified, a single invoice is produced per billing cycle.
+             */
+            @JsonProperty("invoicing_cycle_configuration")
+            @ExcludeMissing
+            fun _invoicingCycleConfiguration(): JsonField<InvoicingCycleConfiguration> =
+                invoicingCycleConfiguration
+
+            /**
+             * User-specified key/value pairs for the resource. Individual keys can be removed by
+             * setting the value to `null`, and the entire metadata mapping can be cleared by
+             * setting `metadata` to `null`.
+             */
+            @JsonProperty("metadata")
+            @ExcludeMissing
+            fun _metadata(): JsonField<Metadata> = metadata
+
+            @JsonAnyGetter
+            @ExcludeMissing
+            fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
+
+            private var validated: Boolean = false
+
+            fun validate(): NewPlanScalableMatrixWithTieredPricingPrice = apply {
+                if (validated) {
+                    return@apply
+                }
+
+                cadence()
+                itemId()
+                modelType()
+                name()
+                scalableMatrixWithTieredPricingConfig().validate()
+                billableMetricId()
+                billedInAdvance()
+                billingCycleConfiguration()?.validate()
+                conversionRate()
+                currency()
+                externalPriceId()
+                fixedPriceQuantity()
+                invoiceGroupingKey()
+                invoicingCycleConfiguration()?.validate()
+                metadata()?.validate()
+                validated = true
+            }
+
+            fun toBuilder() = Builder().from(this)
+
+            companion object {
+
+                fun builder() = Builder()
+            }
+
+            /** A builder for [NewPlanScalableMatrixWithTieredPricingPrice]. */
+            class Builder internal constructor() {
+
+                private var cadence: JsonField<Cadence>? = null
+                private var itemId: JsonField<String>? = null
+                private var modelType: JsonField<ModelType>? = null
+                private var name: JsonField<String>? = null
+                private var scalableMatrixWithTieredPricingConfig:
+                    JsonField<ScalableMatrixWithTieredPricingConfig>? =
+                    null
+                private var billableMetricId: JsonField<String> = JsonMissing.of()
+                private var billedInAdvance: JsonField<Boolean> = JsonMissing.of()
+                private var billingCycleConfiguration: JsonField<BillingCycleConfiguration> =
+                    JsonMissing.of()
+                private var conversionRate: JsonField<Double> = JsonMissing.of()
+                private var currency: JsonField<String> = JsonMissing.of()
+                private var externalPriceId: JsonField<String> = JsonMissing.of()
+                private var fixedPriceQuantity: JsonField<Double> = JsonMissing.of()
+                private var invoiceGroupingKey: JsonField<String> = JsonMissing.of()
+                private var invoicingCycleConfiguration: JsonField<InvoicingCycleConfiguration> =
+                    JsonMissing.of()
+                private var metadata: JsonField<Metadata> = JsonMissing.of()
+                private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
+
+                internal fun from(
+                    newPlanScalableMatrixWithTieredPricingPrice:
+                        NewPlanScalableMatrixWithTieredPricingPrice
+                ) = apply {
+                    cadence = newPlanScalableMatrixWithTieredPricingPrice.cadence
+                    itemId = newPlanScalableMatrixWithTieredPricingPrice.itemId
+                    modelType = newPlanScalableMatrixWithTieredPricingPrice.modelType
+                    name = newPlanScalableMatrixWithTieredPricingPrice.name
+                    scalableMatrixWithTieredPricingConfig =
+                        newPlanScalableMatrixWithTieredPricingPrice
+                            .scalableMatrixWithTieredPricingConfig
+                    billableMetricId = newPlanScalableMatrixWithTieredPricingPrice.billableMetricId
+                    billedInAdvance = newPlanScalableMatrixWithTieredPricingPrice.billedInAdvance
+                    billingCycleConfiguration =
+                        newPlanScalableMatrixWithTieredPricingPrice.billingCycleConfiguration
+                    conversionRate = newPlanScalableMatrixWithTieredPricingPrice.conversionRate
+                    currency = newPlanScalableMatrixWithTieredPricingPrice.currency
+                    externalPriceId = newPlanScalableMatrixWithTieredPricingPrice.externalPriceId
+                    fixedPriceQuantity =
+                        newPlanScalableMatrixWithTieredPricingPrice.fixedPriceQuantity
+                    invoiceGroupingKey =
+                        newPlanScalableMatrixWithTieredPricingPrice.invoiceGroupingKey
+                    invoicingCycleConfiguration =
+                        newPlanScalableMatrixWithTieredPricingPrice.invoicingCycleConfiguration
+                    metadata = newPlanScalableMatrixWithTieredPricingPrice.metadata
+                    additionalProperties =
+                        newPlanScalableMatrixWithTieredPricingPrice.additionalProperties
+                            .toMutableMap()
+                }
+
+                /** The cadence to bill for this price on. */
+                fun cadence(cadence: Cadence) = cadence(JsonField.of(cadence))
+
+                /** The cadence to bill for this price on. */
+                fun cadence(cadence: JsonField<Cadence>) = apply { this.cadence = cadence }
+
+                /** The id of the item the plan will be associated with. */
+                fun itemId(itemId: String) = itemId(JsonField.of(itemId))
+
+                /** The id of the item the plan will be associated with. */
+                fun itemId(itemId: JsonField<String>) = apply { this.itemId = itemId }
+
+                fun modelType(modelType: ModelType) = modelType(JsonField.of(modelType))
+
+                fun modelType(modelType: JsonField<ModelType>) = apply {
+                    this.modelType = modelType
+                }
+
+                /** The name of the price. */
+                fun name(name: String) = name(JsonField.of(name))
+
+                /** The name of the price. */
+                fun name(name: JsonField<String>) = apply { this.name = name }
+
+                fun scalableMatrixWithTieredPricingConfig(
+                    scalableMatrixWithTieredPricingConfig: ScalableMatrixWithTieredPricingConfig
+                ) =
+                    scalableMatrixWithTieredPricingConfig(
+                        JsonField.of(scalableMatrixWithTieredPricingConfig)
+                    )
+
+                fun scalableMatrixWithTieredPricingConfig(
+                    scalableMatrixWithTieredPricingConfig:
+                        JsonField<ScalableMatrixWithTieredPricingConfig>
+                ) = apply {
+                    this.scalableMatrixWithTieredPricingConfig =
+                        scalableMatrixWithTieredPricingConfig
+                }
+
+                /**
+                 * The id of the billable metric for the price. Only needed if the price is
+                 * usage-based.
+                 */
+                fun billableMetricId(billableMetricId: String?) =
+                    billableMetricId(JsonField.ofNullable(billableMetricId))
+
+                /**
+                 * The id of the billable metric for the price. Only needed if the price is
+                 * usage-based.
+                 */
+                fun billableMetricId(billableMetricId: JsonField<String>) = apply {
+                    this.billableMetricId = billableMetricId
+                }
+
+                /**
+                 * If the Price represents a fixed cost, the price will be billed in-advance if this
+                 * is true, and in-arrears if this is false.
+                 */
+                fun billedInAdvance(billedInAdvance: Boolean?) =
+                    billedInAdvance(JsonField.ofNullable(billedInAdvance))
+
+                /**
+                 * If the Price represents a fixed cost, the price will be billed in-advance if this
+                 * is true, and in-arrears if this is false.
+                 */
+                fun billedInAdvance(billedInAdvance: Boolean) =
+                    billedInAdvance(billedInAdvance as Boolean?)
+
+                /**
+                 * If the Price represents a fixed cost, the price will be billed in-advance if this
+                 * is true, and in-arrears if this is false.
+                 */
+                fun billedInAdvance(billedInAdvance: JsonField<Boolean>) = apply {
+                    this.billedInAdvance = billedInAdvance
+                }
+
+                /**
+                 * For custom cadence: specifies the duration of the billing period in days or
+                 * months.
+                 */
+                fun billingCycleConfiguration(
+                    billingCycleConfiguration: BillingCycleConfiguration?
+                ) = billingCycleConfiguration(JsonField.ofNullable(billingCycleConfiguration))
+
+                /**
+                 * For custom cadence: specifies the duration of the billing period in days or
+                 * months.
+                 */
+                fun billingCycleConfiguration(
+                    billingCycleConfiguration: JsonField<BillingCycleConfiguration>
+                ) = apply { this.billingCycleConfiguration = billingCycleConfiguration }
+
+                /** The per unit conversion rate of the price currency to the invoicing currency. */
+                fun conversionRate(conversionRate: Double?) =
+                    conversionRate(JsonField.ofNullable(conversionRate))
+
+                /** The per unit conversion rate of the price currency to the invoicing currency. */
+                fun conversionRate(conversionRate: Double) =
+                    conversionRate(conversionRate as Double?)
+
+                /** The per unit conversion rate of the price currency to the invoicing currency. */
+                fun conversionRate(conversionRate: JsonField<Double>) = apply {
+                    this.conversionRate = conversionRate
+                }
+
+                /**
+                 * An ISO 4217 currency string, or custom pricing unit identifier, in which this
+                 * price is billed.
+                 */
+                fun currency(currency: String?) = currency(JsonField.ofNullable(currency))
+
+                /**
+                 * An ISO 4217 currency string, or custom pricing unit identifier, in which this
+                 * price is billed.
+                 */
+                fun currency(currency: JsonField<String>) = apply { this.currency = currency }
+
+                /** An alias for the price. */
+                fun externalPriceId(externalPriceId: String?) =
+                    externalPriceId(JsonField.ofNullable(externalPriceId))
+
+                /** An alias for the price. */
+                fun externalPriceId(externalPriceId: JsonField<String>) = apply {
+                    this.externalPriceId = externalPriceId
+                }
+
+                /**
+                 * If the Price represents a fixed cost, this represents the quantity of units
+                 * applied.
+                 */
+                fun fixedPriceQuantity(fixedPriceQuantity: Double?) =
+                    fixedPriceQuantity(JsonField.ofNullable(fixedPriceQuantity))
+
+                /**
+                 * If the Price represents a fixed cost, this represents the quantity of units
+                 * applied.
+                 */
+                fun fixedPriceQuantity(fixedPriceQuantity: Double) =
+                    fixedPriceQuantity(fixedPriceQuantity as Double?)
+
+                /**
+                 * If the Price represents a fixed cost, this represents the quantity of units
+                 * applied.
+                 */
+                fun fixedPriceQuantity(fixedPriceQuantity: JsonField<Double>) = apply {
+                    this.fixedPriceQuantity = fixedPriceQuantity
+                }
+
+                /** The property used to group this price on an invoice */
+                fun invoiceGroupingKey(invoiceGroupingKey: String?) =
+                    invoiceGroupingKey(JsonField.ofNullable(invoiceGroupingKey))
+
+                /** The property used to group this price on an invoice */
+                fun invoiceGroupingKey(invoiceGroupingKey: JsonField<String>) = apply {
+                    this.invoiceGroupingKey = invoiceGroupingKey
+                }
+
+                /**
+                 * Within each billing cycle, specifies the cadence at which invoices are produced.
+                 * If unspecified, a single invoice is produced per billing cycle.
+                 */
+                fun invoicingCycleConfiguration(
+                    invoicingCycleConfiguration: InvoicingCycleConfiguration?
+                ) = invoicingCycleConfiguration(JsonField.ofNullable(invoicingCycleConfiguration))
+
+                /**
+                 * Within each billing cycle, specifies the cadence at which invoices are produced.
+                 * If unspecified, a single invoice is produced per billing cycle.
+                 */
+                fun invoicingCycleConfiguration(
+                    invoicingCycleConfiguration: JsonField<InvoicingCycleConfiguration>
+                ) = apply { this.invoicingCycleConfiguration = invoicingCycleConfiguration }
+
+                /**
+                 * User-specified key/value pairs for the resource. Individual keys can be removed
+                 * by setting the value to `null`, and the entire metadata mapping can be cleared by
+                 * setting `metadata` to `null`.
+                 */
+                fun metadata(metadata: Metadata?) = metadata(JsonField.ofNullable(metadata))
+
+                /**
+                 * User-specified key/value pairs for the resource. Individual keys can be removed
+                 * by setting the value to `null`, and the entire metadata mapping can be cleared by
+                 * setting `metadata` to `null`.
+                 */
+                fun metadata(metadata: JsonField<Metadata>) = apply { this.metadata = metadata }
+
+                fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                    this.additionalProperties.clear()
+                    putAllAdditionalProperties(additionalProperties)
+                }
+
+                fun putAdditionalProperty(key: String, value: JsonValue) = apply {
+                    additionalProperties.put(key, value)
+                }
+
+                fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) =
+                    apply {
+                        this.additionalProperties.putAll(additionalProperties)
+                    }
+
+                fun removeAdditionalProperty(key: String) = apply {
+                    additionalProperties.remove(key)
+                }
+
+                fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                    keys.forEach(::removeAdditionalProperty)
+                }
+
+                fun build(): NewPlanScalableMatrixWithTieredPricingPrice =
+                    NewPlanScalableMatrixWithTieredPricingPrice(
+                        checkRequired("cadence", cadence),
+                        checkRequired("itemId", itemId),
+                        checkRequired("modelType", modelType),
+                        checkRequired("name", name),
+                        checkRequired(
+                            "scalableMatrixWithTieredPricingConfig",
+                            scalableMatrixWithTieredPricingConfig
+                        ),
+                        billableMetricId,
+                        billedInAdvance,
+                        billingCycleConfiguration,
+                        conversionRate,
+                        currency,
+                        externalPriceId,
+                        fixedPriceQuantity,
+                        invoiceGroupingKey,
+                        invoicingCycleConfiguration,
+                        metadata,
+                        additionalProperties.toImmutable(),
+                    )
+            }
+
+            /** The cadence to bill for this price on. */
+            class Cadence
+            @JsonCreator
+            private constructor(
+                private val value: JsonField<String>,
+            ) : Enum {
+
+                /**
+                 * Returns this class instance's raw value.
+                 *
+                 * This is usually only useful if this instance was deserialized from data that
+                 * doesn't match any known member, and you want to know that value. For example, if
+                 * the SDK is on an older version than the API, then the API may respond with new
+                 * members that the SDK is unaware of.
+                 */
+                @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
+
+                companion object {
+
+                    val ANNUAL = of("annual")
+
+                    val SEMI_ANNUAL = of("semi_annual")
+
+                    val MONTHLY = of("monthly")
+
+                    val QUARTERLY = of("quarterly")
+
+                    val ONE_TIME = of("one_time")
+
+                    val CUSTOM = of("custom")
+
+                    fun of(value: String) = Cadence(JsonField.of(value))
+                }
+
+                /** An enum containing [Cadence]'s known values. */
+                enum class Known {
+                    ANNUAL,
+                    SEMI_ANNUAL,
+                    MONTHLY,
+                    QUARTERLY,
+                    ONE_TIME,
+                    CUSTOM,
+                }
+
+                /**
+                 * An enum containing [Cadence]'s known values, as well as an [_UNKNOWN] member.
+                 *
+                 * An instance of [Cadence] can contain an unknown value in a couple of cases:
+                 * - It was deserialized from data that doesn't match any known member. For example,
+                 *   if the SDK is on an older version than the API, then the API may respond with
+                 *   new members that the SDK is unaware of.
+                 * - It was constructed with an arbitrary value using the [of] method.
+                 */
+                enum class Value {
+                    ANNUAL,
+                    SEMI_ANNUAL,
+                    MONTHLY,
+                    QUARTERLY,
+                    ONE_TIME,
+                    CUSTOM,
+                    /**
+                     * An enum member indicating that [Cadence] was instantiated with an unknown
+                     * value.
+                     */
+                    _UNKNOWN,
+                }
+
+                /**
+                 * Returns an enum member corresponding to this class instance's value, or
+                 * [Value._UNKNOWN] if the class was instantiated with an unknown value.
+                 *
+                 * Use the [known] method instead if you're certain the value is always known or if
+                 * you want to throw for the unknown case.
+                 */
+                fun value(): Value =
+                    when (this) {
+                        ANNUAL -> Value.ANNUAL
+                        SEMI_ANNUAL -> Value.SEMI_ANNUAL
+                        MONTHLY -> Value.MONTHLY
+                        QUARTERLY -> Value.QUARTERLY
+                        ONE_TIME -> Value.ONE_TIME
+                        CUSTOM -> Value.CUSTOM
+                        else -> Value._UNKNOWN
+                    }
+
+                /**
+                 * Returns an enum member corresponding to this class instance's value.
+                 *
+                 * Use the [value] method instead if you're uncertain the value is always known and
+                 * don't want to throw for the unknown case.
+                 *
+                 * @throws OrbInvalidDataException if this class instance's value is a not a known
+                 *   member.
+                 */
+                fun known(): Known =
+                    when (this) {
+                        ANNUAL -> Known.ANNUAL
+                        SEMI_ANNUAL -> Known.SEMI_ANNUAL
+                        MONTHLY -> Known.MONTHLY
+                        QUARTERLY -> Known.QUARTERLY
+                        ONE_TIME -> Known.ONE_TIME
+                        CUSTOM -> Known.CUSTOM
+                        else -> throw OrbInvalidDataException("Unknown Cadence: $value")
+                    }
+
+                fun asString(): String = _value().asStringOrThrow()
+
+                override fun equals(other: Any?): Boolean {
+                    if (this === other) {
+                        return true
+                    }
+
+                    return /* spotless:off */ other is Cadence && value == other.value /* spotless:on */
+                }
+
+                override fun hashCode() = value.hashCode()
+
+                override fun toString() = value.toString()
+            }
+
+            class ModelType
+            @JsonCreator
+            private constructor(
+                private val value: JsonField<String>,
+            ) : Enum {
+
+                /**
+                 * Returns this class instance's raw value.
+                 *
+                 * This is usually only useful if this instance was deserialized from data that
+                 * doesn't match any known member, and you want to know that value. For example, if
+                 * the SDK is on an older version than the API, then the API may respond with new
+                 * members that the SDK is unaware of.
+                 */
+                @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
+
+                companion object {
+
+                    val SCALABLE_MATRIX_WITH_TIERED_PRICING =
+                        of("scalable_matrix_with_tiered_pricing")
+
+                    fun of(value: String) = ModelType(JsonField.of(value))
+                }
+
+                /** An enum containing [ModelType]'s known values. */
+                enum class Known {
+                    SCALABLE_MATRIX_WITH_TIERED_PRICING,
+                }
+
+                /**
+                 * An enum containing [ModelType]'s known values, as well as an [_UNKNOWN] member.
+                 *
+                 * An instance of [ModelType] can contain an unknown value in a couple of cases:
+                 * - It was deserialized from data that doesn't match any known member. For example,
+                 *   if the SDK is on an older version than the API, then the API may respond with
+                 *   new members that the SDK is unaware of.
+                 * - It was constructed with an arbitrary value using the [of] method.
+                 */
+                enum class Value {
+                    SCALABLE_MATRIX_WITH_TIERED_PRICING,
+                    /**
+                     * An enum member indicating that [ModelType] was instantiated with an unknown
+                     * value.
+                     */
+                    _UNKNOWN,
+                }
+
+                /**
+                 * Returns an enum member corresponding to this class instance's value, or
+                 * [Value._UNKNOWN] if the class was instantiated with an unknown value.
+                 *
+                 * Use the [known] method instead if you're certain the value is always known or if
+                 * you want to throw for the unknown case.
+                 */
+                fun value(): Value =
+                    when (this) {
+                        SCALABLE_MATRIX_WITH_TIERED_PRICING ->
+                            Value.SCALABLE_MATRIX_WITH_TIERED_PRICING
+                        else -> Value._UNKNOWN
+                    }
+
+                /**
+                 * Returns an enum member corresponding to this class instance's value.
+                 *
+                 * Use the [value] method instead if you're uncertain the value is always known and
+                 * don't want to throw for the unknown case.
+                 *
+                 * @throws OrbInvalidDataException if this class instance's value is a not a known
+                 *   member.
+                 */
+                fun known(): Known =
+                    when (this) {
+                        SCALABLE_MATRIX_WITH_TIERED_PRICING ->
+                            Known.SCALABLE_MATRIX_WITH_TIERED_PRICING
+                        else -> throw OrbInvalidDataException("Unknown ModelType: $value")
+                    }
+
+                fun asString(): String = _value().asStringOrThrow()
+
+                override fun equals(other: Any?): Boolean {
+                    if (this === other) {
+                        return true
+                    }
+
+                    return /* spotless:off */ other is ModelType && value == other.value /* spotless:on */
+                }
+
+                override fun hashCode() = value.hashCode()
+
+                override fun toString() = value.toString()
+            }
+
+            @NoAutoDetect
+            class ScalableMatrixWithTieredPricingConfig
+            @JsonCreator
+            private constructor(
+                @JsonAnySetter
+                private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
+            ) {
+
+                @JsonAnyGetter
+                @ExcludeMissing
+                fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
+
+                private var validated: Boolean = false
+
+                fun validate(): ScalableMatrixWithTieredPricingConfig = apply {
+                    if (validated) {
+                        return@apply
+                    }
+
+                    validated = true
+                }
+
+                fun toBuilder() = Builder().from(this)
+
+                companion object {
+
+                    fun builder() = Builder()
+                }
+
+                /** A builder for [ScalableMatrixWithTieredPricingConfig]. */
+                class Builder internal constructor() {
+
+                    private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
+
+                    internal fun from(
+                        scalableMatrixWithTieredPricingConfig: ScalableMatrixWithTieredPricingConfig
+                    ) = apply {
+                        additionalProperties =
+                            scalableMatrixWithTieredPricingConfig.additionalProperties
+                                .toMutableMap()
+                    }
+
+                    fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                        this.additionalProperties.clear()
+                        putAllAdditionalProperties(additionalProperties)
+                    }
+
+                    fun putAdditionalProperty(key: String, value: JsonValue) = apply {
+                        additionalProperties.put(key, value)
+                    }
+
+                    fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) =
+                        apply {
+                            this.additionalProperties.putAll(additionalProperties)
+                        }
+
+                    fun removeAdditionalProperty(key: String) = apply {
+                        additionalProperties.remove(key)
+                    }
+
+                    fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                        keys.forEach(::removeAdditionalProperty)
+                    }
+
+                    fun build(): ScalableMatrixWithTieredPricingConfig =
+                        ScalableMatrixWithTieredPricingConfig(additionalProperties.toImmutable())
+                }
+
+                override fun equals(other: Any?): Boolean {
+                    if (this === other) {
+                        return true
+                    }
+
+                    return /* spotless:off */ other is ScalableMatrixWithTieredPricingConfig && additionalProperties == other.additionalProperties /* spotless:on */
+                }
+
+                /* spotless:off */
+                private val hashCode: Int by lazy { Objects.hash(additionalProperties) }
+                /* spotless:on */
+
+                override fun hashCode(): Int = hashCode
+
+                override fun toString() =
+                    "ScalableMatrixWithTieredPricingConfig{additionalProperties=$additionalProperties}"
+            }
+
+            /**
+             * For custom cadence: specifies the duration of the billing period in days or months.
+             */
+            @NoAutoDetect
+            class BillingCycleConfiguration
+            @JsonCreator
+            private constructor(
+                @JsonProperty("duration")
+                @ExcludeMissing
+                private val duration: JsonField<Long> = JsonMissing.of(),
+                @JsonProperty("duration_unit")
+                @ExcludeMissing
+                private val durationUnit: JsonField<DurationUnit> = JsonMissing.of(),
+                @JsonAnySetter
+                private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
+            ) {
+
+                /** The duration of the billing period. */
+                fun duration(): Long = duration.getRequired("duration")
+
+                /** The unit of billing period duration. */
+                fun durationUnit(): DurationUnit = durationUnit.getRequired("duration_unit")
+
+                /** The duration of the billing period. */
+                @JsonProperty("duration")
+                @ExcludeMissing
+                fun _duration(): JsonField<Long> = duration
+
+                /** The unit of billing period duration. */
+                @JsonProperty("duration_unit")
+                @ExcludeMissing
+                fun _durationUnit(): JsonField<DurationUnit> = durationUnit
+
+                @JsonAnyGetter
+                @ExcludeMissing
+                fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
+
+                private var validated: Boolean = false
+
+                fun validate(): BillingCycleConfiguration = apply {
+                    if (validated) {
+                        return@apply
+                    }
+
+                    duration()
+                    durationUnit()
+                    validated = true
+                }
+
+                fun toBuilder() = Builder().from(this)
+
+                companion object {
+
+                    fun builder() = Builder()
+                }
+
+                /** A builder for [BillingCycleConfiguration]. */
+                class Builder internal constructor() {
+
+                    private var duration: JsonField<Long>? = null
+                    private var durationUnit: JsonField<DurationUnit>? = null
+                    private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
+
+                    internal fun from(billingCycleConfiguration: BillingCycleConfiguration) =
+                        apply {
+                            duration = billingCycleConfiguration.duration
+                            durationUnit = billingCycleConfiguration.durationUnit
+                            additionalProperties =
+                                billingCycleConfiguration.additionalProperties.toMutableMap()
+                        }
+
+                    /** The duration of the billing period. */
+                    fun duration(duration: Long) = duration(JsonField.of(duration))
+
+                    /** The duration of the billing period. */
+                    fun duration(duration: JsonField<Long>) = apply { this.duration = duration }
+
+                    /** The unit of billing period duration. */
+                    fun durationUnit(durationUnit: DurationUnit) =
+                        durationUnit(JsonField.of(durationUnit))
+
+                    /** The unit of billing period duration. */
+                    fun durationUnit(durationUnit: JsonField<DurationUnit>) = apply {
+                        this.durationUnit = durationUnit
+                    }
+
+                    fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                        this.additionalProperties.clear()
+                        putAllAdditionalProperties(additionalProperties)
+                    }
+
+                    fun putAdditionalProperty(key: String, value: JsonValue) = apply {
+                        additionalProperties.put(key, value)
+                    }
+
+                    fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) =
+                        apply {
+                            this.additionalProperties.putAll(additionalProperties)
+                        }
+
+                    fun removeAdditionalProperty(key: String) = apply {
+                        additionalProperties.remove(key)
+                    }
+
+                    fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                        keys.forEach(::removeAdditionalProperty)
+                    }
+
+                    fun build(): BillingCycleConfiguration =
+                        BillingCycleConfiguration(
+                            checkRequired("duration", duration),
+                            checkRequired("durationUnit", durationUnit),
+                            additionalProperties.toImmutable(),
+                        )
+                }
+
+                /** The unit of billing period duration. */
+                class DurationUnit
+                @JsonCreator
+                private constructor(
+                    private val value: JsonField<String>,
+                ) : Enum {
+
+                    /**
+                     * Returns this class instance's raw value.
+                     *
+                     * This is usually only useful if this instance was deserialized from data that
+                     * doesn't match any known member, and you want to know that value. For example,
+                     * if the SDK is on an older version than the API, then the API may respond with
+                     * new members that the SDK is unaware of.
+                     */
+                    @com.fasterxml.jackson.annotation.JsonValue
+                    fun _value(): JsonField<String> = value
+
+                    companion object {
+
+                        val DAY = of("day")
+
+                        val MONTH = of("month")
+
+                        fun of(value: String) = DurationUnit(JsonField.of(value))
+                    }
+
+                    /** An enum containing [DurationUnit]'s known values. */
+                    enum class Known {
+                        DAY,
+                        MONTH,
+                    }
+
+                    /**
+                     * An enum containing [DurationUnit]'s known values, as well as an [_UNKNOWN]
+                     * member.
+                     *
+                     * An instance of [DurationUnit] can contain an unknown value in a couple of
+                     * cases:
+                     * - It was deserialized from data that doesn't match any known member. For
+                     *   example, if the SDK is on an older version than the API, then the API may
+                     *   respond with new members that the SDK is unaware of.
+                     * - It was constructed with an arbitrary value using the [of] method.
+                     */
+                    enum class Value {
+                        DAY,
+                        MONTH,
+                        /**
+                         * An enum member indicating that [DurationUnit] was instantiated with an
+                         * unknown value.
+                         */
+                        _UNKNOWN,
+                    }
+
+                    /**
+                     * Returns an enum member corresponding to this class instance's value, or
+                     * [Value._UNKNOWN] if the class was instantiated with an unknown value.
+                     *
+                     * Use the [known] method instead if you're certain the value is always known or
+                     * if you want to throw for the unknown case.
+                     */
+                    fun value(): Value =
+                        when (this) {
+                            DAY -> Value.DAY
+                            MONTH -> Value.MONTH
+                            else -> Value._UNKNOWN
+                        }
+
+                    /**
+                     * Returns an enum member corresponding to this class instance's value.
+                     *
+                     * Use the [value] method instead if you're uncertain the value is always known
+                     * and don't want to throw for the unknown case.
+                     *
+                     * @throws OrbInvalidDataException if this class instance's value is a not a
+                     *   known member.
+                     */
+                    fun known(): Known =
+                        when (this) {
+                            DAY -> Known.DAY
+                            MONTH -> Known.MONTH
+                            else -> throw OrbInvalidDataException("Unknown DurationUnit: $value")
+                        }
+
+                    fun asString(): String = _value().asStringOrThrow()
+
+                    override fun equals(other: Any?): Boolean {
+                        if (this === other) {
+                            return true
+                        }
+
+                        return /* spotless:off */ other is DurationUnit && value == other.value /* spotless:on */
+                    }
+
+                    override fun hashCode() = value.hashCode()
+
+                    override fun toString() = value.toString()
+                }
+
+                override fun equals(other: Any?): Boolean {
+                    if (this === other) {
+                        return true
+                    }
+
+                    return /* spotless:off */ other is BillingCycleConfiguration && duration == other.duration && durationUnit == other.durationUnit && additionalProperties == other.additionalProperties /* spotless:on */
+                }
+
+                /* spotless:off */
+                private val hashCode: Int by lazy { Objects.hash(duration, durationUnit, additionalProperties) }
+                /* spotless:on */
+
+                override fun hashCode(): Int = hashCode
+
+                override fun toString() =
+                    "BillingCycleConfiguration{duration=$duration, durationUnit=$durationUnit, additionalProperties=$additionalProperties}"
+            }
+
+            /**
+             * Within each billing cycle, specifies the cadence at which invoices are produced. If
+             * unspecified, a single invoice is produced per billing cycle.
+             */
+            @NoAutoDetect
+            class InvoicingCycleConfiguration
+            @JsonCreator
+            private constructor(
+                @JsonProperty("duration")
+                @ExcludeMissing
+                private val duration: JsonField<Long> = JsonMissing.of(),
+                @JsonProperty("duration_unit")
+                @ExcludeMissing
+                private val durationUnit: JsonField<DurationUnit> = JsonMissing.of(),
+                @JsonAnySetter
+                private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
+            ) {
+
+                /** The duration of the billing period. */
+                fun duration(): Long = duration.getRequired("duration")
+
+                /** The unit of billing period duration. */
+                fun durationUnit(): DurationUnit = durationUnit.getRequired("duration_unit")
+
+                /** The duration of the billing period. */
+                @JsonProperty("duration")
+                @ExcludeMissing
+                fun _duration(): JsonField<Long> = duration
+
+                /** The unit of billing period duration. */
+                @JsonProperty("duration_unit")
+                @ExcludeMissing
+                fun _durationUnit(): JsonField<DurationUnit> = durationUnit
+
+                @JsonAnyGetter
+                @ExcludeMissing
+                fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
+
+                private var validated: Boolean = false
+
+                fun validate(): InvoicingCycleConfiguration = apply {
+                    if (validated) {
+                        return@apply
+                    }
+
+                    duration()
+                    durationUnit()
+                    validated = true
+                }
+
+                fun toBuilder() = Builder().from(this)
+
+                companion object {
+
+                    fun builder() = Builder()
+                }
+
+                /** A builder for [InvoicingCycleConfiguration]. */
+                class Builder internal constructor() {
+
+                    private var duration: JsonField<Long>? = null
+                    private var durationUnit: JsonField<DurationUnit>? = null
+                    private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
+
+                    internal fun from(invoicingCycleConfiguration: InvoicingCycleConfiguration) =
+                        apply {
+                            duration = invoicingCycleConfiguration.duration
+                            durationUnit = invoicingCycleConfiguration.durationUnit
+                            additionalProperties =
+                                invoicingCycleConfiguration.additionalProperties.toMutableMap()
+                        }
+
+                    /** The duration of the billing period. */
+                    fun duration(duration: Long) = duration(JsonField.of(duration))
+
+                    /** The duration of the billing period. */
+                    fun duration(duration: JsonField<Long>) = apply { this.duration = duration }
+
+                    /** The unit of billing period duration. */
+                    fun durationUnit(durationUnit: DurationUnit) =
+                        durationUnit(JsonField.of(durationUnit))
+
+                    /** The unit of billing period duration. */
+                    fun durationUnit(durationUnit: JsonField<DurationUnit>) = apply {
+                        this.durationUnit = durationUnit
+                    }
+
+                    fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                        this.additionalProperties.clear()
+                        putAllAdditionalProperties(additionalProperties)
+                    }
+
+                    fun putAdditionalProperty(key: String, value: JsonValue) = apply {
+                        additionalProperties.put(key, value)
+                    }
+
+                    fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) =
+                        apply {
+                            this.additionalProperties.putAll(additionalProperties)
+                        }
+
+                    fun removeAdditionalProperty(key: String) = apply {
+                        additionalProperties.remove(key)
+                    }
+
+                    fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                        keys.forEach(::removeAdditionalProperty)
+                    }
+
+                    fun build(): InvoicingCycleConfiguration =
+                        InvoicingCycleConfiguration(
+                            checkRequired("duration", duration),
+                            checkRequired("durationUnit", durationUnit),
+                            additionalProperties.toImmutable(),
+                        )
+                }
+
+                /** The unit of billing period duration. */
+                class DurationUnit
+                @JsonCreator
+                private constructor(
+                    private val value: JsonField<String>,
+                ) : Enum {
+
+                    /**
+                     * Returns this class instance's raw value.
+                     *
+                     * This is usually only useful if this instance was deserialized from data that
+                     * doesn't match any known member, and you want to know that value. For example,
+                     * if the SDK is on an older version than the API, then the API may respond with
+                     * new members that the SDK is unaware of.
+                     */
+                    @com.fasterxml.jackson.annotation.JsonValue
+                    fun _value(): JsonField<String> = value
+
+                    companion object {
+
+                        val DAY = of("day")
+
+                        val MONTH = of("month")
+
+                        fun of(value: String) = DurationUnit(JsonField.of(value))
+                    }
+
+                    /** An enum containing [DurationUnit]'s known values. */
+                    enum class Known {
+                        DAY,
+                        MONTH,
+                    }
+
+                    /**
+                     * An enum containing [DurationUnit]'s known values, as well as an [_UNKNOWN]
+                     * member.
+                     *
+                     * An instance of [DurationUnit] can contain an unknown value in a couple of
+                     * cases:
+                     * - It was deserialized from data that doesn't match any known member. For
+                     *   example, if the SDK is on an older version than the API, then the API may
+                     *   respond with new members that the SDK is unaware of.
+                     * - It was constructed with an arbitrary value using the [of] method.
+                     */
+                    enum class Value {
+                        DAY,
+                        MONTH,
+                        /**
+                         * An enum member indicating that [DurationUnit] was instantiated with an
+                         * unknown value.
+                         */
+                        _UNKNOWN,
+                    }
+
+                    /**
+                     * Returns an enum member corresponding to this class instance's value, or
+                     * [Value._UNKNOWN] if the class was instantiated with an unknown value.
+                     *
+                     * Use the [known] method instead if you're certain the value is always known or
+                     * if you want to throw for the unknown case.
+                     */
+                    fun value(): Value =
+                        when (this) {
+                            DAY -> Value.DAY
+                            MONTH -> Value.MONTH
+                            else -> Value._UNKNOWN
+                        }
+
+                    /**
+                     * Returns an enum member corresponding to this class instance's value.
+                     *
+                     * Use the [value] method instead if you're uncertain the value is always known
+                     * and don't want to throw for the unknown case.
+                     *
+                     * @throws OrbInvalidDataException if this class instance's value is a not a
+                     *   known member.
+                     */
+                    fun known(): Known =
+                        when (this) {
+                            DAY -> Known.DAY
+                            MONTH -> Known.MONTH
+                            else -> throw OrbInvalidDataException("Unknown DurationUnit: $value")
+                        }
+
+                    fun asString(): String = _value().asStringOrThrow()
+
+                    override fun equals(other: Any?): Boolean {
+                        if (this === other) {
+                            return true
+                        }
+
+                        return /* spotless:off */ other is DurationUnit && value == other.value /* spotless:on */
+                    }
+
+                    override fun hashCode() = value.hashCode()
+
+                    override fun toString() = value.toString()
+                }
+
+                override fun equals(other: Any?): Boolean {
+                    if (this === other) {
+                        return true
+                    }
+
+                    return /* spotless:off */ other is InvoicingCycleConfiguration && duration == other.duration && durationUnit == other.durationUnit && additionalProperties == other.additionalProperties /* spotless:on */
+                }
+
+                /* spotless:off */
+                private val hashCode: Int by lazy { Objects.hash(duration, durationUnit, additionalProperties) }
+                /* spotless:on */
+
+                override fun hashCode(): Int = hashCode
+
+                override fun toString() =
+                    "InvoicingCycleConfiguration{duration=$duration, durationUnit=$durationUnit, additionalProperties=$additionalProperties}"
+            }
+
+            /**
+             * User-specified key/value pairs for the resource. Individual keys can be removed by
+             * setting the value to `null`, and the entire metadata mapping can be cleared by
+             * setting `metadata` to `null`.
+             */
+            @NoAutoDetect
+            class Metadata
+            @JsonCreator
+            private constructor(
+                @JsonAnySetter
+                private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
+            ) {
+
+                @JsonAnyGetter
+                @ExcludeMissing
+                fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
+
+                private var validated: Boolean = false
+
+                fun validate(): Metadata = apply {
+                    if (validated) {
+                        return@apply
+                    }
+
+                    validated = true
+                }
+
+                fun toBuilder() = Builder().from(this)
+
+                companion object {
+
+                    fun builder() = Builder()
+                }
+
+                /** A builder for [Metadata]. */
+                class Builder internal constructor() {
+
+                    private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
+
+                    internal fun from(metadata: Metadata) = apply {
+                        additionalProperties = metadata.additionalProperties.toMutableMap()
+                    }
+
+                    fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                        this.additionalProperties.clear()
+                        putAllAdditionalProperties(additionalProperties)
+                    }
+
+                    fun putAdditionalProperty(key: String, value: JsonValue) = apply {
+                        additionalProperties.put(key, value)
+                    }
+
+                    fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) =
+                        apply {
+                            this.additionalProperties.putAll(additionalProperties)
+                        }
+
+                    fun removeAdditionalProperty(key: String) = apply {
+                        additionalProperties.remove(key)
+                    }
+
+                    fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                        keys.forEach(::removeAdditionalProperty)
+                    }
+
+                    fun build(): Metadata = Metadata(additionalProperties.toImmutable())
+                }
+
+                override fun equals(other: Any?): Boolean {
+                    if (this === other) {
+                        return true
+                    }
+
+                    return /* spotless:off */ other is Metadata && additionalProperties == other.additionalProperties /* spotless:on */
+                }
+
+                /* spotless:off */
+                private val hashCode: Int by lazy { Objects.hash(additionalProperties) }
+                /* spotless:on */
+
+                override fun hashCode(): Int = hashCode
+
+                override fun toString() = "Metadata{additionalProperties=$additionalProperties}"
+            }
+
+            override fun equals(other: Any?): Boolean {
+                if (this === other) {
+                    return true
+                }
+
+                return /* spotless:off */ other is NewPlanScalableMatrixWithTieredPricingPrice && cadence == other.cadence && itemId == other.itemId && modelType == other.modelType && name == other.name && scalableMatrixWithTieredPricingConfig == other.scalableMatrixWithTieredPricingConfig && billableMetricId == other.billableMetricId && billedInAdvance == other.billedInAdvance && billingCycleConfiguration == other.billingCycleConfiguration && conversionRate == other.conversionRate && currency == other.currency && externalPriceId == other.externalPriceId && fixedPriceQuantity == other.fixedPriceQuantity && invoiceGroupingKey == other.invoiceGroupingKey && invoicingCycleConfiguration == other.invoicingCycleConfiguration && metadata == other.metadata && additionalProperties == other.additionalProperties /* spotless:on */
+            }
+
+            /* spotless:off */
+            private val hashCode: Int by lazy { Objects.hash(cadence, itemId, modelType, name, scalableMatrixWithTieredPricingConfig, billableMetricId, billedInAdvance, billingCycleConfiguration, conversionRate, currency, externalPriceId, fixedPriceQuantity, invoiceGroupingKey, invoicingCycleConfiguration, metadata, additionalProperties) }
+            /* spotless:on */
+
+            override fun hashCode(): Int = hashCode
+
+            override fun toString() =
+                "NewPlanScalableMatrixWithTieredPricingPrice{cadence=$cadence, itemId=$itemId, modelType=$modelType, name=$name, scalableMatrixWithTieredPricingConfig=$scalableMatrixWithTieredPricingConfig, billableMetricId=$billableMetricId, billedInAdvance=$billedInAdvance, billingCycleConfiguration=$billingCycleConfiguration, conversionRate=$conversionRate, currency=$currency, externalPriceId=$externalPriceId, fixedPriceQuantity=$fixedPriceQuantity, invoiceGroupingKey=$invoiceGroupingKey, invoicingCycleConfiguration=$invoicingCycleConfiguration, metadata=$metadata, additionalProperties=$additionalProperties}"
         }
     }
 
