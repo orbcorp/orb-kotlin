@@ -363,6 +363,14 @@ class SubscriptionsTest {
                                                 .unitAmount("unit_amount")
                                                 .build()
                                         )
+                                        .dimensionalPriceConfiguration(
+                                            Price.UnitPrice.DimensionalPriceConfiguration.builder()
+                                                .addDimensionValue("string")
+                                                .dimensionalPriceGroupId(
+                                                    "dimensional_price_group_id"
+                                                )
+                                                .build()
+                                        )
                                         .build()
                                 )
                                 .product(
@@ -488,6 +496,14 @@ class SubscriptionsTest {
                                         .unitConfig(
                                             Price.UnitPrice.UnitConfig.builder()
                                                 .unitAmount("unit_amount")
+                                                .build()
+                                        )
+                                        .dimensionalPriceConfiguration(
+                                            Price.UnitPrice.DimensionalPriceConfiguration.builder()
+                                                .addDimensionValue("string")
+                                                .dimensionalPriceGroupId(
+                                                    "dimensional_price_group_id"
+                                                )
                                                 .build()
                                         )
                                         .build()
@@ -853,6 +869,12 @@ class SubscriptionsTest {
                                             .unitAmount("unit_amount")
                                             .build()
                                     )
+                                    .dimensionalPriceConfiguration(
+                                        Price.UnitPrice.DimensionalPriceConfiguration.builder()
+                                            .addDimensionValue("string")
+                                            .dimensionalPriceGroupId("dimensional_price_group_id")
+                                            .build()
+                                    )
                                     .build()
                             )
                             .product(
@@ -968,6 +990,12 @@ class SubscriptionsTest {
                                     .unitConfig(
                                         Price.UnitPrice.UnitConfig.builder()
                                             .unitAmount("unit_amount")
+                                            .build()
+                                    )
+                                    .dimensionalPriceConfiguration(
+                                        Price.UnitPrice.DimensionalPriceConfiguration.builder()
+                                            .addDimensionValue("string")
+                                            .dimensionalPriceGroupId("dimensional_price_group_id")
                                             .build()
                                     )
                                     .build()

@@ -341,6 +341,12 @@ class SubscriptionTriggerPhaseResponseTest {
                                         .unitAmount("unit_amount")
                                         .build()
                                 )
+                                .dimensionalPriceConfiguration(
+                                    Price.UnitPrice.DimensionalPriceConfiguration.builder()
+                                        .addDimensionValue("string")
+                                        .dimensionalPriceGroupId("dimensional_price_group_id")
+                                        .build()
+                                )
                                 .build()
                         )
                         .product(
@@ -452,6 +458,12 @@ class SubscriptionTriggerPhaseResponseTest {
                                 .unitConfig(
                                     Price.UnitPrice.UnitConfig.builder()
                                         .unitAmount("unit_amount")
+                                        .build()
+                                )
+                                .dimensionalPriceConfiguration(
+                                    Price.UnitPrice.DimensionalPriceConfiguration.builder()
+                                        .addDimensionValue("string")
+                                        .dimensionalPriceGroupId("dimensional_price_group_id")
                                         .build()
                                 )
                                 .build()
@@ -817,6 +829,12 @@ class SubscriptionTriggerPhaseResponseTest {
                                     .unitAmount("unit_amount")
                                     .build()
                             )
+                            .dimensionalPriceConfiguration(
+                                Price.UnitPrice.DimensionalPriceConfiguration.builder()
+                                    .addDimensionValue("string")
+                                    .dimensionalPriceGroupId("dimensional_price_group_id")
+                                    .build()
+                            )
                             .build()
                     )
                     .product(
@@ -922,6 +940,12 @@ class SubscriptionTriggerPhaseResponseTest {
                             .unitConfig(
                                 Price.UnitPrice.UnitConfig.builder()
                                     .unitAmount("unit_amount")
+                                    .build()
+                            )
+                            .dimensionalPriceConfiguration(
+                                Price.UnitPrice.DimensionalPriceConfiguration.builder()
+                                    .addDimensionValue("string")
+                                    .dimensionalPriceGroupId("dimensional_price_group_id")
                                     .build()
                             )
                             .build()

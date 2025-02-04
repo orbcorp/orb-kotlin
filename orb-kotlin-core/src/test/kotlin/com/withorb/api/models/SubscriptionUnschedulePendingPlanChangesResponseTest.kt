@@ -348,6 +348,12 @@ class SubscriptionUnschedulePendingPlanChangesResponseTest {
                                         .unitAmount("unit_amount")
                                         .build()
                                 )
+                                .dimensionalPriceConfiguration(
+                                    Price.UnitPrice.DimensionalPriceConfiguration.builder()
+                                        .addDimensionValue("string")
+                                        .dimensionalPriceGroupId("dimensional_price_group_id")
+                                        .build()
+                                )
                                 .build()
                         )
                         .product(
@@ -459,6 +465,12 @@ class SubscriptionUnschedulePendingPlanChangesResponseTest {
                                 .unitConfig(
                                     Price.UnitPrice.UnitConfig.builder()
                                         .unitAmount("unit_amount")
+                                        .build()
+                                )
+                                .dimensionalPriceConfiguration(
+                                    Price.UnitPrice.DimensionalPriceConfiguration.builder()
+                                        .addDimensionValue("string")
+                                        .dimensionalPriceGroupId("dimensional_price_group_id")
                                         .build()
                                 )
                                 .build()
@@ -833,6 +845,12 @@ class SubscriptionUnschedulePendingPlanChangesResponseTest {
                                     .unitAmount("unit_amount")
                                     .build()
                             )
+                            .dimensionalPriceConfiguration(
+                                Price.UnitPrice.DimensionalPriceConfiguration.builder()
+                                    .addDimensionValue("string")
+                                    .dimensionalPriceGroupId("dimensional_price_group_id")
+                                    .build()
+                            )
                             .build()
                     )
                     .product(
@@ -939,6 +957,12 @@ class SubscriptionUnschedulePendingPlanChangesResponseTest {
                             .unitConfig(
                                 Price.UnitPrice.UnitConfig.builder()
                                     .unitAmount("unit_amount")
+                                    .build()
+                            )
+                            .dimensionalPriceConfiguration(
+                                Price.UnitPrice.DimensionalPriceConfiguration.builder()
+                                    .addDimensionValue("string")
+                                    .dimensionalPriceGroupId("dimensional_price_group_id")
                                     .build()
                             )
                             .build()
