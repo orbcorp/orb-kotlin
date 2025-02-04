@@ -14,7 +14,24 @@ class InvoiceLineItemCreateResponseTest {
         val invoiceLineItemCreateResponse =
             InvoiceLineItemCreateResponse.builder()
                 .id("id")
+                .adjustedSubtotal("5.00")
+                .addAdjustment(
+                    InvoiceLineItemCreateResponse.Adjustment.AmountDiscountAdjustment.builder()
+                        .id("id")
+                        .adjustmentType(
+                            InvoiceLineItemCreateResponse.Adjustment.AmountDiscountAdjustment
+                                .AdjustmentType
+                                .AMOUNT_DISCOUNT
+                        )
+                        .amountDiscount("amount_discount")
+                        .addAppliesToPriceId("string")
+                        .isInvoiceLevel(true)
+                        .planPhaseOrder(0L)
+                        .reason("reason")
+                        .build()
+                )
                 .amount("7.00")
+                .creditsApplied("6.00")
                 .discount(
                     PercentageDiscount.builder()
                         .addAppliesToPriceId("h74gfhdjvn7ujokd")
@@ -41,6 +58,7 @@ class InvoiceLineItemCreateResponseTest {
                 )
                 .minimumAmount("minimum_amount")
                 .name("Fixed Fee")
+                .partiallyInvoicedAmount("4.00")
                 .price(
                     Price.UnitPrice.builder()
                         .id("id")
@@ -109,6 +127,12 @@ class InvoiceLineItemCreateResponseTest {
                         .unitConfig(
                             Price.UnitPrice.UnitConfig.builder().unitAmount("unit_amount").build()
                         )
+                        .dimensionalPriceConfiguration(
+                            Price.UnitPrice.DimensionalPriceConfiguration.builder()
+                                .addDimensionValue("string")
+                                .dimensionalPriceGroupId("dimensional_price_group_id")
+                                .build()
+                        )
                         .build()
                 )
                 .quantity(1.0)
@@ -147,7 +171,27 @@ class InvoiceLineItemCreateResponseTest {
                 .build()
         assertThat(invoiceLineItemCreateResponse).isNotNull
         assertThat(invoiceLineItemCreateResponse.id()).isEqualTo("id")
+        assertThat(invoiceLineItemCreateResponse.adjustedSubtotal()).isEqualTo("5.00")
+        assertThat(invoiceLineItemCreateResponse.adjustments())
+            .containsExactly(
+                InvoiceLineItemCreateResponse.Adjustment.ofAmountDiscount(
+                    InvoiceLineItemCreateResponse.Adjustment.AmountDiscountAdjustment.builder()
+                        .id("id")
+                        .adjustmentType(
+                            InvoiceLineItemCreateResponse.Adjustment.AmountDiscountAdjustment
+                                .AdjustmentType
+                                .AMOUNT_DISCOUNT
+                        )
+                        .amountDiscount("amount_discount")
+                        .addAppliesToPriceId("string")
+                        .isInvoiceLevel(true)
+                        .planPhaseOrder(0L)
+                        .reason("reason")
+                        .build()
+                )
+            )
         assertThat(invoiceLineItemCreateResponse.amount()).isEqualTo("7.00")
+        assertThat(invoiceLineItemCreateResponse.creditsApplied()).isEqualTo("6.00")
         assertThat(invoiceLineItemCreateResponse.discount())
             .isEqualTo(
                 Discount.ofPercentage(
@@ -180,6 +224,7 @@ class InvoiceLineItemCreateResponseTest {
             )
         assertThat(invoiceLineItemCreateResponse.minimumAmount()).isEqualTo("minimum_amount")
         assertThat(invoiceLineItemCreateResponse.name()).isEqualTo("Fixed Fee")
+        assertThat(invoiceLineItemCreateResponse.partiallyInvoicedAmount()).isEqualTo("4.00")
         assertThat(invoiceLineItemCreateResponse.price())
             .isEqualTo(
                 Price.ofUnit(
@@ -249,6 +294,12 @@ class InvoiceLineItemCreateResponseTest {
                         .priceType(Price.UnitPrice.PriceType.USAGE_PRICE)
                         .unitConfig(
                             Price.UnitPrice.UnitConfig.builder().unitAmount("unit_amount").build()
+                        )
+                        .dimensionalPriceConfiguration(
+                            Price.UnitPrice.DimensionalPriceConfiguration.builder()
+                                .addDimensionValue("string")
+                                .dimensionalPriceGroupId("dimensional_price_group_id")
+                                .build()
                         )
                         .build()
                 )

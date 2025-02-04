@@ -172,6 +172,12 @@ class PlanTest {
                         .unitConfig(
                             Price.UnitPrice.UnitConfig.builder().unitAmount("unit_amount").build()
                         )
+                        .dimensionalPriceConfiguration(
+                            Price.UnitPrice.DimensionalPriceConfiguration.builder()
+                                .addDimensionValue("string")
+                                .dimensionalPriceGroupId("dimensional_price_group_id")
+                                .build()
+                        )
                         .build()
                 )
                 .product(
@@ -362,6 +368,12 @@ class PlanTest {
                         .priceType(Price.UnitPrice.PriceType.USAGE_PRICE)
                         .unitConfig(
                             Price.UnitPrice.UnitConfig.builder().unitAmount("unit_amount").build()
+                        )
+                        .dimensionalPriceConfiguration(
+                            Price.UnitPrice.DimensionalPriceConfiguration.builder()
+                                .addDimensionValue("string")
+                                .dimensionalPriceGroupId("dimensional_price_group_id")
+                                .build()
                         )
                         .build()
                 )

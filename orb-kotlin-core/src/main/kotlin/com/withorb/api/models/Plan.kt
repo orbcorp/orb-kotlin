@@ -848,6 +848,20 @@ private constructor(
         fun addPrice(maxGroupTieredPackage: Price.MaxGroupTieredPackagePrice) =
             addPrice(Price.ofMaxGroupTieredPackage(maxGroupTieredPackage))
 
+        /**
+         * Prices for this plan. If the plan has phases, this includes prices across all phases of
+         * the plan.
+         */
+        fun addPrice(scalableMatrixWithUnitPricing: Price.ScalableMatrixWithUnitPricingPrice) =
+            addPrice(Price.ofScalableMatrixWithUnitPricing(scalableMatrixWithUnitPricing))
+
+        /**
+         * Prices for this plan. If the plan has phases, this includes prices across all phases of
+         * the plan.
+         */
+        fun addPrice(scalableMatrixWithTieredPricing: Price.ScalableMatrixWithTieredPricingPrice) =
+            addPrice(Price.ofScalableMatrixWithTieredPricing(scalableMatrixWithTieredPricing))
+
         fun product(product: Product) = product(JsonField.of(product))
 
         fun product(product: JsonField<Product>) = apply { this.product = product }

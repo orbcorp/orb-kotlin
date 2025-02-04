@@ -101,7 +101,24 @@ class InvoiceTest {
                 .addLineItem(
                     Invoice.LineItem.builder()
                         .id("id")
+                        .adjustedSubtotal("5.00")
+                        .addAdjustment(
+                            Invoice.LineItem.Adjustment.AmountDiscountAdjustment.builder()
+                                .id("id")
+                                .adjustmentType(
+                                    Invoice.LineItem.Adjustment.AmountDiscountAdjustment
+                                        .AdjustmentType
+                                        .AMOUNT_DISCOUNT
+                                )
+                                .amountDiscount("amount_discount")
+                                .addAppliesToPriceId("string")
+                                .isInvoiceLevel(true)
+                                .planPhaseOrder(0L)
+                                .reason("reason")
+                                .build()
+                        )
                         .amount("7.00")
+                        .creditsApplied("6.00")
                         .discount(
                             PercentageDiscount.builder()
                                 .addAppliesToPriceId("h74gfhdjvn7ujokd")
@@ -128,6 +145,7 @@ class InvoiceTest {
                         )
                         .minimumAmount("minimum_amount")
                         .name("Fixed Fee")
+                        .partiallyInvoicedAmount("4.00")
                         .price(
                             Price.UnitPrice.builder()
                                 .id("id")
@@ -200,6 +218,12 @@ class InvoiceTest {
                                 .unitConfig(
                                     Price.UnitPrice.UnitConfig.builder()
                                         .unitAmount("unit_amount")
+                                        .build()
+                                )
+                                .dimensionalPriceConfiguration(
+                                    Price.UnitPrice.DimensionalPriceConfiguration.builder()
+                                        .addDimensionValue("string")
+                                        .dimensionalPriceGroupId("dimensional_price_group_id")
                                         .build()
                                 )
                                 .build()
@@ -392,7 +416,23 @@ class InvoiceTest {
             .containsExactly(
                 Invoice.LineItem.builder()
                     .id("id")
+                    .adjustedSubtotal("5.00")
+                    .addAdjustment(
+                        Invoice.LineItem.Adjustment.AmountDiscountAdjustment.builder()
+                            .id("id")
+                            .adjustmentType(
+                                Invoice.LineItem.Adjustment.AmountDiscountAdjustment.AdjustmentType
+                                    .AMOUNT_DISCOUNT
+                            )
+                            .amountDiscount("amount_discount")
+                            .addAppliesToPriceId("string")
+                            .isInvoiceLevel(true)
+                            .planPhaseOrder(0L)
+                            .reason("reason")
+                            .build()
+                    )
                     .amount("7.00")
+                    .creditsApplied("6.00")
                     .discount(
                         PercentageDiscount.builder()
                             .addAppliesToPriceId("h74gfhdjvn7ujokd")
@@ -419,6 +459,7 @@ class InvoiceTest {
                     )
                     .minimumAmount("minimum_amount")
                     .name("Fixed Fee")
+                    .partiallyInvoicedAmount("4.00")
                     .price(
                         Price.UnitPrice.builder()
                             .id("id")
@@ -489,6 +530,12 @@ class InvoiceTest {
                             .unitConfig(
                                 Price.UnitPrice.UnitConfig.builder()
                                     .unitAmount("unit_amount")
+                                    .build()
+                            )
+                            .dimensionalPriceConfiguration(
+                                Price.UnitPrice.DimensionalPriceConfiguration.builder()
+                                    .addDimensionValue("string")
+                                    .dimensionalPriceGroupId("dimensional_price_group_id")
                                     .build()
                             )
                             .build()
