@@ -1,5 +1,22 @@
 # Changelog
 
+## 0.1.0-alpha.17 (2025-02-05)
+
+Full Changelog: [v0.1.0-alpha.16...v0.1.0-alpha.17](https://github.com/orbcorp/orb-kotlin/compare/v0.1.0-alpha.16...v0.1.0-alpha.17)
+
+### Bug Fixes
+
+* **api:** add missing `@MustBeClosed` annotations ([#197](https://github.com/orbcorp/orb-kotlin/issues/197)) ([e71eae6](https://github.com/orbcorp/orb-kotlin/commit/e71eae61f1035dbf8c295f7c9e561ad72d6d11cb))
+* **api:** switch `CompletableFuture&lt;Void&gt;` to `CompletableFuture<Void?>` ([e71eae6](https://github.com/orbcorp/orb-kotlin/commit/e71eae61f1035dbf8c295f7c9e561ad72d6d11cb))
+* **client:** add missing validation calls on response ([e71eae6](https://github.com/orbcorp/orb-kotlin/commit/e71eae61f1035dbf8c295f7c9e561ad72d6d11cb))
+* **client:** always provide a body for `PATCH` methods ([e71eae6](https://github.com/orbcorp/orb-kotlin/commit/e71eae61f1035dbf8c295f7c9e561ad72d6d11cb))
+
+
+### Chores
+
+* **internal:** minor formatting/style changes ([e71eae6](https://github.com/orbcorp/orb-kotlin/commit/e71eae61f1035dbf8c295f7c9e561ad72d6d11cb))
+* **internal:** rename some tests ([e71eae6](https://github.com/orbcorp/orb-kotlin/commit/e71eae61f1035dbf8c295f7c9e561ad72d6d11cb))
+
 ## 0.1.0-alpha.16 (2025-02-04)
 
 Full Changelog: [v0.1.0-alpha.15...v0.1.0-alpha.16](https://github.com/orbcorp/orb-kotlin/compare/v0.1.0-alpha.15...v0.1.0-alpha.16)
