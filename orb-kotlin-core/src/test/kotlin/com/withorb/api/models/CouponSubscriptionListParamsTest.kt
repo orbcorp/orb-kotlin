@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test
 class CouponSubscriptionListParamsTest {
 
     @Test
-    fun createCouponSubscriptionListParams() {
+    fun create() {
         CouponSubscriptionListParams.builder()
             .couponId("coupon_id")
             .cursor("cursor")

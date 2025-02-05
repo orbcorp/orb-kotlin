@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test
 class CreditNoteListParamsTest {
 
     @Test
-    fun createCreditNoteListParams() {
+    fun create() {
         CreditNoteListParams.builder().cursor("cursor").limit(1L).build()
     }
 

@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test
 class EventVolumeListParamsTest {
 
     @Test
-    fun createEventVolumeListParams() {
+    fun create() {
         EventVolumeListParams.builder()
             .timeframeStart(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
             .cursor("cursor")

@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test
 class CustomerSyncPaymentMethodsFromGatewayByExternalCustomerIdParamsTest {
 
     @Test
-    fun createCustomerSyncPaymentMethodsFromGatewayByExternalCustomerIdParams() {
+    fun create() {
         CustomerSyncPaymentMethodsFromGatewayByExternalCustomerIdParams.builder()
             .customerId("customer_id")
             .build()

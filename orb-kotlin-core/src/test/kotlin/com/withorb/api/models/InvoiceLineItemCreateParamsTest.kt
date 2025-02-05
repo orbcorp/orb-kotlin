@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test
 class InvoiceLineItemCreateParamsTest {
 
     @Test
-    fun createInvoiceLineItemCreateParams() {
+    fun create() {
         InvoiceLineItemCreateParams.builder()
             .amount("12.00")
             .endDate(LocalDate.parse("2023-09-22"))

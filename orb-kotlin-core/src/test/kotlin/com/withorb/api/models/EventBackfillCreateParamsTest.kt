@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test
 class EventBackfillCreateParamsTest {
 
     @Test
-    fun createEventBackfillCreateParams() {
+    fun create() {
         EventBackfillCreateParams.builder()
             .timeframeEnd(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
             .timeframeStart(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))

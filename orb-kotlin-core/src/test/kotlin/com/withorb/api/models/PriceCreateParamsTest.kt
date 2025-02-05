@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test
 class PriceCreateParamsTest {
 
     @Test
-    fun createPriceCreateParams() {
+    fun create() {
         PriceCreateParams.builder()
             .forNewFloatingUnitPrice(
                 PriceCreateParams.NewFloatingUnitPrice.builder()

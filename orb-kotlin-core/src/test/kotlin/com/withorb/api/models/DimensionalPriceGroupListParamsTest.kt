@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test
 class DimensionalPriceGroupListParamsTest {
 
     @Test
-    fun createDimensionalPriceGroupListParams() {
+    fun create() {
         DimensionalPriceGroupListParams.builder().cursor("cursor").limit(1L).build()
     }
 

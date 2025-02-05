@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test
 class TopLevelPingParamsTest {
 
     @Test
-    fun createTopLevelPingParams() {
+    fun create() {
         TopLevelPingParams.builder().build()
     }
 }

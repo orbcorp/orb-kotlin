@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test
 class MetricFetchParamsTest {
 
     @Test
-    fun createMetricFetchParams() {
+    fun create() {
         MetricFetchParams.builder().metricId("metric_id").build()
     }
 

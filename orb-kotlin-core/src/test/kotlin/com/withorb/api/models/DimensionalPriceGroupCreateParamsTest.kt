@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test
 class DimensionalPriceGroupCreateParamsTest {
 
     @Test
-    fun createDimensionalPriceGroupCreateParams() {
+    fun create() {
         DimensionalPriceGroupCreateParams.builder()
             .billableMetricId("billable_metric_id")
             .addDimension("region")

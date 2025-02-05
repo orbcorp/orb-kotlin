@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test
 class PriceExternalPriceIdFetchParamsTest {
 
     @Test
-    fun createPriceExternalPriceIdFetchParams() {
+    fun create() {
         PriceExternalPriceIdFetchParams.builder().externalPriceId("external_price_id").build()
     }
 

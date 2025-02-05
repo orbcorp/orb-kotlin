@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test
 class CustomerCreditTopUpCreateByExternalIdParamsTest {
 
     @Test
-    fun createCustomerCreditTopUpCreateByExternalIdParams() {
+    fun create() {
         CustomerCreditTopUpCreateByExternalIdParams.builder()
             .externalCustomerId("external_customer_id")
             .amount("amount")

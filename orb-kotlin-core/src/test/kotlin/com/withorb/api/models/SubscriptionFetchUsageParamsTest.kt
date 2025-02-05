@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test
 class SubscriptionFetchUsageParamsTest {
 
     @Test
-    fun createSubscriptionFetchUsageParams() {
+    fun create() {
         SubscriptionFetchUsageParams.builder()
             .subscriptionId("subscription_id")
             .billableMetricId("billable_metric_id")

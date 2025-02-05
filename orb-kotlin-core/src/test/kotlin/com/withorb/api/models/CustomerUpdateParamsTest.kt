@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test
 class CustomerUpdateParamsTest {
 
     @Test
-    fun createCustomerUpdateParams() {
+    fun create() {
         CustomerUpdateParams.builder()
             .customerId("customer_id")
             .accountingSyncConfiguration(

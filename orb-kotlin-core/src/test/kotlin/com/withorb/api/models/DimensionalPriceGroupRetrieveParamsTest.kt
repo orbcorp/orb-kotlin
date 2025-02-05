@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test
 class DimensionalPriceGroupRetrieveParamsTest {
 
     @Test
-    fun createDimensionalPriceGroupRetrieveParams() {
+    fun create() {
         DimensionalPriceGroupRetrieveParams.builder()
             .dimensionalPriceGroupId("dimensional_price_group_id")
             .build()

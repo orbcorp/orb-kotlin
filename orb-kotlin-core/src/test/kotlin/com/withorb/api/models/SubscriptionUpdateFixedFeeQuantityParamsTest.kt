@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test
 class SubscriptionUpdateFixedFeeQuantityParamsTest {
 
     @Test
-    fun createSubscriptionUpdateFixedFeeQuantityParams() {
+    fun create() {
         SubscriptionUpdateFixedFeeQuantityParams.builder()
             .subscriptionId("subscription_id")
             .priceId("price_id")
