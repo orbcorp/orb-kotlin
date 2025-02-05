@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test
 class AlertCreateForSubscriptionParamsTest {
 
     @Test
-    fun createAlertCreateForSubscriptionParams() {
+    fun create() {
         AlertCreateForSubscriptionParams.builder()
             .subscriptionId("subscription_id")
             .addThreshold(AlertCreateForSubscriptionParams.Threshold.builder().value(0.0).build())

@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test
 class EventBackfillCloseParamsTest {
 
     @Test
-    fun createEventBackfillCloseParams() {
+    fun create() {
         EventBackfillCloseParams.builder().backfillId("backfill_id").build()
     }
 

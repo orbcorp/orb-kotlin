@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test
 class PriceFetchParamsTest {
 
     @Test
-    fun createPriceFetchParams() {
+    fun create() {
         PriceFetchParams.builder().priceId("price_id").build()
     }
 

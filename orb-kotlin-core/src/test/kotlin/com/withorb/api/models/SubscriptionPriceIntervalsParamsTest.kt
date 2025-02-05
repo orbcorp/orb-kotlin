@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test
 class SubscriptionPriceIntervalsParamsTest {
 
     @Test
-    fun createSubscriptionPriceIntervalsParams() {
+    fun create() {
         SubscriptionPriceIntervalsParams.builder()
             .subscriptionId("subscription_id")
             .addAdd(

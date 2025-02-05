@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test
 class SubscriptionTriggerPhaseParamsTest {
 
     @Test
-    fun createSubscriptionTriggerPhaseParams() {
+    fun create() {
         SubscriptionTriggerPhaseParams.builder()
             .subscriptionId("subscription_id")
             .effectiveDate(LocalDate.parse("2019-12-27"))

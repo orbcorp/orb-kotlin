@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test
 class ItemListParamsTest {
 
     @Test
-    fun createItemListParams() {
+    fun create() {
         ItemListParams.builder().cursor("cursor").limit(1L).build()
     }
 

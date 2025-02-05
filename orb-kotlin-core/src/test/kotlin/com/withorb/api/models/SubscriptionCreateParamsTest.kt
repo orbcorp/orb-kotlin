@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test
 class SubscriptionCreateParamsTest {
 
     @Test
-    fun createSubscriptionCreateParams() {
+    fun create() {
         SubscriptionCreateParams.builder()
             .addAddAdjustment(
                 SubscriptionCreateParams.AddAdjustment.builder()

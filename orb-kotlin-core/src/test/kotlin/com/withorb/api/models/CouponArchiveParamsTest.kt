@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test
 class CouponArchiveParamsTest {
 
     @Test
-    fun createCouponArchiveParams() {
+    fun create() {
         CouponArchiveParams.builder().couponId("coupon_id").build()
     }
 

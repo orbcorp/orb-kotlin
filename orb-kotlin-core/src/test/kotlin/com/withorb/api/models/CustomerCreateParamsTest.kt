@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test
 class CustomerCreateParamsTest {
 
     @Test
-    fun createCustomerCreateParams() {
+    fun create() {
         CustomerCreateParams.builder()
             .email("dev@stainlessapi.com")
             .name("x")

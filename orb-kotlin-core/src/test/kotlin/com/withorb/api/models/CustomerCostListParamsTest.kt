@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test
 class CustomerCostListParamsTest {
 
     @Test
-    fun createCustomerCostListParams() {
+    fun create() {
         CustomerCostListParams.builder()
             .customerId("customer_id")
             .currency("currency")

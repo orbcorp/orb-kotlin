@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test
 class PlanFetchParamsTest {
 
     @Test
-    fun createPlanFetchParams() {
+    fun create() {
         PlanFetchParams.builder().planId("plan_id").build()
     }
 

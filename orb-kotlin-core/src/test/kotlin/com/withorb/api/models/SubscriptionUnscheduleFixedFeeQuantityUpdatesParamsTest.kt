@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test
 class SubscriptionUnscheduleFixedFeeQuantityUpdatesParamsTest {
 
     @Test
-    fun createSubscriptionUnscheduleFixedFeeQuantityUpdatesParams() {
+    fun create() {
         SubscriptionUnscheduleFixedFeeQuantityUpdatesParams.builder()
             .subscriptionId("subscription_id")
             .priceId("price_id")

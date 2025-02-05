@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test
 class SubscriptionUpdateTrialParamsTest {
 
     @Test
-    fun createSubscriptionUpdateTrialParams() {
+    fun create() {
         SubscriptionUpdateTrialParams.builder()
             .subscriptionId("subscription_id")
             .trialEndDate(OffsetDateTime.parse("2017-07-21T17:32:28Z"))

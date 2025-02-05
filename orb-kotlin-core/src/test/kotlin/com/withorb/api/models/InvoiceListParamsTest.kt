@@ -11,7 +11,7 @@ import org.junit.jupiter.api.Test
 class InvoiceListParamsTest {
 
     @Test
-    fun createInvoiceListParams() {
+    fun create() {
         InvoiceListParams.builder()
             .amount("amount")
             .amountGt("amount[gt]")

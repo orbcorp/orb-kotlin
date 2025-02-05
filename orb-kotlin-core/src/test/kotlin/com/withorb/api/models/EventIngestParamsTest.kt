@@ -11,7 +11,7 @@ import org.junit.jupiter.api.Test
 class EventIngestParamsTest {
 
     @Test
-    fun createEventIngestParams() {
+    fun create() {
         EventIngestParams.builder()
             .addEvent(
                 EventIngestParams.Event.builder()

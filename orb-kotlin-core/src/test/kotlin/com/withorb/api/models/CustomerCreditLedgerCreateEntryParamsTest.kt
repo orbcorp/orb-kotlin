@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test
 class CustomerCreditLedgerCreateEntryParamsTest {
 
     @Test
-    fun createCustomerCreditLedgerCreateEntryParams() {
+    fun create() {
         CustomerCreditLedgerCreateEntryParams.builder()
             .forAddIncrementCreditLedgerEntryRequestParams(
                 CustomerCreditLedgerCreateEntryParams.AddIncrementCreditLedgerEntryRequestParams

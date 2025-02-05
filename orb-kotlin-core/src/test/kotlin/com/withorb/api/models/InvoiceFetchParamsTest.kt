@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test
 class InvoiceFetchParamsTest {
 
     @Test
-    fun createInvoiceFetchParams() {
+    fun create() {
         InvoiceFetchParams.builder().invoiceId("invoice_id").build()
     }
 

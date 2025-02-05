@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test
 class CouponListParamsTest {
 
     @Test
-    fun createCouponListParams() {
+    fun create() {
         CouponListParams.builder()
             .cursor("cursor")
             .limit(1L)

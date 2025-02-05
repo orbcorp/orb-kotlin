@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test
 class EventDeprecateParamsTest {
 
     @Test
-    fun createEventDeprecateParams() {
+    fun create() {
         EventDeprecateParams.builder().eventId("event_id").build()
     }
 

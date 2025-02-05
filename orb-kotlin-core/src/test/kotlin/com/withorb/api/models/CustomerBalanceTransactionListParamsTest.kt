@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test
 class CustomerBalanceTransactionListParamsTest {
 
     @Test
-    fun createCustomerBalanceTransactionListParams() {
+    fun create() {
         CustomerBalanceTransactionListParams.builder()
             .customerId("customer_id")
             .cursor("cursor")

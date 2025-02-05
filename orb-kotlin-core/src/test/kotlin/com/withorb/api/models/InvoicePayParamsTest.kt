@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test
 class InvoicePayParamsTest {
 
     @Test
-    fun createInvoicePayParams() {
+    fun create() {
         InvoicePayParams.builder().invoiceId("invoice_id").build()
     }
 

@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test
 class PriceUpdateParamsTest {
 
     @Test
-    fun createPriceUpdateParams() {
+    fun create() {
         PriceUpdateParams.builder()
             .priceId("price_id")
             .metadata(

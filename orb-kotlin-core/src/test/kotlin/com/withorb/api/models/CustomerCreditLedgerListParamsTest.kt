@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test
 class CustomerCreditLedgerListParamsTest {
 
     @Test
-    fun createCustomerCreditLedgerListParams() {
+    fun create() {
         CustomerCreditLedgerListParams.builder()
             .customerId("customer_id")
             .createdAtGt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
