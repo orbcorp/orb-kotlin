@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test
 class SubscriptionFetchCostsParamsTest {
 
     @Test
-    fun createSubscriptionFetchCostsParams() {
+    fun create() {
         SubscriptionFetchCostsParams.builder()
             .subscriptionId("subscription_id")
             .currency("currency")

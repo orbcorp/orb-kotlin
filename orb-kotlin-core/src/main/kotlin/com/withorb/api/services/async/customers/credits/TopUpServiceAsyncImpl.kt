@@ -55,15 +55,14 @@ internal constructor(
                 .body(json(clientOptions.jsonMapper, params._body()))
                 .build()
                 .prepareAsync(clientOptions, params)
-        return clientOptions.httpClient.executeAsync(request, requestOptions).let { response ->
-            response
-                .use { createHandler.handle(it) }
-                .apply {
-                    if (requestOptions.responseValidation ?: clientOptions.responseValidation) {
-                        validate()
-                    }
+        val response = clientOptions.httpClient.executeAsync(request, requestOptions)
+        return response
+            .use { createHandler.handle(it) }
+            .also {
+                if (requestOptions.responseValidation ?: clientOptions.responseValidation) {
+                    it.validate()
                 }
-        }
+            }
     }
 
     private val listHandler: Handler<CustomerCreditTopUpListPageAsync.Response> =
@@ -81,16 +80,15 @@ internal constructor(
                 .addPathSegments("customers", params.getPathParam(0), "credits", "top_ups")
                 .build()
                 .prepareAsync(clientOptions, params)
-        return clientOptions.httpClient.executeAsync(request, requestOptions).let { response ->
-            response
-                .use { listHandler.handle(it) }
-                .apply {
-                    if (requestOptions.responseValidation ?: clientOptions.responseValidation) {
-                        validate()
-                    }
+        val response = clientOptions.httpClient.executeAsync(request, requestOptions)
+        return response
+            .use { listHandler.handle(it) }
+            .also {
+                if (requestOptions.responseValidation ?: clientOptions.responseValidation) {
+                    it.validate()
                 }
-                .let { CustomerCreditTopUpListPageAsync.of(this, params, it) }
-        }
+            }
+            .let { CustomerCreditTopUpListPageAsync.of(this, params, it) }
     }
 
     private val deleteHandler: Handler<Void?> = emptyHandler().withErrorHandler(errorHandler)
@@ -110,12 +108,11 @@ internal constructor(
                     "top_ups",
                     params.getPathParam(1)
                 )
-                .apply { params._body()?.also { body(json(clientOptions.jsonMapper, it)) } }
+                .apply { params._body()?.let { body(json(clientOptions.jsonMapper, it)) } }
                 .build()
                 .prepareAsync(clientOptions, params)
-        return clientOptions.httpClient.executeAsync(request, requestOptions).let { response ->
-            response.use { deleteHandler.handle(it) }
-        }
+        val response = clientOptions.httpClient.executeAsync(request, requestOptions)
+        response.use { deleteHandler.handle(it) }
     }
 
     private val createByExternalIdHandler: Handler<CustomerCreditTopUpCreateByExternalIdResponse> =
@@ -147,15 +144,14 @@ internal constructor(
                 .body(json(clientOptions.jsonMapper, params._body()))
                 .build()
                 .prepareAsync(clientOptions, params)
-        return clientOptions.httpClient.executeAsync(request, requestOptions).let { response ->
-            response
-                .use { createByExternalIdHandler.handle(it) }
-                .apply {
-                    if (requestOptions.responseValidation ?: clientOptions.responseValidation) {
-                        validate()
-                    }
+        val response = clientOptions.httpClient.executeAsync(request, requestOptions)
+        return response
+            .use { createByExternalIdHandler.handle(it) }
+            .also {
+                if (requestOptions.responseValidation ?: clientOptions.responseValidation) {
+                    it.validate()
                 }
-        }
+            }
     }
 
     private val deleteByExternalIdHandler: Handler<Void?> =
@@ -177,12 +173,11 @@ internal constructor(
                     "top_ups",
                     params.getPathParam(1)
                 )
-                .apply { params._body()?.also { body(json(clientOptions.jsonMapper, it)) } }
+                .apply { params._body()?.let { body(json(clientOptions.jsonMapper, it)) } }
                 .build()
                 .prepareAsync(clientOptions, params)
-        return clientOptions.httpClient.executeAsync(request, requestOptions).let { response ->
-            response.use { deleteByExternalIdHandler.handle(it) }
-        }
+        val response = clientOptions.httpClient.executeAsync(request, requestOptions)
+        response.use { deleteByExternalIdHandler.handle(it) }
     }
 
     private val listByExternalIdHandler:
@@ -207,15 +202,14 @@ internal constructor(
                 )
                 .build()
                 .prepareAsync(clientOptions, params)
-        return clientOptions.httpClient.executeAsync(request, requestOptions).let { response ->
-            response
-                .use { listByExternalIdHandler.handle(it) }
-                .apply {
-                    if (requestOptions.responseValidation ?: clientOptions.responseValidation) {
-                        validate()
-                    }
+        val response = clientOptions.httpClient.executeAsync(request, requestOptions)
+        return response
+            .use { listByExternalIdHandler.handle(it) }
+            .also {
+                if (requestOptions.responseValidation ?: clientOptions.responseValidation) {
+                    it.validate()
                 }
-                .let { CustomerCreditTopUpListByExternalIdPageAsync.of(this, params, it) }
-        }
+            }
+            .let { CustomerCreditTopUpListByExternalIdPageAsync.of(this, params, it) }
     }
 }

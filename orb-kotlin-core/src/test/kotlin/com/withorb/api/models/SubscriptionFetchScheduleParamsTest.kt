@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test
 class SubscriptionFetchScheduleParamsTest {
 
     @Test
-    fun createSubscriptionFetchScheduleParams() {
+    fun create() {
         SubscriptionFetchScheduleParams.builder()
             .subscriptionId("subscription_id")
             .cursor("cursor")

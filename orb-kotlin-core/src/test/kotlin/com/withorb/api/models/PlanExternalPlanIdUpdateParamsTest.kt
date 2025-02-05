@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test
 class PlanExternalPlanIdUpdateParamsTest {
 
     @Test
-    fun createPlanExternalPlanIdUpdateParams() {
+    fun create() {
         PlanExternalPlanIdUpdateParams.builder()
             .otherExternalPlanId("external_plan_id")
             .externalPlanId("external_plan_id")

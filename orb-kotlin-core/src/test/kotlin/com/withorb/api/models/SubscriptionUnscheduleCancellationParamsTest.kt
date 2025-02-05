@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test
 class SubscriptionUnscheduleCancellationParamsTest {
 
     @Test
-    fun createSubscriptionUnscheduleCancellationParams() {
+    fun create() {
         SubscriptionUnscheduleCancellationParams.builder().subscriptionId("subscription_id").build()
     }
 

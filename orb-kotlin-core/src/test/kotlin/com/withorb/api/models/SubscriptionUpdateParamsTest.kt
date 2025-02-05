@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test
 class SubscriptionUpdateParamsTest {
 
     @Test
-    fun createSubscriptionUpdateParams() {
+    fun create() {
         SubscriptionUpdateParams.builder()
             .subscriptionId("subscription_id")
             .autoCollection(true)

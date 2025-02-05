@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test
 class SubscriptionCancelParamsTest {
 
     @Test
-    fun createSubscriptionCancelParams() {
+    fun create() {
         SubscriptionCancelParams.builder()
             .subscriptionId("subscription_id")
             .cancelOption(SubscriptionCancelParams.CancelOption.END_OF_SUBSCRIPTION_TERM)

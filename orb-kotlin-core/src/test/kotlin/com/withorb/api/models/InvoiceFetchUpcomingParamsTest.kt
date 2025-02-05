@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test
 class InvoiceFetchUpcomingParamsTest {
 
     @Test
-    fun createInvoiceFetchUpcomingParams() {
+    fun create() {
         InvoiceFetchUpcomingParams.builder().subscriptionId("subscription_id").build()
     }
 

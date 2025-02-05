@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test
 class SubscriptionFetchParamsTest {
 
     @Test
-    fun createSubscriptionFetchParams() {
+    fun create() {
         SubscriptionFetchParams.builder().subscriptionId("subscription_id").build()
     }
 

@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test
 class EventSearchParamsTest {
 
     @Test
-    fun createEventSearchParams() {
+    fun create() {
         EventSearchParams.builder()
             .addEventId("string")
             .timeframeEnd(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))

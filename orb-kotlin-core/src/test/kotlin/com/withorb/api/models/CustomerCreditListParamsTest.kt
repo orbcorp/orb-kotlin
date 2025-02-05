@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test
 class CustomerCreditListParamsTest {
 
     @Test
-    fun createCustomerCreditListParams() {
+    fun create() {
         CustomerCreditListParams.builder()
             .customerId("customer_id")
             .currency("currency")

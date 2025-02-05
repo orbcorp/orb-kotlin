@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test
 class CouponFetchParamsTest {
 
     @Test
-    fun createCouponFetchParams() {
+    fun create() {
         CouponFetchParams.builder().couponId("coupon_id").build()
     }
 

@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test
 class PriceEvaluateParamsTest {
 
     @Test
-    fun createPriceEvaluateParams() {
+    fun create() {
         PriceEvaluateParams.builder()
             .priceId("price_id")
             .timeframeEnd(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))

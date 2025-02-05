@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test
 class EventBackfillFetchParamsTest {
 
     @Test
-    fun createEventBackfillFetchParams() {
+    fun create() {
         EventBackfillFetchParams.builder().backfillId("backfill_id").build()
     }
 

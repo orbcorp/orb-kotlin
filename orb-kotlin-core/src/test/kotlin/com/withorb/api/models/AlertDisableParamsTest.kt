@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test
 class AlertDisableParamsTest {
 
     @Test
-    fun createAlertDisableParams() {
+    fun create() {
         AlertDisableParams.builder()
             .alertConfigurationId("alert_configuration_id")
             .subscriptionId("subscription_id")

@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test
 class EventUpdateParamsTest {
 
     @Test
-    fun createEventUpdateParams() {
+    fun create() {
         EventUpdateParams.builder()
             .eventId("event_id")
             .eventName("event_name")

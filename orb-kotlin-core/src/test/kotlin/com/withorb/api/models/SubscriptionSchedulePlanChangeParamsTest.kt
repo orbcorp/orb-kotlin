@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test
 class SubscriptionSchedulePlanChangeParamsTest {
 
     @Test
-    fun createSubscriptionSchedulePlanChangeParams() {
+    fun create() {
         SubscriptionSchedulePlanChangeParams.builder()
             .subscriptionId("subscription_id")
             .changeOption(SubscriptionSchedulePlanChangeParams.ChangeOption.REQUESTED_DATE)

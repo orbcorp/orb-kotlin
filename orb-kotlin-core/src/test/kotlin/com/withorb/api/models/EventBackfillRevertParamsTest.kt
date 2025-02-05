@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test
 class EventBackfillRevertParamsTest {
 
     @Test
-    fun createEventBackfillRevertParams() {
+    fun create() {
         EventBackfillRevertParams.builder().backfillId("backfill_id").build()
     }
 

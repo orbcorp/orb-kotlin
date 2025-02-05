@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test
 class CreditNoteCreateParamsTest {
 
     @Test
-    fun createCreditNoteCreateParams() {
+    fun create() {
         CreditNoteCreateParams.builder()
             .addLineItem(
                 CreditNoteCreateParams.LineItem.builder()

@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test
 class MetricCreateParamsTest {
 
     @Test
-    fun createMetricCreateParams() {
+    fun create() {
         MetricCreateParams.builder()
             .description("Sum of bytes downloaded in fast mode")
             .itemId("item_id")

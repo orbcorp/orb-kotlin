@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test
 class AlertUpdateParamsTest {
 
     @Test
-    fun createAlertUpdateParams() {
+    fun create() {
         AlertUpdateParams.builder()
             .alertConfigurationId("alert_configuration_id")
             .addThreshold(AlertUpdateParams.Threshold.builder().value(0.0).build())

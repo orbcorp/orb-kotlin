@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test
 class ItemFetchParamsTest {
 
     @Test
-    fun createItemFetchParams() {
+    fun create() {
         ItemFetchParams.builder().itemId("item_id").build()
     }
 
