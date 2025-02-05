@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test
 class PlanCreateParamsTest {
 
     @Test
-    fun createPlanCreateParams() {
+    fun create() {
         PlanCreateParams.builder()
             .currency("currency")
             .name("name")

@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test
 class CreditNoteFetchParamsTest {
 
     @Test
-    fun createCreditNoteFetchParams() {
+    fun create() {
         CreditNoteFetchParams.builder().creditNoteId("credit_note_id").build()
     }
 

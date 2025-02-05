@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test
 class AlertCreateForCustomerParamsTest {
 
     @Test
-    fun createAlertCreateForCustomerParams() {
+    fun create() {
         AlertCreateForCustomerParams.builder()
             .customerId("customer_id")
             .currency("currency")

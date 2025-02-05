@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test
 class MetricUpdateParamsTest {
 
     @Test
-    fun createMetricUpdateParams() {
+    fun create() {
         MetricUpdateParams.builder()
             .metricId("metric_id")
             .metadata(

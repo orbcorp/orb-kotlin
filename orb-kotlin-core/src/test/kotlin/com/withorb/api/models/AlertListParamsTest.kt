@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test
 class AlertListParamsTest {
 
     @Test
-    fun createAlertListParams() {
+    fun create() {
         AlertListParams.builder()
             .createdAtGt(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
             .createdAtGte(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))

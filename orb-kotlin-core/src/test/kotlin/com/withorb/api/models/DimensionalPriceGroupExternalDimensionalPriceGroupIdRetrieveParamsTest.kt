@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test
 class DimensionalPriceGroupExternalDimensionalPriceGroupIdRetrieveParamsTest {
 
     @Test
-    fun createDimensionalPriceGroupExternalDimensionalPriceGroupIdRetrieveParams() {
+    fun create() {
         DimensionalPriceGroupExternalDimensionalPriceGroupIdRetrieveParams.builder()
             .externalDimensionalPriceGroupId("external_dimensional_price_group_id")
             .build()

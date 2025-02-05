@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test
 class CustomerCreditLedgerCreateEntryByExternalIdParamsTest {
 
     @Test
-    fun createCustomerCreditLedgerCreateEntryByExternalIdParams() {
+    fun create() {
         CustomerCreditLedgerCreateEntryByExternalIdParams.builder()
             .forAddIncrementCreditLedgerEntryRequestParams(
                 CustomerCreditLedgerCreateEntryByExternalIdParams

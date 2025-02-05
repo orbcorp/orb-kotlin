@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test
 class ItemUpdateParamsTest {
 
     @Test
-    fun createItemUpdateParams() {
+    fun create() {
         ItemUpdateParams.builder()
             .itemId("item_id")
             .addExternalConnection(

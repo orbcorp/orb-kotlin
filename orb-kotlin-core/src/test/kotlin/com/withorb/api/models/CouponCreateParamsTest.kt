@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test
 class CouponCreateParamsTest {
 
     @Test
-    fun createCouponCreateParams() {
+    fun create() {
         CouponCreateParams.builder()
             .newCouponPercentageDiscount(0.0)
             .redemptionCode("HALFOFF")

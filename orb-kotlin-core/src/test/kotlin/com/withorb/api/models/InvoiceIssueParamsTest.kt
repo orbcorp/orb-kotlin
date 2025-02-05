@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test
 class InvoiceIssueParamsTest {
 
     @Test
-    fun createInvoiceIssueParams() {
+    fun create() {
         InvoiceIssueParams.builder().invoiceId("invoice_id").synchronous(true).build()
     }
 

@@ -96,15 +96,14 @@ internal constructor(
                 .body(json(clientOptions.jsonMapper, params._body()))
                 .build()
                 .prepareAsync(clientOptions, params)
-        return clientOptions.httpClient.executeAsync(request, requestOptions).let { response ->
-            response
-                .use { updateHandler.handle(it) }
-                .apply {
-                    if (requestOptions.responseValidation ?: clientOptions.responseValidation) {
-                        validate()
-                    }
+        val response = clientOptions.httpClient.executeAsync(request, requestOptions)
+        return response
+            .use { updateHandler.handle(it) }
+            .also {
+                if (requestOptions.responseValidation ?: clientOptions.responseValidation) {
+                    it.validate()
                 }
-        }
+            }
     }
 
     private val deprecateHandler: Handler<EventDeprecateResponse> =
@@ -154,18 +153,17 @@ internal constructor(
             HttpRequest.builder()
                 .method(HttpMethod.PUT)
                 .addPathSegments("events", params.getPathParam(0), "deprecate")
-                .apply { params._body()?.also { body(json(clientOptions.jsonMapper, it)) } }
+                .apply { params._body()?.let { body(json(clientOptions.jsonMapper, it)) } }
                 .build()
                 .prepareAsync(clientOptions, params)
-        return clientOptions.httpClient.executeAsync(request, requestOptions).let { response ->
-            response
-                .use { deprecateHandler.handle(it) }
-                .apply {
-                    if (requestOptions.responseValidation ?: clientOptions.responseValidation) {
-                        validate()
-                    }
+        val response = clientOptions.httpClient.executeAsync(request, requestOptions)
+        return response
+            .use { deprecateHandler.handle(it) }
+            .also {
+                if (requestOptions.responseValidation ?: clientOptions.responseValidation) {
+                    it.validate()
                 }
-        }
+            }
     }
 
     private val ingestHandler: Handler<EventIngestResponse> =
@@ -371,15 +369,14 @@ internal constructor(
                 .body(json(clientOptions.jsonMapper, params._body()))
                 .build()
                 .prepareAsync(clientOptions, params)
-        return clientOptions.httpClient.executeAsync(request, requestOptions).let { response ->
-            response
-                .use { ingestHandler.handle(it) }
-                .apply {
-                    if (requestOptions.responseValidation ?: clientOptions.responseValidation) {
-                        validate()
-                    }
+        val response = clientOptions.httpClient.executeAsync(request, requestOptions)
+        return response
+            .use { ingestHandler.handle(it) }
+            .also {
+                if (requestOptions.responseValidation ?: clientOptions.responseValidation) {
+                    it.validate()
                 }
-        }
+            }
     }
 
     private val searchHandler: Handler<EventSearchResponse> =
@@ -412,14 +409,13 @@ internal constructor(
                 .body(json(clientOptions.jsonMapper, params._body()))
                 .build()
                 .prepareAsync(clientOptions, params)
-        return clientOptions.httpClient.executeAsync(request, requestOptions).let { response ->
-            response
-                .use { searchHandler.handle(it) }
-                .apply {
-                    if (requestOptions.responseValidation ?: clientOptions.responseValidation) {
-                        validate()
-                    }
+        val response = clientOptions.httpClient.executeAsync(request, requestOptions)
+        return response
+            .use { searchHandler.handle(it) }
+            .also {
+                if (requestOptions.responseValidation ?: clientOptions.responseValidation) {
+                    it.validate()
                 }
-        }
+            }
     }
 }

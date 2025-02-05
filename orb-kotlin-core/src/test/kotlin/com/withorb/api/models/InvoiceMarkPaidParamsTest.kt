@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test
 class InvoiceMarkPaidParamsTest {
 
     @Test
-    fun createInvoiceMarkPaidParams() {
+    fun create() {
         InvoiceMarkPaidParams.builder()
             .invoiceId("invoice_id")
             .paymentReceivedDate(LocalDate.parse("2023-09-22"))

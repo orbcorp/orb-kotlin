@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test
 class InvoiceVoidParamsTest {
 
     @Test
-    fun createInvoiceVoidParams() {
+    fun create() {
         InvoiceVoidParams.builder().invoiceId("invoice_id").build()
     }
 

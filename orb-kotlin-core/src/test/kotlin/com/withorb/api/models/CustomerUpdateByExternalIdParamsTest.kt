@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test
 class CustomerUpdateByExternalIdParamsTest {
 
     @Test
-    fun createCustomerUpdateByExternalIdParams() {
+    fun create() {
         CustomerUpdateByExternalIdParams.builder()
             .id("external_customer_id")
             .accountingSyncConfiguration(

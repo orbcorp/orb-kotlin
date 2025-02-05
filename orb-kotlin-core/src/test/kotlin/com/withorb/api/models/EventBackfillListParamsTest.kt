@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test
 class EventBackfillListParamsTest {
 
     @Test
-    fun createEventBackfillListParams() {
+    fun create() {
         EventBackfillListParams.builder().cursor("cursor").limit(1L).build()
     }
 

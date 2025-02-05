@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test
 class SubscriptionUnschedulePendingPlanChangesParamsTest {
 
     @Test
-    fun createSubscriptionUnschedulePendingPlanChangesParams() {
+    fun create() {
         SubscriptionUnschedulePendingPlanChangesParams.builder()
             .subscriptionId("subscription_id")
             .build()

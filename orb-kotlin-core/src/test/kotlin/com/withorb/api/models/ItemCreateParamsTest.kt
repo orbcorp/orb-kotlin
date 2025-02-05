@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test
 class ItemCreateParamsTest {
 
     @Test
-    fun createItemCreateParams() {
+    fun create() {
         ItemCreateParams.builder().name("API requests").build()
     }
 
