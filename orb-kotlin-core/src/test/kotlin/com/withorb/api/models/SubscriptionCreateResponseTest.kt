@@ -20,20 +20,20 @@ class SubscriptionCreateResponseTest {
                         .id("id")
                         .adjustment(
                             SubscriptionCreateResponse.AdjustmentInterval.Adjustment
-                                .AmountDiscountAdjustment
+                                .PlanPhaseUsageDiscountAdjustment
                                 .builder()
                                 .id("id")
                                 .adjustmentType(
                                     SubscriptionCreateResponse.AdjustmentInterval.Adjustment
-                                        .AmountDiscountAdjustment
+                                        .PlanPhaseUsageDiscountAdjustment
                                         .AdjustmentType
-                                        .AMOUNT_DISCOUNT
+                                        .USAGE_DISCOUNT
                                 )
-                                .amountDiscount("amount_discount")
                                 .addAppliesToPriceId("string")
                                 .isInvoiceLevel(true)
                                 .planPhaseOrder(0L)
                                 .reason("reason")
+                                .usageDiscount(0.0)
                                 .build()
                         )
                         .addAppliesToPriceIntervalId("string")
@@ -176,17 +176,17 @@ class SubscriptionCreateResponseTest {
                     Plan.builder()
                         .id("id")
                         .addAdjustment(
-                            Plan.Adjustment.AmountDiscountAdjustment.builder()
+                            Plan.Adjustment.PlanPhaseUsageDiscountAdjustment.builder()
                                 .id("id")
                                 .adjustmentType(
-                                    Plan.Adjustment.AmountDiscountAdjustment.AdjustmentType
-                                        .AMOUNT_DISCOUNT
+                                    Plan.Adjustment.PlanPhaseUsageDiscountAdjustment.AdjustmentType
+                                        .USAGE_DISCOUNT
                                 )
-                                .amountDiscount("amount_discount")
                                 .addAppliesToPriceId("string")
                                 .isInvoiceLevel(true)
                                 .planPhaseOrder(0L)
                                 .reason("reason")
+                                .usageDiscount(0.0)
                                 .build()
                         )
                         .basePlan(
@@ -493,20 +493,20 @@ class SubscriptionCreateResponseTest {
                     .id("id")
                     .adjustment(
                         SubscriptionCreateResponse.AdjustmentInterval.Adjustment
-                            .AmountDiscountAdjustment
+                            .PlanPhaseUsageDiscountAdjustment
                             .builder()
                             .id("id")
                             .adjustmentType(
                                 SubscriptionCreateResponse.AdjustmentInterval.Adjustment
-                                    .AmountDiscountAdjustment
+                                    .PlanPhaseUsageDiscountAdjustment
                                     .AdjustmentType
-                                    .AMOUNT_DISCOUNT
+                                    .USAGE_DISCOUNT
                             )
-                            .amountDiscount("amount_discount")
                             .addAppliesToPriceId("string")
                             .isInvoiceLevel(true)
                             .planPhaseOrder(0L)
                             .reason("reason")
+                            .usageDiscount(0.0)
                             .build()
                     )
                     .addAppliesToPriceIntervalId("string")
@@ -663,17 +663,17 @@ class SubscriptionCreateResponseTest {
                 Plan.builder()
                     .id("id")
                     .addAdjustment(
-                        Plan.Adjustment.AmountDiscountAdjustment.builder()
+                        Plan.Adjustment.PlanPhaseUsageDiscountAdjustment.builder()
                             .id("id")
                             .adjustmentType(
-                                Plan.Adjustment.AmountDiscountAdjustment.AdjustmentType
-                                    .AMOUNT_DISCOUNT
+                                Plan.Adjustment.PlanPhaseUsageDiscountAdjustment.AdjustmentType
+                                    .USAGE_DISCOUNT
                             )
-                            .amountDiscount("amount_discount")
                             .addAppliesToPriceId("string")
                             .isInvoiceLevel(true)
                             .planPhaseOrder(0L)
                             .reason("reason")
+                            .usageDiscount(0.0)
                             .build()
                     )
                     .basePlan(

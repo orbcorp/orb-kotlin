@@ -16,18 +16,19 @@ class InvoiceLineItemCreateResponseTest {
                 .id("id")
                 .adjustedSubtotal("5.00")
                 .addAdjustment(
-                    InvoiceLineItemCreateResponse.Adjustment.AmountDiscountAdjustment.builder()
+                    InvoiceLineItemCreateResponse.Adjustment.MonetaryUsageDiscountAdjustment
+                        .builder()
                         .id("id")
                         .adjustmentType(
-                            InvoiceLineItemCreateResponse.Adjustment.AmountDiscountAdjustment
+                            InvoiceLineItemCreateResponse.Adjustment.MonetaryUsageDiscountAdjustment
                                 .AdjustmentType
-                                .AMOUNT_DISCOUNT
+                                .USAGE_DISCOUNT
                         )
-                        .amountDiscount("amount_discount")
+                        .amount("amount")
                         .addAppliesToPriceId("string")
                         .isInvoiceLevel(true)
-                        .planPhaseOrder(0L)
                         .reason("reason")
+                        .usageDiscount(0.0)
                         .build()
                 )
                 .amount("7.00")
@@ -174,19 +175,20 @@ class InvoiceLineItemCreateResponseTest {
         assertThat(invoiceLineItemCreateResponse.adjustedSubtotal()).isEqualTo("5.00")
         assertThat(invoiceLineItemCreateResponse.adjustments())
             .containsExactly(
-                InvoiceLineItemCreateResponse.Adjustment.ofAmountDiscount(
-                    InvoiceLineItemCreateResponse.Adjustment.AmountDiscountAdjustment.builder()
+                InvoiceLineItemCreateResponse.Adjustment.ofMonetaryUsageDiscount(
+                    InvoiceLineItemCreateResponse.Adjustment.MonetaryUsageDiscountAdjustment
+                        .builder()
                         .id("id")
                         .adjustmentType(
-                            InvoiceLineItemCreateResponse.Adjustment.AmountDiscountAdjustment
+                            InvoiceLineItemCreateResponse.Adjustment.MonetaryUsageDiscountAdjustment
                                 .AdjustmentType
-                                .AMOUNT_DISCOUNT
+                                .USAGE_DISCOUNT
                         )
-                        .amountDiscount("amount_discount")
+                        .amount("amount")
                         .addAppliesToPriceId("string")
                         .isInvoiceLevel(true)
-                        .planPhaseOrder(0L)
                         .reason("reason")
+                        .usageDiscount(0.0)
                         .build()
                 )
             )
