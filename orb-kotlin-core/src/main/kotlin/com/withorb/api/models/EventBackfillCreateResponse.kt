@@ -40,6 +40,9 @@ private constructor(
     @JsonProperty("events_ingested")
     @ExcludeMissing
     private val eventsIngested: JsonField<Long> = JsonMissing.of(),
+    @JsonProperty("replace_existing_events")
+    @ExcludeMissing
+    private val replaceExistingEvents: JsonField<Boolean> = JsonMissing.of(),
     @JsonProperty("reverted_at")
     @ExcludeMissing
     private val revertedAt: JsonField<OffsetDateTime> = JsonMissing.of(),
@@ -76,6 +79,14 @@ private constructor(
 
     /** The number of events ingested in this backfill. */
     fun eventsIngested(): Long = eventsIngested.getRequired("events_ingested")
+
+    /**
+     * If `true`, existing events in the backfill's timeframe will be replaced with the newly
+     * ingested events associated with the backfill. If `false`, newly ingested events will be added
+     * to the existing events.
+     */
+    fun replaceExistingEvents(): Boolean =
+        replaceExistingEvents.getRequired("replace_existing_events")
 
     /** The time at which this backfill was reverted. */
     fun revertedAt(): OffsetDateTime? = revertedAt.getNullable("reverted_at")
@@ -118,6 +129,15 @@ private constructor(
     @ExcludeMissing
     fun _eventsIngested(): JsonField<Long> = eventsIngested
 
+    /**
+     * If `true`, existing events in the backfill's timeframe will be replaced with the newly
+     * ingested events associated with the backfill. If `false`, newly ingested events will be added
+     * to the existing events.
+     */
+    @JsonProperty("replace_existing_events")
+    @ExcludeMissing
+    fun _replaceExistingEvents(): JsonField<Boolean> = replaceExistingEvents
+
     /** The time at which this backfill was reverted. */
     @JsonProperty("reverted_at")
     @ExcludeMissing
@@ -158,6 +178,7 @@ private constructor(
         createdAt()
         customerId()
         eventsIngested()
+        replaceExistingEvents()
         revertedAt()
         status()
         timeframeEnd()
@@ -181,6 +202,7 @@ private constructor(
         private var createdAt: JsonField<OffsetDateTime>? = null
         private var customerId: JsonField<String>? = null
         private var eventsIngested: JsonField<Long>? = null
+        private var replaceExistingEvents: JsonField<Boolean>? = null
         private var revertedAt: JsonField<OffsetDateTime>? = null
         private var status: JsonField<Status>? = null
         private var timeframeEnd: JsonField<OffsetDateTime>? = null
@@ -194,6 +216,7 @@ private constructor(
             createdAt = eventBackfillCreateResponse.createdAt
             customerId = eventBackfillCreateResponse.customerId
             eventsIngested = eventBackfillCreateResponse.eventsIngested
+            replaceExistingEvents = eventBackfillCreateResponse.replaceExistingEvents
             revertedAt = eventBackfillCreateResponse.revertedAt
             status = eventBackfillCreateResponse.status
             timeframeEnd = eventBackfillCreateResponse.timeframeEnd
@@ -240,6 +263,23 @@ private constructor(
         /** The number of events ingested in this backfill. */
         fun eventsIngested(eventsIngested: JsonField<Long>) = apply {
             this.eventsIngested = eventsIngested
+        }
+
+        /**
+         * If `true`, existing events in the backfill's timeframe will be replaced with the newly
+         * ingested events associated with the backfill. If `false`, newly ingested events will be
+         * added to the existing events.
+         */
+        fun replaceExistingEvents(replaceExistingEvents: Boolean) =
+            replaceExistingEvents(JsonField.of(replaceExistingEvents))
+
+        /**
+         * If `true`, existing events in the backfill's timeframe will be replaced with the newly
+         * ingested events associated with the backfill. If `false`, newly ingested events will be
+         * added to the existing events.
+         */
+        fun replaceExistingEvents(replaceExistingEvents: JsonField<Boolean>) = apply {
+            this.replaceExistingEvents = replaceExistingEvents
         }
 
         /** The time at which this backfill was reverted. */
@@ -310,6 +350,7 @@ private constructor(
                 checkRequired("createdAt", createdAt),
                 checkRequired("customerId", customerId),
                 checkRequired("eventsIngested", eventsIngested),
+                checkRequired("replaceExistingEvents", replaceExistingEvents),
                 checkRequired("revertedAt", revertedAt),
                 checkRequired("status", status),
                 checkRequired("timeframeEnd", timeframeEnd),
@@ -428,15 +469,15 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is EventBackfillCreateResponse && id == other.id && closeTime == other.closeTime && createdAt == other.createdAt && customerId == other.customerId && eventsIngested == other.eventsIngested && revertedAt == other.revertedAt && status == other.status && timeframeEnd == other.timeframeEnd && timeframeStart == other.timeframeStart && deprecationFilter == other.deprecationFilter && additionalProperties == other.additionalProperties /* spotless:on */
+        return /* spotless:off */ other is EventBackfillCreateResponse && id == other.id && closeTime == other.closeTime && createdAt == other.createdAt && customerId == other.customerId && eventsIngested == other.eventsIngested && replaceExistingEvents == other.replaceExistingEvents && revertedAt == other.revertedAt && status == other.status && timeframeEnd == other.timeframeEnd && timeframeStart == other.timeframeStart && deprecationFilter == other.deprecationFilter && additionalProperties == other.additionalProperties /* spotless:on */
     }
 
     /* spotless:off */
-    private val hashCode: Int by lazy { Objects.hash(id, closeTime, createdAt, customerId, eventsIngested, revertedAt, status, timeframeEnd, timeframeStart, deprecationFilter, additionalProperties) }
+    private val hashCode: Int by lazy { Objects.hash(id, closeTime, createdAt, customerId, eventsIngested, replaceExistingEvents, revertedAt, status, timeframeEnd, timeframeStart, deprecationFilter, additionalProperties) }
     /* spotless:on */
 
     override fun hashCode(): Int = hashCode
 
     override fun toString() =
-        "EventBackfillCreateResponse{id=$id, closeTime=$closeTime, createdAt=$createdAt, customerId=$customerId, eventsIngested=$eventsIngested, revertedAt=$revertedAt, status=$status, timeframeEnd=$timeframeEnd, timeframeStart=$timeframeStart, deprecationFilter=$deprecationFilter, additionalProperties=$additionalProperties}"
+        "EventBackfillCreateResponse{id=$id, closeTime=$closeTime, createdAt=$createdAt, customerId=$customerId, eventsIngested=$eventsIngested, replaceExistingEvents=$replaceExistingEvents, revertedAt=$revertedAt, status=$status, timeframeEnd=$timeframeEnd, timeframeStart=$timeframeStart, deprecationFilter=$deprecationFilter, additionalProperties=$additionalProperties}"
 }
