@@ -103,18 +103,18 @@ class InvoiceTest {
                         .id("id")
                         .adjustedSubtotal("5.00")
                         .addAdjustment(
-                            Invoice.LineItem.Adjustment.AmountDiscountAdjustment.builder()
+                            Invoice.LineItem.Adjustment.MonetaryUsageDiscountAdjustment.builder()
                                 .id("id")
                                 .adjustmentType(
-                                    Invoice.LineItem.Adjustment.AmountDiscountAdjustment
+                                    Invoice.LineItem.Adjustment.MonetaryUsageDiscountAdjustment
                                         .AdjustmentType
-                                        .AMOUNT_DISCOUNT
+                                        .USAGE_DISCOUNT
                                 )
-                                .amountDiscount("amount_discount")
+                                .amount("amount")
                                 .addAppliesToPriceId("string")
                                 .isInvoiceLevel(true)
-                                .planPhaseOrder(0L)
                                 .reason("reason")
+                                .usageDiscount(0.0)
                                 .build()
                         )
                         .amount("7.00")
@@ -418,17 +418,18 @@ class InvoiceTest {
                     .id("id")
                     .adjustedSubtotal("5.00")
                     .addAdjustment(
-                        Invoice.LineItem.Adjustment.AmountDiscountAdjustment.builder()
+                        Invoice.LineItem.Adjustment.MonetaryUsageDiscountAdjustment.builder()
                             .id("id")
                             .adjustmentType(
-                                Invoice.LineItem.Adjustment.AmountDiscountAdjustment.AdjustmentType
-                                    .AMOUNT_DISCOUNT
+                                Invoice.LineItem.Adjustment.MonetaryUsageDiscountAdjustment
+                                    .AdjustmentType
+                                    .USAGE_DISCOUNT
                             )
-                            .amountDiscount("amount_discount")
+                            .amount("amount")
                             .addAppliesToPriceId("string")
                             .isInvoiceLevel(true)
-                            .planPhaseOrder(0L)
                             .reason("reason")
+                            .usageDiscount(0.0)
                             .build()
                     )
                     .amount("7.00")
