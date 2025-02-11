@@ -36,6 +36,16 @@ class SubscriptionCreateParamsTest {
             )
             .addAddPrice(
                 SubscriptionCreateParams.AddPrice.builder()
+                    .allocationPrice(
+                        SubscriptionCreateParams.AddPrice.AllocationPrice.builder()
+                            .amount("10.00")
+                            .cadence(
+                                SubscriptionCreateParams.AddPrice.AllocationPrice.Cadence.ONE_TIME
+                            )
+                            .currency("USD")
+                            .expiresAtEndOfCadence(true)
+                            .build()
+                    )
                     .addDiscount(
                         SubscriptionCreateParams.AddPrice.Discount.builder()
                             .discountType(
@@ -187,6 +197,17 @@ class SubscriptionCreateParamsTest {
             .addReplacePrice(
                 SubscriptionCreateParams.ReplacePrice.builder()
                     .replacesPriceId("replaces_price_id")
+                    .allocationPrice(
+                        SubscriptionCreateParams.ReplacePrice.AllocationPrice.builder()
+                            .amount("10.00")
+                            .cadence(
+                                SubscriptionCreateParams.ReplacePrice.AllocationPrice.Cadence
+                                    .ONE_TIME
+                            )
+                            .currency("USD")
+                            .expiresAtEndOfCadence(true)
+                            .build()
+                    )
                     .addDiscount(
                         SubscriptionCreateParams.ReplacePrice.Discount.builder()
                             .discountType(
@@ -305,6 +326,17 @@ class SubscriptionCreateParamsTest {
                 )
                 .addAddPrice(
                     SubscriptionCreateParams.AddPrice.builder()
+                        .allocationPrice(
+                            SubscriptionCreateParams.AddPrice.AllocationPrice.builder()
+                                .amount("10.00")
+                                .cadence(
+                                    SubscriptionCreateParams.AddPrice.AllocationPrice.Cadence
+                                        .ONE_TIME
+                                )
+                                .currency("USD")
+                                .expiresAtEndOfCadence(true)
+                                .build()
+                        )
                         .addDiscount(
                             SubscriptionCreateParams.AddPrice.Discount.builder()
                                 .discountType(
@@ -459,6 +491,17 @@ class SubscriptionCreateParamsTest {
                 .addReplacePrice(
                     SubscriptionCreateParams.ReplacePrice.builder()
                         .replacesPriceId("replaces_price_id")
+                        .allocationPrice(
+                            SubscriptionCreateParams.ReplacePrice.AllocationPrice.builder()
+                                .amount("10.00")
+                                .cadence(
+                                    SubscriptionCreateParams.ReplacePrice.AllocationPrice.Cadence
+                                        .ONE_TIME
+                                )
+                                .currency("USD")
+                                .expiresAtEndOfCadence(true)
+                                .build()
+                        )
                         .addDiscount(
                             SubscriptionCreateParams.ReplacePrice.Discount.builder()
                                 .discountType(
@@ -584,6 +627,17 @@ class SubscriptionCreateParamsTest {
             .isEqualTo(
                 listOf(
                     SubscriptionCreateParams.AddPrice.builder()
+                        .allocationPrice(
+                            SubscriptionCreateParams.AddPrice.AllocationPrice.builder()
+                                .amount("10.00")
+                                .cadence(
+                                    SubscriptionCreateParams.AddPrice.AllocationPrice.Cadence
+                                        .ONE_TIME
+                                )
+                                .currency("USD")
+                                .expiresAtEndOfCadence(true)
+                                .build()
+                        )
                         .addDiscount(
                             SubscriptionCreateParams.AddPrice.Discount.builder()
                                 .discountType(
@@ -754,6 +808,17 @@ class SubscriptionCreateParamsTest {
                 listOf(
                     SubscriptionCreateParams.ReplacePrice.builder()
                         .replacesPriceId("replaces_price_id")
+                        .allocationPrice(
+                            SubscriptionCreateParams.ReplacePrice.AllocationPrice.builder()
+                                .amount("10.00")
+                                .cadence(
+                                    SubscriptionCreateParams.ReplacePrice.AllocationPrice.Cadence
+                                        .ONE_TIME
+                                )
+                                .currency("USD")
+                                .expiresAtEndOfCadence(true)
+                                .build()
+                        )
                         .addDiscount(
                             SubscriptionCreateParams.ReplacePrice.Discount.builder()
                                 .discountType(

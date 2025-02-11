@@ -39,6 +39,18 @@ class SubscriptionSchedulePlanChangeParamsTest {
             )
             .addAddPrice(
                 SubscriptionSchedulePlanChangeParams.AddPrice.builder()
+                    .allocationPrice(
+                        SubscriptionSchedulePlanChangeParams.AddPrice.AllocationPrice.builder()
+                            .amount("10.00")
+                            .cadence(
+                                SubscriptionSchedulePlanChangeParams.AddPrice.AllocationPrice
+                                    .Cadence
+                                    .ONE_TIME
+                            )
+                            .currency("USD")
+                            .expiresAtEndOfCadence(true)
+                            .build()
+                    )
                     .addDiscount(
                         SubscriptionSchedulePlanChangeParams.AddPrice.Discount.builder()
                             .discountType(
@@ -192,6 +204,18 @@ class SubscriptionSchedulePlanChangeParamsTest {
             .addReplacePrice(
                 SubscriptionSchedulePlanChangeParams.ReplacePrice.builder()
                     .replacesPriceId("replaces_price_id")
+                    .allocationPrice(
+                        SubscriptionSchedulePlanChangeParams.ReplacePrice.AllocationPrice.builder()
+                            .amount("10.00")
+                            .cadence(
+                                SubscriptionSchedulePlanChangeParams.ReplacePrice.AllocationPrice
+                                    .Cadence
+                                    .ONE_TIME
+                            )
+                            .currency("USD")
+                            .expiresAtEndOfCadence(true)
+                            .build()
+                    )
                     .addDiscount(
                         SubscriptionSchedulePlanChangeParams.ReplacePrice.Discount.builder()
                             .discountType(
@@ -320,6 +344,18 @@ class SubscriptionSchedulePlanChangeParamsTest {
                 )
                 .addAddPrice(
                     SubscriptionSchedulePlanChangeParams.AddPrice.builder()
+                        .allocationPrice(
+                            SubscriptionSchedulePlanChangeParams.AddPrice.AllocationPrice.builder()
+                                .amount("10.00")
+                                .cadence(
+                                    SubscriptionSchedulePlanChangeParams.AddPrice.AllocationPrice
+                                        .Cadence
+                                        .ONE_TIME
+                                )
+                                .currency("USD")
+                                .expiresAtEndOfCadence(true)
+                                .build()
+                        )
                         .addDiscount(
                             SubscriptionSchedulePlanChangeParams.AddPrice.Discount.builder()
                                 .discountType(
@@ -476,6 +512,20 @@ class SubscriptionSchedulePlanChangeParamsTest {
                 .addReplacePrice(
                     SubscriptionSchedulePlanChangeParams.ReplacePrice.builder()
                         .replacesPriceId("replaces_price_id")
+                        .allocationPrice(
+                            SubscriptionSchedulePlanChangeParams.ReplacePrice.AllocationPrice
+                                .builder()
+                                .amount("10.00")
+                                .cadence(
+                                    SubscriptionSchedulePlanChangeParams.ReplacePrice
+                                        .AllocationPrice
+                                        .Cadence
+                                        .ONE_TIME
+                                )
+                                .currency("USD")
+                                .expiresAtEndOfCadence(true)
+                                .build()
+                        )
                         .addDiscount(
                             SubscriptionSchedulePlanChangeParams.ReplacePrice.Discount.builder()
                                 .discountType(
@@ -605,6 +655,18 @@ class SubscriptionSchedulePlanChangeParamsTest {
             .isEqualTo(
                 listOf(
                     SubscriptionSchedulePlanChangeParams.AddPrice.builder()
+                        .allocationPrice(
+                            SubscriptionSchedulePlanChangeParams.AddPrice.AllocationPrice.builder()
+                                .amount("10.00")
+                                .cadence(
+                                    SubscriptionSchedulePlanChangeParams.AddPrice.AllocationPrice
+                                        .Cadence
+                                        .ONE_TIME
+                                )
+                                .currency("USD")
+                                .expiresAtEndOfCadence(true)
+                                .build()
+                        )
                         .addDiscount(
                             SubscriptionSchedulePlanChangeParams.AddPrice.Discount.builder()
                                 .discountType(
@@ -773,6 +835,20 @@ class SubscriptionSchedulePlanChangeParamsTest {
                 listOf(
                     SubscriptionSchedulePlanChangeParams.ReplacePrice.builder()
                         .replacesPriceId("replaces_price_id")
+                        .allocationPrice(
+                            SubscriptionSchedulePlanChangeParams.ReplacePrice.AllocationPrice
+                                .builder()
+                                .amount("10.00")
+                                .cadence(
+                                    SubscriptionSchedulePlanChangeParams.ReplacePrice
+                                        .AllocationPrice
+                                        .Cadence
+                                        .ONE_TIME
+                                )
+                                .currency("USD")
+                                .expiresAtEndOfCadence(true)
+                                .build()
+                        )
                         .addDiscount(
                             SubscriptionSchedulePlanChangeParams.ReplacePrice.Discount.builder()
                                 .discountType(
