@@ -323,6 +323,8 @@ private constructor(
 
             val OVERPAYMENT_REFUND = of("overpayment_refund")
 
+            val EXTERNAL_PAYMENT = of("external_payment")
+
             fun of(value: String) = Action(JsonField.of(value))
         }
 
@@ -336,6 +338,7 @@ private constructor(
             CREDIT_NOTE_APPLIED,
             CREDIT_NOTE_VOIDED,
             OVERPAYMENT_REFUND,
+            EXTERNAL_PAYMENT,
         }
 
         /**
@@ -356,6 +359,7 @@ private constructor(
             CREDIT_NOTE_APPLIED,
             CREDIT_NOTE_VOIDED,
             OVERPAYMENT_REFUND,
+            EXTERNAL_PAYMENT,
             /** An enum member indicating that [Action] was instantiated with an unknown value. */
             _UNKNOWN,
         }
@@ -377,6 +381,7 @@ private constructor(
                 CREDIT_NOTE_APPLIED -> Value.CREDIT_NOTE_APPLIED
                 CREDIT_NOTE_VOIDED -> Value.CREDIT_NOTE_VOIDED
                 OVERPAYMENT_REFUND -> Value.OVERPAYMENT_REFUND
+                EXTERNAL_PAYMENT -> Value.EXTERNAL_PAYMENT
                 else -> Value._UNKNOWN
             }
 
@@ -398,6 +403,7 @@ private constructor(
                 CREDIT_NOTE_APPLIED -> Known.CREDIT_NOTE_APPLIED
                 CREDIT_NOTE_VOIDED -> Known.CREDIT_NOTE_VOIDED
                 OVERPAYMENT_REFUND -> Known.OVERPAYMENT_REFUND
+                EXTERNAL_PAYMENT -> Known.EXTERNAL_PAYMENT
                 else -> throw OrbInvalidDataException("Unknown Action: $value")
             }
 
