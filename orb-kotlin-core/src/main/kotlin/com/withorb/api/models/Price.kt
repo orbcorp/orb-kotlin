@@ -72,6 +72,7 @@ private constructor(
     private val maxGroupTieredPackage: MaxGroupTieredPackagePrice? = null,
     private val scalableMatrixWithUnitPricing: ScalableMatrixWithUnitPricingPrice? = null,
     private val scalableMatrixWithTieredPricing: ScalableMatrixWithTieredPricingPrice? = null,
+    private val cumulativeGroupedBulk: CumulativeGroupedBulkPrice? = null,
     private val _json: JsonValue? = null,
 ) {
 
@@ -131,6 +132,8 @@ private constructor(
     fun scalableMatrixWithTieredPricing(): ScalableMatrixWithTieredPricingPrice? =
         scalableMatrixWithTieredPricing
 
+    fun cumulativeGroupedBulk(): CumulativeGroupedBulkPrice? = cumulativeGroupedBulk
+
     fun isUnit(): Boolean = unit != null
 
     fun isPackagePrice(): Boolean = packagePrice != null
@@ -184,6 +187,8 @@ private constructor(
     fun isScalableMatrixWithUnitPricing(): Boolean = scalableMatrixWithUnitPricing != null
 
     fun isScalableMatrixWithTieredPricing(): Boolean = scalableMatrixWithTieredPricing != null
+
+    fun isCumulativeGroupedBulk(): Boolean = cumulativeGroupedBulk != null
 
     fun asUnit(): UnitPrice = unit.getOrThrow("unit")
 
@@ -255,6 +260,9 @@ private constructor(
     fun asScalableMatrixWithTieredPricing(): ScalableMatrixWithTieredPricingPrice =
         scalableMatrixWithTieredPricing.getOrThrow("scalableMatrixWithTieredPricing")
 
+    fun asCumulativeGroupedBulk(): CumulativeGroupedBulkPrice =
+        cumulativeGroupedBulk.getOrThrow("cumulativeGroupedBulk")
+
     fun _json(): JsonValue? = _json
 
     fun <T> accept(visitor: Visitor<T>): T {
@@ -294,6 +302,8 @@ private constructor(
                 visitor.visitScalableMatrixWithUnitPricing(scalableMatrixWithUnitPricing)
             scalableMatrixWithTieredPricing != null ->
                 visitor.visitScalableMatrixWithTieredPricing(scalableMatrixWithTieredPricing)
+            cumulativeGroupedBulk != null ->
+                visitor.visitCumulativeGroupedBulk(cumulativeGroupedBulk)
             else -> visitor.unknown(_json)
         }
     }
@@ -438,6 +448,12 @@ private constructor(
                 ) {
                     scalableMatrixWithTieredPricing.validate()
                 }
+
+                override fun visitCumulativeGroupedBulk(
+                    cumulativeGroupedBulk: CumulativeGroupedBulkPrice
+                ) {
+                    cumulativeGroupedBulk.validate()
+                }
             }
         )
         validated = true
@@ -448,10 +464,10 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is Price && unit == other.unit && packagePrice == other.packagePrice && matrix == other.matrix && tiered == other.tiered && tieredBps == other.tieredBps && bps == other.bps && bulkBps == other.bulkBps && bulk == other.bulk && thresholdTotalAmount == other.thresholdTotalAmount && tieredPackage == other.tieredPackage && groupedTiered == other.groupedTiered && tieredWithMinimum == other.tieredWithMinimum && tieredPackageWithMinimum == other.tieredPackageWithMinimum && packageWithAllocation == other.packageWithAllocation && unitWithPercent == other.unitWithPercent && matrixWithAllocation == other.matrixWithAllocation && tieredWithProration == other.tieredWithProration && unitWithProration == other.unitWithProration && groupedAllocation == other.groupedAllocation && groupedWithProratedMinimum == other.groupedWithProratedMinimum && groupedWithMeteredMinimum == other.groupedWithMeteredMinimum && matrixWithDisplayName == other.matrixWithDisplayName && bulkWithProration == other.bulkWithProration && groupedTieredPackage == other.groupedTieredPackage && maxGroupTieredPackage == other.maxGroupTieredPackage && scalableMatrixWithUnitPricing == other.scalableMatrixWithUnitPricing && scalableMatrixWithTieredPricing == other.scalableMatrixWithTieredPricing /* spotless:on */
+        return /* spotless:off */ other is Price && unit == other.unit && packagePrice == other.packagePrice && matrix == other.matrix && tiered == other.tiered && tieredBps == other.tieredBps && bps == other.bps && bulkBps == other.bulkBps && bulk == other.bulk && thresholdTotalAmount == other.thresholdTotalAmount && tieredPackage == other.tieredPackage && groupedTiered == other.groupedTiered && tieredWithMinimum == other.tieredWithMinimum && tieredPackageWithMinimum == other.tieredPackageWithMinimum && packageWithAllocation == other.packageWithAllocation && unitWithPercent == other.unitWithPercent && matrixWithAllocation == other.matrixWithAllocation && tieredWithProration == other.tieredWithProration && unitWithProration == other.unitWithProration && groupedAllocation == other.groupedAllocation && groupedWithProratedMinimum == other.groupedWithProratedMinimum && groupedWithMeteredMinimum == other.groupedWithMeteredMinimum && matrixWithDisplayName == other.matrixWithDisplayName && bulkWithProration == other.bulkWithProration && groupedTieredPackage == other.groupedTieredPackage && maxGroupTieredPackage == other.maxGroupTieredPackage && scalableMatrixWithUnitPricing == other.scalableMatrixWithUnitPricing && scalableMatrixWithTieredPricing == other.scalableMatrixWithTieredPricing && cumulativeGroupedBulk == other.cumulativeGroupedBulk /* spotless:on */
     }
 
-    override fun hashCode(): Int = /* spotless:off */ Objects.hash(unit, packagePrice, matrix, tiered, tieredBps, bps, bulkBps, bulk, thresholdTotalAmount, tieredPackage, groupedTiered, tieredWithMinimum, tieredPackageWithMinimum, packageWithAllocation, unitWithPercent, matrixWithAllocation, tieredWithProration, unitWithProration, groupedAllocation, groupedWithProratedMinimum, groupedWithMeteredMinimum, matrixWithDisplayName, bulkWithProration, groupedTieredPackage, maxGroupTieredPackage, scalableMatrixWithUnitPricing, scalableMatrixWithTieredPricing) /* spotless:on */
+    override fun hashCode(): Int = /* spotless:off */ Objects.hash(unit, packagePrice, matrix, tiered, tieredBps, bps, bulkBps, bulk, thresholdTotalAmount, tieredPackage, groupedTiered, tieredWithMinimum, tieredPackageWithMinimum, packageWithAllocation, unitWithPercent, matrixWithAllocation, tieredWithProration, unitWithProration, groupedAllocation, groupedWithProratedMinimum, groupedWithMeteredMinimum, matrixWithDisplayName, bulkWithProration, groupedTieredPackage, maxGroupTieredPackage, scalableMatrixWithUnitPricing, scalableMatrixWithTieredPricing, cumulativeGroupedBulk) /* spotless:on */
 
     override fun toString(): String =
         when {
@@ -487,6 +503,7 @@ private constructor(
                 "Price{scalableMatrixWithUnitPricing=$scalableMatrixWithUnitPricing}"
             scalableMatrixWithTieredPricing != null ->
                 "Price{scalableMatrixWithTieredPricing=$scalableMatrixWithTieredPricing}"
+            cumulativeGroupedBulk != null -> "Price{cumulativeGroupedBulk=$cumulativeGroupedBulk}"
             _json != null -> "Price{_unknown=$_json}"
             else -> throw IllegalStateException("Invalid Price")
         }
@@ -568,6 +585,9 @@ private constructor(
         fun ofScalableMatrixWithTieredPricing(
             scalableMatrixWithTieredPricing: ScalableMatrixWithTieredPricingPrice
         ) = Price(scalableMatrixWithTieredPricing = scalableMatrixWithTieredPricing)
+
+        fun ofCumulativeGroupedBulk(cumulativeGroupedBulk: CumulativeGroupedBulkPrice) =
+            Price(cumulativeGroupedBulk = cumulativeGroupedBulk)
     }
 
     /** An interface that defines how to map each variant of [Price] to a value of type [T]. */
@@ -636,6 +656,8 @@ private constructor(
         fun visitScalableMatrixWithTieredPricing(
             scalableMatrixWithTieredPricing: ScalableMatrixWithTieredPricingPrice
         ): T
+
+        fun visitCumulativeGroupedBulk(cumulativeGroupedBulk: CumulativeGroupedBulkPrice): T
 
         /**
          * Maps an unknown variant of [Price] to a value of type [T].
@@ -844,6 +866,14 @@ private constructor(
                             return Price(scalableMatrixWithTieredPricing = it, _json = json)
                         }
                 }
+                "cumulative_grouped_bulk" -> {
+                    tryDeserialize(node, jacksonTypeRef<CumulativeGroupedBulkPrice>()) {
+                            it.validate()
+                        }
+                        ?.let {
+                            return Price(cumulativeGroupedBulk = it, _json = json)
+                        }
+                }
             }
 
             return Price(_json = json)
@@ -897,6 +927,8 @@ private constructor(
                     generator.writeObject(value.scalableMatrixWithUnitPricing)
                 value.scalableMatrixWithTieredPricing != null ->
                     generator.writeObject(value.scalableMatrixWithTieredPricing)
+                value.cumulativeGroupedBulk != null ->
+                    generator.writeObject(value.cumulativeGroupedBulk)
                 value._json != null -> generator.writeObject(value._json)
                 else -> throw IllegalStateException("Invalid Price")
             }
@@ -63464,5 +63496,2270 @@ private constructor(
 
         override fun toString() =
             "ScalableMatrixWithTieredPricingPrice{id=$id, billableMetric=$billableMetric, billingCycleConfiguration=$billingCycleConfiguration, cadence=$cadence, conversionRate=$conversionRate, createdAt=$createdAt, creditAllocation=$creditAllocation, currency=$currency, discount=$discount, externalPriceId=$externalPriceId, fixedPriceQuantity=$fixedPriceQuantity, invoicingCycleConfiguration=$invoicingCycleConfiguration, item=$item, maximum=$maximum, maximumAmount=$maximumAmount, metadata=$metadata, minimum=$minimum, minimumAmount=$minimumAmount, modelType=$modelType, name=$name, planPhaseOrder=$planPhaseOrder, priceType=$priceType, scalableMatrixWithTieredPricingConfig=$scalableMatrixWithTieredPricingConfig, dimensionalPriceConfiguration=$dimensionalPriceConfiguration, additionalProperties=$additionalProperties}"
+    }
+
+    @NoAutoDetect
+    class CumulativeGroupedBulkPrice
+    @JsonCreator
+    private constructor(
+        @JsonProperty("id") @ExcludeMissing private val id: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("billable_metric")
+        @ExcludeMissing
+        private val billableMetric: JsonField<BillableMetric> = JsonMissing.of(),
+        @JsonProperty("billing_cycle_configuration")
+        @ExcludeMissing
+        private val billingCycleConfiguration: JsonField<BillingCycleConfiguration> =
+            JsonMissing.of(),
+        @JsonProperty("cadence")
+        @ExcludeMissing
+        private val cadence: JsonField<Cadence> = JsonMissing.of(),
+        @JsonProperty("conversion_rate")
+        @ExcludeMissing
+        private val conversionRate: JsonField<Double> = JsonMissing.of(),
+        @JsonProperty("created_at")
+        @ExcludeMissing
+        private val createdAt: JsonField<OffsetDateTime> = JsonMissing.of(),
+        @JsonProperty("credit_allocation")
+        @ExcludeMissing
+        private val creditAllocation: JsonField<CreditAllocation> = JsonMissing.of(),
+        @JsonProperty("cumulative_grouped_bulk_config")
+        @ExcludeMissing
+        private val cumulativeGroupedBulkConfig: JsonField<CumulativeGroupedBulkConfig> =
+            JsonMissing.of(),
+        @JsonProperty("currency")
+        @ExcludeMissing
+        private val currency: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("discount")
+        @ExcludeMissing
+        private val discount: JsonField<Discount> = JsonMissing.of(),
+        @JsonProperty("external_price_id")
+        @ExcludeMissing
+        private val externalPriceId: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("fixed_price_quantity")
+        @ExcludeMissing
+        private val fixedPriceQuantity: JsonField<Double> = JsonMissing.of(),
+        @JsonProperty("invoicing_cycle_configuration")
+        @ExcludeMissing
+        private val invoicingCycleConfiguration: JsonField<InvoicingCycleConfiguration> =
+            JsonMissing.of(),
+        @JsonProperty("item") @ExcludeMissing private val item: JsonField<Item> = JsonMissing.of(),
+        @JsonProperty("maximum")
+        @ExcludeMissing
+        private val maximum: JsonField<Maximum> = JsonMissing.of(),
+        @JsonProperty("maximum_amount")
+        @ExcludeMissing
+        private val maximumAmount: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("metadata")
+        @ExcludeMissing
+        private val metadata: JsonField<Metadata> = JsonMissing.of(),
+        @JsonProperty("minimum")
+        @ExcludeMissing
+        private val minimum: JsonField<Minimum> = JsonMissing.of(),
+        @JsonProperty("minimum_amount")
+        @ExcludeMissing
+        private val minimumAmount: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("model_type")
+        @ExcludeMissing
+        private val modelType: JsonField<ModelType> = JsonMissing.of(),
+        @JsonProperty("name")
+        @ExcludeMissing
+        private val name: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("plan_phase_order")
+        @ExcludeMissing
+        private val planPhaseOrder: JsonField<Long> = JsonMissing.of(),
+        @JsonProperty("price_type")
+        @ExcludeMissing
+        private val priceType: JsonField<PriceType> = JsonMissing.of(),
+        @JsonProperty("dimensional_price_configuration")
+        @ExcludeMissing
+        private val dimensionalPriceConfiguration: JsonField<DimensionalPriceConfiguration> =
+            JsonMissing.of(),
+        @JsonAnySetter
+        private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
+    ) {
+
+        fun id(): String = id.getRequired("id")
+
+        fun billableMetric(): BillableMetric? = billableMetric.getNullable("billable_metric")
+
+        fun billingCycleConfiguration(): BillingCycleConfiguration =
+            billingCycleConfiguration.getRequired("billing_cycle_configuration")
+
+        fun cadence(): Cadence = cadence.getRequired("cadence")
+
+        fun conversionRate(): Double? = conversionRate.getNullable("conversion_rate")
+
+        fun createdAt(): OffsetDateTime = createdAt.getRequired("created_at")
+
+        fun creditAllocation(): CreditAllocation? =
+            creditAllocation.getNullable("credit_allocation")
+
+        fun cumulativeGroupedBulkConfig(): CumulativeGroupedBulkConfig =
+            cumulativeGroupedBulkConfig.getRequired("cumulative_grouped_bulk_config")
+
+        fun currency(): String = currency.getRequired("currency")
+
+        fun discount(): Discount? = discount.getNullable("discount")
+
+        fun externalPriceId(): String? = externalPriceId.getNullable("external_price_id")
+
+        fun fixedPriceQuantity(): Double? = fixedPriceQuantity.getNullable("fixed_price_quantity")
+
+        fun invoicingCycleConfiguration(): InvoicingCycleConfiguration? =
+            invoicingCycleConfiguration.getNullable("invoicing_cycle_configuration")
+
+        fun item(): Item = item.getRequired("item")
+
+        fun maximum(): Maximum? = maximum.getNullable("maximum")
+
+        fun maximumAmount(): String? = maximumAmount.getNullable("maximum_amount")
+
+        /**
+         * User specified key-value pairs for the resource. If not present, this defaults to an
+         * empty dictionary. Individual keys can be removed by setting the value to `null`, and the
+         * entire metadata mapping can be cleared by setting `metadata` to `null`.
+         */
+        fun metadata(): Metadata = metadata.getRequired("metadata")
+
+        fun minimum(): Minimum? = minimum.getNullable("minimum")
+
+        fun minimumAmount(): String? = minimumAmount.getNullable("minimum_amount")
+
+        fun modelType(): ModelType = modelType.getRequired("model_type")
+
+        fun name(): String = name.getRequired("name")
+
+        fun planPhaseOrder(): Long? = planPhaseOrder.getNullable("plan_phase_order")
+
+        fun priceType(): PriceType = priceType.getRequired("price_type")
+
+        fun dimensionalPriceConfiguration(): DimensionalPriceConfiguration? =
+            dimensionalPriceConfiguration.getNullable("dimensional_price_configuration")
+
+        @JsonProperty("id") @ExcludeMissing fun _id(): JsonField<String> = id
+
+        @JsonProperty("billable_metric")
+        @ExcludeMissing
+        fun _billableMetric(): JsonField<BillableMetric> = billableMetric
+
+        @JsonProperty("billing_cycle_configuration")
+        @ExcludeMissing
+        fun _billingCycleConfiguration(): JsonField<BillingCycleConfiguration> =
+            billingCycleConfiguration
+
+        @JsonProperty("cadence") @ExcludeMissing fun _cadence(): JsonField<Cadence> = cadence
+
+        @JsonProperty("conversion_rate")
+        @ExcludeMissing
+        fun _conversionRate(): JsonField<Double> = conversionRate
+
+        @JsonProperty("created_at")
+        @ExcludeMissing
+        fun _createdAt(): JsonField<OffsetDateTime> = createdAt
+
+        @JsonProperty("credit_allocation")
+        @ExcludeMissing
+        fun _creditAllocation(): JsonField<CreditAllocation> = creditAllocation
+
+        @JsonProperty("cumulative_grouped_bulk_config")
+        @ExcludeMissing
+        fun _cumulativeGroupedBulkConfig(): JsonField<CumulativeGroupedBulkConfig> =
+            cumulativeGroupedBulkConfig
+
+        @JsonProperty("currency") @ExcludeMissing fun _currency(): JsonField<String> = currency
+
+        @JsonProperty("discount") @ExcludeMissing fun _discount(): JsonField<Discount> = discount
+
+        @JsonProperty("external_price_id")
+        @ExcludeMissing
+        fun _externalPriceId(): JsonField<String> = externalPriceId
+
+        @JsonProperty("fixed_price_quantity")
+        @ExcludeMissing
+        fun _fixedPriceQuantity(): JsonField<Double> = fixedPriceQuantity
+
+        @JsonProperty("invoicing_cycle_configuration")
+        @ExcludeMissing
+        fun _invoicingCycleConfiguration(): JsonField<InvoicingCycleConfiguration> =
+            invoicingCycleConfiguration
+
+        @JsonProperty("item") @ExcludeMissing fun _item(): JsonField<Item> = item
+
+        @JsonProperty("maximum") @ExcludeMissing fun _maximum(): JsonField<Maximum> = maximum
+
+        @JsonProperty("maximum_amount")
+        @ExcludeMissing
+        fun _maximumAmount(): JsonField<String> = maximumAmount
+
+        /**
+         * User specified key-value pairs for the resource. If not present, this defaults to an
+         * empty dictionary. Individual keys can be removed by setting the value to `null`, and the
+         * entire metadata mapping can be cleared by setting `metadata` to `null`.
+         */
+        @JsonProperty("metadata") @ExcludeMissing fun _metadata(): JsonField<Metadata> = metadata
+
+        @JsonProperty("minimum") @ExcludeMissing fun _minimum(): JsonField<Minimum> = minimum
+
+        @JsonProperty("minimum_amount")
+        @ExcludeMissing
+        fun _minimumAmount(): JsonField<String> = minimumAmount
+
+        @JsonProperty("model_type")
+        @ExcludeMissing
+        fun _modelType(): JsonField<ModelType> = modelType
+
+        @JsonProperty("name") @ExcludeMissing fun _name(): JsonField<String> = name
+
+        @JsonProperty("plan_phase_order")
+        @ExcludeMissing
+        fun _planPhaseOrder(): JsonField<Long> = planPhaseOrder
+
+        @JsonProperty("price_type")
+        @ExcludeMissing
+        fun _priceType(): JsonField<PriceType> = priceType
+
+        @JsonProperty("dimensional_price_configuration")
+        @ExcludeMissing
+        fun _dimensionalPriceConfiguration(): JsonField<DimensionalPriceConfiguration> =
+            dimensionalPriceConfiguration
+
+        @JsonAnyGetter
+        @ExcludeMissing
+        fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
+
+        private var validated: Boolean = false
+
+        fun validate(): CumulativeGroupedBulkPrice = apply {
+            if (validated) {
+                return@apply
+            }
+
+            id()
+            billableMetric()?.validate()
+            billingCycleConfiguration().validate()
+            cadence()
+            conversionRate()
+            createdAt()
+            creditAllocation()?.validate()
+            cumulativeGroupedBulkConfig().validate()
+            currency()
+            discount()?.validate()
+            externalPriceId()
+            fixedPriceQuantity()
+            invoicingCycleConfiguration()?.validate()
+            item().validate()
+            maximum()?.validate()
+            maximumAmount()
+            metadata().validate()
+            minimum()?.validate()
+            minimumAmount()
+            modelType()
+            name()
+            planPhaseOrder()
+            priceType()
+            dimensionalPriceConfiguration()?.validate()
+            validated = true
+        }
+
+        fun toBuilder() = Builder().from(this)
+
+        companion object {
+
+            fun builder() = Builder()
+        }
+
+        /** A builder for [CumulativeGroupedBulkPrice]. */
+        class Builder internal constructor() {
+
+            private var id: JsonField<String>? = null
+            private var billableMetric: JsonField<BillableMetric>? = null
+            private var billingCycleConfiguration: JsonField<BillingCycleConfiguration>? = null
+            private var cadence: JsonField<Cadence>? = null
+            private var conversionRate: JsonField<Double>? = null
+            private var createdAt: JsonField<OffsetDateTime>? = null
+            private var creditAllocation: JsonField<CreditAllocation>? = null
+            private var cumulativeGroupedBulkConfig: JsonField<CumulativeGroupedBulkConfig>? = null
+            private var currency: JsonField<String>? = null
+            private var discount: JsonField<Discount>? = null
+            private var externalPriceId: JsonField<String>? = null
+            private var fixedPriceQuantity: JsonField<Double>? = null
+            private var invoicingCycleConfiguration: JsonField<InvoicingCycleConfiguration>? = null
+            private var item: JsonField<Item>? = null
+            private var maximum: JsonField<Maximum>? = null
+            private var maximumAmount: JsonField<String>? = null
+            private var metadata: JsonField<Metadata>? = null
+            private var minimum: JsonField<Minimum>? = null
+            private var minimumAmount: JsonField<String>? = null
+            private var modelType: JsonField<ModelType>? = null
+            private var name: JsonField<String>? = null
+            private var planPhaseOrder: JsonField<Long>? = null
+            private var priceType: JsonField<PriceType>? = null
+            private var dimensionalPriceConfiguration: JsonField<DimensionalPriceConfiguration> =
+                JsonMissing.of()
+            private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
+
+            internal fun from(cumulativeGroupedBulkPrice: CumulativeGroupedBulkPrice) = apply {
+                id = cumulativeGroupedBulkPrice.id
+                billableMetric = cumulativeGroupedBulkPrice.billableMetric
+                billingCycleConfiguration = cumulativeGroupedBulkPrice.billingCycleConfiguration
+                cadence = cumulativeGroupedBulkPrice.cadence
+                conversionRate = cumulativeGroupedBulkPrice.conversionRate
+                createdAt = cumulativeGroupedBulkPrice.createdAt
+                creditAllocation = cumulativeGroupedBulkPrice.creditAllocation
+                cumulativeGroupedBulkConfig = cumulativeGroupedBulkPrice.cumulativeGroupedBulkConfig
+                currency = cumulativeGroupedBulkPrice.currency
+                discount = cumulativeGroupedBulkPrice.discount
+                externalPriceId = cumulativeGroupedBulkPrice.externalPriceId
+                fixedPriceQuantity = cumulativeGroupedBulkPrice.fixedPriceQuantity
+                invoicingCycleConfiguration = cumulativeGroupedBulkPrice.invoicingCycleConfiguration
+                item = cumulativeGroupedBulkPrice.item
+                maximum = cumulativeGroupedBulkPrice.maximum
+                maximumAmount = cumulativeGroupedBulkPrice.maximumAmount
+                metadata = cumulativeGroupedBulkPrice.metadata
+                minimum = cumulativeGroupedBulkPrice.minimum
+                minimumAmount = cumulativeGroupedBulkPrice.minimumAmount
+                modelType = cumulativeGroupedBulkPrice.modelType
+                name = cumulativeGroupedBulkPrice.name
+                planPhaseOrder = cumulativeGroupedBulkPrice.planPhaseOrder
+                priceType = cumulativeGroupedBulkPrice.priceType
+                dimensionalPriceConfiguration =
+                    cumulativeGroupedBulkPrice.dimensionalPriceConfiguration
+                additionalProperties =
+                    cumulativeGroupedBulkPrice.additionalProperties.toMutableMap()
+            }
+
+            fun id(id: String) = id(JsonField.of(id))
+
+            fun id(id: JsonField<String>) = apply { this.id = id }
+
+            fun billableMetric(billableMetric: BillableMetric?) =
+                billableMetric(JsonField.ofNullable(billableMetric))
+
+            fun billableMetric(billableMetric: JsonField<BillableMetric>) = apply {
+                this.billableMetric = billableMetric
+            }
+
+            fun billingCycleConfiguration(billingCycleConfiguration: BillingCycleConfiguration) =
+                billingCycleConfiguration(JsonField.of(billingCycleConfiguration))
+
+            fun billingCycleConfiguration(
+                billingCycleConfiguration: JsonField<BillingCycleConfiguration>
+            ) = apply { this.billingCycleConfiguration = billingCycleConfiguration }
+
+            fun cadence(cadence: Cadence) = cadence(JsonField.of(cadence))
+
+            fun cadence(cadence: JsonField<Cadence>) = apply { this.cadence = cadence }
+
+            fun conversionRate(conversionRate: Double?) =
+                conversionRate(JsonField.ofNullable(conversionRate))
+
+            fun conversionRate(conversionRate: Double) = conversionRate(conversionRate as Double?)
+
+            fun conversionRate(conversionRate: JsonField<Double>) = apply {
+                this.conversionRate = conversionRate
+            }
+
+            fun createdAt(createdAt: OffsetDateTime) = createdAt(JsonField.of(createdAt))
+
+            fun createdAt(createdAt: JsonField<OffsetDateTime>) = apply {
+                this.createdAt = createdAt
+            }
+
+            fun creditAllocation(creditAllocation: CreditAllocation?) =
+                creditAllocation(JsonField.ofNullable(creditAllocation))
+
+            fun creditAllocation(creditAllocation: JsonField<CreditAllocation>) = apply {
+                this.creditAllocation = creditAllocation
+            }
+
+            fun cumulativeGroupedBulkConfig(
+                cumulativeGroupedBulkConfig: CumulativeGroupedBulkConfig
+            ) = cumulativeGroupedBulkConfig(JsonField.of(cumulativeGroupedBulkConfig))
+
+            fun cumulativeGroupedBulkConfig(
+                cumulativeGroupedBulkConfig: JsonField<CumulativeGroupedBulkConfig>
+            ) = apply { this.cumulativeGroupedBulkConfig = cumulativeGroupedBulkConfig }
+
+            fun currency(currency: String) = currency(JsonField.of(currency))
+
+            fun currency(currency: JsonField<String>) = apply { this.currency = currency }
+
+            fun discount(discount: Discount?) = discount(JsonField.ofNullable(discount))
+
+            fun discount(discount: JsonField<Discount>) = apply { this.discount = discount }
+
+            fun discount(percentage: PercentageDiscount) =
+                discount(Discount.ofPercentage(percentage))
+
+            fun discount(trial: TrialDiscount) = discount(Discount.ofTrial(trial))
+
+            fun trialDiscount(appliesToPriceIds: List<String>) =
+                discount(
+                    TrialDiscount.builder()
+                        .discountType(TrialDiscount.DiscountType.TRIAL)
+                        .appliesToPriceIds(appliesToPriceIds)
+                        .build()
+                )
+
+            fun discount(usage: Discount.UsageDiscount) = discount(Discount.ofUsage(usage))
+
+            fun discount(amount: AmountDiscount) = discount(Discount.ofAmount(amount))
+
+            fun externalPriceId(externalPriceId: String?) =
+                externalPriceId(JsonField.ofNullable(externalPriceId))
+
+            fun externalPriceId(externalPriceId: JsonField<String>) = apply {
+                this.externalPriceId = externalPriceId
+            }
+
+            fun fixedPriceQuantity(fixedPriceQuantity: Double?) =
+                fixedPriceQuantity(JsonField.ofNullable(fixedPriceQuantity))
+
+            fun fixedPriceQuantity(fixedPriceQuantity: Double) =
+                fixedPriceQuantity(fixedPriceQuantity as Double?)
+
+            fun fixedPriceQuantity(fixedPriceQuantity: JsonField<Double>) = apply {
+                this.fixedPriceQuantity = fixedPriceQuantity
+            }
+
+            fun invoicingCycleConfiguration(
+                invoicingCycleConfiguration: InvoicingCycleConfiguration?
+            ) = invoicingCycleConfiguration(JsonField.ofNullable(invoicingCycleConfiguration))
+
+            fun invoicingCycleConfiguration(
+                invoicingCycleConfiguration: JsonField<InvoicingCycleConfiguration>
+            ) = apply { this.invoicingCycleConfiguration = invoicingCycleConfiguration }
+
+            fun item(item: Item) = item(JsonField.of(item))
+
+            fun item(item: JsonField<Item>) = apply { this.item = item }
+
+            fun maximum(maximum: Maximum?) = maximum(JsonField.ofNullable(maximum))
+
+            fun maximum(maximum: JsonField<Maximum>) = apply { this.maximum = maximum }
+
+            fun maximumAmount(maximumAmount: String?) =
+                maximumAmount(JsonField.ofNullable(maximumAmount))
+
+            fun maximumAmount(maximumAmount: JsonField<String>) = apply {
+                this.maximumAmount = maximumAmount
+            }
+
+            /**
+             * User specified key-value pairs for the resource. If not present, this defaults to an
+             * empty dictionary. Individual keys can be removed by setting the value to `null`, and
+             * the entire metadata mapping can be cleared by setting `metadata` to `null`.
+             */
+            fun metadata(metadata: Metadata) = metadata(JsonField.of(metadata))
+
+            /**
+             * User specified key-value pairs for the resource. If not present, this defaults to an
+             * empty dictionary. Individual keys can be removed by setting the value to `null`, and
+             * the entire metadata mapping can be cleared by setting `metadata` to `null`.
+             */
+            fun metadata(metadata: JsonField<Metadata>) = apply { this.metadata = metadata }
+
+            fun minimum(minimum: Minimum?) = minimum(JsonField.ofNullable(minimum))
+
+            fun minimum(minimum: JsonField<Minimum>) = apply { this.minimum = minimum }
+
+            fun minimumAmount(minimumAmount: String?) =
+                minimumAmount(JsonField.ofNullable(minimumAmount))
+
+            fun minimumAmount(minimumAmount: JsonField<String>) = apply {
+                this.minimumAmount = minimumAmount
+            }
+
+            fun modelType(modelType: ModelType) = modelType(JsonField.of(modelType))
+
+            fun modelType(modelType: JsonField<ModelType>) = apply { this.modelType = modelType }
+
+            fun name(name: String) = name(JsonField.of(name))
+
+            fun name(name: JsonField<String>) = apply { this.name = name }
+
+            fun planPhaseOrder(planPhaseOrder: Long?) =
+                planPhaseOrder(JsonField.ofNullable(planPhaseOrder))
+
+            fun planPhaseOrder(planPhaseOrder: Long) = planPhaseOrder(planPhaseOrder as Long?)
+
+            fun planPhaseOrder(planPhaseOrder: JsonField<Long>) = apply {
+                this.planPhaseOrder = planPhaseOrder
+            }
+
+            fun priceType(priceType: PriceType) = priceType(JsonField.of(priceType))
+
+            fun priceType(priceType: JsonField<PriceType>) = apply { this.priceType = priceType }
+
+            fun dimensionalPriceConfiguration(
+                dimensionalPriceConfiguration: DimensionalPriceConfiguration?
+            ) = dimensionalPriceConfiguration(JsonField.ofNullable(dimensionalPriceConfiguration))
+
+            fun dimensionalPriceConfiguration(
+                dimensionalPriceConfiguration: JsonField<DimensionalPriceConfiguration>
+            ) = apply { this.dimensionalPriceConfiguration = dimensionalPriceConfiguration }
+
+            fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                this.additionalProperties.clear()
+                putAllAdditionalProperties(additionalProperties)
+            }
+
+            fun putAdditionalProperty(key: String, value: JsonValue) = apply {
+                additionalProperties.put(key, value)
+            }
+
+            fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                this.additionalProperties.putAll(additionalProperties)
+            }
+
+            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+
+            fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                keys.forEach(::removeAdditionalProperty)
+            }
+
+            fun build(): CumulativeGroupedBulkPrice =
+                CumulativeGroupedBulkPrice(
+                    checkRequired("id", id),
+                    checkRequired("billableMetric", billableMetric),
+                    checkRequired("billingCycleConfiguration", billingCycleConfiguration),
+                    checkRequired("cadence", cadence),
+                    checkRequired("conversionRate", conversionRate),
+                    checkRequired("createdAt", createdAt),
+                    checkRequired("creditAllocation", creditAllocation),
+                    checkRequired("cumulativeGroupedBulkConfig", cumulativeGroupedBulkConfig),
+                    checkRequired("currency", currency),
+                    checkRequired("discount", discount),
+                    checkRequired("externalPriceId", externalPriceId),
+                    checkRequired("fixedPriceQuantity", fixedPriceQuantity),
+                    checkRequired("invoicingCycleConfiguration", invoicingCycleConfiguration),
+                    checkRequired("item", item),
+                    checkRequired("maximum", maximum),
+                    checkRequired("maximumAmount", maximumAmount),
+                    checkRequired("metadata", metadata),
+                    checkRequired("minimum", minimum),
+                    checkRequired("minimumAmount", minimumAmount),
+                    checkRequired("modelType", modelType),
+                    checkRequired("name", name),
+                    checkRequired("planPhaseOrder", planPhaseOrder),
+                    checkRequired("priceType", priceType),
+                    dimensionalPriceConfiguration,
+                    additionalProperties.toImmutable(),
+                )
+        }
+
+        @NoAutoDetect
+        class BillableMetric
+        @JsonCreator
+        private constructor(
+            @JsonProperty("id")
+            @ExcludeMissing
+            private val id: JsonField<String> = JsonMissing.of(),
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
+        ) {
+
+            fun id(): String = id.getRequired("id")
+
+            @JsonProperty("id") @ExcludeMissing fun _id(): JsonField<String> = id
+
+            @JsonAnyGetter
+            @ExcludeMissing
+            fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
+
+            private var validated: Boolean = false
+
+            fun validate(): BillableMetric = apply {
+                if (validated) {
+                    return@apply
+                }
+
+                id()
+                validated = true
+            }
+
+            fun toBuilder() = Builder().from(this)
+
+            companion object {
+
+                fun builder() = Builder()
+            }
+
+            /** A builder for [BillableMetric]. */
+            class Builder internal constructor() {
+
+                private var id: JsonField<String>? = null
+                private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
+
+                internal fun from(billableMetric: BillableMetric) = apply {
+                    id = billableMetric.id
+                    additionalProperties = billableMetric.additionalProperties.toMutableMap()
+                }
+
+                fun id(id: String) = id(JsonField.of(id))
+
+                fun id(id: JsonField<String>) = apply { this.id = id }
+
+                fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                    this.additionalProperties.clear()
+                    putAllAdditionalProperties(additionalProperties)
+                }
+
+                fun putAdditionalProperty(key: String, value: JsonValue) = apply {
+                    additionalProperties.put(key, value)
+                }
+
+                fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) =
+                    apply {
+                        this.additionalProperties.putAll(additionalProperties)
+                    }
+
+                fun removeAdditionalProperty(key: String) = apply {
+                    additionalProperties.remove(key)
+                }
+
+                fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                    keys.forEach(::removeAdditionalProperty)
+                }
+
+                fun build(): BillableMetric =
+                    BillableMetric(checkRequired("id", id), additionalProperties.toImmutable())
+            }
+
+            override fun equals(other: Any?): Boolean {
+                if (this === other) {
+                    return true
+                }
+
+                return /* spotless:off */ other is BillableMetric && id == other.id && additionalProperties == other.additionalProperties /* spotless:on */
+            }
+
+            /* spotless:off */
+            private val hashCode: Int by lazy { Objects.hash(id, additionalProperties) }
+            /* spotless:on */
+
+            override fun hashCode(): Int = hashCode
+
+            override fun toString() =
+                "BillableMetric{id=$id, additionalProperties=$additionalProperties}"
+        }
+
+        @NoAutoDetect
+        class BillingCycleConfiguration
+        @JsonCreator
+        private constructor(
+            @JsonProperty("duration")
+            @ExcludeMissing
+            private val duration: JsonField<Long> = JsonMissing.of(),
+            @JsonProperty("duration_unit")
+            @ExcludeMissing
+            private val durationUnit: JsonField<DurationUnit> = JsonMissing.of(),
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
+        ) {
+
+            fun duration(): Long = duration.getRequired("duration")
+
+            fun durationUnit(): DurationUnit = durationUnit.getRequired("duration_unit")
+
+            @JsonProperty("duration") @ExcludeMissing fun _duration(): JsonField<Long> = duration
+
+            @JsonProperty("duration_unit")
+            @ExcludeMissing
+            fun _durationUnit(): JsonField<DurationUnit> = durationUnit
+
+            @JsonAnyGetter
+            @ExcludeMissing
+            fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
+
+            private var validated: Boolean = false
+
+            fun validate(): BillingCycleConfiguration = apply {
+                if (validated) {
+                    return@apply
+                }
+
+                duration()
+                durationUnit()
+                validated = true
+            }
+
+            fun toBuilder() = Builder().from(this)
+
+            companion object {
+
+                fun builder() = Builder()
+            }
+
+            /** A builder for [BillingCycleConfiguration]. */
+            class Builder internal constructor() {
+
+                private var duration: JsonField<Long>? = null
+                private var durationUnit: JsonField<DurationUnit>? = null
+                private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
+
+                internal fun from(billingCycleConfiguration: BillingCycleConfiguration) = apply {
+                    duration = billingCycleConfiguration.duration
+                    durationUnit = billingCycleConfiguration.durationUnit
+                    additionalProperties =
+                        billingCycleConfiguration.additionalProperties.toMutableMap()
+                }
+
+                fun duration(duration: Long) = duration(JsonField.of(duration))
+
+                fun duration(duration: JsonField<Long>) = apply { this.duration = duration }
+
+                fun durationUnit(durationUnit: DurationUnit) =
+                    durationUnit(JsonField.of(durationUnit))
+
+                fun durationUnit(durationUnit: JsonField<DurationUnit>) = apply {
+                    this.durationUnit = durationUnit
+                }
+
+                fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                    this.additionalProperties.clear()
+                    putAllAdditionalProperties(additionalProperties)
+                }
+
+                fun putAdditionalProperty(key: String, value: JsonValue) = apply {
+                    additionalProperties.put(key, value)
+                }
+
+                fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) =
+                    apply {
+                        this.additionalProperties.putAll(additionalProperties)
+                    }
+
+                fun removeAdditionalProperty(key: String) = apply {
+                    additionalProperties.remove(key)
+                }
+
+                fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                    keys.forEach(::removeAdditionalProperty)
+                }
+
+                fun build(): BillingCycleConfiguration =
+                    BillingCycleConfiguration(
+                        checkRequired("duration", duration),
+                        checkRequired("durationUnit", durationUnit),
+                        additionalProperties.toImmutable(),
+                    )
+            }
+
+            class DurationUnit
+            @JsonCreator
+            private constructor(
+                private val value: JsonField<String>,
+            ) : Enum {
+
+                /**
+                 * Returns this class instance's raw value.
+                 *
+                 * This is usually only useful if this instance was deserialized from data that
+                 * doesn't match any known member, and you want to know that value. For example, if
+                 * the SDK is on an older version than the API, then the API may respond with new
+                 * members that the SDK is unaware of.
+                 */
+                @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
+
+                companion object {
+
+                    val DAY = of("day")
+
+                    val MONTH = of("month")
+
+                    fun of(value: String) = DurationUnit(JsonField.of(value))
+                }
+
+                /** An enum containing [DurationUnit]'s known values. */
+                enum class Known {
+                    DAY,
+                    MONTH,
+                }
+
+                /**
+                 * An enum containing [DurationUnit]'s known values, as well as an [_UNKNOWN]
+                 * member.
+                 *
+                 * An instance of [DurationUnit] can contain an unknown value in a couple of cases:
+                 * - It was deserialized from data that doesn't match any known member. For example,
+                 *   if the SDK is on an older version than the API, then the API may respond with
+                 *   new members that the SDK is unaware of.
+                 * - It was constructed with an arbitrary value using the [of] method.
+                 */
+                enum class Value {
+                    DAY,
+                    MONTH,
+                    /**
+                     * An enum member indicating that [DurationUnit] was instantiated with an
+                     * unknown value.
+                     */
+                    _UNKNOWN,
+                }
+
+                /**
+                 * Returns an enum member corresponding to this class instance's value, or
+                 * [Value._UNKNOWN] if the class was instantiated with an unknown value.
+                 *
+                 * Use the [known] method instead if you're certain the value is always known or if
+                 * you want to throw for the unknown case.
+                 */
+                fun value(): Value =
+                    when (this) {
+                        DAY -> Value.DAY
+                        MONTH -> Value.MONTH
+                        else -> Value._UNKNOWN
+                    }
+
+                /**
+                 * Returns an enum member corresponding to this class instance's value.
+                 *
+                 * Use the [value] method instead if you're uncertain the value is always known and
+                 * don't want to throw for the unknown case.
+                 *
+                 * @throws OrbInvalidDataException if this class instance's value is a not a known
+                 *   member.
+                 */
+                fun known(): Known =
+                    when (this) {
+                        DAY -> Known.DAY
+                        MONTH -> Known.MONTH
+                        else -> throw OrbInvalidDataException("Unknown DurationUnit: $value")
+                    }
+
+                fun asString(): String = _value().asStringOrThrow()
+
+                override fun equals(other: Any?): Boolean {
+                    if (this === other) {
+                        return true
+                    }
+
+                    return /* spotless:off */ other is DurationUnit && value == other.value /* spotless:on */
+                }
+
+                override fun hashCode() = value.hashCode()
+
+                override fun toString() = value.toString()
+            }
+
+            override fun equals(other: Any?): Boolean {
+                if (this === other) {
+                    return true
+                }
+
+                return /* spotless:off */ other is BillingCycleConfiguration && duration == other.duration && durationUnit == other.durationUnit && additionalProperties == other.additionalProperties /* spotless:on */
+            }
+
+            /* spotless:off */
+            private val hashCode: Int by lazy { Objects.hash(duration, durationUnit, additionalProperties) }
+            /* spotless:on */
+
+            override fun hashCode(): Int = hashCode
+
+            override fun toString() =
+                "BillingCycleConfiguration{duration=$duration, durationUnit=$durationUnit, additionalProperties=$additionalProperties}"
+        }
+
+        class Cadence
+        @JsonCreator
+        private constructor(
+            private val value: JsonField<String>,
+        ) : Enum {
+
+            /**
+             * Returns this class instance's raw value.
+             *
+             * This is usually only useful if this instance was deserialized from data that doesn't
+             * match any known member, and you want to know that value. For example, if the SDK is
+             * on an older version than the API, then the API may respond with new members that the
+             * SDK is unaware of.
+             */
+            @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
+
+            companion object {
+
+                val ONE_TIME = of("one_time")
+
+                val MONTHLY = of("monthly")
+
+                val QUARTERLY = of("quarterly")
+
+                val SEMI_ANNUAL = of("semi_annual")
+
+                val ANNUAL = of("annual")
+
+                val CUSTOM = of("custom")
+
+                fun of(value: String) = Cadence(JsonField.of(value))
+            }
+
+            /** An enum containing [Cadence]'s known values. */
+            enum class Known {
+                ONE_TIME,
+                MONTHLY,
+                QUARTERLY,
+                SEMI_ANNUAL,
+                ANNUAL,
+                CUSTOM,
+            }
+
+            /**
+             * An enum containing [Cadence]'s known values, as well as an [_UNKNOWN] member.
+             *
+             * An instance of [Cadence] can contain an unknown value in a couple of cases:
+             * - It was deserialized from data that doesn't match any known member. For example, if
+             *   the SDK is on an older version than the API, then the API may respond with new
+             *   members that the SDK is unaware of.
+             * - It was constructed with an arbitrary value using the [of] method.
+             */
+            enum class Value {
+                ONE_TIME,
+                MONTHLY,
+                QUARTERLY,
+                SEMI_ANNUAL,
+                ANNUAL,
+                CUSTOM,
+                /**
+                 * An enum member indicating that [Cadence] was instantiated with an unknown value.
+                 */
+                _UNKNOWN,
+            }
+
+            /**
+             * Returns an enum member corresponding to this class instance's value, or
+             * [Value._UNKNOWN] if the class was instantiated with an unknown value.
+             *
+             * Use the [known] method instead if you're certain the value is always known or if you
+             * want to throw for the unknown case.
+             */
+            fun value(): Value =
+                when (this) {
+                    ONE_TIME -> Value.ONE_TIME
+                    MONTHLY -> Value.MONTHLY
+                    QUARTERLY -> Value.QUARTERLY
+                    SEMI_ANNUAL -> Value.SEMI_ANNUAL
+                    ANNUAL -> Value.ANNUAL
+                    CUSTOM -> Value.CUSTOM
+                    else -> Value._UNKNOWN
+                }
+
+            /**
+             * Returns an enum member corresponding to this class instance's value.
+             *
+             * Use the [value] method instead if you're uncertain the value is always known and
+             * don't want to throw for the unknown case.
+             *
+             * @throws OrbInvalidDataException if this class instance's value is a not a known
+             *   member.
+             */
+            fun known(): Known =
+                when (this) {
+                    ONE_TIME -> Known.ONE_TIME
+                    MONTHLY -> Known.MONTHLY
+                    QUARTERLY -> Known.QUARTERLY
+                    SEMI_ANNUAL -> Known.SEMI_ANNUAL
+                    ANNUAL -> Known.ANNUAL
+                    CUSTOM -> Known.CUSTOM
+                    else -> throw OrbInvalidDataException("Unknown Cadence: $value")
+                }
+
+            fun asString(): String = _value().asStringOrThrow()
+
+            override fun equals(other: Any?): Boolean {
+                if (this === other) {
+                    return true
+                }
+
+                return /* spotless:off */ other is Cadence && value == other.value /* spotless:on */
+            }
+
+            override fun hashCode() = value.hashCode()
+
+            override fun toString() = value.toString()
+        }
+
+        @NoAutoDetect
+        class CreditAllocation
+        @JsonCreator
+        private constructor(
+            @JsonProperty("allows_rollover")
+            @ExcludeMissing
+            private val allowsRollover: JsonField<Boolean> = JsonMissing.of(),
+            @JsonProperty("currency")
+            @ExcludeMissing
+            private val currency: JsonField<String> = JsonMissing.of(),
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
+        ) {
+
+            fun allowsRollover(): Boolean = allowsRollover.getRequired("allows_rollover")
+
+            fun currency(): String = currency.getRequired("currency")
+
+            @JsonProperty("allows_rollover")
+            @ExcludeMissing
+            fun _allowsRollover(): JsonField<Boolean> = allowsRollover
+
+            @JsonProperty("currency") @ExcludeMissing fun _currency(): JsonField<String> = currency
+
+            @JsonAnyGetter
+            @ExcludeMissing
+            fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
+
+            private var validated: Boolean = false
+
+            fun validate(): CreditAllocation = apply {
+                if (validated) {
+                    return@apply
+                }
+
+                allowsRollover()
+                currency()
+                validated = true
+            }
+
+            fun toBuilder() = Builder().from(this)
+
+            companion object {
+
+                fun builder() = Builder()
+            }
+
+            /** A builder for [CreditAllocation]. */
+            class Builder internal constructor() {
+
+                private var allowsRollover: JsonField<Boolean>? = null
+                private var currency: JsonField<String>? = null
+                private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
+
+                internal fun from(creditAllocation: CreditAllocation) = apply {
+                    allowsRollover = creditAllocation.allowsRollover
+                    currency = creditAllocation.currency
+                    additionalProperties = creditAllocation.additionalProperties.toMutableMap()
+                }
+
+                fun allowsRollover(allowsRollover: Boolean) =
+                    allowsRollover(JsonField.of(allowsRollover))
+
+                fun allowsRollover(allowsRollover: JsonField<Boolean>) = apply {
+                    this.allowsRollover = allowsRollover
+                }
+
+                fun currency(currency: String) = currency(JsonField.of(currency))
+
+                fun currency(currency: JsonField<String>) = apply { this.currency = currency }
+
+                fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                    this.additionalProperties.clear()
+                    putAllAdditionalProperties(additionalProperties)
+                }
+
+                fun putAdditionalProperty(key: String, value: JsonValue) = apply {
+                    additionalProperties.put(key, value)
+                }
+
+                fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) =
+                    apply {
+                        this.additionalProperties.putAll(additionalProperties)
+                    }
+
+                fun removeAdditionalProperty(key: String) = apply {
+                    additionalProperties.remove(key)
+                }
+
+                fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                    keys.forEach(::removeAdditionalProperty)
+                }
+
+                fun build(): CreditAllocation =
+                    CreditAllocation(
+                        checkRequired("allowsRollover", allowsRollover),
+                        checkRequired("currency", currency),
+                        additionalProperties.toImmutable(),
+                    )
+            }
+
+            override fun equals(other: Any?): Boolean {
+                if (this === other) {
+                    return true
+                }
+
+                return /* spotless:off */ other is CreditAllocation && allowsRollover == other.allowsRollover && currency == other.currency && additionalProperties == other.additionalProperties /* spotless:on */
+            }
+
+            /* spotless:off */
+            private val hashCode: Int by lazy { Objects.hash(allowsRollover, currency, additionalProperties) }
+            /* spotless:on */
+
+            override fun hashCode(): Int = hashCode
+
+            override fun toString() =
+                "CreditAllocation{allowsRollover=$allowsRollover, currency=$currency, additionalProperties=$additionalProperties}"
+        }
+
+        @NoAutoDetect
+        class CumulativeGroupedBulkConfig
+        @JsonCreator
+        private constructor(
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
+        ) {
+
+            @JsonAnyGetter
+            @ExcludeMissing
+            fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
+
+            private var validated: Boolean = false
+
+            fun validate(): CumulativeGroupedBulkConfig = apply {
+                if (validated) {
+                    return@apply
+                }
+
+                validated = true
+            }
+
+            fun toBuilder() = Builder().from(this)
+
+            companion object {
+
+                fun builder() = Builder()
+            }
+
+            /** A builder for [CumulativeGroupedBulkConfig]. */
+            class Builder internal constructor() {
+
+                private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
+
+                internal fun from(cumulativeGroupedBulkConfig: CumulativeGroupedBulkConfig) =
+                    apply {
+                        additionalProperties =
+                            cumulativeGroupedBulkConfig.additionalProperties.toMutableMap()
+                    }
+
+                fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                    this.additionalProperties.clear()
+                    putAllAdditionalProperties(additionalProperties)
+                }
+
+                fun putAdditionalProperty(key: String, value: JsonValue) = apply {
+                    additionalProperties.put(key, value)
+                }
+
+                fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) =
+                    apply {
+                        this.additionalProperties.putAll(additionalProperties)
+                    }
+
+                fun removeAdditionalProperty(key: String) = apply {
+                    additionalProperties.remove(key)
+                }
+
+                fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                    keys.forEach(::removeAdditionalProperty)
+                }
+
+                fun build(): CumulativeGroupedBulkConfig =
+                    CumulativeGroupedBulkConfig(additionalProperties.toImmutable())
+            }
+
+            override fun equals(other: Any?): Boolean {
+                if (this === other) {
+                    return true
+                }
+
+                return /* spotless:off */ other is CumulativeGroupedBulkConfig && additionalProperties == other.additionalProperties /* spotless:on */
+            }
+
+            /* spotless:off */
+            private val hashCode: Int by lazy { Objects.hash(additionalProperties) }
+            /* spotless:on */
+
+            override fun hashCode(): Int = hashCode
+
+            override fun toString() =
+                "CumulativeGroupedBulkConfig{additionalProperties=$additionalProperties}"
+        }
+
+        @NoAutoDetect
+        class InvoicingCycleConfiguration
+        @JsonCreator
+        private constructor(
+            @JsonProperty("duration")
+            @ExcludeMissing
+            private val duration: JsonField<Long> = JsonMissing.of(),
+            @JsonProperty("duration_unit")
+            @ExcludeMissing
+            private val durationUnit: JsonField<DurationUnit> = JsonMissing.of(),
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
+        ) {
+
+            fun duration(): Long = duration.getRequired("duration")
+
+            fun durationUnit(): DurationUnit = durationUnit.getRequired("duration_unit")
+
+            @JsonProperty("duration") @ExcludeMissing fun _duration(): JsonField<Long> = duration
+
+            @JsonProperty("duration_unit")
+            @ExcludeMissing
+            fun _durationUnit(): JsonField<DurationUnit> = durationUnit
+
+            @JsonAnyGetter
+            @ExcludeMissing
+            fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
+
+            private var validated: Boolean = false
+
+            fun validate(): InvoicingCycleConfiguration = apply {
+                if (validated) {
+                    return@apply
+                }
+
+                duration()
+                durationUnit()
+                validated = true
+            }
+
+            fun toBuilder() = Builder().from(this)
+
+            companion object {
+
+                fun builder() = Builder()
+            }
+
+            /** A builder for [InvoicingCycleConfiguration]. */
+            class Builder internal constructor() {
+
+                private var duration: JsonField<Long>? = null
+                private var durationUnit: JsonField<DurationUnit>? = null
+                private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
+
+                internal fun from(invoicingCycleConfiguration: InvoicingCycleConfiguration) =
+                    apply {
+                        duration = invoicingCycleConfiguration.duration
+                        durationUnit = invoicingCycleConfiguration.durationUnit
+                        additionalProperties =
+                            invoicingCycleConfiguration.additionalProperties.toMutableMap()
+                    }
+
+                fun duration(duration: Long) = duration(JsonField.of(duration))
+
+                fun duration(duration: JsonField<Long>) = apply { this.duration = duration }
+
+                fun durationUnit(durationUnit: DurationUnit) =
+                    durationUnit(JsonField.of(durationUnit))
+
+                fun durationUnit(durationUnit: JsonField<DurationUnit>) = apply {
+                    this.durationUnit = durationUnit
+                }
+
+                fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                    this.additionalProperties.clear()
+                    putAllAdditionalProperties(additionalProperties)
+                }
+
+                fun putAdditionalProperty(key: String, value: JsonValue) = apply {
+                    additionalProperties.put(key, value)
+                }
+
+                fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) =
+                    apply {
+                        this.additionalProperties.putAll(additionalProperties)
+                    }
+
+                fun removeAdditionalProperty(key: String) = apply {
+                    additionalProperties.remove(key)
+                }
+
+                fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                    keys.forEach(::removeAdditionalProperty)
+                }
+
+                fun build(): InvoicingCycleConfiguration =
+                    InvoicingCycleConfiguration(
+                        checkRequired("duration", duration),
+                        checkRequired("durationUnit", durationUnit),
+                        additionalProperties.toImmutable(),
+                    )
+            }
+
+            class DurationUnit
+            @JsonCreator
+            private constructor(
+                private val value: JsonField<String>,
+            ) : Enum {
+
+                /**
+                 * Returns this class instance's raw value.
+                 *
+                 * This is usually only useful if this instance was deserialized from data that
+                 * doesn't match any known member, and you want to know that value. For example, if
+                 * the SDK is on an older version than the API, then the API may respond with new
+                 * members that the SDK is unaware of.
+                 */
+                @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
+
+                companion object {
+
+                    val DAY = of("day")
+
+                    val MONTH = of("month")
+
+                    fun of(value: String) = DurationUnit(JsonField.of(value))
+                }
+
+                /** An enum containing [DurationUnit]'s known values. */
+                enum class Known {
+                    DAY,
+                    MONTH,
+                }
+
+                /**
+                 * An enum containing [DurationUnit]'s known values, as well as an [_UNKNOWN]
+                 * member.
+                 *
+                 * An instance of [DurationUnit] can contain an unknown value in a couple of cases:
+                 * - It was deserialized from data that doesn't match any known member. For example,
+                 *   if the SDK is on an older version than the API, then the API may respond with
+                 *   new members that the SDK is unaware of.
+                 * - It was constructed with an arbitrary value using the [of] method.
+                 */
+                enum class Value {
+                    DAY,
+                    MONTH,
+                    /**
+                     * An enum member indicating that [DurationUnit] was instantiated with an
+                     * unknown value.
+                     */
+                    _UNKNOWN,
+                }
+
+                /**
+                 * Returns an enum member corresponding to this class instance's value, or
+                 * [Value._UNKNOWN] if the class was instantiated with an unknown value.
+                 *
+                 * Use the [known] method instead if you're certain the value is always known or if
+                 * you want to throw for the unknown case.
+                 */
+                fun value(): Value =
+                    when (this) {
+                        DAY -> Value.DAY
+                        MONTH -> Value.MONTH
+                        else -> Value._UNKNOWN
+                    }
+
+                /**
+                 * Returns an enum member corresponding to this class instance's value.
+                 *
+                 * Use the [value] method instead if you're uncertain the value is always known and
+                 * don't want to throw for the unknown case.
+                 *
+                 * @throws OrbInvalidDataException if this class instance's value is a not a known
+                 *   member.
+                 */
+                fun known(): Known =
+                    when (this) {
+                        DAY -> Known.DAY
+                        MONTH -> Known.MONTH
+                        else -> throw OrbInvalidDataException("Unknown DurationUnit: $value")
+                    }
+
+                fun asString(): String = _value().asStringOrThrow()
+
+                override fun equals(other: Any?): Boolean {
+                    if (this === other) {
+                        return true
+                    }
+
+                    return /* spotless:off */ other is DurationUnit && value == other.value /* spotless:on */
+                }
+
+                override fun hashCode() = value.hashCode()
+
+                override fun toString() = value.toString()
+            }
+
+            override fun equals(other: Any?): Boolean {
+                if (this === other) {
+                    return true
+                }
+
+                return /* spotless:off */ other is InvoicingCycleConfiguration && duration == other.duration && durationUnit == other.durationUnit && additionalProperties == other.additionalProperties /* spotless:on */
+            }
+
+            /* spotless:off */
+            private val hashCode: Int by lazy { Objects.hash(duration, durationUnit, additionalProperties) }
+            /* spotless:on */
+
+            override fun hashCode(): Int = hashCode
+
+            override fun toString() =
+                "InvoicingCycleConfiguration{duration=$duration, durationUnit=$durationUnit, additionalProperties=$additionalProperties}"
+        }
+
+        @NoAutoDetect
+        class Item
+        @JsonCreator
+        private constructor(
+            @JsonProperty("id")
+            @ExcludeMissing
+            private val id: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("name")
+            @ExcludeMissing
+            private val name: JsonField<String> = JsonMissing.of(),
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
+        ) {
+
+            fun id(): String = id.getRequired("id")
+
+            fun name(): String = name.getRequired("name")
+
+            @JsonProperty("id") @ExcludeMissing fun _id(): JsonField<String> = id
+
+            @JsonProperty("name") @ExcludeMissing fun _name(): JsonField<String> = name
+
+            @JsonAnyGetter
+            @ExcludeMissing
+            fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
+
+            private var validated: Boolean = false
+
+            fun validate(): Item = apply {
+                if (validated) {
+                    return@apply
+                }
+
+                id()
+                name()
+                validated = true
+            }
+
+            fun toBuilder() = Builder().from(this)
+
+            companion object {
+
+                fun builder() = Builder()
+            }
+
+            /** A builder for [Item]. */
+            class Builder internal constructor() {
+
+                private var id: JsonField<String>? = null
+                private var name: JsonField<String>? = null
+                private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
+
+                internal fun from(item: Item) = apply {
+                    id = item.id
+                    name = item.name
+                    additionalProperties = item.additionalProperties.toMutableMap()
+                }
+
+                fun id(id: String) = id(JsonField.of(id))
+
+                fun id(id: JsonField<String>) = apply { this.id = id }
+
+                fun name(name: String) = name(JsonField.of(name))
+
+                fun name(name: JsonField<String>) = apply { this.name = name }
+
+                fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                    this.additionalProperties.clear()
+                    putAllAdditionalProperties(additionalProperties)
+                }
+
+                fun putAdditionalProperty(key: String, value: JsonValue) = apply {
+                    additionalProperties.put(key, value)
+                }
+
+                fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) =
+                    apply {
+                        this.additionalProperties.putAll(additionalProperties)
+                    }
+
+                fun removeAdditionalProperty(key: String) = apply {
+                    additionalProperties.remove(key)
+                }
+
+                fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                    keys.forEach(::removeAdditionalProperty)
+                }
+
+                fun build(): Item =
+                    Item(
+                        checkRequired("id", id),
+                        checkRequired("name", name),
+                        additionalProperties.toImmutable(),
+                    )
+            }
+
+            override fun equals(other: Any?): Boolean {
+                if (this === other) {
+                    return true
+                }
+
+                return /* spotless:off */ other is Item && id == other.id && name == other.name && additionalProperties == other.additionalProperties /* spotless:on */
+            }
+
+            /* spotless:off */
+            private val hashCode: Int by lazy { Objects.hash(id, name, additionalProperties) }
+            /* spotless:on */
+
+            override fun hashCode(): Int = hashCode
+
+            override fun toString() =
+                "Item{id=$id, name=$name, additionalProperties=$additionalProperties}"
+        }
+
+        @NoAutoDetect
+        class Maximum
+        @JsonCreator
+        private constructor(
+            @JsonProperty("applies_to_price_ids")
+            @ExcludeMissing
+            private val appliesToPriceIds: JsonField<List<String>> = JsonMissing.of(),
+            @JsonProperty("maximum_amount")
+            @ExcludeMissing
+            private val maximumAmount: JsonField<String> = JsonMissing.of(),
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
+        ) {
+
+            /**
+             * List of price_ids that this maximum amount applies to. For plan/plan phase maximums,
+             * this can be a subset of prices.
+             */
+            fun appliesToPriceIds(): List<String> =
+                appliesToPriceIds.getRequired("applies_to_price_ids")
+
+            /** Maximum amount applied */
+            fun maximumAmount(): String = maximumAmount.getRequired("maximum_amount")
+
+            /**
+             * List of price_ids that this maximum amount applies to. For plan/plan phase maximums,
+             * this can be a subset of prices.
+             */
+            @JsonProperty("applies_to_price_ids")
+            @ExcludeMissing
+            fun _appliesToPriceIds(): JsonField<List<String>> = appliesToPriceIds
+
+            /** Maximum amount applied */
+            @JsonProperty("maximum_amount")
+            @ExcludeMissing
+            fun _maximumAmount(): JsonField<String> = maximumAmount
+
+            @JsonAnyGetter
+            @ExcludeMissing
+            fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
+
+            private var validated: Boolean = false
+
+            fun validate(): Maximum = apply {
+                if (validated) {
+                    return@apply
+                }
+
+                appliesToPriceIds()
+                maximumAmount()
+                validated = true
+            }
+
+            fun toBuilder() = Builder().from(this)
+
+            companion object {
+
+                fun builder() = Builder()
+            }
+
+            /** A builder for [Maximum]. */
+            class Builder internal constructor() {
+
+                private var appliesToPriceIds: JsonField<MutableList<String>>? = null
+                private var maximumAmount: JsonField<String>? = null
+                private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
+
+                internal fun from(maximum: Maximum) = apply {
+                    appliesToPriceIds = maximum.appliesToPriceIds.map { it.toMutableList() }
+                    maximumAmount = maximum.maximumAmount
+                    additionalProperties = maximum.additionalProperties.toMutableMap()
+                }
+
+                /**
+                 * List of price_ids that this maximum amount applies to. For plan/plan phase
+                 * maximums, this can be a subset of prices.
+                 */
+                fun appliesToPriceIds(appliesToPriceIds: List<String>) =
+                    appliesToPriceIds(JsonField.of(appliesToPriceIds))
+
+                /**
+                 * List of price_ids that this maximum amount applies to. For plan/plan phase
+                 * maximums, this can be a subset of prices.
+                 */
+                fun appliesToPriceIds(appliesToPriceIds: JsonField<List<String>>) = apply {
+                    this.appliesToPriceIds = appliesToPriceIds.map { it.toMutableList() }
+                }
+
+                /**
+                 * List of price_ids that this maximum amount applies to. For plan/plan phase
+                 * maximums, this can be a subset of prices.
+                 */
+                fun addAppliesToPriceId(appliesToPriceId: String) = apply {
+                    appliesToPriceIds =
+                        (appliesToPriceIds ?: JsonField.of(mutableListOf())).apply {
+                            (asKnown()
+                                    ?: throw IllegalStateException(
+                                        "Field was set to non-list type: ${javaClass.simpleName}"
+                                    ))
+                                .add(appliesToPriceId)
+                        }
+                }
+
+                /** Maximum amount applied */
+                fun maximumAmount(maximumAmount: String) =
+                    maximumAmount(JsonField.of(maximumAmount))
+
+                /** Maximum amount applied */
+                fun maximumAmount(maximumAmount: JsonField<String>) = apply {
+                    this.maximumAmount = maximumAmount
+                }
+
+                fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                    this.additionalProperties.clear()
+                    putAllAdditionalProperties(additionalProperties)
+                }
+
+                fun putAdditionalProperty(key: String, value: JsonValue) = apply {
+                    additionalProperties.put(key, value)
+                }
+
+                fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) =
+                    apply {
+                        this.additionalProperties.putAll(additionalProperties)
+                    }
+
+                fun removeAdditionalProperty(key: String) = apply {
+                    additionalProperties.remove(key)
+                }
+
+                fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                    keys.forEach(::removeAdditionalProperty)
+                }
+
+                fun build(): Maximum =
+                    Maximum(
+                        checkRequired("appliesToPriceIds", appliesToPriceIds).map {
+                            it.toImmutable()
+                        },
+                        checkRequired("maximumAmount", maximumAmount),
+                        additionalProperties.toImmutable(),
+                    )
+            }
+
+            override fun equals(other: Any?): Boolean {
+                if (this === other) {
+                    return true
+                }
+
+                return /* spotless:off */ other is Maximum && appliesToPriceIds == other.appliesToPriceIds && maximumAmount == other.maximumAmount && additionalProperties == other.additionalProperties /* spotless:on */
+            }
+
+            /* spotless:off */
+            private val hashCode: Int by lazy { Objects.hash(appliesToPriceIds, maximumAmount, additionalProperties) }
+            /* spotless:on */
+
+            override fun hashCode(): Int = hashCode
+
+            override fun toString() =
+                "Maximum{appliesToPriceIds=$appliesToPriceIds, maximumAmount=$maximumAmount, additionalProperties=$additionalProperties}"
+        }
+
+        /**
+         * User specified key-value pairs for the resource. If not present, this defaults to an
+         * empty dictionary. Individual keys can be removed by setting the value to `null`, and the
+         * entire metadata mapping can be cleared by setting `metadata` to `null`.
+         */
+        @NoAutoDetect
+        class Metadata
+        @JsonCreator
+        private constructor(
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
+        ) {
+
+            @JsonAnyGetter
+            @ExcludeMissing
+            fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
+
+            private var validated: Boolean = false
+
+            fun validate(): Metadata = apply {
+                if (validated) {
+                    return@apply
+                }
+
+                validated = true
+            }
+
+            fun toBuilder() = Builder().from(this)
+
+            companion object {
+
+                fun builder() = Builder()
+            }
+
+            /** A builder for [Metadata]. */
+            class Builder internal constructor() {
+
+                private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
+
+                internal fun from(metadata: Metadata) = apply {
+                    additionalProperties = metadata.additionalProperties.toMutableMap()
+                }
+
+                fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                    this.additionalProperties.clear()
+                    putAllAdditionalProperties(additionalProperties)
+                }
+
+                fun putAdditionalProperty(key: String, value: JsonValue) = apply {
+                    additionalProperties.put(key, value)
+                }
+
+                fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) =
+                    apply {
+                        this.additionalProperties.putAll(additionalProperties)
+                    }
+
+                fun removeAdditionalProperty(key: String) = apply {
+                    additionalProperties.remove(key)
+                }
+
+                fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                    keys.forEach(::removeAdditionalProperty)
+                }
+
+                fun build(): Metadata = Metadata(additionalProperties.toImmutable())
+            }
+
+            override fun equals(other: Any?): Boolean {
+                if (this === other) {
+                    return true
+                }
+
+                return /* spotless:off */ other is Metadata && additionalProperties == other.additionalProperties /* spotless:on */
+            }
+
+            /* spotless:off */
+            private val hashCode: Int by lazy { Objects.hash(additionalProperties) }
+            /* spotless:on */
+
+            override fun hashCode(): Int = hashCode
+
+            override fun toString() = "Metadata{additionalProperties=$additionalProperties}"
+        }
+
+        @NoAutoDetect
+        class Minimum
+        @JsonCreator
+        private constructor(
+            @JsonProperty("applies_to_price_ids")
+            @ExcludeMissing
+            private val appliesToPriceIds: JsonField<List<String>> = JsonMissing.of(),
+            @JsonProperty("minimum_amount")
+            @ExcludeMissing
+            private val minimumAmount: JsonField<String> = JsonMissing.of(),
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
+        ) {
+
+            /**
+             * List of price_ids that this minimum amount applies to. For plan/plan phase minimums,
+             * this can be a subset of prices.
+             */
+            fun appliesToPriceIds(): List<String> =
+                appliesToPriceIds.getRequired("applies_to_price_ids")
+
+            /** Minimum amount applied */
+            fun minimumAmount(): String = minimumAmount.getRequired("minimum_amount")
+
+            /**
+             * List of price_ids that this minimum amount applies to. For plan/plan phase minimums,
+             * this can be a subset of prices.
+             */
+            @JsonProperty("applies_to_price_ids")
+            @ExcludeMissing
+            fun _appliesToPriceIds(): JsonField<List<String>> = appliesToPriceIds
+
+            /** Minimum amount applied */
+            @JsonProperty("minimum_amount")
+            @ExcludeMissing
+            fun _minimumAmount(): JsonField<String> = minimumAmount
+
+            @JsonAnyGetter
+            @ExcludeMissing
+            fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
+
+            private var validated: Boolean = false
+
+            fun validate(): Minimum = apply {
+                if (validated) {
+                    return@apply
+                }
+
+                appliesToPriceIds()
+                minimumAmount()
+                validated = true
+            }
+
+            fun toBuilder() = Builder().from(this)
+
+            companion object {
+
+                fun builder() = Builder()
+            }
+
+            /** A builder for [Minimum]. */
+            class Builder internal constructor() {
+
+                private var appliesToPriceIds: JsonField<MutableList<String>>? = null
+                private var minimumAmount: JsonField<String>? = null
+                private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
+
+                internal fun from(minimum: Minimum) = apply {
+                    appliesToPriceIds = minimum.appliesToPriceIds.map { it.toMutableList() }
+                    minimumAmount = minimum.minimumAmount
+                    additionalProperties = minimum.additionalProperties.toMutableMap()
+                }
+
+                /**
+                 * List of price_ids that this minimum amount applies to. For plan/plan phase
+                 * minimums, this can be a subset of prices.
+                 */
+                fun appliesToPriceIds(appliesToPriceIds: List<String>) =
+                    appliesToPriceIds(JsonField.of(appliesToPriceIds))
+
+                /**
+                 * List of price_ids that this minimum amount applies to. For plan/plan phase
+                 * minimums, this can be a subset of prices.
+                 */
+                fun appliesToPriceIds(appliesToPriceIds: JsonField<List<String>>) = apply {
+                    this.appliesToPriceIds = appliesToPriceIds.map { it.toMutableList() }
+                }
+
+                /**
+                 * List of price_ids that this minimum amount applies to. For plan/plan phase
+                 * minimums, this can be a subset of prices.
+                 */
+                fun addAppliesToPriceId(appliesToPriceId: String) = apply {
+                    appliesToPriceIds =
+                        (appliesToPriceIds ?: JsonField.of(mutableListOf())).apply {
+                            (asKnown()
+                                    ?: throw IllegalStateException(
+                                        "Field was set to non-list type: ${javaClass.simpleName}"
+                                    ))
+                                .add(appliesToPriceId)
+                        }
+                }
+
+                /** Minimum amount applied */
+                fun minimumAmount(minimumAmount: String) =
+                    minimumAmount(JsonField.of(minimumAmount))
+
+                /** Minimum amount applied */
+                fun minimumAmount(minimumAmount: JsonField<String>) = apply {
+                    this.minimumAmount = minimumAmount
+                }
+
+                fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                    this.additionalProperties.clear()
+                    putAllAdditionalProperties(additionalProperties)
+                }
+
+                fun putAdditionalProperty(key: String, value: JsonValue) = apply {
+                    additionalProperties.put(key, value)
+                }
+
+                fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) =
+                    apply {
+                        this.additionalProperties.putAll(additionalProperties)
+                    }
+
+                fun removeAdditionalProperty(key: String) = apply {
+                    additionalProperties.remove(key)
+                }
+
+                fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                    keys.forEach(::removeAdditionalProperty)
+                }
+
+                fun build(): Minimum =
+                    Minimum(
+                        checkRequired("appliesToPriceIds", appliesToPriceIds).map {
+                            it.toImmutable()
+                        },
+                        checkRequired("minimumAmount", minimumAmount),
+                        additionalProperties.toImmutable(),
+                    )
+            }
+
+            override fun equals(other: Any?): Boolean {
+                if (this === other) {
+                    return true
+                }
+
+                return /* spotless:off */ other is Minimum && appliesToPriceIds == other.appliesToPriceIds && minimumAmount == other.minimumAmount && additionalProperties == other.additionalProperties /* spotless:on */
+            }
+
+            /* spotless:off */
+            private val hashCode: Int by lazy { Objects.hash(appliesToPriceIds, minimumAmount, additionalProperties) }
+            /* spotless:on */
+
+            override fun hashCode(): Int = hashCode
+
+            override fun toString() =
+                "Minimum{appliesToPriceIds=$appliesToPriceIds, minimumAmount=$minimumAmount, additionalProperties=$additionalProperties}"
+        }
+
+        class ModelType
+        @JsonCreator
+        private constructor(
+            private val value: JsonField<String>,
+        ) : Enum {
+
+            /**
+             * Returns this class instance's raw value.
+             *
+             * This is usually only useful if this instance was deserialized from data that doesn't
+             * match any known member, and you want to know that value. For example, if the SDK is
+             * on an older version than the API, then the API may respond with new members that the
+             * SDK is unaware of.
+             */
+            @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
+
+            companion object {
+
+                val CUMULATIVE_GROUPED_BULK = of("cumulative_grouped_bulk")
+
+                fun of(value: String) = ModelType(JsonField.of(value))
+            }
+
+            /** An enum containing [ModelType]'s known values. */
+            enum class Known {
+                CUMULATIVE_GROUPED_BULK,
+            }
+
+            /**
+             * An enum containing [ModelType]'s known values, as well as an [_UNKNOWN] member.
+             *
+             * An instance of [ModelType] can contain an unknown value in a couple of cases:
+             * - It was deserialized from data that doesn't match any known member. For example, if
+             *   the SDK is on an older version than the API, then the API may respond with new
+             *   members that the SDK is unaware of.
+             * - It was constructed with an arbitrary value using the [of] method.
+             */
+            enum class Value {
+                CUMULATIVE_GROUPED_BULK,
+                /**
+                 * An enum member indicating that [ModelType] was instantiated with an unknown
+                 * value.
+                 */
+                _UNKNOWN,
+            }
+
+            /**
+             * Returns an enum member corresponding to this class instance's value, or
+             * [Value._UNKNOWN] if the class was instantiated with an unknown value.
+             *
+             * Use the [known] method instead if you're certain the value is always known or if you
+             * want to throw for the unknown case.
+             */
+            fun value(): Value =
+                when (this) {
+                    CUMULATIVE_GROUPED_BULK -> Value.CUMULATIVE_GROUPED_BULK
+                    else -> Value._UNKNOWN
+                }
+
+            /**
+             * Returns an enum member corresponding to this class instance's value.
+             *
+             * Use the [value] method instead if you're uncertain the value is always known and
+             * don't want to throw for the unknown case.
+             *
+             * @throws OrbInvalidDataException if this class instance's value is a not a known
+             *   member.
+             */
+            fun known(): Known =
+                when (this) {
+                    CUMULATIVE_GROUPED_BULK -> Known.CUMULATIVE_GROUPED_BULK
+                    else -> throw OrbInvalidDataException("Unknown ModelType: $value")
+                }
+
+            fun asString(): String = _value().asStringOrThrow()
+
+            override fun equals(other: Any?): Boolean {
+                if (this === other) {
+                    return true
+                }
+
+                return /* spotless:off */ other is ModelType && value == other.value /* spotless:on */
+            }
+
+            override fun hashCode() = value.hashCode()
+
+            override fun toString() = value.toString()
+        }
+
+        class PriceType
+        @JsonCreator
+        private constructor(
+            private val value: JsonField<String>,
+        ) : Enum {
+
+            /**
+             * Returns this class instance's raw value.
+             *
+             * This is usually only useful if this instance was deserialized from data that doesn't
+             * match any known member, and you want to know that value. For example, if the SDK is
+             * on an older version than the API, then the API may respond with new members that the
+             * SDK is unaware of.
+             */
+            @com.fasterxml.jackson.annotation.JsonValue fun _value(): JsonField<String> = value
+
+            companion object {
+
+                val USAGE_PRICE = of("usage_price")
+
+                val FIXED_PRICE = of("fixed_price")
+
+                fun of(value: String) = PriceType(JsonField.of(value))
+            }
+
+            /** An enum containing [PriceType]'s known values. */
+            enum class Known {
+                USAGE_PRICE,
+                FIXED_PRICE,
+            }
+
+            /**
+             * An enum containing [PriceType]'s known values, as well as an [_UNKNOWN] member.
+             *
+             * An instance of [PriceType] can contain an unknown value in a couple of cases:
+             * - It was deserialized from data that doesn't match any known member. For example, if
+             *   the SDK is on an older version than the API, then the API may respond with new
+             *   members that the SDK is unaware of.
+             * - It was constructed with an arbitrary value using the [of] method.
+             */
+            enum class Value {
+                USAGE_PRICE,
+                FIXED_PRICE,
+                /**
+                 * An enum member indicating that [PriceType] was instantiated with an unknown
+                 * value.
+                 */
+                _UNKNOWN,
+            }
+
+            /**
+             * Returns an enum member corresponding to this class instance's value, or
+             * [Value._UNKNOWN] if the class was instantiated with an unknown value.
+             *
+             * Use the [known] method instead if you're certain the value is always known or if you
+             * want to throw for the unknown case.
+             */
+            fun value(): Value =
+                when (this) {
+                    USAGE_PRICE -> Value.USAGE_PRICE
+                    FIXED_PRICE -> Value.FIXED_PRICE
+                    else -> Value._UNKNOWN
+                }
+
+            /**
+             * Returns an enum member corresponding to this class instance's value.
+             *
+             * Use the [value] method instead if you're uncertain the value is always known and
+             * don't want to throw for the unknown case.
+             *
+             * @throws OrbInvalidDataException if this class instance's value is a not a known
+             *   member.
+             */
+            fun known(): Known =
+                when (this) {
+                    USAGE_PRICE -> Known.USAGE_PRICE
+                    FIXED_PRICE -> Known.FIXED_PRICE
+                    else -> throw OrbInvalidDataException("Unknown PriceType: $value")
+                }
+
+            fun asString(): String = _value().asStringOrThrow()
+
+            override fun equals(other: Any?): Boolean {
+                if (this === other) {
+                    return true
+                }
+
+                return /* spotless:off */ other is PriceType && value == other.value /* spotless:on */
+            }
+
+            override fun hashCode() = value.hashCode()
+
+            override fun toString() = value.toString()
+        }
+
+        @NoAutoDetect
+        class DimensionalPriceConfiguration
+        @JsonCreator
+        private constructor(
+            @JsonProperty("dimension_values")
+            @ExcludeMissing
+            private val dimensionValues: JsonField<List<String>> = JsonMissing.of(),
+            @JsonProperty("dimensional_price_group_id")
+            @ExcludeMissing
+            private val dimensionalPriceGroupId: JsonField<String> = JsonMissing.of(),
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
+        ) {
+
+            fun dimensionValues(): List<String> = dimensionValues.getRequired("dimension_values")
+
+            fun dimensionalPriceGroupId(): String =
+                dimensionalPriceGroupId.getRequired("dimensional_price_group_id")
+
+            @JsonProperty("dimension_values")
+            @ExcludeMissing
+            fun _dimensionValues(): JsonField<List<String>> = dimensionValues
+
+            @JsonProperty("dimensional_price_group_id")
+            @ExcludeMissing
+            fun _dimensionalPriceGroupId(): JsonField<String> = dimensionalPriceGroupId
+
+            @JsonAnyGetter
+            @ExcludeMissing
+            fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
+
+            private var validated: Boolean = false
+
+            fun validate(): DimensionalPriceConfiguration = apply {
+                if (validated) {
+                    return@apply
+                }
+
+                dimensionValues()
+                dimensionalPriceGroupId()
+                validated = true
+            }
+
+            fun toBuilder() = Builder().from(this)
+
+            companion object {
+
+                fun builder() = Builder()
+            }
+
+            /** A builder for [DimensionalPriceConfiguration]. */
+            class Builder internal constructor() {
+
+                private var dimensionValues: JsonField<MutableList<String>>? = null
+                private var dimensionalPriceGroupId: JsonField<String>? = null
+                private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
+
+                internal fun from(dimensionalPriceConfiguration: DimensionalPriceConfiguration) =
+                    apply {
+                        dimensionValues =
+                            dimensionalPriceConfiguration.dimensionValues.map { it.toMutableList() }
+                        dimensionalPriceGroupId =
+                            dimensionalPriceConfiguration.dimensionalPriceGroupId
+                        additionalProperties =
+                            dimensionalPriceConfiguration.additionalProperties.toMutableMap()
+                    }
+
+                fun dimensionValues(dimensionValues: List<String>) =
+                    dimensionValues(JsonField.of(dimensionValues))
+
+                fun dimensionValues(dimensionValues: JsonField<List<String>>) = apply {
+                    this.dimensionValues = dimensionValues.map { it.toMutableList() }
+                }
+
+                fun addDimensionValue(dimensionValue: String) = apply {
+                    dimensionValues =
+                        (dimensionValues ?: JsonField.of(mutableListOf())).apply {
+                            (asKnown()
+                                    ?: throw IllegalStateException(
+                                        "Field was set to non-list type: ${javaClass.simpleName}"
+                                    ))
+                                .add(dimensionValue)
+                        }
+                }
+
+                fun dimensionalPriceGroupId(dimensionalPriceGroupId: String) =
+                    dimensionalPriceGroupId(JsonField.of(dimensionalPriceGroupId))
+
+                fun dimensionalPriceGroupId(dimensionalPriceGroupId: JsonField<String>) = apply {
+                    this.dimensionalPriceGroupId = dimensionalPriceGroupId
+                }
+
+                fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                    this.additionalProperties.clear()
+                    putAllAdditionalProperties(additionalProperties)
+                }
+
+                fun putAdditionalProperty(key: String, value: JsonValue) = apply {
+                    additionalProperties.put(key, value)
+                }
+
+                fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) =
+                    apply {
+                        this.additionalProperties.putAll(additionalProperties)
+                    }
+
+                fun removeAdditionalProperty(key: String) = apply {
+                    additionalProperties.remove(key)
+                }
+
+                fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                    keys.forEach(::removeAdditionalProperty)
+                }
+
+                fun build(): DimensionalPriceConfiguration =
+                    DimensionalPriceConfiguration(
+                        checkRequired("dimensionValues", dimensionValues).map { it.toImmutable() },
+                        checkRequired("dimensionalPriceGroupId", dimensionalPriceGroupId),
+                        additionalProperties.toImmutable(),
+                    )
+            }
+
+            override fun equals(other: Any?): Boolean {
+                if (this === other) {
+                    return true
+                }
+
+                return /* spotless:off */ other is DimensionalPriceConfiguration && dimensionValues == other.dimensionValues && dimensionalPriceGroupId == other.dimensionalPriceGroupId && additionalProperties == other.additionalProperties /* spotless:on */
+            }
+
+            /* spotless:off */
+            private val hashCode: Int by lazy { Objects.hash(dimensionValues, dimensionalPriceGroupId, additionalProperties) }
+            /* spotless:on */
+
+            override fun hashCode(): Int = hashCode
+
+            override fun toString() =
+                "DimensionalPriceConfiguration{dimensionValues=$dimensionValues, dimensionalPriceGroupId=$dimensionalPriceGroupId, additionalProperties=$additionalProperties}"
+        }
+
+        override fun equals(other: Any?): Boolean {
+            if (this === other) {
+                return true
+            }
+
+            return /* spotless:off */ other is CumulativeGroupedBulkPrice && id == other.id && billableMetric == other.billableMetric && billingCycleConfiguration == other.billingCycleConfiguration && cadence == other.cadence && conversionRate == other.conversionRate && createdAt == other.createdAt && creditAllocation == other.creditAllocation && cumulativeGroupedBulkConfig == other.cumulativeGroupedBulkConfig && currency == other.currency && discount == other.discount && externalPriceId == other.externalPriceId && fixedPriceQuantity == other.fixedPriceQuantity && invoicingCycleConfiguration == other.invoicingCycleConfiguration && item == other.item && maximum == other.maximum && maximumAmount == other.maximumAmount && metadata == other.metadata && minimum == other.minimum && minimumAmount == other.minimumAmount && modelType == other.modelType && name == other.name && planPhaseOrder == other.planPhaseOrder && priceType == other.priceType && dimensionalPriceConfiguration == other.dimensionalPriceConfiguration && additionalProperties == other.additionalProperties /* spotless:on */
+        }
+
+        /* spotless:off */
+        private val hashCode: Int by lazy { Objects.hash(id, billableMetric, billingCycleConfiguration, cadence, conversionRate, createdAt, creditAllocation, cumulativeGroupedBulkConfig, currency, discount, externalPriceId, fixedPriceQuantity, invoicingCycleConfiguration, item, maximum, maximumAmount, metadata, minimum, minimumAmount, modelType, name, planPhaseOrder, priceType, dimensionalPriceConfiguration, additionalProperties) }
+        /* spotless:on */
+
+        override fun hashCode(): Int = hashCode
+
+        override fun toString() =
+            "CumulativeGroupedBulkPrice{id=$id, billableMetric=$billableMetric, billingCycleConfiguration=$billingCycleConfiguration, cadence=$cadence, conversionRate=$conversionRate, createdAt=$createdAt, creditAllocation=$creditAllocation, cumulativeGroupedBulkConfig=$cumulativeGroupedBulkConfig, currency=$currency, discount=$discount, externalPriceId=$externalPriceId, fixedPriceQuantity=$fixedPriceQuantity, invoicingCycleConfiguration=$invoicingCycleConfiguration, item=$item, maximum=$maximum, maximumAmount=$maximumAmount, metadata=$metadata, minimum=$minimum, minimumAmount=$minimumAmount, modelType=$modelType, name=$name, planPhaseOrder=$planPhaseOrder, priceType=$priceType, dimensionalPriceConfiguration=$dimensionalPriceConfiguration, additionalProperties=$additionalProperties}"
     }
 }

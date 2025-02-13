@@ -287,6 +287,9 @@ private constructor(
             @JsonProperty("price")
             @ExcludeMissing
             private val price: JsonField<Price> = JsonMissing.of(),
+            @JsonProperty("price_id")
+            @ExcludeMissing
+            private val priceId: JsonField<String> = JsonMissing.of(),
             @JsonProperty("subtotal")
             @ExcludeMissing
             private val subtotal: JsonField<String> = JsonMissing.of(),
@@ -300,19 +303,11 @@ private constructor(
             private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
         ) {
 
-            /**
-             * The Price resource represents a price that can be billed on a subscription, resulting
-             * in a charge on an invoice in the form of an invoice line item. Prices take a quantity
-             * and determine an amount to bill.
-             *
-             * Orb supports a few different pricing models out of the box. Each of these models is
-             * serialized differently in a given Price object. The model_type field determines the
-             * key for the configuration object that is present.
-             *
-             * For more on the types of prices, see
-             * [the core concepts documentation](/core-concepts#plan-and-price)
-             */
+            /** The price object */
             fun price(): Price = price.getRequired("price")
+
+            /** The price the cost is associated with */
+            fun priceId(): String = priceId.getRequired("price_id")
 
             /** Price's contributions for the timeframe, excluding any minimums and discounts. */
             fun subtotal(): String = subtotal.getRequired("subtotal")
@@ -323,19 +318,11 @@ private constructor(
             /** The price's quantity for the timeframe */
             fun quantity(): Double? = quantity.getNullable("quantity")
 
-            /**
-             * The Price resource represents a price that can be billed on a subscription, resulting
-             * in a charge on an invoice in the form of an invoice line item. Prices take a quantity
-             * and determine an amount to bill.
-             *
-             * Orb supports a few different pricing models out of the box. Each of these models is
-             * serialized differently in a given Price object. The model_type field determines the
-             * key for the configuration object that is present.
-             *
-             * For more on the types of prices, see
-             * [the core concepts documentation](/core-concepts#plan-and-price)
-             */
+            /** The price object */
             @JsonProperty("price") @ExcludeMissing fun _price(): JsonField<Price> = price
+
+            /** The price the cost is associated with */
+            @JsonProperty("price_id") @ExcludeMissing fun _priceId(): JsonField<String> = priceId
 
             /** Price's contributions for the timeframe, excluding any minimums and discounts. */
             @JsonProperty("subtotal") @ExcludeMissing fun _subtotal(): JsonField<String> = subtotal
@@ -358,6 +345,7 @@ private constructor(
                 }
 
                 price().validate()
+                priceId()
                 subtotal()
                 total()
                 quantity()
@@ -375,6 +363,7 @@ private constructor(
             class Builder internal constructor() {
 
                 private var price: JsonField<Price>? = null
+                private var priceId: JsonField<String>? = null
                 private var subtotal: JsonField<String>? = null
                 private var total: JsonField<String>? = null
                 private var quantity: JsonField<Double> = JsonMissing.of()
@@ -382,438 +371,130 @@ private constructor(
 
                 internal fun from(perPriceCost: PerPriceCost) = apply {
                     price = perPriceCost.price
+                    priceId = perPriceCost.priceId
                     subtotal = perPriceCost.subtotal
                     total = perPriceCost.total
                     quantity = perPriceCost.quantity
                     additionalProperties = perPriceCost.additionalProperties.toMutableMap()
                 }
 
-                /**
-                 * The Price resource represents a price that can be billed on a subscription,
-                 * resulting in a charge on an invoice in the form of an invoice line item. Prices
-                 * take a quantity and determine an amount to bill.
-                 *
-                 * Orb supports a few different pricing models out of the box. Each of these models
-                 * is serialized differently in a given Price object. The model_type field
-                 * determines the key for the configuration object that is present.
-                 *
-                 * For more on the types of prices, see
-                 * [the core concepts documentation](/core-concepts#plan-and-price)
-                 */
+                /** The price object */
                 fun price(price: Price) = price(JsonField.of(price))
 
-                /**
-                 * The Price resource represents a price that can be billed on a subscription,
-                 * resulting in a charge on an invoice in the form of an invoice line item. Prices
-                 * take a quantity and determine an amount to bill.
-                 *
-                 * Orb supports a few different pricing models out of the box. Each of these models
-                 * is serialized differently in a given Price object. The model_type field
-                 * determines the key for the configuration object that is present.
-                 *
-                 * For more on the types of prices, see
-                 * [the core concepts documentation](/core-concepts#plan-and-price)
-                 */
+                /** The price object */
                 fun price(price: JsonField<Price>) = apply { this.price = price }
 
-                /**
-                 * The Price resource represents a price that can be billed on a subscription,
-                 * resulting in a charge on an invoice in the form of an invoice line item. Prices
-                 * take a quantity and determine an amount to bill.
-                 *
-                 * Orb supports a few different pricing models out of the box. Each of these models
-                 * is serialized differently in a given Price object. The model_type field
-                 * determines the key for the configuration object that is present.
-                 *
-                 * For more on the types of prices, see
-                 * [the core concepts documentation](/core-concepts#plan-and-price)
-                 */
+                /** The price object */
                 fun price(unit: Price.UnitPrice) = price(Price.ofUnit(unit))
 
-                /**
-                 * The Price resource represents a price that can be billed on a subscription,
-                 * resulting in a charge on an invoice in the form of an invoice line item. Prices
-                 * take a quantity and determine an amount to bill.
-                 *
-                 * Orb supports a few different pricing models out of the box. Each of these models
-                 * is serialized differently in a given Price object. The model_type field
-                 * determines the key for the configuration object that is present.
-                 *
-                 * For more on the types of prices, see
-                 * [the core concepts documentation](/core-concepts#plan-and-price)
-                 */
+                /** The price object */
                 fun price(packagePrice: Price.PackagePrice) =
                     price(Price.ofPackagePrice(packagePrice))
 
-                /**
-                 * The Price resource represents a price that can be billed on a subscription,
-                 * resulting in a charge on an invoice in the form of an invoice line item. Prices
-                 * take a quantity and determine an amount to bill.
-                 *
-                 * Orb supports a few different pricing models out of the box. Each of these models
-                 * is serialized differently in a given Price object. The model_type field
-                 * determines the key for the configuration object that is present.
-                 *
-                 * For more on the types of prices, see
-                 * [the core concepts documentation](/core-concepts#plan-and-price)
-                 */
+                /** The price object */
                 fun price(matrix: Price.MatrixPrice) = price(Price.ofMatrix(matrix))
 
-                /**
-                 * The Price resource represents a price that can be billed on a subscription,
-                 * resulting in a charge on an invoice in the form of an invoice line item. Prices
-                 * take a quantity and determine an amount to bill.
-                 *
-                 * Orb supports a few different pricing models out of the box. Each of these models
-                 * is serialized differently in a given Price object. The model_type field
-                 * determines the key for the configuration object that is present.
-                 *
-                 * For more on the types of prices, see
-                 * [the core concepts documentation](/core-concepts#plan-and-price)
-                 */
+                /** The price object */
                 fun price(tiered: Price.TieredPrice) = price(Price.ofTiered(tiered))
 
-                /**
-                 * The Price resource represents a price that can be billed on a subscription,
-                 * resulting in a charge on an invoice in the form of an invoice line item. Prices
-                 * take a quantity and determine an amount to bill.
-                 *
-                 * Orb supports a few different pricing models out of the box. Each of these models
-                 * is serialized differently in a given Price object. The model_type field
-                 * determines the key for the configuration object that is present.
-                 *
-                 * For more on the types of prices, see
-                 * [the core concepts documentation](/core-concepts#plan-and-price)
-                 */
+                /** The price object */
                 fun price(tieredBps: Price.TieredBpsPrice) = price(Price.ofTieredBps(tieredBps))
 
-                /**
-                 * The Price resource represents a price that can be billed on a subscription,
-                 * resulting in a charge on an invoice in the form of an invoice line item. Prices
-                 * take a quantity and determine an amount to bill.
-                 *
-                 * Orb supports a few different pricing models out of the box. Each of these models
-                 * is serialized differently in a given Price object. The model_type field
-                 * determines the key for the configuration object that is present.
-                 *
-                 * For more on the types of prices, see
-                 * [the core concepts documentation](/core-concepts#plan-and-price)
-                 */
+                /** The price object */
                 fun price(bps: Price.BpsPrice) = price(Price.ofBps(bps))
 
-                /**
-                 * The Price resource represents a price that can be billed on a subscription,
-                 * resulting in a charge on an invoice in the form of an invoice line item. Prices
-                 * take a quantity and determine an amount to bill.
-                 *
-                 * Orb supports a few different pricing models out of the box. Each of these models
-                 * is serialized differently in a given Price object. The model_type field
-                 * determines the key for the configuration object that is present.
-                 *
-                 * For more on the types of prices, see
-                 * [the core concepts documentation](/core-concepts#plan-and-price)
-                 */
+                /** The price object */
                 fun price(bulkBps: Price.BulkBpsPrice) = price(Price.ofBulkBps(bulkBps))
 
-                /**
-                 * The Price resource represents a price that can be billed on a subscription,
-                 * resulting in a charge on an invoice in the form of an invoice line item. Prices
-                 * take a quantity and determine an amount to bill.
-                 *
-                 * Orb supports a few different pricing models out of the box. Each of these models
-                 * is serialized differently in a given Price object. The model_type field
-                 * determines the key for the configuration object that is present.
-                 *
-                 * For more on the types of prices, see
-                 * [the core concepts documentation](/core-concepts#plan-and-price)
-                 */
+                /** The price object */
                 fun price(bulk: Price.BulkPrice) = price(Price.ofBulk(bulk))
 
-                /**
-                 * The Price resource represents a price that can be billed on a subscription,
-                 * resulting in a charge on an invoice in the form of an invoice line item. Prices
-                 * take a quantity and determine an amount to bill.
-                 *
-                 * Orb supports a few different pricing models out of the box. Each of these models
-                 * is serialized differently in a given Price object. The model_type field
-                 * determines the key for the configuration object that is present.
-                 *
-                 * For more on the types of prices, see
-                 * [the core concepts documentation](/core-concepts#plan-and-price)
-                 */
+                /** The price object */
                 fun price(thresholdTotalAmount: Price.ThresholdTotalAmountPrice) =
                     price(Price.ofThresholdTotalAmount(thresholdTotalAmount))
 
-                /**
-                 * The Price resource represents a price that can be billed on a subscription,
-                 * resulting in a charge on an invoice in the form of an invoice line item. Prices
-                 * take a quantity and determine an amount to bill.
-                 *
-                 * Orb supports a few different pricing models out of the box. Each of these models
-                 * is serialized differently in a given Price object. The model_type field
-                 * determines the key for the configuration object that is present.
-                 *
-                 * For more on the types of prices, see
-                 * [the core concepts documentation](/core-concepts#plan-and-price)
-                 */
+                /** The price object */
                 fun price(tieredPackage: Price.TieredPackagePrice) =
                     price(Price.ofTieredPackage(tieredPackage))
 
-                /**
-                 * The Price resource represents a price that can be billed on a subscription,
-                 * resulting in a charge on an invoice in the form of an invoice line item. Prices
-                 * take a quantity and determine an amount to bill.
-                 *
-                 * Orb supports a few different pricing models out of the box. Each of these models
-                 * is serialized differently in a given Price object. The model_type field
-                 * determines the key for the configuration object that is present.
-                 *
-                 * For more on the types of prices, see
-                 * [the core concepts documentation](/core-concepts#plan-and-price)
-                 */
+                /** The price object */
                 fun price(groupedTiered: Price.GroupedTieredPrice) =
                     price(Price.ofGroupedTiered(groupedTiered))
 
-                /**
-                 * The Price resource represents a price that can be billed on a subscription,
-                 * resulting in a charge on an invoice in the form of an invoice line item. Prices
-                 * take a quantity and determine an amount to bill.
-                 *
-                 * Orb supports a few different pricing models out of the box. Each of these models
-                 * is serialized differently in a given Price object. The model_type field
-                 * determines the key for the configuration object that is present.
-                 *
-                 * For more on the types of prices, see
-                 * [the core concepts documentation](/core-concepts#plan-and-price)
-                 */
+                /** The price object */
                 fun price(tieredWithMinimum: Price.TieredWithMinimumPrice) =
                     price(Price.ofTieredWithMinimum(tieredWithMinimum))
 
-                /**
-                 * The Price resource represents a price that can be billed on a subscription,
-                 * resulting in a charge on an invoice in the form of an invoice line item. Prices
-                 * take a quantity and determine an amount to bill.
-                 *
-                 * Orb supports a few different pricing models out of the box. Each of these models
-                 * is serialized differently in a given Price object. The model_type field
-                 * determines the key for the configuration object that is present.
-                 *
-                 * For more on the types of prices, see
-                 * [the core concepts documentation](/core-concepts#plan-and-price)
-                 */
+                /** The price object */
                 fun price(tieredPackageWithMinimum: Price.TieredPackageWithMinimumPrice) =
                     price(Price.ofTieredPackageWithMinimum(tieredPackageWithMinimum))
 
-                /**
-                 * The Price resource represents a price that can be billed on a subscription,
-                 * resulting in a charge on an invoice in the form of an invoice line item. Prices
-                 * take a quantity and determine an amount to bill.
-                 *
-                 * Orb supports a few different pricing models out of the box. Each of these models
-                 * is serialized differently in a given Price object. The model_type field
-                 * determines the key for the configuration object that is present.
-                 *
-                 * For more on the types of prices, see
-                 * [the core concepts documentation](/core-concepts#plan-and-price)
-                 */
+                /** The price object */
                 fun price(packageWithAllocation: Price.PackageWithAllocationPrice) =
                     price(Price.ofPackageWithAllocation(packageWithAllocation))
 
-                /**
-                 * The Price resource represents a price that can be billed on a subscription,
-                 * resulting in a charge on an invoice in the form of an invoice line item. Prices
-                 * take a quantity and determine an amount to bill.
-                 *
-                 * Orb supports a few different pricing models out of the box. Each of these models
-                 * is serialized differently in a given Price object. The model_type field
-                 * determines the key for the configuration object that is present.
-                 *
-                 * For more on the types of prices, see
-                 * [the core concepts documentation](/core-concepts#plan-and-price)
-                 */
+                /** The price object */
                 fun price(unitWithPercent: Price.UnitWithPercentPrice) =
                     price(Price.ofUnitWithPercent(unitWithPercent))
 
-                /**
-                 * The Price resource represents a price that can be billed on a subscription,
-                 * resulting in a charge on an invoice in the form of an invoice line item. Prices
-                 * take a quantity and determine an amount to bill.
-                 *
-                 * Orb supports a few different pricing models out of the box. Each of these models
-                 * is serialized differently in a given Price object. The model_type field
-                 * determines the key for the configuration object that is present.
-                 *
-                 * For more on the types of prices, see
-                 * [the core concepts documentation](/core-concepts#plan-and-price)
-                 */
+                /** The price object */
                 fun price(matrixWithAllocation: Price.MatrixWithAllocationPrice) =
                     price(Price.ofMatrixWithAllocation(matrixWithAllocation))
 
-                /**
-                 * The Price resource represents a price that can be billed on a subscription,
-                 * resulting in a charge on an invoice in the form of an invoice line item. Prices
-                 * take a quantity and determine an amount to bill.
-                 *
-                 * Orb supports a few different pricing models out of the box. Each of these models
-                 * is serialized differently in a given Price object. The model_type field
-                 * determines the key for the configuration object that is present.
-                 *
-                 * For more on the types of prices, see
-                 * [the core concepts documentation](/core-concepts#plan-and-price)
-                 */
+                /** The price object */
                 fun price(tieredWithProration: Price.TieredWithProrationPrice) =
                     price(Price.ofTieredWithProration(tieredWithProration))
 
-                /**
-                 * The Price resource represents a price that can be billed on a subscription,
-                 * resulting in a charge on an invoice in the form of an invoice line item. Prices
-                 * take a quantity and determine an amount to bill.
-                 *
-                 * Orb supports a few different pricing models out of the box. Each of these models
-                 * is serialized differently in a given Price object. The model_type field
-                 * determines the key for the configuration object that is present.
-                 *
-                 * For more on the types of prices, see
-                 * [the core concepts documentation](/core-concepts#plan-and-price)
-                 */
+                /** The price object */
                 fun price(unitWithProration: Price.UnitWithProrationPrice) =
                     price(Price.ofUnitWithProration(unitWithProration))
 
-                /**
-                 * The Price resource represents a price that can be billed on a subscription,
-                 * resulting in a charge on an invoice in the form of an invoice line item. Prices
-                 * take a quantity and determine an amount to bill.
-                 *
-                 * Orb supports a few different pricing models out of the box. Each of these models
-                 * is serialized differently in a given Price object. The model_type field
-                 * determines the key for the configuration object that is present.
-                 *
-                 * For more on the types of prices, see
-                 * [the core concepts documentation](/core-concepts#plan-and-price)
-                 */
+                /** The price object */
                 fun price(groupedAllocation: Price.GroupedAllocationPrice) =
                     price(Price.ofGroupedAllocation(groupedAllocation))
 
-                /**
-                 * The Price resource represents a price that can be billed on a subscription,
-                 * resulting in a charge on an invoice in the form of an invoice line item. Prices
-                 * take a quantity and determine an amount to bill.
-                 *
-                 * Orb supports a few different pricing models out of the box. Each of these models
-                 * is serialized differently in a given Price object. The model_type field
-                 * determines the key for the configuration object that is present.
-                 *
-                 * For more on the types of prices, see
-                 * [the core concepts documentation](/core-concepts#plan-and-price)
-                 */
+                /** The price object */
                 fun price(groupedWithProratedMinimum: Price.GroupedWithProratedMinimumPrice) =
                     price(Price.ofGroupedWithProratedMinimum(groupedWithProratedMinimum))
 
-                /**
-                 * The Price resource represents a price that can be billed on a subscription,
-                 * resulting in a charge on an invoice in the form of an invoice line item. Prices
-                 * take a quantity and determine an amount to bill.
-                 *
-                 * Orb supports a few different pricing models out of the box. Each of these models
-                 * is serialized differently in a given Price object. The model_type field
-                 * determines the key for the configuration object that is present.
-                 *
-                 * For more on the types of prices, see
-                 * [the core concepts documentation](/core-concepts#plan-and-price)
-                 */
+                /** The price object */
                 fun price(groupedWithMeteredMinimum: Price.GroupedWithMeteredMinimumPrice) =
                     price(Price.ofGroupedWithMeteredMinimum(groupedWithMeteredMinimum))
 
-                /**
-                 * The Price resource represents a price that can be billed on a subscription,
-                 * resulting in a charge on an invoice in the form of an invoice line item. Prices
-                 * take a quantity and determine an amount to bill.
-                 *
-                 * Orb supports a few different pricing models out of the box. Each of these models
-                 * is serialized differently in a given Price object. The model_type field
-                 * determines the key for the configuration object that is present.
-                 *
-                 * For more on the types of prices, see
-                 * [the core concepts documentation](/core-concepts#plan-and-price)
-                 */
+                /** The price object */
                 fun price(matrixWithDisplayName: Price.MatrixWithDisplayNamePrice) =
                     price(Price.ofMatrixWithDisplayName(matrixWithDisplayName))
 
-                /**
-                 * The Price resource represents a price that can be billed on a subscription,
-                 * resulting in a charge on an invoice in the form of an invoice line item. Prices
-                 * take a quantity and determine an amount to bill.
-                 *
-                 * Orb supports a few different pricing models out of the box. Each of these models
-                 * is serialized differently in a given Price object. The model_type field
-                 * determines the key for the configuration object that is present.
-                 *
-                 * For more on the types of prices, see
-                 * [the core concepts documentation](/core-concepts#plan-and-price)
-                 */
+                /** The price object */
                 fun price(bulkWithProration: Price.BulkWithProrationPrice) =
                     price(Price.ofBulkWithProration(bulkWithProration))
 
-                /**
-                 * The Price resource represents a price that can be billed on a subscription,
-                 * resulting in a charge on an invoice in the form of an invoice line item. Prices
-                 * take a quantity and determine an amount to bill.
-                 *
-                 * Orb supports a few different pricing models out of the box. Each of these models
-                 * is serialized differently in a given Price object. The model_type field
-                 * determines the key for the configuration object that is present.
-                 *
-                 * For more on the types of prices, see
-                 * [the core concepts documentation](/core-concepts#plan-and-price)
-                 */
+                /** The price object */
                 fun price(groupedTieredPackage: Price.GroupedTieredPackagePrice) =
                     price(Price.ofGroupedTieredPackage(groupedTieredPackage))
 
-                /**
-                 * The Price resource represents a price that can be billed on a subscription,
-                 * resulting in a charge on an invoice in the form of an invoice line item. Prices
-                 * take a quantity and determine an amount to bill.
-                 *
-                 * Orb supports a few different pricing models out of the box. Each of these models
-                 * is serialized differently in a given Price object. The model_type field
-                 * determines the key for the configuration object that is present.
-                 *
-                 * For more on the types of prices, see
-                 * [the core concepts documentation](/core-concepts#plan-and-price)
-                 */
+                /** The price object */
                 fun price(maxGroupTieredPackage: Price.MaxGroupTieredPackagePrice) =
                     price(Price.ofMaxGroupTieredPackage(maxGroupTieredPackage))
 
-                /**
-                 * The Price resource represents a price that can be billed on a subscription,
-                 * resulting in a charge on an invoice in the form of an invoice line item. Prices
-                 * take a quantity and determine an amount to bill.
-                 *
-                 * Orb supports a few different pricing models out of the box. Each of these models
-                 * is serialized differently in a given Price object. The model_type field
-                 * determines the key for the configuration object that is present.
-                 *
-                 * For more on the types of prices, see
-                 * [the core concepts documentation](/core-concepts#plan-and-price)
-                 */
+                /** The price object */
                 fun price(scalableMatrixWithUnitPricing: Price.ScalableMatrixWithUnitPricingPrice) =
                     price(Price.ofScalableMatrixWithUnitPricing(scalableMatrixWithUnitPricing))
 
-                /**
-                 * The Price resource represents a price that can be billed on a subscription,
-                 * resulting in a charge on an invoice in the form of an invoice line item. Prices
-                 * take a quantity and determine an amount to bill.
-                 *
-                 * Orb supports a few different pricing models out of the box. Each of these models
-                 * is serialized differently in a given Price object. The model_type field
-                 * determines the key for the configuration object that is present.
-                 *
-                 * For more on the types of prices, see
-                 * [the core concepts documentation](/core-concepts#plan-and-price)
-                 */
+                /** The price object */
                 fun price(
                     scalableMatrixWithTieredPricing: Price.ScalableMatrixWithTieredPricingPrice
                 ) = price(Price.ofScalableMatrixWithTieredPricing(scalableMatrixWithTieredPricing))
+
+                /** The price object */
+                fun price(cumulativeGroupedBulk: Price.CumulativeGroupedBulkPrice) =
+                    price(Price.ofCumulativeGroupedBulk(cumulativeGroupedBulk))
+
+                /** The price the cost is associated with */
+                fun priceId(priceId: String) = priceId(JsonField.of(priceId))
+
+                /** The price the cost is associated with */
+                fun priceId(priceId: JsonField<String>) = apply { this.priceId = priceId }
 
                 /**
                  * Price's contributions for the timeframe, excluding any minimums and discounts.
@@ -865,6 +546,7 @@ private constructor(
                 fun build(): PerPriceCost =
                     PerPriceCost(
                         checkRequired("price", price),
+                        checkRequired("priceId", priceId),
                         checkRequired("subtotal", subtotal),
                         checkRequired("total", total),
                         quantity,
@@ -877,17 +559,17 @@ private constructor(
                     return true
                 }
 
-                return /* spotless:off */ other is PerPriceCost && price == other.price && subtotal == other.subtotal && total == other.total && quantity == other.quantity && additionalProperties == other.additionalProperties /* spotless:on */
+                return /* spotless:off */ other is PerPriceCost && price == other.price && priceId == other.priceId && subtotal == other.subtotal && total == other.total && quantity == other.quantity && additionalProperties == other.additionalProperties /* spotless:on */
             }
 
             /* spotless:off */
-            private val hashCode: Int by lazy { Objects.hash(price, subtotal, total, quantity, additionalProperties) }
+            private val hashCode: Int by lazy { Objects.hash(price, priceId, subtotal, total, quantity, additionalProperties) }
             /* spotless:on */
 
             override fun hashCode(): Int = hashCode
 
             override fun toString() =
-                "PerPriceCost{price=$price, subtotal=$subtotal, total=$total, quantity=$quantity, additionalProperties=$additionalProperties}"
+                "PerPriceCost{price=$price, priceId=$priceId, subtotal=$subtotal, total=$total, quantity=$quantity, additionalProperties=$additionalProperties}"
         }
 
         override fun equals(other: Any?): Boolean {
