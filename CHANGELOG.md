@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.1.0-alpha.20 (2025-02-13)
+
+Full Changelog: [v0.1.0-alpha.19...v0.1.0-alpha.20](https://github.com/orbcorp/orb-kotlin/compare/v0.1.0-alpha.19...v0.1.0-alpha.20)
+
+### Features
+
+* **api:** api update ([#208](https://github.com/orbcorp/orb-kotlin/issues/208)) ([6f4a732](https://github.com/orbcorp/orb-kotlin/commit/6f4a732bedb6bfd177d9a2ccd66e5f892a471d35))
+
+
+### Documentation
+
+* add more phantom reachability docs ([#206](https://github.com/orbcorp/orb-kotlin/issues/206)) ([124a506](https://github.com/orbcorp/orb-kotlin/commit/124a50600addc5ca825e86c4d232b6b7ff3fa21d))
+
 ## 0.1.0-alpha.19 (2025-02-11)
 
 Full Changelog: [v0.1.0-alpha.18...v0.1.0-alpha.19](https://github.com/orbcorp/orb-kotlin/compare/v0.1.0-alpha.18...v0.1.0-alpha.19)
