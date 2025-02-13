@@ -979,6 +979,21 @@ private constructor(
         fun price(scalableMatrixWithTieredPricing: Price.ScalableMatrixWithTieredPricingPrice) =
             price(Price.ofScalableMatrixWithTieredPricing(scalableMatrixWithTieredPricing))
 
+        /**
+         * The Price resource represents a price that can be billed on a subscription, resulting in
+         * a charge on an invoice in the form of an invoice line item. Prices take a quantity and
+         * determine an amount to bill.
+         *
+         * Orb supports a few different pricing models out of the box. Each of these models is
+         * serialized differently in a given Price object. The model_type field determines the key
+         * for the configuration object that is present.
+         *
+         * For more on the types of prices, see
+         * [the core concepts documentation](/core-concepts#plan-and-price)
+         */
+        fun price(cumulativeGroupedBulk: Price.CumulativeGroupedBulkPrice) =
+            price(Price.ofCumulativeGroupedBulk(cumulativeGroupedBulk))
+
         /** Either the fixed fee quantity or the usage during the service period. */
         fun quantity(quantity: Double) = quantity(JsonField.of(quantity))
 

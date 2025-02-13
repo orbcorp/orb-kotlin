@@ -863,6 +863,13 @@ private constructor(
         fun addPrice(scalableMatrixWithTieredPricing: Price.ScalableMatrixWithTieredPricingPrice) =
             addPrice(Price.ofScalableMatrixWithTieredPricing(scalableMatrixWithTieredPricing))
 
+        /**
+         * Prices for this plan. If the plan has phases, this includes prices across all phases of
+         * the plan.
+         */
+        fun addPrice(cumulativeGroupedBulk: Price.CumulativeGroupedBulkPrice) =
+            addPrice(Price.ofCumulativeGroupedBulk(cumulativeGroupedBulk))
+
         fun product(product: Product) = product(JsonField.of(product))
 
         fun product(product: JsonField<Product>) = apply { this.product = product }
