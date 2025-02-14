@@ -12,6 +12,7 @@ class SubscriptionTriggerPhaseParamsTest {
     fun create() {
         SubscriptionTriggerPhaseParams.builder()
             .subscriptionId("subscription_id")
+            .allowInvoiceCreditOrVoid(true)
             .effectiveDate(LocalDate.parse("2019-12-27"))
             .build()
     }
@@ -21,10 +22,12 @@ class SubscriptionTriggerPhaseParamsTest {
         val params =
             SubscriptionTriggerPhaseParams.builder()
                 .subscriptionId("subscription_id")
+                .allowInvoiceCreditOrVoid(true)
                 .effectiveDate(LocalDate.parse("2019-12-27"))
                 .build()
         val body = params._body()
         assertThat(body).isNotNull
+        assertThat(body.allowInvoiceCreditOrVoid()).isEqualTo(true)
         assertThat(body.effectiveDate()).isEqualTo(LocalDate.parse("2019-12-27"))
     }
 

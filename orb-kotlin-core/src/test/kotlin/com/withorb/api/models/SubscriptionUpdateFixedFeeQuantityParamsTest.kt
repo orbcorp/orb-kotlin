@@ -14,6 +14,7 @@ class SubscriptionUpdateFixedFeeQuantityParamsTest {
             .subscriptionId("subscription_id")
             .priceId("price_id")
             .quantity(0.0)
+            .allowInvoiceCreditOrVoid(true)
             .changeOption(SubscriptionUpdateFixedFeeQuantityParams.ChangeOption.IMMEDIATE)
             .effectiveDate(LocalDate.parse("2022-12-21"))
             .build()
@@ -26,6 +27,7 @@ class SubscriptionUpdateFixedFeeQuantityParamsTest {
                 .subscriptionId("subscription_id")
                 .priceId("price_id")
                 .quantity(0.0)
+                .allowInvoiceCreditOrVoid(true)
                 .changeOption(SubscriptionUpdateFixedFeeQuantityParams.ChangeOption.IMMEDIATE)
                 .effectiveDate(LocalDate.parse("2022-12-21"))
                 .build()
@@ -33,6 +35,7 @@ class SubscriptionUpdateFixedFeeQuantityParamsTest {
         assertThat(body).isNotNull
         assertThat(body.priceId()).isEqualTo("price_id")
         assertThat(body.quantity()).isEqualTo(0.0)
+        assertThat(body.allowInvoiceCreditOrVoid()).isEqualTo(true)
         assertThat(body.changeOption())
             .isEqualTo(SubscriptionUpdateFixedFeeQuantityParams.ChangeOption.IMMEDIATE)
         assertThat(body.effectiveDate()).isEqualTo(LocalDate.parse("2022-12-21"))

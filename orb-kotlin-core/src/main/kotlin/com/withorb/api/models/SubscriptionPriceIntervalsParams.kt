@@ -113,6 +113,13 @@ private constructor(
     /** A list of adjustments to add to the subscription. */
     fun addAdjustments(): List<AddAdjustment>? = body.addAdjustments()
 
+    /**
+     * If false, this request will fail if it would void an issued invoice or create a credit note.
+     * Consider using this as a safety mechanism if you do not expect existing invoices to be
+     * changed.
+     */
+    fun allowInvoiceCreditOrVoid(): Boolean? = body.allowInvoiceCreditOrVoid()
+
     /** A list of price intervals to edit on the subscription. */
     fun edit(): List<Edit>? = body.edit()
 
@@ -124,6 +131,13 @@ private constructor(
 
     /** A list of adjustments to add to the subscription. */
     fun _addAdjustments(): JsonField<List<AddAdjustment>> = body._addAdjustments()
+
+    /**
+     * If false, this request will fail if it would void an issued invoice or create a credit note.
+     * Consider using this as a safety mechanism if you do not expect existing invoices to be
+     * changed.
+     */
+    fun _allowInvoiceCreditOrVoid(): JsonField<Boolean> = body._allowInvoiceCreditOrVoid()
 
     /** A list of price intervals to edit on the subscription. */
     fun _edit(): JsonField<List<Edit>> = body._edit()
@@ -160,6 +174,9 @@ private constructor(
         @JsonProperty("add_adjustments")
         @ExcludeMissing
         private val addAdjustments: JsonField<List<AddAdjustment>> = JsonMissing.of(),
+        @JsonProperty("allow_invoice_credit_or_void")
+        @ExcludeMissing
+        private val allowInvoiceCreditOrVoid: JsonField<Boolean> = JsonMissing.of(),
         @JsonProperty("edit")
         @ExcludeMissing
         private val edit: JsonField<List<Edit>> = JsonMissing.of(),
@@ -176,6 +193,14 @@ private constructor(
         /** A list of adjustments to add to the subscription. */
         fun addAdjustments(): List<AddAdjustment>? = addAdjustments.getNullable("add_adjustments")
 
+        /**
+         * If false, this request will fail if it would void an issued invoice or create a credit
+         * note. Consider using this as a safety mechanism if you do not expect existing invoices to
+         * be changed.
+         */
+        fun allowInvoiceCreditOrVoid(): Boolean? =
+            allowInvoiceCreditOrVoid.getNullable("allow_invoice_credit_or_void")
+
         /** A list of price intervals to edit on the subscription. */
         fun edit(): List<Edit>? = edit.getNullable("edit")
 
@@ -190,6 +215,15 @@ private constructor(
         @JsonProperty("add_adjustments")
         @ExcludeMissing
         fun _addAdjustments(): JsonField<List<AddAdjustment>> = addAdjustments
+
+        /**
+         * If false, this request will fail if it would void an issued invoice or create a credit
+         * note. Consider using this as a safety mechanism if you do not expect existing invoices to
+         * be changed.
+         */
+        @JsonProperty("allow_invoice_credit_or_void")
+        @ExcludeMissing
+        fun _allowInvoiceCreditOrVoid(): JsonField<Boolean> = allowInvoiceCreditOrVoid
 
         /** A list of price intervals to edit on the subscription. */
         @JsonProperty("edit") @ExcludeMissing fun _edit(): JsonField<List<Edit>> = edit
@@ -212,6 +246,7 @@ private constructor(
 
             add()?.forEach { it.validate() }
             addAdjustments()?.forEach { it.validate() }
+            allowInvoiceCreditOrVoid()
             edit()?.forEach { it.validate() }
             editAdjustments()?.forEach { it.validate() }
             validated = true
@@ -229,6 +264,7 @@ private constructor(
 
             private var add: JsonField<MutableList<Add>>? = null
             private var addAdjustments: JsonField<MutableList<AddAdjustment>>? = null
+            private var allowInvoiceCreditOrVoid: JsonField<Boolean> = JsonMissing.of()
             private var edit: JsonField<MutableList<Edit>>? = null
             private var editAdjustments: JsonField<MutableList<EditAdjustment>>? = null
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
@@ -238,6 +274,8 @@ private constructor(
                     add = subscriptionPriceIntervalsBody.add.map { it.toMutableList() }
                     addAdjustments =
                         subscriptionPriceIntervalsBody.addAdjustments.map { it.toMutableList() }
+                    allowInvoiceCreditOrVoid =
+                        subscriptionPriceIntervalsBody.allowInvoiceCreditOrVoid
                     edit = subscriptionPriceIntervalsBody.edit.map { it.toMutableList() }
                     editAdjustments =
                         subscriptionPriceIntervalsBody.editAdjustments.map { it.toMutableList() }
@@ -282,6 +320,31 @@ private constructor(
                                 ))
                             .add(addAdjustment)
                     }
+            }
+
+            /**
+             * If false, this request will fail if it would void an issued invoice or create a
+             * credit note. Consider using this as a safety mechanism if you do not expect existing
+             * invoices to be changed.
+             */
+            fun allowInvoiceCreditOrVoid(allowInvoiceCreditOrVoid: Boolean?) =
+                allowInvoiceCreditOrVoid(JsonField.ofNullable(allowInvoiceCreditOrVoid))
+
+            /**
+             * If false, this request will fail if it would void an issued invoice or create a
+             * credit note. Consider using this as a safety mechanism if you do not expect existing
+             * invoices to be changed.
+             */
+            fun allowInvoiceCreditOrVoid(allowInvoiceCreditOrVoid: Boolean) =
+                allowInvoiceCreditOrVoid(allowInvoiceCreditOrVoid as Boolean?)
+
+            /**
+             * If false, this request will fail if it would void an issued invoice or create a
+             * credit note. Consider using this as a safety mechanism if you do not expect existing
+             * invoices to be changed.
+             */
+            fun allowInvoiceCreditOrVoid(allowInvoiceCreditOrVoid: JsonField<Boolean>) = apply {
+                this.allowInvoiceCreditOrVoid = allowInvoiceCreditOrVoid
             }
 
             /** A list of price intervals to edit on the subscription. */
@@ -348,6 +411,7 @@ private constructor(
                 SubscriptionPriceIntervalsBody(
                     (add ?: JsonMissing.of()).map { it.toImmutable() },
                     (addAdjustments ?: JsonMissing.of()).map { it.toImmutable() },
+                    allowInvoiceCreditOrVoid,
                     (edit ?: JsonMissing.of()).map { it.toImmutable() },
                     (editAdjustments ?: JsonMissing.of()).map { it.toImmutable() },
                     additionalProperties.toImmutable(),
@@ -359,17 +423,17 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is SubscriptionPriceIntervalsBody && add == other.add && addAdjustments == other.addAdjustments && edit == other.edit && editAdjustments == other.editAdjustments && additionalProperties == other.additionalProperties /* spotless:on */
+            return /* spotless:off */ other is SubscriptionPriceIntervalsBody && add == other.add && addAdjustments == other.addAdjustments && allowInvoiceCreditOrVoid == other.allowInvoiceCreditOrVoid && edit == other.edit && editAdjustments == other.editAdjustments && additionalProperties == other.additionalProperties /* spotless:on */
         }
 
         /* spotless:off */
-        private val hashCode: Int by lazy { Objects.hash(add, addAdjustments, edit, editAdjustments, additionalProperties) }
+        private val hashCode: Int by lazy { Objects.hash(add, addAdjustments, allowInvoiceCreditOrVoid, edit, editAdjustments, additionalProperties) }
         /* spotless:on */
 
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "SubscriptionPriceIntervalsBody{add=$add, addAdjustments=$addAdjustments, edit=$edit, editAdjustments=$editAdjustments, additionalProperties=$additionalProperties}"
+            "SubscriptionPriceIntervalsBody{add=$add, addAdjustments=$addAdjustments, allowInvoiceCreditOrVoid=$allowInvoiceCreditOrVoid, edit=$edit, editAdjustments=$editAdjustments, additionalProperties=$additionalProperties}"
     }
 
     fun toBuilder() = Builder().from(this)
@@ -422,6 +486,32 @@ private constructor(
         /** A list of adjustments to add to the subscription. */
         fun addAddAdjustment(addAdjustment: AddAdjustment) = apply {
             body.addAddAdjustment(addAdjustment)
+        }
+
+        /**
+         * If false, this request will fail if it would void an issued invoice or create a credit
+         * note. Consider using this as a safety mechanism if you do not expect existing invoices to
+         * be changed.
+         */
+        fun allowInvoiceCreditOrVoid(allowInvoiceCreditOrVoid: Boolean?) = apply {
+            body.allowInvoiceCreditOrVoid(allowInvoiceCreditOrVoid)
+        }
+
+        /**
+         * If false, this request will fail if it would void an issued invoice or create a credit
+         * note. Consider using this as a safety mechanism if you do not expect existing invoices to
+         * be changed.
+         */
+        fun allowInvoiceCreditOrVoid(allowInvoiceCreditOrVoid: Boolean) =
+            allowInvoiceCreditOrVoid(allowInvoiceCreditOrVoid as Boolean?)
+
+        /**
+         * If false, this request will fail if it would void an issued invoice or create a credit
+         * note. Consider using this as a safety mechanism if you do not expect existing invoices to
+         * be changed.
+         */
+        fun allowInvoiceCreditOrVoid(allowInvoiceCreditOrVoid: JsonField<Boolean>) = apply {
+            body.allowInvoiceCreditOrVoid(allowInvoiceCreditOrVoid)
         }
 
         /** A list of price intervals to edit on the subscription. */
