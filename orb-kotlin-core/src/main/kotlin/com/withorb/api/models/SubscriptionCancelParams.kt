@@ -87,6 +87,13 @@ private constructor(
     fun cancelOption(): CancelOption = body.cancelOption()
 
     /**
+     * If false, this request will fail if it would void an issued invoice or create a credit note.
+     * Consider using this as a safety mechanism if you do not expect existing invoices to be
+     * changed.
+     */
+    fun allowInvoiceCreditOrVoid(): Boolean? = body.allowInvoiceCreditOrVoid()
+
+    /**
      * The date that the cancellation should take effect. This parameter can only be passed if the
      * `cancel_option` is `requested_date`.
      */
@@ -94,6 +101,13 @@ private constructor(
 
     /** Determines the timing of subscription cancellation */
     fun _cancelOption(): JsonField<CancelOption> = body._cancelOption()
+
+    /**
+     * If false, this request will fail if it would void an issued invoice or create a credit note.
+     * Consider using this as a safety mechanism if you do not expect existing invoices to be
+     * changed.
+     */
+    fun _allowInvoiceCreditOrVoid(): JsonField<Boolean> = body._allowInvoiceCreditOrVoid()
 
     /**
      * The date that the cancellation should take effect. This parameter can only be passed if the
@@ -127,6 +141,9 @@ private constructor(
         @JsonProperty("cancel_option")
         @ExcludeMissing
         private val cancelOption: JsonField<CancelOption> = JsonMissing.of(),
+        @JsonProperty("allow_invoice_credit_or_void")
+        @ExcludeMissing
+        private val allowInvoiceCreditOrVoid: JsonField<Boolean> = JsonMissing.of(),
         @JsonProperty("cancellation_date")
         @ExcludeMissing
         private val cancellationDate: JsonField<OffsetDateTime> = JsonMissing.of(),
@@ -138,6 +155,14 @@ private constructor(
         fun cancelOption(): CancelOption = cancelOption.getRequired("cancel_option")
 
         /**
+         * If false, this request will fail if it would void an issued invoice or create a credit
+         * note. Consider using this as a safety mechanism if you do not expect existing invoices to
+         * be changed.
+         */
+        fun allowInvoiceCreditOrVoid(): Boolean? =
+            allowInvoiceCreditOrVoid.getNullable("allow_invoice_credit_or_void")
+
+        /**
          * The date that the cancellation should take effect. This parameter can only be passed if
          * the `cancel_option` is `requested_date`.
          */
@@ -147,6 +172,15 @@ private constructor(
         @JsonProperty("cancel_option")
         @ExcludeMissing
         fun _cancelOption(): JsonField<CancelOption> = cancelOption
+
+        /**
+         * If false, this request will fail if it would void an issued invoice or create a credit
+         * note. Consider using this as a safety mechanism if you do not expect existing invoices to
+         * be changed.
+         */
+        @JsonProperty("allow_invoice_credit_or_void")
+        @ExcludeMissing
+        fun _allowInvoiceCreditOrVoid(): JsonField<Boolean> = allowInvoiceCreditOrVoid
 
         /**
          * The date that the cancellation should take effect. This parameter can only be passed if
@@ -168,6 +202,7 @@ private constructor(
             }
 
             cancelOption()
+            allowInvoiceCreditOrVoid()
             cancellationDate()
             validated = true
         }
@@ -183,11 +218,13 @@ private constructor(
         class Builder internal constructor() {
 
             private var cancelOption: JsonField<CancelOption>? = null
+            private var allowInvoiceCreditOrVoid: JsonField<Boolean> = JsonMissing.of()
             private var cancellationDate: JsonField<OffsetDateTime> = JsonMissing.of()
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             internal fun from(subscriptionCancelBody: SubscriptionCancelBody) = apply {
                 cancelOption = subscriptionCancelBody.cancelOption
+                allowInvoiceCreditOrVoid = subscriptionCancelBody.allowInvoiceCreditOrVoid
                 cancellationDate = subscriptionCancelBody.cancellationDate
                 additionalProperties = subscriptionCancelBody.additionalProperties.toMutableMap()
             }
@@ -198,6 +235,31 @@ private constructor(
             /** Determines the timing of subscription cancellation */
             fun cancelOption(cancelOption: JsonField<CancelOption>) = apply {
                 this.cancelOption = cancelOption
+            }
+
+            /**
+             * If false, this request will fail if it would void an issued invoice or create a
+             * credit note. Consider using this as a safety mechanism if you do not expect existing
+             * invoices to be changed.
+             */
+            fun allowInvoiceCreditOrVoid(allowInvoiceCreditOrVoid: Boolean?) =
+                allowInvoiceCreditOrVoid(JsonField.ofNullable(allowInvoiceCreditOrVoid))
+
+            /**
+             * If false, this request will fail if it would void an issued invoice or create a
+             * credit note. Consider using this as a safety mechanism if you do not expect existing
+             * invoices to be changed.
+             */
+            fun allowInvoiceCreditOrVoid(allowInvoiceCreditOrVoid: Boolean) =
+                allowInvoiceCreditOrVoid(allowInvoiceCreditOrVoid as Boolean?)
+
+            /**
+             * If false, this request will fail if it would void an issued invoice or create a
+             * credit note. Consider using this as a safety mechanism if you do not expect existing
+             * invoices to be changed.
+             */
+            fun allowInvoiceCreditOrVoid(allowInvoiceCreditOrVoid: JsonField<Boolean>) = apply {
+                this.allowInvoiceCreditOrVoid = allowInvoiceCreditOrVoid
             }
 
             /**
@@ -237,6 +299,7 @@ private constructor(
             fun build(): SubscriptionCancelBody =
                 SubscriptionCancelBody(
                     checkRequired("cancelOption", cancelOption),
+                    allowInvoiceCreditOrVoid,
                     cancellationDate,
                     additionalProperties.toImmutable(),
                 )
@@ -247,17 +310,17 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is SubscriptionCancelBody && cancelOption == other.cancelOption && cancellationDate == other.cancellationDate && additionalProperties == other.additionalProperties /* spotless:on */
+            return /* spotless:off */ other is SubscriptionCancelBody && cancelOption == other.cancelOption && allowInvoiceCreditOrVoid == other.allowInvoiceCreditOrVoid && cancellationDate == other.cancellationDate && additionalProperties == other.additionalProperties /* spotless:on */
         }
 
         /* spotless:off */
-        private val hashCode: Int by lazy { Objects.hash(cancelOption, cancellationDate, additionalProperties) }
+        private val hashCode: Int by lazy { Objects.hash(cancelOption, allowInvoiceCreditOrVoid, cancellationDate, additionalProperties) }
         /* spotless:on */
 
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "SubscriptionCancelBody{cancelOption=$cancelOption, cancellationDate=$cancellationDate, additionalProperties=$additionalProperties}"
+            "SubscriptionCancelBody{cancelOption=$cancelOption, allowInvoiceCreditOrVoid=$allowInvoiceCreditOrVoid, cancellationDate=$cancellationDate, additionalProperties=$additionalProperties}"
     }
 
     fun toBuilder() = Builder().from(this)
@@ -291,6 +354,32 @@ private constructor(
         /** Determines the timing of subscription cancellation */
         fun cancelOption(cancelOption: JsonField<CancelOption>) = apply {
             body.cancelOption(cancelOption)
+        }
+
+        /**
+         * If false, this request will fail if it would void an issued invoice or create a credit
+         * note. Consider using this as a safety mechanism if you do not expect existing invoices to
+         * be changed.
+         */
+        fun allowInvoiceCreditOrVoid(allowInvoiceCreditOrVoid: Boolean?) = apply {
+            body.allowInvoiceCreditOrVoid(allowInvoiceCreditOrVoid)
+        }
+
+        /**
+         * If false, this request will fail if it would void an issued invoice or create a credit
+         * note. Consider using this as a safety mechanism if you do not expect existing invoices to
+         * be changed.
+         */
+        fun allowInvoiceCreditOrVoid(allowInvoiceCreditOrVoid: Boolean) =
+            allowInvoiceCreditOrVoid(allowInvoiceCreditOrVoid as Boolean?)
+
+        /**
+         * If false, this request will fail if it would void an issued invoice or create a credit
+         * note. Consider using this as a safety mechanism if you do not expect existing invoices to
+         * be changed.
+         */
+        fun allowInvoiceCreditOrVoid(allowInvoiceCreditOrVoid: JsonField<Boolean>) = apply {
+            body.allowInvoiceCreditOrVoid(allowInvoiceCreditOrVoid)
         }
 
         /**

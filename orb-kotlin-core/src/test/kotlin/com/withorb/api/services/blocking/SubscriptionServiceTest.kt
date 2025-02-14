@@ -401,6 +401,7 @@ class SubscriptionServiceTest {
                 SubscriptionCancelParams.builder()
                     .subscriptionId("subscription_id")
                     .cancelOption(SubscriptionCancelParams.CancelOption.END_OF_SUBSCRIPTION_TERM)
+                    .allowInvoiceCreditOrVoid(true)
                     .cancellationDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                     .build()
             )
@@ -626,6 +627,7 @@ class SubscriptionServiceTest {
                             .endDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                             .build()
                     )
+                    .allowInvoiceCreditOrVoid(true)
                     .addEdit(
                         SubscriptionPriceIntervalsParams.Edit.builder()
                             .priceIntervalId("sdfs6wdjvn7ujokd")
@@ -992,6 +994,7 @@ class SubscriptionServiceTest {
             subscriptionService.triggerPhase(
                 SubscriptionTriggerPhaseParams.builder()
                     .subscriptionId("subscription_id")
+                    .allowInvoiceCreditOrVoid(true)
                     .effectiveDate(LocalDate.parse("2019-12-27"))
                     .build()
             )
@@ -1068,6 +1071,7 @@ class SubscriptionServiceTest {
                     .subscriptionId("subscription_id")
                     .priceId("price_id")
                     .quantity(0.0)
+                    .allowInvoiceCreditOrVoid(true)
                     .changeOption(SubscriptionUpdateFixedFeeQuantityParams.ChangeOption.IMMEDIATE)
                     .effectiveDate(LocalDate.parse("2022-12-21"))
                     .build()
