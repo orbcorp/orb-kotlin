@@ -52,6 +52,13 @@ private constructor(
     fun quantity(): Double = body.quantity()
 
     /**
+     * If false, this request will fail if it would void an issued invoice or create a credit note.
+     * Consider using this as a safety mechanism if you do not expect existing invoices to be
+     * changed.
+     */
+    fun allowInvoiceCreditOrVoid(): Boolean? = body.allowInvoiceCreditOrVoid()
+
+    /**
      * Determines when the change takes effect. Note that if `effective_date` is specified, this
      * defaults to `effective_date`. Otherwise, this defaults to `immediate` unless it's explicitly
      * set to `upcoming_invoice.
@@ -69,6 +76,13 @@ private constructor(
     fun _priceId(): JsonField<String> = body._priceId()
 
     fun _quantity(): JsonField<Double> = body._quantity()
+
+    /**
+     * If false, this request will fail if it would void an issued invoice or create a credit note.
+     * Consider using this as a safety mechanism if you do not expect existing invoices to be
+     * changed.
+     */
+    fun _allowInvoiceCreditOrVoid(): JsonField<Boolean> = body._allowInvoiceCreditOrVoid()
 
     /**
      * Determines when the change takes effect. Note that if `effective_date` is specified, this
@@ -113,6 +127,9 @@ private constructor(
         @JsonProperty("quantity")
         @ExcludeMissing
         private val quantity: JsonField<Double> = JsonMissing.of(),
+        @JsonProperty("allow_invoice_credit_or_void")
+        @ExcludeMissing
+        private val allowInvoiceCreditOrVoid: JsonField<Boolean> = JsonMissing.of(),
         @JsonProperty("change_option")
         @ExcludeMissing
         private val changeOption: JsonField<ChangeOption> = JsonMissing.of(),
@@ -127,6 +144,14 @@ private constructor(
         fun priceId(): String = priceId.getRequired("price_id")
 
         fun quantity(): Double = quantity.getRequired("quantity")
+
+        /**
+         * If false, this request will fail if it would void an issued invoice or create a credit
+         * note. Consider using this as a safety mechanism if you do not expect existing invoices to
+         * be changed.
+         */
+        fun allowInvoiceCreditOrVoid(): Boolean? =
+            allowInvoiceCreditOrVoid.getNullable("allow_invoice_credit_or_void")
 
         /**
          * Determines when the change takes effect. Note that if `effective_date` is specified, this
@@ -146,6 +171,15 @@ private constructor(
         @JsonProperty("price_id") @ExcludeMissing fun _priceId(): JsonField<String> = priceId
 
         @JsonProperty("quantity") @ExcludeMissing fun _quantity(): JsonField<Double> = quantity
+
+        /**
+         * If false, this request will fail if it would void an issued invoice or create a credit
+         * note. Consider using this as a safety mechanism if you do not expect existing invoices to
+         * be changed.
+         */
+        @JsonProperty("allow_invoice_credit_or_void")
+        @ExcludeMissing
+        fun _allowInvoiceCreditOrVoid(): JsonField<Boolean> = allowInvoiceCreditOrVoid
 
         /**
          * Determines when the change takes effect. Note that if `effective_date` is specified, this
@@ -178,6 +212,7 @@ private constructor(
 
             priceId()
             quantity()
+            allowInvoiceCreditOrVoid()
             changeOption()
             effectiveDate()
             validated = true
@@ -195,6 +230,7 @@ private constructor(
 
             private var priceId: JsonField<String>? = null
             private var quantity: JsonField<Double>? = null
+            private var allowInvoiceCreditOrVoid: JsonField<Boolean> = JsonMissing.of()
             private var changeOption: JsonField<ChangeOption> = JsonMissing.of()
             private var effectiveDate: JsonField<LocalDate> = JsonMissing.of()
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
@@ -204,6 +240,8 @@ private constructor(
             ) = apply {
                 priceId = subscriptionUpdateFixedFeeQuantityBody.priceId
                 quantity = subscriptionUpdateFixedFeeQuantityBody.quantity
+                allowInvoiceCreditOrVoid =
+                    subscriptionUpdateFixedFeeQuantityBody.allowInvoiceCreditOrVoid
                 changeOption = subscriptionUpdateFixedFeeQuantityBody.changeOption
                 effectiveDate = subscriptionUpdateFixedFeeQuantityBody.effectiveDate
                 additionalProperties =
@@ -219,6 +257,31 @@ private constructor(
             fun quantity(quantity: Double) = quantity(JsonField.of(quantity))
 
             fun quantity(quantity: JsonField<Double>) = apply { this.quantity = quantity }
+
+            /**
+             * If false, this request will fail if it would void an issued invoice or create a
+             * credit note. Consider using this as a safety mechanism if you do not expect existing
+             * invoices to be changed.
+             */
+            fun allowInvoiceCreditOrVoid(allowInvoiceCreditOrVoid: Boolean?) =
+                allowInvoiceCreditOrVoid(JsonField.ofNullable(allowInvoiceCreditOrVoid))
+
+            /**
+             * If false, this request will fail if it would void an issued invoice or create a
+             * credit note. Consider using this as a safety mechanism if you do not expect existing
+             * invoices to be changed.
+             */
+            fun allowInvoiceCreditOrVoid(allowInvoiceCreditOrVoid: Boolean) =
+                allowInvoiceCreditOrVoid(allowInvoiceCreditOrVoid as Boolean?)
+
+            /**
+             * If false, this request will fail if it would void an issued invoice or create a
+             * credit note. Consider using this as a safety mechanism if you do not expect existing
+             * invoices to be changed.
+             */
+            fun allowInvoiceCreditOrVoid(allowInvoiceCreditOrVoid: JsonField<Boolean>) = apply {
+                this.allowInvoiceCreditOrVoid = allowInvoiceCreditOrVoid
+            }
 
             /**
              * Determines when the change takes effect. Note that if `effective_date` is specified,
@@ -276,6 +339,7 @@ private constructor(
                 SubscriptionUpdateFixedFeeQuantityBody(
                     checkRequired("priceId", priceId),
                     checkRequired("quantity", quantity),
+                    allowInvoiceCreditOrVoid,
                     changeOption,
                     effectiveDate,
                     additionalProperties.toImmutable(),
@@ -287,17 +351,17 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is SubscriptionUpdateFixedFeeQuantityBody && priceId == other.priceId && quantity == other.quantity && changeOption == other.changeOption && effectiveDate == other.effectiveDate && additionalProperties == other.additionalProperties /* spotless:on */
+            return /* spotless:off */ other is SubscriptionUpdateFixedFeeQuantityBody && priceId == other.priceId && quantity == other.quantity && allowInvoiceCreditOrVoid == other.allowInvoiceCreditOrVoid && changeOption == other.changeOption && effectiveDate == other.effectiveDate && additionalProperties == other.additionalProperties /* spotless:on */
         }
 
         /* spotless:off */
-        private val hashCode: Int by lazy { Objects.hash(priceId, quantity, changeOption, effectiveDate, additionalProperties) }
+        private val hashCode: Int by lazy { Objects.hash(priceId, quantity, allowInvoiceCreditOrVoid, changeOption, effectiveDate, additionalProperties) }
         /* spotless:on */
 
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "SubscriptionUpdateFixedFeeQuantityBody{priceId=$priceId, quantity=$quantity, changeOption=$changeOption, effectiveDate=$effectiveDate, additionalProperties=$additionalProperties}"
+            "SubscriptionUpdateFixedFeeQuantityBody{priceId=$priceId, quantity=$quantity, allowInvoiceCreditOrVoid=$allowInvoiceCreditOrVoid, changeOption=$changeOption, effectiveDate=$effectiveDate, additionalProperties=$additionalProperties}"
     }
 
     fun toBuilder() = Builder().from(this)
@@ -339,6 +403,32 @@ private constructor(
         fun quantity(quantity: Double) = apply { body.quantity(quantity) }
 
         fun quantity(quantity: JsonField<Double>) = apply { body.quantity(quantity) }
+
+        /**
+         * If false, this request will fail if it would void an issued invoice or create a credit
+         * note. Consider using this as a safety mechanism if you do not expect existing invoices to
+         * be changed.
+         */
+        fun allowInvoiceCreditOrVoid(allowInvoiceCreditOrVoid: Boolean?) = apply {
+            body.allowInvoiceCreditOrVoid(allowInvoiceCreditOrVoid)
+        }
+
+        /**
+         * If false, this request will fail if it would void an issued invoice or create a credit
+         * note. Consider using this as a safety mechanism if you do not expect existing invoices to
+         * be changed.
+         */
+        fun allowInvoiceCreditOrVoid(allowInvoiceCreditOrVoid: Boolean) =
+            allowInvoiceCreditOrVoid(allowInvoiceCreditOrVoid as Boolean?)
+
+        /**
+         * If false, this request will fail if it would void an issued invoice or create a credit
+         * note. Consider using this as a safety mechanism if you do not expect existing invoices to
+         * be changed.
+         */
+        fun allowInvoiceCreditOrVoid(allowInvoiceCreditOrVoid: JsonField<Boolean>) = apply {
+            body.allowInvoiceCreditOrVoid(allowInvoiceCreditOrVoid)
+        }
 
         /**
          * Determines when the change takes effect. Note that if `effective_date` is specified, this

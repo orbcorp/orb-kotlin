@@ -32,10 +32,24 @@ private constructor(
     fun subscriptionId(): String = subscriptionId
 
     /**
+     * If false, this request will fail if it would void an issued invoice or create a credit note.
+     * Consider using this as a safety mechanism if you do not expect existing invoices to be
+     * changed.
+     */
+    fun allowInvoiceCreditOrVoid(): Boolean? = body.allowInvoiceCreditOrVoid()
+
+    /**
      * The date on which the phase change should take effect. If not provided, defaults to today in
      * the customer's timezone.
      */
     fun effectiveDate(): LocalDate? = body.effectiveDate()
+
+    /**
+     * If false, this request will fail if it would void an issued invoice or create a credit note.
+     * Consider using this as a safety mechanism if you do not expect existing invoices to be
+     * changed.
+     */
+    fun _allowInvoiceCreditOrVoid(): JsonField<Boolean> = body._allowInvoiceCreditOrVoid()
 
     /**
      * The date on which the phase change should take effect. If not provided, defaults to today in
@@ -66,6 +80,9 @@ private constructor(
     class SubscriptionTriggerPhaseBody
     @JsonCreator
     internal constructor(
+        @JsonProperty("allow_invoice_credit_or_void")
+        @ExcludeMissing
+        private val allowInvoiceCreditOrVoid: JsonField<Boolean> = JsonMissing.of(),
         @JsonProperty("effective_date")
         @ExcludeMissing
         private val effectiveDate: JsonField<LocalDate> = JsonMissing.of(),
@@ -74,10 +91,27 @@ private constructor(
     ) {
 
         /**
+         * If false, this request will fail if it would void an issued invoice or create a credit
+         * note. Consider using this as a safety mechanism if you do not expect existing invoices to
+         * be changed.
+         */
+        fun allowInvoiceCreditOrVoid(): Boolean? =
+            allowInvoiceCreditOrVoid.getNullable("allow_invoice_credit_or_void")
+
+        /**
          * The date on which the phase change should take effect. If not provided, defaults to today
          * in the customer's timezone.
          */
         fun effectiveDate(): LocalDate? = effectiveDate.getNullable("effective_date")
+
+        /**
+         * If false, this request will fail if it would void an issued invoice or create a credit
+         * note. Consider using this as a safety mechanism if you do not expect existing invoices to
+         * be changed.
+         */
+        @JsonProperty("allow_invoice_credit_or_void")
+        @ExcludeMissing
+        fun _allowInvoiceCreditOrVoid(): JsonField<Boolean> = allowInvoiceCreditOrVoid
 
         /**
          * The date on which the phase change should take effect. If not provided, defaults to today
@@ -98,6 +132,7 @@ private constructor(
                 return@apply
             }
 
+            allowInvoiceCreditOrVoid()
             effectiveDate()
             validated = true
         }
@@ -112,13 +147,40 @@ private constructor(
         /** A builder for [SubscriptionTriggerPhaseBody]. */
         class Builder internal constructor() {
 
+            private var allowInvoiceCreditOrVoid: JsonField<Boolean> = JsonMissing.of()
             private var effectiveDate: JsonField<LocalDate> = JsonMissing.of()
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             internal fun from(subscriptionTriggerPhaseBody: SubscriptionTriggerPhaseBody) = apply {
+                allowInvoiceCreditOrVoid = subscriptionTriggerPhaseBody.allowInvoiceCreditOrVoid
                 effectiveDate = subscriptionTriggerPhaseBody.effectiveDate
                 additionalProperties =
                     subscriptionTriggerPhaseBody.additionalProperties.toMutableMap()
+            }
+
+            /**
+             * If false, this request will fail if it would void an issued invoice or create a
+             * credit note. Consider using this as a safety mechanism if you do not expect existing
+             * invoices to be changed.
+             */
+            fun allowInvoiceCreditOrVoid(allowInvoiceCreditOrVoid: Boolean?) =
+                allowInvoiceCreditOrVoid(JsonField.ofNullable(allowInvoiceCreditOrVoid))
+
+            /**
+             * If false, this request will fail if it would void an issued invoice or create a
+             * credit note. Consider using this as a safety mechanism if you do not expect existing
+             * invoices to be changed.
+             */
+            fun allowInvoiceCreditOrVoid(allowInvoiceCreditOrVoid: Boolean) =
+                allowInvoiceCreditOrVoid(allowInvoiceCreditOrVoid as Boolean?)
+
+            /**
+             * If false, this request will fail if it would void an issued invoice or create a
+             * credit note. Consider using this as a safety mechanism if you do not expect existing
+             * invoices to be changed.
+             */
+            fun allowInvoiceCreditOrVoid(allowInvoiceCreditOrVoid: JsonField<Boolean>) = apply {
+                this.allowInvoiceCreditOrVoid = allowInvoiceCreditOrVoid
             }
 
             /**
@@ -156,7 +218,11 @@ private constructor(
             }
 
             fun build(): SubscriptionTriggerPhaseBody =
-                SubscriptionTriggerPhaseBody(effectiveDate, additionalProperties.toImmutable())
+                SubscriptionTriggerPhaseBody(
+                    allowInvoiceCreditOrVoid,
+                    effectiveDate,
+                    additionalProperties.toImmutable(),
+                )
         }
 
         override fun equals(other: Any?): Boolean {
@@ -164,17 +230,17 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is SubscriptionTriggerPhaseBody && effectiveDate == other.effectiveDate && additionalProperties == other.additionalProperties /* spotless:on */
+            return /* spotless:off */ other is SubscriptionTriggerPhaseBody && allowInvoiceCreditOrVoid == other.allowInvoiceCreditOrVoid && effectiveDate == other.effectiveDate && additionalProperties == other.additionalProperties /* spotless:on */
         }
 
         /* spotless:off */
-        private val hashCode: Int by lazy { Objects.hash(effectiveDate, additionalProperties) }
+        private val hashCode: Int by lazy { Objects.hash(allowInvoiceCreditOrVoid, effectiveDate, additionalProperties) }
         /* spotless:on */
 
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "SubscriptionTriggerPhaseBody{effectiveDate=$effectiveDate, additionalProperties=$additionalProperties}"
+            "SubscriptionTriggerPhaseBody{allowInvoiceCreditOrVoid=$allowInvoiceCreditOrVoid, effectiveDate=$effectiveDate, additionalProperties=$additionalProperties}"
     }
 
     fun toBuilder() = Builder().from(this)
@@ -202,6 +268,32 @@ private constructor(
         }
 
         fun subscriptionId(subscriptionId: String) = apply { this.subscriptionId = subscriptionId }
+
+        /**
+         * If false, this request will fail if it would void an issued invoice or create a credit
+         * note. Consider using this as a safety mechanism if you do not expect existing invoices to
+         * be changed.
+         */
+        fun allowInvoiceCreditOrVoid(allowInvoiceCreditOrVoid: Boolean?) = apply {
+            body.allowInvoiceCreditOrVoid(allowInvoiceCreditOrVoid)
+        }
+
+        /**
+         * If false, this request will fail if it would void an issued invoice or create a credit
+         * note. Consider using this as a safety mechanism if you do not expect existing invoices to
+         * be changed.
+         */
+        fun allowInvoiceCreditOrVoid(allowInvoiceCreditOrVoid: Boolean) =
+            allowInvoiceCreditOrVoid(allowInvoiceCreditOrVoid as Boolean?)
+
+        /**
+         * If false, this request will fail if it would void an issued invoice or create a credit
+         * note. Consider using this as a safety mechanism if you do not expect existing invoices to
+         * be changed.
+         */
+        fun allowInvoiceCreditOrVoid(allowInvoiceCreditOrVoid: JsonField<Boolean>) = apply {
+            body.allowInvoiceCreditOrVoid(allowInvoiceCreditOrVoid)
+        }
 
         /**
          * The date on which the phase change should take effect. If not provided, defaults to today

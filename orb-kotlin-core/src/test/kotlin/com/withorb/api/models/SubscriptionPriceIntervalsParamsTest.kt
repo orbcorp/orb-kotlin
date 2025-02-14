@@ -128,6 +128,7 @@ class SubscriptionPriceIntervalsParamsTest {
                     .endDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                     .build()
             )
+            .allowInvoiceCreditOrVoid(true)
             .addEdit(
                 SubscriptionPriceIntervalsParams.Edit.builder()
                     .priceIntervalId("sdfs6wdjvn7ujokd")
@@ -274,6 +275,7 @@ class SubscriptionPriceIntervalsParamsTest {
                         .endDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                         .build()
                 )
+                .allowInvoiceCreditOrVoid(true)
                 .addEdit(
                     SubscriptionPriceIntervalsParams.Edit.builder()
                         .priceIntervalId("sdfs6wdjvn7ujokd")
@@ -422,6 +424,7 @@ class SubscriptionPriceIntervalsParamsTest {
                         .build()
                 )
             )
+        assertThat(body.allowInvoiceCreditOrVoid()).isEqualTo(true)
         assertThat(body.edit())
             .isEqualTo(
                 listOf(
