@@ -26,10 +26,8 @@ import com.withorb.api.services.blocking.events.BackfillServiceImpl
 import com.withorb.api.services.blocking.events.VolumeService
 import com.withorb.api.services.blocking.events.VolumeServiceImpl
 
-class EventServiceImpl
-internal constructor(
-    private val clientOptions: ClientOptions,
-) : EventService {
+class EventServiceImpl internal constructor(private val clientOptions: ClientOptions) :
+    EventService {
 
     private val errorHandler: Handler<OrbError> = errorHandler(clientOptions.jsonMapper)
 
@@ -87,7 +85,7 @@ internal constructor(
      */
     override fun update(
         params: EventUpdateParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): EventUpdateResponse {
         val request =
             HttpRequest.builder()
@@ -147,7 +145,7 @@ internal constructor(
      */
     override fun deprecate(
         params: EventDeprecateParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): EventDeprecateResponse {
         val request =
             HttpRequest.builder()
@@ -360,7 +358,7 @@ internal constructor(
      */
     override fun ingest(
         params: EventIngestParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): EventIngestResponse {
         val request =
             HttpRequest.builder()
@@ -400,7 +398,7 @@ internal constructor(
      */
     override fun search(
         params: EventSearchParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): EventSearchResponse {
         val request =
             HttpRequest.builder()

@@ -31,7 +31,7 @@ interface PriceService {
      */
     fun create(
         params: PriceCreateParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): Price
 
     /**
@@ -40,7 +40,7 @@ interface PriceService {
      */
     fun update(
         params: PriceUpdateParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): Price
 
     /**
@@ -49,7 +49,7 @@ interface PriceService {
      */
     fun list(
         params: PriceListParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): PriceListPage
 
     /**
@@ -73,12 +73,12 @@ interface PriceService {
      */
     fun evaluate(
         params: PriceEvaluateParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): PriceEvaluateResponse
 
     /** This endpoint returns a price given an identifier. */
     fun fetch(
         params: PriceFetchParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): Price
 }

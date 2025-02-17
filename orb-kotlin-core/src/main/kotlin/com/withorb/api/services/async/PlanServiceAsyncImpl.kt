@@ -22,10 +22,8 @@ import com.withorb.api.models.PlanUpdateParams
 import com.withorb.api.services.async.plans.ExternalPlanIdServiceAsync
 import com.withorb.api.services.async.plans.ExternalPlanIdServiceAsyncImpl
 
-class PlanServiceAsyncImpl
-internal constructor(
-    private val clientOptions: ClientOptions,
-) : PlanServiceAsync {
+class PlanServiceAsyncImpl internal constructor(private val clientOptions: ClientOptions) :
+    PlanServiceAsync {
 
     private val errorHandler: Handler<OrbError> = errorHandler(clientOptions.jsonMapper)
 
@@ -96,7 +94,7 @@ internal constructor(
      */
     override suspend fun list(
         params: PlanListParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): PlanListPageAsync {
         val request =
             HttpRequest.builder()

@@ -15,10 +15,8 @@ import com.withorb.api.errors.OrbError
 import com.withorb.api.models.TopLevelPingParams
 import com.withorb.api.models.TopLevelPingResponse
 
-class TopLevelServiceImpl
-internal constructor(
-    private val clientOptions: ClientOptions,
-) : TopLevelService {
+class TopLevelServiceImpl internal constructor(private val clientOptions: ClientOptions) :
+    TopLevelService {
 
     private val errorHandler: Handler<OrbError> = errorHandler(clientOptions.jsonMapper)
 
@@ -35,7 +33,7 @@ internal constructor(
      */
     override fun ping(
         params: TopLevelPingParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): TopLevelPingResponse {
         val request =
             HttpRequest.builder()

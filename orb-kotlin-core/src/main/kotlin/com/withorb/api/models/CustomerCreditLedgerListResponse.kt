@@ -276,7 +276,7 @@ private constructor(
                         ?.let {
                             return CustomerCreditLedgerListResponse(
                                 incrementLedgerEntry = it,
-                                _json = json
+                                _json = json,
                             )
                         }
                 }
@@ -285,7 +285,7 @@ private constructor(
                         ?.let {
                             return CustomerCreditLedgerListResponse(
                                 decrementLedgerEntry = it,
-                                _json = json
+                                _json = json,
                             )
                         }
                 }
@@ -296,7 +296,7 @@ private constructor(
                         ?.let {
                             return CustomerCreditLedgerListResponse(
                                 expirationChangeLedgerEntry = it,
-                                _json = json
+                                _json = json,
                             )
                         }
                 }
@@ -307,7 +307,7 @@ private constructor(
                         ?.let {
                             return CustomerCreditLedgerListResponse(
                                 creditBlockExpiryLedgerEntry = it,
-                                _json = json
+                                _json = json,
                             )
                         }
                 }
@@ -316,7 +316,7 @@ private constructor(
                         ?.let {
                             return CustomerCreditLedgerListResponse(
                                 voidLedgerEntry = it,
-                                _json = json
+                                _json = json,
                             )
                         }
                 }
@@ -327,7 +327,7 @@ private constructor(
                         ?.let {
                             return CustomerCreditLedgerListResponse(
                                 voidInitiatedLedgerEntry = it,
-                                _json = json
+                                _json = json,
                             )
                         }
                 }
@@ -336,7 +336,7 @@ private constructor(
                         ?.let {
                             return CustomerCreditLedgerListResponse(
                                 amendmentLedgerEntry = it,
-                                _json = json
+                                _json = json,
                             )
                         }
                 }
@@ -352,7 +352,7 @@ private constructor(
         override fun serialize(
             value: CustomerCreditLedgerListResponse,
             generator: JsonGenerator,
-            provider: SerializerProvider
+            provider: SerializerProvider,
         ) {
             when {
                 value.incrementLedgerEntry != null ->
@@ -942,11 +942,8 @@ private constructor(
                 "Customer{id=$id, externalCustomerId=$externalCustomerId, additionalProperties=$additionalProperties}"
         }
 
-        class EntryStatus
-        @JsonCreator
-        private constructor(
-            private val value: JsonField<String>,
-        ) : Enum {
+        class EntryStatus @JsonCreator private constructor(private val value: JsonField<String>) :
+            Enum {
 
             /**
              * Returns this class instance's raw value.
@@ -1037,11 +1034,8 @@ private constructor(
             override fun toString() = value.toString()
         }
 
-        class EntryType
-        @JsonCreator
-        private constructor(
-            private val value: JsonField<String>,
-        ) : Enum {
+        class EntryType @JsonCreator private constructor(private val value: JsonField<String>) :
+            Enum {
 
             /**
              * Returns this class instance's raw value.
@@ -1062,7 +1056,7 @@ private constructor(
 
             /** An enum containing [EntryType]'s known values. */
             enum class Known {
-                INCREMENT,
+                INCREMENT
             }
 
             /**
@@ -1136,7 +1130,7 @@ private constructor(
         @JsonCreator
         private constructor(
             @JsonAnySetter
-            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap()
         ) {
 
             @JsonAnyGetter
@@ -1842,11 +1836,8 @@ private constructor(
                 "Customer{id=$id, externalCustomerId=$externalCustomerId, additionalProperties=$additionalProperties}"
         }
 
-        class EntryStatus
-        @JsonCreator
-        private constructor(
-            private val value: JsonField<String>,
-        ) : Enum {
+        class EntryStatus @JsonCreator private constructor(private val value: JsonField<String>) :
+            Enum {
 
             /**
              * Returns this class instance's raw value.
@@ -1937,11 +1928,8 @@ private constructor(
             override fun toString() = value.toString()
         }
 
-        class EntryType
-        @JsonCreator
-        private constructor(
-            private val value: JsonField<String>,
-        ) : Enum {
+        class EntryType @JsonCreator private constructor(private val value: JsonField<String>) :
+            Enum {
 
             /**
              * Returns this class instance's raw value.
@@ -1962,7 +1950,7 @@ private constructor(
 
             /** An enum containing [EntryType]'s known values. */
             enum class Known {
-                DECREMENT,
+                DECREMENT
             }
 
             /**
@@ -2036,7 +2024,7 @@ private constructor(
         @JsonCreator
         private constructor(
             @JsonAnySetter
-            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap()
         ) {
 
             @JsonAnyGetter
@@ -2719,11 +2707,8 @@ private constructor(
                 "Customer{id=$id, externalCustomerId=$externalCustomerId, additionalProperties=$additionalProperties}"
         }
 
-        class EntryStatus
-        @JsonCreator
-        private constructor(
-            private val value: JsonField<String>,
-        ) : Enum {
+        class EntryStatus @JsonCreator private constructor(private val value: JsonField<String>) :
+            Enum {
 
             /**
              * Returns this class instance's raw value.
@@ -2814,11 +2799,8 @@ private constructor(
             override fun toString() = value.toString()
         }
 
-        class EntryType
-        @JsonCreator
-        private constructor(
-            private val value: JsonField<String>,
-        ) : Enum {
+        class EntryType @JsonCreator private constructor(private val value: JsonField<String>) :
+            Enum {
 
             /**
              * Returns this class instance's raw value.
@@ -2839,7 +2821,7 @@ private constructor(
 
             /** An enum containing [EntryType]'s known values. */
             enum class Known {
-                EXPIRATION_CHANGE,
+                EXPIRATION_CHANGE
             }
 
             /**
@@ -2913,7 +2895,7 @@ private constructor(
         @JsonCreator
         private constructor(
             @JsonAnySetter
-            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap()
         ) {
 
             @JsonAnyGetter
@@ -3575,11 +3557,8 @@ private constructor(
                 "Customer{id=$id, externalCustomerId=$externalCustomerId, additionalProperties=$additionalProperties}"
         }
 
-        class EntryStatus
-        @JsonCreator
-        private constructor(
-            private val value: JsonField<String>,
-        ) : Enum {
+        class EntryStatus @JsonCreator private constructor(private val value: JsonField<String>) :
+            Enum {
 
             /**
              * Returns this class instance's raw value.
@@ -3670,11 +3649,8 @@ private constructor(
             override fun toString() = value.toString()
         }
 
-        class EntryType
-        @JsonCreator
-        private constructor(
-            private val value: JsonField<String>,
-        ) : Enum {
+        class EntryType @JsonCreator private constructor(private val value: JsonField<String>) :
+            Enum {
 
             /**
              * Returns this class instance's raw value.
@@ -3695,7 +3671,7 @@ private constructor(
 
             /** An enum containing [EntryType]'s known values. */
             enum class Known {
-                CREDIT_BLOCK_EXPIRY,
+                CREDIT_BLOCK_EXPIRY
             }
 
             /**
@@ -3769,7 +3745,7 @@ private constructor(
         @JsonCreator
         private constructor(
             @JsonAnySetter
-            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap()
         ) {
 
             @JsonAnyGetter
@@ -4464,11 +4440,8 @@ private constructor(
                 "Customer{id=$id, externalCustomerId=$externalCustomerId, additionalProperties=$additionalProperties}"
         }
 
-        class EntryStatus
-        @JsonCreator
-        private constructor(
-            private val value: JsonField<String>,
-        ) : Enum {
+        class EntryStatus @JsonCreator private constructor(private val value: JsonField<String>) :
+            Enum {
 
             /**
              * Returns this class instance's raw value.
@@ -4559,11 +4532,8 @@ private constructor(
             override fun toString() = value.toString()
         }
 
-        class EntryType
-        @JsonCreator
-        private constructor(
-            private val value: JsonField<String>,
-        ) : Enum {
+        class EntryType @JsonCreator private constructor(private val value: JsonField<String>) :
+            Enum {
 
             /**
              * Returns this class instance's raw value.
@@ -4584,7 +4554,7 @@ private constructor(
 
             /** An enum containing [EntryType]'s known values. */
             enum class Known {
-                VOID,
+                VOID
             }
 
             /**
@@ -4658,7 +4628,7 @@ private constructor(
         @JsonCreator
         private constructor(
             @JsonAnySetter
-            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap()
         ) {
 
             @JsonAnyGetter
@@ -5374,11 +5344,8 @@ private constructor(
                 "Customer{id=$id, externalCustomerId=$externalCustomerId, additionalProperties=$additionalProperties}"
         }
 
-        class EntryStatus
-        @JsonCreator
-        private constructor(
-            private val value: JsonField<String>,
-        ) : Enum {
+        class EntryStatus @JsonCreator private constructor(private val value: JsonField<String>) :
+            Enum {
 
             /**
              * Returns this class instance's raw value.
@@ -5469,11 +5436,8 @@ private constructor(
             override fun toString() = value.toString()
         }
 
-        class EntryType
-        @JsonCreator
-        private constructor(
-            private val value: JsonField<String>,
-        ) : Enum {
+        class EntryType @JsonCreator private constructor(private val value: JsonField<String>) :
+            Enum {
 
             /**
              * Returns this class instance's raw value.
@@ -5494,7 +5458,7 @@ private constructor(
 
             /** An enum containing [EntryType]'s known values. */
             enum class Known {
-                VOID_INITIATED,
+                VOID_INITIATED
             }
 
             /**
@@ -5568,7 +5532,7 @@ private constructor(
         @JsonCreator
         private constructor(
             @JsonAnySetter
-            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap()
         ) {
 
             @JsonAnyGetter
@@ -6229,11 +6193,8 @@ private constructor(
                 "Customer{id=$id, externalCustomerId=$externalCustomerId, additionalProperties=$additionalProperties}"
         }
 
-        class EntryStatus
-        @JsonCreator
-        private constructor(
-            private val value: JsonField<String>,
-        ) : Enum {
+        class EntryStatus @JsonCreator private constructor(private val value: JsonField<String>) :
+            Enum {
 
             /**
              * Returns this class instance's raw value.
@@ -6324,11 +6285,8 @@ private constructor(
             override fun toString() = value.toString()
         }
 
-        class EntryType
-        @JsonCreator
-        private constructor(
-            private val value: JsonField<String>,
-        ) : Enum {
+        class EntryType @JsonCreator private constructor(private val value: JsonField<String>) :
+            Enum {
 
             /**
              * Returns this class instance's raw value.
@@ -6349,7 +6307,7 @@ private constructor(
 
             /** An enum containing [EntryType]'s known values. */
             enum class Known {
-                AMENDMENT,
+                AMENDMENT
             }
 
             /**
@@ -6423,7 +6381,7 @@ private constructor(
         @JsonCreator
         private constructor(
             @JsonAnySetter
-            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap()
         ) {
 
             @JsonAnyGetter

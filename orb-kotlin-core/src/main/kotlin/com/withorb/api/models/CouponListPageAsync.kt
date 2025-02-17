@@ -79,11 +79,7 @@ private constructor(
     companion object {
 
         fun of(couponsService: CouponServiceAsync, params: CouponListParams, response: Response) =
-            CouponListPageAsync(
-                couponsService,
-                params,
-                response,
-            )
+            CouponListPageAsync(couponsService, params, response)
     }
 
     @NoAutoDetect
@@ -170,18 +166,11 @@ private constructor(
                 this.additionalProperties.put(key, value)
             }
 
-            fun build() =
-                Response(
-                    data,
-                    paginationMetadata,
-                    additionalProperties.toImmutable(),
-                )
+            fun build() = Response(data, paginationMetadata, additionalProperties.toImmutable())
         }
     }
 
-    class AutoPager(
-        private val firstPage: CouponListPageAsync,
-    ) : Flow<Coupon> {
+    class AutoPager(private val firstPage: CouponListPageAsync) : Flow<Coupon> {
 
         override suspend fun collect(collector: FlowCollector<Coupon>) {
             var page = firstPage

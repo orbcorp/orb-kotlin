@@ -24,10 +24,8 @@ import com.withorb.api.models.AlertListParams
 import com.withorb.api.models.AlertRetrieveParams
 import com.withorb.api.models.AlertUpdateParams
 
-class AlertServiceImpl
-internal constructor(
-    private val clientOptions: ClientOptions,
-) : AlertService {
+class AlertServiceImpl internal constructor(private val clientOptions: ClientOptions) :
+    AlertService {
 
     private val errorHandler: Handler<OrbError> = errorHandler(clientOptions.jsonMapper)
 
@@ -119,7 +117,7 @@ internal constructor(
      */
     override fun createForCustomer(
         params: AlertCreateForCustomerParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): Alert {
         val request =
             HttpRequest.builder()
@@ -151,7 +149,7 @@ internal constructor(
      */
     override fun createForExternalCustomer(
         params: AlertCreateForExternalCustomerParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): Alert {
         val request =
             HttpRequest.builder()
@@ -187,7 +185,7 @@ internal constructor(
      */
     override fun createForSubscription(
         params: AlertCreateForSubscriptionParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): Alert {
         val request =
             HttpRequest.builder()

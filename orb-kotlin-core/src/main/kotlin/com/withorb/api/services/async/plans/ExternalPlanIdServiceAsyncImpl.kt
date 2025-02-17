@@ -18,9 +18,7 @@ import com.withorb.api.models.PlanExternalPlanIdFetchParams
 import com.withorb.api.models.PlanExternalPlanIdUpdateParams
 
 class ExternalPlanIdServiceAsyncImpl
-internal constructor(
-    private val clientOptions: ClientOptions,
-) : ExternalPlanIdServiceAsync {
+internal constructor(private val clientOptions: ClientOptions) : ExternalPlanIdServiceAsync {
 
     private val errorHandler: Handler<OrbError> = errorHandler(clientOptions.jsonMapper)
 
@@ -35,7 +33,7 @@ internal constructor(
      */
     override suspend fun update(
         params: PlanExternalPlanIdUpdateParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): Plan {
         val request =
             HttpRequest.builder()
@@ -76,7 +74,7 @@ internal constructor(
      */
     override suspend fun fetch(
         params: PlanExternalPlanIdFetchParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): Plan {
         val request =
             HttpRequest.builder()

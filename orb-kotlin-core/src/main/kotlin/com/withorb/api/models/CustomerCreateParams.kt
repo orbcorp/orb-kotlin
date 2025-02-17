@@ -2492,7 +2492,7 @@ private constructor(
     @JsonCreator
     private constructor(
         @JsonAnySetter
-        private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
+        private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap()
     ) {
 
         @JsonAnyGetter
@@ -2568,11 +2568,8 @@ private constructor(
      * This is used for creating charges or invoices in an external system via Orb. When not in test
      * mode, the connection must first be configured in the Orb webapp.
      */
-    class PaymentProvider
-    @JsonCreator
-    private constructor(
-        private val value: JsonField<String>,
-    ) : Enum {
+    class PaymentProvider @JsonCreator private constructor(private val value: JsonField<String>) :
+        Enum {
 
         /**
          * Returns this class instance's raw value.
@@ -2754,7 +2751,7 @@ private constructor(
             fun build(): ReportingConfiguration =
                 ReportingConfiguration(
                     checkRequired("exempt", exempt),
-                    additionalProperties.toImmutable()
+                    additionalProperties.toImmutable(),
                 )
         }
 
@@ -3087,7 +3084,7 @@ private constructor(
             override fun serialize(
                 value: TaxConfiguration,
                 generator: JsonGenerator,
-                provider: SerializerProvider
+                provider: SerializerProvider,
             ) {
                 when {
                     value.newAvalara != null -> generator.writeObject(value.newAvalara)
@@ -3223,9 +3220,7 @@ private constructor(
 
             class TaxProvider
             @JsonCreator
-            private constructor(
-                private val value: JsonField<String>,
-            ) : Enum {
+            private constructor(private val value: JsonField<String>) : Enum {
 
                 /**
                  * Returns this class instance's raw value.
@@ -3246,7 +3241,7 @@ private constructor(
 
                 /** An enum containing [TaxProvider]'s known values. */
                 enum class Known {
-                    AVALARA,
+                    AVALARA
                 }
 
                 /**
@@ -3433,9 +3428,7 @@ private constructor(
 
             class TaxProvider
             @JsonCreator
-            private constructor(
-                private val value: JsonField<String>,
-            ) : Enum {
+            private constructor(private val value: JsonField<String>) : Enum {
 
                 /**
                  * Returns this class instance's raw value.
@@ -3456,7 +3449,7 @@ private constructor(
 
                 /** An enum containing [TaxProvider]'s known values. */
                 enum class Known {
-                    TAXJAR,
+                    TAXJAR
                 }
 
                 /**
@@ -3751,11 +3744,8 @@ private constructor(
                 )
         }
 
-        class Country
-        @JsonCreator
-        private constructor(
-            private val value: JsonField<String>,
-        ) : Enum {
+        class Country @JsonCreator private constructor(private val value: JsonField<String>) :
+            Enum {
 
             /**
              * Returns this class instance's raw value.
@@ -4301,11 +4291,7 @@ private constructor(
             override fun toString() = value.toString()
         }
 
-        class Type
-        @JsonCreator
-        private constructor(
-            private val value: JsonField<String>,
-        ) : Enum {
+        class Type @JsonCreator private constructor(private val value: JsonField<String>) : Enum {
 
             /**
              * Returns this class instance's raw value.

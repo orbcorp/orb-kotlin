@@ -17,9 +17,7 @@ import com.withorb.api.models.InvoiceLineItemCreateParams
 import com.withorb.api.models.InvoiceLineItemCreateResponse
 
 class InvoiceLineItemServiceAsyncImpl
-internal constructor(
-    private val clientOptions: ClientOptions,
-) : InvoiceLineItemServiceAsync {
+internal constructor(private val clientOptions: ClientOptions) : InvoiceLineItemServiceAsync {
 
     private val errorHandler: Handler<OrbError> = errorHandler(clientOptions.jsonMapper)
 
@@ -33,7 +31,7 @@ internal constructor(
      */
     override suspend fun create(
         params: InvoiceLineItemCreateParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): InvoiceLineItemCreateResponse {
         val request =
             HttpRequest.builder()

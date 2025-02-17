@@ -210,11 +210,7 @@ private constructor(
             }
 
             fun build(): PlanUpdateBody =
-                PlanUpdateBody(
-                    externalPlanId,
-                    metadata,
-                    additionalProperties.toImmutable(),
-                )
+                PlanUpdateBody(externalPlanId, metadata, additionalProperties.toImmutable())
         }
 
         override fun equals(other: Any?): Boolean {
@@ -426,7 +422,7 @@ private constructor(
     @JsonCreator
     private constructor(
         @JsonAnySetter
-        private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
+        private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap()
     ) {
 
         @JsonAnyGetter

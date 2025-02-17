@@ -24,10 +24,8 @@ import com.withorb.api.models.PriceUpdateParams
 import com.withorb.api.services.async.prices.ExternalPriceIdServiceAsync
 import com.withorb.api.services.async.prices.ExternalPriceIdServiceAsyncImpl
 
-class PriceServiceAsyncImpl
-internal constructor(
-    private val clientOptions: ClientOptions,
-) : PriceServiceAsync {
+class PriceServiceAsyncImpl internal constructor(private val clientOptions: ClientOptions) :
+    PriceServiceAsync {
 
     private val errorHandler: Handler<OrbError> = errorHandler(clientOptions.jsonMapper)
 
@@ -105,7 +103,7 @@ internal constructor(
      */
     override suspend fun list(
         params: PriceListParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): PriceListPageAsync {
         val request =
             HttpRequest.builder()
@@ -148,7 +146,7 @@ internal constructor(
      */
     override suspend fun evaluate(
         params: PriceEvaluateParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): PriceEvaluateResponse {
         val request =
             HttpRequest.builder()

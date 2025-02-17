@@ -24,10 +24,8 @@ import com.withorb.api.models.PriceUpdateParams
 import com.withorb.api.services.blocking.prices.ExternalPriceIdService
 import com.withorb.api.services.blocking.prices.ExternalPriceIdServiceImpl
 
-class PriceServiceImpl
-internal constructor(
-    private val clientOptions: ClientOptions,
-) : PriceService {
+class PriceServiceImpl internal constructor(private val clientOptions: ClientOptions) :
+    PriceService {
 
     private val errorHandler: Handler<OrbError> = errorHandler(clientOptions.jsonMapper)
 
@@ -144,7 +142,7 @@ internal constructor(
      */
     override fun evaluate(
         params: PriceEvaluateParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): PriceEvaluateResponse {
         val request =
             HttpRequest.builder()

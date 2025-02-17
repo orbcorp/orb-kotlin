@@ -19,7 +19,7 @@ interface MetricServiceAsync {
      */
     suspend fun create(
         params: MetricCreateParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): BillableMetric
 
     /**
@@ -28,7 +28,7 @@ interface MetricServiceAsync {
      */
     suspend fun update(
         params: MetricUpdateParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): BillableMetric
 
     /**
@@ -38,7 +38,7 @@ interface MetricServiceAsync {
      */
     suspend fun list(
         params: MetricListParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): MetricListPageAsync
 
     /**
@@ -47,6 +47,6 @@ interface MetricServiceAsync {
      */
     suspend fun fetch(
         params: MetricFetchParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): BillableMetric
 }

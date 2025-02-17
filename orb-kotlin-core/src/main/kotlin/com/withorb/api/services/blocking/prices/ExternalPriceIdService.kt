@@ -15,7 +15,7 @@ interface ExternalPriceIdService {
      */
     fun update(
         params: PriceExternalPriceIdUpdateParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): Price
 
     /**
@@ -25,6 +25,6 @@ interface ExternalPriceIdService {
      */
     fun fetch(
         params: PriceExternalPriceIdFetchParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): Price
 }

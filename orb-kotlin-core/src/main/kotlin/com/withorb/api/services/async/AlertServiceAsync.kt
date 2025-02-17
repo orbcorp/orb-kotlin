@@ -19,13 +19,13 @@ interface AlertServiceAsync {
     /** This endpoint retrieves an alert by its ID. */
     suspend fun retrieve(
         params: AlertRetrieveParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): Alert
 
     /** This endpoint updates the thresholds of an alert. */
     suspend fun update(
         params: AlertUpdateParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): Alert
 
     /**
@@ -41,7 +41,7 @@ interface AlertServiceAsync {
      */
     suspend fun list(
         params: AlertListParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): AlertListPageAsync
 
     /**
@@ -54,7 +54,7 @@ interface AlertServiceAsync {
      */
     suspend fun createForCustomer(
         params: AlertCreateForCustomerParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): Alert
 
     /**
@@ -67,7 +67,7 @@ interface AlertServiceAsync {
      */
     suspend fun createForExternalCustomer(
         params: AlertCreateForExternalCustomerParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): Alert
 
     /**
@@ -84,7 +84,7 @@ interface AlertServiceAsync {
      */
     suspend fun createForSubscription(
         params: AlertCreateForSubscriptionParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): Alert
 
     /**
@@ -94,7 +94,7 @@ interface AlertServiceAsync {
      */
     suspend fun disable(
         params: AlertDisableParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): Alert
 
     /**
@@ -104,6 +104,6 @@ interface AlertServiceAsync {
      */
     suspend fun enable(
         params: AlertEnableParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): Alert
 }

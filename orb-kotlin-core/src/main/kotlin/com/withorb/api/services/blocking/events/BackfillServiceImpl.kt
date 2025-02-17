@@ -24,10 +24,8 @@ import com.withorb.api.models.EventBackfillListParams
 import com.withorb.api.models.EventBackfillRevertParams
 import com.withorb.api.models.EventBackfillRevertResponse
 
-class BackfillServiceImpl
-internal constructor(
-    private val clientOptions: ClientOptions,
-) : BackfillService {
+class BackfillServiceImpl internal constructor(private val clientOptions: ClientOptions) :
+    BackfillService {
 
     private val errorHandler: Handler<OrbError> = errorHandler(clientOptions.jsonMapper)
 
@@ -67,7 +65,7 @@ internal constructor(
      */
     override fun create(
         params: EventBackfillCreateParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): EventBackfillCreateResponse {
         val request =
             HttpRequest.builder()
@@ -100,7 +98,7 @@ internal constructor(
      */
     override fun list(
         params: EventBackfillListParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): EventBackfillListPage {
         val request =
             HttpRequest.builder()
@@ -130,7 +128,7 @@ internal constructor(
      */
     override fun close(
         params: EventBackfillCloseParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): EventBackfillCloseResponse {
         val request =
             HttpRequest.builder()
@@ -156,7 +154,7 @@ internal constructor(
     /** This endpoint is used to fetch a backfill given an identifier. */
     override fun fetch(
         params: EventBackfillFetchParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): EventBackfillFetchResponse {
         val request =
             HttpRequest.builder()
@@ -188,7 +186,7 @@ internal constructor(
      */
     override fun revert(
         params: EventBackfillRevertParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): EventBackfillRevertResponse {
         val request =
             HttpRequest.builder()

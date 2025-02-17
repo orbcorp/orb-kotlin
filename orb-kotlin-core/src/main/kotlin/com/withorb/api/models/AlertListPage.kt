@@ -81,11 +81,7 @@ private constructor(
     companion object {
 
         fun of(alertsService: AlertService, params: AlertListParams, response: Response) =
-            AlertListPage(
-                alertsService,
-                params,
-                response,
-            )
+            AlertListPage(alertsService, params, response)
     }
 
     @NoAutoDetect
@@ -172,18 +168,11 @@ private constructor(
                 this.additionalProperties.put(key, value)
             }
 
-            fun build() =
-                Response(
-                    data,
-                    paginationMetadata,
-                    additionalProperties.toImmutable(),
-                )
+            fun build() = Response(data, paginationMetadata, additionalProperties.toImmutable())
         }
     }
 
-    class AutoPager(
-        private val firstPage: AlertListPage,
-    ) : Sequence<Alert> {
+    class AutoPager(private val firstPage: AlertListPage) : Sequence<Alert> {
 
         override fun iterator(): Iterator<Alert> = iterator {
             var page = firstPage

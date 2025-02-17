@@ -420,60 +420,60 @@ private constructor(
                     "increment" -> {
                         tryDeserialize(
                                 node,
-                                jacksonTypeRef<AddIncrementCreditLedgerEntryRequestParams>()
+                                jacksonTypeRef<AddIncrementCreditLedgerEntryRequestParams>(),
                             )
                             ?.let {
                                 return CustomerCreditLedgerCreateEntryBody(
                                     addIncrementCreditLedgerEntryRequestParams = it,
-                                    _json = json
+                                    _json = json,
                                 )
                             }
                     }
                     "decrement" -> {
                         tryDeserialize(
                                 node,
-                                jacksonTypeRef<AddDecrementCreditLedgerEntryRequestParams>()
+                                jacksonTypeRef<AddDecrementCreditLedgerEntryRequestParams>(),
                             )
                             ?.let {
                                 return CustomerCreditLedgerCreateEntryBody(
                                     addDecrementCreditLedgerEntryRequestParams = it,
-                                    _json = json
+                                    _json = json,
                                 )
                             }
                     }
                     "expiration_change" -> {
                         tryDeserialize(
                                 node,
-                                jacksonTypeRef<AddExpirationChangeCreditLedgerEntryRequestParams>()
+                                jacksonTypeRef<AddExpirationChangeCreditLedgerEntryRequestParams>(),
                             )
                             ?.let {
                                 return CustomerCreditLedgerCreateEntryBody(
                                     addExpirationChangeCreditLedgerEntryRequestParams = it,
-                                    _json = json
+                                    _json = json,
                                 )
                             }
                     }
                     "void" -> {
                         tryDeserialize(
                                 node,
-                                jacksonTypeRef<AddVoidCreditLedgerEntryRequestParams>()
+                                jacksonTypeRef<AddVoidCreditLedgerEntryRequestParams>(),
                             )
                             ?.let {
                                 return CustomerCreditLedgerCreateEntryBody(
                                     addVoidCreditLedgerEntryRequestParams = it,
-                                    _json = json
+                                    _json = json,
                                 )
                             }
                     }
                     "amendment" -> {
                         tryDeserialize(
                                 node,
-                                jacksonTypeRef<AddAmendmentCreditLedgerEntryRequestParams>()
+                                jacksonTypeRef<AddAmendmentCreditLedgerEntryRequestParams>(),
                             )
                             ?.let {
                                 return CustomerCreditLedgerCreateEntryBody(
                                     addAmendmentCreditLedgerEntryRequestParams = it,
-                                    _json = json
+                                    _json = json,
                                 )
                             }
                     }
@@ -491,7 +491,7 @@ private constructor(
             override fun serialize(
                 value: CustomerCreditLedgerCreateEntryBody,
                 generator: JsonGenerator,
-                provider: SerializerProvider
+                provider: SerializerProvider,
             ) {
                 when {
                     value.addIncrementCreditLedgerEntryRequestParams != null ->
@@ -1052,11 +1052,8 @@ private constructor(
                 )
         }
 
-        class EntryType
-        @JsonCreator
-        private constructor(
-            private val value: JsonField<String>,
-        ) : Enum {
+        class EntryType @JsonCreator private constructor(private val value: JsonField<String>) :
+            Enum {
 
             /**
              * Returns this class instance's raw value.
@@ -1077,7 +1074,7 @@ private constructor(
 
             /** An enum containing [EntryType]'s known values. */
             enum class Known {
-                INCREMENT,
+                INCREMENT
             }
 
             /**
@@ -1365,7 +1362,7 @@ private constructor(
         @JsonCreator
         private constructor(
             @JsonAnySetter
-            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap()
         ) {
 
             @JsonAnyGetter
@@ -1678,11 +1675,8 @@ private constructor(
                 )
         }
 
-        class EntryType
-        @JsonCreator
-        private constructor(
-            private val value: JsonField<String>,
-        ) : Enum {
+        class EntryType @JsonCreator private constructor(private val value: JsonField<String>) :
+            Enum {
 
             /**
              * Returns this class instance's raw value.
@@ -1703,7 +1697,7 @@ private constructor(
 
             /** An enum containing [EntryType]'s known values. */
             enum class Known {
-                DECREMENT,
+                DECREMENT
             }
 
             /**
@@ -1777,7 +1771,7 @@ private constructor(
         @JsonCreator
         private constructor(
             @JsonAnySetter
-            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap()
         ) {
 
             @JsonAnyGetter
@@ -2189,11 +2183,8 @@ private constructor(
                 )
         }
 
-        class EntryType
-        @JsonCreator
-        private constructor(
-            private val value: JsonField<String>,
-        ) : Enum {
+        class EntryType @JsonCreator private constructor(private val value: JsonField<String>) :
+            Enum {
 
             /**
              * Returns this class instance's raw value.
@@ -2214,7 +2205,7 @@ private constructor(
 
             /** An enum containing [EntryType]'s known values. */
             enum class Known {
-                EXPIRATION_CHANGE,
+                EXPIRATION_CHANGE
             }
 
             /**
@@ -2288,7 +2279,7 @@ private constructor(
         @JsonCreator
         private constructor(
             @JsonAnySetter
-            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap()
         ) {
 
             @JsonAnyGetter
@@ -2642,11 +2633,8 @@ private constructor(
                 )
         }
 
-        class EntryType
-        @JsonCreator
-        private constructor(
-            private val value: JsonField<String>,
-        ) : Enum {
+        class EntryType @JsonCreator private constructor(private val value: JsonField<String>) :
+            Enum {
 
             /**
              * Returns this class instance's raw value.
@@ -2667,7 +2655,7 @@ private constructor(
 
             /** An enum containing [EntryType]'s known values. */
             enum class Known {
-                VOID,
+                VOID
             }
 
             /**
@@ -2741,7 +2729,7 @@ private constructor(
         @JsonCreator
         private constructor(
             @JsonAnySetter
-            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap()
         ) {
 
             @JsonAnyGetter
@@ -2817,11 +2805,8 @@ private constructor(
         }
 
         /** Can only be specified when `entry_type=void`. The reason for the void. */
-        class VoidReason
-        @JsonCreator
-        private constructor(
-            private val value: JsonField<String>,
-        ) : Enum {
+        class VoidReason @JsonCreator private constructor(private val value: JsonField<String>) :
+            Enum {
 
             /**
              * Returns this class instance's raw value.
@@ -2842,7 +2827,7 @@ private constructor(
 
             /** An enum containing [VoidReason]'s known values. */
             enum class Known {
-                REFUND,
+                REFUND
             }
 
             /**
@@ -3163,11 +3148,8 @@ private constructor(
                 )
         }
 
-        class EntryType
-        @JsonCreator
-        private constructor(
-            private val value: JsonField<String>,
-        ) : Enum {
+        class EntryType @JsonCreator private constructor(private val value: JsonField<String>) :
+            Enum {
 
             /**
              * Returns this class instance's raw value.
@@ -3188,7 +3170,7 @@ private constructor(
 
             /** An enum containing [EntryType]'s known values. */
             enum class Known {
-                AMENDMENT,
+                AMENDMENT
             }
 
             /**
@@ -3262,7 +3244,7 @@ private constructor(
         @JsonCreator
         private constructor(
             @JsonAnySetter
-            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap()
         ) {
 
             @JsonAnyGetter

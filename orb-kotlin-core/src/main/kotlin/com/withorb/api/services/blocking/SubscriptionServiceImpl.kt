@@ -45,10 +45,8 @@ import com.withorb.api.models.SubscriptionUpdateTrialParams
 import com.withorb.api.models.SubscriptionUpdateTrialResponse
 import com.withorb.api.models.SubscriptionUsage
 
-class SubscriptionServiceImpl
-internal constructor(
-    private val clientOptions: ClientOptions,
-) : SubscriptionService {
+class SubscriptionServiceImpl internal constructor(private val clientOptions: ClientOptions) :
+    SubscriptionService {
 
     private val errorHandler: Handler<OrbError> = errorHandler(clientOptions.jsonMapper)
 
@@ -296,7 +294,7 @@ internal constructor(
      */
     override fun create(
         params: SubscriptionCreateParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): SubscriptionCreateResponse {
         val request =
             HttpRequest.builder()
@@ -324,7 +322,7 @@ internal constructor(
      */
     override fun update(
         params: SubscriptionUpdateParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): Subscription {
         val request =
             HttpRequest.builder()
@@ -359,7 +357,7 @@ internal constructor(
      */
     override fun list(
         params: SubscriptionListParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): SubscriptionListPage {
         val request =
             HttpRequest.builder()
@@ -437,7 +435,7 @@ internal constructor(
      */
     override fun cancel(
         params: SubscriptionCancelParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): SubscriptionCancelResponse {
         val request =
             HttpRequest.builder()
@@ -465,7 +463,7 @@ internal constructor(
      */
     override fun fetch(
         params: SubscriptionFetchParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): Subscription {
         val request =
             HttpRequest.builder()
@@ -500,7 +498,7 @@ internal constructor(
      */
     override fun fetchCosts(
         params: SubscriptionFetchCostsParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): SubscriptionFetchCostsResponse {
         val request =
             HttpRequest.builder()
@@ -529,7 +527,7 @@ internal constructor(
      */
     override fun fetchSchedule(
         params: SubscriptionFetchScheduleParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): SubscriptionFetchSchedulePage {
         val request =
             HttpRequest.builder()
@@ -730,7 +728,7 @@ internal constructor(
      */
     override fun fetchUsage(
         params: SubscriptionFetchUsageParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): SubscriptionUsage {
         val request =
             HttpRequest.builder()
@@ -821,7 +819,7 @@ internal constructor(
      */
     override fun priceIntervals(
         params: SubscriptionPriceIntervalsParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): SubscriptionPriceIntervalsResponse {
         val request =
             HttpRequest.builder()
@@ -1012,7 +1010,7 @@ internal constructor(
      */
     override fun schedulePlanChange(
         params: SubscriptionSchedulePlanChangeParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): SubscriptionSchedulePlanChangeResponse {
         val request =
             HttpRequest.builder()
@@ -1040,7 +1038,7 @@ internal constructor(
      */
     override fun triggerPhase(
         params: SubscriptionTriggerPhaseParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): SubscriptionTriggerPhaseResponse {
         val request =
             HttpRequest.builder()
@@ -1072,7 +1070,7 @@ internal constructor(
      */
     override fun unscheduleCancellation(
         params: SubscriptionUnscheduleCancellationParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): SubscriptionUnscheduleCancellationResponse {
         val request =
             HttpRequest.builder()
@@ -1104,7 +1102,7 @@ internal constructor(
      */
     override fun unscheduleFixedFeeQuantityUpdates(
         params: SubscriptionUnscheduleFixedFeeQuantityUpdatesParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): SubscriptionUnscheduleFixedFeeQuantityUpdatesResponse {
         val request =
             HttpRequest.builder()
@@ -1112,7 +1110,7 @@ internal constructor(
                 .addPathSegments(
                     "subscriptions",
                     params.getPathParam(0),
-                    "unschedule_fixed_fee_quantity_updates"
+                    "unschedule_fixed_fee_quantity_updates",
                 )
                 .body(json(clientOptions.jsonMapper, params._body()))
                 .build()
@@ -1137,7 +1135,7 @@ internal constructor(
      */
     override fun unschedulePendingPlanChanges(
         params: SubscriptionUnschedulePendingPlanChangesParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): SubscriptionUnschedulePendingPlanChangesResponse {
         val request =
             HttpRequest.builder()
@@ -1145,7 +1143,7 @@ internal constructor(
                 .addPathSegments(
                     "subscriptions",
                     params.getPathParam(0),
-                    "unschedule_pending_plan_changes"
+                    "unschedule_pending_plan_changes",
                 )
                 .apply { params._body()?.let { body(json(clientOptions.jsonMapper, it)) } }
                 .build()
@@ -1180,7 +1178,7 @@ internal constructor(
      */
     override fun updateFixedFeeQuantity(
         params: SubscriptionUpdateFixedFeeQuantityParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): SubscriptionUpdateFixedFeeQuantityResponse {
         val request =
             HttpRequest.builder()
@@ -1188,7 +1186,7 @@ internal constructor(
                 .addPathSegments(
                     "subscriptions",
                     params.getPathParam(0),
-                    "update_fixed_fee_quantity"
+                    "update_fixed_fee_quantity",
                 )
                 .body(json(clientOptions.jsonMapper, params._body()))
                 .build()
@@ -1227,7 +1225,7 @@ internal constructor(
      */
     override fun updateTrial(
         params: SubscriptionUpdateTrialParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): SubscriptionUpdateTrialResponse {
         val request =
             HttpRequest.builder()

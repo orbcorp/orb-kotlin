@@ -21,7 +21,7 @@ interface CouponService {
      */
     fun create(
         params: CouponCreateParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): Coupon
 
     /**
@@ -34,7 +34,7 @@ interface CouponService {
      */
     fun list(
         params: CouponListParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): CouponListPage
 
     /**
@@ -44,7 +44,7 @@ interface CouponService {
      */
     fun archive(
         params: CouponArchiveParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): Coupon
 
     /**
@@ -53,6 +53,6 @@ interface CouponService {
      */
     fun fetch(
         params: CouponFetchParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): Coupon
 }

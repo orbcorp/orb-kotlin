@@ -93,7 +93,7 @@ private constructor(
         fun build(): EventUpdateResponse =
             EventUpdateResponse(
                 checkRequired("amended", amended),
-                additionalProperties.toImmutable()
+                additionalProperties.toImmutable(),
             )
     }
 

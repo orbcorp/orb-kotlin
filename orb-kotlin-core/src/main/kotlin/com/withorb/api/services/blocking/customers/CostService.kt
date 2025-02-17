@@ -122,7 +122,7 @@ interface CostService {
      */
     fun list(
         params: CustomerCostListParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): CustomerCostListResponse
 
     /**
@@ -237,6 +237,6 @@ interface CostService {
      */
     fun listByExternalId(
         params: CustomerCostListByExternalIdParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): CustomerCostListByExternalIdResponse
 }

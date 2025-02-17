@@ -32,10 +32,8 @@ import com.withorb.api.services.async.customers.CostServiceAsyncImpl
 import com.withorb.api.services.async.customers.CreditServiceAsync
 import com.withorb.api.services.async.customers.CreditServiceAsyncImpl
 
-class CustomerServiceAsyncImpl
-internal constructor(
-    private val clientOptions: ClientOptions,
-) : CustomerServiceAsync {
+class CustomerServiceAsyncImpl internal constructor(private val clientOptions: ClientOptions) :
+    CustomerServiceAsync {
 
     private val errorHandler: Handler<OrbError> = errorHandler(clientOptions.jsonMapper)
 
@@ -71,7 +69,7 @@ internal constructor(
      */
     override suspend fun create(
         params: CustomerCreateParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): Customer {
         val request =
             HttpRequest.builder()
@@ -101,7 +99,7 @@ internal constructor(
      */
     override suspend fun update(
         params: CustomerUpdateParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): Customer {
         val request =
             HttpRequest.builder()
@@ -133,7 +131,7 @@ internal constructor(
      */
     override suspend fun list(
         params: CustomerListParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): CustomerListPageAsync {
         val request =
             HttpRequest.builder()
@@ -193,7 +191,7 @@ internal constructor(
      */
     override suspend fun fetch(
         params: CustomerFetchParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): Customer {
         val request =
             HttpRequest.builder()
@@ -223,7 +221,7 @@ internal constructor(
      */
     override suspend fun fetchByExternalId(
         params: CustomerFetchByExternalIdParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): Customer {
         val request =
             HttpRequest.builder()
@@ -254,7 +252,7 @@ internal constructor(
      */
     override suspend fun syncPaymentMethodsFromGateway(
         params: CustomerSyncPaymentMethodsFromGatewayParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ) {
         val request =
             HttpRequest.builder()
@@ -263,7 +261,7 @@ internal constructor(
                     "customers",
                     "external_customer_id",
                     params.getPathParam(0),
-                    "sync_payment_methods_from_gateway"
+                    "sync_payment_methods_from_gateway",
                 )
                 .apply { params._body()?.let { body(json(clientOptions.jsonMapper, it)) } }
                 .build()
@@ -285,7 +283,7 @@ internal constructor(
      */
     override suspend fun syncPaymentMethodsFromGatewayByExternalCustomerId(
         params: CustomerSyncPaymentMethodsFromGatewayByExternalCustomerIdParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ) {
         val request =
             HttpRequest.builder()
@@ -293,7 +291,7 @@ internal constructor(
                 .addPathSegments(
                     "customers",
                     params.getPathParam(0),
-                    "sync_payment_methods_from_gateway"
+                    "sync_payment_methods_from_gateway",
                 )
                 .apply { params._body()?.let { body(json(clientOptions.jsonMapper, it)) } }
                 .build()
@@ -312,7 +310,7 @@ internal constructor(
      */
     override suspend fun updateByExternalId(
         params: CustomerUpdateByExternalIdParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): Customer {
         val request =
             HttpRequest.builder()

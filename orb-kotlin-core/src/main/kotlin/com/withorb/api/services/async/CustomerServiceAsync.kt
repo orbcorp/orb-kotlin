@@ -41,7 +41,7 @@ interface CustomerServiceAsync {
      */
     suspend fun create(
         params: CustomerCreateParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): Customer
 
     /**
@@ -52,7 +52,7 @@ interface CustomerServiceAsync {
      */
     suspend fun update(
         params: CustomerUpdateParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): Customer
 
     /**
@@ -64,7 +64,7 @@ interface CustomerServiceAsync {
      */
     suspend fun list(
         params: CustomerListParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): CustomerListPageAsync
 
     /**
@@ -84,7 +84,7 @@ interface CustomerServiceAsync {
      */
     suspend fun delete(
         params: CustomerDeleteParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     )
 
     /**
@@ -96,7 +96,7 @@ interface CustomerServiceAsync {
      */
     suspend fun fetch(
         params: CustomerFetchParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): Customer
 
     /**
@@ -108,7 +108,7 @@ interface CustomerServiceAsync {
      */
     suspend fun fetchByExternalId(
         params: CustomerFetchByExternalIdParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): Customer
 
     /**
@@ -121,7 +121,7 @@ interface CustomerServiceAsync {
      */
     suspend fun syncPaymentMethodsFromGateway(
         params: CustomerSyncPaymentMethodsFromGatewayParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     )
 
     /**
@@ -134,7 +134,7 @@ interface CustomerServiceAsync {
      */
     suspend fun syncPaymentMethodsFromGatewayByExternalCustomerId(
         params: CustomerSyncPaymentMethodsFromGatewayByExternalCustomerIdParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     )
 
     /**
@@ -144,6 +144,6 @@ interface CustomerServiceAsync {
      */
     suspend fun updateByExternalId(
         params: CustomerUpdateByExternalIdParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): Customer
 }

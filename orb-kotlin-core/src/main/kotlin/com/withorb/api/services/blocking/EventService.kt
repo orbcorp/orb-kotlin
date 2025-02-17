@@ -63,7 +63,7 @@ interface EventService {
      */
     fun update(
         params: EventUpdateParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): EventUpdateResponse
 
     /**
@@ -104,7 +104,7 @@ interface EventService {
      */
     fun deprecate(
         params: EventDeprecateParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): EventDeprecateResponse
 
     /**
@@ -298,7 +298,7 @@ interface EventService {
      */
     fun ingest(
         params: EventIngestParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): EventIngestResponse
 
     /**
@@ -319,6 +319,6 @@ interface EventService {
      */
     fun search(
         params: EventSearchParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): EventSearchResponse
 }

@@ -155,7 +155,7 @@ private constructor(
         override fun serialize(
             value: SubscriptionUsage,
             generator: JsonGenerator,
-            provider: SerializerProvider
+            provider: SerializerProvider,
         ) {
             when {
                 value.ungrouped != null -> generator.writeObject(value.ungrouped)
@@ -254,7 +254,7 @@ private constructor(
             fun build(): UngroupedSubscriptionUsage =
                 UngroupedSubscriptionUsage(
                     checkRequired("data", data).map { it.toImmutable() },
-                    additionalProperties.toImmutable()
+                    additionalProperties.toImmutable(),
                 )
         }
 
@@ -644,11 +644,8 @@ private constructor(
                     "Usage{quantity=$quantity, timeframeEnd=$timeframeEnd, timeframeStart=$timeframeStart, additionalProperties=$additionalProperties}"
             }
 
-            class ViewMode
-            @JsonCreator
-            private constructor(
-                private val value: JsonField<String>,
-            ) : Enum {
+            class ViewMode @JsonCreator private constructor(private val value: JsonField<String>) :
+                Enum {
 
                 /**
                  * Returns this class instance's raw value.
@@ -1415,11 +1412,8 @@ private constructor(
                     "Usage{quantity=$quantity, timeframeEnd=$timeframeEnd, timeframeStart=$timeframeStart, additionalProperties=$additionalProperties}"
             }
 
-            class ViewMode
-            @JsonCreator
-            private constructor(
-                private val value: JsonField<String>,
-            ) : Enum {
+            class ViewMode @JsonCreator private constructor(private val value: JsonField<String>) :
+                Enum {
 
                 /**
                  * Returns this class instance's raw value.
