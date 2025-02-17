@@ -31,7 +31,9 @@ class SubscriptionUpdateFixedFeeQuantityParamsTest {
                 .changeOption(SubscriptionUpdateFixedFeeQuantityParams.ChangeOption.IMMEDIATE)
                 .effectiveDate(LocalDate.parse("2022-12-21"))
                 .build()
+
         val body = params._body()
+
         assertThat(body).isNotNull
         assertThat(body.priceId()).isEqualTo("price_id")
         assertThat(body.quantity()).isEqualTo(0.0)
@@ -49,7 +51,9 @@ class SubscriptionUpdateFixedFeeQuantityParamsTest {
                 .priceId("price_id")
                 .quantity(0.0)
                 .build()
+
         val body = params._body()
+
         assertThat(body).isNotNull
         assertThat(body.priceId()).isEqualTo("price_id")
         assertThat(body.quantity()).isEqualTo(0.0)

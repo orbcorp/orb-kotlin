@@ -26,7 +26,7 @@ import java.util.Objects
 class MetricUpdateParams
 private constructor(
     private val metricId: String,
-    private val body: MetricUpdateBody,
+    private val body: Body,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
 ) : Params {
@@ -53,7 +53,7 @@ private constructor(
 
     fun _additionalQueryParams(): QueryParams = additionalQueryParams
 
-    internal fun _body(): MetricUpdateBody = body
+    internal fun _body(): Body = body
 
     override fun _headers(): Headers = additionalHeaders
 
@@ -67,9 +67,9 @@ private constructor(
     }
 
     @NoAutoDetect
-    class MetricUpdateBody
+    class Body
     @JsonCreator
-    internal constructor(
+    private constructor(
         @JsonProperty("metadata")
         @ExcludeMissing
         private val metadata: JsonField<Metadata> = JsonMissing.of(),
@@ -97,7 +97,7 @@ private constructor(
 
         private var validated: Boolean = false
 
-        fun validate(): MetricUpdateBody = apply {
+        fun validate(): Body = apply {
             if (validated) {
                 return@apply
             }
@@ -113,15 +113,15 @@ private constructor(
             fun builder() = Builder()
         }
 
-        /** A builder for [MetricUpdateBody]. */
+        /** A builder for [Body]. */
         class Builder internal constructor() {
 
             private var metadata: JsonField<Metadata> = JsonMissing.of()
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
-            internal fun from(metricUpdateBody: MetricUpdateBody) = apply {
-                metadata = metricUpdateBody.metadata
-                additionalProperties = metricUpdateBody.additionalProperties.toMutableMap()
+            internal fun from(body: Body) = apply {
+                metadata = body.metadata
+                additionalProperties = body.additionalProperties.toMutableMap()
             }
 
             /**
@@ -157,8 +157,7 @@ private constructor(
                 keys.forEach(::removeAdditionalProperty)
             }
 
-            fun build(): MetricUpdateBody =
-                MetricUpdateBody(metadata, additionalProperties.toImmutable())
+            fun build(): Body = Body(metadata, additionalProperties.toImmutable())
         }
 
         override fun equals(other: Any?): Boolean {
@@ -166,7 +165,7 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is MetricUpdateBody && metadata == other.metadata && additionalProperties == other.additionalProperties /* spotless:on */
+            return /* spotless:off */ other is Body && metadata == other.metadata && additionalProperties == other.additionalProperties /* spotless:on */
         }
 
         /* spotless:off */
@@ -176,7 +175,7 @@ private constructor(
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "MetricUpdateBody{metadata=$metadata, additionalProperties=$additionalProperties}"
+            "Body{metadata=$metadata, additionalProperties=$additionalProperties}"
     }
 
     fun toBuilder() = Builder().from(this)
@@ -191,7 +190,7 @@ private constructor(
     class Builder internal constructor() {
 
         private var metricId: String? = null
-        private var body: MetricUpdateBody.Builder = MetricUpdateBody.builder()
+        private var body: Body.Builder = Body.builder()
         private var additionalHeaders: Headers.Builder = Headers.builder()
         private var additionalQueryParams: QueryParams.Builder = QueryParams.builder()
 

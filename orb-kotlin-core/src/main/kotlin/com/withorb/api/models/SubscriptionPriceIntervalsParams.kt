@@ -100,7 +100,7 @@ import java.util.Objects
 class SubscriptionPriceIntervalsParams
 private constructor(
     private val subscriptionId: String,
-    private val body: SubscriptionPriceIntervalsBody,
+    private val body: Body,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
 ) : Params {
@@ -151,7 +151,7 @@ private constructor(
 
     fun _additionalQueryParams(): QueryParams = additionalQueryParams
 
-    internal fun _body(): SubscriptionPriceIntervalsBody = body
+    internal fun _body(): Body = body
 
     override fun _headers(): Headers = additionalHeaders
 
@@ -165,9 +165,9 @@ private constructor(
     }
 
     @NoAutoDetect
-    class SubscriptionPriceIntervalsBody
+    class Body
     @JsonCreator
-    internal constructor(
+    private constructor(
         @JsonProperty("add")
         @ExcludeMissing
         private val add: JsonField<List<Add>> = JsonMissing.of(),
@@ -239,7 +239,7 @@ private constructor(
 
         private var validated: Boolean = false
 
-        fun validate(): SubscriptionPriceIntervalsBody = apply {
+        fun validate(): Body = apply {
             if (validated) {
                 return@apply
             }
@@ -259,7 +259,7 @@ private constructor(
             fun builder() = Builder()
         }
 
-        /** A builder for [SubscriptionPriceIntervalsBody]. */
+        /** A builder for [Body]. */
         class Builder internal constructor() {
 
             private var add: JsonField<MutableList<Add>>? = null
@@ -269,19 +269,14 @@ private constructor(
             private var editAdjustments: JsonField<MutableList<EditAdjustment>>? = null
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
-            internal fun from(subscriptionPriceIntervalsBody: SubscriptionPriceIntervalsBody) =
-                apply {
-                    add = subscriptionPriceIntervalsBody.add.map { it.toMutableList() }
-                    addAdjustments =
-                        subscriptionPriceIntervalsBody.addAdjustments.map { it.toMutableList() }
-                    allowInvoiceCreditOrVoid =
-                        subscriptionPriceIntervalsBody.allowInvoiceCreditOrVoid
-                    edit = subscriptionPriceIntervalsBody.edit.map { it.toMutableList() }
-                    editAdjustments =
-                        subscriptionPriceIntervalsBody.editAdjustments.map { it.toMutableList() }
-                    additionalProperties =
-                        subscriptionPriceIntervalsBody.additionalProperties.toMutableMap()
-                }
+            internal fun from(body: Body) = apply {
+                add = body.add.map { it.toMutableList() }
+                addAdjustments = body.addAdjustments.map { it.toMutableList() }
+                allowInvoiceCreditOrVoid = body.allowInvoiceCreditOrVoid
+                edit = body.edit.map { it.toMutableList() }
+                editAdjustments = body.editAdjustments.map { it.toMutableList() }
+                additionalProperties = body.additionalProperties.toMutableMap()
+            }
 
             /** A list of price intervals to add to the subscription. */
             fun add(add: List<Add>) = add(JsonField.of(add))
@@ -407,8 +402,8 @@ private constructor(
                 keys.forEach(::removeAdditionalProperty)
             }
 
-            fun build(): SubscriptionPriceIntervalsBody =
-                SubscriptionPriceIntervalsBody(
+            fun build(): Body =
+                Body(
                     (add ?: JsonMissing.of()).map { it.toImmutable() },
                     (addAdjustments ?: JsonMissing.of()).map { it.toImmutable() },
                     allowInvoiceCreditOrVoid,
@@ -423,7 +418,7 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is SubscriptionPriceIntervalsBody && add == other.add && addAdjustments == other.addAdjustments && allowInvoiceCreditOrVoid == other.allowInvoiceCreditOrVoid && edit == other.edit && editAdjustments == other.editAdjustments && additionalProperties == other.additionalProperties /* spotless:on */
+            return /* spotless:off */ other is Body && add == other.add && addAdjustments == other.addAdjustments && allowInvoiceCreditOrVoid == other.allowInvoiceCreditOrVoid && edit == other.edit && editAdjustments == other.editAdjustments && additionalProperties == other.additionalProperties /* spotless:on */
         }
 
         /* spotless:off */
@@ -433,7 +428,7 @@ private constructor(
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "SubscriptionPriceIntervalsBody{add=$add, addAdjustments=$addAdjustments, allowInvoiceCreditOrVoid=$allowInvoiceCreditOrVoid, edit=$edit, editAdjustments=$editAdjustments, additionalProperties=$additionalProperties}"
+            "Body{add=$add, addAdjustments=$addAdjustments, allowInvoiceCreditOrVoid=$allowInvoiceCreditOrVoid, edit=$edit, editAdjustments=$editAdjustments, additionalProperties=$additionalProperties}"
     }
 
     fun toBuilder() = Builder().from(this)
@@ -448,8 +443,7 @@ private constructor(
     class Builder internal constructor() {
 
         private var subscriptionId: String? = null
-        private var body: SubscriptionPriceIntervalsBody.Builder =
-            SubscriptionPriceIntervalsBody.builder()
+        private var body: Body.Builder = Body.builder()
         private var additionalHeaders: Headers.Builder = Headers.builder()
         private var additionalQueryParams: QueryParams.Builder = QueryParams.builder()
 

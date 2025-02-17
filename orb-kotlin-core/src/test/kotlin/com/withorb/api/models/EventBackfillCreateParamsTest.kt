@@ -33,7 +33,9 @@ class EventBackfillCreateParamsTest {
                 .externalCustomerId("external_customer_id")
                 .replaceExistingEvents(true)
                 .build()
+
         val body = params._body()
+
         assertThat(body).isNotNull
         assertThat(body.timeframeEnd()).isEqualTo(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
         assertThat(body.timeframeStart())
@@ -53,7 +55,9 @@ class EventBackfillCreateParamsTest {
                 .timeframeEnd(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                 .timeframeStart(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                 .build()
+
         val body = params._body()
+
         assertThat(body).isNotNull
         assertThat(body.timeframeEnd()).isEqualTo(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
         assertThat(body.timeframeStart())

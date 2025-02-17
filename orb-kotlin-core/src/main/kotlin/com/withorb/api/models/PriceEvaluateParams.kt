@@ -42,7 +42,7 @@ import java.util.Objects
 class PriceEvaluateParams
 private constructor(
     private val priceId: String,
-    private val body: PriceEvaluateBody,
+    private val body: Body,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
 ) : Params {
@@ -103,7 +103,7 @@ private constructor(
 
     fun _additionalQueryParams(): QueryParams = additionalQueryParams
 
-    internal fun _body(): PriceEvaluateBody = body
+    internal fun _body(): Body = body
 
     override fun _headers(): Headers = additionalHeaders
 
@@ -117,9 +117,9 @@ private constructor(
     }
 
     @NoAutoDetect
-    class PriceEvaluateBody
+    class Body
     @JsonCreator
-    internal constructor(
+    private constructor(
         @JsonProperty("timeframe_end")
         @ExcludeMissing
         private val timeframeEnd: JsonField<OffsetDateTime> = JsonMissing.of(),
@@ -208,7 +208,7 @@ private constructor(
 
         private var validated: Boolean = false
 
-        fun validate(): PriceEvaluateBody = apply {
+        fun validate(): Body = apply {
             if (validated) {
                 return@apply
             }
@@ -229,7 +229,7 @@ private constructor(
             fun builder() = Builder()
         }
 
-        /** A builder for [PriceEvaluateBody]. */
+        /** A builder for [Body]. */
         class Builder internal constructor() {
 
             private var timeframeEnd: JsonField<OffsetDateTime>? = null
@@ -240,14 +240,14 @@ private constructor(
             private var groupingKeys: JsonField<MutableList<String>>? = null
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
-            internal fun from(priceEvaluateBody: PriceEvaluateBody) = apply {
-                timeframeEnd = priceEvaluateBody.timeframeEnd
-                timeframeStart = priceEvaluateBody.timeframeStart
-                customerId = priceEvaluateBody.customerId
-                externalCustomerId = priceEvaluateBody.externalCustomerId
-                filter = priceEvaluateBody.filter
-                groupingKeys = priceEvaluateBody.groupingKeys.map { it.toMutableList() }
-                additionalProperties = priceEvaluateBody.additionalProperties.toMutableMap()
+            internal fun from(body: Body) = apply {
+                timeframeEnd = body.timeframeEnd
+                timeframeStart = body.timeframeStart
+                customerId = body.customerId
+                externalCustomerId = body.externalCustomerId
+                filter = body.filter
+                groupingKeys = body.groupingKeys.map { it.toMutableList() }
+                additionalProperties = body.additionalProperties.toMutableMap()
             }
 
             /** The exclusive upper bound for event timestamps */
@@ -346,8 +346,8 @@ private constructor(
                 keys.forEach(::removeAdditionalProperty)
             }
 
-            fun build(): PriceEvaluateBody =
-                PriceEvaluateBody(
+            fun build(): Body =
+                Body(
                     checkRequired("timeframeEnd", timeframeEnd),
                     checkRequired("timeframeStart", timeframeStart),
                     customerId,
@@ -363,7 +363,7 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is PriceEvaluateBody && timeframeEnd == other.timeframeEnd && timeframeStart == other.timeframeStart && customerId == other.customerId && externalCustomerId == other.externalCustomerId && filter == other.filter && groupingKeys == other.groupingKeys && additionalProperties == other.additionalProperties /* spotless:on */
+            return /* spotless:off */ other is Body && timeframeEnd == other.timeframeEnd && timeframeStart == other.timeframeStart && customerId == other.customerId && externalCustomerId == other.externalCustomerId && filter == other.filter && groupingKeys == other.groupingKeys && additionalProperties == other.additionalProperties /* spotless:on */
         }
 
         /* spotless:off */
@@ -373,7 +373,7 @@ private constructor(
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "PriceEvaluateBody{timeframeEnd=$timeframeEnd, timeframeStart=$timeframeStart, customerId=$customerId, externalCustomerId=$externalCustomerId, filter=$filter, groupingKeys=$groupingKeys, additionalProperties=$additionalProperties}"
+            "Body{timeframeEnd=$timeframeEnd, timeframeStart=$timeframeStart, customerId=$customerId, externalCustomerId=$externalCustomerId, filter=$filter, groupingKeys=$groupingKeys, additionalProperties=$additionalProperties}"
     }
 
     fun toBuilder() = Builder().from(this)
@@ -388,7 +388,7 @@ private constructor(
     class Builder internal constructor() {
 
         private var priceId: String? = null
-        private var body: PriceEvaluateBody.Builder = PriceEvaluateBody.builder()
+        private var body: Body.Builder = Body.builder()
         private var additionalHeaders: Headers.Builder = Headers.builder()
         private var additionalQueryParams: QueryParams.Builder = QueryParams.builder()
 

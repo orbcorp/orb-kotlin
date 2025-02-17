@@ -136,7 +136,9 @@ class PlanCreateParamsTest {
                 .netTerms(0L)
                 .status(PlanCreateParams.Status.ACTIVE)
                 .build()
+
         val body = params._body()
+
         assertThat(body).isNotNull
         assertThat(body.currency()).isEqualTo("currency")
         assertThat(body.name()).isEqualTo("name")
@@ -226,7 +228,9 @@ class PlanCreateParamsTest {
                         .build()
                 )
                 .build()
+
         val body = params._body()
+
         assertThat(body).isNotNull
         assertThat(body.currency()).isEqualTo("currency")
         assertThat(body.name()).isEqualTo("name")

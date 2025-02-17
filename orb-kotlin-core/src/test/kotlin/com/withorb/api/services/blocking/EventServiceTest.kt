@@ -64,6 +64,8 @@ class EventServiceTest {
         val eventIngestResponse =
             eventService.ingest(
                 EventIngestParams.builder()
+                    .backfillId("backfill_id")
+                    .debug(true)
                     .addEvent(
                         EventIngestParams.Event.builder()
                             .eventName("event_name")
@@ -74,8 +76,6 @@ class EventServiceTest {
                             .externalCustomerId("external_customer_id")
                             .build()
                     )
-                    .backfillId("backfill_id")
-                    .debug(true)
                     .build()
             )
         println(eventIngestResponse)

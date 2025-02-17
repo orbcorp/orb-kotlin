@@ -39,7 +39,7 @@ import java.util.Objects
 class SubscriptionUpdateFixedFeeQuantityParams
 private constructor(
     private val subscriptionId: String,
-    private val body: SubscriptionUpdateFixedFeeQuantityBody,
+    private val body: Body,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
 ) : Params {
@@ -104,7 +104,7 @@ private constructor(
 
     fun _additionalQueryParams(): QueryParams = additionalQueryParams
 
-    internal fun _body(): SubscriptionUpdateFixedFeeQuantityBody = body
+    internal fun _body(): Body = body
 
     override fun _headers(): Headers = additionalHeaders
 
@@ -118,9 +118,9 @@ private constructor(
     }
 
     @NoAutoDetect
-    class SubscriptionUpdateFixedFeeQuantityBody
+    class Body
     @JsonCreator
-    internal constructor(
+    private constructor(
         @JsonProperty("price_id")
         @ExcludeMissing
         private val priceId: JsonField<String> = JsonMissing.of(),
@@ -205,7 +205,7 @@ private constructor(
 
         private var validated: Boolean = false
 
-        fun validate(): SubscriptionUpdateFixedFeeQuantityBody = apply {
+        fun validate(): Body = apply {
             if (validated) {
                 return@apply
             }
@@ -225,7 +225,7 @@ private constructor(
             fun builder() = Builder()
         }
 
-        /** A builder for [SubscriptionUpdateFixedFeeQuantityBody]. */
+        /** A builder for [Body]. */
         class Builder internal constructor() {
 
             private var priceId: JsonField<String>? = null
@@ -235,17 +235,13 @@ private constructor(
             private var effectiveDate: JsonField<LocalDate> = JsonMissing.of()
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
-            internal fun from(
-                subscriptionUpdateFixedFeeQuantityBody: SubscriptionUpdateFixedFeeQuantityBody
-            ) = apply {
-                priceId = subscriptionUpdateFixedFeeQuantityBody.priceId
-                quantity = subscriptionUpdateFixedFeeQuantityBody.quantity
-                allowInvoiceCreditOrVoid =
-                    subscriptionUpdateFixedFeeQuantityBody.allowInvoiceCreditOrVoid
-                changeOption = subscriptionUpdateFixedFeeQuantityBody.changeOption
-                effectiveDate = subscriptionUpdateFixedFeeQuantityBody.effectiveDate
-                additionalProperties =
-                    subscriptionUpdateFixedFeeQuantityBody.additionalProperties.toMutableMap()
+            internal fun from(body: Body) = apply {
+                priceId = body.priceId
+                quantity = body.quantity
+                allowInvoiceCreditOrVoid = body.allowInvoiceCreditOrVoid
+                changeOption = body.changeOption
+                effectiveDate = body.effectiveDate
+                additionalProperties = body.additionalProperties.toMutableMap()
             }
 
             /** Price for which the quantity should be updated. Must be a fixed fee. */
@@ -335,8 +331,8 @@ private constructor(
                 keys.forEach(::removeAdditionalProperty)
             }
 
-            fun build(): SubscriptionUpdateFixedFeeQuantityBody =
-                SubscriptionUpdateFixedFeeQuantityBody(
+            fun build(): Body =
+                Body(
                     checkRequired("priceId", priceId),
                     checkRequired("quantity", quantity),
                     allowInvoiceCreditOrVoid,
@@ -351,7 +347,7 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is SubscriptionUpdateFixedFeeQuantityBody && priceId == other.priceId && quantity == other.quantity && allowInvoiceCreditOrVoid == other.allowInvoiceCreditOrVoid && changeOption == other.changeOption && effectiveDate == other.effectiveDate && additionalProperties == other.additionalProperties /* spotless:on */
+            return /* spotless:off */ other is Body && priceId == other.priceId && quantity == other.quantity && allowInvoiceCreditOrVoid == other.allowInvoiceCreditOrVoid && changeOption == other.changeOption && effectiveDate == other.effectiveDate && additionalProperties == other.additionalProperties /* spotless:on */
         }
 
         /* spotless:off */
@@ -361,7 +357,7 @@ private constructor(
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "SubscriptionUpdateFixedFeeQuantityBody{priceId=$priceId, quantity=$quantity, allowInvoiceCreditOrVoid=$allowInvoiceCreditOrVoid, changeOption=$changeOption, effectiveDate=$effectiveDate, additionalProperties=$additionalProperties}"
+            "Body{priceId=$priceId, quantity=$quantity, allowInvoiceCreditOrVoid=$allowInvoiceCreditOrVoid, changeOption=$changeOption, effectiveDate=$effectiveDate, additionalProperties=$additionalProperties}"
     }
 
     fun toBuilder() = Builder().from(this)
@@ -376,8 +372,7 @@ private constructor(
     class Builder internal constructor() {
 
         private var subscriptionId: String? = null
-        private var body: SubscriptionUpdateFixedFeeQuantityBody.Builder =
-            SubscriptionUpdateFixedFeeQuantityBody.builder()
+        private var body: Body.Builder = Body.builder()
         private var additionalHeaders: Headers.Builder = Headers.builder()
         private var additionalQueryParams: QueryParams.Builder = QueryParams.builder()
 

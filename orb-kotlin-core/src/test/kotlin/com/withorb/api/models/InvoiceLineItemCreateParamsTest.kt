@@ -31,7 +31,9 @@ class InvoiceLineItemCreateParamsTest {
                 .quantity(1.0)
                 .startDate(LocalDate.parse("2023-09-22"))
                 .build()
+
         val body = params._body()
+
         assertThat(body).isNotNull
         assertThat(body.amount()).isEqualTo("12.00")
         assertThat(body.endDate()).isEqualTo(LocalDate.parse("2023-09-22"))
@@ -52,7 +54,9 @@ class InvoiceLineItemCreateParamsTest {
                 .quantity(1.0)
                 .startDate(LocalDate.parse("2023-09-22"))
                 .build()
+
         val body = params._body()
+
         assertThat(body).isNotNull
         assertThat(body.amount()).isEqualTo("12.00")
         assertThat(body.endDate()).isEqualTo(LocalDate.parse("2023-09-22"))

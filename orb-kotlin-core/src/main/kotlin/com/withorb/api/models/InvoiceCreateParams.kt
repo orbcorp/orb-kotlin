@@ -26,7 +26,7 @@ import java.util.Objects
 /** This endpoint is used to create a one-off invoice for a customer. */
 class InvoiceCreateParams
 private constructor(
-    private val body: InvoiceCreateBody,
+    private val body: Body,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
 ) : Params {
@@ -135,16 +135,16 @@ private constructor(
 
     fun _additionalQueryParams(): QueryParams = additionalQueryParams
 
-    internal fun _body(): InvoiceCreateBody = body
+    internal fun _body(): Body = body
 
     override fun _headers(): Headers = additionalHeaders
 
     override fun _queryParams(): QueryParams = additionalQueryParams
 
     @NoAutoDetect
-    class InvoiceCreateBody
+    class Body
     @JsonCreator
-    internal constructor(
+    private constructor(
         @JsonProperty("currency")
         @ExcludeMissing
         private val currency: JsonField<String> = JsonMissing.of(),
@@ -297,7 +297,7 @@ private constructor(
 
         private var validated: Boolean = false
 
-        fun validate(): InvoiceCreateBody = apply {
+        fun validate(): Body = apply {
             if (validated) {
                 return@apply
             }
@@ -322,7 +322,7 @@ private constructor(
             fun builder() = Builder()
         }
 
-        /** A builder for [InvoiceCreateBody]. */
+        /** A builder for [Body]. */
         class Builder internal constructor() {
 
             private var currency: JsonField<String>? = null
@@ -337,18 +337,18 @@ private constructor(
             private var willAutoIssue: JsonField<Boolean> = JsonMissing.of()
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
-            internal fun from(invoiceCreateBody: InvoiceCreateBody) = apply {
-                currency = invoiceCreateBody.currency
-                invoiceDate = invoiceCreateBody.invoiceDate
-                lineItems = invoiceCreateBody.lineItems.map { it.toMutableList() }
-                netTerms = invoiceCreateBody.netTerms
-                customerId = invoiceCreateBody.customerId
-                discount = invoiceCreateBody.discount
-                externalCustomerId = invoiceCreateBody.externalCustomerId
-                memo = invoiceCreateBody.memo
-                metadata = invoiceCreateBody.metadata
-                willAutoIssue = invoiceCreateBody.willAutoIssue
-                additionalProperties = invoiceCreateBody.additionalProperties.toMutableMap()
+            internal fun from(body: Body) = apply {
+                currency = body.currency
+                invoiceDate = body.invoiceDate
+                lineItems = body.lineItems.map { it.toMutableList() }
+                netTerms = body.netTerms
+                customerId = body.customerId
+                discount = body.discount
+                externalCustomerId = body.externalCustomerId
+                memo = body.memo
+                metadata = body.metadata
+                willAutoIssue = body.willAutoIssue
+                additionalProperties = body.additionalProperties.toMutableMap()
             }
 
             /**
@@ -518,8 +518,8 @@ private constructor(
                 keys.forEach(::removeAdditionalProperty)
             }
 
-            fun build(): InvoiceCreateBody =
-                InvoiceCreateBody(
+            fun build(): Body =
+                Body(
                     checkRequired("currency", currency),
                     checkRequired("invoiceDate", invoiceDate),
                     checkRequired("lineItems", lineItems).map { it.toImmutable() },
@@ -539,7 +539,7 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is InvoiceCreateBody && currency == other.currency && invoiceDate == other.invoiceDate && lineItems == other.lineItems && netTerms == other.netTerms && customerId == other.customerId && discount == other.discount && externalCustomerId == other.externalCustomerId && memo == other.memo && metadata == other.metadata && willAutoIssue == other.willAutoIssue && additionalProperties == other.additionalProperties /* spotless:on */
+            return /* spotless:off */ other is Body && currency == other.currency && invoiceDate == other.invoiceDate && lineItems == other.lineItems && netTerms == other.netTerms && customerId == other.customerId && discount == other.discount && externalCustomerId == other.externalCustomerId && memo == other.memo && metadata == other.metadata && willAutoIssue == other.willAutoIssue && additionalProperties == other.additionalProperties /* spotless:on */
         }
 
         /* spotless:off */
@@ -549,7 +549,7 @@ private constructor(
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "InvoiceCreateBody{currency=$currency, invoiceDate=$invoiceDate, lineItems=$lineItems, netTerms=$netTerms, customerId=$customerId, discount=$discount, externalCustomerId=$externalCustomerId, memo=$memo, metadata=$metadata, willAutoIssue=$willAutoIssue, additionalProperties=$additionalProperties}"
+            "Body{currency=$currency, invoiceDate=$invoiceDate, lineItems=$lineItems, netTerms=$netTerms, customerId=$customerId, discount=$discount, externalCustomerId=$externalCustomerId, memo=$memo, metadata=$metadata, willAutoIssue=$willAutoIssue, additionalProperties=$additionalProperties}"
     }
 
     fun toBuilder() = Builder().from(this)
@@ -563,7 +563,7 @@ private constructor(
     @NoAutoDetect
     class Builder internal constructor() {
 
-        private var body: InvoiceCreateBody.Builder = InvoiceCreateBody.builder()
+        private var body: Body.Builder = Body.builder()
         private var additionalHeaders: Headers.Builder = Headers.builder()
         private var additionalQueryParams: QueryParams.Builder = QueryParams.builder()
 
