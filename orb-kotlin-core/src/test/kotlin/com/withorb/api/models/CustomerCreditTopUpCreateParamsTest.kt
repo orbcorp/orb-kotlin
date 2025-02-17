@@ -48,7 +48,9 @@ class CustomerCreditTopUpCreateParamsTest {
                 .expiresAfter(0L)
                 .expiresAfterUnit(CustomerCreditTopUpCreateParams.ExpiresAfterUnit.DAY)
                 .build()
+
         val body = params._body()
+
         assertThat(body).isNotNull
         assertThat(body.amount()).isEqualTo("amount")
         assertThat(body.currency()).isEqualTo("currency")
@@ -84,7 +86,9 @@ class CustomerCreditTopUpCreateParamsTest {
                 .perUnitCostBasis("per_unit_cost_basis")
                 .threshold("threshold")
                 .build()
+
         val body = params._body()
+
         assertThat(body).isNotNull
         assertThat(body.amount()).isEqualTo("amount")
         assertThat(body.currency()).isEqualTo("currency")

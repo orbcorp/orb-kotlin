@@ -164,7 +164,9 @@ class CustomerUpdateByExternalIdParamsTest {
                         .build()
                 )
                 .build()
+
         val body = params._body()
+
         assertThat(body).isNotNull
         assertThat(body.accountingSyncConfiguration())
             .isEqualTo(
@@ -253,7 +255,9 @@ class CustomerUpdateByExternalIdParamsTest {
     @Test
     fun bodyWithoutOptionalFields() {
         val params = CustomerUpdateByExternalIdParams.builder().id("external_customer_id").build()
+
         val body = params._body()
+
         assertThat(body).isNotNull
     }
 

@@ -26,7 +26,7 @@ import java.util.Objects
 class PriceUpdateParams
 private constructor(
     private val priceId: String,
-    private val body: PriceUpdateBody,
+    private val body: Body,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
 ) : Params {
@@ -53,7 +53,7 @@ private constructor(
 
     fun _additionalQueryParams(): QueryParams = additionalQueryParams
 
-    internal fun _body(): PriceUpdateBody = body
+    internal fun _body(): Body = body
 
     override fun _headers(): Headers = additionalHeaders
 
@@ -67,9 +67,9 @@ private constructor(
     }
 
     @NoAutoDetect
-    class PriceUpdateBody
+    class Body
     @JsonCreator
-    internal constructor(
+    private constructor(
         @JsonProperty("metadata")
         @ExcludeMissing
         private val metadata: JsonField<Metadata> = JsonMissing.of(),
@@ -97,7 +97,7 @@ private constructor(
 
         private var validated: Boolean = false
 
-        fun validate(): PriceUpdateBody = apply {
+        fun validate(): Body = apply {
             if (validated) {
                 return@apply
             }
@@ -113,15 +113,15 @@ private constructor(
             fun builder() = Builder()
         }
 
-        /** A builder for [PriceUpdateBody]. */
+        /** A builder for [Body]. */
         class Builder internal constructor() {
 
             private var metadata: JsonField<Metadata> = JsonMissing.of()
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
-            internal fun from(priceUpdateBody: PriceUpdateBody) = apply {
-                metadata = priceUpdateBody.metadata
-                additionalProperties = priceUpdateBody.additionalProperties.toMutableMap()
+            internal fun from(body: Body) = apply {
+                metadata = body.metadata
+                additionalProperties = body.additionalProperties.toMutableMap()
             }
 
             /**
@@ -157,8 +157,7 @@ private constructor(
                 keys.forEach(::removeAdditionalProperty)
             }
 
-            fun build(): PriceUpdateBody =
-                PriceUpdateBody(metadata, additionalProperties.toImmutable())
+            fun build(): Body = Body(metadata, additionalProperties.toImmutable())
         }
 
         override fun equals(other: Any?): Boolean {
@@ -166,7 +165,7 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is PriceUpdateBody && metadata == other.metadata && additionalProperties == other.additionalProperties /* spotless:on */
+            return /* spotless:off */ other is Body && metadata == other.metadata && additionalProperties == other.additionalProperties /* spotless:on */
         }
 
         /* spotless:off */
@@ -176,7 +175,7 @@ private constructor(
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "PriceUpdateBody{metadata=$metadata, additionalProperties=$additionalProperties}"
+            "Body{metadata=$metadata, additionalProperties=$additionalProperties}"
     }
 
     fun toBuilder() = Builder().from(this)
@@ -191,7 +190,7 @@ private constructor(
     class Builder internal constructor() {
 
         private var priceId: String? = null
-        private var body: PriceUpdateBody.Builder = PriceUpdateBody.builder()
+        private var body: Body.Builder = Body.builder()
         private var additionalHeaders: Headers.Builder = Headers.builder()
         private var additionalQueryParams: QueryParams.Builder = QueryParams.builder()
 

@@ -31,7 +31,9 @@ class PriceExternalPriceIdUpdateParamsTest {
                         .build()
                 )
                 .build()
+
         val body = params._body()
+
         assertThat(body).isNotNull
         assertThat(body.metadata())
             .isEqualTo(
@@ -45,7 +47,9 @@ class PriceExternalPriceIdUpdateParamsTest {
     fun bodyWithoutOptionalFields() {
         val params =
             PriceExternalPriceIdUpdateParams.builder().externalPriceId("external_price_id").build()
+
         val body = params._body()
+
         assertThat(body).isNotNull
     }
 

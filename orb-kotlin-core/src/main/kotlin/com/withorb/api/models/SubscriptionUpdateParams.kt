@@ -26,7 +26,7 @@ import java.util.Objects
 class SubscriptionUpdateParams
 private constructor(
     private val subscriptionId: String,
-    private val body: SubscriptionUpdateBody,
+    private val body: Body,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
 ) : Params {
@@ -105,7 +105,7 @@ private constructor(
 
     fun _additionalQueryParams(): QueryParams = additionalQueryParams
 
-    internal fun _body(): SubscriptionUpdateBody = body
+    internal fun _body(): Body = body
 
     override fun _headers(): Headers = additionalHeaders
 
@@ -119,9 +119,9 @@ private constructor(
     }
 
     @NoAutoDetect
-    class SubscriptionUpdateBody
+    class Body
     @JsonCreator
-    internal constructor(
+    private constructor(
         @JsonProperty("auto_collection")
         @ExcludeMissing
         private val autoCollection: JsonField<Boolean> = JsonMissing.of(),
@@ -221,7 +221,7 @@ private constructor(
 
         private var validated: Boolean = false
 
-        fun validate(): SubscriptionUpdateBody = apply {
+        fun validate(): Body = apply {
             if (validated) {
                 return@apply
             }
@@ -241,7 +241,7 @@ private constructor(
             fun builder() = Builder()
         }
 
-        /** A builder for [SubscriptionUpdateBody]. */
+        /** A builder for [Body]. */
         class Builder internal constructor() {
 
             private var autoCollection: JsonField<Boolean> = JsonMissing.of()
@@ -251,13 +251,13 @@ private constructor(
             private var netTerms: JsonField<Long> = JsonMissing.of()
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
-            internal fun from(subscriptionUpdateBody: SubscriptionUpdateBody) = apply {
-                autoCollection = subscriptionUpdateBody.autoCollection
-                defaultInvoiceMemo = subscriptionUpdateBody.defaultInvoiceMemo
-                invoicingThreshold = subscriptionUpdateBody.invoicingThreshold
-                metadata = subscriptionUpdateBody.metadata
-                netTerms = subscriptionUpdateBody.netTerms
-                additionalProperties = subscriptionUpdateBody.additionalProperties.toMutableMap()
+            internal fun from(body: Body) = apply {
+                autoCollection = body.autoCollection
+                defaultInvoiceMemo = body.defaultInvoiceMemo
+                invoicingThreshold = body.invoicingThreshold
+                metadata = body.metadata
+                netTerms = body.netTerms
+                additionalProperties = body.additionalProperties.toMutableMap()
             }
 
             /**
@@ -373,8 +373,8 @@ private constructor(
                 keys.forEach(::removeAdditionalProperty)
             }
 
-            fun build(): SubscriptionUpdateBody =
-                SubscriptionUpdateBody(
+            fun build(): Body =
+                Body(
                     autoCollection,
                     defaultInvoiceMemo,
                     invoicingThreshold,
@@ -389,7 +389,7 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is SubscriptionUpdateBody && autoCollection == other.autoCollection && defaultInvoiceMemo == other.defaultInvoiceMemo && invoicingThreshold == other.invoicingThreshold && metadata == other.metadata && netTerms == other.netTerms && additionalProperties == other.additionalProperties /* spotless:on */
+            return /* spotless:off */ other is Body && autoCollection == other.autoCollection && defaultInvoiceMemo == other.defaultInvoiceMemo && invoicingThreshold == other.invoicingThreshold && metadata == other.metadata && netTerms == other.netTerms && additionalProperties == other.additionalProperties /* spotless:on */
         }
 
         /* spotless:off */
@@ -399,7 +399,7 @@ private constructor(
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "SubscriptionUpdateBody{autoCollection=$autoCollection, defaultInvoiceMemo=$defaultInvoiceMemo, invoicingThreshold=$invoicingThreshold, metadata=$metadata, netTerms=$netTerms, additionalProperties=$additionalProperties}"
+            "Body{autoCollection=$autoCollection, defaultInvoiceMemo=$defaultInvoiceMemo, invoicingThreshold=$invoicingThreshold, metadata=$metadata, netTerms=$netTerms, additionalProperties=$additionalProperties}"
     }
 
     fun toBuilder() = Builder().from(this)
@@ -414,7 +414,7 @@ private constructor(
     class Builder internal constructor() {
 
         private var subscriptionId: String? = null
-        private var body: SubscriptionUpdateBody.Builder = SubscriptionUpdateBody.builder()
+        private var body: Body.Builder = Body.builder()
         private var additionalHeaders: Headers.Builder = Headers.builder()
         private var additionalQueryParams: QueryParams.Builder = QueryParams.builder()
 

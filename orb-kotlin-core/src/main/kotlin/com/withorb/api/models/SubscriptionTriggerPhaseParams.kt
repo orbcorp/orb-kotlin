@@ -24,7 +24,7 @@ import java.util.Objects
 class SubscriptionTriggerPhaseParams
 private constructor(
     private val subscriptionId: String,
-    private val body: SubscriptionTriggerPhaseBody,
+    private val body: Body,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
 ) : Params {
@@ -63,7 +63,7 @@ private constructor(
 
     fun _additionalQueryParams(): QueryParams = additionalQueryParams
 
-    internal fun _body(): SubscriptionTriggerPhaseBody = body
+    internal fun _body(): Body = body
 
     override fun _headers(): Headers = additionalHeaders
 
@@ -77,9 +77,9 @@ private constructor(
     }
 
     @NoAutoDetect
-    class SubscriptionTriggerPhaseBody
+    class Body
     @JsonCreator
-    internal constructor(
+    private constructor(
         @JsonProperty("allow_invoice_credit_or_void")
         @ExcludeMissing
         private val allowInvoiceCreditOrVoid: JsonField<Boolean> = JsonMissing.of(),
@@ -127,7 +127,7 @@ private constructor(
 
         private var validated: Boolean = false
 
-        fun validate(): SubscriptionTriggerPhaseBody = apply {
+        fun validate(): Body = apply {
             if (validated) {
                 return@apply
             }
@@ -144,18 +144,17 @@ private constructor(
             fun builder() = Builder()
         }
 
-        /** A builder for [SubscriptionTriggerPhaseBody]. */
+        /** A builder for [Body]. */
         class Builder internal constructor() {
 
             private var allowInvoiceCreditOrVoid: JsonField<Boolean> = JsonMissing.of()
             private var effectiveDate: JsonField<LocalDate> = JsonMissing.of()
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
-            internal fun from(subscriptionTriggerPhaseBody: SubscriptionTriggerPhaseBody) = apply {
-                allowInvoiceCreditOrVoid = subscriptionTriggerPhaseBody.allowInvoiceCreditOrVoid
-                effectiveDate = subscriptionTriggerPhaseBody.effectiveDate
-                additionalProperties =
-                    subscriptionTriggerPhaseBody.additionalProperties.toMutableMap()
+            internal fun from(body: Body) = apply {
+                allowInvoiceCreditOrVoid = body.allowInvoiceCreditOrVoid
+                effectiveDate = body.effectiveDate
+                additionalProperties = body.additionalProperties.toMutableMap()
             }
 
             /**
@@ -217,12 +216,8 @@ private constructor(
                 keys.forEach(::removeAdditionalProperty)
             }
 
-            fun build(): SubscriptionTriggerPhaseBody =
-                SubscriptionTriggerPhaseBody(
-                    allowInvoiceCreditOrVoid,
-                    effectiveDate,
-                    additionalProperties.toImmutable(),
-                )
+            fun build(): Body =
+                Body(allowInvoiceCreditOrVoid, effectiveDate, additionalProperties.toImmutable())
         }
 
         override fun equals(other: Any?): Boolean {
@@ -230,7 +225,7 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is SubscriptionTriggerPhaseBody && allowInvoiceCreditOrVoid == other.allowInvoiceCreditOrVoid && effectiveDate == other.effectiveDate && additionalProperties == other.additionalProperties /* spotless:on */
+            return /* spotless:off */ other is Body && allowInvoiceCreditOrVoid == other.allowInvoiceCreditOrVoid && effectiveDate == other.effectiveDate && additionalProperties == other.additionalProperties /* spotless:on */
         }
 
         /* spotless:off */
@@ -240,7 +235,7 @@ private constructor(
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "SubscriptionTriggerPhaseBody{allowInvoiceCreditOrVoid=$allowInvoiceCreditOrVoid, effectiveDate=$effectiveDate, additionalProperties=$additionalProperties}"
+            "Body{allowInvoiceCreditOrVoid=$allowInvoiceCreditOrVoid, effectiveDate=$effectiveDate, additionalProperties=$additionalProperties}"
     }
 
     fun toBuilder() = Builder().from(this)
@@ -255,8 +250,7 @@ private constructor(
     class Builder internal constructor() {
 
         private var subscriptionId: String? = null
-        private var body: SubscriptionTriggerPhaseBody.Builder =
-            SubscriptionTriggerPhaseBody.builder()
+        private var body: Body.Builder = Body.builder()
         private var additionalHeaders: Headers.Builder = Headers.builder()
         private var additionalQueryParams: QueryParams.Builder = QueryParams.builder()
 

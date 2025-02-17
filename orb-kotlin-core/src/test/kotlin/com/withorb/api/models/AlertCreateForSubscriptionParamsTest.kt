@@ -28,7 +28,9 @@ class AlertCreateForSubscriptionParamsTest {
                 .type(AlertCreateForSubscriptionParams.Type.USAGE_EXCEEDED)
                 .metricId("metric_id")
                 .build()
+
         val body = params._body()
+
         assertThat(body).isNotNull
         assertThat(body.thresholds())
             .isEqualTo(
@@ -48,7 +50,9 @@ class AlertCreateForSubscriptionParamsTest {
                 )
                 .type(AlertCreateForSubscriptionParams.Type.USAGE_EXCEEDED)
                 .build()
+
         val body = params._body()
+
         assertThat(body).isNotNull
         assertThat(body.thresholds())
             .isEqualTo(

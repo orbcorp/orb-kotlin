@@ -32,7 +32,7 @@ import java.util.Objects
 class CustomerCreditTopUpCreateParams
 private constructor(
     private val customerId: String,
-    private val body: CustomerCreditTopUpCreateBody,
+    private val body: Body,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
 ) : Params {
@@ -105,7 +105,7 @@ private constructor(
 
     fun _additionalQueryParams(): QueryParams = additionalQueryParams
 
-    internal fun _body(): CustomerCreditTopUpCreateBody = body
+    internal fun _body(): Body = body
 
     override fun _headers(): Headers = additionalHeaders
 
@@ -119,9 +119,9 @@ private constructor(
     }
 
     @NoAutoDetect
-    class CustomerCreditTopUpCreateBody
+    class Body
     @JsonCreator
-    internal constructor(
+    private constructor(
         @JsonProperty("amount")
         @ExcludeMissing
         private val amount: JsonField<String> = JsonMissing.of(),
@@ -222,7 +222,7 @@ private constructor(
 
         private var validated: Boolean = false
 
-        fun validate(): CustomerCreditTopUpCreateBody = apply {
+        fun validate(): Body = apply {
             if (validated) {
                 return@apply
             }
@@ -244,7 +244,7 @@ private constructor(
             fun builder() = Builder()
         }
 
-        /** A builder for [CustomerCreditTopUpCreateBody]. */
+        /** A builder for [Body]. */
         class Builder internal constructor() {
 
             private var amount: JsonField<String>? = null
@@ -256,18 +256,16 @@ private constructor(
             private var expiresAfterUnit: JsonField<ExpiresAfterUnit> = JsonMissing.of()
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
-            internal fun from(customerCreditTopUpCreateBody: CustomerCreditTopUpCreateBody) =
-                apply {
-                    amount = customerCreditTopUpCreateBody.amount
-                    currency = customerCreditTopUpCreateBody.currency
-                    invoiceSettings = customerCreditTopUpCreateBody.invoiceSettings
-                    perUnitCostBasis = customerCreditTopUpCreateBody.perUnitCostBasis
-                    threshold = customerCreditTopUpCreateBody.threshold
-                    expiresAfter = customerCreditTopUpCreateBody.expiresAfter
-                    expiresAfterUnit = customerCreditTopUpCreateBody.expiresAfterUnit
-                    additionalProperties =
-                        customerCreditTopUpCreateBody.additionalProperties.toMutableMap()
-                }
+            internal fun from(body: Body) = apply {
+                amount = body.amount
+                currency = body.currency
+                invoiceSettings = body.invoiceSettings
+                perUnitCostBasis = body.perUnitCostBasis
+                threshold = body.threshold
+                expiresAfter = body.expiresAfter
+                expiresAfterUnit = body.expiresAfterUnit
+                additionalProperties = body.additionalProperties.toMutableMap()
+            }
 
             /** The amount to increment when the threshold is reached. */
             fun amount(amount: String) = amount(JsonField.of(amount))
@@ -365,8 +363,8 @@ private constructor(
                 keys.forEach(::removeAdditionalProperty)
             }
 
-            fun build(): CustomerCreditTopUpCreateBody =
-                CustomerCreditTopUpCreateBody(
+            fun build(): Body =
+                Body(
                     checkRequired("amount", amount),
                     checkRequired("currency", currency),
                     checkRequired("invoiceSettings", invoiceSettings),
@@ -383,7 +381,7 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is CustomerCreditTopUpCreateBody && amount == other.amount && currency == other.currency && invoiceSettings == other.invoiceSettings && perUnitCostBasis == other.perUnitCostBasis && threshold == other.threshold && expiresAfter == other.expiresAfter && expiresAfterUnit == other.expiresAfterUnit && additionalProperties == other.additionalProperties /* spotless:on */
+            return /* spotless:off */ other is Body && amount == other.amount && currency == other.currency && invoiceSettings == other.invoiceSettings && perUnitCostBasis == other.perUnitCostBasis && threshold == other.threshold && expiresAfter == other.expiresAfter && expiresAfterUnit == other.expiresAfterUnit && additionalProperties == other.additionalProperties /* spotless:on */
         }
 
         /* spotless:off */
@@ -393,7 +391,7 @@ private constructor(
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "CustomerCreditTopUpCreateBody{amount=$amount, currency=$currency, invoiceSettings=$invoiceSettings, perUnitCostBasis=$perUnitCostBasis, threshold=$threshold, expiresAfter=$expiresAfter, expiresAfterUnit=$expiresAfterUnit, additionalProperties=$additionalProperties}"
+            "Body{amount=$amount, currency=$currency, invoiceSettings=$invoiceSettings, perUnitCostBasis=$perUnitCostBasis, threshold=$threshold, expiresAfter=$expiresAfter, expiresAfterUnit=$expiresAfterUnit, additionalProperties=$additionalProperties}"
     }
 
     fun toBuilder() = Builder().from(this)
@@ -408,8 +406,7 @@ private constructor(
     class Builder internal constructor() {
 
         private var customerId: String? = null
-        private var body: CustomerCreditTopUpCreateBody.Builder =
-            CustomerCreditTopUpCreateBody.builder()
+        private var body: Body.Builder = Body.builder()
         private var additionalHeaders: Headers.Builder = Headers.builder()
         private var additionalQueryParams: QueryParams.Builder = QueryParams.builder()
 

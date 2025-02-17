@@ -30,7 +30,7 @@ import java.util.Objects
  */
 class DimensionalPriceGroupCreateParams
 private constructor(
-    private val body: DimensionalPriceGroupCreateBody,
+    private val body: Body,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
 ) : Params {
@@ -74,16 +74,16 @@ private constructor(
 
     fun _additionalQueryParams(): QueryParams = additionalQueryParams
 
-    internal fun _body(): DimensionalPriceGroupCreateBody = body
+    internal fun _body(): Body = body
 
     override fun _headers(): Headers = additionalHeaders
 
     override fun _queryParams(): QueryParams = additionalQueryParams
 
     @NoAutoDetect
-    class DimensionalPriceGroupCreateBody
+    class Body
     @JsonCreator
-    internal constructor(
+    private constructor(
         @JsonProperty("billable_metric_id")
         @ExcludeMissing
         private val billableMetricId: JsonField<String> = JsonMissing.of(),
@@ -148,7 +148,7 @@ private constructor(
 
         private var validated: Boolean = false
 
-        fun validate(): DimensionalPriceGroupCreateBody = apply {
+        fun validate(): Body = apply {
             if (validated) {
                 return@apply
             }
@@ -168,7 +168,7 @@ private constructor(
             fun builder() = Builder()
         }
 
-        /** A builder for [DimensionalPriceGroupCreateBody]. */
+        /** A builder for [Body]. */
         class Builder internal constructor() {
 
             private var billableMetricId: JsonField<String>? = null
@@ -178,18 +178,14 @@ private constructor(
             private var metadata: JsonField<Metadata> = JsonMissing.of()
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
-            internal fun from(dimensionalPriceGroupCreateBody: DimensionalPriceGroupCreateBody) =
-                apply {
-                    billableMetricId = dimensionalPriceGroupCreateBody.billableMetricId
-                    dimensions =
-                        dimensionalPriceGroupCreateBody.dimensions.map { it.toMutableList() }
-                    name = dimensionalPriceGroupCreateBody.name
-                    externalDimensionalPriceGroupId =
-                        dimensionalPriceGroupCreateBody.externalDimensionalPriceGroupId
-                    metadata = dimensionalPriceGroupCreateBody.metadata
-                    additionalProperties =
-                        dimensionalPriceGroupCreateBody.additionalProperties.toMutableMap()
-                }
+            internal fun from(body: Body) = apply {
+                billableMetricId = body.billableMetricId
+                dimensions = body.dimensions.map { it.toMutableList() }
+                name = body.name
+                externalDimensionalPriceGroupId = body.externalDimensionalPriceGroupId
+                metadata = body.metadata
+                additionalProperties = body.additionalProperties.toMutableMap()
+            }
 
             fun billableMetricId(billableMetricId: String) =
                 billableMetricId(JsonField.of(billableMetricId))
@@ -264,8 +260,8 @@ private constructor(
                 keys.forEach(::removeAdditionalProperty)
             }
 
-            fun build(): DimensionalPriceGroupCreateBody =
-                DimensionalPriceGroupCreateBody(
+            fun build(): Body =
+                Body(
                     checkRequired("billableMetricId", billableMetricId),
                     checkRequired("dimensions", dimensions).map { it.toImmutable() },
                     checkRequired("name", name),
@@ -280,7 +276,7 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is DimensionalPriceGroupCreateBody && billableMetricId == other.billableMetricId && dimensions == other.dimensions && name == other.name && externalDimensionalPriceGroupId == other.externalDimensionalPriceGroupId && metadata == other.metadata && additionalProperties == other.additionalProperties /* spotless:on */
+            return /* spotless:off */ other is Body && billableMetricId == other.billableMetricId && dimensions == other.dimensions && name == other.name && externalDimensionalPriceGroupId == other.externalDimensionalPriceGroupId && metadata == other.metadata && additionalProperties == other.additionalProperties /* spotless:on */
         }
 
         /* spotless:off */
@@ -290,7 +286,7 @@ private constructor(
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "DimensionalPriceGroupCreateBody{billableMetricId=$billableMetricId, dimensions=$dimensions, name=$name, externalDimensionalPriceGroupId=$externalDimensionalPriceGroupId, metadata=$metadata, additionalProperties=$additionalProperties}"
+            "Body{billableMetricId=$billableMetricId, dimensions=$dimensions, name=$name, externalDimensionalPriceGroupId=$externalDimensionalPriceGroupId, metadata=$metadata, additionalProperties=$additionalProperties}"
     }
 
     fun toBuilder() = Builder().from(this)
@@ -304,8 +300,7 @@ private constructor(
     @NoAutoDetect
     class Builder internal constructor() {
 
-        private var body: DimensionalPriceGroupCreateBody.Builder =
-            DimensionalPriceGroupCreateBody.builder()
+        private var body: Body.Builder = Body.builder()
         private var additionalHeaders: Headers.Builder = Headers.builder()
         private var additionalQueryParams: QueryParams.Builder = QueryParams.builder()
 

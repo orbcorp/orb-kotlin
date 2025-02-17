@@ -299,7 +299,9 @@ class SubscriptionPriceIntervalsParamsTest {
                         .build()
                 )
                 .build()
+
         val body = params._body()
+
         assertThat(body).isNotNull
         assertThat(body.add())
             .isEqualTo(
@@ -459,7 +461,9 @@ class SubscriptionPriceIntervalsParamsTest {
     fun bodyWithoutOptionalFields() {
         val params =
             SubscriptionPriceIntervalsParams.builder().subscriptionId("subscription_id").build()
+
         val body = params._body()
+
         assertThat(body).isNotNull
     }
 

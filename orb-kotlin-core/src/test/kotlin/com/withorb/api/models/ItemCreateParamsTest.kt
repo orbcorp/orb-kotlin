@@ -15,7 +15,9 @@ class ItemCreateParamsTest {
     @Test
     fun body() {
         val params = ItemCreateParams.builder().name("API requests").build()
+
         val body = params._body()
+
         assertThat(body).isNotNull
         assertThat(body.name()).isEqualTo("API requests")
     }
@@ -23,7 +25,9 @@ class ItemCreateParamsTest {
     @Test
     fun bodyWithoutOptionalFields() {
         val params = ItemCreateParams.builder().name("API requests").build()
+
         val body = params._body()
+
         assertThat(body).isNotNull
         assertThat(body.name()).isEqualTo("API requests")
     }
