@@ -21,7 +21,7 @@ interface CouponServiceAsync {
      */
     suspend fun create(
         params: CouponCreateParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): Coupon
 
     /**
@@ -34,7 +34,7 @@ interface CouponServiceAsync {
      */
     suspend fun list(
         params: CouponListParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): CouponListPageAsync
 
     /**
@@ -44,7 +44,7 @@ interface CouponServiceAsync {
      */
     suspend fun archive(
         params: CouponArchiveParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): Coupon
 
     /**
@@ -53,6 +53,6 @@ interface CouponServiceAsync {
      */
     suspend fun fetch(
         params: CouponFetchParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): Coupon
 }

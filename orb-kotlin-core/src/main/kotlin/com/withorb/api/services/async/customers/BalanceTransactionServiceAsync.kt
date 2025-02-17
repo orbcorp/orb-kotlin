@@ -16,7 +16,7 @@ interface BalanceTransactionServiceAsync {
      */
     suspend fun create(
         params: CustomerBalanceTransactionCreateParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): CustomerBalanceTransactionCreateResponse
 
     /**
@@ -48,6 +48,6 @@ interface BalanceTransactionServiceAsync {
      */
     suspend fun list(
         params: CustomerBalanceTransactionListParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): CustomerBalanceTransactionListPageAsync
 }

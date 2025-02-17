@@ -333,7 +333,7 @@ private constructor(
             fun build(): EventIngestBody =
                 EventIngestBody(
                     checkRequired("events", events).map { it.toImmutable() },
-                    additionalProperties.toImmutable()
+                    additionalProperties.toImmutable(),
                 )
         }
 

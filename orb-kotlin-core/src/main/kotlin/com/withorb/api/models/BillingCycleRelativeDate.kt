@@ -9,9 +9,7 @@ import com.withorb.api.errors.OrbInvalidDataException
 
 class BillingCycleRelativeDate
 @JsonCreator
-private constructor(
-    private val value: JsonField<String>,
-) : Enum {
+private constructor(private val value: JsonField<String>) : Enum {
 
     /**
      * Returns this class instance's raw value.

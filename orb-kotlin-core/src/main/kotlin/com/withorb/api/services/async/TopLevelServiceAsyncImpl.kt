@@ -15,10 +15,8 @@ import com.withorb.api.errors.OrbError
 import com.withorb.api.models.TopLevelPingParams
 import com.withorb.api.models.TopLevelPingResponse
 
-class TopLevelServiceAsyncImpl
-internal constructor(
-    private val clientOptions: ClientOptions,
-) : TopLevelServiceAsync {
+class TopLevelServiceAsyncImpl internal constructor(private val clientOptions: ClientOptions) :
+    TopLevelServiceAsync {
 
     private val errorHandler: Handler<OrbError> = errorHandler(clientOptions.jsonMapper)
 
@@ -35,7 +33,7 @@ internal constructor(
      */
     override suspend fun ping(
         params: TopLevelPingParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): TopLevelPingResponse {
         val request =
             HttpRequest.builder()

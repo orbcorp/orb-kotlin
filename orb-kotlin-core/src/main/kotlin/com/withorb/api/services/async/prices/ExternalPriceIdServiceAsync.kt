@@ -15,7 +15,7 @@ interface ExternalPriceIdServiceAsync {
      */
     suspend fun update(
         params: PriceExternalPriceIdUpdateParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): Price
 
     /**
@@ -25,6 +25,6 @@ interface ExternalPriceIdServiceAsync {
      */
     suspend fun fetch(
         params: PriceExternalPriceIdFetchParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): Price
 }

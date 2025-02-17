@@ -89,7 +89,7 @@ private constructor(
         fun build(): TopLevelPingResponse =
             TopLevelPingResponse(
                 checkRequired("response", response),
-                additionalProperties.toImmutable()
+                additionalProperties.toImmutable(),
             )
     }
 

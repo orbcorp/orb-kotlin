@@ -151,13 +151,8 @@ private constructor(
         fun of(
             ledgerService: LedgerServiceAsync,
             params: CustomerCreditLedgerListParams,
-            response: Response
-        ) =
-            CustomerCreditLedgerListPageAsync(
-                ledgerService,
-                params,
-                response,
-            )
+            response: Response,
+        ) = CustomerCreditLedgerListPageAsync(ledgerService, params, response)
     }
 
     @NoAutoDetect
@@ -247,18 +242,12 @@ private constructor(
                 this.additionalProperties.put(key, value)
             }
 
-            fun build() =
-                Response(
-                    data,
-                    paginationMetadata,
-                    additionalProperties.toImmutable(),
-                )
+            fun build() = Response(data, paginationMetadata, additionalProperties.toImmutable())
         }
     }
 
-    class AutoPager(
-        private val firstPage: CustomerCreditLedgerListPageAsync,
-    ) : Flow<CustomerCreditLedgerListResponse> {
+    class AutoPager(private val firstPage: CustomerCreditLedgerListPageAsync) :
+        Flow<CustomerCreditLedgerListResponse> {
 
         override suspend fun collect(collector: FlowCollector<CustomerCreditLedgerListResponse>) {
             var page = firstPage

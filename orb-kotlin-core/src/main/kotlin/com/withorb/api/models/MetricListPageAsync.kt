@@ -76,11 +76,7 @@ private constructor(
     companion object {
 
         fun of(metricsService: MetricServiceAsync, params: MetricListParams, response: Response) =
-            MetricListPageAsync(
-                metricsService,
-                params,
-                response,
-            )
+            MetricListPageAsync(metricsService, params, response)
     }
 
     @NoAutoDetect
@@ -167,18 +163,11 @@ private constructor(
                 this.additionalProperties.put(key, value)
             }
 
-            fun build() =
-                Response(
-                    data,
-                    paginationMetadata,
-                    additionalProperties.toImmutable(),
-                )
+            fun build() = Response(data, paginationMetadata, additionalProperties.toImmutable())
         }
     }
 
-    class AutoPager(
-        private val firstPage: MetricListPageAsync,
-    ) : Flow<BillableMetric> {
+    class AutoPager(private val firstPage: MetricListPageAsync) : Flow<BillableMetric> {
 
         override suspend fun collect(collector: FlowCollector<BillableMetric>) {
             var page = firstPage

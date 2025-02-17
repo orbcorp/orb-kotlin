@@ -93,7 +93,7 @@ private constructor(
         fun build(): EventDeprecateResponse =
             EventDeprecateResponse(
                 checkRequired("deprecated", deprecated),
-                additionalProperties.toImmutable()
+                additionalProperties.toImmutable(),
             )
     }
 

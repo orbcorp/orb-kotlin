@@ -26,19 +26,19 @@ interface TopUpService {
      */
     fun create(
         params: CustomerCreditTopUpCreateParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): CustomerCreditTopUpCreateResponse
 
     /** List top-ups */
     fun list(
         params: CustomerCreditTopUpListParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): CustomerCreditTopUpListPage
 
     /** Delete top-up */
     fun delete(
         params: CustomerCreditTopUpDeleteParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     )
 
     /**
@@ -51,18 +51,18 @@ interface TopUpService {
      */
     fun createByExternalId(
         params: CustomerCreditTopUpCreateByExternalIdParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): CustomerCreditTopUpCreateByExternalIdResponse
 
     /** Delete top-up by external ID */
     fun deleteByExternalId(
         params: CustomerCreditTopUpDeleteByExternalIdParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     )
 
     /** List top-ups by external ID */
     fun listByExternalId(
         params: CustomerCreditTopUpListByExternalIdParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): CustomerCreditTopUpListByExternalIdPage
 }

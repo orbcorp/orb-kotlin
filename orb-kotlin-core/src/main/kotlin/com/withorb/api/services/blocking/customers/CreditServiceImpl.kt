@@ -21,10 +21,8 @@ import com.withorb.api.services.blocking.customers.credits.LedgerServiceImpl
 import com.withorb.api.services.blocking.customers.credits.TopUpService
 import com.withorb.api.services.blocking.customers.credits.TopUpServiceImpl
 
-class CreditServiceImpl
-internal constructor(
-    private val clientOptions: ClientOptions,
-) : CreditService {
+class CreditServiceImpl internal constructor(private val clientOptions: ClientOptions) :
+    CreditService {
 
     private val errorHandler: Handler<OrbError> = errorHandler(clientOptions.jsonMapper)
 
@@ -51,7 +49,7 @@ internal constructor(
      */
     override fun list(
         params: CustomerCreditListParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): CustomerCreditListPage {
         val request =
             HttpRequest.builder()
@@ -85,7 +83,7 @@ internal constructor(
      */
     override fun listByExternalId(
         params: CustomerCreditListByExternalIdParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): CustomerCreditListByExternalIdPage {
         val request =
             HttpRequest.builder()
@@ -94,7 +92,7 @@ internal constructor(
                     "customers",
                     "external_customer_id",
                     params.getPathParam(0),
-                    "credits"
+                    "credits",
                 )
                 .build()
                 .prepare(clientOptions, params)

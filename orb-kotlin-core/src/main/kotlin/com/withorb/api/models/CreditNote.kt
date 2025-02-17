@@ -1133,9 +1133,7 @@ private constructor(
 
             class DiscountType
             @JsonCreator
-            private constructor(
-                private val value: JsonField<String>,
-            ) : Enum {
+            private constructor(private val value: JsonField<String>) : Enum {
 
                 /**
                  * Returns this class instance's raw value.
@@ -1432,11 +1430,8 @@ private constructor(
                 )
         }
 
-        class DiscountType
-        @JsonCreator
-        private constructor(
-            private val value: JsonField<String>,
-        ) : Enum {
+        class DiscountType @JsonCreator private constructor(private val value: JsonField<String>) :
+            Enum {
 
             /**
              * Returns this class instance's raw value.
@@ -1457,7 +1452,7 @@ private constructor(
 
             /** An enum containing [DiscountType]'s known values. */
             enum class Known {
-                PERCENTAGE,
+                PERCENTAGE
             }
 
             /**
@@ -1653,11 +1648,7 @@ private constructor(
             "MaximumAmountAdjustment{amountApplied=$amountApplied, discountType=$discountType, percentageDiscount=$percentageDiscount, appliesToPrices=$appliesToPrices, reason=$reason, additionalProperties=$additionalProperties}"
     }
 
-    class Reason
-    @JsonCreator
-    private constructor(
-        private val value: JsonField<String>,
-    ) : Enum {
+    class Reason @JsonCreator private constructor(private val value: JsonField<String>) : Enum {
 
         /**
          * Returns this class instance's raw value.
@@ -1756,11 +1747,7 @@ private constructor(
         override fun toString() = value.toString()
     }
 
-    class Type
-    @JsonCreator
-    private constructor(
-        private val value: JsonField<String>,
-    ) : Enum {
+    class Type @JsonCreator private constructor(private val value: JsonField<String>) : Enum {
 
         /**
          * Returns this class instance's raw value.
@@ -2015,11 +2002,8 @@ private constructor(
                 )
         }
 
-        class DiscountType
-        @JsonCreator
-        private constructor(
-            private val value: JsonField<String>,
-        ) : Enum {
+        class DiscountType @JsonCreator private constructor(private val value: JsonField<String>) :
+            Enum {
 
             /**
              * Returns this class instance's raw value.
@@ -2040,7 +2024,7 @@ private constructor(
 
             /** An enum containing [DiscountType]'s known values. */
             enum class Known {
-                PERCENTAGE,
+                PERCENTAGE
             }
 
             /**

@@ -14,7 +14,7 @@ interface CreditNoteService {
     /** This endpoint is used to create a single [`Credit Note`](/invoicing/credit-notes). */
     fun create(
         params: CreditNoteCreateParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): CreditNote
 
     /**
@@ -24,7 +24,7 @@ interface CreditNoteService {
      */
     fun list(
         params: CreditNoteListParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): CreditNoteListPage
 
     /**
@@ -33,6 +33,6 @@ interface CreditNoteService {
      */
     fun fetch(
         params: CreditNoteFetchParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): CreditNote
 }

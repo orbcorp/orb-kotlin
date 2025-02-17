@@ -1344,7 +1344,7 @@ private constructor(
                     "percentage_discount" -> {
                         tryDeserialize(
                                 node,
-                                jacksonTypeRef<MonetaryPercentageDiscountAdjustment>()
+                                jacksonTypeRef<MonetaryPercentageDiscountAdjustment>(),
                             ) {
                                 it.validate()
                             }
@@ -1379,7 +1379,7 @@ private constructor(
             override fun serialize(
                 value: Adjustment,
                 generator: JsonGenerator,
-                provider: SerializerProvider
+                provider: SerializerProvider,
             ) {
                 when {
                     value.monetaryUsageDiscount != null ->
@@ -1652,9 +1652,7 @@ private constructor(
 
             class AdjustmentType
             @JsonCreator
-            private constructor(
-                private val value: JsonField<String>,
-            ) : Enum {
+            private constructor(private val value: JsonField<String>) : Enum {
 
                 /**
                  * Returns this class instance's raw value.
@@ -1675,7 +1673,7 @@ private constructor(
 
                 /** An enum containing [AdjustmentType]'s known values. */
                 enum class Known {
-                    USAGE_DISCOUNT,
+                    USAGE_DISCOUNT
                 }
 
                 /**
@@ -2017,9 +2015,7 @@ private constructor(
 
             class AdjustmentType
             @JsonCreator
-            private constructor(
-                private val value: JsonField<String>,
-            ) : Enum {
+            private constructor(private val value: JsonField<String>) : Enum {
 
                 /**
                  * Returns this class instance's raw value.
@@ -2040,7 +2036,7 @@ private constructor(
 
                 /** An enum containing [AdjustmentType]'s known values. */
                 enum class Known {
-                    AMOUNT_DISCOUNT,
+                    AMOUNT_DISCOUNT
                 }
 
                 /**
@@ -2382,9 +2378,7 @@ private constructor(
 
             class AdjustmentType
             @JsonCreator
-            private constructor(
-                private val value: JsonField<String>,
-            ) : Enum {
+            private constructor(private val value: JsonField<String>) : Enum {
 
                 /**
                  * Returns this class instance's raw value.
@@ -2405,7 +2399,7 @@ private constructor(
 
                 /** An enum containing [AdjustmentType]'s known values. */
                 enum class Known {
-                    PERCENTAGE_DISCOUNT,
+                    PERCENTAGE_DISCOUNT
                 }
 
                 /**
@@ -2762,9 +2756,7 @@ private constructor(
 
             class AdjustmentType
             @JsonCreator
-            private constructor(
-                private val value: JsonField<String>,
-            ) : Enum {
+            private constructor(private val value: JsonField<String>) : Enum {
 
                 /**
                  * Returns this class instance's raw value.
@@ -2785,7 +2777,7 @@ private constructor(
 
                 /** An enum containing [AdjustmentType]'s known values. */
                 enum class Known {
-                    MINIMUM,
+                    MINIMUM
                 }
 
                 /**
@@ -3123,9 +3115,7 @@ private constructor(
 
             class AdjustmentType
             @JsonCreator
-            private constructor(
-                private val value: JsonField<String>,
-            ) : Enum {
+            private constructor(private val value: JsonField<String>) : Enum {
 
                 /**
                  * Returns this class instance's raw value.
@@ -3146,7 +3136,7 @@ private constructor(
 
                 /** An enum containing [AdjustmentType]'s known values. */
                 enum class Known {
-                    MAXIMUM,
+                    MAXIMUM
                 }
 
                 /**
@@ -3702,7 +3692,7 @@ private constructor(
             override fun serialize(
                 value: SubLineItem,
                 generator: JsonGenerator,
-                provider: SerializerProvider
+                provider: SerializerProvider,
             ) {
                 when {
                     value.matrix != null -> generator.writeObject(value.matrix)
@@ -4100,7 +4090,7 @@ private constructor(
                             checkRequired("dimensionValues", dimensionValues).map {
                                 it.toImmutable()
                             },
-                            additionalProperties.toImmutable()
+                            additionalProperties.toImmutable(),
                         )
                 }
 
@@ -4122,11 +4112,8 @@ private constructor(
                     "MatrixConfig{dimensionValues=$dimensionValues, additionalProperties=$additionalProperties}"
             }
 
-            class Type
-            @JsonCreator
-            private constructor(
-                private val value: JsonField<String>,
-            ) : Enum {
+            class Type @JsonCreator private constructor(private val value: JsonField<String>) :
+                Enum {
 
                 /**
                  * Returns this class instance's raw value.
@@ -4147,7 +4134,7 @@ private constructor(
 
                 /** An enum containing [Type]'s known values. */
                 enum class Known {
-                    MATRIX,
+                    MATRIX
                 }
 
                 /**
@@ -4653,11 +4640,8 @@ private constructor(
                     "TierConfig{firstUnit=$firstUnit, lastUnit=$lastUnit, unitAmount=$unitAmount, additionalProperties=$additionalProperties}"
             }
 
-            class Type
-            @JsonCreator
-            private constructor(
-                private val value: JsonField<String>,
-            ) : Enum {
+            class Type @JsonCreator private constructor(private val value: JsonField<String>) :
+                Enum {
 
                 /**
                  * Returns this class instance's raw value.
@@ -4678,7 +4662,7 @@ private constructor(
 
                 /** An enum containing [Type]'s known values. */
                 enum class Known {
-                    TIER,
+                    TIER
                 }
 
                 /**
@@ -5024,11 +5008,8 @@ private constructor(
                     "Grouping{key=$key, value=$value, additionalProperties=$additionalProperties}"
             }
 
-            class Type
-            @JsonCreator
-            private constructor(
-                private val value: JsonField<String>,
-            ) : Enum {
+            class Type @JsonCreator private constructor(private val value: JsonField<String>) :
+                Enum {
 
                 /**
                  * Returns this class instance's raw value.
@@ -5049,7 +5030,7 @@ private constructor(
 
                 /** An enum containing [Type]'s known values. */
                 enum class Known {
-                    NULL,
+                    NULL
                 }
 
                 /**

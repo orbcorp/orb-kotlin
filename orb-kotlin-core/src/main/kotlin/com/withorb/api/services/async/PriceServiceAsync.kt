@@ -31,7 +31,7 @@ interface PriceServiceAsync {
      */
     suspend fun create(
         params: PriceCreateParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): Price
 
     /**
@@ -40,7 +40,7 @@ interface PriceServiceAsync {
      */
     suspend fun update(
         params: PriceUpdateParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): Price
 
     /**
@@ -49,7 +49,7 @@ interface PriceServiceAsync {
      */
     suspend fun list(
         params: PriceListParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): PriceListPageAsync
 
     /**
@@ -73,12 +73,12 @@ interface PriceServiceAsync {
      */
     suspend fun evaluate(
         params: PriceEvaluateParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): PriceEvaluateResponse
 
     /** This endpoint returns a price given an identifier. */
     suspend fun fetch(
         params: PriceFetchParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): Price
 }

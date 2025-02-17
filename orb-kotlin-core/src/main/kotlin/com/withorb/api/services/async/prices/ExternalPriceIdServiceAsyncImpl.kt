@@ -18,9 +18,7 @@ import com.withorb.api.models.PriceExternalPriceIdFetchParams
 import com.withorb.api.models.PriceExternalPriceIdUpdateParams
 
 class ExternalPriceIdServiceAsyncImpl
-internal constructor(
-    private val clientOptions: ClientOptions,
-) : ExternalPriceIdServiceAsync {
+internal constructor(private val clientOptions: ClientOptions) : ExternalPriceIdServiceAsync {
 
     private val errorHandler: Handler<OrbError> = errorHandler(clientOptions.jsonMapper)
 
@@ -33,7 +31,7 @@ internal constructor(
      */
     override suspend fun update(
         params: PriceExternalPriceIdUpdateParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): Price {
         val request =
             HttpRequest.builder()
@@ -62,7 +60,7 @@ internal constructor(
      */
     override suspend fun fetch(
         params: PriceExternalPriceIdFetchParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): Price {
         val request =
             HttpRequest.builder()

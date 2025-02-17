@@ -75,13 +75,8 @@ private constructor(
         fun of(
             dimensionalPriceGroupsService: DimensionalPriceGroupServiceAsync,
             params: DimensionalPriceGroupListParams,
-            response: Response
-        ) =
-            DimensionalPriceGroupListPageAsync(
-                dimensionalPriceGroupsService,
-                params,
-                response,
-            )
+            response: Response,
+        ) = DimensionalPriceGroupListPageAsync(dimensionalPriceGroupsService, params, response)
     }
 
     @NoAutoDetect
@@ -169,18 +164,12 @@ private constructor(
                 this.additionalProperties.put(key, value)
             }
 
-            fun build() =
-                Response(
-                    data,
-                    paginationMetadata,
-                    additionalProperties.toImmutable(),
-                )
+            fun build() = Response(data, paginationMetadata, additionalProperties.toImmutable())
         }
     }
 
-    class AutoPager(
-        private val firstPage: DimensionalPriceGroupListPageAsync,
-    ) : Flow<DimensionalPriceGroup> {
+    class AutoPager(private val firstPage: DimensionalPriceGroupListPageAsync) :
+        Flow<DimensionalPriceGroup> {
 
         override suspend fun collect(collector: FlowCollector<DimensionalPriceGroup>) {
             var page = firstPage

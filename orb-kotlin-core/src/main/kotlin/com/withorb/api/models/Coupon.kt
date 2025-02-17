@@ -428,7 +428,7 @@ private constructor(
             override fun serialize(
                 value: Discount,
                 generator: JsonGenerator,
-                provider: SerializerProvider
+                provider: SerializerProvider,
             ) {
                 when {
                     value.percentage != null -> generator.writeObject(value.percentage)

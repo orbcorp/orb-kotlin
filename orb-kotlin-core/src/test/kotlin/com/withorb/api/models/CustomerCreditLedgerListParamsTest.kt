@@ -51,7 +51,7 @@ class CustomerCreditLedgerListParamsTest {
         expected.put("cursor", "cursor")
         expected.put(
             "entry_status",
-            CustomerCreditLedgerListParams.EntryStatus.COMMITTED.toString()
+            CustomerCreditLedgerListParams.EntryStatus.COMMITTED.toString(),
         )
         expected.put("entry_type", CustomerCreditLedgerListParams.EntryType.INCREMENT.toString())
         expected.put("limit", "1")

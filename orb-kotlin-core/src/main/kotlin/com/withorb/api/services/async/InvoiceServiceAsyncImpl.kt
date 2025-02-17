@@ -26,10 +26,8 @@ import com.withorb.api.models.InvoicePayParams
 import com.withorb.api.models.InvoiceUpdateParams
 import com.withorb.api.models.InvoiceVoidParams
 
-class InvoiceServiceAsyncImpl
-internal constructor(
-    private val clientOptions: ClientOptions,
-) : InvoiceServiceAsync {
+class InvoiceServiceAsyncImpl internal constructor(private val clientOptions: ClientOptions) :
+    InvoiceServiceAsync {
 
     private val errorHandler: Handler<OrbError> = errorHandler(clientOptions.jsonMapper)
 
@@ -39,7 +37,7 @@ internal constructor(
     /** This endpoint is used to create a one-off invoice for a customer. */
     override suspend fun create(
         params: InvoiceCreateParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): Invoice {
         val request =
             HttpRequest.builder()
@@ -69,7 +67,7 @@ internal constructor(
      */
     override suspend fun update(
         params: InvoiceUpdateParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): Invoice {
         val request =
             HttpRequest.builder()
@@ -108,7 +106,7 @@ internal constructor(
      */
     override suspend fun list(
         params: InvoiceListParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): InvoiceListPageAsync {
         val request =
             HttpRequest.builder()
@@ -135,7 +133,7 @@ internal constructor(
      */
     override suspend fun fetch(
         params: InvoiceFetchParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): Invoice {
         val request =
             HttpRequest.builder()
@@ -163,7 +161,7 @@ internal constructor(
      */
     override suspend fun fetchUpcoming(
         params: InvoiceFetchUpcomingParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): InvoiceFetchUpcomingResponse {
         val request =
             HttpRequest.builder()
@@ -193,7 +191,7 @@ internal constructor(
      */
     override suspend fun issue(
         params: InvoiceIssueParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): Invoice {
         val request =
             HttpRequest.builder()
@@ -221,7 +219,7 @@ internal constructor(
      */
     override suspend fun markPaid(
         params: InvoiceMarkPaidParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): Invoice {
         val request =
             HttpRequest.builder()

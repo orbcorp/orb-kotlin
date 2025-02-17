@@ -15,24 +15,24 @@ interface ItemServiceAsync {
     /** This endpoint is used to create an [Item](/core-concepts#item). */
     suspend fun create(
         params: ItemCreateParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): Item
 
     /** This endpoint can be used to update properties on the Item. */
     suspend fun update(
         params: ItemUpdateParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): Item
 
     /** This endpoint returns a list of all Items, ordered in descending order by creation time. */
     suspend fun list(
         params: ItemListParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): ItemListPageAsync
 
     /** This endpoint returns an item identified by its item_id. */
     suspend fun fetch(
         params: ItemFetchParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): Item
 }
