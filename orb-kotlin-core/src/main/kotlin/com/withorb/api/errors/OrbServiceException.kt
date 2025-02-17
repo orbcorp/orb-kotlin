@@ -8,7 +8,7 @@ abstract class OrbServiceException(
     private val body: String,
     private val error: OrbError,
     message: String = "$statusCode: $error",
-    cause: Throwable? = null
+    cause: Throwable? = null,
 ) : OrbException(message, cause) {
 
     fun statusCode(): Int = statusCode

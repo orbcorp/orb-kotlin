@@ -839,11 +839,8 @@ private constructor(
     }
 
     /** The unit of expires_after. */
-    class ExpiresAfterUnit
-    @JsonCreator
-    private constructor(
-        private val value: JsonField<String>,
-    ) : Enum {
+    class ExpiresAfterUnit @JsonCreator private constructor(private val value: JsonField<String>) :
+        Enum {
 
         /**
          * Returns this class instance's raw value.

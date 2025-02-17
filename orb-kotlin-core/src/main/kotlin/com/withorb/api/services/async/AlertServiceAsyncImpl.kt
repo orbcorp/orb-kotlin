@@ -24,10 +24,8 @@ import com.withorb.api.models.AlertListParams
 import com.withorb.api.models.AlertRetrieveParams
 import com.withorb.api.models.AlertUpdateParams
 
-class AlertServiceAsyncImpl
-internal constructor(
-    private val clientOptions: ClientOptions,
-) : AlertServiceAsync {
+class AlertServiceAsyncImpl internal constructor(private val clientOptions: ClientOptions) :
+    AlertServiceAsync {
 
     private val errorHandler: Handler<OrbError> = errorHandler(clientOptions.jsonMapper)
 
@@ -37,7 +35,7 @@ internal constructor(
     /** This endpoint retrieves an alert by its ID. */
     override suspend fun retrieve(
         params: AlertRetrieveParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): Alert {
         val request =
             HttpRequest.builder()
@@ -94,7 +92,7 @@ internal constructor(
      */
     override suspend fun list(
         params: AlertListParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): AlertListPageAsync {
         val request =
             HttpRequest.builder()
@@ -126,7 +124,7 @@ internal constructor(
      */
     override suspend fun createForCustomer(
         params: AlertCreateForCustomerParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): Alert {
         val request =
             HttpRequest.builder()
@@ -158,7 +156,7 @@ internal constructor(
      */
     override suspend fun createForExternalCustomer(
         params: AlertCreateForExternalCustomerParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): Alert {
         val request =
             HttpRequest.builder()
@@ -194,7 +192,7 @@ internal constructor(
      */
     override suspend fun createForSubscription(
         params: AlertCreateForSubscriptionParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): Alert {
         val request =
             HttpRequest.builder()
@@ -223,7 +221,7 @@ internal constructor(
      */
     override suspend fun disable(
         params: AlertDisableParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): Alert {
         val request =
             HttpRequest.builder()

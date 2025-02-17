@@ -16,9 +16,8 @@ import com.withorb.api.models.DimensionalPriceGroup
 import com.withorb.api.models.DimensionalPriceGroupExternalDimensionalPriceGroupIdRetrieveParams
 
 class ExternalDimensionalPriceGroupIdServiceAsyncImpl
-internal constructor(
-    private val clientOptions: ClientOptions,
-) : ExternalDimensionalPriceGroupIdServiceAsync {
+internal constructor(private val clientOptions: ClientOptions) :
+    ExternalDimensionalPriceGroupIdServiceAsync {
 
     private val errorHandler: Handler<OrbError> = errorHandler(clientOptions.jsonMapper)
 
@@ -28,7 +27,7 @@ internal constructor(
     /** Fetch dimensional price group by external ID */
     override suspend fun retrieve(
         params: DimensionalPriceGroupExternalDimensionalPriceGroupIdRetrieveParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): DimensionalPriceGroup {
         val request =
             HttpRequest.builder()
@@ -36,7 +35,7 @@ internal constructor(
                 .addPathSegments(
                     "dimensional_price_groups",
                     "external_dimensional_price_group_id",
-                    params.getPathParam(0)
+                    params.getPathParam(0),
                 )
                 .build()
                 .prepareAsync(clientOptions, params)

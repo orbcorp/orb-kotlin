@@ -27,7 +27,7 @@ interface CreditServiceAsync {
      */
     suspend fun list(
         params: CustomerCreditListParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): CustomerCreditListPageAsync
 
     /**
@@ -41,6 +41,6 @@ interface CreditServiceAsync {
      */
     suspend fun listByExternalId(
         params: CustomerCreditListByExternalIdParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): CustomerCreditListByExternalIdPageAsync
 }

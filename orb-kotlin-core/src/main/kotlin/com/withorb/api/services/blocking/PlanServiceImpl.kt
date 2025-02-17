@@ -22,10 +22,7 @@ import com.withorb.api.models.PlanUpdateParams
 import com.withorb.api.services.blocking.plans.ExternalPlanIdService
 import com.withorb.api.services.blocking.plans.ExternalPlanIdServiceImpl
 
-class PlanServiceImpl
-internal constructor(
-    private val clientOptions: ClientOptions,
-) : PlanService {
+class PlanServiceImpl internal constructor(private val clientOptions: ClientOptions) : PlanService {
 
     private val errorHandler: Handler<OrbError> = errorHandler(clientOptions.jsonMapper)
 

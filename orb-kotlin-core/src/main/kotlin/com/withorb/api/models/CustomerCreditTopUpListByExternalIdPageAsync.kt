@@ -75,13 +75,8 @@ private constructor(
         fun of(
             topUpsService: TopUpServiceAsync,
             params: CustomerCreditTopUpListByExternalIdParams,
-            response: Response
-        ) =
-            CustomerCreditTopUpListByExternalIdPageAsync(
-                topUpsService,
-                params,
-                response,
-            )
+            response: Response,
+        ) = CustomerCreditTopUpListByExternalIdPageAsync(topUpsService, params, response)
     }
 
     @NoAutoDetect
@@ -176,18 +171,12 @@ private constructor(
                 this.additionalProperties.put(key, value)
             }
 
-            fun build() =
-                Response(
-                    data,
-                    paginationMetadata,
-                    additionalProperties.toImmutable(),
-                )
+            fun build() = Response(data, paginationMetadata, additionalProperties.toImmutable())
         }
     }
 
-    class AutoPager(
-        private val firstPage: CustomerCreditTopUpListByExternalIdPageAsync,
-    ) : Flow<CustomerCreditTopUpListByExternalIdResponse> {
+    class AutoPager(private val firstPage: CustomerCreditTopUpListByExternalIdPageAsync) :
+        Flow<CustomerCreditTopUpListByExternalIdResponse> {
 
         override suspend fun collect(
             collector: FlowCollector<CustomerCreditTopUpListByExternalIdResponse>

@@ -19,9 +19,7 @@ import com.withorb.api.models.CustomerBalanceTransactionListPageAsync
 import com.withorb.api.models.CustomerBalanceTransactionListParams
 
 class BalanceTransactionServiceAsyncImpl
-internal constructor(
-    private val clientOptions: ClientOptions,
-) : BalanceTransactionServiceAsync {
+internal constructor(private val clientOptions: ClientOptions) : BalanceTransactionServiceAsync {
 
     private val errorHandler: Handler<OrbError> = errorHandler(clientOptions.jsonMapper)
 
@@ -35,7 +33,7 @@ internal constructor(
      */
     override suspend fun create(
         params: CustomerBalanceTransactionCreateParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): CustomerBalanceTransactionCreateResponse {
         val request =
             HttpRequest.builder()
@@ -87,7 +85,7 @@ internal constructor(
      */
     override suspend fun list(
         params: CustomerBalanceTransactionListParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): CustomerBalanceTransactionListPageAsync {
         val request =
             HttpRequest.builder()

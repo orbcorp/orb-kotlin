@@ -882,7 +882,7 @@ class ErrorHandlingTest {
                     e,
                     999,
                     Headers.builder().put("Foo", "Bar").build(),
-                    toJson(ORB_ERROR)
+                    toJson(ORB_ERROR),
                 )
             })
     }
@@ -1061,7 +1061,7 @@ class ErrorHandlingTest {
         throwable: Throwable,
         statusCode: Int,
         headers: Headers,
-        responseBody: ByteArray
+        responseBody: ByteArray,
     ) {
         assertThat(throwable)
             .asInstanceOf(

@@ -22,10 +22,8 @@ import com.withorb.api.models.CustomerCreditLedgerListByExternalIdParams
 import com.withorb.api.models.CustomerCreditLedgerListPageAsync
 import com.withorb.api.models.CustomerCreditLedgerListParams
 
-class LedgerServiceAsyncImpl
-internal constructor(
-    private val clientOptions: ClientOptions,
-) : LedgerServiceAsync {
+class LedgerServiceAsyncImpl internal constructor(private val clientOptions: ClientOptions) :
+    LedgerServiceAsync {
 
     private val errorHandler: Handler<OrbError> = errorHandler(clientOptions.jsonMapper)
 
@@ -114,7 +112,7 @@ internal constructor(
      */
     override suspend fun list(
         params: CustomerCreditLedgerListParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): CustomerCreditLedgerListPageAsync {
         val request =
             HttpRequest.builder()
@@ -242,7 +240,7 @@ internal constructor(
      */
     override suspend fun createEntry(
         params: CustomerCreditLedgerCreateEntryParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): CustomerCreditLedgerCreateEntryResponse {
         val request =
             HttpRequest.builder()
@@ -371,7 +369,7 @@ internal constructor(
      */
     override suspend fun createEntryByExternalId(
         params: CustomerCreditLedgerCreateEntryByExternalIdParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): CustomerCreditLedgerCreateEntryByExternalIdResponse {
         val request =
             HttpRequest.builder()
@@ -381,7 +379,7 @@ internal constructor(
                     "external_customer_id",
                     params.getPathParam(0),
                     "credits",
-                    "ledger_entry"
+                    "ledger_entry",
                 )
                 .body(json(clientOptions.jsonMapper, params._body()))
                 .build()
@@ -484,7 +482,7 @@ internal constructor(
      */
     override suspend fun listByExternalId(
         params: CustomerCreditLedgerListByExternalIdParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): CustomerCreditLedgerListByExternalIdPageAsync {
         val request =
             HttpRequest.builder()
@@ -494,7 +492,7 @@ internal constructor(
                     "external_customer_id",
                     params.getPathParam(0),
                     "credits",
-                    "ledger"
+                    "ledger",
                 )
                 .build()
                 .prepareAsync(clientOptions, params)

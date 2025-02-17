@@ -79,13 +79,8 @@ private constructor(
         fun of(
             subscriptionsService: SubscriptionServiceAsync,
             params: SubscriptionFetchScheduleParams,
-            response: Response
-        ) =
-            SubscriptionFetchSchedulePageAsync(
-                subscriptionsService,
-                params,
-                response,
-            )
+            response: Response,
+        ) = SubscriptionFetchSchedulePageAsync(subscriptionsService, params, response)
     }
 
     @NoAutoDetect
@@ -176,18 +171,12 @@ private constructor(
                 this.additionalProperties.put(key, value)
             }
 
-            fun build() =
-                Response(
-                    data,
-                    paginationMetadata,
-                    additionalProperties.toImmutable(),
-                )
+            fun build() = Response(data, paginationMetadata, additionalProperties.toImmutable())
         }
     }
 
-    class AutoPager(
-        private val firstPage: SubscriptionFetchSchedulePageAsync,
-    ) : Flow<SubscriptionFetchScheduleResponse> {
+    class AutoPager(private val firstPage: SubscriptionFetchSchedulePageAsync) :
+        Flow<SubscriptionFetchScheduleResponse> {
 
         override suspend fun collect(collector: FlowCollector<SubscriptionFetchScheduleResponse>) {
             var page = firstPage

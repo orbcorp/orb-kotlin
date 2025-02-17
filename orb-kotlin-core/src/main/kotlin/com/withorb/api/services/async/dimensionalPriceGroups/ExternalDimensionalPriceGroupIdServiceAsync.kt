@@ -11,6 +11,6 @@ interface ExternalDimensionalPriceGroupIdServiceAsync {
     /** Fetch dimensional price group by external ID */
     suspend fun retrieve(
         params: DimensionalPriceGroupExternalDimensionalPriceGroupIdRetrieveParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): DimensionalPriceGroup
 }

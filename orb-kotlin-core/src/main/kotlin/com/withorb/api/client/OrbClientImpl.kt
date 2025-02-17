@@ -33,9 +33,7 @@ import com.withorb.api.services.blocking.SubscriptionServiceImpl
 import com.withorb.api.services.blocking.TopLevelService
 import com.withorb.api.services.blocking.TopLevelServiceImpl
 
-class OrbClientImpl(
-    private val clientOptions: ClientOptions,
-) : OrbClient {
+class OrbClientImpl(private val clientOptions: ClientOptions) : OrbClient {
 
     private val clientOptionsWithUserAgent =
         if (clientOptions.headers.names().contains("User-Agent")) clientOptions

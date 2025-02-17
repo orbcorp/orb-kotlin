@@ -25,18 +25,18 @@ interface DimensionalPriceGroupServiceAsync {
      */
     suspend fun create(
         params: DimensionalPriceGroupCreateParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): DimensionalPriceGroup
 
     /** Fetch dimensional price group */
     suspend fun retrieve(
         params: DimensionalPriceGroupRetrieveParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): DimensionalPriceGroup
 
     /** List dimensional price groups */
     suspend fun list(
         params: DimensionalPriceGroupListParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): DimensionalPriceGroupListPageAsync
 }

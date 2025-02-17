@@ -18,7 +18,7 @@ interface PlanServiceAsync {
     /** This endpoint allows creation of plans including their prices. */
     suspend fun create(
         params: PlanCreateParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): Plan
 
     /**
@@ -29,7 +29,7 @@ interface PlanServiceAsync {
      */
     suspend fun update(
         params: PlanUpdateParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): Plan
 
     /**
@@ -40,7 +40,7 @@ interface PlanServiceAsync {
      */
     suspend fun list(
         params: PlanListParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): PlanListPageAsync
 
     /**
@@ -63,6 +63,6 @@ interface PlanServiceAsync {
      */
     suspend fun fetch(
         params: PlanFetchParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): Plan
 }

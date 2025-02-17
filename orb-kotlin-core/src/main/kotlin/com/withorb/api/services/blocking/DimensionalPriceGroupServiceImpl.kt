@@ -22,9 +22,7 @@ import com.withorb.api.services.blocking.dimensionalPriceGroups.ExternalDimensio
 import com.withorb.api.services.blocking.dimensionalPriceGroups.ExternalDimensionalPriceGroupIdServiceImpl
 
 class DimensionalPriceGroupServiceImpl
-internal constructor(
-    private val clientOptions: ClientOptions,
-) : DimensionalPriceGroupService {
+internal constructor(private val clientOptions: ClientOptions) : DimensionalPriceGroupService {
 
     private val errorHandler: Handler<OrbError> = errorHandler(clientOptions.jsonMapper)
 
@@ -49,7 +47,7 @@ internal constructor(
      */
     override fun create(
         params: DimensionalPriceGroupCreateParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): DimensionalPriceGroup {
         val request =
             HttpRequest.builder()
@@ -74,7 +72,7 @@ internal constructor(
     /** Fetch dimensional price group */
     override fun retrieve(
         params: DimensionalPriceGroupRetrieveParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): DimensionalPriceGroup {
         val request =
             HttpRequest.builder()
@@ -99,7 +97,7 @@ internal constructor(
     /** List dimensional price groups */
     override fun list(
         params: DimensionalPriceGroupListParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): DimensionalPriceGroupListPage {
         val request =
             HttpRequest.builder()

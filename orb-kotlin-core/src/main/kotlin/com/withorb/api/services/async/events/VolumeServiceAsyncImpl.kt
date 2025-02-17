@@ -15,10 +15,8 @@ import com.withorb.api.errors.OrbError
 import com.withorb.api.models.EventVolumeListParams
 import com.withorb.api.models.EventVolumes
 
-class VolumeServiceAsyncImpl
-internal constructor(
-    private val clientOptions: ClientOptions,
-) : VolumeServiceAsync {
+class VolumeServiceAsyncImpl internal constructor(private val clientOptions: ClientOptions) :
+    VolumeServiceAsync {
 
     private val errorHandler: Handler<OrbError> = errorHandler(clientOptions.jsonMapper)
 
@@ -40,7 +38,7 @@ internal constructor(
      */
     override suspend fun list(
         params: EventVolumeListParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): EventVolumes {
         val request =
             HttpRequest.builder()

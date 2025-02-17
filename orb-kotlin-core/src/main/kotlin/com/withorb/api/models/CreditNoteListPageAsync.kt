@@ -79,13 +79,8 @@ private constructor(
         fun of(
             creditNotesService: CreditNoteServiceAsync,
             params: CreditNoteListParams,
-            response: Response
-        ) =
-            CreditNoteListPageAsync(
-                creditNotesService,
-                params,
-                response,
-            )
+            response: Response,
+        ) = CreditNoteListPageAsync(creditNotesService, params, response)
     }
 
     @NoAutoDetect
@@ -172,18 +167,11 @@ private constructor(
                 this.additionalProperties.put(key, value)
             }
 
-            fun build() =
-                Response(
-                    data,
-                    paginationMetadata,
-                    additionalProperties.toImmutable(),
-                )
+            fun build() = Response(data, paginationMetadata, additionalProperties.toImmutable())
         }
     }
 
-    class AutoPager(
-        private val firstPage: CreditNoteListPageAsync,
-    ) : Flow<CreditNote> {
+    class AutoPager(private val firstPage: CreditNoteListPageAsync) : Flow<CreditNote> {
 
         override suspend fun collect(collector: FlowCollector<CreditNote>) {
             var page = firstPage

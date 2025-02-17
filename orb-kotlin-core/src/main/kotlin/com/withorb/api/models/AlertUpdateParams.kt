@@ -149,7 +149,7 @@ private constructor(
             fun build(): AlertUpdateBody =
                 AlertUpdateBody(
                     checkRequired("thresholds", thresholds).map { it.toImmutable() },
-                    additionalProperties.toImmutable()
+                    additionalProperties.toImmutable(),
                 )
         }
 

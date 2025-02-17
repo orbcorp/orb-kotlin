@@ -20,10 +20,7 @@ import com.withorb.api.models.ItemListPage
 import com.withorb.api.models.ItemListParams
 import com.withorb.api.models.ItemUpdateParams
 
-class ItemServiceImpl
-internal constructor(
-    private val clientOptions: ClientOptions,
-) : ItemService {
+class ItemServiceImpl internal constructor(private val clientOptions: ClientOptions) : ItemService {
 
     private val errorHandler: Handler<OrbError> = errorHandler(clientOptions.jsonMapper)
 

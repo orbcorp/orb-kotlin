@@ -33,9 +33,7 @@ import com.withorb.api.services.async.SubscriptionServiceAsyncImpl
 import com.withorb.api.services.async.TopLevelServiceAsync
 import com.withorb.api.services.async.TopLevelServiceAsyncImpl
 
-class OrbClientAsyncImpl(
-    private val clientOptions: ClientOptions,
-) : OrbClientAsync {
+class OrbClientAsyncImpl(private val clientOptions: ClientOptions) : OrbClientAsync {
 
     private val clientOptionsWithUserAgent =
         if (clientOptions.headers.names().contains("User-Agent")) clientOptions

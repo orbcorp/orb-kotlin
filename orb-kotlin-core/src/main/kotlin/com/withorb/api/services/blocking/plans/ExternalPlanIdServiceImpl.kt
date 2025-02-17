@@ -17,10 +17,8 @@ import com.withorb.api.models.Plan
 import com.withorb.api.models.PlanExternalPlanIdFetchParams
 import com.withorb.api.models.PlanExternalPlanIdUpdateParams
 
-class ExternalPlanIdServiceImpl
-internal constructor(
-    private val clientOptions: ClientOptions,
-) : ExternalPlanIdService {
+class ExternalPlanIdServiceImpl internal constructor(private val clientOptions: ClientOptions) :
+    ExternalPlanIdService {
 
     private val errorHandler: Handler<OrbError> = errorHandler(clientOptions.jsonMapper)
 
@@ -35,7 +33,7 @@ internal constructor(
      */
     override fun update(
         params: PlanExternalPlanIdUpdateParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): Plan {
         val request =
             HttpRequest.builder()
@@ -76,7 +74,7 @@ internal constructor(
      */
     override fun fetch(
         params: PlanExternalPlanIdFetchParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): Plan {
         val request =
             HttpRequest.builder()

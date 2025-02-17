@@ -106,7 +106,7 @@ private constructor(
         fun build(): CustomerCostListByExternalIdResponse =
             CustomerCostListByExternalIdResponse(
                 checkRequired("data", data).map { it.toImmutable() },
-                additionalProperties.toImmutable()
+                additionalProperties.toImmutable(),
             )
     }
 

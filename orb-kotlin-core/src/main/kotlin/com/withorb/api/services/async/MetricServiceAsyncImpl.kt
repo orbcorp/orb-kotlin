@@ -20,10 +20,8 @@ import com.withorb.api.models.MetricListPageAsync
 import com.withorb.api.models.MetricListParams
 import com.withorb.api.models.MetricUpdateParams
 
-class MetricServiceAsyncImpl
-internal constructor(
-    private val clientOptions: ClientOptions,
-) : MetricServiceAsync {
+class MetricServiceAsyncImpl internal constructor(private val clientOptions: ClientOptions) :
+    MetricServiceAsync {
 
     private val errorHandler: Handler<OrbError> = errorHandler(clientOptions.jsonMapper)
 
@@ -37,7 +35,7 @@ internal constructor(
      */
     override suspend fun create(
         params: MetricCreateParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): BillableMetric {
         val request =
             HttpRequest.builder()
@@ -65,7 +63,7 @@ internal constructor(
      */
     override suspend fun update(
         params: MetricUpdateParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): BillableMetric {
         val request =
             HttpRequest.builder()
@@ -95,7 +93,7 @@ internal constructor(
      */
     override suspend fun list(
         params: MetricListParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): MetricListPageAsync {
         val request =
             HttpRequest.builder()
@@ -123,7 +121,7 @@ internal constructor(
      */
     override suspend fun fetch(
         params: MetricFetchParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): BillableMetric {
         val request =
             HttpRequest.builder()
