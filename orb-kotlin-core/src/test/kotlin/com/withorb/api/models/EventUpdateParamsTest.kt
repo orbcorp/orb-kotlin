@@ -32,7 +32,9 @@ class EventUpdateParamsTest {
                 .customerId("customer_id")
                 .externalCustomerId("external_customer_id")
                 .build()
+
         val body = params._body()
+
         assertThat(body).isNotNull
         assertThat(body.eventName()).isEqualTo("event_name")
         assertThat(body._properties()).isEqualTo(JsonValue.from(mapOf<String, Any>()))
@@ -50,7 +52,9 @@ class EventUpdateParamsTest {
                 .properties(JsonValue.from(mapOf<String, Any>()))
                 .timestamp(OffsetDateTime.parse("2020-12-09T16:09:53Z"))
                 .build()
+
         val body = params._body()
+
         assertThat(body).isNotNull
         assertThat(body.eventName()).isEqualTo("event_name")
         assertThat(body._properties()).isEqualTo(JsonValue.from(mapOf<String, Any>()))

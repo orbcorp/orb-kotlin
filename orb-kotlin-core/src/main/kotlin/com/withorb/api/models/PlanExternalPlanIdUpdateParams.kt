@@ -27,7 +27,7 @@ import java.util.Objects
 class PlanExternalPlanIdUpdateParams
 private constructor(
     private val otherExternalPlanId: String,
-    private val body: PlanExternalPlanIdUpdateBody,
+    private val body: Body,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
 ) : Params {
@@ -66,7 +66,7 @@ private constructor(
 
     fun _additionalQueryParams(): QueryParams = additionalQueryParams
 
-    internal fun _body(): PlanExternalPlanIdUpdateBody = body
+    internal fun _body(): Body = body
 
     override fun _headers(): Headers = additionalHeaders
 
@@ -80,9 +80,9 @@ private constructor(
     }
 
     @NoAutoDetect
-    class PlanExternalPlanIdUpdateBody
+    class Body
     @JsonCreator
-    internal constructor(
+    private constructor(
         @JsonProperty("external_plan_id")
         @ExcludeMissing
         private val externalPlanId: JsonField<String> = JsonMissing.of(),
@@ -129,7 +129,7 @@ private constructor(
 
         private var validated: Boolean = false
 
-        fun validate(): PlanExternalPlanIdUpdateBody = apply {
+        fun validate(): Body = apply {
             if (validated) {
                 return@apply
             }
@@ -146,18 +146,17 @@ private constructor(
             fun builder() = Builder()
         }
 
-        /** A builder for [PlanExternalPlanIdUpdateBody]. */
+        /** A builder for [Body]. */
         class Builder internal constructor() {
 
             private var externalPlanId: JsonField<String> = JsonMissing.of()
             private var metadata: JsonField<Metadata> = JsonMissing.of()
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
-            internal fun from(planExternalPlanIdUpdateBody: PlanExternalPlanIdUpdateBody) = apply {
-                externalPlanId = planExternalPlanIdUpdateBody.externalPlanId
-                metadata = planExternalPlanIdUpdateBody.metadata
-                additionalProperties =
-                    planExternalPlanIdUpdateBody.additionalProperties.toMutableMap()
+            internal fun from(body: Body) = apply {
+                externalPlanId = body.externalPlanId
+                metadata = body.metadata
+                additionalProperties = body.additionalProperties.toMutableMap()
             }
 
             /**
@@ -210,12 +209,7 @@ private constructor(
                 keys.forEach(::removeAdditionalProperty)
             }
 
-            fun build(): PlanExternalPlanIdUpdateBody =
-                PlanExternalPlanIdUpdateBody(
-                    externalPlanId,
-                    metadata,
-                    additionalProperties.toImmutable(),
-                )
+            fun build(): Body = Body(externalPlanId, metadata, additionalProperties.toImmutable())
         }
 
         override fun equals(other: Any?): Boolean {
@@ -223,7 +217,7 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is PlanExternalPlanIdUpdateBody && externalPlanId == other.externalPlanId && metadata == other.metadata && additionalProperties == other.additionalProperties /* spotless:on */
+            return /* spotless:off */ other is Body && externalPlanId == other.externalPlanId && metadata == other.metadata && additionalProperties == other.additionalProperties /* spotless:on */
         }
 
         /* spotless:off */
@@ -233,7 +227,7 @@ private constructor(
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "PlanExternalPlanIdUpdateBody{externalPlanId=$externalPlanId, metadata=$metadata, additionalProperties=$additionalProperties}"
+            "Body{externalPlanId=$externalPlanId, metadata=$metadata, additionalProperties=$additionalProperties}"
     }
 
     fun toBuilder() = Builder().from(this)
@@ -248,8 +242,7 @@ private constructor(
     class Builder internal constructor() {
 
         private var otherExternalPlanId: String? = null
-        private var body: PlanExternalPlanIdUpdateBody.Builder =
-            PlanExternalPlanIdUpdateBody.builder()
+        private var body: Body.Builder = Body.builder()
         private var additionalHeaders: Headers.Builder = Headers.builder()
         private var additionalQueryParams: QueryParams.Builder = QueryParams.builder()
 

@@ -22,7 +22,9 @@ class AlertUpdateParamsTest {
                 .alertConfigurationId("alert_configuration_id")
                 .addThreshold(AlertUpdateParams.Threshold.builder().value(0.0).build())
                 .build()
+
         val body = params._body()
+
         assertThat(body).isNotNull
         assertThat(body.thresholds())
             .isEqualTo(listOf(AlertUpdateParams.Threshold.builder().value(0.0).build()))
@@ -35,7 +37,9 @@ class AlertUpdateParamsTest {
                 .alertConfigurationId("alert_configuration_id")
                 .addThreshold(AlertUpdateParams.Threshold.builder().value(0.0).build())
                 .build()
+
         val body = params._body()
+
         assertThat(body).isNotNull
         assertThat(body.thresholds())
             .isEqualTo(listOf(AlertUpdateParams.Threshold.builder().value(0.0).build()))

@@ -154,7 +154,9 @@ class CustomerCreateParamsTest {
                 )
                 .timezone("timezone")
                 .build()
+
         val body = params._body()
+
         assertThat(body).isNotNull
         assertThat(body.email()).isEqualTo("dev@stainlessapi.com")
         assertThat(body.name()).isEqualTo("x")
@@ -237,7 +239,9 @@ class CustomerCreateParamsTest {
     @Test
     fun bodyWithoutOptionalFields() {
         val params = CustomerCreateParams.builder().email("dev@stainlessapi.com").name("x").build()
+
         val body = params._body()
+
         assertThat(body).isNotNull
         assertThat(body.email()).isEqualTo("dev@stainlessapi.com")
         assertThat(body.name()).isEqualTo("x")

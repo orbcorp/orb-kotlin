@@ -43,13 +43,14 @@ class LedgerServiceTest {
         val customerCreditLedgerCreateEntryResponse =
             ledgerService.createEntry(
                 CustomerCreditLedgerCreateEntryParams.builder()
-                    .forAddIncrementCreditLedgerEntryRequestParams(
-                        CustomerCreditLedgerCreateEntryParams
+                    .customerId("customer_id")
+                    .body(
+                        CustomerCreditLedgerCreateEntryParams.Body
                             .AddIncrementCreditLedgerEntryRequestParams
                             .builder()
                             .amount(0.0)
                             .entryType(
-                                CustomerCreditLedgerCreateEntryParams
+                                CustomerCreditLedgerCreateEntryParams.Body
                                     .AddIncrementCreditLedgerEntryRequestParams
                                     .EntryType
                                     .INCREMENT
@@ -59,7 +60,7 @@ class LedgerServiceTest {
                             .effectiveDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                             .expiryDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                             .invoiceSettings(
-                                CustomerCreditLedgerCreateEntryParams
+                                CustomerCreditLedgerCreateEntryParams.Body
                                     .AddIncrementCreditLedgerEntryRequestParams
                                     .InvoiceSettings
                                     .builder()
@@ -70,7 +71,7 @@ class LedgerServiceTest {
                                     .build()
                             )
                             .metadata(
-                                CustomerCreditLedgerCreateEntryParams
+                                CustomerCreditLedgerCreateEntryParams.Body
                                     .AddIncrementCreditLedgerEntryRequestParams
                                     .Metadata
                                     .builder()
@@ -80,7 +81,6 @@ class LedgerServiceTest {
                             .perUnitCostBasis("per_unit_cost_basis")
                             .build()
                     )
-                    .customerId("customer_id")
                     .build()
             )
         println(customerCreditLedgerCreateEntryResponse)
@@ -97,13 +97,14 @@ class LedgerServiceTest {
         val customerCreditLedgerCreateEntryByExternalIdResponse =
             ledgerService.createEntryByExternalId(
                 CustomerCreditLedgerCreateEntryByExternalIdParams.builder()
-                    .forAddIncrementCreditLedgerEntryRequestParams(
-                        CustomerCreditLedgerCreateEntryByExternalIdParams
+                    .externalCustomerId("external_customer_id")
+                    .body(
+                        CustomerCreditLedgerCreateEntryByExternalIdParams.Body
                             .AddIncrementCreditLedgerEntryRequestParams
                             .builder()
                             .amount(0.0)
                             .entryType(
-                                CustomerCreditLedgerCreateEntryByExternalIdParams
+                                CustomerCreditLedgerCreateEntryByExternalIdParams.Body
                                     .AddIncrementCreditLedgerEntryRequestParams
                                     .EntryType
                                     .INCREMENT
@@ -113,7 +114,7 @@ class LedgerServiceTest {
                             .effectiveDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                             .expiryDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                             .invoiceSettings(
-                                CustomerCreditLedgerCreateEntryByExternalIdParams
+                                CustomerCreditLedgerCreateEntryByExternalIdParams.Body
                                     .AddIncrementCreditLedgerEntryRequestParams
                                     .InvoiceSettings
                                     .builder()
@@ -124,7 +125,7 @@ class LedgerServiceTest {
                                     .build()
                             )
                             .metadata(
-                                CustomerCreditLedgerCreateEntryByExternalIdParams
+                                CustomerCreditLedgerCreateEntryByExternalIdParams.Body
                                     .AddIncrementCreditLedgerEntryRequestParams
                                     .Metadata
                                     .builder()
@@ -134,7 +135,6 @@ class LedgerServiceTest {
                             .perUnitCostBasis("per_unit_cost_basis")
                             .build()
                     )
-                    .externalCustomerId("external_customer_id")
                     .build()
             )
         println(customerCreditLedgerCreateEntryByExternalIdResponse)

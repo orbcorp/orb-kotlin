@@ -26,7 +26,9 @@ class CustomerBalanceTransactionCreateParamsTest {
                 .type(CustomerBalanceTransactionCreateParams.Type.INCREMENT)
                 .description("description")
                 .build()
+
         val body = params._body()
+
         assertThat(body).isNotNull
         assertThat(body.amount()).isEqualTo("amount")
         assertThat(body.type()).isEqualTo(CustomerBalanceTransactionCreateParams.Type.INCREMENT)
@@ -41,7 +43,9 @@ class CustomerBalanceTransactionCreateParamsTest {
                 .amount("amount")
                 .type(CustomerBalanceTransactionCreateParams.Type.INCREMENT)
                 .build()
+
         val body = params._body()
+
         assertThat(body).isNotNull
         assertThat(body.amount()).isEqualTo("amount")
         assertThat(body.type()).isEqualTo(CustomerBalanceTransactionCreateParams.Type.INCREMENT)

@@ -32,7 +32,7 @@ import java.util.Objects
 class AlertCreateForExternalCustomerParams
 private constructor(
     private val externalCustomerId: String,
-    private val body: AlertCreateForExternalCustomerBody,
+    private val body: Body,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
 ) : Params {
@@ -63,7 +63,7 @@ private constructor(
 
     fun _additionalQueryParams(): QueryParams = additionalQueryParams
 
-    internal fun _body(): AlertCreateForExternalCustomerBody = body
+    internal fun _body(): Body = body
 
     override fun _headers(): Headers = additionalHeaders
 
@@ -77,9 +77,9 @@ private constructor(
     }
 
     @NoAutoDetect
-    class AlertCreateForExternalCustomerBody
+    class Body
     @JsonCreator
-    internal constructor(
+    private constructor(
         @JsonProperty("currency")
         @ExcludeMissing
         private val currency: JsonField<String> = JsonMissing.of(),
@@ -117,7 +117,7 @@ private constructor(
 
         private var validated: Boolean = false
 
-        fun validate(): AlertCreateForExternalCustomerBody = apply {
+        fun validate(): Body = apply {
             if (validated) {
                 return@apply
             }
@@ -135,7 +135,7 @@ private constructor(
             fun builder() = Builder()
         }
 
-        /** A builder for [AlertCreateForExternalCustomerBody]. */
+        /** A builder for [Body]. */
         class Builder internal constructor() {
 
             private var currency: JsonField<String>? = null
@@ -143,15 +143,11 @@ private constructor(
             private var thresholds: JsonField<MutableList<Threshold>>? = null
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
-            internal fun from(
-                alertCreateForExternalCustomerBody: AlertCreateForExternalCustomerBody
-            ) = apply {
-                currency = alertCreateForExternalCustomerBody.currency
-                type = alertCreateForExternalCustomerBody.type
-                thresholds =
-                    alertCreateForExternalCustomerBody.thresholds.map { it.toMutableList() }
-                additionalProperties =
-                    alertCreateForExternalCustomerBody.additionalProperties.toMutableMap()
+            internal fun from(body: Body) = apply {
+                currency = body.currency
+                type = body.type
+                thresholds = body.thresholds.map { it.toMutableList() }
+                additionalProperties = body.additionalProperties.toMutableMap()
             }
 
             /** The case sensitive currency or custom pricing unit to use for this alert. */
@@ -206,8 +202,8 @@ private constructor(
                 keys.forEach(::removeAdditionalProperty)
             }
 
-            fun build(): AlertCreateForExternalCustomerBody =
-                AlertCreateForExternalCustomerBody(
+            fun build(): Body =
+                Body(
                     checkRequired("currency", currency),
                     checkRequired("type", type),
                     (thresholds ?: JsonMissing.of()).map { it.toImmutable() },
@@ -220,7 +216,7 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is AlertCreateForExternalCustomerBody && currency == other.currency && type == other.type && thresholds == other.thresholds && additionalProperties == other.additionalProperties /* spotless:on */
+            return /* spotless:off */ other is Body && currency == other.currency && type == other.type && thresholds == other.thresholds && additionalProperties == other.additionalProperties /* spotless:on */
         }
 
         /* spotless:off */
@@ -230,7 +226,7 @@ private constructor(
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "AlertCreateForExternalCustomerBody{currency=$currency, type=$type, thresholds=$thresholds, additionalProperties=$additionalProperties}"
+            "Body{currency=$currency, type=$type, thresholds=$thresholds, additionalProperties=$additionalProperties}"
     }
 
     fun toBuilder() = Builder().from(this)
@@ -245,8 +241,7 @@ private constructor(
     class Builder internal constructor() {
 
         private var externalCustomerId: String? = null
-        private var body: AlertCreateForExternalCustomerBody.Builder =
-            AlertCreateForExternalCustomerBody.builder()
+        private var body: Body.Builder = Body.builder()
         private var additionalHeaders: Headers.Builder = Headers.builder()
         private var additionalQueryParams: QueryParams.Builder = QueryParams.builder()
 

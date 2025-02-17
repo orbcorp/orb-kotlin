@@ -93,7 +93,9 @@ class InvoiceCreateParamsTest {
                 )
                 .willAutoIssue(false)
                 .build()
+
         val body = params._body()
+
         assertThat(body).isNotNull
         assertThat(body.currency()).isEqualTo("USD")
         assertThat(body.invoiceDate()).isEqualTo(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
@@ -163,7 +165,9 @@ class InvoiceCreateParamsTest {
                 )
                 .netTerms(0L)
                 .build()
+
         val body = params._body()
+
         assertThat(body).isNotNull
         assertThat(body.currency()).isEqualTo("USD")
         assertThat(body.invoiceDate()).isEqualTo(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))

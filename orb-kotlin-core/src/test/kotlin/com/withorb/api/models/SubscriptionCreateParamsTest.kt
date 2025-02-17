@@ -596,7 +596,9 @@ class SubscriptionCreateParamsTest {
                 .startDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                 .trialDurationDays(999999L)
                 .build()
+
         val body = params._body()
+
         assertThat(body).isNotNull
         assertThat(body.addAdjustments())
             .isEqualTo(
@@ -918,7 +920,9 @@ class SubscriptionCreateParamsTest {
     @Test
     fun bodyWithoutOptionalFields() {
         val params = SubscriptionCreateParams.builder().build()
+
         val body = params._body()
+
         assertThat(body).isNotNull
     }
 }

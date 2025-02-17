@@ -13,6 +13,8 @@ class EventIngestParamsTest {
     @Test
     fun create() {
         EventIngestParams.builder()
+            .backfillId("backfill_id")
+            .debug(true)
             .addEvent(
                 EventIngestParams.Event.builder()
                     .eventName("event_name")
@@ -23,8 +25,6 @@ class EventIngestParamsTest {
                     .externalCustomerId("external_customer_id")
                     .build()
             )
-            .backfillId("backfill_id")
-            .debug(true)
             .build()
     }
 
@@ -32,6 +32,8 @@ class EventIngestParamsTest {
     fun queryParams() {
         val params =
             EventIngestParams.builder()
+                .backfillId("backfill_id")
+                .debug(true)
                 .addEvent(
                     EventIngestParams.Event.builder()
                         .eventName("event_name")
@@ -42,8 +44,6 @@ class EventIngestParamsTest {
                         .externalCustomerId("external_customer_id")
                         .build()
                 )
-                .backfillId("backfill_id")
-                .debug(true)
                 .build()
         val expected = QueryParams.builder()
         expected.put("backfill_id", "backfill_id")
@@ -72,6 +72,8 @@ class EventIngestParamsTest {
     fun body() {
         val params =
             EventIngestParams.builder()
+                .backfillId("backfill_id")
+                .debug(true)
                 .addEvent(
                     EventIngestParams.Event.builder()
                         .eventName("event_name")
@@ -82,10 +84,10 @@ class EventIngestParamsTest {
                         .externalCustomerId("external_customer_id")
                         .build()
                 )
-                .backfillId("backfill_id")
-                .debug(true)
                 .build()
+
         val body = params._body()
+
         assertThat(body).isNotNull
         assertThat(body.events())
             .isEqualTo(
@@ -115,7 +117,9 @@ class EventIngestParamsTest {
                         .build()
                 )
                 .build()
+
         val body = params._body()
+
         assertThat(body).isNotNull
         assertThat(body.events())
             .isEqualTo(

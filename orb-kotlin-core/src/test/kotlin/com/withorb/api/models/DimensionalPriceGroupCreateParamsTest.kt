@@ -39,7 +39,9 @@ class DimensionalPriceGroupCreateParamsTest {
                         .build()
                 )
                 .build()
+
         val body = params._body()
+
         assertThat(body).isNotNull
         assertThat(body.billableMetricId()).isEqualTo("billable_metric_id")
         assertThat(body.dimensions()).isEqualTo(listOf("region", "instance_type"))
@@ -63,7 +65,9 @@ class DimensionalPriceGroupCreateParamsTest {
                 .addDimension("instance_type")
                 .name("name")
                 .build()
+
         val body = params._body()
+
         assertThat(body).isNotNull
         assertThat(body.billableMetricId()).isEqualTo("billable_metric_id")
         assertThat(body.dimensions()).isEqualTo(listOf("region", "instance_type"))

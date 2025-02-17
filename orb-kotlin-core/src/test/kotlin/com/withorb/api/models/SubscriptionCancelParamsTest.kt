@@ -27,7 +27,9 @@ class SubscriptionCancelParamsTest {
                 .allowInvoiceCreditOrVoid(true)
                 .cancellationDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                 .build()
+
         val body = params._body()
+
         assertThat(body).isNotNull
         assertThat(body.cancelOption())
             .isEqualTo(SubscriptionCancelParams.CancelOption.END_OF_SUBSCRIPTION_TERM)
@@ -43,7 +45,9 @@ class SubscriptionCancelParamsTest {
                 .subscriptionId("subscription_id")
                 .cancelOption(SubscriptionCancelParams.CancelOption.END_OF_SUBSCRIPTION_TERM)
                 .build()
+
         val body = params._body()
+
         assertThat(body).isNotNull
         assertThat(body.cancelOption())
             .isEqualTo(SubscriptionCancelParams.CancelOption.END_OF_SUBSCRIPTION_TERM)

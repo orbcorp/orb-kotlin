@@ -31,7 +31,9 @@ class MetricUpdateParamsTest {
                         .build()
                 )
                 .build()
+
         val body = params._body()
+
         assertThat(body).isNotNull
         assertThat(body.metadata())
             .isEqualTo(
@@ -44,7 +46,9 @@ class MetricUpdateParamsTest {
     @Test
     fun bodyWithoutOptionalFields() {
         val params = MetricUpdateParams.builder().metricId("metric_id").build()
+
         val body = params._body()
+
         assertThat(body).isNotNull
     }
 

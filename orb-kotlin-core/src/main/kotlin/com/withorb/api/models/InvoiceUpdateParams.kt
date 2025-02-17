@@ -28,7 +28,7 @@ import java.util.Objects
 class InvoiceUpdateParams
 private constructor(
     private val invoiceId: String,
-    private val body: InvoiceUpdateBody,
+    private val body: Body,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
 ) : Params {
@@ -55,7 +55,7 @@ private constructor(
 
     fun _additionalQueryParams(): QueryParams = additionalQueryParams
 
-    internal fun _body(): InvoiceUpdateBody = body
+    internal fun _body(): Body = body
 
     override fun _headers(): Headers = additionalHeaders
 
@@ -69,9 +69,9 @@ private constructor(
     }
 
     @NoAutoDetect
-    class InvoiceUpdateBody
+    class Body
     @JsonCreator
-    internal constructor(
+    private constructor(
         @JsonProperty("metadata")
         @ExcludeMissing
         private val metadata: JsonField<Metadata> = JsonMissing.of(),
@@ -99,7 +99,7 @@ private constructor(
 
         private var validated: Boolean = false
 
-        fun validate(): InvoiceUpdateBody = apply {
+        fun validate(): Body = apply {
             if (validated) {
                 return@apply
             }
@@ -115,15 +115,15 @@ private constructor(
             fun builder() = Builder()
         }
 
-        /** A builder for [InvoiceUpdateBody]. */
+        /** A builder for [Body]. */
         class Builder internal constructor() {
 
             private var metadata: JsonField<Metadata> = JsonMissing.of()
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
-            internal fun from(invoiceUpdateBody: InvoiceUpdateBody) = apply {
-                metadata = invoiceUpdateBody.metadata
-                additionalProperties = invoiceUpdateBody.additionalProperties.toMutableMap()
+            internal fun from(body: Body) = apply {
+                metadata = body.metadata
+                additionalProperties = body.additionalProperties.toMutableMap()
             }
 
             /**
@@ -159,8 +159,7 @@ private constructor(
                 keys.forEach(::removeAdditionalProperty)
             }
 
-            fun build(): InvoiceUpdateBody =
-                InvoiceUpdateBody(metadata, additionalProperties.toImmutable())
+            fun build(): Body = Body(metadata, additionalProperties.toImmutable())
         }
 
         override fun equals(other: Any?): Boolean {
@@ -168,7 +167,7 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is InvoiceUpdateBody && metadata == other.metadata && additionalProperties == other.additionalProperties /* spotless:on */
+            return /* spotless:off */ other is Body && metadata == other.metadata && additionalProperties == other.additionalProperties /* spotless:on */
         }
 
         /* spotless:off */
@@ -178,7 +177,7 @@ private constructor(
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "InvoiceUpdateBody{metadata=$metadata, additionalProperties=$additionalProperties}"
+            "Body{metadata=$metadata, additionalProperties=$additionalProperties}"
     }
 
     fun toBuilder() = Builder().from(this)
@@ -193,7 +192,7 @@ private constructor(
     class Builder internal constructor() {
 
         private var invoiceId: String? = null
-        private var body: InvoiceUpdateBody.Builder = InvoiceUpdateBody.builder()
+        private var body: Body.Builder = Body.builder()
         private var additionalHeaders: Headers.Builder = Headers.builder()
         private var additionalQueryParams: QueryParams.Builder = QueryParams.builder()
 
