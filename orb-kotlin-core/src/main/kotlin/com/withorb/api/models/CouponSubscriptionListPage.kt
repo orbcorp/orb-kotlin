@@ -78,13 +78,8 @@ private constructor(
         fun of(
             subscriptionsService: SubscriptionService,
             params: CouponSubscriptionListParams,
-            response: Response
-        ) =
-            CouponSubscriptionListPage(
-                subscriptionsService,
-                params,
-                response,
-            )
+            response: Response,
+        ) = CouponSubscriptionListPage(subscriptionsService, params, response)
     }
 
     @NoAutoDetect
@@ -171,18 +166,11 @@ private constructor(
                 this.additionalProperties.put(key, value)
             }
 
-            fun build() =
-                Response(
-                    data,
-                    paginationMetadata,
-                    additionalProperties.toImmutable(),
-                )
+            fun build() = Response(data, paginationMetadata, additionalProperties.toImmutable())
         }
     }
 
-    class AutoPager(
-        private val firstPage: CouponSubscriptionListPage,
-    ) : Sequence<Subscription> {
+    class AutoPager(private val firstPage: CouponSubscriptionListPage) : Sequence<Subscription> {
 
         override fun iterator(): Iterator<Subscription> = iterator {
             var page = firstPage

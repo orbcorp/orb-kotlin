@@ -2745,7 +2745,7 @@ private constructor(
                 override fun serialize(
                     value: Adjustment,
                     generator: JsonGenerator,
-                    provider: SerializerProvider
+                    provider: SerializerProvider,
                 ) {
                     when {
                         value.newPercentageDiscount != null ->
@@ -2948,9 +2948,7 @@ private constructor(
 
                 class AdjustmentType
                 @JsonCreator
-                private constructor(
-                    private val value: JsonField<String>,
-                ) : Enum {
+                private constructor(private val value: JsonField<String>) : Enum {
 
                     /**
                      * Returns this class instance's raw value.
@@ -2972,7 +2970,7 @@ private constructor(
 
                     /** An enum containing [AdjustmentType]'s known values. */
                     enum class Known {
-                        PERCENTAGE_DISCOUNT,
+                        PERCENTAGE_DISCOUNT
                     }
 
                     /**
@@ -3240,9 +3238,7 @@ private constructor(
 
                 class AdjustmentType
                 @JsonCreator
-                private constructor(
-                    private val value: JsonField<String>,
-                ) : Enum {
+                private constructor(private val value: JsonField<String>) : Enum {
 
                     /**
                      * Returns this class instance's raw value.
@@ -3264,7 +3260,7 @@ private constructor(
 
                     /** An enum containing [AdjustmentType]'s known values. */
                     enum class Known {
-                        USAGE_DISCOUNT,
+                        USAGE_DISCOUNT
                     }
 
                     /**
@@ -3532,9 +3528,7 @@ private constructor(
 
                 class AdjustmentType
                 @JsonCreator
-                private constructor(
-                    private val value: JsonField<String>,
-                ) : Enum {
+                private constructor(private val value: JsonField<String>) : Enum {
 
                     /**
                      * Returns this class instance's raw value.
@@ -3556,7 +3550,7 @@ private constructor(
 
                     /** An enum containing [AdjustmentType]'s known values. */
                     enum class Known {
-                        AMOUNT_DISCOUNT,
+                        AMOUNT_DISCOUNT
                     }
 
                     /**
@@ -3842,9 +3836,7 @@ private constructor(
 
                 class AdjustmentType
                 @JsonCreator
-                private constructor(
-                    private val value: JsonField<String>,
-                ) : Enum {
+                private constructor(private val value: JsonField<String>) : Enum {
 
                     /**
                      * Returns this class instance's raw value.
@@ -3866,7 +3858,7 @@ private constructor(
 
                     /** An enum containing [AdjustmentType]'s known values. */
                     enum class Known {
-                        MINIMUM,
+                        MINIMUM
                     }
 
                     /**
@@ -4133,9 +4125,7 @@ private constructor(
 
                 class AdjustmentType
                 @JsonCreator
-                private constructor(
-                    private val value: JsonField<String>,
-                ) : Enum {
+                private constructor(private val value: JsonField<String>) : Enum {
 
                     /**
                      * Returns this class instance's raw value.
@@ -4157,7 +4147,7 @@ private constructor(
 
                     /** An enum containing [AdjustmentType]'s known values. */
                     enum class Known {
-                        MAXIMUM,
+                        MAXIMUM
                     }
 
                     /**
@@ -4912,11 +4902,8 @@ private constructor(
             }
 
             /** The cadence at which to allocate the amount to the customer. */
-            class Cadence
-            @JsonCreator
-            private constructor(
-                private val value: JsonField<String>,
-            ) : Enum {
+            class Cadence @JsonCreator private constructor(private val value: JsonField<String>) :
+                Enum {
 
                 /**
                  * Returns this class instance's raw value.
@@ -5245,9 +5232,7 @@ private constructor(
 
             class DiscountType
             @JsonCreator
-            private constructor(
-                private val value: JsonField<String>,
-            ) : Enum {
+            private constructor(private val value: JsonField<String>) : Enum {
 
                 /**
                  * Returns this class instance's raw value.
@@ -6020,21 +6005,21 @@ private constructor(
                         "threshold_total_amount" -> {
                             tryDeserialize(
                                     node,
-                                    jacksonTypeRef<NewSubscriptionThresholdTotalAmountPrice>()
+                                    jacksonTypeRef<NewSubscriptionThresholdTotalAmountPrice>(),
                                 ) {
                                     it.validate()
                                 }
                                 ?.let {
                                     return Price(
                                         newSubscriptionThresholdTotalAmount = it,
-                                        _json = json
+                                        _json = json,
                                     )
                                 }
                         }
                         "tiered_package" -> {
                             tryDeserialize(
                                     node,
-                                    jacksonTypeRef<NewSubscriptionTieredPackagePrice>()
+                                    jacksonTypeRef<NewSubscriptionTieredPackagePrice>(),
                                 ) {
                                     it.validate()
                                 }
@@ -6045,21 +6030,21 @@ private constructor(
                         "tiered_with_minimum" -> {
                             tryDeserialize(
                                     node,
-                                    jacksonTypeRef<NewSubscriptionTieredWithMinimumPrice>()
+                                    jacksonTypeRef<NewSubscriptionTieredWithMinimumPrice>(),
                                 ) {
                                     it.validate()
                                 }
                                 ?.let {
                                     return Price(
                                         newSubscriptionTieredWithMinimum = it,
-                                        _json = json
+                                        _json = json,
                                     )
                                 }
                         }
                         "unit_with_percent" -> {
                             tryDeserialize(
                                     node,
-                                    jacksonTypeRef<NewSubscriptionUnitWithPercentPrice>()
+                                    jacksonTypeRef<NewSubscriptionUnitWithPercentPrice>(),
                                 ) {
                                     it.validate()
                                 }
@@ -6070,84 +6055,84 @@ private constructor(
                         "package_with_allocation" -> {
                             tryDeserialize(
                                     node,
-                                    jacksonTypeRef<NewSubscriptionPackageWithAllocationPrice>()
+                                    jacksonTypeRef<NewSubscriptionPackageWithAllocationPrice>(),
                                 ) {
                                     it.validate()
                                 }
                                 ?.let {
                                     return Price(
                                         newSubscriptionPackageWithAllocation = it,
-                                        _json = json
+                                        _json = json,
                                     )
                                 }
                         }
                         "tiered_with_proration" -> {
                             tryDeserialize(
                                     node,
-                                    jacksonTypeRef<NewSubscriptionTierWithProrationPrice>()
+                                    jacksonTypeRef<NewSubscriptionTierWithProrationPrice>(),
                                 ) {
                                     it.validate()
                                 }
                                 ?.let {
                                     return Price(
                                         newSubscriptionTierWithProration = it,
-                                        _json = json
+                                        _json = json,
                                     )
                                 }
                         }
                         "unit_with_proration" -> {
                             tryDeserialize(
                                     node,
-                                    jacksonTypeRef<NewSubscriptionUnitWithProrationPrice>()
+                                    jacksonTypeRef<NewSubscriptionUnitWithProrationPrice>(),
                                 ) {
                                     it.validate()
                                 }
                                 ?.let {
                                     return Price(
                                         newSubscriptionUnitWithProration = it,
-                                        _json = json
+                                        _json = json,
                                     )
                                 }
                         }
                         "grouped_allocation" -> {
                             tryDeserialize(
                                     node,
-                                    jacksonTypeRef<NewSubscriptionGroupedAllocationPrice>()
+                                    jacksonTypeRef<NewSubscriptionGroupedAllocationPrice>(),
                                 ) {
                                     it.validate()
                                 }
                                 ?.let {
                                     return Price(
                                         newSubscriptionGroupedAllocation = it,
-                                        _json = json
+                                        _json = json,
                                     )
                                 }
                         }
                         "grouped_with_prorated_minimum" -> {
                             tryDeserialize(
                                     node,
-                                    jacksonTypeRef<NewSubscriptionGroupedWithProratedMinimumPrice>()
+                                    jacksonTypeRef<NewSubscriptionGroupedWithProratedMinimumPrice>(),
                                 ) {
                                     it.validate()
                                 }
                                 ?.let {
                                     return Price(
                                         newSubscriptionGroupedWithProratedMinimum = it,
-                                        _json = json
+                                        _json = json,
                                     )
                                 }
                         }
                         "bulk_with_proration" -> {
                             tryDeserialize(
                                     node,
-                                    jacksonTypeRef<NewSubscriptionBulkWithProrationPrice>()
+                                    jacksonTypeRef<NewSubscriptionBulkWithProrationPrice>(),
                                 ) {
                                     it.validate()
                                 }
                                 ?.let {
                                     return Price(
                                         newSubscriptionBulkWithProration = it,
-                                        _json = json
+                                        _json = json,
                                     )
                                 }
                         }
@@ -6162,7 +6147,7 @@ private constructor(
                 override fun serialize(
                     value: Price,
                     generator: JsonGenerator,
-                    provider: SerializerProvider
+                    provider: SerializerProvider,
                 ) {
                     when {
                         value.newSubscriptionUnit != null ->
@@ -6774,9 +6759,7 @@ private constructor(
                 /** The cadence to bill for this price on. */
                 class Cadence
                 @JsonCreator
-                private constructor(
-                    private val value: JsonField<String>,
-                ) : Enum {
+                private constructor(private val value: JsonField<String>) : Enum {
 
                     /**
                      * Returns this class instance's raw value.
@@ -6894,9 +6877,7 @@ private constructor(
 
                 class ModelType
                 @JsonCreator
-                private constructor(
-                    private val value: JsonField<String>,
-                ) : Enum {
+                private constructor(private val value: JsonField<String>) : Enum {
 
                     /**
                      * Returns this class instance's raw value.
@@ -6918,7 +6899,7 @@ private constructor(
 
                     /** An enum containing [ModelType]'s known values. */
                     enum class Known {
-                        UNIT,
+                        UNIT
                     }
 
                     /**
@@ -7069,7 +7050,7 @@ private constructor(
                         fun build(): UnitConfig =
                             UnitConfig(
                                 checkRequired("unitAmount", unitAmount),
-                                additionalProperties.toImmutable()
+                                additionalProperties.toImmutable(),
                             )
                     }
 
@@ -7212,9 +7193,7 @@ private constructor(
                     /** The unit of billing period duration. */
                     class DurationUnit
                     @JsonCreator
-                    private constructor(
-                        private val value: JsonField<String>,
-                    ) : Enum {
+                    private constructor(private val value: JsonField<String>) : Enum {
 
                         /**
                          * Returns this class instance's raw value.
@@ -7449,9 +7428,7 @@ private constructor(
                     /** The unit of billing period duration. */
                     class DurationUnit
                     @JsonCreator
-                    private constructor(
-                        private val value: JsonField<String>,
-                    ) : Enum {
+                    private constructor(private val value: JsonField<String>) : Enum {
 
                         /**
                          * Returns this class instance's raw value.
@@ -7574,7 +7551,7 @@ private constructor(
                 @JsonCreator
                 private constructor(
                     @JsonAnySetter
-                    private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
+                    private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap()
                 ) {
 
                     @JsonAnyGetter
@@ -8237,9 +8214,7 @@ private constructor(
                 /** The cadence to bill for this price on. */
                 class Cadence
                 @JsonCreator
-                private constructor(
-                    private val value: JsonField<String>,
-                ) : Enum {
+                private constructor(private val value: JsonField<String>) : Enum {
 
                     /**
                      * Returns this class instance's raw value.
@@ -8357,9 +8332,7 @@ private constructor(
 
                 class ModelType
                 @JsonCreator
-                private constructor(
-                    private val value: JsonField<String>,
-                ) : Enum {
+                private constructor(private val value: JsonField<String>) : Enum {
 
                     /**
                      * Returns this class instance's raw value.
@@ -8381,7 +8354,7 @@ private constructor(
 
                     /** An enum containing [ModelType]'s known values. */
                     enum class Known {
-                        PACKAGE,
+                        PACKAGE
                     }
 
                     /**
@@ -8711,9 +8684,7 @@ private constructor(
                     /** The unit of billing period duration. */
                     class DurationUnit
                     @JsonCreator
-                    private constructor(
-                        private val value: JsonField<String>,
-                    ) : Enum {
+                    private constructor(private val value: JsonField<String>) : Enum {
 
                         /**
                          * Returns this class instance's raw value.
@@ -8948,9 +8919,7 @@ private constructor(
                     /** The unit of billing period duration. */
                     class DurationUnit
                     @JsonCreator
-                    private constructor(
-                        private val value: JsonField<String>,
-                    ) : Enum {
+                    private constructor(private val value: JsonField<String>) : Enum {
 
                         /**
                          * Returns this class instance's raw value.
@@ -9073,7 +9042,7 @@ private constructor(
                 @JsonCreator
                 private constructor(
                     @JsonAnySetter
-                    private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
+                    private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap()
                 ) {
 
                     @JsonAnyGetter
@@ -9736,9 +9705,7 @@ private constructor(
                 /** The cadence to bill for this price on. */
                 class Cadence
                 @JsonCreator
-                private constructor(
-                    private val value: JsonField<String>,
-                ) : Enum {
+                private constructor(private val value: JsonField<String>) : Enum {
 
                     /**
                      * Returns this class instance's raw value.
@@ -10224,9 +10191,7 @@ private constructor(
 
                 class ModelType
                 @JsonCreator
-                private constructor(
-                    private val value: JsonField<String>,
-                ) : Enum {
+                private constructor(private val value: JsonField<String>) : Enum {
 
                     /**
                      * Returns this class instance's raw value.
@@ -10248,7 +10213,7 @@ private constructor(
 
                     /** An enum containing [ModelType]'s known values. */
                     enum class Known {
-                        MATRIX,
+                        MATRIX
                     }
 
                     /**
@@ -10434,9 +10399,7 @@ private constructor(
                     /** The unit of billing period duration. */
                     class DurationUnit
                     @JsonCreator
-                    private constructor(
-                        private val value: JsonField<String>,
-                    ) : Enum {
+                    private constructor(private val value: JsonField<String>) : Enum {
 
                         /**
                          * Returns this class instance's raw value.
@@ -10671,9 +10634,7 @@ private constructor(
                     /** The unit of billing period duration. */
                     class DurationUnit
                     @JsonCreator
-                    private constructor(
-                        private val value: JsonField<String>,
-                    ) : Enum {
+                    private constructor(private val value: JsonField<String>) : Enum {
 
                         /**
                          * Returns this class instance's raw value.
@@ -10796,7 +10757,7 @@ private constructor(
                 @JsonCreator
                 private constructor(
                     @JsonAnySetter
-                    private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
+                    private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap()
                 ) {
 
                     @JsonAnyGetter
@@ -11459,9 +11420,7 @@ private constructor(
                 /** The cadence to bill for this price on. */
                 class Cadence
                 @JsonCreator
-                private constructor(
-                    private val value: JsonField<String>,
-                ) : Enum {
+                private constructor(private val value: JsonField<String>) : Enum {
 
                     /**
                      * Returns this class instance's raw value.
@@ -11579,9 +11538,7 @@ private constructor(
 
                 class ModelType
                 @JsonCreator
-                private constructor(
-                    private val value: JsonField<String>,
-                ) : Enum {
+                private constructor(private val value: JsonField<String>) : Enum {
 
                     /**
                      * Returns this class instance's raw value.
@@ -11603,7 +11560,7 @@ private constructor(
 
                     /** An enum containing [ModelType]'s known values. */
                     enum class Known {
-                        TIERED,
+                        TIERED
                     }
 
                     /**
@@ -11772,7 +11729,7 @@ private constructor(
                         fun build(): TieredConfig =
                             TieredConfig(
                                 checkRequired("tiers", tiers).map { it.toImmutable() },
-                                additionalProperties.toImmutable()
+                                additionalProperties.toImmutable(),
                             )
                     }
 
@@ -12088,9 +12045,7 @@ private constructor(
                     /** The unit of billing period duration. */
                     class DurationUnit
                     @JsonCreator
-                    private constructor(
-                        private val value: JsonField<String>,
-                    ) : Enum {
+                    private constructor(private val value: JsonField<String>) : Enum {
 
                         /**
                          * Returns this class instance's raw value.
@@ -12325,9 +12280,7 @@ private constructor(
                     /** The unit of billing period duration. */
                     class DurationUnit
                     @JsonCreator
-                    private constructor(
-                        private val value: JsonField<String>,
-                    ) : Enum {
+                    private constructor(private val value: JsonField<String>) : Enum {
 
                         /**
                          * Returns this class instance's raw value.
@@ -12450,7 +12403,7 @@ private constructor(
                 @JsonCreator
                 private constructor(
                     @JsonAnySetter
-                    private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
+                    private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap()
                 ) {
 
                     @JsonAnyGetter
@@ -13115,9 +13068,7 @@ private constructor(
                 /** The cadence to bill for this price on. */
                 class Cadence
                 @JsonCreator
-                private constructor(
-                    private val value: JsonField<String>,
-                ) : Enum {
+                private constructor(private val value: JsonField<String>) : Enum {
 
                     /**
                      * Returns this class instance's raw value.
@@ -13235,9 +13186,7 @@ private constructor(
 
                 class ModelType
                 @JsonCreator
-                private constructor(
-                    private val value: JsonField<String>,
-                ) : Enum {
+                private constructor(private val value: JsonField<String>) : Enum {
 
                     /**
                      * Returns this class instance's raw value.
@@ -13259,7 +13208,7 @@ private constructor(
 
                     /** An enum containing [ModelType]'s known values. */
                     enum class Known {
-                        TIERED_BPS,
+                        TIERED_BPS
                     }
 
                     /**
@@ -13438,7 +13387,7 @@ private constructor(
                         fun build(): TieredBpsConfig =
                             TieredBpsConfig(
                                 checkRequired("tiers", tiers).map { it.toImmutable() },
-                                additionalProperties.toImmutable()
+                                additionalProperties.toImmutable(),
                             )
                     }
 
@@ -13759,9 +13708,7 @@ private constructor(
                     /** The unit of billing period duration. */
                     class DurationUnit
                     @JsonCreator
-                    private constructor(
-                        private val value: JsonField<String>,
-                    ) : Enum {
+                    private constructor(private val value: JsonField<String>) : Enum {
 
                         /**
                          * Returns this class instance's raw value.
@@ -13996,9 +13943,7 @@ private constructor(
                     /** The unit of billing period duration. */
                     class DurationUnit
                     @JsonCreator
-                    private constructor(
-                        private val value: JsonField<String>,
-                    ) : Enum {
+                    private constructor(private val value: JsonField<String>) : Enum {
 
                         /**
                          * Returns this class instance's raw value.
@@ -14121,7 +14066,7 @@ private constructor(
                 @JsonCreator
                 private constructor(
                     @JsonAnySetter
-                    private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
+                    private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap()
                 ) {
 
                     @JsonAnyGetter
@@ -14910,9 +14855,7 @@ private constructor(
                 /** The cadence to bill for this price on. */
                 class Cadence
                 @JsonCreator
-                private constructor(
-                    private val value: JsonField<String>,
-                ) : Enum {
+                private constructor(private val value: JsonField<String>) : Enum {
 
                     /**
                      * Returns this class instance's raw value.
@@ -15030,9 +14973,7 @@ private constructor(
 
                 class ModelType
                 @JsonCreator
-                private constructor(
-                    private val value: JsonField<String>,
-                ) : Enum {
+                private constructor(private val value: JsonField<String>) : Enum {
 
                     /**
                      * Returns this class instance's raw value.
@@ -15054,7 +14995,7 @@ private constructor(
 
                     /** An enum containing [ModelType]'s known values. */
                     enum class Known {
-                        BPS,
+                        BPS
                     }
 
                     /**
@@ -15240,9 +15181,7 @@ private constructor(
                     /** The unit of billing period duration. */
                     class DurationUnit
                     @JsonCreator
-                    private constructor(
-                        private val value: JsonField<String>,
-                    ) : Enum {
+                    private constructor(private val value: JsonField<String>) : Enum {
 
                         /**
                          * Returns this class instance's raw value.
@@ -15477,9 +15416,7 @@ private constructor(
                     /** The unit of billing period duration. */
                     class DurationUnit
                     @JsonCreator
-                    private constructor(
-                        private val value: JsonField<String>,
-                    ) : Enum {
+                    private constructor(private val value: JsonField<String>) : Enum {
 
                         /**
                          * Returns this class instance's raw value.
@@ -15602,7 +15539,7 @@ private constructor(
                 @JsonCreator
                 private constructor(
                     @JsonAnySetter
-                    private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
+                    private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap()
                 ) {
 
                     @JsonAnyGetter
@@ -16375,7 +16312,7 @@ private constructor(
                         fun build(): BulkBpsConfig =
                             BulkBpsConfig(
                                 checkRequired("tiers", tiers).map { it.toImmutable() },
-                                additionalProperties.toImmutable()
+                                additionalProperties.toImmutable(),
                             )
                     }
 
@@ -16554,9 +16491,7 @@ private constructor(
                 /** The cadence to bill for this price on. */
                 class Cadence
                 @JsonCreator
-                private constructor(
-                    private val value: JsonField<String>,
-                ) : Enum {
+                private constructor(private val value: JsonField<String>) : Enum {
 
                     /**
                      * Returns this class instance's raw value.
@@ -16674,9 +16609,7 @@ private constructor(
 
                 class ModelType
                 @JsonCreator
-                private constructor(
-                    private val value: JsonField<String>,
-                ) : Enum {
+                private constructor(private val value: JsonField<String>) : Enum {
 
                     /**
                      * Returns this class instance's raw value.
@@ -16698,7 +16631,7 @@ private constructor(
 
                     /** An enum containing [ModelType]'s known values. */
                     enum class Known {
-                        BULK_BPS,
+                        BULK_BPS
                     }
 
                     /**
@@ -16884,9 +16817,7 @@ private constructor(
                     /** The unit of billing period duration. */
                     class DurationUnit
                     @JsonCreator
-                    private constructor(
-                        private val value: JsonField<String>,
-                    ) : Enum {
+                    private constructor(private val value: JsonField<String>) : Enum {
 
                         /**
                          * Returns this class instance's raw value.
@@ -17121,9 +17052,7 @@ private constructor(
                     /** The unit of billing period duration. */
                     class DurationUnit
                     @JsonCreator
-                    private constructor(
-                        private val value: JsonField<String>,
-                    ) : Enum {
+                    private constructor(private val value: JsonField<String>) : Enum {
 
                         /**
                          * Returns this class instance's raw value.
@@ -17246,7 +17175,7 @@ private constructor(
                 @JsonCreator
                 private constructor(
                     @JsonAnySetter
-                    private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
+                    private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap()
                 ) {
 
                     @JsonAnyGetter
@@ -18002,7 +17931,7 @@ private constructor(
                         fun build(): BulkConfig =
                             BulkConfig(
                                 checkRequired("tiers", tiers).map { it.toImmutable() },
-                                additionalProperties.toImmutable()
+                                additionalProperties.toImmutable(),
                             )
                     }
 
@@ -18165,9 +18094,7 @@ private constructor(
                 /** The cadence to bill for this price on. */
                 class Cadence
                 @JsonCreator
-                private constructor(
-                    private val value: JsonField<String>,
-                ) : Enum {
+                private constructor(private val value: JsonField<String>) : Enum {
 
                     /**
                      * Returns this class instance's raw value.
@@ -18285,9 +18212,7 @@ private constructor(
 
                 class ModelType
                 @JsonCreator
-                private constructor(
-                    private val value: JsonField<String>,
-                ) : Enum {
+                private constructor(private val value: JsonField<String>) : Enum {
 
                     /**
                      * Returns this class instance's raw value.
@@ -18309,7 +18234,7 @@ private constructor(
 
                     /** An enum containing [ModelType]'s known values. */
                     enum class Known {
-                        BULK,
+                        BULK
                     }
 
                     /**
@@ -18495,9 +18420,7 @@ private constructor(
                     /** The unit of billing period duration. */
                     class DurationUnit
                     @JsonCreator
-                    private constructor(
-                        private val value: JsonField<String>,
-                    ) : Enum {
+                    private constructor(private val value: JsonField<String>) : Enum {
 
                         /**
                          * Returns this class instance's raw value.
@@ -18732,9 +18655,7 @@ private constructor(
                     /** The unit of billing period duration. */
                     class DurationUnit
                     @JsonCreator
-                    private constructor(
-                        private val value: JsonField<String>,
-                    ) : Enum {
+                    private constructor(private val value: JsonField<String>) : Enum {
 
                         /**
                          * Returns this class instance's raw value.
@@ -18857,7 +18778,7 @@ private constructor(
                 @JsonCreator
                 private constructor(
                     @JsonAnySetter
-                    private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
+                    private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap()
                 ) {
 
                     @JsonAnyGetter
@@ -19531,9 +19452,7 @@ private constructor(
                 /** The cadence to bill for this price on. */
                 class Cadence
                 @JsonCreator
-                private constructor(
-                    private val value: JsonField<String>,
-                ) : Enum {
+                private constructor(private val value: JsonField<String>) : Enum {
 
                     /**
                      * Returns this class instance's raw value.
@@ -19651,9 +19570,7 @@ private constructor(
 
                 class ModelType
                 @JsonCreator
-                private constructor(
-                    private val value: JsonField<String>,
-                ) : Enum {
+                private constructor(private val value: JsonField<String>) : Enum {
 
                     /**
                      * Returns this class instance's raw value.
@@ -19675,7 +19592,7 @@ private constructor(
 
                     /** An enum containing [ModelType]'s known values. */
                     enum class Known {
-                        THRESHOLD_TOTAL_AMOUNT,
+                        THRESHOLD_TOTAL_AMOUNT
                     }
 
                     /**
@@ -19745,7 +19662,7 @@ private constructor(
                 @JsonCreator
                 private constructor(
                     @JsonAnySetter
-                    private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
+                    private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap()
                 ) {
 
                     @JsonAnyGetter
@@ -19946,9 +19863,7 @@ private constructor(
                     /** The unit of billing period duration. */
                     class DurationUnit
                     @JsonCreator
-                    private constructor(
-                        private val value: JsonField<String>,
-                    ) : Enum {
+                    private constructor(private val value: JsonField<String>) : Enum {
 
                         /**
                          * Returns this class instance's raw value.
@@ -20183,9 +20098,7 @@ private constructor(
                     /** The unit of billing period duration. */
                     class DurationUnit
                     @JsonCreator
-                    private constructor(
-                        private val value: JsonField<String>,
-                    ) : Enum {
+                    private constructor(private val value: JsonField<String>) : Enum {
 
                         /**
                          * Returns this class instance's raw value.
@@ -20308,7 +20221,7 @@ private constructor(
                 @JsonCreator
                 private constructor(
                     @JsonAnySetter
-                    private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
+                    private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap()
                 ) {
 
                     @JsonAnyGetter
@@ -20974,9 +20887,7 @@ private constructor(
                 /** The cadence to bill for this price on. */
                 class Cadence
                 @JsonCreator
-                private constructor(
-                    private val value: JsonField<String>,
-                ) : Enum {
+                private constructor(private val value: JsonField<String>) : Enum {
 
                     /**
                      * Returns this class instance's raw value.
@@ -21094,9 +21005,7 @@ private constructor(
 
                 class ModelType
                 @JsonCreator
-                private constructor(
-                    private val value: JsonField<String>,
-                ) : Enum {
+                private constructor(private val value: JsonField<String>) : Enum {
 
                     /**
                      * Returns this class instance's raw value.
@@ -21118,7 +21027,7 @@ private constructor(
 
                     /** An enum containing [ModelType]'s known values. */
                     enum class Known {
-                        TIERED_PACKAGE,
+                        TIERED_PACKAGE
                     }
 
                     /**
@@ -21188,7 +21097,7 @@ private constructor(
                 @JsonCreator
                 private constructor(
                     @JsonAnySetter
-                    private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
+                    private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap()
                 ) {
 
                     @JsonAnyGetter
@@ -21388,9 +21297,7 @@ private constructor(
                     /** The unit of billing period duration. */
                     class DurationUnit
                     @JsonCreator
-                    private constructor(
-                        private val value: JsonField<String>,
-                    ) : Enum {
+                    private constructor(private val value: JsonField<String>) : Enum {
 
                         /**
                          * Returns this class instance's raw value.
@@ -21625,9 +21532,7 @@ private constructor(
                     /** The unit of billing period duration. */
                     class DurationUnit
                     @JsonCreator
-                    private constructor(
-                        private val value: JsonField<String>,
-                    ) : Enum {
+                    private constructor(private val value: JsonField<String>) : Enum {
 
                         /**
                          * Returns this class instance's raw value.
@@ -21750,7 +21655,7 @@ private constructor(
                 @JsonCreator
                 private constructor(
                     @JsonAnySetter
-                    private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
+                    private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap()
                 ) {
 
                     @JsonAnyGetter
@@ -22421,9 +22326,7 @@ private constructor(
                 /** The cadence to bill for this price on. */
                 class Cadence
                 @JsonCreator
-                private constructor(
-                    private val value: JsonField<String>,
-                ) : Enum {
+                private constructor(private val value: JsonField<String>) : Enum {
 
                     /**
                      * Returns this class instance's raw value.
@@ -22541,9 +22444,7 @@ private constructor(
 
                 class ModelType
                 @JsonCreator
-                private constructor(
-                    private val value: JsonField<String>,
-                ) : Enum {
+                private constructor(private val value: JsonField<String>) : Enum {
 
                     /**
                      * Returns this class instance's raw value.
@@ -22565,7 +22466,7 @@ private constructor(
 
                     /** An enum containing [ModelType]'s known values. */
                     enum class Known {
-                        TIERED_WITH_MINIMUM,
+                        TIERED_WITH_MINIMUM
                     }
 
                     /**
@@ -22635,7 +22536,7 @@ private constructor(
                 @JsonCreator
                 private constructor(
                     @JsonAnySetter
-                    private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
+                    private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap()
                 ) {
 
                     @JsonAnyGetter
@@ -22836,9 +22737,7 @@ private constructor(
                     /** The unit of billing period duration. */
                     class DurationUnit
                     @JsonCreator
-                    private constructor(
-                        private val value: JsonField<String>,
-                    ) : Enum {
+                    private constructor(private val value: JsonField<String>) : Enum {
 
                         /**
                          * Returns this class instance's raw value.
@@ -23073,9 +22972,7 @@ private constructor(
                     /** The unit of billing period duration. */
                     class DurationUnit
                     @JsonCreator
-                    private constructor(
-                        private val value: JsonField<String>,
-                    ) : Enum {
+                    private constructor(private val value: JsonField<String>) : Enum {
 
                         /**
                          * Returns this class instance's raw value.
@@ -23198,7 +23095,7 @@ private constructor(
                 @JsonCreator
                 private constructor(
                     @JsonAnySetter
-                    private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
+                    private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap()
                 ) {
 
                     @JsonAnyGetter
@@ -23866,9 +23763,7 @@ private constructor(
                 /** The cadence to bill for this price on. */
                 class Cadence
                 @JsonCreator
-                private constructor(
-                    private val value: JsonField<String>,
-                ) : Enum {
+                private constructor(private val value: JsonField<String>) : Enum {
 
                     /**
                      * Returns this class instance's raw value.
@@ -23986,9 +23881,7 @@ private constructor(
 
                 class ModelType
                 @JsonCreator
-                private constructor(
-                    private val value: JsonField<String>,
-                ) : Enum {
+                private constructor(private val value: JsonField<String>) : Enum {
 
                     /**
                      * Returns this class instance's raw value.
@@ -24010,7 +23903,7 @@ private constructor(
 
                     /** An enum containing [ModelType]'s known values. */
                     enum class Known {
-                        UNIT_WITH_PERCENT,
+                        UNIT_WITH_PERCENT
                     }
 
                     /**
@@ -24080,7 +23973,7 @@ private constructor(
                 @JsonCreator
                 private constructor(
                     @JsonAnySetter
-                    private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
+                    private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap()
                 ) {
 
                     @JsonAnyGetter
@@ -24280,9 +24173,7 @@ private constructor(
                     /** The unit of billing period duration. */
                     class DurationUnit
                     @JsonCreator
-                    private constructor(
-                        private val value: JsonField<String>,
-                    ) : Enum {
+                    private constructor(private val value: JsonField<String>) : Enum {
 
                         /**
                          * Returns this class instance's raw value.
@@ -24517,9 +24408,7 @@ private constructor(
                     /** The unit of billing period duration. */
                     class DurationUnit
                     @JsonCreator
-                    private constructor(
-                        private val value: JsonField<String>,
-                    ) : Enum {
+                    private constructor(private val value: JsonField<String>) : Enum {
 
                         /**
                          * Returns this class instance's raw value.
@@ -24642,7 +24531,7 @@ private constructor(
                 @JsonCreator
                 private constructor(
                     @JsonAnySetter
-                    private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
+                    private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap()
                 ) {
 
                     @JsonAnyGetter
@@ -25301,7 +25190,7 @@ private constructor(
                             checkRequired("name", name),
                             checkRequired(
                                 "packageWithAllocationConfig",
-                                packageWithAllocationConfig
+                                packageWithAllocationConfig,
                             ),
                             billableMetricId,
                             billedInAdvance,
@@ -25321,9 +25210,7 @@ private constructor(
                 /** The cadence to bill for this price on. */
                 class Cadence
                 @JsonCreator
-                private constructor(
-                    private val value: JsonField<String>,
-                ) : Enum {
+                private constructor(private val value: JsonField<String>) : Enum {
 
                     /**
                      * Returns this class instance's raw value.
@@ -25441,9 +25328,7 @@ private constructor(
 
                 class ModelType
                 @JsonCreator
-                private constructor(
-                    private val value: JsonField<String>,
-                ) : Enum {
+                private constructor(private val value: JsonField<String>) : Enum {
 
                     /**
                      * Returns this class instance's raw value.
@@ -25465,7 +25350,7 @@ private constructor(
 
                     /** An enum containing [ModelType]'s known values. */
                     enum class Known {
-                        PACKAGE_WITH_ALLOCATION,
+                        PACKAGE_WITH_ALLOCATION
                     }
 
                     /**
@@ -25535,7 +25420,7 @@ private constructor(
                 @JsonCreator
                 private constructor(
                     @JsonAnySetter
-                    private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
+                    private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap()
                 ) {
 
                     @JsonAnyGetter
@@ -25737,9 +25622,7 @@ private constructor(
                     /** The unit of billing period duration. */
                     class DurationUnit
                     @JsonCreator
-                    private constructor(
-                        private val value: JsonField<String>,
-                    ) : Enum {
+                    private constructor(private val value: JsonField<String>) : Enum {
 
                         /**
                          * Returns this class instance's raw value.
@@ -25974,9 +25857,7 @@ private constructor(
                     /** The unit of billing period duration. */
                     class DurationUnit
                     @JsonCreator
-                    private constructor(
-                        private val value: JsonField<String>,
-                    ) : Enum {
+                    private constructor(private val value: JsonField<String>) : Enum {
 
                         /**
                          * Returns this class instance's raw value.
@@ -26099,7 +25980,7 @@ private constructor(
                 @JsonCreator
                 private constructor(
                     @JsonAnySetter
-                    private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
+                    private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap()
                 ) {
 
                     @JsonAnyGetter
@@ -26772,9 +26653,7 @@ private constructor(
                 /** The cadence to bill for this price on. */
                 class Cadence
                 @JsonCreator
-                private constructor(
-                    private val value: JsonField<String>,
-                ) : Enum {
+                private constructor(private val value: JsonField<String>) : Enum {
 
                     /**
                      * Returns this class instance's raw value.
@@ -26892,9 +26771,7 @@ private constructor(
 
                 class ModelType
                 @JsonCreator
-                private constructor(
-                    private val value: JsonField<String>,
-                ) : Enum {
+                private constructor(private val value: JsonField<String>) : Enum {
 
                     /**
                      * Returns this class instance's raw value.
@@ -26916,7 +26793,7 @@ private constructor(
 
                     /** An enum containing [ModelType]'s known values. */
                     enum class Known {
-                        TIERED_WITH_PRORATION,
+                        TIERED_WITH_PRORATION
                     }
 
                     /**
@@ -26986,7 +26863,7 @@ private constructor(
                 @JsonCreator
                 private constructor(
                     @JsonAnySetter
-                    private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
+                    private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap()
                 ) {
 
                     @JsonAnyGetter
@@ -27187,9 +27064,7 @@ private constructor(
                     /** The unit of billing period duration. */
                     class DurationUnit
                     @JsonCreator
-                    private constructor(
-                        private val value: JsonField<String>,
-                    ) : Enum {
+                    private constructor(private val value: JsonField<String>) : Enum {
 
                         /**
                          * Returns this class instance's raw value.
@@ -27424,9 +27299,7 @@ private constructor(
                     /** The unit of billing period duration. */
                     class DurationUnit
                     @JsonCreator
-                    private constructor(
-                        private val value: JsonField<String>,
-                    ) : Enum {
+                    private constructor(private val value: JsonField<String>) : Enum {
 
                         /**
                          * Returns this class instance's raw value.
@@ -27549,7 +27422,7 @@ private constructor(
                 @JsonCreator
                 private constructor(
                     @JsonAnySetter
-                    private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
+                    private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap()
                 ) {
 
                     @JsonAnyGetter
@@ -28220,9 +28093,7 @@ private constructor(
                 /** The cadence to bill for this price on. */
                 class Cadence
                 @JsonCreator
-                private constructor(
-                    private val value: JsonField<String>,
-                ) : Enum {
+                private constructor(private val value: JsonField<String>) : Enum {
 
                     /**
                      * Returns this class instance's raw value.
@@ -28340,9 +28211,7 @@ private constructor(
 
                 class ModelType
                 @JsonCreator
-                private constructor(
-                    private val value: JsonField<String>,
-                ) : Enum {
+                private constructor(private val value: JsonField<String>) : Enum {
 
                     /**
                      * Returns this class instance's raw value.
@@ -28364,7 +28233,7 @@ private constructor(
 
                     /** An enum containing [ModelType]'s known values. */
                     enum class Known {
-                        UNIT_WITH_PRORATION,
+                        UNIT_WITH_PRORATION
                     }
 
                     /**
@@ -28434,7 +28303,7 @@ private constructor(
                 @JsonCreator
                 private constructor(
                     @JsonAnySetter
-                    private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
+                    private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap()
                 ) {
 
                     @JsonAnyGetter
@@ -28635,9 +28504,7 @@ private constructor(
                     /** The unit of billing period duration. */
                     class DurationUnit
                     @JsonCreator
-                    private constructor(
-                        private val value: JsonField<String>,
-                    ) : Enum {
+                    private constructor(private val value: JsonField<String>) : Enum {
 
                         /**
                          * Returns this class instance's raw value.
@@ -28872,9 +28739,7 @@ private constructor(
                     /** The unit of billing period duration. */
                     class DurationUnit
                     @JsonCreator
-                    private constructor(
-                        private val value: JsonField<String>,
-                    ) : Enum {
+                    private constructor(private val value: JsonField<String>) : Enum {
 
                         /**
                          * Returns this class instance's raw value.
@@ -28997,7 +28862,7 @@ private constructor(
                 @JsonCreator
                 private constructor(
                     @JsonAnySetter
-                    private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
+                    private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap()
                 ) {
 
                     @JsonAnyGetter
@@ -29668,9 +29533,7 @@ private constructor(
                 /** The cadence to bill for this price on. */
                 class Cadence
                 @JsonCreator
-                private constructor(
-                    private val value: JsonField<String>,
-                ) : Enum {
+                private constructor(private val value: JsonField<String>) : Enum {
 
                     /**
                      * Returns this class instance's raw value.
@@ -29791,7 +29654,7 @@ private constructor(
                 @JsonCreator
                 private constructor(
                     @JsonAnySetter
-                    private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
+                    private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap()
                 ) {
 
                     @JsonAnyGetter
@@ -29873,9 +29736,7 @@ private constructor(
 
                 class ModelType
                 @JsonCreator
-                private constructor(
-                    private val value: JsonField<String>,
-                ) : Enum {
+                private constructor(private val value: JsonField<String>) : Enum {
 
                     /**
                      * Returns this class instance's raw value.
@@ -29897,7 +29758,7 @@ private constructor(
 
                     /** An enum containing [ModelType]'s known values. */
                     enum class Known {
-                        GROUPED_ALLOCATION,
+                        GROUPED_ALLOCATION
                     }
 
                     /**
@@ -30083,9 +29944,7 @@ private constructor(
                     /** The unit of billing period duration. */
                     class DurationUnit
                     @JsonCreator
-                    private constructor(
-                        private val value: JsonField<String>,
-                    ) : Enum {
+                    private constructor(private val value: JsonField<String>) : Enum {
 
                         /**
                          * Returns this class instance's raw value.
@@ -30320,9 +30179,7 @@ private constructor(
                     /** The unit of billing period duration. */
                     class DurationUnit
                     @JsonCreator
-                    private constructor(
-                        private val value: JsonField<String>,
-                    ) : Enum {
+                    private constructor(private val value: JsonField<String>) : Enum {
 
                         /**
                          * Returns this class instance's raw value.
@@ -30445,7 +30302,7 @@ private constructor(
                 @JsonCreator
                 private constructor(
                     @JsonAnySetter
-                    private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
+                    private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap()
                 ) {
 
                     @JsonAnyGetter
@@ -31115,7 +30972,7 @@ private constructor(
                             checkRequired("cadence", cadence),
                             checkRequired(
                                 "groupedWithProratedMinimumConfig",
-                                groupedWithProratedMinimumConfig
+                                groupedWithProratedMinimumConfig,
                             ),
                             checkRequired("itemId", itemId),
                             checkRequired("modelType", modelType),
@@ -31138,9 +30995,7 @@ private constructor(
                 /** The cadence to bill for this price on. */
                 class Cadence
                 @JsonCreator
-                private constructor(
-                    private val value: JsonField<String>,
-                ) : Enum {
+                private constructor(private val value: JsonField<String>) : Enum {
 
                     /**
                      * Returns this class instance's raw value.
@@ -31261,7 +31116,7 @@ private constructor(
                 @JsonCreator
                 private constructor(
                     @JsonAnySetter
-                    private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
+                    private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap()
                 ) {
 
                     @JsonAnyGetter
@@ -31344,9 +31199,7 @@ private constructor(
 
                 class ModelType
                 @JsonCreator
-                private constructor(
-                    private val value: JsonField<String>,
-                ) : Enum {
+                private constructor(private val value: JsonField<String>) : Enum {
 
                     /**
                      * Returns this class instance's raw value.
@@ -31368,7 +31221,7 @@ private constructor(
 
                     /** An enum containing [ModelType]'s known values. */
                     enum class Known {
-                        GROUPED_WITH_PRORATED_MINIMUM,
+                        GROUPED_WITH_PRORATED_MINIMUM
                     }
 
                     /**
@@ -31554,9 +31407,7 @@ private constructor(
                     /** The unit of billing period duration. */
                     class DurationUnit
                     @JsonCreator
-                    private constructor(
-                        private val value: JsonField<String>,
-                    ) : Enum {
+                    private constructor(private val value: JsonField<String>) : Enum {
 
                         /**
                          * Returns this class instance's raw value.
@@ -31791,9 +31642,7 @@ private constructor(
                     /** The unit of billing period duration. */
                     class DurationUnit
                     @JsonCreator
-                    private constructor(
-                        private val value: JsonField<String>,
-                    ) : Enum {
+                    private constructor(private val value: JsonField<String>) : Enum {
 
                         /**
                          * Returns this class instance's raw value.
@@ -31916,7 +31765,7 @@ private constructor(
                 @JsonCreator
                 private constructor(
                     @JsonAnySetter
-                    private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
+                    private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap()
                 ) {
 
                     @JsonAnyGetter
@@ -32589,7 +32438,7 @@ private constructor(
                 @JsonCreator
                 private constructor(
                     @JsonAnySetter
-                    private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
+                    private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap()
                 ) {
 
                     @JsonAnyGetter
@@ -32672,9 +32521,7 @@ private constructor(
                 /** The cadence to bill for this price on. */
                 class Cadence
                 @JsonCreator
-                private constructor(
-                    private val value: JsonField<String>,
-                ) : Enum {
+                private constructor(private val value: JsonField<String>) : Enum {
 
                     /**
                      * Returns this class instance's raw value.
@@ -32792,9 +32639,7 @@ private constructor(
 
                 class ModelType
                 @JsonCreator
-                private constructor(
-                    private val value: JsonField<String>,
-                ) : Enum {
+                private constructor(private val value: JsonField<String>) : Enum {
 
                     /**
                      * Returns this class instance's raw value.
@@ -32816,7 +32661,7 @@ private constructor(
 
                     /** An enum containing [ModelType]'s known values. */
                     enum class Known {
-                        BULK_WITH_PRORATION,
+                        BULK_WITH_PRORATION
                     }
 
                     /**
@@ -33002,9 +32847,7 @@ private constructor(
                     /** The unit of billing period duration. */
                     class DurationUnit
                     @JsonCreator
-                    private constructor(
-                        private val value: JsonField<String>,
-                    ) : Enum {
+                    private constructor(private val value: JsonField<String>) : Enum {
 
                         /**
                          * Returns this class instance's raw value.
@@ -33239,9 +33082,7 @@ private constructor(
                     /** The unit of billing period duration. */
                     class DurationUnit
                     @JsonCreator
-                    private constructor(
-                        private val value: JsonField<String>,
-                    ) : Enum {
+                    private constructor(private val value: JsonField<String>) : Enum {
 
                         /**
                          * Returns this class instance's raw value.
@@ -33364,7 +33205,7 @@ private constructor(
                 @JsonCreator
                 private constructor(
                     @JsonAnySetter
-                    private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
+                    private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap()
                 ) {
 
                     @JsonAnyGetter
@@ -33672,9 +33513,7 @@ private constructor(
     @Deprecated("deprecated")
     class ExternalMarketplace
     @JsonCreator
-    private constructor(
-        private val value: JsonField<String>,
-    ) : Enum {
+    private constructor(private val value: JsonField<String>) : Enum {
 
         /**
          * Returns this class instance's raw value.
@@ -33780,7 +33619,7 @@ private constructor(
     @JsonCreator
     private constructor(
         @JsonAnySetter
-        private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
+        private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap()
     ) {
 
         @JsonAnyGetter
@@ -33934,7 +33773,7 @@ private constructor(
             fun build(): RemoveAdjustment =
                 RemoveAdjustment(
                     checkRequired("adjustmentId", adjustmentId),
-                    additionalProperties.toImmutable()
+                    additionalProperties.toImmutable(),
                 )
         }
 
@@ -34055,11 +33894,7 @@ private constructor(
             }
 
             fun build(): RemovePrice =
-                RemovePrice(
-                    externalPriceId,
-                    priceId,
-                    additionalProperties.toImmutable(),
-                )
+                RemovePrice(externalPriceId, priceId, additionalProperties.toImmutable())
         }
 
         override fun equals(other: Any?): Boolean {
@@ -34429,7 +34264,7 @@ private constructor(
                 override fun serialize(
                     value: Adjustment,
                     generator: JsonGenerator,
-                    provider: SerializerProvider
+                    provider: SerializerProvider,
                 ) {
                     when {
                         value.newPercentageDiscount != null ->
@@ -34632,9 +34467,7 @@ private constructor(
 
                 class AdjustmentType
                 @JsonCreator
-                private constructor(
-                    private val value: JsonField<String>,
-                ) : Enum {
+                private constructor(private val value: JsonField<String>) : Enum {
 
                     /**
                      * Returns this class instance's raw value.
@@ -34656,7 +34489,7 @@ private constructor(
 
                     /** An enum containing [AdjustmentType]'s known values. */
                     enum class Known {
-                        PERCENTAGE_DISCOUNT,
+                        PERCENTAGE_DISCOUNT
                     }
 
                     /**
@@ -34924,9 +34757,7 @@ private constructor(
 
                 class AdjustmentType
                 @JsonCreator
-                private constructor(
-                    private val value: JsonField<String>,
-                ) : Enum {
+                private constructor(private val value: JsonField<String>) : Enum {
 
                     /**
                      * Returns this class instance's raw value.
@@ -34948,7 +34779,7 @@ private constructor(
 
                     /** An enum containing [AdjustmentType]'s known values. */
                     enum class Known {
-                        USAGE_DISCOUNT,
+                        USAGE_DISCOUNT
                     }
 
                     /**
@@ -35216,9 +35047,7 @@ private constructor(
 
                 class AdjustmentType
                 @JsonCreator
-                private constructor(
-                    private val value: JsonField<String>,
-                ) : Enum {
+                private constructor(private val value: JsonField<String>) : Enum {
 
                     /**
                      * Returns this class instance's raw value.
@@ -35240,7 +35069,7 @@ private constructor(
 
                     /** An enum containing [AdjustmentType]'s known values. */
                     enum class Known {
-                        AMOUNT_DISCOUNT,
+                        AMOUNT_DISCOUNT
                     }
 
                     /**
@@ -35526,9 +35355,7 @@ private constructor(
 
                 class AdjustmentType
                 @JsonCreator
-                private constructor(
-                    private val value: JsonField<String>,
-                ) : Enum {
+                private constructor(private val value: JsonField<String>) : Enum {
 
                     /**
                      * Returns this class instance's raw value.
@@ -35550,7 +35377,7 @@ private constructor(
 
                     /** An enum containing [AdjustmentType]'s known values. */
                     enum class Known {
-                        MINIMUM,
+                        MINIMUM
                     }
 
                     /**
@@ -35817,9 +35644,7 @@ private constructor(
 
                 class AdjustmentType
                 @JsonCreator
-                private constructor(
-                    private val value: JsonField<String>,
-                ) : Enum {
+                private constructor(private val value: JsonField<String>) : Enum {
 
                     /**
                      * Returns this class instance's raw value.
@@ -35841,7 +35666,7 @@ private constructor(
 
                     /** An enum containing [AdjustmentType]'s known values. */
                     enum class Known {
-                        MAXIMUM,
+                        MAXIMUM
                     }
 
                     /**
@@ -36553,11 +36378,8 @@ private constructor(
             }
 
             /** The cadence at which to allocate the amount to the customer. */
-            class Cadence
-            @JsonCreator
-            private constructor(
-                private val value: JsonField<String>,
-            ) : Enum {
+            class Cadence @JsonCreator private constructor(private val value: JsonField<String>) :
+                Enum {
 
                 /**
                  * Returns this class instance's raw value.
@@ -36886,9 +36708,7 @@ private constructor(
 
             class DiscountType
             @JsonCreator
-            private constructor(
-                private val value: JsonField<String>,
-            ) : Enum {
+            private constructor(private val value: JsonField<String>) : Enum {
 
                 /**
                  * Returns this class instance's raw value.
@@ -37661,21 +37481,21 @@ private constructor(
                         "threshold_total_amount" -> {
                             tryDeserialize(
                                     node,
-                                    jacksonTypeRef<NewSubscriptionThresholdTotalAmountPrice>()
+                                    jacksonTypeRef<NewSubscriptionThresholdTotalAmountPrice>(),
                                 ) {
                                     it.validate()
                                 }
                                 ?.let {
                                     return Price(
                                         newSubscriptionThresholdTotalAmount = it,
-                                        _json = json
+                                        _json = json,
                                     )
                                 }
                         }
                         "tiered_package" -> {
                             tryDeserialize(
                                     node,
-                                    jacksonTypeRef<NewSubscriptionTieredPackagePrice>()
+                                    jacksonTypeRef<NewSubscriptionTieredPackagePrice>(),
                                 ) {
                                     it.validate()
                                 }
@@ -37686,21 +37506,21 @@ private constructor(
                         "tiered_with_minimum" -> {
                             tryDeserialize(
                                     node,
-                                    jacksonTypeRef<NewSubscriptionTieredWithMinimumPrice>()
+                                    jacksonTypeRef<NewSubscriptionTieredWithMinimumPrice>(),
                                 ) {
                                     it.validate()
                                 }
                                 ?.let {
                                     return Price(
                                         newSubscriptionTieredWithMinimum = it,
-                                        _json = json
+                                        _json = json,
                                     )
                                 }
                         }
                         "unit_with_percent" -> {
                             tryDeserialize(
                                     node,
-                                    jacksonTypeRef<NewSubscriptionUnitWithPercentPrice>()
+                                    jacksonTypeRef<NewSubscriptionUnitWithPercentPrice>(),
                                 ) {
                                     it.validate()
                                 }
@@ -37711,84 +37531,84 @@ private constructor(
                         "package_with_allocation" -> {
                             tryDeserialize(
                                     node,
-                                    jacksonTypeRef<NewSubscriptionPackageWithAllocationPrice>()
+                                    jacksonTypeRef<NewSubscriptionPackageWithAllocationPrice>(),
                                 ) {
                                     it.validate()
                                 }
                                 ?.let {
                                     return Price(
                                         newSubscriptionPackageWithAllocation = it,
-                                        _json = json
+                                        _json = json,
                                     )
                                 }
                         }
                         "tiered_with_proration" -> {
                             tryDeserialize(
                                     node,
-                                    jacksonTypeRef<NewSubscriptionTierWithProrationPrice>()
+                                    jacksonTypeRef<NewSubscriptionTierWithProrationPrice>(),
                                 ) {
                                     it.validate()
                                 }
                                 ?.let {
                                     return Price(
                                         newSubscriptionTierWithProration = it,
-                                        _json = json
+                                        _json = json,
                                     )
                                 }
                         }
                         "unit_with_proration" -> {
                             tryDeserialize(
                                     node,
-                                    jacksonTypeRef<NewSubscriptionUnitWithProrationPrice>()
+                                    jacksonTypeRef<NewSubscriptionUnitWithProrationPrice>(),
                                 ) {
                                     it.validate()
                                 }
                                 ?.let {
                                     return Price(
                                         newSubscriptionUnitWithProration = it,
-                                        _json = json
+                                        _json = json,
                                     )
                                 }
                         }
                         "grouped_allocation" -> {
                             tryDeserialize(
                                     node,
-                                    jacksonTypeRef<NewSubscriptionGroupedAllocationPrice>()
+                                    jacksonTypeRef<NewSubscriptionGroupedAllocationPrice>(),
                                 ) {
                                     it.validate()
                                 }
                                 ?.let {
                                     return Price(
                                         newSubscriptionGroupedAllocation = it,
-                                        _json = json
+                                        _json = json,
                                     )
                                 }
                         }
                         "grouped_with_prorated_minimum" -> {
                             tryDeserialize(
                                     node,
-                                    jacksonTypeRef<NewSubscriptionGroupedWithProratedMinimumPrice>()
+                                    jacksonTypeRef<NewSubscriptionGroupedWithProratedMinimumPrice>(),
                                 ) {
                                     it.validate()
                                 }
                                 ?.let {
                                     return Price(
                                         newSubscriptionGroupedWithProratedMinimum = it,
-                                        _json = json
+                                        _json = json,
                                     )
                                 }
                         }
                         "bulk_with_proration" -> {
                             tryDeserialize(
                                     node,
-                                    jacksonTypeRef<NewSubscriptionBulkWithProrationPrice>()
+                                    jacksonTypeRef<NewSubscriptionBulkWithProrationPrice>(),
                                 ) {
                                     it.validate()
                                 }
                                 ?.let {
                                     return Price(
                                         newSubscriptionBulkWithProration = it,
-                                        _json = json
+                                        _json = json,
                                     )
                                 }
                         }
@@ -37803,7 +37623,7 @@ private constructor(
                 override fun serialize(
                     value: Price,
                     generator: JsonGenerator,
-                    provider: SerializerProvider
+                    provider: SerializerProvider,
                 ) {
                     when {
                         value.newSubscriptionUnit != null ->
@@ -38415,9 +38235,7 @@ private constructor(
                 /** The cadence to bill for this price on. */
                 class Cadence
                 @JsonCreator
-                private constructor(
-                    private val value: JsonField<String>,
-                ) : Enum {
+                private constructor(private val value: JsonField<String>) : Enum {
 
                     /**
                      * Returns this class instance's raw value.
@@ -38535,9 +38353,7 @@ private constructor(
 
                 class ModelType
                 @JsonCreator
-                private constructor(
-                    private val value: JsonField<String>,
-                ) : Enum {
+                private constructor(private val value: JsonField<String>) : Enum {
 
                     /**
                      * Returns this class instance's raw value.
@@ -38559,7 +38375,7 @@ private constructor(
 
                     /** An enum containing [ModelType]'s known values. */
                     enum class Known {
-                        UNIT,
+                        UNIT
                     }
 
                     /**
@@ -38710,7 +38526,7 @@ private constructor(
                         fun build(): UnitConfig =
                             UnitConfig(
                                 checkRequired("unitAmount", unitAmount),
-                                additionalProperties.toImmutable()
+                                additionalProperties.toImmutable(),
                             )
                     }
 
@@ -38853,9 +38669,7 @@ private constructor(
                     /** The unit of billing period duration. */
                     class DurationUnit
                     @JsonCreator
-                    private constructor(
-                        private val value: JsonField<String>,
-                    ) : Enum {
+                    private constructor(private val value: JsonField<String>) : Enum {
 
                         /**
                          * Returns this class instance's raw value.
@@ -39090,9 +38904,7 @@ private constructor(
                     /** The unit of billing period duration. */
                     class DurationUnit
                     @JsonCreator
-                    private constructor(
-                        private val value: JsonField<String>,
-                    ) : Enum {
+                    private constructor(private val value: JsonField<String>) : Enum {
 
                         /**
                          * Returns this class instance's raw value.
@@ -39215,7 +39027,7 @@ private constructor(
                 @JsonCreator
                 private constructor(
                     @JsonAnySetter
-                    private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
+                    private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap()
                 ) {
 
                     @JsonAnyGetter
@@ -39878,9 +39690,7 @@ private constructor(
                 /** The cadence to bill for this price on. */
                 class Cadence
                 @JsonCreator
-                private constructor(
-                    private val value: JsonField<String>,
-                ) : Enum {
+                private constructor(private val value: JsonField<String>) : Enum {
 
                     /**
                      * Returns this class instance's raw value.
@@ -39998,9 +39808,7 @@ private constructor(
 
                 class ModelType
                 @JsonCreator
-                private constructor(
-                    private val value: JsonField<String>,
-                ) : Enum {
+                private constructor(private val value: JsonField<String>) : Enum {
 
                     /**
                      * Returns this class instance's raw value.
@@ -40022,7 +39830,7 @@ private constructor(
 
                     /** An enum containing [ModelType]'s known values. */
                     enum class Known {
-                        PACKAGE,
+                        PACKAGE
                     }
 
                     /**
@@ -40352,9 +40160,7 @@ private constructor(
                     /** The unit of billing period duration. */
                     class DurationUnit
                     @JsonCreator
-                    private constructor(
-                        private val value: JsonField<String>,
-                    ) : Enum {
+                    private constructor(private val value: JsonField<String>) : Enum {
 
                         /**
                          * Returns this class instance's raw value.
@@ -40589,9 +40395,7 @@ private constructor(
                     /** The unit of billing period duration. */
                     class DurationUnit
                     @JsonCreator
-                    private constructor(
-                        private val value: JsonField<String>,
-                    ) : Enum {
+                    private constructor(private val value: JsonField<String>) : Enum {
 
                         /**
                          * Returns this class instance's raw value.
@@ -40714,7 +40518,7 @@ private constructor(
                 @JsonCreator
                 private constructor(
                     @JsonAnySetter
-                    private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
+                    private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap()
                 ) {
 
                     @JsonAnyGetter
@@ -41377,9 +41181,7 @@ private constructor(
                 /** The cadence to bill for this price on. */
                 class Cadence
                 @JsonCreator
-                private constructor(
-                    private val value: JsonField<String>,
-                ) : Enum {
+                private constructor(private val value: JsonField<String>) : Enum {
 
                     /**
                      * Returns this class instance's raw value.
@@ -41865,9 +41667,7 @@ private constructor(
 
                 class ModelType
                 @JsonCreator
-                private constructor(
-                    private val value: JsonField<String>,
-                ) : Enum {
+                private constructor(private val value: JsonField<String>) : Enum {
 
                     /**
                      * Returns this class instance's raw value.
@@ -41889,7 +41689,7 @@ private constructor(
 
                     /** An enum containing [ModelType]'s known values. */
                     enum class Known {
-                        MATRIX,
+                        MATRIX
                     }
 
                     /**
@@ -42075,9 +41875,7 @@ private constructor(
                     /** The unit of billing period duration. */
                     class DurationUnit
                     @JsonCreator
-                    private constructor(
-                        private val value: JsonField<String>,
-                    ) : Enum {
+                    private constructor(private val value: JsonField<String>) : Enum {
 
                         /**
                          * Returns this class instance's raw value.
@@ -42312,9 +42110,7 @@ private constructor(
                     /** The unit of billing period duration. */
                     class DurationUnit
                     @JsonCreator
-                    private constructor(
-                        private val value: JsonField<String>,
-                    ) : Enum {
+                    private constructor(private val value: JsonField<String>) : Enum {
 
                         /**
                          * Returns this class instance's raw value.
@@ -42437,7 +42233,7 @@ private constructor(
                 @JsonCreator
                 private constructor(
                     @JsonAnySetter
-                    private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
+                    private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap()
                 ) {
 
                     @JsonAnyGetter
@@ -43100,9 +42896,7 @@ private constructor(
                 /** The cadence to bill for this price on. */
                 class Cadence
                 @JsonCreator
-                private constructor(
-                    private val value: JsonField<String>,
-                ) : Enum {
+                private constructor(private val value: JsonField<String>) : Enum {
 
                     /**
                      * Returns this class instance's raw value.
@@ -43220,9 +43014,7 @@ private constructor(
 
                 class ModelType
                 @JsonCreator
-                private constructor(
-                    private val value: JsonField<String>,
-                ) : Enum {
+                private constructor(private val value: JsonField<String>) : Enum {
 
                     /**
                      * Returns this class instance's raw value.
@@ -43244,7 +43036,7 @@ private constructor(
 
                     /** An enum containing [ModelType]'s known values. */
                     enum class Known {
-                        TIERED,
+                        TIERED
                     }
 
                     /**
@@ -43413,7 +43205,7 @@ private constructor(
                         fun build(): TieredConfig =
                             TieredConfig(
                                 checkRequired("tiers", tiers).map { it.toImmutable() },
-                                additionalProperties.toImmutable()
+                                additionalProperties.toImmutable(),
                             )
                     }
 
@@ -43729,9 +43521,7 @@ private constructor(
                     /** The unit of billing period duration. */
                     class DurationUnit
                     @JsonCreator
-                    private constructor(
-                        private val value: JsonField<String>,
-                    ) : Enum {
+                    private constructor(private val value: JsonField<String>) : Enum {
 
                         /**
                          * Returns this class instance's raw value.
@@ -43966,9 +43756,7 @@ private constructor(
                     /** The unit of billing period duration. */
                     class DurationUnit
                     @JsonCreator
-                    private constructor(
-                        private val value: JsonField<String>,
-                    ) : Enum {
+                    private constructor(private val value: JsonField<String>) : Enum {
 
                         /**
                          * Returns this class instance's raw value.
@@ -44091,7 +43879,7 @@ private constructor(
                 @JsonCreator
                 private constructor(
                     @JsonAnySetter
-                    private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
+                    private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap()
                 ) {
 
                     @JsonAnyGetter
@@ -44756,9 +44544,7 @@ private constructor(
                 /** The cadence to bill for this price on. */
                 class Cadence
                 @JsonCreator
-                private constructor(
-                    private val value: JsonField<String>,
-                ) : Enum {
+                private constructor(private val value: JsonField<String>) : Enum {
 
                     /**
                      * Returns this class instance's raw value.
@@ -44876,9 +44662,7 @@ private constructor(
 
                 class ModelType
                 @JsonCreator
-                private constructor(
-                    private val value: JsonField<String>,
-                ) : Enum {
+                private constructor(private val value: JsonField<String>) : Enum {
 
                     /**
                      * Returns this class instance's raw value.
@@ -44900,7 +44684,7 @@ private constructor(
 
                     /** An enum containing [ModelType]'s known values. */
                     enum class Known {
-                        TIERED_BPS,
+                        TIERED_BPS
                     }
 
                     /**
@@ -45079,7 +44863,7 @@ private constructor(
                         fun build(): TieredBpsConfig =
                             TieredBpsConfig(
                                 checkRequired("tiers", tiers).map { it.toImmutable() },
-                                additionalProperties.toImmutable()
+                                additionalProperties.toImmutable(),
                             )
                     }
 
@@ -45400,9 +45184,7 @@ private constructor(
                     /** The unit of billing period duration. */
                     class DurationUnit
                     @JsonCreator
-                    private constructor(
-                        private val value: JsonField<String>,
-                    ) : Enum {
+                    private constructor(private val value: JsonField<String>) : Enum {
 
                         /**
                          * Returns this class instance's raw value.
@@ -45637,9 +45419,7 @@ private constructor(
                     /** The unit of billing period duration. */
                     class DurationUnit
                     @JsonCreator
-                    private constructor(
-                        private val value: JsonField<String>,
-                    ) : Enum {
+                    private constructor(private val value: JsonField<String>) : Enum {
 
                         /**
                          * Returns this class instance's raw value.
@@ -45762,7 +45542,7 @@ private constructor(
                 @JsonCreator
                 private constructor(
                     @JsonAnySetter
-                    private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
+                    private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap()
                 ) {
 
                     @JsonAnyGetter
@@ -46551,9 +46331,7 @@ private constructor(
                 /** The cadence to bill for this price on. */
                 class Cadence
                 @JsonCreator
-                private constructor(
-                    private val value: JsonField<String>,
-                ) : Enum {
+                private constructor(private val value: JsonField<String>) : Enum {
 
                     /**
                      * Returns this class instance's raw value.
@@ -46671,9 +46449,7 @@ private constructor(
 
                 class ModelType
                 @JsonCreator
-                private constructor(
-                    private val value: JsonField<String>,
-                ) : Enum {
+                private constructor(private val value: JsonField<String>) : Enum {
 
                     /**
                      * Returns this class instance's raw value.
@@ -46695,7 +46471,7 @@ private constructor(
 
                     /** An enum containing [ModelType]'s known values. */
                     enum class Known {
-                        BPS,
+                        BPS
                     }
 
                     /**
@@ -46881,9 +46657,7 @@ private constructor(
                     /** The unit of billing period duration. */
                     class DurationUnit
                     @JsonCreator
-                    private constructor(
-                        private val value: JsonField<String>,
-                    ) : Enum {
+                    private constructor(private val value: JsonField<String>) : Enum {
 
                         /**
                          * Returns this class instance's raw value.
@@ -47118,9 +46892,7 @@ private constructor(
                     /** The unit of billing period duration. */
                     class DurationUnit
                     @JsonCreator
-                    private constructor(
-                        private val value: JsonField<String>,
-                    ) : Enum {
+                    private constructor(private val value: JsonField<String>) : Enum {
 
                         /**
                          * Returns this class instance's raw value.
@@ -47243,7 +47015,7 @@ private constructor(
                 @JsonCreator
                 private constructor(
                     @JsonAnySetter
-                    private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
+                    private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap()
                 ) {
 
                     @JsonAnyGetter
@@ -48016,7 +47788,7 @@ private constructor(
                         fun build(): BulkBpsConfig =
                             BulkBpsConfig(
                                 checkRequired("tiers", tiers).map { it.toImmutable() },
-                                additionalProperties.toImmutable()
+                                additionalProperties.toImmutable(),
                             )
                     }
 
@@ -48195,9 +47967,7 @@ private constructor(
                 /** The cadence to bill for this price on. */
                 class Cadence
                 @JsonCreator
-                private constructor(
-                    private val value: JsonField<String>,
-                ) : Enum {
+                private constructor(private val value: JsonField<String>) : Enum {
 
                     /**
                      * Returns this class instance's raw value.
@@ -48315,9 +48085,7 @@ private constructor(
 
                 class ModelType
                 @JsonCreator
-                private constructor(
-                    private val value: JsonField<String>,
-                ) : Enum {
+                private constructor(private val value: JsonField<String>) : Enum {
 
                     /**
                      * Returns this class instance's raw value.
@@ -48339,7 +48107,7 @@ private constructor(
 
                     /** An enum containing [ModelType]'s known values. */
                     enum class Known {
-                        BULK_BPS,
+                        BULK_BPS
                     }
 
                     /**
@@ -48525,9 +48293,7 @@ private constructor(
                     /** The unit of billing period duration. */
                     class DurationUnit
                     @JsonCreator
-                    private constructor(
-                        private val value: JsonField<String>,
-                    ) : Enum {
+                    private constructor(private val value: JsonField<String>) : Enum {
 
                         /**
                          * Returns this class instance's raw value.
@@ -48762,9 +48528,7 @@ private constructor(
                     /** The unit of billing period duration. */
                     class DurationUnit
                     @JsonCreator
-                    private constructor(
-                        private val value: JsonField<String>,
-                    ) : Enum {
+                    private constructor(private val value: JsonField<String>) : Enum {
 
                         /**
                          * Returns this class instance's raw value.
@@ -48887,7 +48651,7 @@ private constructor(
                 @JsonCreator
                 private constructor(
                     @JsonAnySetter
-                    private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
+                    private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap()
                 ) {
 
                     @JsonAnyGetter
@@ -49643,7 +49407,7 @@ private constructor(
                         fun build(): BulkConfig =
                             BulkConfig(
                                 checkRequired("tiers", tiers).map { it.toImmutable() },
-                                additionalProperties.toImmutable()
+                                additionalProperties.toImmutable(),
                             )
                     }
 
@@ -49806,9 +49570,7 @@ private constructor(
                 /** The cadence to bill for this price on. */
                 class Cadence
                 @JsonCreator
-                private constructor(
-                    private val value: JsonField<String>,
-                ) : Enum {
+                private constructor(private val value: JsonField<String>) : Enum {
 
                     /**
                      * Returns this class instance's raw value.
@@ -49926,9 +49688,7 @@ private constructor(
 
                 class ModelType
                 @JsonCreator
-                private constructor(
-                    private val value: JsonField<String>,
-                ) : Enum {
+                private constructor(private val value: JsonField<String>) : Enum {
 
                     /**
                      * Returns this class instance's raw value.
@@ -49950,7 +49710,7 @@ private constructor(
 
                     /** An enum containing [ModelType]'s known values. */
                     enum class Known {
-                        BULK,
+                        BULK
                     }
 
                     /**
@@ -50136,9 +49896,7 @@ private constructor(
                     /** The unit of billing period duration. */
                     class DurationUnit
                     @JsonCreator
-                    private constructor(
-                        private val value: JsonField<String>,
-                    ) : Enum {
+                    private constructor(private val value: JsonField<String>) : Enum {
 
                         /**
                          * Returns this class instance's raw value.
@@ -50373,9 +50131,7 @@ private constructor(
                     /** The unit of billing period duration. */
                     class DurationUnit
                     @JsonCreator
-                    private constructor(
-                        private val value: JsonField<String>,
-                    ) : Enum {
+                    private constructor(private val value: JsonField<String>) : Enum {
 
                         /**
                          * Returns this class instance's raw value.
@@ -50498,7 +50254,7 @@ private constructor(
                 @JsonCreator
                 private constructor(
                     @JsonAnySetter
-                    private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
+                    private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap()
                 ) {
 
                     @JsonAnyGetter
@@ -51172,9 +50928,7 @@ private constructor(
                 /** The cadence to bill for this price on. */
                 class Cadence
                 @JsonCreator
-                private constructor(
-                    private val value: JsonField<String>,
-                ) : Enum {
+                private constructor(private val value: JsonField<String>) : Enum {
 
                     /**
                      * Returns this class instance's raw value.
@@ -51292,9 +51046,7 @@ private constructor(
 
                 class ModelType
                 @JsonCreator
-                private constructor(
-                    private val value: JsonField<String>,
-                ) : Enum {
+                private constructor(private val value: JsonField<String>) : Enum {
 
                     /**
                      * Returns this class instance's raw value.
@@ -51316,7 +51068,7 @@ private constructor(
 
                     /** An enum containing [ModelType]'s known values. */
                     enum class Known {
-                        THRESHOLD_TOTAL_AMOUNT,
+                        THRESHOLD_TOTAL_AMOUNT
                     }
 
                     /**
@@ -51386,7 +51138,7 @@ private constructor(
                 @JsonCreator
                 private constructor(
                     @JsonAnySetter
-                    private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
+                    private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap()
                 ) {
 
                     @JsonAnyGetter
@@ -51587,9 +51339,7 @@ private constructor(
                     /** The unit of billing period duration. */
                     class DurationUnit
                     @JsonCreator
-                    private constructor(
-                        private val value: JsonField<String>,
-                    ) : Enum {
+                    private constructor(private val value: JsonField<String>) : Enum {
 
                         /**
                          * Returns this class instance's raw value.
@@ -51824,9 +51574,7 @@ private constructor(
                     /** The unit of billing period duration. */
                     class DurationUnit
                     @JsonCreator
-                    private constructor(
-                        private val value: JsonField<String>,
-                    ) : Enum {
+                    private constructor(private val value: JsonField<String>) : Enum {
 
                         /**
                          * Returns this class instance's raw value.
@@ -51949,7 +51697,7 @@ private constructor(
                 @JsonCreator
                 private constructor(
                     @JsonAnySetter
-                    private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
+                    private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap()
                 ) {
 
                     @JsonAnyGetter
@@ -52615,9 +52363,7 @@ private constructor(
                 /** The cadence to bill for this price on. */
                 class Cadence
                 @JsonCreator
-                private constructor(
-                    private val value: JsonField<String>,
-                ) : Enum {
+                private constructor(private val value: JsonField<String>) : Enum {
 
                     /**
                      * Returns this class instance's raw value.
@@ -52735,9 +52481,7 @@ private constructor(
 
                 class ModelType
                 @JsonCreator
-                private constructor(
-                    private val value: JsonField<String>,
-                ) : Enum {
+                private constructor(private val value: JsonField<String>) : Enum {
 
                     /**
                      * Returns this class instance's raw value.
@@ -52759,7 +52503,7 @@ private constructor(
 
                     /** An enum containing [ModelType]'s known values. */
                     enum class Known {
-                        TIERED_PACKAGE,
+                        TIERED_PACKAGE
                     }
 
                     /**
@@ -52829,7 +52573,7 @@ private constructor(
                 @JsonCreator
                 private constructor(
                     @JsonAnySetter
-                    private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
+                    private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap()
                 ) {
 
                     @JsonAnyGetter
@@ -53029,9 +52773,7 @@ private constructor(
                     /** The unit of billing period duration. */
                     class DurationUnit
                     @JsonCreator
-                    private constructor(
-                        private val value: JsonField<String>,
-                    ) : Enum {
+                    private constructor(private val value: JsonField<String>) : Enum {
 
                         /**
                          * Returns this class instance's raw value.
@@ -53266,9 +53008,7 @@ private constructor(
                     /** The unit of billing period duration. */
                     class DurationUnit
                     @JsonCreator
-                    private constructor(
-                        private val value: JsonField<String>,
-                    ) : Enum {
+                    private constructor(private val value: JsonField<String>) : Enum {
 
                         /**
                          * Returns this class instance's raw value.
@@ -53391,7 +53131,7 @@ private constructor(
                 @JsonCreator
                 private constructor(
                     @JsonAnySetter
-                    private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
+                    private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap()
                 ) {
 
                     @JsonAnyGetter
@@ -54062,9 +53802,7 @@ private constructor(
                 /** The cadence to bill for this price on. */
                 class Cadence
                 @JsonCreator
-                private constructor(
-                    private val value: JsonField<String>,
-                ) : Enum {
+                private constructor(private val value: JsonField<String>) : Enum {
 
                     /**
                      * Returns this class instance's raw value.
@@ -54182,9 +53920,7 @@ private constructor(
 
                 class ModelType
                 @JsonCreator
-                private constructor(
-                    private val value: JsonField<String>,
-                ) : Enum {
+                private constructor(private val value: JsonField<String>) : Enum {
 
                     /**
                      * Returns this class instance's raw value.
@@ -54206,7 +53942,7 @@ private constructor(
 
                     /** An enum containing [ModelType]'s known values. */
                     enum class Known {
-                        TIERED_WITH_MINIMUM,
+                        TIERED_WITH_MINIMUM
                     }
 
                     /**
@@ -54276,7 +54012,7 @@ private constructor(
                 @JsonCreator
                 private constructor(
                     @JsonAnySetter
-                    private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
+                    private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap()
                 ) {
 
                     @JsonAnyGetter
@@ -54477,9 +54213,7 @@ private constructor(
                     /** The unit of billing period duration. */
                     class DurationUnit
                     @JsonCreator
-                    private constructor(
-                        private val value: JsonField<String>,
-                    ) : Enum {
+                    private constructor(private val value: JsonField<String>) : Enum {
 
                         /**
                          * Returns this class instance's raw value.
@@ -54714,9 +54448,7 @@ private constructor(
                     /** The unit of billing period duration. */
                     class DurationUnit
                     @JsonCreator
-                    private constructor(
-                        private val value: JsonField<String>,
-                    ) : Enum {
+                    private constructor(private val value: JsonField<String>) : Enum {
 
                         /**
                          * Returns this class instance's raw value.
@@ -54839,7 +54571,7 @@ private constructor(
                 @JsonCreator
                 private constructor(
                     @JsonAnySetter
-                    private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
+                    private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap()
                 ) {
 
                     @JsonAnyGetter
@@ -55507,9 +55239,7 @@ private constructor(
                 /** The cadence to bill for this price on. */
                 class Cadence
                 @JsonCreator
-                private constructor(
-                    private val value: JsonField<String>,
-                ) : Enum {
+                private constructor(private val value: JsonField<String>) : Enum {
 
                     /**
                      * Returns this class instance's raw value.
@@ -55627,9 +55357,7 @@ private constructor(
 
                 class ModelType
                 @JsonCreator
-                private constructor(
-                    private val value: JsonField<String>,
-                ) : Enum {
+                private constructor(private val value: JsonField<String>) : Enum {
 
                     /**
                      * Returns this class instance's raw value.
@@ -55651,7 +55379,7 @@ private constructor(
 
                     /** An enum containing [ModelType]'s known values. */
                     enum class Known {
-                        UNIT_WITH_PERCENT,
+                        UNIT_WITH_PERCENT
                     }
 
                     /**
@@ -55721,7 +55449,7 @@ private constructor(
                 @JsonCreator
                 private constructor(
                     @JsonAnySetter
-                    private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
+                    private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap()
                 ) {
 
                     @JsonAnyGetter
@@ -55921,9 +55649,7 @@ private constructor(
                     /** The unit of billing period duration. */
                     class DurationUnit
                     @JsonCreator
-                    private constructor(
-                        private val value: JsonField<String>,
-                    ) : Enum {
+                    private constructor(private val value: JsonField<String>) : Enum {
 
                         /**
                          * Returns this class instance's raw value.
@@ -56158,9 +55884,7 @@ private constructor(
                     /** The unit of billing period duration. */
                     class DurationUnit
                     @JsonCreator
-                    private constructor(
-                        private val value: JsonField<String>,
-                    ) : Enum {
+                    private constructor(private val value: JsonField<String>) : Enum {
 
                         /**
                          * Returns this class instance's raw value.
@@ -56283,7 +56007,7 @@ private constructor(
                 @JsonCreator
                 private constructor(
                     @JsonAnySetter
-                    private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
+                    private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap()
                 ) {
 
                     @JsonAnyGetter
@@ -56942,7 +56666,7 @@ private constructor(
                             checkRequired("name", name),
                             checkRequired(
                                 "packageWithAllocationConfig",
-                                packageWithAllocationConfig
+                                packageWithAllocationConfig,
                             ),
                             billableMetricId,
                             billedInAdvance,
@@ -56962,9 +56686,7 @@ private constructor(
                 /** The cadence to bill for this price on. */
                 class Cadence
                 @JsonCreator
-                private constructor(
-                    private val value: JsonField<String>,
-                ) : Enum {
+                private constructor(private val value: JsonField<String>) : Enum {
 
                     /**
                      * Returns this class instance's raw value.
@@ -57082,9 +56804,7 @@ private constructor(
 
                 class ModelType
                 @JsonCreator
-                private constructor(
-                    private val value: JsonField<String>,
-                ) : Enum {
+                private constructor(private val value: JsonField<String>) : Enum {
 
                     /**
                      * Returns this class instance's raw value.
@@ -57106,7 +56826,7 @@ private constructor(
 
                     /** An enum containing [ModelType]'s known values. */
                     enum class Known {
-                        PACKAGE_WITH_ALLOCATION,
+                        PACKAGE_WITH_ALLOCATION
                     }
 
                     /**
@@ -57176,7 +56896,7 @@ private constructor(
                 @JsonCreator
                 private constructor(
                     @JsonAnySetter
-                    private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
+                    private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap()
                 ) {
 
                     @JsonAnyGetter
@@ -57378,9 +57098,7 @@ private constructor(
                     /** The unit of billing period duration. */
                     class DurationUnit
                     @JsonCreator
-                    private constructor(
-                        private val value: JsonField<String>,
-                    ) : Enum {
+                    private constructor(private val value: JsonField<String>) : Enum {
 
                         /**
                          * Returns this class instance's raw value.
@@ -57615,9 +57333,7 @@ private constructor(
                     /** The unit of billing period duration. */
                     class DurationUnit
                     @JsonCreator
-                    private constructor(
-                        private val value: JsonField<String>,
-                    ) : Enum {
+                    private constructor(private val value: JsonField<String>) : Enum {
 
                         /**
                          * Returns this class instance's raw value.
@@ -57740,7 +57456,7 @@ private constructor(
                 @JsonCreator
                 private constructor(
                     @JsonAnySetter
-                    private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
+                    private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap()
                 ) {
 
                     @JsonAnyGetter
@@ -58413,9 +58129,7 @@ private constructor(
                 /** The cadence to bill for this price on. */
                 class Cadence
                 @JsonCreator
-                private constructor(
-                    private val value: JsonField<String>,
-                ) : Enum {
+                private constructor(private val value: JsonField<String>) : Enum {
 
                     /**
                      * Returns this class instance's raw value.
@@ -58533,9 +58247,7 @@ private constructor(
 
                 class ModelType
                 @JsonCreator
-                private constructor(
-                    private val value: JsonField<String>,
-                ) : Enum {
+                private constructor(private val value: JsonField<String>) : Enum {
 
                     /**
                      * Returns this class instance's raw value.
@@ -58557,7 +58269,7 @@ private constructor(
 
                     /** An enum containing [ModelType]'s known values. */
                     enum class Known {
-                        TIERED_WITH_PRORATION,
+                        TIERED_WITH_PRORATION
                     }
 
                     /**
@@ -58627,7 +58339,7 @@ private constructor(
                 @JsonCreator
                 private constructor(
                     @JsonAnySetter
-                    private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
+                    private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap()
                 ) {
 
                     @JsonAnyGetter
@@ -58828,9 +58540,7 @@ private constructor(
                     /** The unit of billing period duration. */
                     class DurationUnit
                     @JsonCreator
-                    private constructor(
-                        private val value: JsonField<String>,
-                    ) : Enum {
+                    private constructor(private val value: JsonField<String>) : Enum {
 
                         /**
                          * Returns this class instance's raw value.
@@ -59065,9 +58775,7 @@ private constructor(
                     /** The unit of billing period duration. */
                     class DurationUnit
                     @JsonCreator
-                    private constructor(
-                        private val value: JsonField<String>,
-                    ) : Enum {
+                    private constructor(private val value: JsonField<String>) : Enum {
 
                         /**
                          * Returns this class instance's raw value.
@@ -59190,7 +58898,7 @@ private constructor(
                 @JsonCreator
                 private constructor(
                     @JsonAnySetter
-                    private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
+                    private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap()
                 ) {
 
                     @JsonAnyGetter
@@ -59861,9 +59569,7 @@ private constructor(
                 /** The cadence to bill for this price on. */
                 class Cadence
                 @JsonCreator
-                private constructor(
-                    private val value: JsonField<String>,
-                ) : Enum {
+                private constructor(private val value: JsonField<String>) : Enum {
 
                     /**
                      * Returns this class instance's raw value.
@@ -59981,9 +59687,7 @@ private constructor(
 
                 class ModelType
                 @JsonCreator
-                private constructor(
-                    private val value: JsonField<String>,
-                ) : Enum {
+                private constructor(private val value: JsonField<String>) : Enum {
 
                     /**
                      * Returns this class instance's raw value.
@@ -60005,7 +59709,7 @@ private constructor(
 
                     /** An enum containing [ModelType]'s known values. */
                     enum class Known {
-                        UNIT_WITH_PRORATION,
+                        UNIT_WITH_PRORATION
                     }
 
                     /**
@@ -60075,7 +59779,7 @@ private constructor(
                 @JsonCreator
                 private constructor(
                     @JsonAnySetter
-                    private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
+                    private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap()
                 ) {
 
                     @JsonAnyGetter
@@ -60276,9 +59980,7 @@ private constructor(
                     /** The unit of billing period duration. */
                     class DurationUnit
                     @JsonCreator
-                    private constructor(
-                        private val value: JsonField<String>,
-                    ) : Enum {
+                    private constructor(private val value: JsonField<String>) : Enum {
 
                         /**
                          * Returns this class instance's raw value.
@@ -60513,9 +60215,7 @@ private constructor(
                     /** The unit of billing period duration. */
                     class DurationUnit
                     @JsonCreator
-                    private constructor(
-                        private val value: JsonField<String>,
-                    ) : Enum {
+                    private constructor(private val value: JsonField<String>) : Enum {
 
                         /**
                          * Returns this class instance's raw value.
@@ -60638,7 +60338,7 @@ private constructor(
                 @JsonCreator
                 private constructor(
                     @JsonAnySetter
-                    private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
+                    private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap()
                 ) {
 
                     @JsonAnyGetter
@@ -61309,9 +61009,7 @@ private constructor(
                 /** The cadence to bill for this price on. */
                 class Cadence
                 @JsonCreator
-                private constructor(
-                    private val value: JsonField<String>,
-                ) : Enum {
+                private constructor(private val value: JsonField<String>) : Enum {
 
                     /**
                      * Returns this class instance's raw value.
@@ -61432,7 +61130,7 @@ private constructor(
                 @JsonCreator
                 private constructor(
                     @JsonAnySetter
-                    private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
+                    private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap()
                 ) {
 
                     @JsonAnyGetter
@@ -61514,9 +61212,7 @@ private constructor(
 
                 class ModelType
                 @JsonCreator
-                private constructor(
-                    private val value: JsonField<String>,
-                ) : Enum {
+                private constructor(private val value: JsonField<String>) : Enum {
 
                     /**
                      * Returns this class instance's raw value.
@@ -61538,7 +61234,7 @@ private constructor(
 
                     /** An enum containing [ModelType]'s known values. */
                     enum class Known {
-                        GROUPED_ALLOCATION,
+                        GROUPED_ALLOCATION
                     }
 
                     /**
@@ -61724,9 +61420,7 @@ private constructor(
                     /** The unit of billing period duration. */
                     class DurationUnit
                     @JsonCreator
-                    private constructor(
-                        private val value: JsonField<String>,
-                    ) : Enum {
+                    private constructor(private val value: JsonField<String>) : Enum {
 
                         /**
                          * Returns this class instance's raw value.
@@ -61961,9 +61655,7 @@ private constructor(
                     /** The unit of billing period duration. */
                     class DurationUnit
                     @JsonCreator
-                    private constructor(
-                        private val value: JsonField<String>,
-                    ) : Enum {
+                    private constructor(private val value: JsonField<String>) : Enum {
 
                         /**
                          * Returns this class instance's raw value.
@@ -62086,7 +61778,7 @@ private constructor(
                 @JsonCreator
                 private constructor(
                     @JsonAnySetter
-                    private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
+                    private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap()
                 ) {
 
                     @JsonAnyGetter
@@ -62756,7 +62448,7 @@ private constructor(
                             checkRequired("cadence", cadence),
                             checkRequired(
                                 "groupedWithProratedMinimumConfig",
-                                groupedWithProratedMinimumConfig
+                                groupedWithProratedMinimumConfig,
                             ),
                             checkRequired("itemId", itemId),
                             checkRequired("modelType", modelType),
@@ -62779,9 +62471,7 @@ private constructor(
                 /** The cadence to bill for this price on. */
                 class Cadence
                 @JsonCreator
-                private constructor(
-                    private val value: JsonField<String>,
-                ) : Enum {
+                private constructor(private val value: JsonField<String>) : Enum {
 
                     /**
                      * Returns this class instance's raw value.
@@ -62902,7 +62592,7 @@ private constructor(
                 @JsonCreator
                 private constructor(
                     @JsonAnySetter
-                    private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
+                    private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap()
                 ) {
 
                     @JsonAnyGetter
@@ -62985,9 +62675,7 @@ private constructor(
 
                 class ModelType
                 @JsonCreator
-                private constructor(
-                    private val value: JsonField<String>,
-                ) : Enum {
+                private constructor(private val value: JsonField<String>) : Enum {
 
                     /**
                      * Returns this class instance's raw value.
@@ -63009,7 +62697,7 @@ private constructor(
 
                     /** An enum containing [ModelType]'s known values. */
                     enum class Known {
-                        GROUPED_WITH_PRORATED_MINIMUM,
+                        GROUPED_WITH_PRORATED_MINIMUM
                     }
 
                     /**
@@ -63195,9 +62883,7 @@ private constructor(
                     /** The unit of billing period duration. */
                     class DurationUnit
                     @JsonCreator
-                    private constructor(
-                        private val value: JsonField<String>,
-                    ) : Enum {
+                    private constructor(private val value: JsonField<String>) : Enum {
 
                         /**
                          * Returns this class instance's raw value.
@@ -63432,9 +63118,7 @@ private constructor(
                     /** The unit of billing period duration. */
                     class DurationUnit
                     @JsonCreator
-                    private constructor(
-                        private val value: JsonField<String>,
-                    ) : Enum {
+                    private constructor(private val value: JsonField<String>) : Enum {
 
                         /**
                          * Returns this class instance's raw value.
@@ -63557,7 +63241,7 @@ private constructor(
                 @JsonCreator
                 private constructor(
                     @JsonAnySetter
-                    private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
+                    private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap()
                 ) {
 
                     @JsonAnyGetter
@@ -64230,7 +63914,7 @@ private constructor(
                 @JsonCreator
                 private constructor(
                     @JsonAnySetter
-                    private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
+                    private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap()
                 ) {
 
                     @JsonAnyGetter
@@ -64313,9 +63997,7 @@ private constructor(
                 /** The cadence to bill for this price on. */
                 class Cadence
                 @JsonCreator
-                private constructor(
-                    private val value: JsonField<String>,
-                ) : Enum {
+                private constructor(private val value: JsonField<String>) : Enum {
 
                     /**
                      * Returns this class instance's raw value.
@@ -64433,9 +64115,7 @@ private constructor(
 
                 class ModelType
                 @JsonCreator
-                private constructor(
-                    private val value: JsonField<String>,
-                ) : Enum {
+                private constructor(private val value: JsonField<String>) : Enum {
 
                     /**
                      * Returns this class instance's raw value.
@@ -64457,7 +64137,7 @@ private constructor(
 
                     /** An enum containing [ModelType]'s known values. */
                     enum class Known {
-                        BULK_WITH_PRORATION,
+                        BULK_WITH_PRORATION
                     }
 
                     /**
@@ -64643,9 +64323,7 @@ private constructor(
                     /** The unit of billing period duration. */
                     class DurationUnit
                     @JsonCreator
-                    private constructor(
-                        private val value: JsonField<String>,
-                    ) : Enum {
+                    private constructor(private val value: JsonField<String>) : Enum {
 
                         /**
                          * Returns this class instance's raw value.
@@ -64880,9 +64558,7 @@ private constructor(
                     /** The unit of billing period duration. */
                     class DurationUnit
                     @JsonCreator
-                    private constructor(
-                        private val value: JsonField<String>,
-                    ) : Enum {
+                    private constructor(private val value: JsonField<String>) : Enum {
 
                         /**
                          * Returns this class instance's raw value.
@@ -65005,7 +64681,7 @@ private constructor(
                 @JsonCreator
                 private constructor(
                     @JsonAnySetter
-                    private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
+                    private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap()
                 ) {
 
                     @JsonAnyGetter

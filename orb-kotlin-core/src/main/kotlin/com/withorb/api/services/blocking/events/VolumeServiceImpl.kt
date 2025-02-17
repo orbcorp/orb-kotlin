@@ -15,10 +15,8 @@ import com.withorb.api.errors.OrbError
 import com.withorb.api.models.EventVolumeListParams
 import com.withorb.api.models.EventVolumes
 
-class VolumeServiceImpl
-internal constructor(
-    private val clientOptions: ClientOptions,
-) : VolumeService {
+class VolumeServiceImpl internal constructor(private val clientOptions: ClientOptions) :
+    VolumeService {
 
     private val errorHandler: Handler<OrbError> = errorHandler(clientOptions.jsonMapper)
 

@@ -48,7 +48,7 @@ interface BackfillServiceAsync {
      */
     suspend fun create(
         params: EventBackfillCreateParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): EventBackfillCreateResponse
 
     /**
@@ -61,7 +61,7 @@ interface BackfillServiceAsync {
      */
     suspend fun list(
         params: EventBackfillListParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): EventBackfillListPageAsync
 
     /**
@@ -71,13 +71,13 @@ interface BackfillServiceAsync {
      */
     suspend fun close(
         params: EventBackfillCloseParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): EventBackfillCloseResponse
 
     /** This endpoint is used to fetch a backfill given an identifier. */
     suspend fun fetch(
         params: EventBackfillFetchParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): EventBackfillFetchResponse
 
     /**
@@ -90,6 +90,6 @@ interface BackfillServiceAsync {
      */
     suspend fun revert(
         params: EventBackfillRevertParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): EventBackfillRevertResponse
 }

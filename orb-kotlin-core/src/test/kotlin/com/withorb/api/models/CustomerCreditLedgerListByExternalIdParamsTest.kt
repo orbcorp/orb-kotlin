@@ -51,11 +51,11 @@ class CustomerCreditLedgerListByExternalIdParamsTest {
         expected.put("cursor", "cursor")
         expected.put(
             "entry_status",
-            CustomerCreditLedgerListByExternalIdParams.EntryStatus.COMMITTED.toString()
+            CustomerCreditLedgerListByExternalIdParams.EntryStatus.COMMITTED.toString(),
         )
         expected.put(
             "entry_type",
-            CustomerCreditLedgerListByExternalIdParams.EntryType.INCREMENT.toString()
+            CustomerCreditLedgerListByExternalIdParams.EntryType.INCREMENT.toString(),
         )
         expected.put("limit", "1")
         expected.put("minimum_amount", "minimum_amount")

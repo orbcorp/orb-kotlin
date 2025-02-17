@@ -73,13 +73,8 @@ private constructor(
         fun of(
             topUpsService: TopUpService,
             params: CustomerCreditTopUpListByExternalIdParams,
-            response: Response
-        ) =
-            CustomerCreditTopUpListByExternalIdPage(
-                topUpsService,
-                params,
-                response,
-            )
+            response: Response,
+        ) = CustomerCreditTopUpListByExternalIdPage(topUpsService, params, response)
     }
 
     @NoAutoDetect
@@ -174,18 +169,12 @@ private constructor(
                 this.additionalProperties.put(key, value)
             }
 
-            fun build() =
-                Response(
-                    data,
-                    paginationMetadata,
-                    additionalProperties.toImmutable(),
-                )
+            fun build() = Response(data, paginationMetadata, additionalProperties.toImmutable())
         }
     }
 
-    class AutoPager(
-        private val firstPage: CustomerCreditTopUpListByExternalIdPage,
-    ) : Sequence<CustomerCreditTopUpListByExternalIdResponse> {
+    class AutoPager(private val firstPage: CustomerCreditTopUpListByExternalIdPage) :
+        Sequence<CustomerCreditTopUpListByExternalIdResponse> {
 
         override fun iterator(): Iterator<CustomerCreditTopUpListByExternalIdResponse> = iterator {
             var page = firstPage

@@ -287,11 +287,7 @@ private constructor(
         }
 
         fun build(): ItemCreateParams =
-            ItemCreateParams(
-                body.build(),
-                additionalHeaders.build(),
-                additionalQueryParams.build(),
-            )
+            ItemCreateParams(body.build(), additionalHeaders.build(), additionalQueryParams.build())
     }
 
     override fun equals(other: Any?): Boolean {

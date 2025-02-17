@@ -78,11 +78,7 @@ private constructor(
     companion object {
 
         fun of(plansService: PlanServiceAsync, params: PlanListParams, response: Response) =
-            PlanListPageAsync(
-                plansService,
-                params,
-                response,
-            )
+            PlanListPageAsync(plansService, params, response)
     }
 
     @NoAutoDetect
@@ -169,18 +165,11 @@ private constructor(
                 this.additionalProperties.put(key, value)
             }
 
-            fun build() =
-                Response(
-                    data,
-                    paginationMetadata,
-                    additionalProperties.toImmutable(),
-                )
+            fun build() = Response(data, paginationMetadata, additionalProperties.toImmutable())
         }
     }
 
-    class AutoPager(
-        private val firstPage: PlanListPageAsync,
-    ) : Flow<Plan> {
+    class AutoPager(private val firstPage: PlanListPageAsync) : Flow<Plan> {
 
         override suspend fun collect(collector: FlowCollector<Plan>) {
             var page = firstPage

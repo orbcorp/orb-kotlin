@@ -74,11 +74,7 @@ private constructor(
     companion object {
 
         fun of(pricesService: PriceService, params: PriceListParams, response: Response) =
-            PriceListPage(
-                pricesService,
-                params,
-                response,
-            )
+            PriceListPage(pricesService, params, response)
     }
 
     @NoAutoDetect
@@ -165,18 +161,11 @@ private constructor(
                 this.additionalProperties.put(key, value)
             }
 
-            fun build() =
-                Response(
-                    data,
-                    paginationMetadata,
-                    additionalProperties.toImmutable(),
-                )
+            fun build() = Response(data, paginationMetadata, additionalProperties.toImmutable())
         }
     }
 
-    class AutoPager(
-        private val firstPage: PriceListPage,
-    ) : Sequence<Price> {
+    class AutoPager(private val firstPage: PriceListPage) : Sequence<Price> {
 
         override fun iterator(): Iterator<Price> = iterator {
             var page = firstPage

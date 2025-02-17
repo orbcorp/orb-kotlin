@@ -17,10 +17,7 @@ import com.withorb.api.models.CustomerCostListByExternalIdResponse
 import com.withorb.api.models.CustomerCostListParams
 import com.withorb.api.models.CustomerCostListResponse
 
-class CostServiceImpl
-internal constructor(
-    private val clientOptions: ClientOptions,
-) : CostService {
+class CostServiceImpl internal constructor(private val clientOptions: ClientOptions) : CostService {
 
     private val errorHandler: Handler<OrbError> = errorHandler(clientOptions.jsonMapper)
 
@@ -140,7 +137,7 @@ internal constructor(
      */
     override fun list(
         params: CustomerCostListParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): CustomerCostListResponse {
         val request =
             HttpRequest.builder()
@@ -274,7 +271,7 @@ internal constructor(
      */
     override fun listByExternalId(
         params: CustomerCostListByExternalIdParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): CustomerCostListByExternalIdResponse {
         val request =
             HttpRequest.builder()
@@ -283,7 +280,7 @@ internal constructor(
                     "customers",
                     "external_customer_id",
                     params.getPathParam(0),
-                    "costs"
+                    "costs",
                 )
                 .build()
                 .prepare(clientOptions, params)

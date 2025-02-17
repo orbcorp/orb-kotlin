@@ -127,25 +127,25 @@ private constructor(
         this.invoiceDateGt?.let {
             queryParams.put(
                 "invoice_date[gt]",
-                listOf(DateTimeFormatter.ISO_OFFSET_DATE_TIME.format(it))
+                listOf(DateTimeFormatter.ISO_OFFSET_DATE_TIME.format(it)),
             )
         }
         this.invoiceDateGte?.let {
             queryParams.put(
                 "invoice_date[gte]",
-                listOf(DateTimeFormatter.ISO_OFFSET_DATE_TIME.format(it))
+                listOf(DateTimeFormatter.ISO_OFFSET_DATE_TIME.format(it)),
             )
         }
         this.invoiceDateLt?.let {
             queryParams.put(
                 "invoice_date[lt]",
-                listOf(DateTimeFormatter.ISO_OFFSET_DATE_TIME.format(it))
+                listOf(DateTimeFormatter.ISO_OFFSET_DATE_TIME.format(it)),
             )
         }
         this.invoiceDateLte?.let {
             queryParams.put(
                 "invoice_date[lte]",
-                listOf(DateTimeFormatter.ISO_OFFSET_DATE_TIME.format(it))
+                listOf(DateTimeFormatter.ISO_OFFSET_DATE_TIME.format(it)),
             )
         }
         this.isRecurring?.let { queryParams.put("is_recurring", listOf(it.toString())) }
@@ -404,11 +404,7 @@ private constructor(
             )
     }
 
-    class DateType
-    @JsonCreator
-    private constructor(
-        private val value: JsonField<String>,
-    ) : Enum {
+    class DateType @JsonCreator private constructor(private val value: JsonField<String>) : Enum {
 
         /**
          * Returns this class instance's raw value.
@@ -495,11 +491,7 @@ private constructor(
         override fun toString() = value.toString()
     }
 
-    class Status
-    @JsonCreator
-    private constructor(
-        private val value: JsonField<String>,
-    ) : Enum {
+    class Status @JsonCreator private constructor(private val value: JsonField<String>) : Enum {
 
         /**
          * Returns this class instance's raw value.

@@ -19,10 +19,8 @@ import com.withorb.api.models.CreditNoteFetchParams
 import com.withorb.api.models.CreditNoteListPage
 import com.withorb.api.models.CreditNoteListParams
 
-class CreditNoteServiceImpl
-internal constructor(
-    private val clientOptions: ClientOptions,
-) : CreditNoteService {
+class CreditNoteServiceImpl internal constructor(private val clientOptions: ClientOptions) :
+    CreditNoteService {
 
     private val errorHandler: Handler<OrbError> = errorHandler(clientOptions.jsonMapper)
 
@@ -32,7 +30,7 @@ internal constructor(
     /** This endpoint is used to create a single [`Credit Note`](/invoicing/credit-notes). */
     override fun create(
         params: CreditNoteCreateParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): CreditNote {
         val request =
             HttpRequest.builder()
@@ -62,7 +60,7 @@ internal constructor(
      */
     override fun list(
         params: CreditNoteListParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): CreditNoteListPage {
         val request =
             HttpRequest.builder()

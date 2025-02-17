@@ -22,10 +22,8 @@ import com.withorb.api.models.CouponListParams
 import com.withorb.api.services.async.coupons.SubscriptionServiceAsync
 import com.withorb.api.services.async.coupons.SubscriptionServiceAsyncImpl
 
-class CouponServiceAsyncImpl
-internal constructor(
-    private val clientOptions: ClientOptions,
-) : CouponServiceAsync {
+class CouponServiceAsyncImpl internal constructor(private val clientOptions: ClientOptions) :
+    CouponServiceAsync {
 
     private val errorHandler: Handler<OrbError> = errorHandler(clientOptions.jsonMapper)
 
@@ -44,7 +42,7 @@ internal constructor(
      */
     override suspend fun create(
         params: CouponCreateParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): Coupon {
         val request =
             HttpRequest.builder()
@@ -77,7 +75,7 @@ internal constructor(
      */
     override suspend fun list(
         params: CouponListParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): CouponListPageAsync {
         val request =
             HttpRequest.builder()
@@ -106,7 +104,7 @@ internal constructor(
      */
     override suspend fun archive(
         params: CouponArchiveParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): Coupon {
         val request =
             HttpRequest.builder()

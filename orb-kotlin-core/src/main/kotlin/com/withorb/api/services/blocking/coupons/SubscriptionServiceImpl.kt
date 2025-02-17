@@ -15,10 +15,8 @@ import com.withorb.api.errors.OrbError
 import com.withorb.api.models.CouponSubscriptionListPage
 import com.withorb.api.models.CouponSubscriptionListParams
 
-class SubscriptionServiceImpl
-internal constructor(
-    private val clientOptions: ClientOptions,
-) : SubscriptionService {
+class SubscriptionServiceImpl internal constructor(private val clientOptions: ClientOptions) :
+    SubscriptionService {
 
     private val errorHandler: Handler<OrbError> = errorHandler(clientOptions.jsonMapper)
 
@@ -34,7 +32,7 @@ internal constructor(
      */
     override fun list(
         params: CouponSubscriptionListParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): CouponSubscriptionListPage {
         val request =
             HttpRequest.builder()

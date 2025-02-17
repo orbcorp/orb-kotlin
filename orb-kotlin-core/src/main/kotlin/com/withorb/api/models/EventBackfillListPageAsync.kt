@@ -82,13 +82,8 @@ private constructor(
         fun of(
             backfillsService: BackfillServiceAsync,
             params: EventBackfillListParams,
-            response: Response
-        ) =
-            EventBackfillListPageAsync(
-                backfillsService,
-                params,
-                response,
-            )
+            response: Response,
+        ) = EventBackfillListPageAsync(backfillsService, params, response)
     }
 
     @NoAutoDetect
@@ -176,18 +171,12 @@ private constructor(
                 this.additionalProperties.put(key, value)
             }
 
-            fun build() =
-                Response(
-                    data,
-                    paginationMetadata,
-                    additionalProperties.toImmutable(),
-                )
+            fun build() = Response(data, paginationMetadata, additionalProperties.toImmutable())
         }
     }
 
-    class AutoPager(
-        private val firstPage: EventBackfillListPageAsync,
-    ) : Flow<EventBackfillListResponse> {
+    class AutoPager(private val firstPage: EventBackfillListPageAsync) :
+        Flow<EventBackfillListResponse> {
 
         override suspend fun collect(collector: FlowCollector<EventBackfillListResponse>) {
             var page = firstPage

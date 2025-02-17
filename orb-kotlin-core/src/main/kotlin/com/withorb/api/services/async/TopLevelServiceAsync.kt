@@ -18,6 +18,6 @@ interface TopLevelServiceAsync {
      */
     suspend fun ping(
         params: TopLevelPingParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): TopLevelPingResponse
 }

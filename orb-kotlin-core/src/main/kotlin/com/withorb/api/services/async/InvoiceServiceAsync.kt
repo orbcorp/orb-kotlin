@@ -21,7 +21,7 @@ interface InvoiceServiceAsync {
     /** This endpoint is used to create a one-off invoice for a customer. */
     suspend fun create(
         params: InvoiceCreateParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): Invoice
 
     /**
@@ -32,7 +32,7 @@ interface InvoiceServiceAsync {
      */
     suspend fun update(
         params: InvoiceUpdateParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): Invoice
 
     /**
@@ -51,7 +51,7 @@ interface InvoiceServiceAsync {
      */
     suspend fun list(
         params: InvoiceListParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): InvoiceListPageAsync
 
     /**
@@ -59,7 +59,7 @@ interface InvoiceServiceAsync {
      */
     suspend fun fetch(
         params: InvoiceFetchParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): Invoice
 
     /**
@@ -68,7 +68,7 @@ interface InvoiceServiceAsync {
      */
     suspend fun fetchUpcoming(
         params: InvoiceFetchUpcomingParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): InvoiceFetchUpcomingResponse
 
     /**
@@ -80,7 +80,7 @@ interface InvoiceServiceAsync {
      */
     suspend fun issue(
         params: InvoiceIssueParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): Invoice
 
     /**
@@ -89,7 +89,7 @@ interface InvoiceServiceAsync {
      */
     suspend fun markPaid(
         params: InvoiceMarkPaidParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): Invoice
 
     /**
@@ -98,7 +98,7 @@ interface InvoiceServiceAsync {
      */
     suspend fun pay(
         params: InvoicePayParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): Invoice
 
     /**
@@ -111,6 +111,6 @@ interface InvoiceServiceAsync {
      */
     suspend fun void(
         params: InvoiceVoidParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): Invoice
 }

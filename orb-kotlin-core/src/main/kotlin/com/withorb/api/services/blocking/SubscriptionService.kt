@@ -277,7 +277,7 @@ interface SubscriptionService {
      */
     fun create(
         params: SubscriptionCreateParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): SubscriptionCreateResponse
 
     /**
@@ -286,7 +286,7 @@ interface SubscriptionService {
      */
     fun update(
         params: SubscriptionUpdateParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): Subscription
 
     /**
@@ -301,7 +301,7 @@ interface SubscriptionService {
      */
     fun list(
         params: SubscriptionListParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): SubscriptionListPage
 
     /**
@@ -359,7 +359,7 @@ interface SubscriptionService {
      */
     fun cancel(
         params: SubscriptionCancelParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): SubscriptionCancelResponse
 
     /**
@@ -368,7 +368,7 @@ interface SubscriptionService {
      */
     fun fetch(
         params: SubscriptionFetchParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): Subscription
 
     /**
@@ -384,7 +384,7 @@ interface SubscriptionService {
      */
     fun fetchCosts(
         params: SubscriptionFetchCostsParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): SubscriptionFetchCostsResponse
 
     /**
@@ -394,7 +394,7 @@ interface SubscriptionService {
      */
     fun fetchSchedule(
         params: SubscriptionFetchScheduleParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): SubscriptionFetchSchedulePage
 
     /**
@@ -576,7 +576,7 @@ interface SubscriptionService {
      */
     fun fetchUsage(
         params: SubscriptionFetchUsageParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): SubscriptionUsage
 
     /**
@@ -648,7 +648,7 @@ interface SubscriptionService {
      */
     fun priceIntervals(
         params: SubscriptionPriceIntervalsParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): SubscriptionPriceIntervalsResponse
 
     /**
@@ -819,7 +819,7 @@ interface SubscriptionService {
      */
     fun schedulePlanChange(
         params: SubscriptionSchedulePlanChangeParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): SubscriptionSchedulePlanChangeResponse
 
     /**
@@ -827,7 +827,7 @@ interface SubscriptionService {
      */
     fun triggerPhase(
         params: SubscriptionTriggerPhaseParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): SubscriptionTriggerPhaseResponse
 
     /**
@@ -839,7 +839,7 @@ interface SubscriptionService {
      */
     fun unscheduleCancellation(
         params: SubscriptionUnscheduleCancellationParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): SubscriptionUnscheduleCancellationResponse
 
     /**
@@ -850,7 +850,7 @@ interface SubscriptionService {
      */
     fun unscheduleFixedFeeQuantityUpdates(
         params: SubscriptionUnscheduleFixedFeeQuantityUpdatesParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): SubscriptionUnscheduleFixedFeeQuantityUpdatesResponse
 
     /**
@@ -858,7 +858,7 @@ interface SubscriptionService {
      */
     fun unschedulePendingPlanChanges(
         params: SubscriptionUnschedulePendingPlanChangesParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): SubscriptionUnschedulePendingPlanChangesResponse
 
     /**
@@ -877,7 +877,7 @@ interface SubscriptionService {
      */
     fun updateFixedFeeQuantity(
         params: SubscriptionUpdateFixedFeeQuantityParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): SubscriptionUpdateFixedFeeQuantityResponse
 
     /**
@@ -900,6 +900,6 @@ interface SubscriptionService {
      */
     fun updateTrial(
         params: SubscriptionUpdateTrialParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): SubscriptionUpdateTrialResponse
 }

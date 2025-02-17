@@ -20,10 +20,8 @@ import com.withorb.api.models.MetricListPage
 import com.withorb.api.models.MetricListParams
 import com.withorb.api.models.MetricUpdateParams
 
-class MetricServiceImpl
-internal constructor(
-    private val clientOptions: ClientOptions,
-) : MetricService {
+class MetricServiceImpl internal constructor(private val clientOptions: ClientOptions) :
+    MetricService {
 
     private val errorHandler: Handler<OrbError> = errorHandler(clientOptions.jsonMapper)
 
@@ -37,7 +35,7 @@ internal constructor(
      */
     override fun create(
         params: MetricCreateParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): BillableMetric {
         val request =
             HttpRequest.builder()
@@ -65,7 +63,7 @@ internal constructor(
      */
     override fun update(
         params: MetricUpdateParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): BillableMetric {
         val request =
             HttpRequest.builder()

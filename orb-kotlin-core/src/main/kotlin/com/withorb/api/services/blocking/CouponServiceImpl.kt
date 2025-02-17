@@ -22,10 +22,8 @@ import com.withorb.api.models.CouponListParams
 import com.withorb.api.services.blocking.coupons.SubscriptionService
 import com.withorb.api.services.blocking.coupons.SubscriptionServiceImpl
 
-class CouponServiceImpl
-internal constructor(
-    private val clientOptions: ClientOptions,
-) : CouponService {
+class CouponServiceImpl internal constructor(private val clientOptions: ClientOptions) :
+    CouponService {
 
     private val errorHandler: Handler<OrbError> = errorHandler(clientOptions.jsonMapper)
 

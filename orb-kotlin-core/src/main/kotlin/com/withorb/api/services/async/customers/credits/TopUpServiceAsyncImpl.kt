@@ -25,10 +25,8 @@ import com.withorb.api.models.CustomerCreditTopUpListByExternalIdParams
 import com.withorb.api.models.CustomerCreditTopUpListPageAsync
 import com.withorb.api.models.CustomerCreditTopUpListParams
 
-class TopUpServiceAsyncImpl
-internal constructor(
-    private val clientOptions: ClientOptions,
-) : TopUpServiceAsync {
+class TopUpServiceAsyncImpl internal constructor(private val clientOptions: ClientOptions) :
+    TopUpServiceAsync {
 
     private val errorHandler: Handler<OrbError> = errorHandler(clientOptions.jsonMapper)
 
@@ -46,7 +44,7 @@ internal constructor(
      */
     override suspend fun create(
         params: CustomerCreditTopUpCreateParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): CustomerCreditTopUpCreateResponse {
         val request =
             HttpRequest.builder()
@@ -72,7 +70,7 @@ internal constructor(
     /** List top-ups */
     override suspend fun list(
         params: CustomerCreditTopUpListParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): CustomerCreditTopUpListPageAsync {
         val request =
             HttpRequest.builder()
@@ -96,7 +94,7 @@ internal constructor(
     /** Delete top-up */
     override suspend fun delete(
         params: CustomerCreditTopUpDeleteParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ) {
         val request =
             HttpRequest.builder()
@@ -106,7 +104,7 @@ internal constructor(
                     params.getPathParam(0),
                     "credits",
                     "top_ups",
-                    params.getPathParam(1)
+                    params.getPathParam(1),
                 )
                 .apply { params._body()?.let { body(json(clientOptions.jsonMapper, it)) } }
                 .build()
@@ -129,7 +127,7 @@ internal constructor(
      */
     override suspend fun createByExternalId(
         params: CustomerCreditTopUpCreateByExternalIdParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): CustomerCreditTopUpCreateByExternalIdResponse {
         val request =
             HttpRequest.builder()
@@ -139,7 +137,7 @@ internal constructor(
                     "external_customer_id",
                     params.getPathParam(0),
                     "credits",
-                    "top_ups"
+                    "top_ups",
                 )
                 .body(json(clientOptions.jsonMapper, params._body()))
                 .build()
@@ -160,7 +158,7 @@ internal constructor(
     /** Delete top-up by external ID */
     override suspend fun deleteByExternalId(
         params: CustomerCreditTopUpDeleteByExternalIdParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ) {
         val request =
             HttpRequest.builder()
@@ -171,7 +169,7 @@ internal constructor(
                     params.getPathParam(0),
                     "credits",
                     "top_ups",
-                    params.getPathParam(1)
+                    params.getPathParam(1),
                 )
                 .apply { params._body()?.let { body(json(clientOptions.jsonMapper, it)) } }
                 .build()
@@ -188,7 +186,7 @@ internal constructor(
     /** List top-ups by external ID */
     override suspend fun listByExternalId(
         params: CustomerCreditTopUpListByExternalIdParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): CustomerCreditTopUpListByExternalIdPageAsync {
         val request =
             HttpRequest.builder()
@@ -198,7 +196,7 @@ internal constructor(
                     "external_customer_id",
                     params.getPathParam(0),
                     "credits",
-                    "top_ups"
+                    "top_ups",
                 )
                 .build()
                 .prepareAsync(clientOptions, params)

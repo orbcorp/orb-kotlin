@@ -20,10 +20,8 @@ import com.withorb.api.models.ItemListPageAsync
 import com.withorb.api.models.ItemListParams
 import com.withorb.api.models.ItemUpdateParams
 
-class ItemServiceAsyncImpl
-internal constructor(
-    private val clientOptions: ClientOptions,
-) : ItemServiceAsync {
+class ItemServiceAsyncImpl internal constructor(private val clientOptions: ClientOptions) :
+    ItemServiceAsync {
 
     private val errorHandler: Handler<OrbError> = errorHandler(clientOptions.jsonMapper)
 
@@ -78,7 +76,7 @@ internal constructor(
     /** This endpoint returns a list of all Items, ordered in descending order by creation time. */
     override suspend fun list(
         params: ItemListParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): ItemListPageAsync {
         val request =
             HttpRequest.builder()

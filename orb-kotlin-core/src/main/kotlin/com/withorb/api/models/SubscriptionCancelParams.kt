@@ -525,11 +525,8 @@ private constructor(
     }
 
     /** Determines the timing of subscription cancellation */
-    class CancelOption
-    @JsonCreator
-    private constructor(
-        private val value: JsonField<String>,
-    ) : Enum {
+    class CancelOption @JsonCreator private constructor(private val value: JsonField<String>) :
+        Enum {
 
         /**
          * Returns this class instance's raw value.

@@ -593,11 +593,8 @@ private constructor(
      * defaults to `effective_date`. Otherwise, this defaults to `immediate` unless it's explicitly
      * set to `upcoming_invoice.
      */
-    class ChangeOption
-    @JsonCreator
-    private constructor(
-        private val value: JsonField<String>,
-    ) : Enum {
+    class ChangeOption @JsonCreator private constructor(private val value: JsonField<String>) :
+        Enum {
 
         /**
          * Returns this class instance's raw value.

@@ -18,10 +18,8 @@ import com.withorb.api.models.CustomerBalanceTransactionCreateResponse
 import com.withorb.api.models.CustomerBalanceTransactionListPage
 import com.withorb.api.models.CustomerBalanceTransactionListParams
 
-class BalanceTransactionServiceImpl
-internal constructor(
-    private val clientOptions: ClientOptions,
-) : BalanceTransactionService {
+class BalanceTransactionServiceImpl internal constructor(private val clientOptions: ClientOptions) :
+    BalanceTransactionService {
 
     private val errorHandler: Handler<OrbError> = errorHandler(clientOptions.jsonMapper)
 
@@ -35,7 +33,7 @@ internal constructor(
      */
     override fun create(
         params: CustomerBalanceTransactionCreateParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): CustomerBalanceTransactionCreateResponse {
         val request =
             HttpRequest.builder()
@@ -87,7 +85,7 @@ internal constructor(
      */
     override fun list(
         params: CustomerBalanceTransactionListParams,
-        requestOptions: RequestOptions
+        requestOptions: RequestOptions,
     ): CustomerBalanceTransactionListPage {
         val request =
             HttpRequest.builder()

@@ -64,25 +64,25 @@ private constructor(
         this.createdAtGt?.let {
             queryParams.put(
                 "created_at[gt]",
-                listOf(DateTimeFormatter.ISO_OFFSET_DATE_TIME.format(it))
+                listOf(DateTimeFormatter.ISO_OFFSET_DATE_TIME.format(it)),
             )
         }
         this.createdAtGte?.let {
             queryParams.put(
                 "created_at[gte]",
-                listOf(DateTimeFormatter.ISO_OFFSET_DATE_TIME.format(it))
+                listOf(DateTimeFormatter.ISO_OFFSET_DATE_TIME.format(it)),
             )
         }
         this.createdAtLt?.let {
             queryParams.put(
                 "created_at[lt]",
-                listOf(DateTimeFormatter.ISO_OFFSET_DATE_TIME.format(it))
+                listOf(DateTimeFormatter.ISO_OFFSET_DATE_TIME.format(it)),
             )
         }
         this.createdAtLte?.let {
             queryParams.put(
                 "created_at[lte]",
-                listOf(DateTimeFormatter.ISO_OFFSET_DATE_TIME.format(it))
+                listOf(DateTimeFormatter.ISO_OFFSET_DATE_TIME.format(it)),
             )
         }
         this.cursor?.let { queryParams.put("cursor", listOf(it.toString())) }
@@ -261,11 +261,7 @@ private constructor(
     }
 
     /** The plan status to filter to ('active', 'archived', or 'draft'). */
-    class Status
-    @JsonCreator
-    private constructor(
-        private val value: JsonField<String>,
-    ) : Enum {
+    class Status @JsonCreator private constructor(private val value: JsonField<String>) : Enum {
 
         /**
          * Returns this class instance's raw value.

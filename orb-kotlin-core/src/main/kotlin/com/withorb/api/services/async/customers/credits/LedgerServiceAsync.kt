@@ -95,7 +95,7 @@ interface LedgerServiceAsync {
      */
     suspend fun list(
         params: CustomerCreditLedgerListParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): CustomerCreditLedgerListPageAsync
 
     /**
@@ -203,7 +203,7 @@ interface LedgerServiceAsync {
      */
     suspend fun createEntry(
         params: CustomerCreditLedgerCreateEntryParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): CustomerCreditLedgerCreateEntryResponse
 
     /**
@@ -311,7 +311,7 @@ interface LedgerServiceAsync {
      */
     suspend fun createEntryByExternalId(
         params: CustomerCreditLedgerCreateEntryByExternalIdParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): CustomerCreditLedgerCreateEntryByExternalIdResponse
 
     /**
@@ -395,6 +395,6 @@ interface LedgerServiceAsync {
      */
     suspend fun listByExternalId(
         params: CustomerCreditLedgerListByExternalIdParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): CustomerCreditLedgerListByExternalIdPageAsync
 }

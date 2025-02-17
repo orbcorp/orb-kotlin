@@ -73,11 +73,7 @@ private constructor(
     companion object {
 
         fun of(itemsService: ItemServiceAsync, params: ItemListParams, response: Response) =
-            ItemListPageAsync(
-                itemsService,
-                params,
-                response,
-            )
+            ItemListPageAsync(itemsService, params, response)
     }
 
     @NoAutoDetect
@@ -164,18 +160,11 @@ private constructor(
                 this.additionalProperties.put(key, value)
             }
 
-            fun build() =
-                Response(
-                    data,
-                    paginationMetadata,
-                    additionalProperties.toImmutable(),
-                )
+            fun build() = Response(data, paginationMetadata, additionalProperties.toImmutable())
         }
     }
 
-    class AutoPager(
-        private val firstPage: ItemListPageAsync,
-    ) : Flow<Item> {
+    class AutoPager(private val firstPage: ItemListPageAsync) : Flow<Item> {
 
         override suspend fun collect(collector: FlowCollector<Item>) {
             var page = firstPage

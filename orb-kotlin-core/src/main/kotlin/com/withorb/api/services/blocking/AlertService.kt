@@ -19,13 +19,13 @@ interface AlertService {
     /** This endpoint retrieves an alert by its ID. */
     fun retrieve(
         params: AlertRetrieveParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): Alert
 
     /** This endpoint updates the thresholds of an alert. */
     fun update(
         params: AlertUpdateParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): Alert
 
     /**
@@ -41,7 +41,7 @@ interface AlertService {
      */
     fun list(
         params: AlertListParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): AlertListPage
 
     /**
@@ -54,7 +54,7 @@ interface AlertService {
      */
     fun createForCustomer(
         params: AlertCreateForCustomerParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): Alert
 
     /**
@@ -67,7 +67,7 @@ interface AlertService {
      */
     fun createForExternalCustomer(
         params: AlertCreateForExternalCustomerParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): Alert
 
     /**
@@ -84,7 +84,7 @@ interface AlertService {
      */
     fun createForSubscription(
         params: AlertCreateForSubscriptionParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): Alert
 
     /**
@@ -94,7 +94,7 @@ interface AlertService {
      */
     fun disable(
         params: AlertDisableParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): Alert
 
     /**
@@ -104,6 +104,6 @@ interface AlertService {
      */
     fun enable(
         params: AlertEnableParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): Alert
 }

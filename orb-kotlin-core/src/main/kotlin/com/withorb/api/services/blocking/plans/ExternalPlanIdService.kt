@@ -17,7 +17,7 @@ interface ExternalPlanIdService {
      */
     fun update(
         params: PlanExternalPlanIdUpdateParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): Plan
 
     /**
@@ -39,6 +39,6 @@ interface ExternalPlanIdService {
      */
     fun fetch(
         params: PlanExternalPlanIdFetchParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): Plan
 }

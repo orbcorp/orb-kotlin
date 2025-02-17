@@ -25,18 +25,18 @@ interface DimensionalPriceGroupService {
      */
     fun create(
         params: DimensionalPriceGroupCreateParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): DimensionalPriceGroup
 
     /** Fetch dimensional price group */
     fun retrieve(
         params: DimensionalPriceGroupRetrieveParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): DimensionalPriceGroup
 
     /** List dimensional price groups */
     fun list(
         params: DimensionalPriceGroupListParams,
-        requestOptions: RequestOptions = RequestOptions.none()
+        requestOptions: RequestOptions = RequestOptions.none(),
     ): DimensionalPriceGroupListPage
 }

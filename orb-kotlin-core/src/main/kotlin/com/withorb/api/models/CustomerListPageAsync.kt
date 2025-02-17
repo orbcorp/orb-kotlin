@@ -81,13 +81,8 @@ private constructor(
         fun of(
             customersService: CustomerServiceAsync,
             params: CustomerListParams,
-            response: Response
-        ) =
-            CustomerListPageAsync(
-                customersService,
-                params,
-                response,
-            )
+            response: Response,
+        ) = CustomerListPageAsync(customersService, params, response)
     }
 
     @NoAutoDetect
@@ -174,18 +169,11 @@ private constructor(
                 this.additionalProperties.put(key, value)
             }
 
-            fun build() =
-                Response(
-                    data,
-                    paginationMetadata,
-                    additionalProperties.toImmutable(),
-                )
+            fun build() = Response(data, paginationMetadata, additionalProperties.toImmutable())
         }
     }
 
-    class AutoPager(
-        private val firstPage: CustomerListPageAsync,
-    ) : Flow<Customer> {
+    class AutoPager(private val firstPage: CustomerListPageAsync) : Flow<Customer> {
 
         override suspend fun collect(collector: FlowCollector<Customer>) {
             var page = firstPage

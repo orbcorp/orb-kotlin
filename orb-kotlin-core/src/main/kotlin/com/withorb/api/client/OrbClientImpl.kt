@@ -35,9 +35,7 @@ import com.withorb.api.services.blocking.TopLevelServiceImpl
 import com.withorb.api.services.blocking.WebhookService
 import com.withorb.api.services.blocking.WebhookServiceImpl
 
-class OrbClientImpl(
-    private val clientOptions: ClientOptions,
-) : OrbClient {
+class OrbClientImpl(private val clientOptions: ClientOptions) : OrbClient {
 
     private val clientOptionsWithUserAgent =
         if (clientOptions.headers.names().contains("User-Agent")) clientOptions
