@@ -621,7 +621,9 @@ class SubscriptionSchedulePlanChangeParamsTest {
                 )
                 .trialDurationDays(999999L)
                 .build()
+
         val body = params._body()
+
         assertThat(body).isNotNull
         assertThat(body.changeOption())
             .isEqualTo(SubscriptionSchedulePlanChangeParams.ChangeOption.REQUESTED_DATE)
@@ -953,7 +955,9 @@ class SubscriptionSchedulePlanChangeParamsTest {
                 .subscriptionId("subscription_id")
                 .changeOption(SubscriptionSchedulePlanChangeParams.ChangeOption.REQUESTED_DATE)
                 .build()
+
         val body = params._body()
+
         assertThat(body).isNotNull
         assertThat(body.changeOption())
             .isEqualTo(SubscriptionSchedulePlanChangeParams.ChangeOption.REQUESTED_DATE)

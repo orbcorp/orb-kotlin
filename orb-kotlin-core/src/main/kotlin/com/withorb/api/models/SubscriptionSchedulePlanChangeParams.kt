@@ -195,7 +195,7 @@ import java.util.Objects
 class SubscriptionSchedulePlanChangeParams
 private constructor(
     private val subscriptionId: String,
-    private val body: SubscriptionSchedulePlanChangeBody,
+    private val body: Body,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
 ) : Params {
@@ -480,7 +480,7 @@ private constructor(
 
     fun _additionalQueryParams(): QueryParams = additionalQueryParams
 
-    internal fun _body(): SubscriptionSchedulePlanChangeBody = body
+    internal fun _body(): Body = body
 
     override fun _headers(): Headers = additionalHeaders
 
@@ -494,9 +494,9 @@ private constructor(
     }
 
     @NoAutoDetect
-    class SubscriptionSchedulePlanChangeBody
+    class Body
     @JsonCreator
-    internal constructor(
+    private constructor(
         @JsonProperty("change_option")
         @ExcludeMissing
         private val changeOption: JsonField<ChangeOption> = JsonMissing.of(),
@@ -911,7 +911,7 @@ private constructor(
 
         private var validated: Boolean = false
 
-        fun validate(): SubscriptionSchedulePlanChangeBody = apply {
+        fun validate(): Body = apply {
             if (validated) {
                 return@apply
             }
@@ -951,7 +951,7 @@ private constructor(
             fun builder() = Builder()
         }
 
-        /** A builder for [SubscriptionSchedulePlanChangeBody]. */
+        /** A builder for [Body]. */
         class Builder internal constructor() {
 
             private var changeOption: JsonField<ChangeOption>? = null
@@ -983,44 +983,33 @@ private constructor(
             private var trialDurationDays: JsonField<Long> = JsonMissing.of()
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
-            internal fun from(
-                subscriptionSchedulePlanChangeBody: SubscriptionSchedulePlanChangeBody
-            ) = apply {
-                changeOption = subscriptionSchedulePlanChangeBody.changeOption
-                addAdjustments =
-                    subscriptionSchedulePlanChangeBody.addAdjustments.map { it.toMutableList() }
-                addPrices = subscriptionSchedulePlanChangeBody.addPrices.map { it.toMutableList() }
-                alignBillingWithPlanChangeDate =
-                    subscriptionSchedulePlanChangeBody.alignBillingWithPlanChangeDate
-                autoCollection = subscriptionSchedulePlanChangeBody.autoCollection
-                billingCycleAlignment = subscriptionSchedulePlanChangeBody.billingCycleAlignment
-                billingCycleAnchorConfiguration =
-                    subscriptionSchedulePlanChangeBody.billingCycleAnchorConfiguration
-                changeDate = subscriptionSchedulePlanChangeBody.changeDate
-                couponRedemptionCode = subscriptionSchedulePlanChangeBody.couponRedemptionCode
-                creditsOverageRate = subscriptionSchedulePlanChangeBody.creditsOverageRate
-                defaultInvoiceMemo = subscriptionSchedulePlanChangeBody.defaultInvoiceMemo
-                externalPlanId = subscriptionSchedulePlanChangeBody.externalPlanId
-                filter = subscriptionSchedulePlanChangeBody.filter
-                initialPhaseOrder = subscriptionSchedulePlanChangeBody.initialPhaseOrder
-                invoicingThreshold = subscriptionSchedulePlanChangeBody.invoicingThreshold
-                netTerms = subscriptionSchedulePlanChangeBody.netTerms
-                perCreditOverageAmount = subscriptionSchedulePlanChangeBody.perCreditOverageAmount
-                planId = subscriptionSchedulePlanChangeBody.planId
-                planVersionNumber = subscriptionSchedulePlanChangeBody.planVersionNumber
-                priceOverrides =
-                    subscriptionSchedulePlanChangeBody.priceOverrides.map { it.toMutableList() }
-                removeAdjustments =
-                    subscriptionSchedulePlanChangeBody.removeAdjustments.map { it.toMutableList() }
-                removePrices =
-                    subscriptionSchedulePlanChangeBody.removePrices.map { it.toMutableList() }
-                replaceAdjustments =
-                    subscriptionSchedulePlanChangeBody.replaceAdjustments.map { it.toMutableList() }
-                replacePrices =
-                    subscriptionSchedulePlanChangeBody.replacePrices.map { it.toMutableList() }
-                trialDurationDays = subscriptionSchedulePlanChangeBody.trialDurationDays
-                additionalProperties =
-                    subscriptionSchedulePlanChangeBody.additionalProperties.toMutableMap()
+            internal fun from(body: Body) = apply {
+                changeOption = body.changeOption
+                addAdjustments = body.addAdjustments.map { it.toMutableList() }
+                addPrices = body.addPrices.map { it.toMutableList() }
+                alignBillingWithPlanChangeDate = body.alignBillingWithPlanChangeDate
+                autoCollection = body.autoCollection
+                billingCycleAlignment = body.billingCycleAlignment
+                billingCycleAnchorConfiguration = body.billingCycleAnchorConfiguration
+                changeDate = body.changeDate
+                couponRedemptionCode = body.couponRedemptionCode
+                creditsOverageRate = body.creditsOverageRate
+                defaultInvoiceMemo = body.defaultInvoiceMemo
+                externalPlanId = body.externalPlanId
+                filter = body.filter
+                initialPhaseOrder = body.initialPhaseOrder
+                invoicingThreshold = body.invoicingThreshold
+                netTerms = body.netTerms
+                perCreditOverageAmount = body.perCreditOverageAmount
+                planId = body.planId
+                planVersionNumber = body.planVersionNumber
+                priceOverrides = body.priceOverrides.map { it.toMutableList() }
+                removeAdjustments = body.removeAdjustments.map { it.toMutableList() }
+                removePrices = body.removePrices.map { it.toMutableList() }
+                replaceAdjustments = body.replaceAdjustments.map { it.toMutableList() }
+                replacePrices = body.replacePrices.map { it.toMutableList() }
+                trialDurationDays = body.trialDurationDays
+                additionalProperties = body.additionalProperties.toMutableMap()
             }
 
             fun changeOption(changeOption: ChangeOption) = changeOption(JsonField.of(changeOption))
@@ -1538,8 +1527,8 @@ private constructor(
                 keys.forEach(::removeAdditionalProperty)
             }
 
-            fun build(): SubscriptionSchedulePlanChangeBody =
-                SubscriptionSchedulePlanChangeBody(
+            fun build(): Body =
+                Body(
                     checkRequired("changeOption", changeOption),
                     (addAdjustments ?: JsonMissing.of()).map { it.toImmutable() },
                     (addPrices ?: JsonMissing.of()).map { it.toImmutable() },
@@ -1574,7 +1563,7 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is SubscriptionSchedulePlanChangeBody && changeOption == other.changeOption && addAdjustments == other.addAdjustments && addPrices == other.addPrices && alignBillingWithPlanChangeDate == other.alignBillingWithPlanChangeDate && autoCollection == other.autoCollection && billingCycleAlignment == other.billingCycleAlignment && billingCycleAnchorConfiguration == other.billingCycleAnchorConfiguration && changeDate == other.changeDate && couponRedemptionCode == other.couponRedemptionCode && creditsOverageRate == other.creditsOverageRate && defaultInvoiceMemo == other.defaultInvoiceMemo && externalPlanId == other.externalPlanId && filter == other.filter && initialPhaseOrder == other.initialPhaseOrder && invoicingThreshold == other.invoicingThreshold && netTerms == other.netTerms && perCreditOverageAmount == other.perCreditOverageAmount && planId == other.planId && planVersionNumber == other.planVersionNumber && priceOverrides == other.priceOverrides && removeAdjustments == other.removeAdjustments && removePrices == other.removePrices && replaceAdjustments == other.replaceAdjustments && replacePrices == other.replacePrices && trialDurationDays == other.trialDurationDays && additionalProperties == other.additionalProperties /* spotless:on */
+            return /* spotless:off */ other is Body && changeOption == other.changeOption && addAdjustments == other.addAdjustments && addPrices == other.addPrices && alignBillingWithPlanChangeDate == other.alignBillingWithPlanChangeDate && autoCollection == other.autoCollection && billingCycleAlignment == other.billingCycleAlignment && billingCycleAnchorConfiguration == other.billingCycleAnchorConfiguration && changeDate == other.changeDate && couponRedemptionCode == other.couponRedemptionCode && creditsOverageRate == other.creditsOverageRate && defaultInvoiceMemo == other.defaultInvoiceMemo && externalPlanId == other.externalPlanId && filter == other.filter && initialPhaseOrder == other.initialPhaseOrder && invoicingThreshold == other.invoicingThreshold && netTerms == other.netTerms && perCreditOverageAmount == other.perCreditOverageAmount && planId == other.planId && planVersionNumber == other.planVersionNumber && priceOverrides == other.priceOverrides && removeAdjustments == other.removeAdjustments && removePrices == other.removePrices && replaceAdjustments == other.replaceAdjustments && replacePrices == other.replacePrices && trialDurationDays == other.trialDurationDays && additionalProperties == other.additionalProperties /* spotless:on */
         }
 
         /* spotless:off */
@@ -1584,7 +1573,7 @@ private constructor(
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "SubscriptionSchedulePlanChangeBody{changeOption=$changeOption, addAdjustments=$addAdjustments, addPrices=$addPrices, alignBillingWithPlanChangeDate=$alignBillingWithPlanChangeDate, autoCollection=$autoCollection, billingCycleAlignment=$billingCycleAlignment, billingCycleAnchorConfiguration=$billingCycleAnchorConfiguration, changeDate=$changeDate, couponRedemptionCode=$couponRedemptionCode, creditsOverageRate=$creditsOverageRate, defaultInvoiceMemo=$defaultInvoiceMemo, externalPlanId=$externalPlanId, filter=$filter, initialPhaseOrder=$initialPhaseOrder, invoicingThreshold=$invoicingThreshold, netTerms=$netTerms, perCreditOverageAmount=$perCreditOverageAmount, planId=$planId, planVersionNumber=$planVersionNumber, priceOverrides=$priceOverrides, removeAdjustments=$removeAdjustments, removePrices=$removePrices, replaceAdjustments=$replaceAdjustments, replacePrices=$replacePrices, trialDurationDays=$trialDurationDays, additionalProperties=$additionalProperties}"
+            "Body{changeOption=$changeOption, addAdjustments=$addAdjustments, addPrices=$addPrices, alignBillingWithPlanChangeDate=$alignBillingWithPlanChangeDate, autoCollection=$autoCollection, billingCycleAlignment=$billingCycleAlignment, billingCycleAnchorConfiguration=$billingCycleAnchorConfiguration, changeDate=$changeDate, couponRedemptionCode=$couponRedemptionCode, creditsOverageRate=$creditsOverageRate, defaultInvoiceMemo=$defaultInvoiceMemo, externalPlanId=$externalPlanId, filter=$filter, initialPhaseOrder=$initialPhaseOrder, invoicingThreshold=$invoicingThreshold, netTerms=$netTerms, perCreditOverageAmount=$perCreditOverageAmount, planId=$planId, planVersionNumber=$planVersionNumber, priceOverrides=$priceOverrides, removeAdjustments=$removeAdjustments, removePrices=$removePrices, replaceAdjustments=$replaceAdjustments, replacePrices=$replacePrices, trialDurationDays=$trialDurationDays, additionalProperties=$additionalProperties}"
     }
 
     fun toBuilder() = Builder().from(this)
@@ -1599,8 +1588,7 @@ private constructor(
     class Builder internal constructor() {
 
         private var subscriptionId: String? = null
-        private var body: SubscriptionSchedulePlanChangeBody.Builder =
-            SubscriptionSchedulePlanChangeBody.builder()
+        private var body: Body.Builder = Body.builder()
         private var additionalHeaders: Headers.Builder = Headers.builder()
         private var additionalQueryParams: QueryParams.Builder = QueryParams.builder()
 

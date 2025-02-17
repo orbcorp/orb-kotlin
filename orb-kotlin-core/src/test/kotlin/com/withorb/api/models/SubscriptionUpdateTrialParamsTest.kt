@@ -25,7 +25,9 @@ class SubscriptionUpdateTrialParamsTest {
                 .trialEndDate(OffsetDateTime.parse("2017-07-21T17:32:28Z"))
                 .shift(true)
                 .build()
+
         val body = params._body()
+
         assertThat(body).isNotNull
         assertThat(body.trialEndDate())
             .isEqualTo(
@@ -43,7 +45,9 @@ class SubscriptionUpdateTrialParamsTest {
                 .subscriptionId("subscription_id")
                 .trialEndDate(OffsetDateTime.parse("2017-07-21T17:32:28Z"))
                 .build()
+
         val body = params._body()
+
         assertThat(body).isNotNull
         assertThat(body.trialEndDate())
             .isEqualTo(

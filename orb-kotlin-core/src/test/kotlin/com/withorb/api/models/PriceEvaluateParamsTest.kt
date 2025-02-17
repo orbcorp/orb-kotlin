@@ -33,7 +33,9 @@ class PriceEvaluateParamsTest {
                 .filter("my_numeric_property > 100 AND my_other_property = 'bar'")
                 .addGroupingKey("case when my_event_type = 'foo' then true else false end")
                 .build()
+
         val body = params._body()
+
         assertThat(body).isNotNull
         assertThat(body.timeframeEnd()).isEqualTo(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
         assertThat(body.timeframeStart())
@@ -54,7 +56,9 @@ class PriceEvaluateParamsTest {
                 .timeframeEnd(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                 .timeframeStart(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                 .build()
+
         val body = params._body()
+
         assertThat(body).isNotNull
         assertThat(body.timeframeEnd()).isEqualTo(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
         assertThat(body.timeframeStart())

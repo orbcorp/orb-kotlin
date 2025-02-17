@@ -31,7 +31,9 @@ class InvoiceUpdateParamsTest {
                         .build()
                 )
                 .build()
+
         val body = params._body()
+
         assertThat(body).isNotNull
         assertThat(body.metadata())
             .isEqualTo(
@@ -44,7 +46,9 @@ class InvoiceUpdateParamsTest {
     @Test
     fun bodyWithoutOptionalFields() {
         val params = InvoiceUpdateParams.builder().invoiceId("invoice_id").build()
+
         val body = params._body()
+
         assertThat(body).isNotNull
     }
 

@@ -26,7 +26,9 @@ class CouponCreateParamsTest {
                 .durationInMonths(12L)
                 .maxRedemptions(1L)
                 .build()
+
         val body = params._body()
+
         assertThat(body).isNotNull
         assertThat(body.discount())
             .isEqualTo(
@@ -52,7 +54,9 @@ class CouponCreateParamsTest {
                 .newCouponPercentageDiscount(0.0)
                 .redemptionCode("HALFOFF")
                 .build()
+
         val body = params._body()
+
         assertThat(body).isNotNull
         assertThat(body.discount())
             .isEqualTo(

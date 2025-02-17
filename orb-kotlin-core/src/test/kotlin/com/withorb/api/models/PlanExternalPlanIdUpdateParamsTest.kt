@@ -33,7 +33,9 @@ class PlanExternalPlanIdUpdateParamsTest {
                         .build()
                 )
                 .build()
+
         val body = params._body()
+
         assertThat(body).isNotNull
         assertThat(body.externalPlanId()).isEqualTo("external_plan_id")
         assertThat(body.metadata())
@@ -48,7 +50,9 @@ class PlanExternalPlanIdUpdateParamsTest {
     fun bodyWithoutOptionalFields() {
         val params =
             PlanExternalPlanIdUpdateParams.builder().otherExternalPlanId("external_plan_id").build()
+
         val body = params._body()
+
         assertThat(body).isNotNull
     }
 

@@ -36,7 +36,7 @@ import java.util.Objects
  */
 class EventSearchParams
 private constructor(
-    private val body: EventSearchBody,
+    private val body: Body,
     private val additionalHeaders: Headers,
     private val additionalQueryParams: QueryParams,
 ) : Params {
@@ -85,16 +85,16 @@ private constructor(
 
     fun _additionalQueryParams(): QueryParams = additionalQueryParams
 
-    internal fun _body(): EventSearchBody = body
+    internal fun _body(): Body = body
 
     override fun _headers(): Headers = additionalHeaders
 
     override fun _queryParams(): QueryParams = additionalQueryParams
 
     @NoAutoDetect
-    class EventSearchBody
+    class Body
     @JsonCreator
-    internal constructor(
+    private constructor(
         @JsonProperty("event_ids")
         @ExcludeMissing
         private val eventIds: JsonField<List<String>> = JsonMissing.of(),
@@ -158,7 +158,7 @@ private constructor(
 
         private var validated: Boolean = false
 
-        fun validate(): EventSearchBody = apply {
+        fun validate(): Body = apply {
             if (validated) {
                 return@apply
             }
@@ -176,7 +176,7 @@ private constructor(
             fun builder() = Builder()
         }
 
-        /** A builder for [EventSearchBody]. */
+        /** A builder for [Body]. */
         class Builder internal constructor() {
 
             private var eventIds: JsonField<MutableList<String>>? = null
@@ -184,11 +184,11 @@ private constructor(
             private var timeframeStart: JsonField<OffsetDateTime> = JsonMissing.of()
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
-            internal fun from(eventSearchBody: EventSearchBody) = apply {
-                eventIds = eventSearchBody.eventIds.map { it.toMutableList() }
-                timeframeEnd = eventSearchBody.timeframeEnd
-                timeframeStart = eventSearchBody.timeframeStart
-                additionalProperties = eventSearchBody.additionalProperties.toMutableMap()
+            internal fun from(body: Body) = apply {
+                eventIds = body.eventIds.map { it.toMutableList() }
+                timeframeEnd = body.timeframeEnd
+                timeframeStart = body.timeframeStart
+                additionalProperties = body.additionalProperties.toMutableMap()
             }
 
             /**
@@ -272,8 +272,8 @@ private constructor(
                 keys.forEach(::removeAdditionalProperty)
             }
 
-            fun build(): EventSearchBody =
-                EventSearchBody(
+            fun build(): Body =
+                Body(
                     checkRequired("eventIds", eventIds).map { it.toImmutable() },
                     timeframeEnd,
                     timeframeStart,
@@ -286,7 +286,7 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is EventSearchBody && eventIds == other.eventIds && timeframeEnd == other.timeframeEnd && timeframeStart == other.timeframeStart && additionalProperties == other.additionalProperties /* spotless:on */
+            return /* spotless:off */ other is Body && eventIds == other.eventIds && timeframeEnd == other.timeframeEnd && timeframeStart == other.timeframeStart && additionalProperties == other.additionalProperties /* spotless:on */
         }
 
         /* spotless:off */
@@ -296,7 +296,7 @@ private constructor(
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "EventSearchBody{eventIds=$eventIds, timeframeEnd=$timeframeEnd, timeframeStart=$timeframeStart, additionalProperties=$additionalProperties}"
+            "Body{eventIds=$eventIds, timeframeEnd=$timeframeEnd, timeframeStart=$timeframeStart, additionalProperties=$additionalProperties}"
     }
 
     fun toBuilder() = Builder().from(this)
@@ -310,7 +310,7 @@ private constructor(
     @NoAutoDetect
     class Builder internal constructor() {
 
-        private var body: EventSearchBody.Builder = EventSearchBody.builder()
+        private var body: Body.Builder = Body.builder()
         private var additionalHeaders: Headers.Builder = Headers.builder()
         private var additionalQueryParams: QueryParams.Builder = QueryParams.builder()
 

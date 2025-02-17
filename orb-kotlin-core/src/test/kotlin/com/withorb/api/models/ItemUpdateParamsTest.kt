@@ -38,7 +38,9 @@ class ItemUpdateParamsTest {
                 )
                 .name("name")
                 .build()
+
         val body = params._body()
+
         assertThat(body).isNotNull
         assertThat(body.externalConnections())
             .isEqualTo(
@@ -57,7 +59,9 @@ class ItemUpdateParamsTest {
     @Test
     fun bodyWithoutOptionalFields() {
         val params = ItemUpdateParams.builder().itemId("item_id").build()
+
         val body = params._body()
+
         assertThat(body).isNotNull
     }
 

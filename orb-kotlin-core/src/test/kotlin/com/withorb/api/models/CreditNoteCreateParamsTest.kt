@@ -34,7 +34,9 @@ class CreditNoteCreateParamsTest {
                 .memo("An optional memo for my credit note.")
                 .reason(CreditNoteCreateParams.Reason.DUPLICATE)
                 .build()
+
         val body = params._body()
+
         assertThat(body).isNotNull
         assertThat(body.lineItems())
             .isEqualTo(
@@ -60,7 +62,9 @@ class CreditNoteCreateParamsTest {
                         .build()
                 )
                 .build()
+
         val body = params._body()
+
         assertThat(body).isNotNull
         assertThat(body.lineItems())
             .isEqualTo(

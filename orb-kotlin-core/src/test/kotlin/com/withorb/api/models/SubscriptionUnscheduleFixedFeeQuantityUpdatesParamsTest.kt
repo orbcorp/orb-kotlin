@@ -22,7 +22,9 @@ class SubscriptionUnscheduleFixedFeeQuantityUpdatesParamsTest {
                 .subscriptionId("subscription_id")
                 .priceId("price_id")
                 .build()
+
         val body = params._body()
+
         assertThat(body).isNotNull
         assertThat(body.priceId()).isEqualTo("price_id")
     }
@@ -34,7 +36,9 @@ class SubscriptionUnscheduleFixedFeeQuantityUpdatesParamsTest {
                 .subscriptionId("subscription_id")
                 .priceId("price_id")
                 .build()
+
         val body = params._body()
+
         assertThat(body).isNotNull
         assertThat(body.priceId()).isEqualTo("price_id")
     }
