@@ -707,10 +707,9 @@ interface SubscriptionServiceAsync {
      * If the plan has phases, each object in the list must include a number with `plan_phase_order`
      * key to indicate which phase the price should be added to.
      *
-     * An object in the list can specify an optional `start_date` and optional `end_date`. This is
-     * equivalent to creating a price interval with the
-     * [add/edit price intervals endpoint](/api-reference/price-interval/add-or-edit-price-intervals).
-     * If unspecified, the start or end date of the phase or subscription will be used.
+     * An object in the list can specify an optional `start_date` and optional `end_date`. If
+     * `start_date` is unspecified, the start of the phase / plan change time will be used. If
+     * `end_date` is unspecified, it will finish at the end of the phase / have no end time.
      *
      * An object in the list can specify an optional `minimum_amount`, `maximum_amount`, or
      * `discounts`. This will create adjustments which apply only to this price.
@@ -763,7 +762,8 @@ interface SubscriptionServiceAsync {
      * key to indicate which phase the adjustment should be added to.
      *
      * An object in the list can specify an optional `start_date` and optional `end_date`. If
-     * unspecified, the start or end date of the phase or subscription will be used.
+     * `start_date` is unspecified, the start of the phase / plan change time will be used. If
+     * `end_date` is unspecified, it will finish at the end of the phase / have no end time.
      *
      * ### Removing adjustments
      *

@@ -6323,7 +6323,7 @@ private constructor(
                 /** The cadence to bill for this price on. */
                 fun cadence(): Cadence = cadence.getRequired("cadence")
 
-                /** The id of the item the plan will be associated with. */
+                /** The id of the item the price will be associated with. */
                 fun itemId(): String = itemId.getRequired("item_id")
 
                 fun modelType(): ModelType = modelType.getRequired("model_type")
@@ -6400,7 +6400,7 @@ private constructor(
                 @ExcludeMissing
                 fun _cadence(): JsonField<Cadence> = cadence
 
-                /** The id of the item the plan will be associated with. */
+                /** The id of the item the price will be associated with. */
                 @JsonProperty("item_id") @ExcludeMissing fun _itemId(): JsonField<String> = itemId
 
                 @JsonProperty("model_type")
@@ -6586,10 +6586,10 @@ private constructor(
                     /** The cadence to bill for this price on. */
                     fun cadence(cadence: JsonField<Cadence>) = apply { this.cadence = cadence }
 
-                    /** The id of the item the plan will be associated with. */
+                    /** The id of the item the price will be associated with. */
                     fun itemId(itemId: String) = itemId(JsonField.of(itemId))
 
-                    /** The id of the item the plan will be associated with. */
+                    /** The id of the item the price will be associated with. */
                     fun itemId(itemId: JsonField<String>) = apply { this.itemId = itemId }
 
                     fun modelType(modelType: ModelType) = modelType(JsonField.of(modelType))
@@ -7820,7 +7820,7 @@ private constructor(
                 /** The cadence to bill for this price on. */
                 fun cadence(): Cadence = cadence.getRequired("cadence")
 
-                /** The id of the item the plan will be associated with. */
+                /** The id of the item the price will be associated with. */
                 fun itemId(): String = itemId.getRequired("item_id")
 
                 fun modelType(): ModelType = modelType.getRequired("model_type")
@@ -7897,7 +7897,7 @@ private constructor(
                 @ExcludeMissing
                 fun _cadence(): JsonField<Cadence> = cadence
 
-                /** The id of the item the plan will be associated with. */
+                /** The id of the item the price will be associated with. */
                 @JsonProperty("item_id") @ExcludeMissing fun _itemId(): JsonField<String> = itemId
 
                 @JsonProperty("model_type")
@@ -8084,10 +8084,10 @@ private constructor(
                     /** The cadence to bill for this price on. */
                     fun cadence(cadence: JsonField<Cadence>) = apply { this.cadence = cadence }
 
-                    /** The id of the item the plan will be associated with. */
+                    /** The id of the item the price will be associated with. */
                     fun itemId(itemId: String) = itemId(JsonField.of(itemId))
 
-                    /** The id of the item the plan will be associated with. */
+                    /** The id of the item the price will be associated with. */
                     fun itemId(itemId: JsonField<String>) = apply { this.itemId = itemId }
 
                     fun modelType(modelType: ModelType) = modelType(JsonField.of(modelType))
@@ -9355,7 +9355,7 @@ private constructor(
                 /** The cadence to bill for this price on. */
                 fun cadence(): Cadence = cadence.getRequired("cadence")
 
-                /** The id of the item the plan will be associated with. */
+                /** The id of the item the price will be associated with. */
                 fun itemId(): String = itemId.getRequired("item_id")
 
                 fun matrixConfig(): MatrixConfig = matrixConfig.getRequired("matrix_config")
@@ -9432,7 +9432,7 @@ private constructor(
                 @ExcludeMissing
                 fun _cadence(): JsonField<Cadence> = cadence
 
-                /** The id of the item the plan will be associated with. */
+                /** The id of the item the price will be associated with. */
                 @JsonProperty("item_id") @ExcludeMissing fun _itemId(): JsonField<String> = itemId
 
                 @JsonProperty("matrix_config")
@@ -9619,10 +9619,10 @@ private constructor(
                     /** The cadence to bill for this price on. */
                     fun cadence(cadence: JsonField<Cadence>) = apply { this.cadence = cadence }
 
-                    /** The id of the item the plan will be associated with. */
+                    /** The id of the item the price will be associated with. */
                     fun itemId(itemId: String) = itemId(JsonField.of(itemId))
 
-                    /** The id of the item the plan will be associated with. */
+                    /** The id of the item the price will be associated with. */
                     fun itemId(itemId: JsonField<String>) = apply { this.itemId = itemId }
 
                     fun matrixConfig(matrixConfig: MatrixConfig) =
@@ -11114,7 +11114,7 @@ private constructor(
                 /** The cadence to bill for this price on. */
                 fun cadence(): Cadence = cadence.getRequired("cadence")
 
-                /** The id of the item the plan will be associated with. */
+                /** The id of the item the price will be associated with. */
                 fun itemId(): String = itemId.getRequired("item_id")
 
                 fun modelType(): ModelType = modelType.getRequired("model_type")
@@ -11191,7 +11191,7 @@ private constructor(
                 @ExcludeMissing
                 fun _cadence(): JsonField<Cadence> = cadence
 
-                /** The id of the item the plan will be associated with. */
+                /** The id of the item the price will be associated with. */
                 @JsonProperty("item_id") @ExcludeMissing fun _itemId(): JsonField<String> = itemId
 
                 @JsonProperty("model_type")
@@ -11378,10 +11378,10 @@ private constructor(
                     /** The cadence to bill for this price on. */
                     fun cadence(cadence: JsonField<Cadence>) = apply { this.cadence = cadence }
 
-                    /** The id of the item the plan will be associated with. */
+                    /** The id of the item the price will be associated with. */
                     fun itemId(itemId: String) = itemId(JsonField.of(itemId))
 
-                    /** The id of the item the plan will be associated with. */
+                    /** The id of the item the price will be associated with. */
                     fun itemId(itemId: JsonField<String>) = apply { this.itemId = itemId }
 
                     fun modelType(modelType: ModelType) = modelType(JsonField.of(modelType))
@@ -12804,7 +12804,7 @@ private constructor(
                 /** The cadence to bill for this price on. */
                 fun cadence(): Cadence = cadence.getRequired("cadence")
 
-                /** The id of the item the plan will be associated with. */
+                /** The id of the item the price will be associated with. */
                 fun itemId(): String = itemId.getRequired("item_id")
 
                 fun modelType(): ModelType = modelType.getRequired("model_type")
@@ -12882,7 +12882,7 @@ private constructor(
                 @ExcludeMissing
                 fun _cadence(): JsonField<Cadence> = cadence
 
-                /** The id of the item the plan will be associated with. */
+                /** The id of the item the price will be associated with. */
                 @JsonProperty("item_id") @ExcludeMissing fun _itemId(): JsonField<String> = itemId
 
                 @JsonProperty("model_type")
@@ -13070,10 +13070,10 @@ private constructor(
                     /** The cadence to bill for this price on. */
                     fun cadence(cadence: JsonField<Cadence>) = apply { this.cadence = cadence }
 
-                    /** The id of the item the plan will be associated with. */
+                    /** The id of the item the price will be associated with. */
                     fun itemId(itemId: String) = itemId(JsonField.of(itemId))
 
-                    /** The id of the item the plan will be associated with. */
+                    /** The id of the item the price will be associated with. */
                     fun itemId(itemId: JsonField<String>) = apply { this.itemId = itemId }
 
                     fun modelType(modelType: ModelType) = modelType(JsonField.of(modelType))
@@ -14513,7 +14513,7 @@ private constructor(
                 /** The cadence to bill for this price on. */
                 fun cadence(): Cadence = cadence.getRequired("cadence")
 
-                /** The id of the item the plan will be associated with. */
+                /** The id of the item the price will be associated with. */
                 fun itemId(): String = itemId.getRequired("item_id")
 
                 fun modelType(): ModelType = modelType.getRequired("model_type")
@@ -14592,7 +14592,7 @@ private constructor(
                 @ExcludeMissing
                 fun _cadence(): JsonField<Cadence> = cadence
 
-                /** The id of the item the plan will be associated with. */
+                /** The id of the item the price will be associated with. */
                 @JsonProperty("item_id") @ExcludeMissing fun _itemId(): JsonField<String> = itemId
 
                 @JsonProperty("model_type")
@@ -14780,10 +14780,10 @@ private constructor(
                     /** The cadence to bill for this price on. */
                     fun cadence(cadence: JsonField<Cadence>) = apply { this.cadence = cadence }
 
-                    /** The id of the item the plan will be associated with. */
+                    /** The id of the item the price will be associated with. */
                     fun itemId(itemId: String) = itemId(JsonField.of(itemId))
 
-                    /** The id of the item the plan will be associated with. */
+                    /** The id of the item the price will be associated with. */
                     fun itemId(itemId: JsonField<String>) = apply { this.itemId = itemId }
 
                     fun modelType(modelType: ModelType) = modelType(JsonField.of(modelType))
@@ -16030,7 +16030,7 @@ private constructor(
                 /** The cadence to bill for this price on. */
                 fun cadence(): Cadence = cadence.getRequired("cadence")
 
-                /** The id of the item the plan will be associated with. */
+                /** The id of the item the price will be associated with. */
                 fun itemId(): String = itemId.getRequired("item_id")
 
                 fun modelType(): ModelType = modelType.getRequired("model_type")
@@ -16109,7 +16109,7 @@ private constructor(
                 @ExcludeMissing
                 fun _cadence(): JsonField<Cadence> = cadence
 
-                /** The id of the item the plan will be associated with. */
+                /** The id of the item the price will be associated with. */
                 @JsonProperty("item_id") @ExcludeMissing fun _itemId(): JsonField<String> = itemId
 
                 @JsonProperty("model_type")
@@ -16299,10 +16299,10 @@ private constructor(
                     /** The cadence to bill for this price on. */
                     fun cadence(cadence: JsonField<Cadence>) = apply { this.cadence = cadence }
 
-                    /** The id of the item the plan will be associated with. */
+                    /** The id of the item the price will be associated with. */
                     fun itemId(itemId: String) = itemId(JsonField.of(itemId))
 
-                    /** The id of the item the plan will be associated with. */
+                    /** The id of the item the price will be associated with. */
                     fun itemId(itemId: JsonField<String>) = apply { this.itemId = itemId }
 
                     fun modelType(modelType: ModelType) = modelType(JsonField.of(modelType))
@@ -17710,7 +17710,7 @@ private constructor(
                 /** The cadence to bill for this price on. */
                 fun cadence(): Cadence = cadence.getRequired("cadence")
 
-                /** The id of the item the plan will be associated with. */
+                /** The id of the item the price will be associated with. */
                 fun itemId(): String = itemId.getRequired("item_id")
 
                 fun modelType(): ModelType = modelType.getRequired("model_type")
@@ -17789,7 +17789,7 @@ private constructor(
                 @ExcludeMissing
                 fun _cadence(): JsonField<Cadence> = cadence
 
-                /** The id of the item the plan will be associated with. */
+                /** The id of the item the price will be associated with. */
                 @JsonProperty("item_id") @ExcludeMissing fun _itemId(): JsonField<String> = itemId
 
                 @JsonProperty("model_type")
@@ -17977,10 +17977,10 @@ private constructor(
                     /** The cadence to bill for this price on. */
                     fun cadence(cadence: JsonField<Cadence>) = apply { this.cadence = cadence }
 
-                    /** The id of the item the plan will be associated with. */
+                    /** The id of the item the price will be associated with. */
                     fun itemId(itemId: String) = itemId(JsonField.of(itemId))
 
-                    /** The id of the item the plan will be associated with. */
+                    /** The id of the item the price will be associated with. */
                     fun itemId(itemId: JsonField<String>) = apply { this.itemId = itemId }
 
                     fun modelType(modelType: ModelType) = modelType(JsonField.of(modelType))
@@ -19356,7 +19356,7 @@ private constructor(
                 /** The cadence to bill for this price on. */
                 fun cadence(): Cadence = cadence.getRequired("cadence")
 
-                /** The id of the item the plan will be associated with. */
+                /** The id of the item the price will be associated with. */
                 fun itemId(): String = itemId.getRequired("item_id")
 
                 fun modelType(): ModelType = modelType.getRequired("model_type")
@@ -19434,7 +19434,7 @@ private constructor(
                 @ExcludeMissing
                 fun _cadence(): JsonField<Cadence> = cadence
 
-                /** The id of the item the plan will be associated with. */
+                /** The id of the item the price will be associated with. */
                 @JsonProperty("item_id") @ExcludeMissing fun _itemId(): JsonField<String> = itemId
 
                 @JsonProperty("model_type")
@@ -19629,10 +19629,10 @@ private constructor(
                     /** The cadence to bill for this price on. */
                     fun cadence(cadence: JsonField<Cadence>) = apply { this.cadence = cadence }
 
-                    /** The id of the item the plan will be associated with. */
+                    /** The id of the item the price will be associated with. */
                     fun itemId(itemId: String) = itemId(JsonField.of(itemId))
 
-                    /** The id of the item the plan will be associated with. */
+                    /** The id of the item the price will be associated with. */
                     fun itemId(itemId: JsonField<String>) = apply { this.itemId = itemId }
 
                     fun modelType(modelType: ModelType) = modelType(JsonField.of(modelType))
@@ -20842,7 +20842,7 @@ private constructor(
                 /** The cadence to bill for this price on. */
                 fun cadence(): Cadence = cadence.getRequired("cadence")
 
-                /** The id of the item the plan will be associated with. */
+                /** The id of the item the price will be associated with. */
                 fun itemId(): String = itemId.getRequired("item_id")
 
                 fun modelType(): ModelType = modelType.getRequired("model_type")
@@ -20920,7 +20920,7 @@ private constructor(
                 @ExcludeMissing
                 fun _cadence(): JsonField<Cadence> = cadence
 
-                /** The id of the item the plan will be associated with. */
+                /** The id of the item the price will be associated with. */
                 @JsonProperty("item_id") @ExcludeMissing fun _itemId(): JsonField<String> = itemId
 
                 @JsonProperty("model_type")
@@ -21108,10 +21108,10 @@ private constructor(
                     /** The cadence to bill for this price on. */
                     fun cadence(cadence: JsonField<Cadence>) = apply { this.cadence = cadence }
 
-                    /** The id of the item the plan will be associated with. */
+                    /** The id of the item the price will be associated with. */
                     fun itemId(itemId: String) = itemId(JsonField.of(itemId))
 
-                    /** The id of the item the plan will be associated with. */
+                    /** The id of the item the price will be associated with. */
                     fun itemId(itemId: JsonField<String>) = apply { this.itemId = itemId }
 
                     fun modelType(modelType: ModelType) = modelType(JsonField.of(modelType))
@@ -22321,7 +22321,7 @@ private constructor(
                 /** The cadence to bill for this price on. */
                 fun cadence(): Cadence = cadence.getRequired("cadence")
 
-                /** The id of the item the plan will be associated with. */
+                /** The id of the item the price will be associated with. */
                 fun itemId(): String = itemId.getRequired("item_id")
 
                 fun modelType(): ModelType = modelType.getRequired("model_type")
@@ -22399,7 +22399,7 @@ private constructor(
                 @ExcludeMissing
                 fun _cadence(): JsonField<Cadence> = cadence
 
-                /** The id of the item the plan will be associated with. */
+                /** The id of the item the price will be associated with. */
                 @JsonProperty("item_id") @ExcludeMissing fun _itemId(): JsonField<String> = itemId
 
                 @JsonProperty("model_type")
@@ -22592,10 +22592,10 @@ private constructor(
                     /** The cadence to bill for this price on. */
                     fun cadence(cadence: JsonField<Cadence>) = apply { this.cadence = cadence }
 
-                    /** The id of the item the plan will be associated with. */
+                    /** The id of the item the price will be associated with. */
                     fun itemId(itemId: String) = itemId(JsonField.of(itemId))
 
-                    /** The id of the item the plan will be associated with. */
+                    /** The id of the item the price will be associated with. */
                     fun itemId(itemId: JsonField<String>) = apply { this.itemId = itemId }
 
                     fun modelType(modelType: ModelType) = modelType(JsonField.of(modelType))
@@ -23805,7 +23805,7 @@ private constructor(
                 /** The cadence to bill for this price on. */
                 fun cadence(): Cadence = cadence.getRequired("cadence")
 
-                /** The id of the item the plan will be associated with. */
+                /** The id of the item the price will be associated with. */
                 fun itemId(): String = itemId.getRequired("item_id")
 
                 fun modelType(): ModelType = modelType.getRequired("model_type")
@@ -23883,7 +23883,7 @@ private constructor(
                 @ExcludeMissing
                 fun _cadence(): JsonField<Cadence> = cadence
 
-                /** The id of the item the plan will be associated with. */
+                /** The id of the item the price will be associated with. */
                 @JsonProperty("item_id") @ExcludeMissing fun _itemId(): JsonField<String> = itemId
 
                 @JsonProperty("model_type")
@@ -24073,10 +24073,10 @@ private constructor(
                     /** The cadence to bill for this price on. */
                     fun cadence(cadence: JsonField<Cadence>) = apply { this.cadence = cadence }
 
-                    /** The id of the item the plan will be associated with. */
+                    /** The id of the item the price will be associated with. */
                     fun itemId(itemId: String) = itemId(JsonField.of(itemId))
 
-                    /** The id of the item the plan will be associated with. */
+                    /** The id of the item the price will be associated with. */
                     fun itemId(itemId: JsonField<String>) = apply { this.itemId = itemId }
 
                     fun modelType(modelType: ModelType) = modelType(JsonField.of(modelType))
@@ -25285,7 +25285,7 @@ private constructor(
                 /** The cadence to bill for this price on. */
                 fun cadence(): Cadence = cadence.getRequired("cadence")
 
-                /** The id of the item the plan will be associated with. */
+                /** The id of the item the price will be associated with. */
                 fun itemId(): String = itemId.getRequired("item_id")
 
                 fun modelType(): ModelType = modelType.getRequired("model_type")
@@ -25363,7 +25363,7 @@ private constructor(
                 @ExcludeMissing
                 fun _cadence(): JsonField<Cadence> = cadence
 
-                /** The id of the item the plan will be associated with. */
+                /** The id of the item the price will be associated with. */
                 @JsonProperty("item_id") @ExcludeMissing fun _itemId(): JsonField<String> = itemId
 
                 @JsonProperty("model_type")
@@ -25560,10 +25560,10 @@ private constructor(
                     /** The cadence to bill for this price on. */
                     fun cadence(cadence: JsonField<Cadence>) = apply { this.cadence = cadence }
 
-                    /** The id of the item the plan will be associated with. */
+                    /** The id of the item the price will be associated with. */
                     fun itemId(itemId: String) = itemId(JsonField.of(itemId))
 
-                    /** The id of the item the plan will be associated with. */
+                    /** The id of the item the price will be associated with. */
                     fun itemId(itemId: JsonField<String>) = apply { this.itemId = itemId }
 
                     fun modelType(modelType: ModelType) = modelType(JsonField.of(modelType))
@@ -26778,7 +26778,7 @@ private constructor(
                 /** The cadence to bill for this price on. */
                 fun cadence(): Cadence = cadence.getRequired("cadence")
 
-                /** The id of the item the plan will be associated with. */
+                /** The id of the item the price will be associated with. */
                 fun itemId(): String = itemId.getRequired("item_id")
 
                 fun modelType(): ModelType = modelType.getRequired("model_type")
@@ -26856,7 +26856,7 @@ private constructor(
                 @ExcludeMissing
                 fun _cadence(): JsonField<Cadence> = cadence
 
-                /** The id of the item the plan will be associated with. */
+                /** The id of the item the price will be associated with. */
                 @JsonProperty("item_id") @ExcludeMissing fun _itemId(): JsonField<String> = itemId
 
                 @JsonProperty("model_type")
@@ -27050,10 +27050,10 @@ private constructor(
                     /** The cadence to bill for this price on. */
                     fun cadence(cadence: JsonField<Cadence>) = apply { this.cadence = cadence }
 
-                    /** The id of the item the plan will be associated with. */
+                    /** The id of the item the price will be associated with. */
                     fun itemId(itemId: String) = itemId(JsonField.of(itemId))
 
-                    /** The id of the item the plan will be associated with. */
+                    /** The id of the item the price will be associated with. */
                     fun itemId(itemId: JsonField<String>) = apply { this.itemId = itemId }
 
                     fun modelType(modelType: ModelType) = modelType(JsonField.of(modelType))
@@ -28264,7 +28264,7 @@ private constructor(
                 /** The cadence to bill for this price on. */
                 fun cadence(): Cadence = cadence.getRequired("cadence")
 
-                /** The id of the item the plan will be associated with. */
+                /** The id of the item the price will be associated with. */
                 fun itemId(): String = itemId.getRequired("item_id")
 
                 fun modelType(): ModelType = modelType.getRequired("model_type")
@@ -28342,7 +28342,7 @@ private constructor(
                 @ExcludeMissing
                 fun _cadence(): JsonField<Cadence> = cadence
 
-                /** The id of the item the plan will be associated with. */
+                /** The id of the item the price will be associated with. */
                 @JsonProperty("item_id") @ExcludeMissing fun _itemId(): JsonField<String> = itemId
 
                 @JsonProperty("model_type")
@@ -28535,10 +28535,10 @@ private constructor(
                     /** The cadence to bill for this price on. */
                     fun cadence(cadence: JsonField<Cadence>) = apply { this.cadence = cadence }
 
-                    /** The id of the item the plan will be associated with. */
+                    /** The id of the item the price will be associated with. */
                     fun itemId(itemId: String) = itemId(JsonField.of(itemId))
 
-                    /** The id of the item the plan will be associated with. */
+                    /** The id of the item the price will be associated with. */
                     fun itemId(itemId: JsonField<String>) = apply { this.itemId = itemId }
 
                     fun modelType(modelType: ModelType) = modelType(JsonField.of(modelType))
@@ -29751,7 +29751,7 @@ private constructor(
                 fun groupedAllocationConfig(): GroupedAllocationConfig =
                     groupedAllocationConfig.getRequired("grouped_allocation_config")
 
-                /** The id of the item the plan will be associated with. */
+                /** The id of the item the price will be associated with. */
                 fun itemId(): String = itemId.getRequired("item_id")
 
                 fun modelType(): ModelType = modelType.getRequired("model_type")
@@ -29831,7 +29831,7 @@ private constructor(
                 fun _groupedAllocationConfig(): JsonField<GroupedAllocationConfig> =
                     groupedAllocationConfig
 
-                /** The id of the item the plan will be associated with. */
+                /** The id of the item the price will be associated with. */
                 @JsonProperty("item_id") @ExcludeMissing fun _itemId(): JsonField<String> = itemId
 
                 @JsonProperty("model_type")
@@ -30026,10 +30026,10 @@ private constructor(
                         groupedAllocationConfig: JsonField<GroupedAllocationConfig>
                     ) = apply { this.groupedAllocationConfig = groupedAllocationConfig }
 
-                    /** The id of the item the plan will be associated with. */
+                    /** The id of the item the price will be associated with. */
                     fun itemId(itemId: String) = itemId(JsonField.of(itemId))
 
-                    /** The id of the item the plan will be associated with. */
+                    /** The id of the item the price will be associated with. */
                     fun itemId(itemId: JsonField<String>) = apply { this.itemId = itemId }
 
                     fun modelType(modelType: ModelType) = modelType(JsonField.of(modelType))
@@ -31238,7 +31238,7 @@ private constructor(
                         "grouped_with_prorated_minimum_config"
                     )
 
-                /** The id of the item the plan will be associated with. */
+                /** The id of the item the price will be associated with. */
                 fun itemId(): String = itemId.getRequired("item_id")
 
                 fun modelType(): ModelType = modelType.getRequired("model_type")
@@ -31318,7 +31318,7 @@ private constructor(
                 fun _groupedWithProratedMinimumConfig():
                     JsonField<GroupedWithProratedMinimumConfig> = groupedWithProratedMinimumConfig
 
-                /** The id of the item the plan will be associated with. */
+                /** The id of the item the price will be associated with. */
                 @JsonProperty("item_id") @ExcludeMissing fun _itemId(): JsonField<String> = itemId
 
                 @JsonProperty("model_type")
@@ -31529,10 +31529,10 @@ private constructor(
                         this.groupedWithProratedMinimumConfig = groupedWithProratedMinimumConfig
                     }
 
-                    /** The id of the item the plan will be associated with. */
+                    /** The id of the item the price will be associated with. */
                     fun itemId(itemId: String) = itemId(JsonField.of(itemId))
 
-                    /** The id of the item the plan will be associated with. */
+                    /** The id of the item the price will be associated with. */
                     fun itemId(itemId: JsonField<String>) = apply { this.itemId = itemId }
 
                     fun modelType(modelType: ModelType) = modelType(JsonField.of(modelType))
@@ -32742,7 +32742,7 @@ private constructor(
                 /** The cadence to bill for this price on. */
                 fun cadence(): Cadence = cadence.getRequired("cadence")
 
-                /** The id of the item the plan will be associated with. */
+                /** The id of the item the price will be associated with. */
                 fun itemId(): String = itemId.getRequired("item_id")
 
                 fun modelType(): ModelType = modelType.getRequired("model_type")
@@ -32822,7 +32822,7 @@ private constructor(
                 @ExcludeMissing
                 fun _cadence(): JsonField<Cadence> = cadence
 
-                /** The id of the item the plan will be associated with. */
+                /** The id of the item the price will be associated with. */
                 @JsonProperty("item_id") @ExcludeMissing fun _itemId(): JsonField<String> = itemId
 
                 @JsonProperty("model_type")
@@ -33017,10 +33017,10 @@ private constructor(
                     /** The cadence to bill for this price on. */
                     fun cadence(cadence: JsonField<Cadence>) = apply { this.cadence = cadence }
 
-                    /** The id of the item the plan will be associated with. */
+                    /** The id of the item the price will be associated with. */
                     fun itemId(itemId: String) = itemId(JsonField.of(itemId))
 
-                    /** The id of the item the plan will be associated with. */
+                    /** The id of the item the price will be associated with. */
                     fun itemId(itemId: JsonField<String>) = apply { this.itemId = itemId }
 
                     fun modelType(modelType: ModelType) = modelType(JsonField.of(modelType))
@@ -38676,7 +38676,7 @@ private constructor(
                 /** The cadence to bill for this price on. */
                 fun cadence(): Cadence = cadence.getRequired("cadence")
 
-                /** The id of the item the plan will be associated with. */
+                /** The id of the item the price will be associated with. */
                 fun itemId(): String = itemId.getRequired("item_id")
 
                 fun modelType(): ModelType = modelType.getRequired("model_type")
@@ -38753,7 +38753,7 @@ private constructor(
                 @ExcludeMissing
                 fun _cadence(): JsonField<Cadence> = cadence
 
-                /** The id of the item the plan will be associated with. */
+                /** The id of the item the price will be associated with. */
                 @JsonProperty("item_id") @ExcludeMissing fun _itemId(): JsonField<String> = itemId
 
                 @JsonProperty("model_type")
@@ -38939,10 +38939,10 @@ private constructor(
                     /** The cadence to bill for this price on. */
                     fun cadence(cadence: JsonField<Cadence>) = apply { this.cadence = cadence }
 
-                    /** The id of the item the plan will be associated with. */
+                    /** The id of the item the price will be associated with. */
                     fun itemId(itemId: String) = itemId(JsonField.of(itemId))
 
-                    /** The id of the item the plan will be associated with. */
+                    /** The id of the item the price will be associated with. */
                     fun itemId(itemId: JsonField<String>) = apply { this.itemId = itemId }
 
                     fun modelType(modelType: ModelType) = modelType(JsonField.of(modelType))
@@ -40173,7 +40173,7 @@ private constructor(
                 /** The cadence to bill for this price on. */
                 fun cadence(): Cadence = cadence.getRequired("cadence")
 
-                /** The id of the item the plan will be associated with. */
+                /** The id of the item the price will be associated with. */
                 fun itemId(): String = itemId.getRequired("item_id")
 
                 fun modelType(): ModelType = modelType.getRequired("model_type")
@@ -40250,7 +40250,7 @@ private constructor(
                 @ExcludeMissing
                 fun _cadence(): JsonField<Cadence> = cadence
 
-                /** The id of the item the plan will be associated with. */
+                /** The id of the item the price will be associated with. */
                 @JsonProperty("item_id") @ExcludeMissing fun _itemId(): JsonField<String> = itemId
 
                 @JsonProperty("model_type")
@@ -40437,10 +40437,10 @@ private constructor(
                     /** The cadence to bill for this price on. */
                     fun cadence(cadence: JsonField<Cadence>) = apply { this.cadence = cadence }
 
-                    /** The id of the item the plan will be associated with. */
+                    /** The id of the item the price will be associated with. */
                     fun itemId(itemId: String) = itemId(JsonField.of(itemId))
 
-                    /** The id of the item the plan will be associated with. */
+                    /** The id of the item the price will be associated with. */
                     fun itemId(itemId: JsonField<String>) = apply { this.itemId = itemId }
 
                     fun modelType(modelType: ModelType) = modelType(JsonField.of(modelType))
@@ -41708,7 +41708,7 @@ private constructor(
                 /** The cadence to bill for this price on. */
                 fun cadence(): Cadence = cadence.getRequired("cadence")
 
-                /** The id of the item the plan will be associated with. */
+                /** The id of the item the price will be associated with. */
                 fun itemId(): String = itemId.getRequired("item_id")
 
                 fun matrixConfig(): MatrixConfig = matrixConfig.getRequired("matrix_config")
@@ -41785,7 +41785,7 @@ private constructor(
                 @ExcludeMissing
                 fun _cadence(): JsonField<Cadence> = cadence
 
-                /** The id of the item the plan will be associated with. */
+                /** The id of the item the price will be associated with. */
                 @JsonProperty("item_id") @ExcludeMissing fun _itemId(): JsonField<String> = itemId
 
                 @JsonProperty("matrix_config")
@@ -41972,10 +41972,10 @@ private constructor(
                     /** The cadence to bill for this price on. */
                     fun cadence(cadence: JsonField<Cadence>) = apply { this.cadence = cadence }
 
-                    /** The id of the item the plan will be associated with. */
+                    /** The id of the item the price will be associated with. */
                     fun itemId(itemId: String) = itemId(JsonField.of(itemId))
 
-                    /** The id of the item the plan will be associated with. */
+                    /** The id of the item the price will be associated with. */
                     fun itemId(itemId: JsonField<String>) = apply { this.itemId = itemId }
 
                     fun matrixConfig(matrixConfig: MatrixConfig) =
@@ -43467,7 +43467,7 @@ private constructor(
                 /** The cadence to bill for this price on. */
                 fun cadence(): Cadence = cadence.getRequired("cadence")
 
-                /** The id of the item the plan will be associated with. */
+                /** The id of the item the price will be associated with. */
                 fun itemId(): String = itemId.getRequired("item_id")
 
                 fun modelType(): ModelType = modelType.getRequired("model_type")
@@ -43544,7 +43544,7 @@ private constructor(
                 @ExcludeMissing
                 fun _cadence(): JsonField<Cadence> = cadence
 
-                /** The id of the item the plan will be associated with. */
+                /** The id of the item the price will be associated with. */
                 @JsonProperty("item_id") @ExcludeMissing fun _itemId(): JsonField<String> = itemId
 
                 @JsonProperty("model_type")
@@ -43731,10 +43731,10 @@ private constructor(
                     /** The cadence to bill for this price on. */
                     fun cadence(cadence: JsonField<Cadence>) = apply { this.cadence = cadence }
 
-                    /** The id of the item the plan will be associated with. */
+                    /** The id of the item the price will be associated with. */
                     fun itemId(itemId: String) = itemId(JsonField.of(itemId))
 
-                    /** The id of the item the plan will be associated with. */
+                    /** The id of the item the price will be associated with. */
                     fun itemId(itemId: JsonField<String>) = apply { this.itemId = itemId }
 
                     fun modelType(modelType: ModelType) = modelType(JsonField.of(modelType))
@@ -45157,7 +45157,7 @@ private constructor(
                 /** The cadence to bill for this price on. */
                 fun cadence(): Cadence = cadence.getRequired("cadence")
 
-                /** The id of the item the plan will be associated with. */
+                /** The id of the item the price will be associated with. */
                 fun itemId(): String = itemId.getRequired("item_id")
 
                 fun modelType(): ModelType = modelType.getRequired("model_type")
@@ -45235,7 +45235,7 @@ private constructor(
                 @ExcludeMissing
                 fun _cadence(): JsonField<Cadence> = cadence
 
-                /** The id of the item the plan will be associated with. */
+                /** The id of the item the price will be associated with. */
                 @JsonProperty("item_id") @ExcludeMissing fun _itemId(): JsonField<String> = itemId
 
                 @JsonProperty("model_type")
@@ -45423,10 +45423,10 @@ private constructor(
                     /** The cadence to bill for this price on. */
                     fun cadence(cadence: JsonField<Cadence>) = apply { this.cadence = cadence }
 
-                    /** The id of the item the plan will be associated with. */
+                    /** The id of the item the price will be associated with. */
                     fun itemId(itemId: String) = itemId(JsonField.of(itemId))
 
-                    /** The id of the item the plan will be associated with. */
+                    /** The id of the item the price will be associated with. */
                     fun itemId(itemId: JsonField<String>) = apply { this.itemId = itemId }
 
                     fun modelType(modelType: ModelType) = modelType(JsonField.of(modelType))
@@ -46866,7 +46866,7 @@ private constructor(
                 /** The cadence to bill for this price on. */
                 fun cadence(): Cadence = cadence.getRequired("cadence")
 
-                /** The id of the item the plan will be associated with. */
+                /** The id of the item the price will be associated with. */
                 fun itemId(): String = itemId.getRequired("item_id")
 
                 fun modelType(): ModelType = modelType.getRequired("model_type")
@@ -46945,7 +46945,7 @@ private constructor(
                 @ExcludeMissing
                 fun _cadence(): JsonField<Cadence> = cadence
 
-                /** The id of the item the plan will be associated with. */
+                /** The id of the item the price will be associated with. */
                 @JsonProperty("item_id") @ExcludeMissing fun _itemId(): JsonField<String> = itemId
 
                 @JsonProperty("model_type")
@@ -47133,10 +47133,10 @@ private constructor(
                     /** The cadence to bill for this price on. */
                     fun cadence(cadence: JsonField<Cadence>) = apply { this.cadence = cadence }
 
-                    /** The id of the item the plan will be associated with. */
+                    /** The id of the item the price will be associated with. */
                     fun itemId(itemId: String) = itemId(JsonField.of(itemId))
 
-                    /** The id of the item the plan will be associated with. */
+                    /** The id of the item the price will be associated with. */
                     fun itemId(itemId: JsonField<String>) = apply { this.itemId = itemId }
 
                     fun modelType(modelType: ModelType) = modelType(JsonField.of(modelType))
@@ -48383,7 +48383,7 @@ private constructor(
                 /** The cadence to bill for this price on. */
                 fun cadence(): Cadence = cadence.getRequired("cadence")
 
-                /** The id of the item the plan will be associated with. */
+                /** The id of the item the price will be associated with. */
                 fun itemId(): String = itemId.getRequired("item_id")
 
                 fun modelType(): ModelType = modelType.getRequired("model_type")
@@ -48462,7 +48462,7 @@ private constructor(
                 @ExcludeMissing
                 fun _cadence(): JsonField<Cadence> = cadence
 
-                /** The id of the item the plan will be associated with. */
+                /** The id of the item the price will be associated with. */
                 @JsonProperty("item_id") @ExcludeMissing fun _itemId(): JsonField<String> = itemId
 
                 @JsonProperty("model_type")
@@ -48652,10 +48652,10 @@ private constructor(
                     /** The cadence to bill for this price on. */
                     fun cadence(cadence: JsonField<Cadence>) = apply { this.cadence = cadence }
 
-                    /** The id of the item the plan will be associated with. */
+                    /** The id of the item the price will be associated with. */
                     fun itemId(itemId: String) = itemId(JsonField.of(itemId))
 
-                    /** The id of the item the plan will be associated with. */
+                    /** The id of the item the price will be associated with. */
                     fun itemId(itemId: JsonField<String>) = apply { this.itemId = itemId }
 
                     fun modelType(modelType: ModelType) = modelType(JsonField.of(modelType))
@@ -50063,7 +50063,7 @@ private constructor(
                 /** The cadence to bill for this price on. */
                 fun cadence(): Cadence = cadence.getRequired("cadence")
 
-                /** The id of the item the plan will be associated with. */
+                /** The id of the item the price will be associated with. */
                 fun itemId(): String = itemId.getRequired("item_id")
 
                 fun modelType(): ModelType = modelType.getRequired("model_type")
@@ -50142,7 +50142,7 @@ private constructor(
                 @ExcludeMissing
                 fun _cadence(): JsonField<Cadence> = cadence
 
-                /** The id of the item the plan will be associated with. */
+                /** The id of the item the price will be associated with. */
                 @JsonProperty("item_id") @ExcludeMissing fun _itemId(): JsonField<String> = itemId
 
                 @JsonProperty("model_type")
@@ -50330,10 +50330,10 @@ private constructor(
                     /** The cadence to bill for this price on. */
                     fun cadence(cadence: JsonField<Cadence>) = apply { this.cadence = cadence }
 
-                    /** The id of the item the plan will be associated with. */
+                    /** The id of the item the price will be associated with. */
                     fun itemId(itemId: String) = itemId(JsonField.of(itemId))
 
-                    /** The id of the item the plan will be associated with. */
+                    /** The id of the item the price will be associated with. */
                     fun itemId(itemId: JsonField<String>) = apply { this.itemId = itemId }
 
                     fun modelType(modelType: ModelType) = modelType(JsonField.of(modelType))
@@ -51709,7 +51709,7 @@ private constructor(
                 /** The cadence to bill for this price on. */
                 fun cadence(): Cadence = cadence.getRequired("cadence")
 
-                /** The id of the item the plan will be associated with. */
+                /** The id of the item the price will be associated with. */
                 fun itemId(): String = itemId.getRequired("item_id")
 
                 fun modelType(): ModelType = modelType.getRequired("model_type")
@@ -51787,7 +51787,7 @@ private constructor(
                 @ExcludeMissing
                 fun _cadence(): JsonField<Cadence> = cadence
 
-                /** The id of the item the plan will be associated with. */
+                /** The id of the item the price will be associated with. */
                 @JsonProperty("item_id") @ExcludeMissing fun _itemId(): JsonField<String> = itemId
 
                 @JsonProperty("model_type")
@@ -51982,10 +51982,10 @@ private constructor(
                     /** The cadence to bill for this price on. */
                     fun cadence(cadence: JsonField<Cadence>) = apply { this.cadence = cadence }
 
-                    /** The id of the item the plan will be associated with. */
+                    /** The id of the item the price will be associated with. */
                     fun itemId(itemId: String) = itemId(JsonField.of(itemId))
 
-                    /** The id of the item the plan will be associated with. */
+                    /** The id of the item the price will be associated with. */
                     fun itemId(itemId: JsonField<String>) = apply { this.itemId = itemId }
 
                     fun modelType(modelType: ModelType) = modelType(JsonField.of(modelType))
@@ -53195,7 +53195,7 @@ private constructor(
                 /** The cadence to bill for this price on. */
                 fun cadence(): Cadence = cadence.getRequired("cadence")
 
-                /** The id of the item the plan will be associated with. */
+                /** The id of the item the price will be associated with. */
                 fun itemId(): String = itemId.getRequired("item_id")
 
                 fun modelType(): ModelType = modelType.getRequired("model_type")
@@ -53273,7 +53273,7 @@ private constructor(
                 @ExcludeMissing
                 fun _cadence(): JsonField<Cadence> = cadence
 
-                /** The id of the item the plan will be associated with. */
+                /** The id of the item the price will be associated with. */
                 @JsonProperty("item_id") @ExcludeMissing fun _itemId(): JsonField<String> = itemId
 
                 @JsonProperty("model_type")
@@ -53461,10 +53461,10 @@ private constructor(
                     /** The cadence to bill for this price on. */
                     fun cadence(cadence: JsonField<Cadence>) = apply { this.cadence = cadence }
 
-                    /** The id of the item the plan will be associated with. */
+                    /** The id of the item the price will be associated with. */
                     fun itemId(itemId: String) = itemId(JsonField.of(itemId))
 
-                    /** The id of the item the plan will be associated with. */
+                    /** The id of the item the price will be associated with. */
                     fun itemId(itemId: JsonField<String>) = apply { this.itemId = itemId }
 
                     fun modelType(modelType: ModelType) = modelType(JsonField.of(modelType))
@@ -54674,7 +54674,7 @@ private constructor(
                 /** The cadence to bill for this price on. */
                 fun cadence(): Cadence = cadence.getRequired("cadence")
 
-                /** The id of the item the plan will be associated with. */
+                /** The id of the item the price will be associated with. */
                 fun itemId(): String = itemId.getRequired("item_id")
 
                 fun modelType(): ModelType = modelType.getRequired("model_type")
@@ -54752,7 +54752,7 @@ private constructor(
                 @ExcludeMissing
                 fun _cadence(): JsonField<Cadence> = cadence
 
-                /** The id of the item the plan will be associated with. */
+                /** The id of the item the price will be associated with. */
                 @JsonProperty("item_id") @ExcludeMissing fun _itemId(): JsonField<String> = itemId
 
                 @JsonProperty("model_type")
@@ -54945,10 +54945,10 @@ private constructor(
                     /** The cadence to bill for this price on. */
                     fun cadence(cadence: JsonField<Cadence>) = apply { this.cadence = cadence }
 
-                    /** The id of the item the plan will be associated with. */
+                    /** The id of the item the price will be associated with. */
                     fun itemId(itemId: String) = itemId(JsonField.of(itemId))
 
-                    /** The id of the item the plan will be associated with. */
+                    /** The id of the item the price will be associated with. */
                     fun itemId(itemId: JsonField<String>) = apply { this.itemId = itemId }
 
                     fun modelType(modelType: ModelType) = modelType(JsonField.of(modelType))
@@ -56158,7 +56158,7 @@ private constructor(
                 /** The cadence to bill for this price on. */
                 fun cadence(): Cadence = cadence.getRequired("cadence")
 
-                /** The id of the item the plan will be associated with. */
+                /** The id of the item the price will be associated with. */
                 fun itemId(): String = itemId.getRequired("item_id")
 
                 fun modelType(): ModelType = modelType.getRequired("model_type")
@@ -56236,7 +56236,7 @@ private constructor(
                 @ExcludeMissing
                 fun _cadence(): JsonField<Cadence> = cadence
 
-                /** The id of the item the plan will be associated with. */
+                /** The id of the item the price will be associated with. */
                 @JsonProperty("item_id") @ExcludeMissing fun _itemId(): JsonField<String> = itemId
 
                 @JsonProperty("model_type")
@@ -56426,10 +56426,10 @@ private constructor(
                     /** The cadence to bill for this price on. */
                     fun cadence(cadence: JsonField<Cadence>) = apply { this.cadence = cadence }
 
-                    /** The id of the item the plan will be associated with. */
+                    /** The id of the item the price will be associated with. */
                     fun itemId(itemId: String) = itemId(JsonField.of(itemId))
 
-                    /** The id of the item the plan will be associated with. */
+                    /** The id of the item the price will be associated with. */
                     fun itemId(itemId: JsonField<String>) = apply { this.itemId = itemId }
 
                     fun modelType(modelType: ModelType) = modelType(JsonField.of(modelType))
@@ -57638,7 +57638,7 @@ private constructor(
                 /** The cadence to bill for this price on. */
                 fun cadence(): Cadence = cadence.getRequired("cadence")
 
-                /** The id of the item the plan will be associated with. */
+                /** The id of the item the price will be associated with. */
                 fun itemId(): String = itemId.getRequired("item_id")
 
                 fun modelType(): ModelType = modelType.getRequired("model_type")
@@ -57716,7 +57716,7 @@ private constructor(
                 @ExcludeMissing
                 fun _cadence(): JsonField<Cadence> = cadence
 
-                /** The id of the item the plan will be associated with. */
+                /** The id of the item the price will be associated with. */
                 @JsonProperty("item_id") @ExcludeMissing fun _itemId(): JsonField<String> = itemId
 
                 @JsonProperty("model_type")
@@ -57913,10 +57913,10 @@ private constructor(
                     /** The cadence to bill for this price on. */
                     fun cadence(cadence: JsonField<Cadence>) = apply { this.cadence = cadence }
 
-                    /** The id of the item the plan will be associated with. */
+                    /** The id of the item the price will be associated with. */
                     fun itemId(itemId: String) = itemId(JsonField.of(itemId))
 
-                    /** The id of the item the plan will be associated with. */
+                    /** The id of the item the price will be associated with. */
                     fun itemId(itemId: JsonField<String>) = apply { this.itemId = itemId }
 
                     fun modelType(modelType: ModelType) = modelType(JsonField.of(modelType))
@@ -59131,7 +59131,7 @@ private constructor(
                 /** The cadence to bill for this price on. */
                 fun cadence(): Cadence = cadence.getRequired("cadence")
 
-                /** The id of the item the plan will be associated with. */
+                /** The id of the item the price will be associated with. */
                 fun itemId(): String = itemId.getRequired("item_id")
 
                 fun modelType(): ModelType = modelType.getRequired("model_type")
@@ -59209,7 +59209,7 @@ private constructor(
                 @ExcludeMissing
                 fun _cadence(): JsonField<Cadence> = cadence
 
-                /** The id of the item the plan will be associated with. */
+                /** The id of the item the price will be associated with. */
                 @JsonProperty("item_id") @ExcludeMissing fun _itemId(): JsonField<String> = itemId
 
                 @JsonProperty("model_type")
@@ -59403,10 +59403,10 @@ private constructor(
                     /** The cadence to bill for this price on. */
                     fun cadence(cadence: JsonField<Cadence>) = apply { this.cadence = cadence }
 
-                    /** The id of the item the plan will be associated with. */
+                    /** The id of the item the price will be associated with. */
                     fun itemId(itemId: String) = itemId(JsonField.of(itemId))
 
-                    /** The id of the item the plan will be associated with. */
+                    /** The id of the item the price will be associated with. */
                     fun itemId(itemId: JsonField<String>) = apply { this.itemId = itemId }
 
                     fun modelType(modelType: ModelType) = modelType(JsonField.of(modelType))
@@ -60617,7 +60617,7 @@ private constructor(
                 /** The cadence to bill for this price on. */
                 fun cadence(): Cadence = cadence.getRequired("cadence")
 
-                /** The id of the item the plan will be associated with. */
+                /** The id of the item the price will be associated with. */
                 fun itemId(): String = itemId.getRequired("item_id")
 
                 fun modelType(): ModelType = modelType.getRequired("model_type")
@@ -60695,7 +60695,7 @@ private constructor(
                 @ExcludeMissing
                 fun _cadence(): JsonField<Cadence> = cadence
 
-                /** The id of the item the plan will be associated with. */
+                /** The id of the item the price will be associated with. */
                 @JsonProperty("item_id") @ExcludeMissing fun _itemId(): JsonField<String> = itemId
 
                 @JsonProperty("model_type")
@@ -60888,10 +60888,10 @@ private constructor(
                     /** The cadence to bill for this price on. */
                     fun cadence(cadence: JsonField<Cadence>) = apply { this.cadence = cadence }
 
-                    /** The id of the item the plan will be associated with. */
+                    /** The id of the item the price will be associated with. */
                     fun itemId(itemId: String) = itemId(JsonField.of(itemId))
 
-                    /** The id of the item the plan will be associated with. */
+                    /** The id of the item the price will be associated with. */
                     fun itemId(itemId: JsonField<String>) = apply { this.itemId = itemId }
 
                     fun modelType(modelType: ModelType) = modelType(JsonField.of(modelType))
@@ -62104,7 +62104,7 @@ private constructor(
                 fun groupedAllocationConfig(): GroupedAllocationConfig =
                     groupedAllocationConfig.getRequired("grouped_allocation_config")
 
-                /** The id of the item the plan will be associated with. */
+                /** The id of the item the price will be associated with. */
                 fun itemId(): String = itemId.getRequired("item_id")
 
                 fun modelType(): ModelType = modelType.getRequired("model_type")
@@ -62184,7 +62184,7 @@ private constructor(
                 fun _groupedAllocationConfig(): JsonField<GroupedAllocationConfig> =
                     groupedAllocationConfig
 
-                /** The id of the item the plan will be associated with. */
+                /** The id of the item the price will be associated with. */
                 @JsonProperty("item_id") @ExcludeMissing fun _itemId(): JsonField<String> = itemId
 
                 @JsonProperty("model_type")
@@ -62379,10 +62379,10 @@ private constructor(
                         groupedAllocationConfig: JsonField<GroupedAllocationConfig>
                     ) = apply { this.groupedAllocationConfig = groupedAllocationConfig }
 
-                    /** The id of the item the plan will be associated with. */
+                    /** The id of the item the price will be associated with. */
                     fun itemId(itemId: String) = itemId(JsonField.of(itemId))
 
-                    /** The id of the item the plan will be associated with. */
+                    /** The id of the item the price will be associated with. */
                     fun itemId(itemId: JsonField<String>) = apply { this.itemId = itemId }
 
                     fun modelType(modelType: ModelType) = modelType(JsonField.of(modelType))
@@ -63591,7 +63591,7 @@ private constructor(
                         "grouped_with_prorated_minimum_config"
                     )
 
-                /** The id of the item the plan will be associated with. */
+                /** The id of the item the price will be associated with. */
                 fun itemId(): String = itemId.getRequired("item_id")
 
                 fun modelType(): ModelType = modelType.getRequired("model_type")
@@ -63671,7 +63671,7 @@ private constructor(
                 fun _groupedWithProratedMinimumConfig():
                     JsonField<GroupedWithProratedMinimumConfig> = groupedWithProratedMinimumConfig
 
-                /** The id of the item the plan will be associated with. */
+                /** The id of the item the price will be associated with. */
                 @JsonProperty("item_id") @ExcludeMissing fun _itemId(): JsonField<String> = itemId
 
                 @JsonProperty("model_type")
@@ -63882,10 +63882,10 @@ private constructor(
                         this.groupedWithProratedMinimumConfig = groupedWithProratedMinimumConfig
                     }
 
-                    /** The id of the item the plan will be associated with. */
+                    /** The id of the item the price will be associated with. */
                     fun itemId(itemId: String) = itemId(JsonField.of(itemId))
 
-                    /** The id of the item the plan will be associated with. */
+                    /** The id of the item the price will be associated with. */
                     fun itemId(itemId: JsonField<String>) = apply { this.itemId = itemId }
 
                     fun modelType(modelType: ModelType) = modelType(JsonField.of(modelType))
@@ -65095,7 +65095,7 @@ private constructor(
                 /** The cadence to bill for this price on. */
                 fun cadence(): Cadence = cadence.getRequired("cadence")
 
-                /** The id of the item the plan will be associated with. */
+                /** The id of the item the price will be associated with. */
                 fun itemId(): String = itemId.getRequired("item_id")
 
                 fun modelType(): ModelType = modelType.getRequired("model_type")
@@ -65175,7 +65175,7 @@ private constructor(
                 @ExcludeMissing
                 fun _cadence(): JsonField<Cadence> = cadence
 
-                /** The id of the item the plan will be associated with. */
+                /** The id of the item the price will be associated with. */
                 @JsonProperty("item_id") @ExcludeMissing fun _itemId(): JsonField<String> = itemId
 
                 @JsonProperty("model_type")
@@ -65370,10 +65370,10 @@ private constructor(
                     /** The cadence to bill for this price on. */
                     fun cadence(cadence: JsonField<Cadence>) = apply { this.cadence = cadence }
 
-                    /** The id of the item the plan will be associated with. */
+                    /** The id of the item the price will be associated with. */
                     fun itemId(itemId: String) = itemId(JsonField.of(itemId))
 
-                    /** The id of the item the plan will be associated with. */
+                    /** The id of the item the price will be associated with. */
                     fun itemId(itemId: JsonField<String>) = apply { this.itemId = itemId }
 
                     fun modelType(modelType: ModelType) = modelType(JsonField.of(modelType))

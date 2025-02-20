@@ -548,6 +548,9 @@ private constructor(
         @JsonProperty("amount")
         @ExcludeMissing
         private val amount: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("item_id")
+        @ExcludeMissing
+        private val itemId: JsonField<String> = JsonMissing.of(),
         @JsonProperty("name")
         @ExcludeMissing
         private val name: JsonField<String> = JsonMissing.of(),
@@ -573,6 +576,9 @@ private constructor(
         /** The amount of the line item, including any line item minimums and discounts. */
         fun amount(): String = amount.getRequired("amount")
 
+        /** The id of the item associated with this line item. */
+        fun itemId(): String = itemId.getRequired("item_id")
+
         /** The name of the corresponding invoice line item. */
         fun name(): String = name.getRequired("name")
 
@@ -593,6 +599,9 @@ private constructor(
 
         /** The amount of the line item, including any line item minimums and discounts. */
         @JsonProperty("amount") @ExcludeMissing fun _amount(): JsonField<String> = amount
+
+        /** The id of the item associated with this line item. */
+        @JsonProperty("item_id") @ExcludeMissing fun _itemId(): JsonField<String> = itemId
 
         /** The name of the corresponding invoice line item. */
         @JsonProperty("name") @ExcludeMissing fun _name(): JsonField<String> = name
@@ -626,6 +635,7 @@ private constructor(
 
             id()
             amount()
+            itemId()
             name()
             quantity()
             subtotal()
@@ -646,6 +656,7 @@ private constructor(
 
             private var id: JsonField<String>? = null
             private var amount: JsonField<String>? = null
+            private var itemId: JsonField<String>? = null
             private var name: JsonField<String>? = null
             private var quantity: JsonField<Double>? = null
             private var subtotal: JsonField<String>? = null
@@ -656,6 +667,7 @@ private constructor(
             internal fun from(lineItem: LineItem) = apply {
                 id = lineItem.id
                 amount = lineItem.amount
+                itemId = lineItem.itemId
                 name = lineItem.name
                 quantity = lineItem.quantity
                 subtotal = lineItem.subtotal
@@ -675,6 +687,12 @@ private constructor(
 
             /** The amount of the line item, including any line item minimums and discounts. */
             fun amount(amount: JsonField<String>) = apply { this.amount = amount }
+
+            /** The id of the item associated with this line item. */
+            fun itemId(itemId: String) = itemId(JsonField.of(itemId))
+
+            /** The id of the item associated with this line item. */
+            fun itemId(itemId: JsonField<String>) = apply { this.itemId = itemId }
 
             /** The name of the corresponding invoice line item. */
             fun name(name: String) = name(JsonField.of(name))
@@ -760,6 +778,7 @@ private constructor(
                 LineItem(
                     checkRequired("id", id),
                     checkRequired("amount", amount),
+                    checkRequired("itemId", itemId),
                     checkRequired("name", name),
                     checkRequired("quantity", quantity),
                     checkRequired("subtotal", subtotal),
@@ -1258,17 +1277,17 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is LineItem && id == other.id && amount == other.amount && name == other.name && quantity == other.quantity && subtotal == other.subtotal && taxAmounts == other.taxAmounts && discounts == other.discounts && additionalProperties == other.additionalProperties /* spotless:on */
+            return /* spotless:off */ other is LineItem && id == other.id && amount == other.amount && itemId == other.itemId && name == other.name && quantity == other.quantity && subtotal == other.subtotal && taxAmounts == other.taxAmounts && discounts == other.discounts && additionalProperties == other.additionalProperties /* spotless:on */
         }
 
         /* spotless:off */
-        private val hashCode: Int by lazy { Objects.hash(id, amount, name, quantity, subtotal, taxAmounts, discounts, additionalProperties) }
+        private val hashCode: Int by lazy { Objects.hash(id, amount, itemId, name, quantity, subtotal, taxAmounts, discounts, additionalProperties) }
         /* spotless:on */
 
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "LineItem{id=$id, amount=$amount, name=$name, quantity=$quantity, subtotal=$subtotal, taxAmounts=$taxAmounts, discounts=$discounts, additionalProperties=$additionalProperties}"
+            "LineItem{id=$id, amount=$amount, itemId=$itemId, name=$name, quantity=$quantity, subtotal=$subtotal, taxAmounts=$taxAmounts, discounts=$discounts, additionalProperties=$additionalProperties}"
     }
 
     /** The maximum amount applied on the original invoice */
