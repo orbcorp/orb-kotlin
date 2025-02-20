@@ -1,5 +1,30 @@
 # Changelog
 
+## 0.1.0-alpha.22 (2025-02-20)
+
+Full Changelog: [v0.1.0-alpha.21...v0.1.0-alpha.22](https://github.com/orbcorp/orb-kotlin/compare/v0.1.0-alpha.21...v0.1.0-alpha.22)
+
+### Features
+
+* **api:** api update ([#222](https://github.com/orbcorp/orb-kotlin/issues/222)) ([ac69a65](https://github.com/orbcorp/orb-kotlin/commit/ac69a65c36be159b7bebe1a6cb5ef0d90fccaf1f))
+* **client:** support `JsonField#asX()` for known values ([#217](https://github.com/orbcorp/orb-kotlin/issues/217)) ([2be0c1e](https://github.com/orbcorp/orb-kotlin/commit/2be0c1ed3238e289bf301450a88b1cce90cc68d4))
+* **client:** update enum `asX` methods ([#216](https://github.com/orbcorp/orb-kotlin/issues/216)) ([84ed646](https://github.com/orbcorp/orb-kotlin/commit/84ed6463fce5cafc680a3bd77204d6560ec3aa27))
+
+
+### Chores
+
+* **ci:** update gradle actions to v4 ([#221](https://github.com/orbcorp/orb-kotlin/issues/221)) ([21878ed](https://github.com/orbcorp/orb-kotlin/commit/21878ed36b29f89840b1e506f94e7225319b2fc5))
+* **docs:** reorganize readme ([#218](https://github.com/orbcorp/orb-kotlin/issues/218)) ([8af4563](https://github.com/orbcorp/orb-kotlin/commit/8af456303e9d20f40a926e6d3382c7dcfd3780f6))
+* **internal:** get rid of configuration cache ([#220](https://github.com/orbcorp/orb-kotlin/issues/220)) ([a319997](https://github.com/orbcorp/orb-kotlin/commit/a319997c994cab69de556ab05d96bd31a9b8d0b2))
+* **internal:** make body class constructors private ([f77accd](https://github.com/orbcorp/orb-kotlin/commit/f77accd00565182c48b4e4ce821838eb10240a9a))
+* **internal:** make body classes for multipart requests ([f77accd](https://github.com/orbcorp/orb-kotlin/commit/f77accd00565182c48b4e4ce821838eb10240a9a))
+* **internal:** misc formatting changes ([f77accd](https://github.com/orbcorp/orb-kotlin/commit/f77accd00565182c48b4e4ce821838eb10240a9a))
+* **internal:** optimize build and test perf ([926590b](https://github.com/orbcorp/orb-kotlin/commit/926590bf2f8d6d38043f2d8508d7402946508b13))
+* **internal:** rename internal body classes ([f77accd](https://github.com/orbcorp/orb-kotlin/commit/f77accd00565182c48b4e4ce821838eb10240a9a))
+* **internal:** update formatter ([#213](https://github.com/orbcorp/orb-kotlin/issues/213)) ([926590b](https://github.com/orbcorp/orb-kotlin/commit/926590bf2f8d6d38043f2d8508d7402946508b13))
+* **internal:** update some formatting in `Values.kt` ([2be0c1e](https://github.com/orbcorp/orb-kotlin/commit/2be0c1ed3238e289bf301450a88b1cce90cc68d4))
+* **internal:** use better test example values ([#215](https://github.com/orbcorp/orb-kotlin/issues/215)) ([f77accd](https://github.com/orbcorp/orb-kotlin/commit/f77accd00565182c48b4e4ce821838eb10240a9a))
+
 ## 0.1.0-alpha.21 (2025-02-14)
 
 Full Changelog: [v0.1.0-alpha.20...v0.1.0-alpha.21](https://github.com/orbcorp/orb-kotlin/compare/v0.1.0-alpha.20...v0.1.0-alpha.21)
