@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.1.0-alpha.23 (2025-02-20)
+
+Full Changelog: [v0.1.0-alpha.22...v0.1.0-alpha.23](https://github.com/orbcorp/orb-kotlin/compare/v0.1.0-alpha.22...v0.1.0-alpha.23)
+
+### Chores
+
+* **client:** remove checked exception related code ([#224](https://github.com/orbcorp/orb-kotlin/issues/224)) ([235e16e](https://github.com/orbcorp/orb-kotlin/commit/235e16ecefc18bd6875567eaa90419d7ccf8a1b9))
+
 ## 0.1.0-alpha.22 (2025-02-20)
 
 Full Changelog: [v0.1.0-alpha.21...v0.1.0-alpha.22](https://github.com/orbcorp/orb-kotlin/compare/v0.1.0-alpha.21...v0.1.0-alpha.22)
