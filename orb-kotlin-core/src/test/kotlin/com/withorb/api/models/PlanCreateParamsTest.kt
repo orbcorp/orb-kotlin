@@ -3,6 +3,7 @@
 package com.withorb.api.models
 
 import com.withorb.api.core.JsonValue
+import kotlin.test.assertNotNull
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
@@ -139,7 +140,7 @@ class PlanCreateParamsTest {
 
         val body = params._body()
 
-        assertThat(body).isNotNull
+        assertNotNull(body)
         assertThat(body.currency()).isEqualTo("currency")
         assertThat(body.name()).isEqualTo("name")
         assertThat(body.prices())
@@ -231,7 +232,7 @@ class PlanCreateParamsTest {
 
         val body = params._body()
 
-        assertThat(body).isNotNull
+        assertNotNull(body)
         assertThat(body.currency()).isEqualTo("currency")
         assertThat(body.name()).isEqualTo("name")
         assertThat(body.prices())

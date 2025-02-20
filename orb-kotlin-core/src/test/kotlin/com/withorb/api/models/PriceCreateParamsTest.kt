@@ -120,7 +120,6 @@ class PriceCreateParamsTest {
 
         val body = params._body()
 
-        assertThat(body).isNotNull
         assertThat(body)
             .isEqualTo(
                 PriceCreateParams.Body.ofNewFloatingUnitPrice(
@@ -197,7 +196,6 @@ class PriceCreateParamsTest {
 
         val body = params._body()
 
-        assertThat(body).isNotNull
         assertThat(body)
             .isEqualTo(
                 PriceCreateParams.Body.ofNewFloatingUnitPrice(
