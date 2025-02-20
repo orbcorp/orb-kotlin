@@ -75,7 +75,7 @@ internal class WebhookServiceTest {
                                     .atOffset(ZoneOffset.UTC)
                                     .format(DateTimeFormatter.ISO_LOCAL_DATE_TIME)
                         ),
-                        SECRET
+                        SECRET,
                     )
             }
             .isInstanceOf(OrbException::class.java)
@@ -97,7 +97,7 @@ internal class WebhookServiceTest {
                                     .atOffset(ZoneOffset.UTC)
                                     .format(DateTimeFormatter.ISO_LOCAL_DATE_TIME)
                         ),
-                        SECRET
+                        SECRET,
                     )
             }
             .isInstanceOf(OrbException::class.java)
@@ -131,7 +131,7 @@ internal class WebhookServiceTest {
                     .verifySignature(
                         PAYLOAD.trimIndent(),
                         buildHeaders(signature = "$SIGNATURE v1=Zm9v"),
-                        SECRET
+                        SECRET,
                     )
             }
             .doesNotThrowAnyException()
@@ -141,7 +141,7 @@ internal class WebhookServiceTest {
                     .verifySignature(
                         PAYLOAD.trimIndent(),
                         buildHeaders(signature = "v1=$SIGNATURE v2=$SIGNATURE"),
-                        SECRET
+                        SECRET,
                     )
             }
             .doesNotThrowAnyException()
@@ -156,7 +156,7 @@ internal class WebhookServiceTest {
                     .verifySignature(
                         PAYLOAD.trimIndent(),
                         buildHeaders(signature = "v2=$SIGNATURE"),
-                        SECRET
+                        SECRET,
                     )
             }
             .isInstanceOf(OrbException::class.java)
