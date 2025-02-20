@@ -99,7 +99,6 @@ class CustomerCreditLedgerCreateEntryByExternalIdParamsTest {
 
         val body = params._body()
 
-        assertThat(body).isNotNull
         assertThat(body)
             .isEqualTo(
                 CustomerCreditLedgerCreateEntryByExternalIdParams.Body
@@ -153,7 +152,6 @@ class CustomerCreditLedgerCreateEntryByExternalIdParamsTest {
 
         val body = params._body()
 
-        assertThat(body).isNotNull
         assertThat(body)
             .isEqualTo(
                 CustomerCreditLedgerCreateEntryByExternalIdParams.Body

@@ -4,6 +4,7 @@ package com.withorb.api.models
 
 import com.withorb.api.core.JsonValue
 import java.time.OffsetDateTime
+import kotlin.test.assertNotNull
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
@@ -599,7 +600,7 @@ class SubscriptionCreateParamsTest {
 
         val body = params._body()
 
-        assertThat(body).isNotNull
+        assertNotNull(body)
         assertThat(body.addAdjustments())
             .isEqualTo(
                 listOf(
@@ -923,6 +924,6 @@ class SubscriptionCreateParamsTest {
 
         val body = params._body()
 
-        assertThat(body).isNotNull
+        assertNotNull(body)
     }
 }

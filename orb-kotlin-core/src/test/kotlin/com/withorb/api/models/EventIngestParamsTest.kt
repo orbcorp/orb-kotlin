@@ -5,6 +5,7 @@ package com.withorb.api.models
 import com.withorb.api.core.JsonValue
 import com.withorb.api.core.http.QueryParams
 import java.time.OffsetDateTime
+import kotlin.test.assertNotNull
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
@@ -88,7 +89,7 @@ class EventIngestParamsTest {
 
         val body = params._body()
 
-        assertThat(body).isNotNull
+        assertNotNull(body)
         assertThat(body.events())
             .isEqualTo(
                 listOf(
@@ -120,7 +121,7 @@ class EventIngestParamsTest {
 
         val body = params._body()
 
-        assertThat(body).isNotNull
+        assertNotNull(body)
         assertThat(body.events())
             .isEqualTo(
                 listOf(

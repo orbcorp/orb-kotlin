@@ -3,6 +3,7 @@
 package com.withorb.api.models
 
 import com.withorb.api.core.JsonValue
+import kotlin.test.assertNotNull
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
@@ -40,7 +41,7 @@ class MetricCreateParamsTest {
 
         val body = params._body()
 
-        assertThat(body).isNotNull
+        assertNotNull(body)
         assertThat(body.description()).isEqualTo("Sum of bytes downloaded in fast mode")
         assertThat(body.itemId()).isEqualTo("item_id")
         assertThat(body.name()).isEqualTo("Bytes downloaded")
@@ -66,7 +67,7 @@ class MetricCreateParamsTest {
 
         val body = params._body()
 
-        assertThat(body).isNotNull
+        assertNotNull(body)
         assertThat(body.description()).isEqualTo("Sum of bytes downloaded in fast mode")
         assertThat(body.itemId()).isEqualTo("item_id")
         assertThat(body.name()).isEqualTo("Bytes downloaded")

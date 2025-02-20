@@ -99,7 +99,6 @@ class CustomerCreditLedgerCreateEntryParamsTest {
 
         val body = params._body()
 
-        assertThat(body).isNotNull
         assertThat(body)
             .isEqualTo(
                 CustomerCreditLedgerCreateEntryParams.Body
@@ -153,7 +152,6 @@ class CustomerCreditLedgerCreateEntryParamsTest {
 
         val body = params._body()
 
-        assertThat(body).isNotNull
         assertThat(body)
             .isEqualTo(
                 CustomerCreditLedgerCreateEntryParams.Body
