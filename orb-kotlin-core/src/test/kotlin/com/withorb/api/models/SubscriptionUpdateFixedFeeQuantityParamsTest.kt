@@ -3,6 +3,7 @@
 package com.withorb.api.models
 
 import java.time.LocalDate
+import kotlin.test.assertNotNull
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
@@ -34,7 +35,7 @@ class SubscriptionUpdateFixedFeeQuantityParamsTest {
 
         val body = params._body()
 
-        assertThat(body).isNotNull
+        assertNotNull(body)
         assertThat(body.priceId()).isEqualTo("price_id")
         assertThat(body.quantity()).isEqualTo(0.0)
         assertThat(body.allowInvoiceCreditOrVoid()).isEqualTo(true)
@@ -54,7 +55,7 @@ class SubscriptionUpdateFixedFeeQuantityParamsTest {
 
         val body = params._body()
 
-        assertThat(body).isNotNull
+        assertNotNull(body)
         assertThat(body.priceId()).isEqualTo("price_id")
         assertThat(body.quantity()).isEqualTo(0.0)
     }

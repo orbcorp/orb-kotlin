@@ -2,6 +2,7 @@
 
 package com.withorb.api.models
 
+import kotlin.test.assertNotNull
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
@@ -25,7 +26,7 @@ class SubscriptionUnscheduleFixedFeeQuantityUpdatesParamsTest {
 
         val body = params._body()
 
-        assertThat(body).isNotNull
+        assertNotNull(body)
         assertThat(body.priceId()).isEqualTo("price_id")
     }
 
@@ -39,7 +40,7 @@ class SubscriptionUnscheduleFixedFeeQuantityUpdatesParamsTest {
 
         val body = params._body()
 
-        assertThat(body).isNotNull
+        assertNotNull(body)
         assertThat(body.priceId()).isEqualTo("price_id")
     }
 

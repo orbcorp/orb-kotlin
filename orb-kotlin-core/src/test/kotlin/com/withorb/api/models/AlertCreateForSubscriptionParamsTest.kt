@@ -2,6 +2,7 @@
 
 package com.withorb.api.models
 
+import kotlin.test.assertNotNull
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
@@ -31,7 +32,7 @@ class AlertCreateForSubscriptionParamsTest {
 
         val body = params._body()
 
-        assertThat(body).isNotNull
+        assertNotNull(body)
         assertThat(body.thresholds())
             .isEqualTo(
                 listOf(AlertCreateForSubscriptionParams.Threshold.builder().value(0.0).build())
@@ -53,7 +54,7 @@ class AlertCreateForSubscriptionParamsTest {
 
         val body = params._body()
 
-        assertThat(body).isNotNull
+        assertNotNull(body)
         assertThat(body.thresholds())
             .isEqualTo(
                 listOf(AlertCreateForSubscriptionParams.Threshold.builder().value(0.0).build())

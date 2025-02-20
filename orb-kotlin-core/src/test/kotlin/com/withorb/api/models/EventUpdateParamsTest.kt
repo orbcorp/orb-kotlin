@@ -4,6 +4,7 @@ package com.withorb.api.models
 
 import com.withorb.api.core.JsonValue
 import java.time.OffsetDateTime
+import kotlin.test.assertNotNull
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
@@ -35,7 +36,7 @@ class EventUpdateParamsTest {
 
         val body = params._body()
 
-        assertThat(body).isNotNull
+        assertNotNull(body)
         assertThat(body.eventName()).isEqualTo("event_name")
         assertThat(body._properties()).isEqualTo(JsonValue.from(mapOf<String, Any>()))
         assertThat(body.timestamp()).isEqualTo(OffsetDateTime.parse("2020-12-09T16:09:53Z"))
@@ -55,7 +56,7 @@ class EventUpdateParamsTest {
 
         val body = params._body()
 
-        assertThat(body).isNotNull
+        assertNotNull(body)
         assertThat(body.eventName()).isEqualTo("event_name")
         assertThat(body._properties()).isEqualTo(JsonValue.from(mapOf<String, Any>()))
         assertThat(body.timestamp()).isEqualTo(OffsetDateTime.parse("2020-12-09T16:09:53Z"))
