@@ -1,5 +1,26 @@
 # Changelog
 
+## 0.1.0-alpha.23 (2025-02-20)
+
+Full Changelog: [v0.1.0-alpha.22...v0.1.0-alpha.23](https://github.com/orbcorp/orb-kotlin/compare/v0.1.0-alpha.22...v0.1.0-alpha.23)
+
+### Features
+
+* **api:** api update ([#228](https://github.com/orbcorp/orb-kotlin/issues/228)) ([aa8e765](https://github.com/orbcorp/orb-kotlin/commit/aa8e765fb05f7e8c75240230ce80e421ca6b0e1a))
+
+
+### Bug Fixes
+
+* **client:** mark some request bodies as optional ([#227](https://github.com/orbcorp/orb-kotlin/issues/227)) ([afafbad](https://github.com/orbcorp/orb-kotlin/commit/afafbadac76a2a8312816f54110a6638f2a136c3))
+
+
+### Chores
+
+* **client:** remove checked exception related code ([#224](https://github.com/orbcorp/orb-kotlin/issues/224)) ([235e16e](https://github.com/orbcorp/orb-kotlin/commit/235e16ecefc18bd6875567eaa90419d7ccf8a1b9))
+* **docs:** add faq to readme ([#226](https://github.com/orbcorp/orb-kotlin/issues/226)) ([8a1326d](https://github.com/orbcorp/orb-kotlin/commit/8a1326d180a0b2420b9a8dc8c5a748cca5c7aa89))
+* **internal:** remove unnecessary non-null asserts in tests ([afafbad](https://github.com/orbcorp/orb-kotlin/commit/afafbadac76a2a8312816f54110a6638f2a136c3))
+* **internal:** use `assertNotNull` in tests for type narrowing ([afafbad](https://github.com/orbcorp/orb-kotlin/commit/afafbadac76a2a8312816f54110a6638f2a136c3))
+
 ## 0.1.0-alpha.22 (2025-02-20)
 
 Full Changelog: [v0.1.0-alpha.21...v0.1.0-alpha.22](https://github.com/orbcorp/orb-kotlin/compare/v0.1.0-alpha.21...v0.1.0-alpha.22)
