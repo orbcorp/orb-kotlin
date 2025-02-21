@@ -41,6 +41,12 @@ class CustomerUpdateParamsTest {
             .email("dev@stainlessapi.com")
             .emailDelivery(true)
             .externalCustomerId("external_customer_id")
+            .hierarchy(
+                CustomerUpdateParams.Hierarchy.builder()
+                    .addChildCustomerId("string")
+                    .parentCustomerId("parent_customer_id")
+                    .build()
+            )
             .metadata(
                 CustomerUpdateParams.Metadata.builder()
                     .putAdditionalProperty("foo", JsonValue.from("string"))
@@ -115,6 +121,12 @@ class CustomerUpdateParamsTest {
                 .email("dev@stainlessapi.com")
                 .emailDelivery(true)
                 .externalCustomerId("external_customer_id")
+                .hierarchy(
+                    CustomerUpdateParams.Hierarchy.builder()
+                        .addChildCustomerId("string")
+                        .parentCustomerId("parent_customer_id")
+                        .build()
+                )
                 .metadata(
                     CustomerUpdateParams.Metadata.builder()
                         .putAdditionalProperty("foo", JsonValue.from("string"))
@@ -189,6 +201,13 @@ class CustomerUpdateParamsTest {
         assertThat(body.email()).isEqualTo("dev@stainlessapi.com")
         assertThat(body.emailDelivery()).isEqualTo(true)
         assertThat(body.externalCustomerId()).isEqualTo("external_customer_id")
+        assertThat(body.hierarchy())
+            .isEqualTo(
+                CustomerUpdateParams.Hierarchy.builder()
+                    .addChildCustomerId("string")
+                    .parentCustomerId("parent_customer_id")
+                    .build()
+            )
         assertThat(body.metadata())
             .isEqualTo(
                 CustomerUpdateParams.Metadata.builder()
