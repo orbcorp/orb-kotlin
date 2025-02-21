@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.1.0-alpha.24 (2025-02-21)
+
+Full Changelog: [v0.1.0-alpha.23...v0.1.0-alpha.24](https://github.com/orbcorp/orb-kotlin/compare/v0.1.0-alpha.23...v0.1.0-alpha.24)
+
+### Features
+
+* **api:** api update ([#232](https://github.com/orbcorp/orb-kotlin/issues/232)) ([1f2eecb](https://github.com/orbcorp/orb-kotlin/commit/1f2eecbdf80601064d09b6de22bbad489fe101ad))
+
+
+### Documentation
+
+* add immutability explanation to readme ([#230](https://github.com/orbcorp/orb-kotlin/issues/230)) ([9a7dab7](https://github.com/orbcorp/orb-kotlin/commit/9a7dab7923bda9e234b7f75954bd6fa0b1979b72))
+
 ## 0.1.0-alpha.23 (2025-02-20)
 
 Full Changelog: [v0.1.0-alpha.22...v0.1.0-alpha.23](https://github.com/orbcorp/orb-kotlin/compare/v0.1.0-alpha.22...v0.1.0-alpha.23)
