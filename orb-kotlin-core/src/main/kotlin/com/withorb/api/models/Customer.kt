@@ -70,6 +70,9 @@ private constructor(
     @JsonProperty("external_customer_id")
     @ExcludeMissing
     private val externalCustomerId: JsonField<String> = JsonMissing.of(),
+    @JsonProperty("hierarchy")
+    @ExcludeMissing
+    private val hierarchy: JsonField<Hierarchy> = JsonMissing.of(),
     @JsonProperty("metadata")
     @ExcludeMissing
     private val metadata: JsonField<Metadata> = JsonMissing.of(),
@@ -132,6 +135,9 @@ private constructor(
      * your system.
      */
     fun externalCustomerId(): String? = externalCustomerId.getNullable("external_customer_id")
+
+    /** The hierarchical relationships for this customer. */
+    fun hierarchy(): Hierarchy = hierarchy.getRequired("hierarchy")
 
     /**
      * User specified key-value pairs for the resource. If not present, this defaults to an empty
@@ -326,6 +332,9 @@ private constructor(
     @ExcludeMissing
     fun _externalCustomerId(): JsonField<String> = externalCustomerId
 
+    /** The hierarchical relationships for this customer. */
+    @JsonProperty("hierarchy") @ExcludeMissing fun _hierarchy(): JsonField<Hierarchy> = hierarchy
+
     /**
      * User specified key-value pairs for the resource. If not present, this defaults to an empty
      * dictionary. Individual keys can be removed by setting the value to `null`, and the entire
@@ -504,6 +513,7 @@ private constructor(
         emailDelivery()
         exemptFromAutomatedTax()
         externalCustomerId()
+        hierarchy().validate()
         metadata().validate()
         name()
         paymentProvider()
@@ -538,6 +548,7 @@ private constructor(
         private var emailDelivery: JsonField<Boolean>? = null
         private var exemptFromAutomatedTax: JsonField<Boolean>? = null
         private var externalCustomerId: JsonField<String>? = null
+        private var hierarchy: JsonField<Hierarchy>? = null
         private var metadata: JsonField<Metadata>? = null
         private var name: JsonField<String>? = null
         private var paymentProvider: JsonField<PaymentProvider>? = null
@@ -563,6 +574,7 @@ private constructor(
             emailDelivery = customer.emailDelivery
             exemptFromAutomatedTax = customer.exemptFromAutomatedTax
             externalCustomerId = customer.externalCustomerId
+            hierarchy = customer.hierarchy
             metadata = customer.metadata
             name = customer.name
             paymentProvider = customer.paymentProvider
@@ -669,6 +681,12 @@ private constructor(
         fun externalCustomerId(externalCustomerId: JsonField<String>) = apply {
             this.externalCustomerId = externalCustomerId
         }
+
+        /** The hierarchical relationships for this customer. */
+        fun hierarchy(hierarchy: Hierarchy) = hierarchy(JsonField.of(hierarchy))
+
+        /** The hierarchical relationships for this customer. */
+        fun hierarchy(hierarchy: JsonField<Hierarchy>) = apply { this.hierarchy = hierarchy }
 
         /**
          * User specified key-value pairs for the resource. If not present, this defaults to an
@@ -1008,6 +1026,7 @@ private constructor(
                 checkRequired("emailDelivery", emailDelivery),
                 checkRequired("exemptFromAutomatedTax", exemptFromAutomatedTax),
                 checkRequired("externalCustomerId", externalCustomerId),
+                checkRequired("hierarchy", hierarchy),
                 checkRequired("metadata", metadata),
                 checkRequired("name", name),
                 checkRequired("paymentProvider", paymentProvider),
@@ -1193,6 +1212,371 @@ private constructor(
 
         override fun toString() =
             "BillingAddress{city=$city, country=$country, line1=$line1, line2=$line2, postalCode=$postalCode, state=$state, additionalProperties=$additionalProperties}"
+    }
+
+    /** The hierarchical relationships for this customer. */
+    @NoAutoDetect
+    class Hierarchy
+    @JsonCreator
+    private constructor(
+        @JsonProperty("children")
+        @ExcludeMissing
+        private val children: JsonField<List<Child>> = JsonMissing.of(),
+        @JsonProperty("parent")
+        @ExcludeMissing
+        private val parent: JsonField<Parent> = JsonMissing.of(),
+        @JsonAnySetter
+        private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
+    ) {
+
+        fun children(): List<Child> = children.getRequired("children")
+
+        fun parent(): Parent? = parent.getNullable("parent")
+
+        @JsonProperty("children") @ExcludeMissing fun _children(): JsonField<List<Child>> = children
+
+        @JsonProperty("parent") @ExcludeMissing fun _parent(): JsonField<Parent> = parent
+
+        @JsonAnyGetter
+        @ExcludeMissing
+        fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
+
+        private var validated: Boolean = false
+
+        fun validate(): Hierarchy = apply {
+            if (validated) {
+                return@apply
+            }
+
+            children().forEach { it.validate() }
+            parent()?.validate()
+            validated = true
+        }
+
+        fun toBuilder() = Builder().from(this)
+
+        companion object {
+
+            fun builder() = Builder()
+        }
+
+        /** A builder for [Hierarchy]. */
+        class Builder internal constructor() {
+
+            private var children: JsonField<MutableList<Child>>? = null
+            private var parent: JsonField<Parent>? = null
+            private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
+
+            internal fun from(hierarchy: Hierarchy) = apply {
+                children = hierarchy.children.map { it.toMutableList() }
+                parent = hierarchy.parent
+                additionalProperties = hierarchy.additionalProperties.toMutableMap()
+            }
+
+            fun children(children: List<Child>) = children(JsonField.of(children))
+
+            fun children(children: JsonField<List<Child>>) = apply {
+                this.children = children.map { it.toMutableList() }
+            }
+
+            fun addChild(child: Child) = apply {
+                children =
+                    (children ?: JsonField.of(mutableListOf())).apply {
+                        (asKnown()
+                                ?: throw IllegalStateException(
+                                    "Field was set to non-list type: ${javaClass.simpleName}"
+                                ))
+                            .add(child)
+                    }
+            }
+
+            fun parent(parent: Parent?) = parent(JsonField.ofNullable(parent))
+
+            fun parent(parent: JsonField<Parent>) = apply { this.parent = parent }
+
+            fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                this.additionalProperties.clear()
+                putAllAdditionalProperties(additionalProperties)
+            }
+
+            fun putAdditionalProperty(key: String, value: JsonValue) = apply {
+                additionalProperties.put(key, value)
+            }
+
+            fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                this.additionalProperties.putAll(additionalProperties)
+            }
+
+            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+
+            fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                keys.forEach(::removeAdditionalProperty)
+            }
+
+            fun build(): Hierarchy =
+                Hierarchy(
+                    checkRequired("children", children).map { it.toImmutable() },
+                    checkRequired("parent", parent),
+                    additionalProperties.toImmutable(),
+                )
+        }
+
+        @NoAutoDetect
+        class Child
+        @JsonCreator
+        private constructor(
+            @JsonProperty("id")
+            @ExcludeMissing
+            private val id: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("external_customer_id")
+            @ExcludeMissing
+            private val externalCustomerId: JsonField<String> = JsonMissing.of(),
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
+        ) {
+
+            fun id(): String = id.getRequired("id")
+
+            fun externalCustomerId(): String? =
+                externalCustomerId.getNullable("external_customer_id")
+
+            @JsonProperty("id") @ExcludeMissing fun _id(): JsonField<String> = id
+
+            @JsonProperty("external_customer_id")
+            @ExcludeMissing
+            fun _externalCustomerId(): JsonField<String> = externalCustomerId
+
+            @JsonAnyGetter
+            @ExcludeMissing
+            fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
+
+            private var validated: Boolean = false
+
+            fun validate(): Child = apply {
+                if (validated) {
+                    return@apply
+                }
+
+                id()
+                externalCustomerId()
+                validated = true
+            }
+
+            fun toBuilder() = Builder().from(this)
+
+            companion object {
+
+                fun builder() = Builder()
+            }
+
+            /** A builder for [Child]. */
+            class Builder internal constructor() {
+
+                private var id: JsonField<String>? = null
+                private var externalCustomerId: JsonField<String>? = null
+                private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
+
+                internal fun from(child: Child) = apply {
+                    id = child.id
+                    externalCustomerId = child.externalCustomerId
+                    additionalProperties = child.additionalProperties.toMutableMap()
+                }
+
+                fun id(id: String) = id(JsonField.of(id))
+
+                fun id(id: JsonField<String>) = apply { this.id = id }
+
+                fun externalCustomerId(externalCustomerId: String?) =
+                    externalCustomerId(JsonField.ofNullable(externalCustomerId))
+
+                fun externalCustomerId(externalCustomerId: JsonField<String>) = apply {
+                    this.externalCustomerId = externalCustomerId
+                }
+
+                fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                    this.additionalProperties.clear()
+                    putAllAdditionalProperties(additionalProperties)
+                }
+
+                fun putAdditionalProperty(key: String, value: JsonValue) = apply {
+                    additionalProperties.put(key, value)
+                }
+
+                fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) =
+                    apply {
+                        this.additionalProperties.putAll(additionalProperties)
+                    }
+
+                fun removeAdditionalProperty(key: String) = apply {
+                    additionalProperties.remove(key)
+                }
+
+                fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                    keys.forEach(::removeAdditionalProperty)
+                }
+
+                fun build(): Child =
+                    Child(
+                        checkRequired("id", id),
+                        checkRequired("externalCustomerId", externalCustomerId),
+                        additionalProperties.toImmutable(),
+                    )
+            }
+
+            override fun equals(other: Any?): Boolean {
+                if (this === other) {
+                    return true
+                }
+
+                return /* spotless:off */ other is Child && id == other.id && externalCustomerId == other.externalCustomerId && additionalProperties == other.additionalProperties /* spotless:on */
+            }
+
+            /* spotless:off */
+            private val hashCode: Int by lazy { Objects.hash(id, externalCustomerId, additionalProperties) }
+            /* spotless:on */
+
+            override fun hashCode(): Int = hashCode
+
+            override fun toString() =
+                "Child{id=$id, externalCustomerId=$externalCustomerId, additionalProperties=$additionalProperties}"
+        }
+
+        @NoAutoDetect
+        class Parent
+        @JsonCreator
+        private constructor(
+            @JsonProperty("id")
+            @ExcludeMissing
+            private val id: JsonField<String> = JsonMissing.of(),
+            @JsonProperty("external_customer_id")
+            @ExcludeMissing
+            private val externalCustomerId: JsonField<String> = JsonMissing.of(),
+            @JsonAnySetter
+            private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
+        ) {
+
+            fun id(): String = id.getRequired("id")
+
+            fun externalCustomerId(): String? =
+                externalCustomerId.getNullable("external_customer_id")
+
+            @JsonProperty("id") @ExcludeMissing fun _id(): JsonField<String> = id
+
+            @JsonProperty("external_customer_id")
+            @ExcludeMissing
+            fun _externalCustomerId(): JsonField<String> = externalCustomerId
+
+            @JsonAnyGetter
+            @ExcludeMissing
+            fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
+
+            private var validated: Boolean = false
+
+            fun validate(): Parent = apply {
+                if (validated) {
+                    return@apply
+                }
+
+                id()
+                externalCustomerId()
+                validated = true
+            }
+
+            fun toBuilder() = Builder().from(this)
+
+            companion object {
+
+                fun builder() = Builder()
+            }
+
+            /** A builder for [Parent]. */
+            class Builder internal constructor() {
+
+                private var id: JsonField<String>? = null
+                private var externalCustomerId: JsonField<String>? = null
+                private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
+
+                internal fun from(parent: Parent) = apply {
+                    id = parent.id
+                    externalCustomerId = parent.externalCustomerId
+                    additionalProperties = parent.additionalProperties.toMutableMap()
+                }
+
+                fun id(id: String) = id(JsonField.of(id))
+
+                fun id(id: JsonField<String>) = apply { this.id = id }
+
+                fun externalCustomerId(externalCustomerId: String?) =
+                    externalCustomerId(JsonField.ofNullable(externalCustomerId))
+
+                fun externalCustomerId(externalCustomerId: JsonField<String>) = apply {
+                    this.externalCustomerId = externalCustomerId
+                }
+
+                fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                    this.additionalProperties.clear()
+                    putAllAdditionalProperties(additionalProperties)
+                }
+
+                fun putAdditionalProperty(key: String, value: JsonValue) = apply {
+                    additionalProperties.put(key, value)
+                }
+
+                fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) =
+                    apply {
+                        this.additionalProperties.putAll(additionalProperties)
+                    }
+
+                fun removeAdditionalProperty(key: String) = apply {
+                    additionalProperties.remove(key)
+                }
+
+                fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                    keys.forEach(::removeAdditionalProperty)
+                }
+
+                fun build(): Parent =
+                    Parent(
+                        checkRequired("id", id),
+                        checkRequired("externalCustomerId", externalCustomerId),
+                        additionalProperties.toImmutable(),
+                    )
+            }
+
+            override fun equals(other: Any?): Boolean {
+                if (this === other) {
+                    return true
+                }
+
+                return /* spotless:off */ other is Parent && id == other.id && externalCustomerId == other.externalCustomerId && additionalProperties == other.additionalProperties /* spotless:on */
+            }
+
+            /* spotless:off */
+            private val hashCode: Int by lazy { Objects.hash(id, externalCustomerId, additionalProperties) }
+            /* spotless:on */
+
+            override fun hashCode(): Int = hashCode
+
+            override fun toString() =
+                "Parent{id=$id, externalCustomerId=$externalCustomerId, additionalProperties=$additionalProperties}"
+        }
+
+        override fun equals(other: Any?): Boolean {
+            if (this === other) {
+                return true
+            }
+
+            return /* spotless:off */ other is Hierarchy && children == other.children && parent == other.parent && additionalProperties == other.additionalProperties /* spotless:on */
+        }
+
+        /* spotless:off */
+        private val hashCode: Int by lazy { Objects.hash(children, parent, additionalProperties) }
+        /* spotless:on */
+
+        override fun hashCode(): Int = hashCode
+
+        override fun toString() =
+            "Hierarchy{children=$children, parent=$parent, additionalProperties=$additionalProperties}"
     }
 
     /**
@@ -3335,15 +3719,15 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is Customer && id == other.id && additionalEmails == other.additionalEmails && autoCollection == other.autoCollection && balance == other.balance && billingAddress == other.billingAddress && createdAt == other.createdAt && currency == other.currency && email == other.email && emailDelivery == other.emailDelivery && exemptFromAutomatedTax == other.exemptFromAutomatedTax && externalCustomerId == other.externalCustomerId && metadata == other.metadata && name == other.name && paymentProvider == other.paymentProvider && paymentProviderId == other.paymentProviderId && portalUrl == other.portalUrl && shippingAddress == other.shippingAddress && taxId == other.taxId && timezone == other.timezone && accountingSyncConfiguration == other.accountingSyncConfiguration && reportingConfiguration == other.reportingConfiguration && additionalProperties == other.additionalProperties /* spotless:on */
+        return /* spotless:off */ other is Customer && id == other.id && additionalEmails == other.additionalEmails && autoCollection == other.autoCollection && balance == other.balance && billingAddress == other.billingAddress && createdAt == other.createdAt && currency == other.currency && email == other.email && emailDelivery == other.emailDelivery && exemptFromAutomatedTax == other.exemptFromAutomatedTax && externalCustomerId == other.externalCustomerId && hierarchy == other.hierarchy && metadata == other.metadata && name == other.name && paymentProvider == other.paymentProvider && paymentProviderId == other.paymentProviderId && portalUrl == other.portalUrl && shippingAddress == other.shippingAddress && taxId == other.taxId && timezone == other.timezone && accountingSyncConfiguration == other.accountingSyncConfiguration && reportingConfiguration == other.reportingConfiguration && additionalProperties == other.additionalProperties /* spotless:on */
     }
 
     /* spotless:off */
-    private val hashCode: Int by lazy { Objects.hash(id, additionalEmails, autoCollection, balance, billingAddress, createdAt, currency, email, emailDelivery, exemptFromAutomatedTax, externalCustomerId, metadata, name, paymentProvider, paymentProviderId, portalUrl, shippingAddress, taxId, timezone, accountingSyncConfiguration, reportingConfiguration, additionalProperties) }
+    private val hashCode: Int by lazy { Objects.hash(id, additionalEmails, autoCollection, balance, billingAddress, createdAt, currency, email, emailDelivery, exemptFromAutomatedTax, externalCustomerId, hierarchy, metadata, name, paymentProvider, paymentProviderId, portalUrl, shippingAddress, taxId, timezone, accountingSyncConfiguration, reportingConfiguration, additionalProperties) }
     /* spotless:on */
 
     override fun hashCode(): Int = hashCode
 
     override fun toString() =
-        "Customer{id=$id, additionalEmails=$additionalEmails, autoCollection=$autoCollection, balance=$balance, billingAddress=$billingAddress, createdAt=$createdAt, currency=$currency, email=$email, emailDelivery=$emailDelivery, exemptFromAutomatedTax=$exemptFromAutomatedTax, externalCustomerId=$externalCustomerId, metadata=$metadata, name=$name, paymentProvider=$paymentProvider, paymentProviderId=$paymentProviderId, portalUrl=$portalUrl, shippingAddress=$shippingAddress, taxId=$taxId, timezone=$timezone, accountingSyncConfiguration=$accountingSyncConfiguration, reportingConfiguration=$reportingConfiguration, additionalProperties=$additionalProperties}"
+        "Customer{id=$id, additionalEmails=$additionalEmails, autoCollection=$autoCollection, balance=$balance, billingAddress=$billingAddress, createdAt=$createdAt, currency=$currency, email=$email, emailDelivery=$emailDelivery, exemptFromAutomatedTax=$exemptFromAutomatedTax, externalCustomerId=$externalCustomerId, hierarchy=$hierarchy, metadata=$metadata, name=$name, paymentProvider=$paymentProvider, paymentProviderId=$paymentProviderId, portalUrl=$portalUrl, shippingAddress=$shippingAddress, taxId=$taxId, timezone=$timezone, accountingSyncConfiguration=$accountingSyncConfiguration, reportingConfiguration=$reportingConfiguration, additionalProperties=$additionalProperties}"
 }

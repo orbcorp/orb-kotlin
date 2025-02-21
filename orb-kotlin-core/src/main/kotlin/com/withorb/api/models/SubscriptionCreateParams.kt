@@ -412,6 +412,15 @@ private constructor(
     fun trialDurationDays(): Long? = body.trialDurationDays()
 
     /**
+     * A list of customer IDs whose usage events will be aggregated and billed under this
+     * subscription. By default, a subscription only considers usage events associated with its
+     * attached customer's customer_id. When usage_customer_ids is provided, the subscription
+     * includes usage events from the specified customers only. Provided usage_customer_ids must be
+     * either the customer for this subscription itself, or any of that customer's children.
+     */
+    fun usageCustomerIds(): List<String>? = body.usageCustomerIds()
+
+    /**
      * Additional adjustments to be added to the subscription. (Only available for accounts that
      * have migrated off of legacy subscription overrides)
      */
@@ -555,6 +564,15 @@ private constructor(
      */
     fun _trialDurationDays(): JsonField<Long> = body._trialDurationDays()
 
+    /**
+     * A list of customer IDs whose usage events will be aggregated and billed under this
+     * subscription. By default, a subscription only considers usage events associated with its
+     * attached customer's customer_id. When usage_customer_ids is provided, the subscription
+     * includes usage events from the specified customers only. Provided usage_customer_ids must be
+     * either the customer for this subscription itself, or any of that customer's children.
+     */
+    fun _usageCustomerIds(): JsonField<List<String>> = body._usageCustomerIds()
+
     fun _additionalBodyProperties(): Map<String, JsonValue> = body._additionalProperties()
 
     fun _additionalHeaders(): Headers = additionalHeaders
@@ -662,6 +680,9 @@ private constructor(
         @JsonProperty("trial_duration_days")
         @ExcludeMissing
         private val trialDurationDays: JsonField<Long> = JsonMissing.of(),
+        @JsonProperty("usage_customer_ids")
+        @ExcludeMissing
+        private val usageCustomerIds: JsonField<List<String>> = JsonMissing.of(),
         @JsonAnySetter
         private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
     ) {
@@ -816,6 +837,15 @@ private constructor(
          * specified in the plan. If `0` is provided, the trial on the plan will be skipped.
          */
         fun trialDurationDays(): Long? = trialDurationDays.getNullable("trial_duration_days")
+
+        /**
+         * A list of customer IDs whose usage events will be aggregated and billed under this
+         * subscription. By default, a subscription only considers usage events associated with its
+         * attached customer's customer_id. When usage_customer_ids is provided, the subscription
+         * includes usage events from the specified customers only. Provided usage_customer_ids must
+         * be either the customer for this subscription itself, or any of that customer's children.
+         */
+        fun usageCustomerIds(): List<String>? = usageCustomerIds.getNullable("usage_customer_ids")
 
         /**
          * Additional adjustments to be added to the subscription. (Only available for accounts that
@@ -1013,6 +1043,17 @@ private constructor(
         @ExcludeMissing
         fun _trialDurationDays(): JsonField<Long> = trialDurationDays
 
+        /**
+         * A list of customer IDs whose usage events will be aggregated and billed under this
+         * subscription. By default, a subscription only considers usage events associated with its
+         * attached customer's customer_id. When usage_customer_ids is provided, the subscription
+         * includes usage events from the specified customers only. Provided usage_customer_ids must
+         * be either the customer for this subscription itself, or any of that customer's children.
+         */
+        @JsonProperty("usage_customer_ids")
+        @ExcludeMissing
+        fun _usageCustomerIds(): JsonField<List<String>> = usageCustomerIds
+
         @JsonAnyGetter
         @ExcludeMissing
         fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
@@ -1054,6 +1095,7 @@ private constructor(
             replacePrices()?.forEach { it.validate() }
             startDate()
             trialDurationDays()
+            usageCustomerIds()
             validated = true
         }
 
@@ -1099,6 +1141,7 @@ private constructor(
             private var replacePrices: JsonField<MutableList<ReplacePrice>>? = null
             private var startDate: JsonField<OffsetDateTime> = JsonMissing.of()
             private var trialDurationDays: JsonField<Long> = JsonMissing.of()
+            private var usageCustomerIds: JsonField<MutableList<String>>? = null
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
             internal fun from(body: Body) = apply {
@@ -1132,6 +1175,7 @@ private constructor(
                 replacePrices = body.replacePrices.map { it.toMutableList() }
                 startDate = body.startDate
                 trialDurationDays = body.trialDurationDays
+                usageCustomerIds = body.usageCustomerIds.map { it.toMutableList() }
                 additionalProperties = body.additionalProperties.toMutableMap()
             }
 
@@ -1640,6 +1684,48 @@ private constructor(
                 this.trialDurationDays = trialDurationDays
             }
 
+            /**
+             * A list of customer IDs whose usage events will be aggregated and billed under this
+             * subscription. By default, a subscription only considers usage events associated with
+             * its attached customer's customer_id. When usage_customer_ids is provided, the
+             * subscription includes usage events from the specified customers only. Provided
+             * usage_customer_ids must be either the customer for this subscription itself, or any
+             * of that customer's children.
+             */
+            fun usageCustomerIds(usageCustomerIds: List<String>?) =
+                usageCustomerIds(JsonField.ofNullable(usageCustomerIds))
+
+            /**
+             * A list of customer IDs whose usage events will be aggregated and billed under this
+             * subscription. By default, a subscription only considers usage events associated with
+             * its attached customer's customer_id. When usage_customer_ids is provided, the
+             * subscription includes usage events from the specified customers only. Provided
+             * usage_customer_ids must be either the customer for this subscription itself, or any
+             * of that customer's children.
+             */
+            fun usageCustomerIds(usageCustomerIds: JsonField<List<String>>) = apply {
+                this.usageCustomerIds = usageCustomerIds.map { it.toMutableList() }
+            }
+
+            /**
+             * A list of customer IDs whose usage events will be aggregated and billed under this
+             * subscription. By default, a subscription only considers usage events associated with
+             * its attached customer's customer_id. When usage_customer_ids is provided, the
+             * subscription includes usage events from the specified customers only. Provided
+             * usage_customer_ids must be either the customer for this subscription itself, or any
+             * of that customer's children.
+             */
+            fun addUsageCustomerId(usageCustomerId: String) = apply {
+                usageCustomerIds =
+                    (usageCustomerIds ?: JsonField.of(mutableListOf())).apply {
+                        (asKnown()
+                                ?: throw IllegalStateException(
+                                    "Field was set to non-list type: ${javaClass.simpleName}"
+                                ))
+                            .add(usageCustomerId)
+                    }
+            }
+
             fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
                 this.additionalProperties.clear()
                 putAllAdditionalProperties(additionalProperties)
@@ -1691,6 +1777,7 @@ private constructor(
                     (replacePrices ?: JsonMissing.of()).map { it.toImmutable() },
                     startDate,
                     trialDurationDays,
+                    (usageCustomerIds ?: JsonMissing.of()).map { it.toImmutable() },
                     additionalProperties.toImmutable(),
                 )
         }
@@ -1700,17 +1787,17 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is Body && addAdjustments == other.addAdjustments && addPrices == other.addPrices && alignBillingWithSubscriptionStartDate == other.alignBillingWithSubscriptionStartDate && autoCollection == other.autoCollection && awsRegion == other.awsRegion && billingCycleAnchorConfiguration == other.billingCycleAnchorConfiguration && couponRedemptionCode == other.couponRedemptionCode && creditsOverageRate == other.creditsOverageRate && customerId == other.customerId && defaultInvoiceMemo == other.defaultInvoiceMemo && endDate == other.endDate && externalCustomerId == other.externalCustomerId && externalMarketplace == other.externalMarketplace && externalMarketplaceReportingId == other.externalMarketplaceReportingId && externalPlanId == other.externalPlanId && filter == other.filter && initialPhaseOrder == other.initialPhaseOrder && invoicingThreshold == other.invoicingThreshold && metadata == other.metadata && netTerms == other.netTerms && perCreditOverageAmount == other.perCreditOverageAmount && planId == other.planId && planVersionNumber == other.planVersionNumber && priceOverrides == other.priceOverrides && removeAdjustments == other.removeAdjustments && removePrices == other.removePrices && replaceAdjustments == other.replaceAdjustments && replacePrices == other.replacePrices && startDate == other.startDate && trialDurationDays == other.trialDurationDays && additionalProperties == other.additionalProperties /* spotless:on */
+            return /* spotless:off */ other is Body && addAdjustments == other.addAdjustments && addPrices == other.addPrices && alignBillingWithSubscriptionStartDate == other.alignBillingWithSubscriptionStartDate && autoCollection == other.autoCollection && awsRegion == other.awsRegion && billingCycleAnchorConfiguration == other.billingCycleAnchorConfiguration && couponRedemptionCode == other.couponRedemptionCode && creditsOverageRate == other.creditsOverageRate && customerId == other.customerId && defaultInvoiceMemo == other.defaultInvoiceMemo && endDate == other.endDate && externalCustomerId == other.externalCustomerId && externalMarketplace == other.externalMarketplace && externalMarketplaceReportingId == other.externalMarketplaceReportingId && externalPlanId == other.externalPlanId && filter == other.filter && initialPhaseOrder == other.initialPhaseOrder && invoicingThreshold == other.invoicingThreshold && metadata == other.metadata && netTerms == other.netTerms && perCreditOverageAmount == other.perCreditOverageAmount && planId == other.planId && planVersionNumber == other.planVersionNumber && priceOverrides == other.priceOverrides && removeAdjustments == other.removeAdjustments && removePrices == other.removePrices && replaceAdjustments == other.replaceAdjustments && replacePrices == other.replacePrices && startDate == other.startDate && trialDurationDays == other.trialDurationDays && usageCustomerIds == other.usageCustomerIds && additionalProperties == other.additionalProperties /* spotless:on */
         }
 
         /* spotless:off */
-        private val hashCode: Int by lazy { Objects.hash(addAdjustments, addPrices, alignBillingWithSubscriptionStartDate, autoCollection, awsRegion, billingCycleAnchorConfiguration, couponRedemptionCode, creditsOverageRate, customerId, defaultInvoiceMemo, endDate, externalCustomerId, externalMarketplace, externalMarketplaceReportingId, externalPlanId, filter, initialPhaseOrder, invoicingThreshold, metadata, netTerms, perCreditOverageAmount, planId, planVersionNumber, priceOverrides, removeAdjustments, removePrices, replaceAdjustments, replacePrices, startDate, trialDurationDays, additionalProperties) }
+        private val hashCode: Int by lazy { Objects.hash(addAdjustments, addPrices, alignBillingWithSubscriptionStartDate, autoCollection, awsRegion, billingCycleAnchorConfiguration, couponRedemptionCode, creditsOverageRate, customerId, defaultInvoiceMemo, endDate, externalCustomerId, externalMarketplace, externalMarketplaceReportingId, externalPlanId, filter, initialPhaseOrder, invoicingThreshold, metadata, netTerms, perCreditOverageAmount, planId, planVersionNumber, priceOverrides, removeAdjustments, removePrices, replaceAdjustments, replacePrices, startDate, trialDurationDays, usageCustomerIds, additionalProperties) }
         /* spotless:on */
 
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "Body{addAdjustments=$addAdjustments, addPrices=$addPrices, alignBillingWithSubscriptionStartDate=$alignBillingWithSubscriptionStartDate, autoCollection=$autoCollection, awsRegion=$awsRegion, billingCycleAnchorConfiguration=$billingCycleAnchorConfiguration, couponRedemptionCode=$couponRedemptionCode, creditsOverageRate=$creditsOverageRate, customerId=$customerId, defaultInvoiceMemo=$defaultInvoiceMemo, endDate=$endDate, externalCustomerId=$externalCustomerId, externalMarketplace=$externalMarketplace, externalMarketplaceReportingId=$externalMarketplaceReportingId, externalPlanId=$externalPlanId, filter=$filter, initialPhaseOrder=$initialPhaseOrder, invoicingThreshold=$invoicingThreshold, metadata=$metadata, netTerms=$netTerms, perCreditOverageAmount=$perCreditOverageAmount, planId=$planId, planVersionNumber=$planVersionNumber, priceOverrides=$priceOverrides, removeAdjustments=$removeAdjustments, removePrices=$removePrices, replaceAdjustments=$replaceAdjustments, replacePrices=$replacePrices, startDate=$startDate, trialDurationDays=$trialDurationDays, additionalProperties=$additionalProperties}"
+            "Body{addAdjustments=$addAdjustments, addPrices=$addPrices, alignBillingWithSubscriptionStartDate=$alignBillingWithSubscriptionStartDate, autoCollection=$autoCollection, awsRegion=$awsRegion, billingCycleAnchorConfiguration=$billingCycleAnchorConfiguration, couponRedemptionCode=$couponRedemptionCode, creditsOverageRate=$creditsOverageRate, customerId=$customerId, defaultInvoiceMemo=$defaultInvoiceMemo, endDate=$endDate, externalCustomerId=$externalCustomerId, externalMarketplace=$externalMarketplace, externalMarketplaceReportingId=$externalMarketplaceReportingId, externalPlanId=$externalPlanId, filter=$filter, initialPhaseOrder=$initialPhaseOrder, invoicingThreshold=$invoicingThreshold, metadata=$metadata, netTerms=$netTerms, perCreditOverageAmount=$perCreditOverageAmount, planId=$planId, planVersionNumber=$planVersionNumber, priceOverrides=$priceOverrides, removeAdjustments=$removeAdjustments, removePrices=$removePrices, replaceAdjustments=$replaceAdjustments, replacePrices=$replacePrices, startDate=$startDate, trialDurationDays=$trialDurationDays, usageCustomerIds=$usageCustomerIds, additionalProperties=$additionalProperties}"
     }
 
     fun toBuilder() = Builder().from(this)
@@ -2190,6 +2277,39 @@ private constructor(
          */
         fun trialDurationDays(trialDurationDays: JsonField<Long>) = apply {
             body.trialDurationDays(trialDurationDays)
+        }
+
+        /**
+         * A list of customer IDs whose usage events will be aggregated and billed under this
+         * subscription. By default, a subscription only considers usage events associated with its
+         * attached customer's customer_id. When usage_customer_ids is provided, the subscription
+         * includes usage events from the specified customers only. Provided usage_customer_ids must
+         * be either the customer for this subscription itself, or any of that customer's children.
+         */
+        fun usageCustomerIds(usageCustomerIds: List<String>?) = apply {
+            body.usageCustomerIds(usageCustomerIds)
+        }
+
+        /**
+         * A list of customer IDs whose usage events will be aggregated and billed under this
+         * subscription. By default, a subscription only considers usage events associated with its
+         * attached customer's customer_id. When usage_customer_ids is provided, the subscription
+         * includes usage events from the specified customers only. Provided usage_customer_ids must
+         * be either the customer for this subscription itself, or any of that customer's children.
+         */
+        fun usageCustomerIds(usageCustomerIds: JsonField<List<String>>) = apply {
+            body.usageCustomerIds(usageCustomerIds)
+        }
+
+        /**
+         * A list of customer IDs whose usage events will be aggregated and billed under this
+         * subscription. By default, a subscription only considers usage events associated with its
+         * attached customer's customer_id. When usage_customer_ids is provided, the subscription
+         * includes usage events from the specified customers only. Provided usage_customer_ids must
+         * be either the customer for this subscription itself, or any of that customer's children.
+         */
+        fun addUsageCustomerId(usageCustomerId: String) = apply {
+            body.addUsageCustomerId(usageCustomerId)
         }
 
         fun additionalBodyProperties(additionalBodyProperties: Map<String, JsonValue>) = apply {
