@@ -82,6 +82,9 @@ private constructor(
      */
     fun externalCustomerId(): String? = body.externalCustomerId()
 
+    /** The hierarchical relationships for this customer. */
+    fun hierarchy(): Hierarchy? = body.hierarchy()
+
     /**
      * User-specified key/value pairs for the resource. Individual keys can be removed by setting
      * the value to `null`, and the entire metadata mapping can be cleared by setting `metadata` to
@@ -255,6 +258,9 @@ private constructor(
      * current subscriptions.
      */
     fun _externalCustomerId(): JsonField<String> = body._externalCustomerId()
+
+    /** The hierarchical relationships for this customer. */
+    fun _hierarchy(): JsonField<Hierarchy> = body._hierarchy()
 
     /**
      * User-specified key/value pairs for the resource. Individual keys can be removed by setting
@@ -444,6 +450,9 @@ private constructor(
         @JsonProperty("external_customer_id")
         @ExcludeMissing
         private val externalCustomerId: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("hierarchy")
+        @ExcludeMissing
+        private val hierarchy: JsonField<Hierarchy> = JsonMissing.of(),
         @JsonProperty("metadata")
         @ExcludeMissing
         private val metadata: JsonField<Metadata> = JsonMissing.of(),
@@ -506,6 +515,9 @@ private constructor(
          * current subscriptions.
          */
         fun externalCustomerId(): String? = externalCustomerId.getNullable("external_customer_id")
+
+        /** The hierarchical relationships for this customer. */
+        fun hierarchy(): Hierarchy? = hierarchy.getNullable("hierarchy")
 
         /**
          * User-specified key/value pairs for the resource. Individual keys can be removed by
@@ -695,6 +707,11 @@ private constructor(
         @ExcludeMissing
         fun _externalCustomerId(): JsonField<String> = externalCustomerId
 
+        /** The hierarchical relationships for this customer. */
+        @JsonProperty("hierarchy")
+        @ExcludeMissing
+        fun _hierarchy(): JsonField<Hierarchy> = hierarchy
+
         /**
          * User-specified key/value pairs for the resource. Individual keys can be removed by
          * setting the value to `null`, and the entire metadata mapping can be cleared by setting
@@ -863,6 +880,7 @@ private constructor(
             email()
             emailDelivery()
             externalCustomerId()
+            hierarchy()?.validate()
             metadata()?.validate()
             name()
             paymentProvider()
@@ -893,6 +911,7 @@ private constructor(
             private var email: JsonField<String> = JsonMissing.of()
             private var emailDelivery: JsonField<Boolean> = JsonMissing.of()
             private var externalCustomerId: JsonField<String> = JsonMissing.of()
+            private var hierarchy: JsonField<Hierarchy> = JsonMissing.of()
             private var metadata: JsonField<Metadata> = JsonMissing.of()
             private var name: JsonField<String> = JsonMissing.of()
             private var paymentProvider: JsonField<PaymentProvider> = JsonMissing.of()
@@ -912,6 +931,7 @@ private constructor(
                 email = body.email
                 emailDelivery = body.emailDelivery
                 externalCustomerId = body.externalCustomerId
+                hierarchy = body.hierarchy
                 metadata = body.metadata
                 name = body.name
                 paymentProvider = body.paymentProvider
@@ -1033,6 +1053,12 @@ private constructor(
             fun externalCustomerId(externalCustomerId: JsonField<String>) = apply {
                 this.externalCustomerId = externalCustomerId
             }
+
+            /** The hierarchical relationships for this customer. */
+            fun hierarchy(hierarchy: Hierarchy?) = hierarchy(JsonField.ofNullable(hierarchy))
+
+            /** The hierarchical relationships for this customer. */
+            fun hierarchy(hierarchy: JsonField<Hierarchy>) = apply { this.hierarchy = hierarchy }
 
             /**
              * User-specified key/value pairs for the resource. Individual keys can be removed by
@@ -1388,6 +1414,7 @@ private constructor(
                     email,
                     emailDelivery,
                     externalCustomerId,
+                    hierarchy,
                     metadata,
                     name,
                     paymentProvider,
@@ -1405,17 +1432,17 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is Body && accountingSyncConfiguration == other.accountingSyncConfiguration && additionalEmails == other.additionalEmails && autoCollection == other.autoCollection && billingAddress == other.billingAddress && currency == other.currency && email == other.email && emailDelivery == other.emailDelivery && externalCustomerId == other.externalCustomerId && metadata == other.metadata && name == other.name && paymentProvider == other.paymentProvider && paymentProviderId == other.paymentProviderId && reportingConfiguration == other.reportingConfiguration && shippingAddress == other.shippingAddress && taxConfiguration == other.taxConfiguration && taxId == other.taxId && additionalProperties == other.additionalProperties /* spotless:on */
+            return /* spotless:off */ other is Body && accountingSyncConfiguration == other.accountingSyncConfiguration && additionalEmails == other.additionalEmails && autoCollection == other.autoCollection && billingAddress == other.billingAddress && currency == other.currency && email == other.email && emailDelivery == other.emailDelivery && externalCustomerId == other.externalCustomerId && hierarchy == other.hierarchy && metadata == other.metadata && name == other.name && paymentProvider == other.paymentProvider && paymentProviderId == other.paymentProviderId && reportingConfiguration == other.reportingConfiguration && shippingAddress == other.shippingAddress && taxConfiguration == other.taxConfiguration && taxId == other.taxId && additionalProperties == other.additionalProperties /* spotless:on */
         }
 
         /* spotless:off */
-        private val hashCode: Int by lazy { Objects.hash(accountingSyncConfiguration, additionalEmails, autoCollection, billingAddress, currency, email, emailDelivery, externalCustomerId, metadata, name, paymentProvider, paymentProviderId, reportingConfiguration, shippingAddress, taxConfiguration, taxId, additionalProperties) }
+        private val hashCode: Int by lazy { Objects.hash(accountingSyncConfiguration, additionalEmails, autoCollection, billingAddress, currency, email, emailDelivery, externalCustomerId, hierarchy, metadata, name, paymentProvider, paymentProviderId, reportingConfiguration, shippingAddress, taxConfiguration, taxId, additionalProperties) }
         /* spotless:on */
 
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "Body{accountingSyncConfiguration=$accountingSyncConfiguration, additionalEmails=$additionalEmails, autoCollection=$autoCollection, billingAddress=$billingAddress, currency=$currency, email=$email, emailDelivery=$emailDelivery, externalCustomerId=$externalCustomerId, metadata=$metadata, name=$name, paymentProvider=$paymentProvider, paymentProviderId=$paymentProviderId, reportingConfiguration=$reportingConfiguration, shippingAddress=$shippingAddress, taxConfiguration=$taxConfiguration, taxId=$taxId, additionalProperties=$additionalProperties}"
+            "Body{accountingSyncConfiguration=$accountingSyncConfiguration, additionalEmails=$additionalEmails, autoCollection=$autoCollection, billingAddress=$billingAddress, currency=$currency, email=$email, emailDelivery=$emailDelivery, externalCustomerId=$externalCustomerId, hierarchy=$hierarchy, metadata=$metadata, name=$name, paymentProvider=$paymentProvider, paymentProviderId=$paymentProviderId, reportingConfiguration=$reportingConfiguration, shippingAddress=$shippingAddress, taxConfiguration=$taxConfiguration, taxId=$taxId, additionalProperties=$additionalProperties}"
     }
 
     fun toBuilder() = Builder().from(this)
@@ -1548,6 +1575,12 @@ private constructor(
         fun externalCustomerId(externalCustomerId: JsonField<String>) = apply {
             body.externalCustomerId(externalCustomerId)
         }
+
+        /** The hierarchical relationships for this customer. */
+        fun hierarchy(hierarchy: Hierarchy?) = apply { body.hierarchy(hierarchy) }
+
+        /** The hierarchical relationships for this customer. */
+        fun hierarchy(hierarchy: JsonField<Hierarchy>) = apply { body.hierarchy(hierarchy) }
 
         /**
          * User-specified key/value pairs for the resource. Individual keys can be removed by
@@ -2418,6 +2451,175 @@ private constructor(
 
         override fun toString() =
             "BillingAddress{city=$city, country=$country, line1=$line1, line2=$line2, postalCode=$postalCode, state=$state, additionalProperties=$additionalProperties}"
+    }
+
+    /** The hierarchical relationships for this customer. */
+    @NoAutoDetect
+    class Hierarchy
+    @JsonCreator
+    private constructor(
+        @JsonProperty("child_customer_ids")
+        @ExcludeMissing
+        private val childCustomerIds: JsonField<List<String>> = JsonMissing.of(),
+        @JsonProperty("parent_customer_id")
+        @ExcludeMissing
+        private val parentCustomerId: JsonField<String> = JsonMissing.of(),
+        @JsonAnySetter
+        private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
+    ) {
+
+        /**
+         * A list of child customer IDs to add to the hierarchy. The desired child customers must
+         * not already be part of another hierarchy.
+         */
+        fun childCustomerIds(): List<String>? = childCustomerIds.getNullable("child_customer_ids")
+
+        /**
+         * The ID of the parent customer in the hierarchy. The desired parent customer must not be a
+         * child of another customer.
+         */
+        fun parentCustomerId(): String? = parentCustomerId.getNullable("parent_customer_id")
+
+        /**
+         * A list of child customer IDs to add to the hierarchy. The desired child customers must
+         * not already be part of another hierarchy.
+         */
+        @JsonProperty("child_customer_ids")
+        @ExcludeMissing
+        fun _childCustomerIds(): JsonField<List<String>> = childCustomerIds
+
+        /**
+         * The ID of the parent customer in the hierarchy. The desired parent customer must not be a
+         * child of another customer.
+         */
+        @JsonProperty("parent_customer_id")
+        @ExcludeMissing
+        fun _parentCustomerId(): JsonField<String> = parentCustomerId
+
+        @JsonAnyGetter
+        @ExcludeMissing
+        fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
+
+        private var validated: Boolean = false
+
+        fun validate(): Hierarchy = apply {
+            if (validated) {
+                return@apply
+            }
+
+            childCustomerIds()
+            parentCustomerId()
+            validated = true
+        }
+
+        fun toBuilder() = Builder().from(this)
+
+        companion object {
+
+            fun builder() = Builder()
+        }
+
+        /** A builder for [Hierarchy]. */
+        class Builder internal constructor() {
+
+            private var childCustomerIds: JsonField<MutableList<String>>? = null
+            private var parentCustomerId: JsonField<String> = JsonMissing.of()
+            private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
+
+            internal fun from(hierarchy: Hierarchy) = apply {
+                childCustomerIds = hierarchy.childCustomerIds.map { it.toMutableList() }
+                parentCustomerId = hierarchy.parentCustomerId
+                additionalProperties = hierarchy.additionalProperties.toMutableMap()
+            }
+
+            /**
+             * A list of child customer IDs to add to the hierarchy. The desired child customers
+             * must not already be part of another hierarchy.
+             */
+            fun childCustomerIds(childCustomerIds: List<String>) =
+                childCustomerIds(JsonField.of(childCustomerIds))
+
+            /**
+             * A list of child customer IDs to add to the hierarchy. The desired child customers
+             * must not already be part of another hierarchy.
+             */
+            fun childCustomerIds(childCustomerIds: JsonField<List<String>>) = apply {
+                this.childCustomerIds = childCustomerIds.map { it.toMutableList() }
+            }
+
+            /**
+             * A list of child customer IDs to add to the hierarchy. The desired child customers
+             * must not already be part of another hierarchy.
+             */
+            fun addChildCustomerId(childCustomerId: String) = apply {
+                childCustomerIds =
+                    (childCustomerIds ?: JsonField.of(mutableListOf())).apply {
+                        (asKnown()
+                                ?: throw IllegalStateException(
+                                    "Field was set to non-list type: ${javaClass.simpleName}"
+                                ))
+                            .add(childCustomerId)
+                    }
+            }
+
+            /**
+             * The ID of the parent customer in the hierarchy. The desired parent customer must not
+             * be a child of another customer.
+             */
+            fun parentCustomerId(parentCustomerId: String?) =
+                parentCustomerId(JsonField.ofNullable(parentCustomerId))
+
+            /**
+             * The ID of the parent customer in the hierarchy. The desired parent customer must not
+             * be a child of another customer.
+             */
+            fun parentCustomerId(parentCustomerId: JsonField<String>) = apply {
+                this.parentCustomerId = parentCustomerId
+            }
+
+            fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                this.additionalProperties.clear()
+                putAllAdditionalProperties(additionalProperties)
+            }
+
+            fun putAdditionalProperty(key: String, value: JsonValue) = apply {
+                additionalProperties.put(key, value)
+            }
+
+            fun putAllAdditionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
+                this.additionalProperties.putAll(additionalProperties)
+            }
+
+            fun removeAdditionalProperty(key: String) = apply { additionalProperties.remove(key) }
+
+            fun removeAllAdditionalProperties(keys: Set<String>) = apply {
+                keys.forEach(::removeAdditionalProperty)
+            }
+
+            fun build(): Hierarchy =
+                Hierarchy(
+                    (childCustomerIds ?: JsonMissing.of()).map { it.toImmutable() },
+                    parentCustomerId,
+                    additionalProperties.toImmutable(),
+                )
+        }
+
+        override fun equals(other: Any?): Boolean {
+            if (this === other) {
+                return true
+            }
+
+            return /* spotless:off */ other is Hierarchy && childCustomerIds == other.childCustomerIds && parentCustomerId == other.parentCustomerId && additionalProperties == other.additionalProperties /* spotless:on */
+        }
+
+        /* spotless:off */
+        private val hashCode: Int by lazy { Objects.hash(childCustomerIds, parentCustomerId, additionalProperties) }
+        /* spotless:on */
+
+        override fun hashCode(): Int = hashCode
+
+        override fun toString() =
+            "Hierarchy{childCustomerIds=$childCustomerIds, parentCustomerId=$parentCustomerId, additionalProperties=$additionalProperties}"
     }
 
     /**

@@ -33,6 +33,22 @@ class CustomerTest {
                 .emailDelivery(true)
                 .exemptFromAutomatedTax(true)
                 .externalCustomerId("external_customer_id")
+                .hierarchy(
+                    Customer.Hierarchy.builder()
+                        .addChild(
+                            Customer.Hierarchy.Child.builder()
+                                .id("id")
+                                .externalCustomerId("external_customer_id")
+                                .build()
+                        )
+                        .parent(
+                            Customer.Hierarchy.Parent.builder()
+                                .id("id")
+                                .externalCustomerId("external_customer_id")
+                                .build()
+                        )
+                        .build()
+                )
                 .metadata(
                     Customer.Metadata.builder()
                         .putAdditionalProperty("foo", JsonValue.from("string"))
@@ -101,6 +117,23 @@ class CustomerTest {
         assertThat(customer.emailDelivery()).isEqualTo(true)
         assertThat(customer.exemptFromAutomatedTax()).isEqualTo(true)
         assertThat(customer.externalCustomerId()).isEqualTo("external_customer_id")
+        assertThat(customer.hierarchy())
+            .isEqualTo(
+                Customer.Hierarchy.builder()
+                    .addChild(
+                        Customer.Hierarchy.Child.builder()
+                            .id("id")
+                            .externalCustomerId("external_customer_id")
+                            .build()
+                    )
+                    .parent(
+                        Customer.Hierarchy.Parent.builder()
+                            .id("id")
+                            .externalCustomerId("external_customer_id")
+                            .build()
+                    )
+                    .build()
+            )
         assertThat(customer.metadata())
             .isEqualTo(
                 Customer.Metadata.builder()

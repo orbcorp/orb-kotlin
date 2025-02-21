@@ -76,6 +76,22 @@ class SubscriptionSchedulePlanChangeResponseTest {
                         .emailDelivery(true)
                         .exemptFromAutomatedTax(true)
                         .externalCustomerId("external_customer_id")
+                        .hierarchy(
+                            Customer.Hierarchy.builder()
+                                .addChild(
+                                    Customer.Hierarchy.Child.builder()
+                                        .id("id")
+                                        .externalCustomerId("external_customer_id")
+                                        .build()
+                                )
+                                .parent(
+                                    Customer.Hierarchy.Parent.builder()
+                                        .id("id")
+                                        .externalCustomerId("external_customer_id")
+                                        .build()
+                                )
+                                .build()
+                        )
                         .metadata(
                             Customer.Metadata.builder()
                                 .putAdditionalProperty("foo", JsonValue.from("string"))
@@ -557,6 +573,22 @@ class SubscriptionSchedulePlanChangeResponseTest {
                     .emailDelivery(true)
                     .exemptFromAutomatedTax(true)
                     .externalCustomerId("external_customer_id")
+                    .hierarchy(
+                        Customer.Hierarchy.builder()
+                            .addChild(
+                                Customer.Hierarchy.Child.builder()
+                                    .id("id")
+                                    .externalCustomerId("external_customer_id")
+                                    .build()
+                            )
+                            .parent(
+                                Customer.Hierarchy.Parent.builder()
+                                    .id("id")
+                                    .externalCustomerId("external_customer_id")
+                                    .build()
+                            )
+                            .build()
+                    )
                     .metadata(
                         Customer.Metadata.builder()
                             .putAdditionalProperty("foo", JsonValue.from("string"))
