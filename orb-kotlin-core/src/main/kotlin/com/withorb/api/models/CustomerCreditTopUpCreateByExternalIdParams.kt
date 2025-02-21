@@ -19,6 +19,7 @@ import com.withorb.api.core.http.QueryParams
 import com.withorb.api.core.immutableEmptyMap
 import com.withorb.api.core.toImmutable
 import com.withorb.api.errors.OrbInvalidDataException
+import java.time.OffsetDateTime
 import java.util.Objects
 
 /**
@@ -61,6 +62,11 @@ private constructor(
     fun threshold(): String = body.threshold()
 
     /**
+     * The date from which the top-up is active. If unspecified, the top-up is active immediately.
+     */
+    fun activeFrom(): OffsetDateTime? = body.activeFrom()
+
+    /**
      * The number of days or months after which the top-up expires. If unspecified, it does not
      * expire.
      */
@@ -89,6 +95,11 @@ private constructor(
      * the top-up will be triggered.
      */
     fun _threshold(): JsonField<String> = body._threshold()
+
+    /**
+     * The date from which the top-up is active. If unspecified, the top-up is active immediately.
+     */
+    fun _activeFrom(): JsonField<OffsetDateTime> = body._activeFrom()
 
     /**
      * The number of days or months after which the top-up expires. If unspecified, it does not
@@ -137,6 +148,9 @@ private constructor(
         @JsonProperty("threshold")
         @ExcludeMissing
         private val threshold: JsonField<String> = JsonMissing.of(),
+        @JsonProperty("active_from")
+        @ExcludeMissing
+        private val activeFrom: JsonField<OffsetDateTime> = JsonMissing.of(),
         @JsonProperty("expires_after")
         @ExcludeMissing
         private val expiresAfter: JsonField<Long> = JsonMissing.of(),
@@ -167,6 +181,12 @@ private constructor(
          * threshold, the top-up will be triggered.
          */
         fun threshold(): String = threshold.getRequired("threshold")
+
+        /**
+         * The date from which the top-up is active. If unspecified, the top-up is active
+         * immediately.
+         */
+        fun activeFrom(): OffsetDateTime? = activeFrom.getNullable("active_from")
 
         /**
          * The number of days or months after which the top-up expires. If unspecified, it does not
@@ -204,6 +224,14 @@ private constructor(
         @JsonProperty("threshold") @ExcludeMissing fun _threshold(): JsonField<String> = threshold
 
         /**
+         * The date from which the top-up is active. If unspecified, the top-up is active
+         * immediately.
+         */
+        @JsonProperty("active_from")
+        @ExcludeMissing
+        fun _activeFrom(): JsonField<OffsetDateTime> = activeFrom
+
+        /**
          * The number of days or months after which the top-up expires. If unspecified, it does not
          * expire.
          */
@@ -232,6 +260,7 @@ private constructor(
             invoiceSettings().validate()
             perUnitCostBasis()
             threshold()
+            activeFrom()
             expiresAfter()
             expiresAfterUnit()
             validated = true
@@ -252,6 +281,7 @@ private constructor(
             private var invoiceSettings: JsonField<InvoiceSettings>? = null
             private var perUnitCostBasis: JsonField<String>? = null
             private var threshold: JsonField<String>? = null
+            private var activeFrom: JsonField<OffsetDateTime> = JsonMissing.of()
             private var expiresAfter: JsonField<Long> = JsonMissing.of()
             private var expiresAfterUnit: JsonField<ExpiresAfterUnit> = JsonMissing.of()
             private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
@@ -262,6 +292,7 @@ private constructor(
                 invoiceSettings = body.invoiceSettings
                 perUnitCostBasis = body.perUnitCostBasis
                 threshold = body.threshold
+                activeFrom = body.activeFrom
                 expiresAfter = body.expiresAfter
                 expiresAfterUnit = body.expiresAfterUnit
                 additionalProperties = body.additionalProperties.toMutableMap()
@@ -314,6 +345,21 @@ private constructor(
              * threshold, the top-up will be triggered.
              */
             fun threshold(threshold: JsonField<String>) = apply { this.threshold = threshold }
+
+            /**
+             * The date from which the top-up is active. If unspecified, the top-up is active
+             * immediately.
+             */
+            fun activeFrom(activeFrom: OffsetDateTime?) =
+                activeFrom(JsonField.ofNullable(activeFrom))
+
+            /**
+             * The date from which the top-up is active. If unspecified, the top-up is active
+             * immediately.
+             */
+            fun activeFrom(activeFrom: JsonField<OffsetDateTime>) = apply {
+                this.activeFrom = activeFrom
+            }
 
             /**
              * The number of days or months after which the top-up expires. If unspecified, it does
@@ -370,6 +416,7 @@ private constructor(
                     checkRequired("invoiceSettings", invoiceSettings),
                     checkRequired("perUnitCostBasis", perUnitCostBasis),
                     checkRequired("threshold", threshold),
+                    activeFrom,
                     expiresAfter,
                     expiresAfterUnit,
                     additionalProperties.toImmutable(),
@@ -381,17 +428,17 @@ private constructor(
                 return true
             }
 
-            return /* spotless:off */ other is Body && amount == other.amount && currency == other.currency && invoiceSettings == other.invoiceSettings && perUnitCostBasis == other.perUnitCostBasis && threshold == other.threshold && expiresAfter == other.expiresAfter && expiresAfterUnit == other.expiresAfterUnit && additionalProperties == other.additionalProperties /* spotless:on */
+            return /* spotless:off */ other is Body && amount == other.amount && currency == other.currency && invoiceSettings == other.invoiceSettings && perUnitCostBasis == other.perUnitCostBasis && threshold == other.threshold && activeFrom == other.activeFrom && expiresAfter == other.expiresAfter && expiresAfterUnit == other.expiresAfterUnit && additionalProperties == other.additionalProperties /* spotless:on */
         }
 
         /* spotless:off */
-        private val hashCode: Int by lazy { Objects.hash(amount, currency, invoiceSettings, perUnitCostBasis, threshold, expiresAfter, expiresAfterUnit, additionalProperties) }
+        private val hashCode: Int by lazy { Objects.hash(amount, currency, invoiceSettings, perUnitCostBasis, threshold, activeFrom, expiresAfter, expiresAfterUnit, additionalProperties) }
         /* spotless:on */
 
         override fun hashCode(): Int = hashCode
 
         override fun toString() =
-            "Body{amount=$amount, currency=$currency, invoiceSettings=$invoiceSettings, perUnitCostBasis=$perUnitCostBasis, threshold=$threshold, expiresAfter=$expiresAfter, expiresAfterUnit=$expiresAfterUnit, additionalProperties=$additionalProperties}"
+            "Body{amount=$amount, currency=$currency, invoiceSettings=$invoiceSettings, perUnitCostBasis=$perUnitCostBasis, threshold=$threshold, activeFrom=$activeFrom, expiresAfter=$expiresAfter, expiresAfterUnit=$expiresAfterUnit, additionalProperties=$additionalProperties}"
     }
 
     fun toBuilder() = Builder().from(this)
@@ -474,6 +521,20 @@ private constructor(
          * threshold, the top-up will be triggered.
          */
         fun threshold(threshold: JsonField<String>) = apply { body.threshold(threshold) }
+
+        /**
+         * The date from which the top-up is active. If unspecified, the top-up is active
+         * immediately.
+         */
+        fun activeFrom(activeFrom: OffsetDateTime?) = apply { body.activeFrom(activeFrom) }
+
+        /**
+         * The date from which the top-up is active. If unspecified, the top-up is active
+         * immediately.
+         */
+        fun activeFrom(activeFrom: JsonField<OffsetDateTime>) = apply {
+            body.activeFrom(activeFrom)
+        }
 
         /**
          * The number of days or months after which the top-up expires. If unspecified, it does not

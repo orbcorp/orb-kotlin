@@ -2,6 +2,7 @@
 
 package com.withorb.api.models
 
+import java.time.OffsetDateTime
 import kotlin.test.assertNotNull
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
@@ -24,6 +25,7 @@ class CustomerCreditTopUpCreateByExternalIdParamsTest {
             )
             .perUnitCostBasis("per_unit_cost_basis")
             .threshold("threshold")
+            .activeFrom(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
             .expiresAfter(0L)
             .expiresAfterUnit(CustomerCreditTopUpCreateByExternalIdParams.ExpiresAfterUnit.DAY)
             .build()
@@ -46,6 +48,7 @@ class CustomerCreditTopUpCreateByExternalIdParamsTest {
                 )
                 .perUnitCostBasis("per_unit_cost_basis")
                 .threshold("threshold")
+                .activeFrom(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                 .expiresAfter(0L)
                 .expiresAfterUnit(CustomerCreditTopUpCreateByExternalIdParams.ExpiresAfterUnit.DAY)
                 .build()
@@ -66,6 +69,7 @@ class CustomerCreditTopUpCreateByExternalIdParamsTest {
             )
         assertThat(body.perUnitCostBasis()).isEqualTo("per_unit_cost_basis")
         assertThat(body.threshold()).isEqualTo("threshold")
+        assertThat(body.activeFrom()).isEqualTo(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
         assertThat(body.expiresAfter()).isEqualTo(0L)
         assertThat(body.expiresAfterUnit())
             .isEqualTo(CustomerCreditTopUpCreateByExternalIdParams.ExpiresAfterUnit.DAY)
