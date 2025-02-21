@@ -60,6 +60,12 @@ class CustomerServiceTest {
                     .currency("currency")
                     .emailDelivery(true)
                     .externalCustomerId("external_customer_id")
+                    .hierarchy(
+                        CustomerCreateParams.Hierarchy.builder()
+                            .addChildCustomerId("string")
+                            .parentCustomerId("parent_customer_id")
+                            .build()
+                    )
                     .metadata(
                         CustomerCreateParams.Metadata.builder()
                             .putAdditionalProperty("foo", JsonValue.from("string"))
@@ -145,6 +151,12 @@ class CustomerServiceTest {
                     .email("dev@stainlessapi.com")
                     .emailDelivery(true)
                     .externalCustomerId("external_customer_id")
+                    .hierarchy(
+                        CustomerUpdateParams.Hierarchy.builder()
+                            .addChildCustomerId("string")
+                            .parentCustomerId("parent_customer_id")
+                            .build()
+                    )
                     .metadata(
                         CustomerUpdateParams.Metadata.builder()
                             .putAdditionalProperty("foo", JsonValue.from("string"))
@@ -317,6 +329,12 @@ class CustomerServiceTest {
                     .email("dev@stainlessapi.com")
                     .emailDelivery(true)
                     .externalCustomerId("external_customer_id")
+                    .hierarchy(
+                        CustomerUpdateByExternalIdParams.Hierarchy.builder()
+                            .addChildCustomerId("string")
+                            .parentCustomerId("parent_customer_id")
+                            .build()
+                    )
                     .metadata(
                         CustomerUpdateByExternalIdParams.Metadata.builder()
                             .putAdditionalProperty("foo", JsonValue.from("string"))

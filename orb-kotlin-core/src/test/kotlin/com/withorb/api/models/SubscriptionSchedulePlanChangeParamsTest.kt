@@ -311,6 +311,7 @@ class SubscriptionSchedulePlanChangeParamsTest {
                     .build()
             )
             .trialDurationDays(999999L)
+            .addUsageCustomerId("string")
             .build()
     }
 
@@ -621,6 +622,7 @@ class SubscriptionSchedulePlanChangeParamsTest {
                         .build()
                 )
                 .trialDurationDays(999999L)
+                .addUsageCustomerId("string")
                 .build()
 
         val body = params._body()
@@ -947,6 +949,7 @@ class SubscriptionSchedulePlanChangeParamsTest {
                 )
             )
         assertThat(body.trialDurationDays()).isEqualTo(999999L)
+        assertThat(body.usageCustomerIds()).isEqualTo(listOf("string"))
     }
 
     @Test

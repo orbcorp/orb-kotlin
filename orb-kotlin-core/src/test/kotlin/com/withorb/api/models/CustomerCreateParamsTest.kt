@@ -41,6 +41,12 @@ class CustomerCreateParamsTest {
             .currency("currency")
             .emailDelivery(true)
             .externalCustomerId("external_customer_id")
+            .hierarchy(
+                CustomerCreateParams.Hierarchy.builder()
+                    .addChildCustomerId("string")
+                    .parentCustomerId("parent_customer_id")
+                    .build()
+            )
             .metadata(
                 CustomerCreateParams.Metadata.builder()
                     .putAdditionalProperty("foo", JsonValue.from("string"))
@@ -115,6 +121,12 @@ class CustomerCreateParamsTest {
                 .currency("currency")
                 .emailDelivery(true)
                 .externalCustomerId("external_customer_id")
+                .hierarchy(
+                    CustomerCreateParams.Hierarchy.builder()
+                        .addChildCustomerId("string")
+                        .parentCustomerId("parent_customer_id")
+                        .build()
+                )
                 .metadata(
                     CustomerCreateParams.Metadata.builder()
                         .putAdditionalProperty("foo", JsonValue.from("string"))
@@ -190,6 +202,13 @@ class CustomerCreateParamsTest {
         assertThat(body.currency()).isEqualTo("currency")
         assertThat(body.emailDelivery()).isEqualTo(true)
         assertThat(body.externalCustomerId()).isEqualTo("external_customer_id")
+        assertThat(body.hierarchy())
+            .isEqualTo(
+                CustomerCreateParams.Hierarchy.builder()
+                    .addChildCustomerId("string")
+                    .parentCustomerId("parent_customer_id")
+                    .build()
+            )
         assertThat(body.metadata())
             .isEqualTo(
                 CustomerCreateParams.Metadata.builder()
