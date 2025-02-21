@@ -10,6 +10,7 @@ import com.withorb.api.models.CustomerCreditTopUpDeleteByExternalIdParams
 import com.withorb.api.models.CustomerCreditTopUpDeleteParams
 import com.withorb.api.models.CustomerCreditTopUpListByExternalIdParams
 import com.withorb.api.models.CustomerCreditTopUpListParams
+import java.time.OffsetDateTime
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 
@@ -40,6 +41,7 @@ class TopUpServiceTest {
                     )
                     .perUnitCostBasis("per_unit_cost_basis")
                     .threshold("threshold")
+                    .activeFrom(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                     .expiresAfter(0L)
                     .expiresAfterUnit(CustomerCreditTopUpCreateParams.ExpiresAfterUnit.DAY)
                     .build()
@@ -104,6 +106,7 @@ class TopUpServiceTest {
                     )
                     .perUnitCostBasis("per_unit_cost_basis")
                     .threshold("threshold")
+                    .activeFrom(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                     .expiresAfter(0L)
                     .expiresAfterUnit(
                         CustomerCreditTopUpCreateByExternalIdParams.ExpiresAfterUnit.DAY
