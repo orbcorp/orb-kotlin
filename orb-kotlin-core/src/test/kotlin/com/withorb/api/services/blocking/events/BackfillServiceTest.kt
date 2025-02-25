@@ -7,7 +7,6 @@ import com.withorb.api.client.okhttp.OrbOkHttpClient
 import com.withorb.api.models.EventBackfillCloseParams
 import com.withorb.api.models.EventBackfillCreateParams
 import com.withorb.api.models.EventBackfillFetchParams
-import com.withorb.api.models.EventBackfillListParams
 import com.withorb.api.models.EventBackfillRevertParams
 import java.time.OffsetDateTime
 import org.junit.jupiter.api.Test
@@ -48,7 +47,7 @@ class BackfillServiceTest {
                 .apiKey("My API Key")
                 .build()
         val backfillService = client.events().backfills()
-        val backfills = backfillService.list(EventBackfillListParams.builder().build())
+        val backfills = backfillService.list()
         println(backfills)
         backfills.data().forEach { it.validate() }
     }

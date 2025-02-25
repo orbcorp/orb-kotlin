@@ -85,6 +85,8 @@ private constructor(
 
     companion object {
 
+        fun none(): MetricListParams = builder().build()
+
         fun builder() = Builder()
     }
 

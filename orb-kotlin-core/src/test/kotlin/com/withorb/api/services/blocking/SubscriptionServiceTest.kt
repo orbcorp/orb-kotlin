@@ -11,7 +11,6 @@ import com.withorb.api.models.SubscriptionFetchCostsParams
 import com.withorb.api.models.SubscriptionFetchParams
 import com.withorb.api.models.SubscriptionFetchScheduleParams
 import com.withorb.api.models.SubscriptionFetchUsageParams
-import com.withorb.api.models.SubscriptionListParams
 import com.withorb.api.models.SubscriptionPriceIntervalsParams
 import com.withorb.api.models.SubscriptionSchedulePlanChangeParams
 import com.withorb.api.models.SubscriptionTriggerPhaseParams
@@ -384,7 +383,7 @@ class SubscriptionServiceTest {
                 .apiKey("My API Key")
                 .build()
         val subscriptionService = client.subscriptions()
-        val subscriptions = subscriptionService.list(SubscriptionListParams.builder().build())
+        val subscriptions = subscriptionService.list()
         println(subscriptions)
         subscriptions.data().forEach { it.validate() }
     }

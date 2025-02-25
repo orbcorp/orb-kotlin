@@ -96,6 +96,8 @@ private constructor(
 
     companion object {
 
+        fun none(): PlanListParams = builder().build()
+
         fun builder() = Builder()
     }
 

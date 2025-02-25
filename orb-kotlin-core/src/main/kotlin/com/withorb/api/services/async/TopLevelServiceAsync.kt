@@ -17,7 +17,18 @@ interface TopLevelServiceAsync {
      * This API does not have any side-effects or return any Orb resources.
      */
     suspend fun ping(
-        params: TopLevelPingParams,
+        params: TopLevelPingParams = TopLevelPingParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): TopLevelPingResponse
+
+    /**
+     * This endpoint allows you to test your connection to the Orb API and check the validity of
+     * your API key, passed in the Authorization header. This is particularly useful for checking
+     * that your environment is set up properly, and is a great choice for connectors and
+     * integrations.
+     *
+     * This API does not have any side-effects or return any Orb resources.
+     */
+    suspend fun ping(requestOptions: RequestOptions): TopLevelPingResponse =
+        ping(TopLevelPingParams.none(), requestOptions)
 }

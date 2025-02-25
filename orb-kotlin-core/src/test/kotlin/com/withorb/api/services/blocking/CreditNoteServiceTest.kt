@@ -6,7 +6,6 @@ import com.withorb.api.TestServerExtension
 import com.withorb.api.client.okhttp.OrbOkHttpClient
 import com.withorb.api.models.CreditNoteCreateParams
 import com.withorb.api.models.CreditNoteFetchParams
-import com.withorb.api.models.CreditNoteListParams
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 
@@ -46,7 +45,7 @@ class CreditNoteServiceTest {
                 .apiKey("My API Key")
                 .build()
         val creditNoteService = client.creditNotes()
-        val creditNotes = creditNoteService.list(CreditNoteListParams.builder().build())
+        val creditNotes = creditNoteService.list()
         println(creditNotes)
         creditNotes.data().forEach { it.validate() }
     }

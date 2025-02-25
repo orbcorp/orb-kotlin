@@ -36,7 +36,11 @@ interface DimensionalPriceGroupServiceAsync {
 
     /** List dimensional price groups */
     suspend fun list(
-        params: DimensionalPriceGroupListParams,
+        params: DimensionalPriceGroupListParams = DimensionalPriceGroupListParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): DimensionalPriceGroupListPageAsync
+
+    /** List dimensional price groups */
+    suspend fun list(requestOptions: RequestOptions): DimensionalPriceGroupListPageAsync =
+        list(DimensionalPriceGroupListParams.none(), requestOptions)
 }
