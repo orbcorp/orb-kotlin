@@ -6,7 +6,6 @@ import com.withorb.api.TestServerExtension
 import com.withorb.api.client.okhttp.OrbOkHttpClient
 import com.withorb.api.core.JsonValue
 import com.withorb.api.models.DimensionalPriceGroupCreateParams
-import com.withorb.api.models.DimensionalPriceGroupListParams
 import com.withorb.api.models.DimensionalPriceGroupRetrieveParams
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
@@ -67,8 +66,7 @@ class DimensionalPriceGroupServiceTest {
                 .apiKey("My API Key")
                 .build()
         val dimensionalPriceGroupService = client.dimensionalPriceGroups()
-        val dimensionalPriceGroups =
-            dimensionalPriceGroupService.list(DimensionalPriceGroupListParams.builder().build())
+        val dimensionalPriceGroups = dimensionalPriceGroupService.list()
         println(dimensionalPriceGroups)
         dimensionalPriceGroups.data().forEach { it.validate() }
     }

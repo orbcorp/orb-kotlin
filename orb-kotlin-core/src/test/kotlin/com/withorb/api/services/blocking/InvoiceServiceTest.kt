@@ -9,7 +9,6 @@ import com.withorb.api.models.InvoiceCreateParams
 import com.withorb.api.models.InvoiceFetchParams
 import com.withorb.api.models.InvoiceFetchUpcomingParams
 import com.withorb.api.models.InvoiceIssueParams
-import com.withorb.api.models.InvoiceListParams
 import com.withorb.api.models.InvoiceMarkPaidParams
 import com.withorb.api.models.InvoicePayParams
 import com.withorb.api.models.InvoiceUpdateParams
@@ -107,7 +106,7 @@ class InvoiceServiceTest {
                 .apiKey("My API Key")
                 .build()
         val invoiceService = client.invoices()
-        val invoices = invoiceService.list(InvoiceListParams.builder().build())
+        val invoices = invoiceService.list()
         println(invoices)
         invoices.data().forEach { it.validate() }
     }

@@ -23,9 +23,17 @@ interface CreditNoteServiceAsync {
      * `creation_time`.
      */
     suspend fun list(
-        params: CreditNoteListParams,
+        params: CreditNoteListParams = CreditNoteListParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CreditNoteListPageAsync
+
+    /**
+     * Get a paginated list of CreditNotes. Users can also filter by customer_id, subscription_id,
+     * or external_customer_id. The credit notes will be returned in reverse chronological order by
+     * `creation_time`.
+     */
+    suspend fun list(requestOptions: RequestOptions): CreditNoteListPageAsync =
+        list(CreditNoteListParams.none(), requestOptions)
 
     /**
      * This endpoint is used to fetch a single [`Credit Note`](/invoicing/credit-notes) given an

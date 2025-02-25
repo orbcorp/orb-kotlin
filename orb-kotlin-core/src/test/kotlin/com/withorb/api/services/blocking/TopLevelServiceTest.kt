@@ -4,7 +4,6 @@ package com.withorb.api.services.blocking
 
 import com.withorb.api.TestServerExtension
 import com.withorb.api.client.okhttp.OrbOkHttpClient
-import com.withorb.api.models.TopLevelPingParams
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 
@@ -19,7 +18,7 @@ class TopLevelServiceTest {
                 .apiKey("My API Key")
                 .build()
         val topLevelService = client.topLevel()
-        val topLevelPingResponse = topLevelService.ping(TopLevelPingParams.builder().build())
+        val topLevelPingResponse = topLevelService.ping()
         println(topLevelPingResponse)
         topLevelPingResponse.validate()
     }
