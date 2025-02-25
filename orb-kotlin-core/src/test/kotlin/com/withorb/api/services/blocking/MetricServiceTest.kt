@@ -7,7 +7,6 @@ import com.withorb.api.client.okhttp.OrbOkHttpClient
 import com.withorb.api.core.JsonValue
 import com.withorb.api.models.MetricCreateParams
 import com.withorb.api.models.MetricFetchParams
-import com.withorb.api.models.MetricListParams
 import com.withorb.api.models.MetricUpdateParams
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
@@ -72,7 +71,7 @@ class MetricServiceTest {
                 .apiKey("My API Key")
                 .build()
         val metricService = client.metrics()
-        val billableMetrics = metricService.list(MetricListParams.builder().build())
+        val billableMetrics = metricService.list()
         println(billableMetrics)
         billableMetrics.data().forEach { it.validate() }
     }

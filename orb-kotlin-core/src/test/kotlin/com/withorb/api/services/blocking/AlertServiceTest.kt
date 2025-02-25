@@ -9,7 +9,6 @@ import com.withorb.api.models.AlertCreateForExternalCustomerParams
 import com.withorb.api.models.AlertCreateForSubscriptionParams
 import com.withorb.api.models.AlertDisableParams
 import com.withorb.api.models.AlertEnableParams
-import com.withorb.api.models.AlertListParams
 import com.withorb.api.models.AlertRetrieveParams
 import com.withorb.api.models.AlertUpdateParams
 import org.junit.jupiter.api.Disabled
@@ -60,7 +59,7 @@ class AlertServiceTest {
                 .apiKey("My API Key")
                 .build()
         val alertService = client.alerts()
-        val alerts = alertService.list(AlertListParams.builder().build())
+        val alerts = alertService.list()
         println(alerts)
         alerts.data().forEach { it.validate() }
     }

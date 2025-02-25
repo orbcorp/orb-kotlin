@@ -109,6 +109,8 @@ private constructor(
 
     companion object {
 
+        fun none(): AlertListParams = builder().build()
+
         fun builder() = Builder()
     }
 

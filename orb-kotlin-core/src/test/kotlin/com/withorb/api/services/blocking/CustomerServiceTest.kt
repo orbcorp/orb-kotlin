@@ -9,7 +9,6 @@ import com.withorb.api.models.CustomerCreateParams
 import com.withorb.api.models.CustomerDeleteParams
 import com.withorb.api.models.CustomerFetchByExternalIdParams
 import com.withorb.api.models.CustomerFetchParams
-import com.withorb.api.models.CustomerListParams
 import com.withorb.api.models.CustomerSyncPaymentMethodsFromGatewayByExternalCustomerIdParams
 import com.withorb.api.models.CustomerSyncPaymentMethodsFromGatewayParams
 import com.withorb.api.models.CustomerUpdateByExternalIdParams
@@ -210,7 +209,7 @@ class CustomerServiceTest {
                 .apiKey("My API Key")
                 .build()
         val customerService = client.customers()
-        val customers = customerService.list(CustomerListParams.builder().build())
+        val customers = customerService.list()
         println(customers)
         customers.data().forEach { it.validate() }
     }

@@ -60,6 +60,8 @@ private constructor(
 
     companion object {
 
+        fun none(): CouponListParams = builder().build()
+
         fun builder() = Builder()
     }
 

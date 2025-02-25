@@ -7,7 +7,6 @@ import com.withorb.api.client.okhttp.OrbOkHttpClient
 import com.withorb.api.core.JsonValue
 import com.withorb.api.models.PlanCreateParams
 import com.withorb.api.models.PlanFetchParams
-import com.withorb.api.models.PlanListParams
 import com.withorb.api.models.PlanUpdateParams
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
@@ -124,7 +123,7 @@ class PlanServiceTest {
                 .apiKey("My API Key")
                 .build()
         val planService = client.plans()
-        val plans = planService.list(PlanListParams.builder().build())
+        val plans = planService.list()
         println(plans)
         plans.data().forEach { it.validate() }
     }

@@ -8,7 +8,6 @@ import com.withorb.api.core.JsonValue
 import com.withorb.api.models.PriceCreateParams
 import com.withorb.api.models.PriceEvaluateParams
 import com.withorb.api.models.PriceFetchParams
-import com.withorb.api.models.PriceListParams
 import com.withorb.api.models.PriceUpdateParams
 import java.time.OffsetDateTime
 import org.junit.jupiter.api.Test
@@ -114,7 +113,7 @@ class PriceServiceTest {
                 .apiKey("My API Key")
                 .build()
         val priceService = client.prices()
-        val prices = priceService.list(PriceListParams.builder().build())
+        val prices = priceService.list()
         println(prices)
         prices.data().forEach { it.validate() }
     }
