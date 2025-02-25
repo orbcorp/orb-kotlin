@@ -61,7 +61,7 @@ private constructor(
     /**
      * Determines when the change takes effect. Note that if `effective_date` is specified, this
      * defaults to `effective_date`. Otherwise, this defaults to `immediate` unless it's explicitly
-     * set to `upcoming_invoice.
+     * set to `upcoming_invoice`.
      */
     fun changeOption(): ChangeOption? = body.changeOption()
 
@@ -87,7 +87,7 @@ private constructor(
     /**
      * Determines when the change takes effect. Note that if `effective_date` is specified, this
      * defaults to `effective_date`. Otherwise, this defaults to `immediate` unless it's explicitly
-     * set to `upcoming_invoice.
+     * set to `upcoming_invoice`.
      */
     fun _changeOption(): JsonField<ChangeOption> = body._changeOption()
 
@@ -156,7 +156,7 @@ private constructor(
         /**
          * Determines when the change takes effect. Note that if `effective_date` is specified, this
          * defaults to `effective_date`. Otherwise, this defaults to `immediate` unless it's
-         * explicitly set to `upcoming_invoice.
+         * explicitly set to `upcoming_invoice`.
          */
         fun changeOption(): ChangeOption? = changeOption.getNullable("change_option")
 
@@ -184,7 +184,7 @@ private constructor(
         /**
          * Determines when the change takes effect. Note that if `effective_date` is specified, this
          * defaults to `effective_date`. Otherwise, this defaults to `immediate` unless it's
-         * explicitly set to `upcoming_invoice.
+         * explicitly set to `upcoming_invoice`.
          */
         @JsonProperty("change_option")
         @ExcludeMissing
@@ -282,14 +282,14 @@ private constructor(
             /**
              * Determines when the change takes effect. Note that if `effective_date` is specified,
              * this defaults to `effective_date`. Otherwise, this defaults to `immediate` unless
-             * it's explicitly set to `upcoming_invoice.
+             * it's explicitly set to `upcoming_invoice`.
              */
             fun changeOption(changeOption: ChangeOption) = changeOption(JsonField.of(changeOption))
 
             /**
              * Determines when the change takes effect. Note that if `effective_date` is specified,
              * this defaults to `effective_date`. Otherwise, this defaults to `immediate` unless
-             * it's explicitly set to `upcoming_invoice.
+             * it's explicitly set to `upcoming_invoice`.
              */
             fun changeOption(changeOption: JsonField<ChangeOption>) = apply {
                 this.changeOption = changeOption
@@ -428,14 +428,14 @@ private constructor(
         /**
          * Determines when the change takes effect. Note that if `effective_date` is specified, this
          * defaults to `effective_date`. Otherwise, this defaults to `immediate` unless it's
-         * explicitly set to `upcoming_invoice.
+         * explicitly set to `upcoming_invoice`.
          */
         fun changeOption(changeOption: ChangeOption) = apply { body.changeOption(changeOption) }
 
         /**
          * Determines when the change takes effect. Note that if `effective_date` is specified, this
          * defaults to `effective_date`. Otherwise, this defaults to `immediate` unless it's
-         * explicitly set to `upcoming_invoice.
+         * explicitly set to `upcoming_invoice`.
          */
         fun changeOption(changeOption: JsonField<ChangeOption>) = apply {
             body.changeOption(changeOption)
@@ -586,7 +586,7 @@ private constructor(
     /**
      * Determines when the change takes effect. Note that if `effective_date` is specified, this
      * defaults to `effective_date`. Otherwise, this defaults to `immediate` unless it's explicitly
-     * set to `upcoming_invoice.
+     * set to `upcoming_invoice`.
      */
     class ChangeOption @JsonCreator private constructor(private val value: JsonField<String>) :
         Enum {
