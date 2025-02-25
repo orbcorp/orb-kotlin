@@ -6,7 +6,6 @@ import com.withorb.api.TestServerExtension
 import com.withorb.api.client.okhttp.OrbOkHttpClient
 import com.withorb.api.models.ItemCreateParams
 import com.withorb.api.models.ItemFetchParams
-import com.withorb.api.models.ItemListParams
 import com.withorb.api.models.ItemUpdateParams
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
@@ -62,7 +61,7 @@ class ItemServiceTest {
                 .apiKey("My API Key")
                 .build()
         val itemService = client.items()
-        val items = itemService.list(ItemListParams.builder().build())
+        val items = itemService.list()
         println(items)
         items.data().forEach { it.validate() }
     }

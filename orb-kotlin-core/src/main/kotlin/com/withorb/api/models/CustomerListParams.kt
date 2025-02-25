@@ -88,6 +88,8 @@ private constructor(
 
     companion object {
 
+        fun none(): CustomerListParams = builder().build()
+
         fun builder() = Builder()
     }
 
