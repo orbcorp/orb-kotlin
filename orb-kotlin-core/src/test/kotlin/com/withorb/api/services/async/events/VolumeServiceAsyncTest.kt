@@ -1,28 +1,28 @@
 // File generated from our OpenAPI spec by Stainless.
 
-package com.withorb.api.services.blocking.events
+package com.withorb.api.services.async.events
 
 import com.withorb.api.TestServerExtension
-import com.withorb.api.client.okhttp.OrbOkHttpClient
+import com.withorb.api.client.okhttp.OrbOkHttpClientAsync
 import com.withorb.api.models.EventVolumeListParams
 import java.time.OffsetDateTime
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 
 @ExtendWith(TestServerExtension::class)
-class VolumeServiceTest {
+class VolumeServiceAsyncTest {
 
     @Test
-    fun list() {
+    suspend fun list() {
         val client =
-            OrbOkHttpClient.builder()
+            OrbOkHttpClientAsync.builder()
                 .baseUrl(TestServerExtension.BASE_URL)
                 .apiKey("My API Key")
                 .build()
-        val volumeService = client.events().volume()
+        val volumeServiceAsync = client.events().volume()
 
         val eventVolumes =
-            volumeService.list(
+            volumeServiceAsync.list(
                 EventVolumeListParams.builder()
                     .timeframeStart(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                     .cursor("cursor")

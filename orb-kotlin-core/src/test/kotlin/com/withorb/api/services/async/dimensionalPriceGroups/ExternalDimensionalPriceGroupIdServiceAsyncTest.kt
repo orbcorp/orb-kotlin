@@ -1,28 +1,28 @@
 // File generated from our OpenAPI spec by Stainless.
 
-package com.withorb.api.services.blocking.dimensionalPriceGroups
+package com.withorb.api.services.async.dimensionalPriceGroups
 
 import com.withorb.api.TestServerExtension
-import com.withorb.api.client.okhttp.OrbOkHttpClient
+import com.withorb.api.client.okhttp.OrbOkHttpClientAsync
 import com.withorb.api.models.DimensionalPriceGroupExternalDimensionalPriceGroupIdRetrieveParams
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 
 @ExtendWith(TestServerExtension::class)
-class ExternalDimensionalPriceGroupIdServiceTest {
+class ExternalDimensionalPriceGroupIdServiceAsyncTest {
 
     @Test
-    fun retrieve() {
+    suspend fun retrieve() {
         val client =
-            OrbOkHttpClient.builder()
+            OrbOkHttpClientAsync.builder()
                 .baseUrl(TestServerExtension.BASE_URL)
                 .apiKey("My API Key")
                 .build()
-        val externalDimensionalPriceGroupIdService =
+        val externalDimensionalPriceGroupIdServiceAsync =
             client.dimensionalPriceGroups().externalDimensionalPriceGroupId()
 
         val dimensionalPriceGroup =
-            externalDimensionalPriceGroupIdService.retrieve(
+            externalDimensionalPriceGroupIdServiceAsync.retrieve(
                 DimensionalPriceGroupExternalDimensionalPriceGroupIdRetrieveParams.builder()
                     .externalDimensionalPriceGroupId("external_dimensional_price_group_id")
                     .build()

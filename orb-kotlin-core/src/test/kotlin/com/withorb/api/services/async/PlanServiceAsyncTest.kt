@@ -1,9 +1,9 @@
 // File generated from our OpenAPI spec by Stainless.
 
-package com.withorb.api.services.blocking
+package com.withorb.api.services.async
 
 import com.withorb.api.TestServerExtension
-import com.withorb.api.client.okhttp.OrbOkHttpClient
+import com.withorb.api.client.okhttp.OrbOkHttpClientAsync
 import com.withorb.api.core.JsonValue
 import com.withorb.api.models.PlanCreateParams
 import com.withorb.api.models.PlanFetchParams
@@ -12,19 +12,19 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 
 @ExtendWith(TestServerExtension::class)
-class PlanServiceTest {
+class PlanServiceAsyncTest {
 
     @Test
-    fun create() {
+    suspend fun create() {
         val client =
-            OrbOkHttpClient.builder()
+            OrbOkHttpClientAsync.builder()
                 .baseUrl(TestServerExtension.BASE_URL)
                 .apiKey("My API Key")
                 .build()
-        val planService = client.plans()
+        val planServiceAsync = client.plans()
 
         val plan =
-            planService.create(
+            planServiceAsync.create(
                 PlanCreateParams.builder()
                     .currency("currency")
                     .name("name")
@@ -93,16 +93,16 @@ class PlanServiceTest {
     }
 
     @Test
-    fun update() {
+    suspend fun update() {
         val client =
-            OrbOkHttpClient.builder()
+            OrbOkHttpClientAsync.builder()
                 .baseUrl(TestServerExtension.BASE_URL)
                 .apiKey("My API Key")
                 .build()
-        val planService = client.plans()
+        val planServiceAsync = client.plans()
 
         val plan =
-            planService.update(
+            planServiceAsync.update(
                 PlanUpdateParams.builder()
                     .planId("plan_id")
                     .externalPlanId("external_plan_id")
@@ -118,29 +118,29 @@ class PlanServiceTest {
     }
 
     @Test
-    fun list() {
+    suspend fun list() {
         val client =
-            OrbOkHttpClient.builder()
+            OrbOkHttpClientAsync.builder()
                 .baseUrl(TestServerExtension.BASE_URL)
                 .apiKey("My API Key")
                 .build()
-        val planService = client.plans()
+        val planServiceAsync = client.plans()
 
-        val page = planService.list()
+        val page = planServiceAsync.list()
 
         page.response().validate()
     }
 
     @Test
-    fun fetch() {
+    suspend fun fetch() {
         val client =
-            OrbOkHttpClient.builder()
+            OrbOkHttpClientAsync.builder()
                 .baseUrl(TestServerExtension.BASE_URL)
                 .apiKey("My API Key")
                 .build()
-        val planService = client.plans()
+        val planServiceAsync = client.plans()
 
-        val plan = planService.fetch(PlanFetchParams.builder().planId("plan_id").build())
+        val plan = planServiceAsync.fetch(PlanFetchParams.builder().planId("plan_id").build())
 
         plan.validate()
     }
