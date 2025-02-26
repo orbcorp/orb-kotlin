@@ -1,9 +1,9 @@
 // File generated from our OpenAPI spec by Stainless.
 
-package com.withorb.api.services.blocking
+package com.withorb.api.services.async
 
 import com.withorb.api.TestServerExtension
-import com.withorb.api.client.okhttp.OrbOkHttpClient
+import com.withorb.api.client.okhttp.OrbOkHttpClientAsync
 import com.withorb.api.models.AlertCreateForCustomerParams
 import com.withorb.api.models.AlertCreateForExternalCustomerParams
 import com.withorb.api.models.AlertCreateForSubscriptionParams
@@ -16,33 +16,34 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 
 @ExtendWith(TestServerExtension::class)
-class AlertServiceTest {
+class AlertServiceAsyncTest {
 
     @Test
-    fun retrieve() {
+    suspend fun retrieve() {
         val client =
-            OrbOkHttpClient.builder()
+            OrbOkHttpClientAsync.builder()
                 .baseUrl(TestServerExtension.BASE_URL)
                 .apiKey("My API Key")
                 .build()
-        val alertService = client.alerts()
+        val alertServiceAsync = client.alerts()
 
-        val alert = alertService.retrieve(AlertRetrieveParams.builder().alertId("alert_id").build())
+        val alert =
+            alertServiceAsync.retrieve(AlertRetrieveParams.builder().alertId("alert_id").build())
 
         alert.validate()
     }
 
     @Test
-    fun update() {
+    suspend fun update() {
         val client =
-            OrbOkHttpClient.builder()
+            OrbOkHttpClientAsync.builder()
                 .baseUrl(TestServerExtension.BASE_URL)
                 .apiKey("My API Key")
                 .build()
-        val alertService = client.alerts()
+        val alertServiceAsync = client.alerts()
 
         val alert =
-            alertService.update(
+            alertServiceAsync.update(
                 AlertUpdateParams.builder()
                     .alertConfigurationId("alert_configuration_id")
                     .addThreshold(AlertUpdateParams.Threshold.builder().value(0.0).build())
@@ -54,30 +55,30 @@ class AlertServiceTest {
 
     @Disabled("plan_version=0 breaks Prism")
     @Test
-    fun list() {
+    suspend fun list() {
         val client =
-            OrbOkHttpClient.builder()
+            OrbOkHttpClientAsync.builder()
                 .baseUrl(TestServerExtension.BASE_URL)
                 .apiKey("My API Key")
                 .build()
-        val alertService = client.alerts()
+        val alertServiceAsync = client.alerts()
 
-        val page = alertService.list()
+        val page = alertServiceAsync.list()
 
         page.response().validate()
     }
 
     @Test
-    fun createForCustomer() {
+    suspend fun createForCustomer() {
         val client =
-            OrbOkHttpClient.builder()
+            OrbOkHttpClientAsync.builder()
                 .baseUrl(TestServerExtension.BASE_URL)
                 .apiKey("My API Key")
                 .build()
-        val alertService = client.alerts()
+        val alertServiceAsync = client.alerts()
 
         val alert =
-            alertService.createForCustomer(
+            alertServiceAsync.createForCustomer(
                 AlertCreateForCustomerParams.builder()
                     .customerId("customer_id")
                     .currency("currency")
@@ -92,16 +93,16 @@ class AlertServiceTest {
     }
 
     @Test
-    fun createForExternalCustomer() {
+    suspend fun createForExternalCustomer() {
         val client =
-            OrbOkHttpClient.builder()
+            OrbOkHttpClientAsync.builder()
                 .baseUrl(TestServerExtension.BASE_URL)
                 .apiKey("My API Key")
                 .build()
-        val alertService = client.alerts()
+        val alertServiceAsync = client.alerts()
 
         val alert =
-            alertService.createForExternalCustomer(
+            alertServiceAsync.createForExternalCustomer(
                 AlertCreateForExternalCustomerParams.builder()
                     .externalCustomerId("external_customer_id")
                     .currency("currency")
@@ -116,16 +117,16 @@ class AlertServiceTest {
     }
 
     @Test
-    fun createForSubscription() {
+    suspend fun createForSubscription() {
         val client =
-            OrbOkHttpClient.builder()
+            OrbOkHttpClientAsync.builder()
                 .baseUrl(TestServerExtension.BASE_URL)
                 .apiKey("My API Key")
                 .build()
-        val alertService = client.alerts()
+        val alertServiceAsync = client.alerts()
 
         val alert =
-            alertService.createForSubscription(
+            alertServiceAsync.createForSubscription(
                 AlertCreateForSubscriptionParams.builder()
                     .subscriptionId("subscription_id")
                     .addThreshold(
@@ -140,16 +141,16 @@ class AlertServiceTest {
     }
 
     @Test
-    fun disable() {
+    suspend fun disable() {
         val client =
-            OrbOkHttpClient.builder()
+            OrbOkHttpClientAsync.builder()
                 .baseUrl(TestServerExtension.BASE_URL)
                 .apiKey("My API Key")
                 .build()
-        val alertService = client.alerts()
+        val alertServiceAsync = client.alerts()
 
         val alert =
-            alertService.disable(
+            alertServiceAsync.disable(
                 AlertDisableParams.builder()
                     .alertConfigurationId("alert_configuration_id")
                     .subscriptionId("subscription_id")
@@ -160,16 +161,16 @@ class AlertServiceTest {
     }
 
     @Test
-    fun enable() {
+    suspend fun enable() {
         val client =
-            OrbOkHttpClient.builder()
+            OrbOkHttpClientAsync.builder()
                 .baseUrl(TestServerExtension.BASE_URL)
                 .apiKey("My API Key")
                 .build()
-        val alertService = client.alerts()
+        val alertServiceAsync = client.alerts()
 
         val alert =
-            alertService.enable(
+            alertServiceAsync.enable(
                 AlertEnableParams.builder()
                     .alertConfigurationId("alert_configuration_id")
                     .subscriptionId("subscription_id")

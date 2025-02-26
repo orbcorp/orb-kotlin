@@ -1,9 +1,9 @@
 // File generated from our OpenAPI spec by Stainless.
 
-package com.withorb.api.services.blocking.plans
+package com.withorb.api.services.async.plans
 
 import com.withorb.api.TestServerExtension
-import com.withorb.api.client.okhttp.OrbOkHttpClient
+import com.withorb.api.client.okhttp.OrbOkHttpClientAsync
 import com.withorb.api.core.JsonValue
 import com.withorb.api.models.PlanExternalPlanIdFetchParams
 import com.withorb.api.models.PlanExternalPlanIdUpdateParams
@@ -11,19 +11,19 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 
 @ExtendWith(TestServerExtension::class)
-class ExternalPlanIdServiceTest {
+class ExternalPlanIdServiceAsyncTest {
 
     @Test
-    fun update() {
+    suspend fun update() {
         val client =
-            OrbOkHttpClient.builder()
+            OrbOkHttpClientAsync.builder()
                 .baseUrl(TestServerExtension.BASE_URL)
                 .apiKey("My API Key")
                 .build()
-        val externalPlanIdService = client.plans().externalPlanId()
+        val externalPlanIdServiceAsync = client.plans().externalPlanId()
 
         val plan =
-            externalPlanIdService.update(
+            externalPlanIdServiceAsync.update(
                 PlanExternalPlanIdUpdateParams.builder()
                     .otherExternalPlanId("external_plan_id")
                     .externalPlanId("external_plan_id")
@@ -39,16 +39,16 @@ class ExternalPlanIdServiceTest {
     }
 
     @Test
-    fun fetch() {
+    suspend fun fetch() {
         val client =
-            OrbOkHttpClient.builder()
+            OrbOkHttpClientAsync.builder()
                 .baseUrl(TestServerExtension.BASE_URL)
                 .apiKey("My API Key")
                 .build()
-        val externalPlanIdService = client.plans().externalPlanId()
+        val externalPlanIdServiceAsync = client.plans().externalPlanId()
 
         val plan =
-            externalPlanIdService.fetch(
+            externalPlanIdServiceAsync.fetch(
                 PlanExternalPlanIdFetchParams.builder().externalPlanId("external_plan_id").build()
             )
 
