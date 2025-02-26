@@ -1,9 +1,9 @@
 // File generated from our OpenAPI spec by Stainless.
 
-package com.withorb.api.services.blocking
+package com.withorb.api.services.async
 
 import com.withorb.api.TestServerExtension
-import com.withorb.api.client.okhttp.OrbOkHttpClient
+import com.withorb.api.client.okhttp.OrbOkHttpClientAsync
 import com.withorb.api.core.JsonValue
 import com.withorb.api.models.MetricCreateParams
 import com.withorb.api.models.MetricFetchParams
@@ -12,19 +12,19 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 
 @ExtendWith(TestServerExtension::class)
-class MetricServiceTest {
+class MetricServiceAsyncTest {
 
     @Test
-    fun create() {
+    suspend fun create() {
         val client =
-            OrbOkHttpClient.builder()
+            OrbOkHttpClientAsync.builder()
                 .baseUrl(TestServerExtension.BASE_URL)
                 .apiKey("My API Key")
                 .build()
-        val metricService = client.metrics()
+        val metricServiceAsync = client.metrics()
 
         val billableMetric =
-            metricService.create(
+            metricServiceAsync.create(
                 MetricCreateParams.builder()
                     .description("Sum of bytes downloaded in fast mode")
                     .itemId("item_id")
@@ -42,16 +42,16 @@ class MetricServiceTest {
     }
 
     @Test
-    fun update() {
+    suspend fun update() {
         val client =
-            OrbOkHttpClient.builder()
+            OrbOkHttpClientAsync.builder()
                 .baseUrl(TestServerExtension.BASE_URL)
                 .apiKey("My API Key")
                 .build()
-        val metricService = client.metrics()
+        val metricServiceAsync = client.metrics()
 
         val billableMetric =
-            metricService.update(
+            metricServiceAsync.update(
                 MetricUpdateParams.builder()
                     .metricId("metric_id")
                     .metadata(
@@ -66,30 +66,30 @@ class MetricServiceTest {
     }
 
     @Test
-    fun list() {
+    suspend fun list() {
         val client =
-            OrbOkHttpClient.builder()
+            OrbOkHttpClientAsync.builder()
                 .baseUrl(TestServerExtension.BASE_URL)
                 .apiKey("My API Key")
                 .build()
-        val metricService = client.metrics()
+        val metricServiceAsync = client.metrics()
 
-        val page = metricService.list()
+        val page = metricServiceAsync.list()
 
         page.response().validate()
     }
 
     @Test
-    fun fetch() {
+    suspend fun fetch() {
         val client =
-            OrbOkHttpClient.builder()
+            OrbOkHttpClientAsync.builder()
                 .baseUrl(TestServerExtension.BASE_URL)
                 .apiKey("My API Key")
                 .build()
-        val metricService = client.metrics()
+        val metricServiceAsync = client.metrics()
 
         val billableMetric =
-            metricService.fetch(MetricFetchParams.builder().metricId("metric_id").build())
+            metricServiceAsync.fetch(MetricFetchParams.builder().metricId("metric_id").build())
 
         billableMetric.validate()
     }
