@@ -1,9 +1,9 @@
 // File generated from our OpenAPI spec by Stainless.
 
-package com.withorb.api.services.blocking
+package com.withorb.api.services.async
 
 import com.withorb.api.TestServerExtension
-import com.withorb.api.client.okhttp.OrbOkHttpClient
+import com.withorb.api.client.okhttp.OrbOkHttpClientAsync
 import com.withorb.api.models.CouponArchiveParams
 import com.withorb.api.models.CouponCreateParams
 import com.withorb.api.models.CouponFetchParams
@@ -11,19 +11,19 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 
 @ExtendWith(TestServerExtension::class)
-class CouponServiceTest {
+class CouponServiceAsyncTest {
 
     @Test
-    fun create() {
+    suspend fun create() {
         val client =
-            OrbOkHttpClient.builder()
+            OrbOkHttpClientAsync.builder()
                 .baseUrl(TestServerExtension.BASE_URL)
                 .apiKey("My API Key")
                 .build()
-        val couponService = client.coupons()
+        val couponServiceAsync = client.coupons()
 
         val coupon =
-            couponService.create(
+            couponServiceAsync.create(
                 CouponCreateParams.builder()
                     .newCouponPercentageDiscount(0.0)
                     .redemptionCode("HALFOFF")
@@ -36,44 +36,45 @@ class CouponServiceTest {
     }
 
     @Test
-    fun list() {
+    suspend fun list() {
         val client =
-            OrbOkHttpClient.builder()
+            OrbOkHttpClientAsync.builder()
                 .baseUrl(TestServerExtension.BASE_URL)
                 .apiKey("My API Key")
                 .build()
-        val couponService = client.coupons()
+        val couponServiceAsync = client.coupons()
 
-        val page = couponService.list()
+        val page = couponServiceAsync.list()
 
         page.response().validate()
     }
 
     @Test
-    fun archive() {
+    suspend fun archive() {
         val client =
-            OrbOkHttpClient.builder()
+            OrbOkHttpClientAsync.builder()
                 .baseUrl(TestServerExtension.BASE_URL)
                 .apiKey("My API Key")
                 .build()
-        val couponService = client.coupons()
+        val couponServiceAsync = client.coupons()
 
         val coupon =
-            couponService.archive(CouponArchiveParams.builder().couponId("coupon_id").build())
+            couponServiceAsync.archive(CouponArchiveParams.builder().couponId("coupon_id").build())
 
         coupon.validate()
     }
 
     @Test
-    fun fetch() {
+    suspend fun fetch() {
         val client =
-            OrbOkHttpClient.builder()
+            OrbOkHttpClientAsync.builder()
                 .baseUrl(TestServerExtension.BASE_URL)
                 .apiKey("My API Key")
                 .build()
-        val couponService = client.coupons()
+        val couponServiceAsync = client.coupons()
 
-        val coupon = couponService.fetch(CouponFetchParams.builder().couponId("coupon_id").build())
+        val coupon =
+            couponServiceAsync.fetch(CouponFetchParams.builder().couponId("coupon_id").build())
 
         coupon.validate()
     }

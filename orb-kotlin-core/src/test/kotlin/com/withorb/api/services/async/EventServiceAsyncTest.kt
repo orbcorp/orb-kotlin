@@ -1,9 +1,9 @@
 // File generated from our OpenAPI spec by Stainless.
 
-package com.withorb.api.services.blocking
+package com.withorb.api.services.async
 
 import com.withorb.api.TestServerExtension
-import com.withorb.api.client.okhttp.OrbOkHttpClient
+import com.withorb.api.client.okhttp.OrbOkHttpClientAsync
 import com.withorb.api.core.JsonValue
 import com.withorb.api.models.EventDeprecateParams
 import com.withorb.api.models.EventIngestParams
@@ -14,19 +14,19 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 
 @ExtendWith(TestServerExtension::class)
-class EventServiceTest {
+class EventServiceAsyncTest {
 
     @Test
-    fun update() {
+    suspend fun update() {
         val client =
-            OrbOkHttpClient.builder()
+            OrbOkHttpClientAsync.builder()
                 .baseUrl(TestServerExtension.BASE_URL)
                 .apiKey("My API Key")
                 .build()
-        val eventService = client.events()
+        val eventServiceAsync = client.events()
 
         val event =
-            eventService.update(
+            eventServiceAsync.update(
                 EventUpdateParams.builder()
                     .eventId("event_id")
                     .eventName("event_name")
@@ -41,31 +41,31 @@ class EventServiceTest {
     }
 
     @Test
-    fun deprecate() {
+    suspend fun deprecate() {
         val client =
-            OrbOkHttpClient.builder()
+            OrbOkHttpClientAsync.builder()
                 .baseUrl(TestServerExtension.BASE_URL)
                 .apiKey("My API Key")
                 .build()
-        val eventService = client.events()
+        val eventServiceAsync = client.events()
 
         val response =
-            eventService.deprecate(EventDeprecateParams.builder().eventId("event_id").build())
+            eventServiceAsync.deprecate(EventDeprecateParams.builder().eventId("event_id").build())
 
         response.validate()
     }
 
     @Test
-    fun ingest() {
+    suspend fun ingest() {
         val client =
-            OrbOkHttpClient.builder()
+            OrbOkHttpClientAsync.builder()
                 .baseUrl(TestServerExtension.BASE_URL)
                 .apiKey("My API Key")
                 .build()
-        val eventService = client.events()
+        val eventServiceAsync = client.events()
 
         val response =
-            eventService.ingest(
+            eventServiceAsync.ingest(
                 EventIngestParams.builder()
                     .backfillId("backfill_id")
                     .debug(true)
@@ -86,16 +86,16 @@ class EventServiceTest {
     }
 
     @Test
-    fun search() {
+    suspend fun search() {
         val client =
-            OrbOkHttpClient.builder()
+            OrbOkHttpClientAsync.builder()
                 .baseUrl(TestServerExtension.BASE_URL)
                 .apiKey("My API Key")
                 .build()
-        val eventService = client.events()
+        val eventServiceAsync = client.events()
 
         val response =
-            eventService.search(
+            eventServiceAsync.search(
                 EventSearchParams.builder()
                     .addEventId("string")
                     .timeframeEnd(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))

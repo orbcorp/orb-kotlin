@@ -1,9 +1,9 @@
 // File generated from our OpenAPI spec by Stainless.
 
-package com.withorb.api.services.blocking
+package com.withorb.api.services.async
 
 import com.withorb.api.TestServerExtension
-import com.withorb.api.client.okhttp.OrbOkHttpClient
+import com.withorb.api.client.okhttp.OrbOkHttpClientAsync
 import com.withorb.api.core.JsonValue
 import com.withorb.api.models.InvoiceCreateParams
 import com.withorb.api.models.InvoiceFetchParams
@@ -20,19 +20,19 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 
 @ExtendWith(TestServerExtension::class)
-class InvoiceServiceTest {
+class InvoiceServiceAsyncTest {
 
     @Test
-    fun create() {
+    suspend fun create() {
         val client =
-            OrbOkHttpClient.builder()
+            OrbOkHttpClientAsync.builder()
                 .baseUrl(TestServerExtension.BASE_URL)
                 .apiKey("My API Key")
                 .build()
-        val invoiceService = client.invoices()
+        val invoiceServiceAsync = client.invoices()
 
         val invoice =
-            invoiceService.create(
+            invoiceServiceAsync.create(
                 InvoiceCreateParams.builder()
                     .currency("USD")
                     .invoiceDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
@@ -77,16 +77,16 @@ class InvoiceServiceTest {
     }
 
     @Test
-    fun update() {
+    suspend fun update() {
         val client =
-            OrbOkHttpClient.builder()
+            OrbOkHttpClientAsync.builder()
                 .baseUrl(TestServerExtension.BASE_URL)
                 .apiKey("My API Key")
                 .build()
-        val invoiceService = client.invoices()
+        val invoiceServiceAsync = client.invoices()
 
         val invoice =
-            invoiceService.update(
+            invoiceServiceAsync.update(
                 InvoiceUpdateParams.builder()
                     .invoiceId("invoice_id")
                     .metadata(
@@ -101,45 +101,45 @@ class InvoiceServiceTest {
     }
 
     @Test
-    fun list() {
+    suspend fun list() {
         val client =
-            OrbOkHttpClient.builder()
+            OrbOkHttpClientAsync.builder()
                 .baseUrl(TestServerExtension.BASE_URL)
                 .apiKey("My API Key")
                 .build()
-        val invoiceService = client.invoices()
+        val invoiceServiceAsync = client.invoices()
 
-        val page = invoiceService.list()
+        val page = invoiceServiceAsync.list()
 
         page.response().validate()
     }
 
     @Test
-    fun fetch() {
+    suspend fun fetch() {
         val client =
-            OrbOkHttpClient.builder()
+            OrbOkHttpClientAsync.builder()
                 .baseUrl(TestServerExtension.BASE_URL)
                 .apiKey("My API Key")
                 .build()
-        val invoiceService = client.invoices()
+        val invoiceServiceAsync = client.invoices()
 
         val invoice =
-            invoiceService.fetch(InvoiceFetchParams.builder().invoiceId("invoice_id").build())
+            invoiceServiceAsync.fetch(InvoiceFetchParams.builder().invoiceId("invoice_id").build())
 
         invoice.validate()
     }
 
     @Test
-    fun fetchUpcoming() {
+    suspend fun fetchUpcoming() {
         val client =
-            OrbOkHttpClient.builder()
+            OrbOkHttpClientAsync.builder()
                 .baseUrl(TestServerExtension.BASE_URL)
                 .apiKey("My API Key")
                 .build()
-        val invoiceService = client.invoices()
+        val invoiceServiceAsync = client.invoices()
 
         val response =
-            invoiceService.fetchUpcoming(
+            invoiceServiceAsync.fetchUpcoming(
                 InvoiceFetchUpcomingParams.builder().subscriptionId("subscription_id").build()
             )
 
@@ -147,16 +147,16 @@ class InvoiceServiceTest {
     }
 
     @Test
-    fun issue() {
+    suspend fun issue() {
         val client =
-            OrbOkHttpClient.builder()
+            OrbOkHttpClientAsync.builder()
                 .baseUrl(TestServerExtension.BASE_URL)
                 .apiKey("My API Key")
                 .build()
-        val invoiceService = client.invoices()
+        val invoiceServiceAsync = client.invoices()
 
         val invoice =
-            invoiceService.issue(
+            invoiceServiceAsync.issue(
                 InvoiceIssueParams.builder().invoiceId("invoice_id").synchronous(true).build()
             )
 
@@ -164,16 +164,16 @@ class InvoiceServiceTest {
     }
 
     @Test
-    fun markPaid() {
+    suspend fun markPaid() {
         val client =
-            OrbOkHttpClient.builder()
+            OrbOkHttpClientAsync.builder()
                 .baseUrl(TestServerExtension.BASE_URL)
                 .apiKey("My API Key")
                 .build()
-        val invoiceService = client.invoices()
+        val invoiceServiceAsync = client.invoices()
 
         val invoice =
-            invoiceService.markPaid(
+            invoiceServiceAsync.markPaid(
                 InvoiceMarkPaidParams.builder()
                     .invoiceId("invoice_id")
                     .paymentReceivedDate(LocalDate.parse("2023-09-22"))
@@ -186,30 +186,31 @@ class InvoiceServiceTest {
     }
 
     @Test
-    fun pay() {
+    suspend fun pay() {
         val client =
-            OrbOkHttpClient.builder()
+            OrbOkHttpClientAsync.builder()
                 .baseUrl(TestServerExtension.BASE_URL)
                 .apiKey("My API Key")
                 .build()
-        val invoiceService = client.invoices()
+        val invoiceServiceAsync = client.invoices()
 
-        val invoice = invoiceService.pay(InvoicePayParams.builder().invoiceId("invoice_id").build())
+        val invoice =
+            invoiceServiceAsync.pay(InvoicePayParams.builder().invoiceId("invoice_id").build())
 
         invoice.validate()
     }
 
     @Test
-    fun void() {
+    suspend fun void() {
         val client =
-            OrbOkHttpClient.builder()
+            OrbOkHttpClientAsync.builder()
                 .baseUrl(TestServerExtension.BASE_URL)
                 .apiKey("My API Key")
                 .build()
-        val invoiceService = client.invoices()
+        val invoiceServiceAsync = client.invoices()
 
         val invoice =
-            invoiceService.void(InvoiceVoidParams.builder().invoiceId("invoice_id").build())
+            invoiceServiceAsync.void(InvoiceVoidParams.builder().invoiceId("invoice_id").build())
 
         invoice.validate()
     }
