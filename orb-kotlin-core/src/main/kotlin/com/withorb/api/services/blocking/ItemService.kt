@@ -26,9 +26,13 @@ interface ItemService {
 
     /** This endpoint returns a list of all Items, ordered in descending order by creation time. */
     fun list(
-        params: ItemListParams,
+        params: ItemListParams = ItemListParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): ItemListPage
+
+    /** This endpoint returns a list of all Items, ordered in descending order by creation time. */
+    fun list(requestOptions: RequestOptions): ItemListPage =
+        list(ItemListParams.none(), requestOptions)
 
     /** This endpoint returns an item identified by its item_id. */
     fun fetch(params: ItemFetchParams, requestOptions: RequestOptions = RequestOptions.none()): Item

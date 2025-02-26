@@ -48,9 +48,16 @@ interface PriceService {
      * [price creation endpoint](/api-reference/price/create-price).
      */
     fun list(
-        params: PriceListParams,
+        params: PriceListParams = PriceListParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): PriceListPage
+
+    /**
+     * This endpoint is used to list all add-on prices created using the
+     * [price creation endpoint](/api-reference/price/create-price).
+     */
+    fun list(requestOptions: RequestOptions): PriceListPage =
+        list(PriceListParams.none(), requestOptions)
 
     /**
      * This endpoint is used to evaluate the output of a price for a given customer and time range.

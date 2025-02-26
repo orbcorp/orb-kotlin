@@ -18,14 +18,15 @@ import org.junit.jupiter.api.extension.ExtendWith
 class TopUpServiceTest {
 
     @Test
-    fun callCreate() {
+    fun create() {
         val client =
             OrbOkHttpClient.builder()
                 .baseUrl(TestServerExtension.BASE_URL)
                 .apiKey("My API Key")
                 .build()
         val topUpService = client.customers().credits().topUps()
-        val customerCreditTopUpCreateResponse =
+
+        val topUp =
             topUpService.create(
                 CustomerCreditTopUpCreateParams.builder()
                     .customerId("customer_id")
@@ -46,34 +47,36 @@ class TopUpServiceTest {
                     .expiresAfterUnit(CustomerCreditTopUpCreateParams.ExpiresAfterUnit.DAY)
                     .build()
             )
-        println(customerCreditTopUpCreateResponse)
-        customerCreditTopUpCreateResponse.validate()
+
+        topUp.validate()
     }
 
     @Test
-    fun callList() {
+    fun list() {
         val client =
             OrbOkHttpClient.builder()
                 .baseUrl(TestServerExtension.BASE_URL)
                 .apiKey("My API Key")
                 .build()
         val topUpService = client.customers().credits().topUps()
-        val topUps =
+
+        val page =
             topUpService.list(
                 CustomerCreditTopUpListParams.builder().customerId("customer_id").build()
             )
-        println(topUps)
-        topUps.data().forEach { it.validate() }
+
+        page.response().validate()
     }
 
     @Test
-    fun callDelete() {
+    fun delete() {
         val client =
             OrbOkHttpClient.builder()
                 .baseUrl(TestServerExtension.BASE_URL)
                 .apiKey("My API Key")
                 .build()
         val topUpService = client.customers().credits().topUps()
+
         topUpService.delete(
             CustomerCreditTopUpDeleteParams.builder()
                 .customerId("customer_id")
@@ -83,14 +86,15 @@ class TopUpServiceTest {
     }
 
     @Test
-    fun callCreateByExternalId() {
+    fun createByExternalId() {
         val client =
             OrbOkHttpClient.builder()
                 .baseUrl(TestServerExtension.BASE_URL)
                 .apiKey("My API Key")
                 .build()
         val topUpService = client.customers().credits().topUps()
-        val customerCreditTopUpCreateByExternalIdResponse =
+
+        val response =
             topUpService.createByExternalId(
                 CustomerCreditTopUpCreateByExternalIdParams.builder()
                     .externalCustomerId("external_customer_id")
@@ -113,18 +117,19 @@ class TopUpServiceTest {
                     )
                     .build()
             )
-        println(customerCreditTopUpCreateByExternalIdResponse)
-        customerCreditTopUpCreateByExternalIdResponse.validate()
+
+        response.validate()
     }
 
     @Test
-    fun callDeleteByExternalId() {
+    fun deleteByExternalId() {
         val client =
             OrbOkHttpClient.builder()
                 .baseUrl(TestServerExtension.BASE_URL)
                 .apiKey("My API Key")
                 .build()
         val topUpService = client.customers().credits().topUps()
+
         topUpService.deleteByExternalId(
             CustomerCreditTopUpDeleteByExternalIdParams.builder()
                 .externalCustomerId("external_customer_id")
@@ -134,20 +139,21 @@ class TopUpServiceTest {
     }
 
     @Test
-    fun callListByExternalId() {
+    fun listByExternalId() {
         val client =
             OrbOkHttpClient.builder()
                 .baseUrl(TestServerExtension.BASE_URL)
                 .apiKey("My API Key")
                 .build()
         val topUpService = client.customers().credits().topUps()
-        val topUps =
+
+        val page =
             topUpService.listByExternalId(
                 CustomerCreditTopUpListByExternalIdParams.builder()
                     .externalCustomerId("external_customer_id")
                     .build()
             )
-        println(topUps)
-        topUps.data().forEach { it.validate() }
+
+        page.response().validate()
     }
 }

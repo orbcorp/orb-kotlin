@@ -12,7 +12,7 @@ import org.junit.jupiter.api.extension.ExtendWith
 class ExternalDimensionalPriceGroupIdServiceTest {
 
     @Test
-    fun callRetrieve() {
+    fun retrieve() {
         val client =
             OrbOkHttpClient.builder()
                 .baseUrl(TestServerExtension.BASE_URL)
@@ -20,13 +20,14 @@ class ExternalDimensionalPriceGroupIdServiceTest {
                 .build()
         val externalDimensionalPriceGroupIdService =
             client.dimensionalPriceGroups().externalDimensionalPriceGroupId()
+
         val dimensionalPriceGroup =
             externalDimensionalPriceGroupIdService.retrieve(
                 DimensionalPriceGroupExternalDimensionalPriceGroupIdRetrieveParams.builder()
                     .externalDimensionalPriceGroupId("external_dimensional_price_group_id")
                     .build()
             )
-        println(dimensionalPriceGroup)
+
         dimensionalPriceGroup.validate()
     }
 }

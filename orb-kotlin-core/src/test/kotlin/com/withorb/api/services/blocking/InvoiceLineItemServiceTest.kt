@@ -13,14 +13,15 @@ import org.junit.jupiter.api.extension.ExtendWith
 class InvoiceLineItemServiceTest {
 
     @Test
-    fun callCreate() {
+    fun create() {
         val client =
             OrbOkHttpClient.builder()
                 .baseUrl(TestServerExtension.BASE_URL)
                 .apiKey("My API Key")
                 .build()
         val invoiceLineItemService = client.invoiceLineItems()
-        val invoiceLineItemCreateResponse =
+
+        val invoiceLineItem =
             invoiceLineItemService.create(
                 InvoiceLineItemCreateParams.builder()
                     .amount("12.00")
@@ -31,7 +32,7 @@ class InvoiceLineItemServiceTest {
                     .startDate(LocalDate.parse("2023-09-22"))
                     .build()
             )
-        println(invoiceLineItemCreateResponse)
-        invoiceLineItemCreateResponse.validate()
+
+        invoiceLineItem.validate()
     }
 }

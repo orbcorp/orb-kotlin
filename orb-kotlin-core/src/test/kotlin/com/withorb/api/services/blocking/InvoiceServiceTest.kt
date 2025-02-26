@@ -9,7 +9,6 @@ import com.withorb.api.models.InvoiceCreateParams
 import com.withorb.api.models.InvoiceFetchParams
 import com.withorb.api.models.InvoiceFetchUpcomingParams
 import com.withorb.api.models.InvoiceIssueParams
-import com.withorb.api.models.InvoiceListParams
 import com.withorb.api.models.InvoiceMarkPaidParams
 import com.withorb.api.models.InvoicePayParams
 import com.withorb.api.models.InvoiceUpdateParams
@@ -24,13 +23,14 @@ import org.junit.jupiter.api.extension.ExtendWith
 class InvoiceServiceTest {
 
     @Test
-    fun callCreate() {
+    fun create() {
         val client =
             OrbOkHttpClient.builder()
                 .baseUrl(TestServerExtension.BASE_URL)
                 .apiKey("My API Key")
                 .build()
         val invoiceService = client.invoices()
+
         val invoice =
             invoiceService.create(
                 InvoiceCreateParams.builder()
@@ -72,18 +72,19 @@ class InvoiceServiceTest {
                     .willAutoIssue(false)
                     .build()
             )
-        println(invoice)
+
         invoice.validate()
     }
 
     @Test
-    fun callUpdate() {
+    fun update() {
         val client =
             OrbOkHttpClient.builder()
                 .baseUrl(TestServerExtension.BASE_URL)
                 .apiKey("My API Key")
                 .build()
         val invoiceService = client.invoices()
+
         val invoice =
             invoiceService.update(
                 InvoiceUpdateParams.builder()
@@ -95,77 +96,82 @@ class InvoiceServiceTest {
                     )
                     .build()
             )
-        println(invoice)
+
         invoice.validate()
     }
 
     @Test
-    fun callList() {
+    fun list() {
         val client =
             OrbOkHttpClient.builder()
                 .baseUrl(TestServerExtension.BASE_URL)
                 .apiKey("My API Key")
                 .build()
         val invoiceService = client.invoices()
-        val invoices = invoiceService.list(InvoiceListParams.builder().build())
-        println(invoices)
-        invoices.data().forEach { it.validate() }
+
+        val page = invoiceService.list()
+
+        page.response().validate()
     }
 
     @Test
-    fun callFetch() {
+    fun fetch() {
         val client =
             OrbOkHttpClient.builder()
                 .baseUrl(TestServerExtension.BASE_URL)
                 .apiKey("My API Key")
                 .build()
         val invoiceService = client.invoices()
+
         val invoice =
             invoiceService.fetch(InvoiceFetchParams.builder().invoiceId("invoice_id").build())
-        println(invoice)
+
         invoice.validate()
     }
 
     @Test
-    fun callFetchUpcoming() {
+    fun fetchUpcoming() {
         val client =
             OrbOkHttpClient.builder()
                 .baseUrl(TestServerExtension.BASE_URL)
                 .apiKey("My API Key")
                 .build()
         val invoiceService = client.invoices()
-        val invoiceFetchUpcomingResponse =
+
+        val response =
             invoiceService.fetchUpcoming(
                 InvoiceFetchUpcomingParams.builder().subscriptionId("subscription_id").build()
             )
-        println(invoiceFetchUpcomingResponse)
-        invoiceFetchUpcomingResponse.validate()
+
+        response.validate()
     }
 
     @Test
-    fun callIssue() {
+    fun issue() {
         val client =
             OrbOkHttpClient.builder()
                 .baseUrl(TestServerExtension.BASE_URL)
                 .apiKey("My API Key")
                 .build()
         val invoiceService = client.invoices()
+
         val invoice =
             invoiceService.issue(
                 InvoiceIssueParams.builder().invoiceId("invoice_id").synchronous(true).build()
             )
-        println(invoice)
+
         invoice.validate()
     }
 
     @Test
-    fun callMarkPaid() {
+    fun markPaid() {
         val client =
             OrbOkHttpClient.builder()
                 .baseUrl(TestServerExtension.BASE_URL)
                 .apiKey("My API Key")
                 .build()
         val invoiceService = client.invoices()
+
         val invoice =
             invoiceService.markPaid(
                 InvoiceMarkPaidParams.builder()
@@ -175,34 +181,36 @@ class InvoiceServiceTest {
                     .notes("notes")
                     .build()
             )
-        println(invoice)
+
         invoice.validate()
     }
 
     @Test
-    fun callPay() {
+    fun pay() {
         val client =
             OrbOkHttpClient.builder()
                 .baseUrl(TestServerExtension.BASE_URL)
                 .apiKey("My API Key")
                 .build()
         val invoiceService = client.invoices()
+
         val invoice = invoiceService.pay(InvoicePayParams.builder().invoiceId("invoice_id").build())
-        println(invoice)
+
         invoice.validate()
     }
 
     @Test
-    fun callVoid() {
+    fun void() {
         val client =
             OrbOkHttpClient.builder()
                 .baseUrl(TestServerExtension.BASE_URL)
                 .apiKey("My API Key")
                 .build()
         val invoiceService = client.invoices()
+
         val invoice =
             invoiceService.void(InvoiceVoidParams.builder().invoiceId("invoice_id").build())
-        println(invoice)
+
         invoice.validate()
     }
 }

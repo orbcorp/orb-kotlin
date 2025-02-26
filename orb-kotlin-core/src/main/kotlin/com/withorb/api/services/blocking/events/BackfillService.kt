@@ -60,9 +60,20 @@ interface BackfillService {
      * be found in the [Pagination-metadata schema](pagination).
      */
     fun list(
-        params: EventBackfillListParams,
+        params: EventBackfillListParams = EventBackfillListParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): EventBackfillListPage
+
+    /**
+     * This endpoint returns a list of all backfills in a list format.
+     *
+     * The list of backfills is ordered starting from the most recently created backfill. The
+     * response also includes [`pagination_metadata`](/api-reference/pagination), which lets the
+     * caller retrieve the next page of results if they exist. More information about pagination can
+     * be found in the [Pagination-metadata schema](pagination).
+     */
+    fun list(requestOptions: RequestOptions): EventBackfillListPage =
+        list(EventBackfillListParams.none(), requestOptions)
 
     /**
      * Closing a backfill makes the updated usage visible in Orb. Upon closing a backfill, Orb will

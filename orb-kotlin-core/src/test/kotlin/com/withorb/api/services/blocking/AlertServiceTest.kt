@@ -9,7 +9,6 @@ import com.withorb.api.models.AlertCreateForExternalCustomerParams
 import com.withorb.api.models.AlertCreateForSubscriptionParams
 import com.withorb.api.models.AlertDisableParams
 import com.withorb.api.models.AlertEnableParams
-import com.withorb.api.models.AlertListParams
 import com.withorb.api.models.AlertRetrieveParams
 import com.withorb.api.models.AlertUpdateParams
 import org.junit.jupiter.api.Disabled
@@ -20,26 +19,28 @@ import org.junit.jupiter.api.extension.ExtendWith
 class AlertServiceTest {
 
     @Test
-    fun callRetrieve() {
+    fun retrieve() {
         val client =
             OrbOkHttpClient.builder()
                 .baseUrl(TestServerExtension.BASE_URL)
                 .apiKey("My API Key")
                 .build()
         val alertService = client.alerts()
+
         val alert = alertService.retrieve(AlertRetrieveParams.builder().alertId("alert_id").build())
-        println(alert)
+
         alert.validate()
     }
 
     @Test
-    fun callUpdate() {
+    fun update() {
         val client =
             OrbOkHttpClient.builder()
                 .baseUrl(TestServerExtension.BASE_URL)
                 .apiKey("My API Key")
                 .build()
         val alertService = client.alerts()
+
         val alert =
             alertService.update(
                 AlertUpdateParams.builder()
@@ -47,32 +48,34 @@ class AlertServiceTest {
                     .addThreshold(AlertUpdateParams.Threshold.builder().value(0.0).build())
                     .build()
             )
-        println(alert)
+
         alert.validate()
     }
 
     @Disabled("plan_version=0 breaks Prism")
     @Test
-    fun callList() {
+    fun list() {
         val client =
             OrbOkHttpClient.builder()
                 .baseUrl(TestServerExtension.BASE_URL)
                 .apiKey("My API Key")
                 .build()
         val alertService = client.alerts()
-        val alerts = alertService.list(AlertListParams.builder().build())
-        println(alerts)
-        alerts.data().forEach { it.validate() }
+
+        val page = alertService.list()
+
+        page.response().validate()
     }
 
     @Test
-    fun callCreateForCustomer() {
+    fun createForCustomer() {
         val client =
             OrbOkHttpClient.builder()
                 .baseUrl(TestServerExtension.BASE_URL)
                 .apiKey("My API Key")
                 .build()
         val alertService = client.alerts()
+
         val alert =
             alertService.createForCustomer(
                 AlertCreateForCustomerParams.builder()
@@ -84,18 +87,19 @@ class AlertServiceTest {
                     )
                     .build()
             )
-        println(alert)
+
         alert.validate()
     }
 
     @Test
-    fun callCreateForExternalCustomer() {
+    fun createForExternalCustomer() {
         val client =
             OrbOkHttpClient.builder()
                 .baseUrl(TestServerExtension.BASE_URL)
                 .apiKey("My API Key")
                 .build()
         val alertService = client.alerts()
+
         val alert =
             alertService.createForExternalCustomer(
                 AlertCreateForExternalCustomerParams.builder()
@@ -107,18 +111,19 @@ class AlertServiceTest {
                     )
                     .build()
             )
-        println(alert)
+
         alert.validate()
     }
 
     @Test
-    fun callCreateForSubscription() {
+    fun createForSubscription() {
         val client =
             OrbOkHttpClient.builder()
                 .baseUrl(TestServerExtension.BASE_URL)
                 .apiKey("My API Key")
                 .build()
         val alertService = client.alerts()
+
         val alert =
             alertService.createForSubscription(
                 AlertCreateForSubscriptionParams.builder()
@@ -130,18 +135,19 @@ class AlertServiceTest {
                     .metricId("metric_id")
                     .build()
             )
-        println(alert)
+
         alert.validate()
     }
 
     @Test
-    fun callDisable() {
+    fun disable() {
         val client =
             OrbOkHttpClient.builder()
                 .baseUrl(TestServerExtension.BASE_URL)
                 .apiKey("My API Key")
                 .build()
         val alertService = client.alerts()
+
         val alert =
             alertService.disable(
                 AlertDisableParams.builder()
@@ -149,18 +155,19 @@ class AlertServiceTest {
                     .subscriptionId("subscription_id")
                     .build()
             )
-        println(alert)
+
         alert.validate()
     }
 
     @Test
-    fun callEnable() {
+    fun enable() {
         val client =
             OrbOkHttpClient.builder()
                 .baseUrl(TestServerExtension.BASE_URL)
                 .apiKey("My API Key")
                 .build()
         val alertService = client.alerts()
+
         val alert =
             alertService.enable(
                 AlertEnableParams.builder()
@@ -168,7 +175,7 @@ class AlertServiceTest {
                     .subscriptionId("subscription_id")
                     .build()
             )
-        println(alert)
+
         alert.validate()
     }
 }

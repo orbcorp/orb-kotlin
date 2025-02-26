@@ -47,6 +47,8 @@ private constructor(
 
     companion object {
 
+        fun none(): PriceListParams = builder().build()
+
         fun builder() = Builder()
     }
 

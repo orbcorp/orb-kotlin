@@ -13,13 +13,14 @@ import org.junit.jupiter.api.extension.ExtendWith
 class VolumeServiceTest {
 
     @Test
-    fun callList() {
+    fun list() {
         val client =
             OrbOkHttpClient.builder()
                 .baseUrl(TestServerExtension.BASE_URL)
                 .apiKey("My API Key")
                 .build()
         val volumeService = client.events().volume()
+
         val eventVolumes =
             volumeService.list(
                 EventVolumeListParams.builder()
@@ -29,7 +30,7 @@ class VolumeServiceTest {
                     .timeframeEnd(OffsetDateTime.parse("2024-10-11T06:00:00Z"))
                     .build()
             )
-        println(eventVolumes)
+
         eventVolumes.validate()
     }
 }

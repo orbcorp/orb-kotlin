@@ -1,5 +1,24 @@
 # Changelog
 
+## 0.1.0-alpha.27 (2025-02-26)
+
+Full Changelog: [v0.1.0-alpha.26...v0.1.0-alpha.27](https://github.com/orbcorp/orb-kotlin/compare/v0.1.0-alpha.26...v0.1.0-alpha.27)
+
+### Features
+
+* **client:** allow omitting params object when none required ([#241](https://github.com/orbcorp/orb-kotlin/issues/241)) ([19c350a](https://github.com/orbcorp/orb-kotlin/commit/19c350ad1c39a60d833013ce20c4c074053bdf1e))
+
+
+### Chores
+
+* **internal:** add async service tests ([#243](https://github.com/orbcorp/orb-kotlin/issues/243)) ([8a2518c](https://github.com/orbcorp/orb-kotlin/commit/8a2518c6075a0b8b0d4bdaef42a7c00f9d30bc5b))
+* **internal:** improve sync service tests ([8a2518c](https://github.com/orbcorp/orb-kotlin/commit/8a2518c6075a0b8b0d4bdaef42a7c00f9d30bc5b))
+
+
+### Documentation
+
+* readme parameter tweaks ([8a2518c](https://github.com/orbcorp/orb-kotlin/commit/8a2518c6075a0b8b0d4bdaef42a7c00f9d30bc5b))
+
 ## 0.1.0-alpha.26 (2025-02-25)
 
 Full Changelog: [v0.1.0-alpha.25...v0.1.0-alpha.26](https://github.com/orbcorp/orb-kotlin/compare/v0.1.0-alpha.25...v0.1.0-alpha.26)

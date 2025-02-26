@@ -63,9 +63,19 @@ interface CustomerService {
      * See [Customer](/core-concepts##customer) for an overview of the customer model.
      */
     fun list(
-        params: CustomerListParams,
+        params: CustomerListParams = CustomerListParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CustomerListPage
+
+    /**
+     * This endpoint returns a list of all customers for an account. The list of customers is
+     * ordered starting from the most recently created customer. This endpoint follows Orb's
+     * [standardized pagination format](/api-reference/pagination).
+     *
+     * See [Customer](/core-concepts##customer) for an overview of the customer model.
+     */
+    fun list(requestOptions: RequestOptions): CustomerListPage =
+        list(CustomerListParams.none(), requestOptions)
 
     /**
      * This performs a deletion of this customer, its subscriptions, and its invoices, provided the

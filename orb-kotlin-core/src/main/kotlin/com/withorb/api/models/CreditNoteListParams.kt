@@ -48,6 +48,8 @@ private constructor(
 
     companion object {
 
+        fun none(): CreditNoteListParams = builder().build()
+
         fun builder() = Builder()
     }
 

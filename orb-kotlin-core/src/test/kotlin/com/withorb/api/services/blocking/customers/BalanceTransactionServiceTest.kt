@@ -13,14 +13,15 @@ import org.junit.jupiter.api.extension.ExtendWith
 class BalanceTransactionServiceTest {
 
     @Test
-    fun callCreate() {
+    fun create() {
         val client =
             OrbOkHttpClient.builder()
                 .baseUrl(TestServerExtension.BASE_URL)
                 .apiKey("My API Key")
                 .build()
         val balanceTransactionService = client.customers().balanceTransactions()
-        val customerBalanceTransactionCreateResponse =
+
+        val balanceTransaction =
             balanceTransactionService.create(
                 CustomerBalanceTransactionCreateParams.builder()
                     .customerId("customer_id")
@@ -29,23 +30,24 @@ class BalanceTransactionServiceTest {
                     .description("description")
                     .build()
             )
-        println(customerBalanceTransactionCreateResponse)
-        customerBalanceTransactionCreateResponse.validate()
+
+        balanceTransaction.validate()
     }
 
     @Test
-    fun callList() {
+    fun list() {
         val client =
             OrbOkHttpClient.builder()
                 .baseUrl(TestServerExtension.BASE_URL)
                 .apiKey("My API Key")
                 .build()
         val balanceTransactionService = client.customers().balanceTransactions()
-        val customerBalanceTransactions =
+
+        val page =
             balanceTransactionService.list(
                 CustomerBalanceTransactionListParams.builder().customerId("customer_id").build()
             )
-        println(customerBalanceTransactions)
-        customerBalanceTransactions.data().forEach { it.validate() }
+
+        page.response().validate()
     }
 }

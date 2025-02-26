@@ -13,34 +13,36 @@ import org.junit.jupiter.api.extension.ExtendWith
 class CreditServiceTest {
 
     @Test
-    fun callList() {
+    fun list() {
         val client =
             OrbOkHttpClient.builder()
                 .baseUrl(TestServerExtension.BASE_URL)
                 .apiKey("My API Key")
                 .build()
         val creditService = client.customers().credits()
-        val customerCreditBalances =
+
+        val page =
             creditService.list(CustomerCreditListParams.builder().customerId("customer_id").build())
-        println(customerCreditBalances)
-        customerCreditBalances.data().forEach { it.validate() }
+
+        page.response().validate()
     }
 
     @Test
-    fun callListByExternalId() {
+    fun listByExternalId() {
         val client =
             OrbOkHttpClient.builder()
                 .baseUrl(TestServerExtension.BASE_URL)
                 .apiKey("My API Key")
                 .build()
         val creditService = client.customers().credits()
-        val customerCreditBalances =
+
+        val page =
             creditService.listByExternalId(
                 CustomerCreditListByExternalIdParams.builder()
                     .externalCustomerId("external_customer_id")
                     .build()
             )
-        println(customerCreditBalances)
-        customerCreditBalances.data().forEach { it.validate() }
+
+        page.response().validate()
     }
 }

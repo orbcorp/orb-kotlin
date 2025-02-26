@@ -160,6 +160,8 @@ private constructor(
 
     companion object {
 
+        fun none(): InvoiceListParams = builder().build()
+
         fun builder() = Builder()
     }
 

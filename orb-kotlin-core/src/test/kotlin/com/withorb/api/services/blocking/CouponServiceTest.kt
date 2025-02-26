@@ -7,7 +7,6 @@ import com.withorb.api.client.okhttp.OrbOkHttpClient
 import com.withorb.api.models.CouponArchiveParams
 import com.withorb.api.models.CouponCreateParams
 import com.withorb.api.models.CouponFetchParams
-import com.withorb.api.models.CouponListParams
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 
@@ -15,13 +14,14 @@ import org.junit.jupiter.api.extension.ExtendWith
 class CouponServiceTest {
 
     @Test
-    fun callCreate() {
+    fun create() {
         val client =
             OrbOkHttpClient.builder()
                 .baseUrl(TestServerExtension.BASE_URL)
                 .apiKey("My API Key")
                 .build()
         val couponService = client.coupons()
+
         val coupon =
             couponService.create(
                 CouponCreateParams.builder()
@@ -31,47 +31,50 @@ class CouponServiceTest {
                     .maxRedemptions(1L)
                     .build()
             )
-        println(coupon)
+
         coupon.validate()
     }
 
     @Test
-    fun callList() {
+    fun list() {
         val client =
             OrbOkHttpClient.builder()
                 .baseUrl(TestServerExtension.BASE_URL)
                 .apiKey("My API Key")
                 .build()
         val couponService = client.coupons()
-        val coupons = couponService.list(CouponListParams.builder().build())
-        println(coupons)
-        coupons.data().forEach { it.validate() }
+
+        val page = couponService.list()
+
+        page.response().validate()
     }
 
     @Test
-    fun callArchive() {
+    fun archive() {
         val client =
             OrbOkHttpClient.builder()
                 .baseUrl(TestServerExtension.BASE_URL)
                 .apiKey("My API Key")
                 .build()
         val couponService = client.coupons()
+
         val coupon =
             couponService.archive(CouponArchiveParams.builder().couponId("coupon_id").build())
-        println(coupon)
+
         coupon.validate()
     }
 
     @Test
-    fun callFetch() {
+    fun fetch() {
         val client =
             OrbOkHttpClient.builder()
                 .baseUrl(TestServerExtension.BASE_URL)
                 .apiKey("My API Key")
                 .build()
         val couponService = client.coupons()
+
         val coupon = couponService.fetch(CouponFetchParams.builder().couponId("coupon_id").build())
-        println(coupon)
+
         coupon.validate()
     }
 }

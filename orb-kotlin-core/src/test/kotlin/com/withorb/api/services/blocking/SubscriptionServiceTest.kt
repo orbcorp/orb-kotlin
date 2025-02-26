@@ -11,7 +11,6 @@ import com.withorb.api.models.SubscriptionFetchCostsParams
 import com.withorb.api.models.SubscriptionFetchParams
 import com.withorb.api.models.SubscriptionFetchScheduleParams
 import com.withorb.api.models.SubscriptionFetchUsageParams
-import com.withorb.api.models.SubscriptionListParams
 import com.withorb.api.models.SubscriptionPriceIntervalsParams
 import com.withorb.api.models.SubscriptionSchedulePlanChangeParams
 import com.withorb.api.models.SubscriptionTriggerPhaseParams
@@ -31,14 +30,15 @@ import org.junit.jupiter.api.extension.ExtendWith
 class SubscriptionServiceTest {
 
     @Test
-    fun callCreate() {
+    fun create() {
         val client =
             OrbOkHttpClient.builder()
                 .baseUrl(TestServerExtension.BASE_URL)
                 .apiKey("My API Key")
                 .build()
         val subscriptionService = client.subscriptions()
-        val subscriptionCreateResponse =
+
+        val subscription =
             subscriptionService.create(
                 SubscriptionCreateParams.builder()
                     .addAddAdjustment(
@@ -345,18 +345,19 @@ class SubscriptionServiceTest {
                     .addUsageCustomerId("string")
                     .build()
             )
-        println(subscriptionCreateResponse)
-        subscriptionCreateResponse.validate()
+
+        subscription.validate()
     }
 
     @Test
-    fun callUpdate() {
+    fun update() {
         val client =
             OrbOkHttpClient.builder()
                 .baseUrl(TestServerExtension.BASE_URL)
                 .apiKey("My API Key")
                 .build()
         val subscriptionService = client.subscriptions()
+
         val subscription =
             subscriptionService.update(
                 SubscriptionUpdateParams.builder()
@@ -372,32 +373,34 @@ class SubscriptionServiceTest {
                     .netTerms(0L)
                     .build()
             )
-        println(subscription)
+
         subscription.validate()
     }
 
     @Test
-    fun callList() {
+    fun list() {
         val client =
             OrbOkHttpClient.builder()
                 .baseUrl(TestServerExtension.BASE_URL)
                 .apiKey("My API Key")
                 .build()
         val subscriptionService = client.subscriptions()
-        val subscriptions = subscriptionService.list(SubscriptionListParams.builder().build())
-        println(subscriptions)
-        subscriptions.data().forEach { it.validate() }
+
+        val page = subscriptionService.list()
+
+        page.response().validate()
     }
 
     @Test
-    fun callCancel() {
+    fun cancel() {
         val client =
             OrbOkHttpClient.builder()
                 .baseUrl(TestServerExtension.BASE_URL)
                 .apiKey("My API Key")
                 .build()
         val subscriptionService = client.subscriptions()
-        val subscriptionCancelResponse =
+
+        val response =
             subscriptionService.cancel(
                 SubscriptionCancelParams.builder()
                     .subscriptionId("subscription_id")
@@ -406,35 +409,37 @@ class SubscriptionServiceTest {
                     .cancellationDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                     .build()
             )
-        println(subscriptionCancelResponse)
-        subscriptionCancelResponse.validate()
+
+        response.validate()
     }
 
     @Test
-    fun callFetch() {
+    fun fetch() {
         val client =
             OrbOkHttpClient.builder()
                 .baseUrl(TestServerExtension.BASE_URL)
                 .apiKey("My API Key")
                 .build()
         val subscriptionService = client.subscriptions()
+
         val subscription =
             subscriptionService.fetch(
                 SubscriptionFetchParams.builder().subscriptionId("subscription_id").build()
             )
-        println(subscription)
+
         subscription.validate()
     }
 
     @Test
-    fun callFetchCosts() {
+    fun fetchCosts() {
         val client =
             OrbOkHttpClient.builder()
                 .baseUrl(TestServerExtension.BASE_URL)
                 .apiKey("My API Key")
                 .build()
         val subscriptionService = client.subscriptions()
-        val subscriptionFetchCostsResponse =
+
+        val response =
             subscriptionService.fetchCosts(
                 SubscriptionFetchCostsParams.builder()
                     .subscriptionId("subscription_id")
@@ -444,35 +449,37 @@ class SubscriptionServiceTest {
                     .viewMode(SubscriptionFetchCostsParams.ViewMode.PERIODIC)
                     .build()
             )
-        println(subscriptionFetchCostsResponse)
-        subscriptionFetchCostsResponse.validate()
+
+        response.validate()
     }
 
     @Test
-    fun callFetchSchedule() {
+    fun fetchSchedule() {
         val client =
             OrbOkHttpClient.builder()
                 .baseUrl(TestServerExtension.BASE_URL)
                 .apiKey("My API Key")
                 .build()
         val subscriptionService = client.subscriptions()
-        val subscriptionScheduleItems =
+
+        val page =
             subscriptionService.fetchSchedule(
                 SubscriptionFetchScheduleParams.builder().subscriptionId("subscription_id").build()
             )
-        println(subscriptionScheduleItems)
-        subscriptionScheduleItems.data().forEach { it.validate() }
+
+        page.response().validate()
     }
 
     @Disabled("Incorrect example breaks Prism")
     @Test
-    fun callFetchUsage() {
+    fun fetchUsage() {
         val client =
             OrbOkHttpClient.builder()
                 .baseUrl(TestServerExtension.BASE_URL)
                 .apiKey("My API Key")
                 .build()
         val subscriptionService = client.subscriptions()
+
         val subscriptionUsage =
             subscriptionService.fetchUsage(
                 SubscriptionFetchUsageParams.builder()
@@ -489,19 +496,21 @@ class SubscriptionServiceTest {
                     .viewMode(SubscriptionFetchUsageParams.ViewMode.PERIODIC)
                     .build()
             )
-        println(subscriptionUsage)
+
+        subscriptionUsage.validate()
     }
 
     @Disabled("Incorrect example breaks Prism")
     @Test
-    fun callPriceIntervals() {
+    fun priceIntervals() {
         val client =
             OrbOkHttpClient.builder()
                 .baseUrl(TestServerExtension.BASE_URL)
                 .apiKey("My API Key")
                 .build()
         val subscriptionService = client.subscriptions()
-        val subscriptionPriceIntervalsResponse =
+
+        val response =
             subscriptionService.priceIntervals(
                 SubscriptionPriceIntervalsParams.builder()
                     .subscriptionId("subscription_id")
@@ -653,19 +662,20 @@ class SubscriptionServiceTest {
                     )
                     .build()
             )
-        println(subscriptionPriceIntervalsResponse)
-        subscriptionPriceIntervalsResponse.validate()
+
+        response.validate()
     }
 
     @Test
-    fun callSchedulePlanChange() {
+    fun schedulePlanChange() {
         val client =
             OrbOkHttpClient.builder()
                 .baseUrl(TestServerExtension.BASE_URL)
                 .apiKey("My API Key")
                 .build()
         val subscriptionService = client.subscriptions()
-        val subscriptionSchedulePlanChangeResponse =
+
+        val response =
             subscriptionService.schedulePlanChange(
                 SubscriptionSchedulePlanChangeParams.builder()
                     .subscriptionId("subscription_id")
@@ -980,19 +990,20 @@ class SubscriptionServiceTest {
                     .addUsageCustomerId("string")
                     .build()
             )
-        println(subscriptionSchedulePlanChangeResponse)
-        subscriptionSchedulePlanChangeResponse.validate()
+
+        response.validate()
     }
 
     @Test
-    fun callTriggerPhase() {
+    fun triggerPhase() {
         val client =
             OrbOkHttpClient.builder()
                 .baseUrl(TestServerExtension.BASE_URL)
                 .apiKey("My API Key")
                 .build()
         val subscriptionService = client.subscriptions()
-        val subscriptionTriggerPhaseResponse =
+
+        val response =
             subscriptionService.triggerPhase(
                 SubscriptionTriggerPhaseParams.builder()
                     .subscriptionId("subscription_id")
@@ -1000,74 +1011,78 @@ class SubscriptionServiceTest {
                     .effectiveDate(LocalDate.parse("2019-12-27"))
                     .build()
             )
-        println(subscriptionTriggerPhaseResponse)
-        subscriptionTriggerPhaseResponse.validate()
+
+        response.validate()
     }
 
     @Test
-    fun callUnscheduleCancellation() {
+    fun unscheduleCancellation() {
         val client =
             OrbOkHttpClient.builder()
                 .baseUrl(TestServerExtension.BASE_URL)
                 .apiKey("My API Key")
                 .build()
         val subscriptionService = client.subscriptions()
-        val subscriptionUnscheduleCancellationResponse =
+
+        val response =
             subscriptionService.unscheduleCancellation(
                 SubscriptionUnscheduleCancellationParams.builder()
                     .subscriptionId("subscription_id")
                     .build()
             )
-        println(subscriptionUnscheduleCancellationResponse)
-        subscriptionUnscheduleCancellationResponse.validate()
+
+        response.validate()
     }
 
     @Test
-    fun callUnscheduleFixedFeeQuantityUpdates() {
+    fun unscheduleFixedFeeQuantityUpdates() {
         val client =
             OrbOkHttpClient.builder()
                 .baseUrl(TestServerExtension.BASE_URL)
                 .apiKey("My API Key")
                 .build()
         val subscriptionService = client.subscriptions()
-        val subscriptionUnscheduleFixedFeeQuantityUpdatesResponse =
+
+        val response =
             subscriptionService.unscheduleFixedFeeQuantityUpdates(
                 SubscriptionUnscheduleFixedFeeQuantityUpdatesParams.builder()
                     .subscriptionId("subscription_id")
                     .priceId("price_id")
                     .build()
             )
-        println(subscriptionUnscheduleFixedFeeQuantityUpdatesResponse)
-        subscriptionUnscheduleFixedFeeQuantityUpdatesResponse.validate()
+
+        response.validate()
     }
 
     @Test
-    fun callUnschedulePendingPlanChanges() {
+    fun unschedulePendingPlanChanges() {
         val client =
             OrbOkHttpClient.builder()
                 .baseUrl(TestServerExtension.BASE_URL)
                 .apiKey("My API Key")
                 .build()
         val subscriptionService = client.subscriptions()
-        val subscriptionUnschedulePendingPlanChangesResponse =
+
+        val response =
             subscriptionService.unschedulePendingPlanChanges(
                 SubscriptionUnschedulePendingPlanChangesParams.builder()
                     .subscriptionId("subscription_id")
                     .build()
             )
-        println(subscriptionUnschedulePendingPlanChangesResponse)
-        subscriptionUnschedulePendingPlanChangesResponse.validate()
+
+        response.validate()
     }
 
     @Test
-    fun callUpdateFixedFeeQuantity() {
+    fun updateFixedFeeQuantity() {
         val client =
             OrbOkHttpClient.builder()
                 .baseUrl(TestServerExtension.BASE_URL)
                 .apiKey("My API Key")
                 .build()
         val subscriptionService = client.subscriptions()
-        val subscriptionUpdateFixedFeeQuantityResponse =
+
+        val response =
             subscriptionService.updateFixedFeeQuantity(
                 SubscriptionUpdateFixedFeeQuantityParams.builder()
                     .subscriptionId("subscription_id")
@@ -1078,19 +1093,20 @@ class SubscriptionServiceTest {
                     .effectiveDate(LocalDate.parse("2022-12-21"))
                     .build()
             )
-        println(subscriptionUpdateFixedFeeQuantityResponse)
-        subscriptionUpdateFixedFeeQuantityResponse.validate()
+
+        response.validate()
     }
 
     @Test
-    fun callUpdateTrial() {
+    fun updateTrial() {
         val client =
             OrbOkHttpClient.builder()
                 .baseUrl(TestServerExtension.BASE_URL)
                 .apiKey("My API Key")
                 .build()
         val subscriptionService = client.subscriptions()
-        val subscriptionUpdateTrialResponse =
+
+        val response =
             subscriptionService.updateTrial(
                 SubscriptionUpdateTrialParams.builder()
                     .subscriptionId("subscription_id")
@@ -1098,7 +1114,7 @@ class SubscriptionServiceTest {
                     .shift(true)
                     .build()
             )
-        println(subscriptionUpdateTrialResponse)
-        subscriptionUpdateTrialResponse.validate()
+
+        response.validate()
     }
 }

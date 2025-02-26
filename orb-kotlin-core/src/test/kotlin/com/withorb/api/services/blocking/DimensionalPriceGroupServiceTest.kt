@@ -6,7 +6,6 @@ import com.withorb.api.TestServerExtension
 import com.withorb.api.client.okhttp.OrbOkHttpClient
 import com.withorb.api.core.JsonValue
 import com.withorb.api.models.DimensionalPriceGroupCreateParams
-import com.withorb.api.models.DimensionalPriceGroupListParams
 import com.withorb.api.models.DimensionalPriceGroupRetrieveParams
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
@@ -15,13 +14,14 @@ import org.junit.jupiter.api.extension.ExtendWith
 class DimensionalPriceGroupServiceTest {
 
     @Test
-    fun callCreate() {
+    fun create() {
         val client =
             OrbOkHttpClient.builder()
                 .baseUrl(TestServerExtension.BASE_URL)
                 .apiKey("My API Key")
                 .build()
         val dimensionalPriceGroupService = client.dimensionalPriceGroups()
+
         val dimensionalPriceGroup =
             dimensionalPriceGroupService.create(
                 DimensionalPriceGroupCreateParams.builder()
@@ -37,39 +37,40 @@ class DimensionalPriceGroupServiceTest {
                     )
                     .build()
             )
-        println(dimensionalPriceGroup)
+
         dimensionalPriceGroup.validate()
     }
 
     @Test
-    fun callRetrieve() {
+    fun retrieve() {
         val client =
             OrbOkHttpClient.builder()
                 .baseUrl(TestServerExtension.BASE_URL)
                 .apiKey("My API Key")
                 .build()
         val dimensionalPriceGroupService = client.dimensionalPriceGroups()
+
         val dimensionalPriceGroup =
             dimensionalPriceGroupService.retrieve(
                 DimensionalPriceGroupRetrieveParams.builder()
                     .dimensionalPriceGroupId("dimensional_price_group_id")
                     .build()
             )
-        println(dimensionalPriceGroup)
+
         dimensionalPriceGroup.validate()
     }
 
     @Test
-    fun callList() {
+    fun list() {
         val client =
             OrbOkHttpClient.builder()
                 .baseUrl(TestServerExtension.BASE_URL)
                 .apiKey("My API Key")
                 .build()
         val dimensionalPriceGroupService = client.dimensionalPriceGroups()
-        val dimensionalPriceGroups =
-            dimensionalPriceGroupService.list(DimensionalPriceGroupListParams.builder().build())
-        println(dimensionalPriceGroups)
-        dimensionalPriceGroups.data().forEach { it.validate() }
+
+        val page = dimensionalPriceGroupService.list()
+
+        page.response().validate()
     }
 }

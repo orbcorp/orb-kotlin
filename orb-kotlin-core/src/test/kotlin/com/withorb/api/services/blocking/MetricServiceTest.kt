@@ -7,7 +7,6 @@ import com.withorb.api.client.okhttp.OrbOkHttpClient
 import com.withorb.api.core.JsonValue
 import com.withorb.api.models.MetricCreateParams
 import com.withorb.api.models.MetricFetchParams
-import com.withorb.api.models.MetricListParams
 import com.withorb.api.models.MetricUpdateParams
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
@@ -16,13 +15,14 @@ import org.junit.jupiter.api.extension.ExtendWith
 class MetricServiceTest {
 
     @Test
-    fun callCreate() {
+    fun create() {
         val client =
             OrbOkHttpClient.builder()
                 .baseUrl(TestServerExtension.BASE_URL)
                 .apiKey("My API Key")
                 .build()
         val metricService = client.metrics()
+
         val billableMetric =
             metricService.create(
                 MetricCreateParams.builder()
@@ -37,18 +37,19 @@ class MetricServiceTest {
                     )
                     .build()
             )
-        println(billableMetric)
+
         billableMetric.validate()
     }
 
     @Test
-    fun callUpdate() {
+    fun update() {
         val client =
             OrbOkHttpClient.builder()
                 .baseUrl(TestServerExtension.BASE_URL)
                 .apiKey("My API Key")
                 .build()
         val metricService = client.metrics()
+
         val billableMetric =
             metricService.update(
                 MetricUpdateParams.builder()
@@ -60,34 +61,36 @@ class MetricServiceTest {
                     )
                     .build()
             )
-        println(billableMetric)
+
         billableMetric.validate()
     }
 
     @Test
-    fun callList() {
+    fun list() {
         val client =
             OrbOkHttpClient.builder()
                 .baseUrl(TestServerExtension.BASE_URL)
                 .apiKey("My API Key")
                 .build()
         val metricService = client.metrics()
-        val billableMetrics = metricService.list(MetricListParams.builder().build())
-        println(billableMetrics)
-        billableMetrics.data().forEach { it.validate() }
+
+        val page = metricService.list()
+
+        page.response().validate()
     }
 
     @Test
-    fun callFetch() {
+    fun fetch() {
         val client =
             OrbOkHttpClient.builder()
                 .baseUrl(TestServerExtension.BASE_URL)
                 .apiKey("My API Key")
                 .build()
         val metricService = client.metrics()
+
         val billableMetric =
             metricService.fetch(MetricFetchParams.builder().metricId("metric_id").build())
-        println(billableMetric)
+
         billableMetric.validate()
     }
 }

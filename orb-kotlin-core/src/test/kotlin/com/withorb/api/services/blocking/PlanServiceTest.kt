@@ -7,7 +7,6 @@ import com.withorb.api.client.okhttp.OrbOkHttpClient
 import com.withorb.api.core.JsonValue
 import com.withorb.api.models.PlanCreateParams
 import com.withorb.api.models.PlanFetchParams
-import com.withorb.api.models.PlanListParams
 import com.withorb.api.models.PlanUpdateParams
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
@@ -16,13 +15,14 @@ import org.junit.jupiter.api.extension.ExtendWith
 class PlanServiceTest {
 
     @Test
-    fun callCreate() {
+    fun create() {
         val client =
             OrbOkHttpClient.builder()
                 .baseUrl(TestServerExtension.BASE_URL)
                 .apiKey("My API Key")
                 .build()
         val planService = client.plans()
+
         val plan =
             planService.create(
                 PlanCreateParams.builder()
@@ -88,18 +88,19 @@ class PlanServiceTest {
                     .status(PlanCreateParams.Status.ACTIVE)
                     .build()
             )
-        println(plan)
+
         plan.validate()
     }
 
     @Test
-    fun callUpdate() {
+    fun update() {
         val client =
             OrbOkHttpClient.builder()
                 .baseUrl(TestServerExtension.BASE_URL)
                 .apiKey("My API Key")
                 .build()
         val planService = client.plans()
+
         val plan =
             planService.update(
                 PlanUpdateParams.builder()
@@ -112,33 +113,35 @@ class PlanServiceTest {
                     )
                     .build()
             )
-        println(plan)
+
         plan.validate()
     }
 
     @Test
-    fun callList() {
+    fun list() {
         val client =
             OrbOkHttpClient.builder()
                 .baseUrl(TestServerExtension.BASE_URL)
                 .apiKey("My API Key")
                 .build()
         val planService = client.plans()
-        val plans = planService.list(PlanListParams.builder().build())
-        println(plans)
-        plans.data().forEach { it.validate() }
+
+        val page = planService.list()
+
+        page.response().validate()
     }
 
     @Test
-    fun callFetch() {
+    fun fetch() {
         val client =
             OrbOkHttpClient.builder()
                 .baseUrl(TestServerExtension.BASE_URL)
                 .apiKey("My API Key")
                 .build()
         val planService = client.plans()
+
         val plan = planService.fetch(PlanFetchParams.builder().planId("plan_id").build())
-        println(plan)
+
         plan.validate()
     }
 }

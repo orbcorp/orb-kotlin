@@ -17,30 +17,32 @@ import org.junit.jupiter.api.extension.ExtendWith
 class LedgerServiceTest {
 
     @Test
-    fun callList() {
+    fun list() {
         val client =
             OrbOkHttpClient.builder()
                 .baseUrl(TestServerExtension.BASE_URL)
                 .apiKey("My API Key")
                 .build()
         val ledgerService = client.customers().credits().ledger()
-        val creditLedgerEntries =
+
+        val page =
             ledgerService.list(
                 CustomerCreditLedgerListParams.builder().customerId("customer_id").build()
             )
-        println(creditLedgerEntries)
-        creditLedgerEntries.data().forEach { it.validate() }
+
+        page.response().validate()
     }
 
     @Test
-    fun callCreateEntry() {
+    fun createEntry() {
         val client =
             OrbOkHttpClient.builder()
                 .baseUrl(TestServerExtension.BASE_URL)
                 .apiKey("My API Key")
                 .build()
         val ledgerService = client.customers().credits().ledger()
-        val customerCreditLedgerCreateEntryResponse =
+
+        val response =
             ledgerService.createEntry(
                 CustomerCreditLedgerCreateEntryParams.builder()
                     .customerId("customer_id")
@@ -83,18 +85,20 @@ class LedgerServiceTest {
                     )
                     .build()
             )
-        println(customerCreditLedgerCreateEntryResponse)
+
+        response.validate()
     }
 
     @Test
-    fun callCreateEntryByExternalId() {
+    fun createEntryByExternalId() {
         val client =
             OrbOkHttpClient.builder()
                 .baseUrl(TestServerExtension.BASE_URL)
                 .apiKey("My API Key")
                 .build()
         val ledgerService = client.customers().credits().ledger()
-        val customerCreditLedgerCreateEntryByExternalIdResponse =
+
+        val response =
             ledgerService.createEntryByExternalId(
                 CustomerCreditLedgerCreateEntryByExternalIdParams.builder()
                     .externalCustomerId("external_customer_id")
@@ -137,24 +141,26 @@ class LedgerServiceTest {
                     )
                     .build()
             )
-        println(customerCreditLedgerCreateEntryByExternalIdResponse)
+
+        response.validate()
     }
 
     @Test
-    fun callListByExternalId() {
+    fun listByExternalId() {
         val client =
             OrbOkHttpClient.builder()
                 .baseUrl(TestServerExtension.BASE_URL)
                 .apiKey("My API Key")
                 .build()
         val ledgerService = client.customers().credits().ledger()
-        val creditLedgerEntries =
+
+        val page =
             ledgerService.listByExternalId(
                 CustomerCreditLedgerListByExternalIdParams.builder()
                     .externalCustomerId("external_customer_id")
                     .build()
             )
-        println(creditLedgerEntries)
-        creditLedgerEntries.data().forEach { it.validate() }
+
+        page.response().validate()
     }
 }

@@ -12,18 +12,19 @@ import org.junit.jupiter.api.extension.ExtendWith
 class SubscriptionServiceTest {
 
     @Test
-    fun callList() {
+    fun list() {
         val client =
             OrbOkHttpClient.builder()
                 .baseUrl(TestServerExtension.BASE_URL)
                 .apiKey("My API Key")
                 .build()
         val subscriptionService = client.coupons().subscriptions()
-        val subscriptions =
+
+        val page =
             subscriptionService.list(
                 CouponSubscriptionListParams.builder().couponId("coupon_id").build()
             )
-        println(subscriptions)
-        subscriptions.data().forEach { it.validate() }
+
+        page.response().validate()
     }
 }

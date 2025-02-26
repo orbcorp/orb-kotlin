@@ -44,6 +44,8 @@ private constructor(
 
     companion object {
 
+        fun none(): ItemListParams = builder().build()
+
         fun builder() = Builder()
     }
 

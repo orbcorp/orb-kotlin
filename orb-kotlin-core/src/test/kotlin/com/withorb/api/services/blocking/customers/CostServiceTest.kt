@@ -14,14 +14,15 @@ import org.junit.jupiter.api.extension.ExtendWith
 class CostServiceTest {
 
     @Test
-    fun callList() {
+    fun list() {
         val client =
             OrbOkHttpClient.builder()
                 .baseUrl(TestServerExtension.BASE_URL)
                 .apiKey("My API Key")
                 .build()
         val costService = client.customers().costs()
-        val customerCostListResponse =
+
+        val cost =
             costService.list(
                 CustomerCostListParams.builder()
                     .customerId("customer_id")
@@ -31,19 +32,20 @@ class CostServiceTest {
                     .viewMode(CustomerCostListParams.ViewMode.PERIODIC)
                     .build()
             )
-        println(customerCostListResponse)
-        customerCostListResponse.validate()
+
+        cost.validate()
     }
 
     @Test
-    fun callListByExternalId() {
+    fun listByExternalId() {
         val client =
             OrbOkHttpClient.builder()
                 .baseUrl(TestServerExtension.BASE_URL)
                 .apiKey("My API Key")
                 .build()
         val costService = client.customers().costs()
-        val customerCostListByExternalIdResponse =
+
+        val response =
             costService.listByExternalId(
                 CustomerCostListByExternalIdParams.builder()
                     .externalCustomerId("external_customer_id")
@@ -53,7 +55,7 @@ class CostServiceTest {
                     .viewMode(CustomerCostListByExternalIdParams.ViewMode.PERIODIC)
                     .build()
             )
-        println(customerCostListByExternalIdResponse)
-        customerCostListByExternalIdResponse.validate()
+
+        response.validate()
     }
 }

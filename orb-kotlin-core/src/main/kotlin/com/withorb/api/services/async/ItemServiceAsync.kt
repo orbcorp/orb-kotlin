@@ -26,9 +26,13 @@ interface ItemServiceAsync {
 
     /** This endpoint returns a list of all Items, ordered in descending order by creation time. */
     suspend fun list(
-        params: ItemListParams,
+        params: ItemListParams = ItemListParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): ItemListPageAsync
+
+    /** This endpoint returns a list of all Items, ordered in descending order by creation time. */
+    suspend fun list(requestOptions: RequestOptions): ItemListPageAsync =
+        list(ItemListParams.none(), requestOptions)
 
     /** This endpoint returns an item identified by its item_id. */
     suspend fun fetch(

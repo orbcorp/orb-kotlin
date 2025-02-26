@@ -36,7 +36,11 @@ interface DimensionalPriceGroupService {
 
     /** List dimensional price groups */
     fun list(
-        params: DimensionalPriceGroupListParams,
+        params: DimensionalPriceGroupListParams = DimensionalPriceGroupListParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): DimensionalPriceGroupListPage
+
+    /** List dimensional price groups */
+    fun list(requestOptions: RequestOptions): DimensionalPriceGroupListPage =
+        list(DimensionalPriceGroupListParams.none(), requestOptions)
 }

@@ -33,9 +33,20 @@ interface CouponService {
      * schema.
      */
     fun list(
-        params: CouponListParams,
+        params: CouponListParams = CouponListParams.none(),
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CouponListPage
+
+    /**
+     * This endpoint returns a list of all coupons for an account in a list format.
+     *
+     * The list of coupons is ordered starting from the most recently created coupon. The response
+     * also includes `pagination_metadata`, which lets the caller retrieve the next page of results
+     * if they exist. More information about pagination can be found in the Pagination-metadata
+     * schema.
+     */
+    fun list(requestOptions: RequestOptions): CouponListPage =
+        list(CouponListParams.none(), requestOptions)
 
     /**
      * This endpoint allows a coupon to be archived. Archived coupons can no longer be redeemed, and

@@ -51,6 +51,8 @@ private constructor(
 
     companion object {
 
+        fun none(): EventBackfillListParams = builder().build()
+
         fun builder() = Builder()
     }
 

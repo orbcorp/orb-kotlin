@@ -8,7 +8,6 @@ import com.withorb.api.core.JsonValue
 import com.withorb.api.models.PriceCreateParams
 import com.withorb.api.models.PriceEvaluateParams
 import com.withorb.api.models.PriceFetchParams
-import com.withorb.api.models.PriceListParams
 import com.withorb.api.models.PriceUpdateParams
 import java.time.OffsetDateTime
 import org.junit.jupiter.api.Test
@@ -18,13 +17,14 @@ import org.junit.jupiter.api.extension.ExtendWith
 class PriceServiceTest {
 
     @Test
-    fun callCreate() {
+    fun create() {
         val client =
             OrbOkHttpClient.builder()
                 .baseUrl(TestServerExtension.BASE_URL)
                 .apiKey("My API Key")
                 .build()
         val priceService = client.prices()
+
         val price =
             priceService.create(
                 PriceCreateParams.builder()
@@ -81,17 +81,19 @@ class PriceServiceTest {
                     )
                     .build()
             )
-        println(price)
+
+        price.validate()
     }
 
     @Test
-    fun callUpdate() {
+    fun update() {
         val client =
             OrbOkHttpClient.builder()
                 .baseUrl(TestServerExtension.BASE_URL)
                 .apiKey("My API Key")
                 .build()
         val priceService = client.prices()
+
         val price =
             priceService.update(
                 PriceUpdateParams.builder()
@@ -103,31 +105,34 @@ class PriceServiceTest {
                     )
                     .build()
             )
-        println(price)
+
+        price.validate()
     }
 
     @Test
-    fun callList() {
+    fun list() {
         val client =
             OrbOkHttpClient.builder()
                 .baseUrl(TestServerExtension.BASE_URL)
                 .apiKey("My API Key")
                 .build()
         val priceService = client.prices()
-        val prices = priceService.list(PriceListParams.builder().build())
-        println(prices)
-        prices.data().forEach { it.validate() }
+
+        val page = priceService.list()
+
+        page.response().validate()
     }
 
     @Test
-    fun callEvaluate() {
+    fun evaluate() {
         val client =
             OrbOkHttpClient.builder()
                 .baseUrl(TestServerExtension.BASE_URL)
                 .apiKey("My API Key")
                 .build()
         val priceService = client.prices()
-        val priceEvaluateResponse =
+
+        val response =
             priceService.evaluate(
                 PriceEvaluateParams.builder()
                     .priceId("price_id")
@@ -139,19 +144,21 @@ class PriceServiceTest {
                     .addGroupingKey("case when my_event_type = 'foo' then true else false end")
                     .build()
             )
-        println(priceEvaluateResponse)
-        priceEvaluateResponse.validate()
+
+        response.validate()
     }
 
     @Test
-    fun callFetch() {
+    fun fetch() {
         val client =
             OrbOkHttpClient.builder()
                 .baseUrl(TestServerExtension.BASE_URL)
                 .apiKey("My API Key")
                 .build()
         val priceService = client.prices()
+
         val price = priceService.fetch(PriceFetchParams.builder().priceId("price_id").build())
-        println(price)
+
+        price.validate()
     }
 }
