@@ -38,7 +38,7 @@ class CustomerUpdateParamsTest {
                     .build()
             )
             .currency("currency")
-            .email("dev@stainlessapi.com")
+            .email("dev@stainless.com")
             .emailDelivery(true)
             .externalCustomerId("external_customer_id")
             .hierarchy(
@@ -118,7 +118,7 @@ class CustomerUpdateParamsTest {
                         .build()
                 )
                 .currency("currency")
-                .email("dev@stainlessapi.com")
+                .email("dev@stainless.com")
                 .emailDelivery(true)
                 .externalCustomerId("external_customer_id")
                 .hierarchy(
@@ -198,7 +198,7 @@ class CustomerUpdateParamsTest {
                     .build()
             )
         assertThat(body.currency()).isEqualTo("currency")
-        assertThat(body.email()).isEqualTo("dev@stainlessapi.com")
+        assertThat(body.email()).isEqualTo("dev@stainless.com")
         assertThat(body.emailDelivery()).isEqualTo(true)
         assertThat(body.externalCustomerId()).isEqualTo("external_customer_id")
         assertThat(body.hierarchy())

@@ -12,7 +12,7 @@ class CustomerCreateParamsTest {
     @Test
     fun create() {
         CustomerCreateParams.builder()
-            .email("dev@stainlessapi.com")
+            .email("dev@stainless.com")
             .name("x")
             .accountingSyncConfiguration(
                 CustomerCreateParams.AccountingSyncConfiguration.builder()
@@ -92,7 +92,7 @@ class CustomerCreateParamsTest {
     fun body() {
         val params =
             CustomerCreateParams.builder()
-                .email("dev@stainlessapi.com")
+                .email("dev@stainless.com")
                 .name("x")
                 .accountingSyncConfiguration(
                     CustomerCreateParams.AccountingSyncConfiguration.builder()
@@ -171,7 +171,7 @@ class CustomerCreateParamsTest {
         val body = params._body()
 
         assertNotNull(body)
-        assertThat(body.email()).isEqualTo("dev@stainlessapi.com")
+        assertThat(body.email()).isEqualTo("dev@stainless.com")
         assertThat(body.name()).isEqualTo("x")
         assertThat(body.accountingSyncConfiguration())
             .isEqualTo(
@@ -258,12 +258,12 @@ class CustomerCreateParamsTest {
 
     @Test
     fun bodyWithoutOptionalFields() {
-        val params = CustomerCreateParams.builder().email("dev@stainlessapi.com").name("x").build()
+        val params = CustomerCreateParams.builder().email("dev@stainless.com").name("x").build()
 
         val body = params._body()
 
         assertNotNull(body)
-        assertThat(body.email()).isEqualTo("dev@stainlessapi.com")
+        assertThat(body.email()).isEqualTo("dev@stainless.com")
         assertThat(body.name()).isEqualTo("x")
     }
 }

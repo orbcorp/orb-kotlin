@@ -40,7 +40,7 @@ internal class ServiceParamsTest {
 
         customerService.create(
             CustomerCreateParams.builder()
-                .email("dev@stainlessapi.com")
+                .email("dev@stainless.com")
                 .name("x")
                 .accountingSyncConfiguration(
                     CustomerCreateParams.AccountingSyncConfiguration.builder()

@@ -31,7 +31,7 @@ class CustomerServiceAsyncTest {
         val customer =
             customerServiceAsync.create(
                 CustomerCreateParams.builder()
-                    .email("dev@stainlessapi.com")
+                    .email("dev@stainless.com")
                     .name("x")
                     .accountingSyncConfiguration(
                         CustomerCreateParams.AccountingSyncConfiguration.builder()
@@ -149,7 +149,7 @@ class CustomerServiceAsyncTest {
                             .build()
                     )
                     .currency("currency")
-                    .email("dev@stainlessapi.com")
+                    .email("dev@stainless.com")
                     .emailDelivery(true)
                     .externalCustomerId("external_customer_id")
                     .hierarchy(
@@ -338,7 +338,7 @@ class CustomerServiceAsyncTest {
                             .build()
                     )
                     .currency("currency")
-                    .email("dev@stainlessapi.com")
+                    .email("dev@stainless.com")
                     .emailDelivery(true)
                     .externalCustomerId("external_customer_id")
                     .hierarchy(
