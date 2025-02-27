@@ -531,6 +531,7 @@ class SubscriptionServiceTest {
                             .addAmountDiscountCreationParamsDiscount(0.0)
                             .endDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                             .externalPriceId("external_price_id")
+                            .filter("my_property > 100 AND my_other_property = 'bar'")
                             .addFixedFeeQuantityTransition(
                                 SubscriptionPriceIntervalsParams.Add.FixedFeeQuantityTransition
                                     .builder()
@@ -613,6 +614,7 @@ class SubscriptionServiceTest {
                                     .build()
                             )
                             .priceId("h74gfhdjvn7ujokd")
+                            .addUsageCustomerId("string")
                             .build()
                     )
                     .addAddAdjustment(
@@ -643,6 +645,7 @@ class SubscriptionServiceTest {
                             .priceIntervalId("sdfs6wdjvn7ujokd")
                             .billingCycleDay(0L)
                             .endDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                            .filter("my_property > 100 AND my_other_property = 'bar'")
                             .addFixedFeeQuantityTransition(
                                 SubscriptionPriceIntervalsParams.Edit.FixedFeeQuantityTransition
                                     .builder()
@@ -651,6 +654,7 @@ class SubscriptionServiceTest {
                                     .build()
                             )
                             .startDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                            .addUsageCustomerId("string")
                             .build()
                     )
                     .addEditAdjustment(

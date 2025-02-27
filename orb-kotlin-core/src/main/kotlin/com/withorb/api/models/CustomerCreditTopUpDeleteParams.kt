@@ -11,7 +11,10 @@ import com.withorb.api.core.http.QueryParams
 import com.withorb.api.core.toImmutable
 import java.util.Objects
 
-/** Delete top-up */
+/**
+ * This deactivates the top-up and voids any invoices associated with pending credit blocks
+ * purchased through the top-up.
+ */
 class CustomerCreditTopUpDeleteParams
 private constructor(
     private val customerId: String,

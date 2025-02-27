@@ -397,6 +397,7 @@ class SubscriptionUpdateFixedFeeQuantityResponseTest {
                             OffsetDateTime.parse("2019-12-27T18:11:19.117Z")
                         )
                         .endDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                        .filter("filter")
                         .addFixedFeeQuantityTransition(
                             SubscriptionUpdateFixedFeeQuantityResponse.PriceInterval
                                 .FixedFeeQuantityTransition
@@ -489,6 +490,7 @@ class SubscriptionUpdateFixedFeeQuantityResponseTest {
                                 .build()
                         )
                         .startDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                        .addUsageCustomerId("string")
                         .build()
                 )
                 .redeemedCoupon(
@@ -901,6 +903,7 @@ class SubscriptionUpdateFixedFeeQuantityResponseTest {
                     .currentBillingPeriodEndDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                     .currentBillingPeriodStartDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                     .endDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                    .filter("filter")
                     .addFixedFeeQuantityTransition(
                         SubscriptionUpdateFixedFeeQuantityResponse.PriceInterval
                             .FixedFeeQuantityTransition
@@ -991,6 +994,7 @@ class SubscriptionUpdateFixedFeeQuantityResponseTest {
                             .build()
                     )
                     .startDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                    .addUsageCustomerId("string")
                     .build()
             )
         assertThat(subscriptionUpdateFixedFeeQuantityResponse.redeemedCoupon())

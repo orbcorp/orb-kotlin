@@ -91,7 +91,10 @@ class TopUpServiceAsyncImpl internal constructor(private val clientOptions: Clie
 
     private val deleteHandler: Handler<Void?> = emptyHandler().withErrorHandler(errorHandler)
 
-    /** Delete top-up */
+    /**
+     * This deactivates the top-up and voids any invoices associated with pending credit blocks
+     * purchased through the top-up.
+     */
     override suspend fun delete(
         params: CustomerCreditTopUpDeleteParams,
         requestOptions: RequestOptions,
@@ -155,7 +158,10 @@ class TopUpServiceAsyncImpl internal constructor(private val clientOptions: Clie
     private val deleteByExternalIdHandler: Handler<Void?> =
         emptyHandler().withErrorHandler(errorHandler)
 
-    /** Delete top-up by external ID */
+    /**
+     * This deactivates the top-up and voids any invoices associated with pending credit blocks
+     * purchased through the top-up.
+     */
     override suspend fun deleteByExternalId(
         params: CustomerCreditTopUpDeleteByExternalIdParams,
         requestOptions: RequestOptions,
