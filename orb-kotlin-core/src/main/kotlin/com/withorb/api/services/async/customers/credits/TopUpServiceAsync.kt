@@ -35,7 +35,10 @@ interface TopUpServiceAsync {
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CustomerCreditTopUpListPageAsync
 
-    /** Delete top-up */
+    /**
+     * This deactivates the top-up and voids any invoices associated with pending credit blocks
+     * purchased through the top-up.
+     */
     suspend fun delete(
         params: CustomerCreditTopUpDeleteParams,
         requestOptions: RequestOptions = RequestOptions.none(),
@@ -54,7 +57,10 @@ interface TopUpServiceAsync {
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CustomerCreditTopUpCreateByExternalIdResponse
 
-    /** Delete top-up by external ID */
+    /**
+     * This deactivates the top-up and voids any invoices associated with pending credit blocks
+     * purchased through the top-up.
+     */
     suspend fun deleteByExternalId(
         params: CustomerCreditTopUpDeleteByExternalIdParams,
         requestOptions: RequestOptions = RequestOptions.none(),

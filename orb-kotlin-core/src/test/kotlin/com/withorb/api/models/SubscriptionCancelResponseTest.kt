@@ -392,6 +392,7 @@ class SubscriptionCancelResponseTest {
                             OffsetDateTime.parse("2019-12-27T18:11:19.117Z")
                         )
                         .endDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                        .filter("filter")
                         .addFixedFeeQuantityTransition(
                             SubscriptionCancelResponse.PriceInterval.FixedFeeQuantityTransition
                                 .builder()
@@ -483,6 +484,7 @@ class SubscriptionCancelResponseTest {
                                 .build()
                         )
                         .startDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                        .addUsageCustomerId("string")
                         .build()
                 )
                 .redeemedCoupon(
@@ -890,6 +892,7 @@ class SubscriptionCancelResponseTest {
                     .currentBillingPeriodEndDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                     .currentBillingPeriodStartDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
                     .endDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                    .filter("filter")
                     .addFixedFeeQuantityTransition(
                         SubscriptionCancelResponse.PriceInterval.FixedFeeQuantityTransition
                             .builder()
@@ -979,6 +982,7 @@ class SubscriptionCancelResponseTest {
                             .build()
                     )
                     .startDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                    .addUsageCustomerId("string")
                     .build()
             )
         assertThat(subscriptionCancelResponse.redeemedCoupon())
