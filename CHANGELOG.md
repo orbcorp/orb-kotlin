@@ -1,5 +1,27 @@
 # Changelog
 
+## 0.1.0-alpha.27 (2025-02-27)
+
+Full Changelog: [v0.1.0-alpha.26...v0.1.0-alpha.27](https://github.com/orbcorp/orb-kotlin/compare/v0.1.0-alpha.26...v0.1.0-alpha.27)
+
+### Features
+
+* **api:** api update ([#247](https://github.com/orbcorp/orb-kotlin/issues/247)) ([7170639](https://github.com/orbcorp/orb-kotlin/commit/71706391fcf17e02c05995c26241d6fc6457b410))
+* **client:** allow omitting params object when none required ([#241](https://github.com/orbcorp/orb-kotlin/issues/241)) ([19c350a](https://github.com/orbcorp/orb-kotlin/commit/19c350ad1c39a60d833013ce20c4c074053bdf1e))
+
+
+### Chores
+
+* **client:** use deep identity methods for primitive array types ([#244](https://github.com/orbcorp/orb-kotlin/issues/244)) ([84e7382](https://github.com/orbcorp/orb-kotlin/commit/84e7382c517014686e64ca9de4c16974db68b77b))
+* **internal:** add async service tests ([#243](https://github.com/orbcorp/orb-kotlin/issues/243)) ([8a2518c](https://github.com/orbcorp/orb-kotlin/commit/8a2518c6075a0b8b0d4bdaef42a7c00f9d30bc5b))
+* **internal:** improve sync service tests ([8a2518c](https://github.com/orbcorp/orb-kotlin/commit/8a2518c6075a0b8b0d4bdaef42a7c00f9d30bc5b))
+* **internal:** refactor `ServiceParamsTest` ([#246](https://github.com/orbcorp/orb-kotlin/issues/246)) ([6610689](https://github.com/orbcorp/orb-kotlin/commit/661068915bea1e3828addb8c05058cf382d6fd5e))
+
+
+### Documentation
+
+* readme parameter tweaks ([8a2518c](https://github.com/orbcorp/orb-kotlin/commit/8a2518c6075a0b8b0d4bdaef42a7c00f9d30bc5b))
+
 ## 0.1.0-alpha.26 (2025-02-25)
 
 Full Changelog: [v0.1.0-alpha.25...v0.1.0-alpha.26](https://github.com/orbcorp/orb-kotlin/compare/v0.1.0-alpha.25...v0.1.0-alpha.26)
