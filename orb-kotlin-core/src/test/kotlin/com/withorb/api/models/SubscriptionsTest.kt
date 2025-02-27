@@ -418,6 +418,7 @@ class SubscriptionsTest {
                                     OffsetDateTime.parse("2019-12-27T18:11:19.117Z")
                                 )
                                 .endDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                                .filter("filter")
                                 .addFixedFeeQuantityTransition(
                                     Subscription.PriceInterval.FixedFeeQuantityTransition.builder()
                                         .effectiveDate(
@@ -526,6 +527,7 @@ class SubscriptionsTest {
                                         .build()
                                 )
                                 .startDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                                .addUsageCustomerId("string")
                                 .build()
                         )
                         .redeemedCoupon(
@@ -940,6 +942,7 @@ class SubscriptionsTest {
                                 OffsetDateTime.parse("2019-12-27T18:11:19.117Z")
                             )
                             .endDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                            .filter("filter")
                             .addFixedFeeQuantityTransition(
                                 Subscription.PriceInterval.FixedFeeQuantityTransition.builder()
                                     .effectiveDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
@@ -1036,6 +1039,7 @@ class SubscriptionsTest {
                                     .build()
                             )
                             .startDate(OffsetDateTime.parse("2019-12-27T18:11:19.117Z"))
+                            .addUsageCustomerId("string")
                             .build()
                     )
                     .redeemedCoupon(

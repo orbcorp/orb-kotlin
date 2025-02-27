@@ -91,7 +91,10 @@ class TopUpServiceImpl internal constructor(private val clientOptions: ClientOpt
 
     private val deleteHandler: Handler<Void?> = emptyHandler().withErrorHandler(errorHandler)
 
-    /** Delete top-up */
+    /**
+     * This deactivates the top-up and voids any invoices associated with pending credit blocks
+     * purchased through the top-up.
+     */
     override fun delete(params: CustomerCreditTopUpDeleteParams, requestOptions: RequestOptions) {
         val request =
             HttpRequest.builder()
@@ -152,7 +155,10 @@ class TopUpServiceImpl internal constructor(private val clientOptions: ClientOpt
     private val deleteByExternalIdHandler: Handler<Void?> =
         emptyHandler().withErrorHandler(errorHandler)
 
-    /** Delete top-up by external ID */
+    /**
+     * This deactivates the top-up and voids any invoices associated with pending credit blocks
+     * purchased through the top-up.
+     */
     override fun deleteByExternalId(
         params: CustomerCreditTopUpDeleteByExternalIdParams,
         requestOptions: RequestOptions,
