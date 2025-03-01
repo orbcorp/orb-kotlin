@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.1.0-alpha.28 (2025-03-01)
+
+Full Changelog: [v0.1.0-alpha.27...v0.1.0-alpha.28](https://github.com/orbcorp/orb-kotlin/compare/v0.1.0-alpha.27...v0.1.0-alpha.28)
+
+### Features
+
+* **api:** api update ([#251](https://github.com/orbcorp/orb-kotlin/issues/251)) ([f9272c5](https://github.com/orbcorp/orb-kotlin/commit/f9272c5528ab9bbea2a9b5e3d1b6c62fd95ac1a7))
+
+
+### Documentation
+
+* update URLs from stainlessapi.com to stainless.com ([#249](https://github.com/orbcorp/orb-kotlin/issues/249)) ([84489d8](https://github.com/orbcorp/orb-kotlin/commit/84489d83cc6d0dfbe04ea5f63ec519a51f967483))
+
 ## 0.1.0-alpha.27 (2025-02-27)
 
 Full Changelog: [v0.1.0-alpha.26...v0.1.0-alpha.27](https://github.com/orbcorp/orb-kotlin/compare/v0.1.0-alpha.26...v0.1.0-alpha.27)
