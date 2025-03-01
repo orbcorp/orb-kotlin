@@ -129,6 +129,7 @@ class InvoiceTest {
                                 .build()
                         )
                         .endDate(OffsetDateTime.parse("2022-02-01T08:00:00+00:00"))
+                        .filter("filter")
                         .grouping("grouping")
                         .maximum(
                             Invoice.LineItem.Maximum.builder()
@@ -259,6 +260,7 @@ class InvoiceTest {
                                 .taxRatePercentage("tax_rate_percentage")
                                 .build()
                         )
+                        .addUsageCustomerId("string")
                         .build()
                 )
                 .maximum(
@@ -444,6 +446,7 @@ class InvoiceTest {
                             .build()
                     )
                     .endDate(OffsetDateTime.parse("2022-02-01T08:00:00+00:00"))
+                    .filter("filter")
                     .grouping("grouping")
                     .maximum(
                         Invoice.LineItem.Maximum.builder()
@@ -571,6 +574,7 @@ class InvoiceTest {
                             .taxRatePercentage("tax_rate_percentage")
                             .build()
                     )
+                    .addUsageCustomerId("string")
                     .build()
             )
         assertThat(invoice.maximum())
