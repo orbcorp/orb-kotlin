@@ -52,6 +52,9 @@ private constructor(
     @JsonProperty("end_date")
     @ExcludeMissing
     private val endDate: JsonField<OffsetDateTime> = JsonMissing.of(),
+    @JsonProperty("filter")
+    @ExcludeMissing
+    private val filter: JsonField<String> = JsonMissing.of(),
     @JsonProperty("grouping")
     @ExcludeMissing
     private val grouping: JsonField<String> = JsonMissing.of(),
@@ -87,6 +90,9 @@ private constructor(
     @JsonProperty("tax_amounts")
     @ExcludeMissing
     private val taxAmounts: JsonField<List<TaxAmount>> = JsonMissing.of(),
+    @JsonProperty("usage_customer_ids")
+    @ExcludeMissing
+    private val usageCustomerIds: JsonField<List<String>> = JsonMissing.of(),
     @JsonAnySetter private val additionalProperties: Map<String, JsonValue> = immutableEmptyMap(),
 ) {
 
@@ -115,6 +121,9 @@ private constructor(
 
     /** The end date of the range of time applied for this line item's price. */
     fun endDate(): OffsetDateTime = endDate.getRequired("end_date")
+
+    /** An additional filter that was used to calculate the usage for this line item. */
+    fun filter(): String? = filter.getNullable("filter")
 
     /**
      * [DEPRECATED] For configured prices that are split by a grouping key, this will be populated
@@ -178,6 +187,9 @@ private constructor(
      */
     fun taxAmounts(): List<TaxAmount> = taxAmounts.getRequired("tax_amounts")
 
+    /** A list of customer ids that were used to calculate the usage for this line item. */
+    fun usageCustomerIds(): List<String>? = usageCustomerIds.getNullable("usage_customer_ids")
+
     /** A unique ID for this line item. */
     @JsonProperty("id") @ExcludeMissing fun _id(): JsonField<String> = id
 
@@ -209,6 +221,9 @@ private constructor(
 
     /** The end date of the range of time applied for this line item's price. */
     @JsonProperty("end_date") @ExcludeMissing fun _endDate(): JsonField<OffsetDateTime> = endDate
+
+    /** An additional filter that was used to calculate the usage for this line item. */
+    @JsonProperty("filter") @ExcludeMissing fun _filter(): JsonField<String> = filter
 
     /**
      * [DEPRECATED] For configured prices that are split by a grouping key, this will be populated
@@ -289,6 +304,11 @@ private constructor(
     @ExcludeMissing
     fun _taxAmounts(): JsonField<List<TaxAmount>> = taxAmounts
 
+    /** A list of customer ids that were used to calculate the usage for this line item. */
+    @JsonProperty("usage_customer_ids")
+    @ExcludeMissing
+    fun _usageCustomerIds(): JsonField<List<String>> = usageCustomerIds
+
     @JsonAnyGetter
     @ExcludeMissing
     fun _additionalProperties(): Map<String, JsonValue> = additionalProperties
@@ -307,6 +327,7 @@ private constructor(
         creditsApplied()
         discount()?.validate()
         endDate()
+        filter()
         grouping()
         maximum()?.validate()
         maximumAmount()
@@ -320,6 +341,7 @@ private constructor(
         subLineItems().forEach { it.validate() }
         subtotal()
         taxAmounts().forEach { it.validate() }
+        usageCustomerIds()
         validated = true
     }
 
@@ -340,6 +362,7 @@ private constructor(
         private var creditsApplied: JsonField<String>? = null
         private var discount: JsonField<Discount>? = null
         private var endDate: JsonField<OffsetDateTime>? = null
+        private var filter: JsonField<String>? = null
         private var grouping: JsonField<String>? = null
         private var maximum: JsonField<Maximum>? = null
         private var maximumAmount: JsonField<String>? = null
@@ -353,6 +376,7 @@ private constructor(
         private var subLineItems: JsonField<MutableList<SubLineItem>>? = null
         private var subtotal: JsonField<String>? = null
         private var taxAmounts: JsonField<MutableList<TaxAmount>>? = null
+        private var usageCustomerIds: JsonField<MutableList<String>>? = null
         private var additionalProperties: MutableMap<String, JsonValue> = mutableMapOf()
 
         internal fun from(invoiceLineItemCreateResponse: InvoiceLineItemCreateResponse) = apply {
@@ -363,6 +387,7 @@ private constructor(
             creditsApplied = invoiceLineItemCreateResponse.creditsApplied
             discount = invoiceLineItemCreateResponse.discount
             endDate = invoiceLineItemCreateResponse.endDate
+            filter = invoiceLineItemCreateResponse.filter
             grouping = invoiceLineItemCreateResponse.grouping
             maximum = invoiceLineItemCreateResponse.maximum
             maximumAmount = invoiceLineItemCreateResponse.maximumAmount
@@ -376,6 +401,8 @@ private constructor(
             subLineItems = invoiceLineItemCreateResponse.subLineItems.map { it.toMutableList() }
             subtotal = invoiceLineItemCreateResponse.subtotal
             taxAmounts = invoiceLineItemCreateResponse.taxAmounts.map { it.toMutableList() }
+            usageCustomerIds =
+                invoiceLineItemCreateResponse.usageCustomerIds.map { it.toMutableList() }
             additionalProperties = invoiceLineItemCreateResponse.additionalProperties.toMutableMap()
         }
 
@@ -486,6 +513,12 @@ private constructor(
 
         /** The end date of the range of time applied for this line item's price. */
         fun endDate(endDate: JsonField<OffsetDateTime>) = apply { this.endDate = endDate }
+
+        /** An additional filter that was used to calculate the usage for this line item. */
+        fun filter(filter: String?) = filter(JsonField.ofNullable(filter))
+
+        /** An additional filter that was used to calculate the usage for this line item. */
+        fun filter(filter: JsonField<String>) = apply { this.filter = filter }
 
         /**
          * [DEPRECATED] For configured prices that are split by a grouping key, this will be
@@ -1091,6 +1124,27 @@ private constructor(
                 }
         }
 
+        /** A list of customer ids that were used to calculate the usage for this line item. */
+        fun usageCustomerIds(usageCustomerIds: List<String>?) =
+            usageCustomerIds(JsonField.ofNullable(usageCustomerIds))
+
+        /** A list of customer ids that were used to calculate the usage for this line item. */
+        fun usageCustomerIds(usageCustomerIds: JsonField<List<String>>) = apply {
+            this.usageCustomerIds = usageCustomerIds.map { it.toMutableList() }
+        }
+
+        /** A list of customer ids that were used to calculate the usage for this line item. */
+        fun addUsageCustomerId(usageCustomerId: String) = apply {
+            usageCustomerIds =
+                (usageCustomerIds ?: JsonField.of(mutableListOf())).apply {
+                    (asKnown()
+                            ?: throw IllegalStateException(
+                                "Field was set to non-list type: ${javaClass.simpleName}"
+                            ))
+                        .add(usageCustomerId)
+                }
+        }
+
         fun additionalProperties(additionalProperties: Map<String, JsonValue>) = apply {
             this.additionalProperties.clear()
             putAllAdditionalProperties(additionalProperties)
@@ -1119,6 +1173,7 @@ private constructor(
                 checkRequired("creditsApplied", creditsApplied),
                 checkRequired("discount", discount),
                 checkRequired("endDate", endDate),
+                checkRequired("filter", filter),
                 checkRequired("grouping", grouping),
                 checkRequired("maximum", maximum),
                 checkRequired("maximumAmount", maximumAmount),
@@ -1132,6 +1187,7 @@ private constructor(
                 checkRequired("subLineItems", subLineItems).map { it.toImmutable() },
                 checkRequired("subtotal", subtotal),
                 checkRequired("taxAmounts", taxAmounts).map { it.toImmutable() },
+                checkRequired("usageCustomerIds", usageCustomerIds).map { it.toImmutable() },
                 additionalProperties.toImmutable(),
             )
     }
@@ -5345,15 +5401,15 @@ private constructor(
             return true
         }
 
-        return /* spotless:off */ other is InvoiceLineItemCreateResponse && id == other.id && adjustedSubtotal == other.adjustedSubtotal && adjustments == other.adjustments && amount == other.amount && creditsApplied == other.creditsApplied && discount == other.discount && endDate == other.endDate && grouping == other.grouping && maximum == other.maximum && maximumAmount == other.maximumAmount && minimum == other.minimum && minimumAmount == other.minimumAmount && name == other.name && partiallyInvoicedAmount == other.partiallyInvoicedAmount && price == other.price && quantity == other.quantity && startDate == other.startDate && subLineItems == other.subLineItems && subtotal == other.subtotal && taxAmounts == other.taxAmounts && additionalProperties == other.additionalProperties /* spotless:on */
+        return /* spotless:off */ other is InvoiceLineItemCreateResponse && id == other.id && adjustedSubtotal == other.adjustedSubtotal && adjustments == other.adjustments && amount == other.amount && creditsApplied == other.creditsApplied && discount == other.discount && endDate == other.endDate && filter == other.filter && grouping == other.grouping && maximum == other.maximum && maximumAmount == other.maximumAmount && minimum == other.minimum && minimumAmount == other.minimumAmount && name == other.name && partiallyInvoicedAmount == other.partiallyInvoicedAmount && price == other.price && quantity == other.quantity && startDate == other.startDate && subLineItems == other.subLineItems && subtotal == other.subtotal && taxAmounts == other.taxAmounts && usageCustomerIds == other.usageCustomerIds && additionalProperties == other.additionalProperties /* spotless:on */
     }
 
     /* spotless:off */
-    private val hashCode: Int by lazy { Objects.hash(id, adjustedSubtotal, adjustments, amount, creditsApplied, discount, endDate, grouping, maximum, maximumAmount, minimum, minimumAmount, name, partiallyInvoicedAmount, price, quantity, startDate, subLineItems, subtotal, taxAmounts, additionalProperties) }
+    private val hashCode: Int by lazy { Objects.hash(id, adjustedSubtotal, adjustments, amount, creditsApplied, discount, endDate, filter, grouping, maximum, maximumAmount, minimum, minimumAmount, name, partiallyInvoicedAmount, price, quantity, startDate, subLineItems, subtotal, taxAmounts, usageCustomerIds, additionalProperties) }
     /* spotless:on */
 
     override fun hashCode(): Int = hashCode
 
     override fun toString() =
-        "InvoiceLineItemCreateResponse{id=$id, adjustedSubtotal=$adjustedSubtotal, adjustments=$adjustments, amount=$amount, creditsApplied=$creditsApplied, discount=$discount, endDate=$endDate, grouping=$grouping, maximum=$maximum, maximumAmount=$maximumAmount, minimum=$minimum, minimumAmount=$minimumAmount, name=$name, partiallyInvoicedAmount=$partiallyInvoicedAmount, price=$price, quantity=$quantity, startDate=$startDate, subLineItems=$subLineItems, subtotal=$subtotal, taxAmounts=$taxAmounts, additionalProperties=$additionalProperties}"
+        "InvoiceLineItemCreateResponse{id=$id, adjustedSubtotal=$adjustedSubtotal, adjustments=$adjustments, amount=$amount, creditsApplied=$creditsApplied, discount=$discount, endDate=$endDate, filter=$filter, grouping=$grouping, maximum=$maximum, maximumAmount=$maximumAmount, minimum=$minimum, minimumAmount=$minimumAmount, name=$name, partiallyInvoicedAmount=$partiallyInvoicedAmount, price=$price, quantity=$quantity, startDate=$startDate, subLineItems=$subLineItems, subtotal=$subtotal, taxAmounts=$taxAmounts, usageCustomerIds=$usageCustomerIds, additionalProperties=$additionalProperties}"
 }
