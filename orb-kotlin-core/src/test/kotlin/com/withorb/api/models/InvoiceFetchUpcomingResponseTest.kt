@@ -140,6 +140,7 @@ class InvoiceFetchUpcomingResponseTest {
                                 .build()
                         )
                         .endDate(OffsetDateTime.parse("2022-02-01T08:00:00+00:00"))
+                        .filter("filter")
                         .grouping("grouping")
                         .maximum(
                             InvoiceFetchUpcomingResponse.LineItem.Maximum.builder()
@@ -280,6 +281,7 @@ class InvoiceFetchUpcomingResponseTest {
                                 .taxRatePercentage("tax_rate_percentage")
                                 .build()
                         )
+                        .addUsageCustomerId("string")
                         .build()
                 )
                 .maximum(
@@ -483,6 +485,7 @@ class InvoiceFetchUpcomingResponseTest {
                             .build()
                     )
                     .endDate(OffsetDateTime.parse("2022-02-01T08:00:00+00:00"))
+                    .filter("filter")
                     .grouping("grouping")
                     .maximum(
                         InvoiceFetchUpcomingResponse.LineItem.Maximum.builder()
@@ -618,6 +621,7 @@ class InvoiceFetchUpcomingResponseTest {
                             .taxRatePercentage("tax_rate_percentage")
                             .build()
                     )
+                    .addUsageCustomerId("string")
                     .build()
             )
         assertThat(invoiceFetchUpcomingResponse.maximum())
