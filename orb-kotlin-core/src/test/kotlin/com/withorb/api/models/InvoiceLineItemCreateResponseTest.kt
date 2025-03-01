@@ -43,6 +43,7 @@ class InvoiceLineItemCreateResponseTest {
                         .build()
                 )
                 .endDate(OffsetDateTime.parse("2022-02-01T08:00:00+00:00"))
+                .filter("filter")
                 .grouping("grouping")
                 .maximum(
                     InvoiceLineItemCreateResponse.Maximum.builder()
@@ -169,6 +170,7 @@ class InvoiceLineItemCreateResponseTest {
                         .taxRatePercentage("tax_rate_percentage")
                         .build()
                 )
+                .addUsageCustomerId("string")
                 .build()
         assertThat(invoiceLineItemCreateResponse).isNotNull
         assertThat(invoiceLineItemCreateResponse.id()).isEqualTo("id")
@@ -208,6 +210,7 @@ class InvoiceLineItemCreateResponseTest {
             )
         assertThat(invoiceLineItemCreateResponse.endDate())
             .isEqualTo(OffsetDateTime.parse("2022-02-01T08:00:00+00:00"))
+        assertThat(invoiceLineItemCreateResponse.filter()).isEqualTo("filter")
         assertThat(invoiceLineItemCreateResponse.grouping()).isEqualTo("grouping")
         assertThat(invoiceLineItemCreateResponse.maximum())
             .isEqualTo(
@@ -344,5 +347,6 @@ class InvoiceLineItemCreateResponseTest {
                     .taxRatePercentage("tax_rate_percentage")
                     .build()
             )
+        assertThat(invoiceLineItemCreateResponse.usageCustomerIds()).containsExactly("string")
     }
 }
