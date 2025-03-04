@@ -163,6 +163,14 @@ private constructor(
 
         companion object {
 
+            /**
+             * Returns a mutable builder for constructing an instance of [Body].
+             *
+             * The following fields are required:
+             * ```kotlin
+             * .trialEndDate()
+             * ```
+             */
             fun builder() = Builder()
         }
 
@@ -268,6 +276,16 @@ private constructor(
 
     companion object {
 
+        /**
+         * Returns a mutable builder for constructing an instance of
+         * [SubscriptionUpdateTrialParams].
+         *
+         * The following fields are required:
+         * ```kotlin
+         * .subscriptionId()
+         * .trialEndDate()
+         * ```
+         */
         fun builder() = Builder()
     }
 

@@ -320,6 +320,17 @@ private constructor(
 
         companion object {
 
+            /**
+             * Returns a mutable builder for constructing an instance of [Body].
+             *
+             * The following fields are required:
+             * ```kotlin
+             * .currency()
+             * .invoiceDate()
+             * .lineItems()
+             * .netTerms()
+             * ```
+             */
             fun builder() = Builder()
         }
 
@@ -553,6 +564,17 @@ private constructor(
 
     companion object {
 
+        /**
+         * Returns a mutable builder for constructing an instance of [InvoiceCreateParams].
+         *
+         * The following fields are required:
+         * ```kotlin
+         * .currency()
+         * .invoiceDate()
+         * .lineItems()
+         * .netTerms()
+         * ```
+         */
         fun builder() = Builder()
     }
 
@@ -920,6 +942,20 @@ private constructor(
 
         companion object {
 
+            /**
+             * Returns a mutable builder for constructing an instance of [LineItem].
+             *
+             * The following fields are required:
+             * ```kotlin
+             * .endDate()
+             * .itemId()
+             * .modelType()
+             * .name()
+             * .quantity()
+             * .startDate()
+             * .unitConfig()
+             * ```
+             */
             fun builder() = Builder()
         }
 
@@ -1150,6 +1186,14 @@ private constructor(
 
             companion object {
 
+                /**
+                 * Returns a mutable builder for constructing an instance of [UnitConfig].
+                 *
+                 * The following fields are required:
+                 * ```kotlin
+                 * .unitAmount()
+                 * ```
+                 */
                 fun builder() = Builder()
             }
 
@@ -1268,6 +1312,7 @@ private constructor(
 
         companion object {
 
+            /** Returns a mutable builder for constructing an instance of [Metadata]. */
             fun builder() = Builder()
         }
 

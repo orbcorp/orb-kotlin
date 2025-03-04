@@ -166,6 +166,16 @@ private constructor(
 
         companion object {
 
+            /**
+             * Returns a mutable builder for constructing an instance of [Body].
+             *
+             * The following fields are required:
+             * ```kotlin
+             * .billableMetricId()
+             * .dimensions()
+             * .name()
+             * ```
+             */
             fun builder() = Builder()
         }
 
@@ -290,6 +300,17 @@ private constructor(
 
     companion object {
 
+        /**
+         * Returns a mutable builder for constructing an instance of
+         * [DimensionalPriceGroupCreateParams].
+         *
+         * The following fields are required:
+         * ```kotlin
+         * .billableMetricId()
+         * .dimensions()
+         * .name()
+         * ```
+         */
         fun builder() = Builder()
     }
 
@@ -509,6 +530,7 @@ private constructor(
 
         companion object {
 
+            /** Returns a mutable builder for constructing an instance of [Metadata]. */
             fun builder() = Builder()
         }
 

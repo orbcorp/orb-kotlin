@@ -160,6 +160,10 @@ private constructor(
 
         companion object {
 
+            /**
+             * Returns a mutable builder for constructing an instance of
+             * [CustomerBalanceTransactionListPage].
+             */
             fun builder() = Builder()
         }
 

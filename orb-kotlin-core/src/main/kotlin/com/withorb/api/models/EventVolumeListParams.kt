@@ -88,6 +88,14 @@ private constructor(
 
     companion object {
 
+        /**
+         * Returns a mutable builder for constructing an instance of [EventVolumeListParams].
+         *
+         * The following fields are required:
+         * ```kotlin
+         * .timeframeStart()
+         * ```
+         */
         fun builder() = Builder()
     }
 

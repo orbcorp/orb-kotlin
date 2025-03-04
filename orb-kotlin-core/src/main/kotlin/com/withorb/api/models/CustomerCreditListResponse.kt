@@ -107,6 +107,20 @@ private constructor(
 
     companion object {
 
+        /**
+         * Returns a mutable builder for constructing an instance of [CustomerCreditListResponse].
+         *
+         * The following fields are required:
+         * ```kotlin
+         * .id()
+         * .balance()
+         * .effectiveDate()
+         * .expiryDate()
+         * .maximumInitialBalance()
+         * .perUnitCostBasis()
+         * .status()
+         * ```
+         */
         fun builder() = Builder()
     }
 
