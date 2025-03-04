@@ -58,6 +58,14 @@ private constructor(
 
     companion object {
 
+        /**
+         * Returns a mutable builder for constructing an instance of [AlertDisableParams].
+         *
+         * The following fields are required:
+         * ```kotlin
+         * .alertConfigurationId()
+         * ```
+         */
         fun builder() = Builder()
     }
 

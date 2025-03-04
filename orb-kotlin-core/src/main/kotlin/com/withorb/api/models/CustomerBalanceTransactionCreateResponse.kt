@@ -150,6 +150,24 @@ private constructor(
 
     companion object {
 
+        /**
+         * Returns a mutable builder for constructing an instance of
+         * [CustomerBalanceTransactionCreateResponse].
+         *
+         * The following fields are required:
+         * ```kotlin
+         * .id()
+         * .action()
+         * .amount()
+         * .createdAt()
+         * .creditNote()
+         * .description()
+         * .endingBalance()
+         * .invoice()
+         * .startingBalance()
+         * .type()
+         * ```
+         */
         fun builder() = Builder()
     }
 
@@ -462,6 +480,14 @@ private constructor(
 
         companion object {
 
+            /**
+             * Returns a mutable builder for constructing an instance of [CreditNote].
+             *
+             * The following fields are required:
+             * ```kotlin
+             * .id()
+             * ```
+             */
             fun builder() = Builder()
         }
 
@@ -556,6 +582,14 @@ private constructor(
 
         companion object {
 
+            /**
+             * Returns a mutable builder for constructing an instance of [Invoice].
+             *
+             * The following fields are required:
+             * ```kotlin
+             * .id()
+             * ```
+             */
             fun builder() = Builder()
         }
 

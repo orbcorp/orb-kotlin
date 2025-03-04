@@ -50,6 +50,7 @@ private constructor(
 
         fun none(): CreditNoteListParams = builder().build()
 
+        /** Returns a mutable builder for constructing an instance of [CreditNoteListParams]. */
         fun builder() = Builder()
     }
 

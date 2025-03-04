@@ -105,6 +105,15 @@ private constructor(
 
     companion object {
 
+        /**
+         * Returns a mutable builder for constructing an instance of [TrialDiscount].
+         *
+         * The following fields are required:
+         * ```kotlin
+         * .appliesToPriceIds()
+         * .discountType()
+         * ```
+         */
         fun builder() = Builder()
     }
 

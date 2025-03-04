@@ -98,6 +98,7 @@ private constructor(
 
         fun none(): PlanListParams = builder().build()
 
+        /** Returns a mutable builder for constructing an instance of [PlanListParams]. */
         fun builder() = Builder()
     }
 

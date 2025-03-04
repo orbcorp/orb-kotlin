@@ -170,6 +170,15 @@ private constructor(
 
         companion object {
 
+            /**
+             * Returns a mutable builder for constructing an instance of [Body].
+             *
+             * The following fields are required:
+             * ```kotlin
+             * .discount()
+             * .redemptionCode()
+             * ```
+             */
             fun builder() = Builder()
         }
 
@@ -324,6 +333,15 @@ private constructor(
 
     companion object {
 
+        /**
+         * Returns a mutable builder for constructing an instance of [CouponCreateParams].
+         *
+         * The following fields are required:
+         * ```kotlin
+         * .discount()
+         * .redemptionCode()
+         * ```
+         */
         fun builder() = Builder()
     }
 
@@ -735,6 +753,16 @@ private constructor(
 
             companion object {
 
+                /**
+                 * Returns a mutable builder for constructing an instance of
+                 * [NewCouponPercentageDiscount].
+                 *
+                 * The following fields are required:
+                 * ```kotlin
+                 * .discountType()
+                 * .percentageDiscount()
+                 * ```
+                 */
                 fun builder() = Builder()
             }
 
@@ -959,6 +987,16 @@ private constructor(
 
             companion object {
 
+                /**
+                 * Returns a mutable builder for constructing an instance of
+                 * [NewCouponAmountDiscount].
+                 *
+                 * The following fields are required:
+                 * ```kotlin
+                 * .amountDiscount()
+                 * .discountType()
+                 * ```
+                 */
                 fun builder() = Builder()
             }
 

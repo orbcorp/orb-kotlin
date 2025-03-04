@@ -270,6 +270,18 @@ private constructor(
 
         companion object {
 
+            /**
+             * Returns a mutable builder for constructing an instance of [Body].
+             *
+             * The following fields are required:
+             * ```kotlin
+             * .amount()
+             * .currency()
+             * .invoiceSettings()
+             * .perUnitCostBasis()
+             * .threshold()
+             * ```
+             */
             fun builder() = Builder()
         }
 
@@ -445,6 +457,20 @@ private constructor(
 
     companion object {
 
+        /**
+         * Returns a mutable builder for constructing an instance of
+         * [CustomerCreditTopUpCreateParams].
+         *
+         * The following fields are required:
+         * ```kotlin
+         * .customerId()
+         * .amount()
+         * .currency()
+         * .invoiceSettings()
+         * .perUnitCostBasis()
+         * .threshold()
+         * ```
+         */
         fun builder() = Builder()
     }
 
@@ -776,6 +802,15 @@ private constructor(
 
         companion object {
 
+            /**
+             * Returns a mutable builder for constructing an instance of [InvoiceSettings].
+             *
+             * The following fields are required:
+             * ```kotlin
+             * .autoCollection()
+             * .netTerms()
+             * ```
+             */
             fun builder() = Builder()
         }
 

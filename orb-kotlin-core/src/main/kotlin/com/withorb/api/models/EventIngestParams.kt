@@ -283,6 +283,14 @@ private constructor(
 
         companion object {
 
+            /**
+             * Returns a mutable builder for constructing an instance of [Body].
+             *
+             * The following fields are required:
+             * ```kotlin
+             * .events()
+             * ```
+             */
             fun builder() = Builder()
         }
 
@@ -357,6 +365,14 @@ private constructor(
 
     companion object {
 
+        /**
+         * Returns a mutable builder for constructing an instance of [EventIngestParams].
+         *
+         * The following fields are required:
+         * ```kotlin
+         * .events()
+         * ```
+         */
         fun builder() = Builder()
     }
 
@@ -632,6 +648,17 @@ private constructor(
 
         companion object {
 
+            /**
+             * Returns a mutable builder for constructing an instance of [Event].
+             *
+             * The following fields are required:
+             * ```kotlin
+             * .eventName()
+             * .idempotencyKey()
+             * .properties()
+             * .timestamp()
+             * ```
+             */
             fun builder() = Builder()
         }
 

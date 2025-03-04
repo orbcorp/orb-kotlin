@@ -151,6 +151,23 @@ private constructor(
 
     companion object {
 
+        /**
+         * Returns a mutable builder for constructing an instance of [Alert].
+         *
+         * The following fields are required:
+         * ```kotlin
+         * .id()
+         * .createdAt()
+         * .currency()
+         * .customer()
+         * .enabled()
+         * .metric()
+         * .plan()
+         * .subscription()
+         * .thresholds()
+         * .type()
+         * ```
+         */
         fun builder() = Builder()
     }
 
@@ -334,6 +351,15 @@ private constructor(
 
         companion object {
 
+            /**
+             * Returns a mutable builder for constructing an instance of [Customer].
+             *
+             * The following fields are required:
+             * ```kotlin
+             * .id()
+             * .externalCustomerId()
+             * ```
+             */
             fun builder() = Builder()
         }
 
@@ -439,6 +465,14 @@ private constructor(
 
         companion object {
 
+            /**
+             * Returns a mutable builder for constructing an instance of [Metric].
+             *
+             * The following fields are required:
+             * ```kotlin
+             * .id()
+             * ```
+             */
             fun builder() = Builder()
         }
 
@@ -568,6 +602,17 @@ private constructor(
 
         companion object {
 
+            /**
+             * Returns a mutable builder for constructing an instance of [Plan].
+             *
+             * The following fields are required:
+             * ```kotlin
+             * .id()
+             * .externalPlanId()
+             * .name()
+             * .planVersion()
+             * ```
+             */
             fun builder() = Builder()
         }
 
@@ -699,6 +744,14 @@ private constructor(
 
         companion object {
 
+            /**
+             * Returns a mutable builder for constructing an instance of [Subscription].
+             *
+             * The following fields are required:
+             * ```kotlin
+             * .id()
+             * ```
+             */
             fun builder() = Builder()
         }
 
@@ -802,6 +855,14 @@ private constructor(
 
         companion object {
 
+            /**
+             * Returns a mutable builder for constructing an instance of [Threshold].
+             *
+             * The following fields are required:
+             * ```kotlin
+             * .value()
+             * ```
+             */
             fun builder() = Builder()
         }
 

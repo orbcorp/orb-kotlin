@@ -201,6 +201,15 @@ private constructor(
 
         companion object {
 
+            /**
+             * Returns a mutable builder for constructing an instance of
+             * [UngroupedSubscriptionUsage].
+             *
+             * The following fields are required:
+             * ```kotlin
+             * .data()
+             * ```
+             */
             fun builder() = Builder()
         }
 
@@ -309,6 +318,16 @@ private constructor(
 
             companion object {
 
+                /**
+                 * Returns a mutable builder for constructing an instance of [Data].
+                 *
+                 * The following fields are required:
+                 * ```kotlin
+                 * .billableMetric()
+                 * .usage()
+                 * .viewMode()
+                 * ```
+                 */
                 fun builder() = Builder()
             }
 
@@ -424,6 +443,15 @@ private constructor(
 
                 companion object {
 
+                    /**
+                     * Returns a mutable builder for constructing an instance of [BillableMetric].
+                     *
+                     * The following fields are required:
+                     * ```kotlin
+                     * .id()
+                     * .name()
+                     * ```
+                     */
                     fun builder() = Builder()
                 }
 
@@ -552,6 +580,16 @@ private constructor(
 
                 companion object {
 
+                    /**
+                     * Returns a mutable builder for constructing an instance of [Usage].
+                     *
+                     * The following fields are required:
+                     * ```kotlin
+                     * .quantity()
+                     * .timeframeEnd()
+                     * .timeframeStart()
+                     * ```
+                     */
                     fun builder() = Builder()
                 }
 
@@ -820,6 +858,14 @@ private constructor(
 
         companion object {
 
+            /**
+             * Returns a mutable builder for constructing an instance of [GroupedSubscriptionUsage].
+             *
+             * The following fields are required:
+             * ```kotlin
+             * .data()
+             * ```
+             */
             fun builder() = Builder()
         }
 
@@ -947,6 +993,17 @@ private constructor(
 
             companion object {
 
+                /**
+                 * Returns a mutable builder for constructing an instance of [Data].
+                 *
+                 * The following fields are required:
+                 * ```kotlin
+                 * .billableMetric()
+                 * .metricGroup()
+                 * .usage()
+                 * .viewMode()
+                 * ```
+                 */
                 fun builder() = Builder()
             }
 
@@ -1071,6 +1128,15 @@ private constructor(
 
                 companion object {
 
+                    /**
+                     * Returns a mutable builder for constructing an instance of [BillableMetric].
+                     *
+                     * The following fields are required:
+                     * ```kotlin
+                     * .id()
+                     * .name()
+                     * ```
+                     */
                     fun builder() = Builder()
                 }
 
@@ -1189,6 +1255,15 @@ private constructor(
 
                 companion object {
 
+                    /**
+                     * Returns a mutable builder for constructing an instance of [MetricGroup].
+                     *
+                     * The following fields are required:
+                     * ```kotlin
+                     * .propertyKey()
+                     * .propertyValue()
+                     * ```
+                     */
                     fun builder() = Builder()
                 }
 
@@ -1322,6 +1397,16 @@ private constructor(
 
                 companion object {
 
+                    /**
+                     * Returns a mutable builder for constructing an instance of [Usage].
+                     *
+                     * The following fields are required:
+                     * ```kotlin
+                     * .quantity()
+                     * .timeframeEnd()
+                     * .timeframeStart()
+                     * ```
+                     */
                     fun builder() = Builder()
                 }
 

@@ -532,6 +532,33 @@ private constructor(
 
     companion object {
 
+        /**
+         * Returns a mutable builder for constructing an instance of [Customer].
+         *
+         * The following fields are required:
+         * ```kotlin
+         * .id()
+         * .additionalEmails()
+         * .autoCollection()
+         * .balance()
+         * .billingAddress()
+         * .createdAt()
+         * .currency()
+         * .email()
+         * .emailDelivery()
+         * .exemptFromAutomatedTax()
+         * .externalCustomerId()
+         * .hierarchy()
+         * .metadata()
+         * .name()
+         * .paymentProvider()
+         * .paymentProviderId()
+         * .portalUrl()
+         * .shippingAddress()
+         * .taxId()
+         * .timezone()
+         * ```
+         */
         fun builder() = Builder()
     }
 
@@ -1114,6 +1141,19 @@ private constructor(
 
         companion object {
 
+            /**
+             * Returns a mutable builder for constructing an instance of [BillingAddress].
+             *
+             * The following fields are required:
+             * ```kotlin
+             * .city()
+             * .country()
+             * .line1()
+             * .line2()
+             * .postalCode()
+             * .state()
+             * ```
+             */
             fun builder() = Builder()
         }
 
@@ -1254,6 +1294,15 @@ private constructor(
 
         companion object {
 
+            /**
+             * Returns a mutable builder for constructing an instance of [Hierarchy].
+             *
+             * The following fields are required:
+             * ```kotlin
+             * .children()
+             * .parent()
+             * ```
+             */
             fun builder() = Builder()
         }
 
@@ -1359,6 +1408,15 @@ private constructor(
 
             companion object {
 
+                /**
+                 * Returns a mutable builder for constructing an instance of [Child].
+                 *
+                 * The following fields are required:
+                 * ```kotlin
+                 * .id()
+                 * .externalCustomerId()
+                 * ```
+                 */
                 fun builder() = Builder()
             }
 
@@ -1479,6 +1537,15 @@ private constructor(
 
             companion object {
 
+                /**
+                 * Returns a mutable builder for constructing an instance of [Parent].
+                 *
+                 * The following fields are required:
+                 * ```kotlin
+                 * .id()
+                 * .externalCustomerId()
+                 * ```
+                 */
                 fun builder() = Builder()
             }
 
@@ -1603,6 +1670,7 @@ private constructor(
 
         companion object {
 
+            /** Returns a mutable builder for constructing an instance of [Metadata]. */
             fun builder() = Builder()
         }
 
@@ -1853,6 +1921,19 @@ private constructor(
 
         companion object {
 
+            /**
+             * Returns a mutable builder for constructing an instance of [ShippingAddress].
+             *
+             * The following fields are required:
+             * ```kotlin
+             * .city()
+             * .country()
+             * .line1()
+             * .line2()
+             * .postalCode()
+             * .state()
+             * ```
+             */
             fun builder() = Builder()
         }
 
@@ -2104,6 +2185,16 @@ private constructor(
 
         companion object {
 
+            /**
+             * Returns a mutable builder for constructing an instance of [TaxId].
+             *
+             * The following fields are required:
+             * ```kotlin
+             * .country()
+             * .type()
+             * .value()
+             * ```
+             */
             fun builder() = Builder()
         }
 
@@ -3294,6 +3385,16 @@ private constructor(
 
         companion object {
 
+            /**
+             * Returns a mutable builder for constructing an instance of
+             * [AccountingSyncConfiguration].
+             *
+             * The following fields are required:
+             * ```kotlin
+             * .accountingProviders()
+             * .excluded()
+             * ```
+             */
             fun builder() = Builder()
         }
 
@@ -3407,6 +3508,15 @@ private constructor(
 
             companion object {
 
+                /**
+                 * Returns a mutable builder for constructing an instance of [AccountingProvider].
+                 *
+                 * The following fields are required:
+                 * ```kotlin
+                 * .externalProviderId()
+                 * .providerType()
+                 * ```
+                 */
                 fun builder() = Builder()
             }
 
@@ -3641,6 +3751,14 @@ private constructor(
 
         companion object {
 
+            /**
+             * Returns a mutable builder for constructing an instance of [ReportingConfiguration].
+             *
+             * The following fields are required:
+             * ```kotlin
+             * .exempt()
+             * ```
+             */
             fun builder() = Builder()
         }
 

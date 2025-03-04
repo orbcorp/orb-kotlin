@@ -87,6 +87,7 @@ private constructor(
 
         fun none(): MetricListParams = builder().build()
 
+        /** Returns a mutable builder for constructing an instance of [MetricListParams]. */
         fun builder() = Builder()
     }
 
