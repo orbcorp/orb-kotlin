@@ -46,6 +46,10 @@ class OrbClientAsyncImpl(private val clientOptions: ClientOptions) : OrbClientAs
     // Pass the original clientOptions so that this client sets its own User-Agent.
     private val sync: OrbClient by lazy { OrbClientImpl(clientOptions) }
 
+    private val withRawResponse: OrbClientAsync.WithRawResponse by lazy {
+        WithRawResponseImpl(clientOptions)
+    }
+
     private val topLevel: TopLevelServiceAsync by lazy {
         TopLevelServiceAsyncImpl(clientOptionsWithUserAgent)
     }
@@ -100,6 +104,8 @@ class OrbClientAsyncImpl(private val clientOptions: ClientOptions) : OrbClientAs
 
     override fun sync(): OrbClient = sync
 
+    override fun withRawResponse(): OrbClientAsync.WithRawResponse = withRawResponse
+
     override fun topLevel(): TopLevelServiceAsync = topLevel
 
     override fun coupons(): CouponServiceAsync = coupons
@@ -130,4 +136,95 @@ class OrbClientAsyncImpl(private val clientOptions: ClientOptions) : OrbClientAs
         dimensionalPriceGroups
 
     override fun close() = clientOptions.httpClient.close()
+
+    class WithRawResponseImpl internal constructor(private val clientOptions: ClientOptions) :
+        OrbClientAsync.WithRawResponse {
+
+        private val topLevel: TopLevelServiceAsync.WithRawResponse by lazy {
+            TopLevelServiceAsyncImpl.WithRawResponseImpl(clientOptions)
+        }
+
+        private val coupons: CouponServiceAsync.WithRawResponse by lazy {
+            CouponServiceAsyncImpl.WithRawResponseImpl(clientOptions)
+        }
+
+        private val creditNotes: CreditNoteServiceAsync.WithRawResponse by lazy {
+            CreditNoteServiceAsyncImpl.WithRawResponseImpl(clientOptions)
+        }
+
+        private val customers: CustomerServiceAsync.WithRawResponse by lazy {
+            CustomerServiceAsyncImpl.WithRawResponseImpl(clientOptions)
+        }
+
+        private val events: EventServiceAsync.WithRawResponse by lazy {
+            EventServiceAsyncImpl.WithRawResponseImpl(clientOptions)
+        }
+
+        private val invoiceLineItems: InvoiceLineItemServiceAsync.WithRawResponse by lazy {
+            InvoiceLineItemServiceAsyncImpl.WithRawResponseImpl(clientOptions)
+        }
+
+        private val invoices: InvoiceServiceAsync.WithRawResponse by lazy {
+            InvoiceServiceAsyncImpl.WithRawResponseImpl(clientOptions)
+        }
+
+        private val items: ItemServiceAsync.WithRawResponse by lazy {
+            ItemServiceAsyncImpl.WithRawResponseImpl(clientOptions)
+        }
+
+        private val metrics: MetricServiceAsync.WithRawResponse by lazy {
+            MetricServiceAsyncImpl.WithRawResponseImpl(clientOptions)
+        }
+
+        private val plans: PlanServiceAsync.WithRawResponse by lazy {
+            PlanServiceAsyncImpl.WithRawResponseImpl(clientOptions)
+        }
+
+        private val prices: PriceServiceAsync.WithRawResponse by lazy {
+            PriceServiceAsyncImpl.WithRawResponseImpl(clientOptions)
+        }
+
+        private val subscriptions: SubscriptionServiceAsync.WithRawResponse by lazy {
+            SubscriptionServiceAsyncImpl.WithRawResponseImpl(clientOptions)
+        }
+
+        private val alerts: AlertServiceAsync.WithRawResponse by lazy {
+            AlertServiceAsyncImpl.WithRawResponseImpl(clientOptions)
+        }
+
+        private val dimensionalPriceGroups:
+            DimensionalPriceGroupServiceAsync.WithRawResponse by lazy {
+            DimensionalPriceGroupServiceAsyncImpl.WithRawResponseImpl(clientOptions)
+        }
+
+        override fun topLevel(): TopLevelServiceAsync.WithRawResponse = topLevel
+
+        override fun coupons(): CouponServiceAsync.WithRawResponse = coupons
+
+        override fun creditNotes(): CreditNoteServiceAsync.WithRawResponse = creditNotes
+
+        override fun customers(): CustomerServiceAsync.WithRawResponse = customers
+
+        override fun events(): EventServiceAsync.WithRawResponse = events
+
+        override fun invoiceLineItems(): InvoiceLineItemServiceAsync.WithRawResponse =
+            invoiceLineItems
+
+        override fun invoices(): InvoiceServiceAsync.WithRawResponse = invoices
+
+        override fun items(): ItemServiceAsync.WithRawResponse = items
+
+        override fun metrics(): MetricServiceAsync.WithRawResponse = metrics
+
+        override fun plans(): PlanServiceAsync.WithRawResponse = plans
+
+        override fun prices(): PriceServiceAsync.WithRawResponse = prices
+
+        override fun subscriptions(): SubscriptionServiceAsync.WithRawResponse = subscriptions
+
+        override fun alerts(): AlertServiceAsync.WithRawResponse = alerts
+
+        override fun dimensionalPriceGroups(): DimensionalPriceGroupServiceAsync.WithRawResponse =
+            dimensionalPriceGroups
+    }
 }

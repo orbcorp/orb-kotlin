@@ -2,7 +2,9 @@
 
 package com.withorb.api.services.async
 
+import com.google.errorprone.annotations.MustBeClosed
 import com.withorb.api.core.RequestOptions
+import com.withorb.api.core.http.HttpResponseFor
 import com.withorb.api.models.Invoice
 import com.withorb.api.models.InvoiceCreateParams
 import com.withorb.api.models.InvoiceFetchParams
@@ -17,6 +19,11 @@ import com.withorb.api.models.InvoiceUpdateParams
 import com.withorb.api.models.InvoiceVoidParams
 
 interface InvoiceServiceAsync {
+
+    /**
+     * Returns a view of this service that provides access to raw HTTP responses for each method.
+     */
+    fun withRawResponse(): WithRawResponse
 
     /** This endpoint is used to create a one-off invoice for a customer. */
     suspend fun create(
@@ -134,4 +141,108 @@ interface InvoiceServiceAsync {
         params: InvoiceVoidParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): Invoice
+
+    /**
+     * A view of [InvoiceServiceAsync] that provides access to raw HTTP responses for each method.
+     */
+    interface WithRawResponse {
+
+        /**
+         * Returns a raw HTTP response for `post /invoices`, but is otherwise the same as
+         * [InvoiceServiceAsync.create].
+         */
+        @MustBeClosed
+        suspend fun create(
+            params: InvoiceCreateParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<Invoice>
+
+        /**
+         * Returns a raw HTTP response for `put /invoices/{invoice_id}`, but is otherwise the same
+         * as [InvoiceServiceAsync.update].
+         */
+        @MustBeClosed
+        suspend fun update(
+            params: InvoiceUpdateParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<Invoice>
+
+        /**
+         * Returns a raw HTTP response for `get /invoices`, but is otherwise the same as
+         * [InvoiceServiceAsync.list].
+         */
+        @MustBeClosed
+        suspend fun list(
+            params: InvoiceListParams = InvoiceListParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<InvoiceListPageAsync>
+
+        /**
+         * Returns a raw HTTP response for `get /invoices`, but is otherwise the same as
+         * [InvoiceServiceAsync.list].
+         */
+        @MustBeClosed
+        suspend fun list(requestOptions: RequestOptions): HttpResponseFor<InvoiceListPageAsync> =
+            list(InvoiceListParams.none(), requestOptions)
+
+        /**
+         * Returns a raw HTTP response for `get /invoices/{invoice_id}`, but is otherwise the same
+         * as [InvoiceServiceAsync.fetch].
+         */
+        @MustBeClosed
+        suspend fun fetch(
+            params: InvoiceFetchParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<Invoice>
+
+        /**
+         * Returns a raw HTTP response for `get /invoices/upcoming`, but is otherwise the same as
+         * [InvoiceServiceAsync.fetchUpcoming].
+         */
+        @MustBeClosed
+        suspend fun fetchUpcoming(
+            params: InvoiceFetchUpcomingParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<InvoiceFetchUpcomingResponse>
+
+        /**
+         * Returns a raw HTTP response for `post /invoices/{invoice_id}/issue`, but is otherwise the
+         * same as [InvoiceServiceAsync.issue].
+         */
+        @MustBeClosed
+        suspend fun issue(
+            params: InvoiceIssueParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<Invoice>
+
+        /**
+         * Returns a raw HTTP response for `post /invoices/{invoice_id}/mark_paid`, but is otherwise
+         * the same as [InvoiceServiceAsync.markPaid].
+         */
+        @MustBeClosed
+        suspend fun markPaid(
+            params: InvoiceMarkPaidParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<Invoice>
+
+        /**
+         * Returns a raw HTTP response for `post /invoices/{invoice_id}/pay`, but is otherwise the
+         * same as [InvoiceServiceAsync.pay].
+         */
+        @MustBeClosed
+        suspend fun pay(
+            params: InvoicePayParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<Invoice>
+
+        /**
+         * Returns a raw HTTP response for `post /invoices/{invoice_id}/void`, but is otherwise the
+         * same as [InvoiceServiceAsync.void].
+         */
+        @MustBeClosed
+        suspend fun void(
+            params: InvoiceVoidParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<Invoice>
+    }
 }

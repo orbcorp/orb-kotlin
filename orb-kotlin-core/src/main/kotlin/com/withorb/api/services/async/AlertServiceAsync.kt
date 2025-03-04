@@ -2,7 +2,9 @@
 
 package com.withorb.api.services.async
 
+import com.google.errorprone.annotations.MustBeClosed
 import com.withorb.api.core.RequestOptions
+import com.withorb.api.core.http.HttpResponseFor
 import com.withorb.api.models.Alert
 import com.withorb.api.models.AlertCreateForCustomerParams
 import com.withorb.api.models.AlertCreateForExternalCustomerParams
@@ -15,6 +17,11 @@ import com.withorb.api.models.AlertRetrieveParams
 import com.withorb.api.models.AlertUpdateParams
 
 interface AlertServiceAsync {
+
+    /**
+     * Returns a view of this service that provides access to raw HTTP responses for each method.
+     */
+    fun withRawResponse(): WithRawResponse
 
     /** This endpoint retrieves an alert by its ID. */
     suspend fun retrieve(
@@ -120,4 +127,97 @@ interface AlertServiceAsync {
         params: AlertEnableParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): Alert
+
+    /** A view of [AlertServiceAsync] that provides access to raw HTTP responses for each method. */
+    interface WithRawResponse {
+
+        /**
+         * Returns a raw HTTP response for `get /alerts/{alert_id}`, but is otherwise the same as
+         * [AlertServiceAsync.retrieve].
+         */
+        @MustBeClosed
+        suspend fun retrieve(
+            params: AlertRetrieveParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<Alert>
+
+        /**
+         * Returns a raw HTTP response for `put /alerts/{alert_configuration_id}`, but is otherwise
+         * the same as [AlertServiceAsync.update].
+         */
+        @MustBeClosed
+        suspend fun update(
+            params: AlertUpdateParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<Alert>
+
+        /**
+         * Returns a raw HTTP response for `get /alerts`, but is otherwise the same as
+         * [AlertServiceAsync.list].
+         */
+        @MustBeClosed
+        suspend fun list(
+            params: AlertListParams = AlertListParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<AlertListPageAsync>
+
+        /**
+         * Returns a raw HTTP response for `get /alerts`, but is otherwise the same as
+         * [AlertServiceAsync.list].
+         */
+        @MustBeClosed
+        suspend fun list(requestOptions: RequestOptions): HttpResponseFor<AlertListPageAsync> =
+            list(AlertListParams.none(), requestOptions)
+
+        /**
+         * Returns a raw HTTP response for `post /alerts/customer_id/{customer_id}`, but is
+         * otherwise the same as [AlertServiceAsync.createForCustomer].
+         */
+        @MustBeClosed
+        suspend fun createForCustomer(
+            params: AlertCreateForCustomerParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<Alert>
+
+        /**
+         * Returns a raw HTTP response for `post
+         * /alerts/external_customer_id/{external_customer_id}`, but is otherwise the same as
+         * [AlertServiceAsync.createForExternalCustomer].
+         */
+        @MustBeClosed
+        suspend fun createForExternalCustomer(
+            params: AlertCreateForExternalCustomerParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<Alert>
+
+        /**
+         * Returns a raw HTTP response for `post /alerts/subscription_id/{subscription_id}`, but is
+         * otherwise the same as [AlertServiceAsync.createForSubscription].
+         */
+        @MustBeClosed
+        suspend fun createForSubscription(
+            params: AlertCreateForSubscriptionParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<Alert>
+
+        /**
+         * Returns a raw HTTP response for `post /alerts/{alert_configuration_id}/disable`, but is
+         * otherwise the same as [AlertServiceAsync.disable].
+         */
+        @MustBeClosed
+        suspend fun disable(
+            params: AlertDisableParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<Alert>
+
+        /**
+         * Returns a raw HTTP response for `post /alerts/{alert_configuration_id}/enable`, but is
+         * otherwise the same as [AlertServiceAsync.enable].
+         */
+        @MustBeClosed
+        suspend fun enable(
+            params: AlertEnableParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<Alert>
+    }
 }

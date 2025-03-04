@@ -41,6 +41,11 @@ interface OrbClientAsync {
      */
     fun sync(): OrbClient
 
+    /**
+     * Returns a view of this service that provides access to raw HTTP responses for each method.
+     */
+    fun withRawResponse(): WithRawResponse
+
     fun topLevel(): TopLevelServiceAsync
 
     fun coupons(): CouponServiceAsync
@@ -81,4 +86,36 @@ interface OrbClientAsync {
      * method.
      */
     fun close()
+
+    /** A view of [OrbClientAsync] that provides access to raw HTTP responses for each method. */
+    interface WithRawResponse {
+
+        fun topLevel(): TopLevelServiceAsync.WithRawResponse
+
+        fun coupons(): CouponServiceAsync.WithRawResponse
+
+        fun creditNotes(): CreditNoteServiceAsync.WithRawResponse
+
+        fun customers(): CustomerServiceAsync.WithRawResponse
+
+        fun events(): EventServiceAsync.WithRawResponse
+
+        fun invoiceLineItems(): InvoiceLineItemServiceAsync.WithRawResponse
+
+        fun invoices(): InvoiceServiceAsync.WithRawResponse
+
+        fun items(): ItemServiceAsync.WithRawResponse
+
+        fun metrics(): MetricServiceAsync.WithRawResponse
+
+        fun plans(): PlanServiceAsync.WithRawResponse
+
+        fun prices(): PriceServiceAsync.WithRawResponse
+
+        fun subscriptions(): SubscriptionServiceAsync.WithRawResponse
+
+        fun alerts(): AlertServiceAsync.WithRawResponse
+
+        fun dimensionalPriceGroups(): DimensionalPriceGroupServiceAsync.WithRawResponse
+    }
 }

@@ -2,7 +2,9 @@
 
 package com.withorb.api.services.blocking.customers
 
+import com.google.errorprone.annotations.MustBeClosed
 import com.withorb.api.core.RequestOptions
+import com.withorb.api.core.http.HttpResponseFor
 import com.withorb.api.models.CustomerCreditListByExternalIdPage
 import com.withorb.api.models.CustomerCreditListByExternalIdParams
 import com.withorb.api.models.CustomerCreditListPage
@@ -11,6 +13,11 @@ import com.withorb.api.services.blocking.customers.credits.LedgerService
 import com.withorb.api.services.blocking.customers.credits.TopUpService
 
 interface CreditService {
+
+    /**
+     * Returns a view of this service that provides access to raw HTTP responses for each method.
+     */
+    fun withRawResponse(): WithRawResponse
 
     fun ledger(): LedgerService
 
@@ -43,4 +50,33 @@ interface CreditService {
         params: CustomerCreditListByExternalIdParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CustomerCreditListByExternalIdPage
+
+    /** A view of [CreditService] that provides access to raw HTTP responses for each method. */
+    interface WithRawResponse {
+
+        fun ledger(): LedgerService.WithRawResponse
+
+        fun topUps(): TopUpService.WithRawResponse
+
+        /**
+         * Returns a raw HTTP response for `get /customers/{customer_id}/credits`, but is otherwise
+         * the same as [CreditService.list].
+         */
+        @MustBeClosed
+        fun list(
+            params: CustomerCreditListParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<CustomerCreditListPage>
+
+        /**
+         * Returns a raw HTTP response for `get
+         * /customers/external_customer_id/{external_customer_id}/credits`, but is otherwise the
+         * same as [CreditService.listByExternalId].
+         */
+        @MustBeClosed
+        fun listByExternalId(
+            params: CustomerCreditListByExternalIdParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<CustomerCreditListByExternalIdPage>
+    }
 }

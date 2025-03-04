@@ -1,5 +1,19 @@
 # Changelog
 
+## 0.1.0-alpha.29 (2025-03-04)
+
+Full Changelog: [v0.1.0-alpha.28...v0.1.0-alpha.29](https://github.com/orbcorp/orb-kotlin/compare/v0.1.0-alpha.28...v0.1.0-alpha.29)
+
+### Features
+
+* **client:** allow configuring timeouts granularly ([#255](https://github.com/orbcorp/orb-kotlin/issues/255)) ([d82934f](https://github.com/orbcorp/orb-kotlin/commit/d82934fe524ea6a551ca252c1bcd3825572eba2b))
+* **client:** support raw response access ([#256](https://github.com/orbcorp/orb-kotlin/issues/256)) ([9997841](https://github.com/orbcorp/orb-kotlin/commit/99978418e6065ec55d398fa71aea7028c0cda326))
+
+
+### Chores
+
+* **internal:** refactor `ErrorHandlingTest` ([#253](https://github.com/orbcorp/orb-kotlin/issues/253)) ([fc5e946](https://github.com/orbcorp/orb-kotlin/commit/fc5e946df208547d801c61c726080958bf31f6b4))
+
 ## 0.1.0-alpha.28 (2025-03-01)
 
 Full Changelog: [v0.1.0-alpha.27...v0.1.0-alpha.28](https://github.com/orbcorp/orb-kotlin/compare/v0.1.0-alpha.27...v0.1.0-alpha.28)

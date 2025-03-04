@@ -2,7 +2,9 @@
 
 package com.withorb.api.services.blocking
 
+import com.google.errorprone.annotations.MustBeClosed
 import com.withorb.api.core.RequestOptions
+import com.withorb.api.core.http.HttpResponseFor
 import com.withorb.api.models.Coupon
 import com.withorb.api.models.CouponArchiveParams
 import com.withorb.api.models.CouponCreateParams
@@ -12,6 +14,11 @@ import com.withorb.api.models.CouponListParams
 import com.withorb.api.services.blocking.coupons.SubscriptionService
 
 interface CouponService {
+
+    /**
+     * Returns a view of this service that provides access to raw HTTP responses for each method.
+     */
+    fun withRawResponse(): WithRawResponse
 
     fun subscriptions(): SubscriptionService
 
@@ -66,4 +73,58 @@ interface CouponService {
         params: CouponFetchParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): Coupon
+
+    /** A view of [CouponService] that provides access to raw HTTP responses for each method. */
+    interface WithRawResponse {
+
+        fun subscriptions(): SubscriptionService.WithRawResponse
+
+        /**
+         * Returns a raw HTTP response for `post /coupons`, but is otherwise the same as
+         * [CouponService.create].
+         */
+        @MustBeClosed
+        fun create(
+            params: CouponCreateParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<Coupon>
+
+        /**
+         * Returns a raw HTTP response for `get /coupons`, but is otherwise the same as
+         * [CouponService.list].
+         */
+        @MustBeClosed
+        fun list(
+            params: CouponListParams = CouponListParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<CouponListPage>
+
+        /**
+         * Returns a raw HTTP response for `get /coupons`, but is otherwise the same as
+         * [CouponService.list].
+         */
+        @MustBeClosed
+        fun list(requestOptions: RequestOptions): HttpResponseFor<CouponListPage> =
+            list(CouponListParams.none(), requestOptions)
+
+        /**
+         * Returns a raw HTTP response for `post /coupons/{coupon_id}/archive`, but is otherwise the
+         * same as [CouponService.archive].
+         */
+        @MustBeClosed
+        fun archive(
+            params: CouponArchiveParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<Coupon>
+
+        /**
+         * Returns a raw HTTP response for `get /coupons/{coupon_id}`, but is otherwise the same as
+         * [CouponService.fetch].
+         */
+        @MustBeClosed
+        fun fetch(
+            params: CouponFetchParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<Coupon>
+    }
 }
