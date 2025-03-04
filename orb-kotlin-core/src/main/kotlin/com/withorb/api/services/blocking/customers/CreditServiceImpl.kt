@@ -10,6 +10,8 @@ import com.withorb.api.core.handlers.withErrorHandler
 import com.withorb.api.core.http.HttpMethod
 import com.withorb.api.core.http.HttpRequest
 import com.withorb.api.core.http.HttpResponse.Handler
+import com.withorb.api.core.http.HttpResponseFor
+import com.withorb.api.core.http.parseable
 import com.withorb.api.core.prepare
 import com.withorb.api.errors.OrbError
 import com.withorb.api.models.CustomerCreditListByExternalIdPage
@@ -24,88 +26,116 @@ import com.withorb.api.services.blocking.customers.credits.TopUpServiceImpl
 class CreditServiceImpl internal constructor(private val clientOptions: ClientOptions) :
     CreditService {
 
-    private val errorHandler: Handler<OrbError> = errorHandler(clientOptions.jsonMapper)
+    private val withRawResponse: CreditService.WithRawResponse by lazy {
+        WithRawResponseImpl(clientOptions)
+    }
 
     private val ledger: LedgerService by lazy { LedgerServiceImpl(clientOptions) }
 
     private val topUps: TopUpService by lazy { TopUpServiceImpl(clientOptions) }
 
+    override fun withRawResponse(): CreditService.WithRawResponse = withRawResponse
+
     override fun ledger(): LedgerService = ledger
 
     override fun topUps(): TopUpService = topUps
 
-    private val listHandler: Handler<CustomerCreditListPage.Response> =
-        jsonHandler<CustomerCreditListPage.Response>(clientOptions.jsonMapper)
-            .withErrorHandler(errorHandler)
-
-    /**
-     * Returns a paginated list of unexpired, non-zero credit blocks for a customer.
-     *
-     * If `include_all_blocks` is set to `true`, all credit blocks (including expired and depleted
-     * blocks) will be included in the response.
-     *
-     * Note that `currency` defaults to credits if not specified. To use a real world currency, set
-     * `currency` to an ISO 4217 string.
-     */
     override fun list(
         params: CustomerCreditListParams,
         requestOptions: RequestOptions,
-    ): CustomerCreditListPage {
-        val request =
-            HttpRequest.builder()
-                .method(HttpMethod.GET)
-                .addPathSegments("customers", params.getPathParam(0), "credits")
-                .build()
-                .prepare(clientOptions, params)
-        val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
-        val response = clientOptions.httpClient.execute(request, requestOptions)
-        return response
-            .use { listHandler.handle(it) }
-            .also {
-                if (requestOptions.responseValidation!!) {
-                    it.validate()
-                }
-            }
-            .let { CustomerCreditListPage.of(this, params, it) }
-    }
+    ): CustomerCreditListPage =
+        // get /customers/{customer_id}/credits
+        withRawResponse().list(params, requestOptions).parse()
 
-    private val listByExternalIdHandler: Handler<CustomerCreditListByExternalIdPage.Response> =
-        jsonHandler<CustomerCreditListByExternalIdPage.Response>(clientOptions.jsonMapper)
-            .withErrorHandler(errorHandler)
-
-    /**
-     * Returns a paginated list of unexpired, non-zero credit blocks for a customer.
-     *
-     * If `include_all_blocks` is set to `true`, all credit blocks (including expired and depleted
-     * blocks) will be included in the response.
-     *
-     * Note that `currency` defaults to credits if not specified. To use a real world currency, set
-     * `currency` to an ISO 4217 string.
-     */
     override fun listByExternalId(
         params: CustomerCreditListByExternalIdParams,
         requestOptions: RequestOptions,
-    ): CustomerCreditListByExternalIdPage {
-        val request =
-            HttpRequest.builder()
-                .method(HttpMethod.GET)
-                .addPathSegments(
-                    "customers",
-                    "external_customer_id",
-                    params.getPathParam(0),
-                    "credits",
-                )
-                .build()
-                .prepare(clientOptions, params)
-        val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
-        val response = clientOptions.httpClient.execute(request, requestOptions)
-        return response
-            .use { listByExternalIdHandler.handle(it) }
-            .also {
-                if (requestOptions.responseValidation!!) {
-                    it.validate()
-                }
+    ): CustomerCreditListByExternalIdPage =
+        // get /customers/external_customer_id/{external_customer_id}/credits
+        withRawResponse().listByExternalId(params, requestOptions).parse()
+
+    class WithRawResponseImpl internal constructor(private val clientOptions: ClientOptions) :
+        CreditService.WithRawResponse {
+
+        private val errorHandler: Handler<OrbError> = errorHandler(clientOptions.jsonMapper)
+
+        private val ledger: LedgerService.WithRawResponse by lazy {
+            LedgerServiceImpl.WithRawResponseImpl(clientOptions)
+        }
+
+        private val topUps: TopUpService.WithRawResponse by lazy {
+            TopUpServiceImpl.WithRawResponseImpl(clientOptions)
+        }
+
+        override fun ledger(): LedgerService.WithRawResponse = ledger
+
+        override fun topUps(): TopUpService.WithRawResponse = topUps
+
+        private val listHandler: Handler<CustomerCreditListPage.Response> =
+            jsonHandler<CustomerCreditListPage.Response>(clientOptions.jsonMapper)
+                .withErrorHandler(errorHandler)
+
+        override fun list(
+            params: CustomerCreditListParams,
+            requestOptions: RequestOptions,
+        ): HttpResponseFor<CustomerCreditListPage> {
+            val request =
+                HttpRequest.builder()
+                    .method(HttpMethod.GET)
+                    .addPathSegments("customers", params.getPathParam(0), "credits")
+                    .build()
+                    .prepare(clientOptions, params)
+            val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
+            val response = clientOptions.httpClient.execute(request, requestOptions)
+            return response.parseable {
+                response
+                    .use { listHandler.handle(it) }
+                    .also {
+                        if (requestOptions.responseValidation!!) {
+                            it.validate()
+                        }
+                    }
+                    .let { CustomerCreditListPage.of(CreditServiceImpl(clientOptions), params, it) }
             }
-            .let { CustomerCreditListByExternalIdPage.of(this, params, it) }
+        }
+
+        private val listByExternalIdHandler: Handler<CustomerCreditListByExternalIdPage.Response> =
+            jsonHandler<CustomerCreditListByExternalIdPage.Response>(clientOptions.jsonMapper)
+                .withErrorHandler(errorHandler)
+
+        override fun listByExternalId(
+            params: CustomerCreditListByExternalIdParams,
+            requestOptions: RequestOptions,
+        ): HttpResponseFor<CustomerCreditListByExternalIdPage> {
+            val request =
+                HttpRequest.builder()
+                    .method(HttpMethod.GET)
+                    .addPathSegments(
+                        "customers",
+                        "external_customer_id",
+                        params.getPathParam(0),
+                        "credits",
+                    )
+                    .build()
+                    .prepare(clientOptions, params)
+            val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
+            val response = clientOptions.httpClient.execute(request, requestOptions)
+            return response.parseable {
+                response
+                    .use { listByExternalIdHandler.handle(it) }
+                    .also {
+                        if (requestOptions.responseValidation!!) {
+                            it.validate()
+                        }
+                    }
+                    .let {
+                        CustomerCreditListByExternalIdPage.of(
+                            CreditServiceImpl(clientOptions),
+                            params,
+                            it,
+                        )
+                    }
+            }
+        }
     }
 }

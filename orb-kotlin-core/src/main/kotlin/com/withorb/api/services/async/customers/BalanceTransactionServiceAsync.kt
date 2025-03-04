@@ -2,13 +2,20 @@
 
 package com.withorb.api.services.async.customers
 
+import com.google.errorprone.annotations.MustBeClosed
 import com.withorb.api.core.RequestOptions
+import com.withorb.api.core.http.HttpResponseFor
 import com.withorb.api.models.CustomerBalanceTransactionCreateParams
 import com.withorb.api.models.CustomerBalanceTransactionCreateResponse
 import com.withorb.api.models.CustomerBalanceTransactionListPageAsync
 import com.withorb.api.models.CustomerBalanceTransactionListParams
 
 interface BalanceTransactionServiceAsync {
+
+    /**
+     * Returns a view of this service that provides access to raw HTTP responses for each method.
+     */
+    fun withRawResponse(): WithRawResponse
 
     /**
      * Creates an immutable balance transaction that updates the customer's balance and returns back
@@ -50,4 +57,31 @@ interface BalanceTransactionServiceAsync {
         params: CustomerBalanceTransactionListParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CustomerBalanceTransactionListPageAsync
+
+    /**
+     * A view of [BalanceTransactionServiceAsync] that provides access to raw HTTP responses for
+     * each method.
+     */
+    interface WithRawResponse {
+
+        /**
+         * Returns a raw HTTP response for `post /customers/{customer_id}/balance_transactions`, but
+         * is otherwise the same as [BalanceTransactionServiceAsync.create].
+         */
+        @MustBeClosed
+        suspend fun create(
+            params: CustomerBalanceTransactionCreateParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<CustomerBalanceTransactionCreateResponse>
+
+        /**
+         * Returns a raw HTTP response for `get /customers/{customer_id}/balance_transactions`, but
+         * is otherwise the same as [BalanceTransactionServiceAsync.list].
+         */
+        @MustBeClosed
+        suspend fun list(
+            params: CustomerBalanceTransactionListParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<CustomerBalanceTransactionListPageAsync>
+    }
 }
