@@ -10,6 +10,8 @@ import com.withorb.api.core.handlers.withErrorHandler
 import com.withorb.api.core.http.HttpMethod
 import com.withorb.api.core.http.HttpRequest
 import com.withorb.api.core.http.HttpResponse.Handler
+import com.withorb.api.core.http.HttpResponseFor
+import com.withorb.api.core.http.parseable
 import com.withorb.api.core.json
 import com.withorb.api.core.prepareAsync
 import com.withorb.api.errors.OrbError
@@ -24,99 +26,143 @@ import com.withorb.api.services.async.dimensionalPriceGroups.ExternalDimensional
 class DimensionalPriceGroupServiceAsyncImpl
 internal constructor(private val clientOptions: ClientOptions) : DimensionalPriceGroupServiceAsync {
 
-    private val errorHandler: Handler<OrbError> = errorHandler(clientOptions.jsonMapper)
+    private val withRawResponse: DimensionalPriceGroupServiceAsync.WithRawResponse by lazy {
+        WithRawResponseImpl(clientOptions)
+    }
 
     private val externalDimensionalPriceGroupId:
         ExternalDimensionalPriceGroupIdServiceAsync by lazy {
         ExternalDimensionalPriceGroupIdServiceAsyncImpl(clientOptions)
     }
 
+    override fun withRawResponse(): DimensionalPriceGroupServiceAsync.WithRawResponse =
+        withRawResponse
+
     override fun externalDimensionalPriceGroupId(): ExternalDimensionalPriceGroupIdServiceAsync =
         externalDimensionalPriceGroupId
 
-    private val createHandler: Handler<DimensionalPriceGroup> =
-        jsonHandler<DimensionalPriceGroup>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
-
-    /**
-     * A dimensional price group is used to partition the result of a billable metric by a set of
-     * dimensions. Prices in a price group must specify the parition used to derive their usage.
-     *
-     * For example, suppose we have a billable metric that measures the number of widgets used and
-     * we want to charge differently depending on the color of the widget. We can create a price
-     * group with a dimension "color" and two prices: one that charges $10 per red widget and one
-     * that charges $20 per blue widget.
-     */
     override suspend fun create(
         params: DimensionalPriceGroupCreateParams,
         requestOptions: RequestOptions,
-    ): DimensionalPriceGroup {
-        val request =
-            HttpRequest.builder()
-                .method(HttpMethod.POST)
-                .addPathSegments("dimensional_price_groups")
-                .body(json(clientOptions.jsonMapper, params._body()))
-                .build()
-                .prepareAsync(clientOptions, params)
-        val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
-        val response = clientOptions.httpClient.executeAsync(request, requestOptions)
-        return response
-            .use { createHandler.handle(it) }
-            .also {
-                if (requestOptions.responseValidation!!) {
-                    it.validate()
-                }
-            }
-    }
+    ): DimensionalPriceGroup =
+        // post /dimensional_price_groups
+        withRawResponse().create(params, requestOptions).parse()
 
-    private val retrieveHandler: Handler<DimensionalPriceGroup> =
-        jsonHandler<DimensionalPriceGroup>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
-
-    /** Fetch dimensional price group */
     override suspend fun retrieve(
         params: DimensionalPriceGroupRetrieveParams,
         requestOptions: RequestOptions,
-    ): DimensionalPriceGroup {
-        val request =
-            HttpRequest.builder()
-                .method(HttpMethod.GET)
-                .addPathSegments("dimensional_price_groups", params.getPathParam(0))
-                .build()
-                .prepareAsync(clientOptions, params)
-        val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
-        val response = clientOptions.httpClient.executeAsync(request, requestOptions)
-        return response
-            .use { retrieveHandler.handle(it) }
-            .also {
-                if (requestOptions.responseValidation!!) {
-                    it.validate()
-                }
-            }
-    }
+    ): DimensionalPriceGroup =
+        // get /dimensional_price_groups/{dimensional_price_group_id}
+        withRawResponse().retrieve(params, requestOptions).parse()
 
-    private val listHandler: Handler<DimensionalPriceGroupListPageAsync.Response> =
-        jsonHandler<DimensionalPriceGroupListPageAsync.Response>(clientOptions.jsonMapper)
-            .withErrorHandler(errorHandler)
-
-    /** List dimensional price groups */
     override suspend fun list(
         params: DimensionalPriceGroupListParams,
         requestOptions: RequestOptions,
-    ): DimensionalPriceGroupListPageAsync {
-        val request =
-            HttpRequest.builder()
-                .method(HttpMethod.GET)
-                .addPathSegments("dimensional_price_groups")
-                .build()
-                .prepareAsync(clientOptions, params)
-        val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
-        val response = clientOptions.httpClient.executeAsync(request, requestOptions)
-        return response
-            .use { listHandler.handle(it) }
-            .also {
-                if (requestOptions.responseValidation!!) {
-                    it.validate()
-                }
+    ): DimensionalPriceGroupListPageAsync =
+        // get /dimensional_price_groups
+        withRawResponse().list(params, requestOptions).parse()
+
+    class WithRawResponseImpl internal constructor(private val clientOptions: ClientOptions) :
+        DimensionalPriceGroupServiceAsync.WithRawResponse {
+
+        private val errorHandler: Handler<OrbError> = errorHandler(clientOptions.jsonMapper)
+
+        private val externalDimensionalPriceGroupId:
+            ExternalDimensionalPriceGroupIdServiceAsync.WithRawResponse by lazy {
+            ExternalDimensionalPriceGroupIdServiceAsyncImpl.WithRawResponseImpl(clientOptions)
+        }
+
+        override fun externalDimensionalPriceGroupId():
+            ExternalDimensionalPriceGroupIdServiceAsync.WithRawResponse =
+            externalDimensionalPriceGroupId
+
+        private val createHandler: Handler<DimensionalPriceGroup> =
+            jsonHandler<DimensionalPriceGroup>(clientOptions.jsonMapper)
+                .withErrorHandler(errorHandler)
+
+        override suspend fun create(
+            params: DimensionalPriceGroupCreateParams,
+            requestOptions: RequestOptions,
+        ): HttpResponseFor<DimensionalPriceGroup> {
+            val request =
+                HttpRequest.builder()
+                    .method(HttpMethod.POST)
+                    .addPathSegments("dimensional_price_groups")
+                    .body(json(clientOptions.jsonMapper, params._body()))
+                    .build()
+                    .prepareAsync(clientOptions, params)
+            val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
+            val response = clientOptions.httpClient.executeAsync(request, requestOptions)
+            return response.parseable {
+                response
+                    .use { createHandler.handle(it) }
+                    .also {
+                        if (requestOptions.responseValidation!!) {
+                            it.validate()
+                        }
+                    }
             }
-            .let { DimensionalPriceGroupListPageAsync.of(this, params, it) }
+        }
+
+        private val retrieveHandler: Handler<DimensionalPriceGroup> =
+            jsonHandler<DimensionalPriceGroup>(clientOptions.jsonMapper)
+                .withErrorHandler(errorHandler)
+
+        override suspend fun retrieve(
+            params: DimensionalPriceGroupRetrieveParams,
+            requestOptions: RequestOptions,
+        ): HttpResponseFor<DimensionalPriceGroup> {
+            val request =
+                HttpRequest.builder()
+                    .method(HttpMethod.GET)
+                    .addPathSegments("dimensional_price_groups", params.getPathParam(0))
+                    .build()
+                    .prepareAsync(clientOptions, params)
+            val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
+            val response = clientOptions.httpClient.executeAsync(request, requestOptions)
+            return response.parseable {
+                response
+                    .use { retrieveHandler.handle(it) }
+                    .also {
+                        if (requestOptions.responseValidation!!) {
+                            it.validate()
+                        }
+                    }
+            }
+        }
+
+        private val listHandler: Handler<DimensionalPriceGroupListPageAsync.Response> =
+            jsonHandler<DimensionalPriceGroupListPageAsync.Response>(clientOptions.jsonMapper)
+                .withErrorHandler(errorHandler)
+
+        override suspend fun list(
+            params: DimensionalPriceGroupListParams,
+            requestOptions: RequestOptions,
+        ): HttpResponseFor<DimensionalPriceGroupListPageAsync> {
+            val request =
+                HttpRequest.builder()
+                    .method(HttpMethod.GET)
+                    .addPathSegments("dimensional_price_groups")
+                    .build()
+                    .prepareAsync(clientOptions, params)
+            val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
+            val response = clientOptions.httpClient.executeAsync(request, requestOptions)
+            return response.parseable {
+                response
+                    .use { listHandler.handle(it) }
+                    .also {
+                        if (requestOptions.responseValidation!!) {
+                            it.validate()
+                        }
+                    }
+                    .let {
+                        DimensionalPriceGroupListPageAsync.of(
+                            DimensionalPriceGroupServiceAsyncImpl(clientOptions),
+                            params,
+                            it,
+                        )
+                    }
+            }
+        }
     }
 }

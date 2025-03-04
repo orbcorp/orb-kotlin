@@ -2,7 +2,9 @@
 
 package com.withorb.api.services.async
 
+import com.google.errorprone.annotations.MustBeClosed
 import com.withorb.api.core.RequestOptions
+import com.withorb.api.core.http.HttpResponseFor
 import com.withorb.api.models.DimensionalPriceGroup
 import com.withorb.api.models.DimensionalPriceGroupCreateParams
 import com.withorb.api.models.DimensionalPriceGroupListPageAsync
@@ -11,6 +13,11 @@ import com.withorb.api.models.DimensionalPriceGroupRetrieveParams
 import com.withorb.api.services.async.dimensionalPriceGroups.ExternalDimensionalPriceGroupIdServiceAsync
 
 interface DimensionalPriceGroupServiceAsync {
+
+    /**
+     * Returns a view of this service that provides access to raw HTTP responses for each method.
+     */
+    fun withRawResponse(): WithRawResponse
 
     fun externalDimensionalPriceGroupId(): ExternalDimensionalPriceGroupIdServiceAsync
 
@@ -43,4 +50,55 @@ interface DimensionalPriceGroupServiceAsync {
     /** List dimensional price groups */
     suspend fun list(requestOptions: RequestOptions): DimensionalPriceGroupListPageAsync =
         list(DimensionalPriceGroupListParams.none(), requestOptions)
+
+    /**
+     * A view of [DimensionalPriceGroupServiceAsync] that provides access to raw HTTP responses for
+     * each method.
+     */
+    interface WithRawResponse {
+
+        fun externalDimensionalPriceGroupId():
+            ExternalDimensionalPriceGroupIdServiceAsync.WithRawResponse
+
+        /**
+         * Returns a raw HTTP response for `post /dimensional_price_groups`, but is otherwise the
+         * same as [DimensionalPriceGroupServiceAsync.create].
+         */
+        @MustBeClosed
+        suspend fun create(
+            params: DimensionalPriceGroupCreateParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<DimensionalPriceGroup>
+
+        /**
+         * Returns a raw HTTP response for `get
+         * /dimensional_price_groups/{dimensional_price_group_id}`, but is otherwise the same as
+         * [DimensionalPriceGroupServiceAsync.retrieve].
+         */
+        @MustBeClosed
+        suspend fun retrieve(
+            params: DimensionalPriceGroupRetrieveParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<DimensionalPriceGroup>
+
+        /**
+         * Returns a raw HTTP response for `get /dimensional_price_groups`, but is otherwise the
+         * same as [DimensionalPriceGroupServiceAsync.list].
+         */
+        @MustBeClosed
+        suspend fun list(
+            params: DimensionalPriceGroupListParams = DimensionalPriceGroupListParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<DimensionalPriceGroupListPageAsync>
+
+        /**
+         * Returns a raw HTTP response for `get /dimensional_price_groups`, but is otherwise the
+         * same as [DimensionalPriceGroupServiceAsync.list].
+         */
+        @MustBeClosed
+        suspend fun list(
+            requestOptions: RequestOptions
+        ): HttpResponseFor<DimensionalPriceGroupListPageAsync> =
+            list(DimensionalPriceGroupListParams.none(), requestOptions)
+    }
 }

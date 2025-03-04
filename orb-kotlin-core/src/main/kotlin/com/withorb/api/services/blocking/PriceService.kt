@@ -2,7 +2,9 @@
 
 package com.withorb.api.services.blocking
 
+import com.google.errorprone.annotations.MustBeClosed
 import com.withorb.api.core.RequestOptions
+import com.withorb.api.core.http.HttpResponseFor
 import com.withorb.api.models.Price
 import com.withorb.api.models.PriceCreateParams
 import com.withorb.api.models.PriceEvaluateParams
@@ -14,6 +16,11 @@ import com.withorb.api.models.PriceUpdateParams
 import com.withorb.api.services.blocking.prices.ExternalPriceIdService
 
 interface PriceService {
+
+    /**
+     * Returns a view of this service that provides access to raw HTTP responses for each method.
+     */
+    fun withRawResponse(): WithRawResponse
 
     fun externalPriceId(): ExternalPriceIdService
 
@@ -88,4 +95,68 @@ interface PriceService {
         params: PriceFetchParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): Price
+
+    /** A view of [PriceService] that provides access to raw HTTP responses for each method. */
+    interface WithRawResponse {
+
+        fun externalPriceId(): ExternalPriceIdService.WithRawResponse
+
+        /**
+         * Returns a raw HTTP response for `post /prices`, but is otherwise the same as
+         * [PriceService.create].
+         */
+        @MustBeClosed
+        fun create(
+            params: PriceCreateParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<Price>
+
+        /**
+         * Returns a raw HTTP response for `put /prices/{price_id}`, but is otherwise the same as
+         * [PriceService.update].
+         */
+        @MustBeClosed
+        fun update(
+            params: PriceUpdateParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<Price>
+
+        /**
+         * Returns a raw HTTP response for `get /prices`, but is otherwise the same as
+         * [PriceService.list].
+         */
+        @MustBeClosed
+        fun list(
+            params: PriceListParams = PriceListParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<PriceListPage>
+
+        /**
+         * Returns a raw HTTP response for `get /prices`, but is otherwise the same as
+         * [PriceService.list].
+         */
+        @MustBeClosed
+        fun list(requestOptions: RequestOptions): HttpResponseFor<PriceListPage> =
+            list(PriceListParams.none(), requestOptions)
+
+        /**
+         * Returns a raw HTTP response for `post /prices/{price_id}/evaluate`, but is otherwise the
+         * same as [PriceService.evaluate].
+         */
+        @MustBeClosed
+        fun evaluate(
+            params: PriceEvaluateParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<PriceEvaluateResponse>
+
+        /**
+         * Returns a raw HTTP response for `get /prices/{price_id}`, but is otherwise the same as
+         * [PriceService.fetch].
+         */
+        @MustBeClosed
+        fun fetch(
+            params: PriceFetchParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<Price>
+    }
 }

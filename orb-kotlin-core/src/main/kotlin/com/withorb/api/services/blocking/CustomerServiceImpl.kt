@@ -10,7 +10,10 @@ import com.withorb.api.core.handlers.jsonHandler
 import com.withorb.api.core.handlers.withErrorHandler
 import com.withorb.api.core.http.HttpMethod
 import com.withorb.api.core.http.HttpRequest
+import com.withorb.api.core.http.HttpResponse
 import com.withorb.api.core.http.HttpResponse.Handler
+import com.withorb.api.core.http.HttpResponseFor
+import com.withorb.api.core.http.parseable
 import com.withorb.api.core.json
 import com.withorb.api.core.prepare
 import com.withorb.api.errors.OrbError
@@ -35,7 +38,9 @@ import com.withorb.api.services.blocking.customers.CreditServiceImpl
 class CustomerServiceImpl internal constructor(private val clientOptions: ClientOptions) :
     CustomerService {
 
-    private val errorHandler: Handler<OrbError> = errorHandler(clientOptions.jsonMapper)
+    private val withRawResponse: CustomerService.WithRawResponse by lazy {
+        WithRawResponseImpl(clientOptions)
+    }
 
     private val costs: CostService by lazy { CostServiceImpl(clientOptions) }
 
@@ -45,287 +50,321 @@ class CustomerServiceImpl internal constructor(private val clientOptions: Client
         BalanceTransactionServiceImpl(clientOptions)
     }
 
+    override fun withRawResponse(): CustomerService.WithRawResponse = withRawResponse
+
     override fun costs(): CostService = costs
 
     override fun credits(): CreditService = credits
 
     override fun balanceTransactions(): BalanceTransactionService = balanceTransactions
 
-    private val createHandler: Handler<Customer> =
-        jsonHandler<Customer>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+    override fun create(params: CustomerCreateParams, requestOptions: RequestOptions): Customer =
+        // post /customers
+        withRawResponse().create(params, requestOptions).parse()
 
-    /**
-     * This operation is used to create an Orb customer, who is party to the core billing
-     * relationship. See [Customer](/core-concepts##customer) for an overview of the customer
-     * resource.
-     *
-     * This endpoint is critical in the following Orb functionality:
-     * - Automated charges can be configured by setting `payment_provider` and `payment_provider_id`
-     *   to automatically issue invoices
-     * - [Customer ID Aliases](/events-and-metrics/customer-aliases) can be configured by setting
-     *   `external_customer_id`
-     * - [Timezone localization](/essentials/timezones) can be configured on a per-customer basis by
-     *   setting the `timezone` parameter
-     */
-    override fun create(params: CustomerCreateParams, requestOptions: RequestOptions): Customer {
-        val request =
-            HttpRequest.builder()
-                .method(HttpMethod.POST)
-                .addPathSegments("customers")
-                .body(json(clientOptions.jsonMapper, params._body()))
-                .build()
-                .prepare(clientOptions, params)
-        val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
-        val response = clientOptions.httpClient.execute(request, requestOptions)
-        return response
-            .use { createHandler.handle(it) }
-            .also {
-                if (requestOptions.responseValidation!!) {
-                    it.validate()
-                }
-            }
-    }
+    override fun update(params: CustomerUpdateParams, requestOptions: RequestOptions): Customer =
+        // put /customers/{customer_id}
+        withRawResponse().update(params, requestOptions).parse()
 
-    private val updateHandler: Handler<Customer> =
-        jsonHandler<Customer>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
-
-    /**
-     * This endpoint can be used to update the `payment_provider`, `payment_provider_id`, `name`,
-     * `email`, `email_delivery`, `tax_id`, `auto_collection`, `metadata`, `shipping_address`,
-     * `billing_address`, and `additional_emails` of an existing customer. Other fields on a
-     * customer are currently immutable.
-     */
-    override fun update(params: CustomerUpdateParams, requestOptions: RequestOptions): Customer {
-        val request =
-            HttpRequest.builder()
-                .method(HttpMethod.PUT)
-                .addPathSegments("customers", params.getPathParam(0))
-                .body(json(clientOptions.jsonMapper, params._body()))
-                .build()
-                .prepare(clientOptions, params)
-        val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
-        val response = clientOptions.httpClient.execute(request, requestOptions)
-        return response
-            .use { updateHandler.handle(it) }
-            .also {
-                if (requestOptions.responseValidation!!) {
-                    it.validate()
-                }
-            }
-    }
-
-    private val listHandler: Handler<CustomerListPage.Response> =
-        jsonHandler<CustomerListPage.Response>(clientOptions.jsonMapper)
-            .withErrorHandler(errorHandler)
-
-    /**
-     * This endpoint returns a list of all customers for an account. The list of customers is
-     * ordered starting from the most recently created customer. This endpoint follows Orb's
-     * [standardized pagination format](/api-reference/pagination).
-     *
-     * See [Customer](/core-concepts##customer) for an overview of the customer model.
-     */
     override fun list(
         params: CustomerListParams,
         requestOptions: RequestOptions,
-    ): CustomerListPage {
-        val request =
-            HttpRequest.builder()
-                .method(HttpMethod.GET)
-                .addPathSegments("customers")
-                .build()
-                .prepare(clientOptions, params)
-        val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
-        val response = clientOptions.httpClient.execute(request, requestOptions)
-        return response
-            .use { listHandler.handle(it) }
-            .also {
-                if (requestOptions.responseValidation!!) {
-                    it.validate()
-                }
-            }
-            .let { CustomerListPage.of(this, params, it) }
-    }
+    ): CustomerListPage =
+        // get /customers
+        withRawResponse().list(params, requestOptions).parse()
 
-    private val deleteHandler: Handler<Void?> = emptyHandler().withErrorHandler(errorHandler)
-
-    /**
-     * This performs a deletion of this customer, its subscriptions, and its invoices, provided the
-     * customer does not have any issued invoices. Customers with issued invoices cannot be deleted.
-     * This operation is irreversible. Note that this is a _soft_ deletion, but the data will be
-     * inaccessible through the API and Orb dashboard.
-     *
-     * For a hard-deletion, please reach out to the Orb team directly.
-     *
-     * **Note**: This operation happens asynchronously and can be expected to take a few minutes to
-     * propagate to related resources. However, querying for the customer on subsequent GET requests
-     * while deletion is in process will reflect its deletion with a `deleted: true` property. Once
-     * the customer deletion has been fully processed, the customer will not be returned in the API.
-     *
-     * On successful processing, this returns an empty dictionary (`{}`) in the API.
-     */
     override fun delete(params: CustomerDeleteParams, requestOptions: RequestOptions) {
-        val request =
-            HttpRequest.builder()
-                .method(HttpMethod.DELETE)
-                .addPathSegments("customers", params.getPathParam(0))
-                .apply { params._body()?.let { body(json(clientOptions.jsonMapper, it)) } }
-                .build()
-                .prepare(clientOptions, params)
-        val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
-        val response = clientOptions.httpClient.execute(request, requestOptions)
-        response.use { deleteHandler.handle(it) }
+        // delete /customers/{customer_id}
+        withRawResponse().delete(params, requestOptions)
     }
 
-    private val fetchHandler: Handler<Customer> =
-        jsonHandler<Customer>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+    override fun fetch(params: CustomerFetchParams, requestOptions: RequestOptions): Customer =
+        // get /customers/{customer_id}
+        withRawResponse().fetch(params, requestOptions).parse()
 
-    /**
-     * This endpoint is used to fetch customer details given an identifier. If the `Customer` is in
-     * the process of being deleted, only the properties `id` and `deleted: true` will be returned.
-     *
-     * See the [Customer resource](/core-concepts#customer) for a full discussion of the Customer
-     * model.
-     */
-    override fun fetch(params: CustomerFetchParams, requestOptions: RequestOptions): Customer {
-        val request =
-            HttpRequest.builder()
-                .method(HttpMethod.GET)
-                .addPathSegments("customers", params.getPathParam(0))
-                .build()
-                .prepare(clientOptions, params)
-        val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
-        val response = clientOptions.httpClient.execute(request, requestOptions)
-        return response
-            .use { fetchHandler.handle(it) }
-            .also {
-                if (requestOptions.responseValidation!!) {
-                    it.validate()
-                }
-            }
-    }
-
-    private val fetchByExternalIdHandler: Handler<Customer> =
-        jsonHandler<Customer>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
-
-    /**
-     * This endpoint is used to fetch customer details given an `external_customer_id` (see
-     * [Customer ID Aliases](/events-and-metrics/customer-aliases)).
-     *
-     * Note that the resource and semantics of this endpoint exactly mirror
-     * [Get Customer](fetch-customer).
-     */
     override fun fetchByExternalId(
         params: CustomerFetchByExternalIdParams,
         requestOptions: RequestOptions,
-    ): Customer {
-        val request =
-            HttpRequest.builder()
-                .method(HttpMethod.GET)
-                .addPathSegments("customers", "external_customer_id", params.getPathParam(0))
-                .build()
-                .prepare(clientOptions, params)
-        val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
-        val response = clientOptions.httpClient.execute(request, requestOptions)
-        return response
-            .use { fetchByExternalIdHandler.handle(it) }
-            .also {
-                if (requestOptions.responseValidation!!) {
-                    it.validate()
-                }
-            }
-    }
+    ): Customer =
+        // get /customers/external_customer_id/{external_customer_id}
+        withRawResponse().fetchByExternalId(params, requestOptions).parse()
 
-    private val syncPaymentMethodsFromGatewayHandler: Handler<Void?> =
-        emptyHandler().withErrorHandler(errorHandler)
-
-    /**
-     * Sync Orb's payment methods for the customer with their gateway.
-     *
-     * This method can be called before taking an action that may cause the customer to be charged,
-     * ensuring that the most up-to-date payment method is charged.
-     *
-     * **Note**: This functionality is currently only available for Stripe.
-     */
     override fun syncPaymentMethodsFromGateway(
         params: CustomerSyncPaymentMethodsFromGatewayParams,
         requestOptions: RequestOptions,
     ) {
-        val request =
-            HttpRequest.builder()
-                .method(HttpMethod.POST)
-                .addPathSegments(
-                    "customers",
-                    "external_customer_id",
-                    params.getPathParam(0),
-                    "sync_payment_methods_from_gateway",
-                )
-                .apply { params._body()?.let { body(json(clientOptions.jsonMapper, it)) } }
-                .build()
-                .prepare(clientOptions, params)
-        val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
-        val response = clientOptions.httpClient.execute(request, requestOptions)
-        response.use { syncPaymentMethodsFromGatewayHandler.handle(it) }
+        // post
+        // /customers/external_customer_id/{external_customer_id}/sync_payment_methods_from_gateway
+        withRawResponse().syncPaymentMethodsFromGateway(params, requestOptions)
     }
 
-    private val syncPaymentMethodsFromGatewayByExternalCustomerIdHandler: Handler<Void?> =
-        emptyHandler().withErrorHandler(errorHandler)
-
-    /**
-     * Sync Orb's payment methods for the customer with their gateway.
-     *
-     * This method can be called before taking an action that may cause the customer to be charged,
-     * ensuring that the most up-to-date payment method is charged.
-     *
-     * **Note**: This functionality is currently only available for Stripe.
-     */
     override fun syncPaymentMethodsFromGatewayByExternalCustomerId(
         params: CustomerSyncPaymentMethodsFromGatewayByExternalCustomerIdParams,
         requestOptions: RequestOptions,
     ) {
-        val request =
-            HttpRequest.builder()
-                .method(HttpMethod.POST)
-                .addPathSegments(
-                    "customers",
-                    params.getPathParam(0),
-                    "sync_payment_methods_from_gateway",
-                )
-                .apply { params._body()?.let { body(json(clientOptions.jsonMapper, it)) } }
-                .build()
-                .prepare(clientOptions, params)
-        val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
-        val response = clientOptions.httpClient.execute(request, requestOptions)
-        response.use { syncPaymentMethodsFromGatewayByExternalCustomerIdHandler.handle(it) }
+        // post /customers/{customer_id}/sync_payment_methods_from_gateway
+        withRawResponse().syncPaymentMethodsFromGatewayByExternalCustomerId(params, requestOptions)
     }
 
-    private val updateByExternalIdHandler: Handler<Customer> =
-        jsonHandler<Customer>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
-
-    /**
-     * This endpoint is used to update customer details given an `external_customer_id` (see
-     * [Customer ID Aliases](/events-and-metrics/customer-aliases)). Note that the resource and
-     * semantics of this endpoint exactly mirror [Update Customer](update-customer).
-     */
     override fun updateByExternalId(
         params: CustomerUpdateByExternalIdParams,
         requestOptions: RequestOptions,
-    ): Customer {
-        val request =
-            HttpRequest.builder()
-                .method(HttpMethod.PUT)
-                .addPathSegments("customers", "external_customer_id", params.getPathParam(0))
-                .body(json(clientOptions.jsonMapper, params._body()))
-                .build()
-                .prepare(clientOptions, params)
-        val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
-        val response = clientOptions.httpClient.execute(request, requestOptions)
-        return response
-            .use { updateByExternalIdHandler.handle(it) }
-            .also {
-                if (requestOptions.responseValidation!!) {
-                    it.validate()
-                }
+    ): Customer =
+        // put /customers/external_customer_id/{external_customer_id}
+        withRawResponse().updateByExternalId(params, requestOptions).parse()
+
+    class WithRawResponseImpl internal constructor(private val clientOptions: ClientOptions) :
+        CustomerService.WithRawResponse {
+
+        private val errorHandler: Handler<OrbError> = errorHandler(clientOptions.jsonMapper)
+
+        private val costs: CostService.WithRawResponse by lazy {
+            CostServiceImpl.WithRawResponseImpl(clientOptions)
+        }
+
+        private val credits: CreditService.WithRawResponse by lazy {
+            CreditServiceImpl.WithRawResponseImpl(clientOptions)
+        }
+
+        private val balanceTransactions: BalanceTransactionService.WithRawResponse by lazy {
+            BalanceTransactionServiceImpl.WithRawResponseImpl(clientOptions)
+        }
+
+        override fun costs(): CostService.WithRawResponse = costs
+
+        override fun credits(): CreditService.WithRawResponse = credits
+
+        override fun balanceTransactions(): BalanceTransactionService.WithRawResponse =
+            balanceTransactions
+
+        private val createHandler: Handler<Customer> =
+            jsonHandler<Customer>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+
+        override fun create(
+            params: CustomerCreateParams,
+            requestOptions: RequestOptions,
+        ): HttpResponseFor<Customer> {
+            val request =
+                HttpRequest.builder()
+                    .method(HttpMethod.POST)
+                    .addPathSegments("customers")
+                    .body(json(clientOptions.jsonMapper, params._body()))
+                    .build()
+                    .prepare(clientOptions, params)
+            val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
+            val response = clientOptions.httpClient.execute(request, requestOptions)
+            return response.parseable {
+                response
+                    .use { createHandler.handle(it) }
+                    .also {
+                        if (requestOptions.responseValidation!!) {
+                            it.validate()
+                        }
+                    }
             }
+        }
+
+        private val updateHandler: Handler<Customer> =
+            jsonHandler<Customer>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+
+        override fun update(
+            params: CustomerUpdateParams,
+            requestOptions: RequestOptions,
+        ): HttpResponseFor<Customer> {
+            val request =
+                HttpRequest.builder()
+                    .method(HttpMethod.PUT)
+                    .addPathSegments("customers", params.getPathParam(0))
+                    .body(json(clientOptions.jsonMapper, params._body()))
+                    .build()
+                    .prepare(clientOptions, params)
+            val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
+            val response = clientOptions.httpClient.execute(request, requestOptions)
+            return response.parseable {
+                response
+                    .use { updateHandler.handle(it) }
+                    .also {
+                        if (requestOptions.responseValidation!!) {
+                            it.validate()
+                        }
+                    }
+            }
+        }
+
+        private val listHandler: Handler<CustomerListPage.Response> =
+            jsonHandler<CustomerListPage.Response>(clientOptions.jsonMapper)
+                .withErrorHandler(errorHandler)
+
+        override fun list(
+            params: CustomerListParams,
+            requestOptions: RequestOptions,
+        ): HttpResponseFor<CustomerListPage> {
+            val request =
+                HttpRequest.builder()
+                    .method(HttpMethod.GET)
+                    .addPathSegments("customers")
+                    .build()
+                    .prepare(clientOptions, params)
+            val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
+            val response = clientOptions.httpClient.execute(request, requestOptions)
+            return response.parseable {
+                response
+                    .use { listHandler.handle(it) }
+                    .also {
+                        if (requestOptions.responseValidation!!) {
+                            it.validate()
+                        }
+                    }
+                    .let { CustomerListPage.of(CustomerServiceImpl(clientOptions), params, it) }
+            }
+        }
+
+        private val deleteHandler: Handler<Void?> = emptyHandler().withErrorHandler(errorHandler)
+
+        override fun delete(
+            params: CustomerDeleteParams,
+            requestOptions: RequestOptions,
+        ): HttpResponse {
+            val request =
+                HttpRequest.builder()
+                    .method(HttpMethod.DELETE)
+                    .addPathSegments("customers", params.getPathParam(0))
+                    .apply { params._body()?.let { body(json(clientOptions.jsonMapper, it)) } }
+                    .build()
+                    .prepare(clientOptions, params)
+            val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
+            val response = clientOptions.httpClient.execute(request, requestOptions)
+            return response.parseable { response.use { deleteHandler.handle(it) } }
+        }
+
+        private val fetchHandler: Handler<Customer> =
+            jsonHandler<Customer>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+
+        override fun fetch(
+            params: CustomerFetchParams,
+            requestOptions: RequestOptions,
+        ): HttpResponseFor<Customer> {
+            val request =
+                HttpRequest.builder()
+                    .method(HttpMethod.GET)
+                    .addPathSegments("customers", params.getPathParam(0))
+                    .build()
+                    .prepare(clientOptions, params)
+            val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
+            val response = clientOptions.httpClient.execute(request, requestOptions)
+            return response.parseable {
+                response
+                    .use { fetchHandler.handle(it) }
+                    .also {
+                        if (requestOptions.responseValidation!!) {
+                            it.validate()
+                        }
+                    }
+            }
+        }
+
+        private val fetchByExternalIdHandler: Handler<Customer> =
+            jsonHandler<Customer>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+
+        override fun fetchByExternalId(
+            params: CustomerFetchByExternalIdParams,
+            requestOptions: RequestOptions,
+        ): HttpResponseFor<Customer> {
+            val request =
+                HttpRequest.builder()
+                    .method(HttpMethod.GET)
+                    .addPathSegments("customers", "external_customer_id", params.getPathParam(0))
+                    .build()
+                    .prepare(clientOptions, params)
+            val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
+            val response = clientOptions.httpClient.execute(request, requestOptions)
+            return response.parseable {
+                response
+                    .use { fetchByExternalIdHandler.handle(it) }
+                    .also {
+                        if (requestOptions.responseValidation!!) {
+                            it.validate()
+                        }
+                    }
+            }
+        }
+
+        private val syncPaymentMethodsFromGatewayHandler: Handler<Void?> =
+            emptyHandler().withErrorHandler(errorHandler)
+
+        override fun syncPaymentMethodsFromGateway(
+            params: CustomerSyncPaymentMethodsFromGatewayParams,
+            requestOptions: RequestOptions,
+        ): HttpResponse {
+            val request =
+                HttpRequest.builder()
+                    .method(HttpMethod.POST)
+                    .addPathSegments(
+                        "customers",
+                        "external_customer_id",
+                        params.getPathParam(0),
+                        "sync_payment_methods_from_gateway",
+                    )
+                    .apply { params._body()?.let { body(json(clientOptions.jsonMapper, it)) } }
+                    .build()
+                    .prepare(clientOptions, params)
+            val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
+            val response = clientOptions.httpClient.execute(request, requestOptions)
+            return response.parseable {
+                response.use { syncPaymentMethodsFromGatewayHandler.handle(it) }
+            }
+        }
+
+        private val syncPaymentMethodsFromGatewayByExternalCustomerIdHandler: Handler<Void?> =
+            emptyHandler().withErrorHandler(errorHandler)
+
+        override fun syncPaymentMethodsFromGatewayByExternalCustomerId(
+            params: CustomerSyncPaymentMethodsFromGatewayByExternalCustomerIdParams,
+            requestOptions: RequestOptions,
+        ): HttpResponse {
+            val request =
+                HttpRequest.builder()
+                    .method(HttpMethod.POST)
+                    .addPathSegments(
+                        "customers",
+                        params.getPathParam(0),
+                        "sync_payment_methods_from_gateway",
+                    )
+                    .apply { params._body()?.let { body(json(clientOptions.jsonMapper, it)) } }
+                    .build()
+                    .prepare(clientOptions, params)
+            val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
+            val response = clientOptions.httpClient.execute(request, requestOptions)
+            return response.parseable {
+                response.use { syncPaymentMethodsFromGatewayByExternalCustomerIdHandler.handle(it) }
+            }
+        }
+
+        private val updateByExternalIdHandler: Handler<Customer> =
+            jsonHandler<Customer>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+
+        override fun updateByExternalId(
+            params: CustomerUpdateByExternalIdParams,
+            requestOptions: RequestOptions,
+        ): HttpResponseFor<Customer> {
+            val request =
+                HttpRequest.builder()
+                    .method(HttpMethod.PUT)
+                    .addPathSegments("customers", "external_customer_id", params.getPathParam(0))
+                    .body(json(clientOptions.jsonMapper, params._body()))
+                    .build()
+                    .prepare(clientOptions, params)
+            val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
+            val response = clientOptions.httpClient.execute(request, requestOptions)
+            return response.parseable {
+                response
+                    .use { updateByExternalIdHandler.handle(it) }
+                    .also {
+                        if (requestOptions.responseValidation!!) {
+                            it.validate()
+                        }
+                    }
+            }
+        }
     }
 }

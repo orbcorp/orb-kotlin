@@ -2,11 +2,18 @@
 
 package com.withorb.api.services.blocking.events
 
+import com.google.errorprone.annotations.MustBeClosed
 import com.withorb.api.core.RequestOptions
+import com.withorb.api.core.http.HttpResponseFor
 import com.withorb.api.models.EventVolumeListParams
 import com.withorb.api.models.EventVolumes
 
 interface VolumeService {
+
+    /**
+     * Returns a view of this service that provides access to raw HTTP responses for each method.
+     */
+    fun withRawResponse(): WithRawResponse
 
     /**
      * This endpoint returns the event volume for an account in a
@@ -25,4 +32,18 @@ interface VolumeService {
         params: EventVolumeListParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): EventVolumes
+
+    /** A view of [VolumeService] that provides access to raw HTTP responses for each method. */
+    interface WithRawResponse {
+
+        /**
+         * Returns a raw HTTP response for `get /events/volume`, but is otherwise the same as
+         * [VolumeService.list].
+         */
+        @MustBeClosed
+        fun list(
+            params: EventVolumeListParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<EventVolumes>
+    }
 }

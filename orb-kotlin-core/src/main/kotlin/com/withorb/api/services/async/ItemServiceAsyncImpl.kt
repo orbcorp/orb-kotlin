@@ -10,6 +10,8 @@ import com.withorb.api.core.handlers.withErrorHandler
 import com.withorb.api.core.http.HttpMethod
 import com.withorb.api.core.http.HttpRequest
 import com.withorb.api.core.http.HttpResponse.Handler
+import com.withorb.api.core.http.HttpResponseFor
+import com.withorb.api.core.http.parseable
 import com.withorb.api.core.json
 import com.withorb.api.core.prepareAsync
 import com.withorb.api.errors.OrbError
@@ -23,100 +25,142 @@ import com.withorb.api.models.ItemUpdateParams
 class ItemServiceAsyncImpl internal constructor(private val clientOptions: ClientOptions) :
     ItemServiceAsync {
 
-    private val errorHandler: Handler<OrbError> = errorHandler(clientOptions.jsonMapper)
-
-    private val createHandler: Handler<Item> =
-        jsonHandler<Item>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
-
-    /** This endpoint is used to create an [Item](/core-concepts#item). */
-    override suspend fun create(params: ItemCreateParams, requestOptions: RequestOptions): Item {
-        val request =
-            HttpRequest.builder()
-                .method(HttpMethod.POST)
-                .addPathSegments("items")
-                .body(json(clientOptions.jsonMapper, params._body()))
-                .build()
-                .prepareAsync(clientOptions, params)
-        val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
-        val response = clientOptions.httpClient.executeAsync(request, requestOptions)
-        return response
-            .use { createHandler.handle(it) }
-            .also {
-                if (requestOptions.responseValidation!!) {
-                    it.validate()
-                }
-            }
+    private val withRawResponse: ItemServiceAsync.WithRawResponse by lazy {
+        WithRawResponseImpl(clientOptions)
     }
 
-    private val updateHandler: Handler<Item> =
-        jsonHandler<Item>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+    override fun withRawResponse(): ItemServiceAsync.WithRawResponse = withRawResponse
 
-    /** This endpoint can be used to update properties on the Item. */
-    override suspend fun update(params: ItemUpdateParams, requestOptions: RequestOptions): Item {
-        val request =
-            HttpRequest.builder()
-                .method(HttpMethod.PUT)
-                .addPathSegments("items", params.getPathParam(0))
-                .body(json(clientOptions.jsonMapper, params._body()))
-                .build()
-                .prepareAsync(clientOptions, params)
-        val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
-        val response = clientOptions.httpClient.executeAsync(request, requestOptions)
-        return response
-            .use { updateHandler.handle(it) }
-            .also {
-                if (requestOptions.responseValidation!!) {
-                    it.validate()
-                }
-            }
-    }
+    override suspend fun create(params: ItemCreateParams, requestOptions: RequestOptions): Item =
+        // post /items
+        withRawResponse().create(params, requestOptions).parse()
 
-    private val listHandler: Handler<ItemListPageAsync.Response> =
-        jsonHandler<ItemListPageAsync.Response>(clientOptions.jsonMapper)
-            .withErrorHandler(errorHandler)
+    override suspend fun update(params: ItemUpdateParams, requestOptions: RequestOptions): Item =
+        // put /items/{item_id}
+        withRawResponse().update(params, requestOptions).parse()
 
-    /** This endpoint returns a list of all Items, ordered in descending order by creation time. */
     override suspend fun list(
         params: ItemListParams,
         requestOptions: RequestOptions,
-    ): ItemListPageAsync {
-        val request =
-            HttpRequest.builder()
-                .method(HttpMethod.GET)
-                .addPathSegments("items")
-                .build()
-                .prepareAsync(clientOptions, params)
-        val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
-        val response = clientOptions.httpClient.executeAsync(request, requestOptions)
-        return response
-            .use { listHandler.handle(it) }
-            .also {
-                if (requestOptions.responseValidation!!) {
-                    it.validate()
-                }
-            }
-            .let { ItemListPageAsync.of(this, params, it) }
-    }
+    ): ItemListPageAsync =
+        // get /items
+        withRawResponse().list(params, requestOptions).parse()
 
-    private val fetchHandler: Handler<Item> =
-        jsonHandler<Item>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+    override suspend fun fetch(params: ItemFetchParams, requestOptions: RequestOptions): Item =
+        // get /items/{item_id}
+        withRawResponse().fetch(params, requestOptions).parse()
 
-    /** This endpoint returns an item identified by its item_id. */
-    override suspend fun fetch(params: ItemFetchParams, requestOptions: RequestOptions): Item {
-        val request =
-            HttpRequest.builder()
-                .method(HttpMethod.GET)
-                .addPathSegments("items", params.getPathParam(0))
-                .build()
-                .prepareAsync(clientOptions, params)
-        val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
-        val response = clientOptions.httpClient.executeAsync(request, requestOptions)
-        return response
-            .use { fetchHandler.handle(it) }
-            .also {
-                if (requestOptions.responseValidation!!) {
-                    it.validate()
-                }
+    class WithRawResponseImpl internal constructor(private val clientOptions: ClientOptions) :
+        ItemServiceAsync.WithRawResponse {
+
+        private val errorHandler: Handler<OrbError> = errorHandler(clientOptions.jsonMapper)
+
+        private val createHandler: Handler<Item> =
+            jsonHandler<Item>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+
+        override suspend fun create(
+            params: ItemCreateParams,
+            requestOptions: RequestOptions,
+        ): HttpResponseFor<Item> {
+            val request =
+                HttpRequest.builder()
+                    .method(HttpMethod.POST)
+                    .addPathSegments("items")
+                    .body(json(clientOptions.jsonMapper, params._body()))
+                    .build()
+                    .prepareAsync(clientOptions, params)
+            val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
+            val response = clientOptions.httpClient.executeAsync(request, requestOptions)
+            return response.parseable {
+                response
+                    .use { createHandler.handle(it) }
+                    .also {
+                        if (requestOptions.responseValidation!!) {
+                            it.validate()
+                        }
+                    }
             }
+        }
+
+        private val updateHandler: Handler<Item> =
+            jsonHandler<Item>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+
+        override suspend fun update(
+            params: ItemUpdateParams,
+            requestOptions: RequestOptions,
+        ): HttpResponseFor<Item> {
+            val request =
+                HttpRequest.builder()
+                    .method(HttpMethod.PUT)
+                    .addPathSegments("items", params.getPathParam(0))
+                    .body(json(clientOptions.jsonMapper, params._body()))
+                    .build()
+                    .prepareAsync(clientOptions, params)
+            val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
+            val response = clientOptions.httpClient.executeAsync(request, requestOptions)
+            return response.parseable {
+                response
+                    .use { updateHandler.handle(it) }
+                    .also {
+                        if (requestOptions.responseValidation!!) {
+                            it.validate()
+                        }
+                    }
+            }
+        }
+
+        private val listHandler: Handler<ItemListPageAsync.Response> =
+            jsonHandler<ItemListPageAsync.Response>(clientOptions.jsonMapper)
+                .withErrorHandler(errorHandler)
+
+        override suspend fun list(
+            params: ItemListParams,
+            requestOptions: RequestOptions,
+        ): HttpResponseFor<ItemListPageAsync> {
+            val request =
+                HttpRequest.builder()
+                    .method(HttpMethod.GET)
+                    .addPathSegments("items")
+                    .build()
+                    .prepareAsync(clientOptions, params)
+            val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
+            val response = clientOptions.httpClient.executeAsync(request, requestOptions)
+            return response.parseable {
+                response
+                    .use { listHandler.handle(it) }
+                    .also {
+                        if (requestOptions.responseValidation!!) {
+                            it.validate()
+                        }
+                    }
+                    .let { ItemListPageAsync.of(ItemServiceAsyncImpl(clientOptions), params, it) }
+            }
+        }
+
+        private val fetchHandler: Handler<Item> =
+            jsonHandler<Item>(clientOptions.jsonMapper).withErrorHandler(errorHandler)
+
+        override suspend fun fetch(
+            params: ItemFetchParams,
+            requestOptions: RequestOptions,
+        ): HttpResponseFor<Item> {
+            val request =
+                HttpRequest.builder()
+                    .method(HttpMethod.GET)
+                    .addPathSegments("items", params.getPathParam(0))
+                    .build()
+                    .prepareAsync(clientOptions, params)
+            val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
+            val response = clientOptions.httpClient.executeAsync(request, requestOptions)
+            return response.parseable {
+                response
+                    .use { fetchHandler.handle(it) }
+                    .also {
+                        if (requestOptions.responseValidation!!) {
+                            it.validate()
+                        }
+                    }
+            }
+        }
     }
 }

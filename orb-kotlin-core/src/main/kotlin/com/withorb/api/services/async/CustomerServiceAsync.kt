@@ -2,7 +2,10 @@
 
 package com.withorb.api.services.async
 
+import com.google.errorprone.annotations.MustBeClosed
 import com.withorb.api.core.RequestOptions
+import com.withorb.api.core.http.HttpResponse
+import com.withorb.api.core.http.HttpResponseFor
 import com.withorb.api.models.Customer
 import com.withorb.api.models.CustomerCreateParams
 import com.withorb.api.models.CustomerDeleteParams
@@ -19,6 +22,11 @@ import com.withorb.api.services.async.customers.CostServiceAsync
 import com.withorb.api.services.async.customers.CreditServiceAsync
 
 interface CustomerServiceAsync {
+
+    /**
+     * Returns a view of this service that provides access to raw HTTP responses for each method.
+     */
+    fun withRawResponse(): WithRawResponse
 
     fun costs(): CostServiceAsync
 
@@ -156,4 +164,118 @@ interface CustomerServiceAsync {
         params: CustomerUpdateByExternalIdParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): Customer
+
+    /**
+     * A view of [CustomerServiceAsync] that provides access to raw HTTP responses for each method.
+     */
+    interface WithRawResponse {
+
+        fun costs(): CostServiceAsync.WithRawResponse
+
+        fun credits(): CreditServiceAsync.WithRawResponse
+
+        fun balanceTransactions(): BalanceTransactionServiceAsync.WithRawResponse
+
+        /**
+         * Returns a raw HTTP response for `post /customers`, but is otherwise the same as
+         * [CustomerServiceAsync.create].
+         */
+        @MustBeClosed
+        suspend fun create(
+            params: CustomerCreateParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<Customer>
+
+        /**
+         * Returns a raw HTTP response for `put /customers/{customer_id}`, but is otherwise the same
+         * as [CustomerServiceAsync.update].
+         */
+        @MustBeClosed
+        suspend fun update(
+            params: CustomerUpdateParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<Customer>
+
+        /**
+         * Returns a raw HTTP response for `get /customers`, but is otherwise the same as
+         * [CustomerServiceAsync.list].
+         */
+        @MustBeClosed
+        suspend fun list(
+            params: CustomerListParams = CustomerListParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<CustomerListPageAsync>
+
+        /**
+         * Returns a raw HTTP response for `get /customers`, but is otherwise the same as
+         * [CustomerServiceAsync.list].
+         */
+        @MustBeClosed
+        suspend fun list(requestOptions: RequestOptions): HttpResponseFor<CustomerListPageAsync> =
+            list(CustomerListParams.none(), requestOptions)
+
+        /**
+         * Returns a raw HTTP response for `delete /customers/{customer_id}`, but is otherwise the
+         * same as [CustomerServiceAsync.delete].
+         */
+        @MustBeClosed
+        suspend fun delete(
+            params: CustomerDeleteParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponse
+
+        /**
+         * Returns a raw HTTP response for `get /customers/{customer_id}`, but is otherwise the same
+         * as [CustomerServiceAsync.fetch].
+         */
+        @MustBeClosed
+        suspend fun fetch(
+            params: CustomerFetchParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<Customer>
+
+        /**
+         * Returns a raw HTTP response for `get
+         * /customers/external_customer_id/{external_customer_id}`, but is otherwise the same as
+         * [CustomerServiceAsync.fetchByExternalId].
+         */
+        @MustBeClosed
+        suspend fun fetchByExternalId(
+            params: CustomerFetchByExternalIdParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<Customer>
+
+        /**
+         * Returns a raw HTTP response for `post
+         * /customers/external_customer_id/{external_customer_id}/sync_payment_methods_from_gateway`,
+         * but is otherwise the same as [CustomerServiceAsync.syncPaymentMethodsFromGateway].
+         */
+        @MustBeClosed
+        suspend fun syncPaymentMethodsFromGateway(
+            params: CustomerSyncPaymentMethodsFromGatewayParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponse
+
+        /**
+         * Returns a raw HTTP response for `post
+         * /customers/{customer_id}/sync_payment_methods_from_gateway`, but is otherwise the same as
+         * [CustomerServiceAsync.syncPaymentMethodsFromGatewayByExternalCustomerId].
+         */
+        @MustBeClosed
+        suspend fun syncPaymentMethodsFromGatewayByExternalCustomerId(
+            params: CustomerSyncPaymentMethodsFromGatewayByExternalCustomerIdParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponse
+
+        /**
+         * Returns a raw HTTP response for `put
+         * /customers/external_customer_id/{external_customer_id}`, but is otherwise the same as
+         * [CustomerServiceAsync.updateByExternalId].
+         */
+        @MustBeClosed
+        suspend fun updateByExternalId(
+            params: CustomerUpdateByExternalIdParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<Customer>
+    }
 }

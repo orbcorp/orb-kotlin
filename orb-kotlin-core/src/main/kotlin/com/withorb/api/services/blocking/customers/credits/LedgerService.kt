@@ -2,7 +2,9 @@
 
 package com.withorb.api.services.blocking.customers.credits
 
+import com.google.errorprone.annotations.MustBeClosed
 import com.withorb.api.core.RequestOptions
+import com.withorb.api.core.http.HttpResponseFor
 import com.withorb.api.models.CustomerCreditLedgerCreateEntryByExternalIdParams
 import com.withorb.api.models.CustomerCreditLedgerCreateEntryByExternalIdResponse
 import com.withorb.api.models.CustomerCreditLedgerCreateEntryParams
@@ -13,6 +15,11 @@ import com.withorb.api.models.CustomerCreditLedgerListPage
 import com.withorb.api.models.CustomerCreditLedgerListParams
 
 interface LedgerService {
+
+    /**
+     * Returns a view of this service that provides access to raw HTTP responses for each method.
+     */
+    fun withRawResponse(): WithRawResponse
 
     /**
      * The credits ledger provides _auditing_ functionality over Orb's credits system with a list of
@@ -397,4 +404,50 @@ interface LedgerService {
         params: CustomerCreditLedgerListByExternalIdParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CustomerCreditLedgerListByExternalIdPage
+
+    /** A view of [LedgerService] that provides access to raw HTTP responses for each method. */
+    interface WithRawResponse {
+
+        /**
+         * Returns a raw HTTP response for `get /customers/{customer_id}/credits/ledger`, but is
+         * otherwise the same as [LedgerService.list].
+         */
+        @MustBeClosed
+        fun list(
+            params: CustomerCreditLedgerListParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<CustomerCreditLedgerListPage>
+
+        /**
+         * Returns a raw HTTP response for `post /customers/{customer_id}/credits/ledger_entry`, but
+         * is otherwise the same as [LedgerService.createEntry].
+         */
+        @MustBeClosed
+        fun createEntry(
+            params: CustomerCreditLedgerCreateEntryParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<CustomerCreditLedgerCreateEntryResponse>
+
+        /**
+         * Returns a raw HTTP response for `post
+         * /customers/external_customer_id/{external_customer_id}/credits/ledger_entry`, but is
+         * otherwise the same as [LedgerService.createEntryByExternalId].
+         */
+        @MustBeClosed
+        fun createEntryByExternalId(
+            params: CustomerCreditLedgerCreateEntryByExternalIdParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<CustomerCreditLedgerCreateEntryByExternalIdResponse>
+
+        /**
+         * Returns a raw HTTP response for `get
+         * /customers/external_customer_id/{external_customer_id}/credits/ledger`, but is otherwise
+         * the same as [LedgerService.listByExternalId].
+         */
+        @MustBeClosed
+        fun listByExternalId(
+            params: CustomerCreditLedgerListByExternalIdParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<CustomerCreditLedgerListByExternalIdPage>
+    }
 }
