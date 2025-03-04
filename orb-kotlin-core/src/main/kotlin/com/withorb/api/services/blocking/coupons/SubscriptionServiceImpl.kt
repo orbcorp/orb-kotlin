@@ -10,6 +10,8 @@ import com.withorb.api.core.handlers.withErrorHandler
 import com.withorb.api.core.http.HttpMethod
 import com.withorb.api.core.http.HttpRequest
 import com.withorb.api.core.http.HttpResponse.Handler
+import com.withorb.api.core.http.HttpResponseFor
+import com.withorb.api.core.http.parseable
 import com.withorb.api.core.prepare
 import com.withorb.api.errors.OrbError
 import com.withorb.api.models.CouponSubscriptionListPage
@@ -18,37 +20,56 @@ import com.withorb.api.models.CouponSubscriptionListParams
 class SubscriptionServiceImpl internal constructor(private val clientOptions: ClientOptions) :
     SubscriptionService {
 
-    private val errorHandler: Handler<OrbError> = errorHandler(clientOptions.jsonMapper)
+    private val withRawResponse: SubscriptionService.WithRawResponse by lazy {
+        WithRawResponseImpl(clientOptions)
+    }
 
-    private val listHandler: Handler<CouponSubscriptionListPage.Response> =
-        jsonHandler<CouponSubscriptionListPage.Response>(clientOptions.jsonMapper)
-            .withErrorHandler(errorHandler)
+    override fun withRawResponse(): SubscriptionService.WithRawResponse = withRawResponse
 
-    /**
-     * This endpoint returns a list of all subscriptions that have redeemed a given coupon as a
-     * [paginated](/api-reference/pagination) list, ordered starting from the most recently created
-     * subscription. For a full discussion of the subscription resource, see
-     * [Subscription](/core-concepts#subscription).
-     */
     override fun list(
         params: CouponSubscriptionListParams,
         requestOptions: RequestOptions,
-    ): CouponSubscriptionListPage {
-        val request =
-            HttpRequest.builder()
-                .method(HttpMethod.GET)
-                .addPathSegments("coupons", params.getPathParam(0), "subscriptions")
-                .build()
-                .prepare(clientOptions, params)
-        val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
-        val response = clientOptions.httpClient.execute(request, requestOptions)
-        return response
-            .use { listHandler.handle(it) }
-            .also {
-                if (requestOptions.responseValidation!!) {
-                    it.validate()
-                }
+    ): CouponSubscriptionListPage =
+        // get /coupons/{coupon_id}/subscriptions
+        withRawResponse().list(params, requestOptions).parse()
+
+    class WithRawResponseImpl internal constructor(private val clientOptions: ClientOptions) :
+        SubscriptionService.WithRawResponse {
+
+        private val errorHandler: Handler<OrbError> = errorHandler(clientOptions.jsonMapper)
+
+        private val listHandler: Handler<CouponSubscriptionListPage.Response> =
+            jsonHandler<CouponSubscriptionListPage.Response>(clientOptions.jsonMapper)
+                .withErrorHandler(errorHandler)
+
+        override fun list(
+            params: CouponSubscriptionListParams,
+            requestOptions: RequestOptions,
+        ): HttpResponseFor<CouponSubscriptionListPage> {
+            val request =
+                HttpRequest.builder()
+                    .method(HttpMethod.GET)
+                    .addPathSegments("coupons", params.getPathParam(0), "subscriptions")
+                    .build()
+                    .prepare(clientOptions, params)
+            val requestOptions = requestOptions.applyDefaults(RequestOptions.from(clientOptions))
+            val response = clientOptions.httpClient.execute(request, requestOptions)
+            return response.parseable {
+                response
+                    .use { listHandler.handle(it) }
+                    .also {
+                        if (requestOptions.responseValidation!!) {
+                            it.validate()
+                        }
+                    }
+                    .let {
+                        CouponSubscriptionListPage.of(
+                            SubscriptionServiceImpl(clientOptions),
+                            params,
+                            it,
+                        )
+                    }
             }
-            .let { CouponSubscriptionListPage.of(this, params, it) }
+        }
     }
 }

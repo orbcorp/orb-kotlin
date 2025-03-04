@@ -2,13 +2,20 @@
 
 package com.withorb.api.services.blocking.customers
 
+import com.google.errorprone.annotations.MustBeClosed
 import com.withorb.api.core.RequestOptions
+import com.withorb.api.core.http.HttpResponseFor
 import com.withorb.api.models.CustomerCostListByExternalIdParams
 import com.withorb.api.models.CustomerCostListByExternalIdResponse
 import com.withorb.api.models.CustomerCostListParams
 import com.withorb.api.models.CustomerCostListResponse
 
 interface CostService {
+
+    /**
+     * Returns a view of this service that provides access to raw HTTP responses for each method.
+     */
+    fun withRawResponse(): WithRawResponse
 
     /**
      * This endpoint is used to fetch a day-by-day snapshot of a customer's costs in Orb, calculated
@@ -239,4 +246,29 @@ interface CostService {
         params: CustomerCostListByExternalIdParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): CustomerCostListByExternalIdResponse
+
+    /** A view of [CostService] that provides access to raw HTTP responses for each method. */
+    interface WithRawResponse {
+
+        /**
+         * Returns a raw HTTP response for `get /customers/{customer_id}/costs`, but is otherwise
+         * the same as [CostService.list].
+         */
+        @MustBeClosed
+        fun list(
+            params: CustomerCostListParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<CustomerCostListResponse>
+
+        /**
+         * Returns a raw HTTP response for `get
+         * /customers/external_customer_id/{external_customer_id}/costs`, but is otherwise the same
+         * as [CostService.listByExternalId].
+         */
+        @MustBeClosed
+        fun listByExternalId(
+            params: CustomerCostListByExternalIdParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<CustomerCostListByExternalIdResponse>
+    }
 }

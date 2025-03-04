@@ -2,7 +2,9 @@
 
 package com.withorb.api.services.blocking
 
+import com.google.errorprone.annotations.MustBeClosed
 import com.withorb.api.core.RequestOptions
+import com.withorb.api.core.http.HttpResponseFor
 import com.withorb.api.models.Alert
 import com.withorb.api.models.AlertCreateForCustomerParams
 import com.withorb.api.models.AlertCreateForExternalCustomerParams
@@ -15,6 +17,11 @@ import com.withorb.api.models.AlertRetrieveParams
 import com.withorb.api.models.AlertUpdateParams
 
 interface AlertService {
+
+    /**
+     * Returns a view of this service that provides access to raw HTTP responses for each method.
+     */
+    fun withRawResponse(): WithRawResponse
 
     /** This endpoint retrieves an alert by its ID. */
     fun retrieve(
@@ -120,4 +127,97 @@ interface AlertService {
         params: AlertEnableParams,
         requestOptions: RequestOptions = RequestOptions.none(),
     ): Alert
+
+    /** A view of [AlertService] that provides access to raw HTTP responses for each method. */
+    interface WithRawResponse {
+
+        /**
+         * Returns a raw HTTP response for `get /alerts/{alert_id}`, but is otherwise the same as
+         * [AlertService.retrieve].
+         */
+        @MustBeClosed
+        fun retrieve(
+            params: AlertRetrieveParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<Alert>
+
+        /**
+         * Returns a raw HTTP response for `put /alerts/{alert_configuration_id}`, but is otherwise
+         * the same as [AlertService.update].
+         */
+        @MustBeClosed
+        fun update(
+            params: AlertUpdateParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<Alert>
+
+        /**
+         * Returns a raw HTTP response for `get /alerts`, but is otherwise the same as
+         * [AlertService.list].
+         */
+        @MustBeClosed
+        fun list(
+            params: AlertListParams = AlertListParams.none(),
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<AlertListPage>
+
+        /**
+         * Returns a raw HTTP response for `get /alerts`, but is otherwise the same as
+         * [AlertService.list].
+         */
+        @MustBeClosed
+        fun list(requestOptions: RequestOptions): HttpResponseFor<AlertListPage> =
+            list(AlertListParams.none(), requestOptions)
+
+        /**
+         * Returns a raw HTTP response for `post /alerts/customer_id/{customer_id}`, but is
+         * otherwise the same as [AlertService.createForCustomer].
+         */
+        @MustBeClosed
+        fun createForCustomer(
+            params: AlertCreateForCustomerParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<Alert>
+
+        /**
+         * Returns a raw HTTP response for `post
+         * /alerts/external_customer_id/{external_customer_id}`, but is otherwise the same as
+         * [AlertService.createForExternalCustomer].
+         */
+        @MustBeClosed
+        fun createForExternalCustomer(
+            params: AlertCreateForExternalCustomerParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<Alert>
+
+        /**
+         * Returns a raw HTTP response for `post /alerts/subscription_id/{subscription_id}`, but is
+         * otherwise the same as [AlertService.createForSubscription].
+         */
+        @MustBeClosed
+        fun createForSubscription(
+            params: AlertCreateForSubscriptionParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<Alert>
+
+        /**
+         * Returns a raw HTTP response for `post /alerts/{alert_configuration_id}/disable`, but is
+         * otherwise the same as [AlertService.disable].
+         */
+        @MustBeClosed
+        fun disable(
+            params: AlertDisableParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<Alert>
+
+        /**
+         * Returns a raw HTTP response for `post /alerts/{alert_configuration_id}/enable`, but is
+         * otherwise the same as [AlertService.enable].
+         */
+        @MustBeClosed
+        fun enable(
+            params: AlertEnableParams,
+            requestOptions: RequestOptions = RequestOptions.none(),
+        ): HttpResponseFor<Alert>
+    }
 }
